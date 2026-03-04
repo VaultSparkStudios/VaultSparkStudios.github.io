@@ -2,9 +2,7 @@
 VaultSpark Studios Organizational Repository
 
 
-About VaultSpark Studios:
-
-Where worlds are built. Where stories ignite. Crafting immersive games & entertainment that push all boundaries. The vault is sparked. ⚡
+About VaultSpark Studios: Where worlds are built. Where stories ignite. Crafting immersive games & entertainment that push all boundaries. The vault is sparked. ⚡
 
 
 Try Our Current Vault Of Games (Test Versions):
