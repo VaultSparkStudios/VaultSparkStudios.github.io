@@ -3,55 +3,71 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Page Not Found | VaultSpark Studios</title>
-  <meta name="description" content="The page you were looking for could not be found." />
+  <title>404 | VaultSpark Studios</title>
+  <meta name="description" content="The page you tried to reach is not in the vault." />
   <link rel="icon" type="image/png" href="assets/favicon.png" />
   <style>
     body {
       margin: 0;
-      font-family: Inter, Arial, sans-serif;
       min-height: 100vh;
       display: grid;
       place-items: center;
-      background:
-        radial-gradient(circle at 10% 30%, rgba(31, 162, 255, 0.12), transparent 18%),
-        radial-gradient(circle at 90% 30%, rgba(255, 122, 0, 0.12), transparent 18%),
-        linear-gradient(180deg, #000000 0%, #07090f 45%, #0b0c12 100%);
-      color: #eef2ff;
       padding: 2rem;
       box-sizing: border-box;
+      color: #eef2ff;
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 18% 34%, rgba(31,162,255,0.18), transparent 0 22%),
+        radial-gradient(circle at 82% 34%, rgba(255,122,0,0.18), transparent 0 22%),
+        linear-gradient(180deg, #000000 0%, #05070d 100%);
     }
     .wrap {
       max-width: 760px;
       width: 100%;
       padding: 2rem;
       border-radius: 24px;
-      background: rgba(15, 21, 40, 0.82);
+      background: rgba(10, 13, 22, 0.88);
       border: 1px solid rgba(255,255,255,0.08);
       text-align: center;
-      box-shadow: 0 18px 55px rgba(0,0,0,0.42);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.45);
     }
-    img { width: min(100%, 320px); height: auto; margin: 0 auto 1rem; display:block; }
-    h1 { margin: 0 0 1rem; font-size: clamp(2.4rem, 7vw, 4.5rem); letter-spacing: -0.04em; }
-    p { color: #aeb7ca; font-size: 1.04rem; line-height: 1.6; margin-bottom: 1.5rem; }
+    img {
+      width: min(100%, 460px);
+      margin: 0 auto 1.25rem;
+      display: block;
+    }
+    h1 {
+      margin: 0 0 0.7rem;
+      font-size: clamp(2.7rem, 7vw, 4.5rem);
+      letter-spacing: -0.04em;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+    p {
+      color: #b5bfd8;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin: 0 auto 1.35rem;
+      max-width: 42ch;
+    }
     a {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       min-height: 48px;
-      line-height: 48px;
-      padding: 0 1.2rem;
+      padding: 0 1.15rem;
       border-radius: 999px;
+      font-weight: 700;
+      color: #081018;
+      background: linear-gradient(135deg, #FFC400, #ffd84f);
       text-decoration: none;
-      font-weight: 800;
-      color: #091018;
-      background: linear-gradient(135deg, #FFC400, #ffd86a 55%, #fff3b0);
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <img src="assets/vaultspark-logo.png" alt="VaultSpark Studios logo" />
-    <h1>404</h1>
-    <p>The page you tried to reach is not in the vault. Head back to the VaultSpark Studios homepage.</p>
+    <img src="assets/vaultspark-cinematic-logo.png" alt="VaultSpark Studios logo" />
+    <h1>Signal Lost</h1>
+    <p>The page you tried to reach is not in the vault. Turn back toward the source and re-enter the signal.</p>
     <a href="index.html">Return Home</a>
   </div>
 </body>
