@@ -14,33 +14,26 @@
       display: grid;
       place-items: center;
       background:
-        radial-gradient(circle at top left, rgba(110, 231, 255, 0.14), transparent 28%),
-        radial-gradient(circle at 85% 10%, rgba(139, 92, 246, 0.18), transparent 26%),
-        linear-gradient(180deg, #050814 0%, #060816 42%, #090d1d 100%);
+        radial-gradient(circle at 10% 30%, rgba(31, 162, 255, 0.12), transparent 18%),
+        radial-gradient(circle at 90% 30%, rgba(255, 122, 0, 0.12), transparent 18%),
+        linear-gradient(180deg, #000000 0%, #07090f 45%, #0b0c12 100%);
       color: #eef2ff;
       padding: 2rem;
       box-sizing: border-box;
     }
     .wrap {
-      max-width: 700px;
+      max-width: 760px;
       width: 100%;
       padding: 2rem;
       border-radius: 24px;
       background: rgba(15, 21, 40, 0.82);
       border: 1px solid rgba(255,255,255,0.08);
       text-align: center;
+      box-shadow: 0 18px 55px rgba(0,0,0,0.42);
     }
-    h1 {
-      margin: 0 0 1rem;
-      font-size: clamp(2.5rem, 7vw, 4.5rem);
-      letter-spacing: -0.04em;
-    }
-    p {
-      color: #a8b3cf;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      margin-bottom: 1.5rem;
-    }
+    img { width: min(100%, 320px); height: auto; margin: 0 auto 1rem; display:block; }
+    h1 { margin: 0 0 1rem; font-size: clamp(2.4rem, 7vw, 4.5rem); letter-spacing: -0.04em; }
+    p { color: #aeb7ca; font-size: 1.04rem; line-height: 1.6; margin-bottom: 1.5rem; }
     a {
       display: inline-block;
       min-height: 48px;
@@ -48,14 +41,15 @@
       padding: 0 1.2rem;
       border-radius: 999px;
       text-decoration: none;
-      font-weight: 700;
-      color: #03111b;
-      background: linear-gradient(135deg, #6ee7ff, #b5f3ff);
+      font-weight: 800;
+      color: #091018;
+      background: linear-gradient(135deg, #FFC400, #ffd86a 55%, #fff3b0);
     }
   </style>
 </head>
 <body>
   <div class="wrap">
+    <img src="assets/vaultspark-logo.png" alt="VaultSpark Studios logo" />
     <h1>404</h1>
     <p>The page you tried to reach is not in the vault. Head back to the VaultSpark Studios homepage.</p>
     <a href="index.html">Return Home</a>
