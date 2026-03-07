@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VaultSpark Football GM | VaultSpark Studios</title>
+  <meta
+    name="description"
+    content="VaultSpark Football GM is in active development. Follow the project, view the repo, and track the roadmap toward a fully static browser build."
+  />
+  <meta property="og:title" content="VaultSpark Football GM" />
+  <meta
+    property="og:description"
+    content="A realism-focused NFL front-office simulation from VaultSpark Studios. This launch page is live while the full game is refactored for static hosting."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/vaultspark-football-gm/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="theme-color" content="#08111f" />
+  <style>
+    :root {
+      --bg: #05070d;
+      --panel: rgba(11, 16, 28, 0.9);
+      --line: rgba(255, 255, 255, 0.08);
+      --text: #eef2ff;
+      --muted: #bac4da;
+      --blue: #1fa2ff;
+      --orange: #ff7a00;
+      --gold: #ffc400;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(255, 122, 0, 0.18), transparent 0 28%),
+        radial-gradient(circle at 85% 18%, rgba(31, 162, 255, 0.18), transparent 0 24%),
+        linear-gradient(180deg, #020304 0%, #08111f 52%, #05070d 100%);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .shell {
+      width: min(calc(100% - 2rem), 1040px);
+      margin: 0 auto;
+      padding: 3rem 0 4rem;
+    }
+
+    .crumb {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero {
+      padding: 2rem;
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(10, 15, 27, 0.82), rgba(6, 9, 16, 0.96)),
+        linear-gradient(135deg, rgba(255, 122, 0, 0.08), rgba(31, 162, 255, 0.06));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -8% -30% auto;
+      width: 36%;
+      height: 48%;
+      background: radial-gradient(circle, rgba(255, 196, 0, 0.18), transparent 68%);
+      filter: blur(26px);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h1 {
+      margin: 1rem 0 0.9rem;
+      font-size: clamp(2.3rem, 6vw, 4.4rem);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+    }
+
+    .lead {
+      max-width: 62ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .meta span {
+      padding: 0.55rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #f4f7ff;
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0.85rem 1.2rem;
+      border-radius: 14px;
+      font-weight: 800;
+      letter-spacing: 0.01em;
+      border: 1px solid transparent;
+    }
+
+    .button-primary {
+      background: linear-gradient(135deg, var(--orange), var(--gold));
+      color: #0d0f13;
+      box-shadow: 0 14px 34px rgba(255, 122, 0, 0.25);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #f3f6ff;
+    }
+
+    .note {
+      padding: 1rem 1.1rem;
+      border-left: 4px solid var(--blue);
+      border-radius: 16px;
+      background: rgba(31, 162, 255, 0.08);
+      color: #d8e8ff;
+      max-width: 64ch;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1.4rem;
+    }
+
+    .panel {
+      padding: 1.2rem;
+      border-radius: 20px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .panel h2 {
+      margin: 0 0 0.75rem;
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+    }
+
+    .panel p,
+    .panel li {
+      color: var(--muted);
+    }
+
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+
+    footer {
+      margin-top: 1.4rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 880px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <a class="crumb" href="https://vaultsparkstudios.com/">Back to VaultSpark Studios</a>
+
+    <section class="hero">
+      <div class="eyebrow">Launch Stub</div>
+      <h1>VaultSpark Football GM</h1>
+      <p class="lead">
+        A realism-focused NFL franchise simulator built around roster depth, season/career calibration, contracts, draft flow, and long-horizon front-office storytelling.
+      </p>
+      <div class="meta">
+        <span>NFL Front Office Sim</span>
+        <span>Browser Project</span>
+        <span>Static Hosting Refactor Pending</span>
+      </div>
+      <div class="actions">
+        <a class="button button-primary" href="https://github.com/VaultSparkStudios/VaultSpark-Football-GM">Open Repository</a>
+        <a class="button button-secondary" href="https://vaultsparkstudios.com/">Studio Landing Page</a>
+      </div>
+      <div class="note">
+        This page is a temporary launch stub. The full game currently depends on a Node server runtime and API layer, so it is being prepared for a later static-browser deployment.
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>What Exists Now</h2>
+        <ul>
+          <li>Weekly and offseason franchise simulation</li>
+          <li>Depth chart, usage, contracts, draft, and save systems</li>
+          <li>Season and career realism verification tooling</li>
+          <li>MIT-licensed codebase published under VaultSpark Studios</li>
+        </ul>
+      </article>
+
+      <article class="panel">
+        <h2>Why This Is A Stub</h2>
+        <p>
+          The current build relies on server-hosted session state, filesystem-backed saves, and API endpoints. GitHub Pages only serves static assets, so a full browser-native refactor is required before the playable game can live here directly.
+        </p>
+      </article>
+    </section>
+
+    <footer>
+      VaultSpark Football GM is now live as a project launch page while the playable browser build is refactored for static hosting.
+    </footer>
+  </main>
+</body>
+</html>
