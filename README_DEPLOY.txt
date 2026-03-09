@@ -7,3 +7,9 @@ Deploy these files to the root of your GitHub Pages repo:
 - upload the entire assets folder
 
 After pushing to main, GitHub Pages should deploy the updated landing page.
+
+Studio-wide multi-game deployment defaults now live in:
+- docs/STUDIO_DEPLOYMENT_STANDARD.md
+- docs/templates/deploy-pages.template.yml
+- docs/templates/GAME_LAUNCH_CHECKLIST.template.md
+- AGENTS.md
