@@ -19,13 +19,13 @@
 Before making deployment, domain, GitHub Pages, or studio-site integration
 changes, read these files first:
 
-- `STUDIO_DEPLOYMENT_STANDARD.md`
-- `STUDIO_BACKEND_PLAN.md`
-- `DEPLOY_PAGES.md`
-- `deploy-pages.template.yml`
-- `deploy-backend.docker-compose.template.yml`
-- `Caddyfile.studio-backend.template`
-- `GAME_LAUNCH_CHECKLIST.template.md`
+- `docs/STUDIO_DEPLOYMENT_STANDARD.md`
+- `docs/STUDIO_BACKEND_PLAN.md`
+- `docs/DEPLOY_PAGES.md`
+- `docs/templates/deploy-pages.template.yml`
+- `docs/templates/deploy-backend.docker-compose.template.yml`
+- `docs/templates/Caddyfile.studio-backend.template`
+- `docs/templates/GAME_LAUNCH_CHECKLIST.template.md`
 
 ## Required behavior
 
@@ -68,7 +68,7 @@ No secrets are required for Pages deployment.
 | File | Purpose |
 |---|---|
 | `.github/workflows/ci.yml` | Typecheck, lint, build on push/PR |
-| `.github/workflows/deploy-pages.yml` | Build + sync bundle into studio site |
+| `.github/workflows/deploy-pages.yml` | Build + deploy the game repo directly to GitHub Pages |
 | `.github/workflows/deploy-backend.yml` | Backend deploy (if game has a runtime) |
 
 ## Standard source files (per game repo)

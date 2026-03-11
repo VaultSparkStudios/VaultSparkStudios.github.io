@@ -51,44 +51,38 @@ Keep one repo per game plus one studio-site repo.
 
 - Studio site repo:
   - `VaultSparkStudios.github.io`
-- Game repos:
-  - `VaultFront`
-  - `Dunescape`
-  - `Call-Of-Doodie`
-  - `Gridiron-GM`
+- Game repos (lowercase with hyphens — GitHub recommended convention):
+  - `vaultfront`
+  - `dunescape`
+  - `call-of-doodie`
+  - `gridiron-gm`
 
 Rules:
 
-- repo names may follow branding and may contain caps/hyphens
-- public URLs must not depend on repo name casing
+- repo names are always lowercase with hyphens between words (GitHub recommended)
+- repo name and public slug are always identical — there is no separate branding alias
+- each game repo deploys its own GitHub Pages directly; no cross-repo sync required
+- because repo names are lowercase and the org has a custom domain, GitHub Pages
+  from each game repo is automatically served at `vaultsparkstudios.com/{slug}/`
 - do not use the studio-site repo as the gameplay source repo
 - every game repo must keep local copies of the studio deployment standard,
   templates, and handoff references so the repo remains self-sufficient
 
 ## Public URL standard
 
-Every game gets a lowercase slug.
+Every game gets a slug. The slug is identical to the repo name.
 
-Examples:
-
-- `vaultfront`
-- `dunescape`
-- `call-of-doodie`
-- `gridiron-gm`
-
-Public URLs:
-
-- studio root:
-  - `https://vaultsparkstudios.com/`
-- game paths:
-  - `https://vaultsparkstudios.com/vaultfront/`
-  - `https://vaultsparkstudios.com/dunescape/`
-  - `https://vaultsparkstudios.com/call-of-doodie/`
+| Repo name | Public slug | Public URL |
+|---|---|---|
+| `vaultfront` | `vaultfront` | `https://vaultsparkstudios.com/vaultfront/` |
+| `dunescape` | `dunescape` | `https://vaultsparkstudios.com/dunescape/` |
+| `call-of-doodie` | `call-of-doodie` | `https://vaultsparkstudios.com/call-of-doodie/` |
+| `gridiron-gm` | `gridiron-gm` | `https://vaultsparkstudios.com/gridiron-gm/` |
 
 Rules:
 
-- use lowercase
-- use hyphens, not underscores
+- slugs are always lowercase with hyphens, never underscores
+- repo name and slug are always identical
 - keep the slug stable once launched
 - treat the slug as the canonical public identifier
 
@@ -145,18 +139,21 @@ Each game repo should have:
    - tests
 
 2. `deploy-pages.yml`
-   - build static client for `/{slug}/`
-   - copy `index.html` to `404.html`
-   - sync built bundle into `VaultSparkStudios.github.io/{slug}/`
-   - commit/push via token
+   - build static client with `VITE_APP_BASE_PATH=/{slug}/`
+   - copy `index.html` to `404.html` for SPA deep-link fallback
+   - upload `dist/` as a GitHub Pages artifact
+   - deploy to GitHub Pages — served at `vaultsparkstudios.com/{slug}/`
+   - no cross-repo sync or `STUDIO_SITE_TOKEN` required
 
 3. `deploy-backend.yml` if the game has a dedicated runtime/backend
 
 Rules:
 
+- the public slug in the build path matches the repo name exactly
+- enable GitHub Pages source as "GitHub Actions" in each game repo's settings (one-time)
 - frontend deploy and backend deploy must be separate workflows
 - do not couple Pages publishing to backend rollout
-- studio-site publishing should update only the target subfolder for the game
+- studio-site publishing must update only the target `/{slug}/` subfolder
 
 ## Temporary clone safety standard
 
@@ -176,21 +173,22 @@ Per game repo, define the same variable names.
 
 Variables:
 
-- `GAME_SLUG`
-- `GAME_SERVICE_ORIGIN`
-- `API_DOMAIN`
-- `STUDIO_SITE_BRANCH`
+- `GAME_SLUG` — lowercase public slug (e.g. `dunescape`)
+- `GAME_SERVICE_ORIGIN` — e.g. `https://play-dunescape.vaultsparkstudios.com`
+- `API_DOMAIN` — e.g. `api-dunescape.vaultsparkstudios.com`
+- `STUDIO_SITE_BRANCH` — branch to push bundle into (typically `main`)
 
 Secrets:
 
-- `STUDIO_SITE_TOKEN`
+- `STUDIO_SITE_TOKEN` — PAT with write access to `VaultSparkStudios.github.io`
 - backend deploy credentials
 - game-specific API/auth secrets
 
 Rules:
 
 - keep variable names identical across all game repos
-- only values should change per game
+- only values change per game
+- `STUDIO_SITE_TOKEN` is required for every game that publishes via the studio site sync model
 
 ## Landing-page integration standard
 
@@ -265,16 +263,22 @@ Rules:
 
 ## Future-game defaults
 
-For a new game with slug `shadow-rift`:
+For a new game named `Shadow Rift`:
 
-- repo:
-  - `Shadow-Rift`
+- repo name (lowercase with hyphens):
+  - `shadow-rift`
+- public slug (identical to repo name):
+  - `shadow-rift`
+- studio site subfolder:
+  - `VaultSparkStudios.github.io/shadow-rift/`
 - public URL:
   - `https://vaultsparkstudios.com/shadow-rift/`
 - gameplay origin:
   - `https://play-shadow-rift.vaultsparkstudios.com`
 - API origin:
   - `https://api-shadow-rift.vaultsparkstudios.com`
+- `GAME_SLUG` repo variable:
+  - `shadow-rift`
 
 ## Non-negotiable governance rules
 

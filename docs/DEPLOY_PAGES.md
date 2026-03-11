@@ -1,59 +1,65 @@
-# VaultFront Pages Deployment
+# VaultSpark Studios — Pages Deployment Standard
 
-This repo can build a static client bundle for deployment at:
+Every game in the studio deploys its frontend bundle directly from its own
+game repo using GitHub Pages.
 
-- `https://vaultsparkstudios.com/vaultfront/`
+Because all game repo names are lowercase with hyphens (GitHub recommended
+convention) and the studio org has a custom domain (`vaultsparkstudios.com`),
+GitHub Pages from each game repo is automatically served at:
 
-The bundle is intended to be copied into the separate studio landing-page repo,
-not published as a standalone Pages site from this repository.
+```
+https://vaultsparkstudios.com/{slug}/
+```
 
-Backend/runtime deployment is separate. The default studio runtime plan is
-documented in:
+No token or sync into the studio site repo is required. Repo name and public
+slug are always identical.
 
-- `docs/STUDIO_BACKEND_PLAN.md`
+Backend/runtime deployment is separate and documented in:
 
-## Required GitHub variables
+- `STUDIO_BACKEND_PLAN.md`
 
-Set these repo variables in `VaultSparkStudios/VaultFront`:
+---
 
-- `STUDIO_SITE_BRANCH`
-  - Example: `main`
-- `GAME_SERVICE_ORIGIN`
-  - Default standard: `https://play-vaultfront.vaultsparkstudios.com`
-- `API_DOMAIN`
-  - Default standard: `api-vaultfront.vaultsparkstudios.com`
+## How it works
 
-Studio-wide default naming standard:
+Each game repo runs `deploy-pages.yml` which:
 
-- `play-{slug}.vaultsparkstudios.com`
-- `api-{slug}.vaultsparkstudios.com`
+1. Builds the static client with `VITE_APP_BASE_PATH=/{slug}/`
+2. Copies `dist/index.html` → `dist/404.html` for SPA deep-link fallback
+3. Uploads the `dist/` folder as a Pages artifact
+4. Deploys to GitHub Pages — served at `vaultsparkstudios.com/{slug}/`
 
-## Required GitHub secret
+The game repo owns and serves its own public URL. No cross-repo sync needed.
 
-- `STUDIO_SITE_TOKEN`
-  - Personal access token with write access to the studio site repo
+---
 
-## What the workflow does
+## Required GitHub Pages setup (per game repo, one-time)
 
-`deploy-pages.yml`:
+1. Go to repo Settings → Pages
+2. Set Source to **GitHub Actions**
 
-1. Builds the client with `VITE_APP_BASE_PATH=/vaultfront/`
-2. Copies `static/index.html` to `static/404.html` for SPA deep-link fallback
-3. Checks out the studio site repo
-4. Syncs the built bundle into `/vaultfront/`
-5. Commits and pushes the updated bundle
+No secrets or variables are required for the Pages deploy itself.
 
-The studio repo target is hardcoded to:
+---
 
-- `VaultSparkStudios/VaultSparkStudios.github.io`
+## Repo and slug convention
 
-## Studio site repo follow-up
+Repo names are lowercase with hyphens. Repo name and public slug are always identical.
 
-The studio site repo still needs a separate content change:
+| Game | Repo name | Public slug | Public URL |
+|---|---|---|---|
+| Dunescape | `dunescape` | `dunescape` | `https://vaultsparkstudios.com/dunescape/` |
+| VaultFront | `vaultfront` | `vaultfront` | `https://vaultsparkstudios.com/vaultfront/` |
+| Call Of Doodie | `call-of-doodie` | `call-of-doodie` | `https://vaultsparkstudios.com/call-of-doodie/` |
+| Gridiron GM | `gridiron-gm` | `gridiron-gm` | `https://vaultsparkstudios.com/gridiron-gm/` |
 
-1. Add a `VaultFront` card under the `Vault-Forged` area
-2. Link it to `/vaultfront/`
-3. Reuse the same card/template pattern as the existing games
+---
 
-This repo does not contain the studio landing-page source, so that step is
-documented here but not implemented locally.
+## Studio site follow-up after first deploy
+
+After the first successful deploy:
+
+1. Add a card for the game in the `Vault-Forged` section of `index.html`
+2. Set the card CTA to `/{slug}/`
+3. Reuse the existing card template and art class pattern
+4. Fetch latest remote state before editing `index.html`
