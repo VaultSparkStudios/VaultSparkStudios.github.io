@@ -61,8 +61,9 @@ Rules:
 
 - repo names are always lowercase with hyphens between words (GitHub recommended)
 - repo name and public slug are always identical — there is no separate branding alias
-- game bundles are synced into the studio site repo at the `{slug}/` subfolder
-- the studio site repo owns the canonical public URL for every game
+- each game repo deploys its own GitHub Pages directly; no cross-repo sync required
+- because repo names are lowercase and the org has a custom domain, GitHub Pages
+  from each game repo is automatically served at `vaultsparkstudios.com/{slug}/`
 - do not use the studio-site repo as the gameplay source repo
 - every game repo must keep local copies of the studio deployment standard,
   templates, and handoff references so the repo remains self-sufficient
@@ -138,17 +139,18 @@ Each game repo should have:
    - tests
 
 2. `deploy-pages.yml`
-   - build static client with `VITE_APP_BASE_PATH=/{slug}/` (lowercase slug)
+   - build static client with `VITE_APP_BASE_PATH=/{slug}/`
    - copy `index.html` to `404.html` for SPA deep-link fallback
-   - check out `VaultSparkStudios/VaultSparkStudios.github.io`
-   - sync built bundle into `VaultSparkStudios.github.io/{slug}/` (lowercase)
-   - commit and push via `STUDIO_SITE_TOKEN`
+   - upload `dist/` as a GitHub Pages artifact
+   - deploy to GitHub Pages — served at `vaultsparkstudios.com/{slug}/`
+   - no cross-repo sync or `STUDIO_SITE_TOKEN` required
 
 3. `deploy-backend.yml` if the game has a dedicated runtime/backend
 
 Rules:
 
-- the public slug in the build path and studio site folder matches the repo name exactly
+- the public slug in the build path matches the repo name exactly
+- enable GitHub Pages source as "GitHub Actions" in each game repo's settings (one-time)
 - frontend deploy and backend deploy must be separate workflows
 - do not couple Pages publishing to backend rollout
 - studio-site publishing must update only the target `/{slug}/` subfolder

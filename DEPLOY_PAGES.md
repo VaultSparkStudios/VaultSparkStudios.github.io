@@ -1,11 +1,18 @@
 # VaultSpark Studios — Pages Deployment Standard
 
-Every game in the studio deploys its frontend bundle into this repo
-(`VaultSparkStudios/VaultSparkStudios.github.io`) at a lowercase slug path.
+Every game in the studio deploys its frontend bundle directly from its own
+game repo using GitHub Pages.
 
-This decouples the public URL from the game repo name. The repo may be
-capitalized (`Dunescape`); the public URL is always lowercase
-(`/dunescape/`).
+Because all game repo names are lowercase with hyphens (GitHub recommended
+convention) and the studio org has a custom domain (`vaultsparkstudios.com`),
+GitHub Pages from each game repo is automatically served at:
+
+```
+https://vaultsparkstudios.com/{slug}/
+```
+
+No token or sync into the studio site repo is required. Repo name and public
+slug are always identical.
 
 Backend/runtime deployment is separate and documented in:
 
@@ -17,35 +24,25 @@ Backend/runtime deployment is separate and documented in:
 
 Each game repo runs `deploy-pages.yml` which:
 
-1. Builds the static client with `VITE_APP_BASE_PATH=/{slug}/` (lowercase)
+1. Builds the static client with `VITE_APP_BASE_PATH=/{slug}/`
 2. Copies `dist/index.html` → `dist/404.html` for SPA deep-link fallback
-3. Checks out this studio site repo using `STUDIO_SITE_TOKEN`
-4. Syncs the built bundle into `/{slug}/` (lowercase subfolder here)
-5. Commits and pushes — GitHub Pages serves it at `vaultsparkstudios.com/{slug}/`
+3. Uploads the `dist/` folder as a Pages artifact
+4. Deploys to GitHub Pages — served at `vaultsparkstudios.com/{slug}/`
 
-The studio site repo is always the canonical host. The game repo name casing
-does not affect the public URL.
+The game repo owns and serves its own public URL. No cross-repo sync needed.
 
 ---
 
-## Required GitHub variables (per game repo)
+## Required GitHub Pages setup (per game repo, one-time)
 
-| Variable | Example value |
-|---|---|
-| `GAME_SLUG` | `dunescape` |
-| `STUDIO_SITE_BRANCH` | `main` |
-| `GAME_SERVICE_ORIGIN` | `https://play-dunescape.vaultsparkstudios.com` |
-| `API_DOMAIN` | `api-dunescape.vaultsparkstudios.com` |
+1. Go to repo Settings → Pages
+2. Set Source to **GitHub Actions**
 
-## Required GitHub secret (per game repo)
-
-| Secret | Purpose |
-|---|---|
-| `STUDIO_SITE_TOKEN` | PAT with write access to `VaultSparkStudios.github.io` |
+No secrets or variables are required for the Pages deploy itself.
 
 ---
 
-## Slug and repo name convention
+## Repo and slug convention
 
 Repo names are lowercase with hyphens. Repo name and public slug are always identical.
 
@@ -60,9 +57,9 @@ Repo names are lowercase with hyphens. Repo name and public slug are always iden
 
 ## Studio site follow-up after first deploy
 
-After the bundle is synced for the first time:
+After the first successful deploy:
 
 1. Add a card for the game in the `Vault-Forged` section of `index.html`
-2. Set the card CTA to `/{slug}/` (lowercase)
+2. Set the card CTA to `/{slug}/`
 3. Reuse the existing card template and art class pattern
 4. Fetch latest remote state before editing `index.html`

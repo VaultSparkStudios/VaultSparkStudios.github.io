@@ -35,13 +35,11 @@ changes, read these files first:
   understandable from repo files, not just prior chat context.
 - **Game repo names are always lowercase with hyphens between words (e.g. `dunescape`, `call-of-doodie`).** This follows GitHub's recommended naming convention.
 - **Repo name and public slug are identical.** There is no separate branding alias for the repo — the slug is the canonical identifier everywhere.
-- **Games do NOT deploy from their own repo's GitHub Pages.** Each game's bundle
-  is synced into THIS repo at the `{slug}/` subfolder via `STUDIO_SITE_TOKEN`.
-  The studio site repo owns the canonical public URL for every game.
+- **Each game deploys its own GitHub Pages directly from its own repo.** Because repo names are lowercase and the org has a custom domain, Pages is automatically served at `vaultsparkstudios.com/{slug}/`. No cross-repo sync or `STUDIO_SITE_TOKEN` is required.
+- Enable GitHub Pages source as "GitHub Actions" in each game repo's Settings → Pages (one-time setup).
 - Keep public game URLs lowercase and slug-based.
 - Keep the studio landing page repo separate from individual game repos.
 - Keep frontend Pages deployment separate from backend/runtime deployment.
-- `STUDIO_SITE_TOKEN` is required in every game repo's secrets for the sync to work.
 - Keep backend/runtime naming on the studio default:
   - `https://play-{slug}.vaultsparkstudios.com`
   - `https://api-{slug}.vaultsparkstudios.com`
@@ -52,20 +50,18 @@ changes, read these files first:
   and verify the live site or upstream landing-page file so you are not editing
   against a stale clone.
 
-## Required GitHub variables (per game repo)
+## Required GitHub setup (per game repo)
+
+**Settings → Pages:** Set Source to **GitHub Actions** (one-time, enables the deploy).
+
+**Optional variables** (for games with a backend):
 
 | Variable | Example value |
 |---|---|
-| `GAME_SLUG` | `dunescape` |
-| `STUDIO_SITE_BRANCH` | `main` |
 | `GAME_SERVICE_ORIGIN` | `https://play-dunescape.vaultsparkstudios.com` |
 | `API_DOMAIN` | `api-dunescape.vaultsparkstudios.com` |
 
-## Required GitHub secret (per game repo)
-
-| Secret | Purpose |
-|---|---|
-| `STUDIO_SITE_TOKEN` | PAT with write access to `VaultSparkStudios.github.io` |
+No secrets are required for Pages deployment.
 
 ## Standard workflow files (per game repo)
 
