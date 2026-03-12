@@ -49,6 +49,7 @@ changes, read these files first:
 - Before committing studio-site homepage changes, fetch the latest remote state
   and verify the live site or upstream landing-page file so you are not editing
   against a stale clone.
+- Must follow the STUDIO SYSTEM TEMPLATE at the bottom of this document and create all files and folders it mentions
 
 ## Required GitHub setup (per game repo)
 
