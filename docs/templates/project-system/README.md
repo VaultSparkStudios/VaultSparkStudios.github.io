@@ -2,6 +2,10 @@
 
 Use these templates when creating or migrating a VaultSpark project.
 
+This public repo copy should be treated as a public-safe reference layer.
+Sensitive template usage should happen in `vaultspark-studio-ops` or in private
+project repos.
+
 ## Core
 
 - `AGENTS_PROJECT.template.md`
@@ -41,6 +45,9 @@ Use these templates when creating or migrating a VaultSpark project.
 - `PROMISES_TO_AUDIENCE.template.md`
 - `REFERENCE_WALL.template.md`
 - `APPROVAL_MATRIX.template.md`
+
+These templates are especially sensitive in real use and should generally be
+filled in only in private repos.
 
 ## Operational support
 

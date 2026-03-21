@@ -1,12 +1,18 @@
 # VaultSpark Studio Project System
 
+This public repo copy is the public-safe reference layer, not the full internal
+source of truth. Sensitive studio-system evolution should move to the private
+`vaultspark-studio-ops` repo.
+
 This document defines the VaultSpark Studios operating system for project memory,
 handoffs, canon protection, creative direction, and AI-assisted continuity.
 
 Use this together with:
 
+- `docs/STUDIO_PUBLIC_PRIVATE_SPLIT.md`
 - `docs/STUDIO_REPO_TOPOLOGY.md`
 - `docs/STUDIO_DOCUMENT_AUTHORITY.md`
+- `docs/STUDIO_LOCAL_PROJECT_BOOTSTRAP.md`
 - `docs/STUDIO_NEW_PROJECT_BOOTSTRAP.md`
 - `docs/STUDIO_EXISTING_PROJECT_MIGRATION.md`
 - `docs/STUDIO_PROJECT_TYPE_MATRIX.md`
@@ -15,6 +21,11 @@ Use this together with:
 
 VaultSpark should be able to run games, films, novels, music, dashboards, apps,
 and shared universes without losing identity, history, or operational clarity.
+
+## Storage rule
+
+Use this public copy for public-safe summaries and transition guidance. Keep
+sensitive templates and operational records in private repos.
 
 ## Universal baseline for every serious project
 
@@ -33,6 +44,9 @@ Every project should have these files from day one or be migrated into them:
 - `AGENTS.md`
 - `prompts/start.md`
 - `prompts/closeout.md`
+
+These should exist even when the project is still only a local folder and has
+not been initialized as a Git repo yet.
 
 ## Soul versus Brain
 

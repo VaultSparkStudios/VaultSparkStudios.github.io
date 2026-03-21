@@ -2,11 +2,18 @@
 
 Use this process for every new serious project.
 
+If the project does not have a Git repo yet, start with
+`docs/STUDIO_LOCAL_PROJECT_BOOTSTRAP.md` first.
+
+The private `vaultspark-studio-ops` repo should be treated as the preferred
+source of truth for this process going forward.
+
 ## Before code or production work starts
 
-1. Create the repo with the canonical public slug
-2. Add `AGENTS.md`
-3. Create the baseline folders:
+1. If the project is only a local folder, run the local bootstrap first
+2. Create the repo with the canonical public slug
+3. Add `AGENTS.md`
+4. Create the baseline folders:
    - `context/`
    - `docs/`
    - `plans/`
@@ -14,8 +21,8 @@ Use this process for every new serious project.
    - `logs/`
    - `handoffs/`
    - `prompts/`
-4. Create the baseline project files from templates
-5. Add only the medium-specific templates that project needs
+5. Create the baseline project files from templates
+6. Add only the medium-specific templates that project needs
 
 ## Fill these first
 

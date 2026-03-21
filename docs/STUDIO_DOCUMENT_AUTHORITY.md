@@ -1,5 +1,8 @@
 # VaultSpark Document Authority
 
+This public repo copy is a public-safe reference. Sensitive authority and
+storage policy decisions should be maintained in the private ops repo.
+
 This document defines which files are authoritative when records disagree.
 
 ## Authority classes
@@ -60,3 +63,9 @@ Escalate before making unilateral changes that affect:
 - public promises
 - launch commitments
 - security or data handling
+
+## Storage note
+
+Identity, canon, rights, provenance, innovation, and approval records should
+default to private storage unless they have been intentionally sanitized for
+public use.

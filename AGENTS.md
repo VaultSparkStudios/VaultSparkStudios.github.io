@@ -33,8 +33,10 @@ Before creating or restructuring project memory, handoffs, canon docs, or
 studio operating records, read these files first:
 
 * `docs/STUDIO_PROJECT_SYSTEM.md`
+* `docs/STUDIO_PUBLIC_PRIVATE_SPLIT.md`
 * `docs/STUDIO_REPO_TOPOLOGY.md`
 * `docs/STUDIO_DOCUMENT_AUTHORITY.md`
+* `docs/STUDIO_LOCAL_PROJECT_BOOTSTRAP.md`
 * `docs/STUDIO_NEW_PROJECT_BOOTSTRAP.md`
 * `docs/STUDIO_EXISTING_PROJECT_MIGRATION.md`
 * `docs/STUDIO_PROJECT_TYPE_MATRIX.md`
@@ -65,6 +67,9 @@ and verify the live site or upstream landing-page file so you are not editing
 against a stale clone.
 * Use `docs/templates/project-system/` as the canonical template library for
 project memory, handoffs, canon, provenance, brand, and learning records.
+* Treat this public repo as the public-safe layer. Sensitive studio-system,
+rights, provenance, canon, innovation, approval, and unpublished strategy
+materials belong in `vaultspark-studio-ops` or in private project repos.
 * For existing projects, prefer additive migration over disruptive
 reorganization.
 * Must follow the STUDIO SYSTEM TEMPLATE at the bottom of this document and create all files and folders it mentions
