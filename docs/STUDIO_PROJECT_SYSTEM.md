@@ -27,10 +27,12 @@ Every project should have these files from day one or be migrated into them:
 - `context/DECISIONS.md`
 - `context/TASK_BOARD.md`
 - `context/OPEN_QUESTIONS.md`
-- `handoffs/LATEST_HANDOFF.md`
+- `context/LATEST_HANDOFF.md`
 - `logs/WORK_LOG.md`
 - `docs/CREATIVE_DIRECTION_RECORD.md`
 - `AGENTS.md`
+- `prompts/start.md`
+- `prompts/closeout.md`
 
 ## Soul versus Brain
 
@@ -73,9 +75,19 @@ After meaningful work:
 1. Update `context/CURRENT_STATE.md`
 2. Update `context/TASK_BOARD.md`
 3. Append key reasoning to `context/DECISIONS.md`
-4. Update `handoffs/LATEST_HANDOFF.md`
+4. Update `context/LATEST_HANDOFF.md`
 5. Append to `logs/WORK_LOG.md`
 6. Append to `docs/CREATIVE_DIRECTION_RECORD.md` whenever a human provides creative direction, approval, rejection, refinement, or canon-impacting intent
+
+## Session aliases
+
+All VaultSpark projects should support two universal prompts:
+
+- `start`: run the full startup protocol and produce a concise startup brief
+- `closeout`: run the full closeout protocol and perform write-back
+
+These should be implemented in project-local `prompts/start.md` and
+`prompts/closeout.md`, then referenced from the project's `AGENTS.md`.
 
 ## Minimum viable philosophy
 

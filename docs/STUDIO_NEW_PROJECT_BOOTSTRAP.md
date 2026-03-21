@@ -24,7 +24,9 @@ Use this process for every new serious project.
 - `context/SOUL.md`
 - `context/CURRENT_STATE.md`
 - `context/TASK_BOARD.md`
-- `handoffs/LATEST_HANDOFF.md`
+- `context/LATEST_HANDOFF.md`
+- `prompts/start.md`
+- `prompts/closeout.md`
 - `AGENTS.md`
 
 ## Then add higher-leverage records

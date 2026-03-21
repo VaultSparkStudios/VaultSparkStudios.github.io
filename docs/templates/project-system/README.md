@@ -14,6 +14,8 @@ Use these templates when creating or migrating a VaultSpark project.
 - `LATEST_HANDOFF.template.md`
 - `WORK_LOG.template.md`
 - `CREATIVE_DIRECTION_RECORD.template.md`
+- `START_PROMPT.template.md`
+- `CLOSEOUT_PROMPT.template.md`
 
 ## High-leverage memory
 
