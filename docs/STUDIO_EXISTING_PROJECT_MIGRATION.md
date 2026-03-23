@@ -25,3 +25,13 @@ This migration should be additive first.
 
 Do not reorganize code, rename shipped paths, or move existing public assets
 unless there is a specific project decision to do so.
+
+## Portfolio Backfill
+
+For existing projects, backfill:
+
+- `context/PORTFOLIO_CARD.md`
+- `context/PROJECT_STATUS.json`
+
+Use current reality, not old intent, and then add the project to the aggregated studio portfolio registry.
+

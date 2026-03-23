@@ -44,3 +44,15 @@ source of truth for this process going forward.
 - `docs/CREATIVE_DIRECTION_RECORD.md`
 - `prompts/PROMPT_LIBRARY.md`
 - `logs/WORK_LOG.md`
+
+## Portfolio Tracking
+
+New projects should not wait until later to join the studio portfolio.
+
+During bootstrap, fill:
+
+- `context/PORTFOLIO_CARD.md`
+- `context/PROJECT_STATUS.json`
+
+Then add the project to the private studio portfolio registry.
+

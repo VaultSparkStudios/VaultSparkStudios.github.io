@@ -77,3 +77,13 @@ If the local folder already has product or architecture docs:
 3. Use `start` for the first serious AI session
 4. Initialize Git only after the local structure feels correct
 5. Create the GitHub repo after the project has a stable identity and control layer
+
+## Portfolio Tracking
+
+As part of local bootstrap, create and fill:
+
+- `context/PORTFOLIO_CARD.md`
+- `context/PROJECT_STATUS.json`
+
+Do this before Git initialization so the project can enter the studio-wide portfolio registry immediately.
+

@@ -202,6 +202,80 @@ $projectBrief = @"
 - Out of scope:
 "@
 
+$portfolioCard = @"
+# Portfolio Card
+
+## Snapshot
+
+- Name: $ProjectName
+- Slug: $Slug
+- Medium: $Medium
+- Status: Pre-Git bootstrap
+- Stage: Concept / setup
+- Priority: High
+- Owner: $Owner
+- Health: Yellow
+- Last updated: $(Get-Date -Format yyyy-MM-dd)
+
+## Quick overview
+
+- One-line summary: $ProjectType
+- Current focus: establish project identity, scope, and operating clarity
+- Next milestone: confirm the first real milestone and Git-ready structure
+- Launch window: Unknown
+
+## Top blockers
+
+- project scope still needs to be locked
+
+## Links
+
+- Repo: Not created yet
+- Runtime: Not deployed
+- Key docs:
+  - `context/PROJECT_BRIEF.md`
+  - `context/LATEST_HANDOFF.md`
+
+## Cross-studio value
+
+- Franchise or strategic value: fill this in
+- Downstream content value: fill this in
+- Shared systems or dependencies: fill this in
+"@
+
+$projectStatus = @"
+{
+  "schemaVersion": "1.0",
+  "name": "$ProjectName",
+  "slug": "$Slug",
+  "medium": "$Medium",
+  "status": "incubating",
+  "stage": "concept",
+  "priority": "high",
+  "owner": "$Owner",
+  "health": "yellow",
+  "summary": "$ProjectType",
+  "currentFocus": "Establish project identity, scope, and operating clarity.",
+  "nextMilestone": "Confirm the first real milestone and Git-ready structure.",
+  "launchWindow": "Unknown",
+  "repo": "",
+  "runtimeUrl": "",
+  "lastUpdated": "$(Get-Date -Format yyyy-MM-dd)",
+  "lastHandoffDate": "$(Get-Date -Format yyyy-MM-dd)",
+  "riskLevel": "medium",
+  "consumerReady": false,
+  "innovationScore": 0,
+  "franchiseValue": "unknown",
+  "topBlockers": [
+    "Project scope still needs to be locked"
+  ],
+  "readFirst": [
+    "context/PROJECT_BRIEF.md",
+    "context/PORTFOLIO_CARD.md",
+    "context/LATEST_HANDOFF.md"
+  ]
+}
+"@
 $brain = @"
 # Brain
 
@@ -664,15 +738,58 @@ foreach ($entry in $fileMap) {
     }
 }
 
+$extraPortfolioFiles = @(
+    @{ Path = (Join-Path $root "context\PORTFOLIO_CARD.md"); Content = $portfolioCard },
+    @{ Path = (Join-Path $root "context\PROJECT_STATUS.json"); Content = $projectStatus }
+)
+
+foreach ($entry in $extraPortfolioFiles) {
+    $state = Set-FileIfMissing -Path $entry.Path -Content $entry.Content
+    if ($state -eq "created") {
+        $created.Add($entry.Path)
+    }
+    else {
+        $skipped.Add($entry.Path)
+    }
+}
 Write-Host ""
 Write-Host "VaultSpark local project bootstrap complete."
 Write-Host "Project path: $root"
 Write-Host "Project name: $ProjectName"
 Write-Host "Project slug: $Slug"
 Write-Host "Project medium: $Medium"
+$extraPortfolioFiles = @(
+    @{ Path = (Join-Path $root "context\PORTFOLIO_CARD.md"); Content = $portfolioCard },
+    @{ Path = (Join-Path $root "context\PROJECT_STATUS.json"); Content = $projectStatus }
+)
+
+foreach ($entry in $extraPortfolioFiles) {
+    $state = Set-FileIfMissing -Path $entry.Path -Content $entry.Content
+    if ($state -eq "created") {
+        $created.Add($entry.Path)
+    }
+    else {
+        $skipped.Add($entry.Path)
+    }
+}
 Write-Host ""
 Write-Host "Created:"
 $created | ForEach-Object { Write-Host "  - $_" }
+$extraPortfolioFiles = @(
+    @{ Path = (Join-Path $root "context\PORTFOLIO_CARD.md"); Content = $portfolioCard },
+    @{ Path = (Join-Path $root "context\PROJECT_STATUS.json"); Content = $projectStatus }
+)
+
+foreach ($entry in $extraPortfolioFiles) {
+    $state = Set-FileIfMissing -Path $entry.Path -Content $entry.Content
+    if ($state -eq "created") {
+        $created.Add($entry.Path)
+    }
+    else {
+        $skipped.Add($entry.Path)
+    }
+}
 Write-Host ""
 Write-Host "Skipped existing:"
 $skipped | ForEach-Object { Write-Host "  - $_" }
+

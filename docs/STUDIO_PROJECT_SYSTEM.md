@@ -119,3 +119,20 @@ Use:
 - the universal baseline for all projects
 - world/franchise files only when IP spans projects
 - medium-specific files only when the medium requires them
+
+## Studio-wide portfolio tracking
+
+VaultSpark should maintain a compact portfolio layer across all active projects.
+
+Project-owned summary files:
+
+- `context/PORTFOLIO_CARD.md`
+- `context/PROJECT_STATUS.json`
+
+Studio-owned aggregate files in the private ops repo:
+
+- `portfolio/PROJECT_REGISTRY.md`
+- `portfolio/PROJECT_REGISTRY.json`
+
+The dashboard should visualize the portfolio layer, but the project repos remain the source of detailed truth.
+

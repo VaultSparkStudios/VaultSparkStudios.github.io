@@ -85,3 +85,8 @@ filled in only in private repos.
 - `TRACK_SHEET.template.md`
 - `LYRIC_LEDGER.template.md`
 - `STEMS_REGISTRY.template.md`
+
+## Studio-wide tracking
+
+- `PORTFOLIO_REGISTRY.template.md`
+
