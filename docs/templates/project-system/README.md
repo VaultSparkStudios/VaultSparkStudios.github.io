@@ -24,11 +24,18 @@ project repos.
 ## High-leverage memory
 
 - `TRUTH_MAP.template.md`
+- `MEMORY_INDEX.template.md`
 - `OPEN_QUESTIONS.template.md`
 - `ASSUMPTIONS_REGISTER.template.md`
 - `RISK_REGISTER.template.md`
+- `CONSTRAINTS_LEDGER.template.md`
 - `DECISION_HEATMAP.template.md`
 - `LEARNING_LOOP.template.md`
+- `EXPERIMENT_REGISTRY.template.md`
+- `QUALITY_BAR.template.md`
+- `GLOSSARY.template.md`
+- `FAILURE_MODES.template.md`
+- `MODEL_BEHAVIOR_SPEC.template.md`
 - `INNOVATION_PIPELINE.template.md`
 - `INNOVATION_PORTFOLIO.template.md`
 
@@ -53,3 +60,28 @@ filled in only in private repos.
 
 - `PROMPT_LIBRARY.template.md`
 - `ASSET_REGISTRY.template.md`
+
+## Project-type overlays
+
+- `SYSTEMS.template.md`
+- `CONTENT_PLAN.template.md`
+- `LIVE_OPS.template.md`
+- `USER_JOURNEYS.template.md`
+- `API_SURFACE.template.md`
+- `RELEASE_PLAN.template.md`
+- `DATA_SOURCES.template.md`
+- `KPI_PRIORITIES.template.md`
+- `DECISION_USE_CASES.template.md`
+- `TIMELINE.template.md`
+- `STORY_OUTLINE.template.md`
+- `SCRIPT_REVISION_LOG.template.md`
+- `SCENE_LEDGER.template.md`
+- `VISUAL_LANGUAGE.template.md`
+- `OUTLINE.template.md`
+- `CHAPTER_TRACKER.template.md`
+- `CHARACTER_BIBLE.template.md`
+- `WORLD_RULES.template.md`
+- `SONIC_BRIEF.template.md`
+- `TRACK_SHEET.template.md`
+- `LYRIC_LEDGER.template.md`
+- `STEMS_REGISTRY.template.md`

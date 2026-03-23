@@ -68,3 +68,13 @@ medium.
 - `CONTINUITY_RULES.md`
 - `RETCON_LOG.md`
 - `RIGHTS_PROVENANCE.md`
+
+## Advanced operating overlays
+
+- `MEMORY_INDEX.md`
+- `CONSTRAINTS_LEDGER.md`
+- `EXPERIMENT_REGISTRY.md`
+- `QUALITY_BAR.md`
+- `GLOSSARY.md`
+- `FAILURE_MODES.md`
+- `MODEL_BEHAVIOR_SPEC.md`

@@ -63,6 +63,7 @@ memory system.
 - `context/ASSUMPTIONS_REGISTER.md`
 - `context/RISK_REGISTER.md`
 - `context/TRUTH_MAP.md`
+- `context/MEMORY_INDEX.md`
 - `docs/RIGHTS_PROVENANCE.md`
 - `docs/CANON.md`
 - `docs/ENTITY_BIBLE.md`
@@ -70,8 +71,14 @@ memory system.
 - `docs/ASSET_REGISTRY.md`
 - `docs/BRAND_SYSTEM.md`
 - `docs/SOCIAL_SYSTEM.md`
+- `docs/QUALITY_BAR.md`
+- `docs/GLOSSARY.md`
+- `docs/FAILURE_MODES.md`
+- `docs/MODEL_BEHAVIOR_SPEC.md`
 - `prompts/PROMPT_LIBRARY.md`
+- `plans/CONSTRAINTS_LEDGER.md`
 - `plans/DECISION_HEATMAP.md`
+- `plans/EXPERIMENT_REGISTRY.md`
 - `plans/LEARNING_LOOP.md`
 
 ## Especially strong files for AI-heavy studios
