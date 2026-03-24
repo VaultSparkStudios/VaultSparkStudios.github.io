@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gridiron GM | Football Franchise Management Game — VaultSpark Studios</title>
+  <meta name="description" content="Gridiron GM is a free browser-based football franchise management game. Build your dynasty — draft, trade, sign, and cut players. Every decision has consequences. Every season tells a story." />
+  <meta name="keywords" content="Gridiron GM, football management game, franchise simulation, browser sports game, VaultSpark Studios, dynasty football, free football game" />
+  <link rel="canonical" href="https://vaultsparkstudios.com/gridiron-gm/" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="Gridiron GM | Build Your Football Dynasty" />
+  <meta property="og:description" content="Free browser football franchise management. Draft, trade, and build a dynasty — every decision matters, every season tells a story." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/gridiron-gm/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSpark" />
+  <meta name="twitter:title" content="Gridiron GM | Build Your Football Dynasty" />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "VideoGame",
+    "name": "Gridiron GM",
+    "url": "https://vaultsparkstudios.com/gridiron-gm/",
+    "description": "A football franchise management simulation game with front-office strategy and long-run dynasty storytelling.",
+    "genre": ["Sports", "Simulation", "Strategy", "Management"],
+    "gamePlatform": "Web Browser",
+    "applicationCategory": "Game",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "VaultSpark Studios",
+      "url": "https://vaultsparkstudios.com"
+    }
+  }
+  </script>
+
+  <style>
+    .game-hero {
+      padding: 5rem 0 0;
+      position: relative;
+    }
+    .game-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 40%, rgba(31,162,255,0.14), transparent 32%),
+        radial-gradient(circle at 85% 40%, rgba(255,122,0,0.12), transparent 32%);
+      pointer-events: none;
+    }
+    .game-hero .container { position: relative; z-index: 1; }
+
+    .hero-art {
+      min-height: 360px;
+      border-radius: var(--radius);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem;
+      overflow: hidden;
+      margin-top: 2rem;
+    }
+    .hero-art::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      filter: blur(32px);
+      opacity: 0.95;
+    }
+    .hero-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.65));
+    }
+    .hero-art-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-art h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 7vw, 5.5rem);
+      letter-spacing: -0.045em;
+      line-height: 0.95;
+      margin: 0;
+    }
+    .hero-art-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .game-body {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 2rem;
+      padding: 3rem 0 5rem;
+      align-items: start;
+    }
+
+    .feature-block {
+      padding: 2rem;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+    }
+    .feature-block h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.9rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+    .feature-block > p {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 1.5rem;
+      display: grid;
+      gap: 0.5rem;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.55;
+    }
+    .feature-list li::before {
+      content: "▸";
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.05rem;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.85rem;
+    }
+    .stat-block {
+      padding: 1.15rem;
+      border-radius: 18px;
+      background: rgba(31,162,255,0.05);
+      border: 1px solid rgba(31,162,255,0.14);
+      text-align: center;
+    }
+    .stat-block strong {
+      display: block;
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--blue);
+      letter-spacing: -0.03em;
+    }
+    .stat-block span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 0.2rem;
+    }
+
+    .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .info-block {
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .info-block h3 {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.9rem;
+    }
+    .info-row:last-child { border-bottom: none; }
+    .info-row span:first-child { color: var(--muted); }
+    .info-row span:last-child { font-weight: 600; color: var(--text); }
+
+    @media (max-width: 900px) {
+      .game-body { grid-template-columns: 1fr; }
+      .hero-art { min-height: 260px; }
+    }
+    @media (max-width: 640px) {
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .hero-art-actions .button,
+      .hero-art-actions .button-secondary { width: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.png" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/games/" class="active">Games</a>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/#vault-tools">Vault Forge</a>
+        <a href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="game-hero">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Games &nbsp;·&nbsp; Sports Simulation</span>
+
+        <div class="hero-art gridiron">
+          <span class="status status-live">Playable Now</span>
+          <div class="hero-art-content">
+            <h1>Gridiron GM</h1>
+            <div class="hero-art-actions">
+              <a class="button" href="game.html">Play Now — Free</a>
+              <a class="button-secondary" href="/vault-member/#register">Track Your Dynasty</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="game-body">
+
+          <div class="feature-block">
+            <h2>Build Your Dynasty.</h2>
+            <p>
+              Gridiron GM puts you in the front office of a football franchise with one goal: build
+              a dynasty. Make the hard calls — cuts, trades, draft picks, and game-week strategy.
+              Experience the slow-burn satisfaction of watching a franchise you built from the inside
+              out become a contender. Every decision has consequences. Every season tells a story.
+            </p>
+
+            <ul class="feature-list">
+              <li>Full franchise management — draft, trade, sign, and cut players</li>
+              <li>Long-run dynasty storytelling across multiple seasons</li>
+              <li>Pressure-filled decision making with realistic outcomes</li>
+              <li>Free to play immediately in your browser — no download required</li>
+              <li>Track your progress and rank with a free Vault Member account</li>
+            </ul>
+
+            <div class="meta" style="margin-bottom: 1.5rem;">
+              <span>Sports Sim</span>
+              <span>Management</span>
+              <span>Dynasty</span>
+              <span>Strategy</span>
+              <span>Free</span>
+            </div>
+
+            <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+              <a class="button" href="game.html">Play Gridiron GM</a>
+              <a class="button-secondary" href="/games/">All Games</a>
+            </div>
+          </div>
+
+          <div class="side-panel">
+            <div class="stat-grid">
+              <div class="stat-block">
+                <strong>Free</strong>
+                <span>No cost, no paywall</span>
+              </div>
+              <div class="stat-block">
+                <strong>Browser</strong>
+                <span>No download needed</span>
+              </div>
+              <div class="stat-block">
+                <strong>Dynasty</strong>
+                <span>Multi-season play</span>
+              </div>
+              <div class="stat-block">
+                <strong>Live</strong>
+                <span>Actively updated</span>
+              </div>
+            </div>
+
+            <div class="info-block">
+              <h3>Game Info</h3>
+              <div class="info-row">
+                <span>Genre</span>
+                <span>Sports / Management Sim</span>
+              </div>
+              <div class="info-row">
+                <span>Platform</span>
+                <span>Web Browser</span>
+              </div>
+              <div class="info-row">
+                <span>Price</span>
+                <span>Free</span>
+              </div>
+              <div class="info-row">
+                <span>Status</span>
+                <span style="color: #86efac;">Live &amp; Playable</span>
+              </div>
+              <div class="info-row">
+                <span>Developer</span>
+                <span>VaultSpark Studios</span>
+              </div>
+            </div>
+
+            <div style="padding:1.5rem;border-radius:var(--radius);background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.1);">
+              <p style="color:var(--muted);font-size:0.9rem;line-height:1.65;margin-bottom:1rem;">
+                Create a free Vault Member account to track your dynasty stats, earn achievements,
+                and unlock early access to everything we build next.
+              </p>
+              <a class="button-ghost" href="/vault-member/#register" style="width:100%;display:flex;justify-content:center;">Join The Vault — Free</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="https://vaultsparkstudios.com/call-of-doodie/">Call Of Doodie</a>
+          <a href="/gridiron-gm/">Gridiron GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/universe/">Universe</a>
+          <a href="/studio/">About VaultSpark</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/contact/">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span>
+          <a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp;
+          <a href="/contact/">Contact</a> &nbsp;·&nbsp;
+          <a href="/vault-member/">Vault Members</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+
+</body>
+</html>

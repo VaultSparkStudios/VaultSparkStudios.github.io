@@ -24,6 +24,7 @@
   <meta name="twitter:site" content="@VaultSpark" />
   <link rel="icon" type="image/png" href="../assets/favicon.png" />
   <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="../assets/style.css" />
 
   <style>
@@ -240,6 +241,9 @@
             <p>Fill in the details below and your message goes directly to the founder's inbox.</p>
 
             <form class="contact-form" id="contact-form" novalidate>
+              <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+              <input type="hidden" name="subject" value="VaultSpark Studios — Contact Form" />
+              <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
               <div class="form-grid">
                 <div class="form-group">
                   <label for="contact-name">Your Name</label>
@@ -298,6 +302,7 @@
           <a href="/">Home</a>
           <a href="/universe/">Universe</a>
           <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
           <a href="/vault-member/">Vault Membership</a>
           <a href="/contact/">Contact</a>
         </div>
@@ -337,8 +342,9 @@
       });
     });
 
-    // Contact form → mailto handler
-    document.getElementById('contact-form').addEventListener('submit', function(e) {
+    // Contact form → Web3Forms
+    // Get your free access key at https://web3forms.com — replace the placeholder in the hidden input above.
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       const name    = document.getElementById('contact-name').value.trim();
       const email   = document.getElementById('contact-email').value.trim();
@@ -347,19 +353,39 @@
 
       if (!name || !email || !subject || !message) return;
 
-      const mailSubject = encodeURIComponent('VaultSpark Inquiry: ' + subject);
-      const mailBody    = encodeURIComponent(
-        'From: ' + name + '\nEmail: ' + email + '\n\n' + message
-      );
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Transmitting…';
 
-      window.location.href =
-        'mailto:founder@vaultsparkstudios.com?subject=' + mailSubject + '&body=' + mailBody;
+      const data = new FormData(this);
+      data.set('message', 'Subject: ' + subject + '\n\n' + message);
 
-      // Show success state after short delay
-      setTimeout(() => {
-        document.getElementById('contact-form').style.display = 'none';
-        document.getElementById('contact-success').style.display = 'block';
-      }, 800);
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: data
+        });
+        const json = await res.json();
+
+        if (json.success) {
+          document.getElementById('contact-form').style.display = 'none';
+          document.getElementById('contact-success').style.display = 'block';
+        } else {
+          throw new Error(json.message || 'Submission failed');
+        }
+      } catch (err) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        const existing = this.querySelector('.contact-error');
+        if (!existing) {
+          const errEl = document.createElement('p');
+          errEl.className = 'contact-error';
+          errEl.style.cssText = 'color:#f87171;font-size:0.88rem;margin-top:0.75rem;';
+          errEl.textContent = 'Transmission failed — please try emailing founder@vaultsparkstudios.com directly.';
+          this.appendChild(errEl);
+        }
+      }
     });
   </script>
 

@@ -1,6 +1,6 @@
 # Latest Handoff — VaultSpark Studios Website
 
-Last updated: 2026-03-24 (session 3)
+Last updated: 2026-03-24 (session 4)
 
 ---
 
@@ -30,6 +30,25 @@ Last updated: 2026-03-24 (session 3)
 - All footers: updated footer-bottom with Privacy Policy · Contact · Vault Members + VaultSpark™ trademark notice
 - `assets/style.css`: social grid 4-col desktop / 2-col tablet / 1-col mobile; textarea + form-group utility styles added
 
+### Site improvements — performance, accessibility, SEO, PWA (session 4)
+- `assets/style.css` — added `prefers-reduced-motion` block (disables all animations/transitions for users who opt out) and `:focus-visible` gold outline for keyboard navigation
+- `sitemap.xml` — created with all 8 pages, `lastmod`, `changefreq`, and `priority` values
+- `robots.txt` — created, pointing to sitemap URL
+- `manifest.json` — created PWA web app manifest (all icon sizes already present)
+- All pages — added `<link rel="manifest" href="/manifest.json" />` and `<link rel="apple-touch-icon">` where missing
+- `contact/index.html` — replaced `mailto:` handler with Web3Forms fetch API (see setup note in "What To Do Next")
+- `404.html` — fixed `href="index.html"` → `href="/"`, replaced 4 MB cinematic logo with icon (1.3 MB), added manifest link
+- `gridiron-gm/index.html` — created full marketing landing page with hero, feature list, stat grid, info panel, consistent nav/footer, JSON-LD VideoGame schema
+- `games/index.html` + `index.html` — MindFrame added as "In Development" card in sealed section (alongside existing "Project ???"); `.mindframe` CSS class was already present
+### Studio OS surfaced publicly (session 4 continued)
+- `roadmap/index.html` — new `/roadmap/` page: full project pipeline (6 projects with stage badges), Studio OS explanation (4 pillars: project memory, handoff discipline, deployment standard, AI velocity), and full studio timeline split into past/future panels
+- `studio/index.html` — "Signal Log" section added (before contact CTA): 3 signal cards covering 2024 launch, 2025 first sparks, 2026 Studio OS going public; links to `/roadmap/`
+- `vault-member/index.html` — "Studio Pipeline" panel added to dashboard: all 6 projects with stage indicators; links to `/roadmap/`
+- All page footers — "Vault Pipeline" link added to Studio column
+- `sitemap.xml` — `/roadmap/` added
+
+- **Image optimization pending** — `vaultspark-cinematic-logo.png` (4 MB), `vaultspark-logo.png` (2.9 MB), `vaultspark-icon.png` (1.3 MB) should be converted to WebP. Use Squoosh (squoosh.app), TinyPNG, or `cwebp` locally. Replace with `<picture>` element + WebP source + PNG fallback.
+
 ### Kit (ConvertKit) newsletter integration (session 2)
 - `assets/kit.js` — full Kit integration module:
   - `subscribe(email, tagIds)` — subscribes to one or more tags
@@ -58,6 +77,13 @@ Last updated: 2026-03-24 (session 3)
 
 ---
 
+## Founder Account
+
+- Seeding is NOT in public code — runs only via a private console script pasted into the founder's browser
+- Account structure: handle `VaultFounder` / email `founder@vaultsparkstudios.com` / 10,000 pts / The Sparked rank / all 6 achievements / `role: 'founder'` / `_seeded: true`
+- `VS.exportForBackend()` is the only public method — returns a clean migration-ready JSON for the real auth API (strips localStorage hash, notes bcrypt must be set server-side)
+- Private seeding script is documented in the handoff only (not in public source)
+
 ## Account / Member System State
 
 - Storage: `localStorage` keys `vs_accounts_v2` (all accounts) and `vs_session_v2` (active session)
@@ -80,6 +106,10 @@ vaultsparkstudios.com/
   /vault-member/      → vault-member/index.html
   /contact/           → contact/index.html
   /privacy/           → privacy/index.html
+  /gridiron-gm/       → gridiron-gm/index.html  ← new (marketing page; add game.html when game is ready)
+  sitemap.xml         ← new
+  robots.txt          ← new
+  manifest.json       ← new (PWA manifest)
   assets/
     style.css         shared design system
     kit.js            Kit newsletter integration (WELCOME_SEQUENCE_ID = 2695661)
@@ -140,12 +170,12 @@ let WELCOME_SEQUENCE_ID = 1234567;  // your actual ID
 ```
 Commit and push. New subscribers will auto-enroll.
 
-### 2. Add MindFrame to the website (priority: medium)
-MindFrame is listed as `incubating` in `vaultspark-studio-ops/portfolio/PROJECT_REGISTRY.json`. When it has a public presence, add a card to:
-- `index.html` → "Sealed In The Vault" tier (or "In Development" depending on stage)
-- `games/index.html` → appropriate section
-
-Use the `.mindframe` CSS theme class (already defined in `assets/style.css`).
+### 2. Set up Web3Forms for contact page (priority: high)
+The contact form now submits to Web3Forms (no mailto). To activate:
+1. Go to **https://web3forms.com** → enter `founder@vaultsparkstudios.com` → get your access key
+2. Open `contact/index.html` and find `value="YOUR_WEB3FORMS_ACCESS_KEY"`
+3. Replace that placeholder with your actual key
+4. Commit and push — form will submit to your inbox immediately
 
 ### 3. Wire VaultFront and Dunescape play buttons
 Currently both link to existing sub-paths. When their backends go live, update the card CTAs in `index.html` and `games/index.html` to link to the live play URLs.
@@ -156,8 +186,8 @@ When the VPS/Postgres stack goes live:
 - The `showDashboard()` function already reads from the returned member object — it just needs a real one
 - Wire the dashboard "Connected Games" section to real per-game API endpoints (`api-{slug}.vaultsparkstudios.com`)
 
-### 5. Add `gridiron-gm` to the site nav (when it has a dedicated page)
-The Gridiron GM game links to `/gridiron-gm/` but that sub-path doesn't exist as a tracked subdirectory in this repo yet. When it has its own page, it will appear automatically via GitHub Pages.
+### 5. Add game files to `/gridiron-gm/`
+`gridiron-gm/index.html` now exists as a full marketing landing page. The "Play Now" button links to `game.html`. Drop the actual Gridiron GM game files into `/gridiron-gm/` (game.html + assets) when ready.
 
 ---
 

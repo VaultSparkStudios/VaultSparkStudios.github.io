@@ -15,6 +15,7 @@
   <title>404 | VaultSpark Studios</title>
   <meta name="description" content="The page you tried to reach is not in the vault." />
   <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="manifest" href="/manifest.json" />
   <style>
     body {
       margin: 0;
@@ -41,9 +42,12 @@
       box-shadow: 0 18px 60px rgba(0,0,0,0.45);
     }
     img {
-      width: min(100%, 460px);
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
       margin: 0 auto 1.25rem;
       display: block;
+      filter: drop-shadow(0 0 18px rgba(255, 122, 0, 0.4));
     }
     h1 {
       margin: 0 0 0.7rem;
@@ -74,10 +78,10 @@
 </head>
 <body>
   <div class="wrap">
-    <img src="assets/vaultspark-cinematic-logo.png" alt="VaultSpark Studios logo" />
+    <img src="assets/vaultspark-icon.png" alt="VaultSpark Studios icon" />
     <h1>Signal Lost</h1>
     <p>The page you tried to reach is not in the vault. Turn back toward the source and re-enter the signal.</p>
-    <a href="index.html">Return Home</a>
+    <a href="/">Return Home</a>
   </div>
 </body>
 </html>

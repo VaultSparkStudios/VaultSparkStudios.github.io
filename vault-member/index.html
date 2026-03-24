@@ -23,6 +23,8 @@
   <meta name="twitter:site" content="@VaultSpark" />
   <meta name="robots" content="noindex, follow" />
   <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="../assets/style.css" />
   <script src="../assets/kit.js"></script>
 
@@ -787,6 +789,58 @@
               </div>
             </div>
 
+            <!-- Studio Pipeline -->
+            <div class="dash-panel dashboard-full">
+              <h3>Studio Pipeline</h3>
+              <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.6rem;" id="studio-pipeline-grid">
+                <div style="padding:0.85rem 1rem;border-radius:14px;border:1px solid rgba(74,222,128,0.2);background:rgba(74,222,128,0.04);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;margin-bottom:0.3rem;">
+                    <span style="font-weight:700;font-size:0.88rem;">Call Of Doodie</span>
+                    <span style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#86efac;">Live</span>
+                  </div>
+                  <span style="font-size:0.78rem;color:var(--dim);">Action Comedy Shooter</span>
+                </div>
+                <div style="padding:0.85rem 1rem;border-radius:14px;border:1px solid rgba(74,222,128,0.2);background:rgba(74,222,128,0.04);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;margin-bottom:0.3rem;">
+                    <span style="font-weight:700;font-size:0.88rem;">Gridiron GM</span>
+                    <span style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#86efac;">Live</span>
+                  </div>
+                  <span style="font-size:0.78rem;color:var(--dim);">Football Dynasty Sim</span>
+                </div>
+                <div style="padding:0.85rem 1rem;border-radius:14px;border:1px solid rgba(255,196,0,0.2);background:rgba(255,196,0,0.04);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;margin-bottom:0.3rem;">
+                    <span style="font-weight:700;font-size:0.88rem;">Football GM</span>
+                    <span style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--gold);">Beta</span>
+                  </div>
+                  <span style="font-size:0.78rem;color:var(--dim);">NFL Franchise Sim</span>
+                </div>
+                <div style="padding:0.85rem 1rem;border-radius:14px;border:1px solid rgba(31,162,255,0.18);background:rgba(31,162,255,0.04);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;margin-bottom:0.3rem;">
+                    <span style="font-weight:700;font-size:0.88rem;">VaultFront</span>
+                    <span style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#7dd3fc;">In Dev</span>
+                  </div>
+                  <span style="font-size:0.78rem;color:var(--dim);">Strategy Warfront</span>
+                </div>
+                <div style="padding:0.85rem 1rem;border-radius:14px;border:1px solid rgba(31,162,255,0.18);background:rgba(31,162,255,0.04);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;margin-bottom:0.3rem;">
+                    <span style="font-weight:700;font-size:0.88rem;">Dunescape</span>
+                    <span style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#7dd3fc;">In Dev</span>
+                  </div>
+                  <span style="font-size:0.78rem;color:var(--dim);">Fantasy MMORPG</span>
+                </div>
+                <div style="padding:0.85rem 1rem;border-radius:14px;border:1px solid rgba(148,163,184,0.14);background:rgba(148,163,184,0.03);">
+                  <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;margin-bottom:0.3rem;">
+                    <span style="font-weight:700;font-size:0.88rem;">MindFrame</span>
+                    <span style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;">Concept</span>
+                  </div>
+                  <span style="font-size:0.78rem;color:var(--dim);">Cognitive Puzzle</span>
+                </div>
+              </div>
+              <p style="margin-top:0.85rem;font-size:0.82rem;color:var(--dim);line-height:1.55;">
+                Vault Members receive early signals when any project moves stage. &nbsp;<a href="/roadmap/" style="color:var(--gold);font-weight:600;">View full pipeline →</a>
+              </p>
+            </div>
+
             <!-- Vault Dispatch Preferences -->
             <div class="dash-panel dashboard-full">
               <h3>Vault Dispatch Preferences</h3>
@@ -847,6 +901,7 @@
           <a href="/">Home</a>
           <a href="/universe/">Universe</a>
           <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
         </div>
         <div class="footer-col">
           <h4>Follow</h4>
@@ -1010,6 +1065,31 @@
         showAuth();
       },
 
+      // ── Backend export helper (founder use only) ──────────────
+      // Run VS.exportForBackend() from the browser console when ready to
+      // migrate the founder account to the real auth API.
+      exportForBackend() {
+        const accounts = this.getAccounts();
+        const founder = accounts['vaultfounder'];
+        if (!founder) { console.error('No VaultFounder account found in this browser.'); return null; }
+
+        const exportData = {
+          email:        founder.email,
+          username:     founder.username,
+          role:         founder.role || 'founder',
+          points:       founder.points,
+          subscribed:   founder.subscribed,
+          prefs:        founder.prefs,
+          achievements: founder.achievements,
+          createdAt:    founder.createdAt,
+          _note:        'Migrated from localStorage. Set a new bcrypt password server-side — localStorage hash is not bcrypt-compatible.',
+        };
+
+        console.log('%c📦 Founder export — ready for backend migration:', 'color:#FFC400;font-weight:bold;');
+        console.log(JSON.stringify(exportData, null, 2));
+        return exportData;
+      },
+
       savePrefs() {
         const session = this.getSession();
         if (!session) return;
@@ -1050,7 +1130,7 @@
 
     function showDashboard(member) {
       document.getElementById('auth-view').style.display = 'none';
-      document.getElementById('dashboard-view').style.display = '';
+      document.getElementById('dashboard-view').style.display = 'block';
 
       // Nav
       const nameBadge = document.getElementById('nav-member-name');

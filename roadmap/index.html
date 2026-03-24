@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Pipeline | VaultSpark Studios Roadmap & Studio OS</title>
+  <meta name="description" content="The live state of VaultSpark Studios — every project in the forge, what's shipping next, and how the studio runs. Studio OS: the system behind every world we build." />
+  <meta name="keywords" content="VaultSpark Studios roadmap, game development pipeline, studio OS, indie game studio transparency, what's coming next" />
+  <link rel="canonical" href="https://vaultsparkstudios.com/roadmap/" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="Vault Pipeline | What VaultSpark Is Building" />
+  <meta property="og:description" content="Every project in the forge, what's shipping next, and how the Studio OS keeps it all moving." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/roadmap/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSpark" />
+  <meta name="twitter:title" content="Vault Pipeline | VaultSpark Studios" />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <style>
+    .page-hero {
+      padding: 5rem 0 3rem;
+      position: relative;
+    }
+    .page-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 12% 40%, rgba(255,196,0,0.1), transparent 30%),
+        radial-gradient(circle at 88% 40%, rgba(31,162,255,0.1), transparent 30%);
+      pointer-events: none;
+    }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      margin: 0.75rem 0 1rem;
+    }
+    .page-hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 56ch;
+      line-height: 1.65;
+    }
+
+    /* Pipeline */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+    .pipeline-card {
+      padding: 1.4rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
+      transition: border-color 0.22s ease, transform 0.22s ease;
+    }
+    .pipeline-card:hover {
+      border-color: rgba(255,255,255,0.15);
+      transform: translateY(-3px);
+    }
+    .pipeline-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-bottom: 0.85rem;
+    }
+    .pipeline-card h3 {
+      font-size: 1.12rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+    .stage-badge {
+      padding: 0.3rem 0.62rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .stage-live    { background: rgba(74,222,128,0.1);  color: #86efac; border: 1px solid rgba(74,222,128,0.25); }
+    .stage-beta    { background: rgba(255,196,0,0.1);   color: var(--gold); border: 1px solid rgba(255,196,0,0.22); }
+    .stage-dev     { background: rgba(31,162,255,0.1);  color: #7dd3fc; border: 1px solid rgba(31,162,255,0.22); }
+    .stage-concept { background: rgba(148,163,184,0.08);color: #94a3b8; border: 1px solid rgba(148,163,184,0.16); }
+
+    .pipeline-card p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 0.85rem;
+    }
+    .pipeline-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.85rem;
+    }
+    .pipeline-card-meta span {
+      padding: 0.28rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    .pipeline-card-link {
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--gold);
+      transition: color 0.18s;
+    }
+    .pipeline-card-link:hover { color: #ffe066; }
+
+    /* Stage legend */
+    .stage-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1.5rem;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .legend-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+    }
+
+    /* OS section */
+    .os-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .os-block {
+      padding: 1.5rem;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .os-block-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      margin-bottom: 0.85rem;
+    }
+    .os-block h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.45rem;
+    }
+    .os-block p {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 980px) {
+      .pipeline-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .os-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .pipeline-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.png" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/games/">Games</a>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/" class="active">Studio</a>
+        <a href="/#vault-tools">Vault Forge</a>
+        <a href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="page-hero" aria-labelledby="page-heading">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Studio OS</span>
+        <h1 id="page-heading">The Vault<br>Pipeline.</h1>
+        <p>
+          Every project in the forge, every world that's gone live, and everything sealed under pressure.
+          This is the live state of VaultSpark Studios — and the system that keeps it all moving.
+        </p>
+        <div class="stage-legend">
+          <div class="legend-item"><div class="legend-dot" style="background:#86efac;"></div> Live</div>
+          <div class="legend-item"><div class="legend-dot" style="background:var(--gold);"></div> Beta</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#7dd3fc;"></div> In Development</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#94a3b8;"></div> Concept Stage</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pipeline -->
+    <section id="pipeline" aria-labelledby="pipeline-heading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="pipeline-heading">Active Projects</h2>
+            <p>Six worlds in various stages. All moving forward.</p>
+          </div>
+        </div>
+
+        <div class="pipeline-grid">
+
+          <div class="pipeline-card">
+            <div class="pipeline-card-top">
+              <h3>Call Of Doodie</h3>
+              <span class="stage-badge stage-live">Live</span>
+            </div>
+            <p>Action comedy browser shooter. The first world unsealed from the vault — free to play, actively updated.</p>
+            <div class="pipeline-card-meta">
+              <span>Action</span><span>Comedy</span><span>Shooter</span>
+            </div>
+            <a class="pipeline-card-link" href="https://vaultsparkstudios.com/call-of-doodie/">Play Now →</a>
+          </div>
+
+          <div class="pipeline-card">
+            <div class="pipeline-card-top">
+              <h3>Gridiron GM</h3>
+              <span class="stage-badge stage-live">Live</span>
+            </div>
+            <p>Football franchise management simulation. Build a dynasty across multiple seasons — every decision has consequences.</p>
+            <div class="pipeline-card-meta">
+              <span>Sports Sim</span><span>Management</span><span>Dynasty</span>
+            </div>
+            <a class="pipeline-card-link" href="/gridiron-gm/">Play Now →</a>
+          </div>
+
+          <div class="pipeline-card">
+            <div class="pipeline-card-top">
+              <h3>VaultSpark Football GM</h3>
+              <span class="stage-badge stage-beta">Beta</span>
+            </div>
+            <p>Deep NFL front-office simulation focused on league realism, career arcs, and franchise storytelling. In client beta.</p>
+            <div class="pipeline-card-meta">
+              <span>Sports Sim</span><span>NFL</span><span>Front Office</span>
+            </div>
+            <a class="pipeline-card-link" href="https://vaultsparkstudios.com/vaultspark-football-gm/">Access Beta →</a>
+          </div>
+
+          <div class="pipeline-card">
+            <div class="pipeline-card-top">
+              <h3>VaultFront</h3>
+              <span class="stage-badge stage-dev">In Dev</span>
+            </div>
+            <p>Strategic warfront — tactical territory control and resource management. Backend in the forge. Launch sequence in progress.</p>
+            <div class="pipeline-card-meta">
+              <span>Strategy</span><span>Warfront</span><span>Tactical</span>
+            </div>
+            <span style="font-size:0.84rem;color:var(--dim);font-weight:600;">Early Access via Vault Membership</span>
+          </div>
+
+          <div class="pipeline-card">
+            <div class="pipeline-card-top">
+              <h3>Dunescape</h3>
+              <span class="stage-badge stage-dev">In Dev</span>
+            </div>
+            <p>Fantasy MMORPG set in a realm of shadowed horizons and strange beauty. World-building is active — the myth is deepening.</p>
+            <div class="pipeline-card-meta">
+              <span>MMORPG</span><span>Fantasy</span><span>Exploration</span>
+            </div>
+            <span style="font-size:0.84rem;color:var(--dim);font-weight:600;">Early Access via Vault Membership</span>
+          </div>
+
+          <div class="pipeline-card">
+            <div class="pipeline-card-top">
+              <h3>MindFrame</h3>
+              <span class="stage-badge stage-concept">Concept Stage</span>
+            </div>
+            <p>A cognitive puzzle experience built around the mechanics of perception. Classification in progress — Vault Members will hear first.</p>
+            <div class="pipeline-card-meta">
+              <span>Puzzle</span><span>Cognitive</span><span>Experimental</span>
+            </div>
+            <a class="pipeline-card-link" href="/vault-member/#register">Get Early Signal →</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Studio OS -->
+    <section id="studio-os" aria-labelledby="os-heading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="os-heading">The Studio OS</h2>
+            <p>The operational system that runs VaultSpark — built so nothing gets lost between sessions.</p>
+          </div>
+          <a class="button-secondary" href="/studio/">About The Studio</a>
+        </div>
+
+        <div style="padding:2rem;border-radius:var(--radius);background:linear-gradient(135deg,rgba(255,196,0,0.04),rgba(13,17,28,0.95) 50%,rgba(31,162,255,0.04));border:1px solid rgba(255,255,255,0.08);margin-bottom:1.2rem;">
+          <p style="font-size:1.02rem;line-height:1.75;color:var(--muted);max-width:80ch;">
+            Most studios lose velocity between projects — context drifts, decisions get re-argued, and
+            momentum stalls. VaultSpark runs on a studio operating system that gives every project
+            persistent memory: who made what call, why, and what comes next.
+            Every game in the pipeline is backed by a living brief, a decision record,
+            a creative direction lock, and a handoff that keeps the studio running
+            with or without continuity between sessions.
+            <span style="color:var(--text);font-weight:600;">One person building like many.</span>
+          </p>
+        </div>
+
+        <div class="os-grid">
+          <div class="os-block">
+            <div class="os-block-icon" style="background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.14);">🧠</div>
+            <h3>Project Memory</h3>
+            <p>Every project carries a BRAIN (strategic thinking), a SOUL (identity and taste), a CURRENT_STATE record, and a DECISIONS log. Nothing gets re-litigated. Creative direction is locked and versioned.</p>
+          </div>
+          <div class="os-block">
+            <div class="os-block-icon" style="background:rgba(31,162,255,0.08);border:1px solid rgba(31,162,255,0.14);">🔁</div>
+            <h3>Handoff Discipline</h3>
+            <p>Every session closes with a handoff document — what was built, what's mid-flight, and the exact next step. Picked up days or weeks later with zero context loss. This page is part of that system.</p>
+          </div>
+          <div class="os-block">
+            <div class="os-block-icon" style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.14);">🚀</div>
+            <h3>Deployment Standard</h3>
+            <p>Hub-and-spoke repo architecture. One slug per game — the URL, the repo, and the backend subdomain all match. Every game is one deploy away from going live. No rebuilding from scratch.</p>
+          </div>
+          <div class="os-block">
+            <div class="os-block-icon" style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.14);">⚡</div>
+            <h3>AI-Augmented Velocity</h3>
+            <p>Sora for cinematics. Suno for sound. Claude for development and studio operations. ChatGPT for ideation. Every tool earns its place by making a solo studio move at team speed — with taste intact.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Timeline -->
+    <section id="timeline" aria-labelledby="timeline-heading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="timeline-heading">Studio Timeline</h2>
+            <p>Where we've been, where we are, where we're going.</p>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <h3 style="margin-bottom:1.2rem;">What's Happened</h3>
+            <div class="timeline">
+              <div class="timeline-item">
+                <span class="tl-label">2024 — Ignition</span>
+                <strong>The vault was opened</strong>
+                <div class="tl-body">VaultSpark Studios was founded. First projects entered the forge. The studio identity was defined and the vault mythology was established. The Studio OS was built from day one.</div>
+              </div>
+              <div class="timeline-item">
+                <span class="tl-label">2025 — First Sparks</span>
+                <strong>Live games and cinematic media</strong>
+                <div class="tl-body">Call of Doodie and Gridiron GM went live. DreadSpike made his first cinematic appearance. VaultSpark Football GM entered client beta. Studio footprint expanded across all major platforms.</div>
+              </div>
+              <div class="timeline-item">
+                <span class="tl-label">2026 Q1 — Expansion</span>
+                <strong>Vault Membership, full site, Studio OS public</strong>
+                <div class="tl-body">The studio website expanded to a full multi-page experience. Vault Membership launched with cross-game account tracking. The Studio OS was surfaced publicly for the first time. MindFrame entered concept classification.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3 style="margin-bottom:1.2rem;">What's Coming</h3>
+            <div class="timeline">
+              <div class="timeline-item">
+                <span class="tl-label">2026 — Backend Goes Live</span>
+                <strong>Real member data, cross-game accounts</strong>
+                <div class="tl-body">The studio VPS comes online. Vault Member accounts activate with real game session data, leaderboard positions, and achievement tracking wired to actual play.</div>
+              </div>
+              <div class="timeline-item">
+                <span class="tl-label">2026 — VaultFront Launch</span>
+                <strong>Strategy enters the vault</strong>
+                <div class="tl-body">VaultFront's backend completes and the game goes live. The Studio OS has the entire codebase, creative direction, and deployment pipeline already in place.</div>
+              </div>
+              <div class="timeline-item">
+                <span class="tl-label">Beyond — Dunescape &amp; More</span>
+                <strong>The MMORPG rises. New worlds exit sealed status.</strong>
+                <div class="tl-body">Dunescape deepens. MindFrame exits concept stage. The vault keeps building — every system already in place to support whatever emerges next.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="padding:0 0 4.5rem;">
+      <div class="container">
+        <div style="text-align:center;padding:3rem 2rem;border-radius:var(--radius);background:linear-gradient(135deg,rgba(255,196,0,0.06),rgba(13,17,28,0.95) 50%,rgba(31,162,255,0.06));border:1px solid rgba(255,255,255,0.08);">
+          <span class="eyebrow" style="margin-bottom:1rem;display:inline-flex;">Vault Members Get First Signals</span>
+          <h2 style="font-family:Georgia,serif;font-size:clamp(1.8rem,3.5vw,2.6rem);letter-spacing:-0.04em;margin:0.75rem auto 1rem;max-width:20ch;">Every Project. One Account. First To Know.</h2>
+          <p style="color:var(--muted);font-size:1.02rem;max-width:48ch;margin:0 auto 1.8rem;line-height:1.65;">Free Vault Member accounts get early access, beta invites, and first signals when sealed projects open their vault.</p>
+          <div style="display:flex;gap:0.9rem;justify-content:center;flex-wrap:wrap;">
+            <a class="button" href="/vault-member/#register">Create Free Account</a>
+            <a class="button-secondary" href="/studio/">Read The Manifesto</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="https://vaultsparkstudios.com/call-of-doodie/">Call Of Doodie</a>
+          <a href="/gridiron-gm/">Gridiron GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/universe/">Universe</a>
+          <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/contact/">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span>
+          <a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp;
+          <a href="/contact/">Contact</a> &nbsp;·&nbsp;
+          <a href="/vault-member/">Vault Members</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+
+</body>
+</html>
