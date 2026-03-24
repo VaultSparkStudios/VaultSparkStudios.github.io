@@ -1,6 +1,6 @@
 # Latest Handoff — VaultSpark Studios Website
 
-Last updated: 2026-03-24
+Last updated: 2026-03-24 (session 3)
 
 ---
 
@@ -14,6 +14,21 @@ Last updated: 2026-03-24
 - `studio/index.html` — manifesto, how-we-build (6-step process), studio pillars, roadmap timeline, FAQ schema
 - `vault-member/index.html` — full account portal: register/login tabs, localStorage session, 5-tier Vault Rank system, 6 achievements, cross-game connections dashboard, newsletter preference toggles
 - All pages share consistent nav, footer, JSON-LD structured data, canonical URLs, OG/Twitter cards
+
+### Kit welcome sequence activated (between session 2 and 3)
+- `WELCOME_SEQUENCE_ID = 2695661` set in `assets/kit.js` — new subscribers auto-enroll in 3-email Vault Dispatch onboarding sequence
+
+### Site expansion (session 3)
+- Nav updated on all pages: added **Home** (before Games) and **Contact** (after GitHub)
+- Vault Dispatch copy: "Connect to the Vault's Signal" / "delivered through direct signals"
+- Project tier: "Active & Live" → "Unsealed & Live"; description updated with unsealed language
+- Social section: expanded to 16 platforms — added TikTok, Threads, Bluesky, Pinterest, Discord Server (`discord.gg/bgR3mSB2`), Gumroad; 4-column desktop grid
+- **New `/contact/` page**: contact form with mailto handler → `founder@vaultsparkstudios.com`; sidebar with quick-reach info; no external form service required
+- **New `/privacy/` page**: full privacy policy (Kit/ConvertKit, Google Analytics GA4, localStorage), cookie disclosure, trademark + copyright notices for all game titles and brand marks, fan content policy, DMCA
+- Universe `/classified`: 4 new entities added (ECHO-NULL, THE ARCHIVIST, VEIN-CONSTRUCT, DESIGNATION PENDING); 6 total; 3-column desktop grid
+- Studio page: contact CTA block above FAQ with "Contact The Studio →" button linking to `/contact/`
+- All footers: updated footer-bottom with Privacy Policy · Contact · Vault Members + VaultSpark™ trademark notice
+- `assets/style.css`: social grid 4-col desktop / 2-col tablet / 1-col mobile; textarea + form-group utility styles added
 
 ### Kit (ConvertKit) newsletter integration (session 2)
 - `assets/kit.js` — full Kit integration module:
@@ -63,9 +78,11 @@ vaultsparkstudios.com/
   /universe/          → universe/index.html
   /studio/            → studio/index.html
   /vault-member/      → vault-member/index.html
+  /contact/           → contact/index.html
+  /privacy/           → privacy/index.html
   assets/
     style.css         shared design system
-    kit.js            Kit newsletter integration
+    kit.js            Kit newsletter integration (WELCOME_SEQUENCE_ID = 2695661)
     vaultspark-icon.png
     vaultspark-cinematic-logo.png
     darth-spike.mp4 + poster + 3 stills
