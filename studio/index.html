@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About VaultSpark Studios | Independent Indie Game Studio</title>
+  <meta name="description" content="VaultSpark Studios is an independent game studio forging cinematic worlds, sports simulations, and playable experiments. Learn about our studio philosophy, how we build games, and the vault mythology that drives everything we make." />
+  <meta name="keywords" content="VaultSpark Studios about, independent game studio, indie game developer, game studio philosophy, how games are made, VaultSpark" />
+  <link rel="canonical" href="https://vaultsparkstudios.com/studio/" />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="About VaultSpark Studios | Independent Game Studio" />
+  <meta property="og:description" content="Independent game studio forging cinematic worlds, sports simulations, and playable experiments. Learn about the vault philosophy." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/studio/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSpark" />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "AboutPage",
+        "name": "About VaultSpark Studios",
+        "url": "https://vaultsparkstudios.com/studio/",
+        "description": "VaultSpark Studios is an independent game studio crafting cinematic worlds, sports simulations, and playable experiments.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "VaultSpark Studios",
+          "url": "https://vaultsparkstudios.com"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is VaultSpark Studios?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VaultSpark Studios is an independent game studio that builds browser-based games, cinematic characters, and playable experiments across multiple genres. The studio operates under a 'vault' philosophy — every project begins in containment and is released when the pressure is right."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does VaultSpark Studios make games?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VaultSpark Studios builds games as web-first experiences using modern web technologies. Games are deployed directly to the browser via GitHub Pages and a studio-wide backend infrastructure. The studio uses AI tools as part of the creation process alongside traditional development."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How can I follow VaultSpark Studios?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "VaultSpark Studios is active on GitHub, X (Twitter), Instagram, YouTube, Facebook, Reddit, Discord, Sora, and Suno. Create a free Vault Member account to receive the Vault Dispatch newsletter with studio updates and early access drops."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    .page-hero {
+      padding: 5rem 0 3.5rem;
+      position: relative;
+    }
+    .page-hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 15% 40%, rgba(255,196,0,0.08), transparent 28%),
+        radial-gradient(circle at 85% 40%, rgba(255,122,0,0.08), transparent 28%);
+      pointer-events: none;
+    }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      margin: 0.75rem 0 1rem;
+    }
+    .page-hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 56ch;
+      line-height: 1.65;
+    }
+
+    /* Manifesto block */
+    .manifesto {
+      padding: 3rem;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(255,196,0,0.04), rgba(13,17,28,0.95) 40%, rgba(31,162,255,0.04)),
+        rgba(8,10,17,0.97);
+      border: 1px solid rgba(255,196,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .manifesto::before {
+      content: "";
+      position: absolute;
+      inset: -30% auto -30% -15%;
+      width: 50%;
+      background: radial-gradient(circle, rgba(255,196,0,0.05), transparent 65%);
+      filter: blur(50px);
+      pointer-events: none;
+    }
+    .manifesto-inner { position: relative; z-index: 1; max-width: 72ch; }
+    .manifesto blockquote {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.5rem, 3vw, 2.1rem);
+      line-height: 1.4;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin: 0 0 1.4rem;
+      font-style: italic;
+      border-left: 3px solid var(--gold);
+      padding-left: 1.5rem;
+    }
+    .manifesto p { color: var(--muted); font-size: 1.02rem; line-height: 1.72; margin-bottom: 0.9rem; }
+    .manifesto p:last-child { margin-bottom: 0; }
+
+    /* How we build */
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.1rem;
+    }
+    .process-step {
+      padding: 1.5rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.025);
+      position: relative;
+    }
+    .step-num {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      color: rgba(255,196,0,0.2);
+      font-family: Georgia, serif;
+      line-height: 1;
+      margin-bottom: 0.6rem;
+    }
+    .process-step h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.45rem;
+      font-family: inherit;
+    }
+    .process-step p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+
+    /* Pillars */
+    .pillar-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.1rem;
+    }
+    .pillar {
+      padding: 1.5rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.025);
+      transition: border-color 0.2s ease;
+    }
+    .pillar:hover { border-color: rgba(255,196,0,0.15); }
+    .pillar h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.5rem;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .pillar p { color: var(--muted); font-size: 0.92rem; line-height: 1.62; }
+
+    .faq-grid { display: grid; gap: 0.7rem; max-width: 820px; }
+    .faq-item {
+      padding: 1.2rem 1.3rem;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.025);
+    }
+    .faq-item h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #fff;
+      font-family: inherit;
+    }
+    .faq-item p { color: var(--muted); font-size: 0.94rem; line-height: 1.62; }
+
+    @media (max-width: 820px) {
+      .process-grid { grid-template-columns: 1fr; }
+      .pillar-grid { grid-template-columns: 1fr; }
+      .manifesto { padding: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.png" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/games/">Games</a>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/" class="active">Studio</a>
+        <a href="/#vault-tools">Vault Forge</a>
+        <a href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero" aria-labelledby="page-heading">
+      <div class="container">
+        <span class="eyebrow">Independent Studio &nbsp;·&nbsp; Est. 2024</span>
+        <h1 id="page-heading">Inside<br>The Vault.</h1>
+        <p>
+          VaultSpark Studios is an independent game studio forging cinematic worlds, sports simulations,
+          and playable experiments. We build things that feel charged from the first second —
+          because they were pressurized before they were released.
+        </p>
+      </div>
+    </section>
+
+    <!-- Manifesto -->
+    <section id="manifesto" aria-labelledby="manifesto-heading">
+      <div class="container">
+        <div class="manifesto">
+          <div class="manifesto-inner">
+            <h2 id="manifesto-heading" style="font-family:Georgia,serif;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-0.03em;margin-bottom:1.2rem;color:var(--muted);font-weight:400;">The VaultSpark Manifesto</h2>
+            <blockquote>
+              "The vault is not a metaphor for storage.<br>
+              It is pressure. It is containment.<br>
+              It is the moment before ignition."
+            </blockquote>
+            <p>
+              Every project VaultSpark builds begins the same way: we put fire to steel, we wait, we watch
+              the pressure build, and when the forge is ready — a spark splits the steel and a new world
+              cracks into existence. That world cannot be un-sparked. It cannot go back into containment.
+              It is permanent, alive, and expanding.
+            </p>
+            <p>
+              VaultSpark Studios exists to build stories that are unpredictable, memorable, and impossible
+              to ignore — games with real identity, characters with real weight, and cinematic worlds
+              that feel like they were always there, waiting to be discovered. We don't build products.
+              We pressurize worlds and then release them.
+            </p>
+            <p>
+              We are independent. We are opinionated. We are not interested in predictable. We are interested
+              in what happens when the vault opens and something entirely new steps out.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How We Build -->
+    <section id="how-we-build" aria-labelledby="how-heading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="how-heading">How We Build</h2>
+            <p>The VaultSpark process — from sealed concept to live world.</p>
+          </div>
+        </div>
+        <div class="process-grid">
+          <div class="process-step">
+            <div class="step-num">01</div>
+            <h3>Seal the Concept</h3>
+            <p>Every project begins in containment. We develop the world internally — identity, tone, mechanics, and character — before a single line of public code is written. The seal protects the soul of the project during its most vulnerable stage.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-num">02</div>
+            <h3>Pressurize the Forge</h3>
+            <p>Design, prototype, iterate. We build under pressure, testing ideas against the core identity until only the best survive. If an element weakens the world, it gets cut. The forge is not sentimental. Only the charged elements make it out.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-num">03</div>
+            <h3>Spark the Release</h3>
+            <p>When the forge is ready, we release. Browser-first, free to play, immediately accessible. No gating, no paywalls, no excuses. The world opens and players walk in. Then we keep building — because the vault never fully closes.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-num">04</div>
+            <h3>Expand the Universe</h3>
+            <p>Every live world feeds back into the larger VaultSpark universe. Characters, lore, and mechanics connect across projects. Your Vault Member account tracks your journey across all of them — because the universe only grows wider from here.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-num">05</div>
+            <h3>Build With Intelligence</h3>
+            <p>VaultSpark uses AI tooling as a core part of the studio workflow — from cinematic media generation (Sora) to sound (Suno) to accelerated development. We use every tool available to build things that would otherwise take a team ten times our size.</p>
+          </div>
+          <div class="process-step">
+            <div class="step-num">06</div>
+            <h3>Never Compromise Identity</h3>
+            <p>The vault mythology, the studio aesthetic, the tone — these are protected at every stage. VaultSpark games feel like VaultSpark games. We don't drift. We don't compromise core identity for convenience. The soul of every project is sealed in, not bolted on.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Studio Pillars -->
+    <section id="pillars" aria-labelledby="pillars-heading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="pillars-heading">What We Stand For</h2>
+            <p>The principles that define every VaultSpark decision.</p>
+          </div>
+        </div>
+        <div class="pillar-grid">
+          <div class="pillar">
+            <h3><span>⚡</span> Charged From Day One</h3>
+            <p>A VaultSpark project doesn't build toward its identity — it arrives with it. Every game ships with clear aesthetic, tone, and purpose. Nothing is figured out after launch. The charge is built in.</p>
+          </div>
+          <div class="pillar">
+            <h3><span>🌍</span> World-First Design</h3>
+            <p>Mechanics serve worlds, not the other way around. Before we design gameplay systems, we design the world that contains them. The game you play is only the surface of a deeper place.</p>
+          </div>
+          <div class="pillar">
+            <h3><span>🔓</span> Free and Accessible</h3>
+            <p>VaultSpark games are free to play in your browser. No download required. No subscription needed. The vault opens for everyone. Optional features unlock with a free Studio Member account.</p>
+          </div>
+          <div class="pillar">
+            <h3><span>🎭</span> Cinematic Ambition</h3>
+            <p>We think in trailers, not tutorials. Every VaultSpark game should have a moment that feels cinematic — that stops you mid-session and makes you want to show someone else what just happened.</p>
+          </div>
+          <div class="pillar">
+            <h3><span>📈</span> Built to Scale</h3>
+            <p>Every VaultSpark system — the backend infrastructure, the project architecture, the studio OS — is designed to scale from one game to a dozen without rebuilding from scratch. We plant roots before we grow trees.</p>
+          </div>
+          <div class="pillar">
+            <h3><span>🔗</span> Everything Connects</h3>
+            <p>No VaultSpark project exists in isolation. Characters bleed between worlds. Lore threads connect across games. Your Studio Member account is the single thread that ties your journey across every title we build.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Roadmap / Timeline -->
+    <section id="roadmap" aria-labelledby="roadmap-heading">
+      <div class="container">
+        <div class="two-col">
+          <div class="panel">
+            <h3 id="roadmap-heading">Studio Timeline</h3>
+            <div class="timeline">
+              <div class="timeline-item">
+                <span class="tl-label">2024 — Ignition</span>
+                <strong>The vault was opened</strong>
+                <div class="tl-body">VaultSpark Studios was founded. First projects entered the forge. The studio identity was defined and the vault mythology was established.</div>
+              </div>
+              <div class="timeline-item">
+                <span class="tl-label">2025 — First Sparks</span>
+                <strong>Live games and cinematic media</strong>
+                <div class="tl-body">Call of Doodie and Gridiron GM went live. DreadSpike made his first cinematic appearance. The studio footprint expanded across all major platforms.</div>
+              </div>
+              <div class="timeline-item">
+                <span class="tl-label">2026 — Expansion</span>
+                <strong>Multi-world studio, Studio Membership</strong>
+                <div class="tl-body">VaultSpark Football GM entered client beta. The studio website expanded to a full multi-page experience. Vault Membership launched. The backend infrastructure is coming online.</div>
+              </div>
+              <div class="timeline-item">
+                <span class="tl-label">Forge Target</span>
+                <strong>VaultFront, Dunescape &amp; beyond</strong>
+                <div class="tl-body">VaultFront's backend comes fully online. Dunescape development deepens. Cross-game accounts activate with real game data. New worlds exit sealed status.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>The Studio Stack</h3>
+            <p class="muted" style="margin-bottom:1.2rem;">VaultSpark is built on a deliberate technical architecture designed for scale, independence, and speed.</p>
+            <div class="timeline">
+              <div class="timeline-item">
+                <span class="tl-label">Frontend</span>
+                <strong>GitHub Pages + Custom Domain</strong>
+                <div class="tl-body">All games and the studio site are deployed to vaultsparkstudios.com via GitHub Pages. Each game lives at its own path. No CMS. No lock-in.</div>
+              </div>
+              <div class="timeline-item">
+                <span class="tl-label">Backend</span>
+                <strong>VPS + Docker + Caddy + Postgres</strong>
+                <div class="tl-body">A shared studio VPS hosts all game backends. Per-game Docker services, Caddy reverse proxy, shared Postgres and Redis — scalable without rebuilding.</div>
+              </div>
+              <div class="timeline-item">
+                <span class="tl-label">AI Tooling</span>
+                <strong>Sora, Suno, Claude, ChatGPT</strong>
+                <div class="tl-body">VaultSpark uses AI-assisted development, cinematic generation, sound production, and studio operations to build at a pace no small team could achieve otherwise.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" aria-labelledby="faq-heading" style="padding:1.6rem 0 4rem;">
+      <div class="container">
+        <div class="section-head">
+          <div><h2 id="faq-heading">Frequently Asked Questions</h2></div>
+        </div>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h3>What is VaultSpark Studios?</h3>
+            <p>VaultSpark Studios is an independent game studio that builds browser-based games, cinematic characters, and playable experiments across multiple genres including sports simulation, action comedy, strategy, and fantasy MMORPG. Every project operates under the vault philosophy — sealed, pressurized, then released when the spark is ready.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How does VaultSpark Studios make games?</h3>
+            <p>VaultSpark builds games as web-first experiences using modern web technologies, deployed directly via GitHub Pages to the studio's custom domain. The studio uses AI tooling alongside traditional development to build at an ambitious pace. Every game ships to the browser — no download required.</p>
+          </div>
+          <div class="faq-item">
+            <h3>Is VaultSpark Studios a single-person studio?</h3>
+            <p>VaultSpark Studios is an independent studio that leverages AI-assisted development and a lean-but-powerful workflow to build and ship games, media, and tools. The studio is built to scale beyond its current footprint.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How can I support VaultSpark Studios?</h3>
+            <p>The best ways to support VaultSpark are: play the games, create a free Vault Member account, follow on social media, join the Reddit community at r/VaultSparkStudios, and tell people who love games and cinematic worlds that the vault is open.</p>
+          </div>
+          <div class="faq-item">
+            <h3>How can I work with or contact VaultSpark Studios?</h3>
+            <p>Reach VaultSpark Studios through the GitHub organization, X/Twitter at @VaultSpark, or through the community Discord. The studio is open to partnerships that align with the vault philosophy and the overall cinematic direction of the brand.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent. Opinionated. Not interested in predictable.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="https://vaultsparkstudios.com/call-of-doodie/">Call Of Doodie</a>
+          <a href="https://vaultsparkstudios.com/gridiron-gm/">Gridiron GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/universe/">The Universe</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
+          <a href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer">Reddit</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved.</span>
+        <span><a href="/">Home</a> &nbsp;·&nbsp; <a href="/games/">Games</a> &nbsp;·&nbsp; <a href="/universe/">Universe</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Member Portal | VaultSpark Studios Account</title>
+  <meta name="description" content="Create your free VaultSpark Studios account. Track your progress across all VaultSpark games, earn Vault Rank, unlock exclusive achievements, and get early access drops as a Studio Member." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/vault-member/" />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="Vault Member Portal | VaultSpark Studios" />
+  <meta property="og:description" content="Join VaultSpark Studios. Track your rank across every game, unlock exclusive lore, and get early access." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/vault-member/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSpark" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <style>
+    /* ─── Page layout ─── */
+    .member-page {
+      min-height: 100vh;
+      padding: 2rem 0 4rem;
+    }
+    .member-page-hero {
+      text-align: center;
+      padding: 4.5rem 0 2.5rem;
+      position: relative;
+    }
+    .member-page-hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(255,196,0,0.08), transparent 35%),
+        radial-gradient(circle at 70% 50%, rgba(31,162,255,0.08), transparent 35%);
+      pointer-events: none;
+    }
+    .member-page-hero .container { position: relative; z-index: 1; }
+    .member-page-hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      letter-spacing: -0.044em;
+      margin: 0.7rem 0 0.9rem;
+      line-height: 1;
+    }
+    .member-page-hero p {
+      color: var(--muted);
+      font-size: 1.06rem;
+      max-width: 48ch;
+      margin: 0 auto 0;
+      line-height: 1.65;
+    }
+
+    /* ─── Auth card ─── */
+    .auth-wrap {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1.5rem;
+      align-items: start;
+      margin-top: 2.5rem;
+    }
+
+    .auth-card {
+      padding: 2.2rem;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(14,18,30,0.95), rgba(8,10,17,0.98));
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .auth-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 1.8rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      padding: 4px;
+    }
+    .auth-tab {
+      flex: 1;
+      height: 40px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 9px;
+      transition: all 0.2s ease;
+    }
+    .auth-tab.active {
+      background: rgba(255,255,255,0.09);
+      color: var(--text);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .auth-panel { display: none; }
+    .auth-panel.active { display: block; }
+
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--muted);
+      margin-bottom: 0.42rem;
+    }
+    .form-group input {
+      width: 100%;
+      height: 48px;
+      padding: 0 1.1rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      font-size: 0.96rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .form-group input::placeholder { color: var(--dim); }
+    .form-group input:focus {
+      border-color: rgba(255,196,0,0.5);
+      background: rgba(255,255,255,0.08);
+    }
+    .form-group input.error-field {
+      border-color: rgba(239,68,68,0.6);
+    }
+
+    .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.65rem;
+      margin: 0.8rem 0 1.3rem;
+      cursor: pointer;
+    }
+    .form-check input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: var(--gold);
+      cursor: pointer;
+    }
+    .form-check span {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .form-check a { color: var(--gold); }
+
+    .form-error {
+      display: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.25);
+      color: #f87171;
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+    }
+    .form-error.show { display: block; }
+
+    .auth-submit {
+      width: 100%;
+      height: 52px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .auth-divider {
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.84rem;
+      margin: 1rem 0;
+      position: relative;
+    }
+    .auth-divider::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+    }
+    .auth-divider span {
+      position: relative;
+      background: rgba(14,18,30,0.98);
+      padding: 0 0.75rem;
+    }
+
+    .auth-footnote {
+      margin-top: 1.2rem;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      background: rgba(255,196,0,0.04);
+      border: 1px solid rgba(255,196,0,0.1);
+      font-size: 0.82rem;
+      color: var(--dim);
+      line-height: 1.55;
+    }
+    .auth-footnote strong { color: var(--muted); }
+
+    /* ─── Rank preview sidebar ─── */
+    .rank-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .rank-panel {
+      padding: 1.4rem;
+      border-radius: 20px;
+      background: rgba(13,17,28,0.92);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .rank-panel h4 {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .rank-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.62rem 0.75rem;
+      border-radius: 10px;
+      margin-bottom: 0.35rem;
+      transition: background 0.16s ease;
+    }
+    .rank-row:hover { background: rgba(255,255,255,0.04); }
+    .rank-row:last-child { margin-bottom: 0; }
+    .rank-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .rank-row-name { flex: 1; font-weight: 600; font-size: 0.91rem; }
+    .rank-row-pts { color: var(--dim); font-size: 0.79rem; }
+
+    .benefit-list {
+      list-style: none;
+      padding: 0; margin: 0;
+      display: grid;
+      gap: 0.55rem;
+    }
+    .benefit-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .benefit-list li::before {
+      content: "✓";
+      color: #86efac;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ─── Dashboard ─── */
+    #dashboard-view {
+      display: none;
+    }
+
+    .dashboard-header {
+      padding: 2.5rem 0;
+      position: relative;
+    }
+    .dashboard-header::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 20% 50%, rgba(255,196,0,0.07), transparent 40%);
+      pointer-events: none;
+    }
+
+    .profile-card {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(255,196,0,0.05), rgba(13,17,28,0.96) 40%, rgba(31,162,255,0.05));
+      border: 1px solid rgba(255,196,0,0.12);
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 1;
+    }
+    .profile-avatar {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,196,0,0.2), rgba(31,162,255,0.2));
+      border: 2px solid rgba(255,196,0,0.25);
+      display: grid;
+      place-items: center;
+      font-size: 1.8rem;
+      flex-shrink: 0;
+    }
+    .profile-info h2 {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .profile-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .profile-meta .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .profile-pts {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .progress-bar-wrap {
+      margin-top: 0.85rem;
+    }
+    .progress-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: var(--dim);
+      margin-bottom: 0.3rem;
+    }
+    .progress-bar {
+      height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--gold), #fff6c0);
+      transition: width 0.8s ease;
+    }
+
+    .profile-actions {
+      margin-left: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    /* Dashboard grid */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-bottom: 1.2rem;
+    }
+    .dashboard-full { grid-column: 1 / -1; }
+
+    .dash-panel {
+      padding: 1.4rem;
+      border-radius: 20px;
+      background: rgba(13,17,28,0.9);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .dash-panel h3 {
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .game-connection {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+      margin-bottom: 0.55rem;
+      transition: border-color 0.2s ease;
+    }
+    .game-connection:last-child { margin-bottom: 0; }
+    .game-connection:hover { border-color: rgba(255,255,255,0.12); }
+    .game-connection .game-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .game-connection .game-name { flex: 1; font-weight: 600; font-size: 0.93rem; }
+    .game-connection .game-status {
+      font-size: 0.77rem;
+      padding: 0.28rem 0.6rem;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+    .game-status-linked { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+    .game-status-pending { background: rgba(255,196,0,0.1); color: var(--gold); border: 1px solid rgba(255,196,0,0.18); }
+
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.7rem;
+    }
+    .achievement {
+      padding: 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.025);
+      text-align: center;
+      transition: border-color 0.2s ease;
+    }
+    .achievement.locked { opacity: 0.35; filter: grayscale(0.6); }
+    .achievement:hover:not(.locked) { border-color: rgba(255,196,0,0.18); }
+    .achievement .ach-icon { font-size: 1.6rem; margin-bottom: 0.35rem; }
+    .achievement .ach-name { font-size: 0.8rem; font-weight: 700; color: #fff; margin-bottom: 0.18rem; }
+    .achievement .ach-desc { font-size: 0.72rem; color: var(--dim); line-height: 1.4; }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.91rem;
+    }
+    .stat-row:last-child { border-bottom: none; }
+    .stat-row .label { color: var(--muted); }
+    .stat-row .value { font-weight: 700; color: #fff; }
+
+    .newsletter-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+      margin-bottom: 0.55rem;
+    }
+    .newsletter-toggle p { font-size: 0.88rem; color: var(--muted); margin-top: 0.2rem; }
+    .toggle-switch {
+      position: relative;
+      width: 44px; height: 24px;
+      flex-shrink: 0;
+    }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-switch .slider {
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.1);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+    .toggle-switch .slider::before {
+      content: "";
+      position: absolute;
+      left: 3px; top: 3px;
+      width: 18px; height: 18px;
+      background: white;
+      border-radius: 50%;
+      transition: transform 0.2s ease;
+    }
+    .toggle-switch input:checked + .slider { background: var(--gold); }
+    .toggle-switch input:checked + .slider::before { transform: translateX(20px); }
+
+    .signout-btn {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.84rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color 0.18s ease, border-color 0.18s ease;
+    }
+    .signout-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
+
+    .coming-soon-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.28rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--dim);
+    }
+
+    @media (max-width: 860px) {
+      .auth-wrap { grid-template-columns: 1fr; }
+      .rank-sidebar { display: none; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+      .achievement-grid { grid-template-columns: repeat(2, 1fr); }
+      .profile-card { flex-wrap: wrap; }
+      .profile-actions { width: 100%; flex-direction: row; align-items: center; margin-left: 0; }
+    }
+    @media (max-width: 480px) {
+      .achievement-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.png" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/games/">Games</a>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/#vault-tools">Vault Forge</a>
+        <a href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+      </nav>
+      <div class="nav-right">
+        <span class="nav-signin" id="nav-member-name" style="display:none;color:var(--gold);font-weight:700;"></span>
+        <a class="nav-signin" href="/vault-member/" id="nav-signin-link">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register" id="nav-join-btn">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ── Auth View (shown when logged out) ─── -->
+    <div id="auth-view">
+      <section class="member-page-hero" aria-labelledby="member-heading">
+        <div class="container">
+          <span class="eyebrow">Studio Membership &nbsp;·&nbsp; Free Forever</span>
+          <h1 id="member-heading">Enter<br>The Vault.</h1>
+          <p>One account. Every world we build. Your rank grows as the studio grows — and we're just getting started.</p>
+        </div>
+      </section>
+
+      <section style="padding:0 0 4rem;" id="register">
+        <div class="container">
+          <div class="auth-wrap">
+            <!-- Auth Card -->
+            <div class="auth-card">
+              <div class="auth-tabs" role="tablist">
+                <button class="auth-tab active" id="tab-register" role="tab" aria-selected="true" aria-controls="panel-register" onclick="switchTab('register')">Create Account</button>
+                <button class="auth-tab" id="tab-login" role="tab" aria-selected="false" aria-controls="panel-login" onclick="switchTab('login')">Sign In</button>
+              </div>
+
+              <!-- Register Panel -->
+              <div class="auth-panel active" id="panel-register" role="tabpanel" aria-labelledby="tab-register">
+                <div class="form-error" id="reg-error" role="alert"></div>
+                <form id="register-form" novalidate>
+                  <div class="form-group">
+                    <label for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" name="email" placeholder="your@email.com" autocomplete="email" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="reg-username">Vault Handle</label>
+                    <input type="text" id="reg-username" name="username" placeholder="VaultRunner42" autocomplete="username" minlength="3" maxlength="24" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <input type="password" id="reg-password" name="password" placeholder="Min. 8 characters" minlength="8" autocomplete="new-password" required />
+                  </div>
+                  <label class="form-check">
+                    <input type="checkbox" id="reg-subscribe" checked />
+                    <span>Subscribe to <strong>Vault Dispatch</strong> — studio updates, early access drops, and exclusive lore.</span>
+                  </label>
+                  <button type="submit" class="button auth-submit">Open The Vault →</button>
+                </form>
+                <div class="auth-divider"><span>or</span></div>
+                <p style="text-align:center;font-size:0.88rem;color:var(--dim);">Already a member? <a href="#" onclick="switchTab('login');return false;" style="color:var(--gold);">Sign in</a></p>
+                <div class="auth-footnote">
+                  <strong>Note:</strong> Vault Member accounts are currently stored locally in your browser. Full server-backed authentication and cross-device sync arrive when the studio backend launches. Your email and handle are saved immediately.
+                </div>
+              </div>
+
+              <!-- Login Panel -->
+              <div class="auth-panel" id="panel-login" role="tabpanel" aria-labelledby="tab-login">
+                <div class="form-error" id="login-error" role="alert"></div>
+                <form id="login-form" novalidate>
+                  <div class="form-group">
+                    <label for="login-email">Email or Vault Handle</label>
+                    <input type="text" id="login-email" name="emailOrUsername" placeholder="email or handle" autocomplete="username" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" name="password" placeholder="Your password" autocomplete="current-password" required />
+                  </div>
+                  <button type="submit" class="button auth-submit">Enter The Vault →</button>
+                </form>
+                <div class="auth-divider"><span>or</span></div>
+                <p style="text-align:center;font-size:0.88rem;color:var(--dim);">New to VaultSpark? <a href="#" onclick="switchTab('register');return false;" style="color:var(--gold);">Create a free account</a></p>
+                <div class="auth-footnote">
+                  <strong>Note:</strong> Account data is stored locally in your browser. Full cross-device sync arrives with the backend launch.
+                </div>
+              </div>
+            </div>
+
+            <!-- Rank Sidebar -->
+            <div class="rank-sidebar">
+              <div class="rank-panel">
+                <h4>Vault Rank System</h4>
+                <div class="rank-row">
+                  <div class="rank-dot" style="background:#94a3b8;"></div>
+                  <span class="rank-row-name">Spark Initiate</span>
+                  <span class="rank-row-pts">0 – 99 pts</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-dot" style="background:#1FA2FF;"></div>
+                  <span class="rank-row-name">Vault Runner</span>
+                  <span class="rank-row-pts">100 – 499</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-dot" style="background:#FF7A00;"></div>
+                  <span class="rank-row-name">Forge Guard</span>
+                  <span class="rank-row-pts">500 – 1,999</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-dot" style="background:#FFC400;"></div>
+                  <span class="rank-row-name">Vault Keeper</span>
+                  <span class="rank-row-pts">2,000 – 9,999</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-dot" style="background:#FFC400;box-shadow:0 0 8px rgba(255,196,0,0.7);"></div>
+                  <span class="rank-row-name text-gold">The Sparked</span>
+                  <span class="rank-row-pts">10,000+ pts</span>
+                </div>
+              </div>
+
+              <div class="rank-panel">
+                <h4>Member Benefits</h4>
+                <ul class="benefit-list">
+                  <li>Cross-game Vault Rank that grows with every title</li>
+                  <li>Studio-wide achievements only members unlock</li>
+                  <li>Early access to new builds and beta invites</li>
+                  <li>Exclusive lore dispatches and character reveals</li>
+                  <li>First signal when sealed projects break containment</li>
+                  <li>Vault Dispatch newsletter — no noise, just signal</li>
+                  <li>Foundation for real game data integration as titles go live</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div><!-- #auth-view -->
+
+    <!-- ── Dashboard View (shown when logged in) ─── -->
+    <div id="dashboard-view">
+      <div class="dashboard-header">
+        <div class="container" style="position:relative;z-index:1;">
+
+          <div class="profile-card" id="profile-card">
+            <div class="profile-avatar" id="profile-avatar">⚡</div>
+            <div style="flex:1;min-width:0;">
+              <h2 id="profile-username">VaultMember</h2>
+              <div class="profile-meta">
+                <span class="rank-badge badge-gold" id="profile-rank-badge">Spark Initiate</span>
+                <span class="profile-pts" id="profile-pts">10 pts</span>
+                <span class="profile-pts" id="profile-since"></span>
+              </div>
+              <div class="progress-bar-wrap">
+                <div class="progress-bar-label">
+                  <span id="pb-current-rank">Spark Initiate</span>
+                  <span id="pb-next">→ Vault Runner at 100 pts</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" id="progress-fill" style="width:10%;"></div>
+                </div>
+              </div>
+            </div>
+            <div class="profile-actions">
+              <button class="signout-btn" id="signout-btn" onclick="VS.logout()">Sign Out</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <section style="padding:0.5rem 0 4rem;">
+        <div class="container">
+          <div class="dashboard-grid">
+
+            <!-- Connected Games -->
+            <div class="dash-panel">
+              <h3>Connected Games</h3>
+              <div id="game-connections">
+                <div class="game-connection">
+                  <div class="game-dot" style="background:#FF7A00;"></div>
+                  <span class="game-name">Call of Doodie</span>
+                  <span class="game-status game-status-linked">Live</span>
+                </div>
+                <div class="game-connection">
+                  <div class="game-dot" style="background:#1FA2FF;"></div>
+                  <span class="game-name">Gridiron GM</span>
+                  <span class="game-status game-status-linked">Live</span>
+                </div>
+                <div class="game-connection">
+                  <div class="game-dot" style="background:#FF7A00;"></div>
+                  <span class="game-name">VaultSpark Football GM</span>
+                  <span class="game-status game-status-pending">Beta</span>
+                </div>
+                <div class="game-connection">
+                  <div class="game-dot" style="background:#1FA2FF;"></div>
+                  <span class="game-name">VaultFront</span>
+                  <span class="game-status" style="background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.18);font-size:.77rem;padding:.28rem .6rem;border-radius:999px;font-weight:700;">In Dev</span>
+                </div>
+                <div class="game-connection">
+                  <div class="game-dot" style="background:#10B981;"></div>
+                  <span class="game-name">Dunescape</span>
+                  <span class="game-status" style="background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.18);font-size:.77rem;padding:.28rem .6rem;border-radius:999px;font-weight:700;">In Dev</span>
+                </div>
+              </div>
+              <p style="margin-top:0.85rem;font-size:0.82rem;color:var(--dim);line-height:1.55;">
+                Live game data integration activates as each title's backend comes online. Your account is already registered — stats will flow in automatically.
+              </p>
+            </div>
+
+            <!-- Stats -->
+            <div class="dash-panel">
+              <h3>Vault Stats</h3>
+              <div class="stat-row"><span class="label">Vault Points</span><span class="value" id="stat-pts">10</span></div>
+              <div class="stat-row"><span class="label">Current Rank</span><span class="value" id="stat-rank">Spark Initiate</span></div>
+              <div class="stat-row"><span class="label">Games Tracked</span><span class="value">5</span></div>
+              <div class="stat-row"><span class="label">Achievements</span><span class="value" id="stat-achievements">1</span></div>
+              <div class="stat-row"><span class="label">Member Since</span><span class="value" id="stat-since">—</span></div>
+              <div class="stat-row">
+                <span class="label">Game Sessions (real data)</span>
+                <span class="value"><span class="coming-soon-chip">Coming Soon</span></span>
+              </div>
+              <div class="stat-row">
+                <span class="label">Leaderboard Position</span>
+                <span class="value"><span class="coming-soon-chip">Coming Soon</span></span>
+              </div>
+            </div>
+
+            <!-- Achievements -->
+            <div class="dash-panel dashboard-full">
+              <h3>Vault Achievements</h3>
+              <div class="achievement-grid" id="achievement-grid">
+                <!-- populated by JS -->
+              </div>
+            </div>
+
+            <!-- Vault Dispatch Preferences -->
+            <div class="dash-panel dashboard-full">
+              <h3>Vault Dispatch Preferences</h3>
+              <div class="newsletter-toggle" id="pref-dispatch">
+                <div>
+                  <strong>Studio Updates</strong>
+                  <p>New game releases, beta access, and major studio announcements</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="toggle-updates" checked onchange="VS.savePrefs()" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="newsletter-toggle">
+                <div>
+                  <strong>Lore Dispatches</strong>
+                  <p>Character reveals, world-building fragments, and canon signals</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="toggle-lore" checked onchange="VS.savePrefs()" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="newsletter-toggle">
+                <div>
+                  <strong>Early Access Drops</strong>
+                  <p>Beta builds, pre-release access, and exclusive member previews</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="toggle-access" checked onchange="VS.savePrefs()" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div><!-- #dashboard-view -->
+
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>One account. Every world we build. The vault is sparked.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="https://vaultsparkstudios.com/call-of-doodie/">Call Of Doodie</a>
+          <a href="https://vaultsparkstudios.com/gridiron-gm/">Gridiron GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/universe/">Universe</a>
+          <a href="/studio/">About VaultSpark</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer">Reddit</a>
+          <a href="https://discord.com/users/vaultsparkstudios" target="_blank" rel="noreferrer">Discord</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved.</span>
+        <span><a href="/">Home</a> &nbsp;·&nbsp; <a href="/games/">Games</a> &nbsp;·&nbsp; <a href="/studio/">About</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Mobile nav ──────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ── Tab switching ───────────────────────────────────────────
+    function switchTab(which) {
+      document.querySelectorAll('.auth-tab').forEach(t => {
+        t.classList.toggle('active', t.id === 'tab-' + which);
+        t.setAttribute('aria-selected', t.id === 'tab-' + which);
+      });
+      document.querySelectorAll('.auth-panel').forEach(p => {
+        p.classList.toggle('active', p.id === 'panel-' + which);
+      });
+    }
+
+    // ── VaultSpark Auth System ──────────────────────────────────
+    const VS = {
+      ACCOUNTS_KEY: 'vs_accounts_v2',
+      SESSION_KEY:  'vs_session_v2',
+
+      RANKS: [
+        { name: 'Spark Initiate', min: 0,     max: 99,       color: '#94a3b8', badgeClass: 'badge-ghost' },
+        { name: 'Vault Runner',   min: 100,   max: 499,      color: '#1FA2FF', badgeClass: 'badge-blue'  },
+        { name: 'Forge Guard',    min: 500,   max: 1999,     color: '#FF7A00', badgeClass: 'badge-orange'},
+        { name: 'Vault Keeper',   min: 2000,  max: 9999,     color: '#FFC400', badgeClass: 'badge-gold'  },
+        { name: 'The Sparked',    min: 10000, max: Infinity, color: '#FFC400', badgeClass: 'badge-gold'  },
+      ],
+
+      ACHIEVEMENT_DEFS: [
+        { id: 'joined',     icon: '🔓', name: 'Vault Opened',    desc: 'Created your Studio Member account',     pts: 10,  auto: true  },
+        { id: 'subscribed', icon: '📡', name: 'Signal Received', desc: 'Subscribed to Vault Dispatch',           pts: 5,   auto: false },
+        { id: 'visit_game', icon: '🎮', name: 'Into The Game',   desc: 'Visited a live VaultSpark game',         pts: 15,  auto: false },
+        { id: 'first_100',  icon: '⚡', name: 'Vault Runner',    desc: 'Reached 100 Vault Points',               pts: 0,   auto: false },
+        { id: 'lore_read',  icon: '📖', name: 'Lore Keeper',     desc: 'Read the DreadSpike character lore',     pts: 10,  auto: false },
+        { id: 'social',     icon: '🌐', name: 'Broadcast',       desc: 'Followed VaultSpark on a social platform', pts: 5, auto: false },
+      ],
+
+      getAccounts() {
+        try { return JSON.parse(localStorage.getItem(this.ACCOUNTS_KEY) || '{}'); }
+        catch { return {}; }
+      },
+      saveAccounts(data) {
+        localStorage.setItem(this.ACCOUNTS_KEY, JSON.stringify(data));
+      },
+      getSession() {
+        try { return JSON.parse(localStorage.getItem(this.SESSION_KEY) || 'null'); }
+        catch { return null; }
+      },
+      setSession(member) {
+        localStorage.setItem(this.SESSION_KEY, JSON.stringify(member));
+      },
+      clearSession() {
+        localStorage.removeItem(this.SESSION_KEY);
+      },
+
+      getRank(pts) {
+        return this.RANKS.find(r => pts >= r.min && pts <= r.max) || this.RANKS[0];
+      },
+      getNextRank(pts) {
+        const idx = this.RANKS.findIndex(r => pts >= r.min && pts <= r.max);
+        return this.RANKS[idx + 1] || null;
+      },
+      getRankProgress(pts) {
+        const rank = this.getRank(pts);
+        if (rank.max === Infinity) return 100;
+        const total = rank.max - rank.min + 1;
+        const earned = pts - rank.min;
+        return Math.min(100, Math.round((earned / total) * 100));
+      },
+
+      hashPw(pw) {
+        // Simple demo hash — NOT production-grade
+        let h = 5381;
+        for (let i = 0; i < pw.length; i++) { h = ((h << 5) + h) ^ pw.charCodeAt(i); }
+        return (h >>> 0).toString(16) + '_vs26';
+      },
+
+      register(email, username, password, subscribe) {
+        const accounts = this.getAccounts();
+        const em = email.toLowerCase().trim();
+        const un = username.trim();
+        const unLower = un.toLowerCase();
+
+        if (!em || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))
+          return { error: 'Please enter a valid email address.' };
+        if (!un || un.length < 3)
+          return { error: 'Vault handle must be at least 3 characters.' };
+        if (!/^[a-zA-Z0-9_\-\.]+$/.test(un))
+          return { error: 'Handle can only contain letters, numbers, underscores, hyphens, and periods.' };
+        if (!password || password.length < 8)
+          return { error: 'Password must be at least 8 characters.' };
+        if (Object.values(accounts).some(a => a.email === em))
+          return { error: 'An account with this email already exists.' };
+        if (accounts[unLower])
+          return { error: 'That vault handle is already taken. Choose another.' };
+
+        const achievements = [{ id: 'joined', earned: new Date().toISOString() }];
+        if (subscribe) achievements.push({ id: 'subscribed', earned: new Date().toISOString() });
+
+        const member = {
+          email: em,
+          username: un,
+          username_lower: unLower,
+          createdAt: new Date().toISOString(),
+          points: subscribe ? 15 : 10,
+          subscribed: !!subscribe,
+          prefs: { updates: true, lore: true, access: true },
+          achievements,
+          _pw: this.hashPw(password),
+        };
+
+        accounts[unLower] = member;
+        this.saveAccounts(accounts);
+        this.setSession(member);
+        return { member };
+      },
+
+      login(emailOrUsername, password) {
+        const accounts = this.getAccounts();
+        const input = emailOrUsername.toLowerCase().trim();
+        let member = accounts[input]
+          || Object.values(accounts).find(a => a.email === input);
+
+        if (!member) return { error: 'No account found with that email or handle.' };
+        if (member._pw !== this.hashPw(password)) return { error: 'Incorrect password.' };
+
+        this.setSession(member);
+        return { member };
+      },
+
+      logout() {
+        this.clearSession();
+        showAuth();
+      },
+
+      savePrefs() {
+        const session = this.getSession();
+        if (!session) return;
+        const accounts = this.getAccounts();
+        const key = session.username_lower;
+        if (!accounts[key]) return;
+        accounts[key].prefs = {
+          updates: document.getElementById('toggle-updates')?.checked ?? true,
+          lore:    document.getElementById('toggle-lore')?.checked ?? true,
+          access:  document.getElementById('toggle-access')?.checked ?? true,
+        };
+        accounts[key].subscribed = accounts[key].prefs.updates;
+        this.saveAccounts(accounts);
+        this.setSession(accounts[key]);
+      },
+    };
+
+    // ── UI helpers ──────────────────────────────────────────────
+    function showAuth() {
+      document.getElementById('auth-view').style.display = '';
+      document.getElementById('dashboard-view').style.display = 'none';
+      document.getElementById('nav-member-name').style.display = 'none';
+      document.getElementById('nav-signin-link').style.display = '';
+      document.getElementById('nav-join-btn').style.display = '';
+    }
+
+    function showDashboard(member) {
+      document.getElementById('auth-view').style.display = 'none';
+      document.getElementById('dashboard-view').style.display = '';
+
+      // Nav
+      const nameBadge = document.getElementById('nav-member-name');
+      nameBadge.textContent = member.username;
+      nameBadge.style.display = '';
+      document.getElementById('nav-signin-link').style.display = 'none';
+      document.getElementById('nav-join-btn').style.display = 'none';
+
+      // Profile
+      document.getElementById('profile-username').textContent = member.username;
+      const rank = VS.getRank(member.points);
+      const nextRank = VS.getNextRank(member.points);
+      const progress = VS.getRankProgress(member.points);
+
+      const rankBadge = document.getElementById('profile-rank-badge');
+      rankBadge.textContent = rank.name;
+      rankBadge.className = 'rank-badge badge ' + rank.badgeClass;
+
+      document.getElementById('profile-pts').textContent = member.points + ' pts';
+      const createdDate = new Date(member.createdAt);
+      document.getElementById('profile-since').textContent =
+        'Member since ' + createdDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+      document.getElementById('pb-current-rank').textContent = rank.name;
+      document.getElementById('pb-next').textContent = nextRank
+        ? '→ ' + nextRank.name + ' at ' + nextRank.min + ' pts'
+        : '✦ Maximum rank achieved';
+      document.getElementById('progress-fill').style.width = progress + '%';
+
+      // Stats
+      document.getElementById('stat-pts').textContent = member.points;
+      document.getElementById('stat-rank').textContent = rank.name;
+      document.getElementById('stat-since').textContent =
+        createdDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+      const achEarned = member.achievements ? member.achievements.map(a => a.id) : [];
+      document.getElementById('stat-achievements').textContent =
+        achEarned.length + ' / ' + VS.ACHIEVEMENT_DEFS.length;
+
+      // Achievements
+      const grid = document.getElementById('achievement-grid');
+      grid.innerHTML = '';
+      VS.ACHIEVEMENT_DEFS.forEach(def => {
+        const earned = achEarned.includes(def.id);
+        const el = document.createElement('div');
+        el.className = 'achievement' + (earned ? '' : ' locked');
+        el.innerHTML = `
+          <div class="ach-icon">${def.icon}</div>
+          <div class="ach-name">${def.name}</div>
+          <div class="ach-desc">${earned ? def.desc : 'Locked — keep playing to unlock'}</div>
+          ${earned ? '' : '<div style="margin-top:.3rem;font-size:.7rem;color:var(--dim);">🔒 Locked</div>'}
+        `;
+        grid.appendChild(el);
+      });
+
+      // Prefs
+      if (member.prefs) {
+        const up   = document.getElementById('toggle-updates');
+        const lore = document.getElementById('toggle-lore');
+        const acc  = document.getElementById('toggle-access');
+        if (up)   up.checked   = member.prefs.updates !== false;
+        if (lore) lore.checked = member.prefs.lore    !== false;
+        if (acc)  acc.checked  = member.prefs.access  !== false;
+      }
+    }
+
+    // ── Form handlers ───────────────────────────────────────────
+    document.getElementById('register-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email    = document.getElementById('reg-email').value;
+      const username = document.getElementById('reg-username').value;
+      const password = document.getElementById('reg-password').value;
+      const subscribe = document.getElementById('reg-subscribe').checked;
+      const errEl = document.getElementById('reg-error');
+
+      const result = VS.register(email, username, password, subscribe);
+      if (result.error) {
+        errEl.textContent = result.error;
+        errEl.classList.add('show');
+      } else {
+        errEl.classList.remove('show');
+        showDashboard(result.member);
+      }
+    });
+
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const emailOrUsername = document.getElementById('login-email').value;
+      const password        = document.getElementById('login-password').value;
+      const errEl = document.getElementById('login-error');
+
+      const result = VS.login(emailOrUsername, password);
+      if (result.error) {
+        errEl.textContent = result.error;
+        errEl.classList.add('show');
+      } else {
+        errEl.classList.remove('show');
+        showDashboard(result.member);
+      }
+    });
+
+    // ── Init: check session ─────────────────────────────────────
+    (function init() {
+      const session = VS.getSession();
+      if (session) {
+        // Re-load from accounts in case data updated
+        const accounts = VS.getAccounts();
+        const live = accounts[session.username_lower] || session;
+        showDashboard(live);
+      } else {
+        showAuth();
+        // Check if URL has #register hash
+        if (window.location.hash === '#register') {
+          switchTab('register');
+        } else if (window.location.hash === '#login') {
+          switchTab('login');
+        }
+      }
+    })();
+  </script>
+
+</body>
+</html>
