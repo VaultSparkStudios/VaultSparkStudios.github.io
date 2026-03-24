@@ -1146,6 +1146,7 @@
   </footer>
 
   <!-- ═══ SCRIPTS ═══════════════════════════════════════════ -->
+  <script src="assets/kit.js"></script>
   <script>
     // Mobile nav toggle
     const hamburger = document.getElementById('hamburger');
@@ -1165,36 +1166,9 @@
       });
     });
 
-    // Vault Dispatch email form
-    function handleEmailForm(formId, successId) {
-      const form    = document.getElementById(formId);
-      const success = document.getElementById(successId);
-      if (!form) return;
-      form.addEventListener('submit', e => {
-        e.preventDefault();
-        const input = form.querySelector('input[type="email"]');
-        const email = input ? input.value.trim() : '';
-        if (!email || !email.includes('@')) {
-          input && input.focus();
-          return;
-        }
-        // Store email locally for demo; replace action with real endpoint when ready
-        const subs = JSON.parse(localStorage.getItem('vs_subscribers') || '[]');
-        if (!subs.includes(email.toLowerCase())) {
-          subs.push(email.toLowerCase());
-          localStorage.setItem('vs_subscribers', JSON.stringify(subs));
-        }
-        form.style.display = 'none';
-        if (success) success.style.display = 'flex';
-        const footerSuccess = document.getElementById('footer-success');
-        if (footerSuccess && formId !== 'footer-email-form') {
-          document.getElementById('footer-email-form').style.display = 'none';
-        }
-      });
-    }
-
-    handleEmailForm('dispatch-form', 'dispatch-success');
-    handleEmailForm('footer-email-form', 'footer-success');
+    // Wire Vault Dispatch forms to Kit
+    VaultKit.wireForm('dispatch-form',    'dispatch-success');
+    VaultKit.wireForm('footer-email-form', 'footer-success');
 
     // Activate correct nav link for current page
     (function setActiveNav() {

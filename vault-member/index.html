@@ -24,6 +24,7 @@
   <meta name="robots" content="noindex, follow" />
   <link rel="icon" type="image/png" href="../assets/favicon.png" />
   <link rel="stylesheet" href="../assets/style.css" />
+  <script src="../assets/kit.js"></script>
 
   <style>
     /* ─── Page layout ─── */
@@ -1103,13 +1104,14 @@
     }
 
     // ── Form handlers ───────────────────────────────────────────
-    document.getElementById('register-form').addEventListener('submit', function(e) {
+    document.getElementById('register-form').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const email    = document.getElementById('reg-email').value;
-      const username = document.getElementById('reg-username').value;
-      const password = document.getElementById('reg-password').value;
+      const email     = document.getElementById('reg-email').value;
+      const username  = document.getElementById('reg-username').value;
+      const password  = document.getElementById('reg-password').value;
       const subscribe = document.getElementById('reg-subscribe').checked;
-      const errEl = document.getElementById('reg-error');
+      const errEl     = document.getElementById('reg-error');
+      const btn       = this.querySelector('button[type="submit"]');
 
       const result = VS.register(email, username, password, subscribe);
       if (result.error) {
@@ -1117,6 +1119,12 @@
         errEl.classList.add('show');
       } else {
         errEl.classList.remove('show');
+
+        // Subscribe to Kit in the background — don't block dashboard load
+        if (subscribe) {
+          VaultKit.subscribe(email, VaultKit.ALL_TAGS).catch(() => {});
+        }
+
         showDashboard(result.member);
       }
     });
