@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DreadSpike | VaultSpark Universe Character</title>
+  <meta name="description" content="DreadSpike — the being called from the dark by a wrong transmission. Origin, lore, cinematic, and classified intel on VaultSpark's most powerful character." />
+  <meta name="keywords" content="DreadSpike, VaultSpark character, VaultSpark universe, wrong transmission, dimensional anomaly, game character lore" />
+  <link rel="canonical" href="https://vaultsparkstudios.com/universe/dreadspike/" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="DreadSpike | VaultSpark Universe" />
+  <meta property="og:description" content="He was not summoned. He was called — by a wrong transmission across a threshold that should have remained closed." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/universe/dreadspike/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSpark" />
+  <meta name="twitter:title" content="DreadSpike | VaultSpark Universe" />
+
+  <link rel="icon" type="image/png" href="../../assets/favicon.png" />
+  <link rel="apple-touch-icon" href="../../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../../assets/style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "DreadSpike",
+    "description": "A VaultSpark Studios original character — a being from a wrong transmission that crossed dimensions and arrived in a realm he was never meant to enter.",
+    "url": "https://vaultsparkstudios.com/universe/dreadspike/",
+    "isPartOf": { "@type": "CreativeWork", "name": "VaultSpark Universe", "url": "https://vaultsparkstudios.com/universe/" }
+  }
+  </script>
+
+  <style>
+    .char-hero {
+      padding: 5rem 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .char-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 50%, rgba(214,40,40,0.12), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(255,122,0,0.1), transparent 35%);
+      pointer-events: none;
+    }
+    .char-hero .container { position: relative; z-index: 1; }
+    .char-hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      margin: 0.75rem 0 0.5rem;
+    }
+
+    .cinematic-block {
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      background: #000;
+    }
+    .cinematic-block video {
+      width: 100%;
+      display: block;
+      max-height: 540px;
+      object-fit: cover;
+    }
+
+    .char-profile {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 3rem 0 2rem;
+      align-items: start;
+    }
+
+    .lore-block {
+      padding: 2rem;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .lore-block h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.7rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+    }
+    .lore-block p { color: var(--muted); font-size: 0.97rem; line-height: 1.8; margin-bottom: 1rem; }
+    .lore-block p:last-child { margin-bottom: 0; }
+
+    .stat-card {
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      background: rgba(214,40,40,0.04);
+      border: 1px solid rgba(214,40,40,0.12);
+    }
+    .stat-card h3 {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+    .char-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.9rem;
+    }
+    .char-stat-row:last-child { border-bottom: none; }
+    .char-stat-row .s-label { color: var(--muted); flex-shrink: 0; }
+    .char-stat-row .s-value { font-weight: 600; text-align: right; }
+
+    .still-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .still-row img {
+      border-radius: 16px;
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .classified-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      padding-bottom: 5rem;
+    }
+    .classified-card {
+      padding: 1.3rem;
+      border-radius: 20px;
+      border: 1px dashed rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.02);
+      opacity: 0.8;
+    }
+    .classified-card .c-label {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--crimson);
+      margin-bottom: 0.5rem;
+    }
+    .classified-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .classified-card p { font-size: 0.83rem; color: var(--dim); line-height: 1.55; }
+
+    @media (max-width: 900px) {
+      .char-profile { grid-template-columns: 1fr; }
+      .classified-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .still-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .classified-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../../assets/vaultspark-icon.png" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/games/">Games</a>
+        <a href="/universe/" class="active">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/#vault-tools">Vault Forge</a>
+        <a href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="char-hero" aria-labelledby="char-heading">
+      <div class="container">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem;flex-wrap:wrap;">
+          <a href="/universe/" class="eyebrow" style="text-decoration:none;">← Universe</a>
+          <span class="eyebrow">Character Feature</span>
+        </div>
+        <h1 id="char-heading">DreadSpike</h1>
+        <p style="color:var(--muted);font-size:1.1rem;max-width:52ch;line-height:1.65;margin-bottom:1.5rem;">
+          The being called from the dark by a wrong transmission.
+          He was not summoned. He arrived.
+        </p>
+        <div style="display:flex;gap:0.8rem;flex-wrap:wrap;">
+          <a class="button" href="https://sora.chatgpt.com/profile/vaultsparkstudios" target="_blank" rel="noreferrer">Watch Cinematic on Sora</a>
+          <a class="button-secondary" href="/vault-member/#register">Get Lore Dispatches</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cinematic -->
+    <section style="padding:0 0 2rem;">
+      <div class="container">
+        <div class="cinematic-block">
+          <video controls playsinline poster="../../assets/darth-spike-poster.jpg" aria-label="DreadSpike cinematic — VaultSpark Studios original character">
+            <source src="../../assets/darth-spike.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <p style="color:var(--dim);font-size:0.82rem;margin-top:0.75rem;text-align:center;">
+          DreadSpike Cinematic — Sora-generated, 2025 — VaultSpark Studios Original
+        </p>
+      </div>
+    </section>
+
+    <!-- Profile -->
+    <section style="padding:0;">
+      <div class="container">
+        <div class="char-profile">
+          <div class="lore-block">
+            <h2>Origin</h2>
+            <p>
+              Crimson light cuts across frozen space. Fiery ash drifts in suspension.
+              Every movement feels ritualistic — not violence, but ceremony. Every strike feels fated,
+              not chosen. When DreadSpike enters the void, the stars don't just go dark. They pull back.
+            </p>
+            <p>
+              DreadSpike was not summoned. He was called — accidentally, catastrophically,
+              and irreversibly — by a wrong transmission sent across a dimensional threshold that should have
+              remained closed. The signal reached something that should never have been reached.
+              What answered was not what was expected.
+            </p>
+            <p>
+              He arrived in a realm unprepared for him — a dimension that issued a signal meant for something
+              else entirely, and received a being of mythic, terrifying precision. The vault cannot undo the call.
+              It can only contain what arrived. Now the question isn't whether he can be sent back.
+              The question is what he intends to do while he's here.
+            </p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:1rem;">
+            <div class="stat-card">
+              <h3>Classification File</h3>
+              <div class="char-stat-row"><span class="s-label">Designation</span><span class="s-value">DreadSpike</span></div>
+              <div class="char-stat-row"><span class="s-label">Origin</span><span class="s-value">Wrong Transmission</span></div>
+              <div class="char-stat-row"><span class="s-label">Classification</span><span class="s-value">Dimensional Anomaly</span></div>
+              <div class="char-stat-row"><span class="s-label">First Appearance</span><span class="s-value">Sora Cinematic, 2025</span></div>
+              <div class="char-stat-row"><span class="s-label">Status</span><span class="s-value" style="color:#f87171;">Active — In Our Realm</span></div>
+              <div class="char-stat-row"><span class="s-label">Containment</span><span class="s-value" style="color:var(--gold);">Ongoing</span></div>
+            </div>
+
+            <div style="padding:1.3rem;border-radius:18px;background:rgba(214,40,40,0.04);border:1px solid rgba(214,40,40,0.1);">
+              <p style="font-size:0.85rem;color:var(--muted);line-height:1.65;margin-bottom:0.9rem;">
+                Vault Members receive classified lore dispatches — including intel not published on this page.
+              </p>
+              <a class="button-secondary" href="/vault-member/#register" style="width:100%;display:flex;justify-content:center;font-size:0.88rem;">Access Classified Intel →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stills -->
+        <div class="still-row">
+          <img src="../../assets/darth-spike-still-1.jpg" alt="DreadSpike in the void — frozen space and crimson light" loading="lazy" />
+          <img src="../../assets/darth-spike-still-2.jpg" alt="DreadSpike with fiery ash drifting" loading="lazy" />
+          <img src="../../assets/darth-spike-still-3.jpg" alt="DreadSpike — a being not meant for this dimension" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Classified entities -->
+    <section id="classified" aria-labelledby="classified-heading">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="classified-heading">Classified Entities</h2>
+            <p>Others detected in the vault's signal range. Classification in progress.</p>
+          </div>
+          <a class="button-secondary" href="/universe/">Full Universe →</a>
+        </div>
+
+        <div class="classified-grid">
+          <div class="classified-card">
+            <div class="c-label">Subject: FORGE-01</div>
+            <h3>???</h3>
+            <p>Signal detected from within the forge. Origin: unknown. The transmission predates the vault's own records.</p>
+          </div>
+          <div class="classified-card">
+            <div class="c-label">Subject: RIFT-SEVEN</div>
+            <h3>???</h3>
+            <p>Anomalous pressure reading near the seventh rift layer. Something is building toward a threshold event.</p>
+          </div>
+          <div class="classified-card">
+            <div class="c-label">Subject: ECHO-NULL</div>
+            <h3>???</h3>
+            <p>The vault shows ECHO-NULL has been here since before the vault existed. Classification is complicated by this.</p>
+          </div>
+          <div class="classified-card">
+            <div class="c-label">Subject: THE ARCHIVIST</div>
+            <h3>???</h3>
+            <p>Something in the deep layers is cataloguing everything — every spark, every wrong transmission, every arrival.</p>
+          </div>
+          <div class="classified-card">
+            <div class="c-label">Subject: VEIN-CONSTRUCT</div>
+            <h3>???</h3>
+            <p>Structural anomaly running through the vault's eastern grid. Possibly the vault itself is becoming something else.</p>
+          </div>
+          <div class="classified-card">
+            <div class="c-label">Subject: DESIGNATION PENDING</div>
+            <h3>???</h3>
+            <p>Classification process halted — the classification system itself is being rewritten by whatever this is.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Universe</h4>
+          <a href="/universe/">The Universe</a>
+          <a href="/universe/dreadspike/">DreadSpike</a>
+          <a href="/vault-member/">Vault Members (lore access)</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/contact/">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+</body>
+</html>

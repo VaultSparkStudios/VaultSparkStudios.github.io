@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Press Kit | VaultSpark Studios</title>
+  <meta name="description" content="VaultSpark Studios press kit. Studio facts, brand assets, game descriptions, key quotes, and press contact for journalists, content creators, and media." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/press/" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Press Kit | VaultSpark Studios" />
+  <meta property="og:description" content="Studio facts, brand assets, and press contact for VaultSpark Studios." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/press/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSpark" />
+
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <style>
+    .press-hero { padding: 5rem 0 3rem; position: relative; }
+    .press-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(255,196,0,0.08), transparent 55%);
+      pointer-events: none;
+    }
+    .press-hero .container { position: relative; z-index: 1; }
+    .press-hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      margin: 0.75rem 0 1rem;
+    }
+
+    .press-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 2rem;
+      align-items: start;
+      padding-bottom: 5rem;
+    }
+    .press-main { display: flex; flex-direction: column; gap: 1.5rem; }
+    .press-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+
+    .press-block {
+      padding: 1.8rem 2rem;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .press-block h2 {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 1.1rem;
+    }
+
+    .fact-row {
+      display: flex;
+      gap: 1rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.92rem;
+    }
+    .fact-row:last-child { border-bottom: none; }
+    .fact-label { color: var(--muted); min-width: 140px; flex-shrink: 0; }
+    .fact-value { color: var(--text); font-weight: 600; }
+
+    .boilerplate {
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.75;
+      font-style: italic;
+      border-left: 2px solid rgba(255,196,0,0.3);
+      padding-left: 1.2rem;
+      margin: 0;
+    }
+
+    .quote-block {
+      padding: 1.4rem 1.6rem;
+      border-radius: 18px;
+      background: rgba(255,196,0,0.04);
+      border: 1px solid rgba(255,196,0,0.1);
+    }
+    .quote-block blockquote {
+      margin: 0 0 0.6rem;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      font-style: italic;
+    }
+    .quote-block cite { font-size: 0.82rem; color: var(--muted); font-style: normal; font-weight: 700; }
+
+    .game-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .game-row:last-child { border-bottom: none; }
+    .game-dot-press {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 0.35rem;
+    }
+    .game-row-info { flex: 1; }
+    .game-row-info strong { display: block; font-size: 0.93rem; margin-bottom: 0.18rem; }
+    .game-row-info span { font-size: 0.83rem; color: var(--muted); line-height: 1.5; }
+
+    .asset-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.9rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+      margin-bottom: 0.55rem;
+      transition: border-color 0.2s;
+    }
+    .asset-item:last-child { margin-bottom: 0; }
+    .asset-item:hover { border-color: rgba(255,255,255,0.12); }
+    .asset-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .asset-info { flex: 1; }
+    .asset-info strong { display: block; font-size: 0.88rem; }
+    .asset-info span { font-size: 0.79rem; color: var(--dim); }
+    .asset-note { font-size: 0.78rem; color: var(--gold); font-weight: 600; }
+
+    @media (max-width: 900px) { .press-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.png" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <a href="/games/">Games</a>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/" class="active">Studio</a>
+        <a href="/#vault-tools">Vault Forge</a>
+        <a href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="press-hero" aria-labelledby="press-heading">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Press</span>
+        <h1 id="press-heading">Press Kit.</h1>
+        <p style="color:var(--muted);font-size:1.05rem;max-width:52ch;line-height:1.65;">Everything you need to cover VaultSpark Studios. Fast facts, brand assets, game descriptions, quotes, and a direct line to the founder.</p>
+      </div>
+    </section>
+
+    <section style="padding:0 0 1rem;">
+      <div class="container">
+        <div class="press-grid">
+
+          <!-- Main column -->
+          <div class="press-main">
+
+            <!-- Boilerplate -->
+            <div class="press-block">
+              <h2>Studio Boilerplate</h2>
+              <p class="boilerplate">
+                VaultSpark Studios is an independent game studio forging cinematic worlds, sports simulations,
+                and playable browser experiments. Founded in 2024, VaultSpark builds free-to-play browser games
+                powered by a proprietary Studio OS designed to ship at team speed from a lean foundation.
+                Every project begins sealed in the vault and is sparked into existence — from action comedy chaos
+                to deep sports franchise simulations and a fantasy MMORPG rising from the dark. The vault is sparked.
+              </p>
+            </div>
+
+            <!-- Studio facts -->
+            <div class="press-block">
+              <h2>Fast Facts</h2>
+              <div class="fact-row"><span class="fact-label">Studio Name</span><span class="fact-value">VaultSpark Studios</span></div>
+              <div class="fact-row"><span class="fact-label">Founded</span><span class="fact-value">2024</span></div>
+              <div class="fact-row"><span class="fact-label">Type</span><span class="fact-value">Independent / Solo-founded</span></div>
+              <div class="fact-row"><span class="fact-label">Location</span><span class="fact-value">Remote</span></div>
+              <div class="fact-row"><span class="fact-label">Platform</span><span class="fact-value">Web Browser (free to play)</span></div>
+              <div class="fact-row"><span class="fact-label">Live Games</span><span class="fact-value">3 (Call of Doodie, Gridiron GM, Football GM Beta)</span></div>
+              <div class="fact-row"><span class="fact-label">In Development</span><span class="fact-value">VaultFront, Dunescape, MindFrame</span></div>
+              <div class="fact-row"><span class="fact-label">Website</span><span class="fact-value">vaultsparkstudios.com</span></div>
+              <div class="fact-row"><span class="fact-label">Press Contact</span><span class="fact-value">founder@vaultsparkstudios.com</span></div>
+            </div>
+
+            <!-- Games -->
+            <div class="press-block">
+              <h2>Games</h2>
+              <div class="game-row">
+                <div class="game-dot-press" style="background:#FF7A00;"></div>
+                <div class="game-row-info">
+                  <strong>Call of Doodie — Live</strong>
+                  <span>Action comedy browser shooter. A parody-fueled arcade experience built for laughs and surprisingly sharp gameplay. Free to play instantly, no download required.</span>
+                </div>
+              </div>
+              <div class="game-row">
+                <div class="game-dot-press" style="background:#1FA2FF;"></div>
+                <div class="game-row-info">
+                  <strong>Gridiron GM — Live</strong>
+                  <span>Football franchise management simulation. Build a dynasty across multiple seasons — draft, trade, sign, and cut players. Every decision has consequences.</span>
+                </div>
+              </div>
+              <div class="game-row">
+                <div class="game-dot-press" style="background:#FF7A00;"></div>
+                <div class="game-row-info">
+                  <strong>VaultSpark Football GM — Beta</strong>
+                  <span>Deep NFL front-office simulation focused on league realism, career arcs, depth charts, and franchise storytelling. Currently in client beta.</span>
+                </div>
+              </div>
+              <div class="game-row">
+                <div class="game-dot-press" style="background:#1FA2FF;"></div>
+                <div class="game-row-info">
+                  <strong>VaultFront — In Development</strong>
+                  <span>Strategic warfront with tactical territory control and resource management. Backend in development.</span>
+                </div>
+              </div>
+              <div class="game-row">
+                <div class="game-dot-press" style="background:#10B981;"></div>
+                <div class="game-row-info">
+                  <strong>Dunescape — In Development</strong>
+                  <span>Fantasy MMORPG set in a realm of shadowed horizons and strange beauty. Active world-building phase.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Quotes -->
+            <div class="press-block">
+              <h2>Key Quotes</h2>
+              <div style="display:flex;flex-direction:column;gap:0.85rem;">
+                <div class="quote-block">
+                  <blockquote>"Every VaultSpark game begins sealed — pure potential under pressure. The spark event is when we decide the world is ready to exist. The vault doesn't preserve. It pressurizes."</blockquote>
+                  <cite>— VaultSpark Studios, Studio Manifesto</cite>
+                </div>
+                <div class="quote-block">
+                  <blockquote>"We build at team speed from a lean foundation. The Studio OS gives every project persistent memory — who made what call, why, and what comes next. Nothing gets rebuilt from scratch."</blockquote>
+                  <cite>— VaultSpark Studios, on the Studio OS</cite>
+                </div>
+                <div class="quote-block">
+                  <blockquote>"DreadSpike was not summoned. He was called — accidentally, catastrophically, and irreversibly — by a wrong transmission sent across a dimensional threshold that should have remained closed."</blockquote>
+                  <cite>— VaultSpark Studios, DreadSpike Origin</cite>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Sidebar -->
+          <div class="press-sidebar">
+
+            <div class="press-block">
+              <h2>Press Contact</h2>
+              <p style="color:var(--muted);font-size:0.9rem;line-height:1.65;margin-bottom:1.1rem;">
+                For review copies, interviews, coverage requests, and partnership inquiries.
+                Response time is typically within 48 hours.
+              </p>
+              <a class="button" href="mailto:founder@vaultsparkstudios.com" style="width:100%;justify-content:center;display:flex;">Email The Founder</a>
+              <div style="margin-top:0.75rem;">
+                <a class="button-secondary" href="/contact/" style="width:100%;justify-content:center;display:flex;">Contact Form</a>
+              </div>
+              <div style="margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid rgba(255,255,255,0.06);">
+                <div class="fact-row" style="padding:0.5rem 0;"><span class="fact-label" style="font-size:0.83rem;">X / Twitter</span><span class="fact-value" style="font-size:0.83rem;"><a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer" style="color:var(--gold);">@VaultSpark</a></span></div>
+                <div class="fact-row" style="padding:0.5rem 0;border:none;"><span class="fact-label" style="font-size:0.83rem;">Discord</span><span class="fact-value" style="font-size:0.83rem;"><a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer" style="color:var(--gold);">Join Server</a></span></div>
+              </div>
+            </div>
+
+            <div class="press-block">
+              <h2>Brand Assets</h2>
+              <p style="color:var(--muted);font-size:0.83rem;line-height:1.6;margin-bottom:1rem;">Available on request via press contact. Do not alter, recolour, or distort brand assets.</p>
+              <div class="asset-item">
+                <div class="asset-icon">🖼️</div>
+                <div class="asset-info">
+                  <strong>Studio Logo</strong>
+                  <span>PNG — Light &amp; dark variants</span>
+                </div>
+                <span class="asset-note">On request</span>
+              </div>
+              <div class="asset-item">
+                <div class="asset-icon">🎬</div>
+                <div class="asset-info">
+                  <strong>DreadSpike Cinematic</strong>
+                  <span>MP4 — Sora-generated, 2025</span>
+                </div>
+                <a href="https://sora.chatgpt.com/profile/vaultsparkstudios" target="_blank" rel="noreferrer" class="asset-note" style="text-decoration:none;">View on Sora →</a>
+              </div>
+              <div class="asset-item">
+                <div class="asset-icon">📸</div>
+                <div class="asset-info">
+                  <strong>Cinematic Stills</strong>
+                  <span>JPG — 3 still frames from DreadSpike</span>
+                </div>
+                <span class="asset-note">On request</span>
+              </div>
+              <div class="asset-item">
+                <div class="asset-icon">🎮</div>
+                <div class="asset-info">
+                  <strong>Game Screenshots</strong>
+                  <span>Per-game, available on request</span>
+                </div>
+                <span class="asset-note">On request</span>
+              </div>
+              <p style="font-size:0.78rem;color:var(--dim);margin-top:0.85rem;line-height:1.55;">
+                All VaultSpark brand assets are protected trademarks. See <a href="/privacy/" style="color:var(--muted);">Privacy &amp; Legal</a> for full notices.
+              </p>
+            </div>
+
+            <div class="press-block">
+              <h2>Coverage Guidelines</h2>
+              <p style="color:var(--muted);font-size:0.88rem;line-height:1.65;">
+                VaultSpark Studios welcomes reviews, features, let's plays, and community coverage.
+                Please credit games as "<strong style="color:var(--text);">VaultSpark Studios</strong>" and link to
+                <strong style="color:var(--text);">vaultsparkstudios.com</strong> where possible.
+                Fan content and commentary is encouraged — see the
+                <a href="/privacy/#fan-content" style="color:var(--gold);">fan content policy</a> for details.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/call-of-doodie/">Call Of Doodie</a>
+          <a href="/gridiron-gm/">Gridiron GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/contact/">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Follow</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+  </script>
+</body>
+</html>
