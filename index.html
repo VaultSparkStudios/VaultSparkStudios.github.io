@@ -2,6 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="p:domain_verify" content="c8175438f6c7e03b305b86ffcae36881" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VaultSpark Studios | The Vault Is Sparked</title>
   <meta name="description" content="VaultSpark Studios forges cinematic worlds, playable experiments, and the rise of DreadSpike across the VaultSpark universe." />
@@ -423,6 +432,45 @@
       gap: 1.15rem;
     }
 
+    .cards-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .cards-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .project-tier { margin-bottom: 2.6rem; }
+    .project-tier:last-child { margin-bottom: 0; }
+
+    .tier-label {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .tier-label h3 {
+      margin: 0;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      white-space: nowrap;
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .tier-line {
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .status-live { border-color: rgba(74,222,128,0.35); color: #86efac; }
+    .status-dev  { border-color: rgba(251,146,60,0.35);  color: #fdba74; }
+    .status-stub { border-color: rgba(148,163,184,0.18); color: #94a3b8; }
+
+    .card-stub {
+      border-style: dashed;
+      opacity: 0.65;
+    }
+
     .card {
       min-height: 100%;
       display: flex;
@@ -481,6 +529,9 @@
 
     .vaultfront { background: linear-gradient(140deg, #07121d, #102132 50%, #05070d); }
     .vaultfront::before { background: radial-gradient(circle at 22% 24%, rgba(31,162,255,0.34), transparent 24%), radial-gradient(circle at 80% 30%, rgba(255,196,0,0.18), transparent 18%); }
+
+    .vault-sealed { background: linear-gradient(140deg, #0d0d10, #111318 52%, #05070d); }
+    .vault-sealed::before { background: radial-gradient(circle at 50% 50%, rgba(255,196,0,0.07), transparent 55%); }
 
     .status {
       position: absolute;
@@ -747,6 +798,8 @@
     @media (max-width: 980px) {
       .hero-grid,
       .cards,
+      .cards-3,
+      .cards-2,
       .two-col,
       .media-grid,
       .social-grid,
@@ -789,9 +842,9 @@
       </a>
 
       <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#vault-forged">Vault-Forged</a>
+        <a href="#vault-forged">Projects</a>
         <a href="#characters">Characters</a>
-        <a href="#vaulted">Vaulted</a>
+        <a href="#vaulted">Studio</a>
         <a href="#social">Social</a>
         <a href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
       </nav>
@@ -813,7 +866,7 @@
           </p>
 
           <div class="hero-actions">
-            <a class="button" href="#vault-forged">Vault-Forged</a>
+            <a class="button" href="#vault-forged">Explore Projects</a>
             <a class="button-secondary" href="#characters">Character Feature</a>
           </div>
 
@@ -838,9 +891,7 @@
             </div>
 
             <div class="hero-caption">
-              <div33
-                <strong></strong
-              </div>
+              <div></div>
               <div></div>
             </div>
           </div>
@@ -853,110 +904,151 @@
         <div class="section-head">
           <div>
             <h2>Forged From The Vault</h2>
-            <p>Five active portals into the worlds VaultSpark is forging right now.</p>
+            <p>Every VaultSpark world — live and playable, in the forge, or sealed for what's next.</p>
           </div>
         </div>
 
-        <div class="cards">
-          <article class="card">
-            <div class="card-art vaultfront">
-              <span class="status">In Development</span>
-              <h3>VaultFront</h3>
-            </div>
-            <div class="card-body">
-              <p>
-                A strategy warfront built around convoy timing, vault captures, and swing-heavy map pressure, now in active development while the dedicated runtime stack is brought online.
-              </p>
-              <div class="meta">
-                <span>Strategy</span>
-                <span>Backend Pending</span>
-                <span>Vault Warfare</span>
+        <div class="project-tier">
+          <div class="tier-label">
+            <h3>Active &amp; Live</h3>
+            <div class="tier-line"></div>
+          </div>
+          <div class="cards cards-3">
+            <article class="card">
+              <div class="card-art doodie">
+                <span class="status status-live">Playable Now</span>
+                <h3>Call Of Doodie</h3>
               </div>
-              <div class="card-actions">
-                <a class="button" href="https://vaultsparkstudios.com/vaultfront/">View Project</a>
+              <div class="card-body">
+                <p>
+                  A hilarious shooter RPG of comic mayhem where absurdity hits first and the punchline never arrives quietly.
+                </p>
+                <div class="meta">
+                  <span>Action Comedy</span>
+                  <span>Arcade Energy</span>
+                  <span>Web Build</span>
+                </div>
+                <div class="card-actions">
+                  <a class="button" href="https://vaultsparkstudios.com/call-of-doodie/">Play Now</a>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="card">
-            <div class="card-art doodie">
-              <span class="status">Playable Prototype</span>
-              <h3>Call Of Doodie</h3>
-            </div>
-            <div class="card-body">
-              <p>
-                A hilarious shooter RPG of comic mayhem where absurdity hits first and the punchline never arrives quietly.
-              </p>
-              <div class="meta">
-                <span>Action Comedy</span>
-                <span>Arcade Energy</span>
-                <span>Web Build</span>
+            <article class="card">
+              <div class="card-art footballgm">
+                <span class="status status-live">Client Beta</span>
+                <h3>VaultSpark Football GM</h3>
               </div>
-              <div class="card-actions">
-                <a class="button" href="https://vaultsparkstudios.com/call-of-doodie/">Play Now</a>
+              <div class="card-body">
+                <p>
+                  A playable browser beta of a deeper NFL front-office simulation focused on league realism, career arcs, depth charts, and long-run franchise storytelling.
+                </p>
+                <div class="meta">
+                  <span>Football Sim</span>
+                  <span>Front Office</span>
+                  <span>Client Beta</span>
+                </div>
+                <div class="card-actions">
+                  <a class="button" href="https://vaultsparkstudios.com/vaultspark-football-gm/">Play Beta</a>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="card">
-            <div class="card-art footballgm">
-              <span class="status">Client Beta</span>
-              <h3>VaultSpark Football GM</h3>
-            </div>
-            <div class="card-body">
-              <p>
-                A playable browser beta of a deeper NFL front-office simulation focused on league realism, career arcs, depth charts, and long-run franchise storytelling.
-              </p>
-              <div class="meta">
-                <span>Football Sim</span>
-                <span>Front Office</span>
-                <span>Client Beta</span>
+            <article class="card">
+              <div class="card-art gridiron">
+                <span class="status status-live">Playable</span>
+                <h3>Gridiron GM</h3>
               </div>
-              <div class="card-actions">
-                <a class="button" href="https://vaultsparkstudios.com/vaultspark-football-gm/">Play Beta</a>
+              <div class="card-body">
+                <p>
+                  Front-office pressure, franchise ambition, and the slow-burn drama of building a football contender from the inside out.
+                </p>
+                <div class="meta">
+                  <span>Sports Sim</span>
+                  <span>Management</span>
+                  <span>Strategy</span>
+                </div>
+                <div class="card-actions">
+                  <a class="button" href="https://vaultsparkstudios.com/gridiron-gm/">Play Now</a>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
+        </div>
 
-          <article class="card">
-            <div class="card-art dunescape">
-              <span class="status">In Development</span>
-              <h3>Dunescape</h3>
-            </div>
-            <div class="card-body">
-              <p>
-                An MMORPG set in a realm of shadowed horizons, strange beauty, and the feeling that the next step might open an entirely new myth.
-              </p>
-              <div class="meta">
-                <span>Fantasy</span>
-                <span>Worldbuilding</span>
-                <span>Adventure</span>
+        <div class="project-tier">
+          <div class="tier-label">
+            <h3>In Development</h3>
+            <div class="tier-line"></div>
+          </div>
+          <div class="cards cards-2">
+            <article class="card">
+              <div class="card-art vaultfront">
+                <span class="status status-dev">In Development</span>
+                <h3>VaultFront</h3>
               </div>
-              <div class="card-actions">
-                <a class="button" href="https://vaultsparkstudios.com/dunescape/">Explore Project</a>
+              <div class="card-body">
+                <p>
+                  A strategy warfront built around convoy timing, vault captures, and swing-heavy map pressure, now in active development while the dedicated runtime stack is brought online.
+                </p>
+                <div class="meta">
+                  <span>Strategy</span>
+                  <span>Backend Pending</span>
+                  <span>Vault Warfare</span>
+                </div>
+                <div class="card-actions">
+                  <a class="button" href="https://vaultsparkstudios.com/vaultfront/">View Project</a>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
 
-          <article class="card">
-            <div class="card-art gridiron">
-              <span class="status">Playable Simulation</span>
-              <h3>Gridiron GM</h3>
-            </div>
-            <div class="card-body">
-              <p>
-                Front-office pressure, franchise ambition, and the slow-burn drama of building a football contender from the inside out.
-              </p>
-              <div class="meta">
-                <span>Sports Sim</span>
-                <span>Management</span>
-                <span>Strategy</span>
+            <article class="card">
+              <div class="card-art dunescape">
+                <span class="status status-dev">In Development</span>
+                <h3>Dunescape</h3>
               </div>
-              <div class="card-actions">
-                <a class="button" href="https://vaultsparkstudios.com/gridiron-gm/">Play Now</a>
+              <div class="card-body">
+                <p>
+                  An MMORPG set in a realm of shadowed horizons, strange beauty, and the feeling that the next step might open an entirely new myth.
+                </p>
+                <div class="meta">
+                  <span>Fantasy</span>
+                  <span>Worldbuilding</span>
+                  <span>Adventure</span>
+                </div>
+                <div class="card-actions">
+                  <a class="button" href="https://vaultsparkstudios.com/dunescape/">Explore Project</a>
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </div>
+        </div>
+
+        <div class="project-tier">
+          <div class="tier-label">
+            <h3>Sealed In The Vault</h3>
+            <div class="tier-line"></div>
+          </div>
+          <div class="cards cards-2">
+            <article class="card card-stub">
+              <div class="card-art vault-sealed">
+                <span class="status status-stub">Concept Stage</span>
+                <h3>Project ???</h3>
+              </div>
+              <div class="card-body">
+                <p>
+                  Something is charged. The vault walls are warm. A new world is building pressure behind the steel — classification pending.
+                </p>
+                <div class="meta">
+                  <span>Classified</span>
+                  <span>Unknown Genre</span>
+                </div>
+                <div class="card-actions">
+                  <a class="button-secondary" href="#social">Follow For Updates</a>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -1114,9 +1206,9 @@
         <p class="muted" style="margin: 0.35rem 0 0;">The Vault Is Sparked.</p>
       </div>
       <div class="footer-links">
-        <a href="#vault-forged">Vault-Forged</a>
+        <a href="#vault-forged">Projects</a>
         <a href="#characters">Characters</a>
-        <a href="#vaulted">Vaulted</a>
+        <a href="#vaulted">Studio</a>
         <a href="#social">Social</a>
       </div>
     </div>
