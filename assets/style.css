@@ -143,6 +143,66 @@ p { margin: 0; }
   background: rgba(255,255,255,0.05);
 }
 
+/* ─── Nav dropdown ─── */
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.nav-item > a {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.nav-item > a .caret {
+  font-size: 0.65rem;
+  opacity: 0.5;
+  transition: transform 0.18s ease;
+}
+.nav-item:hover > a .caret,
+.nav-item:focus-within > a .caret { transform: rotate(180deg); opacity: 0.8; }
+.nav-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 192px;
+  background: rgba(8,10,17,0.98);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  padding: 0.45rem;
+  z-index: 200;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  backdrop-filter: blur(16px);
+}
+.nav-item:hover .nav-dropdown,
+.nav-item:focus-within .nav-dropdown { display: block; }
+.nav-dropdown a {
+  display: block;
+  padding: 0.5rem 0.85rem;
+  border-radius: 9px;
+  font-size: 0.875rem;
+  color: var(--muted);
+  white-space: nowrap;
+  background: transparent;
+}
+.nav-dropdown a:hover { background: rgba(255,255,255,0.06); color: var(--text); }
+.nav-dropdown .dropdown-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin: 0.35rem 0.5rem;
+}
+.nav-dropdown .dropdown-label {
+  display: block;
+  padding: 0.35rem 0.85rem 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--dim);
+}
+
 .nav-right {
   display: flex;
   align-items: center;
@@ -791,6 +851,26 @@ section { padding: 1.6rem 0 4.2rem; }
     font-size: 1.05rem;
     border-radius: 12px;
   }
+  /* Mobile dropdown — show sub-links inline, no hover needed */
+  .nav-center.open .nav-item { flex-direction: column; align-items: stretch; width: 100%; }
+  .nav-center.open .nav-item > a { width: 100%; }
+  .nav-center.open .nav-item > a .caret { display: none; }
+  .nav-center.open .nav-dropdown {
+    display: flex;
+    flex-direction: column;
+    position: static;
+    transform: none;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    margin: 0.2rem 0 0.4rem 1rem;
+    padding: 0.3rem;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  .nav-center.open .nav-dropdown a { font-size: 0.95rem; padding: 0.65rem 0.9rem; }
+  .nav-center.open .nav-dropdown .dropdown-label { display: none; }
+  .nav-center.open .nav-dropdown .dropdown-divider { display: none; }
   .hamburger { display: flex; }
 }
 
