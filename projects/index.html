@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VaultSpark Projects | Tools, Dashboards & Studio Work</title>
+  <meta name="description" content="Explore every VaultSpark Studios project outside the games vault — developer tools, creator dashboards, studio infrastructure, and experimental builds." />
+  <meta name="keywords" content="VaultSpark projects, PromoGrind, VaultFront, Vault Pipeline, studio tools, developer dashboard, creator tools" />
+  <link rel="canonical" href="https://vaultsparkstudios.com/projects/" />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="VaultSpark Projects | Tools, Dashboards & Studio Work" />
+  <meta property="og:description" content="Every non-game project from VaultSpark Studios — developer tools, creator dashboards, roadmaps, and experimental builds." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/projects/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSpark" />
+  <meta name="twitter:title" content="VaultSpark Projects | Tools, Dashboards & Studio Work" />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <style>
+    /* ── Page hero ── */
+    .page-hero {
+      padding: 5rem 0 3.5rem;
+      position: relative;
+    }
+    .page-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 40%, rgba(255,196,0,0.10), transparent 35%),
+        radial-gradient(circle at 80% 40%, rgba(31,162,255,0.10), transparent 35%);
+      pointer-events: none;
+    }
+    .page-hero .container { position: relative; z-index: 1; }
+    .page-hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      margin: 0.75rem 0 1rem;
+    }
+    .page-hero p {
+      color: var(--muted);
+      font-size: 1.08rem;
+      max-width: 56ch;
+      line-height: 1.65;
+    }
+
+    /* ── Hero stat strip ── */
+    .hero-stats {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+    .hero-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .hero-stat-val {
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      color: #fff;
+    }
+    .hero-stat-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .hero-stat-divider {
+      width: 1px;
+      height: 36px;
+      background: rgba(255,255,255,0.12);
+      align-self: center;
+    }
+
+    /* ── Filter bar ── */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin: 0 0 2.5rem;
+    }
+    .filter-btn {
+      padding: 0.45rem 1rem;
+      border-radius: 99px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: color 0.14s ease, background 0.14s ease, border-color 0.14s ease;
+    }
+    .filter-btn:hover {
+      color: #fff;
+      border-color: rgba(255,255,255,0.28);
+      background: rgba(255,255,255,0.08);
+    }
+    .filter-btn.active {
+      color: #000;
+      background: #fff;
+      border-color: #fff;
+    }
+
+    /* ── Section dividers ── */
+    .projects-section-label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 2.5rem 0 1.5rem;
+    }
+    .projects-section-label span {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+    .projects-section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* ── Project card grid ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.2rem;
+    }
+
+    /* ── Featured project card (full width) ── */
+    .project-card-featured {
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      margin-bottom: 1.2rem;
+      overflow: hidden;
+    }
+    .project-card-featured[data-hidden] { display: none; }
+    .project-card-featured-inner {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 0;
+      align-items: stretch;
+    }
+    .project-card-hero {
+      min-height: 280px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1.4rem;
+      overflow: hidden;
+    }
+    .project-card-hero::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      filter: blur(24px);
+      opacity: 0.95;
+    }
+    .project-card-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.62));
+    }
+    .project-card-hero h2 {
+      position: relative;
+      z-index: 1;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      letter-spacing: -0.04em;
+      margin: 0;
+    }
+    .project-card-hero .status {
+      position: absolute;
+      top: 1.1rem;
+      left: 1.1rem;
+      z-index: 1;
+    }
+    .project-card-body {
+      padding: 2.4rem 2.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .project-card-body .project-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      margin-bottom: 0.65rem;
+    }
+    .project-card-body > p {
+      color: var(--muted);
+      font-size: 0.97rem;
+      line-height: 1.7;
+      margin-bottom: 1.2rem;
+    }
+    .project-card-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    /* ── Standard project card ── */
+    .project-card {
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.18s ease, transform 0.18s ease;
+    }
+    .project-card:hover {
+      border-color: rgba(255,255,255,0.16);
+      transform: translateY(-2px);
+    }
+    .project-card[data-hidden] { display: none; }
+    .card-hero {
+      min-height: 160px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 1rem;
+      overflow: hidden;
+    }
+    .card-hero::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      filter: blur(20px);
+      opacity: 0.85;
+    }
+    .card-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.6));
+    }
+    .card-hero h3 {
+      position: relative;
+      z-index: 1;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.4rem;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
+    .card-badge {
+      position: absolute;
+      top: 0.85rem;
+      left: 0.85rem;
+      z-index: 1;
+    }
+    .card-content {
+      padding: 1.4rem 1.6rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      flex: 1;
+    }
+    .card-content p {
+      color: var(--muted);
+      font-size: 0.91rem;
+      line-height: 1.65;
+      margin: 0;
+    }
+    .card-content .meta { margin: 0; }
+    .card-content .project-card-actions { margin-top: auto; padding-top: 0.4rem; }
+
+    /* ── Feature list ── */
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 0.4rem;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      color: var(--muted);
+      font-size: 0.91rem;
+      line-height: 1.5;
+    }
+    .feature-list li::before {
+      content: "▸";
+      color: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.06rem;
+    }
+
+    /* ── Color themes ── */
+    .promogrind .project-card-hero::before,
+    .promogrind .card-hero::before { background: radial-gradient(ellipse, #f97316 0%, #431407 60%, transparent 100%); }
+    .vaultfront-proj .project-card-hero::before,
+    .vaultfront-proj .card-hero::before { background: radial-gradient(ellipse, #ffc400 0%, #5c3d00 60%, transparent 100%); }
+    .pipeline .project-card-hero::before,
+    .pipeline .card-hero::before { background: radial-gradient(ellipse, #1fa2ff 0%, #0a3d70 60%, transparent 100%); }
+    .signallog .project-card-hero::before,
+    .signallog .card-hero::before { background: radial-gradient(ellipse, #a78bfa 0%, #2e1065 60%, transparent 100%); }
+    .vault-member-proj .project-card-hero::before,
+    .vault-member-proj .card-hero::before { background: radial-gradient(ellipse, #22c55e 0%, #052e16 60%, transparent 100%); }
+
+    /* ── Empty state ── */
+    .projects-empty {
+      display: none;
+      padding: 3rem 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+    .projects-empty.visible { display: block; }
+
+    @media (max-width: 820px) {
+      .project-card-featured-inner { grid-template-columns: 1fr; }
+      .project-card-hero { min-height: 200px; }
+      .project-card-body { padding: 1.6rem; }
+      .hero-stat-divider { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/call-of-doodie/">Call of Doodie</a><a href="/gridiron-gm/">Gridiron GM</a><a href="/vaultspark-football-gm/">Football GM Beta</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/" class="active">Projects <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/promogrind/">PromoGrind</a><a href="/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="page-hero" aria-labelledby="page-heading">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Projects &nbsp;·&nbsp; Tools &amp; Studio Work</span>
+        <h1 id="page-heading">Beyond the<br>Game Vault.</h1>
+        <p>
+          The tools we build, the dashboards we ship, and the studio infrastructure that powers
+          everything — this is the non-game side of VaultSpark. Creator tools, developer utilities,
+          roadmaps, and studio experiments.
+        </p>
+        <div class="hero-stats" aria-label="Project library stats">
+          <div class="hero-stat">
+            <span class="hero-stat-val">2</span>
+            <span class="hero-stat-label">Live Tools</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-val">2</span>
+            <span class="hero-stat-label">In Development</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-val">Free</span>
+            <span class="hero-stat-label">To Use</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-val">Browser</span>
+            <span class="hero-stat-label">No Install</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects catalog -->
+    <section id="catalog" aria-labelledby="catalog-heading">
+      <div class="container">
+        <h2 id="catalog-heading" class="visually-hidden">Project Catalog</h2>
+
+        <!-- Filter bar -->
+        <div class="filter-bar" role="group" aria-label="Filter projects by category">
+          <button class="filter-btn active" data-filter="all">All Projects</button>
+          <button class="filter-btn" data-filter="tools">Tools</button>
+          <button class="filter-btn" data-filter="dev">In Development</button>
+          <button class="filter-btn" data-filter="studio">Studio</button>
+        </div>
+
+        <!-- Live Tools -->
+        <div class="projects-section-label" data-section="tools" aria-hidden="true">
+          <span>Live Tools</span>
+        </div>
+
+        <!-- PromoGrind — featured -->
+        <div class="project-card-featured" data-status="tools" aria-label="PromoGrind — Live Tool">
+          <div class="project-card-featured-inner">
+            <div class="project-card-hero promogrind">
+              <span class="status status-live">Live</span>
+              <h2>PromoGrind</h2>
+            </div>
+            <div class="project-card-body">
+              <p class="project-eyebrow">Creator Tool &nbsp;·&nbsp; Featured</p>
+              <p>
+                PromoGrind is a creator-focused promotional toolkit built for grinding content
+                distribution without the overhead. Schedule posts, track performance, manage
+                cross-platform promotion — all from a single browser-based dashboard. Built by
+                creators, for the grind.
+              </p>
+              <ul class="feature-list">
+                <li>Cross-platform promotion scheduling and management</li>
+                <li>Performance tracking across distribution channels</li>
+                <li>Browser-based — no install, no bloat, just the grind</li>
+              </ul>
+              <div class="meta" style="margin-top:0.4rem;">
+                <span>Creator Tool</span><span>Promotion</span><span>Dashboard</span><span>Free</span>
+              </div>
+              <div class="project-card-actions">
+                <a class="button" href="/promogrind/">Open PromoGrind</a>
+                <a class="button-secondary" href="/promogrind/">Learn More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Standard grid -->
+        <div class="projects-grid" id="projects-grid">
+
+          <!-- Vault Pipeline -->
+          <article class="project-card" data-status="studio" aria-label="Vault Pipeline — Studio">
+            <div class="card-hero pipeline">
+              <span class="status status-live card-badge">Live</span>
+              <h3>Vault Pipeline</h3>
+            </div>
+            <div class="card-content">
+              <p>
+                The public-facing studio roadmap. Track what's shipping, what's in the forge, and
+                what's queued for the next cycle. Transparent development — every milestone, every
+                spark, visible to the community.
+              </p>
+              <div class="meta">
+                <span>Studio</span><span>Roadmap</span><span>Public</span>
+              </div>
+              <div class="project-card-actions">
+                <a class="button" href="/roadmap/">View Roadmap</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Signal Log -->
+          <article class="project-card" data-status="studio" aria-label="Signal Log — Studio">
+            <div class="card-hero signallog">
+              <span class="status status-live card-badge">Live</span>
+              <h3>Signal Log</h3>
+            </div>
+            <div class="card-content">
+              <p>
+                The VaultSpark dev journal — build notes, update logs, and dispatches from inside
+                the forge. Behind-the-scenes writing on how games and tools get built at VaultSpark.
+                Signal over noise.
+              </p>
+              <div class="meta">
+                <span>Studio</span><span>Journal</span><span>Dev Log</span>
+              </div>
+              <div class="project-card-actions">
+                <a class="button" href="/journal/">Read the Log</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- VaultFront (project side) -->
+          <article class="project-card" data-status="dev" aria-label="VaultFront — In Development">
+            <div class="card-hero vaultfront-proj">
+              <span class="status status-dev card-badge">In Development</span>
+              <h3>VaultFront</h3>
+            </div>
+            <div class="card-content">
+              <p>
+                Real-time strategy warfront built around vault capture and convoy mechanics.
+                VaultFront is both a game and a live web platform — the dedicated backend runtime
+                is being brought online as part of studio infrastructure.
+              </p>
+              <div class="meta">
+                <span>Game Platform</span><span>Real-Time</span><span>Backend</span>
+              </div>
+              <div class="project-card-actions">
+                <a class="button" href="/vaultfront/">View Project</a>
+                <a class="button-secondary" href="/vault-member/#register">Get Early Access</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Vault Member Portal -->
+          <article class="project-card" data-status="dev" aria-label="Vault Member Portal — In Development">
+            <div class="card-hero vault-member-proj">
+              <span class="status status-dev card-badge">In Development</span>
+              <h3>Vault Member Portal</h3>
+            </div>
+            <div class="card-content">
+              <p>
+                The account and identity layer for VaultSpark Studios. Cross-game progress tracking,
+                Vault achievements, early access gating, and community tiers — all managed through
+                a single member portal. Backend in active development.
+              </p>
+              <div class="meta">
+                <span>Platform</span><span>Accounts</span><span>Cross-Game</span>
+              </div>
+              <div class="project-card-actions">
+                <a class="button" href="/vault-member/">View Portal</a>
+                <a class="button-secondary" href="/vault-member/#register">Create Account</a>
+              </div>
+            </div>
+          </article>
+
+        </div><!-- /projects-grid -->
+
+        <div class="projects-empty" id="projects-empty" aria-live="polite">
+          No projects match that filter yet. Check back soon — the forge is always running.
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="padding:2rem 0 4rem;">
+      <div class="container">
+        <div style="text-align:center;padding:3rem 2rem;border-radius:var(--radius);background:linear-gradient(135deg,rgba(255,196,0,0.06),rgba(31,162,255,0.06));border:1px solid rgba(255,255,255,0.08);">
+          <span class="eyebrow" style="margin-bottom:1rem;display:inline-flex;">Studio Members</span>
+          <h2 style="font-family:Georgia,serif;font-size:clamp(1.8rem,3.5vw,2.6rem);letter-spacing:-0.04em;margin:0.75rem auto 1rem;max-width:20ch;">Get Early Access to Everything We Ship</h2>
+          <p style="color:var(--muted);font-size:1.02rem;max-width:48ch;margin:0 auto 1.8rem;line-height:1.65;">One free account unlocks beta drops, early tool access, dev signals, and cross-game tracking across the entire VaultSpark ecosystem.</p>
+          <div style="display:flex;gap:0.9rem;justify-content:center;flex-wrap:wrap;">
+            <a class="button" href="/vault-member/#register">Create Free Account</a>
+            <a class="button-secondary" href="/vault-member/">Learn About Membership</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Live Games</h4>
+          <a href="/call-of-doodie/">Call Of Doodie</a>
+          <a href="/gridiron-gm/">Gridiron GM</a>
+          <a href="/vaultspark-football-gm/">Football GM Beta</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/universe/">Universe</a>
+          <a href="/studio/">About</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/vault-member/">Vault Membership</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer">Reddit</a>
+          <a href="https://discord.com/users/vaultsparkstudios" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // Project filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('#projects-grid .project-card');
+    const featuredCard = document.querySelector('.project-card-featured');
+    const sectionLabels = document.querySelectorAll('.projects-section-label');
+    const emptyState = document.getElementById('projects-empty');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+
+        // Update active button
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Filter featured card
+        if (filter === 'all' || filter === featuredCard.dataset.status) {
+          featuredCard.removeAttribute('data-hidden');
+        } else {
+          featuredCard.setAttribute('data-hidden', '');
+        }
+
+        // Filter grid cards
+        let visibleCount = featuredCard.hasAttribute('data-hidden') ? 0 : 1;
+        cards.forEach(card => {
+          if (filter === 'all' || card.dataset.status === filter) {
+            card.removeAttribute('data-hidden');
+            visibleCount++;
+          } else {
+            card.setAttribute('data-hidden', '');
+          }
+        });
+
+        // Show/hide section labels
+        sectionLabels.forEach(label => {
+          const section = label.dataset.section;
+          if (filter === 'all') {
+            label.style.display = '';
+          } else {
+            label.style.display = (filter === section) ? '' : 'none';
+          }
+        });
+
+        // Empty state
+        emptyState.classList.toggle('visible', visibleCount === 0);
+      });
+    });
+  </script>
+</body>
+</html>
