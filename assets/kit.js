@@ -24,7 +24,7 @@
 
   // Set to your Kit sequence ID once you create the welcome sequence in Kit UI.
   // Example: let WELCOME_SEQUENCE_ID = 1234567;
-  let WELCOME_SEQUENCE_ID = null;
+  let WELCOME_SEQUENCE_ID = 2695661;
 
   // ── Core helpers ───────────────────────────────────────────────────────────
 
