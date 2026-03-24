@@ -1,202 +1,205 @@
 # Latest Handoff — VaultSpark Studios Website
 
-Last updated: 2026-03-24 (session 4)
+Last updated: 2026-03-24 (session 5)
 
 ---
 
 ## What Was Completed
 
-### Full site redesign (session 1)
-- `index.html` — complete overhaul: exclusive copy, fixed anchor scroll (`scroll-margin-top: 92px`), mobile hamburger nav, Vault Dispatch email strip, Vault Membership section with rank teaser, DreadSpike feature, multi-column footer
-- `assets/style.css` — shared design system for all pages (tokens, buttons, cards, nav, footer, responsive breakpoints)
-- `games/index.html` — SEO games hub with full per-game descriptions, feature lists, FAQ schema (JSON-LD)
-- `universe/index.html` — DreadSpike full character feature, vault mythology section, classified characters, FAQ schema
-- `studio/index.html` — manifesto, how-we-build (6-step process), studio pillars, roadmap timeline, FAQ schema
-- `vault-member/index.html` — full account portal: register/login tabs, localStorage session, 5-tier Vault Rank system, 6 achievements, cross-game connections dashboard, newsletter preference toggles
-- All pages share consistent nav, footer, JSON-LD structured data, canonical URLs, OG/Twitter cards
+### Sessions 1–4 (see CODEX_HANDOFF_2026-03-12.md for full history)
+Full site redesign, shared design system, all core pages, Kit newsletter integration, PWA manifest, sitemap/robots, Gridiron GM marketing page, roadmap page, journal, press, contact, privacy, games catalog with filter tabs, projects catalog with filter tabs, Studio OS surfaced publicly.
 
-### Kit welcome sequence activated (between session 2 and 3)
-- `WELCOME_SEQUENCE_ID = 2695661` set in `assets/kit.js` — new subscribers auto-enroll in 3-email Vault Dispatch onboarding sequence
-
-### Site expansion (session 3)
-- Nav updated on all pages: added **Home** (before Games) and **Contact** (after GitHub)
-- Vault Dispatch copy: "Connect to the Vault's Signal" / "delivered through direct signals"
-- Project tier: "Active & Live" → "Unsealed & Live"; description updated with unsealed language
-- Social section: expanded to 16 platforms — added TikTok, Threads, Bluesky, Pinterest, Discord Server (`discord.gg/bgR3mSB2`), Gumroad; 4-column desktop grid
-- **New `/contact/` page**: contact form with mailto handler → `founder@vaultsparkstudios.com`; sidebar with quick-reach info; no external form service required
-- **New `/privacy/` page**: full privacy policy (Kit/ConvertKit, Google Analytics GA4, localStorage), cookie disclosure, trademark + copyright notices for all game titles and brand marks, fan content policy, DMCA
-- Universe `/classified`: 4 new entities added (ECHO-NULL, THE ARCHIVIST, VEIN-CONSTRUCT, DESIGNATION PENDING); 6 total; 3-column desktop grid
-- Studio page: contact CTA block above FAQ with "Contact The Studio →" button linking to `/contact/`
-- All footers: updated footer-bottom with Privacy Policy · Contact · Vault Members + VaultSpark™ trademark notice
-- `assets/style.css`: social grid 4-col desktop / 2-col tablet / 1-col mobile; textarea + form-group utility styles added
-
-### Site improvements — performance, accessibility, SEO, PWA (session 4)
-- `assets/style.css` — added `prefers-reduced-motion` block (disables all animations/transitions for users who opt out) and `:focus-visible` gold outline for keyboard navigation
-- `sitemap.xml` — created with all 8 pages, `lastmod`, `changefreq`, and `priority` values
-- `robots.txt` — created, pointing to sitemap URL
-- `manifest.json` — created PWA web app manifest (all icon sizes already present)
-- All pages — added `<link rel="manifest" href="/manifest.json" />` and `<link rel="apple-touch-icon">` where missing
-- `contact/index.html` — replaced `mailto:` handler with Web3Forms fetch API (see setup note in "What To Do Next")
-- `404.html` — fixed `href="index.html"` → `href="/"`, replaced 4 MB cinematic logo with icon (1.3 MB), added manifest link
-- `gridiron-gm/index.html` — created full marketing landing page with hero, feature list, stat grid, info panel, consistent nav/footer, JSON-LD VideoGame schema
-- `games/index.html` + `index.html` — MindFrame added as "In Development" card in sealed section (alongside existing "Project ???"); `.mindframe` CSS class was already present
-### Studio OS surfaced publicly (session 4 continued)
-- `roadmap/index.html` — new `/roadmap/` page: full project pipeline (6 projects with stage badges), Studio OS explanation (4 pillars: project memory, handoff discipline, deployment standard, AI velocity), and full studio timeline split into past/future panels
-- `studio/index.html` — "Signal Log" section added (before contact CTA): 3 signal cards covering 2024 launch, 2025 first sparks, 2026 Studio OS going public; links to `/roadmap/`
-- `vault-member/index.html` — "Studio Pipeline" panel added to dashboard: all 6 projects with stage indicators; links to `/roadmap/`
-- All page footers — "Vault Pipeline" link added to Studio column
-- `sitemap.xml` — `/roadmap/` added
-
-- **Image optimization pending** — `vaultspark-cinematic-logo.png` (4 MB), `vaultspark-logo.png` (2.9 MB), `vaultspark-icon.png` (1.3 MB) should be converted to WebP. Use Squoosh (squoosh.app), TinyPNG, or `cwebp` locally. Replace with `<picture>` element + WebP source + PNG fallback.
-
-### Kit (ConvertKit) newsletter integration (session 2)
-- `assets/kit.js` — full Kit integration module:
-  - `subscribe(email, tagIds)` — subscribes to one or more tags
-  - `removeTag(email, tagId)` — removes tag from subscriber by email
-  - `syncPreferences(email, prefs)` — adds/removes tags based on dashboard toggle state
-  - `subscribeToSequence(email, sequenceId)` — enrolls in welcome sequence
-  - `setWelcomeSequence(id)` — configures auto-enroll on any new subscribe
-  - `wireForm(formId, successId, tagIds)` — attaches Kit to a simple email form
-- `index.html` — Vault Dispatch strip and footer form now POST to Kit
-- `vault-member/index.html` — register with "Vault Dispatch" checkbox → subscribes to all three Kit tags; dashboard preference toggles now sync tag add/remove to Kit in real time
+### Session 5 — copy/naming/UX cleanup + Studio OS architecture decision
+- **Gridiron GM reframed** as a front-office management sim (not live football game): updated meta description, OG tags, body copy ("watch games simulate", "You call the shots from the front office; the field runs itself"), feature list, and games/index.html card + FAQ
+- **"Football GM Beta" → "VaultSpark Football GM"** renamed sitewide across all 14 pages (nav dropdowns, footers, FAQs, JSON-LD, keywords, all copy)
+- **Filter bar spacing fixed** on `/games/` and `/projects/` catalog pages: `#catalog-heading` now has `margin-bottom: 2rem`, filter bar has `margin: 0 0 3rem`
+- **VaultSpark Football GM confirmed** as a separate repo (`VaultSparkStudios/vaultspark-football-gm`) — the `/vaultspark-football-gm/` directory in this repo is a deployed game build and must not be modified here
+- **New website URL architecture decided**: game landing pages move to `/games/{slug}/`, project landing pages move to `/projects/{slug}/`; game/project catalog cards get dual CTAs (Play Now + More Info / View App + More Info); all landing pages include a GitHub activity stream pulling from the game/project repo via the public GitHub API
 
 ---
 
-## Kit Account State
-
-**Platform:** kit.com
-**API Key:** stored in `assets/kit.js` (public/subscribe-only key — intentionally embedded)
-
-| Tag Name | Kit ID |
-|---|---|
-| `studio-updates` | `17824260` |
-| `lore-dispatches` | `17824261` |
-| `early-vault-access` | `17824263` |
-
-**Welcome sequence:** `WELCOME_SEQUENCE_ID = null` — not yet created. See "What To Do Next" below.
-
----
-
-## Founder Account
-
-- Seeding is NOT in public code — runs only via a private console script pasted into the founder's browser
-- Account structure: handle `VaultFounder` / email `founder@vaultsparkstudios.com` / 10,000 pts / The Sparked rank / all 6 achievements / `role: 'founder'` / `_seeded: true`
-- `VS.exportForBackend()` is the only public method — returns a clean migration-ready JSON for the real auth API (strips localStorage hash, notes bcrypt must be set server-side)
-- Private seeding script is documented in the handoff only (not in public source)
-
-## Account / Member System State
-
-- Storage: `localStorage` keys `vs_accounts_v2` (all accounts) and `vs_session_v2` (active session)
-- Password: XOR hash + constant salt (demo-only — NOT production-grade, clearly noted in UI)
-- Achievements defined: `joined`, `subscribed`, `visit_game`, `first_100`, `lore_read`, `social` (6 total)
-- Connected games shown in dashboard: all 5 VaultSpark titles (mock data — real game data comes with backend)
-- Real backend auth: planned when VPS/Docker/Postgres stack goes live (see `docs/STUDIO_BACKEND_PLAN.md`)
-- When backend launches: replace `VS.register/login/getSession` calls with API calls — UI stays the same
-
----
-
-## Site Architecture
+## Current Site Architecture
 
 ```
 vaultsparkstudios.com/
-  /                   → index.html
-  /games/             → games/index.html
-  /universe/          → universe/index.html
-  /studio/            → studio/index.html
-  /vault-member/      → vault-member/index.html
-  /contact/           → contact/index.html
-  /privacy/           → privacy/index.html
-  /gridiron-gm/       → gridiron-gm/index.html  ← new (marketing page; add game.html when game is ready)
-  sitemap.xml         ← new
-  robots.txt          ← new
-  manifest.json       ← new (PWA manifest)
-  assets/
-    style.css         shared design system
-    kit.js            Kit newsletter integration (WELCOME_SEQUENCE_ID = 2695661)
-    vaultspark-icon.png
-    vaultspark-cinematic-logo.png
-    darth-spike.mp4 + poster + 3 stills
-    favicon.png + icon sizes
-    og-image.png
-  handoffs/
-    LATEST_HANDOFF.md (this file)
+  /                         → index.html (home)
+  /games/                   → games/index.html (catalog — dual-CTA cards)
+  /games/{slug}/            → games/{slug}/index.html (game landing page — PLANNED, not yet built)
+  /projects/                → projects/index.html (catalog — dual-CTA cards)
+  /projects/{slug}/         → projects/{slug}/index.html (project landing page — PLANNED)
+  /universe/                → universe/index.html
+  /universe/dreadspike/     → universe/dreadspike/index.html
+  /studio/                  → studio/index.html
+  /vault-member/            → vault-member/index.html
+  /contact/                 → contact/index.html
+  /privacy/                 → privacy/index.html
+  /roadmap/                 → roadmap/index.html
+  /journal/                 → journal/index.html
+  /press/                   → press/index.html
+  /call-of-doodie/          → call-of-doodie/index.html (WILL BECOME meta-refresh → /games/call-of-doodie/)
+  /gridiron-gm/             → gridiron-gm/index.html (WILL BECOME meta-refresh → /games/gridiron-gm/)
+  /vaultspark-football-gm/  → deployed game (separate repo — DO NOT MODIFY)
+  /vaultfront/              → vaultfront/index.html (in-dev placeholder)
+  assets/style.css          shared design system
+  assets/kit.js             Kit newsletter integration (WELCOME_SEQUENCE_ID = 2695661)
+  sitemap.xml
+  robots.txt
+  manifest.json
 ```
 
-Sub-page asset paths use `../assets/` (one level up from subdirectory).
-Root page uses `assets/` directly.
+### Game deploy URLs vs landing page URLs
+| Role | Pattern | Example |
+|---|---|---|
+| Game deploy (from game repo) | `/{slug}/` | `/vaultspark-football-gm/` |
+| Studio landing page | `/games/{slug}/` | `/games/vaultspark-football-gm/` |
+| Project landing page | `/projects/{slug}/` | `/projects/promogrind/` |
+
+---
+
+## Games Catalog
+
+All games live in `games/index.html`. Filter by `data-status`: `live`, `beta`, `dev`, `concept`.
+
+| Game | Status | Deploy URL | Landing page (target) |
+|---|---|---|---|
+| Call of Doodie | live | `/call-of-doodie/` | `/games/call-of-doodie/` |
+| Gridiron GM | live | `/gridiron-gm/game.html` | `/games/gridiron-gm/` |
+| VaultSpark Football GM | beta | `/vaultspark-football-gm/` (sep. repo) | `/games/vaultspark-football-gm/` |
+| VaultFront | dev | `/vaultfront/` | `/games/vaultfront/` |
+| Dunescape | dev | (not yet deployed) | `/games/dunescape/` |
+| MindFrame | concept | — | `/games/mindframe/` |
+| Project ??? | concept | — | `/games/project-unknown/` |
+
+## Projects Catalog
+
+All projects in `projects/index.html`. Filter by `data-status`: `tools`, `dev`, `studio`.
+
+| Project | Status | Direct URL | Landing page (target) |
+|---|---|---|---|
+| PromoGrind | tools/live | `/promogrind/` | `/projects/promogrind/` |
+| Vault Pipeline | studio | `/roadmap/` | `/projects/vault-pipeline/` |
+| Signal Log | studio | `/journal/` | `/projects/signal-log/` |
+| VaultFront | dev | `/vaultfront/` | `/projects/vaultfront/` |
+| Vault Member Portal | dev | `/vault-member/` | `/projects/vault-member/` |
+
+---
+
+## GitHub Activity Stream (planned feature)
+
+Each game/project landing page will pull recent activity from the public GitHub API and render it in a "Recent Updates" section. Implementation:
+
+- **Endpoint**: `https://api.github.com/repos/VaultSparkStudios/{repo}/commits?per_page=5`
+- **Auth**: none required for public repos (60 req/hr rate limit — fine for page loads)
+- **Fallback**: if fetch fails or rate-limited, show a static "View on GitHub →" link
+- **Display**: commit message + relative date (e.g. "2 days ago")
+- **Asset path note**: landing pages at `/games/{slug}/` use `../../assets/` (two levels up)
+
+GitHub repo slugs per game:
+| Game | Repo |
+|---|---|
+| Call of Doodie | `call-of-doodie` |
+| Gridiron GM | `gridiron-gm` |
+| VaultSpark Football GM | `vaultspark-football-gm` |
+| VaultFront | `vaultfront` |
+| Dunescape | `dunescape` |
+
+---
+
+## Vault Member Account System
+
+- Storage: `localStorage` keys `vs_accounts_v2` (all accounts) and `vs_session_v2` (active session)
+- Rank system: Spark Initiate → Vault Runner → Forge Guard → Vault Keeper → The Sparked
+- Achievements: 6 defined (joined, subscribed, visit_game, first_100, lore_read, social)
+- Password: XOR hash + constant salt (demo-only — NOT production-grade)
+- Real backend planned when VPS/Docker/Postgres stack goes live (`docs/STUDIO_BACKEND_PLAN.md`)
+- `VS.exportForBackend()` returns migration-ready JSON for real auth API
+
+## Kit Newsletter State
+
+- Platform: kit.com | Public API key in `assets/kit.js` (safe for client-side)
+- Welcome sequence ID: `2695661` (active — 3-email Vault Dispatch onboarding)
+- Tags: `studio-updates` (17824260), `lore-dispatches` (17824261), `early-vault-access` (17824263)
 
 ---
 
 ## What Is Mid-Flight
 
-### Welcome sequence not yet created
-`WELCOME_SEQUENCE_ID` in `assets/kit.js` is `null`. New subscribers are tagged but not enrolled in any sequence. See below for setup instructions.
+### Game/Project landing pages not yet built
+Architecture decided (session 5). Landing pages at `/games/{slug}/` and `/projects/{slug}/` have not been created yet. Old paths (`/call-of-doodie/`, `/gridiron-gm/`) still serve as the live landing pages until new ones are built and redirects are in place.
 
-### Real game data not yet wired
-Dashboard shows 5 games as "connected" but stats are all mock/static. Actual play session data, leaderboard position, and game-specific achievements wait on the backend VPS going live.
+### Catalog cards still use single-CTA pattern
+`games/index.html` and `projects/index.html` cards still have one primary CTA each. Dual-CTA update (Play Now + More Info) is planned alongside landing page build.
 
-### Preference toggle sync has one edge case
-If a subscriber toggled OFF `studio-updates` (removing the tag from Kit), then unsubscribing from the lore dispatch won't affect their subscriber record — they still exist in Kit, just untagged. Full suppression/unsubscribe requires backend handling.
+### Gridiron GM game.html doesn't exist yet
+`/gridiron-gm/index.html` "Play Now" links to `game.html` which is a 404. Game files need to be added to `/gridiron-gm/` when ready.
+
+### Welcome sequence already active
+`WELCOME_SEQUENCE_ID = 2695661` — active and enrolling new subscribers. No action needed.
+
+### Real game data not wired
+Dashboard shows 5 games as "connected" but stats are mock/static. Waits on backend VPS.
 
 ---
 
 ## What To Do Next
 
-### 1. Create the welcome sequence in Kit (priority: high)
+### 1. Build game landing pages at /games/{slug}/ (priority: high)
+Create `games/{slug}/index.html` for all 7 games. Structure per game page:
+- Hero (same `.hero-art .{slug-class}` gradient treatment from shared CSS)
+- Feature block (description, feature list, genre tags)
+- Side panel (stat grid, game info block, Vault Member CTA)
+- **GitHub Activity Stream section** — `fetch('https://api.github.com/repos/VaultSparkStudios/{repo}/commits?per_page=5')` rendered as a "Recent Updates" list with graceful fallback
+- Asset path: `../../assets/style.css` (two levels up from `/games/{slug}/`)
+- "Play Now" button links to the game deploy URL (`/{slug}/`)
 
-Go to **kit.com → Sequences → New Sequence**. Name it `Vault Dispatch — Welcome Signal`.
+Landing pages needed:
+- `games/call-of-doodie/index.html` (migrate from `/call-of-doodie/`)
+- `games/gridiron-gm/index.html` (migrate from `/gridiron-gm/`)
+- `games/vaultspark-football-gm/index.html` (new — do NOT touch `/vaultspark-football-gm/` dir)
+- `games/vaultfront/index.html`
+- `games/dunescape/index.html`
+- `games/mindframe/index.html`
+- `games/project-unknown/index.html`
 
-Suggested 3-email structure:
+### 2. Build project landing pages at /projects/{slug}/ (priority: high)
+Same structure. Primary CTA varies: "View App", "View Platform", "View Pipeline" depending on project type.
 
-**Email 1 — Immediate — "The vault is open."**
-- Subject: `The vault is open. Welcome to Vault Dispatch.`
-- Content: Welcome, what Vault Dispatch is, link to vaultsparkstudios.com, link to all live games, tease DreadSpike
+### 3. Update /games/ and /projects/ catalog cards (priority: high)
+Each card gets two CTAs:
+- Games: `Play Now` → deploy URL + `More Info` → `/games/{slug}/`
+- Projects: variable (`View App` / `View Platform` / `View Pipeline`) → direct URL + `More Info` → `/projects/{slug}/`
 
-**Email 2 — Day 3 — "A signal from the dark."**
-- Subject: `A wrong transmission called him here. Meet DreadSpike.`
-- Content: DreadSpike lore teaser, link to vaultsparkstudios.com/universe/, embed or link to Sora video
-
-**Email 3 — Day 7 — "Everything live in the vault right now."**
-- Subject: `Three games. Free to play. Right now.`
-- Content: List Call of Doodie, Gridiron GM, VaultSpark Football GM with short descriptions and play links. CTA: create Vault Member account at vaultsparkstudios.com/vault-member/
-
-Once created, **get the sequence ID** from the URL (e.g. `kit.com/sequences/1234567`). Then in `assets/kit.js`, change:
-```js
-let WELCOME_SEQUENCE_ID = null;
+### 4. Add meta-refresh redirects at old game paths
+Replace `/call-of-doodie/index.html` and `/gridiron-gm/index.html` with redirect pages:
+```html
+<meta http-equiv="refresh" content="0; url=/games/call-of-doodie/" />
+<link rel="canonical" href="https://vaultsparkstudios.com/games/call-of-doodie/" />
 ```
-to:
-```js
-let WELCOME_SEQUENCE_ID = 1234567;  // your actual ID
-```
-Commit and push. New subscribers will auto-enroll.
 
-### 2. Set up Web3Forms for contact page (priority: high)
-The contact form now submits to Web3Forms (no mailto). To activate:
-1. Go to **https://web3forms.com** → enter `founder@vaultsparkstudios.com` → get your access key
-2. Open `contact/index.html` and find `value="YOUR_WEB3FORMS_ACCESS_KEY"`
-3. Replace that placeholder with your actual key
-4. Commit and push — form will submit to your inbox immediately
+### 5. Update all nav dropdown + footer links sitewide
+- Nav: `/call-of-doodie/` → `/games/call-of-doodie/`
+- Nav: `/gridiron-gm/` → `/games/gridiron-gm/`
+- Nav: `/vaultspark-football-gm/` → `/games/vaultspark-football-gm/`
+- All footers: mirror same changes
 
-### 3. Wire VaultFront and Dunescape play buttons
-Currently both link to existing sub-paths. When their backends go live, update the card CTAs in `index.html` and `games/index.html` to link to the live play URLs.
+### 6. Update sitemap.xml
+Add all `/games/{slug}/` and `/projects/{slug}/` URLs. Keep old paths until redirects are confirmed working.
 
-### 4. Backend launch prep for member accounts
-When the VPS/Postgres stack goes live:
-- Replace `VS.register()` / `VS.login()` in `vault-member/index.html` with `fetch()` calls to `https://api-member.vaultsparkstudios.com` (or equivalent)
-- The `showDashboard()` function already reads from the returned member object — it just needs a real one
-- Wire the dashboard "Connected Games" section to real per-game API endpoints (`api-{slug}.vaultsparkstudios.com`)
+### 7. Set up Web3Forms for contact page
+Find `value="YOUR_WEB3FORMS_ACCESS_KEY"` in `contact/index.html` and replace with real key from web3forms.com.
 
-### 5. Add game files to `/gridiron-gm/`
-`gridiron-gm/index.html` now exists as a full marketing landing page. The "Play Now" button links to `game.html`. Drop the actual Gridiron GM game files into `/gridiron-gm/` (game.html + assets) when ready.
+### 8. Backend launch prep for member accounts
+Replace `VS.register()` / `VS.login()` in `vault-member/index.html` with `fetch()` calls to `https://api-member.vaultsparkstudios.com` when VPS is live.
 
 ---
 
 ## Important Constraints
 
-- All sub-pages (`games/`, `universe/`, `studio/`, `vault-member/`) use `../assets/` for CSS, JS, and images
-- Root `index.html` uses `assets/` (no `../`)
-- The Kit API key in `assets/kit.js` is the **public API key** (not the secret). It is safe for client-side use — it can only create/update subscribers, not read account data or delete subscribers.
-- Do NOT commit the Kit API secret anywhere in this repo
-- Nav scroll-margin-top is 92px — if the nav height ever changes, update `[id] { scroll-margin-top }` in `assets/style.css`
-- GitHub Pages serves at `vaultsparkstudios.com` via CNAME. All internal links use root-relative paths (`/games/`, `/vault-member/` etc.)
-- The `.claude/` directory is not staged — it is intentionally excluded from commits
+- `/vaultspark-football-gm/` dir = deployed game from separate repo — NEVER modify files inside it
+- Asset paths: root pages use `assets/`, one-level sub-pages use `../assets/`, two-level sub-pages (`/games/{slug}/`) use `../../assets/`
+- GitHub API rate limit: 60 req/hr unauthenticated — always include a graceful fallback in the stream widget
+- GitHub Pages has no server-side redirects — use `<meta http-equiv="refresh">` + canonical link for URL migrations
+- Nav scroll-margin-top is 92px — if nav height changes, update `[id] { scroll-margin-top }` in `assets/style.css`
+- Kit API key in `assets/kit.js` is the public subscribe-only key — safe for client-side, never commit the secret
+- All internal links use root-relative paths (`/games/`, `/vault-member/`, etc.)
+- `.claude/` directory is intentionally excluded from commits

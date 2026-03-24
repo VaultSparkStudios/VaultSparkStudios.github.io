@@ -72,12 +72,23 @@ Rules:
 
 Every game gets a slug. The slug is identical to the repo name.
 
-| Repo name | Public slug | Public URL |
-|---|---|---|
-| `vaultfront` | `vaultfront` | `https://vaultsparkstudios.com/vaultfront/` |
-| `dunescape` | `dunescape` | `https://vaultsparkstudios.com/dunescape/` |
-| `call-of-doodie` | `call-of-doodie` | `https://vaultsparkstudios.com/call-of-doodie/` |
-| `gridiron-gm` | `gridiron-gm` | `https://vaultsparkstudios.com/gridiron-gm/` |
+| Repo name | Public slug | Game deploy URL | Studio landing page |
+|---|---|---|---|
+| `vaultfront` | `vaultfront` | `https://vaultsparkstudios.com/vaultfront/` | `https://vaultsparkstudios.com/games/vaultfront/` |
+| `dunescape` | `dunescape` | `https://vaultsparkstudios.com/dunescape/` | `https://vaultsparkstudios.com/games/dunescape/` |
+| `call-of-doodie` | `call-of-doodie` | `https://vaultsparkstudios.com/call-of-doodie/` | `https://vaultsparkstudios.com/games/call-of-doodie/` |
+| `gridiron-gm` | `gridiron-gm` | `https://vaultsparkstudios.com/gridiron-gm/` | `https://vaultsparkstudios.com/games/gridiron-gm/` |
+| `vaultspark-football-gm` | `vaultspark-football-gm` | `https://vaultsparkstudios.com/vaultspark-football-gm/` | `https://vaultsparkstudios.com/games/vaultspark-football-gm/` |
+
+Two URL layers exist per game:
+
+- **Game deploy URL** (`/{slug}/`): served from the game's own GitHub Pages deployment. Owned by the game repo. Never changes after launch.
+- **Studio landing page URL** (`/games/{slug}/`): authored and maintained in `VaultSparkStudios.github.io`. Rich marketing content, feature lists, GitHub activity stream, dual CTAs.
+
+For projects (non-game tools, studio initiatives):
+
+- **Direct URL**: the tool or app's live URL
+- **Project landing page URL** (`/projects/{slug}/`): authored in `VaultSparkStudios.github.io`
 
 Rules:
 
@@ -192,27 +203,66 @@ Rules:
 
 ## Landing-page integration standard
 
-Every launched game gets a card in the `Vault-Forged` section of the studio site.
+### Catalog cards (games/index.html and projects/index.html)
+
+Every game and project gets a card in the relevant catalog page.
 
 Required card fields:
-
 - title
-- status
+- status badge
 - one-sentence pitch
-- three meta tags
-- one primary CTA
-- canonical path slug
-- card-art theme class
+- meta tags (genre/type)
+- **two CTAs** (dual-CTA pattern):
+  - Primary: "Play Now" (games) or "View App" / "View Platform" / "View Pipeline" (projects) → links to the deploy/live URL
+  - Secondary: "More Info" → links to the studio landing page at `/games/{slug}/` or `/projects/{slug}/`
 
 Rules:
+- every game and project gets a card regardless of stage (live, beta, dev, or concept)
+- in-dev and concept cards show appropriate status badges and have "More Info" linking to a landing page that explains the project
+- keep the primary CTA label contextually accurate (not all projects say "View App")
+- before committing studio-site changes, fetch the latest remote state and verify the live landing page
 
-- reuse the existing `Vault-Forged` card template
-- keep the CTA singular and clear
-- keep copy concise
-- do not introduce per-game bespoke card markup unless the entire section is being redesigned
-- before committing studio-site changes, fetch the latest remote state and
-  verify the live landing page or current upstream `index.html` so changes are
-  applied against the real current site, not a stale clone
+### Studio landing pages (/games/{slug}/ and /projects/{slug}/)
+
+Every game and project gets a dedicated landing page regardless of development stage.
+
+Required landing page sections:
+1. **Hero** — game/project name, status badge, eyebrow label, dual-action buttons (Play Now + Track/Join)
+2. **Feature block** — full description, feature list with ▸ bullets, genre/type meta tags
+3. **Side panel** — stat grid (4 key numbers), game info block (genre, platform, save system, price, status, developer), Vault Member CTA block
+4. **Recent Updates** — GitHub activity stream (see below)
+
+Asset path rule: landing pages at `/games/{slug}/` and `/projects/{slug}/` use `../../assets/` (two levels up from root).
+
+### GitHub Activity Stream
+
+Every landing page includes a live "Recent Updates" section populated from the GitHub API.
+
+Implementation:
+```javascript
+fetch('https://api.github.com/repos/VaultSparkStudios/{repo}/commits?per_page=5')
+  .then(r => r.json())
+  .then(commits => { /* render commit messages + relative dates */ })
+  .catch(() => { /* show static fallback link to GitHub */ });
+```
+
+Rules:
+- always include a graceful fallback (static "View on GitHub →" link) for rate-limit or fetch failures
+- display: commit message (truncated at 80 chars) + relative date
+- do not require authentication — public repos only
+- rate limit is 60 req/hr unauthenticated — acceptable for a marketing page
+
+### URL migration rule
+
+When a game landing page moves from `/{slug}/` to `/games/{slug}/`:
+- replace the old `/{slug}/index.html` with a lightweight redirect page:
+  ```html
+  <meta http-equiv="refresh" content="0; url=/games/{slug}/" />
+  <link rel="canonical" href="https://vaultsparkstudios.com/games/{slug}/" />
+  ```
+- GitHub Pages has no server-side redirects — this is the only option
+- update all internal nav/footer links to the new path
+- update sitemap.xml
 
 ## Per-game launch checklist
 

@@ -111,7 +111,9 @@ No secrets are required for Pages deployment.
 ## VaultSpark Studios website integration
 
 * Studio root site repo: `VaultSparkStudios/VaultSparkStudios.github.io`
-* Standard game path pattern: `https://vaultsparkstudios.com/{slug}/`
+* Game deploy path (from game repo via GitHub Pages): `https://vaultsparkstudios.com/{slug}/`
+* Studio landing page (authored in studio site repo): `https://vaultsparkstudios.com/games/{slug}/`
+* Project landing page (authored in studio site repo): `https://vaultsparkstudios.com/projects/{slug}/`
 * Standard backend patterns:
 
   * `https://play-{slug}.vaultsparkstudios.com`
@@ -124,16 +126,27 @@ No secrets are required for Pages deployment.
   * shared Postgres
   * shared Redis
 
+### GitHub Activity Stream
+
+Every game and project landing page includes a live activity feed from the game/project's GitHub repo:
+
+* Endpoint: `https://api.github.com/repos/VaultSparkStudios/{repo}/commits?per_page=5`
+* Auth: none (public repos, 60 req/hr rate limit)
+* Fallback: static "View on GitHub →" link if fetch fails
+* Display: commit message + relative date in a "Recent Updates" section
+* Implementation: client-side `fetch()` in the landing page `<script>` block
+
 ## Repo and slug convention
 
 Repo names are lowercase with hyphens. Repo name and public slug are always identical.
 
-|Game|Repo name|Public slug|Public URL|
-|-|-|-|-|
-|Dunescape|`dunescape`|`dunescape`|`https://vaultsparkstudios.com/dunescape/`|
-|VaultFront|`vaultfront`|`vaultfront`|`https://vaultsparkstudios.com/vaultfront/`|
-|Call Of Doodie|`call-of-doodie`|`call-of-doodie`|`https://vaultsparkstudios.com/call-of-doodie/`|
-|Gridiron GM|`gridiron-gm`|`gridiron-gm`|`https://vaultsparkstudios.com/gridiron-gm/`|
+|Game|Repo name|Public slug|Game deploy URL|Studio landing page URL|
+|-|-|-|-|-|
+|Dunescape|`dunescape`|`dunescape`|`https://vaultsparkstudios.com/dunescape/`|`https://vaultsparkstudios.com/games/dunescape/`|
+|VaultFront|`vaultfront`|`vaultfront`|`https://vaultsparkstudios.com/vaultfront/`|`https://vaultsparkstudios.com/games/vaultfront/`|
+|Call Of Doodie|`call-of-doodie`|`call-of-doodie`|`https://vaultsparkstudios.com/call-of-doodie/`|`https://vaultsparkstudios.com/games/call-of-doodie/`|
+|Gridiron GM|`gridiron-gm`|`gridiron-gm`|`https://vaultsparkstudios.com/gridiron-gm/`|`https://vaultsparkstudios.com/games/gridiron-gm/`|
+|VaultSpark Football GM|`vaultspark-football-gm`|`vaultspark-football-gm`|`https://vaultsparkstudios.com/vaultspark-football-gm/`|`https://vaultsparkstudios.com/games/vaultspark-football-gm/`|
 
 \---
 

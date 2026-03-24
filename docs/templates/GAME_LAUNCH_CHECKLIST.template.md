@@ -12,7 +12,8 @@ Replace:
 
 - [ ] Repo name is finalized
 - [ ] Public slug is finalized as `__GAME_SLUG__`
-- [ ] Public URL is set to `https://vaultsparkstudios.com/__GAME_SLUG__/`
+- [ ] Game deploy URL is set to `https://vaultsparkstudios.com/__GAME_SLUG__/`
+- [ ] Studio landing page URL is set to `https://vaultsparkstudios.com/games/__GAME_SLUG__/`
 - [ ] Credits/attribution/license review is complete
 - [ ] README and CREDITS reflect the final public branding
 
@@ -55,14 +56,24 @@ Replace:
 
 - [ ] Latest `VaultSparkStudios.github.io` remote state has been fetched
 - [ ] Live landing page or current upstream `index.html` has been checked before editing
-- [ ] `Vault-Forged` card has been added to `VaultSparkStudios.github.io`
+- [ ] Game catalog card added to `games/index.html` with dual CTAs:
+  - "Play Now" → `/__GAME_SLUG__/`
+  - "More Info" → `/games/__GAME_SLUG__/`
 - [ ] Card copy follows the standard:
-  - status
+  - status badge
   - one-sentence pitch
-  - three meta tags
-  - one CTA
-- [ ] Card links to `/__GAME_SLUG__/`
+  - meta tags (genre/type)
 - [ ] Card visual treatment matches the existing section pattern
+- [ ] Studio landing page created at `games/__GAME_SLUG__/index.html` with:
+  - hero section with status badge and dual action buttons
+  - feature block (description, feature list, genre tags)
+  - side panel (stat grid, info block, Vault Member CTA)
+  - GitHub Activity Stream section (commits feed with graceful fallback)
+- [ ] Landing page asset path uses `../../assets/` (two levels up)
+- [ ] Landing page canonical URL set to `https://vaultsparkstudios.com/games/__GAME_SLUG__/`
+- [ ] If migrating from `/__GAME_SLUG__/index.html`, old path replaced with meta-refresh redirect
+- [ ] `sitemap.xml` updated to include `/games/__GAME_SLUG__/`
+- [ ] All nav dropdown and footer links updated to `/games/__GAME_SLUG__/`
 
 ## Validation
 
@@ -74,6 +85,9 @@ Replace:
 - [ ] desktop smoke test passes
 - [ ] hard-refresh deep-link test passes
 - [ ] one real manual gameplay/session pass is complete
+- [ ] GitHub Activity Stream loads on landing page (or graceful fallback shown)
+- [ ] "Play Now" on catalog card links correctly to `/__GAME_SLUG__/`
+- [ ] "More Info" on catalog card links correctly to `/games/__GAME_SLUG__/`
 
 ## Launch
 
