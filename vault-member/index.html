@@ -1014,14 +1014,26 @@
         const accounts = this.getAccounts();
         const key = session.username_lower;
         if (!accounts[key]) return;
-        accounts[key].prefs = {
+
+        const prefs = {
           updates: document.getElementById('toggle-updates')?.checked ?? true,
           lore:    document.getElementById('toggle-lore')?.checked ?? true,
           access:  document.getElementById('toggle-access')?.checked ?? true,
         };
-        accounts[key].subscribed = accounts[key].prefs.updates;
+
+        accounts[key].prefs = prefs;
+        accounts[key].subscribed = prefs.updates;
         this.saveAccounts(accounts);
         this.setSession(accounts[key]);
+
+        // Sync tag changes to Kit in the background (only if they were ever subscribed)
+        if (accounts[key].email && typeof VaultKit !== 'undefined') {
+          VaultKit.syncPreferences(accounts[key].email, {
+            'studio-updates':     prefs.updates,
+            'lore-dispatches':    prefs.lore,
+            'early-vault-access': prefs.access,
+          }).catch(() => {});
+        }
       },
     };
 
