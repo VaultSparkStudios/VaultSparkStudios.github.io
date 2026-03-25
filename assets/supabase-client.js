@@ -25,8 +25,18 @@
   const VAULT_GATED_APPS = {
     promogrind: {
       name: 'PromoGrind',
-      url:  'https://promogrind.com',
+      url:  'https://vaultsparkstudios.com/promogrind',
       desc: 'Sportsbook promo conversion calculators — Vault Members only',
+    },
+    promogrind_local: {
+      name: 'PromoGrind',
+      url:  'http://localhost:5173',
+      desc: 'PromoGrind local dev',
+    },
+    promogrind_local2: {
+      name: 'PromoGrind',
+      url:  'http://localhost:5174',
+      desc: 'PromoGrind local dev',
     },
     // ── Future entries (uncomment and fill in when ready) ──
     // vaultfront: {
