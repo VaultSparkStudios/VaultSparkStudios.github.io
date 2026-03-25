@@ -1200,8 +1200,8 @@
       VSSupabase.rpc('get_member_stats', { p_user_id: member._id }).then(({ data: stats }) => {
         const calcsEl  = document.getElementById('stat-calcs');
         const ledgerEl = document.getElementById('stat-ledger');
-        if (stats && calcsEl)  calcsEl.textContent  = stats.calculation_count ?? '0';
-        if (stats && ledgerEl) ledgerEl.textContent = stats.ledger_entry_count ?? '0';
+        if (stats && calcsEl)  calcsEl.textContent  = stats.calc_count   ?? '0';
+        if (stats && ledgerEl) ledgerEl.textContent = stats.ledger_count ?? '0';
       }).catch(() => {
         const calcsEl  = document.getElementById('stat-calcs');
         const ledgerEl = document.getElementById('stat-ledger');
@@ -1465,11 +1465,9 @@
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) throw new Error('Session expired. Please sign in again.');
         const { error: rpcErr } = await VSSupabase.rpc('register_with_invite', {
-          p_user_id:   session.user.id,
-          p_email:     session.user.email,
-          p_username:  username,
           p_invite_code: invite,
-          p_subscribed: subscribe,
+          p_username:    username,
+          p_subscribe:   subscribe,
         });
         if (rpcErr) throw new Error(rpcErr.message);
         const { data: row } = await VSSupabase.from('vault_members').select('*').eq('id', session.user.id).single();
