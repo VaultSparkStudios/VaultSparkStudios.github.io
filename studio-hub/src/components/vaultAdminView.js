@@ -186,6 +186,66 @@ function renderChallengesTab(sbData) {
   `;
 }
 
+function renderInvestorRequestsTab(sbData) {
+  const inv = sbData?.investorRequests;
+
+  if (!inv) {
+    return `
+      <div class="empty-state" style="padding:40px;">
+        Investor request data unavailable — configure the Supabase anon key to load counts.
+      </div>
+    `;
+  }
+
+  const pending = inv.pending ?? 0;
+  const total = inv.total ?? 0;
+
+  return `
+    <div style="display:flex; flex-direction:column; gap:24px;">
+      <div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:12px;">Investor Requests Overview</div>
+        <div class="vitals-strip" style="grid-template-columns:repeat(2,1fr);">
+          <div class="vital-card">
+            <div class="vital-label">Pending Review</div>
+            <div class="vital-value ${pending > 0 ? "red" : "cyan"}">${fmt(pending)}</div>
+          </div>
+          <div class="vital-card">
+            <div class="vital-label">Total Submitted</div>
+            <div class="vital-value">${fmt(total)}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-body">
+          ${pending > 0 ? `
+            <div class="alert-item warning" style="margin-bottom:12px;">
+              ${pending} investor request${pending === 1 ? "" : "s"} awaiting review.
+            </div>
+          ` : `
+            <div class="data-row">
+              <span class="label">Status</span>
+              <span class="value" style="color:var(--green);">All requests reviewed</span>
+            </div>
+          `}
+          <div class="data-row">
+            <span class="label">Review &amp; manage requests</span>
+            <span class="value">
+              <a href="https://vaultsparkstudios.github.io/vault-member/" target="_blank"
+                 style="color:var(--blue); text-decoration:none; font-size:12px;">
+                Open Vault Command →
+              </a>
+            </span>
+          </div>
+          <div style="font-size:11px; color:var(--muted); margin-top:8px; line-height:1.55;">
+            Full investor request details, questionnaire answers, and approve/reject actions are in the Vault Command admin panel under the Investor Requests tab.
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderBetaKeysTab(sbData) {
   const betaKeys = sbData?.betaKeys || {};
   const entries = Object.entries(betaKeys);
@@ -230,11 +290,13 @@ function renderBetaKeysTab(sbData) {
 
 export function renderVaultAdminView(state) {
   const { sbData = null, adminTab = "members" } = state;
+  const invPending = sbData?.investorRequests?.pending ?? 0;
   const tabs = [
     { id: "members", label: "Members" },
     { id: "pulse", label: "Studio Pulse" },
     { id: "challenges", label: "Challenges" },
     { id: "beta-keys", label: "Beta Keys" },
+    { id: "investor-requests", label: `Investor Requests${invPending > 0 ? ` (${invPending})` : ""}` },
   ];
 
   const tabContent = {
@@ -242,6 +304,7 @@ export function renderVaultAdminView(state) {
     pulse: () => renderPulseTab(sbData, state),
     challenges: () => renderChallengesTab(sbData),
     "beta-keys": () => renderBetaKeysTab(sbData),
+    "investor-requests": () => renderInvestorRequestsTab(sbData),
   };
 
   return `

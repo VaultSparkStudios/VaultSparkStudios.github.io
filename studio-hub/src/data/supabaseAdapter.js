@@ -156,16 +156,42 @@ export async function fetchPointEconomy(supabaseUrl, anonKey, ttlMs = 300000) {
   return data;
 }
 
+export async function fetchInvestorRequestCount(supabaseUrl, anonKey, ttlMs = 60000) {
+  const key = "investor_req_count";
+  const cached = readCache(key, ttlMs);
+  if (cached) return cached;
+
+  // Calls the get_investor_request_count() security definer RPC (anon-safe — returns counts only)
+  try {
+    const res = await fetch(`${supabaseUrl}/rest/v1/rpc/get_investor_request_count`, {
+      method: "POST",
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+        "Content-Type": "application/json",
+      },
+      body: "{}",
+    });
+    if (!res.ok) return { pending: 0, total: 0 };
+    const data = await res.json();
+    writeCache(key, data);
+    return data;
+  } catch {
+    return { pending: 0, total: 0 };
+  }
+}
+
 // Fetch all studio Supabase data in parallel.
 export async function fetchAllSupabaseData(supabaseUrl, anonKey, ttlMs = 300000) {
   if (!supabaseUrl || !anonKey) return null;
-  const [members, sessions, pulse, challenges, betaKeys, economy] = await Promise.all([
+  const [members, sessions, pulse, challenges, betaKeys, economy, investorRequests] = await Promise.all([
     fetchMemberStats(supabaseUrl, anonKey, ttlMs),
     fetchGameSessions(supabaseUrl, anonKey, ttlMs),
     fetchStudioPulse(supabaseUrl, anonKey, 60000),
     fetchChallenges(supabaseUrl, anonKey, ttlMs),
     fetchBetaKeyInventory(supabaseUrl, anonKey, ttlMs),
     fetchPointEconomy(supabaseUrl, anonKey, ttlMs),
+    fetchInvestorRequestCount(supabaseUrl, anonKey, 60000),
   ]);
-  return { members, sessions, pulse, challenges, betaKeys, economy };
+  return { members, sessions, pulse, challenges, betaKeys, economy, investorRequests };
 }

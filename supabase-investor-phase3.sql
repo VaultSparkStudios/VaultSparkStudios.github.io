@@ -12,45 +12,6 @@
 
 -- ── Helper: generate a unique vault username from display_name ────────────────
 
-create or replace function private.generate_investor_username(p_display_name text)
-returns text
-language plpgsql
-security definer
-set search_path = public
-as $$
-declare
-  v_base    text;
-  v_attempt text;
-  v_n       integer := 0;
-begin
-  -- Slugify: lowercase, replace non-alphanumeric with underscore, trim
-  v_base := lower(regexp_replace(trim(p_display_name), '[^a-z0-9]+', '_', 'gi'));
-  v_base := trim(both '_' from v_base);
-  v_base := left(v_base, 28); -- leave room for suffix
-
-  -- Find a unique username
-  loop
-    v_attempt := case when v_n = 0 then v_base else v_base || '_' || v_n end;
-    exit when not exists (
-      select 1 from vault_members where username_lower = v_attempt
-    );
-    v_n := v_n + 1;
-    if v_n > 99 then
-      v_attempt := v_base || '_' || floor(random() * 9000 + 1000)::int;
-      exit;
-    end if;
-  end loop;
-
-  return v_attempt;
-end;
-$$;
-
--- Grant schema usage so the function can be called from public security definer RPCs
-create schema if not exists private;
-
--- Recreate with correct schema
-drop function if exists private.generate_investor_username(text);
-
 create or replace function public.generate_investor_username(p_display_name text)
 returns text
 language plpgsql

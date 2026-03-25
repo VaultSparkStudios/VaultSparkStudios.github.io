@@ -2280,6 +2280,24 @@
                 </div>
               </div>
 
+              <!-- Investor Requests -->
+              <div class="settings-block admin-panel-full">
+                <h3>Investor Requests
+                  <span id="inv-req-badge" style="display:none;margin-left:0.6rem;padding:0.15rem 0.55rem;border-radius:999px;font-size:0.72rem;font-weight:800;background:rgba(31,162,255,0.15);color:#1FA2FF;"></span>
+                </h3>
+                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">
+                  Applications submitted via <a href="/investor/apply/" style="color:#1FA2FF;">/investor/apply/</a>. Approve to grant portal access.
+                </p>
+                <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;" id="inv-req-filters">
+                  <button class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(31,162,255,0.15);border:1px solid rgba(31,162,255,0.3);" onclick="loadInvRequests('pending')" data-filter="pending">Pending</button>
+                  <button class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" onclick="loadInvRequests('contacted')" data-filter="contacted">Contacted</button>
+                  <button class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" onclick="loadInvRequests('approved')" data-filter="approved">Approved</button>
+                  <button class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" onclick="loadInvRequests('rejected')" data-filter="rejected">Rejected</button>
+                  <button class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" onclick="loadInvRequests(null)" data-filter="all">All</button>
+                </div>
+                <div id="inv-req-list" style="font-size:0.88rem;color:var(--muted);">Loading…</div>
+              </div>
+
             </div>
           </div><!-- /dash-pane-admin -->
 
@@ -2823,6 +2841,7 @@
       const navAdminLink  = document.getElementById('nav-admin-link');
       if (adminTabEl)   adminTabEl.style.display   = isAdmin ? '' : 'none';
       if (navAdminLink) navAdminLink.style.display = isAdmin ? '' : 'none';
+      if (isAdmin) loadInvRequests('pending');
     }
 
     // ── Current member reference (for card generation etc.) ──────
@@ -3670,6 +3689,116 @@
         document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
         finish();
       });
+    }
+
+    // ── Investor Requests ─────────────────────────────────────────
+
+    const INV_RANGE_LABELS = {
+      under_10k: 'Under $10k', '10k_50k': '$10k–$50k',
+      '50k_250k': '$50k–$250k', '250k_plus': '$250k+', unspecified: 'Not specified'
+    };
+    const INV_STATUS_COLORS = {
+      pending: '#1FA2FF', contacted: '#FFC400', approved: '#10B981', rejected: '#ef4444'
+    };
+
+    async function loadInvRequests(status) {
+      const list = document.getElementById('inv-req-list');
+      if (!list) return;
+
+      // Update filter button styles
+      document.querySelectorAll('#inv-req-filters button').forEach(btn => {
+        const active = btn.dataset.filter === (status || 'all');
+        btn.style.background = active ? 'rgba(31,162,255,0.15)' : 'transparent';
+        btn.style.borderColor = active ? 'rgba(31,162,255,0.3)' : 'rgba(255,255,255,0.1)';
+      });
+
+      list.innerHTML = '<span style="color:var(--dim);">Loading…</span>';
+
+      const { data, error } = await VSSupabase.rpc('admin_get_investor_requests', {
+        p_status: status || null
+      });
+
+      if (error || data?.error) {
+        list.innerHTML = `<span style="color:#ef4444;">Error: ${data?.error || error?.message}</span>`;
+        return;
+      }
+
+      const requests = Array.isArray(data) ? data : [];
+
+      // Update badge
+      const badge = document.getElementById('inv-req-badge');
+      if (badge) {
+        const pending = requests.filter(r => r.status === 'pending').length;
+        if (pending > 0 && !status) {
+          badge.textContent = pending + ' pending';
+          badge.style.display = 'inline';
+        } else { badge.style.display = 'none'; }
+      }
+
+      if (requests.length === 0) {
+        list.innerHTML = '<span style="color:var(--dim);">No requests in this category.</span>';
+        return;
+      }
+
+      list.innerHTML = requests.map(r => `
+        <div style="border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:0.75rem;background:rgba(255,255,255,0.02);">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;flex-wrap:wrap;">
+            <strong style="color:var(--text);">${escHtml(r.full_name)}</strong>
+            <a href="mailto:${escHtml(r.email)}" style="color:#1FA2FF;font-size:0.85rem;">${escHtml(r.email)}</a>
+            <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.15rem 0.5rem;border-radius:4px;background:rgba(31,162,255,0.08);color:${INV_STATUS_COLORS[r.status] || '#8a9bbf'};">${r.status}</span>
+            ${r.organization ? `<span style="font-size:0.82rem;color:var(--muted);">${escHtml(r.organization)}</span>` : ''}
+            <span style="font-size:0.78rem;color:var(--dim);margin-left:auto;">${INV_RANGE_LABELS[r.investment_range] || '—'} · ${new Date(r.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
+            <div>
+              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Why approve?</div>
+              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.why_approve)}</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Interest in VaultSpark</div>
+              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.why_vaultspark)}</div>
+            </div>
+            ${r.investing_history ? `
+            <div>
+              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Investing history</div>
+              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.investing_history)}</div>
+            </div>` : ''}
+            ${r.value_beyond_capital ? `
+            <div>
+              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Value beyond capital</div>
+              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.value_beyond_capital)}</div>
+            </div>` : ''}
+          </div>
+          <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+            <button onclick="updateInvRequest('${r.id}','contacted')" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.25);color:#FFC400;">Mark Contacted</button>
+            <button onclick="updateInvRequest('${r.id}','approved')" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#10B981;">Approve</button>
+            <button onclick="updateInvRequest('${r.id}','rejected')" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(214,40,40,0.08);border:1px solid rgba(214,40,40,0.2);color:#ef4444;">Reject</button>
+            ${r.prior_gaming ? '<span style="font-size:0.78rem;color:var(--dim);">· Prior gaming investor</span>' : ''}
+            ${r.how_heard ? `<span style="font-size:0.78rem;color:var(--dim);">· Found us via: ${escHtml(r.how_heard)}</span>` : ''}
+          </div>
+          ${r.admin_notes ? `<div style="margin-top:0.6rem;font-size:0.82rem;color:var(--dim);font-style:italic;">Note: ${escHtml(r.admin_notes)}</div>` : ''}
+        </div>`).join('');
+    }
+
+    async function updateInvRequest(id, status) {
+      const note = status === 'rejected' ? prompt('Optional note (visible to you only):') : null;
+      const { data, error } = await VSSupabase.rpc('admin_update_investor_request', {
+        p_request_id: id,
+        p_status: status,
+        p_notes: note || null
+      });
+      if (error || data?.error) {
+        alert('Error: ' + (data?.error || error?.message));
+        return;
+      }
+      // Reload current filter
+      const activeFilter = document.querySelector('#inv-req-filters button[style*="rgba(31,162,255"]');
+      loadInvRequests(activeFilter?.dataset.filter === 'all' ? null : activeFilter?.dataset.filter || 'pending');
+    }
+
+    function escHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
     // ── Vault Command (Admin — member #1 only) ───────────────────
