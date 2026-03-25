@@ -112,6 +112,181 @@
     .auth-panel { display: none; }
     .auth-panel.active { display: block; }
 
+    /* ─── VaultSparked Badge ─── */
+    .vaultsparked-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.38rem;
+      padding: 0.28rem 0.75rem 0.28rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, #0a0a14 0%, #12102a 100%);
+      border: 1px solid transparent;
+      background-clip: padding-box;
+      position: relative;
+      color: #e8d5ff;
+      cursor: default;
+      white-space: nowrap;
+    }
+    .vaultsparked-badge::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #FFC400, #7B5FFF, #1FA2FF, #FFC400);
+      background-size: 300% 300%;
+      animation: vs-border-spin 4s linear infinite;
+      z-index: -1;
+    }
+    .vaultsparked-badge::after {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #FFC400, #7B5FFF, #1FA2FF);
+      opacity: 0.15;
+      filter: blur(6px);
+      animation: vs-border-spin 4s linear infinite reverse;
+      z-index: -2;
+    }
+    .vaultsparked-badge .vs-spark {
+      display: inline-block;
+      font-style: normal;
+      animation: vs-spark-pulse 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 4px #FFC400);
+    }
+    .vaultsparked-badge .vs-text {
+      background: linear-gradient(90deg, #FFC400 0%, #c084fc 50%, #1FA2FF 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: vs-text-shine 3s linear infinite;
+    }
+    @keyframes vs-border-spin {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 300% 50%; }
+    }
+    @keyframes vs-spark-pulse {
+      0%, 100% { transform: scale(1);   filter: drop-shadow(0 0 3px #FFC400); }
+      50%       { transform: scale(1.3); filter: drop-shadow(0 0 8px #FFC400) drop-shadow(0 0 14px #7B5FFF); }
+    }
+    @keyframes vs-text-shine {
+      0%   { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* Static (small) variant — for leaderboards, tool headers */
+    .vaultsparked-badge-sm {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.66rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #1a0f2e, #0d1527);
+      border: 1px solid rgba(123,95,255,0.5);
+      color: #c084fc;
+      box-shadow: 0 0 8px rgba(123,95,255,0.25), inset 0 0 8px rgba(123,95,255,0.05);
+      white-space: nowrap;
+    }
+
+    /* ─── VaultSparked upgrade CTA panel ─── */
+    .vaultsparked-cta {
+      background: linear-gradient(135deg, rgba(123,95,255,0.08), rgba(31,162,255,0.06), rgba(255,196,0,0.06));
+      border: 1px solid rgba(123,95,255,0.25);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .vaultsparked-cta::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: conic-gradient(from 0deg, transparent 0deg, rgba(123,95,255,0.04) 60deg, transparent 120deg);
+      animation: vs-cta-rotate 8s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes vs-cta-rotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .vaultsparked-cta h3 {
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #FFC400, #c084fc, #1FA2FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .vaultsparked-cta .cta-price {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1;
+      margin: 0.75rem 0 0.25rem;
+    }
+    .vaultsparked-cta .cta-price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .vaultsparked-cta .cta-perks {
+      list-style: none;
+      padding: 0;
+      margin: 1.2rem auto;
+      max-width: 340px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .vaultsparked-cta .cta-perks li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.9rem;
+      color: var(--light);
+    }
+    .vaultsparked-cta .cta-perks li::before {
+      content: '⚡';
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .vaultsparked-cta .cta-btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #7B5FFF, #1FA2FF);
+      color: #fff;
+      font-weight: 900;
+      font-size: 1rem;
+      font-family: inherit;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      box-shadow: 0 4px 20px rgba(123,95,255,0.4);
+      transition: opacity 0.2s, transform 0.15s;
+      position: relative;
+      z-index: 1;
+    }
+    .vaultsparked-cta .cta-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .vaultsparked-cta .cta-note {
+      font-size: 0.78rem;
+      color: var(--dim);
+      margin-top: 0.75rem;
+    }
+
     .form-group {
       margin-bottom: 1.1rem;
     }
@@ -1055,6 +1230,39 @@
     .challenge-done { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: #34d399; font-weight: 700; }
     .challenge-expires { font-size: 0.73rem; color: var(--dim); }
 
+    /* ─── Phase 9: Push Notifications (no new CSS — reuses toggle-switch) ─── */
+
+    /* ─── Phase 10: Studio Pulse ─── */
+    .pulse-live-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse-blink 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse-blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.35; transform: scale(0.8); }
+    }
+    .pulse-feed { display: flex; flex-direction: column; }
+    .pulse-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .pulse-item:last-child { border-bottom: none; }
+    .pulse-type-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .pulse-body { flex: 1; min-width: 0; }
+    .pulse-message { font-size: 0.875rem; color: var(--text); line-height: 1.45; }
+    .pulse-time    { font-size: 0.72rem; color: var(--dim); margin-top: 0.1rem; }
+
     /* ─── Phase 7: Discord Connect ─── */
     .discord-connect-btn {
       display: inline-flex; align-items: center; gap: 0.5rem;
@@ -1451,6 +1659,9 @@
               <h2 id="profile-username">VaultMember</h2>
               <div class="profile-meta">
                 <span class="rank-badge badge-gold" id="profile-rank-badge">Spark Initiate</span>
+                <span class="vaultsparked-badge" id="profile-sparked-badge" style="display:none;">
+                  <i class="vs-spark">⚡</i><span class="vs-text">VaultSparked</span>
+                </span>
                 <span class="profile-pts" id="profile-pts">10 pts</span>
                 <span class="profile-pts" id="profile-since"></span>
                 <span class="member-number" id="profile-member-number"></span>
@@ -1558,6 +1769,43 @@
               <div class="achievement-grid" id="achievement-grid">
                 <!-- populated by JS -->
               </div>
+            </div>
+
+            <!-- VaultSparked CTA (shown to free members only) -->
+            <div class="dashboard-full" id="vaultsparked-cta-panel">
+              <div class="vaultsparked-cta">
+                <div style="margin-bottom:0.5rem;">
+                  <span class="vaultsparked-badge" style="font-size:0.85rem;padding:0.4rem 1rem;">
+                    <i class="vs-spark">⚡</i><span class="vs-text">VaultSparked</span>
+                  </span>
+                </div>
+                <h3>Unlock Everything. Forever.</h3>
+                <p style="color:var(--muted);font-size:0.92rem;max-width:44ch;margin:0 auto;">One membership. Every VaultSpark tool, every game perk, every early drop — and everything we add next.</p>
+                <div class="cta-price">$24.99<span>/month</span></div>
+                <ul class="cta-perks">
+                  <li>PromoGrind Live Arb + EV Scanner (real-time odds)</li>
+                  <li>Exclusive VaultSparked badge across all games + tools</li>
+                  <li>2× Vault point multiplier on every action</li>
+                  <li>Early access to every new release</li>
+                  <li>Exclusive cosmetics in Call of Doodie + future games</li>
+                  <li>Every new feature and tool added automatically</li>
+                </ul>
+                <button class="cta-btn" id="vaultsparked-upgrade-btn" onclick="VS.startVaultSparkedCheckout()">
+                  Get VaultSparked →
+                </button>
+                <p class="cta-note">Cancel anytime. Free Vault Member features always free.</p>
+              </div>
+            </div>
+
+            <!-- Live Studio Pulse (Phase 10) -->
+            <div class="dash-panel dashboard-full" id="pulse-panel">
+              <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;">
+                <h3 style="margin:0;">Studio Pulse</h3>
+                <span id="pulse-live-badge" style="display:none;align-items:center;gap:0.35rem;font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#22c55e;">
+                  <span class="pulse-live-dot"></span>LIVE
+                </span>
+              </div>
+              <div id="pulse-feed"><div style="color:var(--dim);font-size:0.88rem;">Loading…</div></div>
             </div>
 
             <!-- Studio Pipeline -->
@@ -1816,6 +2064,24 @@
                 </div>
               </div>
 
+              <!-- Full-width: Push Notifications (Phase 9) -->
+              <div class="settings-full">
+                <div class="settings-block">
+                  <h3>Push Notifications</h3>
+                  <div class="newsletter-toggle">
+                    <div>
+                      <strong>Vault Dispatch Push</strong>
+                      <p>Receive a browser notification when new classified files or studio alerts drop in the Vault.</p>
+                    </div>
+                    <label class="toggle-switch" id="push-toggle-wrap">
+                      <input type="checkbox" id="toggle-push" onchange="togglePushNotifications(this.checked)" disabled />
+                      <span class="slider"></span>
+                    </label>
+                  </div>
+                  <p style="font-size:0.79rem;color:var(--dim);margin-top:0.5rem;line-height:1.55;" id="push-status-msg">Checking push support…</p>
+                </div>
+              </div>
+
               <!-- Full-width: Connected Accounts -->
               <div class="settings-full">
                 <div class="settings-block">
@@ -1999,6 +2265,24 @@
         showAuth();
       },
 
+      async startVaultSparkedCheckout() {
+        const btn = document.getElementById('vaultsparked-upgrade-btn');
+        if (btn) { btn.textContent = 'Redirecting…'; btn.disabled = true; }
+        try {
+          const { data: { session } } = await VSSupabase.auth.getSession();
+          if (!session) { showAuth(); return; }
+          const { data, error } = await VSSupabase.functions.invoke('create-checkout', {
+            headers: { Authorization: `Bearer ${session.access_token}` },
+            body: { plan: 'vault_sparked' },
+          });
+          if (error || !data?.url) throw new Error(error?.message || 'Checkout unavailable');
+          window.location.href = data.url;
+        } catch (err) {
+          if (btn) { btn.textContent = 'Get VaultSparked →'; btn.disabled = false; }
+          console.error('[VaultSparked] Checkout error:', err.message);
+        }
+      },
+
       async savePrefs() {
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) return;
@@ -2176,6 +2460,8 @@
 
     // ── UI helpers ──────────────────────────────────────────────
     function showAuth() {
+      // Phase 10: tear down realtime channel on logout/auth switch
+      if (_pulseChannel) { VSSupabase.removeChannel(_pulseChannel); _pulseChannel = null; }
       document.getElementById('auth-view').style.display = '';
       document.getElementById('dashboard-view').style.display = 'none';
       document.getElementById('nav-account-wrap').style.display = 'none';
@@ -2247,6 +2533,22 @@
       document.getElementById('stat-achievements').textContent =
         achEarned.length + ' / ' + VS.ACHIEVEMENT_DEFS.length;
 
+      // VaultSparked badge + CTA visibility (async subscription check)
+      const sparkedBadge = document.getElementById('profile-sparked-badge');
+      const ctaPanel     = document.getElementById('vaultsparked-cta-panel');
+      VSSupabase.from('subscriptions')
+        .select('status, plan')
+        .eq('user_id', member._id)
+        .maybeSingle()
+        .then(({ data: sub }) => {
+          const isSparked = sub && sub.status === 'active' && (sub.plan === 'vault_sparked' || sub.plan === 'pro');
+          if (sparkedBadge) sparkedBadge.style.display = isSparked ? '' : 'none';
+          if (ctaPanel)     ctaPanel.style.display     = isSparked ? 'none' : '';
+        }).catch(() => {
+          if (sparkedBadge) sparkedBadge.style.display = 'none';
+          if (ctaPanel)     ctaPanel.style.display     = '';
+        });
+
       // Extended stats (PromoGrind / Ledger)
       VSSupabase.rpc('get_member_stats', { p_user_id: member._id }).then(({ data: stats }) => {
         const calcsEl  = document.getElementById('stat-calcs');
@@ -2314,6 +2616,12 @@
 
       // Phase 7: populate Discord status in settings
       updateDiscordUI(member.discord_id);
+
+      // Phase 9: register service worker + load push toggle state
+      registerServiceWorker().then(() => loadPushStatus());
+
+      // Phase 10: start live studio pulse
+      initStudioPulse();
 
       // Phase 4/5/6/7/8: load challenges, auto-complete eligible ones, reset lazy-load flags
       _archiveLoaded   = false;

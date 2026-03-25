@@ -1,22 +1,33 @@
 // VaultSpark Studios — Stripe Checkout Session Creator
-// Creates a hosted Stripe Checkout session for Pro subscription.
+// Creates a hosted Stripe Checkout session.
+// Supports two plans:
+//   vault_sparked — $24.99/month studio-wide membership (STRIPE_VAULT_SPARKED_PRICE_ID)
+//   pro           — legacy PromoGrind-only Pro plan    (STRIPE_PRICE_ID)
 //
 // Deploy: supabase functions deploy create-checkout
 // Set secrets:
 //   supabase secrets set STRIPE_SECRET_KEY=sk_live_...
-//   supabase secrets set STRIPE_PRICE_ID=price_...   (your monthly Pro price ID)
-//   supabase secrets set APP_URL=https://promogrind.com
+//   supabase secrets set STRIPE_VAULT_SPARKED_PRICE_ID=price_...  (VaultSparked $24.99/mo)
+//   supabase secrets set STRIPE_PRICE_ID=price_...                (legacy PromoGrind Pro, optional)
+//   supabase secrets set APP_URL=https://vaultsparkstudios.com
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'https://esm.sh/stripe@14?target=deno';
 
-const stripe   = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
+const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
   apiVersion: '2023-10-16',
   httpClient: Stripe.createFetchHttpClient(),
 });
-const PRICE_ID = Deno.env.get('STRIPE_PRICE_ID') ?? '';
-const APP_URL  = Deno.env.get('APP_URL') ?? 'https://promogrind.com';
+const PRICE_IDS: Record<string, string> = {
+  vault_sparked: Deno.env.get('STRIPE_VAULT_SPARKED_PRICE_ID') ?? '',
+  pro:           Deno.env.get('STRIPE_PRICE_ID') ?? '',
+};
+const APP_URL = Deno.env.get('APP_URL') ?? 'https://vaultsparkstudios.com';
+const SUCCESS_URLS: Record<string, string> = {
+  vault_sparked: `${APP_URL}/vault-member/?checkout=success`,
+  pro:           `${APP_URL}/promogrind/?checkout=success`,
+};
 
 const CORS = {
   'Access-Control-Allow-Origin':  '*',
@@ -40,13 +51,23 @@ serve(async (req: Request) => {
     );
     if (error || !user) return json({ error: 'Invalid token' }, 401);
 
+    // Determine plan from request body (default: vault_sparked)
+    let plan = 'vault_sparked';
+    try {
+      const body = await req.json();
+      if (body?.plan && PRICE_IDS[body.plan]) plan = body.plan;
+    } catch { /* no body or invalid JSON — use default */ }
+
+    const priceId = PRICE_IDS[plan];
+    if (!priceId) return json({ error: `No price configured for plan: ${plan}` }, 400);
+
     // Look up or create Stripe customer
     let customerId: string | undefined;
     const { data: sub } = await supabase
       .from('subscriptions')
       .select('stripe_customer_id')
       .eq('user_id', user.id)
-      .single();
+      .maybeSingle();
 
     if (sub?.stripe_customer_id) {
       customerId = sub.stripe_customer_id;
@@ -58,15 +79,17 @@ serve(async (req: Request) => {
       customerId = customer.id;
     }
 
+    const successUrl = SUCCESS_URLS[plan] ?? `${APP_URL}/vault-member/?checkout=success`;
+
     const session = await stripe.checkout.sessions.create({
-      customer:            customerId,
-      mode:                'subscription',
+      customer:             customerId,
+      mode:                 'subscription',
       payment_method_types: ['card'],
-      line_items:          [{ price: PRICE_ID, quantity: 1 }],
-      success_url:         `${APP_URL}/?checkout=success`,
-      cancel_url:          `${APP_URL}/?checkout=canceled`,
-      metadata:            { vault_user_id: user.id },
-      subscription_data:   { metadata: { vault_user_id: user.id } },
+      line_items:           [{ price: priceId, quantity: 1 }],
+      success_url:          successUrl,
+      cancel_url:           `${APP_URL}/vault-member/?checkout=canceled`,
+      metadata:             { vault_user_id: user.id, plan },
+      subscription_data:    { metadata: { vault_user_id: user.id, plan } },
     });
 
     return json({ url: session.url });

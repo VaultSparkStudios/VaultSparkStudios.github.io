@@ -60,13 +60,14 @@ serve(async (req: Request) => {
           break;
         }
 
-        const sub = await stripe.subscriptions.retrieve(subscriptionId);
+        const sub  = await stripe.subscriptions.retrieve(subscriptionId);
+        const plan = (session.metadata?.plan ?? sub.metadata?.plan ?? 'vault_sparked') as string;
 
         await supabase.from('subscriptions').upsert({
           user_id:                userId,
           stripe_customer_id:     customerId,
           stripe_subscription_id: subscriptionId,
-          plan:                   'pro',
+          plan,
           status:                 sub.status === 'active' ? 'active' : 'inactive',
           current_period_end:     new Date(sub.current_period_end * 1000).toISOString(),
           updated_at:             new Date().toISOString(),
