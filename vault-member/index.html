@@ -2375,6 +2375,29 @@
                 </div>
               </div>
 
+              <!-- Full-width: Change Password -->
+              <div class="settings-full">
+                <div class="settings-block">
+                  <h3>Change Password</h3>
+                  <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.85rem;line-height:1.55;">Update your Vault Member password. A password reset email will be sent to your registered email address.</p>
+                  <button onclick="sendPasswordReset()" id="pw-reset-btn" class="button button-sm" style="background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);">Send Password Reset Email</button>
+                  <span id="pw-reset-msg" style="display:none;font-size:0.82rem;color:#10B981;margin-left:0.75rem;">✓ Reset email sent — check your inbox.</span>
+                </div>
+              </div>
+
+              <!-- Full-width: Data & Privacy -->
+              <div class="settings-full">
+                <div class="settings-block">
+                  <h3>Data &amp; Privacy</h3>
+                  <p style="font-size:0.84rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Your data rights under GDPR and applicable privacy laws. Export a copy of your data or request account deletion.</p>
+                  <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                    <button onclick="exportMyData()" id="export-data-btn" class="button button-sm" style="background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);">⬇ Export My Data</button>
+                    <button onclick="requestDeleteAccount()" style="padding:0.55rem 1.1rem;background:transparent;border:1px solid rgba(248,113,113,0.3);color:#f87171;font-weight:700;font-size:0.88rem;border-radius:10px;cursor:pointer;font-family:inherit;transition:all 0.15s;" onmouseenter="this.style.background='rgba(248,113,113,0.08)'" onmouseleave="this.style.background='transparent'">🗑 Delete Account</button>
+                  </div>
+                  <p style="font-size:0.76rem;color:var(--dim);margin-top:0.75rem;line-height:1.55;">Export downloads a JSON file of your profile, points, and challenge history. Account deletion is permanent and irreversible — all data will be erased.</p>
+                </div>
+              </div>
+
               <!-- Full-width: Connected Accounts -->
               <div class="settings-full">
                 <div class="settings-block">
@@ -5362,6 +5385,75 @@
           }
         }
       } catch (_) {}
+    }
+
+    async function sendPasswordReset() {
+      const btn = document.getElementById('pw-reset-btn');
+      const msg = document.getElementById('pw-reset-msg');
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const { error } = await VSSupabase.auth.resetPasswordForEmail(session.user.email, {
+          redirectTo: window.location.origin + '/vault-member/',
+        });
+        if (!error) {
+          if (msg) { msg.style.display = ''; }
+          if (btn) { btn.textContent = 'Email Sent'; }
+        } else {
+          if (btn) { btn.disabled = false; btn.textContent = 'Send Password Reset Email'; }
+        }
+      } catch (_) {
+        if (btn) { btn.disabled = false; btn.textContent = 'Send Password Reset Email'; }
+      }
+    }
+
+    async function exportMyData() {
+      const btn = document.getElementById('export-data-btn');
+      if (btn) { btn.disabled = true; btn.textContent = 'Preparing…'; }
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const uid = session.user.id;
+
+        const [{ data: profile }, { data: points }, { data: challenges }] = await Promise.all([
+          VSSupabase.from('vault_members').select('*').eq('id', uid).single(),
+          VSSupabase.from('point_events').select('points,reason,label,created_at').eq('user_id', uid).order('created_at', { ascending: false }).limit(500),
+          VSSupabase.from('challenge_submissions').select('challenge_id,created_at').eq('user_id', uid).order('created_at', { ascending: false }),
+        ]);
+
+        const exportData = {
+          exported_at: new Date().toISOString(),
+          email: session.user.email,
+          profile: profile || {},
+          point_history: points || [],
+          challenge_completions: challenges || [],
+        };
+
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'vaultspark-data-' + (profile?.username || uid) + '.json';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (_) {}
+      if (btn) { btn.disabled = false; btn.textContent = '⬇ Export My Data'; }
+    }
+
+    function requestDeleteAccount() {
+      const confirmed = confirm(
+        'Delete your Vault Member account?\n\n' +
+        'This is permanent and irreversible. All your points, achievements, and data will be erased.\n\n' +
+        'To confirm, click OK. You will be signed out immediately and your account will be queued for deletion.'
+      );
+      if (!confirmed) return;
+      VSSupabase.auth.getSession().then(async ({ data: { session } }) => {
+        if (!session) return;
+        // Mark for deletion in vault_members (soft delete — admin can confirm)
+        await VSSupabase.from('vault_members').update({ delete_requested: true }).eq('id', session.user.id).catch(() => {});
+        await VSSupabase.auth.signOut();
+        window.location.href = '/';
+      });
     }
 
     async function refreshPointsDisplay() {
