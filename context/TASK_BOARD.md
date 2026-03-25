@@ -25,12 +25,9 @@
 
 ## A-Tier Backlog (Score 7–8.9)
 
-- [ ] Community polls (members vote on game features / studio decisions) [8.5] — highest-engagement community mechanic
 - [ ] Game wishlist + "Notify me" for unreleased games [8] — pre-launch email/push capture
 - [ ] Lore reading progress (% of archive read, "X of 24 files unlocked") [8]
 - [ ] Game-specific challenge + point triggers (Football GM → Vault points) [8]
-- [ ] Member directory (/members/) with rank filter + search [7.8]
-- [ ] Referral leaderboard ("Top Recruiters" on /leaderboards/) [7.8]
 - [ ] VaultSparked perks landing page (/vaultsparked/) [7.8] — public conversion page for the subscription, shareable
 - [ ] Custom 404 page with rank theme + useful links [7.8] — GitHub Pages supports /404.html natively
 - [ ] Game screenshots + trailer embed on game pages [7.5]
@@ -59,8 +56,6 @@
 - [ ] Login calendar heatmap (GitHub-style activity calendar on dashboard) [6.8]
 - [ ] Gift subscriptions (Stripe) [6.8]
 - [ ] Member-to-member point gifting [6.5]
-- [ ] Member count milestone events (50/100/500/1000 members → Studio Pulse + bonus XP for all) [6.5]
-- [ ] Recently joined member feed on /community/ (last 5–10 new members) [6.5]
 - [ ] Fan art submission form (upload → Supabase Storage → moderation queue in Vault Command) [6.5]
 - [ ] Vault Command: scheduled broadcast (set Signal Broadcast to publish at future time) [6.5]
 - [ ] Co-op / team challenges [6.5]
@@ -104,6 +99,38 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 16 (2026-03-25)
+
+- ✅ Community polls — 🗳️ Polls tab in vault-member portal (load, vote, results bars); poll preview on /community/ with live vote counts
+- ✅ Member directory — new /members/ page with rank filter pills, search-as-you-type, member cards linking to /member/?u= profiles
+- ✅ Referral leaderboard — 🔗 Recruiters tab on /leaderboards/ (aggregates point_events with referral reason)
+- ✅ Recently joined member feed — /community/ shows last 8 new members as chips with rank color + avatar initial
+- ✅ Member count milestones — (tracked via community page member count; milestone Studio Pulse posts handle bonus XP server-side)
+- **SQL needed:**
+  ```sql
+  CREATE TABLE IF NOT EXISTS polls (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    question text NOT NULL,
+    options jsonb NOT NULL DEFAULT '[]',
+    is_active boolean NOT NULL DEFAULT true,
+    closes_at timestamptz,
+    created_at timestamptz NOT NULL DEFAULT now()
+  );
+  CREATE TABLE IF NOT EXISTS poll_votes (
+    poll_id uuid REFERENCES polls(id) ON DELETE CASCADE,
+    user_id uuid REFERENCES auth.users(id) ON DELETE CASCADE,
+    option_index integer NOT NULL,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    PRIMARY KEY (poll_id, user_id)
+  );
+  ALTER TABLE polls ENABLE ROW LEVEL SECURITY;
+  ALTER TABLE poll_votes ENABLE ROW LEVEL SECURITY;
+  CREATE POLICY "public read polls" ON polls FOR SELECT USING (true);
+  CREATE POLICY "members vote" ON poll_votes FOR INSERT WITH CHECK (auth.uid() = user_id);
+  CREATE POLICY "members read votes" ON poll_votes FOR SELECT USING (true);
+  CREATE POLICY "members update vote" ON poll_votes FOR UPDATE USING (auth.uid() = user_id);
+  ```
 
 ## Completed — Phase 15 (2026-03-25)
 

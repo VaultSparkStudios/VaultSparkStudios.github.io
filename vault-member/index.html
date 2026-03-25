@@ -1584,6 +1584,7 @@
             <a role="menuitem" href="#" onclick="switchDashTab('archive');closeNavDropdown();return false;">Classified Archive</a>
             <a role="menuitem" href="#" onclick="switchDashTab('challenges');closeNavDropdown();return false;">Vault Challenges</a>
             <a role="menuitem" href="#" onclick="switchDashTab('earlyaccess');closeNavDropdown();return false;">Early Access</a>
+            <a role="menuitem" href="#" onclick="switchDashTab('polls');closeNavDropdown();return false;">🗳️ Community Polls</a>
             <a role="menuitem" href="#" onclick="switchDashTab('chronicle');closeNavDropdown();return false;">Activity Chronicle</a>
             <a role="menuitem" href="#" onclick="switchDashTab('settings');closeNavDropdown();return false;">Profile &amp; Settings</a>
             <a role="menuitem" href="#" id="nav-admin-link" onclick="switchDashTab('admin');closeNavDropdown();return false;" style="display:none;">⚡ Vault Command</a>
@@ -1879,6 +1880,7 @@
             <button class="dash-tab" id="tab-dash-archive" onclick="switchDashTab('archive')">Classified Archive</button>
             <button class="dash-tab" id="tab-dash-challenges" onclick="switchDashTab('challenges')">Vault Challenges</button>
             <button class="dash-tab" id="tab-dash-earlyaccess" onclick="switchDashTab('earlyaccess')">Early Access</button>
+            <button class="dash-tab" id="tab-dash-polls" onclick="switchDashTab('polls')">🗳️ Polls</button>
             <button class="dash-tab" id="tab-dash-chronicle" onclick="switchDashTab('chronicle')">Chronicle</button>
             <button class="dash-tab" id="tab-dash-settings" onclick="switchDashTab('settings')">Profile &amp; Settings</button>
             <button class="dash-tab" id="tab-dash-admin" onclick="switchDashTab('admin')" style="display:none;">⚡ Vault Command</button>
@@ -2191,6 +2193,19 @@
 
           </div>
           </div><!-- /dash-pane-dashboard -->
+
+          <!-- ── Tab: Community Polls ── -->
+          <div class="dash-pane" id="dash-pane-polls">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.2rem;flex-wrap:wrap;">
+              <div>
+                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">🗳️ Community Polls</div>
+                <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Vote on game features, studio decisions, and community priorities. Your voice shapes the vault.</p>
+              </div>
+            </div>
+            <div id="portal-polls-list">
+              <div style="color:var(--dim);font-size:0.88rem;">Loading polls…</div>
+            </div>
+          </div><!-- /dash-pane-polls -->
 
           <!-- ── Tab: Classified Archive ── -->
           <div class="dash-pane" id="dash-pane-archive">
@@ -2843,6 +2858,7 @@
         loadClassifiedArchive();
       }
       if (which === 'challenges') loadChallenges();
+      if (which === 'polls') loadPolls();
       if (which === 'earlyaccess' && !_betaKeysLoaded) {
         _betaKeysLoaded = true;
         loadBetaKeys();
@@ -4845,6 +4861,95 @@
     let _challengeFilter   = 'All';
 
     const CATEGORY_FILTER_LIST = ['All', 'Daily', 'Weekly', 'Lore', 'Game', 'Social', 'One-Time', 'General'];
+
+    let _pollsLoaded = false;
+    async function loadPolls() {
+      if (_pollsLoaded) return;
+      _pollsLoaded = true;
+      const el = document.getElementById('portal-polls-list');
+      if (!el) return;
+
+      try {
+        const { data: polls, error } = await VSSupabase.from('polls')
+          .select('id, question, options, closes_at, is_active')
+          .eq('is_active', true)
+          .order('created_at', { ascending: false })
+          .limit(5);
+
+        if (error || !polls || polls.length === 0) {
+          el.innerHTML = `<div style="text-align:center;padding:3rem 1rem;color:var(--dim);">
+            <div style="font-size:2.5rem;margin-bottom:0.75rem;">🗳️</div>
+            <div style="font-size:0.9rem;line-height:1.6;">No active polls right now. Check back soon — the studio posts polls regularly to get your input on game decisions and community direction.</div>
+          </div>`;
+          return;
+        }
+
+        // Fetch current member's votes
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        let myVotes = {};
+        if (session) {
+          const { data: votes } = await VSSupabase.from('poll_votes')
+            .select('poll_id, option_index')
+            .eq('user_id', session.user.id);
+          (votes || []).forEach(v => { myVotes[v.poll_id] = v.option_index; });
+        }
+
+        el.innerHTML = polls.map(poll => {
+          const opts = Array.isArray(poll.options) ? poll.options : [];
+          const total = opts.reduce((s, o) => s + (o.votes || 0), 0) || 1;
+          const myVote = myVotes[poll.id];
+          const hasVoted = myVote !== undefined;
+          const closesStr = poll.closes_at
+            ? 'Closes ' + new Date(poll.closes_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+            : '';
+
+          return `<div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.5rem;margin-bottom:1rem;">
+            <div style="font-weight:700;color:var(--text);margin-bottom:1rem;font-size:0.95rem;">${poll.question}</div>
+            <div style="display:flex;flex-direction:column;gap:0.55rem;">
+              ${opts.map((o, idx) => {
+                const pct = Math.round(((o.votes || 0) / total) * 100);
+                const isMyVote = hasVoted && myVote === idx;
+                const label = typeof o === 'object' ? o.label : String(o);
+                if (hasVoted) {
+                  return `<div style="display:flex;align-items:center;gap:0.75rem;">
+                    <div style="min-width:110px;font-size:0.83rem;color:${isMyVote ? 'var(--gold)' : 'var(--text)'};">${label}${isMyVote ? ' ✓' : ''}</div>
+                    <div style="flex:1;height:28px;background:rgba(255,255,255,0.04);border:1px solid ${isMyVote ? 'rgba(255,196,0,0.3)' : 'rgba(255,255,255,0.07)'};border-radius:6px;overflow:hidden;position:relative;">
+                      <div style="height:100%;border-radius:6px;background:${isMyVote ? 'rgba(255,196,0,0.18)' : 'rgba(255,255,255,0.06)'};width:${pct}%;transition:width 0.5s ease;"></div>
+                      <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.73rem;font-weight:700;color:var(--muted);">${pct}%</span>
+                    </div>
+                  </div>`;
+                }
+                return `<button onclick="castVote('${poll.id}',${idx},this.closest('.poll-wrap'))" style="display:flex;align-items:center;gap:0.75rem;background:transparent;border:none;padding:0;cursor:pointer;font-family:inherit;width:100%;text-align:left;">
+                  <div style="min-width:110px;font-size:0.83rem;color:var(--text);">${label}</div>
+                  <div style="flex:1;height:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;position:relative;transition:border-color 0.15s;" onmouseenter="this.style.borderColor='rgba(255,196,0,0.35)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.08)'">
+                    <div style="height:100%;border-radius:6px;background:rgba(255,255,255,0.06);width:${pct}%;"></div>
+                    <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.73rem;font-weight:700;color:var(--dim);">${pct}%</span>
+                  </div>
+                </button>`;
+              }).join('')}
+            </div>
+            ${closesStr ? `<div style="font-size:0.72rem;color:var(--dim);margin-top:0.75rem;">${closesStr}</div>` : ''}
+          </div>`;
+        }).join('');
+      } catch (_) {
+        if (el) el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load polls.</div>';
+      }
+    }
+
+    async function castVote(pollId, optionIndex, container) {
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) { showXpChip(0, 'Sign in to vote'); return; }
+        const { error } = await VSSupabase.from('poll_votes').upsert(
+          { poll_id: pollId, user_id: session.user.id, option_index: optionIndex },
+          { onConflict: 'poll_id,user_id' }
+        );
+        if (!error) {
+          _pollsLoaded = false;
+          loadPolls();
+        }
+      } catch (_) {}
+    }
 
     async function loadChallenges() {
       const grid    = document.getElementById('challenges-list');

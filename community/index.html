@@ -92,6 +92,26 @@
     .comm-bottom-cta h2 { font-family:Georgia,"Times New Roman",serif; font-size:clamp(2rem,5vw,3.2rem); letter-spacing:-0.04em; margin:0.5rem 0 1rem; }
     .comm-bottom-cta p { color:var(--muted); max-width:48ch; margin:0 auto 2rem; line-height:1.65; }
 
+    /* ── Recently Joined ── */
+    .recent-members-row { display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:1rem; }
+    .recent-member-chip { display:flex; align-items:center; gap:0.55rem; background:var(--panel); border:1px solid var(--line); border-radius:999px; padding:0.35rem 0.8rem 0.35rem 0.4rem; }
+    .rmc-avatar { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; flex-shrink:0; }
+    .rmc-name { font-size:0.82rem; font-weight:600; color:var(--text); }
+    .rmc-rank { font-size:0.68rem; color:var(--muted); }
+
+    /* ── Polls ── */
+    .polls-box { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:1.75rem; }
+    .poll-item { padding:1.25rem 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .poll-item:last-child { border-bottom:none; padding-bottom:0; }
+    .poll-question { font-weight:700; color:var(--text); margin-bottom:0.85rem; font-size:0.95rem; }
+    .poll-options { display:flex; flex-direction:column; gap:0.5rem; }
+    .poll-bar-wrap { display:flex; align-items:center; gap:0.75rem; cursor:pointer; }
+    .poll-bar-wrap:hover .poll-bar-bg { border-color:rgba(255,196,0,0.4); }
+    .poll-bar-label { font-size:0.83rem; color:var(--text); min-width:100px; }
+    .poll-bar-bg { flex:1; height:28px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:6px; overflow:hidden; position:relative; transition:border-color 0.15s; }
+    .poll-bar-fill { height:100%; border-radius:6px; background:rgba(255,196,0,0.18); transition:width 0.5s ease; }
+    .poll-bar-pct { position:absolute; right:8px; top:50%; transform:translateY(-50%); font-size:0.73rem; font-weight:700; color:var(--muted); }
+
     /* ── Responsive ── */
     @media(max-width:768px) {
       .comm-stats { grid-template-columns:1fr 1fr; }
@@ -284,6 +304,37 @@
       </div>
     </section>
 
+    <!-- Recently Joined -->
+    <section class="comm-section">
+      <div class="container">
+        <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Members</div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+          <h2 style="margin:0;">Recently Joined</h2>
+          <a href="/members/" style="font-size:0.85rem;color:var(--gold);text-decoration:none;font-weight:600;white-space:nowrap;">Browse all members →</a>
+        </div>
+        <p style="color:var(--muted);font-size:0.92rem;line-height:1.6;margin-bottom:1.25rem;">The newest members of the vault. Welcome them on Discord.</p>
+        <div class="recent-members-row" id="recent-members-row">
+          <div style="color:var(--dim);font-size:0.85rem;">Loading…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Polls -->
+    <section class="comm-section">
+      <div class="container">
+        <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Your Voice</div>
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem;">
+          <h2 style="margin:0;">Community Polls</h2>
+          <span style="font-size:0.8rem;color:var(--dim);">Vault Members vote · results live</span>
+        </div>
+        <p style="color:var(--muted);font-size:0.92rem;line-height:1.6;margin-bottom:1.25rem;">Shape the studio's direction. Vote on upcoming features, game decisions, and community priorities.</p>
+        <div class="polls-box" id="polls-container">
+          <div style="color:var(--dim);font-size:0.88rem;">Loading polls…</div>
+        </div>
+        <p style="font-size:0.82rem;color:var(--dim);margin-top:0.75rem;">Voting requires a <a href="/vault-member/" style="color:var(--gold);">Vault Member account</a>.</p>
+      </div>
+    </section>
+
     <!-- Bottom CTA -->
     <section class="comm-bottom-cta">
       <div class="container">
@@ -353,8 +404,17 @@
       function fmt(n){return n>=1000?(n/1000).toFixed(1)+'K':String(n);}
       function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
-      /* Vault member count */
-      fetch(SB+'/rest/v1/vault_members?select=username,points,created_at&order=points.desc&limit=50',{headers:H})
+      var RANK_TIERS=[
+        {name:'Spark Initiate',min:0,max:99,color:'#8a93b8'},
+        {name:'Vault Runner',min:100,max:499,color:'#10B981'},
+        {name:'Forge Guard',min:500,max:1499,color:'#8B5CF6'},
+        {name:'Vault Keeper',min:1500,max:4999,color:'#1FA2FF'},
+        {name:'The Sparked',min:5000,max:Infinity,color:'#FFC400'}
+      ];
+      function getRankInfo(pts){for(var i=RANK_TIERS.length-1;i>=0;i--){if(pts>=RANK_TIERS[i].min)return RANK_TIERS[i];}return RANK_TIERS[0];}
+
+      /* Vault member count + leaderboard + recently joined */
+      fetch(SB+'/rest/v1/vault_members?select=username,points,created_at&order=points.desc&limit=100',{headers:H})
         .then(function(r){return r.ok?r.json():[];})
         .then(function(data){
           if(!Array.isArray(data))data=[];
@@ -372,9 +432,59 @@
               }).join('');
             }
           }
+
+          /* Recently joined */
+          var recentEl=document.getElementById('recent-members-row');
+          if(recentEl&&data.length){
+            var byDate=data.slice().sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at);});
+            var recent=byDate.slice(0,8);
+            recentEl.innerHTML=recent.map(function(m){
+              var ri=getRankInfo(m.points);
+              var initials=m.username.charAt(0).toUpperCase();
+              return '<div class="recent-member-chip">'+
+                '<div class="rmc-avatar" style="background:'+ri.color+'22;color:'+ri.color+';border:1px solid '+ri.color+'44;">'+initials+'</div>'+
+                '<div><div class="rmc-name"><a href="/member/?u='+encodeURIComponent(m.username)+'" style="color:inherit;text-decoration:none;">'+esc(m.username)+'</a></div>'+
+                '<div class="rmc-rank" style="color:'+ri.color+';">'+ri.name+'</div></div>'+
+              '</div>';
+            }).join('')+'<a href="/members/" style="display:inline-flex;align-items:center;padding:0.35rem 0.85rem;border:1px solid rgba(255,255,255,0.1);border-radius:999px;font-size:0.8rem;color:var(--muted);text-decoration:none;margin-top:0.15rem;">All members →</a>';
+          }
         }).catch(function(){
           var tb=document.getElementById('lbp-tbody');
           if(tb)tb.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:1.5rem;">Could not load data.</td></tr>';
+          var recentEl=document.getElementById('recent-members-row');
+          if(recentEl)recentEl.innerHTML='<div style="color:var(--dim);font-size:0.85rem;">Could not load.</div>';
+        });
+
+      /* Community Polls */
+      fetch(SB+'/rest/v1/polls?select=id,question,options,closes_at&eq.is_active=true&order=created_at.desc&limit=3',{headers:H})
+        .then(function(r){return r.ok?r.json():[];})
+        .then(function(polls){
+          var el=document.getElementById('polls-container');
+          if(!el)return;
+          if(!Array.isArray(polls)||polls.length===0){
+            el.innerHTML='<div style="text-align:center;padding:2rem 1rem;"><div style="font-size:2rem;margin-bottom:0.75rem;">🗳️</div><div style="color:var(--muted);font-size:0.9rem;line-height:1.6;">No active polls right now. Check back soon — polls are posted by the studio.</div></div>';
+            return;
+          }
+          el.innerHTML=polls.map(function(poll){
+            var opts=Array.isArray(poll.options)?poll.options:[];
+            var total=opts.reduce(function(s,o){return s+(o.votes||0);},0)||1;
+            return '<div class="poll-item">'+
+              '<div class="poll-question">'+esc(poll.question)+'</div>'+
+              '<div class="poll-options">'+
+              opts.map(function(o){
+                var pct=Math.round(((o.votes||0)/total)*100);
+                return '<div class="poll-bar-wrap">'+
+                  '<div class="poll-bar-label">'+esc(o.label||o)+'</div>'+
+                  '<div class="poll-bar-bg"><div class="poll-bar-fill" style="width:'+pct+'%"></div><span class="poll-bar-pct">'+pct+'%</span></div>'+
+                '</div>';
+              }).join('')+
+              '</div>'+
+              (poll.closes_at?'<div style="font-size:0.72rem;color:var(--dim);margin-top:0.65rem;">Closes '+new Date(poll.closes_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})+'</div>':'')+
+            '</div>';
+          }).join('');
+        }).catch(function(){
+          var el=document.getElementById('polls-container');
+          if(el)el.innerHTML='<div style="color:var(--dim);font-size:0.85rem;padding:1rem 0;">Could not load polls.</div>';
         });
 
       /* Game sessions this week */

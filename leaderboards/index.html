@@ -147,6 +147,7 @@
         <div class="lb-game-tabs" role="tablist" aria-label="Leaderboard game selection">
           <button class="lb-game-tab active" role="tab" aria-selected="true" aria-controls="lb-panel-global" data-game="global">Global</button>
           <button class="lb-game-tab" role="tab" aria-selected="false" aria-controls="lb-panel-challenges" data-game="challenges">⚡ Challenges</button>
+          <button class="lb-game-tab" role="tab" aria-selected="false" aria-controls="lb-panel-referrals" data-game="referrals">🔗 Recruiters</button>
           <button class="lb-game-tab" role="tab" aria-selected="false" aria-controls="lb-panel-football" data-game="football">Football GM</button>
           <button class="lb-game-tab" role="tab" aria-selected="false" aria-controls="lb-panel-doodie" data-game="doodie">Call of Doodie</button>
         </div>
@@ -224,6 +225,30 @@
             </div>
           </div>
         </div><!-- /lb-panel-challenges -->
+
+        <!-- Referral Recruiters Panel -->
+        <div class="lb-game-panel" id="lb-panel-referrals" role="tabpanel" aria-labelledby="tab-referrals">
+          <div class="lb-game-notice">
+            Top Vault Member recruiters — members who have brought the most new members into the vault via referral links.
+          </div>
+          <div class="lb-table-wrap" id="referrals-table-wrap">
+            <table class="lb-table" aria-label="Top recruiters leaderboard">
+              <thead><tr><th>Rank</th><th>Recruiter</th><th>Referrals</th><th>Pts Earned</th></tr></thead>
+              <tbody id="referrals-tbody">
+                <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="referrals-empty" style="display:none;">
+            <div class="lb-game-empty">
+              <div class="empty-icon">🔗</div>
+              <p>No referrals tracked yet. Share your referral link from the vault to start recruiting.</p>
+              <a href="/vault-member/" class="button button-sm">Get Referral Link</a>
+            </div>
+          </div>
+        </div><!-- /lb-panel-referrals -->
 
         <!-- Football GM Panel -->
         <div class="lb-game-panel" id="lb-panel-football" role="tabpanel" aria-labelledby="tab-football">
@@ -571,13 +596,63 @@
           });
       }
 
+      // ── Referral leaderboard ───────────────────────────────────
+      function fetchReferralLeaderboard() {
+        // Use invite_codes table: each row has an owner (who created it) and used_by (who redeemed)
+        // Aggregate by looking at point_events with reason containing 'referral'
+        fetch(SB+'/rest/v1/point_events?select=user_id,points,reason,vault_members(username)&reason=like.referral*&order=created_at.desc&limit=500', {headers:H})
+          .then(function(r){return r.ok?r.json():[];})
+          .then(function(rows){
+            var tbody=document.getElementById('referrals-tbody');
+            var wrap=document.getElementById('referrals-table-wrap');
+            var empty=document.getElementById('referrals-empty');
+            if(!tbody)return;
+            if(!Array.isArray(rows)||rows.length===0){
+              if(wrap)wrap.style.display='none';
+              if(empty)empty.style.display='';
+              return;
+            }
+            var agg={};
+            rows.forEach(function(r){
+              var vm=r.vault_members;
+              var uname=vm&&vm.username?vm.username:r.user_id;
+              if(!uname)return;
+              if(!agg[uname])agg[uname]={username:uname,referrals:0,pts:0};
+              agg[uname].referrals++;
+              agg[uname].pts+=(r.points||0);
+            });
+            var sorted=Object.values(agg).sort(function(a,b){return b.referrals-a.referrals;});
+            if(!sorted.length){
+              if(wrap)wrap.style.display='none';
+              if(empty)empty.style.display='';
+              return;
+            }
+            if(wrap)wrap.style.display='';
+            if(empty)empty.style.display='none';
+            tbody.innerHTML=sorted.map(function(m,i){
+              return '<tr><td><span class="lb-rank-num">'+(i+1)+'</span></td>'+
+                '<td><span class="lb-username">'+esc(m.username)+'</span></td>'+
+                '<td><span class="lb-points">'+m.referrals+'</span></td>'+
+                '<td><span class="lb-rank-title" style="color:var(--gold);">+'+m.pts+' pts</span></td></tr>';
+            }).join('');
+          })
+          .catch(function(){
+            var tbody=document.getElementById('referrals-tbody');
+            if(tbody)tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">Leaderboard temporarily unavailable.</td></tr>';
+          });
+      }
+
       // Fetch game data on first tab activation (lazy)
-      var footballFetched = false, doodieFetched = false, challengesFetched = false;
+      var footballFetched = false, doodieFetched = false, challengesFetched = false, referralsFetched = false;
       document.querySelectorAll('.lb-game-tab').forEach(function(b){
         b.addEventListener('click',function(){
           if(b.dataset.game==='challenges' && !challengesFetched){
             challengesFetched=true;
             fetchChallengeLeaderboard();
+          }
+          if(b.dataset.game==='referrals' && !referralsFetched){
+            referralsFetched=true;
+            fetchReferralLeaderboard();
           }
           if(b.dataset.game==='football' && !footballFetched){
             footballFetched=true;
