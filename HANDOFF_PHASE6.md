@@ -1,5 +1,5 @@
 # Vault Member — Phase 6+ Handoff
-_Last updated: 2026-03-24 — Phases 0–10 complete_
+_Last updated: 2026-03-24 — Phases 0–10 complete + fully deployed_
 
 ---
 
@@ -206,9 +206,22 @@ refreshPointsDisplay()     — re-fetches pts from DB, updates all pts/rank UI e
 
 ---
 
+## Deployment state (as of 2026-03-24)
+
+All phases fully deployed and live. No pending setup steps remain.
+
+- **SQL migrations:** all applied (phases 4-5, 6, 7-8, 9-10)
+- **Edge Functions deployed:** `assign-discord-role`, `send-push` (+ existing: `create-checkout`, `stripe-webhook`, `odds`)
+- **Secrets set:** VAPID (3 keys on `send-push`), Discord bot token + guild ID + role IDs (on `assign-discord-role`)
+- **DB triggers live:** `on_classified_file_insert` → `send-push`, `on_vault_member_update` → `assign-discord-role`
+- **Realtime:** `studio_pulse` added to `supabase_realtime` publication
+- **VAPID public key:** hardcoded in `vault-member/index.html`
+- **Discord:** bot invited to server, 5 rank roles created (IDs mapped rank 0–4)
+- **Supabase CLI:** linked to project `fjnpzjjyhnpmunfoycrp` via access token
+
 ## Pending phases
 
-_All phases 6–10 are complete. No further phases are currently planned._
+_All phases 0–10 are complete and deployed. No further phases are currently planned._
 
 ### (archive) Phase 6 — Activity Chronicle
 Personal timeline of everything in the member's account — reverse-chron, grouped by type.
