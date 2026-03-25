@@ -779,6 +779,108 @@
     .account-info-row span:first-child { color: var(--muted); }
     .account-info-row span:last-child { font-weight: 600; color: var(--text); word-break: break-all; text-align: right; }
 
+    /* ─── Member number + founding badge ─── */
+    .member-number {
+      font-size: 0.76rem; color: var(--dim); font-weight: 600; white-space: nowrap;
+    }
+    .founding-badge {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.24rem 0.65rem; border-radius: 999px;
+      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
+      background: linear-gradient(135deg, rgba(255,196,0,0.15), rgba(255,122,0,0.1));
+      border: 1px solid rgba(255,196,0,0.28); color: var(--gold);
+    }
+
+    /* ─── Avatar glow for elite ranks ─── */
+    .profile-avatar.rank-elite { animation: avatar-pulse 3s ease-in-out infinite; }
+    @keyframes avatar-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255,196,0,0.0); }
+      50%       { box-shadow: 0 0 22px 7px rgba(255,196,0,0.22); }
+    }
+
+    /* ─── Rank ceremony overlay ─── */
+    .ceremony-overlay {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(0,0,0,0.82);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.35s;
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .ceremony-overlay.show { opacity: 1; pointer-events: auto; }
+    .ceremony-card {
+      position: relative; text-align: center;
+      padding: 3rem 3.5rem; border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(20,15,5,0.98), rgba(8,10,17,0.99));
+      border: 1px solid rgba(255,196,0,0.18);
+      box-shadow: 0 0 80px rgba(255,196,0,0.08), var(--shadow-lg);
+      max-width: 420px; width: 90%; overflow: hidden;
+      animation: ceremony-enter 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes ceremony-enter {
+      from { transform: scale(0.65) translateY(24px); opacity: 0; }
+      to   { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .ceremony-emoji {
+      font-size: 4.5rem; display: block; margin-bottom: 0.6rem;
+      animation: cer-spin 0.65s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes cer-spin {
+      from { transform: rotate(-20deg) scale(0.4); opacity: 0; }
+      to   { transform: rotate(0) scale(1); opacity: 1; }
+    }
+    .ceremony-label {
+      font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.16em; color: var(--muted); margin-bottom: 0.4rem;
+    }
+    .ceremony-rank-name {
+      font-family: Georgia, serif;
+      font-size: clamp(2rem, 5vw, 2.75rem);
+      letter-spacing: -0.04em; line-height: 1; margin-bottom: 0.65rem;
+    }
+    .ceremony-flavor {
+      color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.6rem;
+    }
+    .ceremony-dismiss {
+      padding: 0.68rem 2rem; border-radius: 10px;
+      background: var(--gold); color: #000;
+      font-weight: 800; font-size: 0.9rem; border: none;
+      cursor: pointer; font-family: inherit; transition: opacity 0.18s;
+    }
+    .ceremony-dismiss:hover { opacity: 0.82; }
+    /* Particles */
+    .cer-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+    .cer-particle {
+      position: absolute; width: 7px; height: 7px; border-radius: 50%;
+      left: 50%; top: 50%;
+      animation: cer-particle 1.1s ease-out forwards;
+    }
+    @keyframes cer-particle {
+      0%   { transform: translate(-50%,-50%) translate(0,0) scale(1); opacity: 1; }
+      100% { transform: translate(-50%,-50%) translate(var(--tx),var(--ty)) scale(0); opacity: 0; }
+    }
+
+    /* ─── Member Card modal ─── */
+    .card-modal-overlay {
+      position: fixed; inset: 0; z-index: 900;
+      background: rgba(0,0,0,0.78);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.25s;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .card-modal-overlay.show { opacity: 1; pointer-events: auto; }
+    .card-modal {
+      background: rgba(10,13,22,0.98);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius); padding: 2rem;
+      max-width: 520px; width: 93%; text-align: center;
+    }
+    .card-modal h3 {
+      font-size: 0.74rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem;
+    }
+    #vault-card-canvas { width: 100%; border-radius: 14px; box-shadow: var(--shadow-lg); display: block; }
+    .card-modal-actions { display: flex; gap: 0.75rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
+
     @media (max-width: 860px) {
       .auth-wrap { grid-template-columns: 1fr; }
       .rank-sidebar { display: none; }
@@ -1054,6 +1156,8 @@
                 <span class="rank-badge badge-gold" id="profile-rank-badge">Spark Initiate</span>
                 <span class="profile-pts" id="profile-pts">10 pts</span>
                 <span class="profile-pts" id="profile-since"></span>
+                <span class="member-number" id="profile-member-number"></span>
+                <span class="founding-badge" id="profile-founding-badge" style="display:none;">✦ Founding Member</span>
               </div>
               <div class="progress-bar-wrap">
                 <div class="progress-bar-label">
@@ -1067,6 +1171,7 @@
               <p class="profile-bio" id="profile-bio"></p>
             </div>
             <div class="profile-actions">
+              <button class="signout-btn" style="background:rgba(255,196,0,0.07);border-color:rgba(255,196,0,0.2);color:var(--gold);" onclick="VS.showCardModal()">Vault Card</button>
               <button class="signout-btn" id="signout-btn" onclick="VS.logout()">Sign Out</button>
             </div>
           </div>
@@ -1328,6 +1433,7 @@
                   <div class="account-info-row"><span>Vault Points</span><span id="info-pts">—</span></div>
                   <div class="account-info-row"><span>Member Since</span><span id="info-since">—</span></div>
                   <div class="account-info-row"><span>Days in the Vault</span><span id="info-days">—</span></div>
+                  <div class="account-info-row"><span>Member Number</span><span id="info-member-number">—</span></div>
                 </div>
 
               </div>
@@ -1348,6 +1454,30 @@
     </div><!-- #dashboard-view -->
 
   </main>
+
+  <!-- ── Rank-Up Ceremony Overlay ── -->
+  <div class="ceremony-overlay" id="ceremony-overlay" onclick="dismissCeremony()">
+    <div class="cer-particles" id="cer-particles"></div>
+    <div class="ceremony-card" onclick="event.stopPropagation()">
+      <span class="ceremony-emoji" id="ceremony-emoji">⚡</span>
+      <p class="ceremony-label">Rank Up — You are now</p>
+      <p class="ceremony-rank-name" id="ceremony-rank-name">Vault Runner</p>
+      <p class="ceremony-flavor" id="ceremony-flavor">The vault recognizes your signal.</p>
+      <button class="ceremony-dismiss" onclick="dismissCeremony()">Enter The Vault →</button>
+    </div>
+  </div>
+
+  <!-- ── Vault Member Card Modal ── -->
+  <div class="card-modal-overlay" id="card-modal-overlay" onclick="dismissCardModal()">
+    <div class="card-modal" onclick="event.stopPropagation()">
+      <h3>Your Vault Member Card</h3>
+      <canvas id="vault-card-canvas" width="680" height="380"></canvas>
+      <div class="card-modal-actions">
+        <button class="settings-save-btn" onclick="VS.downloadCard()">Download PNG</button>
+        <button class="signout-btn" onclick="dismissCardModal()">Close</button>
+      </div>
+    </div>
+  </div>
 
   <footer class="site-footer" aria-label="Site footer">
     <div class="container">
@@ -1501,6 +1631,20 @@
         }
       },
 
+      showCardModal() {
+        if (!_currentMember) return;
+        generateMemberCard(_currentMember);
+        document.getElementById('card-modal-overlay').classList.add('show');
+      },
+
+      downloadCard() {
+        const canvas = document.getElementById('vault-card-canvas');
+        const link = document.createElement('a');
+        link.download = 'vault-member-card.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      },
+
       async saveSettings() {
         const btn      = document.getElementById('settings-save-btn');
         const feedback = document.getElementById('settings-feedback');
@@ -1638,6 +1782,8 @@
     }
 
     function showDashboard(member) {
+      _currentMember = member;
+
       document.getElementById('auth-view').style.display = 'none';
       document.getElementById('dashboard-view').style.display = 'block';
 
@@ -1671,6 +1817,17 @@
       // Bio
       const bioEl = document.getElementById('profile-bio');
       if (bioEl) { bioEl.textContent = member.bio || ''; bioEl.style.display = member.bio ? '' : 'none'; }
+
+      // Member number + founding badge
+      const numEl = document.getElementById('profile-member-number');
+      if (numEl) numEl.textContent = member.member_number ? '#' + member.member_number : '';
+      const foundingEl = document.getElementById('profile-founding-badge');
+      if (foundingEl) foundingEl.style.display = (member.member_number && member.member_number <= 100) ? '' : 'none';
+
+      // Avatar glow for Vault Keeper + The Sparked
+      const rankIdx = VS.RANKS.findIndex(r => r.name === rank.name);
+      const profileAvEl = document.getElementById('profile-avatar');
+      if (profileAvEl) profileAvEl.classList.toggle('rank-elite', rankIdx >= 3);
 
       document.getElementById('pb-current-rank').textContent = rank.name;
       document.getElementById('pb-next').textContent = nextRank
@@ -1737,28 +1894,36 @@
 
       // Account info
       const setInfo = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
-      setInfo('info-username', member.username);
-      setInfo('info-email',    member.email || '—');
-      setInfo('info-rank',     rank.name);
-      setInfo('info-pts',      member.points + ' pts');
-      setInfo('info-since',    createdDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
-      setInfo('info-days',     daysInVault === 0 ? 'Joined today' : daysInVault + (daysInVault === 1 ? ' day' : ' days'));
+      setInfo('info-username',      member.username);
+      setInfo('info-email',         member.email || '—');
+      setInfo('info-rank',          rank.name);
+      setInfo('info-pts',           member.points + ' pts');
+      setInfo('info-since',         createdDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
+      setInfo('info-days',          daysInVault === 0 ? 'Joined today' : daysInVault + (daysInVault === 1 ? ' day' : ' days'));
+      setInfo('info-member-number', member.member_number ? '#' + member.member_number + (member.member_number <= 100 ? ' — Founding Member ✦' : '') : '—');
+
+      // Check for rank-up (delayed so dashboard renders first)
+      setTimeout(() => checkRankUp(member), 800);
     }
+
+    // ── Current member reference (for card generation etc.) ──────
+    let _currentMember = null;
 
     // ── Maps a Supabase vault_members row + user to the member shape ──────────
     function buildMember(user, row) {
       return {
-        _id:          user.id,
-        username:     row.username,
-        points:       row.points,
-        subscribed:   row.subscribed,
-        prefs:        row.prefs        || { updates: true, lore: true, access: true },
-        achievements: row.achievements || [],
-        createdAt:    row.created_at,
-        email:        user.email,
-        bio:          row.bio          || '',
-        avatar_id:    row.avatar_id    || 'spark',
-        accent:       row.accent       || '#FFC400',
+        _id:           user.id,
+        username:      row.username,
+        points:        row.points,
+        subscribed:    row.subscribed,
+        prefs:         row.prefs         || { updates: true, lore: true, access: true },
+        achievements:  row.achievements  || [],
+        createdAt:     row.created_at,
+        email:         user.email,
+        bio:           row.bio           || '',
+        avatar_id:     row.avatar_id     || 'spark',
+        accent:        row.accent        || '#FFC400',
+        member_number: row.member_number || null,
       };
     }
 
@@ -1994,6 +2159,177 @@
         btn.disabled    = false;
       }
     });
+
+    // ── Rank-up ceremony ────────────────────────────────────────
+    const RANK_FLAVOR = {
+      'Vault Runner': 'The signal grows stronger. You\'ve crossed the threshold and the vault takes notice.',
+      'Forge Guard':  'Forged in the vault\'s heat. Few make it this deep — and now you\'re one of them.',
+      'Vault Keeper': 'The vault keeps no secrets from you now. You guard what most will never find.',
+      'The Sparked':  'Maximum rank — achieved. You are the reason the vault exists. The spark is yours.',
+    };
+
+    function checkRankUp(member) {
+      const rankIdx = VS.RANKS.findIndex(r => r.name === VS.getRank(member.points).name);
+      const key = 'vs_rank_' + member._id;
+      const stored = localStorage.getItem(key);
+      if (stored !== null && rankIdx > parseInt(stored, 10)) {
+        showRankCeremony(VS.RANKS[rankIdx]);
+      }
+      localStorage.setItem(key, rankIdx);
+    }
+
+    function showRankCeremony(rank) {
+      const RANK_EMOJIS = { 'Vault Runner': '🏃', 'Forge Guard': '🔥', 'Vault Keeper': '🔒', 'The Sparked': '🌟' };
+      document.getElementById('ceremony-emoji').textContent     = RANK_EMOJIS[rank.name] || '⚡';
+      document.getElementById('ceremony-rank-name').textContent = rank.name;
+      document.getElementById('ceremony-rank-name').style.color = rank.color;
+      document.getElementById('ceremony-flavor').textContent    = RANK_FLAVOR[rank.name] || 'The vault recognizes your signal.';
+
+      // Spawn particles
+      const container = document.getElementById('cer-particles');
+      container.innerHTML = '';
+      const colors = ['#FFC400','#FF7A00','#1FA2FF','#ffffff','#34d399'];
+      for (let i = 0; i < 24; i++) {
+        const p = document.createElement('div');
+        p.className = 'cer-particle';
+        const angle = (i / 24) * 360;
+        const dist  = 140 + Math.random() * 120;
+        p.style.cssText = [
+          'background:' + colors[i % colors.length],
+          '--tx:' + (Math.cos(angle * Math.PI / 180) * dist) + 'px',
+          '--ty:' + (Math.sin(angle * Math.PI / 180) * dist) + 'px',
+          'animation-delay:' + (Math.random() * 0.25) + 's',
+        ].join(';');
+        container.appendChild(p);
+      }
+      document.getElementById('ceremony-overlay').classList.add('show');
+    }
+
+    function dismissCeremony() {
+      document.getElementById('ceremony-overlay').classList.remove('show');
+    }
+
+    function dismissCardModal() {
+      document.getElementById('card-modal-overlay').classList.remove('show');
+    }
+
+    // ── Vault Member Card (Canvas) ───────────────────────────────
+    function rrect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    function generateMemberCard(member) {
+      const canvas = document.getElementById('vault-card-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = 680, H = 380;
+      canvas.width = W; canvas.height = H;
+
+      const rank   = VS.getRank(member.points);
+      const av     = VS.getAvatar(member.avatar_id || 'spark');
+      const accent = member.accent || '#FFC400';
+
+      // Background
+      const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+      bgGrad.addColorStop(0, '#08080f'); bgGrad.addColorStop(0.6, '#060810'); bgGrad.addColorStop(1, '#0c0d18');
+      ctx.fillStyle = bgGrad;
+      rrect(ctx, 0, 0, W, H, 22); ctx.fill();
+
+      // Grid lines
+      ctx.strokeStyle = 'rgba(255,255,255,0.022)'; ctx.lineWidth = 1;
+      for (let x = 0; x <= W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y <= H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+      // Accent glow blob
+      const glowGrad = ctx.createRadialGradient(130, H/2, 0, 130, H/2, 120);
+      glowGrad.addColorStop(0, accent + '28'); glowGrad.addColorStop(1, 'transparent');
+      ctx.fillStyle = glowGrad; ctx.fillRect(0, 0, W, H);
+
+      // Left accent bar
+      const barGrad = ctx.createLinearGradient(0, 0, 0, H);
+      barGrad.addColorStop(0, accent); barGrad.addColorStop(1, accent + '44');
+      ctx.fillStyle = barGrad; rrect(ctx, 0, 0, 5, H, [22, 0, 0, 22]); ctx.fill();
+
+      // Avatar circle
+      ctx.save();
+      ctx.beginPath(); ctx.arc(125, H/2, 64, 0, Math.PI*2);
+      ctx.fillStyle = av.bg; ctx.fill();
+      ctx.strokeStyle = accent + '70'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.restore();
+
+      // Avatar emoji
+      ctx.font = '54px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(av.emoji, 125, H/2 + 4);
+
+      // "VAULT MEMBER" label
+      ctx.font = 'bold 10px system-ui,sans-serif'; ctx.fillStyle = accent + 'bb';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+      ctx.fillText('VAULT MEMBER', 215, 38);
+
+      // Member number (top right)
+      if (member.member_number) {
+        ctx.font = '600 10px system-ui,sans-serif';
+        ctx.textAlign = 'right'; ctx.fillStyle = 'rgba(255,255,255,0.28)';
+        ctx.fillText('#' + member.member_number, W - 28, 38);
+      }
+
+      // Username
+      ctx.font = 'bold 40px system-ui,sans-serif';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#ffffff';
+      let uname = member.username || 'VaultMember';
+      while (ctx.measureText(uname).width > W - 245 && uname.length > 3) uname = uname.slice(0,-1);
+      ctx.fillText(uname, 215, H/2 - 35);
+
+      // Rank pill
+      ctx.font = 'bold 10.5px system-ui,sans-serif';
+      const rt = rank.name.toUpperCase();
+      const rw = ctx.measureText(rt).width + 24;
+      ctx.fillStyle = accent + '1e'; rrect(ctx, 215, H/2 - 4, rw, 22, 5); ctx.fill();
+      ctx.strokeStyle = accent + '44'; ctx.lineWidth = 1; rrect(ctx, 215, H/2 - 4, rw, 22, 5); ctx.stroke();
+      ctx.fillStyle = accent; ctx.textBaseline = 'middle'; ctx.fillText(rt, 227, H/2 + 7);
+
+      // Points
+      ctx.font = '600 12px system-ui,sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.45)';
+      ctx.fillText(member.points + ' pts', 215 + rw + 12, H/2 + 7);
+
+      // Founding badge (if applicable)
+      if (member.member_number && member.member_number <= 100) {
+        ctx.font = 'bold 9px system-ui,sans-serif';
+        const fb = '✦ FOUNDING MEMBER';
+        const fw = ctx.measureText(fb).width + 18;
+        rrect(ctx, 215 + rw + 60, H/2 - 4, fw, 22, 4);
+        ctx.fillStyle = 'rgba(255,196,0,0.1)'; ctx.fill();
+        ctx.strokeStyle = 'rgba(255,196,0,0.22)'; ctx.lineWidth = 1; ctx.stroke();
+        ctx.fillStyle = '#FFC400'; ctx.textBaseline = 'middle';
+        ctx.fillText(fb, 215 + rw + 69, H/2 + 7);
+      }
+
+      // Divider
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(215, H/2 + 28); ctx.lineTo(W - 28, H/2 + 28); ctx.stroke();
+
+      // Member since
+      const since = new Date(member.createdAt).toLocaleDateString('en-US',{month:'short',year:'numeric'});
+      ctx.font = '500 11px system-ui,sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.32)';
+      ctx.textBaseline = 'top'; ctx.fillText('Member since ' + since, 215, H/2 + 36);
+
+      // Bottom branding
+      ctx.font = '600 10px system-ui,sans-serif';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'bottom'; ctx.fillStyle = 'rgba(255,255,255,0.18)';
+      ctx.fillText('VAULTSPARKSTUDIOS.COM', 215, H - 26);
+      ctx.textAlign = 'right'; ctx.fillStyle = accent + '55';
+      ctx.fillText('THE VAULT IS SPARKED', W - 28, H - 26);
+
+      // Card border
+      ctx.strokeStyle = 'rgba(255,255,255,0.055)'; ctx.lineWidth = 1;
+      rrect(ctx, 0.5, 0.5, W - 1, H - 1, 21.5); ctx.stroke();
+    }
 
     // ── Init: restore session ────────────────────────────────────
     (async function init() {
