@@ -2785,8 +2785,8 @@
       loadChallenges();
       setTimeout(() => initChallenges(member), 1800);
 
-      // Vault Command tab — member #1 only
-      const isAdmin = member.member_number === 1;
+      // Vault Command tab — VaultSpark account only
+      const isAdmin = member.username.toLowerCase() === 'vaultspark';
       const adminTabEl    = document.getElementById('tab-dash-admin');
       const navAdminLink  = document.getElementById('nav-admin-link');
       if (adminTabEl)   adminTabEl.style.display   = isAdmin ? '' : 'none';
