@@ -28,7 +28,6 @@
 - [ ] Game-specific challenge + point triggers (Football GM → Vault points) [8]
 - [ ] Game screenshots + trailer embed on game pages [7.5]
 - [ ] Dynamic OG image generation per page [7.5]
-- [ ] Lazy-load image audit (add loading="lazy" to all below-fold images) [7.5]
 - [ ] Supabase query batching in portal (consolidate sequential SELECTs into RPCs) [7]
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
 - [ ] WebP/AVIF image audit + conversion [6.5]
@@ -46,10 +45,8 @@
 - [ ] Vault Command: scheduled broadcast (set Signal Broadcast to publish at future time) [6.5]
 - [ ] Co-op / team challenges [6.5]
 - [ ] Dark/light mode toggle [6.5]
-- [ ] Investor portal: KPI trend sparklines (30/60/90-day MRR + member growth) [6.5]
 - [ ] Sitemap auto-generation (GitHub Action) [6.5]
 - [ ] Referral code QR generator (client-side QR for member's /join/?ref= URL) [6.3]
-- [ ] Investor portal "Ask a question" form (contact form → Edge Function → founder email) [6.3]
 - [ ] Game update changelogs on game pages [6.3]
 - [ ] Journal post view count (journal_views table, deduplicated, shown on cards) [6]
 - [ ] Team/about page expansion [6]
@@ -80,6 +77,26 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 23 (2026-03-25)
+
+- ✅ Lazy-load image audit — added `loading="lazy"` to all `<img>` tags across 29 public HTML files (excludes vault-member/investor portals which use dynamic images)
+- ✅ Investor portal KPI sparklines — 30-day SVG sparklines with trend % under each KPI card; member growth line, sessions line; fetches daily bucketed data async (non-blocking)
+- ✅ Investor portal "Ask a question" — card on dashboard right panel; inserts to `founder_questions` table; logs action; 48h response note
+- **SQL needed:**
+  ```sql
+  CREATE TABLE IF NOT EXISTS founder_questions (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    investor_id uuid,
+    investor_name text,
+    question text NOT NULL,
+    answered boolean NOT NULL DEFAULT false,
+    answer text,
+    created_at timestamptz NOT NULL DEFAULT now()
+  );
+  ALTER TABLE founder_questions ENABLE ROW LEVEL SECURITY;
+  CREATE POLICY "investors insert" ON founder_questions FOR INSERT WITH CHECK (true);
+  ```
 
 ## Completed — Phase 22 (2026-03-25)
 

@@ -103,6 +103,89 @@
       .inv-kpi-strip { grid-template-columns: 1fr; }
       .inv-kpi-card  { padding: 1rem; }
     }
+
+    /* ─── KPI Sparklines ─── */
+    .inv-kpi-card {
+      position: relative;
+    }
+    .inv-sparkline-wrap {
+      margin-top: 0.6rem;
+    }
+    .inv-sparkline {
+      display: block;
+      width: 100%;
+      max-width: 140px;
+      height: 28px;
+      overflow: visible;
+    }
+    .inv-sparkline polyline {
+      fill: none;
+      stroke: rgba(31,162,255,0.7);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .inv-sparkline.trend-up polyline { stroke: rgba(16,185,129,0.75); }
+    .inv-sparkline.trend-down polyline { stroke: rgba(214,40,40,0.65); }
+    .inv-sparkline .spark-area {
+      fill: rgba(31,162,255,0.07);
+      stroke: none;
+    }
+    .inv-sparkline.trend-up .spark-area { fill: rgba(16,185,129,0.07); }
+    .inv-sparkline.trend-down .spark-area { fill: rgba(214,40,40,0.06); }
+    .inv-kpi-trend {
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-top: 0.2rem;
+      display: block;
+    }
+    .inv-kpi-trend.up   { color: #10B981; }
+    .inv-kpi-trend.down { color: #D62828; }
+    .inv-kpi-trend.flat { color: var(--dim); }
+
+    /* ─── Ask a Question ─── */
+    .inv-ask-card {
+      margin-top: 2rem;
+    }
+    .inv-ask-card textarea {
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.93rem;
+      line-height: 1.6;
+      padding: 0.8rem 1rem;
+      resize: vertical;
+      min-height: 100px;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .inv-ask-card textarea:focus {
+      border-color: rgba(31,162,255,0.45);
+    }
+    .inv-ask-card textarea::placeholder { color: var(--dim); }
+    .inv-ask-form-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .inv-ask-note {
+      font-size: 0.8rem;
+      color: var(--dim);
+    }
+    .inv-ask-status {
+      font-size: 0.84rem;
+      margin-top: 0.5rem;
+      min-height: 1.2em;
+    }
+    .inv-ask-status.ok { color: #10B981; }
+    .inv-ask-status.err { color: #D62828; }
   </style>
 
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
@@ -169,18 +252,22 @@
           <div class="inv-kpi-card">
             <span class="inv-kpi-value loading" id="kpiMembers" aria-label="Loading"></span>
             <span class="inv-kpi-label">Vault Members</span>
+            <div class="inv-sparkline-wrap" id="sparkMembers"></div>
           </div>
           <div class="inv-kpi-card">
             <span class="inv-kpi-value loading" id="kpiSessions" aria-label="Loading"></span>
             <span class="inv-kpi-label">Game Sessions (7 days)</span>
+            <div class="inv-sparkline-wrap" id="sparkSessions"></div>
           </div>
           <div class="inv-kpi-card">
             <span class="inv-kpi-value loading" id="kpiChallenges" aria-label="Loading"></span>
             <span class="inv-kpi-label">Active Challenges</span>
+            <div class="inv-sparkline-wrap" id="sparkChallenges"></div>
           </div>
           <div class="inv-kpi-card">
             <span class="inv-kpi-value loading" id="kpiGrowth" aria-label="Loading"></span>
             <span class="inv-kpi-label">New Members (7 days)</span>
+            <div class="inv-sparkline-wrap" id="sparkGrowth"></div>
           </div>
         </div>
       </div>
@@ -202,7 +289,7 @@
           </div>
         </div>
 
-        <!-- Right: activity log -->
+        <!-- Right: activity log + ask the founders -->
         <div>
           <h2 class="inv-section-title">Activity</h2>
           <div class="inv-card">
@@ -211,6 +298,23 @@
               <div class="inv-skeleton inv-skeleton-row"></div>
               <div class="inv-skeleton inv-skeleton-row"></div>
             </div>
+          </div>
+
+          <h2 class="inv-section-title" style="margin-top:2rem;">Ask the Founders</h2>
+          <div class="inv-card inv-ask-card">
+            <p style="font-size:0.87rem;color:var(--muted);margin:0 0 0.85rem;line-height:1.55;">
+              Send a question directly to the founding team. We respond to all investor questions within 48 hours.
+            </p>
+            <form id="askForm" onsubmit="return false;">
+              <textarea id="askTextarea" placeholder="What would you like to know?" maxlength="1000"></textarea>
+              <div class="inv-ask-form-row">
+                <span class="inv-ask-note">Max 1,000 characters</span>
+                <button class="inv-btn inv-btn-primary inv-btn-sm" id="askSubmitBtn" type="submit">
+                  Send Question
+                </button>
+              </div>
+              <div class="inv-ask-status" id="askStatus"></div>
+            </form>
           </div>
         </div>
 
@@ -228,6 +332,7 @@
 
     window.addEventListener('investor:ready', async (e) => {
       const profile = e.detail;
+      window._investorProfile = profile; // used by ask form
 
       // Nav user name
       document.getElementById('navUserName').textContent = profile.display_name;
@@ -438,6 +543,114 @@
         growthEl.classList.remove('loading');
         growthEl.textContent = fmtNum(kpiGrowth);
       }
+
+      // Load sparklines async (non-blocking)
+      loadKPISparklines();
+    }
+
+    // ── KPI Sparklines ──────────────────────────────────────────────
+    function renderSparkline(containerId, values, trendClass) {
+      const el = document.getElementById(containerId);
+      if (!el || !values || values.length < 2) return;
+
+      const W = 140, H = 28, pad = 2;
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const range = max - min || 1;
+      const xStep = (W - pad * 2) / (values.length - 1);
+
+      const pts = values.map((v, i) => {
+        const x = pad + i * xStep;
+        const y = pad + (1 - (v - min) / range) * (H - pad * 2);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      });
+      const ptStr = pts.join(' ');
+
+      // Area path: go along line, then close bottom
+      const lastX = (pad + (values.length - 1) * xStep).toFixed(1);
+      const areaPath = `M ${pts[0]} L ${pts.join(' L ')} L ${lastX},${(H - pad).toFixed(1)} L ${pad},${(H - pad).toFixed(1)} Z`;
+
+      // Trend label
+      const first = values[0], last = values[values.length - 1];
+      let trendLabel = '', trendCls = 'flat';
+      if (last > first) {
+        const pct = first > 0 ? Math.round(((last - first) / first) * 100) : 0;
+        trendLabel = `+${pct}% (30d)`;
+        trendCls = 'up';
+      } else if (last < first) {
+        const pct = first > 0 ? Math.round(((first - last) / first) * 100) : 0;
+        trendLabel = `−${pct}% (30d)`;
+        trendCls = 'down';
+      } else {
+        trendLabel = 'Flat (30d)';
+      }
+
+      el.innerHTML = `
+        <svg class="inv-sparkline ${trendClass || trendCls}" viewBox="0 0 ${W} ${H}"
+             aria-hidden="true" preserveAspectRatio="none">
+          <path class="spark-area" d="${areaPath}" />
+          <polyline points="${ptStr}" />
+        </svg>
+        <span class="inv-kpi-trend ${trendCls}">${trendLabel}</span>`;
+    }
+
+    async function loadKPISparklines() {
+      try {
+        const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+        // Fetch member registrations over last 30 days (daily buckets)
+        const { data: memberRows } = await VSSupabase
+          .from('vault_members')
+          .select('created_at')
+          .gte('created_at', thirtyDaysAgo)
+          .order('created_at', { ascending: true });
+
+        if (memberRows && memberRows.length > 0) {
+          // Bucket by day (30 buckets)
+          const buckets = new Array(30).fill(0);
+          const now = Date.now();
+          memberRows.forEach(r => {
+            const daysAgo = Math.floor((now - new Date(r.created_at).getTime()) / (86400000));
+            const idx = 29 - Math.min(daysAgo, 29);
+            buckets[idx]++;
+          });
+          // Convert to cumulative (running total) for member sparkline
+          const cumulative = [];
+          let running = 0;
+          buckets.forEach(v => { running += v; cumulative.push(running); });
+          renderSparkline('sparkMembers', cumulative);
+          renderSparkline('sparkGrowth', buckets.slice(-14)); // last 14 days daily new
+        }
+
+        // Game sessions over last 30 days
+        const { data: sessionRows } = await VSSupabase
+          .from('game_sessions')
+          .select('created_at')
+          .gte('created_at', thirtyDaysAgo)
+          .order('created_at', { ascending: true });
+
+        if (sessionRows && sessionRows.length > 0) {
+          const buckets = new Array(30).fill(0);
+          const now = Date.now();
+          sessionRows.forEach(r => {
+            const daysAgo = Math.floor((now - new Date(r.created_at).getTime()) / (86400000));
+            const idx = 29 - Math.min(daysAgo, 29);
+            buckets[idx]++;
+          });
+          renderSparkline('sparkSessions', buckets);
+        }
+
+        // Challenges — just show flat line since it doesn't have time series
+        // Use a static placeholder showing current count as flat
+        const challengesEl = document.getElementById('kpiChallenges');
+        const n = parseInt(challengesEl?.textContent) || 0;
+        if (n > 0) {
+          renderSparkline('sparkChallenges', new Array(14).fill(n));
+        }
+
+      } catch (_) {
+        // Non-critical — sparklines are best-effort
+      }
     }
 
     function wireDocButtons(container) {
@@ -467,6 +680,53 @@
           }
         });
       });
+    }
+
+    // ── Ask the Founders form ────────────────────────────────────────
+    document.getElementById('askForm')?.addEventListener('submit', submitFounderQuestion);
+
+    async function submitFounderQuestion() {
+      const textarea = document.getElementById('askTextarea');
+      const statusEl = document.getElementById('askStatus');
+      const submitBtn = document.getElementById('askSubmitBtn');
+      const question = textarea?.value?.trim();
+
+      if (!question) {
+        statusEl.textContent = 'Please enter a question.';
+        statusEl.className = 'inv-ask-status err';
+        return;
+      }
+      if (question.length > 1000) {
+        statusEl.textContent = 'Question is too long (max 1,000 characters).';
+        statusEl.className = 'inv-ask-status err';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      statusEl.textContent = '';
+      statusEl.className = 'inv-ask-status';
+
+      try {
+        const { error } = await sb.from('founder_questions').insert({
+          question,
+          investor_id: window._investorProfile?.id ?? null,
+          investor_name: window._investorProfile?.display_name ?? null,
+        });
+
+        if (error) throw error;
+
+        textarea.value = '';
+        statusEl.textContent = 'Question sent. We\'ll reply within 48 hours.';
+        statusEl.className = 'inv-ask-status ok';
+        VSInvestorAuth.logAction('founder_question_sent', null, question.slice(0, 80));
+      } catch (_) {
+        statusEl.textContent = 'Failed to send. Please try again or use the Message page.';
+        statusEl.className = 'inv-ask-status err';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Question';
+      }
     }
 
     document.getElementById('mobileToggle')?.addEventListener('click', () => {
