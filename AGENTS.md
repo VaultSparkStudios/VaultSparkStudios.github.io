@@ -108,6 +108,23 @@ No secrets are required for Pages deployment.
 |`AGENTS.md`|Per-game agent instructions (copied and filled from this template)|
 |`CODEX\_HANDOFF\_YYYY-MM-DD.md`|Deployment handoff doc, updated after each session|
 
+## Vault Member Auth System (Supabase)
+
+Added 2026-03-24. The studio site is the auth hub for all Vault-gated tools.
+
+**Key files:**
+- `assets/supabase-client.js` — shared Supabase JS client (`window.VSSupabase`), cross-domain redirect helper (`VSGate`), gated app registry (`VAULT_GATED_APPS`)
+- `vault-member/index.html` — Supabase auth replaces localStorage; invite codes required to register
+- `supabase-schema.sql` — run once in Supabase SQL Editor to provision tables + RPCs
+
+**Credentials:** `assets/supabase-client.js` has two placeholders at the top (`YOUR_SUPABASE_URL`, `YOUR_SUPABASE_ANON_KEY`). Fill these in after creating the Supabase project. Never commit real credentials.
+
+**Adding a new gated tool:**
+1. Add entry to `VAULT_GATED_APPS` in `assets/supabase-client.js`
+2. New tool copies `promogrind/src/auth.js` + adds Supabase env vars
+
+**Cross-domain token flow:** vault-member sends `access_token` + `refresh_token` via URL hash to the gated tool after login. The tool calls `supabase.auth.setSession()` to establish its session. See `LATEST_HANDOFF.md` for full flow.
+
 ## VaultSpark Studios website integration
 
 * Studio root site repo: `VaultSparkStudios/VaultSparkStudios.github.io`

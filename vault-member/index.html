@@ -27,6 +27,8 @@
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="../assets/style.css" />
   <script src="../assets/kit.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../assets/supabase-client.js"></script>
 
   <style>
     /* ─── Page layout ─── */
@@ -609,6 +611,10 @@
                     <label for="reg-password">Password</label>
                     <input type="password" id="reg-password" name="password" placeholder="Min. 8 characters" minlength="8" autocomplete="new-password" required />
                   </div>
+                  <div class="form-group">
+                    <label for="reg-invite">Invite Code</label>
+                    <input type="text" id="reg-invite" name="inviteCode" placeholder="VAULT-XXXX" autocomplete="off" required style="text-transform:uppercase;letter-spacing:0.08em;" />
+                  </div>
                   <label class="form-check">
                     <input type="checkbox" id="reg-subscribe" checked />
                     <span>Subscribe to <strong>Vault Dispatch</strong> — studio updates, early access drops, and exclusive lore.</span>
@@ -618,7 +624,7 @@
                 <div class="auth-divider"><span>or</span></div>
                 <p style="text-align:center;font-size:0.88rem;color:var(--dim);">Already a member? <a href="#" onclick="switchTab('login');return false;" style="color:var(--gold);">Sign in</a></p>
                 <div class="auth-footnote">
-                  <strong>Note:</strong> Vault Member accounts are currently stored locally in your browser. Full server-backed authentication and cross-device sync arrive when the studio backend launches. Your email and handle are saved immediately.
+                  <strong>Invite required:</strong> Access to Vault Member accounts is invite-only. Enter the invite code you received along with your details above.
                 </div>
               </div>
 
@@ -639,7 +645,7 @@
                 <div class="auth-divider"><span>or</span></div>
                 <p style="text-align:center;font-size:0.88rem;color:var(--dim);">New to VaultSpark? <a href="#" onclick="switchTab('register');return false;" style="color:var(--gold);">Create a free account</a></p>
                 <div class="auth-footnote">
-                  <strong>Note:</strong> Account data is stored locally in your browser. Full cross-device sync arrives with the backend launch.
+                  <strong>Cross-device:</strong> Your account is stored securely on our servers. Sign in from any browser or device.
                 </div>
               </div>
             </div>
@@ -1000,11 +1006,8 @@
       });
     }
 
-    // ── VaultSpark Auth System ──────────────────────────────────
+    // ── Rank / Achievement definitions (display only — source of truth) ──────
     const VS = {
-      ACCOUNTS_KEY: 'vs_accounts_v2',
-      SESSION_KEY:  'vs_session_v2',
-
       RANKS: [
         { name: 'Spark Initiate', min: 0,     max: 99,       color: '#94a3b8', badgeClass: 'badge-ghost' },
         { name: 'Vault Runner',   min: 100,   max: 499,      color: '#1FA2FF', badgeClass: 'badge-blue'  },
@@ -1014,31 +1017,13 @@
       ],
 
       ACHIEVEMENT_DEFS: [
-        { id: 'joined',     icon: '🔓', name: 'Vault Opened',    desc: 'Created your Studio Member account',     pts: 10,  auto: true  },
-        { id: 'subscribed', icon: '📡', name: 'Signal Received', desc: 'Subscribed to Vault Dispatch',           pts: 5,   auto: false },
-        { id: 'visit_game', icon: '🎮', name: 'Into The Game',   desc: 'Visited a live VaultSpark game',         pts: 15,  auto: false },
-        { id: 'first_100',  icon: '⚡', name: 'Vault Runner',    desc: 'Reached 100 Vault Points',               pts: 0,   auto: false },
-        { id: 'lore_read',  icon: '📖', name: 'Lore Keeper',     desc: 'Read the DreadSpike character lore',     pts: 10,  auto: false },
-        { id: 'social',     icon: '🌐', name: 'Broadcast',       desc: 'Followed VaultSpark on a social platform', pts: 5, auto: false },
+        { id: 'joined',     icon: '🔓', name: 'Vault Opened',    desc: 'Created your Studio Member account'         },
+        { id: 'subscribed', icon: '📡', name: 'Signal Received', desc: 'Subscribed to Vault Dispatch'               },
+        { id: 'visit_game', icon: '🎮', name: 'Into The Game',   desc: 'Visited a live VaultSpark game'             },
+        { id: 'first_100',  icon: '⚡', name: 'Vault Runner',    desc: 'Reached 100 Vault Points'                   },
+        { id: 'lore_read',  icon: '📖', name: 'Lore Keeper',     desc: 'Read the DreadSpike character lore'         },
+        { id: 'social',     icon: '🌐', name: 'Broadcast',       desc: 'Followed VaultSpark on a social platform'   },
       ],
-
-      getAccounts() {
-        try { return JSON.parse(localStorage.getItem(this.ACCOUNTS_KEY) || '{}'); }
-        catch { return {}; }
-      },
-      saveAccounts(data) {
-        localStorage.setItem(this.ACCOUNTS_KEY, JSON.stringify(data));
-      },
-      getSession() {
-        try { return JSON.parse(localStorage.getItem(this.SESSION_KEY) || 'null'); }
-        catch { return null; }
-      },
-      setSession(member) {
-        localStorage.setItem(this.SESSION_KEY, JSON.stringify(member));
-      },
-      clearSession() {
-        localStorage.removeItem(this.SESSION_KEY);
-      },
 
       getRank(pts) {
         return this.RANKS.find(r => pts >= r.min && pts <= r.max) || this.RANKS[0];
@@ -1050,122 +1035,28 @@
       getRankProgress(pts) {
         const rank = this.getRank(pts);
         if (rank.max === Infinity) return 100;
-        const total = rank.max - rank.min + 1;
-        const earned = pts - rank.min;
-        return Math.min(100, Math.round((earned / total) * 100));
+        return Math.min(100, Math.round(((pts - rank.min) / (rank.max - rank.min + 1)) * 100));
       },
 
-      hashPw(pw) {
-        // Simple demo hash — NOT production-grade
-        let h = 5381;
-        for (let i = 0; i < pw.length; i++) { h = ((h << 5) + h) ^ pw.charCodeAt(i); }
-        return (h >>> 0).toString(16) + '_vs26';
-      },
-
-      register(email, username, password, subscribe) {
-        const accounts = this.getAccounts();
-        const em = email.toLowerCase().trim();
-        const un = username.trim();
-        const unLower = un.toLowerCase();
-
-        if (!em || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em))
-          return { error: 'Please enter a valid email address.' };
-        if (!un || un.length < 3)
-          return { error: 'Vault handle must be at least 3 characters.' };
-        if (!/^[a-zA-Z0-9_\-\.]+$/.test(un))
-          return { error: 'Handle can only contain letters, numbers, underscores, hyphens, and periods.' };
-        if (!password || password.length < 8)
-          return { error: 'Password must be at least 8 characters.' };
-        if (Object.values(accounts).some(a => a.email === em))
-          return { error: 'An account with this email already exists.' };
-        if (accounts[unLower])
-          return { error: 'That vault handle is already taken. Choose another.' };
-
-        const achievements = [{ id: 'joined', earned: new Date().toISOString() }];
-        if (subscribe) achievements.push({ id: 'subscribed', earned: new Date().toISOString() });
-
-        const member = {
-          email: em,
-          username: un,
-          username_lower: unLower,
-          createdAt: new Date().toISOString(),
-          points: subscribe ? 15 : 10,
-          subscribed: !!subscribe,
-          prefs: { updates: true, lore: true, access: true },
-          achievements,
-          _pw: this.hashPw(password),
-        };
-
-        accounts[unLower] = member;
-        this.saveAccounts(accounts);
-        this.setSession(member);
-        return { member };
-      },
-
-      login(emailOrUsername, password) {
-        const accounts = this.getAccounts();
-        const input = emailOrUsername.toLowerCase().trim();
-        let member = accounts[input]
-          || Object.values(accounts).find(a => a.email === input);
-
-        if (!member) return { error: 'No account found with that email or handle.' };
-        if (member._pw !== this.hashPw(password)) return { error: 'Incorrect password.' };
-
-        this.setSession(member);
-        return { member };
-      },
-
-      logout() {
-        this.clearSession();
+      async logout() {
+        await VSSupabase.auth.signOut();
         showAuth();
       },
 
-      // ── Backend export helper (founder use only) ──────────────
-      // Run VS.exportForBackend() from the browser console when ready to
-      // migrate the founder account to the real auth API.
-      exportForBackend() {
-        const accounts = this.getAccounts();
-        const founder = accounts['vaultfounder'];
-        if (!founder) { console.error('No VaultFounder account found in this browser.'); return null; }
-
-        const exportData = {
-          email:        founder.email,
-          username:     founder.username,
-          role:         founder.role || 'founder',
-          points:       founder.points,
-          subscribed:   founder.subscribed,
-          prefs:        founder.prefs,
-          achievements: founder.achievements,
-          createdAt:    founder.createdAt,
-          _note:        'Migrated from localStorage. Set a new bcrypt password server-side — localStorage hash is not bcrypt-compatible.',
-        };
-
-        console.log('%c📦 Founder export — ready for backend migration:', 'color:#FFC400;font-weight:bold;');
-        console.log(JSON.stringify(exportData, null, 2));
-        return exportData;
-      },
-
-      savePrefs() {
-        const session = this.getSession();
+      async savePrefs() {
+        const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) return;
-        const accounts = this.getAccounts();
-        const key = session.username_lower;
-        if (!accounts[key]) return;
-
         const prefs = {
           updates: document.getElementById('toggle-updates')?.checked ?? true,
-          lore:    document.getElementById('toggle-lore')?.checked ?? true,
-          access:  document.getElementById('toggle-access')?.checked ?? true,
+          lore:    document.getElementById('toggle-lore')?.checked    ?? true,
+          access:  document.getElementById('toggle-access')?.checked  ?? true,
         };
-
-        accounts[key].prefs = prefs;
-        accounts[key].subscribed = prefs.updates;
-        this.saveAccounts(accounts);
-        this.setSession(accounts[key]);
-
-        // Sync tag changes to Kit in the background (only if they were ever subscribed)
-        if (accounts[key].email && typeof VaultKit !== 'undefined') {
-          VaultKit.syncPreferences(accounts[key].email, {
+        await VSSupabase.from('vault_members')
+          .update({ prefs, subscribed: prefs.updates })
+          .eq('id', session.user.id);
+        // Sync to Kit
+        if (session.user.email && typeof VaultKit !== 'undefined') {
+          VaultKit.syncPreferences(session.user.email, {
             'studio-updates':     prefs.updates,
             'lore-dispatches':    prefs.lore,
             'early-vault-access': prefs.access,
@@ -1196,13 +1087,13 @@
 
       // Profile
       document.getElementById('profile-username').textContent = member.username;
-      const rank = VS.getRank(member.points);
+      const rank     = VS.getRank(member.points);
       const nextRank = VS.getNextRank(member.points);
       const progress = VS.getRankProgress(member.points);
 
       const rankBadge = document.getElementById('profile-rank-badge');
       rankBadge.textContent = rank.name;
-      rankBadge.className = 'rank-badge badge ' + rank.badgeClass;
+      rankBadge.className   = 'rank-badge badge ' + rank.badgeClass;
 
       document.getElementById('profile-pts').textContent = member.points + ' pts';
       const createdDate = new Date(member.createdAt);
@@ -1216,12 +1107,12 @@
       document.getElementById('progress-fill').style.width = progress + '%';
 
       // Stats
-      document.getElementById('stat-pts').textContent = member.points;
-      document.getElementById('stat-rank').textContent = rank.name;
+      document.getElementById('stat-pts').textContent   = member.points;
+      document.getElementById('stat-rank').textContent  = rank.name;
       document.getElementById('stat-since').textContent =
         createdDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
-      const achEarned = member.achievements ? member.achievements.map(a => a.id) : [];
+      const achEarned = (member.achievements || []).map(a => a.id);
       document.getElementById('stat-achievements').textContent =
         achEarned.length + ' / ' + VS.ACHIEVEMENT_DEFS.length;
 
@@ -1252,63 +1143,174 @@
       }
     }
 
-    // ── Form handlers ───────────────────────────────────────────
+    // ── Maps a Supabase vault_members row + user to the member shape ──────────
+    function buildMember(user, row) {
+      return {
+        username:     row.username,
+        points:       row.points,
+        subscribed:   row.subscribed,
+        prefs:        row.prefs   || { updates: true, lore: true, access: true },
+        achievements: row.achievements || [],
+        createdAt:    row.created_at,
+        email:        user.email,
+      };
+    }
+
+    // ── Form: Register ───────────────────────────────────────────
     document.getElementById('register-form').addEventListener('submit', async function(e) {
       e.preventDefault();
-      const email     = document.getElementById('reg-email').value;
-      const username  = document.getElementById('reg-username').value;
-      const password  = document.getElementById('reg-password').value;
-      const subscribe = document.getElementById('reg-subscribe').checked;
-      const errEl     = document.getElementById('reg-error');
-      const btn       = this.querySelector('button[type="submit"]');
+      const email      = document.getElementById('reg-email').value.trim();
+      const username   = document.getElementById('reg-username').value.trim();
+      const password   = document.getElementById('reg-password').value;
+      const inviteCode = document.getElementById('reg-invite').value.trim().toUpperCase();
+      const subscribe  = document.getElementById('reg-subscribe').checked;
+      const errEl      = document.getElementById('reg-error');
+      const btn        = this.querySelector('button[type="submit"]');
 
-      const result = VS.register(email, username, password, subscribe);
-      if (result.error) {
-        errEl.textContent = result.error;
-        errEl.classList.add('show');
-      } else {
-        errEl.classList.remove('show');
+      errEl.classList.remove('show');
+      btn.textContent = 'Creating account…';
+      btn.disabled    = true;
 
-        // Subscribe to Kit in the background — don't block dashboard load
-        if (subscribe) {
+      try {
+        // 1. Validate invite code exists and is unused (fast client-side check)
+        const { data: codeCheck } = await VSSupabase
+          .from('invite_codes')
+          .select('code')
+          .eq('code', inviteCode)
+          .single();
+
+        if (!codeCheck) {
+          throw new Error('Invalid or already used invite code.');
+        }
+
+        // 2. Create Supabase auth user
+        const { data: authData, error: authErr } = await VSSupabase.auth.signUp({
+          email,
+          password,
+          options: { data: { username } },
+        });
+
+        if (authErr) throw new Error(authErr.message);
+
+        // 3. Register vault member + redeem code (server-side RPC)
+        const { data: rpcResult, error: rpcErr } = await VSSupabase
+          .rpc('register_with_invite', {
+            p_invite_code: inviteCode,
+            p_username:    username,
+            p_subscribe:   subscribe,
+          });
+
+        if (rpcErr) throw new Error(rpcErr.message);
+        if (rpcResult?.error) throw new Error(rpcResult.error);
+
+        // 4. Subscribe to Kit newsletter
+        if (subscribe && typeof VaultKit !== 'undefined') {
           VaultKit.subscribe(email, VaultKit.ALL_TAGS).catch(() => {});
         }
 
-        showDashboard(result.member);
-      }
-    });
-
-    document.getElementById('login-form').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const emailOrUsername = document.getElementById('login-email').value;
-      const password        = document.getElementById('login-password').value;
-      const errEl = document.getElementById('login-error');
-
-      const result = VS.login(emailOrUsername, password);
-      if (result.error) {
-        errEl.textContent = result.error;
+        // 5. Show confirmation — user must verify email before logging in
+        errEl.style.background = 'rgba(16,185,129,0.08)';
+        errEl.style.borderColor = 'rgba(16,185,129,0.25)';
+        errEl.style.color = '#34d399';
+        errEl.textContent = 'Account created! Check your email to confirm your address, then sign in below.';
         errEl.classList.add('show');
-      } else {
-        errEl.classList.remove('show');
-        showDashboard(result.member);
+        btn.textContent = 'Check your email →';
+        switchTab('login');
+
+      } catch (err) {
+        errEl.style = '';
+        errEl.textContent = err.message || 'Something went wrong. Please try again.';
+        errEl.classList.add('show');
+        btn.textContent = 'Open The Vault →';
+        btn.disabled = false;
       }
     });
 
-    // ── Init: check session ─────────────────────────────────────
-    (function init() {
-      const session = VS.getSession();
+    // ── Form: Login ──────────────────────────────────────────────
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const emailOrUsername = document.getElementById('login-email').value.trim();
+      const password        = document.getElementById('login-password').value;
+      const errEl           = document.getElementById('login-error');
+      const btn             = this.querySelector('button[type="submit"]');
+
+      errEl.classList.remove('show');
+      btn.textContent = 'Entering…';
+      btn.disabled    = true;
+
+      try {
+        // Supabase sign-in requires email, not username. If they entered a
+        // username, look up their email from vault_members first.
+        let email = emailOrUsername;
+        if (!emailOrUsername.includes('@')) {
+          const { data: row } = await VSSupabase
+            .from('vault_members')
+            .select('id')
+            .eq('username_lower', emailOrUsername.toLowerCase())
+            .single();
+
+          if (!row) throw new Error('No account found with that email or handle.');
+
+          // Get email from auth.users via the user's own session — need to
+          // sign in with ID. Instead: ask user to use email for sign-in.
+          throw new Error('Please sign in with your email address (not your Vault Handle).');
+        }
+
+        const { data, error } = await VSSupabase.auth.signInWithPassword({ email, password });
+        if (error) throw new Error(error.message);
+
+        // Load vault_members row
+        const { data: row, error: rowErr } = await VSSupabase
+          .from('vault_members')
+          .select('*')
+          .eq('id', data.user.id)
+          .single();
+
+        if (rowErr || !row) throw new Error('Account found but member profile is missing. Contact support.');
+
+        const member = buildMember(data.user, row);
+
+        // If a ?next= gated app is waiting, redirect with tokens
+        if (VSGate.redirect(data.session)) return;
+
+        showDashboard(member);
+
+      } catch (err) {
+        errEl.textContent = err.message || 'Sign-in failed. Please try again.';
+        errEl.classList.add('show');
+        btn.textContent = 'Enter The Vault →';
+        btn.disabled = false;
+      }
+    });
+
+    // ── Init: restore session ────────────────────────────────────
+    (async function init() {
+      const { data: { session } } = await VSSupabase.auth.getSession();
+
       if (session) {
-        // Re-load from accounts in case data updated
-        const accounts = VS.getAccounts();
-        const live = accounts[session.username_lower] || session;
-        showDashboard(live);
-      } else {
-        showAuth();
-        // Check if URL has #register hash
-        if (window.location.hash === '#register') {
-          switchTab('register');
-        } else if (window.location.hash === '#login') {
-          switchTab('login');
+        const { data: row } = await VSSupabase
+          .from('vault_members')
+          .select('*')
+          .eq('id', session.user.id)
+          .single();
+
+        if (row) {
+          showDashboard(buildMember(session.user, row));
+          return;
+        }
+      }
+
+      showAuth();
+      const hash = window.location.hash;
+      if (hash === '#register') switchTab('register');
+      else if (hash === '#login') switchTab('login');
+
+      // Show app name in subtitle if redirected from a gated tool
+      const appName = VSGate.getNextAppName();
+      if (appName) {
+        const heroP = document.querySelector('.member-page-hero p');
+        if (heroP) {
+          heroP.textContent = `Sign in or create your Vault Member account to access ${appName}.`;
         }
       }
     })();
