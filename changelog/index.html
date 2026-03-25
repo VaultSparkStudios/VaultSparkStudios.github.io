@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RSGLPP4KDZ');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Changelog — What We've Shipped | VaultSpark Studios</title>
+  <meta name="description" content="Every feature, fix, and improvement shipped to the VaultSpark Vault Member portal and public site — phase by phase." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/changelog/" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Vault Changelog | VaultSpark Studios" />
+  <meta property="og:description" content="What we've shipped — phase by phase. Transparency from the studio." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/changelog/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSparkStudios" />
+  <meta name="twitter:title" content="Vault Changelog | VaultSpark Studios" />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Changelog","item":"https://vaultsparkstudios.com/changelog/"}]}
+  </script>
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    .cl-hero { padding:5rem 0 2.5rem; position:relative; }
+    .cl-hero::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 20% 40%, rgba(255,196,0,0.08), transparent 35%), radial-gradient(circle at 80% 60%, rgba(31,162,255,0.06), transparent 35%); }
+    .cl-hero .container { position:relative; z-index:1; }
+    .cl-hero h1 { font-family:Georgia,"Times New Roman",serif; font-size:clamp(2.4rem,5vw,4rem); font-weight:400; letter-spacing:-0.04em; line-height:1; margin:0.75rem 0; }
+    .cl-timeline { max-width:760px; margin:0 auto; padding:0 0 4rem; }
+    .cl-phase { position:relative; padding-left:2.5rem; margin-bottom:3rem; }
+    .cl-phase::before { content:""; position:absolute; left:0.5rem; top:0.9rem; bottom:-3rem; width:1px; background:rgba(255,255,255,0.08); }
+    .cl-phase:last-child::before { display:none; }
+    .cl-dot { position:absolute; left:0; top:0.75rem; width:1rem; height:1rem; border-radius:50%; background:rgba(255,196,0,0.2); border:2px solid rgba(255,196,0,0.5); }
+    .cl-phase-header { margin-bottom:0.75rem; }
+    .cl-phase-num { font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--gold); }
+    .cl-phase-date { font-size:0.68rem; color:var(--dim); margin-left:0.75rem; }
+    .cl-phase-title { font-family:Georgia,"Times New Roman",serif; font-size:1.35rem; font-weight:400; letter-spacing:-0.02em; margin:0.2rem 0 0; color:var(--text); }
+    .cl-items { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.5rem; }
+    .cl-items li { font-size:0.88rem; color:var(--muted); padding-left:1.2rem; position:relative; line-height:1.6; }
+    .cl-items li::before { content:"→"; position:absolute; left:0; color:rgba(255,196,0,0.5); font-size:0.75rem; top:0.05em; }
+    .cl-sql-note { display:inline-block; margin-top:0.75rem; padding:0.35rem 0.75rem; background:rgba(31,162,255,0.08); border:1px solid rgba(31,162,255,0.2); border-radius:6px; font-size:0.78rem; color:#1FA2FF; }
+    @media(max-width:600px) { .cl-phase { padding-left:1.75rem; } }
+  </style>
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="cl-hero">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Transparency</span>
+        <h1>Vault Changelog</h1>
+        <p style="color:var(--muted);font-size:1rem;max-width:52ch;line-height:1.65;margin-top:0.5rem;">Every feature, fix, and improvement shipped to the vault and public site — written for members, not engineers.</p>
+      </div>
+    </section>
+
+    <section style="padding:0 0 4rem;">
+      <div class="container">
+        <div class="cl-timeline">
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 20–21</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Vault Command + Performance</div>
+            </div>
+            <ul class="cl-items">
+              <li>Vault Command: challenge analytics dashboard (completions per challenge, ranked by popularity)</li>
+              <li>Vault Command: member CSV export (one-click download of all members)</li>
+              <li>Challenges tab: collapsible completion history showing when each challenge was earned</li>
+              <li>Settings: password reset email trigger (no more digging for the forgot-password link)</li>
+              <li>Settings: GDPR data export (downloads your full data as JSON)</li>
+              <li>Settings: account deletion request flow</li>
+              <li>Supabase preconnect hints added to all pages that use the API</li>
+              <li>Public changelog page (you're reading it!)</li>
+              <li>security.txt added at /.well-known/security.txt</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 17–19</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Game Pages + Lore Archive + Privacy</div>
+            </div>
+            <ul class="cl-items">
+              <li>Game pages: Vault Points callout added to Call of Doodie, Gridiron GM, and VaultSpark Football GM</li>
+              <li>Unreleased game pages: "Notify Me at Launch" wishlist section (Dunescape, MindFrame, Project Unknown, VaultFront)</li>
+              <li>Classified Archive: reading progress bar (X of N files read)</li>
+              <li>Classified Archive: live keyword search across all files</li>
+              <li>Classified Archive: bookmark files (🔖) with localStorage persistence and filter toggle</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 15–16</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Challenge Streaks, Community + Member Directory</div>
+            </div>
+            <ul class="cl-items">
+              <li>Challenge streaks: 🔥 badge shows your consecutive-day streak on the Challenges tab</li>
+              <li>Streak milestone bonuses: 7-day (+50 pts) and 30-day (+200 pts)</li>
+              <li>Challenge difficulty tiers: Easy / Medium / Hard / Legendary badges on every challenge card</li>
+              <li>First-completion micro-achievements: 1st, 5th, and 10th challenge each award bonus pts</li>
+              <li>Leaderboards: ⚡ Challenges tab (top members by completions) and 🔗 Recruiters tab (top referrers)</li>
+              <li>Community page: recently joined member chips and live community polls section</li>
+              <li>Member directory: new /members/ page with rank filter and search</li>
+              <li>Polls: 🗳️ Polls tab in the vault for voting on studio decisions</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 12–14</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Journal, PWA, Dashboard Upgrades</div>
+            </div>
+            <ul class="cl-items">
+              <li>Individual journal post pages with full SEO, Article JSON-LD, author bio, reading time</li>
+              <li>Journal tag filtering (Studio OS / Games / Launch / Origin / Studio / Site)</li>
+              <li>Journal RSS feed updated to per-post canonical URLs</li>
+              <li>PWA install prompt — install the vault as a home screen app</li>
+              <li>Push notification opt-in with improved 📡 value-prop banner in Settings</li>
+              <li>Dashboard tab persistence — portal remembers your last active tab across sessions</li>
+              <li>"What's New" modal — shows unread Studio Pulse entries on login</li>
+              <li>Points breakdown modal — click "breakdown" on your Vault Points stat</li>
+              <li>Challenge completion modal — replaced XP chip with full slide-up panel</li>
+              <li>Onboarding tour now saved to your Vault profile</li>
+              <li>Points history chart — 30-day bar chart on the Chronicle tab (pure SVG, no dependencies)</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 10–11</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Public Pages, SEO, Community Features</div>
+            </div>
+            <ul class="cl-items">
+              <li>New public pages: /leaderboards/, /community/, /journal/archive/, /ranks/, /member/, /status/, /search/</li>
+              <li>Daily login bonus + streak system (🔥 day counter, milestone bonuses at 7/30/60/100 days)</li>
+              <li>5-step onboarding tour for new vault members</li>
+              <li>In-portal notification center (🔔 bell, Studio Pulse realtime feed)</li>
+              <li>Challenge categories + filter pills</li>
+              <li>Seasonal challenges with countdown badges</li>
+              <li>Achievement progress bars</li>
+              <li>Social sharing of your member card</li>
+              <li>Referral landing page (/join/?ref= shows referrer rank)</li>
+              <li>Journal emoji reactions (🔥❤️🎮⚡)</li>
+              <li>Sentry error tracking on all main pages</li>
+              <li>VideoGame JSON-LD on all game pages</li>
+              <li>Twitter Cards + OG meta tags site-wide</li>
+              <li>Cookie consent banner (GDPR)</li>
+              <li>GitHub Actions: Lighthouse CI</li>
+            </ul>
+          </article>
+
+        </div>
+
+        <div style="text-align:center;padding:2rem 0 3rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Want to shape what gets built next?</p>
+          <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+            <a href="/vault-member/" class="button button-sm">Vote in Vault Polls</a>
+            <a href="/community/" class="button-secondary" style="padding:0.55rem 1.2rem;font-size:0.88rem;">Community Hub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/changelog/">Changelog</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/vault-member/">Vault Membership</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="/leaderboards/">Leaderboard</a>
+          <a href="/members/">Members</a>
+          <a href="/community/">Community Hub</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="/feed.xml">RSS Feed</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/kit.js" defer></script>
+  <script src="/assets/cookie-consent.js" defer></script>
+  <script>
+    const hamburger=document.getElementById('hamburger'),navMenu=document.getElementById('nav-menu');
+    hamburger.addEventListener('click',()=>{const o=navMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
+    navMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{navMenu.classList.remove('open');hamburger.setAttribute('aria-expanded','false');document.body.style.overflow='';}));
+  </script>
+<script src="/assets/vault-cta.js" defer></script>
+</body>
+</html>

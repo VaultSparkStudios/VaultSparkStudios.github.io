@@ -30,11 +30,8 @@
 - [ ] Custom 404 page with rank theme + useful links [7.8] — GitHub Pages supports /404.html natively
 - [ ] Game screenshots + trailer embed on game pages [7.5]
 - [ ] Dynamic OG image generation per page [7.5]
-- [ ] Sticky "Join the Vault" CTA bar on public pages for logged-out visitors [7.5]
-- [ ] Preconnect / DNS-prefetch hints for Supabase CDN + analytics [7.5] — 3-line Lighthouse win
 - [ ] Lazy-load image audit (add loading="lazy" to all below-fold images) [7.5]
 - [ ] Supabase query batching in portal (consolidate sequential SELECTs into RPCs) [7]
-- [ ] Public changelog page (/changelog/ — what shipped each phase, written for members) [7]
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
 - [ ] WebP/AVIF image audit + conversion [6.5]
 - [ ] Graceful degradation on Supabase failure (offline states, error UI) [6.5]
@@ -85,6 +82,12 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 21 (2026-03-25)
+
+- ✅ Supabase preconnect / DNS-prefetch hints — added to homepage, journal, games hub, studio hub, and all released game pages (3-line Lighthouse win)
+- ✅ Public changelog page — `/changelog/` timeline covering Phases 10–21, BreadcrumbList JSON-LD, full SEO meta
+- ✅ Sticky "Join the Vault" CTA bar — `/assets/vault-cta.js`; shows after 4s for logged-out visitors on all public pages; localStorage session heuristic (no fetch); 24h dismiss
 
 ## Completed — Phase 20 (2026-03-25)
 
