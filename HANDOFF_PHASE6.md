@@ -219,6 +219,27 @@ All phases fully deployed and live. No pending setup steps remain.
 - **Discord:** bot invited to server, 5 rank roles created (IDs mapped rank 0–4)
 - **Supabase CLI:** linked to project `fjnpzjjyhnpmunfoycrp` via access token
 
+## Next session prompt
+
+Read HANDOFF_PHASE6.md first (this file), then build the following two things:
+
+### Admin Panel (Option 1)
+Add a hidden "Admin" tab to the Vault Member dashboard (`vault-member/index.html`) that is only visible when `member.member_number === 1`. The tab should contain:
+
+1. **Post to Studio Pulse** — form with a message textarea + type selector (update / alert / drop) + Post button. Calls `supabase.from('studio_pulse').insert(...)` directly (need INSERT policy for the admin user — add `create policy "admin insert pulse" on public.studio_pulse for insert to authenticated with check (auth.uid() = (select id from vault_members where member_number = 1))`).
+
+2. **Post Classified File** — form with fields: title, slug, classification label, rank_required (0–4 selector), universe_tag, content_html (textarea). Submit inserts into `classified_files` which auto-fires the `on_classified_file_insert` trigger → push notification to all subscribers.
+
+3. **Post Beta Key** — form with game_slug selector + key_code input + min_rank selector. Inserts into `beta_keys`.
+
+SQL needed: INSERT policy on `studio_pulse` for member #1, INSERT policy on `classified_files` for member #1, INSERT policy on `beta_keys` for member #1.
+
+### iOS Shortcut (Option 4)
+Build a URL scheme that posts a Studio Pulse message via the Supabase REST API. Deliverable: step-by-step instructions for creating an iOS Shortcut with:
+- A "Ask for Input" action (the message text)
+- A "Choose from list" action (update / alert / drop)
+- A "Get Contents of URL" action posting to `https://fjnpzjjyhnpmunfoycrp.supabase.co/rest/v1/studio_pulse` with the service role key as the Authorization header
+
 ## Pending phases
 
 _All phases 0–10 are complete and deployed. No further phases are currently planned._
