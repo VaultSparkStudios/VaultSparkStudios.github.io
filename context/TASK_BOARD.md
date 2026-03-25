@@ -25,14 +25,12 @@
 
 ## A-Tier Backlog (Score 7–8.9)
 
-- [ ] Lore reading progress (% of archive read, "X of 24 files unlocked") [8]
 - [ ] Game-specific challenge + point triggers (Football GM → Vault points) [8]
 - [ ] VaultSparked perks landing page (/vaultsparked/) [7.8] — public conversion page for the subscription, shareable
 - [ ] Custom 404 page with rank theme + useful links [7.8] — GitHub Pages supports /404.html natively
 - [ ] Game screenshots + trailer embed on game pages [7.5]
 - [ ] Dynamic OG image generation per page [7.5]
 - [ ] GDPR: export your data + delete account flows [7.5]
-- [ ] Classified files search (client-side keyword filter within lore archive) [7.5]
 - [ ] Challenge submission history view (when each challenge was completed, in Challenges tab) [7.5]
 - [ ] Sticky "Join the Vault" CTA bar on public pages for logged-out visitors [7.5]
 - [ ] Vault Command: challenge completion analytics (completion rate, most popular categories, zero-completion challenges) [7.5]
@@ -57,7 +55,6 @@
 - [ ] Fan art submission form (upload → Supabase Storage → moderation queue in Vault Command) [6.5]
 - [ ] Vault Command: scheduled broadcast (set Signal Broadcast to publish at future time) [6.5]
 - [ ] Co-op / team challenges [6.5]
-- [ ] Bookmark classified files [6.5]
 - [ ] Dark/light mode toggle [6.5]
 - [ ] Investor portal: KPI trend sparklines (30/60/90-day MRR + member growth) [6.5]
 - [ ] Sitemap auto-generation (GitHub Action) [6.5]
@@ -97,6 +94,12 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 18 (2026-03-25)
+
+- ✅ Lore reading progress — gold progress bar in Classified Archive showing "X of N files read (pct%)"
+- ✅ Classified files search — live keyword filter input (title/content/classification) in archive header
+- ✅ Bookmark classified files — 🔖 button on each file card; localStorage-backed; "Bookmarks" filter toggle
 
 ## Completed — Phase 17 (2026-03-25)
 

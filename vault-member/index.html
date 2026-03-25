@@ -2209,12 +2209,30 @@
 
           <!-- ── Tab: Classified Archive ── -->
           <div class="dash-pane" id="dash-pane-archive">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
               <div>
                 <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">⚠ Vault Archive — Classified Intelligence</div>
                 <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Declassified to Vault Members only. Access is rank-gated — higher ranks unlock deeper intel. Reading a file for the first time awards <strong style="color:var(--gold);">+20 pts</strong>.</p>
               </div>
               <span id="archive-access-badge" class="archive-access-level" style="background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.18);color:var(--gold);">Loading…</span>
+            </div>
+            <!-- Reading progress -->
+            <div id="archive-progress-bar-wrap" style="display:none;margin-bottom:1rem;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.35rem;">
+                <span style="font-size:0.73rem;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:0.08em;">Reading Progress</span>
+                <span id="archive-progress-label" style="font-size:0.73rem;color:var(--muted);"></span>
+              </div>
+              <div style="height:5px;background:rgba(255,255,255,0.07);border-radius:3px;overflow:hidden;">
+                <div id="archive-progress-fill" style="height:100%;background:linear-gradient(90deg,#FFC400,#ff9500);border-radius:3px;transition:width 0.5s ease;width:0%;"></div>
+              </div>
+            </div>
+            <!-- Search + Bookmarks filter -->
+            <div style="display:flex;gap:0.65rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center;">
+              <div style="position:relative;flex:1;min-width:160px;max-width:300px;">
+                <span style="position:absolute;left:0.7rem;top:50%;transform:translateY(-50%);color:var(--dim);font-size:0.82rem;pointer-events:none;">⌕</span>
+                <input type="search" id="archive-search" placeholder="Search files…" aria-label="Search classified files" autocomplete="off" style="width:100%;padding:0.5rem 0.75rem 0.5rem 2.1rem;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);font-size:0.83rem;font-family:inherit;outline:none;box-sizing:border-box;" />
+              </div>
+              <button id="archive-bookmarks-toggle" onclick="toggleArchiveBookmarks()" style="padding:0.5rem 0.9rem;background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--dim);font-size:0.8rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all 0.15s;white-space:nowrap;">🔖 Bookmarks</button>
             </div>
             <div id="archive-file-list">
               <div style="color:var(--dim);font-size:0.88rem;padding:0.5rem 0;">Loading classified files…</div>
@@ -4766,30 +4784,127 @@
           return;
         }
 
-        list.innerHTML = files.map(f => buildFileCard(f, readSlugs.has(f.slug))).join('');
+        const unlocked = files.filter(f => !f.locked);
+        const readCount = unlocked.filter(f => readSlugs.has(f.slug)).length;
+        const totalUnlocked = unlocked.length;
+
+        // Update reading progress bar
+        const progressWrap = document.getElementById('archive-progress-bar-wrap');
+        const progressFill = document.getElementById('archive-progress-fill');
+        const progressLabel = document.getElementById('archive-progress-label');
+        if (progressWrap && totalUnlocked > 0) {
+          progressWrap.style.display = '';
+          const pct = Math.round((readCount / totalUnlocked) * 100);
+          if (progressFill) progressFill.style.width = pct + '%';
+          if (progressLabel) progressLabel.textContent = readCount + ' of ' + totalUnlocked + ' files read (' + pct + '%)';
+        }
+
+        // Store for search/bookmark filtering
+        window._archiveFiles = files;
+        window._archiveReadSlugs = readSlugs;
+
+        renderArchiveFiles();
+
+        // Wire up search
+        const searchInput = document.getElementById('archive-search');
+        if (searchInput) {
+          let searchTimer;
+          searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(renderArchiveFiles, 150);
+          });
+        }
 
         // Wire up header click toggles
-        list.querySelectorAll('.file-card:not(.locked) .file-card-header').forEach(hdr => {
-          hdr.addEventListener('click', function() {
-            const card = this.closest('.file-card');
-            const wasExpanded = card.classList.contains('expanded');
-            // Collapse all
-            list.querySelectorAll('.file-card.expanded').forEach(c => c.classList.remove('expanded'));
-            if (!wasExpanded) {
-              card.classList.add('expanded');
-              // Award points first time
-              const slug = card.dataset.slug;
-              if (!readSlugs.has(slug)) {
-                readSlugs.add(slug);
-                readFile(card, slug, card.dataset.title);
+        function wireArchiveClicks() {
+          list.querySelectorAll('.file-card:not(.locked) .file-card-header').forEach(hdr => {
+            hdr.addEventListener('click', function() {
+              const card = this.closest('.file-card');
+              const wasExpanded = card.classList.contains('expanded');
+              list.querySelectorAll('.file-card.expanded').forEach(c => c.classList.remove('expanded'));
+              if (!wasExpanded) {
+                card.classList.add('expanded');
+                const slug = card.dataset.slug;
+                if (!readSlugs.has(slug)) {
+                  readSlugs.add(slug);
+                  readFile(card, slug, card.dataset.title);
+                }
               }
-            }
+            });
           });
-        });
+        }
+        wireArchiveClicks();
 
       } catch (_) {
         if (list) list.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load files.</div>';
       }
+    }
+
+    let _archiveShowBookmarks = false;
+
+    function renderArchiveFiles() {
+      const list = document.getElementById('archive-file-list');
+      if (!list || !window._archiveFiles) return;
+      const files = window._archiveFiles;
+      const readSlugs = window._archiveReadSlugs || new Set();
+      const query = (document.getElementById('archive-search')?.value || '').toLowerCase().trim();
+      const bookmarks = getArchiveBookmarks();
+
+      const filtered = files.filter(f => {
+        if (_archiveShowBookmarks && !bookmarks.has(f.slug)) return false;
+        if (!query) return true;
+        return (f.title || '').toLowerCase().includes(query) ||
+               (f.content_html || '').toLowerCase().includes(query) ||
+               (f.classification || '').toLowerCase().includes(query);
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;padding:0.75rem 0;">' +
+          (_archiveShowBookmarks ? 'No bookmarked files.' : 'No files match your search.') + '</div>';
+        return;
+      }
+
+      list.innerHTML = filtered.map(f => buildFileCard(f, readSlugs.has(f.slug))).join('');
+
+      // Re-wire clicks
+      list.querySelectorAll('.file-card:not(.locked) .file-card-header').forEach(hdr => {
+        hdr.addEventListener('click', function() {
+          const card = this.closest('.file-card');
+          const wasExpanded = card.classList.contains('expanded');
+          list.querySelectorAll('.file-card.expanded').forEach(c => c.classList.remove('expanded'));
+          if (!wasExpanded) {
+            card.classList.add('expanded');
+            const slug = card.dataset.slug;
+            if (!readSlugs.has(slug)) {
+              readSlugs.add(slug);
+              readFile(card, slug, card.dataset.title);
+            }
+          }
+        });
+      });
+    }
+
+    function getArchiveBookmarks() {
+      try { return new Set(JSON.parse(localStorage.getItem('vs_arc_bookmarks') || '[]')); }
+      catch (_) { return new Set(); }
+    }
+
+    function toggleFileBookmark(slug, btn) {
+      const bm = getArchiveBookmarks();
+      if (bm.has(slug)) { bm.delete(slug); btn.textContent = '🔖'; btn.title = 'Bookmark'; }
+      else { bm.add(slug); btn.textContent = '🔖✓'; btn.title = 'Bookmarked'; }
+      localStorage.setItem('vs_arc_bookmarks', JSON.stringify([...bm]));
+    }
+
+    function toggleArchiveBookmarks() {
+      _archiveShowBookmarks = !_archiveShowBookmarks;
+      const btn = document.getElementById('archive-bookmarks-toggle');
+      if (btn) {
+        btn.style.background = _archiveShowBookmarks ? 'rgba(255,196,0,0.12)' : 'transparent';
+        btn.style.borderColor = _archiveShowBookmarks ? 'rgba(255,196,0,0.4)' : 'rgba(255,255,255,0.1)';
+        btn.style.color = _archiveShowBookmarks ? 'var(--gold)' : 'var(--dim)';
+      }
+      renderArchiveFiles();
     }
 
     function buildFileCard(f, isRead) {
@@ -4810,6 +4925,8 @@
         </div>`;
       }
 
+      const bm = getArchiveBookmarks();
+      const isBookmarked = bm.has(f.slug);
       return `<div class="file-card" data-slug="${f.slug}" data-title="${f.title.replace(/"/g,'&quot;')}">
         <div class="file-card-header">
           <span class="classification-tag ${tagClass}">${f.classification}</span>
@@ -4817,6 +4934,7 @@
           <div class="file-meta-tags">
             ${uTag ? `<span class="file-universe-tag">${uTag}</span>` : ''}
             ${isRead ? '<span class="file-read-dot" title="Read"></span>' : ''}
+            <button onclick="event.stopPropagation();toggleFileBookmark('${f.slug}',this)" title="${isBookmarked ? 'Bookmarked' : 'Bookmark'}" style="background:none;border:none;cursor:pointer;font-size:0.75rem;padding:0.15rem 0.3rem;color:var(--dim);border-radius:4px;transition:color 0.15s;" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--dim)'">${isBookmarked ? '🔖✓' : '🔖'}</button>
             <span class="file-caret">▼</span>
           </div>
         </div>
