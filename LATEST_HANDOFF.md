@@ -4,58 +4,87 @@ Last updated: 2026-03-24
 
 ## What was completed this session
 
-- **Supabase Vault Member auth system implemented**
-  - `assets/supabase-client.js` (new): shared Supabase JS client exposed as `window.VSSupabase`; `VSGate` helper for cross-domain redirects; `VAULT_GATED_APPS` registry for all gated tools
-  - `vault-member/index.html`: **major update** — localStorage auth (`VS.register/login/logout`) fully replaced with Supabase auth; invite code field added to register form; `?next=` redirect handling added; footnotes updated to reflect real server-backed auth
-  - `supabase-schema.sql` (new): run once in Supabase SQL Editor to create `invite_codes` table, `vault_members` table, RLS policies, and `register_with_invite` RPC
+### Session 1 (earlier): Supabase Vault Member auth system
+- `assets/supabase-client.js` — shared Supabase JS client (`window.VSSupabase`), `VSGate` cross-domain redirect helper, `VAULT_GATED_APPS` registry
+- `vault-member/index.html` — localStorage auth fully replaced with Supabase; invite code field added; `?next=` redirect handling
+- `supabase-schema.sql` — invite_codes, vault_members tables, RLS, `register_with_invite` RPC
 
-- **Supabase CDN scripts added** to `vault-member/index.html` `<head>`:
-  - `https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js`
-  - `../assets/supabase-client.js`
+### Session 2 (this session): Password reset, OAuth, real stats, full backend features
+- **Password reset** (`vault-member/index.html`):
+  - "Forgot password?" link on login form
+  - `panel-forgot`: requests reset email via `resetPasswordForEmail()`
+  - `panel-reset`: set new password via `updateUser({ password })`
+  - Init detects `#type=recovery` hash → shows reset panel automatically
+- **Google + Discord OAuth** (`vault-member/index.html`):
+  - OAuth buttons on both login and register panels
+  - `oauthSignIn(provider)` calls `signInWithOAuth()` with redirect back to vault-member
+  - New OAuth users without a `vault_members` row → `panel-oauth-complete` (username + invite code)
+  - Username pre-filled from OAuth metadata
+- **Real vault stats** (`vault-member/index.html`):
+  - `showDashboard` now calls `get_member_stats` RPC asynchronously
+  - Shows real PromoGrind calculation count + ledger entry count (replaces "Coming Soon" chips)
+- **Supabase Edge Functions** (new in `supabase/functions/`):
+  - `odds/index.ts` — proxies The Odds API; Pro-gated (checks `subscriptions` table)
+  - `stripe-webhook/index.ts` — handles Stripe subscription lifecycle
+  - `create-checkout/index.ts` — creates Stripe Checkout sessions
+- **supabase-schema-v2.sql**: promogrind_data, vault_events, subscriptions, game_sessions tables + RPCs
 
 ## What is mid-flight
 
-- `supabase-client.js` has placeholder credentials (`YOUR_SUPABASE_URL`, `YOUR_SUPABASE_ANON_KEY`) — vault-member auth will not work until these are filled in after Supabase project creation
+- `assets/supabase-client.js` still has placeholder credentials — auth will not work until filled in
+- OAuth providers (Google, Discord) must be enabled in Supabase dashboard
+- Edge Functions must be deployed and secrets set
 
 ## What to do next
 
-1. Create Supabase project at supabase.com
-2. SQL Editor → run `supabase-schema.sql`
-3. Settings → API → copy Project URL + anon key
-4. Fill in `assets/supabase-client.js` (two placeholders at the top of the file)
-5. Also fill in `promogrind/.env` with the same values (prefixed `VITE_`)
-
-## How the VAULT_GATED_APPS registry works
-
-`assets/supabase-client.js` maintains a `VAULT_GATED_APPS` object. Each entry is one Vault-gated tool. The `VSGate.redirect(session)` function sends auth tokens to the registered app after login.
-
-To add a new gated tool:
-1. Add an entry to `VAULT_GATED_APPS` in `assets/supabase-client.js`
-2. Deploy the new tool with its own `auth.js` (copy from promogrind)
+1. **Create Supabase project** at supabase.com
+2. **SQL Editor** → run `supabase-schema.sql` then `supabase-schema-v2.sql`
+3. **Fill credentials**: `assets/supabase-client.js` top-of-file placeholders + `promogrind/.env`
+4. **Deploy Edge Functions**:
+   ```
+   supabase functions deploy odds
+   supabase functions deploy stripe-webhook
+   supabase functions deploy create-checkout
+   ```
+5. **Set secrets** in Supabase dashboard → Edge Functions → Secrets:
+   - `ODDS_API_KEY` (theoddsapi.com)
+   - `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID`, `STRIPE_WEBHOOK_SECRET` (Stripe)
+   - `APP_URL` (e.g. `https://vaultsparkstudios.com/promogrind`)
+6. **Configure OAuth** → Supabase → Authentication → Providers → Google + Discord (requires Google Cloud project + Discord dev app)
+7. **Stripe webhook** → add endpoint pointing to `https://<project>.supabase.co/functions/v1/stripe-webhook`
 
 ## How vault-member → gated tool redirect works
 
 1. Gated tool redirects to `vaultsparkstudios.com/vault-member/?next=<tool-origin>`
-2. vault-member shows login with a subtitle naming the app (e.g. "Sign in to access PromoGrind")
-3. After successful login: `VSGate.redirect(session)` sends the user to `<tool-origin>/#access_token=...&refresh_token=...&type=vault_access`
-4. The tool's `checkAuth()` picks up the tokens from the hash, calls `supabase.auth.setSession()`, clears the hash, renders the app
+2. vault-member shows login + subtitle naming the app
+3. After login: `VSGate.redirect(session)` sends tokens to `<tool-origin>/#access_token=...&type=vault_access`
+4. Tool's `checkAuth()` picks up tokens, calls `setSession()`, clears hash, renders app
 
-## Auth architecture decision
+## How to add a new gated tool
 
-- **Before**: vault-member used localStorage-only auth (a demo hash, NOT production-grade)
-- **After**: Supabase manages real email+password auth, sessions, email confirmation
-- The localStorage `VS_ACCOUNTS_V2` and `VS_SESSION_V2` keys are now unused — existing localStorage data is inert (not deleted, just ignored)
-- The old `VS.exportForBackend()` console helper has been removed (migration is complete)
+1. Add entry to `VAULT_GATED_APPS` in `assets/supabase-client.js`
+2. New tool copies `promogrind/src/auth.js` + adds Supabase env vars
 
-## Files changed
+## Auth architecture
 
-- `assets/supabase-client.js` — NEW
-- `supabase-schema.sql` — NEW
-- `vault-member/index.html` — auth JS block replaced; invite code field added; CDN scripts added
+- **Register**: email+password + invite code → `register_with_invite` RPC (atomic, security definer)
+- **Login**: `signInWithPassword()` → load vault_members row
+- **OAuth**: `signInWithOAuth()` → if no vault_members row → complete-profile panel (invite still required)
+- **Password reset**: `resetPasswordForEmail()` → user clicks email link → `#type=recovery` hash → `updateUser()`
+- **Cross-device**: Supabase sessions persist in localStorage; `promogrind_data` table for app data sync
+
+## Files changed this session
+
+- `vault-member/index.html` — password reset + OAuth + real stats (major update)
+- `supabase-schema-v2.sql` — NEW
+- `supabase/functions/odds/index.ts` — NEW
+- `supabase/functions/stripe-webhook/index.ts` — NEW
+- `supabase/functions/create-checkout/index.ts` — NEW
 
 ## Constraints
 
-- Never commit real Supabase credentials to this repo
-- `assets/supabase-client.js` uses the **anon key** only (safe for browser)
-- Service role key only goes in `promogrind/.env.admin` (git-ignored, admin CLI use only)
-- The `VSGate.getNextUrl()` function validates redirects against known `VAULT_GATED_APPS` origins — do not weaken this check (open redirect prevention)
+- Never commit real Supabase credentials
+- `assets/supabase-client.js` uses anon key only (safe for browser)
+- Service role key only in `promogrind/.env.admin` (git-ignored)
+- `VSGate.getNextUrl()` validates redirects against known origins — do not weaken (open redirect prevention)
+- OAuth new users still require invite codes — this is intentional (invite-only access model)
