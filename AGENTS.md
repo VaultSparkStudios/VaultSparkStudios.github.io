@@ -165,6 +165,34 @@ Every game, tool, app, and platform built under VaultSpark Studios **must** inte
 
 **Cross-domain token flow:** vault-member sends `access_token` + `refresh_token` via URL hash to the gated tool after login. The tool calls `supabase.auth.setSession()` to establish its session. See `LATEST_HANDOFF.md` for full flow.
 
+## VaultSparked Membership Tier
+
+Added 2026-03-24. VaultSparked is the studio-wide premium membership.
+
+**Plan identifier:** `vault_sparked` in the `subscriptions` table
+**Price:** $24.99/month (founding member; may introduce annual discount later)
+**Model:** Additive — every new feature, tool, and game perk included automatically; no per-product upsell
+
+**Key decisions:**
+- One Stripe account for the entire studio; VaultSparked is the single product
+- Future studio features fold in automatically — no new plan needed
+- Legacy `pro` plan is treated as equivalent to `vault_sparked` everywhere (do not break existing subscribers)
+- No live Stripe activation until LLC + EIN obtained; test mode is safe
+
+**Free vs paid split:**
+- Free: core calculators, open games (call-of-doodie, etc.), leaderboards, vault points
+- VaultSparked: Live Scanner (arb + +EV), cosmetics/badges, early access to new tools, future edge features
+
+**Stripe setup (when LLC ready):**
+1. stripe.com → create account as VaultSpark Studios LLC
+2. Products → Add product: VaultSparked $24.99/month recurring
+3. Webhooks → Add endpoint: `https://fjnpzjjyhnpmunfoycrp.supabase.co/functions/v1/stripe-webhook`
+   - Events: checkout.session.completed, customer.subscription.updated, customer.subscription.deleted, invoice.payment_failed
+4. `supabase secrets set STRIPE_SECRET_KEY=sk_live_... STRIPE_VAULT_SPARKED_PRICE_ID=price_... STRIPE_WEBHOOK_SECRET=whsec_... APP_URL=https://vaultsparkstudios.com`
+5. `supabase functions deploy create-checkout && supabase functions deploy stripe-webhook`
+
+**isPro() rule:** Always accept both `vault_sparked` AND `pro` plans as active subscriptions. Never check for only one.
+
 ## VaultSpark Studios website integration
 
 * Studio root site repo: `VaultSparkStudios/VaultSparkStudios.github.io`
