@@ -1960,7 +1960,7 @@
             <!-- Stats -->
             <div class="dash-panel">
               <h3>Vault Stats</h3>
-              <div class="stat-row"><span class="label">Vault Points</span><span class="value" id="stat-pts">10</span></div>
+              <div class="stat-row"><span class="label">Vault Points <span style="font-size:0.72rem;color:var(--dim);font-weight:400;cursor:pointer;" onclick="showPtsBreakdown()" title="See breakdown">▸ breakdown</span></span><span class="value" id="stat-pts">10</span></div>
               <div class="stat-row"><span class="label">Current Rank</span><span class="value" id="stat-rank">Spark Initiate</span></div>
               <div class="stat-row"><span class="label">Games Tracked</span><span class="value">5</span></div>
               <div class="stat-row"><span class="label">Achievements</span><span class="value" id="stat-achievements">1</span></div>
@@ -2244,6 +2244,10 @@
                 <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">📜 Activity Chronicle</div>
                 <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Your complete Vault history — every point earned, challenge completed, and file unlocked.</p>
               </div>
+            </div>
+            <div id="points-history-chart" style="margin-bottom:2rem;padding:1.25rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;">
+              <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Points Earned — Last 30 Days</div>
+              <div id="points-chart-svg" style="color:var(--dim);font-size:0.84rem;">Loading chart…</div>
             </div>
             <div id="chronicle-timeline">
               <div style="color:var(--dim);">Loading…</div>
@@ -2821,6 +2825,7 @@
 
     // ── Dashboard tab switcher ───────────────────────────────────
     function switchDashTab(which) {
+      localStorage.setItem('vs_active_tab', which);
       document.querySelectorAll('.dash-tab').forEach(t => {
         t.classList.toggle('active', t.id === 'tab-dash-' + which);
       });
@@ -2842,6 +2847,7 @@
       if (which === 'chronicle' && !_chronicleLoaded) {
         _chronicleLoaded = true;
         loadChronicle();
+        renderPointsHistoryChart();
       }
     }
 
@@ -3105,6 +3111,13 @@
       if (adminTabEl)   adminTabEl.style.display   = isAdmin ? '' : 'none';
       if (navAdminLink) navAdminLink.style.display = isAdmin ? '' : 'none';
       if (isAdmin) loadInvRequests('pending');
+
+      // Restore active tab from last session
+      const savedTab = localStorage.getItem('vs_active_tab');
+      if (savedTab && savedTab !== 'dashboard') switchDashTab(savedTab);
+
+      // What's New modal — check for unread Studio Pulse entries
+      setTimeout(() => checkWhatsNew(), 2500);
     }
 
     // ── Current member reference (for card generation etc.) ──────
@@ -3126,8 +3139,9 @@
         accent:          row.accent          || '#FFC400',
         member_number:   row.member_number   || null,
         discord_id:      row.discord_id      || null,
-        streak_count:    row.streak_count    || 0,
-        last_login_date: row.last_login_date || null,
+        streak_count:         row.streak_count         || 0,
+        last_login_date:      row.last_login_date      || null,
+        onboarding_completed: row.onboarding_completed || false,
       };
     }
 
@@ -3454,7 +3468,8 @@
     let _onboardingStep = 0;
 
     function maybeStartOnboarding(member) {
-      // Only show to brand-new members who have 0 pts and haven't completed it before
+      // Check DB flag first (populated after SQL migration: ALTER TABLE vault_members ADD COLUMN onboarding_completed boolean DEFAULT false)
+      if (member.onboarding_completed) { localStorage.setItem('onboarding_complete', '1'); return; }
       if (localStorage.getItem('onboarding_complete')) return;
       if (member.points > 0) { localStorage.setItem('onboarding_complete', '1'); return; }
       _onboardingStep = 0;
@@ -3554,6 +3569,10 @@
       localStorage.setItem('onboarding_complete', '1');
       const overlay = document.getElementById('onboarding-overlay');
       if (overlay) overlay.style.display = 'none';
+      // Persist to DB so new devices skip the tour
+      VSSupabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) VSSupabase.from('vault_members').update({ onboarding_completed: true }).eq('id', session.user.id).catch(() => {});
+      });
     }
 
     // ── Phase 2: XP chip notification ────────────────────────────
@@ -4041,6 +4060,178 @@
         el.innerHTML = html;
       } catch (_) {
         if (el) el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load activity chronicle.</div>';
+      }
+    }
+
+    // ── Phase 14: What's New modal ───────────────────────────────
+    async function checkWhatsNew() {
+      try {
+        const { data: pulses } = await VSSupabase
+          .from('studio_pulse')
+          .select('id,message,type,created_at')
+          .order('created_at', { ascending: false })
+          .limit(5);
+        if (!pulses || pulses.length === 0) return;
+        const lastSeen = localStorage.getItem('vs_last_pulse_seen_ts') || '1970-01-01';
+        const unseen = pulses.filter(p => p.created_at > lastSeen);
+        if (unseen.length === 0) return;
+        showWhatsNewModal(unseen, pulses[0].created_at);
+      } catch (_) {}
+    }
+
+    function showWhatsNewModal(items, latestTs) {
+      if (document.getElementById('whats-new-modal')) return;
+      const modal = document.createElement('div');
+      modal.id = 'whats-new-modal';
+      modal.style.cssText = 'position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);';
+      const typeEmoji = { info:'ℹ️', update:'🔔', lore:'📁', alert:'⚡', milestone:'🏆' };
+      const safeTs = latestTs.replace(/'/g, '');
+      const itemsHtml = items.slice(0, 4).map(p =>
+        '<div style="display:flex;gap:0.65rem;padding:0.7rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">'
+        + '<span style="font-size:1rem;flex-shrink:0;margin-top:0.1rem;">' + (typeEmoji[p.type] || '⚡') + '</span>'
+        + '<div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">' + p.message + '</div>'
+        + '</div>'
+      ).join('');
+      modal.innerHTML = '<div style="background:rgba(13,17,28,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:1.75rem;max-width:400px;width:100%;max-height:80vh;overflow-y:auto;">'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;">'
+        + '<h3 style="font-size:1.05rem;font-weight:800;margin:0;">What\'s New in the Vault</h3>'
+        + '<span style="font-size:0.75rem;font-weight:700;padding:0.2rem 0.55rem;background:rgba(255,196,0,0.15);border:1px solid rgba(255,196,0,0.3);border-radius:999px;color:var(--gold);">'
+        + items.length + ' update' + (items.length > 1 ? 's' : '') + '</span>'
+        + '</div>'
+        + '<div style="margin-bottom:1.25rem;">' + itemsHtml + '</div>'
+        + '<button id="whats-new-close-btn" style="width:100%;padding:0.6rem;background:var(--gold);color:#000;font-weight:800;font-size:0.88rem;border:none;border-radius:10px;cursor:pointer;font-family:inherit;">Got it — I\'m up to speed</button>'
+        + '</div>';
+      document.body.appendChild(modal);
+      const closeModal = () => {
+        modal.remove();
+        localStorage.setItem('vs_last_pulse_seen_ts', safeTs);
+      };
+      document.getElementById('whats-new-close-btn').addEventListener('click', closeModal);
+      modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+    }
+
+    // ── Phase 14: Points breakdown modal ─────────────────────────
+    async function showPtsBreakdown() {
+      if (document.getElementById('pts-breakdown-modal')) return;
+      try {
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('reason,points')
+          .order('created_at', { ascending: false })
+          .limit(300);
+        if (!events || events.length === 0) return;
+        const cats = {};
+        events.forEach(e => {
+          const cat = (e.reason || 'other').replace(/_\d+$/, '').replace(/_/g, ' ');
+          cats[cat] = (cats[cat] || 0) + (e.points || 0);
+        });
+        const sorted = Object.entries(cats).sort((a, b) => b[1] - a[1]).slice(0, 7);
+        const total = sorted.reduce((s, c) => s + c[1], 0);
+        const rows = sorted.map(([cat, pts]) => {
+          const pct = total > 0 ? Math.round(pts / total * 100) : 0;
+          return '<div style="margin-bottom:0.7rem;">'
+            + '<div style="display:flex;justify-content:space-between;font-size:0.84rem;margin-bottom:0.25rem;">'
+            + '<span style="color:var(--muted);text-transform:capitalize;">' + cat + '</span>'
+            + '<span style="font-weight:700;color:var(--text);">' + pts + ' pts</span>'
+            + '</div>'
+            + '<div style="height:5px;background:rgba(255,255,255,0.08);border-radius:999px;">'
+            + '<div style="height:5px;background:var(--gold);border-radius:999px;width:' + pct + '%;"></div>'
+            + '</div></div>';
+        }).join('');
+        const modal = document.createElement('div');
+        modal.id = 'pts-breakdown-modal';
+        modal.style.cssText = 'position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);';
+        modal.innerHTML = '<div style="background:rgba(13,17,28,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:1.5rem;max-width:340px;width:100%;">'
+          + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.1rem;">'
+          + '<h3 style="font-size:0.95rem;font-weight:800;margin:0;">Points Breakdown</h3>'
+          + '<button id="pts-breakdown-close" style="background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer;line-height:1;padding:0;" aria-label="Close">&times;</button>'
+          + '</div>'
+          + '<div style="margin-bottom:0.5rem;font-size:0.8rem;color:var(--dim);">Total earned: ' + total + ' pts</div>'
+          + rows + '</div>';
+        document.body.appendChild(modal);
+        document.getElementById('pts-breakdown-close').addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+      } catch (_) {}
+    }
+
+    // ── Phase 14: Challenge complete modal ───────────────────────
+    function showChallengeCompleteModal(pts, title) {
+      const existing = document.getElementById('challenge-complete-modal');
+      if (existing) existing.remove();
+      const currentPts = parseInt(document.getElementById('stat-pts').textContent, 10) || 0;
+      const newPts = currentPts + pts;
+      const rank = VS.getRank(newPts);
+      const nextRank = VS.getNextRank(newPts);
+      const prog = VS.getRankProgress(newPts);
+      const progressHtml = nextRank
+        ? '<div style="margin-top:0.85rem;">'
+          + '<div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--dim);margin-bottom:0.3rem;">'
+          + '<span>' + rank.name + '</span><span>' + (nextRank.min - newPts) + ' pts to ' + nextRank.name + '</span>'
+          + '</div>'
+          + '<div style="height:5px;background:rgba(255,255,255,0.08);border-radius:999px;">'
+          + '<div style="height:5px;background:var(--gold);border-radius:999px;width:' + prog + '%;transition:width 0.6s ease;"></div>'
+          + '</div></div>'
+        : '';
+      const modal = document.createElement('div');
+      modal.id = 'challenge-complete-modal';
+      modal.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:1300;max-width:360px;width:calc(100% - 2rem);background:rgba(13,17,28,0.97);border:1px solid rgba(255,196,0,0.4);border-radius:20px;padding:1.4rem;box-shadow:0 8px 40px rgba(0,0,0,0.6);animation:vs-slide-up 0.3s ease;';
+      modal.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">'
+        + '<div>'
+        + '<div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.2rem;">Challenge Complete ⚡</div>'
+        + '<div style="font-size:0.95rem;font-weight:800;color:var(--text);">' + title + '</div>'
+        + '</div>'
+        + '<button onclick="document.getElementById(\'challenge-complete-modal\').remove()" style="background:none;border:none;color:var(--dim);font-size:1.3rem;cursor:pointer;line-height:1;padding:0 0 0 0.5rem;" aria-label="Close">&times;</button>'
+        + '</div>'
+        + '<div style="font-size:1.8rem;font-weight:900;color:var(--gold);letter-spacing:-0.02em;">+' + pts + ' pts</div>'
+        + '<div style="font-size:0.82rem;color:var(--muted);margin-top:0.2rem;">Total: ' + newPts + ' pts · ' + rank.name + '</div>'
+        + progressHtml;
+      document.body.appendChild(modal);
+      setTimeout(() => { const m = document.getElementById('challenge-complete-modal'); if (m) m.remove(); }, 6000);
+    }
+
+    // ── Phase 14: Points history SVG chart ───────────────────────
+    async function renderPointsHistoryChart() {
+      const el = document.getElementById('points-chart-svg');
+      if (!el) return;
+      try {
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('points,created_at')
+          .gte('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
+          .order('created_at', { ascending: true });
+
+        if (!events || events.length === 0) {
+          el.textContent = 'No activity in the last 30 days.';
+          return;
+        }
+
+        // Build a map of day → total points
+        const dayMap = {};
+        for (let i = 29; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          dayMap[d.toDateString()] = 0;
+        }
+        events.forEach(e => {
+          const key = new Date(e.created_at).toDateString();
+          if (key in dayMap) dayMap[key] += (e.points || 0);
+        });
+
+        const days = Object.entries(dayMap);
+        const maxPts = Math.max(...days.map(d => d[1]), 1);
+        const W = 600, H = 80, barGap = 2;
+        const barW = Math.floor((W - barGap * (days.length - 1)) / days.length);
+        const bars = days.map(([day, pts], i) => {
+          const barH = pts > 0 ? Math.max(3, Math.round(pts / maxPts * H)) : 2;
+          const x = i * (barW + barGap);
+          const y = H - barH;
+          const opacity = pts > 0 ? '1' : '0.25';
+          return `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="2" fill="var(--gold)" opacity="${opacity}"><title>${new Date(day).toLocaleDateString('en-US',{month:'short',day:'numeric'})}: ${pts} pts</title></rect>`;
+        }).join('');
+
+        el.innerHTML = `<svg viewBox="0 0 ${W} ${H + 20}" style="width:100%;height:auto;display:block;" role="img" aria-label="Points earned over last 30 days">${bars}<text x="0" y="${H + 16}" font-size="10" fill="var(--dim)">${new Date(days[0][0]).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</text><text x="${W}" y="${H + 16}" text-anchor="end" font-size="10" fill="var(--dim)">Today</text></svg>`;
+      } catch (_) {
+        el.textContent = 'Could not load chart.';
       }
     }
 
@@ -4858,7 +5049,7 @@
         if (!ch) return;
         const { data } = await VSSupabase.rpc('complete_challenge', { p_challenge_id: ch.id });
         if (data?.ok) {
-          showXpChip(data.points, 'Challenge: ' + data.title);
+          showChallengeCompleteModal(data.points, data.title);
           refreshPointsDisplay();
           loadChallenges();
         }

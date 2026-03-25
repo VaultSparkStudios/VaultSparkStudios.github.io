@@ -26,16 +26,10 @@
 ## A-Tier Backlog (Score 7–8.9)
 
 - [ ] Community polls (members vote on game features / studio decisions) [8.5] — highest-engagement community mechanic
-- [ ] Points history chart (XP over time line graph on dashboard) [8.5] — retention/motivation
-- [ ] "What's New" modal on portal login after feature deployments [8.5] — localStorage version flag, zero backend, makes product feel alive
-- [ ] Dashboard tab persistence (remember active portal tab via localStorage) [8.5] — 2 lines of code, eliminates navigation friction
 - [ ] Game wishlist + "Notify me" for unreleased games [8] — pre-launch email/push capture
 - [ ] Challenge streaks (complete same recurring challenge N days running → bonus XP) [8]
 - [ ] Lore reading progress (% of archive read, "X of 24 files unlocked") [8]
 - [ ] Game-specific challenge + point triggers (Football GM → Vault points) [8]
-- [ ] Challenge completion modal (enhanced — animated +XP, rank progress, share button) [8] — turns routine action into a moment
-- [ ] Onboarding tour completion stored in Supabase (not just localStorage) [8] — prevents tour repeat on new device/cleared storage
-- [ ] Points breakdown tooltip (hover XP → breakdown by challenges/logins/referrals/achievements) [8] — one GROUP BY on point_events
 - [ ] Member directory (/members/) with rank filter + search [7.8]
 - [ ] Referral leaderboard ("Top Recruiters" on /leaderboards/) [7.8]
 - [ ] VaultSparked perks landing page (/vaultsparked/) [7.8] — public conversion page for the subscription, shareable
@@ -114,6 +108,16 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 14 (2026-03-25)
+
+- ✅ Dashboard tab persistence — localStorage save/restore of active portal tab across sessions
+- ✅ "What's New" modal — checks studio_pulse for unread entries since last seen timestamp, shows on login
+- ✅ Points breakdown modal — click "breakdown" on Vault Points stat → bar chart of pts by category from point_events
+- ✅ Challenge completion modal (enhanced) — replaces XP chip: shows challenge name, +pts, total, rank progress bar
+- ✅ Onboarding tour stored in Supabase — member.onboarding_completed checked first; completion writes to DB
+- ✅ Points history SVG chart — 30-day bar chart on Chronicle tab, zero dependencies, pure SVG
+- **SQL needed:** `ALTER TABLE vault_members ADD COLUMN IF NOT EXISTS onboarding_completed boolean NOT NULL DEFAULT false;`
 
 ## Completed — Phase 13 (2026-03-25)
 
