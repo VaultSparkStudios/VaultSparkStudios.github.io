@@ -103,7 +103,7 @@ alter table public.invite_codes
 
 ---
 
-## 🔜 Phase 4 — Classified Files Library
+## ✅ Phase 4 — Classified Files Library (Done)
 Rank-gated expanding lore vault. Current single DreadSpike block becomes a structured archive.
 
 **New table: `classified_files`**
@@ -144,7 +144,7 @@ create policy "members read eligible files"
 
 ---
 
-## 🔜 Phase 5 — Vault Challenges
+## ✅ Phase 5 — Vault Challenges (Done)
 Weekly/monthly tasks for bonus points.
 
 **New table: `challenges`**

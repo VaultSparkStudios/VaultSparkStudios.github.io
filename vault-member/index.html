@@ -959,6 +959,102 @@
     }
     .invite-copy-btn:hover { background: rgba(255,196,0,0.22); }
 
+    /* ─── Classified Archive ─── */
+    .archive-access-level {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.38rem 0.85rem; border-radius: 999px;
+      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .file-card {
+      border-radius: var(--radius);
+      border: 1px solid rgba(255,196,0,0.11);
+      background: linear-gradient(180deg, rgba(16,12,4,0.97), rgba(8,10,18,0.99));
+      margin-bottom: 0.7rem; overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .file-card:hover:not(.locked) { border-color: rgba(255,196,0,0.22); box-shadow: 0 4px 24px rgba(255,196,0,0.04); }
+    .file-card.locked {
+      border-color: rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.015);
+    }
+    .file-card-header {
+      display: flex; align-items: center; gap: 0.9rem;
+      padding: 1.05rem 1.25rem; cursor: pointer; user-select: none;
+    }
+    .file-card.locked .file-card-header { cursor: default; }
+    .classification-tag {
+      font-size: 0.6rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.13em; padding: 0.2rem 0.55rem; border-radius: 4px;
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .ctag-eyes   { background: rgba(255,196,0,0.12); color: var(--gold); border: 1px solid rgba(255,196,0,0.2); }
+    .ctag-rest   { background: rgba(31,162,255,0.1);  color: #7dd3fc;   border: 1px solid rgba(31,162,255,0.2); }
+    .ctag-top    { background: rgba(255,122,0,0.1);   color: #fb923c;   border: 1px solid rgba(255,122,0,0.2); }
+    .ctag-vk     { background: rgba(255,196,0,0.07);  color: var(--gold); border: 1px solid rgba(255,196,0,0.15); }
+    .file-title { flex: 1; font-weight: 700; font-size: 0.94rem; color: var(--text); min-width: 0; }
+    .file-card.locked .file-title { color: var(--dim); }
+    .file-meta-tags { display: flex; align-items: center; gap: 0.55rem; flex-shrink: 0; }
+    .file-universe-tag { font-size: 0.72rem; color: var(--dim); white-space: nowrap; }
+    .file-rank-lock { display: flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: var(--dim); white-space: nowrap; }
+    .file-read-dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; flex-shrink: 0; }
+    .file-caret { font-size: 0.54rem; color: var(--dim); transition: transform 0.2s; flex-shrink: 0; }
+    .file-card.expanded .file-caret { transform: rotate(180deg); }
+    .file-content-body {
+      padding: 0 1.25rem 1.3rem; border-top: 1px solid rgba(255,196,0,0.07);
+      display: none;
+    }
+    .file-card.expanded .file-content-body { display: block; }
+    .file-content-body p {
+      color: var(--muted); font-size: 0.91rem; line-height: 1.78;
+      margin-bottom: 0.8rem;
+    }
+    .file-content-body p:first-child { margin-top: 1rem; }
+    .file-content-body p:last-child  { margin-bottom: 0; }
+    .file-pts-awarded {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.78rem; font-weight: 700; color: var(--gold);
+      margin-top: 1rem; padding: 0.3rem 0.7rem;
+      background: rgba(255,196,0,0.07); border: 1px solid rgba(255,196,0,0.14);
+      border-radius: 999px;
+    }
+
+    /* ─── Vault Challenges ─── */
+    .challenges-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 0.8rem;
+    }
+    .challenge-card {
+      padding: 1.15rem; border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.025);
+      display: flex; flex-direction: column; gap: 0.55rem;
+      transition: border-color 0.2s;
+    }
+    .challenge-card.completed {
+      border-color: rgba(52,211,153,0.18);
+      background: rgba(52,211,153,0.03);
+    }
+    .challenge-card:not(.completed):hover { border-color: rgba(255,196,0,0.15); }
+    .challenge-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.65rem; }
+    .challenge-pts-badge {
+      font-size: 0.78rem; font-weight: 800; color: var(--gold);
+      background: rgba(255,196,0,0.1); border: 1px solid rgba(255,196,0,0.2);
+      border-radius: 999px; padding: 0.22rem 0.6rem; white-space: nowrap; flex-shrink: 0;
+    }
+    .challenge-type-chip {
+      font-size: 0.62rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.08em; padding: 0.18rem 0.5rem; border-radius: 4px; white-space: nowrap;
+    }
+    .ctype-weekly  { background: rgba(139,92,246,0.12); color: #a78bfa; border: 1px solid rgba(139,92,246,0.2); }
+    .ctype-monthly { background: rgba(31,162,255,0.1);  color: #7dd3fc; border: 1px solid rgba(31,162,255,0.2); }
+    .ctype-once    { background: rgba(255,255,255,0.05); color: var(--dim); border: 1px solid rgba(255,255,255,0.09); }
+    .challenge-title { font-weight: 700; font-size: 0.93rem; color: var(--text); line-height: 1.3; }
+    .challenge-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.55; flex: 1; }
+    .challenge-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: 0.2rem; }
+    .challenge-done { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: #34d399; font-weight: 700; }
+    .challenge-expires { font-size: 0.73rem; color: var(--dim); }
+
     @media (max-width: 860px) {
       .auth-wrap { grid-template-columns: 1fr; }
       .rank-sidebar { display: none; }
@@ -1002,6 +1098,8 @@
           </button>
           <div class="nav-account-menu" role="menu">
             <a role="menuitem" href="#" onclick="switchDashTab('dashboard');closeNavDropdown();return false;">Vault Dashboard</a>
+            <a role="menuitem" href="#" onclick="switchDashTab('archive');closeNavDropdown();return false;">Classified Archive</a>
+            <a role="menuitem" href="#" onclick="switchDashTab('challenges');closeNavDropdown();return false;">Vault Challenges</a>
             <a role="menuitem" href="#" onclick="switchDashTab('settings');closeNavDropdown();return false;">Profile &amp; Settings</a>
             <div class="menu-divider"></div>
             <button class="menu-signout" role="menuitem" onclick="VS.logout()">Sign Out</button>
@@ -1263,6 +1361,8 @@
           <!-- Dashboard Tabs -->
           <div class="dash-tabs">
             <button class="dash-tab active" id="tab-dash-dashboard" onclick="switchDashTab('dashboard')">Dashboard</button>
+            <button class="dash-tab" id="tab-dash-archive" onclick="switchDashTab('archive')">Classified Archive</button>
+            <button class="dash-tab" id="tab-dash-challenges" onclick="switchDashTab('challenges')">Vault Challenges</button>
             <button class="dash-tab" id="tab-dash-settings" onclick="switchDashTab('settings')">Profile &amp; Settings</button>
           </div>
 
@@ -1478,6 +1578,34 @@
 
           </div>
           </div><!-- /dash-pane-dashboard -->
+
+          <!-- ── Tab: Classified Archive ── -->
+          <div class="dash-pane" id="dash-pane-archive">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap;">
+              <div>
+                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">⚠ Vault Archive — Classified Intelligence</div>
+                <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Declassified to Vault Members only. Access is rank-gated — higher ranks unlock deeper intel. Reading a file for the first time awards <strong style="color:var(--gold);">+20 pts</strong>.</p>
+              </div>
+              <span id="archive-access-badge" class="archive-access-level" style="background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.18);color:var(--gold);">Loading…</span>
+            </div>
+            <div id="archive-file-list">
+              <div style="color:var(--dim);font-size:0.88rem;padding:0.5rem 0;">Loading classified files…</div>
+            </div>
+          </div><!-- /dash-pane-archive -->
+
+          <!-- ── Tab: Vault Challenges ── -->
+          <div class="dash-pane" id="dash-pane-challenges">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap;">
+              <div>
+                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">⚡ Vault Challenges</div>
+                <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Complete challenges to earn bonus Vault Points. Weekly challenges reset every Monday.</p>
+              </div>
+              <span id="challenges-summary" style="font-size:0.82rem;color:var(--dim);white-space:nowrap;padding-top:0.2rem;"></span>
+            </div>
+            <div class="challenges-grid" id="challenges-list">
+              <div style="color:var(--dim);font-size:0.88rem);grid-column:1/-1;">Loading challenges…</div>
+            </div>
+          </div><!-- /dash-pane-challenges -->
 
           <!-- ── Tab: Settings ── -->
           <div class="dash-pane" id="dash-pane-settings">
@@ -1796,8 +1924,14 @@
       document.querySelectorAll('.dash-pane').forEach(p => {
         p.classList.toggle('active', p.id === 'dash-pane-' + which);
       });
-      // Scroll to top of dashboard
       document.getElementById('dashboard-view')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Lazy-load archive on first open; reload challenges each time (weekly resets)
+      if (which === 'archive' && !_archiveLoaded) {
+        _archiveLoaded = true;
+        loadClassifiedArchive();
+      }
+      if (which === 'challenges') loadChallenges();
     }
 
     // ── Nav account dropdown ─────────────────────────────────────
@@ -2005,6 +2139,11 @@
       loadPointEvents();
       setTimeout(() => initPointsEconomy(member), 1200);
       loadInviteCode();
+
+      // Phase 4/5: load challenges, auto-complete eligible ones, reset archive flag
+      _archiveLoaded = false;
+      loadChallenges();
+      setTimeout(() => initChallenges(member), 1800);
     }
 
     // ── Current member reference (for card generation etc.) ──────
@@ -2487,6 +2626,279 @@
         document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
         if (btn) { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = 'Copy'; }, 2000); }
       }
+    }
+
+    // ── Phase 4: Classified Archive ──────────────────────────────
+    let _archiveLoaded = false;
+
+    const RANK_NAMES = ['Spark Initiate', 'Vault Runner', 'Forge Guard', 'Vault Keeper', 'The Sparked'];
+
+    async function loadClassifiedArchive() {
+      const list = document.getElementById('archive-file-list');
+      const badge = document.getElementById('archive-access-badge');
+      if (!list) return;
+
+      try {
+        const { data: files, error } = await VSSupabase.rpc('get_classified_files');
+        if (error || !files) {
+          list.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load files.</div>';
+          return;
+        }
+
+        // Determine user's rank index from unlocked files
+        const maxUnlocked = files.filter(f => !f.locked).reduce((m, f) => Math.max(m, f.rank_required), 0);
+        if (badge) {
+          const rankLabel = RANK_NAMES[maxUnlocked] || 'Spark Initiate';
+          badge.textContent = '🔓 Access: ' + rankLabel + '+';
+        }
+
+        // Build list of already-read slugs from point_events
+        const { data: readEvents } = await VSSupabase
+          .from('point_events')
+          .select('reason')
+          .like('reason', 'file_read_%');
+        const readSlugs = new Set((readEvents || []).map(e => e.reason.replace('file_read_', '')));
+
+        if (files.length === 0) {
+          list.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">No files available yet.</div>';
+          return;
+        }
+
+        list.innerHTML = files.map(f => buildFileCard(f, readSlugs.has(f.slug))).join('');
+
+        // Wire up header click toggles
+        list.querySelectorAll('.file-card:not(.locked) .file-card-header').forEach(hdr => {
+          hdr.addEventListener('click', function() {
+            const card = this.closest('.file-card');
+            const wasExpanded = card.classList.contains('expanded');
+            // Collapse all
+            list.querySelectorAll('.file-card.expanded').forEach(c => c.classList.remove('expanded'));
+            if (!wasExpanded) {
+              card.classList.add('expanded');
+              // Award points first time
+              const slug = card.dataset.slug;
+              if (!readSlugs.has(slug)) {
+                readSlugs.add(slug);
+                readFile(card, slug, card.dataset.title);
+              }
+            }
+          });
+        });
+
+      } catch (_) {
+        if (list) list.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load files.</div>';
+      }
+    }
+
+    function buildFileCard(f, isRead) {
+      const tagClass = { 'EYES ONLY': 'ctag-eyes', 'RESTRICTED': 'ctag-rest', 'TOP SECRET': 'ctag-top', 'VAULT KEEPER EYES ONLY': 'ctag-vk' }[f.classification] || 'ctag-eyes';
+      const rankLabel = RANK_NAMES[f.rank_required] || 'Vault Runner';
+      const uTag = f.universe_tag ? f.universe_tag.charAt(0).toUpperCase() + f.universe_tag.slice(1) : '';
+
+      if (f.locked) {
+        return `<div class="file-card locked">
+          <div class="file-card-header">
+            <span class="classification-tag ${tagClass}">${f.classification}</span>
+            <span class="file-title">${f.title}</span>
+            <div class="file-meta-tags">
+              ${uTag ? `<span class="file-universe-tag">${uTag}</span>` : ''}
+              <span class="file-rank-lock">🔒 ${rankLabel}+</span>
+            </div>
+          </div>
+        </div>`;
+      }
+
+      return `<div class="file-card" data-slug="${f.slug}" data-title="${f.title.replace(/"/g,'&quot;')}">
+        <div class="file-card-header">
+          <span class="classification-tag ${tagClass}">${f.classification}</span>
+          <span class="file-title">${f.title}</span>
+          <div class="file-meta-tags">
+            ${uTag ? `<span class="file-universe-tag">${uTag}</span>` : ''}
+            ${isRead ? '<span class="file-read-dot" title="Read"></span>' : ''}
+            <span class="file-caret">▼</span>
+          </div>
+        </div>
+        <div class="file-content-body">
+          ${f.content_html}
+          ${isRead
+            ? '<div class="file-pts-awarded">✓ Points already earned for this file</div>'
+            : '<div class="file-pts-awarded" id="pts-' + f.slug + '" style="display:none;">⚡ +20 pts awarded</div>'}
+        </div>
+      </div>`;
+    }
+
+    async function readFile(card, slug, title) {
+      try {
+        const { data } = await VSSupabase.rpc('award_points', {
+          p_reason:   'file_read_' + slug,
+          p_points:   20,
+          p_label:    'Read: ' + title,
+          p_once_per: 'ever',
+        });
+        if (data?.ok) {
+          showXpChip(20, 'Read: ' + title);
+          const ptsEl = document.getElementById('pts-' + slug);
+          if (ptsEl) ptsEl.style.display = '';
+          // Mark read dot
+          const hdr = card.querySelector('.file-card-header');
+          if (hdr && !hdr.querySelector('.file-read-dot')) {
+            const dot = document.createElement('span');
+            dot.className = 'file-read-dot'; dot.title = 'Read';
+            hdr.querySelector('.file-caret')?.before(dot);
+          }
+          // Refresh points
+          refreshPointsDisplay();
+          // Try to complete 'read_file' challenge
+          completeChallengeByActionKey('read_file');
+        }
+      } catch (_) {}
+    }
+
+    // ── Phase 5: Vault Challenges ─────────────────────────────────
+    async function loadChallenges() {
+      const grid    = document.getElementById('challenges-list');
+      const summary = document.getElementById('challenges-summary');
+      if (!grid) return;
+
+      try {
+        const { data: challenges, error } = await VSSupabase.rpc('get_challenges');
+        if (error || !challenges || challenges.length === 0) {
+          grid.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;grid-column:1/-1;">No challenges available right now.</div>';
+          return;
+        }
+
+        const done  = challenges.filter(c => c.completed).length;
+        const total = challenges.length;
+        if (summary) summary.textContent = done + ' / ' + total + ' completed';
+
+        grid.innerHTML = challenges.map(ch => buildChallengeCard(ch)).join('');
+
+      } catch (_) {
+        if (grid) grid.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;grid-column:1/-1;">Could not load challenges.</div>';
+      }
+    }
+
+    function buildChallengeCard(ch) {
+      const typeMap = { weekly: 'ctype-weekly', monthly: 'ctype-monthly', 'one-time': 'ctype-once' };
+      const typeLabel = ch.challenge_type === 'one-time' ? 'One-Time' : ch.challenge_type.charAt(0).toUpperCase() + ch.challenge_type.slice(1);
+      const expiresText = ch.expires_at
+        ? 'Expires ' + new Date(ch.expires_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+        : (ch.challenge_type === 'weekly' ? 'Resets Monday' : '');
+
+      if (ch.completed) {
+        const when = ch.completed_at
+          ? formatTimeAgo(new Date(ch.completed_at))
+          : 'Complete';
+        return `<div class="challenge-card completed">
+          <div class="challenge-card-top">
+            <div>
+              <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
+            </div>
+            <span class="challenge-pts-badge">+${ch.points} pts</span>
+          </div>
+          <div class="challenge-title">${ch.title}</div>
+          <div class="challenge-desc">${ch.description || ''}</div>
+          <div class="challenge-footer">
+            <span class="challenge-done">✓ Earned — ${when}</span>
+            ${expiresText ? `<span class="challenge-expires">${expiresText}</span>` : ''}
+          </div>
+        </div>`;
+      }
+
+      return `<div class="challenge-card">
+        <div class="challenge-card-top">
+          <div>
+            <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
+          </div>
+          <span class="challenge-pts-badge">+${ch.points} pts</span>
+        </div>
+        <div class="challenge-title">${ch.title}</div>
+        <div class="challenge-desc">${ch.description || ''}</div>
+        <div class="challenge-footer">
+          <span class="challenge-expires" style="color:var(--dim);font-size:0.78rem;">${expiresText || 'Complete an action to earn'}</span>
+        </div>
+      </div>`;
+    }
+
+    // Auto-complete challenges based on detected member state
+    async function initChallenges(member) {
+      try {
+        const { data: challenges } = await VSSupabase.rpc('get_challenges');
+        if (!challenges) return;
+
+        const achIds = (member.achievements || []).map(a => a.id);
+        const pending = challenges.filter(c => !c.completed);
+        let totalBonus = 0;
+
+        for (const ch of pending) {
+          let should = false;
+          switch (ch.action_key) {
+            case 'subscribed':     should = !!member.subscribed; break;
+            case 'weekly_login':   should = true; break;
+            case 'profile_complete':
+              should = !!(member.bio && member.bio.trim().length > 0
+                         && member.avatar_id && member.avatar_id !== 'spark'); break;
+            case 'visit_game':
+              should = !!(localStorage.getItem('vs_visited_cod')
+                        || localStorage.getItem('vs_visited_gm')
+                        || localStorage.getItem('vs_visited_vsfgm')); break;
+            case 'visit_all_games':
+              should = !!(localStorage.getItem('vs_visited_cod')
+                        && localStorage.getItem('vs_visited_gm')
+                        && localStorage.getItem('vs_visited_vsfgm')); break;
+            case 'referral_1':     should = achIds.includes('recruiter'); break;
+            case 'referral_5':     should = achIds.includes('patron'); break;
+          }
+          if (should) {
+            const { data } = await VSSupabase.rpc('complete_challenge', { p_challenge_id: ch.id });
+            if (data?.ok) totalBonus += data.points;
+          }
+        }
+
+        if (totalBonus > 0) {
+          showXpChip(totalBonus, 'Challenge bonus');
+          refreshPointsDisplay();
+          loadPointEvents();
+        }
+        loadChallenges();
+      } catch (_) {}
+    }
+
+    async function completeChallengeByActionKey(actionKey) {
+      try {
+        const { data: challenges } = await VSSupabase.rpc('get_challenges');
+        if (!challenges) return;
+        const ch = challenges.find(c => c.action_key === actionKey && !c.completed);
+        if (!ch) return;
+        const { data } = await VSSupabase.rpc('complete_challenge', { p_challenge_id: ch.id });
+        if (data?.ok) {
+          showXpChip(data.points, 'Challenge: ' + data.title);
+          refreshPointsDisplay();
+          loadChallenges();
+        }
+      } catch (_) {}
+    }
+
+    async function refreshPointsDisplay() {
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const { data: row } = await VSSupabase.from('vault_members').select('points').eq('id', session.user.id).single();
+        if (!row) return;
+        const pts  = row.points;
+        const rank = VS.getRank(pts);
+        const prog = VS.getRankProgress(pts);
+        document.getElementById('profile-pts').textContent  = pts + ' pts';
+        document.getElementById('stat-pts').textContent     = pts;
+        document.getElementById('info-pts').textContent     = pts + ' pts';
+        document.getElementById('stat-rank').textContent    = rank.name;
+        document.getElementById('info-rank').textContent    = rank.name;
+        document.getElementById('progress-fill').style.width = prog + '%';
+        const nxt = VS.getNextRank(pts);
+        document.getElementById('pb-current-rank').textContent = rank.name;
+        document.getElementById('pb-next').textContent = nxt ? '→ ' + nxt.name + ' at ' + nxt.min + ' pts' : '✦ Maximum rank achieved';
+        loadPointEvents();
+      } catch (_) {}
     }
 
     // ── Vault Member Card (Canvas) ───────────────────────────────
