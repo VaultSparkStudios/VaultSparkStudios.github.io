@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" href="../../assets/favicon.png" />
   <link rel="stylesheet" href="../../assets/style.css" />
   <link rel="stylesheet" href="../../assets/investor-theme.css" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script src="../../assets/supabase-client.js"></script>
 
@@ -330,14 +331,23 @@
           return;
         }
 
-        // Validate investor access
-        const { data: profile, error: rpcErr } = await sb.rpc('get_my_investor_profile');
+        // Allow vaultspark admin through without an investor record
+        const { data: adminCheck } = await sb
+          .from('vault_members')
+          .select('username_lower')
+          .eq('id', data.user.id)
+          .maybeSingle();
 
-        if (rpcErr || !profile || profile.error) {
-          await sb.auth.signOut();
-          setLoading(false);
-          showError('This account is not registered as an investor. Please contact the studio.');
-          return;
+        if (adminCheck?.username_lower !== 'vaultspark') {
+          // Validate investor access
+          const { data: profile, error: rpcErr } = await sb.rpc('get_my_investor_profile');
+
+          if (rpcErr || !profile || profile.error) {
+            await sb.auth.signOut();
+            setLoading(false);
+            showError('This account is not registered as an investor. Please contact the studio.');
+            return;
+          }
         }
 
         // Success — redirect
