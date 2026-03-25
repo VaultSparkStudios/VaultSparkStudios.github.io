@@ -2,33 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=/games/call-of-doodie/" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Call Of Doodie | Free Browser Shooter — VaultSpark Studios</title>
+  <meta name="description" content="Call of Doodie is a free browser-based action comedy shooter. Hilarious chaos, arcade energy, and punchlines delivered via ammunition. No download required — play free now." />
+  <meta name="keywords" content="Call of Doodie, free browser game, action comedy shooter, arcade game, VaultSpark Studios, funny shooting game, free online game" />
   <link rel="canonical" href="https://vaultsparkstudios.com/games/call-of-doodie/" />
-  <title>Call Of Doodie — VaultSpark Studios</title>
   <meta name="theme-color" content="#000000" />
   <meta name="robots" content="index, follow" />
 
   <meta property="og:title" content="Call Of Doodie | Free Browser Shooter" />
   <meta property="og:description" content="Action comedy chaos. Punchlines via ammunition. Free to play in your browser — no download required." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://vaultsparkstudios.com/call-of-doodie/" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/games/call-of-doodie/" />
   <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@VaultSpark" />
   <meta name="twitter:title" content="Call Of Doodie | Free Browser Shooter" />
   <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
 
-  <link rel="icon" type="image/png" href="../assets/favicon.png" />
-  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="icon" type="image/png" href="../../assets/favicon.png" />
+  <link rel="apple-touch-icon" href="../../assets/icon-256.png" />
   <link rel="manifest" href="/manifest.json" />
-  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="../../assets/style.css" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "VideoGame",
     "name": "Call of Doodie",
-    "url": "https://vaultsparkstudios.com/call-of-doodie/",
+    "url": "https://vaultsparkstudios.com/games/call-of-doodie/",
     "description": "A hilarious browser shooter RPG combining action comedy and arcade energy. Free to play instantly in your browser.",
     "genre": ["Action", "Comedy", "Shooter", "Arcade"],
     "gamePlatform": "Web Browser",
@@ -40,77 +49,18 @@
 
   <style>
     .game-hero { padding: 5rem 0 0; position: relative; }
-    .game-hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 15% 40%, rgba(255,122,0,0.16), transparent 32%),
-        radial-gradient(circle at 85% 40%, rgba(255,196,0,0.1), transparent 32%);
-      pointer-events: none;
-    }
+    .game-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; }
     .game-hero .container { position: relative; z-index: 1; }
-    .hero-art {
-      min-height: 360px;
-      border-radius: var(--radius);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 2rem;
-      overflow: hidden;
-      margin-top: 2rem;
-    }
-    .hero-art::before {
-      content: "";
-      position: absolute;
-      inset: -20%;
-      filter: blur(32px);
-      opacity: 0.95;
-    }
-    .hero-art::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.65));
-    }
-    .hero-art-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .hero-art h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      letter-spacing: -0.045em;
-      line-height: 0.95;
-      margin: 0;
-    }
+    .game-hero::before { background: radial-gradient(circle at 15% 40%, rgba(255,122,0,0.16), transparent 32%), radial-gradient(circle at 85% 40%, rgba(255,196,0,0.1), transparent 32%); }
+    .hero-art { min-height: 360px; border-radius: var(--radius); position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; overflow: hidden; margin-top: 2rem; }
+    .hero-art::before { content: ""; position: absolute; inset: -20%; filter: blur(32px); opacity: 0.95; }
+    .hero-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.65)); }
+    .hero-art-content { position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+    .hero-art h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(3rem, 7vw, 5.5rem); letter-spacing: -0.045em; line-height: 0.95; margin: 0; }
     .hero-art-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; flex-shrink: 0; }
-    .game-body {
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
-      gap: 2rem;
-      padding: 3rem 0 5rem;
-      align-items: start;
-    }
-    .feature-block {
-      padding: 2rem;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow);
-    }
-    .feature-block h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.9rem;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.75rem;
-    }
+    .game-body { display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem; padding: 3rem 0 2rem; align-items: start; }
+    .feature-block { padding: 2rem; border-radius: var(--radius); background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97)); border: 1px solid rgba(255,255,255,0.08); box-shadow: var(--shadow); }
+    .feature-block h2 { font-family: Georgia, "Times New Roman", serif; font-size: 1.9rem; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
     .feature-block > p { color: var(--muted); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem; }
     .feature-list { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; gap: 0.5rem; }
     .feature-list li { display: flex; align-items: flex-start; gap: 0.65rem; color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
@@ -123,10 +73,25 @@
     .info-row span:first-child { color: var(--muted); }
     .info-row span:last-child { font-weight: 600; color: var(--text); }
     .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
-    .stat-block { padding: 1.15rem; border-radius: 18px; background: rgba(255,122,0,0.05); border: 1px solid rgba(255,122,0,0.14); text-align: center; }
-    .stat-block strong { display: block; font-size: 1.75rem; font-weight: 800; color: var(--orange); letter-spacing: -0.03em; }
+    .stat-block { padding: 1.15rem; border-radius: 18px; text-align: center; }
+    .stat-block strong { display: block; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; }
     .stat-block span { display: block; color: var(--muted); font-size: 0.82rem; margin-top: 0.2rem; }
+    .updates-section { padding: 0 0 5rem; }
+    .updates-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; flex-wrap:wrap; gap:0.75rem; }
+    .updates-header h2 { font-family:Georgia,"Times New Roman",serif; font-size:1.5rem; letter-spacing:-0.03em; margin:0; }
+    .updates-header a { font-size:0.85rem; color:var(--muted); text-decoration:none; }
+    .updates-header a:hover { color:var(--text); }
+    #github-stream { display:grid; gap:0.6rem; }
+    .stream-item { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; padding:0.75rem 1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:10px; }
+    .stream-msg { color:var(--text); font-size:0.88rem; line-height:1.5; flex:1; }
+    .stream-date { color:var(--muted); font-size:0.8rem; white-space:nowrap; flex-shrink:0; }
+    .stream-fallback { color:var(--muted); font-size:0.9rem; text-decoration:none; }
+    .stream-fallback:hover { color:var(--text); }
+    /* stat accent */
+    .stat-block { background: rgba(255,122,0,0.05); border: 1px solid rgba(255,122,0,0.14); }
+    .stat-block strong { color: var(--orange); }
     @media (max-width: 900px) { .game-body { grid-template-columns: 1fr; } .hero-art { min-height: 260px; } }
+    @media (max-width: 640px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
@@ -134,16 +99,15 @@
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="VaultSpark Studios — home">
-        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <img src="../../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
         <span>VaultSpark Studios<small>The vault is sparked</small></span>
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/" class="active">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/call-of-doodie/">Call of Doodie</a><a href="/gridiron-gm/">Gridiron GM</a><a href="/vaultspark-football-gm/">VaultSpark Football GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/" class="active">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a></div></div>
         <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/promogrind/">PromoGrind</a><a href="/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
         <a href="/universe/">Universe</a>
         <a href="/studio/">Studio</a>
-
         <a href="/contact/">Contact</a>
       </nav>
       <div class="nav-right">
@@ -166,7 +130,7 @@
           <div class="hero-art-content">
             <h1>Call Of Doodie</h1>
             <div class="hero-art-actions">
-              <a class="button" href="game.html">Play Now — Free</a>
+              <a class="button" href="/call-of-doodie/game.html">Play Now — Free</a>
               <a class="button-secondary" href="/vault-member/#register">Track Your Score</a>
             </div>
           </div>
@@ -177,6 +141,7 @@
     <section>
       <div class="container">
         <div class="game-body">
+
           <div class="feature-block">
             <h2>Chaos Is The Mechanic.</h2>
             <p>
@@ -186,17 +151,17 @@
               the action never lets up.
             </p>
             <ul class="feature-list">
-              <li>Fast-paced arcade shooter gameplay — instant in your browser</li>
+              <li>Fast-paced arcade shooter gameplay — instant in your browser, no download required</li>
               <li>Comedy-first design — every encounter is a setup for the punchline</li>
-              <li>No download, no install, no paywall — free by default</li>
-              <li>Built as a live web build with active development and updates</li>
+              <li>Active development with live updates and content additions</li>
               <li>Cross-game progress tracking with a free Vault Member account</li>
+              <li>No paywall, no install, no account required to start playing</li>
             </ul>
-            <div class="meta" style="margin-bottom:1.5rem;">
+            <div class="meta" style="margin-bottom: 1.5rem;">
               <span>Action</span><span>Comedy</span><span>Shooter</span><span>Arcade</span><span>Free</span>
             </div>
             <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-              <a class="button" href="game.html">Play Call Of Doodie</a>
+              <a class="button" href="/call-of-doodie/game.html">Play Call Of Doodie</a>
               <a class="button-secondary" href="/games/">All Games</a>
             </div>
           </div>
@@ -226,7 +191,7 @@
               <div class="info-row"><span>Genre</span><span>Action Comedy Shooter</span></div>
               <div class="info-row"><span>Platform</span><span>Web Browser</span></div>
               <div class="info-row"><span>Price</span><span>Free</span></div>
-              <div class="info-row"><span>Status</span><span style="color:#86efac;">Live &amp; Playable</span></div>
+              <div class="info-row"><span>Status</span><span style="color: #86efac;">Live &amp; Playable</span></div>
               <div class="info-row"><span>Developer</span><span>VaultSpark Studios</span></div>
             </div>
 
@@ -238,6 +203,19 @@
               <a class="button-ghost" href="/vault-member/#register" style="width:100%;display:flex;justify-content:center;border-color:rgba(255,122,0,0.3);color:var(--orange);">Join The Vault — Free</a>
             </div>
           </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="updates-section">
+      <div class="container">
+        <div class="updates-header">
+          <h2>Recent Updates</h2>
+          <a href="https://github.com/VaultSparkStudios/call-of-doodie" target="_blank" rel="noreferrer">View on GitHub →</a>
+        </div>
+        <div id="github-stream">
+          <div class="stream-item"><span class="stream-msg">Loading recent commits…</span></div>
         </div>
       </div>
     </section>
@@ -253,11 +231,14 @@
         <div class="footer-col">
           <h4>Games</h4>
           <a href="/games/">All Games</a>
-          <a href="/call-of-doodie/">Call Of Doodie</a>
-          <a href="/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
         </div>
         <div class="footer-col">
           <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/universe/">Universe</a>
           <a href="/studio/">About VaultSpark</a>
           <a href="/roadmap/">Vault Pipeline</a>
           <a href="/journal/">Signal Log</a>
@@ -296,5 +277,28 @@
       });
     });
   </script>
+
+  <script>
+    (function() {
+      var el = document.getElementById('github-stream');
+      if (!el) return;
+      fetch('https://api.github.com/repos/VaultSparkStudios/call-of-doodie/commits?per_page=5')
+        .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+        .then(function(commits) {
+          if (!Array.isArray(commits) || !commits.length) throw new Error();
+          var now = Date.now();
+          el.innerHTML = commits.map(function(c) {
+            var msg = (c.commit.message.split('\n')[0] || '').slice(0, 80);
+            var diff = Math.floor((now - new Date(c.commit.author.date)) / 86400000);
+            var rel = diff === 0 ? 'today' : diff === 1 ? 'yesterday' : diff + ' days ago';
+            return '<div class="stream-item"><span class="stream-msg">' + msg + '</span><span class="stream-date">' + rel + '</span></div>';
+          }).join('');
+        })
+        .catch(function() {
+          el.innerHTML = '<a class="stream-fallback" href="https://github.com/VaultSparkStudios/call-of-doodie" target="_blank" rel="noreferrer">View recent commits on GitHub →</a>';
+        });
+    }());
+  </script>
+
 </body>
 </html>

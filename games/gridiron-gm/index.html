@@ -2,33 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=/games/gridiron-gm/" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gridiron GM | NFL-Style Franchise Simulator — Draft, Scout &amp; Build Your Dynasty</title>
+  <meta name="description" content="Gridiron GM is a deep NFL-style franchise management sim. Run a 7-round draft with real pick values, hire scouts with 3-year lookahead, set coaching schemes, manage a $300M salary cap, and watch games simulate with animated play-by-play. 32 fictional teams. Free in your browser." />
+  <meta name="keywords" content="Gridiron GM, NFL franchise simulator, football management game, browser sports sim, VaultSpark Studios, draft simulator, salary cap game, free football game" />
   <link rel="canonical" href="https://vaultsparkstudios.com/games/gridiron-gm/" />
-  <title>Gridiron GM — VaultSpark Studios</title>
   <meta name="theme-color" content="#000000" />
   <meta name="robots" content="index, follow" />
 
   <meta property="og:title" content="Gridiron GM | NFL-Style Franchise Sim — Free in Browser" />
   <meta property="og:description" content="32 fictional teams. 7-round draft. Simulated play-by-play broadcast. Scouting dept with 3-year lookahead. Coaching schemes. $300M salary cap. Free in your browser." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://vaultsparkstudios.com/gridiron-gm/" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/games/gridiron-gm/" />
   <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@VaultSpark" />
   <meta name="twitter:title" content="Gridiron GM | NFL-Style Franchise Sim" />
   <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
 
-  <link rel="icon" type="image/png" href="../assets/favicon.png" />
-  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="icon" type="image/png" href="../../assets/favicon.png" />
+  <link rel="apple-touch-icon" href="../../assets/icon-256.png" />
   <link rel="manifest" href="/manifest.json" />
-  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="../../assets/style.css" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "VideoGame",
     "name": "Gridiron GM",
-    "url": "https://vaultsparkstudios.com/gridiron-gm/",
+    "url": "https://vaultsparkstudios.com/games/gridiron-gm/",
     "description": "A deep NFL-style franchise simulator with 32 fictional teams, 7-round draft using real Jimmy Johnson pick values, scouting department with 3-year draft lookahead, coaching schemes with scheme-fit bonuses, $300M salary cap, live play-by-play simulation with SVG field visualization, and multi-season dynasty play. Free in browser.",
     "genre": ["Sports", "Simulation", "Strategy", "Management", "Dynasty"],
     "gamePlatform": "Web Browser",
@@ -43,184 +52,50 @@
   </script>
 
   <style>
-    .game-hero {
-      padding: 5rem 0 0;
-      position: relative;
-    }
-    .game-hero::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle at 15% 40%, rgba(31,162,255,0.14), transparent 32%),
-        radial-gradient(circle at 85% 40%, rgba(255,122,0,0.12), transparent 32%);
-      pointer-events: none;
-    }
+    .game-hero { padding: 5rem 0 0; position: relative; }
+    .game-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; }
     .game-hero .container { position: relative; z-index: 1; }
-
-    .hero-art {
-      min-height: 360px;
-      border-radius: var(--radius);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 2rem;
-      overflow: hidden;
-      margin-top: 2rem;
-    }
-    .hero-art::before {
-      content: "";
-      position: absolute;
-      inset: -20%;
-      filter: blur(32px);
-      opacity: 0.95;
-    }
-    .hero-art::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.65));
-    }
-    .hero-art-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .hero-art h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      letter-spacing: -0.045em;
-      line-height: 0.95;
-      margin: 0;
-    }
-    .hero-art-actions {
-      display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-      flex-shrink: 0;
-    }
-
-    .game-body {
-      display: grid;
-      grid-template-columns: 1fr 1.1fr;
-      gap: 2rem;
-      padding: 3rem 0 5rem;
-      align-items: start;
-    }
-
-    .feature-block {
-      padding: 2rem;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow);
-    }
-    .feature-block h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.9rem;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.75rem;
-    }
-    .feature-block > p {
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-    }
-
-    .feature-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 1.5rem;
-      display: grid;
-      gap: 0.5rem;
-    }
-    .feature-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.55;
-    }
-    .feature-list li::before {
-      content: "▸";
-      color: var(--gold);
-      flex-shrink: 0;
-      margin-top: 0.05rem;
-    }
-
-    .stat-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.85rem;
-    }
-    .stat-block {
-      padding: 1.15rem;
-      border-radius: 18px;
-      background: rgba(31,162,255,0.05);
-      border: 1px solid rgba(31,162,255,0.14);
-      text-align: center;
-    }
-    .stat-block strong {
-      display: block;
-      font-size: 1.75rem;
-      font-weight: 800;
-      color: var(--blue);
-      letter-spacing: -0.03em;
-    }
-    .stat-block span {
-      display: block;
-      color: var(--muted);
-      font-size: 0.82rem;
-      margin-top: 0.2rem;
-    }
-
-    .side-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .info-block {
-      padding: 1.5rem;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .info-block h3 {
-      font-size: 0.75rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-    .info-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      font-size: 0.9rem;
-    }
+    .game-hero::before { background: radial-gradient(circle at 15% 40%, rgba(31,162,255,0.14), transparent 32%), radial-gradient(circle at 85% 40%, rgba(255,122,0,0.12), transparent 32%); }
+    .hero-art { min-height: 360px; border-radius: var(--radius); position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; overflow: hidden; margin-top: 2rem; }
+    .hero-art::before { content: ""; position: absolute; inset: -20%; filter: blur(32px); opacity: 0.95; }
+    .hero-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.65)); }
+    .hero-art-content { position: relative; z-index: 1; display: flex; align-items: flex-end; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+    .hero-art h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(3rem, 7vw, 5.5rem); letter-spacing: -0.045em; line-height: 0.95; margin: 0; }
+    .hero-art-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; flex-shrink: 0; }
+    .game-body { display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem; padding: 3rem 0 2rem; align-items: start; }
+    .feature-block { padding: 2rem; border-radius: var(--radius); background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97)); border: 1px solid rgba(255,255,255,0.08); box-shadow: var(--shadow); }
+    .feature-block h2 { font-family: Georgia, "Times New Roman", serif; font-size: 1.9rem; letter-spacing: -0.03em; margin-bottom: 0.75rem; }
+    .feature-block > p { color: var(--muted); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .feature-list { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; gap: 0.5rem; }
+    .feature-list li { display: flex; align-items: flex-start; gap: 0.65rem; color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
+    .feature-list li::before { content: "▸"; color: var(--blue); flex-shrink: 0; margin-top: 0.05rem; }
+    .side-panel { display: flex; flex-direction: column; gap: 1rem; }
+    .info-block { padding: 1.5rem; border-radius: var(--radius); background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97)); border: 1px solid rgba(255,255,255,0.08); }
+    .info-block h3 { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem; }
+    .info-row { display: flex; justify-content: space-between; align-items: center; padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); font-size: 0.9rem; }
     .info-row:last-child { border-bottom: none; }
     .info-row span:first-child { color: var(--muted); }
     .info-row span:last-child { font-weight: 600; color: var(--text); }
-
-    @media (max-width: 900px) {
-      .game-body { grid-template-columns: 1fr; }
-      .hero-art { min-height: 260px; }
-    }
-    @media (max-width: 640px) {
-      .stat-grid { grid-template-columns: 1fr 1fr; }
-      .hero-art-actions .button,
-      .hero-art-actions .button-secondary { width: auto; }
-    }
+    .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
+    .stat-block { padding: 1.15rem; border-radius: 18px; text-align: center; }
+    .stat-block strong { display: block; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; }
+    .stat-block span { display: block; color: var(--muted); font-size: 0.82rem; margin-top: 0.2rem; }
+    .updates-section { padding: 0 0 5rem; }
+    .updates-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; flex-wrap:wrap; gap:0.75rem; }
+    .updates-header h2 { font-family:Georgia,"Times New Roman",serif; font-size:1.5rem; letter-spacing:-0.03em; margin:0; }
+    .updates-header a { font-size:0.85rem; color:var(--muted); text-decoration:none; }
+    .updates-header a:hover { color:var(--text); }
+    #github-stream { display:grid; gap:0.6rem; }
+    .stream-item { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; padding:0.75rem 1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:10px; }
+    .stream-msg { color:var(--text); font-size:0.88rem; line-height:1.5; flex:1; }
+    .stream-date { color:var(--muted); font-size:0.8rem; white-space:nowrap; flex-shrink:0; }
+    .stream-fallback { color:var(--muted); font-size:0.9rem; text-decoration:none; }
+    .stream-fallback:hover { color:var(--text); }
+    /* stat accent */
+    .stat-block { background: rgba(31,162,255,0.05); border: 1px solid rgba(31,162,255,0.14); }
+    .stat-block strong { color: var(--blue); }
+    @media (max-width: 900px) { .game-body { grid-template-columns: 1fr; } .hero-art { min-height: 260px; } }
+    @media (max-width: 640px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
   </style>
 </head>
 <body>
@@ -228,16 +103,15 @@
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="VaultSpark Studios — home">
-        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <img src="../../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
         <span>VaultSpark Studios<small>The vault is sparked</small></span>
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/" class="active">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/call-of-doodie/">Call of Doodie</a><a href="/gridiron-gm/">Gridiron GM</a><a href="/vaultspark-football-gm/">VaultSpark Football GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/" class="active">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a></div></div>
         <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/promogrind/">PromoGrind</a><a href="/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
         <a href="/universe/">Universe</a>
         <a href="/studio/">Studio</a>
-
         <a href="/contact/">Contact</a>
       </nav>
       <div class="nav-right">
@@ -255,13 +129,12 @@
     <section class="game-hero">
       <div class="container">
         <span class="eyebrow">VaultSpark Games &nbsp;·&nbsp; Franchise Simulator</span>
-
         <div class="hero-art gridiron">
           <span class="status status-live">Playable Now</span>
           <div class="hero-art-content">
             <h1>Gridiron GM</h1>
             <div class="hero-art-actions">
-              <a class="button" href="game.html">Play Now — Free</a>
+              <a class="button" href="/gridiron-gm/game.html">Play Now — Free</a>
               <a class="button-secondary" href="/vault-member/#register">Track Your Dynasty</a>
             </div>
           </div>
@@ -276,7 +149,7 @@
           <div class="feature-block">
             <h2>The Front Office. The Draft. The Dynasty.</h2>
             <p>
-              Gridiron GM is a deep NFL-style franchise simulator built around the systems that make
+              Gridiron GM is a deep NFL-style franchise management sim built around the systems that make
               real front offices tick. Run a 7-round draft using the Jimmy Johnson pick value chart.
               Hire scouts with nine different specialties and see three draft classes ahead. Set
               coaching schemes — Air Raid, Power Run, West Coast, Zone Blitz — and watch scheme fit
@@ -289,7 +162,6 @@
               Player of the Game reveal. You call the shots from the front office; the field runs itself.
               32 fictional teams. 10 positions. Fully procedurally generated rosters where every franchise is unique.
             </p>
-
             <ul class="feature-list">
               <li>7-round NFL draft with Jimmy Johnson pick value chart governing all trades</li>
               <li>Scouting department — 9 specialist types, 3-year draft class lookahead</li>
@@ -300,17 +172,11 @@
               <li>32 fictional teams, procedurally generated players, real passer rating formula</li>
               <li>Free to play in your browser — no download, no install, no account required</li>
             </ul>
-
             <div class="meta" style="margin-bottom: 1.5rem;">
-              <span>Franchise Sim</span>
-              <span>Dynasty</span>
-              <span>Draft</span>
-              <span>Strategy</span>
-              <span>Free</span>
+              <span>Franchise Sim</span><span>Dynasty</span><span>Draft</span><span>Strategy</span><span>Free</span>
             </div>
-
             <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-              <a class="button" href="game.html">Play Gridiron GM</a>
+              <a class="button" href="/gridiron-gm/game.html">Play Gridiron GM</a>
               <a class="button-secondary" href="/games/">All Games</a>
             </div>
           </div>
@@ -337,30 +203,12 @@
 
             <div class="info-block">
               <h3>Game Info</h3>
-              <div class="info-row">
-                <span>Genre</span>
-                <span>Franchise Simulator</span>
-              </div>
-              <div class="info-row">
-                <span>Platform</span>
-                <span>Web Browser</span>
-              </div>
-              <div class="info-row">
-                <span>Save System</span>
-                <span>Session-based</span>
-              </div>
-              <div class="info-row">
-                <span>Price</span>
-                <span>Free</span>
-              </div>
-              <div class="info-row">
-                <span>Status</span>
-                <span style="color: #86efac;">Live &amp; Playable</span>
-              </div>
-              <div class="info-row">
-                <span>Developer</span>
-                <span>VaultSpark Studios</span>
-              </div>
+              <div class="info-row"><span>Genre</span><span>Franchise Simulator</span></div>
+              <div class="info-row"><span>Platform</span><span>Web Browser</span></div>
+              <div class="info-row"><span>Save System</span><span>Session-based</span></div>
+              <div class="info-row"><span>Price</span><span>Free</span></div>
+              <div class="info-row"><span>Status</span><span style="color: #86efac;">Live &amp; Playable</span></div>
+              <div class="info-row"><span>Developer</span><span>VaultSpark Studios</span></div>
             </div>
 
             <div style="padding:1.5rem;border-radius:var(--radius);background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.1);">
@@ -371,6 +219,19 @@
               <a class="button-ghost" href="/vault-member/#register" style="width:100%;display:flex;justify-content:center;">Join The Vault — Free</a>
             </div>
           </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="updates-section">
+      <div class="container">
+        <div class="updates-header">
+          <h2>Recent Updates</h2>
+          <a href="https://github.com/VaultSparkStudios/gridiron-gm" target="_blank" rel="noreferrer">View on GitHub →</a>
+        </div>
+        <div id="github-stream">
+          <div class="stream-item"><span class="stream-msg">Loading recent commits…</span></div>
         </div>
       </div>
     </section>
@@ -386,8 +247,9 @@
         <div class="footer-col">
           <h4>Games</h4>
           <a href="/games/">All Games</a>
-          <a href="https://vaultsparkstudios.com/call-of-doodie/">Call Of Doodie</a>
-          <a href="/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
         </div>
         <div class="footer-col">
           <h4>Studio</h4>
@@ -410,11 +272,7 @@
       </div>
       <div class="footer-bottom">
         <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
-        <span>
-          <a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp;
-          <a href="/contact/">Contact</a> &nbsp;·&nbsp;
-          <a href="/vault-member/">Vault Members</a>
-        </span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
       </div>
     </div>
   </footer>
@@ -434,6 +292,28 @@
         document.body.style.overflow = '';
       });
     });
+  </script>
+
+  <script>
+    (function() {
+      var el = document.getElementById('github-stream');
+      if (!el) return;
+      fetch('https://api.github.com/repos/VaultSparkStudios/gridiron-gm/commits?per_page=5')
+        .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
+        .then(function(commits) {
+          if (!Array.isArray(commits) || !commits.length) throw new Error();
+          var now = Date.now();
+          el.innerHTML = commits.map(function(c) {
+            var msg = (c.commit.message.split('\n')[0] || '').slice(0, 80);
+            var diff = Math.floor((now - new Date(c.commit.author.date)) / 86400000);
+            var rel = diff === 0 ? 'today' : diff === 1 ? 'yesterday' : diff + ' days ago';
+            return '<div class="stream-item"><span class="stream-msg">' + msg + '</span><span class="stream-date">' + rel + '</span></div>';
+          }).join('');
+        })
+        .catch(function() {
+          el.innerHTML = '<a class="stream-fallback" href="https://github.com/VaultSparkStudios/gridiron-gm" target="_blank" rel="noreferrer">View recent commits on GitHub →</a>';
+        });
+    }());
   </script>
 
 </body>
