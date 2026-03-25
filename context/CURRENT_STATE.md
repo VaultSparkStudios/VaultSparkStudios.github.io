@@ -41,7 +41,7 @@
 
 ## In progress
 
-- Studio OS migration (adding context/, prompts/, logs/ — in progress this session)
+- None. Studio OS migration complete and committed.
 
 ## Blockers
 
@@ -49,6 +49,6 @@
 
 ## Next 3 moves
 
-1. Confirm Studio OS files are in place and committed
-2. Update studio-ops portfolio registry with this project
-3. Test VaultSparked Discord role assignment end-to-end with a real Stripe test checkout
+1. Test VaultSparked Discord role assignment end-to-end with a real Stripe test checkout
+2. Generate VAPID keys to activate web push notifications
+3. Add PORTFOLIO_CARD.md and PROJECT_STATUS.json (for Studio Dashboard aggregation)

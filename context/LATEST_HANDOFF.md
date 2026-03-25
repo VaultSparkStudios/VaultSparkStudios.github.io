@@ -23,7 +23,7 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## What is mid-flight
 
-- Studio OS migration: prompts/ and logs/ files being written this session
+- Nothing. Session complete and committed.
 
 ## What to do next
 

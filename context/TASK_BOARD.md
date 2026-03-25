@@ -2,7 +2,7 @@
 
 ## Now
 
-- Studio OS migration: writing context/, prompts/, logs/ baseline files (in progress 2026-03-25)
+- ~~Studio OS migration~~ ✅ complete 2026-03-25
 
 ## Next
 
