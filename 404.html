@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Google tag (gtag.js) -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -12,86 +13,222 @@
   </script>
   <meta name="p:domain_verify" content="c8175438f6c7e03b305b86ffcae36881" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>404 — Page Not Found | VaultSpark Studios</title>
-  <meta name="description" content="The page you tried to reach is not in the vault." />
-  <meta name="robots" content="noindex" />
-  <link rel="icon" type="image/png" href="assets/favicon.png" />
-  <link rel="manifest" href="/manifest.json" />
-  <style>
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 2rem;
-      box-sizing: border-box;
-      color: #eef2ff;
-      font-family: Inter, Arial, sans-serif;
-      background:
-        radial-gradient(circle at 18% 34%, rgba(31,162,255,0.18), transparent 0 22%),
-        radial-gradient(circle at 82% 34%, rgba(255,122,0,0.18), transparent 0 22%),
-        linear-gradient(180deg, #000000 0%, #05070d 100%);
-    }
-    .wrap {
-      max-width: 760px;
-      width: 100%;
-      padding: 2rem;
-      border-radius: 24px;
-      background: rgba(10, 13, 22, 0.88);
-      border: 1px solid rgba(255,255,255,0.08);
-      text-align: center;
-      box-shadow: 0 18px 60px rgba(0,0,0,0.45);
-    }
-    img {
-      width: 80px;
-      height: 80px;
-      object-fit: contain;
-      margin: 0 auto 1.25rem;
-      display: block;
-      filter: drop-shadow(0 0 18px rgba(255, 122, 0, 0.4));
-    }
-    h1 {
-      margin: 0 0 0.7rem;
-      font-size: clamp(2.7rem, 7vw, 4.5rem);
-      letter-spacing: -0.04em;
-      font-family: Georgia, "Times New Roman", serif;
-    }
-    p {
-      color: #b5bfd8;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      margin: 0 auto 1.35rem;
-      max-width: 42ch;
-    }
-    a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 48px;
-      padding: 0 1.15rem;
-      border-radius: 999px;
-      font-weight: 700;
-      color: #081018;
-      background: linear-gradient(135deg, #FFC400, #ffd84f);
-      text-decoration: none;
-    }
-  </style>
-
+  <title>404 — Lost in the Vault | VaultSpark Studios</title>
+  <meta name="description" content="This page doesn't exist — but the vault does. Head back to VaultSpark Studios." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#000000" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="assets/style.css" />
+
+  <style>
+    .err-page { min-height: 100vh; display: flex; flex-direction: column; }
+
+    .err-main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .err-main::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 30% 40%, rgba(255,196,0,0.07), transparent 45%),
+        radial-gradient(circle at 75% 65%, rgba(31,162,255,0.05), transparent 40%);
+      pointer-events: none;
+    }
+    .err-bg-num {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: Georgia, serif;
+      font-size: clamp(18rem, 40vw, 32rem);
+      font-weight: 700;
+      letter-spacing: -0.06em;
+      color: rgba(255,255,255,0.025);
+      pointer-events: none;
+      user-select: none;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .err-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 560px;
+    }
+    .err-code {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .err-heading {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      letter-spacing: -0.04em;
+      line-height: 1.0;
+      margin-bottom: 1.2rem;
+    }
+    .err-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+      max-width: 42ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .err-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .err-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.85rem 1.8rem;
+      background: linear-gradient(135deg, #FFC400 0%, #FF7A00 100%);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.94rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 4px 20px rgba(255,196,0,0.3);
+    }
+    .err-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,196,0,0.45);
+    }
+    .err-btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.85rem 1.6rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.65);
+      font-weight: 600;
+      font-size: 0.94rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: border-color 0.18s, background 0.18s, color 0.18s;
+    }
+    .err-btn-ghost:hover {
+      border-color: rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+    .err-links-label {
+      font-size: 0.82rem;
+      color: var(--dim);
+      margin-bottom: 0.8rem;
+    }
+    .err-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .err-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.8rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .err-link:hover {
+      border-color: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85);
+    }
+
+    @media (max-width: 480px) {
+      .err-actions { flex-direction: column; align-items: stretch; }
+      .err-btn-primary, .err-btn-ghost { text-align: center; justify-content: center; }
+    }
+  </style>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
-  <div class="wrap">
-    <img src="assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" />
-    <h1>Page Not Found</h1>
-    <p>The page you tried to reach is not in the vault. Turn back toward the source and re-enter the signal.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-top:0.5rem;">
-      <a href="/">Homepage</a>
-      <a href="/games/" style="background:rgba(255,255,255,0.12);color:#eef2ff;border:1px solid rgba(255,255,255,0.2);">Games</a>
-      <a href="/vault-member/" style="background:rgba(255,255,255,0.12);color:#eef2ff;border:1px solid rgba(255,255,255,0.2);">Vault Member</a>
-      <a href="/community/" style="background:rgba(255,255,255,0.12);color:#eef2ff;border:1px solid rgba(255,255,255,0.2);">Community</a>
+<div class="err-page">
+
+  <nav class="site-nav container">
+    <a href="/" class="nav-logo">VaultSpark</a>
+    <div class="nav-links">
+      <a href="/games/">Games</a>
+      <a href="/community/">Community</a>
+      <a href="/leaderboards/">Leaderboard</a>
     </div>
-  </div>
+    <div class="nav-actions">
+      <a href="/vault-member/" class="btn btn-ghost btn-sm">Sign In</a>
+      <a href="/vault-member/#register" class="btn btn-primary btn-sm">Join Free</a>
+    </div>
+  </nav>
+
+  <main class="err-main" id="main-content">
+    <div class="err-bg-num" aria-hidden="true">404</div>
+    <div class="container err-inner">
+      <span class="err-code">Error 404 — Lost in the Vault</span>
+      <h1 class="err-heading">This page<br />doesn't exist.</h1>
+      <p class="err-sub">
+        The page you're looking for was moved, deleted, or never existed.
+        The vault is still here though.
+      </p>
+      <div class="err-actions">
+        <a href="/" class="err-btn-primary">Back to Home</a>
+        <a href="/vault-member/" class="err-btn-ghost">Open the Vault</a>
+      </div>
+      <p class="err-links-label">Or go somewhere useful:</p>
+      <div class="err-links">
+        <a href="/games/" class="err-link">🎮 Games</a>
+        <a href="/community/" class="err-link">Community</a>
+        <a href="/leaderboards/" class="err-link">Leaderboard</a>
+        <a href="/changelog/" class="err-link">Changelog</a>
+        <a href="/vaultsparked/" class="err-link">⚡ VaultSparked</a>
+        <a href="/contact/" class="err-link">Contact</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">VaultSpark</span>
+        <span class="footer-tagline">Independent Game Studio</span>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <a href="/games/">Games</a>
+        <a href="/community/">Community</a>
+        <a href="/privacy/">Privacy</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+    </div>
+  </footer>
+
+</div>
 </body>
 </html>

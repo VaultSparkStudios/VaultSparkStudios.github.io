@@ -26,8 +26,6 @@
 ## A-Tier Backlog (Score 7–8.9)
 
 - [ ] Game-specific challenge + point triggers (Football GM → Vault points) [8]
-- [ ] VaultSparked perks landing page (/vaultsparked/) [7.8] — public conversion page for the subscription, shareable
-- [ ] Custom 404 page with rank theme + useful links [7.8] — GitHub Pages supports /404.html natively
 - [ ] Game screenshots + trailer embed on game pages [7.5]
 - [ ] Dynamic OG image generation per page [7.5]
 - [ ] Lazy-load image audit (add loading="lazy" to all below-fold images) [7.5]
@@ -82,6 +80,11 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 22 (2026-03-25)
+
+- ✅ VaultSparked perks landing page — `/vaultsparked/` with hero, 9-perk grid, comparison table, pricing cards (Free vs $4.99/mo), FAQ, bottom CTA
+- ✅ Custom 404 page — rank-themed, full site nav, useful quick-links, gold CTA, large ghost "404" background number; replaces bare placeholder
 
 ## Completed — Phase 21 (2026-03-25)
 
