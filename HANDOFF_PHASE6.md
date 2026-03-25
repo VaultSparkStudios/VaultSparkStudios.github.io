@@ -1,5 +1,5 @@
 # Vault Member — Phase 6+ Handoff
-_Last updated: 2026-03-24 — Phases 0–5 complete, Phases 6–10 pending_
+_Last updated: 2026-03-24 — Phases 0–10 complete_
 
 ---
 
@@ -36,6 +36,21 @@ Member number (`#1`, `#2`…) auto-assigned via `before insert` trigger. Foundin
 - `fault-layer-origin` (rank 2) — The Vault was discovered not built; The Fault Layer
 - `sparked-initiative-memo` (rank 3) — Why The Sparked register like DreadSpike
 First-read awards +20 pts via `award_points('file_read_{slug}')`. Lazy-loads on first tab open.
+
+### Phase 6 — Activity Chronicle ✅
+`get_activity_timeline(p_limit int)` RPC merges `point_events` (non-challenge, classified by reason prefix) + `challenge_completions`. Chronicle tab on dashboard — day-grouped timeline, type icons (⚡📄🎮📡🔧🤝🔑), +pts badges. "Joined the Vault" appended client-side from `vault_members.created_at`. Lazy-loaded.
+
+### Phase 7 — Discord Role Sync ✅
+`discord_id text` column on `vault_members`. `save_discord_id(p_discord_id)` RPC. Auto-saves Discord identity on OAuth return. "Connected Accounts" block in Settings tab with Connect Discord button → `signInWithOAuth` with `vs_link_discord` localStorage flag for return detection. `assign-discord-role` Edge Function triggered by DB webhook on `vault_members` UPDATE — computes rank change, calls Discord API to swap roles. Env vars: `DISCORD_BOT_TOKEN`, `DISCORD_GUILD_ID`, `DISCORD_ROLE_IDS` (JSON map `{"0":"roleId",...}`).
+
+### Phase 8 — Beta Key Vault ✅
+`beta_keys` table (id, game_slug, key_code, claimed_by, claimed_at, min_rank, created_at). RLS: see unclaimed keys meeting rank threshold OR own claimed keys. `claim_beta_key(p_game_slug)` RPC — `FOR UPDATE SKIP LOCKED` atomicity, checks already-claimed, returns `{ok,key_code}` or `{error}`. "Early Access" tab: cards per game slug with Claim/Copy. `BETA_GAMES` list in JS maps slugs to names+icons.
+
+### (archive) Phase 9 — Web Push Notifications ✅
+`push_subscriptions` table (endpoint UNIQUE, keys JSONB, user_id). `upsert_push_subscription` + `delete_push_subscription` RPCs. `/sw.js` service worker handles `push` + `notificationclick`. Settings: Push Notifications toggle calls `subscribePush`/`unsubscribePush` via `pushManager`. `send-push` Edge Function triggered by `classified_files` INSERT — fans out to all subscriptions via `npm:web-push`. **VAPID setup required:** run `npx web-push generate-vapid-keys`, paste public key into `VAPID_PUBLIC_KEY` const in `vault-member/index.html`, set all three keys as Edge Function secrets. Enable Realtime on `studio_pulse` in Supabase Dashboard.
+
+### (archive) Phase 10 — Live Studio Pulse ✅
+`studio_pulse` table (message, type: 'update'|'alert'|'drop', created_at). Authenticated read RLS. "Studio Pulse" full-width panel on main dashboard — initial load of last 10, Supabase Realtime `postgres_changes` INSERT subscription prepends live. Type-coloured dot indicator. Pulsing LIVE badge. Channel torn down on `showAuth()` (logout), re-subscribed on `showDashboard()`.
 
 ### Phase 5 — Vault Challenges ✅
 `challenges` table + `challenge_completions` table (supports one-time / weekly / monthly dedup). `get_challenges()` RPC returns active challenges with per-user completion state. `complete_challenge(p_challenge_id)` RPC records completion + inserts point_event + updates vault_members.points. "Vault Challenges" tab with card grid. 8 seeded challenges:
@@ -191,9 +206,11 @@ refreshPointsDisplay()     — re-fetches pts from DB, updates all pts/rank UI e
 
 ---
 
-## Pending phases (implement next)
+## Pending phases
 
-### Phase 6 — Activity Chronicle
+_All phases 6–10 are complete. No further phases are currently planned._
+
+### (archive) Phase 6 — Activity Chronicle
 Personal timeline of everything in the member's account — reverse-chron, grouped by type.
 
 **New tab:** "Chronicle" on dashboard
@@ -218,7 +235,7 @@ Returns unified rows: `{type, label, points, occurred_at}` from point_events + c
 
 ---
 
-### Phase 7 — Discord Role Sync
+### (archive) Phase 7 — Discord Role Sync
 **Schema addition needed:**
 ```sql
 alter table public.vault_members
@@ -236,7 +253,7 @@ alter table public.vault_members
 
 ---
 
-### Phase 8 — Beta Key Vault
+### (archive) Phase 8 — Beta Key Vault
 **New table:**
 ```sql
 create table public.beta_keys (
@@ -266,7 +283,7 @@ create policy "members see claimable or own keys"
 
 ---
 
-### Phase 9 — Web Push Notifications
+### (archive) Phase 9 — Web Push Notifications
 1. Register Service Worker (`/sw.js`) on dashboard load
 2. Request push permission on opt-in toggle in Settings
 3. Store `PushSubscription` JSON in new `push_subscriptions` table
@@ -286,7 +303,7 @@ create table public.push_subscriptions (
 
 ---
 
-### Phase 10 — Live Studio Pulse
+### (archive) Phase 10 — Live Studio Pulse
 Real-time curated activity stream.
 
 **New table:**
