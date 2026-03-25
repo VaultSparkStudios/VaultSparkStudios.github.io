@@ -27,14 +27,29 @@
         <a href="/investor-portal/" class="inv-nav-link">Dashboard</a>
         <a href="/investor-portal/updates/" class="inv-nav-link active">Updates</a>
         <a href="/investor-portal/documents/" class="inv-nav-link">Documents</a>
+        <a href="/investor-portal/message/" class="inv-nav-link">Message</a>
         <a href="/investor-portal/profile/" class="inv-nav-link">Profile</a>
       </div>
       <div class="inv-nav-actions">
         <span class="inv-nav-user" id="navUserName"></span>
+        <button class="inv-nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="2" y="5" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+            <rect x="2" y="9.25" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+            <rect x="2" y="13.5" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+          </svg>
+        </button>
         <button class="inv-btn inv-btn-ghost inv-btn-sm" id="signOutBtn">Sign out</button>
       </div>
     </div>
   </nav>
+  <div class="inv-nav-mobile-menu" id="mobileMenu">
+    <a href="/investor-portal/" class="inv-nav-mobile-link">Dashboard</a>
+    <a href="/investor-portal/updates/" class="inv-nav-mobile-link active">Updates</a>
+    <a href="/investor-portal/documents/" class="inv-nav-mobile-link">Documents</a>
+    <a href="/investor-portal/message/" class="inv-nav-mobile-link">Message Studio</a>
+    <a href="/investor-portal/profile/" class="inv-nav-mobile-link">Profile</a>
+  </div>
 
   <!-- Content -->
   <div class="inv-page">
@@ -149,6 +164,10 @@
         renderUpdates();
       });
     }
+
+    document.getElementById('mobileToggle')?.addEventListener('click', () => {
+      document.getElementById('mobileMenu')?.classList.toggle('open');
+    });
   </script>
 
 </body>

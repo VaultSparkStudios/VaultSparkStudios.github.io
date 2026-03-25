@@ -62,14 +62,29 @@
         <a href="/investor-portal/" class="inv-nav-link">Dashboard</a>
         <a href="/investor-portal/updates/" class="inv-nav-link">Updates</a>
         <a href="/investor-portal/documents/" class="inv-nav-link">Documents</a>
+        <a href="/investor-portal/message/" class="inv-nav-link">Message</a>
         <a href="/investor-portal/profile/" class="inv-nav-link active">Profile</a>
       </div>
       <div class="inv-nav-actions">
         <span class="inv-nav-user" id="navUserName"></span>
+        <button class="inv-nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="2" y="5" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+            <rect x="2" y="9.25" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+            <rect x="2" y="13.5" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+          </svg>
+        </button>
         <button class="inv-btn inv-btn-ghost inv-btn-sm" id="signOutBtn">Sign out</button>
       </div>
     </div>
   </nav>
+  <div class="inv-nav-mobile-menu" id="mobileMenu">
+    <a href="/investor-portal/" class="inv-nav-mobile-link">Dashboard</a>
+    <a href="/investor-portal/updates/" class="inv-nav-mobile-link">Updates</a>
+    <a href="/investor-portal/documents/" class="inv-nav-mobile-link">Documents</a>
+    <a href="/investor-portal/message/" class="inv-nav-mobile-link">Message Studio</a>
+    <a href="/investor-portal/profile/" class="inv-nav-mobile-link active">Profile</a>
+  </div>
 
   <!-- Content -->
   <div class="inv-page">
@@ -94,6 +109,15 @@
         </div>
       </div>
 
+      <div style="margin-top:1.5rem; max-width:800px; display:none;" id="applicationCard">
+        <div class="inv-card">
+          <h2 class="inv-section-title">Application on File</h2>
+          <div id="applicationAnswers">
+            <div class="inv-skeleton inv-skeleton-row"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -112,6 +136,7 @@
       VSInvestorAuth.logAction('profile_view');
       renderProfile(profile);
       loadActivity();
+      loadApplication();
     });
 
     function renderProfile(p) {
@@ -189,6 +214,61 @@
 
       area.innerHTML = events.map(e => UI.renderActivityRow(e)).join('');
     }
+
+    async function loadApplication() {
+      const { data: rows } = await sb
+        .from('investor_requests')
+        .select('why_approve, why_vaultspark, investing_history, value_beyond_capital, how_heard, created_at, full_name, entity_type, organization, investment_range')
+        .order('created_at', { ascending: false })
+        .limit(1);
+
+      const card    = document.getElementById('applicationCard');
+      const area    = document.getElementById('applicationAnswers');
+      const row     = rows && rows[0];
+
+      if (!row) {
+        card.style.display = 'none';
+        return;
+      }
+
+      card.style.display = '';
+
+      const entityLabels = {
+        individual: 'Individual', angel: 'Angel Investor',
+        firm: 'Investment Firm', fund: 'Fund', other: 'Other'
+      };
+      const rangeLabels = {
+        under_10k: 'Under $10K', '10k_50k': '$10K – $50K',
+        '50k_250k': '$50K – $250K', '250k_1m': '$250K – $1M', over_1m: 'Over $1M'
+      };
+
+      const blocks = [];
+
+      if (row.full_name) blocks.push({ q: 'Name', a: row.full_name });
+      if (row.entity_type) blocks.push({ q: 'Entity Type', a: entityLabels[row.entity_type] || row.entity_type });
+      if (row.organization) blocks.push({ q: 'Organization', a: row.organization });
+      if (row.investment_range) blocks.push({ q: 'Investment Range', a: rangeLabels[row.investment_range] || row.investment_range });
+      if (row.why_approve) blocks.push({ q: 'Why should we approve you?', a: row.why_approve });
+      if (row.why_vaultspark) blocks.push({ q: 'What interests you most about VaultSpark Studios?', a: row.why_vaultspark });
+      if (row.investing_history) blocks.push({ q: 'Investing history', a: row.investing_history });
+      if (row.value_beyond_capital) blocks.push({ q: 'Value beyond capital', a: row.value_beyond_capital });
+      if (row.how_heard) blocks.push({ q: 'How did you hear about us?', a: row.how_heard });
+
+      if (blocks.length === 0) {
+        card.style.display = 'none';
+        return;
+      }
+
+      area.innerHTML = blocks.map(b => `
+        <div class="inv-answer-block">
+          <div class="inv-answer-question">${UI.escHtml(b.q)}</div>
+          <div class="inv-answer-text">${UI.escHtml(b.a)}</div>
+        </div>`).join('');
+    }
+
+    document.getElementById('mobileToggle')?.addEventListener('click', () => {
+      document.getElementById('mobileMenu')?.classList.toggle('open');
+    });
   </script>
 
 </body>

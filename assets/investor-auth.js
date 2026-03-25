@@ -15,6 +15,26 @@
 
   const LOGIN_URL = '/investor-portal/login/';
 
+  // ── Page gate: hide page until auth resolves ────────────────────
+  function showGate() {
+    // Already hidden via body.inv-loading — inject spinner overlay
+    const gate = document.createElement('div');
+    gate.id = 'invPageGate';
+    gate.className = 'inv-page-gate';
+    gate.innerHTML = '<img class="inv-gate-logo" src="/assets/logo.png" alt="" /><div class="inv-gate-spinner"></div>';
+    document.body.appendChild(gate);
+    document.body.classList.add('inv-loading');
+  }
+
+  function hideGate() {
+    document.body.classList.remove('inv-loading');
+    const gate = document.getElementById('invPageGate');
+    if (gate) {
+      gate.classList.add('hidden');
+      setTimeout(() => gate.remove(), 350);
+    }
+  }
+
   function getRedirectUrl(errorCode) {
     const base = window.location.origin + LOGIN_URL;
     const next = encodeURIComponent(window.location.href);
@@ -28,6 +48,8 @@
   }
 
   async function initInvestorAuth() {
+    showGate();
+
     // Supabase client must be available
     if (!window.VSSupabase) {
       console.error('[investor-auth] VSSupabase not found — check script load order');
@@ -72,6 +94,7 @@
         document_count:     0,
         is_admin:           true,
       };
+      hideGate();
       window.dispatchEvent(new CustomEvent('investor:ready', {
         detail: window.VSInvestorProfile
       }));
@@ -114,6 +137,7 @@
     });
 
     // 6. Signal ready
+    hideGate();
     window.dispatchEvent(new CustomEvent('investor:ready', { detail: profile }));
   }
 

@@ -645,7 +645,6 @@ body.investor-portal::after {
 @media (max-width: 768px) {
   .inv-stat-strip { grid-template-columns: 1fr 1fr; }
   .inv-form-row   { grid-template-columns: 1fr; }
-  .inv-nav-links  { display: none; }
   .inv-doc-table th:nth-child(3),
   .inv-doc-table td:nth-child(3),
   .inv-doc-table th:nth-child(5),
@@ -684,4 +683,217 @@ body.investor-portal::after {
   background: rgba(255, 255, 255, 0.05);
   color: var(--dim);
   border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ── Page loading gate ─────────────────────────────────────────── */
+body.investor-portal.inv-loading {
+  visibility: hidden;
+}
+
+.inv-page-gate {
+  position: fixed;
+  inset: 0;
+  background: #020408;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9998;
+  transition: opacity 0.3s;
+}
+
+.inv-page-gate.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.inv-gate-logo {
+  height: 28px;
+  opacity: 0.7;
+  margin-bottom: 2rem;
+}
+
+.inv-gate-spinner {
+  width: 32px; height: 32px;
+  border: 2px solid rgba(31,162,255,0.15);
+  border-top-color: #1FA2FF;
+  border-radius: 50%;
+  animation: inv-spin 0.75s linear infinite;
+}
+
+@keyframes inv-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Mobile nav ─────────────────────────────────────────────────── */
+.inv-nav-mobile-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.4rem;
+  color: var(--muted);
+}
+
+.inv-nav-mobile-toggle:hover { color: var(--text); }
+
+.inv-nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: var(--nav-height);
+  left: 0; right: 0;
+  background: rgba(2,4,8,0.98);
+  border-bottom: 1px solid rgba(31,162,255,0.12);
+  padding: 1rem 1.5rem 1.5rem;
+  z-index: 99;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.inv-nav-mobile-menu.open { display: flex; }
+
+.inv-nav-mobile-link {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background 0.15s, color 0.15s;
+}
+
+.inv-nav-mobile-link:hover,
+.inv-nav-mobile-link.active {
+  background: rgba(31,162,255,0.08);
+  color: var(--text);
+}
+
+@media (max-width: 768px) {
+  .inv-nav-mobile-toggle { display: flex; align-items: center; justify-content: center; }
+  .inv-nav-links { display: none !important; }
+}
+
+/* ── Step wizard ─────────────────────────────────────────────────── */
+.inv-wizard-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 2rem;
+}
+
+.inv-wizard-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex: 1;
+  position: relative;
+}
+
+.inv-wizard-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: calc(1.1rem + 0.6rem);
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(31,162,255,0.12);
+  transform: translateY(-50%);
+}
+
+.inv-wizard-step.done::after,
+.inv-wizard-step.active::after {
+  background: rgba(31,162,255,0.3);
+}
+
+.inv-wizard-dot {
+  width: 2.2rem; height: 2.2rem;
+  border-radius: 50%;
+  border: 2px solid rgba(31,162,255,0.2);
+  background: rgba(6,10,22,0.97);
+  color: var(--dim);
+  font-size: 0.78rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  z-index: 1;
+}
+
+.inv-wizard-step.active .inv-wizard-dot {
+  border-color: #1FA2FF;
+  color: #1FA2FF;
+  background: rgba(31,162,255,0.08);
+}
+
+.inv-wizard-step.done .inv-wizard-dot {
+  border-color: #10B981;
+  background: rgba(16,185,129,0.12);
+  color: #10B981;
+}
+
+.inv-wizard-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.inv-wizard-step.active .inv-wizard-label { color: var(--text); }
+
+/* ── Notice banner ───────────────────────────────────────────────── */
+.inv-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.25rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+
+.inv-notice-info {
+  background: rgba(31,162,255,0.07);
+  border: 1px solid rgba(31,162,255,0.18);
+  color: #b0d8f5;
+}
+
+.inv-notice-success {
+  background: rgba(16,185,129,0.07);
+  border: 1px solid rgba(16,185,129,0.18);
+  color: #a7f3d0;
+}
+
+.inv-notice-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
+}
+
+/* ── Profile application answers ─────────────────────────────────── */
+.inv-answer-block {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.inv-answer-block:last-child { border-bottom: none; }
+
+.inv-answer-question {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  margin-bottom: 0.5rem;
+}
+
+.inv-answer-text {
+  font-size: 0.93rem;
+  color: var(--muted);
+  line-height: 1.65;
 }

@@ -169,10 +169,29 @@
 
       <!-- Sign up panel -->
       <div id="panelSignup" style="display:none;">
-        <p style="font-size:0.82rem; color:var(--dim); margin-bottom:1.25rem; line-height:1.55;">
-          Create an account to access the investor portal. You'll need to be approved by the studio before your account is activated.
-        </p>
-        <form id="signupForm" novalidate>
+
+        <!-- Step wizard indicator -->
+        <div class="inv-wizard-steps" id="wizardSteps">
+          <div class="inv-wizard-step active" id="wStep1">
+            <div class="inv-wizard-dot">1</div>
+            <span class="inv-wizard-label">Account</span>
+          </div>
+          <div class="inv-wizard-step" id="wStep2">
+            <div class="inv-wizard-dot">2</div>
+            <span class="inv-wizard-label">About You</span>
+          </div>
+          <div class="inv-wizard-step" id="wStep3">
+            <div class="inv-wizard-dot">3</div>
+            <span class="inv-wizard-label">Questionnaire</span>
+          </div>
+        </div>
+
+        <!-- Step 1: Account -->
+        <div id="signupStep1">
+          <div class="inv-notice inv-notice-info">
+            <span class="inv-notice-icon">&#8505;</span>
+            <span>Create an account to apply for investor access. Your application will be reviewed by the studio before access is granted.</span>
+          </div>
           <div class="inv-form-group">
             <label class="inv-label" for="signupEmail">Email address</label>
             <input
@@ -185,7 +204,6 @@
               required
             />
           </div>
-
           <div class="inv-form-group">
             <label class="inv-label" for="signupPassword">Password</label>
             <input
@@ -199,18 +217,134 @@
               minlength="8"
             />
           </div>
-
-          <button type="submit" class="inv-btn inv-btn-primary" id="signupBtn"
+          <button type="button" class="inv-btn inv-btn-primary" id="signupNextBtn1"
                   style="width:100%; justify-content:center;">
-            Create account
+            Continue
           </button>
-        </form>
+        </div>
+
+        <!-- Step 2: About You -->
+        <div id="signupStep2" style="display:none;">
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupFullName">Full name <span style="color:#ef4444;">*</span></label>
+            <input
+              class="inv-input"
+              type="text"
+              id="signupFullName"
+              placeholder="Your legal name or entity name"
+              required
+            />
+          </div>
+          <div class="inv-form-row">
+            <div class="inv-form-group">
+              <label class="inv-label" for="signupEntityType">Entity type</label>
+              <select class="inv-select" id="signupEntityType">
+                <option value="">Select…</option>
+                <option value="individual">Individual</option>
+                <option value="angel">Angel Investor</option>
+                <option value="firm">Investment Firm</option>
+                <option value="fund">Fund</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="inv-form-group">
+              <label class="inv-label" for="signupInvestmentRange">Investment range</label>
+              <select class="inv-select" id="signupInvestmentRange">
+                <option value="">Select…</option>
+                <option value="under_10k">Under $10K</option>
+                <option value="10k_50k">$10K – $50K</option>
+                <option value="50k_250k">$50K – $250K</option>
+                <option value="250k_1m">$250K – $1M</option>
+                <option value="over_1m">Over $1M</option>
+              </select>
+            </div>
+          </div>
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupOrganization">Organization name <span style="color:var(--dim); font-weight:400;">(optional)</span></label>
+            <input
+              class="inv-input"
+              type="text"
+              id="signupOrganization"
+              placeholder="Company or fund name, if applicable"
+            />
+          </div>
+          <div class="inv-form-group">
+            <label class="inv-label">Prior experience investing in gaming companies?</label>
+            <div style="display:flex; gap:1rem; margin-top:0.4rem;">
+              <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer; font-size:0.9rem; color:var(--muted);">
+                <input type="radio" name="signupPriorGaming" value="yes" style="accent-color:#1FA2FF;" /> Yes
+              </label>
+              <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer; font-size:0.9rem; color:var(--muted);">
+                <input type="radio" name="signupPriorGaming" value="no" style="accent-color:#1FA2FF;" /> No
+              </label>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.75rem;">
+            <button type="button" class="inv-btn inv-btn-ghost" id="signupBackBtn1"
+                    style="flex:1; justify-content:center;">
+              Back
+            </button>
+            <button type="button" class="inv-btn inv-btn-primary" id="signupNextBtn2"
+                    style="flex:2; justify-content:center;">
+              Continue
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 3: Questionnaire -->
+        <div id="signupStep3" style="display:none;">
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupWhyApprove">Why should we approve you? <span style="color:#ef4444;">*</span></label>
+            <textarea class="inv-textarea" id="signupWhyApprove"
+                      placeholder="Tell us why you're a strong candidate for investor access…"
+                      required style="min-height:100px;"></textarea>
+          </div>
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupWhyVaultspark">What interests you most about VaultSpark Studios? <span style="color:#ef4444;">*</span></label>
+            <textarea class="inv-textarea" id="signupWhyVaultspark"
+                      placeholder="What draws you to our studio and vision?"
+                      required style="min-height:100px;"></textarea>
+          </div>
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupInvestingHistory">Tell us about your investing history <span style="color:var(--dim); font-weight:400;">(optional)</span></label>
+            <textarea class="inv-textarea" id="signupInvestingHistory"
+                      placeholder="Previous investments, sectors, exits, etc."
+                      style="min-height:90px;"></textarea>
+          </div>
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupValueBeyond">What value can you bring beyond capital? <span style="color:var(--dim); font-weight:400;">(optional)</span></label>
+            <textarea class="inv-textarea" id="signupValueBeyond"
+                      placeholder="Expertise, network, strategic advice, etc."
+                      style="min-height:90px;"></textarea>
+          </div>
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupHowHeard">How did you hear about us?</label>
+            <input class="inv-input" type="text" id="signupHowHeard"
+                   placeholder="Referral, social media, event, etc." />
+          </div>
+          <div style="display:flex; gap:0.75rem;">
+            <button type="button" class="inv-btn inv-btn-ghost" id="signupBackBtn2"
+                    style="flex:1; justify-content:center;">
+              Back
+            </button>
+            <button type="button" class="inv-btn inv-btn-primary" id="signupSubmitBtn"
+                    style="flex:2; justify-content:center;">
+              Submit Application
+            </button>
+          </div>
+        </div>
+
+        <!-- Success state -->
         <div id="signupSuccess" style="display:none; text-align:center; padding:1rem 0;">
-          <p style="color:#a7f3d0; font-size:0.92rem; margin-bottom:0.5rem;">Account created.</p>
+          <div class="inv-notice inv-notice-success" style="text-align:left; margin-bottom:1.5rem;">
+            <span class="inv-notice-icon">&#10003;</span>
+            <span>Account created and application submitted. We'll review your request and be in touch.</span>
+          </div>
           <p style="color:var(--dim); font-size:0.82rem;">
-            Send your email to the studio to request investor access. You'll be able to sign in once approved.
+            You can sign in once the studio approves your access.
           </p>
         </div>
+
       </div>
 
       <div class="inv-divider"></div>
@@ -367,36 +501,106 @@
         );
       });
 
-      // Sign up
-      document.getElementById('signupForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
+      // ── Multi-step signup wizard ────────────────────────────────
+
+      function setWizardStep(step) {
+        [1, 2, 3].forEach(n => {
+          document.getElementById('signupStep' + n).style.display = n === step ? '' : 'none';
+          const wStep = document.getElementById('wStep' + n);
+          wStep.classList.remove('active', 'done');
+          if (n < step)  wStep.classList.add('done');
+          if (n === step) wStep.classList.add('active');
+        });
+      }
+
+      // Step 1 → 2
+      document.getElementById('signupNextBtn1').addEventListener('click', () => {
         const email    = document.getElementById('signupEmail').value.trim();
         const password = document.getElementById('signupPassword').value;
         const errEl    = document.getElementById('loginError');
-        const btn      = document.getElementById('signupBtn');
-
         errEl.classList.remove('visible');
         if (!email || password.length < 8) {
           errEl.textContent = 'Please enter a valid email and a password of at least 8 characters.';
           errEl.classList.add('visible');
           return;
         }
+        setWizardStep(2);
+      });
 
-        btn.disabled = true;
-        btn.textContent = 'Creating account…';
+      // Step 2 → 1
+      document.getElementById('signupBackBtn1').addEventListener('click', () => {
+        setWizardStep(1);
+      });
 
-        const { error } = await sb.auth.signUp({ email, password });
+      // Step 2 → 3
+      document.getElementById('signupNextBtn2').addEventListener('click', () => {
+        const fullName = document.getElementById('signupFullName').value.trim();
+        const errEl    = document.getElementById('loginError');
+        errEl.classList.remove('visible');
+        if (!fullName) {
+          errEl.textContent = 'Please enter your full name.';
+          errEl.classList.add('visible');
+          return;
+        }
+        setWizardStep(3);
+      });
 
-        btn.disabled = false;
-        btn.textContent = 'Create account';
+      // Step 3 → 2
+      document.getElementById('signupBackBtn2').addEventListener('click', () => {
+        setWizardStep(2);
+      });
 
-        if (error) {
-          errEl.textContent = error.message || 'Could not create account. Please try again.';
+      // Final submit
+      document.getElementById('signupSubmitBtn').addEventListener('click', async () => {
+        const errEl = document.getElementById('loginError');
+        errEl.classList.remove('visible');
+
+        const whyApprove   = document.getElementById('signupWhyApprove').value.trim();
+        const whyVaultspark = document.getElementById('signupWhyVaultspark').value.trim();
+
+        if (!whyApprove || !whyVaultspark) {
+          errEl.textContent = 'Please answer the two required questions.';
           errEl.classList.add('visible');
           return;
         }
 
-        document.getElementById('signupForm').style.display = 'none';
+        const btn = document.getElementById('signupSubmitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Submitting…';
+
+        const email    = document.getElementById('signupEmail').value.trim();
+        const password = document.getElementById('signupPassword').value;
+
+        // 1. Create auth account
+        const { error: authError } = await sb.auth.signUp({ email, password });
+        if (authError) {
+          btn.disabled = false;
+          btn.textContent = 'Submit Application';
+          errEl.textContent = authError.message || 'Could not create account. Please try again.';
+          errEl.classList.add('visible');
+          return;
+        }
+
+        // 2. Insert application into investor_requests
+        const priorGamingEl = document.querySelector('input[name="signupPriorGaming"]:checked');
+        await sb.from('investor_requests').insert({
+          email:                  email,
+          full_name:              document.getElementById('signupFullName').value.trim(),
+          entity_type:            document.getElementById('signupEntityType').value || null,
+          organization:           document.getElementById('signupOrganization').value.trim() || null,
+          investment_range:       document.getElementById('signupInvestmentRange').value || null,
+          prior_gaming_investing: priorGamingEl ? priorGamingEl.value === 'yes' : null,
+          why_approve:            whyApprove,
+          why_vaultspark:         whyVaultspark,
+          investing_history:      document.getElementById('signupInvestingHistory').value.trim() || null,
+          value_beyond_capital:   document.getElementById('signupValueBeyond').value.trim() || null,
+          how_heard:              document.getElementById('signupHowHeard').value.trim() || null,
+          status:                 'pending',
+        });
+
+        // Show success regardless of insert result (auth account is what matters for blocking)
+        document.getElementById('signupStep3').style.display = 'none';
+        document.getElementById('wizardSteps').style.display = 'none';
         document.getElementById('signupSuccess').style.display = 'block';
       });
 
