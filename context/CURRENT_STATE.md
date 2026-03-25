@@ -4,7 +4,7 @@
 
 - Date: 2026-03-25
 - Overall status: Live and active
-- Current phase: Phase 11 complete (feature expansion — 12 features shipped)
+- Current phase: Phase 11 complete + mobile responsiveness pass complete
 
 ## What exists
 
@@ -27,11 +27,11 @@
   - Beta Key Vault (atomic claims with FOR UPDATE SKIP LOCKED)
   - Web Push Notifications (sw.js + send-push Edge Function — VAPID setup required to activate)
   - Studio Pulse (live Realtime feed of studio updates)
-  - Vault Command admin panel (admin-only tab: Signal Broadcast, Key Vault Drop, Classified File Uplink)
+  - Vault Command admin panel (admin-only: Signal Broadcast, Key Vault Drop, Classified File Uplink)
   - Stripe subscription integration (checkout, renewal, cancellation, payment failure webhooks)
   - Investor Portal (`/investor-portal/`) — 5-page auth-gated portal with 3-step sign-up wizard
   - Studio Hub — Revenue, Analytics, Member Search tabs
-  - Sentry error tracking (DSN placeholder in homepage, vault-member, investor portal)
+  - Sentry error tracking (DSN live on homepage, vault-member, investor portal)
 
 - public pages:
   - `/` homepage with live member count, Organization + WebSite JSON-LD, Twitter Cards
@@ -45,8 +45,16 @@
   - `/status/` — 6 service health checks, auto-refresh 60s
   - `/search/` — client-side search, `?q=` support
 
+- mobile responsiveness: FULLY AUDITED AND FIXED (2026-03-25)
+  - All pages pass 320px / 480px / 768px / 1024px breakpoints
+  - Tables scroll horizontally on mobile
+  - Nav, modals, overlays, filter pills all work on phone
+  - 44px tap targets on all interactive elements
+  - Protocol: re-audit on every major update
+
 - assets:
-  - `assets/style.css` — all badge classes including 9 rank badges
+  - `assets/style.css` — all badge classes, 4-tier responsive breakpoints (1100/980/768/640px)
+  - `assets/investor-theme.css` — investor portal responsive styles
   - `assets/supabase-client.js` — anon key + client init (auth/write flows)
   - `assets/supabase-public.js` — 1 KB lightweight REST helper (anonymous read-only public pages)
   - `assets/web-vitals.js` — LCP, CLS, FCP, TTFB → GA4
@@ -55,34 +63,22 @@
   - `sw.js` v3 — extended pre-cache + stale-while-revalidate for Supabase API
   - `.github/workflows/lighthouse.yml` — Lighthouse CI
   - `.github/workflows/minify.yml` — file-size reporter
-  - `supabase/functions/assign-discord-role/index.ts`
-  - `supabase/functions/stripe-webhook/index.ts`
 
-- SQL migrations (all in repo root):
-  - `supabase-phase11.sql` — streak, challenge categories, achievement progress (NEEDS RUNNING)
-  - `supabase-journal-reactions.sql` — journal_reactions table + RLS (NEEDS RUNNING)
-  - `supabase-achievements.sql`, `supabase-challenge-submissions.sql` (previously run)
-  - Phase history: `supabase-phase1.sql` through `supabase-phase9-10.sql`
+- SQL migrations (all run):
+  - `supabase-phase11.sql` — streak, challenge categories, achievement progress ✅
+  - `supabase-journal-reactions.sql` — journal_reactions table + RLS ✅
 
 ## In progress
 
-- None. Session committed to main (commit d1c8794).
+- None. Session committed and pushed (59aa07b).
 
 ## Blockers
 
-- VAPID keys not yet generated for web push — send-push Edge Function won't deliver until configured.
-- Cloudflare proxy not yet enabled — requires DNS change by user.
-- supabase-phase11.sql not yet run — streak/categories/progress features need DB columns.
-- supabase-journal-reactions.sql not yet run — journal reactions table doesn't exist yet.
-- Sentry DSN placeholder not yet replaced — search SENTRY_DSN_PLACEHOLDER in 3 files.
+- VAPID keys not yet generated for web push
+- Cloudflare proxy not yet enabled — requires DNS change
 
 ## Next 3 moves
 
-1. Run `supabase-phase11.sql` + `supabase-journal-reactions.sql` in Supabase SQL editor
-2. Replace `SENTRY_DSN_PLACEHOLDER` in index.html, vault-member/index.html, investor-portal/index.html
-3. `git push` to deploy
-
-Then:
-4. Enable Cloudflare proxy (DNS → requires user action on registrar)
-5. Supabase dashboard: CAPTCHA on auth, session timeout, email enumeration prevention
-6. VAPID keys → activate web push notifications
+1. Enable Cloudflare proxy (DNS → requires user action on registrar)
+2. Supabase dashboard: CAPTCHA on auth, session timeout, email enumeration prevention
+3. Start next feature session — top candidates: individual journal post pages [9], PWA install prompt [9], community polls [8.5], points history chart [8.5]
