@@ -1382,6 +1382,50 @@
     .chronicle-time  { font-size: 0.73rem; color: var(--dim); margin-top: 0.1rem; }
     .chronicle-pts   { font-size: 0.82rem; font-weight: 700; color: var(--gold); white-space: nowrap; }
 
+    /* ─── Vault Command (Admin) panel ─── */
+    .admin-panels-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    .admin-panel-full  { grid-column: 1 / -1; }
+    .admin-form-group  { margin-bottom: 1rem; }
+    .admin-form-group label {
+      display: block;
+      font-size: 0.77rem; font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 0.35rem;
+    }
+    .admin-input, .admin-select, .admin-textarea {
+      width: 100%; box-sizing: border-box;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--text); font-size: 0.9rem; font-family: inherit;
+      padding: 0.65rem 0.85rem;
+      outline: none; transition: border-color 0.18s;
+    }
+    .admin-input:focus, .admin-select:focus, .admin-textarea:focus {
+      border-color: rgba(255,196,0,0.4);
+    }
+    .admin-select option { background: #0d0f1a; }
+    .admin-textarea { resize: vertical; min-height: 5.5rem; }
+    .admin-textarea.admin-html { min-height: 9rem; font-family: monospace; font-size: 0.83rem; }
+    .admin-submit-btn {
+      height: 40px; padding: 0 1.4rem;
+      background: rgba(255,196,0,0.12);
+      border: 1px solid rgba(255,196,0,0.3);
+      border-radius: 10px;
+      color: var(--gold); font-size: 0.88rem; font-weight: 700;
+      cursor: pointer; transition: background 0.18s; white-space: nowrap;
+    }
+    .admin-submit-btn:hover { background: rgba(255,196,0,0.22); }
+    .admin-submit-btn:disabled { opacity: 0.5; cursor: default; }
+    .admin-feedback {
+      font-size: 0.82rem; margin-left: 0.8rem;
+      color: var(--dim); opacity: 0; transition: opacity 0.25s;
+    }
+    .admin-feedback.show { opacity: 1; }
+    .admin-feedback.ok   { color: #4ade80; }
+    .admin-feedback.err  { color: #f87171; }
+
     @media (max-width: 860px) {
       .auth-wrap { grid-template-columns: 1fr; }
       .rank-sidebar { display: none; }
@@ -1430,6 +1474,7 @@
             <a role="menuitem" href="#" onclick="switchDashTab('earlyaccess');closeNavDropdown();return false;">Early Access</a>
             <a role="menuitem" href="#" onclick="switchDashTab('chronicle');closeNavDropdown();return false;">Activity Chronicle</a>
             <a role="menuitem" href="#" onclick="switchDashTab('settings');closeNavDropdown();return false;">Profile &amp; Settings</a>
+            <a role="menuitem" href="#" id="nav-admin-link" onclick="switchDashTab('admin');closeNavDropdown();return false;" style="display:none;">⚡ Vault Command</a>
             <div class="menu-divider"></div>
             <button class="menu-signout" role="menuitem" onclick="VS.logout()">Sign Out</button>
           </div>
@@ -1698,6 +1743,7 @@
             <button class="dash-tab" id="tab-dash-earlyaccess" onclick="switchDashTab('earlyaccess')">Early Access</button>
             <button class="dash-tab" id="tab-dash-chronicle" onclick="switchDashTab('chronicle')">Chronicle</button>
             <button class="dash-tab" id="tab-dash-settings" onclick="switchDashTab('settings')">Profile &amp; Settings</button>
+            <button class="dash-tab" id="tab-dash-admin" onclick="switchDashTab('admin')" style="display:none;">⚡ Vault Command</button>
           </div>
 
           <!-- ── Tab: Dashboard ── -->
@@ -2099,6 +2145,115 @@
 
             </div>
           </div><!-- /dash-pane-settings -->
+
+          <!-- ── Tab: Vault Command (Admin — member #1 only) ── -->
+          <div class="dash-pane" id="dash-pane-admin">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap;">
+              <div>
+                <h2 style="font-size:1.1rem;font-weight:800;margin:0 0 0.3rem;letter-spacing:-0.02em;">⚡ Vault Command</h2>
+                <p style="font-size:0.84rem;color:var(--muted);margin:0;line-height:1.55;">Restricted access — Vault Member <strong style="color:var(--gold);">#1</strong>. Actions broadcast to all active Vault members.</p>
+              </div>
+            </div>
+            <div class="admin-panels-grid">
+
+              <!-- Signal Broadcast: Studio Pulse -->
+              <div class="settings-block">
+                <h3>Signal Broadcast</h3>
+                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Post a live message to the Studio Pulse stream. Logged-in members see it in real time.</p>
+                <div class="admin-form-group">
+                  <label for="admin-pulse-msg">Message</label>
+                  <textarea class="admin-textarea" id="admin-pulse-msg" maxlength="300" placeholder="What's happening in the Vault right now?"></textarea>
+                </div>
+                <div class="admin-form-group">
+                  <label for="admin-pulse-type">Signal Type</label>
+                  <select class="admin-select" id="admin-pulse-type">
+                    <option value="update">Update — General studio news</option>
+                    <option value="alert">Alert — Critical Vault signal</option>
+                    <option value="drop">Drop — New content or key drop</option>
+                  </select>
+                </div>
+                <div style="display:flex;align-items:center;">
+                  <button class="admin-submit-btn" id="admin-pulse-btn" onclick="adminPostPulse()">Broadcast Signal</button>
+                  <span class="admin-feedback" id="admin-pulse-fb"></span>
+                </div>
+              </div>
+
+              <!-- Key Vault Drop -->
+              <div class="settings-block">
+                <h3>Key Vault Drop</h3>
+                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Deploy a new beta access key. Members meeting the rank threshold can claim it from the Early Access tab.</p>
+                <div class="admin-form-group">
+                  <label for="admin-key-slug">Game</label>
+                  <select class="admin-select" id="admin-key-slug">
+                    <option value="call-of-doodie">💩 Call of Doodie</option>
+                    <option value="gridiron-gm">🏈 Gridiron GM</option>
+                    <option value="vaultspark-football-gm">⚡ VaultSpark Football GM</option>
+                  </select>
+                </div>
+                <div class="admin-form-group">
+                  <label for="admin-key-code">Key Code</label>
+                  <input class="admin-input" type="text" id="admin-key-code" placeholder="VAULT-XXXX-XXXX-XXXX" autocomplete="off" />
+                </div>
+                <div class="admin-form-group">
+                  <label for="admin-key-rank">Minimum Rank Required</label>
+                  <select class="admin-select" id="admin-key-rank">
+                    <option value="0">0 — Spark Initiate+</option>
+                    <option value="1">1 — Vault Runner+</option>
+                    <option value="2">2 — Forge Guard+</option>
+                    <option value="3">3 — Vault Keeper+</option>
+                    <option value="4">4 — The Sparked only</option>
+                  </select>
+                </div>
+                <div style="display:flex;align-items:center;">
+                  <button class="admin-submit-btn" id="admin-key-btn" onclick="adminPostBetaKey()">Deploy Key</button>
+                  <span class="admin-feedback" id="admin-key-fb"></span>
+                </div>
+              </div>
+
+              <!-- Classified File Uplink (full-width) -->
+              <div class="settings-block admin-panel-full">
+                <h3>Classified File Uplink</h3>
+                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Publish a new classified file to the Archive. Triggers a push notification to all subscribed Vault members automatically.</p>
+                <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;">
+                  <div class="admin-form-group">
+                    <label for="admin-file-title">Title</label>
+                    <input class="admin-input" type="text" id="admin-file-title" placeholder="Operation Fault Echo" />
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="admin-file-slug">Slug</label>
+                    <input class="admin-input" type="text" id="admin-file-slug" placeholder="operation-fault-echo" />
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="admin-file-classification">Classification Label</label>
+                    <input class="admin-input" type="text" id="admin-file-classification" placeholder="CLASSIFIED — VAULT ACCESS" />
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="admin-file-rank">Minimum Rank Required</label>
+                    <select class="admin-select" id="admin-file-rank">
+                      <option value="0">0 — All members</option>
+                      <option value="1">1 — Vault Runner+</option>
+                      <option value="2">2 — Forge Guard+</option>
+                      <option value="3">3 — Vault Keeper+</option>
+                      <option value="4">4 — The Sparked only</option>
+                    </select>
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="admin-file-universe">Universe Tag</label>
+                    <input class="admin-input" type="text" id="admin-file-universe" placeholder="dreadspike" />
+                  </div>
+                </div>
+                <div class="admin-form-group">
+                  <label for="admin-file-html">Content HTML</label>
+                  <textarea class="admin-textarea admin-html" id="admin-file-html" placeholder="<p>The fault layer extends further than any cartographer has mapped…</p>"></textarea>
+                </div>
+                <div style="display:flex;align-items:center;">
+                  <button class="admin-submit-btn" id="admin-file-btn" onclick="adminPostFile()">Uplink to Archive</button>
+                  <span class="admin-feedback" id="admin-file-fb"></span>
+                </div>
+              </div>
+
+            </div>
+          </div><!-- /dash-pane-admin -->
 
         </div>
       </section>
@@ -2629,6 +2784,13 @@
       _betaKeysLoaded  = false;
       loadChallenges();
       setTimeout(() => initChallenges(member), 1800);
+
+      // Vault Command tab — member #1 only
+      const isAdmin = member.member_number === 1;
+      const adminTabEl    = document.getElementById('tab-dash-admin');
+      const navAdminLink  = document.getElementById('nav-admin-link');
+      if (adminTabEl)   adminTabEl.style.display   = isAdmin ? '' : 'none';
+      if (navAdminLink) navAdminLink.style.display = isAdmin ? '' : 'none';
     }
 
     // ── Current member reference (for card generation etc.) ──────
@@ -3476,6 +3638,85 @@
         document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
         finish();
       });
+    }
+
+    // ── Vault Command (Admin — member #1 only) ───────────────────
+
+    function showAdminFeedback(el, msg, ok) {
+      el.textContent = msg;
+      el.className = 'admin-feedback show ' + (ok ? 'ok' : 'err');
+      setTimeout(() => { el.className = 'admin-feedback'; }, 4000);
+    }
+
+    async function adminPostPulse() {
+      const msg  = document.getElementById('admin-pulse-msg').value.trim();
+      const type = document.getElementById('admin-pulse-type').value;
+      const fb   = document.getElementById('admin-pulse-fb');
+      const btn  = document.getElementById('admin-pulse-btn');
+      if (!msg) { showAdminFeedback(fb, 'Signal text required', false); return; }
+      btn.disabled = true; fb.className = 'admin-feedback show'; fb.textContent = 'Broadcasting…';
+      try {
+        const { error } = await VSSupabase.from('studio_pulse').insert({ message: msg, type });
+        if (error) throw error;
+        document.getElementById('admin-pulse-msg').value = '';
+        showAdminFeedback(fb, 'Signal broadcast ✓', true);
+      } catch (err) {
+        showAdminFeedback(fb, 'Error: ' + (err.message || 'unknown'), false);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function adminPostFile() {
+      const title          = document.getElementById('admin-file-title').value.trim();
+      const slug           = document.getElementById('admin-file-slug').value.trim();
+      const classification = document.getElementById('admin-file-classification').value.trim();
+      const rank_required  = parseInt(document.getElementById('admin-file-rank').value, 10);
+      const universe_tag   = document.getElementById('admin-file-universe').value.trim();
+      const content_html   = document.getElementById('admin-file-html').value.trim();
+      const fb  = document.getElementById('admin-file-fb');
+      const btn = document.getElementById('admin-file-btn');
+      if (!title || !slug || !content_html) {
+        showAdminFeedback(fb, 'Title, slug, and content are required', false); return;
+      }
+      btn.disabled = true; fb.className = 'admin-feedback show'; fb.textContent = 'Uploading…';
+      try {
+        const { error } = await VSSupabase.from('classified_files').insert({
+          title, slug, classification, rank_required, universe_tag, content_html,
+          published_at: new Date().toISOString()
+        });
+        if (error) throw error;
+        ['admin-file-title','admin-file-slug','admin-file-classification','admin-file-universe','admin-file-html']
+          .forEach(id => { document.getElementById(id).value = ''; });
+        document.getElementById('admin-file-rank').value = '0';
+        _archiveLoaded = false; // force reload next time Archive tab is opened
+        showAdminFeedback(fb, 'File uplinked to Archive ✓', true);
+      } catch (err) {
+        showAdminFeedback(fb, 'Error: ' + (err.message || 'unknown'), false);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function adminPostBetaKey() {
+      const game_slug = document.getElementById('admin-key-slug').value;
+      const key_code  = document.getElementById('admin-key-code').value.trim();
+      const min_rank  = parseInt(document.getElementById('admin-key-rank').value, 10);
+      const fb  = document.getElementById('admin-key-fb');
+      const btn = document.getElementById('admin-key-btn');
+      if (!key_code) { showAdminFeedback(fb, 'Key code required', false); return; }
+      btn.disabled = true; fb.className = 'admin-feedback show'; fb.textContent = 'Deploying…';
+      try {
+        const { error } = await VSSupabase.from('beta_keys').insert({ game_slug, key_code, min_rank });
+        if (error) throw error;
+        document.getElementById('admin-key-code').value = '';
+        _betaKeysLoaded = false; // force reload next time Early Access tab is opened
+        showAdminFeedback(fb, 'Key deployed to Vault ✓', true);
+      } catch (err) {
+        showAdminFeedback(fb, 'Error: ' + (err.message || 'unknown'), false);
+      } finally {
+        btn.disabled = false;
+      }
     }
 
     // ── Phase 4: Classified Archive ──────────────────────────────

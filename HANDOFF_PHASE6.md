@@ -1,5 +1,5 @@
 # Vault Member — Phase 6+ Handoff
-_Last updated: 2026-03-24 — Phases 0–10 complete + fully deployed_
+_Last updated: 2026-03-24 — Phases 0–10 + Vault Command admin panel complete + fully deployed_
 
 ---
 
@@ -208,9 +208,9 @@ refreshPointsDisplay()     — re-fetches pts from DB, updates all pts/rank UI e
 
 ## Deployment state (as of 2026-03-24)
 
-All phases fully deployed and live. No pending setup steps remain.
+All phases fully deployed and live.
 
-- **SQL migrations:** all applied (phases 4-5, 6, 7-8, 9-10)
+- **SQL migrations:** all applied (phases 4-5, 6, 7-8, 9-10, admin)
 - **Edge Functions deployed:** `assign-discord-role`, `send-push` (+ existing: `create-checkout`, `stripe-webhook`, `odds`)
 - **Secrets set:** VAPID (3 keys on `send-push`), Discord bot token + guild ID + role IDs (on `assign-discord-role`)
 - **DB triggers live:** `on_classified_file_insert` → `send-push`, `on_vault_member_update` → `assign-discord-role`
@@ -219,26 +219,26 @@ All phases fully deployed and live. No pending setup steps remain.
 - **Discord:** bot invited to server, 5 rank roles created (IDs mapped rank 0–4)
 - **Supabase CLI:** linked to project `fjnpzjjyhnpmunfoycrp` via access token
 
+### Pending manual step — run `supabase-admin.sql`
+The `supabase-admin.sql` file in the repo root must be run in the Supabase SQL Editor to create the three INSERT policies (studio_pulse, classified_files, beta_keys) that allow member #1 to post from the Vault Command tab.
+
+### iOS Shortcut
+Instructions in `IOS_SHORTCUT_STUDIO_PULSE.md`. Requires the Supabase service role key (from Supabase Dashboard → Project Settings → API).
+
+## Vault Command (Admin Panel) — 2026-03-24
+
+Hidden tab `⚡ Vault Command` — visible only when `member.member_number === 1`. Also appears in the nav account dropdown.
+
+Three Vault-themed forms:
+1. **Signal Broadcast** — insert into `studio_pulse` (message + type selector: update/alert/drop). Realtime broadcasts to all logged-in members instantly.
+2. **Key Vault Drop** — insert into `beta_keys` (game slug, key code, min rank). Resets `_betaKeysLoaded` flag so Early Access reloads next open.
+3. **Classified File Uplink** — insert into `classified_files` (title, slug, classification, rank_required, universe_tag, content_html). Fires `on_classified_file_insert` DB trigger → push notification fan-out to all subscribed members. Resets `_archiveLoaded` flag.
+
+All three functions live in `vault-member/index.html` as `adminPostPulse()`, `adminPostFile()`, `adminPostBetaKey()` with shared `showAdminFeedback(el, msg, ok)` helper. Buttons disable during submit; feedback auto-clears after 4 s.
+
 ## Next session prompt
 
-Read HANDOFF_PHASE6.md first (this file), then build the following two things:
-
-### Admin Panel (Option 1)
-Add a hidden "Admin" tab to the Vault Member dashboard (`vault-member/index.html`) that is only visible when `member.member_number === 1`. The tab should contain:
-
-1. **Post to Studio Pulse** — form with a message textarea + type selector (update / alert / drop) + Post button. Calls `supabase.from('studio_pulse').insert(...)` directly (need INSERT policy for the admin user — add `create policy "admin insert pulse" on public.studio_pulse for insert to authenticated with check (auth.uid() = (select id from vault_members where member_number = 1))`).
-
-2. **Post Classified File** — form with fields: title, slug, classification label, rank_required (0–4 selector), universe_tag, content_html (textarea). Submit inserts into `classified_files` which auto-fires the `on_classified_file_insert` trigger → push notification to all subscribers.
-
-3. **Post Beta Key** — form with game_slug selector + key_code input + min_rank selector. Inserts into `beta_keys`.
-
-SQL needed: INSERT policy on `studio_pulse` for member #1, INSERT policy on `classified_files` for member #1, INSERT policy on `beta_keys` for member #1.
-
-### iOS Shortcut (Option 4)
-Build a URL scheme that posts a Studio Pulse message via the Supabase REST API. Deliverable: step-by-step instructions for creating an iOS Shortcut with:
-- A "Ask for Input" action (the message text)
-- A "Choose from list" action (update / alert / drop)
-- A "Get Contents of URL" action posting to `https://fjnpzjjyhnpmunfoycrp.supabase.co/rest/v1/studio_pulse` with the service role key as the Authorization header
+No pending build items. All phases and admin tooling are complete. Next session: run `supabase-admin.sql` if not yet applied, then confirm Vault Command tab works for member #1.
 
 ## Pending phases
 
