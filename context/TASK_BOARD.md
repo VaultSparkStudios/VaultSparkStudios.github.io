@@ -26,7 +26,6 @@
 ## A-Tier Backlog (Score 7–8.9)
 
 - [ ] Game-specific challenge + point triggers (Football GM → Vault points) [8]
-- [ ] Game screenshots + trailer embed on game pages [7.5]
 - [ ] Dynamic OG image generation per page [7.5]
 - [ ] Supabase query batching in portal (consolidate sequential SELECTs into RPCs) [7]
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
@@ -52,7 +51,6 @@
 - [ ] Investor data room access log [6]
 - [ ] Community event RSVP [6]
 - [ ] Monthly investor update email (automated digest) [6]
-- [ ] New members this week ticker on /community/ [5.5]
 - [ ] Rate limiting on invite code claims [5.5]
 - [ ] Lighthouse CI score gate (fail build if performance < 90) [5.5]
 
@@ -69,6 +67,11 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 26 (2026-03-25)
+
+- ✅ Game screenshots + trailer embed — media section added to all 3 live game pages (Call of Doodie, Gridiron GM, VaultSpark Football GM); YouTube embed slot (ready for VIDEO_ID) + 3-column screenshot placeholder grid; YouTube channel link in empty state
+- ✅ New members this week ticker — green "+N this week" badge on /community/ Recently Joined section header; fetches exact count from Supabase with 7-day filter
 
 ## Completed — Phase 25 (2026-03-25)
 

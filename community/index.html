@@ -308,11 +308,14 @@
     <section class="comm-section">
       <div class="container">
         <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Members</div>
-        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem;">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:0.6rem;">
           <h2 style="margin:0;">Recently Joined</h2>
           <a href="/members/" style="font-size:0.85rem;color:var(--gold);text-decoration:none;font-weight:600;white-space:nowrap;">Browse all members →</a>
         </div>
-        <p style="color:var(--muted);font-size:0.92rem;line-height:1.6;margin-bottom:1.25rem;">The newest members of the vault. Welcome them on Discord.</p>
+        <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1rem;flex-wrap:wrap;">
+          <p style="color:var(--muted);font-size:0.92rem;line-height:1.6;margin:0;">The newest members of the vault. Welcome them on Discord.</p>
+          <span id="new-members-week-badge" style="display:none;padding:0.2rem 0.65rem;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);border-radius:999px;font-size:0.72rem;font-weight:700;color:#10B981;white-space:nowrap;"></span>
+        </div>
         <div class="recent-members-row" id="recent-members-row">
           <div style="color:var(--dim);font-size:0.85rem;">Loading…</div>
         </div>
@@ -489,6 +492,18 @@
 
       /* Game sessions this week */
       var wago=new Date(Date.now()-7*24*60*60*1000).toISOString();
+
+      /* New members this week badge */
+      fetch(SB+'/rest/v1/vault_members?select=id&created_at=gte.'+encodeURIComponent(wago),
+            {headers:Object.assign({},H,{'Prefer':'count=exact','Range':'0-0'})})
+        .then(function(r){
+          var cr=r.headers.get('Content-Range');
+          if(cr){var parts=cr.split('/');if(parts[1]&&parts[1]!=='*'){
+            var n=parseInt(parts[1],10);
+            var badge=document.getElementById('new-members-week-badge');
+            if(badge&&n>0){badge.textContent='+'+n+' this week';badge.style.display='';}
+          }}
+        }).catch(function(){});
       fetch(SB+'/rest/v1/game_sessions?select=id&created_at=gte.'+encodeURIComponent(wago),{headers:Object.assign({},H,{'Prefer':'count=exact','Range':'0-0'})})
         .then(function(r){
           var cr=r.headers.get('Content-Range');
