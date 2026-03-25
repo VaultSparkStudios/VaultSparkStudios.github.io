@@ -14,8 +14,8 @@
 (function (window) {
   'use strict';
 
-  const SUPABASE_URL      = 'YOUR_SUPABASE_URL';       // e.g. https://xxxx.supabase.co
-  const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';  // public anon key (safe to expose)
+  const SUPABASE_URL      = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+  const SUPABASE_ANON_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
   const VAULT_MEMBER_LOGIN = 'https://vaultsparkstudios.com/vault-member/';
 
   // ── Gated App Registry ──────────────────────────────────────────────────────
