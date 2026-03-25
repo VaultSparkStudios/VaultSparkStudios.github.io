@@ -224,15 +224,21 @@
 
   <script src="/assets/kit.js" defer></script>
   <script>
+    function readTime(text) {
+      const words = text.split(/\s+/).length;
+      return Math.max(1, Math.ceil(words / 200));
+    }
+  </script>
+  <script>
     const hamburger=document.getElementById('hamburger'),navMenu=document.getElementById('nav-menu');
     hamburger.addEventListener('click',()=>{const o=navMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
     navMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{navMenu.classList.remove('open');hamburger.setAttribute('aria-expanded','false');document.body.style.overflow='';}));
   </script>
   <script>
     var entries = [
-      { date:'March 2026', title:'We Made The System Visible', tags:['Studio','Community'], excerpt:'The Studio OS is now live. A behind-the-scenes look at how VaultSpark runs, builds, and ships.', id:'studio-os-public' },
-      { date:'2025', title:'Three Worlds Leave The Vault', tags:['Games'], excerpt:'Call of Doodie, Gridiron GM, VaultSpark Football GM, and DreadSpike all launched. Here is how it happened.', id:'three-worlds' },
-      { date:'2024', title:'The Vault Was Opened', tags:['Studio'], excerpt:'The origin story — how VaultSpark Studios started and why the vault is sparked.', id:'vault-opened' }
+      { date:'March 2026', title:'We Made The System Visible', tags:['Studio','Community'], excerpt:'The Studio OS is now live. A behind-the-scenes look at how VaultSpark runs, builds, and ships.', id:'studio-os-public', readTime:3 },
+      { date:'2025', title:'Three Worlds Leave The Vault', tags:['Games'], excerpt:'Call of Doodie, Gridiron GM, VaultSpark Football GM, and DreadSpike all launched. Here is how it happened.', id:'three-worlds', readTime:2 },
+      { date:'2024', title:'The Vault Was Opened', tags:['Studio'], excerpt:'The origin story — how VaultSpark Studios started and why the vault is sparked.', id:'vault-opened', readTime:3 }
     ];
 
     var currentTag='all', currentSearch='';
@@ -261,15 +267,25 @@
       list.innerHTML=filtered.map(function(e){
         var tagHtml=e.tags.map(function(t){return '<span class="ae-tag">'+esc(t)+'</span>';}).join('');
         var href='/journal/#'+e.id;
-        return '<a class="arc-entry" href="'+href+'" role="listitem" aria-label="'+esc(e.title)+', '+esc(e.date)+'">'
-          +'<div class="ae-date">'+esc(e.date)+'</div>'
+        var readTimeHtml=e.readTime?'<span style="font-size:0.75rem;color:var(--dim);">· '+e.readTime+' min read</span>':'';
+        var shareUrl='https://vaultsparkstudios.com/journal/%23'+e.id;
+        var tweetText=encodeURIComponent(e.title+' — VaultSpark Studios');
+        var shareRow='<div class="share-row" style="display:flex;gap:0.6rem;margin-top:0.9rem;flex-wrap:wrap;">'
+          +'<span style="font-size:0.78rem;color:var(--dim);align-self:center;">Share:</span>'
+          +'<a href="https://twitter.com/intent/tweet?url='+encodeURIComponent('https://vaultsparkstudios.com/journal/#'+e.id)+'&text='+tweetText+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" style="display:inline-flex;align-items:center;gap:0.35rem;padding:0.28rem 0.75rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.75rem;color:var(--muted);text-decoration:none;">𝕏 Share</a>'
+          +'</div>';
+        return '<div class="arc-entry" role="listitem">'
+          +'<div class="ae-date">'+esc(e.date)+readTimeHtml+'</div>'
           +'<div class="ae-body">'
-            +'<div class="ae-title">'+highlight(esc(e.title),q)+'</div>'
-            +'<div class="ae-excerpt">'+highlight(esc(e.excerpt),q)+'</div>'
-            +'<div class="ae-tags">'+tagHtml+'</div>'
+            +'<a href="'+href+'" style="text-decoration:none;color:inherit;display:block;" aria-label="'+esc(e.title)+', '+esc(e.date)+'">'
+              +'<div class="ae-title">'+highlight(esc(e.title),q)+'</div>'
+              +'<div class="ae-excerpt">'+highlight(esc(e.excerpt),q)+'</div>'
+            +'</a>'
+            +'<div class="ae-tags" style="margin-top:0.5rem;">'+tagHtml+'</div>'
+            +shareRow
           +'</div>'
-          +'<div class="ae-arrow" aria-hidden="true">&#8594;</div>'
-          +'</a>';
+          +'<a href="'+href+'" class="ae-arrow" aria-hidden="true" tabindex="-1">&#8594;</a>'
+          +'</div>';
       }).join('');
     }
 

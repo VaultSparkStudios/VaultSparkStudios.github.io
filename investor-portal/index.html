@@ -34,7 +34,7 @@
 
     .inv-kpi-strip {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       margin-bottom: 2rem;
     }
@@ -77,6 +77,10 @@
 
     @media (max-width: 900px) {
       .inv-dashboard-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 800px) {
+      .inv-kpi-strip { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 600px) {
@@ -153,6 +157,10 @@
           <div class="inv-kpi-card">
             <span class="inv-kpi-value loading" id="kpiChallenges" aria-label="Loading"></span>
             <span class="inv-kpi-label">Active Challenges</span>
+          </div>
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiGrowth" aria-label="Loading"></span>
+            <span class="inv-kpi-label">New Members (7 days)</span>
           </div>
         </div>
       </div>
@@ -367,17 +375,20 @@
 
     async function loadKPIs() {
       // Fetch KPIs (anon-readable tables)
-      const [membersRes, sessionsRes, challengesRes] = await Promise.all([
+      const [membersRes, sessionsRes, challengesRes, growthRes] = await Promise.all([
         VSSupabase.from('vault_members').select('id', { count: 'exact', head: true }),
         VSSupabase.from('game_sessions').select('id', { count: 'exact', head: true })
           .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
         VSSupabase.from('challenges').select('id', { count: 'exact', head: true })
-          .eq('is_active', true)
+          .eq('is_active', true),
+        VSSupabase.from('vault_members').select('id', { count: 'exact', head: true })
+          .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString())
       ]);
 
       const kpiMembers    = membersRes.count    ?? '—';
       const kpiSessions   = sessionsRes.count   ?? '—';
       const kpiChallenges = challengesRes.count ?? '—';
+      const kpiGrowth     = growthRes.count     ?? '—';
 
       const fmtNum = (n) =>
         typeof n === 'number'
@@ -387,6 +398,7 @@
       const membersEl    = document.getElementById('kpiMembers');
       const sessionsEl   = document.getElementById('kpiSessions');
       const challengesEl = document.getElementById('kpiChallenges');
+      const growthEl     = document.getElementById('kpiGrowth');
 
       if (membersEl) {
         membersEl.classList.remove('loading');
@@ -399,6 +411,10 @@
       if (challengesEl) {
         challengesEl.classList.remove('loading');
         challengesEl.textContent = fmtNum(kpiChallenges);
+      }
+      if (growthEl) {
+        growthEl.classList.remove('loading');
+        growthEl.textContent = fmtNum(kpiGrowth);
       }
     }
 

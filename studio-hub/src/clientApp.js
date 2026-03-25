@@ -6,7 +6,7 @@ import { fetchAllSocialFeeds } from "./data/socialFeedsAdapter.js";
 import { renderNavigation } from "./components/navigation.js";
 import { renderStudioHubView } from "./components/studioHubView.js";
 import { renderProjectHubView } from "./components/projectHubView.js";
-import { renderVaultAdminView } from "./components/vaultAdminView.js";
+import { renderVaultAdminView, initMemberSearch } from "./components/vaultAdminView.js";
 import { renderSocialView } from "./components/socialView.js";
 import { renderSettingsView, saveCredentials, saveSettings, loadSettings, loadStoredCredentials } from "./components/settingsView.js";
 import { renderGate, isUnlocked, attemptUnlock, setHubPassword, clearHubPassword, isPasswordSet } from "./components/privacyGate.js";
@@ -120,9 +120,20 @@ function bindEvents() {
   document.querySelectorAll("[data-admin-tab]").forEach((el) => {
     el.addEventListener("click", () => {
       const tab = el.getAttribute("data-admin-tab");
-      if (tab && tab !== state.adminTab) { state.adminTab = tab; render(); }
+      if (tab && tab !== state.adminTab) {
+        state.adminTab = tab;
+        render();
+        if (tab === "member-search") {
+          initMemberSearch(config.supabaseUrl, config.supabaseAnonKey);
+        }
+      }
     });
   });
+
+  // If member-search tab is already active on render (e.g. state restored), init it
+  if (state.adminTab === "member-search" && state.activeView === "vault-admin") {
+    initMemberSearch(config.supabaseUrl, config.supabaseAnonKey);
+  }
 
   // Settings — save
   document.getElementById("save-settings-btn")?.addEventListener("click", async () => {

@@ -1768,6 +1768,40 @@
 
           <!-- ── Tab: Dashboard ── -->
           <div class="dash-pane active" id="dash-pane-dashboard">
+
+          <!-- Studio Pulse Notice Banner -->
+          <div id="pulseNotice" style="display:none;background:rgba(31,162,255,0.07);border:1px solid rgba(31,162,255,0.15);border-radius:12px;padding:1rem 1.25rem;margin-bottom:1.25rem;cursor:pointer;" onclick="this.style.display='none'">
+            <div style="display:flex;align-items:flex-start;gap:0.75rem;">
+              <span style="font-size:1rem;flex-shrink:0;">📢</span>
+              <div>
+                <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#1FA2FF;margin-bottom:0.3rem;">Studio Update</div>
+                <div id="pulseNoticeText" style="font-size:0.88rem;color:var(--muted);line-height:1.5;"></div>
+                <div id="pulseNoticeDate" style="font-size:0.75rem;color:var(--dim);margin-top:0.3rem;"></div>
+              </div>
+              <button onclick="event.stopPropagation();document.getElementById('pulseNotice').style.display='none'" style="background:transparent;border:none;color:var(--dim);cursor:pointer;padding:0;margin-left:auto;font-size:1rem;line-height:1;flex-shrink:0;">×</button>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="quick-actions" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.75rem;margin:0 0 1.5rem;">
+            <a href="/games/" style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1.25rem 1rem;background:rgba(31,162,255,0.07);border:1px solid rgba(31,162,255,0.15);border-radius:14px;text-decoration:none;transition:background 0.15s;text-align:center;" onmouseover="this.style.background='rgba(31,162,255,0.12)'" onmouseout="this.style.background='rgba(31,162,255,0.07)'">
+              <span style="font-size:1.5rem;">🎮</span>
+              <span style="font-size:0.82rem;font-weight:600;color:var(--text);">Play Games</span>
+            </a>
+            <a href="/leaderboards/" style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1.25rem 1rem;background:rgba(255,196,0,0.07);border:1px solid rgba(255,196,0,0.15);border-radius:14px;text-decoration:none;transition:background 0.15s;text-align:center;" onmouseover="this.style.background='rgba(255,196,0,0.12)'" onmouseout="this.style.background='rgba(255,196,0,0.07)'">
+              <span style="font-size:1.5rem;">🏆</span>
+              <span style="font-size:0.82rem;font-weight:600;color:var(--text);">Leaderboard</span>
+            </a>
+            <a href="/community/" style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1.25rem 1rem;background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.15);border-radius:14px;text-decoration:none;transition:background 0.15s;text-align:center;" onmouseover="this.style.background='rgba(139,92,246,0.12)'" onmouseout="this.style.background='rgba(139,92,246,0.07)'">
+              <span style="font-size:1.5rem;">💬</span>
+              <span style="font-size:0.82rem;font-weight:600;color:var(--text);">Community</span>
+            </a>
+            <a href="/ranks/" style="display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1.25rem 1rem;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.15);border-radius:14px;text-decoration:none;transition:background 0.15s;text-align:center;" onmouseover="this.style.background='rgba(16,185,129,0.12)'" onmouseout="this.style.background='rgba(16,185,129,0.07)'">
+              <span style="font-size:1.5rem;">⭐</span>
+              <span style="font-size:0.82rem;font-weight:600;color:var(--text);">View Ranks</span>
+            </a>
+          </div>
+
           <div class="dashboard-grid">
 
             <!-- Connected Games -->
@@ -1820,6 +1854,30 @@
               <div class="stat-row">
                 <span class="label">Ledger Entries</span>
                 <span class="value" id="stat-ledger"><span class="coming-soon-chip">Loading…</span></span>
+              </div>
+              <!-- Rank progress bar -->
+              <div class="rank-progress-wrap" style="margin-top:0.75rem;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.35rem;">
+                  <span style="font-size:0.75rem;color:var(--dim);" id="rankProgressLabel">Progress to next rank</span>
+                  <span style="font-size:0.75rem;color:var(--dim);" id="rankProgressPct"></span>
+                </div>
+                <div style="height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;">
+                  <div id="rankProgressBar" style="height:100%;background:linear-gradient(90deg,#1FA2FF,#8B5CF6);border-radius:2px;transition:width 0.5s ease;width:0%;"></div>
+                </div>
+                <div id="rankNextLabel" style="font-size:0.72rem;color:var(--dim);margin-top:0.3rem;"></div>
+              </div>
+            </div>
+
+            <!-- Referral Section -->
+            <div class="dash-panel">
+              <h3>Referral</h3>
+              <div class="referral-section" style="background:rgba(10,13,22,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1.25rem;margin-top:0.25rem;">
+                <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);margin-bottom:0.6rem;">Your Referral Link</div>
+                <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem;">Invite friends and earn 100 Vault Points per signup.</div>
+                <div style="display:flex;gap:0.5rem;align-items:center;">
+                  <code id="referralLink" style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.5rem 0.75rem;font-size:0.78rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></code>
+                  <button id="copyReferralBtn" onclick="navigator.clipboard.writeText(document.getElementById('referralLink').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)" style="background:rgba(31,162,255,0.08);border:1px solid rgba(31,162,255,0.2);color:#1FA2FF;padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0;white-space:nowrap;">Copy</button>
+                </div>
               </div>
             </div>
 
@@ -2738,6 +2796,15 @@
       document.getElementById('stat-since').textContent =
         createdDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
 
+      // Rank progress bar in stats panel
+      updateRankProgress(member.points);
+
+      // Referral link
+      const refLink = document.getElementById('referralLink');
+      if (refLink && member.username) {
+        refLink.textContent = 'https://vaultsparkstudios.com/vault-member/?ref=' + member.username;
+      }
+
       const achEarned = (member.achievements || []).map(a => a.id);
       document.getElementById('stat-achievements').textContent =
         achEarned.length + ' / ' + VS.ACHIEVEMENT_DEFS.length;
@@ -2831,6 +2898,7 @@
 
       // Phase 10: start live studio pulse
       initStudioPulse();
+      loadPulseNotice();
 
       // Phase 4/5/6/7/8: load challenges, auto-complete eligible ones, reset lazy-load flags
       _archiveLoaded   = false;
@@ -3245,6 +3313,7 @@
           document.getElementById('progress-fill').style.width = progress + '%';
           document.getElementById('stat-rank').textContent  = rank.name;
           document.getElementById('info-rank').textContent  = rank.name;
+          updateRankProgress(newPts);
           // Reload activity
           loadPointEvents();
         }
@@ -4153,6 +4222,7 @@
         const nxt = VS.getNextRank(pts);
         document.getElementById('pb-current-rank').textContent = rank.name;
         document.getElementById('pb-next').textContent = nxt ? '→ ' + nxt.name + ' at ' + nxt.min + ' pts' : '✦ Maximum rank achieved';
+        updateRankProgress(pts);
         loadPointEvents();
       } catch (_) {}
     }
@@ -4273,6 +4343,63 @@
       // Card border
       ctx.strokeStyle = 'rgba(255,255,255,0.055)'; ctx.lineWidth = 1;
       rrect(ctx, 0.5, 0.5, W - 1, H - 1, 21.5); ctx.stroke();
+    }
+
+    // ── Rank progress bar (Vault Stats panel) ────────────────────
+    function updateRankProgress(points) {
+      const rank    = VS.getRank(points);
+      const next    = VS.getNextRank(points);
+      const bar     = document.getElementById('rankProgressBar');
+      const pct     = document.getElementById('rankProgressPct');
+      const label   = document.getElementById('rankNextLabel');
+      const heading = document.getElementById('rankProgressLabel');
+      if (!bar) return;
+      if (!next) {
+        bar.style.width      = '100%';
+        bar.style.background = '#FFC400';
+        if (pct)     pct.textContent     = 'MAX';
+        if (label)   label.textContent   = 'Top rank achieved';
+        if (heading) heading.textContent = 'Rank progress';
+        return;
+      }
+      const range    = rank.max - rank.min + 1;
+      const progress = Math.min(100, Math.round(((points - rank.min) / range) * 100));
+      bar.style.width      = progress + '%';
+      bar.style.background = 'linear-gradient(90deg,#1FA2FF,#8B5CF6)';
+      if (pct)     pct.textContent   = progress + '%';
+      if (label)   label.textContent = (rank.max - points + 1) + ' pts to ' + next.name;
+      if (heading) heading.textContent = 'Progress to ' + next.name;
+    }
+
+    // ── Studio Pulse notice banner ────────────────────────────────
+    async function loadPulseNotice() {
+      try {
+        const { data } = await VSSupabase
+          .from('studio_pulse')
+          .select('message, type, created_at')
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        if (data) {
+          const notice = document.getElementById('pulseNotice');
+          const text   = document.getElementById('pulseNoticeText');
+          const date   = document.getElementById('pulseNoticeDate');
+          if (notice && text) {
+            text.textContent = data.message || '';
+            if (date) date.textContent = new Date(data.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const dismissed = sessionStorage.getItem('pulse-dismissed-' + data.created_at);
+            if (!dismissed) {
+              notice.style.display = 'block';
+              const closeBtn = notice.querySelector('button');
+              if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                  sessionStorage.setItem('pulse-dismissed-' + data.created_at, '1');
+                });
+              }
+            }
+          }
+        }
+      } catch (_) {}
     }
 
     // ── Init: restore session ────────────────────────────────────

@@ -181,10 +181,86 @@ export async function fetchInvestorRequestCount(supabaseUrl, anonKey, ttlMs = 60
   }
 }
 
+// Revenue data: count of VaultSparked subscribers
+export async function fetchRevenue(supabaseUrl, anonKey, ttlMs = 300000) {
+  const key = "revenue";
+  const cached = readCache(key, ttlMs);
+  if (cached) return cached;
+
+  try {
+    const res = await fetch(`${supabaseUrl}/rest/v1/vault_members?select=id&is_vaultsparked=eq.true`, {
+      headers: {
+        apikey: anonKey,
+        Authorization: `Bearer ${anonKey}`,
+        "Content-Type": "application/json",
+        Prefer: "count=exact",
+      },
+    });
+    if (!res.ok) {
+      const data = { vaultSparkedCount: 0 };
+      writeCache(key, data);
+      return data;
+    }
+    const contentRange = res.headers.get("Content-Range");
+    let count = 0;
+    if (contentRange) {
+      const match = contentRange.match(/\/(\d+)$/);
+      if (match) count = parseInt(match[1], 10);
+    } else {
+      const rows = await res.json();
+      count = Array.isArray(rows) ? rows.length : 0;
+    }
+    const data = { vaultSparkedCount: count };
+    writeCache(key, data);
+    return data;
+  } catch {
+    return { vaultSparkedCount: 0 };
+  }
+}
+
+// Analytics: game sessions (last 30 days) + member growth (last 8 weeks)
+export async function fetchAnalytics(supabaseUrl, anonKey, ttlMs = 300000) {
+  const key = "analytics";
+  const cached = readCache(key, ttlMs);
+  if (cached) return cached;
+
+  try {
+    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+    const eightWeeksAgo = new Date(Date.now() - 56 * 24 * 60 * 60 * 1000).toISOString();
+
+    const [sessionRows, memberRows] = await Promise.all([
+      sbFetch(supabaseUrl, anonKey, `game_sessions?select=game,created_at&created_at=gte.${thirtyDaysAgo}`),
+      sbFetch(supabaseUrl, anonKey, `vault_members?select=created_at&created_at=gte.${eightWeeksAgo}&order=created_at.asc`),
+    ]);
+
+    // Group members by week
+    const weekGroups = {};
+    let runningTotal = 0;
+    (memberRows || []).forEach((m) => {
+      const d = new Date(m.created_at);
+      const weekStart = new Date(d);
+      weekStart.setDate(d.getDate() - d.getDay());
+      const key2 = weekStart.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      weekGroups[key2] = (weekGroups[key2] || 0) + 1;
+    });
+
+    const memberGrowth = Object.entries(weekGroups).map(([week, new_members]) => {
+      runningTotal += new_members;
+      return { week, new_members, total: runningTotal };
+    });
+
+    const data = { sessions: sessionRows || [], memberGrowth };
+    writeCache(key, data);
+    return data;
+  } catch {
+    return { sessions: [], memberGrowth: [] };
+  }
+}
+
 // Fetch all studio Supabase data in parallel.
 export async function fetchAllSupabaseData(supabaseUrl, anonKey, ttlMs = 300000) {
   if (!supabaseUrl || !anonKey) return null;
-  const [members, sessions, pulse, challenges, betaKeys, economy, investorRequests] = await Promise.all([
+  const [members, sessions, pulse, challenges, betaKeys, economy, investorRequests, revenue, analytics] = await Promise.all([
     fetchMemberStats(supabaseUrl, anonKey, ttlMs),
     fetchGameSessions(supabaseUrl, anonKey, ttlMs),
     fetchStudioPulse(supabaseUrl, anonKey, 60000),
@@ -192,6 +268,8 @@ export async function fetchAllSupabaseData(supabaseUrl, anonKey, ttlMs = 300000)
     fetchBetaKeyInventory(supabaseUrl, anonKey, ttlMs),
     fetchPointEconomy(supabaseUrl, anonKey, ttlMs),
     fetchInvestorRequestCount(supabaseUrl, anonKey, 60000),
+    fetchRevenue(supabaseUrl, anonKey, ttlMs),
+    fetchAnalytics(supabaseUrl, anonKey, ttlMs),
   ]);
-  return { members, sessions, pulse, challenges, betaKeys, economy, investorRequests };
+  return { members, sessions, pulse, challenges, betaKeys, economy, investorRequests, revenue, analytics };
 }

@@ -10,6 +10,7 @@
     gtag('config', 'G-RSGLPP4KDZ');
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="supabase-key" content="sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij" />
   <title>VaultSpark Games | Play Browser Games, Sports Sim & Fantasy Worlds</title>
   <meta name="description" content="Explore every VaultSpark Studios game. Play Call of Doodie, Gridiron GM, VaultSpark Football GM in your browser. Discover Dunescape, VaultFront, and everything sealed in the vault." />
   <meta name="keywords" content="VaultSpark games, Call of Doodie, Gridiron GM, browser games, sports simulation, football management game, MMORPG, VaultFront strategy game" />
@@ -532,7 +533,7 @@
         </div>
 
         <!-- Call of Doodie — featured -->
-        <div class="game-card-featured" data-status="live" aria-label="Call of Doodie — Live">
+        <div class="game-card-featured" data-status="live" data-game="call-of-doodie" aria-label="Call of Doodie — Live">
           <div class="game-card-featured-inner">
             <div class="game-card-hero doodie">
               <span class="status status-live">Playable Now</span>
@@ -558,6 +559,7 @@
                 <a class="button" href="/call-of-doodie/game.html">Play Now — It's Free</a>
                 <a class="button-secondary" href="/games/call-of-doodie/">More Info</a>
               </div>
+              <span class="live-sessions-badge" style="display:none;align-items:center;gap:0.35rem;font-size:0.75rem;color:#10B981;font-weight:600;margin-top:0.75rem;"><span style="width:6px;height:6px;border-radius:50%;background:#10B981;display:inline-block;"></span></span>
             </div>
           </div>
         </div>
@@ -566,7 +568,7 @@
         <div class="games-grid" id="games-grid">
 
           <!-- Gridiron GM -->
-          <article class="game-card" data-status="live" aria-label="Gridiron GM — Live">
+          <article class="game-card" data-status="live" data-game="gridiron-gm" aria-label="Gridiron GM — Live">
             <div class="card-hero gridiron">
               <span class="status status-live card-badge">Live</span>
               <h3>Gridiron GM</h3>
@@ -584,11 +586,12 @@
                 <a class="button" href="/gridiron-gm/game.html">Play Now</a>
                 <a class="button-secondary" href="/games/gridiron-gm/">More Info</a>
               </div>
+              <span class="live-sessions-badge" style="display:none;align-items:center;gap:0.35rem;font-size:0.75rem;color:#10B981;font-weight:600;margin-top:0.75rem;"><span style="width:6px;height:6px;border-radius:50%;background:#10B981;display:inline-block;"></span></span>
             </div>
           </article>
 
           <!-- VaultSpark Football GM -->
-          <article class="game-card" data-status="beta" aria-label="VaultSpark Football GM — Beta">
+          <article class="game-card" data-status="beta" data-game="vaultspark-football-gm" aria-label="VaultSpark Football GM — Beta">
             <div class="card-hero footballgm">
               <span class="status status-dev card-badge">Client Beta</span>
               <h3>VaultSpark Football GM</h3>
@@ -606,6 +609,7 @@
                 <a class="button" href="/games/vaultspark-football-gm/">Play Beta</a>
                 <a class="button-secondary" href="/games/vaultspark-football-gm/">More Info</a>
               </div>
+              <span class="live-sessions-badge" style="display:none;align-items:center;gap:0.35rem;font-size:0.75rem;color:#10B981;font-weight:600;margin-top:0.75rem;"><span style="width:6px;height:6px;border-radius:50%;background:#10B981;display:inline-block;"></span></span>
             </div>
           </article>
 
@@ -870,5 +874,30 @@
       });
     });
   </script>
+
+  <script>
+    (async function() {
+      try {
+        const SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+        const SUPABASE_ANON = document.querySelector('meta[name="supabase-key"]')?.content || '';
+        if (!SUPABASE_ANON) return;
+        const games = ['call-of-doodie','gridiron-gm','vaultspark-football-gm'];
+        for (const game of games) {
+          const today = new Date(); today.setHours(0,0,0,0);
+          const res = await fetch(
+            `${SUPABASE_URL}/rest/v1/game_sessions?select=id&game=eq.${game}&created_at=gte.${today.toISOString()}`,
+            { headers: { apikey: SUPABASE_ANON, 'Prefer': 'count=exact', 'Range': '0-0' } }
+          );
+          const count = parseInt(res.headers.get('content-range')?.split('/')[1] || '0');
+          const badge = document.querySelector(`[data-game="${game}"] .live-sessions-badge`);
+          if (badge && count > 0) {
+            badge.textContent = `${count} playing today`;
+            badge.style.display = 'inline-flex';
+          }
+        }
+      } catch(_) {}
+    })();
+  </script>
+  <script src="/assets/cookie-consent.js" defer></script>
 </body>
 </html>

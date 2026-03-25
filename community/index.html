@@ -234,6 +234,45 @@
       </div>
     </section>
 
+    <!-- Upcoming Events -->
+    <section style="padding:3rem 0;border-top:1px solid rgba(255,255,255,0.06);">
+      <div class="container">
+        <h2 style="font-family:Georgia,serif;font-size:1.75rem;font-weight:400;margin-bottom:0.5rem;">Upcoming Events</h2>
+        <p style="color:var(--muted);margin-bottom:2rem;">Beta tests, community challenges, and game launches.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;">
+          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(31,162,255,0.15);border-radius:16px;padding:1.5rem;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1FA2FF;margin-bottom:0.6rem;">April 2026</div>
+            <div style="font-weight:600;color:var(--text);margin-bottom:0.4rem;">Spring Challenge Sprint</div>
+            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">Complete 5 challenges in one week for a bonus 500 Vault Points and an exclusive badge.</div>
+            <div style="margin-top:1rem;font-size:0.78rem;color:var(--dim);">Open to all Vault Members</div>
+          </div>
+          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(255,196,0,0.15);border-radius:16px;padding:1.5rem;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#FFC400;margin-bottom:0.6rem;">May 2026</div>
+            <div style="font-weight:600;color:var(--text);margin-bottom:0.4rem;">Gridiron GM Season 2</div>
+            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">New season update drops with expanded rosters, new coaching options, and playoff overhaul.</div>
+            <div style="margin-top:1rem;font-size:0.78rem;color:var(--dim);">All players</div>
+          </div>
+          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(139,92,246,0.15);border-radius:16px;padding:1.5rem;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#8B5CF6;margin-bottom:0.6rem;">Q3 2026</div>
+            <div style="font-weight:600;color:var(--text);margin-bottom:0.4rem;">VaultSparked Beta Launch</div>
+            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">A new premium-exclusive game experience for VaultSparked members. First access guaranteed.</div>
+            <div style="margin-top:1rem;font-size:0.78rem;color:var(--dim);">VaultSparked only</div>
+          </div>
+        </div>
+        <!-- Discord join widget -->
+        <div style="background:rgba(88,101,242,0.08);border:1px solid rgba(88,101,242,0.2);border-radius:16px;padding:2rem;margin-top:2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;">
+          <div>
+            <div style="font-weight:700;color:var(--text);margin-bottom:0.35rem;">Join the Discord</div>
+            <div style="font-size:0.88rem;color:var(--muted);">The main hub for community chat, game talk, and real-time studio updates.</div>
+          </div>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.6rem;background:#5865F2;color:#fff;padding:0.75rem 1.5rem;border-radius:10px;font-weight:700;font-size:0.9rem;text-decoration:none;flex-shrink:0;">
+            <svg width="20" height="15" viewBox="0 0 20 15" fill="white" aria-hidden="true"><path d="M16.93 1.24A16.4 16.4 0 0 0 12.86 0c-.19.33-.4.78-.55 1.13a15.18 15.18 0 0 0-4.62 0C7.55.78 7.33.33 7.14 0A16.35 16.35 0 0 0 3.07 1.24 17.34 17.34 0 0 0 .09 12.77a16.55 16.55 0 0 0 5.06 2.56c.41-.56.77-1.15 1.08-1.77a10.77 10.77 0 0 1-1.7-.82l.41-.32a11.81 11.81 0 0 0 10.12 0l.42.32c-.55.32-1.12.6-1.71.82.31.62.67 1.21 1.08 1.77a16.5 16.5 0 0 0 5.07-2.57 17.3 17.3 0 0 0-2.99-11.52ZM6.68 10.46c-1 0-1.82-.92-1.82-2.05s.8-2.06 1.82-2.06c1.01 0 1.84.93 1.82 2.06 0 1.13-.81 2.05-1.82 2.05Zm6.64 0c-1 0-1.82-.92-1.82-2.05s.8-2.06 1.82-2.06c1.01 0 1.83.93 1.82 2.06 0 1.13-.8 2.05-1.82 2.05Z"/></svg>
+            Open Discord
+          </a>
+        </div>
+      </div>
+    </section>
+
     <!-- Bottom CTA -->
     <section class="comm-bottom-cta">
       <div class="container">
@@ -289,6 +328,7 @@
   </footer>
 
   <script src="/assets/kit.js" defer></script>
+  <script src="/assets/cookie-consent.js" defer></script>
   <script>
     const hamburger=document.getElementById('hamburger'),navMenu=document.getElementById('nav-menu');
     hamburger.addEventListener('click',()=>{const o=navMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});

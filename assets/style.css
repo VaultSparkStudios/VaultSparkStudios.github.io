@@ -934,3 +934,54 @@ section { padding: 1.6rem 0 4.2rem; }
   .four-col { grid-template-columns: 1fr; }
   .social-grid { grid-template-columns: 1fr; }
 }
+
+/* ─── Cookie Consent Banner ──────────────────────────── */
+
+#cookieConsent {
+  animation: cookie-slide-up 0.25s ease-out;
+}
+
+@keyframes cookie-slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to   { transform: translateY(0);   opacity: 1; }
+}
+
+/* ─── Search Page ────────────────────────────────────── */
+
+.search-result-card {
+  display: block;
+  padding: 1rem 1.25rem;
+  background: rgba(10,13,22,0.8);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+  margin-bottom: 0.5rem;
+}
+.search-result-card:hover {
+  border-color: rgba(31,162,255,0.25);
+  background: rgba(31,162,255,0.04);
+}
+
+/* ─── Status Page ────────────────────────────────────── */
+
+.status-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  background: rgba(10,13,22,0.8);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.2s;
+}
+.status-card:hover { border-color: rgba(255,255,255,0.12); }
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+  transition: background 0.3s;
+}

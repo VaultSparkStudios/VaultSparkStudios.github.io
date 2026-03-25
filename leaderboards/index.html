@@ -31,6 +31,12 @@
     .lb-filter { padding:0.45rem 1.1rem; border-radius:999px; border:1px solid rgba(255,255,255,0.12); background:transparent; color:var(--muted); font-size:0.85rem; font-weight:600; font-family:inherit; cursor:pointer; transition:all 0.15s; }
     .lb-filter:hover { border-color:rgba(255,196,0,0.4); color:var(--gold); }
     .lb-filter.active { background:rgba(255,196,0,0.12); border-color:rgba(255,196,0,0.4); color:var(--gold); }
+    /* Period tabs */
+    .lb-period-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1.75rem; }
+    .lb-period-tab { padding:0.5rem 1.25rem; border-radius:999px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:var(--muted); font-size:0.85rem; font-weight:600; font-family:inherit; cursor:pointer; transition:all 0.15s; }
+    .lb-period-tab:hover { border-color:rgba(31,162,255,0.4); color:var(--blue); }
+    .lb-period-tab.active { background:rgba(31,162,255,0.1); border-color:rgba(31,162,255,0.4); color:var(--blue); }
+    /* Podium */
     .lb-podium { display:flex; align-items:flex-end; justify-content:center; gap:1rem; margin:0 0 2.5rem; }
     .podium-place { flex:1; max-width:200px; text-align:center; }
     .podium-avatar { width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; font-weight:800; margin:0 auto 0.5rem; }
@@ -49,10 +55,12 @@
     .podium-place:nth-child(1) .podium-bar { height:60px; }
     .podium-place:nth-child(2) .podium-bar { height:90px; border-top-color:rgba(255,196,0,0.3); }
     .podium-place:nth-child(3) .podium-bar { height:45px; }
+    /* Stats */
     .lb-stats-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2rem; }
     .lb-stat-card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:1.25rem; text-align:center; }
     .lb-stat-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--dim); margin-bottom:0.4rem; }
     .lb-stat-value { font-size:1.6rem; font-weight:800; color:var(--gold); }
+    /* Table */
     .lb-table-wrap { background:var(--panel); border:1px solid var(--line); border-radius:16px; overflow:hidden; }
     .lb-table { width:100%; border-collapse:collapse; }
     .lb-table th { font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--dim); padding:1rem 1.25rem; text-align:left; border-bottom:1px solid var(--line); }
@@ -113,10 +121,30 @@
           <div class="lb-stat-card"><div class="lb-stat-label">Points Awarded</div><div class="lb-stat-value" id="lb-total-points">—</div></div>
           <div class="lb-stat-card"><div class="lb-stat-label">Active This Week</div><div class="lb-stat-value" id="lb-active">—</div></div>
         </div>
+
+        <!-- Member Spotlight Card -->
+        <div class="spotlight-card" style="background:linear-gradient(135deg,rgba(255,196,0,0.08),rgba(255,196,0,0.03));border:1px solid rgba(255,196,0,0.2);border-radius:20px;padding:2rem;margin-bottom:2rem;display:flex;align-items:center;gap:2rem;">
+          <div style="font-size:3rem;">&#128081;</div>
+          <div>
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#FFC400;margin-bottom:0.4rem;">Current #1 &mdash; All Time</div>
+            <div id="spotlightName" style="font-family:Georgia,serif;font-size:1.8rem;font-weight:400;color:var(--text);margin-bottom:0.3rem;">Loading&hellip;</div>
+            <div id="spotlightPoints" style="font-size:0.9rem;color:var(--muted);"></div>
+          </div>
+        </div>
+
+        <!-- Period Tabs -->
+        <div class="lb-period-tabs" role="group" aria-label="Leaderboard time period">
+          <button class="lb-period-tab active" data-period="alltime">All Time</button>
+          <button class="lb-period-tab" data-period="month">This Month</button>
+          <button class="lb-period-tab" data-period="week">This Week</button>
+        </div>
+
+        <!-- Sort Filters -->
         <div class="lb-filters" role="group" aria-label="Leaderboard filters">
           <button class="lb-filter active" data-filter="points">By Points</button>
           <button class="lb-filter" data-filter="new">Newest</button>
         </div>
+
         <div class="lb-podium" id="lb-podium" aria-label="Top 3 members">
           <div class="podium-place"><div class="podium-rank-label">#2</div><div class="podium-avatar">—</div><div class="podium-username">—</div><div class="podium-points">— pts</div><div class="podium-bar"></div></div>
           <div class="podium-place"><div class="podium-rank-label">#1</div><div class="podium-avatar">—</div><div class="podium-username">—</div><div class="podium-points">— pts</div><div class="podium-bar"></div></div>
@@ -176,6 +204,7 @@
   </footer>
 
   <script src="/assets/kit.js" defer></script>
+  <script src="/assets/cookie-consent.js" defer></script>
   <script>
     const hamburger=document.getElementById('hamburger'),navMenu=document.getElementById('nav-menu');
     hamburger.addEventListener('click',()=>{const o=navMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
@@ -185,27 +214,93 @@
     (function(){
       var SB='https://fjnpzjjyhnpmunfoycrp.supabase.co',KEY='sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
       var H={apikey:KEY,Authorization:'Bearer '+KEY};
-      var RANKS=[{min:5000,t:'The Sparked'},{min:1500,t:'Vault Keeper'},{min:500,t:'Forge Guard'},{min:100,t:'Vault Runner'},{min:0,t:'Spark Initiate'}];
-      function rank(p){for(var r of RANKS)if(p>=r.min)return r.t;return 'Spark Initiate';}
+
+      var RANK_TIERS=[
+        {name:'Spark Initiate', min:0,    max:99,   color:'#8a93b8'},
+        {name:'Vault Runner',   min:100,  max:499,  color:'#10B981'},
+        {name:'Forge Guard',    min:500,  max:1499, color:'#8B5CF6'},
+        {name:'Vault Keeper',   min:1500, max:4999, color:'#1FA2FF'},
+        {name:'The Sparked',    min:5000, max:Infinity, color:'#FFC400'}
+      ];
+
+      function getRankInfo(pts) {
+        for (var i = RANK_TIERS.length - 1; i >= 0; i--) {
+          if (pts >= RANK_TIERS[i].min) return RANK_TIERS[i];
+        }
+        return RANK_TIERS[0];
+      }
+
+      function getRankProgress(pts) {
+        var r = getRankInfo(pts);
+        if (r.max === Infinity) return 100;
+        var range = r.max - r.min + 1;
+        return Math.min(100, Math.round(((pts - r.min) / range) * 100));
+      }
+
       function fmt(n){return n>=1000?(n/1000).toFixed(1)+'K':String(n);}
       function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
       var all=[];
+      var activeFilter='points';
+      var activePeriod='alltime';
+
+      function filterByPeriod(data, period) {
+        if (period === 'alltime') return data;
+        var now = Date.now();
+        var cutoff;
+        if (period === 'week') {
+          cutoff = new Date(now - 7 * 24 * 60 * 60 * 1000);
+        } else {
+          // This month: first day of current month
+          var d = new Date();
+          cutoff = new Date(d.getFullYear(), d.getMonth(), 1);
+        }
+        return data.filter(function(m){ return new Date(m.created_at) >= cutoff; });
+      }
+
       function renderPodium(d){
         var p=document.getElementById('lb-podium');if(!p||d.length<3)return;
         var order=[d[1],d[0],d[2]],nums=['#2','#1','#3'],places=p.querySelectorAll('.podium-place');
         order.forEach(function(m,i){if(!m)return;places[i].querySelector('.podium-rank-label').textContent=nums[i];places[i].querySelector('.podium-avatar').textContent=m.username.charAt(0).toUpperCase();places[i].querySelector('.podium-username').textContent=m.username;places[i].querySelector('.podium-points').textContent=m.points.toLocaleString()+' pts';});
       }
+
       function renderTable(d){
         var tb=document.getElementById('lb-tbody');if(!tb)return;
-        if(!d.length){tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">No members found.</td></tr>';return;}
-        tb.innerHTML=d.slice(3).map(function(m,i){return '<tr><td><span class="lb-rank-num">'+(i+4)+'</span></td><td><span class="lb-username">'+esc(m.username)+'</span></td><td><span class="lb-points">'+m.points.toLocaleString()+'</span></td><td><span class="lb-rank-title">'+rank(m.points)+'</span></td></tr>';}).join('');
+        if(!d.length){tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">No members found for this period.</td></tr>';return;}
+        tb.innerHTML=d.slice(3).map(function(m,i){
+          var rInfo=getRankInfo(m.points);
+          var pct=getRankProgress(m.points);
+          var nextName=rInfo.max===Infinity?'Max Rank':RANK_TIERS[RANK_TIERS.indexOf(rInfo)+1]?RANK_TIERS[RANK_TIERS.indexOf(rInfo)+1].name:'Max Rank';
+          var progressBar='<div style="width:100%;height:3px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:3px;" title="'+pct+'% to '+nextName+'"><div style="height:3px;border-radius:2px;background:'+rInfo.color+';width:'+pct+'%;transition:width 0.4s;"></div></div>';
+          return '<tr><td><span class="lb-rank-num">'+(i+4)+'</span></td><td><span class="lb-username">'+esc(m.username)+'</span>'+progressBar+'</td><td><span class="lb-points">'+m.points.toLocaleString()+'</span></td><td><span class="lb-rank-title" style="color:'+rInfo.color+'">'+rInfo.name+'</span></td></tr>';
+        }).join('');
       }
-      function apply(filter){
-        var s=all.slice();
-        if(filter==='new')s.sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at);});
+
+      function updateSpotlight(data) {
+        var byPoints = data.slice().sort(function(a,b){return b.points-a.points;});
+        var top = byPoints[0];
+        var nameEl = document.getElementById('spotlightName');
+        var ptsEl = document.getElementById('spotlightPoints');
+        if (!top) {
+          if (nameEl) nameEl.textContent = 'No members yet';
+          return;
+        }
+        if (nameEl) nameEl.textContent = top.username;
+        if (ptsEl) {
+          var rInfo = getRankInfo(top.points);
+          ptsEl.textContent = top.points.toLocaleString() + ' Vault Points \u00b7 ' + rInfo.name;
+        }
+      }
+
+      function apply(){
+        var filtered = filterByPeriod(all, activePeriod);
+        var s = filtered.slice();
+        if(activeFilter==='new') s.sort(function(a,b){return new Date(b.created_at)-new Date(a.created_at);});
         else s.sort(function(a,b){return b.points-a.points;});
-        renderPodium(s);renderTable(s);
+        renderPodium(s);
+        renderTable(s);
       }
+
       fetch(SB+'/rest/v1/vault_members?select=username,points,created_at&order=points.desc&limit=50',{headers:H})
         .then(function(r){return r.ok?r.json():[];})
         .then(function(data){
@@ -215,9 +310,29 @@
           var pe=document.getElementById('lb-total-points');if(pe){var tot=data.reduce(function(s,m){return s+(m.points||0);},0);pe.textContent=fmt(tot);}
           var we=document.getElementById('lb-active');
           if(we){var wago=new Date(Date.now()-7*24*60*60*1000);we.textContent=fmt(data.filter(function(m){return new Date(m.created_at)>wago;}).length);}
-          apply('points');
+          updateSpotlight(data);
+          apply();
         }).catch(function(){var tb=document.getElementById('lb-tbody');if(tb)tb.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">Leaderboard temporarily unavailable.</td></tr>';});
-      document.querySelectorAll('.lb-filter').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('.lb-filter').forEach(function(x){x.classList.remove('active');});b.classList.add('active');apply(b.dataset.filter);});});
+
+      // Sort filter buttons
+      document.querySelectorAll('.lb-filter').forEach(function(b){
+        b.addEventListener('click',function(){
+          document.querySelectorAll('.lb-filter').forEach(function(x){x.classList.remove('active');});
+          b.classList.add('active');
+          activeFilter=b.dataset.filter;
+          apply();
+        });
+      });
+
+      // Period tab buttons
+      document.querySelectorAll('.lb-period-tab').forEach(function(b){
+        b.addEventListener('click',function(){
+          document.querySelectorAll('.lb-period-tab').forEach(function(x){x.classList.remove('active');});
+          b.classList.add('active');
+          activePeriod=b.dataset.period;
+          apply();
+        });
+      });
     })();
   </script>
 </body>

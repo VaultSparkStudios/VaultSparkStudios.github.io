@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RSGLPP4KDZ');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search | VaultSpark Studios</title>
+  <meta name="description" content="Search VaultSpark Studios — find games, projects, community pages, and more." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/search/" />
+  <meta name="robots" content="noindex, follow" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    /* ── Search page ── */
+    .search-hero { padding: 5rem 0 2.5rem; text-align: center; position: relative; }
+    .search-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 50%, rgba(31,162,255,0.07), transparent 45%); }
+    .search-hero .container { position: relative; z-index: 1; }
+    .search-hero h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.2rem, 5vw, 3.5rem); line-height: 1; letter-spacing: -0.04em; margin: 0.75rem 0 1rem; }
+
+    /* ── Search input ── */
+    .search-input-wrap {
+      position: relative;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+    .search-input-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--dim);
+      pointer-events: none;
+      width: 18px;
+      height: 18px;
+    }
+    #searchInput {
+      width: 100%;
+      background: rgba(10,13,22,0.9);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 0.9rem 1rem 0.9rem 2.85rem;
+      font-size: 1rem;
+      color: var(--text);
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      box-sizing: border-box;
+    }
+    #searchInput::placeholder { color: var(--dim); }
+    #searchInput:focus {
+      border-color: rgba(31,162,255,0.4);
+      box-shadow: 0 0 0 3px rgba(31,162,255,0.08);
+    }
+
+    /* ── Results section ── */
+    .search-results-section { padding: 2.5rem 0 5rem; }
+    .search-results-meta {
+      font-size: 0.82rem;
+      color: var(--dim);
+      margin-bottom: 1.25rem;
+      min-height: 1.2em;
+    }
+    .search-results-meta strong { color: var(--muted); }
+
+    /* ── Result card ── */
+    .search-result-card {
+      display: block;
+      padding: 1rem 1.25rem;
+      background: rgba(10,13,22,0.8);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      text-decoration: none;
+      transition: border-color 0.15s, background 0.15s;
+      margin-bottom: 0.5rem;
+    }
+    .search-result-card:hover {
+      border-color: rgba(31,162,255,0.25);
+      background: rgba(31,162,255,0.04);
+    }
+    .search-result-title {
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+    }
+    .search-result-url {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--dim);
+      margin-left: 0.5rem;
+    }
+    .search-result-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Empty state ── */
+    .search-empty {
+      text-align: center;
+      padding: 4rem 1rem;
+      color: var(--dim);
+    }
+    .search-empty p { font-size: 0.95rem; margin-top: 0.5rem; color: var(--muted); }
+
+    /* ── Popular links ── */
+    .search-popular { margin-top: 3rem; padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.05); }
+    .search-popular-title { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--dim); margin-bottom: 1rem; }
+    .search-popular-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .search-popular-tag {
+      display: inline-block;
+      padding: 0.4rem 0.85rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .search-popular-tag:hover {
+      background: rgba(31,162,255,0.08);
+      border-color: rgba(31,162,255,0.2);
+      color: var(--text);
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- Hero + Search Input -->
+    <section class="search-hero" aria-labelledby="search-heading">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Search</span>
+        <h1 id="search-heading">Search</h1>
+        <div class="search-input-wrap">
+          <svg class="search-input-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <circle cx="8.5" cy="8.5" r="5.5" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M13 13l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="Search pages, games, features&hellip;"
+            autocomplete="off"
+            aria-label="Search VaultSpark Studios"
+            aria-controls="searchResults"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="search-results-section">
+      <div class="container">
+        <div class="search-results-meta" id="searchMeta" aria-live="polite"></div>
+        <div id="searchResults" role="list" aria-label="Search results"></div>
+
+        <!-- Popular links (shown when no query) -->
+        <div class="search-popular" id="popularSection">
+          <div class="search-popular-title">Popular pages</div>
+          <div class="search-popular-grid">
+            <button class="search-popular-tag" onclick="setQuery('games')">Games</button>
+            <button class="search-popular-tag" onclick="setQuery('vault')">Vault Member</button>
+            <button class="search-popular-tag" onclick="setQuery('leaderboard')">Leaderboard</button>
+            <button class="search-popular-tag" onclick="setQuery('discord')">Community</button>
+            <button class="search-popular-tag" onclick="setQuery('roadmap')">Roadmap</button>
+            <button class="search-popular-tag" onclick="setQuery('investor')">Investor</button>
+            <button class="search-popular-tag" onclick="setQuery('journal')">Signal Log</button>
+            <button class="search-popular-tag" onclick="setQuery('universe')">Universe</button>
+            <button class="search-popular-tag" onclick="setQuery('status')">Status</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/investor-portal/login/">Investor Portal</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="/leaderboards/">Leaderboard</a>
+          <a href="/community/">Community Hub</a>
+          <a href="/journal/archive/">Signal Archive</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="/feed.xml">RSS Feed</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/kit.js" defer></script>
+  <script src="/assets/cookie-consent.js" defer></script>
+  <script>
+    const hamburger=document.getElementById('hamburger'),navMenu=document.getElementById('nav-menu');
+    hamburger.addEventListener('click',()=>{const o=navMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
+    navMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{navMenu.classList.remove('open');hamburger.setAttribute('aria-expanded','false');document.body.style.overflow='';}));
+  </script>
+  <script>
+    (function() {
+      'use strict';
+
+      var SEARCH_INDEX = [
+        { title: 'Games Hub', url: '/games/', desc: 'All VaultSpark Studios games — Call of Doodie, Gridiron GM, Football GM, VaultFront, Dunescape', tags: ['games'] },
+        { title: 'Call of Doodie', url: '/games/call-of-doodie/', desc: 'Fast-paced browser-based action comedy shooter', tags: ['games', 'action'] },
+        { title: 'Gridiron GM', url: '/games/gridiron-gm/', desc: 'NFL franchise management simulator with 32 teams', tags: ['games', 'sports', 'simulation'] },
+        { title: 'VaultSpark Football GM', url: '/games/vaultspark-football-gm/', desc: 'Deep NFL front-office simulation game', tags: ['games', 'sports'] },
+        { title: 'Dunescape', url: '/games/dunescape/', desc: 'Desert survival strategy game', tags: ['games', 'strategy'] },
+        { title: 'Vault Member', url: '/vault-member/', desc: 'Join the Vault — earn points, climb ranks, access exclusive content', tags: ['membership', 'community'] },
+        { title: 'Leaderboards', url: '/leaderboards/', desc: 'Vault Points leaderboard — top community members ranked', tags: ['community', 'leaderboard'] },
+        { title: 'Community Hub', url: '/community/', desc: 'Discord, fan art, challenges, and community events', tags: ['community'] },
+        { title: 'Vault Ranks', url: '/ranks/', desc: 'All Vault rank tiers, requirements, and perks', tags: ['membership', 'ranks'] },
+        { title: 'Signal Log (Journal)', url: '/journal/', desc: 'Studio updates, dev insights, and lore dispatches', tags: ['journal', 'news'] },
+        { title: 'Journal Archive', url: '/journal/archive/', desc: 'Searchable archive of all Signal Log entries', tags: ['journal'] },
+        { title: 'Universe', url: '/universe/', desc: 'The VaultSpark universe — lore, entities, and worldbuilding', tags: ['lore', 'universe'] },
+        { title: 'Studio', url: '/studio/', desc: 'About VaultSpark Studios — team, mission, and story', tags: ['studio', 'about'] },
+        { title: 'Roadmap', url: '/roadmap/', desc: 'Upcoming features, games, and studio milestones', tags: ['roadmap'] },
+        { title: 'Press Kit', url: '/press/', desc: 'Media assets, logos, and studio information for press', tags: ['press'] },
+        { title: 'Contact', url: '/contact/', desc: 'Get in touch with VaultSpark Studios', tags: ['contact'] },
+        { title: 'Investor Portal', url: '/investor-portal/login/', desc: 'Investor access portal — sign in or apply to invest', tags: ['investor'] },
+        { title: 'Investor Interest Form', url: '/investor-portal/apply/', desc: 'Apply to invest in VaultSpark Studios', tags: ['investor'] },
+        { title: 'Studio Status', url: '/status/', desc: 'Real-time status of VaultSpark services', tags: ['status'] },
+        { title: 'PromoGrind', url: '/projects/promogrind/', desc: 'Marketing and growth tool for creators', tags: ['projects', 'tools'] },
+      ];
+
+      var searchInput    = document.getElementById('searchInput');
+      var searchResults  = document.getElementById('searchResults');
+      var searchMeta     = document.getElementById('searchMeta');
+      var popularSection = document.getElementById('popularSection');
+      var debounceTimer  = null;
+
+      function esc(s) {
+        return String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      function runSearch(query) {
+        var q = query.trim().toLowerCase();
+
+        if (!q) {
+          searchResults.innerHTML = '';
+          searchMeta.innerHTML = '';
+          popularSection.style.display = '';
+          return;
+        }
+
+        popularSection.style.display = 'none';
+
+        var matches = SEARCH_INDEX.filter(function(item) {
+          return (
+            item.title.toLowerCase().includes(q) ||
+            item.desc.toLowerCase().includes(q) ||
+            item.tags.some(function(tag) { return tag.toLowerCase().includes(q); })
+          );
+        });
+
+        if (matches.length === 0) {
+          searchMeta.innerHTML = 'No results for <strong>' + esc(query.trim()) + '</strong>';
+          searchResults.innerHTML =
+            '<div class="search-empty">' +
+              '<div style="font-size:2rem;">&#128269;</div>' +
+              '<p>No pages found matching that query. Try something else.</p>' +
+            '</div>';
+          return;
+        }
+
+        searchMeta.innerHTML =
+          '<strong>' + matches.length + '</strong> result' + (matches.length === 1 ? '' : 's') +
+          ' for <strong>' + esc(query.trim()) + '</strong>';
+
+        searchResults.innerHTML = matches.map(function(item) {
+          return (
+            '<a href="' + esc(item.url) + '" class="search-result-card" role="listitem">' +
+              '<div class="search-result-title">' +
+                esc(item.title) +
+                '<span class="search-result-url">' + esc(item.url) + '</span>' +
+              '</div>' +
+              '<div class="search-result-desc">' + esc(item.desc) + '</div>' +
+            '</a>'
+          );
+        }).join('');
+      }
+
+      function setQuery(val) {
+        searchInput.value = val;
+        runSearch(val);
+        searchInput.focus();
+      }
+
+      // Expose for inline onclick
+      window.setQuery = setQuery;
+
+      searchInput.addEventListener('input', function() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(function() {
+          runSearch(searchInput.value);
+        }, 150);
+      });
+
+      // Pre-fill from ?q= URL param
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var q = params.get('q');
+        if (q) {
+          searchInput.value = q;
+          runSearch(q);
+        }
+      })();
+
+    })();
+  </script>
+</body>
+</html>

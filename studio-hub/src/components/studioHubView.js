@@ -50,6 +50,8 @@ function renderVitals(ghData, sbData, socialData, studioScore) {
     ? Object.values(sbData.sessions).reduce((s, v) => s + (v.week || 0), 0)
     : null;
   const ytSubs = socialData?.youtube?.subscribers ?? null;
+  const vaultSparkedCount = sbData?.revenue?.vaultSparkedCount ?? 0;
+  const mrr = (vaultSparkedCount * 4.99).toFixed(2);
 
   const vitals = [
     {
@@ -64,6 +66,13 @@ function renderVitals(ghData, sbData, socialData, studioScore) {
     { label: "Game Sessions (7d)", value: fmt(totalSessions), sub: "Across all games", cls: "blue" },
     { label: "YouTube Subscribers", value: fmt(ytSubs), sub: ytSubs ? `${fmt(socialData?.youtube?.videoCount)} videos` : "Configure API key", cls: "text" },
     { label: "Open Issues", value: fmt(totalIssues), sub: failingBuilds > 0 ? `${failingBuilds} failing build${failingBuilds > 1 ? "s" : ""}` : "All builds healthy", cls: failingBuilds > 0 ? "red" : totalIssues > 20 ? "gold" : "green" },
+    {
+      label: "MRR",
+      value: `$${Number(mrr).toLocaleString('en-US', { minimumFractionDigits: 2 })}`,
+      sub: `${vaultSparkedCount} VaultSparked`,
+      cls: "",
+      style: "color:#10B981",
+    },
   ];
 
   return `

@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RSGLPP4KDZ');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Member Profile | VaultSpark Studios</title>
+  <meta name="description" content="View a Vault Member public profile — rank, points, and community standing." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Vault Member Profile | VaultSpark Studios" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSpark" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    .member-hero { padding:5rem 0 2rem; position:relative; }
+    .member-hero::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 30% 50%, rgba(31,162,255,0.09), transparent 35%), radial-gradient(circle at 75% 40%, rgba(255,196,0,0.07), transparent 35%); }
+    .member-hero .container { position:relative; z-index:1; }
+    .profile-card { background:var(--panel); border:1px solid var(--line); border-radius:24px; padding:2.5rem; max-width:560px; margin:0 auto; }
+    .profile-avatar { width:80px; height:80px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2.2rem; font-weight:800; margin:0 auto 1.25rem; }
+    .profile-username { font-family:Georgia,"Times New Roman",serif; font-size:2rem; font-weight:400; text-align:center; margin-bottom:0.4rem; color:var(--text); }
+    .profile-rank-badge { display:inline-flex; align-items:center; gap:0.45rem; font-size:0.82rem; font-weight:700; padding:0.35rem 0.9rem; border-radius:999px; }
+    .profile-stats { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.75rem 0; }
+    .profile-stat { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:1rem; text-align:center; }
+    .profile-stat-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--dim); margin-bottom:0.4rem; }
+    .profile-stat-value { font-size:1.5rem; font-weight:800; }
+    /* Lookup form */
+    .lookup-form { max-width:440px; margin:2rem auto 0; text-align:center; }
+    .lookup-form input { width:100%; padding:0.85rem 1.2rem; border-radius:10px; border:1px solid rgba(255,255,255,0.12); background:rgba(255,255,255,0.04); color:var(--text); font-family:inherit; font-size:1rem; box-sizing:border-box; margin-bottom:0.75rem; outline:none; transition:border-color 0.15s; }
+    .lookup-form input:focus { border-color:rgba(31,162,255,0.5); }
+    .lookup-form button { width:100%; padding:0.85rem 1.5rem; border-radius:10px; background:var(--blue,#1FA2FF); color:#fff; font-family:inherit; font-size:0.95rem; font-weight:700; border:none; cursor:pointer; transition:opacity 0.15s; }
+    .lookup-form button:hover { opacity:0.85; }
+    /* Loading / error states */
+    #member-loading, #member-notfound, #member-profile, #member-lookup { }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="member-hero">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Community &nbsp;·&nbsp; Member Profile</span>
+
+        <!-- Loading state -->
+        <div id="member-loading" style="text-align:center;padding:3rem 0;color:var(--muted);">
+          <div style="font-size:1rem;">Loading profile&hellip;</div>
+        </div>
+
+        <!-- Lookup form (shown when no ?u= param) -->
+        <div id="member-lookup" style="display:none;">
+          <h1 style="font-family:Georgia,serif;font-size:clamp(2rem,5vw,3.5rem);font-weight:400;letter-spacing:-0.04em;margin:0.75rem 0 0.5rem;text-align:center;">Member Lookup</h1>
+          <p style="color:var(--muted);text-align:center;margin-bottom:0;">Enter a username to view their public Vault profile.</p>
+          <form class="lookup-form" id="lookup-form" onsubmit="return handleLookup(event)">
+            <input type="text" id="lookup-input" placeholder="Enter username&hellip;" autocomplete="off" spellcheck="false" maxlength="40" aria-label="Username to look up" />
+            <button type="submit">View Profile</button>
+          </form>
+        </div>
+
+        <!-- Not found state -->
+        <div id="member-notfound" style="display:none;text-align:center;padding:3rem 0;">
+          <div style="font-size:2.5rem;margin-bottom:1rem;">&#128373;&#65039;</div>
+          <h2 style="font-family:Georgia,serif;font-size:1.8rem;font-weight:400;margin-bottom:0.5rem;">Member Not Found</h2>
+          <p style="color:var(--muted);margin-bottom:1.5rem;" id="notfound-msg">No Vault Member with that username exists.</p>
+          <a href="/leaderboards/" class="button-secondary" style="padding:0.65rem 1.4rem;font-size:0.9rem;">View Leaderboard</a>
+          &nbsp;
+          <a href="/member/" class="button" style="padding:0.65rem 1.4rem;font-size:0.9rem;">Try Again</a>
+        </div>
+
+        <!-- Profile card -->
+        <div id="member-profile" style="display:none;padding:1rem 0 4rem;">
+          <div class="profile-card">
+            <div class="profile-avatar" id="profile-avatar" style="background:rgba(31,162,255,0.15);color:#1FA2FF;border:2px solid rgba(31,162,255,0.3);">?</div>
+            <div class="profile-username" id="profile-username">Username</div>
+            <div style="text-align:center;margin-bottom:0.5rem;">
+              <span class="profile-rank-badge" id="profile-rank-badge" style="background:rgba(31,162,255,0.12);color:#1FA2FF;border:1px solid rgba(31,162,255,0.25);">Rank</span>
+            </div>
+            <div class="profile-stats">
+              <div class="profile-stat">
+                <div class="profile-stat-label">Vault Points</div>
+                <div class="profile-stat-value" id="profile-points" style="color:var(--gold);">—</div>
+              </div>
+              <div class="profile-stat">
+                <div class="profile-stat-label">Member Since</div>
+                <div class="profile-stat-value" id="profile-since" style="font-size:1rem;padding-top:0.35rem;color:var(--text);">—</div>
+              </div>
+            </div>
+            <!-- Rank progress bar -->
+            <div style="margin-bottom:1.25rem;">
+              <div style="display:flex;justify-content:space-between;margin-bottom:0.4rem;">
+                <span style="font-size:0.78rem;color:var(--muted);" id="progress-label-current">Current Rank</span>
+                <span style="font-size:0.78rem;color:var(--dim);" id="progress-label-next">Next Rank</span>
+              </div>
+              <div style="width:100%;height:6px;background:rgba(255,255,255,0.08);border-radius:4px;">
+                <div id="profile-progress-bar" style="height:6px;border-radius:4px;background:#1FA2FF;width:0%;transition:width 0.6s ease;"></div>
+              </div>
+              <div style="font-size:0.75rem;color:var(--dim);margin-top:0.35rem;text-align:right;" id="progress-pct-label"></div>
+            </div>
+            <div style="text-align:center;">
+              <a href="/leaderboards/" style="font-size:0.88rem;color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.12);padding-bottom:1px;">View full leaderboard &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/investor-portal/login/">Investor Portal</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="/leaderboards/">Leaderboard</a>
+          <a href="/community/">Community Hub</a>
+          <a href="/ranks/">Vault Ranks</a>
+          <a href="/journal/archive/">Signal Archive</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="/feed.xml">RSS Feed</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/kit.js" defer></script>
+  <script>
+    const hamburger=document.getElementById('hamburger'),navMenu=document.getElementById('nav-menu');
+    hamburger.addEventListener('click',()=>{const o=navMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
+    navMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{navMenu.classList.remove('open');hamburger.setAttribute('aria-expanded','false');document.body.style.overflow='';}));
+  </script>
+  <script>
+    (function(){
+      var SB='https://fjnpzjjyhnpmunfoycrp.supabase.co';
+      var KEY='sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+      var H={apikey:KEY,Authorization:'Bearer '+KEY};
+
+      var RANKS=[
+        {name:'Spark Initiate', min:0,    max:99,       color:'#8a93b8', emoji:'⚡'},
+        {name:'Vault Runner',   min:100,  max:499,      color:'#10B981', emoji:'🏃'},
+        {name:'Forge Guard',    min:500,  max:1499,     color:'#8B5CF6', emoji:'🛡️'},
+        {name:'Vault Keeper',   min:1500, max:4999,     color:'#1FA2FF', emoji:'🔐'},
+        {name:'The Sparked',    min:5000, max:Infinity, color:'#FFC400', emoji:'✨'}
+      ];
+
+      function getRank(points){
+        for(var i=RANKS.length-1;i>=0;i--){if(points>=RANKS[i].min)return RANKS[i];}
+        return RANKS[0];
+      }
+
+      function getRankProgress(points){
+        var r=getRank(points);
+        if(r.max===Infinity)return 100;
+        var range=r.max-r.min+1;
+        return Math.min(100,Math.round(((points-r.min)/range)*100));
+      }
+
+      function getNextRank(points){
+        var cur=getRank(points);
+        var idx=RANKS.indexOf(cur);
+        return RANKS[idx+1]||null;
+      }
+
+      function monthsAgo(dateStr){
+        var d=new Date(dateStr);
+        var now=new Date();
+        var months=(now.getFullYear()-d.getFullYear())*12+(now.getMonth()-d.getMonth());
+        if(months<1)return 'this month';
+        if(months===1)return '1 month ago';
+        return months+' months ago';
+      }
+
+      function formatDate(dateStr){
+        var d=new Date(dateStr);
+        return d.toLocaleDateString('en-US',{month:'short',year:'numeric'});
+      }
+
+      function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+      function show(id){document.getElementById(id).style.display='';}
+      function hide(id){document.getElementById(id).style.display='none';}
+
+      function showProfile(member){
+        var pts=member.points||0;
+        var rank=getRank(pts);
+        var next=getNextRank(pts);
+        var pct=getRankProgress(pts);
+
+        // Update <title> and canonical
+        document.title=esc(member.username)+' | Vault Member | VaultSpark Studios';
+        var canon=document.querySelector('link[rel="canonical"]');
+        if(!canon){canon=document.createElement('link');canon.rel='canonical';document.head.appendChild(canon);}
+        canon.href='https://vaultsparkstudios.com/member/?u='+encodeURIComponent(member.username);
+
+        // OG tags
+        var ogTitle=document.querySelector('meta[property="og:title"]');
+        if(ogTitle)ogTitle.content=member.username+' | Vault Member | VaultSpark Studios';
+
+        // Avatar
+        var av=document.getElementById('profile-avatar');
+        av.textContent=member.username.charAt(0).toUpperCase();
+        av.style.background='rgba('+hexToRgb(rank.color)+',0.15)';
+        av.style.color=rank.color;
+        av.style.border='2px solid rgba('+hexToRgb(rank.color)+',0.35)';
+
+        document.getElementById('profile-username').textContent=member.username;
+
+        var badge=document.getElementById('profile-rank-badge');
+        badge.textContent=rank.emoji+' '+rank.name;
+        badge.style.background='rgba('+hexToRgb(rank.color)+',0.12)';
+        badge.style.color=rank.color;
+        badge.style.border='1px solid rgba('+hexToRgb(rank.color)+',0.25)';
+
+        document.getElementById('profile-points').textContent=pts.toLocaleString();
+        document.getElementById('profile-since').textContent=formatDate(member.created_at);
+
+        // Progress bar
+        var bar=document.getElementById('profile-progress-bar');
+        bar.style.background=rank.color;
+        // Trigger CSS transition after render
+        setTimeout(function(){bar.style.width=pct+'%';},60);
+
+        document.getElementById('progress-label-current').textContent=rank.emoji+' '+rank.name;
+        if(next){
+          document.getElementById('progress-label-next').textContent=next.name+' ('+next.min.toLocaleString()+' pts)';
+          document.getElementById('progress-pct-label').textContent=pct+'% to '+next.name;
+        } else {
+          document.getElementById('progress-label-next').textContent='Max Rank Achieved';
+          document.getElementById('progress-pct-label').textContent='You have reached the top tier.';
+        }
+
+        // "Member since X months" in sub-label
+        var sinceEl=document.getElementById('profile-since');
+        sinceEl.title='Joined '+formatDate(member.created_at)+' — '+monthsAgo(member.created_at);
+
+        hide('member-loading');
+        show('member-profile');
+      }
+
+      function hexToRgb(hex){
+        var r=parseInt(hex.slice(1,3),16);
+        var g=parseInt(hex.slice(3,5),16);
+        var b=parseInt(hex.slice(5,7),16);
+        return r+','+g+','+b;
+      }
+
+      function loadMember(username){
+        hide('member-lookup');
+        hide('member-notfound');
+        hide('member-profile');
+        show('member-loading');
+
+        var url=SB+'/rest/v1/vault_members?select=username,points,rank,created_at&username_lower=eq.'+encodeURIComponent(username.toLowerCase())+'&limit=1';
+        fetch(url,{headers:H})
+          .then(function(r){return r.ok?r.json():[];})
+          .then(function(data){
+            hide('member-loading');
+            if(!Array.isArray(data)||data.length===0){
+              document.getElementById('notfound-msg').textContent='No Vault Member with the username "'+esc(username)+'" was found.';
+              show('member-notfound');
+            } else {
+              showProfile(data[0]);
+            }
+          })
+          .catch(function(){
+            hide('member-loading');
+            document.getElementById('notfound-msg').textContent='Could not load profile. Please try again later.';
+            show('member-notfound');
+          });
+      }
+
+      function handleLookup(e){
+        e.preventDefault();
+        var val=document.getElementById('lookup-input').value.trim();
+        if(!val)return false;
+        window.location.href='/member/?u='+encodeURIComponent(val);
+        return false;
+      }
+      window.handleLookup=handleLookup;
+
+      // Init
+      var params=new URLSearchParams(window.location.search);
+      var u=params.get('u');
+      if(u && u.trim()){
+        loadMember(u.trim());
+      } else {
+        hide('member-loading');
+        show('member-lookup');
+      }
+    })();
+  </script>
+</body>
+</html>

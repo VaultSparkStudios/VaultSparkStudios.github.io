@@ -24,6 +24,7 @@
   <link rel="canonical" href="https://vaultsparkstudios.com/" />
   <meta name="theme-color" content="#000000" />
   <meta name="robots" content="index, follow" />
+  <meta name="supabase-key" content="sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij" />
 
   <meta property="og:title" content="VaultSpark Studios | The Vault Is Sparked" />
   <meta property="og:description" content="Independent game studio forging cinematic worlds, sports simulations, and playable experiments. Enter the vault." />
@@ -558,6 +559,7 @@
       .membership-inner { padding: 1.8rem; }
       .dispatch-inner { padding: 1.5rem; }
     }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
   </style>
 </head>
 <body>
@@ -595,6 +597,13 @@
     </div>
   </header>
 
+  <!-- Now Playing Bar -->
+  <div class="now-playing-bar" id="nowPlayingBar" style="display:none;background:rgba(31,162,255,0.06);border-bottom:1px solid rgba(31,162,255,0.1);padding:0.4rem 0;text-align:center;font-size:0.8rem;color:var(--muted);">
+    <div class="container">
+      <span id="nowPlayingText">Loading…</span>
+    </div>
+  </div>
+
   <!-- ═══ MAIN ═════════════════════════════════════════════ -->
   <main id="top">
 
@@ -616,6 +625,11 @@
           <div class="hero-actions">
             <a class="button" href="/games/">Explore Our Games</a>
             <a class="button-secondary" href="/vault-member/#register">Enter The Vault &nbsp;→</a>
+          </div>
+
+          <div class="hero-live-bar" style="display:flex;align-items:center;gap:0.5rem;margin-top:1.25rem;font-size:0.85rem;color:var(--muted);">
+            <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;animation:pulse-dot 2s ease-in-out infinite;flex-shrink:0;"></span>
+            <span><strong class="hero-member-count" style="color:var(--text);">—</strong> members in the Vault</span>
           </div>
 
           <div class="hero-story">
@@ -646,6 +660,40 @@
             </div>
           </div>
         </aside>
+      </div>
+    </section>
+
+    <!-- ── Studio Milestones ─────────────────────────────── -->
+    <section style="padding:4rem 0;border-top:1px solid rgba(255,255,255,0.06);">
+      <div class="container">
+        <div class="eyebrow" style="margin-bottom:2rem;">Studio Milestones</div>
+        <div class="milestones-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;">
+          <div class="milestone-card" style="padding:1.5rem;background:rgba(10,13,22,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1FA2FF;margin-bottom:0.5rem;">2024</div>
+            <div style="font-weight:600;color:var(--text);margin-bottom:0.3rem;">Studio Founded</div>
+            <div style="font-size:0.82rem;color:var(--muted);">VaultSpark Studios opens its doors</div>
+          </div>
+          <div class="milestone-card" style="padding:1.5rem;background:rgba(10,13,22,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#FF7A00;margin-bottom:0.5rem;">2024</div>
+            <div style="font-weight:600;color:var(--text);margin-bottom:0.3rem;">First Game Launched</div>
+            <div style="font-size:0.82rem;color:var(--muted);">Call of Doodie goes live</div>
+          </div>
+          <div class="milestone-card" style="padding:1.5rem;background:rgba(10,13,22,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#FFC400;margin-bottom:0.5rem;">2024</div>
+            <div style="font-weight:600;color:var(--text);margin-bottom:0.3rem;">Vault Launched</div>
+            <div style="font-size:0.82rem;color:var(--muted);">Members-only community opens</div>
+          </div>
+          <div class="milestone-card" style="padding:1.5rem;background:rgba(10,13,22,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#10B981;margin-bottom:0.5rem;">2025</div>
+            <div style="font-weight:600;color:var(--text);margin-bottom:0.3rem;">5 Games Live</div>
+            <div style="font-size:0.82rem;color:var(--muted);">Full catalog of titles shipping</div>
+          </div>
+          <div class="milestone-card" style="padding:1.5rem;background:rgba(10,13,22,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
+            <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#8B5CF6;margin-bottom:0.5rem;">2026</div>
+            <div style="font-weight:600;color:var(--text);margin-bottom:0.3rem;">Investor Portal</div>
+            <div style="font-size:0.82rem;color:var(--muted);">Formal investment program launches</div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1207,6 +1255,7 @@
 
   <!-- ═══ SCRIPTS ═══════════════════════════════════════════ -->
   <script src="assets/kit.js" defer></script>
+  <script src="assets/cookie-consent.js" defer></script>
   <script>
     // Mobile nav toggle
     const hamburger = document.getElementById('hamburger');
@@ -1238,6 +1287,47 @@
         if (href === '/' && path === '/') link.classList.add('active');
         else if (href !== '/' && path.startsWith(href)) link.classList.add('active');
       });
+    })();
+  </script>
+
+  <script>
+    (async function() {
+      try {
+        const SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+        const SUPABASE_ANON = document.querySelector('meta[name="supabase-key"]')?.content || '';
+        if (!SUPABASE_ANON) return;
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/vault_members?select=id`, {
+          headers: { apikey: SUPABASE_ANON, 'Prefer': 'count=exact', 'Range': '0-0' }
+        });
+        const count = parseInt(res.headers.get('content-range')?.split('/')[1] || '0');
+        if (count > 0) {
+          document.querySelectorAll('.hero-member-count').forEach(el => {
+            el.textContent = count.toLocaleString('en-US');
+          });
+        }
+      } catch(_) {}
+    })();
+  </script>
+
+  <script>
+    (async function() {
+      try {
+        const SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+        const SUPABASE_ANON = document.querySelector('meta[name="supabase-key"]')?.content || '';
+        if (!SUPABASE_ANON) return;
+        const today = new Date(); today.setHours(0,0,0,0);
+        const res = await fetch(
+          `${SUPABASE_URL}/rest/v1/game_sessions?select=id&created_at=gte.${today.toISOString()}`,
+          { headers: { apikey: SUPABASE_ANON, 'Prefer': 'count=exact', 'Range': '0-0' } }
+        );
+        const count = parseInt(res.headers.get('content-range')?.split('/')[1] || '0');
+        const bar = document.getElementById('nowPlayingBar');
+        const txt = document.getElementById('nowPlayingText');
+        if (count > 0 && bar && txt) {
+          txt.innerHTML = `🎮 <strong style="color:var(--text)">${count}</strong> game sessions played today`;
+          bar.style.display = 'block';
+        }
+      } catch(_) {}
     })();
   </script>
 

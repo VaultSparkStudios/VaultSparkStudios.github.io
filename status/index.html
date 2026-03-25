@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RSGLPP4KDZ');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Status | VaultSpark Studios</title>
+  <meta name="description" content="Real-time status of VaultSpark Studios services — Vault, games, and infrastructure." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/status/" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Studio Status | VaultSpark Studios" />
+  <meta property="og:description" content="Real-time status of VaultSpark Studios services — Vault, games, and infrastructure." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/status/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSpark" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    /* ── Status page ── */
+    .status-hero { padding: 5rem 0 2.5rem; text-align: center; position: relative; }
+    .status-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(circle at 50% 60%, rgba(16,185,129,0.08), transparent 45%); }
+    .status-hero .container { position: relative; z-index: 1; }
+    .status-hero h1 { font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.2rem, 5vw, 3.5rem); line-height: 1; letter-spacing: -0.04em; margin: 0.75rem 0 0.75rem; }
+    .status-hero p { color: var(--muted); font-size: 1rem; max-width: 48ch; margin: 0 auto; line-height: 1.65; }
+
+    /* ── Overall status banner ── */
+    .overall-banner {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 1rem 1.5rem;
+      border-radius: 14px;
+      margin: 2rem auto 0;
+      max-width: 520px;
+      font-weight: 700;
+      font-size: 1rem;
+      justify-content: center;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .overall-banner.checking {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--dim);
+    }
+    .overall-banner.operational {
+      background: rgba(16,185,129,0.1);
+      border: 1px solid rgba(16,185,129,0.3);
+      color: #10B981;
+    }
+    .overall-banner.degraded {
+      background: rgba(255,196,0,0.1);
+      border: 1px solid rgba(255,196,0,0.3);
+      color: #FFC400;
+    }
+    .overall-banner.down {
+      background: rgba(239,68,68,0.1);
+      border: 1px solid rgba(239,68,68,0.3);
+      color: #ef4444;
+    }
+    .overall-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      background: currentColor;
+      transition: background 0.3s;
+    }
+
+    /* ── Services section ── */
+    .status-section { padding: 3rem 0; }
+    .status-section-title {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--dim);
+      margin-bottom: 1.25rem;
+    }
+
+    /* ── Status card ── */
+    .status-card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 1.25rem;
+      background: rgba(10,13,22,0.8);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      transition: border-color 0.2s;
+    }
+    .status-card:hover { border-color: rgba(255,255,255,0.12); }
+    .status-card-left { display: flex; align-items: center; gap: 0.85rem; }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    .status-card-name { font-weight: 600; color: var(--text); font-size: 0.95rem; }
+    .status-card-msg { font-size: 0.78rem; color: var(--dim); margin-top: 0.1rem; }
+    .status-card-label { font-size: 0.82rem; font-weight: 600; color: var(--dim); white-space: nowrap; }
+
+    /* ── Last checked ── */
+    .status-meta {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--dim);
+      padding: 1.5rem 0 0.5rem;
+    }
+    .status-meta strong { color: var(--muted); }
+
+    /* ── Incident history ── */
+    .incident-section { padding: 3rem 0; border-top: 1px solid rgba(255,255,255,0.05); }
+    .incident-section h2 { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 1rem; }
+    .incident-empty {
+      background: rgba(10,13,22,0.8);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 1.5rem 1.25rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .incident-empty-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10B981;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="status-hero" aria-labelledby="status-heading">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Infrastructure</span>
+        <h1 id="status-heading">Studio Status</h1>
+        <p>Real-time health of VaultSpark services — Vault, games, and infrastructure.</p>
+
+        <!-- Overall status banner -->
+        <div class="overall-banner checking" id="overallBanner" role="status" aria-live="polite">
+          <div class="overall-dot"></div>
+          <span id="overallText">Checking services…</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="status-section" aria-label="Service status checks">
+      <div class="container">
+        <div class="status-section-title">Services</div>
+
+        <!-- Website -->
+        <div class="status-card" id="status-website">
+          <div class="status-card-left">
+            <div class="status-dot" id="dot-website" style="background:#10B981;"></div>
+            <div>
+              <div class="status-card-name">Website</div>
+              <div class="status-card-msg" id="status-msg-website">Page loaded successfully</div>
+            </div>
+          </div>
+          <div class="status-card-label" id="status-label-website" style="color:#10B981;">Operational</div>
+        </div>
+
+        <!-- Vault Member System -->
+        <div class="status-card" id="status-vault">
+          <div class="status-card-left">
+            <div class="status-dot" id="dot-vault"></div>
+            <div>
+              <div class="status-card-name">Vault Member System</div>
+              <div class="status-card-msg" id="status-msg-vault">Checking&hellip;</div>
+            </div>
+          </div>
+          <div class="status-card-label" id="status-label-vault">—</div>
+        </div>
+
+        <!-- Supabase Database -->
+        <div class="status-card" id="status-db">
+          <div class="status-card-left">
+            <div class="status-dot" id="dot-db"></div>
+            <div>
+              <div class="status-card-name">Supabase Database</div>
+              <div class="status-card-msg" id="status-msg-db">Checking&hellip;</div>
+            </div>
+          </div>
+          <div class="status-card-label" id="status-label-db">—</div>
+        </div>
+
+        <!-- Game Sessions -->
+        <div class="status-card" id="status-games">
+          <div class="status-card-left">
+            <div class="status-dot" id="dot-games"></div>
+            <div>
+              <div class="status-card-name">Game Sessions</div>
+              <div class="status-card-msg" id="status-msg-games">Checking&hellip;</div>
+            </div>
+          </div>
+          <div class="status-card-label" id="status-label-games">—</div>
+        </div>
+
+        <!-- Investor Portal -->
+        <div class="status-card" id="status-investor">
+          <div class="status-card-left">
+            <div class="status-dot" id="dot-investor"></div>
+            <div>
+              <div class="status-card-name">Investor Portal</div>
+              <div class="status-card-msg" id="status-msg-investor">Checking&hellip;</div>
+            </div>
+          </div>
+          <div class="status-card-label" id="status-label-investor">—</div>
+        </div>
+
+        <!-- Service Worker / PWA -->
+        <div class="status-card" id="status-sw">
+          <div class="status-card-left">
+            <div class="status-dot" id="dot-sw"></div>
+            <div>
+              <div class="status-card-name">Service Worker / PWA</div>
+              <div class="status-card-msg" id="status-msg-sw">Checking&hellip;</div>
+            </div>
+          </div>
+          <div class="status-card-label" id="status-label-sw">—</div>
+        </div>
+
+        <!-- Last checked -->
+        <div class="status-meta">
+          Last checked: <strong id="lastChecked">—</strong> &nbsp;·&nbsp; Auto-refreshes every 60 seconds
+        </div>
+      </div>
+    </section>
+
+    <!-- Incident History -->
+    <section class="incident-section" aria-labelledby="incident-heading">
+      <div class="container">
+        <span class="eyebrow">Uptime &nbsp;·&nbsp; History</span>
+        <h2 id="incident-heading">Incident History</h2>
+        <div class="incident-empty">
+          <div class="incident-empty-dot"></div>
+          No incidents in the past 90 days.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/investor-portal/login/">Investor Portal</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="/leaderboards/">Leaderboard</a>
+          <a href="/community/">Community Hub</a>
+          <a href="/journal/archive/">Signal Archive</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="/feed.xml">RSS Feed</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/kit.js" defer></script>
+  <script src="/assets/cookie-consent.js" defer></script>
+  <script>
+    const hamburger=document.getElementById('hamburger'),navMenu=document.getElementById('nav-menu');
+    hamburger.addEventListener('click',()=>{const o=navMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
+    navMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{navMenu.classList.remove('open');hamburger.setAttribute('aria-expanded','false');document.body.style.overflow='';}));
+  </script>
+  <script>
+    (function() {
+      'use strict';
+
+      var SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+      var ANON_KEY     = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+
+      // Track results for overall banner
+      var results = {};
+
+      function setCard(name, state, ms, errorMsg) {
+        var dot   = document.getElementById('dot-' + name);
+        var msg   = document.getElementById('status-msg-' + name);
+        var label = document.getElementById('status-label-' + name);
+
+        if (state === 'operational') {
+          if (dot)   dot.style.background = '#10B981';
+          if (msg)   msg.textContent = ms > 2000 ? 'Slow response (' + ms + 'ms)' : ms + 'ms response time';
+          if (label) { label.textContent = ms > 2000 ? 'Degraded' : 'Operational'; label.style.color = ms > 2000 ? '#FFC400' : '#10B981'; }
+          results[name] = ms > 2000 ? 'degraded' : 'operational';
+        } else if (state === 'degraded') {
+          if (dot)   dot.style.background = '#FFC400';
+          if (msg)   msg.textContent = errorMsg || 'Slow response';
+          if (label) { label.textContent = 'Degraded'; label.style.color = '#FFC400'; }
+          results[name] = 'degraded';
+        } else {
+          if (dot)   dot.style.background = '#ef4444';
+          if (msg)   msg.textContent = errorMsg || 'Service unavailable';
+          if (label) { label.textContent = 'Down'; label.style.color = '#ef4444'; }
+          results[name] = 'down';
+        }
+        updateOverallBanner();
+      }
+
+      function updateOverallBanner() {
+        var vals = Object.values(results);
+        if (!vals.length) return;
+        var banner = document.getElementById('overallBanner');
+        var text   = document.getElementById('overallText');
+        if (!banner || !text) return;
+
+        if (vals.some(function(v) { return v === 'down'; })) {
+          banner.className = 'overall-banner down';
+          text.textContent = 'Partial Outage Detected';
+        } else if (vals.some(function(v) { return v === 'degraded'; })) {
+          banner.className = 'overall-banner degraded';
+          text.textContent = 'Partial Degradation Detected';
+        } else {
+          banner.className = 'overall-banner operational';
+          text.textContent = 'All Systems Operational';
+        }
+      }
+
+      function updateLastChecked() {
+        var el = document.getElementById('lastChecked');
+        if (el) el.textContent = new Date().toLocaleTimeString();
+      }
+
+      async function checkService(name, checkFn) {
+        var start = Date.now();
+        try {
+          await Promise.race([
+            checkFn(),
+            new Promise(function(_, reject) { setTimeout(function() { reject(new Error('timeout')); }, 5000); })
+          ]);
+          var ms = Date.now() - start;
+          setCard(name, 'operational', ms, null);
+        } catch(e) {
+          setCard(name, 'down', 0, e.message === 'timeout' ? 'Request timed out' : 'Service unavailable');
+        }
+      }
+
+      async function pingVault() {
+        var r = await fetch(SUPABASE_URL + '/rest/v1/vault_members?select=id&limit=1', {
+          headers: { apikey: ANON_KEY }
+        });
+        if (!r.ok && r.status !== 401 && r.status !== 403) throw new Error('Error ' + r.status);
+      }
+
+      async function pingDB() {
+        var r = await fetch(SUPABASE_URL + '/rest/v1/vault_members?select=id&limit=1', {
+          headers: { apikey: ANON_KEY, 'Prefer': 'count=exact', 'Range': '0-0' }
+        });
+        if (!r.ok && r.status !== 401 && r.status !== 403) throw new Error('Error ' + r.status);
+      }
+
+      async function pingGameSessions() {
+        var r = await fetch(SUPABASE_URL + '/rest/v1/game_sessions?select=id&limit=1', {
+          headers: { apikey: ANON_KEY }
+        });
+        if (!r.ok && r.status !== 401 && r.status !== 403) throw new Error('Error ' + r.status);
+      }
+
+      async function pingInvestors() {
+        var r = await fetch(SUPABASE_URL + '/rest/v1/investors?select=id&limit=1', {
+          headers: { apikey: ANON_KEY }
+        });
+        // 403 is expected for anon — means the endpoint is alive
+        if (r.status === 403 || r.status === 401 || r.ok) return;
+        throw new Error('Error ' + r.status);
+      }
+
+      function checkSW() {
+        return new Promise(function(resolve, reject) {
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(regs) {
+              resolve(regs);
+            }).catch(reject);
+          } else {
+            reject(new Error('Service Worker not supported'));
+          }
+        });
+      }
+
+      function runChecks() {
+        // Website is always operational if the page loaded
+        results['website'] = 'operational';
+
+        checkService('vault', pingVault);
+        checkService('db', pingDB);
+        checkService('games', pingGameSessions);
+        checkService('investor', pingInvestors);
+        checkService('sw', checkSW);
+        updateLastChecked();
+      }
+
+      // Initial check
+      runChecks();
+
+      // Auto-recheck every 60 seconds
+      setInterval(runChecks, 60000);
+    })();
+  </script>
+</body>
+</html>
