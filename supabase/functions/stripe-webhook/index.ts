@@ -73,20 +73,33 @@ serve(async (req: Request) => {
           updated_at:             new Date().toISOString(),
         }, { onConflict: 'user_id' });
 
+        // Sync is_sparked flag → triggers assign-discord-role webhook
+        if (sub.status === 'active') {
+          await supabase.from('vault_members').update({ is_sparked: true }).eq('id', userId);
+        }
+
         break;
       }
 
       // ── Subscription updated (renewal, upgrade, downgrade) ──────
       case 'customer.subscription.updated': {
-        const sub = event.data.object as Stripe.Subscription;
+        const sub    = event.data.object as Stripe.Subscription;
+        const active = sub.status === 'active';
 
         await supabase.from('subscriptions')
           .update({
-            status:             sub.status === 'active' ? 'active' : sub.status,
+            status:             active ? 'active' : sub.status,
             current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
             updated_at:         new Date().toISOString(),
           })
           .eq('stripe_subscription_id', sub.id);
+
+        // Sync is_sparked flag → triggers assign-discord-role webhook
+        const { data: subRow } = await supabase
+          .from('subscriptions').select('user_id').eq('stripe_subscription_id', sub.id).single();
+        if (subRow?.user_id) {
+          await supabase.from('vault_members').update({ is_sparked: active }).eq('id', subRow.user_id);
+        }
 
         break;
       }
@@ -96,11 +109,15 @@ serve(async (req: Request) => {
         const sub = event.data.object as Stripe.Subscription;
 
         await supabase.from('subscriptions')
-          .update({
-            status:     'canceled',
-            updated_at: new Date().toISOString(),
-          })
+          .update({ status: 'canceled', updated_at: new Date().toISOString() })
           .eq('stripe_subscription_id', sub.id);
+
+        // Remove is_sparked flag → triggers assign-discord-role webhook
+        const { data: subRow } = await supabase
+          .from('subscriptions').select('user_id').eq('stripe_subscription_id', sub.id).single();
+        if (subRow?.user_id) {
+          await supabase.from('vault_members').update({ is_sparked: false }).eq('id', subRow.user_id);
+        }
 
         break;
       }
@@ -113,6 +130,13 @@ serve(async (req: Request) => {
         await supabase.from('subscriptions')
           .update({ status: 'past_due', updated_at: new Date().toISOString() })
           .eq('stripe_subscription_id', subId);
+
+        // Remove is_sparked on failed payment
+        const { data: subRow } = await supabase
+          .from('subscriptions').select('user_id').eq('stripe_subscription_id', subId).single();
+        if (subRow?.user_id) {
+          await supabase.from('vault_members').update({ is_sparked: false }).eq('id', subRow.user_id);
+        }
 
         break;
       }
