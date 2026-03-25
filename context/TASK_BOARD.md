@@ -21,13 +21,12 @@
 
 ## S-Tier Backlog (Score 9–10)
 
-- [ ] Rank-up celebration sequence (full-screen confetti + badge reveal when rank increases) [9.5] — highest retention moment in any points economy, currently silent
+*(empty — rank-up ceremony already shipped)*
 
 ## A-Tier Backlog (Score 7–8.9)
 
 - [ ] Community polls (members vote on game features / studio decisions) [8.5] — highest-engagement community mechanic
 - [ ] Game wishlist + "Notify me" for unreleased games [8] — pre-launch email/push capture
-- [ ] Challenge streaks (complete same recurring challenge N days running → bonus XP) [8]
 - [ ] Lore reading progress (% of archive read, "X of 24 files unlocked") [8]
 - [ ] Game-specific challenge + point triggers (Football GM → Vault points) [8]
 - [ ] Member directory (/members/) with rank filter + search [7.8]
@@ -46,7 +45,6 @@
 - [ ] Lazy-load image audit (add loading="lazy" to all below-fold images) [7.5]
 - [ ] security.txt (/.well-known/security.txt) [7] — < 10 lines, signals security maturity
 - [ ] Password change + email change in Settings [7]
-- [ ] Challenge difficulty tiers (Easy/Medium/Hard column on challenges, badge on card) [7]
 - [ ] Supabase query batching in portal (consolidate sequential SELECTs into RPCs) [7]
 - [ ] Public changelog page (/changelog/ — what shipped each phase, written for members) [7]
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
@@ -61,7 +59,6 @@
 - [ ] Login calendar heatmap (GitHub-style activity calendar on dashboard) [6.8]
 - [ ] Gift subscriptions (Stripe) [6.8]
 - [ ] Member-to-member point gifting [6.5]
-- [ ] First-completion micro-achievements ("First Challenge", "First Lore File", "First Referral") [6.5]
 - [ ] Member count milestone events (50/100/500/1000 members → Studio Pulse + bonus XP for all) [6.5]
 - [ ] Recently joined member feed on /community/ (last 5–10 new members) [6.5]
 - [ ] Fan art submission form (upload → Supabase Storage → moderation queue in Vault Command) [6.5]
@@ -75,7 +72,6 @@
 - [ ] Referral code QR generator (client-side QR for member's /join/?ref= URL) [6.3]
 - [ ] Investor portal "Ask a question" form (contact form → Edge Function → founder email) [6.3]
 - [ ] Game update changelogs on game pages [6.3]
-- [ ] Challenge leaderboard (by total challenges completed, tab on /leaderboards/) [6]
 - [ ] Journal post view count (journal_views table, deduplicated, shown on cards) [6]
 - [ ] Team/about page expansion [6]
 - [ ] Fan art voting / gallery contests [6]
@@ -108,6 +104,20 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 15 (2026-03-25)
+
+- ✅ Rank-up celebration sequence — already existed as `showRankCeremony(rank)` with full CSS particle animation + `checkRankUp(member)`
+- ✅ Challenge streaks — `challenge_streak` + `last_challenge_date` columns tracked in portal; 7-day (+50pts) and 30-day (+200pts) milestone bonuses; 🔥 streak badge on Challenges tab
+- ✅ Challenge difficulty tiers — `difficulty` column on challenges; colored badges (Easy/Medium/Hard/Legendary) on every challenge card
+- ✅ First-completion micro-achievements — 1st, 5th, 10th challenge completions award 25 bonus pts each via `updateChallengeStreakAndMicro()`
+- ✅ Challenge leaderboard — new ⚡ Challenges tab on /leaderboards/ with top members by completion count + streak column
+- **SQL needed:**
+  ```sql
+  ALTER TABLE vault_members ADD COLUMN IF NOT EXISTS challenge_streak integer NOT NULL DEFAULT 0;
+  ALTER TABLE vault_members ADD COLUMN IF NOT EXISTS last_challenge_date date;
+  ALTER TABLE challenges ADD COLUMN IF NOT EXISTS difficulty text NOT NULL DEFAULT 'Medium' CHECK (difficulty IN ('Easy','Medium','Hard','Legendary'));
+  ```
 
 ## Completed — Phase 14 (2026-03-25)
 

@@ -2213,7 +2213,10 @@
                 <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">⚡ Vault Challenges</div>
                 <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Complete challenges to earn bonus Vault Points. Weekly challenges reset every Monday.</p>
               </div>
-              <span id="challenges-summary" style="font-size:0.82rem;color:var(--dim);white-space:nowrap;padding-top:0.2rem;"></span>
+              <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
+                <span id="challenge-streak-badge" style="display:none;font-size:0.78rem;font-weight:800;padding:0.22rem 0.6rem;background:rgba(251,146,60,0.12);border:1px solid rgba(251,146,60,0.3);border-radius:999px;color:#fb923c;white-space:nowrap;"></span>
+                <span id="challenges-summary" style="font-size:0.82rem;color:var(--dim);white-space:nowrap;padding-top:0.2rem;"></span>
+              </div>
             </div>
             <!-- Feature 4: Category filter pills -->
             <div id="challenge-filter-pills" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.1rem;">
@@ -3142,6 +3145,8 @@
         streak_count:         row.streak_count         || 0,
         last_login_date:      row.last_login_date      || null,
         onboarding_completed: row.onboarding_completed || false,
+        challenge_streak:     row.challenge_streak     || 0,
+        last_challenge_date:  row.last_challenge_date  || null,
       };
     }
 
@@ -4846,6 +4851,13 @@
       const summary = document.getElementById('challenges-summary');
       if (!grid) return;
 
+      // Show challenge streak badge
+      const streakBadge = document.getElementById('challenge-streak-badge');
+      if (streakBadge && _currentMember && _currentMember.challenge_streak > 0) {
+        streakBadge.textContent = '🔥 ' + _currentMember.challenge_streak + '-day streak';
+        streakBadge.style.display = '';
+      }
+
       try {
         const { data: challenges, error } = await VSSupabase.rpc('get_challenges');
         if (error || !challenges || challenges.length === 0) {
@@ -4937,6 +4949,17 @@
       const isExpired = expiryStr === 'expired';
       const cat       = ch.category || 'General';
 
+      // Difficulty badge
+      const diffMap = {
+        Easy:      { bg: 'rgba(16,185,129,0.1)',  border: 'rgba(16,185,129,0.25)',  color: '#10B981' },
+        Medium:    { bg: 'rgba(31,162,255,0.1)',  border: 'rgba(31,162,255,0.25)',  color: '#1FA2FF' },
+        Hard:      { bg: 'rgba(251,146,60,0.1)',  border: 'rgba(251,146,60,0.25)',  color: '#fb923c' },
+        Legendary: { bg: 'rgba(255,196,0,0.12)',  border: 'rgba(255,196,0,0.35)',   color: '#FFC400' },
+      };
+      const diff = ch.difficulty || 'Medium';
+      const dc = diffMap[diff] || diffMap.Medium;
+      const diffBadge = `<span style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;padding:0.16rem 0.48rem;border-radius:4px;background:${dc.bg};color:${dc.color};border:1px solid ${dc.border};white-space:nowrap;">${diff}</span>`;
+
       // Category badge (if not already expressed by challenge_type)
       const catBadge = (cat !== 'General' && cat.toLowerCase() !== ch.challenge_type)
         ? `<span style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;padding:0.16rem 0.48rem;border-radius:4px;background:rgba(139,92,246,0.1);color:#a78bfa;border:1px solid rgba(139,92,246,0.2);white-space:nowrap;">${cat}</span>`
@@ -4952,7 +4975,7 @@
           <div class="challenge-card-top">
             <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
               <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
-              ${catBadge}
+              ${diffBadge}${catBadge}
             </div>
             <span class="challenge-pts-badge">+${ch.points} pts</span>
           </div>
@@ -4968,7 +4991,7 @@
           <div class="challenge-card-top">
             <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
               <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
-              ${catBadge}
+              ${diffBadge}${catBadge}
             </div>
             <span class="challenge-pts-badge">+${ch.points} pts</span>
           </div>
@@ -4985,7 +5008,7 @@
         <div class="challenge-card-top">
           <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
             <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
-            ${catBadge}
+            ${diffBadge}${catBadge}
           </div>
           <span class="challenge-pts-badge">+${ch.points} pts</span>
         </div>
@@ -5052,6 +5075,68 @@
           showChallengeCompleteModal(data.points, data.title);
           refreshPointsDisplay();
           loadChallenges();
+          await updateChallengeStreakAndMicro();
+        }
+      } catch (_) {}
+    }
+
+    // Update challenge streak and check micro-achievements after a completion
+    async function updateChallengeStreakAndMicro() {
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const today = new Date().toISOString().slice(0, 10);
+        const { data: row } = await VSSupabase.from('vault_members')
+          .select('challenge_streak, last_challenge_date')
+          .eq('id', session.user.id).single();
+        if (!row) return;
+
+        const lastDate = row.last_challenge_date;
+        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        let newStreak = 1;
+        if (lastDate === today) {
+          newStreak = row.challenge_streak || 1; // already counted today
+        } else if (lastDate === yesterday) {
+          newStreak = (row.challenge_streak || 0) + 1;
+        }
+
+        await VSSupabase.from('vault_members')
+          .update({ challenge_streak: newStreak, last_challenge_date: today })
+          .eq('id', session.user.id);
+
+        if (_currentMember) {
+          _currentMember.challenge_streak = newStreak;
+          _currentMember.last_challenge_date = today;
+        }
+
+        // Update streak badge display
+        const streakBadge = document.getElementById('challenge-streak-badge');
+        if (streakBadge && newStreak > 1) {
+          streakBadge.textContent = '🔥 ' + newStreak + '-day streak';
+          streakBadge.style.display = '';
+        }
+
+        // Streak milestone bonuses
+        if (newStreak === 7 || newStreak === 30) {
+          const bonus = newStreak === 7 ? 50 : 200;
+          await VSSupabase.rpc('award_points', { p_user_id: session.user.id, p_points: bonus, p_reason: 'challenge_streak_' + newStreak });
+          showXpChip(bonus, newStreak + '-day challenge streak!');
+          refreshPointsDisplay();
+        }
+
+        // First-completion micro-achievements
+        const { count } = await VSSupabase.from('challenge_submissions')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', session.user.id);
+        const milestones = { 1: 'first_challenge', 5: 'challenge_5', 10: 'challenge_10' };
+        if (milestones[count]) {
+          // Award if not already in achievements
+          const alreadyHas = (_currentMember?.achievements || []).some(a => a.id === milestones[count]);
+          if (!alreadyHas) {
+            await VSSupabase.rpc('award_points', { p_user_id: session.user.id, p_points: 25, p_reason: milestones[count] });
+            const labels = { first_challenge: 'First Challenge', challenge_5: '5 Challenges', challenge_10: '10 Challenges' };
+            showXpChip(25, labels[milestones[count]] + ' milestone!');
+          }
         }
       } catch (_) {}
     }
