@@ -1,6 +1,6 @@
 # Latest Handoff — VaultSpark Studios Site
 
-Last updated: 2026-03-24
+Last updated: 2026-03-24 (session 2 closeout)
 
 ## What was completed this session
 
@@ -28,6 +28,15 @@ Last updated: 2026-03-24
   - `stripe-webhook/index.ts` — handles Stripe subscription lifecycle
   - `create-checkout/index.ts` — creates Stripe Checkout sessions
 - **supabase-schema-v2.sql**: promogrind_data, vault_events, subscriptions, game_sessions tables + RPCs
+
+## Also completed this session
+
+- **Vault Member Integration Standard** — documented in `AGENTS.md` as studio-wide operating protocol; two tiers (gated tool vs open game); points schedule; per-project checklist
+- **call-of-doodie Tier 2 integration** — `_tryAwardVaultPoints()` added to `storage.js`; `game_sessions` RLS insert policy added; call-of-doodie is canonical Tier 2 reference
+- **PromoGrind live** — deployed to `vaultsparkstudios.com/promogrind/`; Supabase env vars set as GitHub Actions secrets; auth flow confirmed working end-to-end
+- **localhost dev origins** added to `VAULT_GATED_APPS` (ports 5173 + 5174)
+- **PromoGrind production URL** corrected to `vaultsparkstudios.com/promogrind`
+- **RPC param fixes** — `get_member_stats` field names, `register_with_invite` OAuth call params
 
 ## What is mid-flight
 
