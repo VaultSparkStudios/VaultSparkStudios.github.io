@@ -447,6 +447,26 @@
     }
     .faq-item p { color: var(--muted); font-size: 0.94rem; line-height: 1.6; }
 
+    /* ── Genre filter buttons (same style as filter-btn but smaller) ── */
+    .genre-btn {
+      padding: 0.35rem 0.85rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .genre-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
+    .genre-btn.active {
+      background: rgba(31,162,255,0.12);
+      border-color: rgba(31,162,255,0.35);
+      color: #1FA2FF;
+    }
+
     /* ── No results state ── */
     .games-empty {
       display: none;
@@ -543,13 +563,22 @@
       <div class="container">
         <h2 id="catalog-heading" class="visually-hidden">Game Catalog</h2>
 
-        <!-- Filter bar -->
+        <!-- Filter bar: Status -->
         <div class="filter-bar" role="group" aria-label="Filter games by status">
           <button class="filter-btn active" data-filter="all">All Games</button>
           <button class="filter-btn" data-filter="live">Live Now</button>
           <button class="filter-btn" data-filter="beta">Beta</button>
           <button class="filter-btn" data-filter="dev">In Development</button>
           <button class="filter-btn" data-filter="concept">Concept</button>
+        </div>
+        <!-- Filter bar: Genre -->
+        <div class="filter-bar" role="group" aria-label="Filter games by genre" style="margin-top:0.5rem;">
+          <button class="genre-btn active" data-genre="all">All Genres</button>
+          <button class="genre-btn" data-genre="sports">Sports</button>
+          <button class="genre-btn" data-genre="action">Action</button>
+          <button class="genre-btn" data-genre="strategy">Strategy</button>
+          <button class="genre-btn" data-genre="mmorpg">MMORPG</button>
+          <button class="genre-btn" data-genre="puzzle">Puzzle</button>
         </div>
 
         <!-- Live & Playable -->
@@ -558,7 +587,7 @@
         </div>
 
         <!-- Call of Doodie — featured -->
-        <div class="game-card-featured" data-status="live" data-game="call-of-doodie" aria-label="Call of Doodie — Live">
+        <div class="game-card-featured" data-status="live" data-game="call-of-doodie" data-genre="action" aria-label="Call of Doodie — Live">
           <div class="game-card-featured-inner">
             <div class="game-card-hero doodie">
               <span class="status status-live">Playable Now</span>
@@ -593,7 +622,7 @@
         <div class="games-grid" id="games-grid">
 
           <!-- Gridiron GM -->
-          <article class="game-card" data-status="live" data-game="gridiron-gm" aria-label="Gridiron GM — Live">
+          <article class="game-card" data-status="live" data-game="gridiron-gm" data-genre="sports" aria-label="Gridiron GM — Live">
             <div class="card-hero gridiron">
               <span class="status status-live card-badge">Live</span>
               <h3>Gridiron GM</h3>
@@ -616,7 +645,7 @@
           </article>
 
           <!-- VaultSpark Football GM -->
-          <article class="game-card" data-status="beta" data-game="vaultspark-football-gm" aria-label="VaultSpark Football GM — Beta">
+          <article class="game-card" data-status="beta" data-game="vaultspark-football-gm" data-genre="sports" aria-label="VaultSpark Football GM — Beta">
             <div class="card-hero footballgm">
               <span class="status status-dev card-badge">Client Beta</span>
               <h3>VaultSpark Football GM</h3>
@@ -639,7 +668,7 @@
           </article>
 
           <!-- VaultFront -->
-          <article class="game-card" data-status="dev" aria-label="VaultFront — In Development">
+          <article class="game-card" data-status="dev" data-genre="strategy" aria-label="VaultFront — In Development">
             <div class="card-hero vaultfront">
               <span class="status status-dev card-badge">In Development</span>
               <h3>VaultFront</h3>
@@ -661,7 +690,7 @@
           </article>
 
           <!-- Dunescape -->
-          <article class="game-card" data-status="dev" aria-label="Dunescape — In Development">
+          <article class="game-card" data-status="dev" data-genre="mmorpg" aria-label="Dunescape — In Development">
             <div class="card-hero dunescape">
               <span class="status status-dev card-badge">In Development</span>
               <h3>Dunescape</h3>
@@ -683,7 +712,7 @@
           </article>
 
           <!-- MindFrame -->
-          <article class="game-card" data-status="concept" aria-label="MindFrame — Concept Stage">
+          <article class="game-card" data-status="concept" data-genre="puzzle" aria-label="MindFrame — Concept Stage">
             <div class="card-hero mindframe">
               <span class="status status-stub card-badge">Concept Stage</span>
               <h3>MindFrame</h3>
@@ -847,55 +876,73 @@
       });
     });
 
-    // Game filter
+    // Game filter — status + genre
     const filterBtns = document.querySelectorAll('.filter-btn');
+    const genreBtns  = document.querySelectorAll('.genre-btn');
     const cards = document.querySelectorAll('#games-grid .game-card');
     const featuredCard = document.querySelector('.game-card-featured');
     const sectionLabels = document.querySelectorAll('.games-section-label');
     const emptyState = document.getElementById('games-empty');
 
+    let activeStatus = 'all';
+    let activeGenre  = 'all';
+
+    function applyFilters() {
+      function cardVisible(card) {
+        const statusOk = activeStatus === 'all' || card.dataset.status === activeStatus;
+        const genreOk  = activeGenre  === 'all' || card.dataset.genre  === activeGenre;
+        return statusOk && genreOk;
+      }
+
+      // Featured card
+      const featuredOk = cardVisible(featuredCard);
+      if (featuredOk) featuredCard.removeAttribute('data-hidden');
+      else            featuredCard.setAttribute('data-hidden', '');
+
+      // Grid cards
+      let visibleCount = featuredOk ? 1 : 0;
+      cards.forEach(card => {
+        if (cardVisible(card)) {
+          card.removeAttribute('data-hidden');
+          visibleCount++;
+        } else {
+          card.setAttribute('data-hidden', '');
+        }
+      });
+
+      // Section labels
+      sectionLabels.forEach(label => {
+        const section = label.dataset.section;
+        if (activeStatus === 'all' && activeGenre === 'all') {
+          label.style.display = '';
+        } else {
+          const hasMatch = activeStatus === 'all'
+            ? true
+            : (activeStatus === section ||
+               (section === 'live' && (activeStatus === 'live' || activeStatus === 'beta')) ||
+               (section === 'dev'  && (activeStatus === 'dev'  || activeStatus === 'concept')));
+          label.style.display = hasMatch ? '' : 'none';
+        }
+      });
+
+      emptyState.classList.toggle('visible', visibleCount === 0);
+    }
+
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        const filter = btn.dataset.filter;
-
-        // Update active button
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        activeStatus = btn.dataset.filter;
+        applyFilters();
+      });
+    });
 
-        // Filter featured card
-        if (filter === 'all' || filter === featuredCard.dataset.status) {
-          featuredCard.removeAttribute('data-hidden');
-        } else {
-          featuredCard.setAttribute('data-hidden', '');
-        }
-
-        // Filter grid cards
-        let visibleCount = featuredCard.hasAttribute('data-hidden') ? 0 : 1;
-        cards.forEach(card => {
-          if (filter === 'all' || card.dataset.status === filter) {
-            card.removeAttribute('data-hidden');
-            visibleCount++;
-          } else {
-            card.setAttribute('data-hidden', '');
-          }
-        });
-
-        // Show/hide section labels based on whether matching cards exist
-        sectionLabels.forEach(label => {
-          const section = label.dataset.section;
-          if (filter === 'all') {
-            label.style.display = '';
-          } else {
-            // Check if any visible cards exist for this section's status group
-            const hasMatch = filter === section ||
-              (section === 'live' && (filter === 'live' || filter === 'beta')) ||
-              (section === 'dev' && (filter === 'dev' || filter === 'concept'));
-            label.style.display = hasMatch ? '' : 'none';
-          }
-        });
-
-        // Empty state
-        emptyState.classList.toggle('visible', visibleCount === 0);
+    genreBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        genreBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeGenre = btn.dataset.genre;
+        applyFilters();
       });
     });
   </script>

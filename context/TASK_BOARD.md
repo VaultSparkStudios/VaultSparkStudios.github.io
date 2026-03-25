@@ -31,7 +31,6 @@
 - [ ] Supabase query batching in portal (consolidate sequential SELECTs into RPCs) [7]
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
 - [ ] WebP/AVIF image audit + conversion [6.5]
-- [ ] Graceful degradation on Supabase failure (offline states, error UI) [6.5]
 - [ ] Profile themes / card backgrounds (rank-based unlockable styles) [6.5]
 
 ## B-Tier Backlog (Score 5–6.9)
@@ -52,10 +51,7 @@
 - [ ] Axe-core accessibility audit in CI [6]
 - [ ] Investor data room access log [6]
 - [ ] Community event RSVP [6]
-- [ ] Member spotlight widget on dashboard [6]
-- [ ] Games hub filtering/sorting (by genre, status, platform) [6]
 - [ ] Monthly investor update email (automated digest) [6]
-- [ ] Rank comparison ("You are X pts behind [member]") [5.5]
 - [ ] New members this week ticker on /community/ [5.5]
 - [ ] Rate limiting on invite code claims [5.5]
 - [ ] Lighthouse CI score gate (fail build if performance < 90) [5.5]
@@ -73,6 +69,13 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 25 (2026-03-25)
+
+- ✅ Graceful degradation — offline detection banner in vault-member portal; auto-shows/hides on network events; pads page top to avoid nav overlap
+- ✅ Games hub genre filtering — added genre filter pill row (Sports, Action, Strategy, MMORPG, Puzzle) + `data-genre` on each game card; combined status+genre filter logic
+- ✅ Member Spotlight — "Vault Community" dashboard panel shows a random top-20 member with avatar + rank + link to profile; refreshes on each login
+- ✅ Rank Comparison — second panel shows pts gap to next player above in leaderboard, with visual progress bar between current and rival pts
 
 ## Completed — Phase 24 (2026-03-25)
 
