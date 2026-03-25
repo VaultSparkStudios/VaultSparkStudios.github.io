@@ -3193,6 +3193,161 @@
       }
     }
 
+    // ── Phase 9: Web Push Notifications ──────────────────────────
+    // Replace 'YOUR_VAPID_PUBLIC_KEY_HERE' with the output of: npx web-push generate-vapid-keys
+    // Then set the same public key as VAPID_PUBLIC_KEY in the send-push Edge Function secrets.
+    const VAPID_PUBLIC_KEY = 'YOUR_VAPID_PUBLIC_KEY_HERE';
+
+    let _swRegistration = null;
+
+    async function registerServiceWorker() {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+      try {
+        _swRegistration = await navigator.serviceWorker.register('/sw.js');
+      } catch (_) {}
+    }
+
+    async function loadPushStatus() {
+      const toggle   = document.getElementById('toggle-push');
+      const statusEl = document.getElementById('push-status-msg');
+      if (!toggle) return;
+
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        toggle.disabled = true;
+        if (statusEl) statusEl.textContent = 'Push notifications are not supported in this browser.';
+        return;
+      }
+      toggle.disabled = false;
+      try {
+        const reg = _swRegistration || await navigator.serviceWorker.getRegistration('/sw.js');
+        if (!reg) { if (statusEl) statusEl.textContent = 'Service worker not yet registered — reload the page.'; return; }
+        const sub = await reg.pushManager.getSubscription();
+        toggle.checked = !!sub;
+        if (statusEl) statusEl.textContent = sub
+          ? 'Push notifications are on. You\'ll hear from the Vault.'
+          : 'Enable to get browser notifications when new files and alerts drop.';
+      } catch (_) {
+        if (statusEl) statusEl.textContent = 'Could not check push notification status.';
+      }
+    }
+
+    async function togglePushNotifications(checked) {
+      if (checked) await subscribePush();
+      else await unsubscribePush();
+    }
+
+    function urlBase64ToUint8Array(b64) {
+      const padding = '='.repeat((4 - b64.length % 4) % 4);
+      const base64  = (b64 + padding).replace(/-/g, '+').replace(/_/g, '/');
+      const raw     = atob(base64);
+      return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
+    }
+
+    async function subscribePush() {
+      const toggle   = document.getElementById('toggle-push');
+      const statusEl = document.getElementById('push-status-msg');
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+          if (toggle)   toggle.checked = false;
+          if (statusEl) statusEl.textContent = 'Notification permission denied.';
+          return;
+        }
+        const reg = _swRegistration || await navigator.serviceWorker.getRegistration('/sw.js');
+        if (!reg) throw new Error('Service worker not available.');
+        const sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+        });
+        const json = sub.toJSON();
+        await VSSupabase.rpc('upsert_push_subscription', { p_endpoint: json.endpoint, p_keys: json.keys });
+        if (statusEl) statusEl.textContent = 'Push notifications enabled. You\'ll hear from the Vault.';
+      } catch (err) {
+        if (toggle)   toggle.checked = false;
+        if (statusEl) statusEl.textContent = 'Could not enable push: ' + (err.message || 'unknown error');
+      }
+    }
+
+    async function unsubscribePush() {
+      const statusEl = document.getElementById('push-status-msg');
+      try {
+        const reg = _swRegistration || await navigator.serviceWorker.getRegistration('/sw.js');
+        if (reg) {
+          const sub = await reg.pushManager.getSubscription();
+          if (sub) {
+            await VSSupabase.rpc('delete_push_subscription', { p_endpoint: sub.endpoint }).catch(() => {});
+            await sub.unsubscribe();
+          }
+        }
+        if (statusEl) statusEl.textContent = 'Push notifications disabled.';
+      } catch (_) {
+        if (statusEl) statusEl.textContent = 'Could not disable push notifications.';
+      }
+    }
+
+    // ── Phase 10: Live Studio Pulse ───────────────────────────────
+    let _pulseChannel = null;
+
+    const PULSE_TYPE_STYLES = {
+      update: { dot: '#1FA2FF', shadow: 'rgba(31,162,255,0.4)' },
+      alert:  { dot: '#f87171', shadow: 'rgba(248,113,113,0.4)' },
+      drop:   { dot: '#FFC400', shadow: 'rgba(255,196,0,0.4)'   },
+    };
+
+    function renderPulseItem(item) {
+      const s = PULSE_TYPE_STYLES[item.type] || PULSE_TYPE_STYLES.update;
+      const t = formatTimeAgo(new Date(item.created_at));
+      return `<div class="pulse-item">
+        <span class="pulse-type-dot" style="background:${s.dot};box-shadow:0 0 5px ${s.shadow};"></span>
+        <div class="pulse-body">
+          <div class="pulse-message">${item.message}</div>
+          <div class="pulse-time">${t}</div>
+        </div>
+      </div>`;
+    }
+
+    async function initStudioPulse() {
+      const el = document.getElementById('pulse-feed');
+      if (!el) return;
+
+      // Tear down any existing channel before re-subscribing
+      if (_pulseChannel) { VSSupabase.removeChannel(_pulseChannel); _pulseChannel = null; }
+
+      try {
+        const { data: items } = await VSSupabase
+          .from('studio_pulse')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(10);
+
+        if (!items || items.length === 0) {
+          el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">No transmissions yet. Stand by.</div>';
+        } else {
+          el.innerHTML = '<div class="pulse-feed">' + items.map(renderPulseItem).join('') + '</div>';
+        }
+
+        // Show LIVE badge
+        const badge = document.getElementById('pulse-live-badge');
+        if (badge) badge.style.display = 'inline-flex';
+
+        // Subscribe to new inserts in real time
+        _pulseChannel = VSSupabase.channel('studio-pulse-ch')
+          .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'studio_pulse' }, (payload) => {
+            const feedEl = document.getElementById('pulse-feed');
+            if (!feedEl) return;
+            let feedDiv = feedEl.querySelector('.pulse-feed');
+            if (!feedDiv) {
+              feedEl.innerHTML = '<div class="pulse-feed"></div>';
+              feedDiv = feedEl.querySelector('.pulse-feed');
+            }
+            feedDiv.insertAdjacentHTML('afterbegin', renderPulseItem(payload.new));
+          })
+          .subscribe();
+      } catch (_) {
+        if (el) el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load studio pulse.</div>';
+      }
+    }
+
     // ── Phase 7: Discord Role Sync ───────────────────────────────
 
     function updateDiscordUI(discordId) {
