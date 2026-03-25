@@ -36,9 +36,6 @@
 
 ## B-Tier Backlog (Score 5–6.9)
 
-- [ ] Annual membership anniversary reward (auto-grant XP + badge on 1-year vault anniversary) [6.8]
-- [ ] Weekly XP recap in notification center (Monday digest: XP earned, pts to next rank) [6.8]
-- [ ] Login calendar heatmap (GitHub-style activity calendar on dashboard) [6.8]
 - [ ] Gift subscriptions (Stripe) [6.8]
 - [ ] Member-to-member point gifting [6.5]
 - [ ] Fan art submission form (upload → Supabase Storage → moderation queue in Vault Command) [6.5]
@@ -46,7 +43,6 @@
 - [ ] Co-op / team challenges [6.5]
 - [ ] Dark/light mode toggle [6.5]
 - [ ] Sitemap auto-generation (GitHub Action) [6.5]
-- [ ] Referral code QR generator (client-side QR for member's /join/?ref= URL) [6.3]
 - [ ] Game update changelogs on game pages [6.3]
 - [ ] Journal post view count (journal_views table, deduplicated, shown on cards) [6]
 - [ ] Team/about page expansion [6]
@@ -77,6 +73,13 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 24 (2026-03-25)
+
+- ✅ Referral QR code generator — "QR" button in referral section → client-side QR via qrcode.js CDN; modal overlay; fallback text if library not loaded
+- ✅ Login activity heatmap — 12-week GitHub-style grid in Chronicle tab; 4 heat levels from `point_events`; day labels on hover
+- ✅ Annual vault anniversary — awards 50 pts × years on member's join anniversary; localStorage + DB double-award guard; XP chip + toast notification
+- ✅ Weekly XP recap banner — shown on Mondays in Chronicle tab; displays last week's total pts + pts-to-next-rank; localStorage-keyed per week; dismissible
 
 ## Completed — Phase 23 (2026-03-25)
 

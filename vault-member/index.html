@@ -40,6 +40,7 @@
   <link rel="stylesheet" href="../assets/style.css" />
   <script src="../assets/kit.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" defer></script>
   <script src="../assets/supabase-client.js"></script>
 
   <style>
@@ -1068,6 +1069,84 @@
     #vault-card-canvas { width: 100%; border-radius: 14px; box-shadow: var(--shadow-lg); display: block; }
     .card-modal-actions { display: flex; gap: 0.75rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
 
+    /* ─── QR Code modal ─── */
+    .qr-modal-overlay {
+      position: fixed; inset: 0; z-index: 901;
+      background: rgba(0,0,0,0.82);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.22s;
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+    }
+    .qr-modal-overlay.show { opacity: 1; pointer-events: auto; }
+    .qr-modal {
+      background: rgba(10,13,22,0.98);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius); padding: 1.75rem 1.5rem;
+      max-width: 320px; width: 90%; text-align: center;
+    }
+    .qr-modal h4 {
+      font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.6rem;
+    }
+    .qr-modal p { font-size:0.82rem; color:var(--muted); margin-bottom:1rem; line-height:1.5; }
+    #qr-canvas-wrap canvas { border-radius: 10px; background: #fff; padding: 10px; width: 200px !important; height: 200px !important; }
+    .qr-modal-close { margin-top:1rem; font-size:0.82rem; color:var(--dim); cursor:pointer; background:none; border:none; color:var(--muted); }
+    .qr-modal-close:hover { color: #fff; }
+
+    /* ─── Login heatmap ─── */
+    .login-heatmap-wrap {
+      margin-bottom: 1.5rem;
+      padding: 1.25rem;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+    }
+    .heatmap-label {
+      font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.75rem;
+    }
+    .heatmap-grid {
+      display: flex; gap: 3px; align-items: flex-end;
+    }
+    .heatmap-col { display: flex; flex-direction: column; gap: 3px; }
+    .heatmap-cell {
+      width: 12px; height: 12px; border-radius: 2px;
+      background: rgba(255,255,255,0.06);
+      transition: background 0.15s;
+      cursor: default;
+    }
+    .heatmap-cell[title]:hover { background: rgba(255,196,0,0.5) !important; }
+    .heatmap-cell.heat-1 { background: rgba(31,162,255,0.25); }
+    .heatmap-cell.heat-2 { background: rgba(31,162,255,0.5); }
+    .heatmap-cell.heat-3 { background: rgba(255,196,0,0.5); }
+    .heatmap-cell.heat-4 { background: rgba(255,196,0,0.85); }
+    .heatmap-footer {
+      margin-top: 0.6rem;
+      font-size: 0.72rem; color: var(--dim);
+      display: flex; justify-content: space-between;
+    }
+
+    /* ─── Weekly recap banner ─── */
+    .weekly-recap-banner {
+      display: none;
+      margin-bottom: 1.25rem;
+      padding: 0.9rem 1.1rem;
+      background: rgba(16,185,129,0.07);
+      border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 12px;
+      font-size: 0.87rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.55;
+      position: relative;
+    }
+    .weekly-recap-banner.show { display: block; }
+    .weekly-recap-dismiss {
+      position: absolute; top: 0.6rem; right: 0.75rem;
+      background: none; border: none; color: var(--dim);
+      cursor: pointer; font-size: 0.95rem; padding: 0.1rem;
+    }
+    .weekly-recap-dismiss:hover { color: #fff; }
+
     /* ─── XP chip (floating earned notification) ─── */
     .xp-chip {
       position: fixed;
@@ -1997,6 +2076,7 @@
                 <div style="display:flex;gap:0.5rem;align-items:center;">
                   <code id="referralLink" style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.5rem 0.75rem;font-size:0.78rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></code>
                   <button id="copyReferralBtn" onclick="navigator.clipboard.writeText(document.getElementById('referralLink').textContent);this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)" style="background:rgba(31,162,255,0.08);border:1px solid rgba(31,162,255,0.2);color:#1FA2FF;padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0;white-space:nowrap;">Copy</button>
+                  <button onclick="showReferralQR()" style="background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.2);color:#FFC400;padding:0.5rem 0.75rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;flex-shrink:0;" title="Show QR code">QR</button>
                 </div>
               </div>
             </div>
@@ -2286,6 +2366,25 @@
                 <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Your complete Vault history — every point earned, challenge completed, and file unlocked.</p>
               </div>
             </div>
+
+            <!-- Weekly recap banner -->
+            <div class="weekly-recap-banner" id="weekly-recap-banner">
+              <button class="weekly-recap-dismiss" onclick="dismissWeeklyRecap()" aria-label="Dismiss">✕</button>
+              <div id="weekly-recap-text"></div>
+            </div>
+
+            <!-- Login heatmap -->
+            <div class="login-heatmap-wrap">
+              <div class="heatmap-label">Activity Heatmap — Last 12 Weeks</div>
+              <div class="heatmap-grid" id="login-heatmap">
+                <div style="color:var(--dim);font-size:0.82rem;">Loading…</div>
+              </div>
+              <div class="heatmap-footer">
+                <span>12 weeks ago</span>
+                <span>Today</span>
+              </div>
+            </div>
+
             <div id="points-history-chart" style="margin-bottom:2rem;padding:1.25rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;">
               <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Points Earned — Last 30 Days</div>
               <div id="points-chart-svg" style="color:var(--dim);font-size:0.84rem;">Loading chart…</div>
@@ -2613,6 +2712,16 @@
   </div>
 
   <!-- ── Vault Member Card Modal ── -->
+  <!-- QR Code Modal -->
+  <div class="qr-modal-overlay" id="qr-modal-overlay" onclick="dismissQRModal()">
+    <div class="qr-modal" onclick="event.stopPropagation()">
+      <h4>Your Referral QR</h4>
+      <p>Share this code to invite friends — you earn 100 pts per signup.</p>
+      <div id="qr-canvas-wrap"></div>
+      <button class="qr-modal-close" onclick="dismissQRModal()">Close</button>
+    </div>
+  </div>
+
   <div class="card-modal-overlay" id="card-modal-overlay" onclick="dismissCardModal()">
     <div class="card-modal" onclick="event.stopPropagation()">
       <h3>Your Vault Member Card</h3>
@@ -3201,6 +3310,10 @@
 
       // What's New modal — check for unread Studio Pulse entries
       setTimeout(() => checkWhatsNew(), 2500);
+
+      // Phase 24: anniversary check + weekly recap
+      setTimeout(() => checkVaultAnniversary(member), 3200);
+      checkWeeklyRecap(member);
     }
 
     // ── Current member reference (for card generation etc.) ──────
@@ -4087,6 +4200,7 @@
       const el = document.getElementById('chronicle-timeline');
       if (!el) return;
       el.innerHTML = '<div style="color:var(--dim);">Loading…</div>';
+      loadLoginHeatmap(); // non-blocking
       try {
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) return;
@@ -4146,6 +4260,202 @@
       } catch (_) {
         if (el) el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load activity chronicle.</div>';
       }
+    }
+
+    // ── Phase 24: QR Code for referral link ──────────────────────
+    function showReferralQR() {
+      const link = document.getElementById('referralLink')?.textContent?.trim();
+      if (!link) return;
+      const overlay = document.getElementById('qr-modal-overlay');
+      const wrap    = document.getElementById('qr-canvas-wrap');
+      if (!overlay || !wrap) return;
+      wrap.innerHTML = '';
+      overlay.classList.add('show');
+      // Use QRCode library (loaded via CDN with defer)
+      if (typeof QRCode !== 'undefined') {
+        const canvas = document.createElement('canvas');
+        wrap.appendChild(canvas);
+        QRCode.toCanvas(canvas, link, {
+          width: 200, margin: 1,
+          color: { dark: '#000000', light: '#ffffff' }
+        }, () => {});
+      } else {
+        // Fallback: show link in text if library not loaded
+        wrap.innerHTML = '<p style="font-size:0.75rem;color:var(--muted);word-break:break-all;">' + link + '</p>';
+      }
+    }
+
+    function dismissQRModal() {
+      document.getElementById('qr-modal-overlay')?.classList.remove('show');
+    }
+
+    // ── Phase 24: Login heatmap (12-week activity calendar) ───────
+    async function loadLoginHeatmap() {
+      const el = document.getElementById('login-heatmap');
+      if (!el) return;
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        // Fetch point_events (login + other activity) for last 84 days
+        const since = new Date(Date.now() - 84 * 86400000).toISOString();
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('occurred_at')
+          .eq('user_id', session.user.id)
+          .gte('occurred_at', since)
+          .order('occurred_at', { ascending: true });
+
+        // Build day bucket map: 'YYYY-MM-DD' → count
+        const dayMap = {};
+        (events || []).forEach(ev => {
+          const key = ev.occurred_at.slice(0, 10);
+          dayMap[key] = (dayMap[key] || 0) + 1;
+        });
+
+        // Build 12 weeks (84 days) grid, 7 rows × 12 cols
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const cells = []; // array of 84 day objects from oldest to newest
+        for (let i = 83; i >= 0; i--) {
+          const d = new Date(today - i * 86400000);
+          const key = d.toISOString().slice(0, 10);
+          const count = dayMap[key] || 0;
+          let heat = 0;
+          if (count >= 1) heat = 1;
+          if (count >= 3) heat = 2;
+          if (count >= 6) heat = 3;
+          if (count >= 10) heat = 4;
+          cells.push({ key, heat, count, label: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) });
+        }
+
+        // Render: 12 columns of 7 cells each
+        let html = '';
+        for (let col = 0; col < 12; col++) {
+          html += '<div class="heatmap-col">';
+          for (let row = 0; row < 7; row++) {
+            const idx = col * 7 + row;
+            const c = cells[idx];
+            const cls = c.heat > 0 ? ` heat-${c.heat}` : '';
+            const label = c.count > 0 ? `${c.label}: ${c.count} event${c.count === 1 ? '' : 's'}` : c.label;
+            html += `<div class="heatmap-cell${cls}" title="${label}"></div>`;
+          }
+          html += '</div>';
+        }
+        el.innerHTML = html;
+      } catch (_) {
+        if (el) el.innerHTML = '<span style="font-size:0.78rem;color:var(--dim);">Heatmap unavailable.</span>';
+      }
+    }
+
+    // ── Phase 24: Annual vault anniversary check ──────────────────
+    async function checkVaultAnniversary(member) {
+      try {
+        if (!member?.createdAt) return;
+        const joined = new Date(member.createdAt);
+        const now    = new Date();
+        const years  = now.getFullYear() - joined.getFullYear();
+        if (years <= 0) return; // not a year yet
+        const anniv = new Date(joined);
+        anniv.setFullYear(now.getFullYear());
+        const daysDiff = Math.abs(now - anniv) / 86400000;
+        if (daysDiff > 1) return; // not within 1 day of anniversary
+
+        // Check we haven't already awarded this year
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const yearKey = now.getFullYear();
+        const alreadyKey = `vs_anniversary_awarded_${yearKey}`;
+        if (localStorage.getItem(alreadyKey)) return;
+
+        // Check point_events for this year's anniversary
+        const startOfYear = `${yearKey}-01-01T00:00:00Z`;
+        const { data: existing } = await VSSupabase
+          .from('point_events')
+          .select('id')
+          .eq('user_id', session.user.id)
+          .eq('reason', 'anniversary')
+          .gte('occurred_at', startOfYear)
+          .limit(1);
+
+        if (existing && existing.length > 0) {
+          localStorage.setItem(alreadyKey, '1');
+          return;
+        }
+
+        // Award anniversary bonus
+        const bonus = years * 50; // 50 pts per year
+        await VSSupabase.rpc('award_points', {
+          p_user_id: session.user.id,
+          p_amount: bonus,
+          p_reason: 'anniversary',
+          p_source: 'vault_member',
+        });
+        localStorage.setItem(alreadyKey, '1');
+
+        // Show celebration toast
+        showXPChip(`🎂 Vault Anniversary! Year ${years} — +${bonus} pts`);
+        setTimeout(() => {
+          if (typeof showToast === 'function') {
+            showToast(`Happy ${years}-year Vault anniversary! You've earned ${bonus} bonus points.`, 'success', 5000);
+          }
+        }, 800);
+      } catch (_) {}
+    }
+
+    // ── Phase 24: Weekly XP recap (shown Mondays) ─────────────────
+    async function checkWeeklyRecap(member) {
+      try {
+        const today = new Date();
+        if (today.getDay() !== 1) return; // Monday only
+
+        // ISO week key: YYYY-WW
+        const startOfYear = new Date(today.getFullYear(), 0, 1);
+        const weekNum = Math.ceil(((today - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+        const weekKey = `vs_weekly_recap_${today.getFullYear()}_${weekNum}`;
+        if (localStorage.getItem(weekKey)) return;
+
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        // Fetch last week's points
+        const lastMonday = new Date(today - 7 * 86400000);
+        lastMonday.setHours(0, 0, 0, 0);
+        const lastSunday = new Date(today);
+        lastSunday.setHours(0, 0, 0, 0);
+
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('amount')
+          .eq('user_id', session.user.id)
+          .gte('occurred_at', lastMonday.toISOString())
+          .lt('occurred_at', lastSunday.toISOString());
+
+        const weekPts = (events || []).reduce((s, e) => s + (e.amount || 0), 0);
+        if (weekPts === 0) return;
+
+        const rank = VS.getRank(member.points);
+        const nextRank = VS.getNextRank(member.points);
+        const ptsToNext = nextRank ? (nextRank.min - member.points) : 0;
+
+        localStorage.setItem(weekKey, '1');
+
+        const banner  = document.getElementById('weekly-recap-banner');
+        const textEl  = document.getElementById('weekly-recap-text');
+        if (!banner || !textEl) return;
+
+        const ptsLine = ptsToNext > 0
+          ? ` You're <strong>${ptsToNext} pts</strong> away from <strong>${nextRank.name}</strong>.`
+          : ' You\'ve reached maximum rank!';
+
+        textEl.innerHTML =
+          `📊 <strong>Last week you earned ${weekPts.toLocaleString()} Vault Points.</strong>${ptsLine} Keep the streak going this week.`;
+        banner.classList.add('show');
+      } catch (_) {}
+    }
+
+    function dismissWeeklyRecap() {
+      document.getElementById('weekly-recap-banner')?.classList.remove('show');
     }
 
     // ── Phase 14: What's New modal ───────────────────────────────
