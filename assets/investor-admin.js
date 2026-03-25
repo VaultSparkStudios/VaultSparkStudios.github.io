@@ -1,7 +1,7 @@
 /**
  * VaultSpark Studios — Investor Admin Panel JS
  *
- * Only loaded on /investor/admin/index.html.
+ * Only loaded on /investor-portal/admin/index.html.
  * Guards itself by checking window.VSInvestorAuth on investor:ready
  * and additionally verifying the vaultspark admin identity.
  *
@@ -409,7 +409,7 @@
                       font-family:Inter,sans-serif;color:#b5bfd8;text-align:center;">
             <div>
               <p style="font-size:1.1rem;margin-bottom:1rem;">Access denied.</p>
-              <a href="/investor/" style="color:#1FA2FF;">Return to portal</a>
+              <a href="/investor-portal/" style="color:#1FA2FF;">Return to portal</a>
             </div>
           </div>`;
         return;

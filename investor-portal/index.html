@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investor Dashboard | VaultSpark Studios</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="stylesheet" href="../assets/style.css" />
+  <link rel="stylesheet" href="../assets/investor-theme.css" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../assets/supabase-client.js"></script>
+  <script src="../assets/investor-auth.js"></script>
+  <script src="../assets/investor-ui.js"></script>
+
+  <style>
+    .inv-dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .inv-latest-update-body {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.7;
+      display: none;
+    }
+
+    .inv-kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .inv-kpi-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .inv-kpi-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+
+    .inv-kpi-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+    }
+
+    .inv-kpi-value.loading {
+      display: inline-block;
+      width: 4rem;
+      height: 1.75rem;
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      animation: inv-pulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes inv-pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    @media (max-width: 900px) {
+      .inv-dashboard-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .inv-kpi-strip { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body class="investor-portal">
+
+  <!-- Nav -->
+  <nav class="inv-nav">
+    <div class="container inv-nav-inner">
+      <div class="inv-nav-brand">
+        <img src="../assets/logo.png" alt="" style="height:22px; opacity:0.8;" />
+        <span><strong>VaultSpark</strong> Investor Portal</span>
+      </div>
+      <div class="inv-nav-links">
+        <a href="/investor-portal/" class="inv-nav-link active">Dashboard</a>
+        <a href="/investor-portal/updates/" class="inv-nav-link">Updates</a>
+        <a href="/investor-portal/documents/" class="inv-nav-link">Documents</a>
+        <a href="/investor-portal/profile/" class="inv-nav-link">Profile</a>
+      </div>
+      <div class="inv-nav-actions">
+        <span class="inv-nav-user" id="navUserName"></span>
+        <button class="inv-btn inv-btn-ghost inv-btn-sm" id="signOutBtn">Sign out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="inv-page">
+    <div class="container">
+
+      <!-- Header -->
+      <div class="inv-header">
+        <h1 id="welcomeHeading">Investor Dashboard</h1>
+        <p id="welcomeSub">Loading your portfolio overview…</p>
+      </div>
+
+      <!-- Stat strip -->
+      <div class="inv-stat-strip" id="statStrip">
+        <div class="inv-card inv-skeleton inv-skeleton-card"></div>
+        <div class="inv-card inv-skeleton inv-skeleton-card"></div>
+        <div class="inv-card inv-skeleton inv-skeleton-card"></div>
+      </div>
+
+      <!-- Studio KPIs -->
+      <div class="inv-card" style="margin-bottom:2rem;">
+        <div class="inv-card-title" style="margin-bottom:1rem;">Studio KPIs</div>
+        <div class="inv-kpi-strip" id="kpiStrip">
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiMembers" aria-label="Loading"></span>
+            <span class="inv-kpi-label">Vault Members</span>
+          </div>
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiSessions" aria-label="Loading"></span>
+            <span class="inv-kpi-label">Game Sessions (7 days)</span>
+          </div>
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiChallenges" aria-label="Loading"></span>
+            <span class="inv-kpi-label">Active Challenges</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main grid -->
+      <div class="inv-dashboard-grid">
+
+        <!-- Left: latest update + recent docs -->
+        <div>
+          <h2 class="inv-section-title">Latest Update</h2>
+          <div id="latestUpdateArea">
+            <div class="inv-skeleton inv-skeleton-card"></div>
+          </div>
+
+          <h2 class="inv-section-title" style="margin-top:2rem;">Recent Documents</h2>
+          <div id="recentDocsArea">
+            <div class="inv-skeleton inv-skeleton-row"></div>
+            <div class="inv-skeleton inv-skeleton-row"></div>
+          </div>
+        </div>
+
+        <!-- Right: activity log -->
+        <div>
+          <h2 class="inv-section-title">Activity</h2>
+          <div class="inv-card">
+            <div id="activityArea">
+              <div class="inv-skeleton inv-skeleton-row"></div>
+              <div class="inv-skeleton inv-skeleton-row"></div>
+              <div class="inv-skeleton inv-skeleton-row"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const UI = window.VSInvestorUI;
+    const sb = window.VSSupabase;
+
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      window.VSInvestorAuth.signOut();
+    });
+
+    window.addEventListener('investor:ready', async (e) => {
+      const profile = e.detail;
+
+      // Nav user name
+      document.getElementById('navUserName').textContent = profile.display_name;
+
+      // Welcome heading
+      const hour = new Date().getHours();
+      const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+      document.getElementById('welcomeHeading').textContent =
+        `${greeting}, ${profile.display_name}`;
+      document.getElementById('welcomeSub').innerHTML =
+        `${UI.renderTierBadge(profile.tier)} &nbsp;·&nbsp; Investor Portal`;
+
+      // Stat strip
+      document.getElementById('statStrip').innerHTML = `
+        <div class="inv-card">
+          <div class="inv-card-title">Investment</div>
+          <div class="inv-stat-value">${UI.formatCurrency(profile.investment_amount)}</div>
+          <div class="inv-stat-label">Committed capital</div>
+        </div>
+        <div class="inv-card">
+          <div class="inv-card-title">Equity</div>
+          <div class="inv-stat-value">${UI.formatPercent(profile.equity_percentage)}</div>
+          <div class="inv-stat-label">Ownership stake</div>
+        </div>
+        <div class="inv-card">
+          <div class="inv-card-title">Since</div>
+          <div class="inv-stat-value" style="font-size:1.25rem;">
+            ${UI.formatDate(profile.investment_date || profile.onboarded_at)}
+          </div>
+          <div class="inv-stat-label">${profile.document_count} documents &nbsp;·&nbsp; ${profile.update_count} updates</div>
+        </div>`;
+
+      // Load latest update
+      loadLatestUpdate(profile);
+
+      // Load recent documents
+      loadRecentDocs();
+
+      // Load activity
+      loadActivity();
+
+      // Load studio KPIs
+      loadKPIs();
+
+      // Realtime: new updates
+      sb.channel('investor-updates-rt')
+        .on('postgres_changes', {
+          event: 'INSERT', schema: 'public', table: 'investor_updates'
+        }, (payload) => {
+          if (payload.new.is_published) loadLatestUpdate(profile);
+        })
+        .subscribe();
+    });
+
+    async function loadLatestUpdate(profile) {
+      const { data: updates } = await sb
+        .from('investor_updates')
+        .select('id, title, update_type, visibility_tier, published_at, body_html')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false })
+        .limit(1);
+
+      const area = document.getElementById('latestUpdateArea');
+      if (!updates || updates.length === 0) {
+        area.innerHTML = '<div class="inv-empty">No updates published yet.</div>';
+        return;
+      }
+
+      const u = updates[0];
+      area.innerHTML = `
+        <div class="inv-update-row">
+          <div class="inv-update-row-meta">
+            ${UI.renderUpdateTypeBadge(u.update_type)}
+            <span class="inv-update-date">${UI.formatDateShort(u.published_at)}</span>
+          </div>
+          <div class="inv-update-row-title">${UI.escHtml(u.title)}</div>
+          <button class="inv-update-expand-btn" id="latestExpandBtn" aria-expanded="false">
+            Read update <span class="inv-chevron">›</span>
+          </button>
+          <div class="inv-update-body" id="latestUpdateBody" hidden></div>
+          <div style="margin-top:0.75rem;">
+            <a href="/investor-portal/updates/" class="inv-btn inv-btn-ghost inv-btn-sm">
+              All updates (${profile.update_count})
+            </a>
+          </div>
+        </div>`;
+
+      document.getElementById('latestExpandBtn').addEventListener('click', function () {
+        const body = document.getElementById('latestUpdateBody');
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        if (!expanded) {
+          body.innerHTML = u.body_html;
+          body.removeAttribute('hidden');
+          this.setAttribute('aria-expanded', 'true');
+          this.querySelector('.inv-chevron').style.transform = 'rotate(90deg)';
+          VSInvestorAuth.logAction('update_read', u.id, u.title);
+        } else {
+          body.setAttribute('hidden', '');
+          this.setAttribute('aria-expanded', 'false');
+          this.querySelector('.inv-chevron').style.transform = '';
+        }
+      });
+    }
+
+    async function loadRecentDocs() {
+      const { data: docs } = await sb
+        .from('investor_documents')
+        .select('id, title, document_type, version, uploaded_at, file_size_bytes, visibility_scope')
+        .eq('is_active', true)
+        .order('uploaded_at', { ascending: false })
+        .limit(4);
+
+      const area = document.getElementById('recentDocsArea');
+      if (!docs || docs.length === 0) {
+        area.innerHTML = '<div class="inv-empty">No documents available yet.</div>';
+        return;
+      }
+
+      area.innerHTML = `
+        <table class="inv-doc-table">
+          <thead>
+            <tr>
+              <th>Document</th>
+              <th>Type</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>${docs.map(d => `
+            <tr class="inv-doc-row">
+              <td class="inv-doc-title">${UI.escHtml(d.title)}</td>
+              <td class="inv-doc-type">${UI.escHtml(UI.docTypeLabel(d.document_type))}</td>
+              <td class="inv-doc-date">${UI.formatDateShort(d.uploaded_at)}</td>
+              <td>
+                <button class="inv-btn inv-btn-sm inv-btn-ghost inv-doc-download-btn"
+                        data-id="${UI.escHtml(d.id)}" data-title="${UI.escHtml(d.title)}">
+                  Open
+                </button>
+              </td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+        <div style="margin-top:0.75rem; text-align:right;">
+          <a href="/investor-portal/documents/" class="inv-btn inv-btn-ghost inv-btn-sm">View all documents</a>
+        </div>`;
+
+      wireDocButtons(area);
+    }
+
+    async function loadActivity() {
+      const { data: events } = await sb
+        .from('investor_activity')
+        .select('action, target_label, created_at')
+        .order('created_at', { ascending: false })
+        .limit(8);
+
+      const area = document.getElementById('activityArea');
+      if (!events || events.length === 0) {
+        area.innerHTML = '<div class="inv-empty" style="padding:1rem 0;">No activity yet.</div>';
+        return;
+      }
+
+      area.innerHTML = events.map(e => UI.renderActivityRow(e)).join('');
+    }
+
+    async function loadKPIs() {
+      // Fetch KPIs (anon-readable tables)
+      const [membersRes, sessionsRes, challengesRes] = await Promise.all([
+        VSSupabase.from('vault_members').select('id', { count: 'exact', head: true }),
+        VSSupabase.from('game_sessions').select('id', { count: 'exact', head: true })
+          .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
+        VSSupabase.from('challenges').select('id', { count: 'exact', head: true })
+          .eq('is_active', true)
+      ]);
+
+      const kpiMembers    = membersRes.count    ?? '—';
+      const kpiSessions   = sessionsRes.count   ?? '—';
+      const kpiChallenges = challengesRes.count ?? '—';
+
+      const fmtNum = (n) =>
+        typeof n === 'number'
+          ? n.toLocaleString('en-US')
+          : String(n);
+
+      const membersEl    = document.getElementById('kpiMembers');
+      const sessionsEl   = document.getElementById('kpiSessions');
+      const challengesEl = document.getElementById('kpiChallenges');
+
+      if (membersEl) {
+        membersEl.classList.remove('loading');
+        membersEl.textContent = fmtNum(kpiMembers);
+      }
+      if (sessionsEl) {
+        sessionsEl.classList.remove('loading');
+        sessionsEl.textContent = fmtNum(kpiSessions);
+      }
+      if (challengesEl) {
+        challengesEl.classList.remove('loading');
+        challengesEl.textContent = fmtNum(kpiChallenges);
+      }
+    }
+
+    function wireDocButtons(container) {
+      container.querySelectorAll('.inv-doc-download-btn').forEach(btn => {
+        btn.addEventListener('click', async function () {
+          const id    = this.dataset.id;
+          const title = this.dataset.title;
+          this.disabled = true;
+          this.textContent = '…';
+
+          const { data, error } = await sb.rpc('get_investor_document_url', {
+            p_document_id: id
+          });
+
+          this.disabled = false;
+          this.textContent = 'Open';
+
+          if (error || !data || data.error) {
+            UI.showToast('Could not open document. Please try again.', 'error');
+            return;
+          }
+
+          if (data.url) {
+            window.open(data.url, '_blank', 'noopener');
+          } else {
+            UI.showToast('Document URL unavailable. Contact the studio.', 'error');
+          }
+        });
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investor Portal | VaultSpark Studios</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="../../assets/favicon.png" />
+  <link rel="stylesheet" href="../../assets/style.css" />
+  <link rel="stylesheet" href="../../assets/investor-theme.css" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../../assets/supabase-client.js"></script>
+
+  <style>
+    body.investor-portal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .login-wrap {
+      width: min(440px, calc(100% - 2rem));
+    }
+
+    .login-brand {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-brand img {
+      height: 36px;
+      margin: 0 auto 1rem;
+      opacity: 0.9;
+    }
+
+    .login-brand h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .login-brand p {
+      font-size: 0.88rem;
+      color: var(--dim);
+    }
+
+    .login-card {
+      background: rgba(6, 10, 22, 0.97);
+      border: 1px solid rgba(31, 162, 255, 0.15);
+      border-radius: 16px;
+      padding: 2rem;
+    }
+
+    .login-error {
+      background: rgba(214,40,40,0.1);
+      border: 1px solid rgba(214,40,40,0.25);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.88rem;
+      color: #fca5a5;
+      margin-bottom: 1.25rem;
+      display: none;
+    }
+
+    .login-error.visible { display: block; }
+
+    .login-footer {
+      text-align: center;
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--dim);
+    }
+
+    .login-footer a {
+      color: rgba(31,162,255,0.7);
+    }
+
+    .login-footer a:hover { color: #1FA2FF; }
+
+    .login-tab {
+      flex: 1;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.15s;
+    }
+    .login-tab.active {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+
+    .login-confidential {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-top: 2rem;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body class="investor-portal">
+
+  <div class="login-wrap">
+
+    <div class="login-brand">
+      <img src="../../assets/logo.png" alt="VaultSpark Studios" />
+      <h1>Investor Portal</h1>
+      <p>VaultSpark Studios — Confidential Access</p>
+    </div>
+
+    <div class="login-card">
+      <!-- Tabs -->
+      <div style="display:flex; gap:0; background:rgba(255,255,255,0.04); border-radius:10px; padding:3px; margin-bottom:1.5rem;">
+        <button class="login-tab active" id="tabSignIn" onclick="switchTab('signin')">Sign in</button>
+        <button class="login-tab" id="tabSignUp" onclick="switchTab('signup')">Create account</button>
+      </div>
+
+      <div class="login-error" id="loginError" role="alert"></div>
+
+      <!-- Sign in panel -->
+      <div id="panelSignin">
+        <form id="loginForm" novalidate>
+          <div class="inv-form-group">
+            <label class="inv-label" for="loginEmail">Email address</label>
+            <input
+              class="inv-input"
+              type="email"
+              id="loginEmail"
+              name="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <div class="inv-form-group">
+            <label class="inv-label" for="loginPassword">Password</label>
+            <input
+              class="inv-input"
+              type="password"
+              id="loginPassword"
+              name="password"
+              autocomplete="current-password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+          <button type="submit" class="inv-btn inv-btn-primary" id="loginBtn"
+                  style="width:100%; justify-content:center;">
+            Sign in
+          </button>
+        </form>
+      </div>
+
+      <!-- Sign up panel -->
+      <div id="panelSignup" style="display:none;">
+        <p style="font-size:0.82rem; color:var(--dim); margin-bottom:1.25rem; line-height:1.55;">
+          Create an account to access the investor portal. You'll need to be approved by the studio before your account is activated.
+        </p>
+        <form id="signupForm" novalidate>
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupEmail">Email address</label>
+            <input
+              class="inv-input"
+              type="email"
+              id="signupEmail"
+              name="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupPassword">Password</label>
+            <input
+              class="inv-input"
+              type="password"
+              id="signupPassword"
+              name="password"
+              autocomplete="new-password"
+              placeholder="At least 8 characters"
+              required
+              minlength="8"
+            />
+          </div>
+
+          <button type="submit" class="inv-btn inv-btn-primary" id="signupBtn"
+                  style="width:100%; justify-content:center;">
+            Create account
+          </button>
+        </form>
+        <div id="signupSuccess" style="display:none; text-align:center; padding:1rem 0;">
+          <p style="color:#a7f3d0; font-size:0.92rem; margin-bottom:0.5rem;">Account created.</p>
+          <p style="color:var(--dim); font-size:0.82rem;">
+            Send your email to the studio to request investor access. You'll be able to sign in once approved.
+          </p>
+        </div>
+      </div>
+
+      <div class="inv-divider"></div>
+
+      <div id="resetSection">
+        <p style="font-size:0.82rem; color:var(--dim); margin-bottom:0.75rem;">
+          Forgot your password?
+        </p>
+        <form id="resetForm" novalidate>
+          <div style="display:flex; gap:0.5rem;">
+            <input
+              class="inv-input"
+              type="email"
+              id="resetEmail"
+              placeholder="Email address"
+              autocomplete="email"
+            />
+            <button type="submit" class="inv-btn inv-btn-ghost inv-btn-sm"
+                    id="resetBtn" style="flex-shrink:0; white-space:nowrap;">
+              Reset
+            </button>
+          </div>
+          <p id="resetMsg" style="font-size:0.8rem; color:var(--muted); margin-top:0.5rem; display:none;"></p>
+        </form>
+      </div>
+    </div>
+
+    <div class="login-footer">
+      Interested in investing? <a href="/investor-portal/apply/">Submit an interest form</a>
+      <br style="margin:0.3rem 0;" />
+      Not an investor? <a href="https://vaultsparkstudios.com">Return to main site</a>
+    </div>
+
+    <div class="login-confidential">Confidential — Authorised access only</div>
+
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      const isSignin = tab === 'signin';
+      document.getElementById('panelSignin').style.display = isSignin ? '' : 'none';
+      document.getElementById('panelSignup').style.display = isSignin ? 'none' : '';
+      document.getElementById('tabSignIn').classList.toggle('active', isSignin);
+      document.getElementById('tabSignUp').classList.toggle('active', !isSignin);
+      document.getElementById('loginError').classList.remove('visible');
+    }
+  </script>
+
+  <script>
+    (async function () {
+      const sb = window.VSSupabase;
+      const loginForm    = document.getElementById('loginForm');
+      const loginBtn     = document.getElementById('loginBtn');
+      const loginError   = document.getElementById('loginError');
+      const resetForm    = document.getElementById('resetForm');
+      const resetBtn     = document.getElementById('resetBtn');
+      const resetMsg     = document.getElementById('resetMsg');
+
+      // If already signed in as a valid investor, redirect to dashboard
+      const { data: { session } } = await sb.auth.getSession();
+      if (session) {
+        const { data: profile } = await sb.rpc('get_my_investor_profile');
+        if (profile && !profile.error) {
+          const params = new URLSearchParams(window.location.search);
+          const next = params.get('next');
+          window.location.replace(
+            (next && next.startsWith(window.location.origin)) ? next : '/investor-portal/'
+          );
+          return;
+        }
+        await sb.auth.signOut();
+      }
+
+      // Show error from redirect
+      const params = new URLSearchParams(window.location.search);
+      const errCode = params.get('error');
+      if (errCode) {
+        const msgs = {
+          not_investor: 'This account is not registered as an investor. Please contact the studio.',
+          rpc_error:    'Could not verify investor access. Please try again.',
+        };
+        showError(msgs[errCode] || 'Authentication error. Please try again.');
+      }
+
+      function showError(msg) {
+        loginError.textContent = msg;
+        loginError.classList.add('visible');
+      }
+
+      function hideError() {
+        loginError.classList.remove('visible');
+      }
+
+      function setLoading(loading) {
+        loginBtn.disabled = loading;
+        loginBtn.textContent = loading ? 'Signing in…' : 'Sign in';
+      }
+
+      loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideError();
+
+        const email    = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+
+        if (!email || !password) {
+          showError('Please enter your email and password.');
+          return;
+        }
+
+        setLoading(true);
+
+        const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+        if (error) {
+          setLoading(false);
+          showError('Invalid email or password.');
+          return;
+        }
+
+        // Admin bypass — try RPC first (security definer), fall back to direct query
+        let isAdmin = false;
+        try {
+          const { data: adminRpc } = await sb.rpc('is_vault_admin');
+          isAdmin = !!adminRpc;
+        } catch (_) {}
+
+        // Fallback: direct vault_members query (works if RLS allows own-row reads)
+        if (!isAdmin) {
+          const { data: vm } = await sb
+            .from('vault_members')
+            .select('username_lower')
+            .eq('id', data.user.id)
+            .maybeSingle();
+          isAdmin = vm?.username_lower === 'vaultspark';
+        }
+
+        if (!isAdmin) {
+          // Validate investor access
+          const { data: profile, error: rpcErr } = await sb.rpc('get_my_investor_profile');
+
+          if (rpcErr || !profile || profile.error) {
+            await sb.auth.signOut();
+            setLoading(false);
+            showError('This account is not registered as an investor. Please contact the studio.');
+            return;
+          }
+        }
+
+        // Success — redirect
+        const next = params.get('next');
+        window.location.replace(
+          (next && next.startsWith(window.location.origin)) ? next : '/investor-portal/'
+        );
+      });
+
+      // Sign up
+      document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email    = document.getElementById('signupEmail').value.trim();
+        const password = document.getElementById('signupPassword').value;
+        const errEl    = document.getElementById('loginError');
+        const btn      = document.getElementById('signupBtn');
+
+        errEl.classList.remove('visible');
+        if (!email || password.length < 8) {
+          errEl.textContent = 'Please enter a valid email and a password of at least 8 characters.';
+          errEl.classList.add('visible');
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Creating account…';
+
+        const { error } = await sb.auth.signUp({ email, password });
+
+        btn.disabled = false;
+        btn.textContent = 'Create account';
+
+        if (error) {
+          errEl.textContent = error.message || 'Could not create account. Please try again.';
+          errEl.classList.add('visible');
+          return;
+        }
+
+        document.getElementById('signupForm').style.display = 'none';
+        document.getElementById('signupSuccess').style.display = 'block';
+      });
+
+      resetForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('resetEmail').value.trim();
+        if (!email) return;
+
+        resetBtn.disabled = true;
+        resetBtn.textContent = '…';
+
+        const { error } = await sb.auth.resetPasswordForEmail(email, {
+          redirectTo: window.location.origin + '/investor-portal/login/'
+        });
+
+        resetMsg.style.display = 'block';
+        if (error) {
+          resetMsg.textContent = 'Error sending reset email. Please try again.';
+          resetMsg.style.color = '#ef4444';
+        } else {
+          resetMsg.textContent = 'Reset email sent. Check your inbox.';
+          resetMsg.style.color = 'var(--muted)';
+        }
+
+        resetBtn.disabled = false;
+        resetBtn.textContent = 'Reset';
+      });
+    })();
+  </script>
+
+</body>
+</html>

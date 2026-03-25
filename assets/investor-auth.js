@@ -1,19 +1,19 @@
 /**
  * VaultSpark Studios — Investor Portal Auth Gate
  *
- * Loaded on every /investor/ page (except /investor/login/).
+ * Loaded on every /investor-portal/ page (except /investor-portal/login/).
  * - Checks for an active Supabase session
  * - Validates the user has an active investor record
  * - Stores profile in window.VSInvestorProfile
  * - Dispatches 'investor:ready' on success
- * - Redirects to /investor/login/ on any failure
+ * - Redirects to /investor-portal/login/ on any failure
  *
  * Requires: supabase-client.js (window.VSSupabase)
  */
 (function (window) {
   'use strict';
 
-  const LOGIN_URL = '/investor/login/';
+  const LOGIN_URL = '/investor-portal/login/';
 
   function getRedirectUrl(errorCode) {
     const base = window.location.origin + LOGIN_URL;
