@@ -117,6 +117,7 @@
 
     window.addEventListener('investor:ready', async (e) => {
       document.getElementById('navUserName').textContent = e.detail.display_name;
+      window._investorProfile = e.detail;
       await loadDocuments();
     });
 
@@ -201,6 +202,15 @@
           if (data.url) {
             window.open(data.url, '_blank', 'noopener');
             UI.showToast(`Opening: ${title}`, 'success');
+            // Log access
+            try {
+              await sb.from('investor_document_access').insert({
+                document_id: id,
+                document_title: title,
+                investor_id: window._investorProfile?.id || null,
+                investor_name: window._investorProfile?.display_name || null
+              });
+            } catch (_) {}
           } else {
             UI.showToast('Document URL unavailable. Contact the studio.', 'error');
           }

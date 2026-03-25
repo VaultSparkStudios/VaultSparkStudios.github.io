@@ -40,9 +40,7 @@
 - [ ] Team/about page expansion [6]
 - [ ] Fan art voting / gallery contests [6]
 - [ ] RLS policy audit (investor_requests + challenge_submissions) [6]
-- [ ] Investor data room access log [6]
 - [ ] Monthly investor update email (automated digest) [6]
-- [ ] Rate limiting on invite code claims [5.5]
 
 ## C-Tier Backlog (Score 3–4.9)
 
@@ -57,6 +55,25 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 34 (2026-03-25)
+
+- ✅ Investor data room access log — `investor_document_access` table; document open events logged on both dashboard and `/investor-portal/documents/` pages; includes investor_id, investor_name, document_id, document_title
+- **SQL needed:**
+  ```sql
+  CREATE TABLE IF NOT EXISTS investor_document_access (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    document_id uuid,
+    document_title text,
+    investor_id uuid,
+    investor_name text,
+    accessed_at timestamptz NOT NULL DEFAULT now()
+  );
+  ALTER TABLE investor_document_access ENABLE ROW LEVEL SECURITY;
+  CREATE POLICY "investors insert access" ON investor_document_access FOR INSERT WITH CHECK (true);
+  CREATE POLICY "service read access" ON investor_document_access FOR SELECT USING (false);
+  ```
+- ✅ Rate limiting on invite code claims — client-side sliding-window guard (3 attempts per 10 min) in registration form; stored in localStorage as `vs_reg_attempts`; blocks submit with clear error message before reaching server
 
 ## Completed — Phase 33 (2026-03-25)
 

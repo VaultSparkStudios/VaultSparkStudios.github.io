@@ -3432,6 +3432,22 @@
       const btn        = this.querySelector('button[type="submit"]');
 
       errEl.classList.remove('show');
+
+      // Client-side rate limit: max 3 registration attempts per 10 minutes
+      const rlKey = 'vs_reg_attempts';
+      const now   = Date.now();
+      try {
+        const stored = JSON.parse(localStorage.getItem(rlKey) || '[]');
+        const recent = stored.filter(function(t){ return now - t < 600000; }); // 10 min window
+        if (recent.length >= 3) {
+          errEl.textContent = 'Too many attempts. Please wait a few minutes before trying again.';
+          errEl.classList.add('show');
+          return;
+        }
+        recent.push(now);
+        localStorage.setItem(rlKey, JSON.stringify(recent));
+      } catch(_) {}
+
       btn.textContent = 'Creating account…';
       btn.disabled    = true;
 
