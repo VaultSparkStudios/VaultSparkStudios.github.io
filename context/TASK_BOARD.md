@@ -25,7 +25,6 @@
 
 ## A-Tier Backlog (Score 7–8.9)
 
-- [ ] Game-specific challenge + point triggers (Football GM → Vault points) [8]
 - [ ] Dynamic OG image generation per page [7.5]
 - [ ] Supabase query batching in portal (consolidate sequential SELECTs into RPCs) [7]
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
@@ -39,7 +38,6 @@
 - [ ] Co-op / team challenges [6.5]
 - [ ] Team/about page expansion [6]
 - [ ] Fan art voting / gallery contests [6]
-- [ ] RLS policy audit (investor_requests + challenge_submissions) [6]
 - [ ] Monthly investor update email (automated digest) [6]
 
 ## C-Tier Backlog (Score 3–4.9)
@@ -55,6 +53,19 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 36 (2026-03-25)
+
+- ✅ Game session recording on all 3 game pages (Call of Doodie, Gridiron GM, VaultSpark Football GM) — when a signed-in member visits a game page, a `game_sessions` row is inserted once per day (localStorage dedup key `vs_gs_{slug}_{date}`)
+- ✅ Session milestone awards in vault portal — `initGameSessionMilestones()` queries all sessions by game_slug and awards points at 5/10/25 session milestones per game (25/50/100 pts)
+- **SQL needed:** run `supabase-phase36-game-sessions.sql` — adds `for insert to authenticated with check (auth.uid() = user_id)` policy to `game_sessions`
+
+## Completed — Phase 35 (2026-03-25)
+
+- ✅ "Who Runs The Vault" team section added to `studio/index.html` — founder card + 3 role cards (Design & Dev, World-Building, Studio Operations)
+- ✅ Member-to-member Gift Points panel in vault portal — `giftPoints()` with recipient lookup, balance check, dual point_events logging
+- ✅ RLS audit complete — `challenge_submissions` and `investor_requests` both have correct INSERT/SELECT/UPDATE policies; no gaps found
+- ✅ Pending SQL migrations consolidated into `supabase-phase35-migrations.sql` (phases 27–35)
 
 ## Completed — Phase 34 (2026-03-25)
 

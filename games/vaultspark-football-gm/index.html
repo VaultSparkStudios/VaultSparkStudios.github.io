@@ -457,6 +457,24 @@
   <script>
     // Vault Member: flag this game as visited for points economy
     try { localStorage.setItem('vs_visited_vsfgm', '1'); } catch(_) {}
+    // Record a game session in Supabase (once per day, if signed in)
+    (function(){
+      var SLUG = 'vaultspark-football-gm';
+      var today = new Date().toISOString().slice(0,10);
+      var lsKey = 'vs_gs_' + SLUG + '_' + today;
+      if (localStorage.getItem(lsKey)) return;
+      try {
+        var raw = localStorage.getItem('sb-fjnpzjjyhnpmunfoycrp-auth-token') || localStorage.getItem('supabase.auth.token');
+        if (!raw) return;
+        var p = JSON.parse(raw); var s = p.currentSession || p;
+        if (!s || !s.access_token || !s.user) return;
+        fetch('https://fjnpzjjyhnpmunfoycrp.supabase.co/rest/v1/game_sessions', {
+          method: 'POST',
+          headers: { apikey: 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij', Authorization: 'Bearer ' + s.access_token, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+          body: JSON.stringify({ user_id: s.user.id, game_slug: SLUG })
+        }).then(function(r){ if (r.ok || r.status === 201) localStorage.setItem(lsKey, '1'); }).catch(function(){});
+      } catch(e){}
+    })();
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     hamburger.addEventListener('click', () => {

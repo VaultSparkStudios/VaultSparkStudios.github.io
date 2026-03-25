@@ -3356,7 +3356,7 @@
 
       // Phase 2/3: load activity feed, award eligible points, load invite code
       loadPointEvents();
-      setTimeout(() => initPointsEconomy(member), 1200);
+      setTimeout(() => { initPointsEconomy(member); initGameSessionMilestones(member); }, 1200);
       loadInviteCode();
 
       // Feature 1: daily login bonus + streak
@@ -4209,6 +4209,77 @@
           loadPointEvents();
         }
       }
+    }
+
+    // ── Phase 36: Game session milestone awards ───────────────────
+    async function initGameSessionMilestones(member) {
+      const uid = member._id;
+      const flag    = (r) => 'vs_pts_' + uid + '_' + r;
+      const hasFlag = (r) => !!localStorage.getItem(flag(r));
+      const setFlag = (r) => localStorage.setItem(flag(r), '1');
+
+      const MILESTONES = [
+        { game: 'call-of-doodie',         steps: [
+          { n: 5,  reason: 'gs_cod_5',   pts: 25,  label: '5 Call of Doodie sessions' },
+          { n: 10, reason: 'gs_cod_10',  pts: 50,  label: '10 Call of Doodie sessions' },
+          { n: 25, reason: 'gs_cod_25',  pts: 100, label: '25 Call of Doodie sessions' },
+        ]},
+        { game: 'gridiron-gm',            steps: [
+          { n: 5,  reason: 'gs_ggm_5',   pts: 25,  label: '5 Gridiron GM sessions' },
+          { n: 10, reason: 'gs_ggm_10',  pts: 50,  label: '10 Gridiron GM sessions' },
+          { n: 25, reason: 'gs_ggm_25',  pts: 100, label: '25 Gridiron GM sessions' },
+        ]},
+        { game: 'vaultspark-football-gm', steps: [
+          { n: 5,  reason: 'gs_vsfgm_5',   pts: 25,  label: '5 Football GM sessions' },
+          { n: 10, reason: 'gs_vsfgm_10',  pts: 50,  label: '10 Football GM sessions' },
+          { n: 25, reason: 'gs_vsfgm_25',  pts: 100, label: '25 Football GM sessions' },
+        ]},
+      ];
+
+      // Only proceed if any milestone is not yet locally flagged
+      const needsCheck = MILESTONES.some(g => g.steps.some(s => !hasFlag(s.reason)));
+      if (!needsCheck) return;
+
+      try {
+        // Single query: count sessions grouped by game_slug for this user
+        const { data: rows } = await VSSupabase
+          .from('game_sessions')
+          .select('game_slug')
+          .eq('user_id', uid);
+        if (!Array.isArray(rows)) return;
+
+        const counts = {};
+        rows.forEach(r => { counts[r.game_slug] = (counts[r.game_slug] || 0) + 1; });
+
+        const toAward = [];
+        for (const g of MILESTONES) {
+          const count = counts[g.game] || 0;
+          for (const step of g.steps) {
+            if (count >= step.n && !hasFlag(step.reason)) {
+              toAward.push(step);
+            }
+          }
+        }
+
+        let totalAwarded = 0;
+        for (const item of toAward) {
+          try {
+            const { data } = await VSSupabase.rpc('award_points', {
+              p_reason:   item.reason,
+              p_points:   item.pts,
+              p_label:    item.label,
+              p_once_per: 'ever',
+            });
+            if (data?.ok || data?.skipped) setFlag(item.reason);
+            if (data?.ok) totalAwarded += item.pts;
+          } catch (_) {}
+        }
+
+        if (totalAwarded > 0) {
+          showXpChip(totalAwarded, toAward.length === 1 ? toAward[0].label : 'Game milestones reached');
+          setTimeout(() => refreshPointsDisplay(), 1800);
+        }
+      } catch (_) {}
     }
 
     // ── Phase 2: Load point events feed ──────────────────────────
