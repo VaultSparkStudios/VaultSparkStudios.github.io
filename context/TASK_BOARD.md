@@ -22,7 +22,6 @@
 ## S-Tier Backlog (Score 9–10)
 
 - [ ] Rank-up celebration sequence (full-screen confetti + badge reveal when rank increases) [9.5] — highest retention moment in any points economy, currently silent
-- [ ] PWA install prompt (beforeinstallprompt handler) [9] — manifest.json exists, near-zero effort, app-like retention
 
 ## A-Tier Backlog (Score 7–8.9)
 
@@ -45,7 +44,6 @@
 - [ ] Dynamic OG image generation per page [7.5]
 - [ ] GDPR: export your data + delete account flows [7.5]
 - [ ] Classified files search (client-side keyword filter within lore archive) [7.5]
-- [ ] Push notification opt-in UI in portal settings [7.5] — VAPID-dependent for delivery but UI buildable now
 - [ ] Challenge submission history view (when each challenge was completed, in Challenges tab) [7.5]
 - [ ] Sticky "Join the Vault" CTA bar on public pages for logged-out visitors [7.5]
 - [ ] Vault Command: challenge completion analytics (completion rate, most popular categories, zero-completion challenges) [7.5]
@@ -116,6 +114,11 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 13 (2026-03-25)
+
+- ✅ PWA install prompt — /assets/pwa-install.js, beforeinstallprompt handler, 7-day dismiss memory, added to homepage + journal + portal
+- ✅ Push notification opt-in UI — improved portal settings block with 📡 banner, stronger value prop copy, toggle always visible
 
 ## Completed — Phase 12 (2026-03-25)
 

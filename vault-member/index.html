@@ -2314,9 +2314,16 @@
               <div class="settings-full">
                 <div class="settings-block">
                   <h3>Push Notifications</h3>
+                  <div style="display:flex;align-items:center;gap:1rem;padding:0.9rem 1rem;background:rgba(255,196,0,0.06);border:1px solid rgba(255,196,0,0.15);border-radius:12px;margin-bottom:1rem;flex-wrap:wrap;">
+                    <div style="font-size:1.5rem;line-height:1;flex-shrink:0;">📡</div>
+                    <div style="flex:1;min-width:180px;">
+                      <div style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.2rem;">Vault Signals — Live Alerts</div>
+                      <div style="font-size:0.8rem;color:var(--muted);line-height:1.55;">Get instant browser notifications the moment classified files drop, challenges go live, or the studio fires a signal. Zero email required.</div>
+                    </div>
+                  </div>
                   <div class="newsletter-toggle">
                     <div>
-                      <strong>Vault Dispatch Push</strong>
+                      <strong>Enable Push Notifications</strong>
                       <p>Receive a browser notification when new classified files or studio alerts drop in the Vault.</p>
                     </div>
                     <label class="toggle-switch" id="push-toggle-wrap">
@@ -5213,6 +5220,7 @@
       }
     })();
   </script>
+  <script src="/assets/pwa-install.js" defer></script>
 
 </body>
 </html>
