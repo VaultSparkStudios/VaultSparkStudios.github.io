@@ -37,16 +37,12 @@
 - [ ] Member-to-member point gifting [6.5]
 - [ ] Fan art submission form (upload → Supabase Storage → moderation queue in Vault Command) [6.5]
 - [ ] Co-op / team challenges [6.5]
-- [ ] Sitemap auto-generation (GitHub Action) [6.5]
 - [ ] Team/about page expansion [6]
 - [ ] Fan art voting / gallery contests [6]
 - [ ] RLS policy audit (investor_requests + challenge_submissions) [6]
-- [ ] Axe-core accessibility audit in CI [6]
 - [ ] Investor data room access log [6]
-- [ ] Community event RSVP [6]
 - [ ] Monthly investor update email (automated digest) [6]
 - [ ] Rate limiting on invite code claims [5.5]
-- [ ] Lighthouse CI score gate (fail build if performance < 90) [5.5]
 
 ## C-Tier Backlog (Score 3–4.9)
 
@@ -61,6 +57,24 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 33 (2026-03-25)
+
+- ✅ Lighthouse CI score gate — `.lighthouserc.json` with `performance ≥ 0.9` error assertion + accessibility/best-practices/SEO warn thresholds; `lighthouse.yml` updated to use `configPath`
+- ✅ Axe-core accessibility audit in CI — `.github/workflows/accessibility.yml` runs `@axe-core/cli` on 5 public pages on push to main; uploads results artifact
+- ✅ Community event RSVP — RSVP buttons on all 3 event cards (Spring Challenge Sprint, Gridiron GM Season 2, VaultSparked Beta); `event_rsvps` Supabase table; live RSVP count; auth-gated submit; marks own RSVPs on load
+- **SQL needed:**
+  ```sql
+  CREATE TABLE IF NOT EXISTS event_rsvps (
+    event_slug text NOT NULL,
+    user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    created_at timestamptz NOT NULL DEFAULT now(),
+    PRIMARY KEY (event_slug, user_id)
+  );
+  ALTER TABLE event_rsvps ENABLE ROW LEVEL SECURITY;
+  CREATE POLICY "members rsvp" ON event_rsvps FOR INSERT WITH CHECK (auth.uid() = user_id);
+  CREATE POLICY "public read rsvps" ON event_rsvps FOR SELECT USING (true);
+  ```
 
 ## Completed — Phase 32 (2026-03-25)
 

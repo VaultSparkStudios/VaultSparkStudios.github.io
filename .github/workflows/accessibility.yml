@@ -1,0 +1,45 @@
+name: Accessibility Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  axe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install axe-cli
+        run: npm install -g @axe-core/cli
+
+      - name: Run axe accessibility audit
+        run: |
+          PAGES=(
+            "https://vaultsparkstudios.com/"
+            "https://vaultsparkstudios.com/games/"
+            "https://vaultsparkstudios.com/community/"
+            "https://vaultsparkstudios.com/journal/"
+            "https://vaultsparkstudios.com/ranks/"
+          )
+          EXIT=0
+          for url in "${PAGES[@]}"; do
+            echo "Auditing $url"
+            axe "$url" --exit || EXIT=1
+          done
+          exit $EXIT
+
+      - name: Upload axe results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: axe-results
+          path: axe-results/
+          retention-days: 7

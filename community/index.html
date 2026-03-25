@@ -272,23 +272,32 @@
         <h2 style="font-family:Georgia,serif;font-size:1.75rem;font-weight:400;margin-bottom:0.5rem;">Upcoming Events</h2>
         <p style="color:var(--muted);margin-bottom:2rem;">Beta tests, community challenges, and game launches.</p>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;">
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(31,162,255,0.15);border-radius:16px;padding:1.5rem;">
+          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(31,162,255,0.15);border-radius:16px;padding:1.5rem;" data-event="spring-challenge-sprint">
             <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1FA2FF;margin-bottom:0.6rem;">April 2026</div>
             <div style="font-weight:600;color:var(--text);margin-bottom:0.4rem;">Spring Challenge Sprint</div>
             <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">Complete 5 challenges in one week for a bonus 500 Vault Points and an exclusive badge.</div>
-            <div style="margin-top:1rem;font-size:0.78rem;color:var(--dim);">Open to all Vault Members</div>
+            <div style="margin-top:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+              <span style="font-size:0.78rem;color:var(--dim);">Open to all Vault Members</span>
+              <button class="rsvp-btn" data-event="spring-challenge-sprint" style="background:rgba(31,162,255,0.12);border:1px solid rgba(31,162,255,0.3);color:#1FA2FF;padding:0.3rem 0.75rem;border-radius:7px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;">RSVP <span class="rsvp-count">—</span></button>
+            </div>
           </div>
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(255,196,0,0.15);border-radius:16px;padding:1.5rem;">
+          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(255,196,0,0.15);border-radius:16px;padding:1.5rem;" data-event="gridiron-gm-season-2">
             <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#FFC400;margin-bottom:0.6rem;">May 2026</div>
             <div style="font-weight:600;color:var(--text);margin-bottom:0.4rem;">Gridiron GM Season 2</div>
             <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">New season update drops with expanded rosters, new coaching options, and playoff overhaul.</div>
-            <div style="margin-top:1rem;font-size:0.78rem;color:var(--dim);">All players</div>
+            <div style="margin-top:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+              <span style="font-size:0.78rem;color:var(--dim);">All players</span>
+              <button class="rsvp-btn" data-event="gridiron-gm-season-2" style="background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.3);color:#FFC400;padding:0.3rem 0.75rem;border-radius:7px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;">RSVP <span class="rsvp-count">—</span></button>
+            </div>
           </div>
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(139,92,246,0.15);border-radius:16px;padding:1.5rem;">
+          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(139,92,246,0.15);border-radius:16px;padding:1.5rem;" data-event="vaultsparked-beta">
             <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#8B5CF6;margin-bottom:0.6rem;">Q3 2026</div>
             <div style="font-weight:600;color:var(--text);margin-bottom:0.4rem;">VaultSparked Beta Launch</div>
             <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">A new premium-exclusive game experience for VaultSparked members. First access guaranteed.</div>
-            <div style="margin-top:1rem;font-size:0.78rem;color:var(--dim);">VaultSparked only</div>
+            <div style="margin-top:1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+              <span style="font-size:0.78rem;color:var(--dim);">VaultSparked only</span>
+              <button class="rsvp-btn" data-event="vaultsparked-beta" style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.3);color:#8B5CF6;padding:0.3rem 0.75rem;border-radius:7px;font-size:0.78rem;font-weight:600;cursor:pointer;font-family:inherit;">RSVP <span class="rsvp-count">—</span></button>
+            </div>
           </div>
         </div>
         <!-- Discord join widget -->
@@ -512,6 +521,78 @@
         }).catch(function(){});
     })();
   </script>
+<script>
+(function(){
+  var SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+  var KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+  var H   = { apikey: KEY, Authorization: 'Bearer ' + KEY };
+
+  function getSession(){
+    try {
+      var raw = localStorage.getItem('sb-fjnpzjjyhnpmunfoycrp-auth-token') || localStorage.getItem('supabase.auth.token');
+      if(!raw) return null;
+      var p = JSON.parse(raw); var s = p.currentSession || p;
+      return (s && s.access_token && s.user) ? s : null;
+    } catch(e){ return null; }
+  }
+
+  var session = getSession();
+  var events  = ['spring-challenge-sprint','gridiron-gm-season-2','vaultsparked-beta'];
+
+  function refreshCounts(){
+    events.forEach(function(ev){
+      fetch(SB+'/rest/v1/event_rsvps?event_slug=eq.'+ev+'&select=id',{
+        headers: Object.assign({},H,{Prefer:'count=exact',Range:'0-0'})
+      }).then(function(r){
+        var cr = r.headers.get('Content-Range');
+        if(cr){ var n=parseInt(cr.split('/')[1],10);
+          document.querySelectorAll('.rsvp-btn[data-event="'+ev+'"] .rsvp-count').forEach(function(el){
+            el.textContent = isNaN(n) ? '—' : n;
+          });
+        }
+      }).catch(function(){});
+    });
+  }
+
+  function markRsvpd(btn, evSlug){
+    btn.style.opacity = '0.6';
+    btn.title = 'You\'ve RSVPed';
+    btn.querySelectorAll('.rsvp-count').forEach(function(el){ el.textContent += ' ✓'; });
+  }
+
+  function loadMyRsvps(){
+    if(!session) return;
+    fetch(SB+'/rest/v1/event_rsvps?user_id=eq.'+session.user.id+'&select=event_slug',{
+      headers: Object.assign({},H,{Authorization:'Bearer '+session.access_token})
+    }).then(function(r){ return r.ok?r.json():[]; })
+    .then(function(mine){
+      if(!Array.isArray(mine)) return;
+      mine.forEach(function(row){
+        document.querySelectorAll('.rsvp-btn[data-event="'+row.event_slug+'"]').forEach(function(btn){
+          markRsvpd(btn, row.event_slug);
+        });
+      });
+    }).catch(function(){});
+  }
+
+  document.querySelectorAll('.rsvp-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if(!session){ window.location.href='/vault-member/'; return; }
+      var ev = btn.dataset.event;
+      var authH = Object.assign({},H,{Authorization:'Bearer '+session.access_token,'Content-Type':'application/json',Prefer:'resolution=ignore-duplicates,return=minimal'});
+      fetch(SB+'/rest/v1/event_rsvps',{
+        method:'POST', headers:authH,
+        body:JSON.stringify({event_slug:ev, user_id:session.user.id})
+      }).then(function(r){
+        if(r.ok||r.status===409){ markRsvpd(btn,ev); refreshCounts(); }
+      }).catch(function(){});
+    });
+  });
+
+  refreshCounts();
+  loadMyRsvps();
+})();
+</script>
 <script src="/assets/vault-cta.js" defer></script>
 </body>
 </html>
