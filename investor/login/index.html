@@ -331,14 +331,10 @@
           return;
         }
 
-        // Allow vaultspark admin through without an investor record
-        const { data: adminCheck } = await sb
-          .from('vault_members')
-          .select('username_lower')
-          .eq('id', data.user.id)
-          .maybeSingle();
+        // Check admin status via security-definer RPC (bypasses RLS)
+        const { data: isAdmin } = await sb.rpc('is_vault_admin');
 
-        if (adminCheck?.username_lower !== 'vaultspark') {
+        if (!isAdmin) {
           // Validate investor access
           const { data: profile, error: rpcErr } = await sb.rpc('get_my_investor_profile');
 

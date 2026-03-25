@@ -42,14 +42,10 @@
       return;
     }
 
-    // 2. Check if vaultspark admin — always allowed, bypasses investor table check
-    const { data: adminCheck } = await VSSupabase
-      .from('vault_members')
-      .select('username_lower, points')
-      .eq('id', session.user.id)
-      .maybeSingle();
+    // 2. Check if vaultspark admin via security-definer RPC (bypasses RLS)
+    const { data: isAdmin } = await VSSupabase.rpc('is_vault_admin');
 
-    if (adminCheck?.username_lower === 'vaultspark') {
+    if (isAdmin) {
       window.VSInvestorProfile = {
         display_name:       'VaultSpark Studios',
         entity_type:        'firm',
