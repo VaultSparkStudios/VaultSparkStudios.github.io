@@ -8,64 +8,92 @@ import { renderStudioHubView } from "./components/studioHubView.js";
 import { renderProjectHubView } from "./components/projectHubView.js";
 import { renderVaultAdminView } from "./components/vaultAdminView.js";
 import { renderSocialView } from "./components/socialView.js";
-import { renderSettingsView, saveCredentials, loadStoredCredentials } from "./components/settingsView.js";
+import { renderSettingsView, saveCredentials, saveSettings, loadSettings, loadStoredCredentials } from "./components/settingsView.js";
+import { renderGate, isUnlocked, attemptUnlock, setHubPassword, clearHubPassword, isPasswordSet } from "./components/privacyGate.js";
 
-// ── Config & cache helpers ─────────────────────────────────────────────────
+// ── Config ────────────────────────────────────────────────────────────────────
 const config = getHubRuntimeConfig();
 
 function clearSessionCache() {
-  const keys = Object.keys(sessionStorage).filter((k) => k.startsWith("vshub_"));
-  keys.forEach((k) => sessionStorage.removeItem(k));
+  Object.keys(sessionStorage).filter((k) => k.startsWith("vshub_")).forEach((k) => sessionStorage.removeItem(k));
 }
+
+// ── State ─────────────────────────────────────────────────────────────────────
+const appSettings = loadSettings();
 
 const state = {
   activeView: "studio-hub",
   adminTab: "members",
+  projectTab: "games",
   syncStatus: "idle",
+  settings: appSettings,
 
-  // Integration data (populated async)
-  ghData: {},       // { "owner/repo": repoData }
-  ghActivity: [],   // org-level event feed
-  sbData: null,     // supabase aggregated data
-  socialData: null, // social feeds data
+  ghData: {},
+  ghActivity: [],
+  sbData: null,
+  socialData: null,
 
-  // Config passthrough for views
   supabaseAnonKey: config.supabaseAnonKey,
 };
 
-// ── Render ─────────────────────────────────────────────────────────────────
+// ── Accent color ──────────────────────────────────────────────────────────────
+function applyAccent(color) {
+  if (color) document.documentElement.style.setProperty("--cyan", color);
+}
+applyAccent(appSettings.accent);
+
+// ── Privacy gate ──────────────────────────────────────────────────────────────
+function mountGate() {
+  const gateEl = document.createElement("div");
+  gateEl.innerHTML = renderGate();
+  document.body.appendChild(gateEl.firstElementChild);
+
+  const input = document.getElementById("gate-password-input");
+  const btn = document.getElementById("gate-submit-btn");
+  const errorEl = document.getElementById("gate-error");
+
+  async function tryUnlock() {
+    const password = input?.value || "";
+    if (!password) return;
+    const ok = await attemptUnlock(password);
+    if (ok) {
+      document.getElementById("privacy-gate")?.remove();
+      render();
+      syncAll();
+    } else {
+      if (errorEl) errorEl.textContent = "Incorrect password";
+      if (input) { input.value = ""; input.focus(); }
+    }
+  }
+
+  btn?.addEventListener("click", tryUnlock);
+  input?.addEventListener("keydown", (e) => { if (e.key === "Enter") tryUnlock(); });
+}
+
+// ── Render ────────────────────────────────────────────────────────────────────
 function render() {
   const app = document.getElementById("app");
   if (!app) return;
-
-  const nav = renderNavigation(state);
-  const main = renderActiveView();
-
-  app.innerHTML = `<div class="shell">${nav}${main}</div>`;
+  app.innerHTML = `<div class="shell">${renderNavigation(state)}${renderActiveView()}</div>`;
   bindEvents();
 }
 
 function renderActiveView() {
   const { activeView } = state;
-
-  if (activeView === "studio-hub") return renderStudioHubView(state);
-  if (activeView === "social") return renderSocialView(state);
+  if (activeView === "studio-hub")  return renderStudioHubView(state);
+  if (activeView === "social")      return renderSocialView(state);
   if (activeView === "vault-admin") return renderVaultAdminView(state);
-  if (activeView === "settings") return renderSettingsView(state);
-
+  if (activeView === "settings")    return renderSettingsView(state);
   if (activeView.startsWith("project:")) {
-    const projectId = activeView.slice("project:".length);
-    const project = getProjectById(projectId);
-    if (project) return renderProjectHubView(project, state);
-    return `<div class="main-panel"><div class="empty-state">Project not found.</div></div>`;
+    const project = getProjectById(activeView.slice("project:".length));
+    return project ? renderProjectHubView(project, state) : `<div class="main-panel"><div class="empty-state">Project not found.</div></div>`;
   }
-
   return `<div class="main-panel"><div class="empty-state">View not found.</div></div>`;
 }
 
-// ── Event Binding ──────────────────────────────────────────────────────────
+// ── Event binding ─────────────────────────────────────────────────────────────
 function bindEvents() {
-  // Nav and project card navigation
+  // Navigation
   document.querySelectorAll("[data-view]").forEach((el) => {
     el.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -77,81 +105,98 @@ function bindEvents() {
     });
   });
 
-  // Vault admin tabs
-  document.querySelectorAll("[data-admin-tab]").forEach((el) => {
+  // Project type tabs
+  document.querySelectorAll("[data-project-tab]").forEach((el) => {
     el.addEventListener("click", () => {
-      const tab = el.getAttribute("data-admin-tab");
-      if (tab && tab !== state.adminTab) {
-        state.adminTab = tab;
+      const tab = el.getAttribute("data-project-tab");
+      if (tab && tab !== state.projectTab) {
+        state.projectTab = tab;
         render();
       }
     });
   });
 
-  // Settings — save credentials
-  const saveBtn = document.getElementById("save-settings-btn");
-  if (saveBtn) {
-    saveBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      const githubToken = document.getElementById("setting-github-token")?.value?.trim() || "";
-      const youtubeApiKey = document.getElementById("setting-youtube-key")?.value?.trim() || "";
-      saveCredentials({ githubToken, youtubeApiKey });
-      const statusEl = document.getElementById("settings-status");
-      if (statusEl) statusEl.textContent = "Saved — reloading data…";
-      // Clear caches and re-sync with new credentials
-      clearSessionCache();
-      Object.assign(config, getHubRuntimeConfig());
-      state.supabaseAnonKey = config.supabaseAnonKey;
-      syncAll();
+  // Vault admin tabs
+  document.querySelectorAll("[data-admin-tab]").forEach((el) => {
+    el.addEventListener("click", () => {
+      const tab = el.getAttribute("data-admin-tab");
+      if (tab && tab !== state.adminTab) { state.adminTab = tab; render(); }
     });
-  }
+  });
+
+  // Settings — save
+  document.getElementById("save-settings-btn")?.addEventListener("click", async () => {
+    const githubToken    = document.getElementById("setting-github-token")?.value?.trim() || "";
+    const youtubeApiKey  = document.getElementById("setting-youtube-key")?.value?.trim() || "";
+    const hubPassword    = document.getElementById("setting-hub-password")?.value?.trim() || "";
+    const accent         = document.getElementById("setting-accent")?.value || "#7ae7c7";
+    const showScores     = document.getElementById("setting-show-scores")?.value !== "false";
+    const sort           = document.getElementById("setting-sort")?.value || "score";
+    const refreshMs      = Number(document.getElementById("setting-refresh")?.value ?? 300000);
+
+    // Credentials
+    const existing = loadStoredCredentials();
+    saveCredentials({ ...existing, githubToken, youtubeApiKey });
+
+    // Hub password
+    if (hubPassword) await setHubPassword(hubPassword);
+
+    // App settings
+    const newSettings = { accent, showScores, sort, refreshMs };
+    saveSettings(newSettings);
+    Object.assign(state.settings, newSettings);
+    applyAccent(accent);
+
+    // Reset cache and resync
+    clearSessionCache();
+    Object.assign(config, getHubRuntimeConfig());
+    state.supabaseAnonKey = config.supabaseAnonKey;
+
+    const statusEl = document.getElementById("settings-status");
+    if (statusEl) statusEl.textContent = "Saved — reloading data…";
+
+    syncAll();
+  });
+
+  // Settings — remove password
+  document.getElementById("clear-password-btn")?.addEventListener("click", async () => {
+    await clearHubPassword();
+    render();
+  });
 
   // Settings — clear all
-  const clearBtn = document.getElementById("clear-settings-btn");
-  if (clearBtn) {
-    clearBtn.addEventListener("click", () => {
-      localStorage.removeItem("vshub_credentials");
-      clearSessionCache();
-      const statusEl = document.getElementById("settings-status");
-      if (statusEl) statusEl.textContent = "Cleared.";
-      render();
-    });
-  }
+  document.getElementById("clear-all-btn")?.addEventListener("click", () => {
+    if (!confirm("Clear all credentials and settings?")) return;
+    localStorage.removeItem("vshub_credentials");
+    localStorage.removeItem("vshub_settings");
+    clearSessionCache();
+    Object.assign(state.settings, {});
+    applyAccent("#7ae7c7");
+    render();
+  });
 
   // Studio Pulse publish
-  const publishBtn = document.getElementById("publish-pulse-btn");
-  if (publishBtn) {
-    publishBtn.addEventListener("click", async () => {
-      const text = document.getElementById("pulse-text")?.value?.trim();
-      const type = document.getElementById("pulse-type")?.value || "info";
-      if (!text) return;
-
-      publishBtn.disabled = true;
-      const statusEl = document.getElementById("pulse-status");
-      if (statusEl) statusEl.textContent = "Publishing...";
-
-      try {
-        // Pulse publishing requires the service role key proxied through the API backend.
-        // For now, show a message directing to the Supabase dashboard.
-        await new Promise((r) => setTimeout(r, 500));
-        if (statusEl) statusEl.textContent = "Connect API backend to enable publishing.";
-        publishBtn.disabled = false;
-      } catch {
-        if (statusEl) statusEl.textContent = "Failed to publish.";
-        publishBtn.disabled = false;
-      }
-    });
-  }
+  document.getElementById("publish-pulse-btn")?.addEventListener("click", async () => {
+    const text = document.getElementById("pulse-text")?.value?.trim();
+    if (!text) return;
+    const btn = document.getElementById("publish-pulse-btn");
+    const statusEl = document.getElementById("pulse-status");
+    btn.disabled = true;
+    if (statusEl) statusEl.textContent = "Publishing…";
+    await new Promise((r) => setTimeout(r, 400));
+    if (statusEl) statusEl.textContent = "API backend required to publish. Coming in VPS deployment.";
+    btn.disabled = false;
+  });
 }
 
-// ── Data Sync ──────────────────────────────────────────────────────────────
+// ── Data sync ─────────────────────────────────────────────────────────────────
+let refreshTimer = null;
+
 async function syncAll() {
   state.syncStatus = "syncing";
   render();
 
-  const repoPaths = PROJECTS
-    .filter((p) => p.githubRepo)
-    .map((p) => p.githubRepo);
+  const repoPaths = PROJECTS.filter((p) => p.githubRepo).map((p) => p.githubRepo);
 
   const [ghRepos, ghActivity, sbData, socialData] = await Promise.all([
     fetchAllRepos(repoPaths, config.githubToken, config.githubCacheTtlMs),
@@ -160,15 +205,30 @@ async function syncAll() {
     fetchAllSocialFeeds(config.youtubeApiKey, config.socialCacheTtlMs),
   ]);
 
-  state.ghData = ghRepos;
+  state.ghData     = ghRepos;
   state.ghActivity = ghActivity;
-  state.sbData = sbData;
+  state.sbData     = sbData;
   state.socialData = socialData;
   state.syncStatus = "live";
 
   render();
+
+  // Schedule next refresh
+  const refreshMs = state.settings.refreshMs ?? 300000;
+  if (refreshTimer) clearTimeout(refreshTimer);
+  if (refreshMs > 0) {
+    refreshTimer = setTimeout(() => {
+      clearSessionCache();
+      syncAll();
+    }, refreshMs);
+  }
 }
 
-// ── Boot ───────────────────────────────────────────────────────────────────
-render();
-syncAll();
+// ── Boot ──────────────────────────────────────────────────────────────────────
+if (!isUnlocked()) {
+  render(); // render shell behind gate
+  mountGate();
+} else {
+  render();
+  syncAll();
+}
