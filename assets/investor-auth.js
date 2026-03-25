@@ -42,7 +42,34 @@
       return;
     }
 
-    // 2. Fetch investor profile via RPC
+    // 2. Check if vaultspark admin — always allowed, bypasses investor table check
+    const { data: adminCheck } = await VSSupabase
+      .from('vault_members')
+      .select('username_lower, points')
+      .eq('id', session.user.id)
+      .maybeSingle();
+
+    if (adminCheck?.username_lower === 'vaultspark') {
+      window.VSInvestorProfile = {
+        display_name:       'VaultSpark Studios',
+        entity_type:        'firm',
+        tier:               'strategic',
+        status:             'active',
+        investment_amount:  null,
+        equity_percentage:  null,
+        investment_date:    null,
+        onboarded_at:       new Date().toISOString(),
+        update_count:       0,
+        document_count:     0,
+        is_admin:           true,
+      };
+      window.dispatchEvent(new CustomEvent('investor:ready', {
+        detail: window.VSInvestorProfile
+      }));
+      return;
+    }
+
+    // 3. Fetch investor profile via RPC
     const { data: profile, error: rpcError } = await VSSupabase
       .rpc('get_my_investor_profile');
 
