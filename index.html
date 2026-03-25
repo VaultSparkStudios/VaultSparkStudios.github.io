@@ -2,6 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- Sentry: replace SENTRY_DSN_PLACEHOLDER with your DSN from sentry.io -->
+  <script
+    src="https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    Sentry.init({
+      dsn: "SENTRY_DSN_PLACEHOLDER",
+      tracesSampleRate: 0.1,
+      environment: location.hostname === 'localhost' ? 'development' : 'production',
+    });
+  </script>
+
   <!-- Resource hints -->
   <link rel="preconnect" href="https://www.googletagmanager.com" />
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
@@ -559,6 +572,7 @@
       .dispatch-inner { padding: 1.5rem; }
     }
     @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
+    @keyframes pulse-ring { 0%{transform:scale(0.85);opacity:0.5} 70%{transform:scale(2.2);opacity:0} 100%{transform:scale(2.2);opacity:0} }
   </style>
 
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
@@ -629,9 +643,12 @@
             <a class="button-secondary" href="/vault-member/#register">Enter The Vault &nbsp;→</a>
           </div>
 
-          <div class="hero-live-bar" style="display:flex;align-items:center;gap:0.5rem;margin-top:1.25rem;font-size:0.85rem;color:var(--muted);">
-            <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:#10B981;animation:pulse-dot 2s ease-in-out infinite;flex-shrink:0;"></span>
-            <span><strong class="hero-member-count" style="color:var(--text);">—</strong> members in the Vault</span>
+          <div class="hero-live-bar" style="display:flex;align-items:center;gap:0.6rem;margin-top:1.25rem;font-size:0.88rem;color:var(--muted);">
+            <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:10px;height:10px;">
+              <span style="position:absolute;inset:0;border-radius:50%;background:#10B981;opacity:0.35;animation:pulse-ring 2s ease-out infinite;"></span>
+              <span style="display:block;width:7px;height:7px;border-radius:50%;background:#10B981;flex-shrink:0;"></span>
+            </span>
+            <span>Join <strong class="hero-member-count" style="color:#fff;font-size:0.97rem;">…</strong> vault members</span>
           </div>
 
           <div class="hero-story">
@@ -1256,6 +1273,7 @@
   </footer>
 
   <!-- ═══ SCRIPTS ═══════════════════════════════════════════ -->
+  <script src="assets/supabase-public.js"></script>
   <script src="assets/kit.js" defer></script>
   <script src="assets/cookie-consent.js" defer></script>
   <script>
@@ -1295,13 +1313,7 @@
   <script>
     (async function() {
       try {
-        const SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
-        const SUPABASE_ANON = document.querySelector('meta[name="supabase-key"]')?.content || '';
-        if (!SUPABASE_ANON) return;
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/vault_members?select=id`, {
-          headers: { apikey: SUPABASE_ANON, 'Prefer': 'count=exact', 'Range': '0-0' }
-        });
-        const count = parseInt(res.headers.get('content-range')?.split('/')[1] || '0');
+        const count = await VSPublic.from('vault_members').headCount();
         if (count > 0) {
           document.querySelectorAll('.hero-member-count').forEach(el => {
             el.textContent = count.toLocaleString('en-US');

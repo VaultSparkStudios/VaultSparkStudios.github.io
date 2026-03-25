@@ -156,6 +156,17 @@
     .archive-link small { font-size: 0.75rem; color: var(--dim); }
 
     @media (max-width: 900px) { .journal-layout { grid-template-columns: 1fr; } }
+
+    /* Reaction row */
+    .reaction-row { display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.06); }
+    .reaction-btn { display:inline-flex; align-items:center; gap:0.35rem; padding:0.35rem 0.85rem; border-radius:999px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:var(--muted); font-family:inherit; font-size:0.82rem; font-weight:600; cursor:pointer; transition:all 0.15s; user-select:none; }
+    .reaction-btn:hover { border-color:rgba(255,196,0,0.4); background:rgba(255,196,0,0.07); color:var(--text); }
+    .reaction-btn.reacted { border-color:rgba(255,196,0,0.5); background:rgba(255,196,0,0.12); color:var(--gold,#FFC400); }
+    .reaction-btn .reaction-emoji { font-size:1rem; line-height:1; }
+    .reaction-btn .reaction-count { min-width:1ch; }
+    /* Journal toast */
+    .jrn-toast { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%) translateY(8px); background:rgba(30,35,55,0.97); border:1px solid rgba(255,255,255,0.15); color:var(--muted); font-size:0.85rem; font-weight:600; padding:0.55rem 1.3rem; border-radius:999px; opacity:0; transition:opacity 0.2s, transform 0.2s; pointer-events:none; z-index:9999; }
+    .jrn-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
   </style>
 
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
@@ -254,6 +265,12 @@
                   Copy link
                 </button>
               </div>
+              <div class="reaction-row" id="reactions-studio-os-public" data-slug="studio-os-public">
+                <button class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
+                <button class="reaction-btn" data-emoji="love" onclick="jrnReact(this)"><span class="reaction-emoji">❤️</span><span class="reaction-count">0</span></button>
+                <button class="reaction-btn" data-emoji="gaming" onclick="jrnReact(this)"><span class="reaction-emoji">🎮</span><span class="reaction-count">0</span></button>
+                <button class="reaction-btn" data-emoji="sparked" onclick="jrnReact(this)"><span class="reaction-emoji">⚡</span><span class="reaction-count">0</span></button>
+              </div>
             </article>
 
             <!-- Entry 2 -->
@@ -302,6 +319,12 @@
                   Copy link
                 </button>
               </div>
+              <div class="reaction-row" id="reactions-first-sparks" data-slug="first-sparks">
+                <button class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
+                <button class="reaction-btn" data-emoji="love" onclick="jrnReact(this)"><span class="reaction-emoji">❤️</span><span class="reaction-count">0</span></button>
+                <button class="reaction-btn" data-emoji="gaming" onclick="jrnReact(this)"><span class="reaction-emoji">🎮</span><span class="reaction-count">0</span></button>
+                <button class="reaction-btn" data-emoji="sparked" onclick="jrnReact(this)"><span class="reaction-emoji">⚡</span><span class="reaction-count">0</span></button>
+              </div>
             </article>
 
             <!-- Entry 1 -->
@@ -349,6 +372,12 @@
                 <button onclick="navigator.clipboard.writeText(window.location.href+'#vault-opened');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
                   Copy link
                 </button>
+              </div>
+              <div class="reaction-row" id="reactions-vault-opened" data-slug="vault-opened">
+                <button class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
+                <button class="reaction-btn" data-emoji="love" onclick="jrnReact(this)"><span class="reaction-emoji">❤️</span><span class="reaction-count">0</span></button>
+                <button class="reaction-btn" data-emoji="gaming" onclick="jrnReact(this)"><span class="reaction-emoji">🎮</span><span class="reaction-count">0</span></button>
+                <button class="reaction-btn" data-emoji="sparked" onclick="jrnReact(this)"><span class="reaction-emoji">⚡</span><span class="reaction-count">0</span></button>
               </div>
             </article>
 
@@ -450,11 +479,180 @@
     </div>
   </footer>
 
+  <!-- Journal reactions toast -->
+  <div class="jrn-toast" id="jrn-toast"></div>
+
+  <script src="/assets/supabase-public.js" defer></script>
   <script>
     function readTime(text) {
       const words = text.split(/\s+/).length;
       return Math.max(1, Math.ceil(words / 200));
     }
+  </script>
+  <script>
+  (function(){
+    var SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+    var KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+    var H   = { apikey: KEY, Authorization: 'Bearer ' + KEY, 'Content-Type': 'application/json' };
+
+    // ── Auth helper ───────────────────────────────────────────────
+    function getSession(){
+      // Supabase stores session under "sb-<project-ref>-auth-token" or "supabase.auth.token"
+      try {
+        var raw = localStorage.getItem('sb-fjnpzjjyhnpmunfoycrp-auth-token')
+                || localStorage.getItem('supabase.auth.token');
+        if(!raw) return null;
+        var parsed = JSON.parse(raw);
+        // Supabase v2 format
+        var session = parsed.currentSession || parsed;
+        if(session && session.access_token && session.user) return session;
+        return null;
+      } catch(e){ return null; }
+    }
+
+    // ── Toast ──────────────────────────────────────────────────────
+    function showToast(msg){
+      var t = document.getElementById('jrn-toast');
+      if(!t) return;
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function(){ t.classList.remove('show'); }, 2500);
+    }
+
+    // ── Load counts + user reactions ──────────────────────────────
+    var SLUGS = ['studio-os-public','first-sparks','vault-opened'];
+
+    function loadReactions(){
+      var session = getSession();
+      var userId  = session && session.user ? session.user.id : null;
+
+      // Fetch all counts for our known slugs
+      var inFilter = SLUGS.map(function(s){ return '"'+s+'"'; }).join(',');
+      var countUrl = SB+'/rest/v1/journal_reactions?select=post_slug,emoji&post_slug=in.('+SLUGS.join(',')+')'
+      fetch(countUrl, { headers: { apikey: KEY, Accept: 'application/json' } })
+        .then(function(r){ return r.ok ? r.json() : []; })
+        .then(function(rows){
+          if(!Array.isArray(rows)) rows = [];
+          // Aggregate counts
+          var counts = {}; // {slug: {emoji: n}}
+          rows.forEach(function(r){
+            if(!counts[r.post_slug]) counts[r.post_slug] = {};
+            counts[r.post_slug][r.emoji] = (counts[r.post_slug][r.emoji]||0) + 1;
+          });
+
+          // Determine user's reactions
+          var userReacted = {}; // {slug+emoji: bool}
+          if(userId){
+            rows.forEach(function(r){
+              // We need user_id in the select — re-fetch with user filter
+            });
+          }
+
+          applyCountsToUI(counts);
+
+          // If logged in, fetch this user's own reactions to mark them
+          if(userId){
+            fetch(SB+'/rest/v1/journal_reactions?select=post_slug,emoji&user_id=eq.'+encodeURIComponent(userId), {
+              headers: { apikey: KEY, Authorization: 'Bearer '+session.access_token, Accept: 'application/json' }
+            })
+            .then(function(r){ return r.ok ? r.json() : []; })
+            .then(function(mine){
+              if(!Array.isArray(mine)) return;
+              mine.forEach(function(rx){
+                var row = document.getElementById('reactions-'+rx.post_slug);
+                if(!row) return;
+                var btn = row.querySelector('[data-emoji="'+rx.emoji+'"]');
+                if(btn) btn.classList.add('reacted');
+              });
+            }).catch(function(){});
+          }
+        })
+        .catch(function(){});
+    }
+
+    function applyCountsToUI(counts){
+      SLUGS.forEach(function(slug){
+        var row = document.getElementById('reactions-'+slug);
+        if(!row) return;
+        var slugCounts = counts[slug] || {};
+        row.querySelectorAll('.reaction-btn').forEach(function(btn){
+          var emoji = btn.dataset.emoji;
+          var countEl = btn.querySelector('.reaction-count');
+          if(countEl) countEl.textContent = slugCounts[emoji] || 0;
+        });
+      });
+    }
+
+    // ── React handler ─────────────────────────────────────────────
+    window.jrnReact = function(btn){
+      var row    = btn.closest('.reaction-row');
+      var slug   = row ? row.dataset.slug : null;
+      var emoji  = btn.dataset.emoji;
+      if(!slug || !emoji) return;
+
+      var session = getSession();
+      if(!session || !session.user){
+        // Not logged in — prompt
+        showToast('Sign in to react \u2192 /vault-member/');
+        setTimeout(function(){
+          window.location.href = '/vault-member/';
+        }, 1800);
+        return;
+      }
+
+      var userId      = session.user.id;
+      var accessToken = session.access_token;
+      var authH = Object.assign({}, H, { Authorization: 'Bearer '+accessToken });
+      var isReacted = btn.classList.contains('reacted');
+      var countEl   = btn.querySelector('.reaction-count');
+      var current   = parseInt(countEl ? countEl.textContent : '0', 10) || 0;
+
+      // Optimistic update
+      if(isReacted){
+        btn.classList.remove('reacted');
+        if(countEl) countEl.textContent = Math.max(0, current - 1);
+      } else {
+        btn.classList.add('reacted');
+        if(countEl) countEl.textContent = current + 1;
+      }
+
+      if(isReacted){
+        // DELETE
+        var delUrl = SB+'/rest/v1/journal_reactions?post_slug=eq.'+encodeURIComponent(slug)+'&emoji=eq.'+encodeURIComponent(emoji)+'&user_id=eq.'+encodeURIComponent(userId);
+        fetch(delUrl, { method: 'DELETE', headers: authH })
+          .then(function(r){
+            if(!r.ok) throw new Error(r.status);
+          })
+          .catch(function(){
+            // Rollback
+            btn.classList.add('reacted');
+            if(countEl) countEl.textContent = current;
+          });
+      } else {
+        // INSERT
+        fetch(SB+'/rest/v1/journal_reactions', {
+          method: 'POST',
+          headers: Object.assign({}, authH, { Prefer: 'return=minimal' }),
+          body: JSON.stringify({ post_slug: slug, emoji: emoji, user_id: userId })
+        })
+        .then(function(r){
+          if(!r.ok) throw new Error(r.status);
+        })
+        .catch(function(){
+          // Rollback
+          btn.classList.remove('reacted');
+          if(countEl) countEl.textContent = current;
+        });
+      }
+    };
+
+    // Load on DOM ready
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', loadReactions);
+    } else {
+      loadReactions();
+    }
+  })();
   </script>
   <script>
     const hamburger = document.getElementById('hamburger');

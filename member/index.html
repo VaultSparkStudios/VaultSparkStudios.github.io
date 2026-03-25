@@ -42,6 +42,31 @@
     .lookup-form button:hover { opacity:0.85; }
     /* Loading / error states */
     #member-loading, #member-notfound, #member-profile, #member-lookup { }
+    /* Founding member badge */
+    .founding-badge { display:inline-flex; align-items:center; gap:0.35rem; font-size:0.78rem; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:999px; background:rgba(255,196,0,0.12); color:var(--gold,#FFC400); border:1px solid rgba(255,196,0,0.3); margin-left:0.5rem; vertical-align:middle; }
+    /* Rank glow for high tiers */
+    .rank-glow { box-shadow:0 0 12px 3px currentColor; }
+    /* Pinned achievements */
+    .pinned-achievements { margin:1.5rem 0 0; }
+    .pinned-achievements-title { font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--dim); margin-bottom:0.65rem; }
+    .pinned-ach-row { display:flex; flex-direction:column; gap:0.45rem; }
+    .pinned-ach-item { display:flex; align-items:center; gap:0.7rem; padding:0.6rem 0.85rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:10px; font-size:0.88rem; color:var(--text); }
+    .pinned-ach-icon { font-size:1.15rem; flex-shrink:0; }
+    .pinned-ach-name { font-weight:600; }
+    .pinned-ach-placeholder { color:var(--dim); font-size:0.85rem; font-style:italic; padding:0.5rem 0; text-align:center; }
+    /* Recent activity */
+    .recent-activity { margin:1.5rem 0 0; }
+    .recent-activity-title { font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; color:var(--dim); margin-bottom:0.65rem; }
+    .activity-row { display:flex; justify-content:space-between; align-items:baseline; gap:0.75rem; padding:0.5rem 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:0.85rem; }
+    .activity-row:last-child { border-bottom:none; }
+    .activity-label { color:var(--muted); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .activity-pts { color:var(--gold); font-weight:700; white-space:nowrap; }
+    .activity-time { color:var(--dim); font-size:0.78rem; white-space:nowrap; }
+    /* Share button + toast */
+    .share-profile-btn { display:inline-flex; align-items:center; gap:0.5rem; padding:0.55rem 1.2rem; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--muted); font-family:inherit; font-size:0.88rem; font-weight:600; cursor:pointer; transition:all 0.15s; margin-top:1.25rem; width:100%; justify-content:center; }
+    .share-profile-btn:hover { background:rgba(255,255,255,0.09); color:var(--text); }
+    .vs-toast { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%) translateY(8px); background:rgba(30,35,55,0.97); border:1px solid rgba(255,196,0,0.3); color:var(--gold,#FFC400); font-size:0.88rem; font-weight:700; padding:0.6rem 1.4rem; border-radius:999px; opacity:0; transition:opacity 0.2s, transform 0.2s; pointer-events:none; z-index:9999; }
+    .vs-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
   </style>
 
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
@@ -112,6 +137,7 @@
             <div class="profile-username" id="profile-username">Username</div>
             <div style="text-align:center;margin-bottom:0.5rem;">
               <span class="profile-rank-badge" id="profile-rank-badge" style="background:rgba(31,162,255,0.12);color:#1FA2FF;border:1px solid rgba(31,162,255,0.25);">Rank</span>
+              <span id="founding-badge" class="founding-badge" style="display:none;">&#9889; Founding Member</span>
             </div>
             <div class="profile-stats">
               <div class="profile-stat">
@@ -134,11 +160,34 @@
               </div>
               <div style="font-size:0.75rem;color:var(--dim);margin-top:0.35rem;text-align:right;" id="progress-pct-label"></div>
             </div>
-            <div style="text-align:center;">
+
+            <!-- Pinned Achievements -->
+            <div class="pinned-achievements">
+              <div class="pinned-achievements-title">Pinned Achievements</div>
+              <div class="pinned-ach-row" id="pinned-ach-row">
+                <div class="pinned-ach-placeholder">Loading achievements&hellip;</div>
+              </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+              <div class="recent-activity-title">Recent Activity</div>
+              <div id="recent-activity-list">
+                <div class="pinned-ach-placeholder">Loading activity&hellip;</div>
+              </div>
+            </div>
+
+            <div style="text-align:center;margin-top:1.5rem;">
               <a href="/leaderboards/" style="font-size:0.88rem;color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.12);padding-bottom:1px;">View full leaderboard &rarr;</a>
             </div>
+
+            <!-- Share Profile -->
+            <button class="share-profile-btn" id="share-profile-btn" onclick="shareProfile()">&#128279; Share Profile</button>
           </div>
         </div>
+
+        <!-- Toast notification -->
+        <div class="vs-toast" id="vs-toast">Copied!</div>
 
       </div>
     </section>
@@ -236,6 +285,28 @@
         return d.toLocaleDateString('en-US',{month:'short',year:'numeric'});
       }
 
+      function formatMemberSince(dateStr){
+        var d=new Date(dateStr);
+        return 'Member since '+d.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+      }
+
+      function timeAgo(dateStr){
+        var d=new Date(dateStr);
+        var secs=Math.floor((Date.now()-d.getTime())/1000);
+        if(secs<60)return 'just now';
+        var mins=Math.floor(secs/60);
+        if(mins<60)return mins+' min ago';
+        var hrs=Math.floor(mins/60);
+        if(hrs<24)return hrs+' hr ago';
+        var days=Math.floor(hrs/24);
+        if(days===1)return '1 day ago';
+        if(days<30)return days+' days ago';
+        var mos=Math.floor(days/30);
+        if(mos===1)return '1 month ago';
+        if(mos<12)return mos+' months ago';
+        return Math.floor(mos/12)+' yr ago';
+      }
+
       function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 
       function show(id){document.getElementById(id).style.display='';}
@@ -273,7 +344,28 @@
         badge.style.border='1px solid rgba('+hexToRgb(rank.color)+',0.25)';
 
         document.getElementById('profile-points').textContent=pts.toLocaleString();
-        document.getElementById('profile-since').textContent=formatDate(member.created_at);
+        // Member since — formatted as "Member since March 2025"
+        var sinceFormatted = formatMemberSince(member.created_at);
+        document.getElementById('profile-since').textContent=sinceFormatted;
+
+        // Founding member badge
+        var foundingBadge=document.getElementById('founding-badge');
+        if(foundingBadge){
+          if(member.member_number && member.member_number<=100){
+            foundingBadge.style.display='';
+          } else {
+            foundingBadge.style.display='none';
+          }
+        }
+
+        // Rank glow for tiers index >= 3 (Vault Keeper, Forge Master, The Sparked)
+        // RANKS array: 0=Spark Initiate, 1=Vault Runner, 2=Forge Guard, 3=Vault Keeper, 4=The Sparked
+        var rankIdx=RANKS.indexOf(rank);
+        if(rankIdx>=3){
+          badge.classList.add('rank-glow');
+        } else {
+          badge.classList.remove('rank-glow');
+        }
 
         // Progress bar
         var bar=document.getElementById('profile-progress-bar');
@@ -290,12 +382,74 @@
           document.getElementById('progress-pct-label').textContent='You have reached the top tier.';
         }
 
-        // "Member since X months" in sub-label
+        // Tooltip on member since
         var sinceEl=document.getElementById('profile-since');
         sinceEl.title='Joined '+formatDate(member.created_at)+' — '+monthsAgo(member.created_at);
 
         hide('member-loading');
         show('member-profile');
+
+        // Async: fetch achievements and activity
+        if(member.id){
+          fetchPinnedAchievements(member.id);
+          fetchRecentActivity(member.id);
+        } else {
+          // If no id field returned, fall through to placeholder
+          renderAchievementsPlaceholder();
+          renderActivityPlaceholder();
+        }
+      }
+
+      function renderAchievementsPlaceholder(){
+        var el=document.getElementById('pinned-ach-row');
+        if(el)el.innerHTML='<div class="pinned-ach-placeholder">No achievements unlocked yet.</div>';
+      }
+
+      function renderActivityPlaceholder(){
+        var el=document.getElementById('recent-activity-list');
+        if(el)el.innerHTML='<div class="pinned-ach-placeholder">No recent activity.</div>';
+      }
+
+      function fetchPinnedAchievements(userId){
+        // Fetch member_achievements joined with achievements for this user, limit 3
+        var url=SB+'/rest/v1/member_achievements?select=unlocked_at,achievements(name,emoji)&user_id=eq.'+encodeURIComponent(userId)+'&order=unlocked_at.desc&limit=3';
+        fetch(url,{headers:H})
+          .then(function(r){return r.ok?r.json():[];})
+          .then(function(data){
+            var el=document.getElementById('pinned-ach-row');
+            if(!el)return;
+            if(!Array.isArray(data)||data.length===0){
+              el.innerHTML='<div class="pinned-ach-placeholder">No achievements unlocked yet.</div>';
+              return;
+            }
+            el.innerHTML=data.map(function(a){
+              var name=a.achievements&&a.achievements.name?esc(a.achievements.name):'Achievement';
+              var emoji=a.achievements&&a.achievements.emoji?esc(a.achievements.emoji):'🏆';
+              return '<div class="pinned-ach-item"><span class="pinned-ach-icon">'+emoji+'</span><span class="pinned-ach-name">'+name+'</span></div>';
+            }).join('');
+          })
+          .catch(function(){renderAchievementsPlaceholder();});
+      }
+
+      function fetchRecentActivity(userId){
+        var url=SB+'/rest/v1/point_events?select=label,points,created_at&user_id=eq.'+encodeURIComponent(userId)+'&order=created_at.desc&limit=5';
+        fetch(url,{headers:H})
+          .then(function(r){return r.ok?r.json():[];})
+          .then(function(data){
+            var el=document.getElementById('recent-activity-list');
+            if(!el)return;
+            if(!Array.isArray(data)||data.length===0){
+              el.innerHTML='<div class="pinned-ach-placeholder">No recent activity.</div>';
+              return;
+            }
+            el.innerHTML=data.map(function(ev){
+              var label=ev.label||'Activity';
+              var pts=(ev.points||0)>0?'+'+ev.points:String(ev.points||0);
+              var when=ev.created_at?timeAgo(ev.created_at):'';
+              return '<div class="activity-row"><span class="activity-label">'+esc(label)+'</span><span class="activity-pts">'+esc(pts)+'</span><span class="activity-time">'+esc(when)+'</span></div>';
+            }).join('');
+          })
+          .catch(function(){renderActivityPlaceholder();});
       }
 
       function hexToRgb(hex){
@@ -311,7 +465,7 @@
         hide('member-profile');
         show('member-loading');
 
-        var url=SB+'/rest/v1/vault_members?select=username,points,rank,created_at&username_lower=eq.'+encodeURIComponent(username.toLowerCase())+'&limit=1';
+        var url=SB+'/rest/v1/vault_members?select=id,username,points,rank,created_at,member_number&username_lower=eq.'+encodeURIComponent(username.toLowerCase())+'&limit=1';
         fetch(url,{headers:H})
           .then(function(r){return r.ok?r.json():[];})
           .then(function(data){
@@ -338,6 +492,31 @@
         return false;
       }
       window.handleLookup=handleLookup;
+
+      function showToast(msg){
+        var t=document.getElementById('vs-toast');
+        if(!t)return;
+        t.textContent=msg||'Copied!';
+        t.classList.add('show');
+        setTimeout(function(){t.classList.remove('show');},2200);
+      }
+
+      function shareProfile(){
+        var url=window.location.href;
+        navigator.clipboard.writeText(url).then(function(){
+          showToast('Copied!');
+          var btn=document.getElementById('share-profile-btn');
+          if(btn){btn.textContent='✓ Copied!';setTimeout(function(){btn.innerHTML='&#128279; Share Profile';},2200);}
+        }).catch(function(){
+          // Fallback for older browsers
+          var ta=document.createElement('textarea');
+          ta.value=url;ta.style.position='fixed';ta.style.opacity='0';
+          document.body.appendChild(ta);ta.select();
+          try{document.execCommand('copy');showToast('Copied!');}catch(e){}
+          document.body.removeChild(ta);
+        });
+      }
+      window.shareProfile=shareProfile;
 
       // Init
       var params=new URLSearchParams(window.location.search);

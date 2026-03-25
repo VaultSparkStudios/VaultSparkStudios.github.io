@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Sentry: replace SENTRY_DSN_PLACEHOLDER with your DSN from sentry.io -->
+  <script
+    src="https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    Sentry.init({
+      dsn: "SENTRY_DSN_PLACEHOLDER",
+      tracesSampleRate: 0.1,
+      environment: location.hostname === 'localhost' ? 'development' : 'production',
+    });
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, follow" />
+
+  <title>You've Been Invited to the Vault — VaultSpark Studios</title>
+  <meta name="description" content="You've been personally invited to join VaultSpark Studios. Claim your spot, earn Vault Rank, unlock exclusive lore, and get access to every game we forge." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/join/" />
+  <meta name="theme-color" content="#000000" />
+
+  <meta property="og:title" content="You've Been Invited to the Vault — VaultSpark Studios" />
+  <meta property="og:description" content="You've been personally invited to join VaultSpark Studios. Claim your spot in the vault." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/join/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta property="og:site_name" content="VaultSpark Studios" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSparkStudios" />
+  <meta name="twitter:title" content="You've Been Invited to the Vault — VaultSpark Studios" />
+  <meta name="twitter:description" content="You've been personally invited to join VaultSpark Studios. Claim your spot." />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+
+  <link rel="icon" type="image/png" href="../assets/favicon.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <style>
+    /* ─── Join page layout ─── */
+    .join-page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .join-hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 6rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .join-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 40%, rgba(31,162,255,0.13), transparent 40%),
+        radial-gradient(circle at 80% 60%, rgba(255,122,0,0.13), transparent 40%);
+      pointer-events: none;
+    }
+
+    .join-hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        180deg,
+        transparent 0 98px,
+        rgba(255,255,255,0.012) 98px 99px
+      );
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .join-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    /* ─── Referrer card ─── */
+    .referrer-card {
+      padding: 0.55rem 1.1rem 0.55rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 1.6rem;
+      max-width: 100%;
+      transition: border-color 0.2s ease;
+    }
+    .referrer-card:hover { border-color: rgba(255,255,255,0.16); }
+    .referrer-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .referrer-name { color: #fff; font-weight: 600; }
+    .rank-badge {
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    /* rank badge colours */
+    .rank-spark-initiate  { background: rgba(148,163,184,0.15); color: #94a3b8; border: 1px solid rgba(148,163,184,0.3); }
+    .rank-vault-runner    { background: rgba(31,162,255,0.15);  color: #1FA2FF; border: 1px solid rgba(31,162,255,0.3); }
+    .rank-rift-scout      { background: rgba(16,185,129,0.15);  color: #10B981; border: 1px solid rgba(16,185,129,0.3); }
+    .rank-vault-guard     { background: rgba(6,182,212,0.15);   color: #06B6D4; border: 1px solid rgba(6,182,212,0.3); }
+    .rank-vault-breacher  { background: rgba(139,92,246,0.15);  color: #8B5CF6; border: 1px solid rgba(139,92,246,0.3); }
+    .rank-void-operative  { background: rgba(55,65,81,0.35);    color: #9ca3af; border: 1px solid rgba(55,65,81,0.5); }
+    .rank-vault-keeper    { background: rgba(255,122,0,0.15);   color: #FF7A00; border: 1px solid rgba(255,122,0,0.3); }
+    .rank-forge-master    { background: rgba(214,40,40,0.15);   color: #D62828; border: 1px solid rgba(214,40,40,0.3); }
+    .rank-the-sparked     { background: rgba(255,196,0,0.15);   color: #FFC400; border: 1px solid rgba(255,196,0,0.35); box-shadow: 0 0 14px rgba(255,196,0,0.12); }
+
+    /* ─── Copy block ─── */
+    .join-eyebrow {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 0.9rem;
+      display: block;
+    }
+
+    .join-heading {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.6rem, 5.5vw, 4.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.045em;
+      margin-bottom: 1.2rem;
+    }
+
+    .join-subtext {
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.65;
+      max-width: 48ch;
+      margin-bottom: 2rem;
+    }
+
+    /* ─── CTA cluster ─── */
+    .join-actions {
+      display: flex;
+      gap: 0.9rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .join-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 1.8rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #1FA2FF 0%, #0d78c7 100%);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+      box-shadow: 0 4px 22px rgba(31,162,255,0.35);
+    }
+    .join-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(31,162,255,0.48);
+      filter: brightness(1.08);
+    }
+    .join-cta:active { transform: translateY(0); }
+
+    .join-cta-note {
+      font-size: 0.84rem;
+      color: var(--dim);
+    }
+
+    /* ─── Benefits panel ─── */
+    .join-panel {
+      padding: 2.2rem;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.96));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+    .join-panel::before {
+      content: "";
+      position: absolute;
+      inset: -30% auto auto 0%;
+      width: 55%; height: 60%;
+      background: radial-gradient(circle, rgba(31,162,255,0.14), transparent 65%);
+      filter: blur(28px);
+      pointer-events: none;
+    }
+    .join-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto 0% -28% auto;
+      width: 50%; height: 55%;
+      background: radial-gradient(circle, rgba(255,122,0,0.16), transparent 65%);
+      filter: blur(28px);
+      pointer-events: none;
+    }
+
+    .join-panel-inner { position: relative; z-index: 1; }
+
+    .panel-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 1.3rem;
+    }
+
+    .benefit-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .benefit-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .benefit-icon {
+      width: 40px; height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .benefit-icon.icon-lore   { background: rgba(255,196,0,0.1); border: 1px solid rgba(255,196,0,0.18); }
+    .benefit-icon.icon-rank   { background: rgba(31,162,255,0.1); border: 1px solid rgba(31,162,255,0.18); }
+    .benefit-icon.icon-quest  { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.18); }
+
+    .benefit-text strong {
+      display: block;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 0.22rem;
+    }
+    .benefit-text p {
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .panel-divider {
+      margin: 1.5rem 0;
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    /* Member count pill */
+    .member-count-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.95rem;
+      border-radius: 999px;
+      background: rgba(16,185,129,0.08);
+      border: 1px solid rgba(16,185,129,0.2);
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-top: 0.4rem;
+    }
+    .member-count-pill .mc-dot {
+      position: relative;
+      width: 8px; height: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .member-count-pill .mc-dot::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #10B981;
+      opacity: 0.35;
+      animation: pulse-ring 2s ease-out infinite;
+    }
+    .member-count-pill .mc-dot::after {
+      content: "";
+      display: block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #10B981;
+      position: relative;
+      z-index: 1;
+    }
+    .member-count-pill strong { color: #fff; }
+
+    /* ─── Generic hero (no ref param) ─── */
+    .generic-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 1rem;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(31,162,255,0.1), rgba(255,122,0,0.1));
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--muted);
+      margin-bottom: 1.6rem;
+    }
+
+    /* ─── Loading / error states ─── */
+    .join-state-loading { display: block; }
+    .join-state-loaded  { display: none; }
+    .join-state-generic { display: none; }
+
+    /* ─── Animations ─── */
+    @keyframes pulse-ring {
+      0%   { transform: scale(0.8); opacity: 0.6; }
+      70%  { transform: scale(2.4); opacity: 0; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fade-up 0.55s ease both; }
+    .fade-up-delay-1 { animation-delay: 0.08s; }
+    .fade-up-delay-2 { animation-delay: 0.16s; }
+    .fade-up-delay-3 { animation-delay: 0.24s; }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      .join-inner {
+        grid-template-columns: 1fr;
+        gap: 2.4rem;
+      }
+      .join-hero { padding: 5rem 0 4rem; }
+    }
+    @media (max-width: 640px) {
+      .join-hero { padding: 4rem 0 3rem; }
+      .join-heading { font-size: clamp(2.2rem, 10vw, 3.2rem); }
+      .join-actions { flex-direction: column; align-items: flex-start; }
+      .join-cta { width: 100%; justify-content: center; }
+      .join-panel { padding: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ═══ HEADER ═══════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>
+          VaultSpark Studios
+          <small>The vault is sparked</small>
+        </span>
+      </a>
+
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown">
+          <a href="/games/">Games <span class="caret">&#9660;</span></a>
+          <div class="nav-dropdown">
+            <span class="dropdown-label">Games</span>
+            <a href="/games/">All Games</a>
+            <div class="dropdown-divider"></div>
+            <a href="/games/call-of-doodie/">Call of Doodie</a>
+            <a href="/games/gridiron-gm/">Gridiron GM</a>
+            <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
+          </div>
+        </div>
+        <div class="nav-item has-dropdown">
+          <a href="/projects/">Projects <span class="caret">&#9660;</span></a>
+          <div class="nav-dropdown">
+            <span class="dropdown-label">Projects</span>
+            <a href="/projects/">All Projects</a>
+            <div class="dropdown-divider"></div>
+            <a href="/projects/promogrind/">PromoGrind</a>
+            <a href="/projects/vaultfront/">VaultFront</a>
+            <a href="/roadmap/">Vault Pipeline</a>
+            <a href="/journal/">Signal Log</a>
+          </div>
+        </div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub">
+          <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        </a>
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══ MAIN ═════════════════════════════════════════════ -->
+  <main id="main-content">
+    <section class="join-hero" aria-labelledby="join-heading">
+      <div class="container">
+        <div class="join-inner">
+
+          <!-- ── Left: copy ─── -->
+          <div class="join-copy fade-up">
+
+            <!-- Referrer card (shown when ?ref= is present and fetch succeeds) -->
+            <div id="referrer-card" class="referrer-card join-state-loading" aria-live="polite" aria-label="Referrer information">
+              <div class="referrer-avatar" id="ref-avatar" aria-hidden="true">⚡</div>
+              <span>
+                <span class="referrer-name" id="ref-name">Loading…</span>
+                <span id="ref-rank-badge" class="rank-badge rank-spark-initiate" style="margin-left:0.45rem;"></span>
+                &nbsp;invited you to the Vault
+              </span>
+            </div>
+
+            <!-- Generic badge (shown when no ref or fetch fails) -->
+            <div id="generic-badge" class="generic-badge join-state-generic">
+              <span>⚡</span>
+              <span>VaultSpark Studios</span>
+            </div>
+
+            <!-- Heading changes based on state -->
+            <h1 class="join-heading" id="join-heading">
+              <span id="join-heading-ref" style="display:none;">Your Vault<br>Awaits.</span>
+              <span id="join-heading-generic">Claim Your<br>Vault Spot.</span>
+            </h1>
+
+            <p class="join-subtext" id="join-subtext">
+              VaultSpark Studios is an independent game studio forging browser games,
+              cinematic worlds, and exclusive community experiences. Free to join — always.
+            </p>
+
+            <div class="join-actions fade-up fade-up-delay-1">
+              <a class="join-cta" href="/vault-member/#register" id="join-cta">
+                Claim Your Spot &nbsp;→
+              </a>
+              <span class="join-cta-note">Free forever. No credit card required.</span>
+            </div>
+
+            <!-- Live member count -->
+            <div style="margin-top:1.5rem;">
+              <div class="member-count-pill fade-up fade-up-delay-2">
+                <span class="mc-dot" aria-hidden="true"></span>
+                <span>
+                  <strong id="join-member-count">…</strong> members already in the Vault
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Right: benefits panel ─── -->
+          <aside class="join-panel fade-up fade-up-delay-2" aria-label="Vault member benefits">
+            <div class="join-panel-inner">
+              <div class="panel-label">Vault Member Benefits</div>
+
+              <ul class="benefit-list" role="list">
+                <li class="benefit-item">
+                  <div class="benefit-icon icon-lore" aria-hidden="true">📖</div>
+                  <div class="benefit-text">
+                    <strong>Classified Lore Access</strong>
+                    <p>Unlock character dispatches, world-building reveals, and classified canon fragments exclusive to vault members.</p>
+                  </div>
+                </li>
+                <li class="benefit-item">
+                  <div class="benefit-icon icon-rank" aria-hidden="true">⚡</div>
+                  <div class="benefit-text">
+                    <strong>Vault Rank System</strong>
+                    <p>Earn rank across every VaultSpark game — from Spark Initiate all the way to The Sparked. Your progress is permanent.</p>
+                  </div>
+                </li>
+                <li class="benefit-item">
+                  <div class="benefit-icon icon-quest" aria-hidden="true">🎯</div>
+                  <div class="benefit-text">
+                    <strong>Challenges &amp; Achievements</strong>
+                    <p>Studio-wide milestones, weekly vault challenges, and cross-game achievements that only registered members can unlock.</p>
+                  </div>
+                </li>
+              </ul>
+
+              <hr class="panel-divider" />
+
+              <div style="display:flex;align-items:center;gap:0.75rem;font-size:0.85rem;color:var(--muted);">
+                <img src="../assets/vaultspark-icon.webp" alt="" width="28" height="28" style="border-radius:8px;opacity:0.85;" aria-hidden="true" />
+                <span>Built by <strong style="color:var(--text);">VaultSpark Studios</strong> — Independent. No pay-to-win. No ads.</span>
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════ -->
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
+          <a href="/games/">All Games →</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/contact/">Contact</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://www.tiktok.com/@vaultsparkstudios" target="_blank" rel="noreferrer">TikTok</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span>
+          <a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp;
+          <a href="/contact/">Contact</a> &nbsp;·&nbsp;
+          <a href="/vault-member/">Vault Members</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══ SCRIPTS ═══════════════════════════════════════════ -->
+  <script src="../assets/supabase-public.js"></script>
+
+  <script>
+    /* ── Mobile nav ──────────────────────────────────────── */
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+  </script>
+
+  <script>
+    /* ── Rank slug → CSS class map ───────────────────────── */
+    const RANK_CLASSES = {
+      'spark initiate':  'rank-spark-initiate',
+      'vault runner':    'rank-vault-runner',
+      'rift scout':      'rank-rift-scout',
+      'vault guard':     'rank-vault-guard',
+      'vault breacher':  'rank-vault-breacher',
+      'void operative':  'rank-void-operative',
+      'vault keeper':    'rank-vault-keeper',
+      'forge master':    'rank-forge-master',
+      'the sparked':     'rank-the-sparked',
+    };
+
+    function rankClass(rankName) {
+      if (!rankName) return 'rank-spark-initiate';
+      return RANK_CLASSES[rankName.toLowerCase()] || 'rank-spark-initiate';
+    }
+
+    function showGeneric() {
+      document.getElementById('referrer-card').style.display   = 'none';
+      document.getElementById('generic-badge').style.display   = 'inline-flex';
+      document.getElementById('join-heading-generic').style.display = '';
+      document.getElementById('join-heading-ref').style.display = 'none';
+    }
+
+    function showReferrer(member) {
+      const avatar   = document.getElementById('ref-avatar');
+      const name     = document.getElementById('ref-name');
+      const badge    = document.getElementById('ref-rank-badge');
+      const card     = document.getElementById('referrer-card');
+      const headingRef     = document.getElementById('join-heading-ref');
+      const headingGeneric = document.getElementById('join-heading-generic');
+      const subtext  = document.getElementById('join-subtext');
+
+      avatar.textContent = member.avatar_emoji || '⚡';
+      name.textContent   = member.username || 'A Vault Member';
+
+      const rn = member.rank_name || 'Spark Initiate';
+      badge.textContent = rn;
+      badge.className   = 'rank-badge ' + rankClass(rn);
+
+      // Swap heading
+      headingRef.style.display     = '';
+      headingGeneric.style.display = 'none';
+
+      // Update subtext to be personalised
+      subtext.textContent = member.username
+        ? `${member.username} personally unlocked the vault door for you. VaultSpark Studios is a free indie game community — earn rank, unlock lore, and play across every world we forge.`
+        : 'You've been personally invited to the Vault. Free to join — forever.';
+
+      card.style.display = 'inline-flex';
+      card.classList.remove('join-state-loading');
+    }
+
+    /* ── Referral flow ───────────────────────────────────── */
+    (async function() {
+      const params = new URLSearchParams(window.location.search);
+      const ref    = params.get('ref');
+
+      if (!ref) { showGeneric(); return; }
+
+      try {
+        const { data, error } = await VSPublic
+          .from('vault_members')
+          .select('username,rank_name,avatar_emoji')
+          .eq('username', ref)
+          .limit(1)
+          .get();
+
+        if (error || !data || data.length === 0) {
+          showGeneric();
+          return;
+        }
+
+        showReferrer(data[0]);
+      } catch (_) {
+        showGeneric();
+      }
+    })();
+
+    /* ── Live member count ───────────────────────────────── */
+    (async function() {
+      try {
+        const count = await VSPublic.from('vault_members').headCount();
+        if (count > 0) {
+          document.getElementById('join-member-count').textContent =
+            count.toLocaleString('en-US');
+        }
+      } catch (_) {}
+    })();
+  </script>
+
+</body>
+</html>

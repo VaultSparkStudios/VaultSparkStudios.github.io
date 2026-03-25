@@ -61,6 +61,17 @@
     .podium-place:nth-child(1) .podium-bar { height:60px; }
     .podium-place:nth-child(2) .podium-bar { height:90px; border-top-color:rgba(255,196,0,0.3); }
     .podium-place:nth-child(3) .podium-bar { height:45px; }
+    /* Game tabs */
+    .lb-game-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:2rem; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:0; }
+    .lb-game-tab { padding:0.6rem 1.4rem; border-radius:8px 8px 0 0; border:1px solid transparent; border-bottom:none; background:transparent; color:var(--muted); font-size:0.88rem; font-weight:700; font-family:inherit; cursor:pointer; transition:all 0.15s; position:relative; bottom:-1px; }
+    .lb-game-tab:hover { color:var(--text); background:rgba(255,255,255,0.04); }
+    .lb-game-tab.active { background:var(--panel); border-color:rgba(255,255,255,0.1); border-bottom-color:var(--panel); color:var(--gold); }
+    .lb-game-panel { display:none; }
+    .lb-game-panel.active { display:block; }
+    .lb-game-empty { text-align:center; padding:3.5rem 1.5rem; }
+    .lb-game-empty .empty-icon { font-size:3rem; margin-bottom:1rem; }
+    .lb-game-empty p { color:var(--muted); font-size:0.95rem; line-height:1.65; margin-bottom:1.25rem; }
+    .lb-game-notice { background:rgba(31,162,255,0.06); border:1px solid rgba(31,162,255,0.15); border-radius:10px; padding:1rem 1.25rem; font-size:0.88rem; color:var(--muted); margin-bottom:1.75rem; line-height:1.6; }
     /* Stats */
     .lb-stats-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:2rem; }
     .lb-stat-card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:1.25rem; text-align:center; }
@@ -125,6 +136,16 @@
     </section>
     <section style="padding:0 0 4rem;">
       <div class="container">
+        <!-- Game Tabs -->
+        <div class="lb-game-tabs" role="tablist" aria-label="Leaderboard game selection">
+          <button class="lb-game-tab active" role="tab" aria-selected="true" aria-controls="lb-panel-global" data-game="global">Global</button>
+          <button class="lb-game-tab" role="tab" aria-selected="false" aria-controls="lb-panel-football" data-game="football">Football GM</button>
+          <button class="lb-game-tab" role="tab" aria-selected="false" aria-controls="lb-panel-doodie" data-game="doodie">Call of Doodie</button>
+        </div>
+
+        <!-- Global Panel -->
+        <div class="lb-game-panel active" id="lb-panel-global" role="tabpanel" aria-labelledby="tab-global">
+
         <div class="lb-stats-strip">
           <div class="lb-stat-card"><div class="lb-stat-label">Total Members</div><div class="lb-stat-value" id="lb-total-members">—</div></div>
           <div class="lb-stat-card"><div class="lb-stat-label">Points Awarded</div><div class="lb-stat-value" id="lb-total-points">—</div></div>
@@ -169,6 +190,57 @@
           <p><strong>Want to climb the board?</strong> Join the vault, complete challenges, and play games to earn Vault Points.</p>
           <div style="display:flex;gap:0.75rem;"><a href="/vault-member/#register" class="button button-sm">Join The Vault</a><a href="/games/" class="button-secondary" style="padding:0.55rem 1.1rem;font-size:0.88rem;">Play Games</a></div>
         </div>
+
+        </div><!-- /lb-panel-global -->
+
+        <!-- Football GM Panel -->
+        <div class="lb-game-panel" id="lb-panel-football" role="tabpanel" aria-labelledby="tab-football">
+          <div class="lb-game-notice">
+            Game leaderboard syncs when Football GM reports scores. Global vault points earned through Football GM challenges are tracked below.
+          </div>
+          <div class="lb-table-wrap" id="football-table-wrap">
+            <table class="lb-table" aria-label="Football GM leaderboard">
+              <thead><tr><th>Rank</th><th>Member</th><th>Points</th><th>Activity</th></tr></thead>
+              <tbody id="football-tbody">
+                <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="football-empty" style="display:none;">
+            <div class="lb-game-empty">
+              <div class="empty-icon">🏈</div>
+              <p>No scores yet — play VaultSpark Football GM to appear here.</p>
+              <a href="/games/vaultspark-football-gm/" class="button button-sm">Play Football GM</a>
+            </div>
+          </div>
+        </div><!-- /lb-panel-football -->
+
+        <!-- Call of Doodie Panel -->
+        <div class="lb-game-panel" id="lb-panel-doodie" role="tabpanel" aria-labelledby="tab-doodie">
+          <div class="lb-game-notice">
+            Game leaderboard syncs when Call of Doodie reports scores. Global vault points earned through Call of Doodie challenges are tracked below.
+          </div>
+          <div class="lb-table-wrap" id="doodie-table-wrap">
+            <table class="lb-table" aria-label="Call of Doodie leaderboard">
+              <thead><tr><th>Rank</th><th>Member</th><th>Points</th><th>Activity</th></tr></thead>
+              <tbody id="doodie-tbody">
+                <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+                <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="doodie-empty" style="display:none;">
+            <div class="lb-game-empty">
+              <div class="empty-icon">💣</div>
+              <p>No scores yet — play Call of Doodie to appear here.</p>
+              <a href="/games/call-of-doodie/" class="button button-sm">Play Call of Doodie</a>
+            </div>
+          </div>
+        </div><!-- /lb-panel-doodie -->
+
       </div>
     </section>
   </main>
@@ -359,6 +431,83 @@
           b.classList.add('active');
           activePeriod=b.dataset.period;
           apply();
+        });
+      });
+
+      // ── Game tabs ──────────────────────────────────────────────
+      document.querySelectorAll('.lb-game-tab').forEach(function(b){
+        b.addEventListener('click',function(){
+          document.querySelectorAll('.lb-game-tab').forEach(function(x){
+            x.classList.remove('active');
+            x.setAttribute('aria-selected','false');
+          });
+          document.querySelectorAll('.lb-game-panel').forEach(function(p){p.classList.remove('active');});
+          b.classList.add('active');
+          b.setAttribute('aria-selected','true');
+          var panel=document.getElementById('lb-panel-'+b.dataset.game);
+          if(panel)panel.classList.add('active');
+        });
+      });
+
+      // ── Game-specific leaderboards ─────────────────────────────
+      function renderGameTable(tbodyId, wrapId, emptyId, rows) {
+        var tbody = document.getElementById(tbodyId);
+        var wrap  = document.getElementById(wrapId);
+        var empty = document.getElementById(emptyId);
+        if (!tbody) return;
+        if (!rows || rows.length === 0) {
+          if (wrap)  wrap.style.display  = 'none';
+          if (empty) empty.style.display = '';
+          return;
+        }
+        if (wrap)  wrap.style.display  = '';
+        if (empty) empty.style.display = 'none';
+        tbody.innerHTML = rows.map(function(r, i) {
+          return '<tr>' +
+            '<td><span class="lb-rank-num">' + (i + 1) + '</span></td>' +
+            '<td><span class="lb-username">' + esc(r.username) + '</span></td>' +
+            '<td><span class="lb-points">' + (r.total_pts || 0).toLocaleString() + '</span></td>' +
+            '<td><span class="lb-rank-title" style="color:var(--muted)">' + esc(r.latest_label || '') + '</span></td>' +
+            '</tr>';
+        }).join('');
+      }
+
+      function fetchGameLeaderboard(keyword, tbodyId, wrapId, emptyId) {
+        // Fetch point_events where label ilike *keyword* joined to vault_members
+        fetch(SB+'/rest/v1/point_events?select=user_id,points,label,vault_members(username)&label=ilike.*'+encodeURIComponent(keyword)+'*&order=created_at.desc&limit=200', {headers:H})
+          .then(function(r){return r.ok?r.json():[];})
+          .then(function(events){
+            if(!Array.isArray(events)||events.length===0){
+              renderGameTable(tbodyId, wrapId, emptyId, []);
+              return;
+            }
+            // Aggregate: sum points per user
+            var agg = {};
+            events.forEach(function(ev){
+              var uname = ev.vault_members && ev.vault_members.username ? ev.vault_members.username : ev.user_id;
+              if(!uname) return;
+              if(!agg[uname]){agg[uname]={username:uname,total_pts:0,latest_label:''};}
+              agg[uname].total_pts += (ev.points||0);
+              if(!agg[uname].latest_label) agg[uname].latest_label = ev.label||'';
+            });
+            var rows = Object.values(agg).sort(function(a,b){return b.total_pts-a.total_pts;});
+            renderGameTable(tbodyId, wrapId, emptyId, rows);
+          })
+          .catch(function(){renderGameTable(tbodyId, wrapId, emptyId, []);});
+      }
+
+      // Fetch game data on first tab activation (lazy)
+      var footballFetched = false, doodieFetched = false;
+      document.querySelectorAll('.lb-game-tab').forEach(function(b){
+        b.addEventListener('click',function(){
+          if(b.dataset.game==='football' && !footballFetched){
+            footballFetched=true;
+            fetchGameLeaderboard('football','football-tbody','football-table-wrap','football-empty');
+          }
+          if(b.dataset.game==='doodie' && !doodieFetched){
+            doodieFetched=true;
+            fetchGameLeaderboard('doodie','doodie-tbody','doodie-table-wrap','doodie-empty');
+          }
         });
       });
     })();
