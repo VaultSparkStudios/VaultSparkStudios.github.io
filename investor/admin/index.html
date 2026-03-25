@@ -98,6 +98,7 @@
         <button class="inv-tab active" data-tab="roster">Investor Roster</button>
         <button class="inv-tab" data-tab="update">Post Update</button>
         <button class="inv-tab" data-tab="activity">Activity Log</button>
+        <button class="inv-tab" data-tab="messages" id="tabMessages">Messages</button>
       </div>
 
       <!-- Tab: Roster -->
@@ -195,6 +196,18 @@
           </select>
         </div>
         <div class="inv-card" id="adminActivityLog"></div>
+      </div>
+
+      <!-- Tab: Messages -->
+      <div class="inv-tab-panel" id="tab-messages">
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem;">
+          <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer; font-size:0.875rem; color:var(--muted);">
+            <input type="checkbox" id="messagesUnreadFilter"
+                   style="width:15px; height:15px; accent-color:#1FA2FF;" />
+            Show unread only
+          </label>
+        </div>
+        <div class="inv-card" id="adminMessagesLog" style="padding:0; overflow:hidden;"></div>
       </div>
 
     </div>

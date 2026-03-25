@@ -285,6 +285,120 @@
     UI().showToast(`Update ${publish ? 'published' : 'saved as draft'}.`, 'success');
   }
 
+  // ── Messages ─────────────────────────────────────────────────────────────────
+
+  const PRIORITY_META = {
+    urgent:   { label: 'Urgent',   cls: 'priority-urgent'   },
+    question: { label: 'Question', cls: 'priority-question' },
+    general:  { label: 'General',  cls: 'priority-general'  }
+  };
+
+  async function loadMessages(unreadOnly) {
+    const container = document.getElementById('adminMessagesLog');
+    if (!container) return;
+    UI().showSkeleton(container, 4, 'row');
+
+    const { data, error } = await sb().rpc('admin_get_investor_messages', {
+      p_unread_only: !!unreadOnly
+    });
+
+    if (error || data?.error) {
+      container.innerHTML = `<div class="inv-empty">Error: ${data?.error || error?.message}</div>`;
+      return;
+    }
+
+    const messages = Array.isArray(data) ? data : [];
+    if (messages.length === 0) {
+      container.innerHTML = '<div class="inv-empty">No messages yet.</div>';
+      return;
+    }
+
+    container.innerHTML = `
+      <table class="inv-admin-table">
+        <thead>
+          <tr>
+            <th>Investor</th>
+            <th>Subject</th>
+            <th>Priority</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${messages.map(msg => {
+            const pm = PRIORITY_META[msg.priority] || PRIORITY_META.general;
+            return `
+              <tr data-message-id="${UI().escHtml(msg.id)}"
+                  style="${msg.read ? 'opacity:0.65;' : ''}">
+                <td style="color:var(--text); font-weight:500;">
+                  ${UI().escHtml(msg.display_name)}
+                </td>
+                <td>
+                  <span style="color:var(--text);">${UI().escHtml(msg.subject)}</span>
+                  <div style="font-size:0.78rem; color:var(--dim); margin-top:0.2rem; max-width:320px;
+                               white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    ${UI().escHtml(msg.message.substring(0, 120))}${msg.message.length > 120 ? '…' : ''}
+                  </div>
+                </td>
+                <td>
+                  <span class="inv-msg-priority ${UI().escHtml(pm.cls)}">${UI().escHtml(pm.label)}</span>
+                </td>
+                <td>${UI().formatDateShort(msg.created_at)}</td>
+                <td>
+                  ${msg.read
+                    ? '<span style="font-size:0.8rem; color:var(--dim);">Read</span>'
+                    : '<span style="font-size:0.8rem; color:#1FA2FF; font-weight:600;">Unread</span>'}
+                </td>
+                <td>
+                  ${!msg.read
+                    ? `<button class="inv-btn inv-btn-sm inv-btn-ghost admin-mark-read-btn"
+                               data-id="${UI().escHtml(msg.id)}">
+                         Mark read
+                       </button>`
+                    : ''}
+                </td>
+              </tr>`;
+          }).join('')}
+        </tbody>
+      </table>`;
+
+    // Wire mark-read buttons
+    container.querySelectorAll('.admin-mark-read-btn').forEach(btn => {
+      btn.addEventListener('click', async function () {
+        const id = this.dataset.id;
+        this.disabled = true;
+        this.textContent = '…';
+        await markMessageRead(id);
+        const unreadOnly = document.getElementById('messagesUnreadFilter')?.checked;
+        loadMessages(unreadOnly);
+        updateMessageBadge();
+      });
+    });
+  }
+
+  async function markMessageRead(messageId) {
+    const { error } = await sb()
+      .from('investor_messages')
+      .update({ read: true })
+      .eq('id', messageId);
+
+    if (error) {
+      UI().showToast('Could not mark message as read.', 'error');
+    }
+  }
+
+  async function updateMessageBadge() {
+    const tabBtn = document.getElementById('tabMessages');
+    if (!tabBtn) return;
+
+    const { data, error } = await sb().rpc('get_investor_message_count');
+    if (error || !data || data.error) return;
+
+    const unread = data.unread ?? 0;
+    tabBtn.textContent = unread > 0 ? `Messages (${unread})` : 'Messages';
+  }
+
   // ── Init ─────────────────────────────────────────────────────────────────────
   window.VSInvestorAdmin = {
     async init(session) {
@@ -304,6 +418,8 @@
       initTabs();
       loadRoster();
       loadAdminActivity(null);
+      loadMessages(false);
+      updateMessageBadge();
 
       // Modal events
       document.getElementById('addInvestorBtn')?.addEventListener('click', () => openEditModal(null));
@@ -314,6 +430,11 @@
       // Activity filter
       document.getElementById('activityInvestorFilter')?.addEventListener('change', function () {
         loadAdminActivity(this.value || null);
+      });
+
+      // Messages unread filter
+      document.getElementById('messagesUnreadFilter')?.addEventListener('change', function () {
+        loadMessages(this.checked);
       });
 
       // Populate investor filter dropdown

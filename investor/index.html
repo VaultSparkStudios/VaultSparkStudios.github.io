@@ -32,8 +32,55 @@
       display: none;
     }
 
+    .inv-kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .inv-kpi-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .inv-kpi-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+
+    .inv-kpi-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+    }
+
+    .inv-kpi-value.loading {
+      display: inline-block;
+      width: 4rem;
+      height: 1.75rem;
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      animation: inv-pulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes inv-pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
     @media (max-width: 900px) {
       .inv-dashboard-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 600px) {
+      .inv-kpi-strip { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
@@ -74,6 +121,25 @@
         <div class="inv-card inv-skeleton inv-skeleton-card"></div>
         <div class="inv-card inv-skeleton inv-skeleton-card"></div>
         <div class="inv-card inv-skeleton inv-skeleton-card"></div>
+      </div>
+
+      <!-- Studio KPIs -->
+      <div class="inv-card" style="margin-bottom:2rem;">
+        <div class="inv-card-title" style="margin-bottom:1rem;">Studio KPIs</div>
+        <div class="inv-kpi-strip" id="kpiStrip">
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiMembers" aria-label="Loading"></span>
+            <span class="inv-kpi-label">Vault Members</span>
+          </div>
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiSessions" aria-label="Loading"></span>
+            <span class="inv-kpi-label">Game Sessions (7 days)</span>
+          </div>
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiChallenges" aria-label="Loading"></span>
+            <span class="inv-kpi-label">Active Challenges</span>
+          </div>
+        </div>
       </div>
 
       <!-- Main grid -->
@@ -159,6 +225,9 @@
 
       // Load activity
       loadActivity();
+
+      // Load studio KPIs
+      loadKPIs();
 
       // Realtime: new updates
       sb.channel('investor-updates-rt')
@@ -279,6 +348,43 @@
       }
 
       area.innerHTML = events.map(e => UI.renderActivityRow(e)).join('');
+    }
+
+    async function loadKPIs() {
+      // Fetch KPIs (anon-readable tables)
+      const [membersRes, sessionsRes, challengesRes] = await Promise.all([
+        VSSupabase.from('vault_members').select('id', { count: 'exact', head: true }),
+        VSSupabase.from('game_sessions').select('id', { count: 'exact', head: true })
+          .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
+        VSSupabase.from('challenges').select('id', { count: 'exact', head: true })
+          .eq('is_active', true)
+      ]);
+
+      const kpiMembers    = membersRes.count    ?? '—';
+      const kpiSessions   = sessionsRes.count   ?? '—';
+      const kpiChallenges = challengesRes.count ?? '—';
+
+      const fmtNum = (n) =>
+        typeof n === 'number'
+          ? n.toLocaleString('en-US')
+          : String(n);
+
+      const membersEl    = document.getElementById('kpiMembers');
+      const sessionsEl   = document.getElementById('kpiSessions');
+      const challengesEl = document.getElementById('kpiChallenges');
+
+      if (membersEl) {
+        membersEl.classList.remove('loading');
+        membersEl.textContent = fmtNum(kpiMembers);
+      }
+      if (sessionsEl) {
+        sessionsEl.classList.remove('loading');
+        sessionsEl.textContent = fmtNum(kpiSessions);
+      }
+      if (challengesEl) {
+        challengesEl.classList.remove('loading');
+        challengesEl.textContent = fmtNum(kpiChallenges);
+      }
     }
 
     function wireDocButtons(container) {

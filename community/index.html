@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RSGLPP4KDZ');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Community | VaultSpark Studios</title>
+  <meta name="description" content="Join the VaultSpark community — Vault Members, Discord, fan art, leaderboards, and challenges. Where players, creators, and fans gather." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/community/" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Vault Community | VaultSpark Studios" />
+  <meta property="og:description" content="Where players, creators, and fans gather. Join the vault, earn points, and be part of the forge." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/community/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSpark" />
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <style>
+    /* ── Hero ── */
+    .comm-hero { padding:5rem 0 3rem; position:relative; text-align:center; }
+    .comm-hero::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 15% 60%, rgba(31,162,255,0.09), transparent 38%), radial-gradient(circle at 85% 40%, rgba(255,196,0,0.07), transparent 38%); }
+    .comm-hero .container { position:relative; z-index:1; }
+    .comm-hero h1 { font-family:Georgia,"Times New Roman",serif; font-size:clamp(2.6rem,6vw,4.5rem); line-height:1; letter-spacing:-0.04em; margin:0.75rem 0 1rem; }
+    .comm-hero p { color:var(--muted); font-size:1.05rem; max-width:52ch; margin:0 auto 2rem; line-height:1.65; }
+    .hero-actions { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
+
+    /* ── Stats strip ── */
+    .comm-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:3rem; }
+    .comm-stat { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:1.5rem; text-align:center; }
+    .comm-stat-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--dim); margin-bottom:0.5rem; }
+    .comm-stat-value { font-size:2rem; font-weight:900; color:var(--gold); line-height:1; }
+    .comm-stat-sub { font-size:0.78rem; color:var(--muted); margin-top:0.35rem; }
+
+    /* ── Section shared ── */
+    .comm-section { padding:3.5rem 0; }
+    .comm-section + .comm-section { border-top:1px solid rgba(255,255,255,0.05); }
+    .comm-section-eyebrow { font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--dim); margin-bottom:0.5rem; }
+    .comm-section h2 { font-family:Georgia,"Times New Roman",serif; font-size:clamp(1.8rem,4vw,2.8rem); letter-spacing:-0.03em; margin:0 0 0.75rem; line-height:1.1; }
+
+    /* ── Discord CTA ── */
+    .discord-banner { background:linear-gradient(135deg, rgba(88,101,242,0.15), rgba(31,162,255,0.08)); border:1px solid rgba(88,101,242,0.3); border-radius:20px; padding:2.5rem 2.2rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; }
+    .discord-banner-copy h3 { font-size:1.4rem; font-weight:800; margin-bottom:0.5rem; }
+    .discord-banner-copy p { font-size:0.92rem; color:var(--muted); margin:0; max-width:46ch; line-height:1.6; }
+    .discord-btn { display:inline-flex; align-items:center; gap:0.6rem; background:#5865F2; color:#fff; font-weight:700; font-size:0.95rem; padding:0.85rem 1.8rem; border-radius:999px; text-decoration:none; transition:opacity 0.18s, transform 0.18s; white-space:nowrap; }
+    .discord-btn:hover { opacity:0.88; transform:translateY(-1px); }
+    .discord-icon { width:22px; height:22px; fill:currentColor; }
+
+    /* ── Fan Art ── */
+    .fan-art-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.25rem; }
+    .fan-art-card { border-radius:14px; overflow:hidden; aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700; color:rgba(255,255,255,0.35); text-align:center; padding:1rem; }
+    .fan-art-card:nth-child(1) { background:linear-gradient(135deg, rgba(255,196,0,0.12), rgba(255,122,0,0.08)); border:1px solid rgba(255,196,0,0.15); }
+    .fan-art-card:nth-child(2) { background:linear-gradient(135deg, rgba(31,162,255,0.12), rgba(139,92,246,0.08)); border:1px solid rgba(31,162,255,0.15); }
+    .fan-art-card:nth-child(3) { background:linear-gradient(135deg, rgba(139,92,246,0.12), rgba(214,40,40,0.08)); border:1px solid rgba(139,92,246,0.15); }
+    .fan-art-card:nth-child(4) { background:linear-gradient(135deg, rgba(16,185,129,0.12), rgba(31,162,255,0.08)); border:1px solid rgba(16,185,129,0.15); }
+    .fan-art-submit { font-size:0.87rem; color:var(--muted); line-height:1.6; }
+    .fan-art-submit a { color:var(--gold); }
+
+    /* ── Leaderboard preview ── */
+    .lb-preview-table { width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+    .lb-preview-table th { font-size:0.7rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--dim); padding:0.85rem 1.2rem; text-align:left; border-bottom:1px solid var(--line); }
+    .lb-preview-table td { padding:0.8rem 1.2rem; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.88rem; }
+    .lb-preview-table tr:last-child td { border-bottom:none; }
+    .lb-preview-table tr:hover td { background:rgba(255,255,255,0.02); }
+    .lbp-rank { font-weight:800; color:var(--dim); font-size:0.8rem; }
+    .lbp-name { font-weight:600; color:var(--text); }
+    .lbp-pts { font-weight:700; color:var(--gold); }
+    .lbp-skeleton td { animation:comm-pulse 1.2s ease-in-out infinite; }
+    .lbp-skeleton td span { display:inline-block; height:0.8rem; border-radius:4px; background:rgba(255,255,255,0.06); }
+    @keyframes comm-pulse { 0%,100%{opacity:0.5;}50%{opacity:1;} }
+    .lb-preview-footer { display:flex; justify-content:flex-end; margin-top:0.75rem; }
+
+    /* ── Challenges ── */
+    .challenges-box { background:linear-gradient(135deg, rgba(255,196,0,0.07), rgba(255,122,0,0.04)); border:1px solid rgba(255,196,0,0.2); border-radius:16px; padding:2.2rem; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap; }
+    .challenges-box h3 { font-size:1.15rem; font-weight:800; margin-bottom:0.4rem; }
+    .challenges-box p { font-size:0.9rem; color:var(--muted); margin:0; max-width:48ch; line-height:1.6; }
+
+    /* ── Bottom CTA ── */
+    .comm-bottom-cta { padding:4rem 0; text-align:center; background:linear-gradient(180deg, transparent, rgba(255,196,0,0.03)); border-top:1px solid rgba(255,255,255,0.05); }
+    .comm-bottom-cta h2 { font-family:Georgia,"Times New Roman",serif; font-size:clamp(2rem,5vw,3.2rem); letter-spacing:-0.04em; margin:0.5rem 0 1rem; }
+    .comm-bottom-cta p { color:var(--muted); max-width:48ch; margin:0 auto 2rem; line-height:1.65; }
+
+    /* ── Responsive ── */
+    @media(max-width:768px) {
+      .comm-stats { grid-template-columns:1fr 1fr; }
+      .fan-art-grid { grid-template-columns:1fr 1fr; }
+      .discord-banner { flex-direction:column; }
+      .challenges-box { flex-direction:column; }
+    }
+    @media(max-width:480px) {
+      .comm-stats { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/contact/">Contact</a>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- Hero -->
+    <section class="comm-hero" aria-labelledby="comm-heading">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Community</span>
+        <h1 id="comm-heading">The Vault Community</h1>
+        <p>Where players, creators, and fans gather.</p>
+        <div class="hero-actions">
+          <a href="/vault-member/#register" class="button">Join The Vault</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer" class="button-secondary" style="padding:0.75rem 1.6rem;">Join Discord</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Strip -->
+    <section class="comm-section" style="padding-top:0;">
+      <div class="container">
+        <div class="comm-stats">
+          <div class="comm-stat">
+            <div class="comm-stat-label">Total Members</div>
+            <div class="comm-stat-value" id="stat-members">—</div>
+            <div class="comm-stat-sub">Vault Members registered</div>
+          </div>
+          <div class="comm-stat">
+            <div class="comm-stat-label">Sessions This Week</div>
+            <div class="comm-stat-value" id="stat-sessions">—</div>
+            <div class="comm-stat-sub">Game sessions logged</div>
+          </div>
+          <div class="comm-stat">
+            <div class="comm-stat-label">Discord</div>
+            <div class="comm-stat-value" style="font-size:1.15rem;padding-top:0.25rem;"><a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer" style="color:var(--gold);text-decoration:none;">Join Us</a></div>
+            <div class="comm-stat-sub">Community server open</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Discord CTA -->
+    <section class="comm-section">
+      <div class="container">
+        <div class="discord-banner">
+          <div class="discord-banner-copy">
+            <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Chat</div>
+            <h3>Join The Discord</h3>
+            <p>The main gathering point for Vault Members. Game talk, challenges, announcements, and fan art. Come in.</p>
+          </div>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer" class="discord-btn" aria-label="Join VaultSpark Discord server">
+            <svg class="discord-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+            Join The Discord
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fan Art Showcase -->
+    <section class="comm-section">
+      <div class="container">
+        <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Fan Art</div>
+        <h2>Fan Art Showcase</h2>
+        <p style="color:var(--muted);font-size:0.95rem;max-width:52ch;line-height:1.65;margin-bottom:1.5rem;">VaultSpark-inspired creations from the community. From game art to lore illustrations — share what the vault sparks in you.</p>
+        <div class="fan-art-grid" aria-label="Fan art showcase grid">
+          <div class="fan-art-card" role="img" aria-label="Fan art placeholder 1">Fan Art<br>Coming Soon</div>
+          <div class="fan-art-card" role="img" aria-label="Fan art placeholder 2">Fan Art<br>Coming Soon</div>
+          <div class="fan-art-card" role="img" aria-label="Fan art placeholder 3">Fan Art<br>Coming Soon</div>
+          <div class="fan-art-card" role="img" aria-label="Fan art placeholder 4">Fan Art<br>Coming Soon</div>
+        </div>
+        <p class="fan-art-submit">Share your VaultSpark creations in <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord #fan-art</a> or <a href="/contact/">email us</a>. The best pieces get featured here.</p>
+      </div>
+    </section>
+
+    <!-- Leaderboard Preview -->
+    <section class="comm-section">
+      <div class="container">
+        <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Rankings</div>
+        <h2>Community Leaderboard</h2>
+        <p style="color:var(--muted);font-size:0.95rem;max-width:52ch;line-height:1.65;margin-bottom:1.5rem;">Top Vault Members ranked by points. Earn points through games, challenges, and community participation.</p>
+        <table class="lb-preview-table" aria-label="Top 5 leaderboard preview">
+          <thead>
+            <tr><th>#</th><th>Member</th><th>Points</th></tr>
+          </thead>
+          <tbody id="lbp-tbody">
+            <tr class="lbp-skeleton"><td><span style="width:20px;">&nbsp;</span></td><td><span style="width:100px;">&nbsp;</span></td><td><span style="width:50px;">&nbsp;</span></td></tr>
+            <tr class="lbp-skeleton"><td><span style="width:20px;">&nbsp;</span></td><td><span style="width:80px;">&nbsp;</span></td><td><span style="width:40px;">&nbsp;</span></td></tr>
+            <tr class="lbp-skeleton"><td><span style="width:20px;">&nbsp;</span></td><td><span style="width:90px;">&nbsp;</span></td><td><span style="width:45px;">&nbsp;</span></td></tr>
+          </tbody>
+        </table>
+        <div class="lb-preview-footer">
+          <a href="/leaderboards/" class="button-secondary" style="padding:0.55rem 1.2rem;font-size:0.88rem;">Full Leaderboard &rarr;</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Active Challenges -->
+    <section class="comm-section">
+      <div class="container">
+        <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Challenges</div>
+        <h2>Active Challenges</h2>
+        <div class="challenges-box">
+          <div>
+            <h3>Earn Vault Points</h3>
+            <p>Complete challenges to earn Vault Points and climb the leaderboard. Join the vault to see active challenges — new ones drop regularly.</p>
+          </div>
+          <a href="/vault-member/" class="button">View Challenges</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom CTA -->
+    <section class="comm-bottom-cta">
+      <div class="container">
+        <span class="eyebrow">The Vault Is Open</span>
+        <h2>Join The Vault</h2>
+        <p>Create your Vault Member account to earn points, track your stats, and become part of the VaultSpark community.</p>
+        <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+          <a href="/vault-member/#register" class="button">Create Account</a>
+          <a href="/games/" class="button-secondary" style="padding:0.75rem 1.6rem;">Play Games</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/studio/">About VaultSpark</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/investor/login/">Investor Portal</a>
+        </div>
+        <div class="footer-col">
+          <h4>Community</h4>
+          <a href="/leaderboards/">Leaderboard</a>
+          <a href="/community/">Community Hub</a>
+          <a href="/journal/archive/">Signal Archive</a>
+          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="/feed.xml">RSS Feed</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/kit.js" defer></script>
+  <script>
+    const hamburger=document.getElementById('hamburger'),navMenu=document.getElementById('nav-menu');
+    hamburger.addEventListener('click',()=>{const o=navMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
+    navMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{navMenu.classList.remove('open');hamburger.setAttribute('aria-expanded','false');document.body.style.overflow='';}));
+  </script>
+  <script>
+    (function(){
+      var SB='https://fjnpzjjyhnpmunfoycrp.supabase.co',KEY='sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+      var H={apikey:KEY,Authorization:'Bearer '+KEY};
+
+      function fmt(n){return n>=1000?(n/1000).toFixed(1)+'K':String(n);}
+      function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+      /* Vault member count */
+      fetch(SB+'/rest/v1/vault_members?select=username,points,created_at&order=points.desc&limit=50',{headers:H})
+        .then(function(r){return r.ok?r.json():[];})
+        .then(function(data){
+          if(!Array.isArray(data))data=[];
+          var ms=document.getElementById('stat-members');
+          if(ms)ms.textContent=fmt(data.length);
+
+          /* Top 5 leaderboard preview */
+          var tb=document.getElementById('lbp-tbody');
+          if(tb){
+            if(!data.length){
+              tb.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:1.5rem;">No members yet. Be the first.</td></tr>';
+            } else {
+              tb.innerHTML=data.slice(0,5).map(function(m,i){
+                return '<tr><td><span class="lbp-rank">'+(i+1)+'</span></td><td><span class="lbp-name">'+esc(m.username)+'</span></td><td><span class="lbp-pts">'+m.points.toLocaleString()+'</span></td></tr>';
+              }).join('');
+            }
+          }
+        }).catch(function(){
+          var tb=document.getElementById('lbp-tbody');
+          if(tb)tb.innerHTML='<tr><td colspan="3" style="text-align:center;color:var(--muted);padding:1.5rem;">Could not load data.</td></tr>';
+        });
+
+      /* Game sessions this week */
+      var wago=new Date(Date.now()-7*24*60*60*1000).toISOString();
+      fetch(SB+'/rest/v1/game_sessions?select=id&created_at=gte.'+encodeURIComponent(wago),{headers:Object.assign({},H,{'Prefer':'count=exact','Range':'0-0'})})
+        .then(function(r){
+          var cr=r.headers.get('Content-Range');
+          if(cr){var parts=cr.split('/');if(parts[1]&&parts[1]!=='*'){var ss=document.getElementById('stat-sessions');if(ss)ss.textContent=fmt(parseInt(parts[1],10));}}
+        }).catch(function(){});
+    })();
+  </script>
+</body>
+</html>

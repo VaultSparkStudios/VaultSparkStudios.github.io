@@ -1,9 +1,79 @@
 // VaultSpark Studios — Service Worker
-// Handles Web Push Notifications (Phase 9)
+// Handles: Push Notifications + Offline Asset Caching
 
-self.addEventListener('install', () => self.skipWaiting());
-self.addEventListener('activate', (e) => e.waitUntil(self.clients.claim()));
+const CACHE_NAME = 'vaultspark-v2';
+const STATIC_ASSETS = [
+  '/',
+  '/assets/style.css',
+  '/assets/kit.js',
+  '/assets/favicon.png',
+  '/assets/icon-256.png',
+  '/assets/vaultspark-icon.webp',
+  '/assets/vaultspark-cinematic-logo.webp',
+  '/404.html',
+];
 
+// ── Install: cache static assets ──────────────────────────────────────────
+self.addEventListener('install', (e) => {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
+  );
+  self.skipWaiting();
+});
+
+// ── Activate: remove old caches ───────────────────────────────────────────
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)))
+    )
+  );
+  self.clients.claim();
+});
+
+// ── Fetch: cache-first for static assets, network-first for pages ─────────
+self.addEventListener('fetch', (e) => {
+  const { request } = e;
+  const url = new URL(request.url);
+
+  // Only handle same-origin requests
+  if (url.origin !== self.location.origin) return;
+
+  // Cache-first strategy for assets (CSS, JS, images, fonts)
+  if (url.pathname.startsWith('/assets/')) {
+    e.respondWith(
+      caches.match(request).then((cached) =>
+        cached || fetch(request).then((res) => {
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(request, clone));
+          }
+          return res;
+        })
+      )
+    );
+    return;
+  }
+
+  // Network-first for HTML pages — fall back to cache, then 404
+  if (request.mode === 'navigate') {
+    e.respondWith(
+      fetch(request)
+        .then((res) => {
+          if (res.ok) {
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then((c) => c.put(request, clone));
+          }
+          return res;
+        })
+        .catch(() =>
+          caches.match(request).then((cached) => cached || caches.match('/404.html'))
+        )
+    );
+  }
+});
+
+// ── Push Notifications ─────────────────────────────────────────────────────
 self.addEventListener('push', function (event) {
   let data = {
     title: 'VaultSpark Studios',

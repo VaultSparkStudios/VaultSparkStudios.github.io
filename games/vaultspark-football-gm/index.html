@@ -21,11 +21,11 @@
   <meta property="og:description" content="Save your league. Return to it. Multiple save slots, Drive/Play sim modes, multi-season dynasty. The most complete football management sim on the web — free in your browser." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://vaultsparkstudios.com/games/vaultspark-football-gm/" />
-  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-vsfgm.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@VaultSpark" />
   <meta name="twitter:title" content="VaultSpark Football GM | Persistent Franchise Sim" />
-  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-vsfgm.png" />
 
   <link rel="icon" type="image/png" href="../../assets/favicon.png" />
   <link rel="apple-touch-icon" href="../../assets/icon-256.png" />
@@ -99,6 +99,7 @@
   </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
   <header class="site-header">
     <div class="container nav">
@@ -134,13 +135,29 @@
           <div class="hero-art-content">
             <h1>VaultSpark Football GM</h1>
             <div class="hero-art-actions">
-              <a class="button" href="/vaultspark-football-gm/">Play Beta — Free</a>
+              <a class="button" href="/games/vaultspark-football-gm/">Play Beta — Free</a>
               <a class="button-secondary" href="/vault-member/#register">Track Your Franchise</a>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    
+    <!-- Community stats bar -->
+    <div class="game-community-bar" id="gcb-vaultspark-football-gm">
+      <div class="container">
+        <div class="gcb-stat">
+          <span>Sessions this week:</span>
+          <strong id="gcb-week-vaultspark-football-gm">—</strong>
+        </div>
+        <div class="gcb-divider"></div>
+        <div class="gcb-stat">
+          <span>All-time sessions:</span>
+          <strong id="gcb-total-vaultspark-football-gm">—</strong>
+        </div>
+        <div class="gcb-divider"></div>
+        <a class="gcb-link" href="/leaderboards/">View Leaderboard</a>
+      </div>
+    </div>
 
     <section>
       <div class="container">
@@ -174,7 +191,7 @@
               <span>NFL Sim</span><span>Management</span><span>Persistent</span><span>Dynasty</span><span>Free</span>
             </div>
             <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-              <a class="button" href="/vaultspark-football-gm/">Play VaultSpark Football GM</a>
+              <a class="button" href="/games/vaultspark-football-gm/">Play VaultSpark Football GM</a>
               <a class="button-secondary" href="/games/">All Games</a>
             </div>
           </div>
@@ -314,6 +331,31 @@
         .catch(function() {
           el.innerHTML = '<a class="stream-fallback" href="https://github.com/VaultSparkStudios/vaultspark-football-gm" target="_blank" rel="noreferrer">View recent commits on GitHub →</a>';
         });
+    }());
+  </script>
+
+
+  <script>
+    (function() {
+      var SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+      var SB_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+      var slug   = 'vaultspark-football-gm';
+      var weekAgo = new Date(Date.now() - 7*24*60*60*1000).toISOString();
+      var headers = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY };
+      Promise.all([
+        fetch(SB_URL + '/rest/v1/game_sessions?select=id&game_slug=eq.' + slug + '&created_at=gte.' + encodeURIComponent(weekAgo), { headers: Object.assign({'Prefer':'count=exact'}, headers) }),
+        fetch(SB_URL + '/rest/v1/game_sessions?select=id&game_slug=eq.' + slug, { headers: Object.assign({'Prefer':'count=exact'}, headers) })
+      ]).then(function(rs) {
+        return Promise.all(rs.map(function(r) {
+          var c = parseInt(r.headers.get('content-range')?.split('/')[1] || '0', 10);
+          return isNaN(c) ? 0 : c;
+        }));
+      }).then(function(counts) {
+        var weekEl  = document.getElementById('gcb-week-' + slug);
+        var totalEl = document.getElementById('gcb-total-' + slug);
+        if (weekEl)  weekEl.textContent  = counts[0].toLocaleString();
+        if (totalEl) totalEl.textContent = counts[1].toLocaleString();
+      }).catch(function() {});
     }());
   </script>
 

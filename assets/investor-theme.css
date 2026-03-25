@@ -655,3 +655,33 @@ body.investor-portal::after {
 @media (max-width: 480px) {
   .inv-stat-strip { grid-template-columns: 1fr; }
 }
+
+/* ── Message priority badges ──────────────────────────────────── */
+
+.inv-msg-priority {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.inv-msg-priority.priority-urgent {
+  background: rgba(255, 80, 80, 0.12);
+  color: #ff9090;
+  border: 1px solid rgba(255, 80, 80, 0.25);
+}
+
+.inv-msg-priority.priority-question {
+  background: rgba(31, 162, 255, 0.1);
+  color: #7ac8ff;
+  border: 1px solid rgba(31, 162, 255, 0.25);
+}
+
+.inv-msg-priority.priority-general {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--dim);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}

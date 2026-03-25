@@ -11,7 +11,7 @@
   --line: rgba(255, 255, 255, 0.08);
   --text: #eef2ff;
   --muted: #b5bfd8;
-  --dim: #6b7594;
+  --dim: #8a93b8;
   --blue: #1FA2FF;
   --orange: #FF7A00;
   --gold: #FFC400;
@@ -26,6 +26,24 @@
   --radius: 24px;
   --nav-height: 78px;
 }
+
+
+/* Skip-to-content accessibility link */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: var(--blue);
+  color: #000;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0 8px 8px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.15s;
+}
+.skip-link:focus { top: 0; }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }

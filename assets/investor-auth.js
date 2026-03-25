@@ -42,8 +42,21 @@
       return;
     }
 
-    // 2. Check if vaultspark admin via security-definer RPC (bypasses RLS)
-    const { data: isAdmin } = await VSSupabase.rpc('is_vault_admin');
+    // 2. Check if vaultspark admin — try RPC first, fall back to direct query
+    let isAdmin = false;
+    try {
+      const { data: adminRpc } = await VSSupabase.rpc('is_vault_admin');
+      isAdmin = !!adminRpc;
+    } catch (_) {}
+
+    if (!isAdmin) {
+      const { data: vm } = await VSSupabase
+        .from('vault_members')
+        .select('username_lower')
+        .eq('id', session.user.id)
+        .maybeSingle();
+      isAdmin = vm?.username_lower === 'vaultspark';
+    }
 
     if (isAdmin) {
       window.VSInvestorProfile = {

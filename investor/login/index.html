@@ -331,8 +331,22 @@
           return;
         }
 
-        // Check admin status via security-definer RPC (bypasses RLS)
-        const { data: isAdmin } = await sb.rpc('is_vault_admin');
+        // Admin bypass — try RPC first (security definer), fall back to direct query
+        let isAdmin = false;
+        try {
+          const { data: adminRpc } = await sb.rpc('is_vault_admin');
+          isAdmin = !!adminRpc;
+        } catch (_) {}
+
+        // Fallback: direct vault_members query (works if RLS allows own-row reads)
+        if (!isAdmin) {
+          const { data: vm } = await sb
+            .from('vault_members')
+            .select('username_lower')
+            .eq('id', data.user.id)
+            .maybeSingle();
+          isAdmin = vm?.username_lower === 'vaultspark';
+        }
 
         if (!isAdmin) {
           // Validate investor access
