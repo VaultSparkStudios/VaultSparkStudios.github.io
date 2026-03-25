@@ -1055,6 +1055,125 @@
     .challenge-done { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: #34d399; font-weight: 700; }
     .challenge-expires { font-size: 0.73rem; color: var(--dim); }
 
+    /* ─── Phase 7: Discord Connect ─── */
+    .discord-connect-btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 1.1rem;
+      background: rgba(88,101,242,0.14);
+      border: 1px solid rgba(88,101,242,0.35);
+      border-radius: 10px;
+      color: var(--light);
+      font-size: 0.87rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .discord-connect-btn:hover { background: rgba(88,101,242,0.26); }
+    .discord-connected-badge {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.42rem 0.85rem;
+      background: rgba(52,211,153,0.1);
+      border: 1px solid rgba(52,211,153,0.22);
+      border-radius: 8px;
+      color: #34d399;
+      font-size: 0.82rem;
+      font-weight: 700;
+    }
+
+    /* ─── Phase 8: Beta Key Vault ─── */
+    .beta-keys-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+    }
+    .beta-key-card {
+      padding: 1.4rem;
+      border-radius: 16px;
+      background: rgba(13,17,28,0.9);
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .beta-key-game { display: flex; align-items: center; gap: 0.65rem; }
+    .beta-key-game-icon { font-size: 1.35rem; line-height: 1; }
+    .beta-key-game-name { font-size: 0.93rem; font-weight: 700; color: var(--text); }
+    .beta-key-code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.86rem;
+      padding: 0.5rem 0.8rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      letter-spacing: 0.04em;
+      color: var(--gold);
+      word-break: break-all;
+    }
+    .beta-key-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+    .beta-claim-btn {
+      padding: 0.48rem 1rem;
+      background: linear-gradient(135deg, var(--gold), #d97706);
+      border: none;
+      border-radius: 8px;
+      color: #000;
+      font-weight: 800;
+      font-size: 0.82rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: opacity 0.2s;
+    }
+    .beta-claim-btn:hover { opacity: 0.85; }
+    .beta-claim-btn:disabled { opacity: 0.38; cursor: not-allowed; }
+    .beta-copy-btn {
+      padding: 0.42rem 0.8rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 0.79rem;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.2s;
+    }
+    .beta-copy-btn:hover { background: rgba(255,255,255,0.1); }
+
+    /* ─── Phase 6: Activity Chronicle ─── */
+    .chronicle-timeline { display: flex; flex-direction: column; }
+    .chronicle-day-header {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: var(--dim);
+      padding: 1.25rem 0 0.5rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      margin-top: 0.25rem;
+    }
+    .chronicle-day-header:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+    .chronicle-item {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .chronicle-item:last-child { border-bottom: none; }
+    .chronicle-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      flex-shrink: 0;
+    }
+    .chronicle-body { flex: 1; min-width: 0; }
+    .chronicle-label { font-size: 0.875rem; color: var(--text); line-height: 1.35; }
+    .chronicle-time  { font-size: 0.73rem; color: var(--dim); margin-top: 0.1rem; }
+    .chronicle-pts   { font-size: 0.82rem; font-weight: 700; color: var(--gold); white-space: nowrap; }
+
     @media (max-width: 860px) {
       .auth-wrap { grid-template-columns: 1fr; }
       .rank-sidebar { display: none; }
@@ -1100,6 +1219,8 @@
             <a role="menuitem" href="#" onclick="switchDashTab('dashboard');closeNavDropdown();return false;">Vault Dashboard</a>
             <a role="menuitem" href="#" onclick="switchDashTab('archive');closeNavDropdown();return false;">Classified Archive</a>
             <a role="menuitem" href="#" onclick="switchDashTab('challenges');closeNavDropdown();return false;">Vault Challenges</a>
+            <a role="menuitem" href="#" onclick="switchDashTab('earlyaccess');closeNavDropdown();return false;">Early Access</a>
+            <a role="menuitem" href="#" onclick="switchDashTab('chronicle');closeNavDropdown();return false;">Activity Chronicle</a>
             <a role="menuitem" href="#" onclick="switchDashTab('settings');closeNavDropdown();return false;">Profile &amp; Settings</a>
             <div class="menu-divider"></div>
             <button class="menu-signout" role="menuitem" onclick="VS.logout()">Sign Out</button>
@@ -1363,6 +1484,8 @@
             <button class="dash-tab active" id="tab-dash-dashboard" onclick="switchDashTab('dashboard')">Dashboard</button>
             <button class="dash-tab" id="tab-dash-archive" onclick="switchDashTab('archive')">Classified Archive</button>
             <button class="dash-tab" id="tab-dash-challenges" onclick="switchDashTab('challenges')">Vault Challenges</button>
+            <button class="dash-tab" id="tab-dash-earlyaccess" onclick="switchDashTab('earlyaccess')">Early Access</button>
+            <button class="dash-tab" id="tab-dash-chronicle" onclick="switchDashTab('chronicle')">Chronicle</button>
             <button class="dash-tab" id="tab-dash-settings" onclick="switchDashTab('settings')">Profile &amp; Settings</button>
           </div>
 
@@ -1607,6 +1730,32 @@
             </div>
           </div><!-- /dash-pane-challenges -->
 
+          <!-- ── Tab: Early Access ── -->
+          <div class="dash-pane" id="dash-pane-earlyaccess">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap;">
+              <div>
+                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">🔐 Early Access</div>
+                <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Claim beta keys for upcoming games. Keys are gated by Vault Rank — the higher your rank, the more access you unlock.</p>
+              </div>
+            </div>
+            <div id="beta-keys-list">
+              <div style="color:var(--dim);">Loading…</div>
+            </div>
+          </div><!-- /dash-pane-earlyaccess -->
+
+          <!-- ── Tab: Chronicle ── -->
+          <div class="dash-pane" id="dash-pane-chronicle">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap;">
+              <div>
+                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">📜 Activity Chronicle</div>
+                <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Your complete Vault history — every point earned, challenge completed, and file unlocked.</p>
+              </div>
+            </div>
+            <div id="chronicle-timeline">
+              <div style="color:var(--dim);">Loading…</div>
+            </div>
+          </div><!-- /dash-pane-chronicle -->
+
           <!-- ── Tab: Settings ── -->
           <div class="dash-pane" id="dash-pane-settings">
             <div class="settings-grid">
@@ -1664,6 +1813,21 @@
                 <div class="settings-save-row">
                   <button class="settings-save-btn" id="settings-save-btn" onclick="VS.saveSettings()">Save Changes</button>
                   <span class="settings-feedback" id="settings-feedback">Saved ✓</span>
+                </div>
+              </div>
+
+              <!-- Full-width: Connected Accounts -->
+              <div class="settings-full">
+                <div class="settings-block">
+                  <h3>Connected Accounts</h3>
+                  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;">
+                    <div style="display:flex;align-items:center;gap:0.6rem;">
+                      <svg width="20" height="15" viewBox="0 0 127.14 96.36" fill="#5865F2" aria-hidden="true"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg>
+                      <span style="font-size:0.9rem;font-weight:700;color:var(--text);">Discord</span>
+                    </div>
+                    <div id="discord-status-area"><!-- populated by JS --></div>
+                  </div>
+                  <p style="font-size:0.81rem;color:var(--dim);margin-top:0.65rem;line-height:1.55;" id="discord-status-desc">Connect your Discord account to automatically receive rank roles when you level up.</p>
                 </div>
               </div>
 
@@ -1926,12 +2090,20 @@
       });
       document.getElementById('dashboard-view')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-      // Lazy-load archive on first open; reload challenges each time (weekly resets)
+      // Lazy-load archive on first open; reload challenges each time (weekly resets); lazy-load chronicle
       if (which === 'archive' && !_archiveLoaded) {
         _archiveLoaded = true;
         loadClassifiedArchive();
       }
       if (which === 'challenges') loadChallenges();
+      if (which === 'earlyaccess' && !_betaKeysLoaded) {
+        _betaKeysLoaded = true;
+        loadBetaKeys();
+      }
+      if (which === 'chronicle' && !_chronicleLoaded) {
+        _chronicleLoaded = true;
+        loadChronicle();
+      }
     }
 
     // ── Nav account dropdown ─────────────────────────────────────
@@ -2140,8 +2312,13 @@
       setTimeout(() => initPointsEconomy(member), 1200);
       loadInviteCode();
 
-      // Phase 4/5: load challenges, auto-complete eligible ones, reset archive flag
-      _archiveLoaded = false;
+      // Phase 7: populate Discord status in settings
+      updateDiscordUI(member.discord_id);
+
+      // Phase 4/5/6/7/8: load challenges, auto-complete eligible ones, reset lazy-load flags
+      _archiveLoaded   = false;
+      _chronicleLoaded = false;
+      _betaKeysLoaded  = false;
       loadChallenges();
       setTimeout(() => initChallenges(member), 1800);
     }
@@ -2164,6 +2341,7 @@
         avatar_id:     row.avatar_id     || 'spark',
         accent:        row.accent        || '#FFC400',
         member_number: row.member_number || null,
+        discord_id:    row.discord_id    || null,
       };
     }
 
@@ -2628,6 +2806,217 @@
       }
     }
 
+    // ── Phase 6: Activity Chronicle ──────────────────────────────
+    let _chronicleLoaded = false;
+
+    const CHRONICLE_ICONS = {
+      challenge:  { icon: '⚡', bg: 'rgba(255,196,0,0.12)',   color: '#fbbf24' },
+      file:       { icon: '📄', bg: 'rgba(31,162,255,0.1)',   color: '#7dd3fc' },
+      game:       { icon: '🎮', bg: 'rgba(52,211,153,0.1)',   color: '#34d399' },
+      subscribed: { icon: '📡', bg: 'rgba(167,139,250,0.1)',  color: '#a78bfa' },
+      profile:    { icon: '🔧', bg: 'rgba(255,255,255,0.06)', color: 'var(--muted)' },
+      referral:   { icon: '🤝', bg: 'rgba(255,196,0,0.1)',    color: '#fbbf24' },
+      joined:     { icon: '🔑', bg: 'rgba(255,196,0,0.14)',   color: 'var(--gold)' },
+      points:     { icon: '✦',  bg: 'rgba(255,255,255,0.05)', color: 'var(--dim)' },
+    };
+
+    async function loadChronicle() {
+      const el = document.getElementById('chronicle-timeline');
+      if (!el) return;
+      el.innerHTML = '<div style="color:var(--dim);">Loading…</div>';
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        const [{ data: events, error }, { data: row }] = await Promise.all([
+          VSSupabase.rpc('get_activity_timeline', { p_limit: 50 }),
+          VSSupabase.from('vault_members').select('created_at').eq('id', session.user.id).single(),
+        ]);
+
+        if (error) throw error;
+
+        const items = [...(events || [])];
+        if (row?.created_at) {
+          items.push({ type: 'joined', label: 'Joined the Vault', points: 0, occurred_at: row.created_at });
+        }
+
+        if (items.length === 0) {
+          el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">No activity yet — start earning points to build your Chronicle.</div>';
+          return;
+        }
+
+        const today     = new Date();
+        const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1);
+
+        let html = '<div class="chronicle-timeline">';
+        let lastDay = null;
+
+        for (const ev of items) {
+          const d      = new Date(ev.occurred_at);
+          const dayKey = d.toDateString();
+
+          if (dayKey !== lastDay) {
+            let dayLabel;
+            if (dayKey === today.toDateString())     dayLabel = 'Today';
+            else if (dayKey === yesterday.toDateString()) dayLabel = 'Yesterday';
+            else dayLabel = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            html += `<div class="chronicle-day-header">${dayLabel}</div>`;
+            lastDay = dayKey;
+          }
+
+          const style   = CHRONICLE_ICONS[ev.type] || CHRONICLE_ICONS.points;
+          const timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+          const ptsHtml = ev.points > 0 ? `<div class="chronicle-pts">+${ev.points} pts</div>` : '';
+
+          html += `<div class="chronicle-item">
+            <div class="chronicle-icon" style="background:${style.bg};color:${style.color};">${style.icon}</div>
+            <div class="chronicle-body">
+              <div class="chronicle-label">${ev.label || ev.type}</div>
+              <div class="chronicle-time">${timeStr}</div>
+            </div>
+            ${ptsHtml}
+          </div>`;
+        }
+
+        html += '</div>';
+        el.innerHTML = html;
+      } catch (_) {
+        if (el) el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load activity chronicle.</div>';
+      }
+    }
+
+    // ── Phase 7: Discord Role Sync ───────────────────────────────
+
+    function updateDiscordUI(discordId) {
+      const area = document.getElementById('discord-status-area');
+      const desc = document.getElementById('discord-status-desc');
+      if (!area) return;
+      if (discordId) {
+        area.innerHTML = '<span class="discord-connected-badge">✓ Discord Connected</span>';
+        if (desc) desc.textContent = 'Your Discord account is linked. You\'ll automatically receive rank roles when you level up.';
+      } else {
+        area.innerHTML = `<button class="discord-connect-btn" onclick="connectDiscord()"><svg width="16" height="12" viewBox="0 0 127.14 96.36" fill="currentColor" aria-hidden="true"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg> Connect Discord</button>`;
+      }
+    }
+
+    async function connectDiscord() {
+      localStorage.setItem('vs_link_discord', '1');
+      const { error } = await VSSupabase.auth.signInWithOAuth({
+        provider: 'discord',
+        options: {
+          scopes: 'identify',
+          redirectTo: window.location.origin + window.location.pathname,
+        },
+      });
+      if (error) {
+        localStorage.removeItem('vs_link_discord');
+        const area = document.getElementById('discord-status-area');
+        if (area) area.innerHTML += `<span style="font-size:0.8rem;color:#f87171;margin-left:0.5rem;">${error.message}</span>`;
+      }
+    }
+
+    // ── Phase 8: Beta Key Vault ───────────────────────────────────
+    let _betaKeysLoaded = false;
+
+    const BETA_GAMES = [
+      { slug: 'call-of-doodie',         name: 'Call of Doodie',         icon: '💩' },
+      { slug: 'gridiron-gm',            name: 'Gridiron GM',            icon: '🏈' },
+      { slug: 'vaultspark-football-gm', name: 'VaultSpark Football GM', icon: '⚡' },
+    ];
+
+    async function loadBetaKeys() {
+      const el = document.getElementById('beta-keys-list');
+      if (!el) return;
+      el.innerHTML = '<div style="color:var(--dim);">Loading…</div>';
+      try {
+        const { data: keys, error } = await VSSupabase.from('beta_keys').select('*');
+        if (error) throw error;
+
+        if (!keys || keys.length === 0) {
+          el.innerHTML = '<p style="color:var(--dim);font-size:0.88rem;line-height:1.6;">No beta keys are available for your rank yet. Earn more Vault Points to unlock early access.</p>';
+          return;
+        }
+
+        // Group by game_slug
+        const byGame = {};
+        for (const k of keys) {
+          if (!byGame[k.game_slug]) byGame[k.game_slug] = { claimed: null, available: [] };
+          if (k.claimed_by)         byGame[k.game_slug].claimed = k;
+          else                      byGame[k.game_slug].available.push(k);
+        }
+
+        const cards = Object.entries(byGame).map(([slug, info]) => {
+          const game = BETA_GAMES.find(g => g.slug === slug) || { name: slug, icon: '🔑' };
+          return buildKeyCard(slug, game.name, game.icon, info);
+        }).join('');
+
+        el.innerHTML = `<div class="beta-keys-grid">${cards}</div>`;
+      } catch (_) {
+        if (el) el.innerHTML = '<p style="color:var(--dim);font-size:0.88rem;">Could not load early access keys.</p>';
+      }
+    }
+
+    function buildKeyCard(slug, name, icon, info) {
+      let actionHtml;
+      if (info.claimed) {
+        actionHtml = `
+          <div class="beta-key-code" id="key-code-${slug}">${info.claimed.key_code}</div>
+          <div class="beta-key-actions">
+            <button class="beta-copy-btn" onclick="copyKeyCode('${slug}')">Copy Key</button>
+            <span style="font-size:0.75rem;color:#34d399;font-weight:700;">✓ Claimed</span>
+          </div>`;
+      } else if (info.available.length > 0) {
+        actionHtml = `
+          <p style="font-size:0.82rem;color:var(--muted);line-height:1.5;margin:0;">A beta key is available for your Vault Rank.</p>
+          <div class="beta-key-actions">
+            <button class="beta-claim-btn" id="claim-btn-${slug}" onclick="claimKey('${slug}')">Claim Key →</button>
+          </div>`;
+      } else {
+        actionHtml = '<p style="font-size:0.82rem;color:var(--dim);margin:0;">No keys available right now.</p>';
+      }
+      return `<div class="beta-key-card">
+        <div class="beta-key-game">
+          <span class="beta-key-game-icon">${icon}</span>
+          <span class="beta-key-game-name">${name}</span>
+        </div>
+        ${actionHtml}
+      </div>`;
+    }
+
+    async function claimKey(gameSlug) {
+      const btn = document.getElementById('claim-btn-' + gameSlug);
+      if (btn) { btn.disabled = true; btn.textContent = 'Claiming…'; }
+      try {
+        const { data, error } = await VSSupabase.rpc('claim_beta_key', { p_game_slug: gameSlug });
+        if (error) throw error;
+        if (data?.ok) {
+          showXpChip(0, 'Beta key claimed!');
+          _betaKeysLoaded = false;
+          loadBetaKeys();
+        } else {
+          if (btn) { btn.disabled = false; btn.textContent = 'Claim Key →'; }
+          const msg = data?.error === 'no_keys_available' ? 'No keys available right now.' : 'Could not claim key. Try again.';
+          if (btn) btn.insertAdjacentHTML('afterend', `<span style="font-size:0.78rem;color:#f87171;"> ${msg}</span>`);
+        }
+      } catch (_) {
+        if (btn) { btn.disabled = false; btn.textContent = 'Claim Key →'; }
+      }
+    }
+
+    function copyKeyCode(gameSlug) {
+      const codeEl = document.getElementById('key-code-' + gameSlug);
+      if (!codeEl) return;
+      const code = codeEl.textContent.trim();
+      const btn = codeEl.nextElementSibling?.querySelector('button');
+      const finish = () => { if (btn) { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = 'Copy Key'; }, 2000); } };
+      navigator.clipboard.writeText(code).then(finish).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = code; ta.style.cssText = 'position:fixed;opacity:0;';
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        finish();
+      });
+    }
+
     // ── Phase 4: Classified Archive ──────────────────────────────
     let _archiveLoaded = false;
 
@@ -3048,6 +3437,21 @@
           .single();
 
         if (row) {
+          // Phase 7: auto-save discord_id if user has a Discord identity not yet stored.
+          // This handles both Discord OAuth users and returning "Connect Discord" linkers.
+          if (!row.discord_id) {
+            const discordIdentity = session.user.identities?.find(i => i.provider === 'discord');
+            if (discordIdentity) {
+              const did = String(discordIdentity.id || discordIdentity.user_id || '');
+              if (did) {
+                await VSSupabase.rpc('save_discord_id', { p_discord_id: did }).catch(() => {});
+                row.discord_id = did;
+              }
+            }
+          }
+          if (localStorage.getItem('vs_link_discord') === '1') {
+            localStorage.removeItem('vs_link_discord');
+          }
           showDashboard(buildMember(session.user, row));
           return;
         }
