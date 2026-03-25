@@ -18,7 +18,7 @@
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://vaultsparkstudios.com/journal/vault-opened/" />
   <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
-  <meta property="article:published_time" content="2024-01-01T00:00:00Z" />
+  <meta property="article:published_time" content="2026-03-01T00:00:00Z" />
   <meta property="article:author" content="VaultSpark Studios" />
   <meta property="article:tag" content="Origin" />
   <meta property="article:tag" content="Studio" />
@@ -28,7 +28,7 @@
   <meta name="twitter:description" content="The origin story of VaultSpark Studios — one person, one system, one vault. The spark was real." />
   <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","headline":"The Vault Was Opened","description":"The origin story of VaultSpark Studios.","url":"https://vaultsparkstudios.com/journal/vault-opened/","datePublished":"2024-01-01T00:00:00Z","dateModified":"2024-01-01T00:00:00Z","author":{"@type":"Organization","name":"VaultSpark Studios","url":"https://vaultsparkstudios.com"},"publisher":{"@type":"Organization","name":"VaultSpark Studios","logo":{"@type":"ImageObject","url":"https://vaultsparkstudios.com/assets/icon-256.png"}},"image":"https://vaultsparkstudios.com/assets/og-image.png","keywords":"VaultSpark Studios origin, indie game studio, Studio OS, vault mythology"}
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"The Vault Was Opened","description":"The origin story of VaultSpark Studios.","url":"https://vaultsparkstudios.com/journal/vault-opened/","datePublished":"2026-03-01T00:00:00Z","dateModified":"2026-03-01T00:00:00Z","author":{"@type":"Organization","name":"VaultSpark Studios","url":"https://vaultsparkstudios.com"},"publisher":{"@type":"Organization","name":"VaultSpark Studios","logo":{"@type":"ImageObject","url":"https://vaultsparkstudios.com/assets/icon-256.png"}},"image":"https://vaultsparkstudios.com/assets/og-image.png","keywords":"VaultSpark Studios origin, indie game studio, Studio OS, vault mythology"}
   </script>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Signal Log","item":"https://vaultsparkstudios.com/journal/"},{"@type":"ListItem","position":3,"name":"The Vault Was Opened","item":"https://vaultsparkstudios.com/journal/vault-opened/"}]}
@@ -132,8 +132,9 @@
         <article class="post-article">
           <header>
             <div class="post-meta">
-              <span class="post-date">2024</span>
+              <span class="post-date">2026</span>
               <span class="post-read-time">· 3 min read</span>
+              <span id="post-view-count" style="font-size:0.78rem;color:var(--dim);"></span>
               <span class="entry-tag">Origin</span>
               <span class="entry-tag">Studio</span>
             </div>
@@ -207,7 +208,7 @@
             </a>
             <a class="archive-link" href="/journal/first-sparks/">
               <span>Three Worlds Leave The Vault</span>
-              <small>2025</small>
+              <small>2026</small>
             </a>
           </div>
           <div class="sidebar-block">
@@ -362,8 +363,35 @@
     }
   };
 
-  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', loadReactions); }
-  else { loadReactions(); }
+  function loadViewCount(){
+    fetch(SB+'/rest/v1/journal_views?post_slug=eq.'+SLUG+'&select=id', {
+      headers: Object.assign({}, H, { Prefer: 'count=exact', Range: '0-0' })
+    }).then(function(r){
+      var cr = r.headers.get('Content-Range');
+      if(cr){ var n = parseInt(cr.split('/')[1],10); if(!isNaN(n)){
+        var el = document.getElementById('post-view-count');
+        if(el) el.textContent = '· \uD83D\uDC41\uFE0F ' + n.toLocaleString() + ' view' + (n===1?'':'s');
+      }}
+    }).catch(function(){});
+  }
+
+  function recordView(){
+    var today = new Date().toISOString().slice(0,10);
+    var key   = 'vs_view_'+SLUG+'_'+today;
+    if(localStorage.getItem(key)) { loadViewCount(); return; }
+    var sid = localStorage.getItem('vs_session_id') || (function(){
+      var id = Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);
+      localStorage.setItem('vs_session_id', id); return id;
+    })();
+    fetch(SB+'/rest/v1/journal_views', {
+      method:'POST', headers:Object.assign({},H,{Prefer:'return=minimal'}),
+      body:JSON.stringify({post_slug:SLUG, session_id:sid})
+    }).then(function(r){ if(r.ok || r.status===409){ localStorage.setItem(key,'1'); loadViewCount(); } })
+    .catch(function(){ loadViewCount(); });
+  }
+
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', function(){ loadReactions(); recordView(); }); }
+  else { loadReactions(); recordView(); }
 })();
 </script>
 <script>

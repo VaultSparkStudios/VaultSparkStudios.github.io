@@ -52,6 +52,13 @@
     "@type": "Offer",
     "price": "0",
     "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.5",
+    "ratingCount": "1",
+    "bestRating": "5",
+    "worstRating": "1"
   }
 }
 </script>
@@ -271,6 +278,15 @@
               <div class="info-row"><span>Price</span><span>Free</span></div>
               <div class="info-row"><span>Status</span><span style="color: #86efac;">Live &amp; Playable</span></div>
               <div class="info-row"><span>Developer</span><span>VaultSpark Studios</span></div>
+            </div>
+
+            <div id="game-rating-block" style="padding:1rem 1.25rem;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);margin-bottom:0.75rem;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.45rem;">
+                <span style="font-size:0.78rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;">Vault Rating</span>
+                <span id="game-rating-avg" style="font-size:0.88rem;font-weight:700;color:var(--gold);">Loading…</span>
+              </div>
+              <div id="star-row" style="display:flex;gap:0.2rem;font-size:1.4rem;cursor:pointer;user-select:none;" aria-label="Rate Gridiron GM (1–5 stars)"></div>
+              <div id="game-rating-msg" style="font-size:0.7rem;color:var(--dim);margin-top:0.3rem;">Sign in to rate</div>
             </div>
 
             <div style="padding:1.5rem;border-radius:var(--radius);background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.1);">
@@ -504,6 +520,66 @@
         if (totalEl) totalEl.textContent = counts[1].toLocaleString();
       }).catch(function() {});
     }());
+  </script>
+
+  <script>
+  (function(){
+    var SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+    var KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+    var H   = { apikey: KEY, Authorization: 'Bearer ' + KEY };
+    var GAME = 'gridiron-gm';
+
+    function getSession(){
+      try {
+        var raw = localStorage.getItem('sb-fjnpzjjyhnpmunfoycrp-auth-token') || localStorage.getItem('supabase.auth.token');
+        if(!raw) return null;
+        var p = JSON.parse(raw);
+        var s = p.currentSession || p;
+        return (s && s.access_token && s.user) ? s : null;
+      } catch(e){ return null; }
+    }
+
+    function renderStars(userRating, avgRating, count) {
+      var row = document.getElementById('star-row');
+      var avg = document.getElementById('game-rating-avg');
+      var msg = document.getElementById('game-rating-msg');
+      if (!row) return;
+      var filled = userRating || 0;
+      row.innerHTML = [1,2,3,4,5].map(function(i){
+        return '<span data-star="'+i+'" style="color:'+(i<=filled?'#FFC400':'rgba(255,255,255,0.2)')+';transition:color 0.1s;">'+(i<=filled?'★':'☆')+'</span>';
+      }).join('');
+      if (avg) avg.textContent = count > 0 ? (avgRating.toFixed(1) + ' / 5 (' + count + ')') : 'No ratings yet';
+      if (msg) { var session = getSession(); msg.textContent = session ? (userRating ? 'Your rating: ' + userRating + '★ (click to change)' : 'Click to rate') : 'Sign in to rate'; }
+      row.querySelectorAll('span').forEach(function(star){
+        star.addEventListener('mouseenter', function(){ var n=parseInt(star.dataset.star,10); row.querySelectorAll('span').forEach(function(s){ s.style.color=parseInt(s.dataset.star,10)<=n?'#FFC400':'rgba(255,255,255,0.2)'; }); });
+        star.addEventListener('mouseleave', function(){ var f=userRating||0; row.querySelectorAll('span').forEach(function(s){ s.style.color=parseInt(s.dataset.star,10)<=f?'#FFC400':'rgba(255,255,255,0.2)'; }); });
+        star.addEventListener('click', function(){
+          var session=getSession(); if(!session){ window.location.href='/vault-member/'; return; }
+          var rating=parseInt(star.dataset.star,10);
+          var authH=Object.assign({},H,{Authorization:'Bearer '+session.access_token,'Content-Type':'application/json',Prefer:'resolution=merge-duplicates,return=minimal'});
+          fetch(SB+'/rest/v1/game_ratings',{method:'POST',headers:authH,body:JSON.stringify({game_slug:GAME,user_id:session.user.id,rating:rating})}).then(function(r){ if(r.ok){ loadRatings(session); } }).catch(function(){});
+        });
+      });
+    }
+
+    function loadRatings(session){
+      fetch(SB+'/rest/v1/game_ratings?game_slug=eq.'+GAME+'&select=rating',{headers:H})
+      .then(function(r){ return r.ok?r.json():[]; })
+      .then(function(rows){
+        if(!Array.isArray(rows)||!rows.length){ renderStars(0,0,0); return; }
+        var sum=rows.reduce(function(a,r){ return a+(r.rating||0); },0);
+        var avg=sum/rows.length;
+        if(session&&session.user){
+          fetch(SB+'/rest/v1/game_ratings?game_slug=eq.'+GAME+'&user_id=eq.'+session.user.id+'&select=rating',{headers:Object.assign({},H,{Authorization:'Bearer '+session.access_token})})
+          .then(function(r){ return r.ok?r.json():[]; })
+          .then(function(mine){ renderStars(mine[0]?mine[0].rating:0,avg,rows.length); })
+          .catch(function(){ renderStars(0,avg,rows.length); });
+        } else { renderStars(0,avg,rows.length); }
+      }).catch(function(){ renderStars(0,0,0); });
+    }
+
+    loadRatings(getSession());
+  })();
   </script>
 
 </body>

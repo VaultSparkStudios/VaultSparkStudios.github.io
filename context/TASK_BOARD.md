@@ -38,12 +38,9 @@
 - [ ] Fan art submission form (upload → Supabase Storage → moderation queue in Vault Command) [6.5]
 - [ ] Co-op / team challenges [6.5]
 - [ ] Sitemap auto-generation (GitHub Action) [6.5]
-- [ ] Game update changelogs on game pages [6.3]
-- [ ] Journal post view count (journal_views table, deduplicated, shown on cards) [6]
 - [ ] Team/about page expansion [6]
 - [ ] Fan art voting / gallery contests [6]
 - [ ] RLS policy audit (investor_requests + challenge_submissions) [6]
-- [ ] Game rating (star ratings from vault members + AggregateRating schema) [6]
 - [ ] Axe-core accessibility audit in CI [6]
 - [ ] Investor data room access log [6]
 - [ ] Community event RSVP [6]
@@ -64,6 +61,46 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 32 (2026-03-25)
+
+- ✅ Year corrections — all public-facing 2024/2025 year labels updated to 2026 (studio started March 2026): homepage milestones, press page (Founded/boilerplate), studio page (Est./timeline), roadmap timeline, journal posts (post-dates, meta, JSON-LD datePublished, feed.xml), universe/DreadSpike pages
+- ✅ Game rating — 5-star vault member rating widget on all 3 released game pages; `game_ratings` table; `AggregateRating` in VideoGame JSON-LD schema; session-auth submit/update; hover interaction; anonymous count display
+- **SQL needed:**
+  ```sql
+  CREATE TABLE IF NOT EXISTS game_ratings (
+    game_slug text NOT NULL,
+    user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    rating integer NOT NULL CHECK (rating >= 1 AND rating <= 5),
+    created_at timestamptz NOT NULL DEFAULT now(),
+    PRIMARY KEY (game_slug, user_id)
+  );
+  ALTER TABLE game_ratings ENABLE ROW LEVEL SECURITY;
+  CREATE POLICY "members rate" ON game_ratings FOR INSERT WITH CHECK (auth.uid() = user_id);
+  CREATE POLICY "members update" ON game_ratings FOR UPDATE USING (auth.uid() = user_id);
+  CREATE POLICY "public read" ON game_ratings FOR SELECT USING (true);
+  ```
+
+## Completed — Phase 31 (2026-03-25)
+
+- ✅ Journal post view count — `journal_views` table (session-based dedup via localStorage + `vs_session_id`); view count shown in post-meta as "👁 N views" on all 3 individual journal post pages; day-keyed localStorage guard (`vs_view_SLUG_DATE`) prevents double-counting per day
+- **SQL needed:**
+  ```sql
+  CREATE TABLE IF NOT EXISTS journal_views (
+    id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+    post_slug text NOT NULL,
+    session_id text NOT NULL,
+    created_at timestamptz NOT NULL DEFAULT now()
+  );
+  ALTER TABLE journal_views ENABLE ROW LEVEL SECURITY;
+  CREATE POLICY "public insert views" ON journal_views FOR INSERT WITH CHECK (true);
+  CREATE POLICY "public read view count" ON journal_views FOR SELECT USING (true);
+  ```
+
+## Completed — Phase 30 (2026-03-25)
+
+- ✅ Sitemap auto-generation — `.github/workflows/sitemap.yml` GitHub Action generates sitemap.xml from all public index.html files on push to main; assigns priority by depth; auto-commits if changed; excludes portal/404 pages
+- ✅ Game update changelogs on game pages — patch notes sections already present on all 3 released game pages (Call of Doodie, Gridiron GM, VaultSpark Football GM) with collapsible version history
 
 ## Completed — Phase 29 (2026-03-25)
 
