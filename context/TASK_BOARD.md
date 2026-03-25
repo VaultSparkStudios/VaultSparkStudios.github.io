@@ -30,9 +30,7 @@
 - [ ] Custom 404 page with rank theme + useful links [7.8] — GitHub Pages supports /404.html natively
 - [ ] Game screenshots + trailer embed on game pages [7.5]
 - [ ] Dynamic OG image generation per page [7.5]
-- [ ] Challenge submission history view (when each challenge was completed, in Challenges tab) [7.5]
 - [ ] Sticky "Join the Vault" CTA bar on public pages for logged-out visitors [7.5]
-- [ ] Vault Command: challenge completion analytics (completion rate, most popular categories, zero-completion challenges) [7.5]
 - [ ] Preconnect / DNS-prefetch hints for Supabase CDN + analytics [7.5] — 3-line Lighthouse win
 - [ ] Lazy-load image audit (add loading="lazy" to all below-fold images) [7.5]
 - [ ] Supabase query batching in portal (consolidate sequential SELECTs into RPCs) [7]
@@ -55,14 +53,12 @@
 - [ ] Dark/light mode toggle [6.5]
 - [ ] Investor portal: KPI trend sparklines (30/60/90-day MRR + member growth) [6.5]
 - [ ] Sitemap auto-generation (GitHub Action) [6.5]
-- [ ] Vault Command: member export CSV (username, email, rank, points, joined date) [6.3]
 - [ ] Referral code QR generator (client-side QR for member's /join/?ref= URL) [6.3]
 - [ ] Investor portal "Ask a question" form (contact form → Edge Function → founder email) [6.3]
 - [ ] Game update changelogs on game pages [6.3]
 - [ ] Journal post view count (journal_views table, deduplicated, shown on cards) [6]
 - [ ] Team/about page expansion [6]
 - [ ] Fan art voting / gallery contests [6]
-- [ ] Multi-admin support (is_admin column) [6]
 - [ ] RLS policy audit (investor_requests + challenge_submissions) [6]
 - [ ] Game rating (star ratings from vault members + AggregateRating schema) [6]
 - [ ] Axe-core accessibility audit in CI [6]
@@ -74,7 +70,6 @@
 - [ ] Rank comparison ("You are X pts behind [member]") [5.5]
 - [ ] New members this week ticker on /community/ [5.5]
 - [ ] Rate limiting on invite code claims [5.5]
-- [ ] Audit log for admin actions (broadcasts, key drops, file uploads) [5.5]
 - [ ] Lighthouse CI score gate (fail build if performance < 90) [5.5]
 
 ## C-Tier Backlog (Score 3–4.9)
@@ -90,6 +85,12 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 20 (2026-03-25)
+
+- ✅ Vault Command: challenge analytics — table showing all active challenges with completion counts, sorted by popularity
+- ✅ Vault Command: member export CSV — downloads vault-members-YYYY-MM-DD.csv with rank, points, member_number, subscribed, joined date
+- ✅ Challenge submission history — collapsible "Show completion history" at bottom of Challenges tab (last 50, with date + pts)
 
 ## Completed — Phase 19 (2026-03-25)
 

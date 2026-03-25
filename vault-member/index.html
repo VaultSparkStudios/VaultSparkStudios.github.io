@@ -2258,6 +2258,11 @@
             <div class="challenges-grid" id="challenges-list">
               <div style="color:var(--dim);font-size:0.88rem;grid-column:1/-1;">Loading challenges…</div>
             </div>
+            <!-- Completion history toggle -->
+            <div style="margin-top:1.5rem;border-top:1px solid rgba(255,255,255,0.06);padding-top:1.25rem;">
+              <button onclick="toggleChallengeHistory(this)" style="background:none;border:none;color:var(--gold);font-size:0.83rem;font-weight:700;cursor:pointer;font-family:inherit;padding:0;">▸ Show completion history</button>
+              <div id="challenge-history-list" style="display:none;margin-top:1rem;"></div>
+            </div>
           </div><!-- /dash-pane-challenges -->
 
           <!-- ── Tab: Early Access ── -->
@@ -2528,6 +2533,24 @@
                   <button class="admin-submit-btn" id="admin-file-btn" onclick="adminPostFile()">Uplink to Archive</button>
                   <span class="admin-feedback" id="admin-file-fb"></span>
                 </div>
+              </div>
+
+              <!-- Challenge Analytics (full-width) -->
+              <div class="settings-block admin-panel-full">
+                <h3>Challenge Analytics</h3>
+                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Completion rates and engagement for all active challenges.</p>
+                <div id="admin-challenge-analytics">
+                  <button class="admin-submit-btn" onclick="loadChallengeAnalytics()" style="margin-bottom:0.75rem;">Load Analytics</button>
+                  <div id="admin-analytics-list" style="font-size:0.86rem;color:var(--muted);"></div>
+                </div>
+              </div>
+
+              <!-- Member Export CSV (full-width) -->
+              <div class="settings-block admin-panel-full">
+                <h3>Member Export</h3>
+                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Download a CSV of all vault members — username, email placeholder, rank, points, joined date.</p>
+                <button class="admin-submit-btn" onclick="exportMemberCSV()" id="admin-csv-btn">⬇ Download Members CSV</button>
+                <span class="admin-feedback" id="admin-csv-fb"></span>
               </div>
 
               <!-- Investor Requests -->
@@ -4694,6 +4717,74 @@
 
     // ── Vault Command (Admin — member #1 only) ───────────────────
 
+    async function loadChallengeAnalytics() {
+      const listEl = document.getElementById('admin-analytics-list');
+      if (!listEl) return;
+      listEl.textContent = 'Loading…';
+      try {
+        const [{ data: challenges }, { data: submissions }] = await Promise.all([
+          VSSupabase.from('challenges').select('id,title,challenge_type,points').eq('is_active', true),
+          VSSupabase.from('challenge_submissions').select('challenge_id'),
+        ]);
+        if (!challenges) { listEl.textContent = 'Could not load.'; return; }
+        const countMap = {};
+        (submissions || []).forEach(s => { countMap[s.challenge_id] = (countMap[s.challenge_id] || 0) + 1; });
+        const totalMembers = parseInt(document.getElementById('stat-pts')?.closest('[data-members]')?.dataset?.members || '0') || 1;
+        const rows = challenges.map(c => ({
+          ...c,
+          completions: countMap[c.id] || 0,
+        })).sort((a, b) => b.completions - a.completions);
+        listEl.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:0.82rem;">' +
+          '<thead><tr style="border-bottom:1px solid rgba(255,255,255,0.08);">' +
+          '<th style="text-align:left;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Challenge</th>' +
+          '<th style="text-align:left;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Type</th>' +
+          '<th style="text-align:right;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Completions</th>' +
+          '<th style="text-align:right;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Pts</th>' +
+          '</tr></thead><tbody>' +
+          rows.map(r => '<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">' +
+            '<td style="padding:0.5rem 0.75rem;color:var(--text);">' + r.title + '</td>' +
+            '<td style="padding:0.5rem 0.75rem;color:var(--muted);">' + r.challenge_type + '</td>' +
+            '<td style="padding:0.5rem 0.75rem;color:var(--gold);text-align:right;">' + r.completions + '</td>' +
+            '<td style="padding:0.5rem 0.75rem;color:var(--dim);text-align:right;">+' + r.points + '</td>' +
+          '</tr>').join('') +
+          '</tbody></table>';
+      } catch (_) { listEl.textContent = 'Error loading analytics.'; }
+    }
+
+    async function exportMemberCSV() {
+      const btn = document.getElementById('admin-csv-btn');
+      const fb = document.getElementById('admin-csv-fb');
+      if (btn) { btn.disabled = true; btn.textContent = 'Generating…'; }
+      try {
+        const { data: members } = await VSSupabase.from('vault_members')
+          .select('username,points,created_at,member_number,subscribed')
+          .order('points', { ascending: false });
+        if (!members || !members.length) { showAdminFeedback(fb, 'No members found.', false); return; }
+        const RANK_NAMES_CSV = ['Spark Initiate','Vault Runner','Forge Guard','Vault Keeper','The Sparked'];
+        function getCSVRank(pts) {
+          if (pts >= 5000) return 'The Sparked';
+          if (pts >= 1500) return 'Vault Keeper';
+          if (pts >= 500) return 'Forge Guard';
+          if (pts >= 100) return 'Vault Runner';
+          return 'Spark Initiate';
+        }
+        const header = 'rank,username,points,vault_rank,member_number,subscribed,joined_date';
+        const rows = members.map((m, i) =>
+          [i+1, m.username, m.points, getCSVRank(m.points), m.member_number || '', m.subscribed ? 'yes' : 'no',
+           m.created_at ? m.created_at.slice(0, 10) : ''].join(',')
+        );
+        const csv = [header, ...rows].join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'vault-members-' + new Date().toISOString().slice(0,10) + '.csv';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showAdminFeedback(fb, '✓ Downloaded ' + members.length + ' members', true);
+      } catch (_) { showAdminFeedback(fb, 'Export failed.', false); }
+      if (btn) { btn.disabled = false; btn.textContent = '⬇ Download Members CSV'; }
+    }
+
     function showAdminFeedback(el, msg, ok) {
       el.textContent = msg;
       el.className = 'admin-feedback show ' + (ok ? 'ok' : 'err');
@@ -5002,6 +5093,47 @@
     let _challengeFilter   = 'All';
 
     const CATEGORY_FILTER_LIST = ['All', 'Daily', 'Weekly', 'Lore', 'Game', 'Social', 'One-Time', 'General'];
+
+    let _challengeHistoryLoaded = false;
+    async function toggleChallengeHistory(btn) {
+      const el = document.getElementById('challenge-history-list');
+      if (!el) return;
+      if (el.style.display !== 'none') {
+        el.style.display = 'none';
+        btn.textContent = '▸ Show completion history';
+        return;
+      }
+      el.style.display = '';
+      btn.textContent = '▾ Hide completion history';
+      if (_challengeHistoryLoaded) return;
+      _challengeHistoryLoaded = true;
+      el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">Loading…</div>';
+      try {
+        const { data } = await VSSupabase
+          .from('challenge_submissions')
+          .select('challenge_id, created_at, challenges(title, points)')
+          .order('created_at', { ascending: false })
+          .limit(50);
+        if (!data || data.length === 0) {
+          el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">No completions yet.</div>';
+          return;
+        }
+        el.innerHTML = data.map(s => {
+          const title = s.challenges?.title || 'Challenge';
+          const pts = s.challenges?.points || 0;
+          const when = s.created_at ? new Date(s.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+          return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.55rem 0;border-bottom:1px solid rgba(255,255,255,0.04);gap:1rem;flex-wrap:wrap;">
+            <div>
+              <div style="font-size:0.85rem;color:var(--text);font-weight:600;">${title}</div>
+              <div style="font-size:0.75rem;color:var(--dim);">${when}</div>
+            </div>
+            <span style="font-size:0.82rem;font-weight:700;color:var(--gold);flex-shrink:0;">+${pts} pts</span>
+          </div>`;
+        }).join('');
+      } catch (_) {
+        el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">Could not load history.</div>';
+      }
+    }
 
     let _pollsLoaded = false;
     async function loadPolls() {
