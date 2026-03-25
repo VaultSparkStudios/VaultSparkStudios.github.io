@@ -1,5 +1,31 @@
 # Agent Instructions — VaultSpark Studios
 
+## Studio OS
+
+This project runs under the VaultSpark Studio OS.
+Local path: `C:\Users\p4cka\documents\development\vaultspark-studio-ops`
+GitHub: https://github.com/VaultSparkStudios/vaultspark-studio-ops
+
+Read `vaultspark-studio-ops/docs/templates/` for canonical templates and conventions.
+Read `vaultspark-studio-ops/portfolio/PROJECT_REGISTRY.md` for all active studio projects.
+
+## Session context read order
+
+At the start of any session, read in this order:
+1. `context/PROJECT_BRIEF.md`
+2. `context/SOUL.md`
+3. `context/BRAIN.md`
+4. `context/CURRENT_STATE.md`
+5. `context/DECISIONS.md`
+6. `context/TASK_BOARD.md`
+7. `context/LATEST_HANDOFF.md`
+8. `HANDOFF_PHASE6.md` — legacy deep-context file (phase history, schema, full system state)
+
+## Session aliases
+
+If the user says only `start`, follow `prompts/start.md`.
+If the user says only `closeout`, follow `prompts/closeout.md`.
+
 ## Studio identity
 
 * Studio site repo: `VaultSparkStudios/VaultSparkStudios.github.io`
