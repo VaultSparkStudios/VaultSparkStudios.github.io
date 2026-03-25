@@ -51,7 +51,7 @@ alter table achievements
 -- Default every binary achievement to 1
 update achievements set progress_max = 1 where progress_max is null;
 
--- Adjust specific achievements with known thresholds
-update achievements set progress_max = 100  where id = 'first_100';
-update achievements set progress_max = 5    where id = 'patron';
-update achievements set progress_max = 1000 where id = 'lore_keeper';
+-- Adjust specific achievements with known thresholds (matched by title keyword)
+update achievements set progress_max = 100  where title ilike '%100%' or title ilike '%first hundred%';
+update achievements set progress_max = 5    where title ilike '%patron%' or title ilike '%subscribe%';
+update achievements set progress_max = 1000 where title ilike '%lore%' or title ilike '%keeper%';

@@ -8,8 +8,7 @@ alter table achievements
 -- Default every binary achievement to progress_max = 1
 update achievements set progress_max = 1 where progress_max is null;
 
--- Override with sensible values for known multi-step achievements
--- (adjust these IDs/slugs to match your actual achievement rows)
-update achievements set progress_max = 100  where id = 'first_100';    -- reach 100 pts
-update achievements set progress_max = 5    where id = 'patron';       -- invite 5 members
-update achievements set progress_max = 1000 where id = 'lore_keeper';  -- read all lore
+-- Override with sensible values for known multi-step achievements (matched by title keyword)
+update achievements set progress_max = 100  where title ilike '%100%' or title ilike '%first hundred%';
+update achievements set progress_max = 5    where title ilike '%patron%' or title ilike '%subscribe%';
+update achievements set progress_max = 1000 where title ilike '%lore%' or title ilike '%keeper%';
