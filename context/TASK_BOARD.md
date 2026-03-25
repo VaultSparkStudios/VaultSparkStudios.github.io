@@ -30,16 +30,13 @@
 - [ ] Supabase query batching in portal (consolidate sequential SELECTs into RPCs) [7]
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
 - [ ] WebP/AVIF image audit + conversion [6.5]
-- [ ] Profile themes / card backgrounds (rank-based unlockable styles) [6.5]
 
 ## B-Tier Backlog (Score 5–6.9)
 
 - [ ] Gift subscriptions (Stripe) [6.8]
 - [ ] Member-to-member point gifting [6.5]
 - [ ] Fan art submission form (upload → Supabase Storage → moderation queue in Vault Command) [6.5]
-- [ ] Vault Command: scheduled broadcast (set Signal Broadcast to publish at future time) [6.5]
 - [ ] Co-op / team challenges [6.5]
-- [ ] Dark/light mode toggle [6.5]
 - [ ] Sitemap auto-generation (GitHub Action) [6.5]
 - [ ] Game update changelogs on game pages [6.3]
 - [ ] Journal post view count (journal_views table, deduplicated, shown on cards) [6]
@@ -67,6 +64,19 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 29 (2026-03-25)
+
+- ✅ Profile themes / card backgrounds — 5 rank-unlockable card themes (Default, Rift Blue rank 2+, Void rank 4+, Forge Fire rank 7+, Sparked rank 8+); theme selector pill row in card modal; `CARD_THEMES` config + `buildCardThemeRow()` + updated `generateMemberCard()` uses theme bg/accent/glow colors; persists in `localStorage` as `vs_card_theme`
+
+## Completed — Phase 28 (2026-03-25)
+
+- ✅ Dark/light mode toggle — `assets/theme-toggle.js` injects ☀/🌙 button into `.nav-right` on all public pages; `body.light-mode` CSS overrides in `style.css`; persists in localStorage as `vs_theme`; injected into 39 public HTML files
+
+## Completed — Phase 27 (2026-03-25)
+
+- ✅ Vault Command: scheduled broadcast — "Schedule for later" toggle + datetime input on Signal Broadcast form; `adminPostPulse()` conditionally sets `publish_at` ISO timestamp on insert; future-date validation; resets UI after success
+- **SQL needed:** `ALTER TABLE studio_pulse ADD COLUMN IF NOT EXISTS publish_at timestamptz;`
 
 ## Completed — Phase 26 (2026-03-25)
 

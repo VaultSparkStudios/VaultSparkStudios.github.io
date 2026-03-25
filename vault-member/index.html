@@ -1047,6 +1047,31 @@
       100% { transform: translate(-50%,-50%) translate(var(--tx),var(--ty)) scale(0); opacity: 0; }
     }
 
+    /* ─── Card theme selector ─── */
+    .card-theme-row {
+      display: flex;
+      gap: 0.45rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 0.8rem 0 0.5rem;
+    }
+    .card-theme-btn {
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 0.3rem 0.65rem;
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      text-transform: uppercase;
+    }
+    .card-theme-btn.active { color: #000; }
+    .card-theme-btn.locked { opacity: 0.4; cursor: not-allowed; }
+    .card-theme-rank-req { font-size: 0.65rem; opacity: 0.6; display: block; }
+
     /* ─── Member Card modal ─── */
     .card-modal-overlay {
       position: fixed; inset: 0; z-index: 900;
@@ -2564,6 +2589,15 @@
                     <option value="drop">Drop — New content or key drop</option>
                   </select>
                 </div>
+                <div class="admin-form-group" style="margin-top:0.5rem;">
+                  <label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;">
+                    <input type="checkbox" id="admin-pulse-schedule-toggle" onchange="document.getElementById('admin-pulse-schedule-wrap').style.display=this.checked?'block':'none'" style="width:auto;accent-color:var(--gold);">
+                    Schedule for later
+                  </label>
+                  <div id="admin-pulse-schedule-wrap" style="display:none;margin-top:0.5rem;">
+                    <input type="datetime-local" class="admin-input" id="admin-pulse-schedule-time" style="width:100%;" />
+                  </div>
+                </div>
                 <div style="display:flex;align-items:center;">
                   <button class="admin-submit-btn" id="admin-pulse-btn" onclick="adminPostPulse()">Broadcast Signal</button>
                   <span class="admin-feedback" id="admin-pulse-fb"></span>
@@ -2744,6 +2778,7 @@
     <div class="card-modal" onclick="event.stopPropagation()">
       <h3>Your Vault Member Card</h3>
       <canvas id="vault-card-canvas" width="680" height="380"></canvas>
+      <div class="card-theme-row" id="card-theme-row" aria-label="Card background theme"></div>
       <div class="card-modal-actions">
         <button class="settings-save-btn" onclick="VS.downloadCard()">Download PNG</button>
         <button class="settings-save-btn" onclick="VS.shareCard()" style="background:var(--gold);color:#000;">Share Rank ⚡</button>
@@ -2955,6 +2990,7 @@
 
       showCardModal() {
         if (!_currentMember) return;
+        buildCardThemeRow(_currentMember);
         generateMemberCard(_currentMember);
         document.getElementById('card-modal-overlay').classList.add('show');
       },
@@ -5224,17 +5260,26 @@
     }
 
     async function adminPostPulse() {
-      const msg  = document.getElementById('admin-pulse-msg').value.trim();
-      const type = document.getElementById('admin-pulse-type').value;
-      const fb   = document.getElementById('admin-pulse-fb');
-      const btn  = document.getElementById('admin-pulse-btn');
+      const msg      = document.getElementById('admin-pulse-msg').value.trim();
+      const type     = document.getElementById('admin-pulse-type').value;
+      const fb       = document.getElementById('admin-pulse-fb');
+      const btn      = document.getElementById('admin-pulse-btn');
+      const schedOn  = document.getElementById('admin-pulse-schedule-toggle').checked;
+      const schedVal = document.getElementById('admin-pulse-schedule-time').value;
       if (!msg) { showAdminFeedback(fb, 'Signal text required', false); return; }
-      btn.disabled = true; fb.className = 'admin-feedback show'; fb.textContent = 'Broadcasting…';
+      if (schedOn && !schedVal) { showAdminFeedback(fb, 'Pick a schedule time', false); return; }
+      if (schedOn && new Date(schedVal) <= new Date()) { showAdminFeedback(fb, 'Schedule time must be in the future', false); return; }
+      btn.disabled = true; fb.className = 'admin-feedback show'; fb.textContent = schedOn ? 'Scheduling…' : 'Broadcasting…';
       try {
-        const { error } = await VSSupabase.from('studio_pulse').insert({ message: msg, type });
+        const payload = { message: msg, type };
+        if (schedOn) payload.publish_at = new Date(schedVal).toISOString();
+        const { error } = await VSSupabase.from('studio_pulse').insert(payload);
         if (error) throw error;
         document.getElementById('admin-pulse-msg').value = '';
-        showAdminFeedback(fb, 'Signal broadcast ✓', true);
+        document.getElementById('admin-pulse-schedule-toggle').checked = false;
+        document.getElementById('admin-pulse-schedule-time').value = '';
+        document.getElementById('admin-pulse-schedule-wrap').style.display = 'none';
+        showAdminFeedback(fb, schedOn ? 'Signal scheduled ✓' : 'Signal broadcast ✓', true);
       } catch (err) {
         showAdminFeedback(fb, 'Error: ' + (err.message || 'unknown'), false);
       } finally {
@@ -6054,6 +6099,45 @@
       ctx.closePath();
     }
 
+    // ── Card background themes ───────────────────────────────────────
+    const CARD_THEMES = [
+      { id: 'default',   label: 'Default',   rankReq: 0, accentColor: null,      bg: ['#08080f','#060810','#0c0d18'], glowColor: null        },
+      { id: 'rift',      label: 'Rift Blue',  rankReq: 2, accentColor: '#10B981', bg: ['#030e1a','#04111e','#061420'], glowColor: '#1FA2FF'   },
+      { id: 'breacher',  label: 'Void',       rankReq: 4, accentColor: '#8B5CF6', bg: ['#0a0414','#090213','#0e0520'], glowColor: '#8B5CF6'   },
+      { id: 'forge',     label: 'Forge Fire', rankReq: 7, accentColor: '#D62828', bg: ['#150604','#160505','#1c0807'], glowColor: '#FF7A00'   },
+      { id: 'sparked',   label: 'Sparked',    rankReq: 8, accentColor: '#FFC400', bg: ['#0f0b00','#120d00','#180f00'], glowColor: '#FFC400'   },
+    ];
+
+    function getCardTheme() {
+      return localStorage.getItem('vs_card_theme') || 'default';
+    }
+
+    function buildCardThemeRow(member) {
+      const row = document.getElementById('card-theme-row');
+      if (!row) return;
+      const rankIdx = VS.RANKS.findIndex(r => r.name === VS.getRank(member.points).name);
+      const active  = getCardTheme();
+      row.innerHTML = '';
+      CARD_THEMES.forEach(function(t) {
+        const locked = rankIdx < t.rankReq;
+        const btn = document.createElement('button');
+        btn.className = 'card-theme-btn' + (t.id === active ? ' active' : '') + (locked ? ' locked' : '');
+        btn.setAttribute('aria-label', t.label + (locked ? ' (locked — requires rank ' + t.rankReq + ')' : ''));
+        btn.disabled = locked;
+        if (t.id === active) btn.style.background = t.accentColor || '#FFC400';
+        else if (!locked && t.accentColor) btn.style.borderColor = t.accentColor + '55';
+        btn.innerHTML = t.label + (locked ? '<span class="card-theme-rank-req">Rank ' + t.rankReq + '+</span>' : '');
+        if (!locked) {
+          btn.addEventListener('click', function() {
+            localStorage.setItem('vs_card_theme', t.id);
+            buildCardThemeRow(member);
+            generateMemberCard(member);
+          });
+        }
+        row.appendChild(btn);
+      });
+    }
+
     function generateMemberCard(member) {
       const canvas = document.getElementById('vault-card-canvas');
       if (!canvas) return;
@@ -6063,11 +6147,14 @@
 
       const rank   = VS.getRank(member.points);
       const av     = VS.getAvatar(member.avatar_id || 'spark');
-      const accent = member.accent || '#FFC400';
+      const themeId = getCardTheme();
+      const theme   = CARD_THEMES.find(t => t.id === themeId) || CARD_THEMES[0];
+      const accent  = theme.accentColor || member.accent || '#FFC400';
+      const glowC   = theme.glowColor   || accent;
 
       // Background
       const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-      bgGrad.addColorStop(0, '#08080f'); bgGrad.addColorStop(0.6, '#060810'); bgGrad.addColorStop(1, '#0c0d18');
+      bgGrad.addColorStop(0, theme.bg[0]); bgGrad.addColorStop(0.6, theme.bg[1]); bgGrad.addColorStop(1, theme.bg[2]);
       ctx.fillStyle = bgGrad;
       rrect(ctx, 0, 0, W, H, 22); ctx.fill();
 
@@ -6077,9 +6164,15 @@
       for (let y = 0; y <= H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
 
       // Accent glow blob
-      const glowGrad = ctx.createRadialGradient(130, H/2, 0, 130, H/2, 120);
-      glowGrad.addColorStop(0, accent + '28'); glowGrad.addColorStop(1, 'transparent');
+      const glowGrad = ctx.createRadialGradient(130, H/2, 0, 130, H/2, 140);
+      glowGrad.addColorStop(0, glowC + '30'); glowGrad.addColorStop(1, 'transparent');
       ctx.fillStyle = glowGrad; ctx.fillRect(0, 0, W, H);
+      // Secondary right-side glow for themed cards
+      if (themeId !== 'default') {
+        const glowGrad2 = ctx.createRadialGradient(W, 0, 0, W, 0, 200);
+        glowGrad2.addColorStop(0, glowC + '18'); glowGrad2.addColorStop(1, 'transparent');
+        ctx.fillStyle = glowGrad2; ctx.fillRect(0, 0, W, H);
+      }
 
       // Left accent bar
       const barGrad = ctx.createLinearGradient(0, 0, 0, H);
