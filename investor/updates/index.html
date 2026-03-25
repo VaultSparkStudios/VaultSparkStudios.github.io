@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investor Updates | VaultSpark Studios</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="../../assets/favicon.png" />
+  <link rel="stylesheet" href="../../assets/style.css" />
+  <link rel="stylesheet" href="../../assets/investor-theme.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../../assets/supabase-client.js"></script>
+  <script src="../../assets/investor-auth.js"></script>
+  <script src="../../assets/investor-ui.js"></script>
+</head>
+<body class="investor-portal">
+
+  <!-- Nav -->
+  <nav class="inv-nav">
+    <div class="container inv-nav-inner">
+      <div class="inv-nav-brand">
+        <img src="../../assets/logo.png" alt="" style="height:22px; opacity:0.8;" />
+        <span><strong>VaultSpark</strong> Investor Portal</span>
+      </div>
+      <div class="inv-nav-links">
+        <a href="/investor/" class="inv-nav-link">Dashboard</a>
+        <a href="/investor/updates/" class="inv-nav-link active">Updates</a>
+        <a href="/investor/documents/" class="inv-nav-link">Documents</a>
+        <a href="/investor/profile/" class="inv-nav-link">Profile</a>
+      </div>
+      <div class="inv-nav-actions">
+        <span class="inv-nav-user" id="navUserName"></span>
+        <button class="inv-btn inv-btn-ghost inv-btn-sm" id="signOutBtn">Sign out</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content -->
+  <div class="inv-page">
+    <div class="container">
+
+      <div class="inv-header">
+        <h1>Studio Updates</h1>
+        <p>Investor communications from VaultSpark Studios.</p>
+      </div>
+
+      <!-- Filter pills -->
+      <div class="inv-filter-pills" id="filterPills">
+        <button class="inv-pill active" data-type="all">All</button>
+        <button class="inv-pill" data-type="general">General</button>
+        <button class="inv-pill" data-type="financial">Financial</button>
+        <button class="inv-pill" data-type="milestone">Milestone</button>
+        <button class="inv-pill" data-type="product">Product</button>
+        <button class="inv-pill" data-type="legal">Legal</button>
+      </div>
+
+      <!-- Updates list -->
+      <div id="updatesList">
+        <div class="inv-skeleton inv-skeleton-card"></div>
+        <div class="inv-skeleton inv-skeleton-card"></div>
+        <div class="inv-skeleton inv-skeleton-card"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const UI = window.VSInvestorUI;
+    const sb = window.VSSupabase;
+
+    let allUpdates = [];
+    let activeFilter = 'all';
+
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      window.VSInvestorAuth.signOut();
+    });
+
+    window.addEventListener('investor:ready', async (e) => {
+      document.getElementById('navUserName').textContent = e.detail.display_name;
+      await loadUpdates();
+      bindFilters();
+    });
+
+    async function loadUpdates() {
+      const { data, error } = await sb
+        .from('investor_updates')
+        .select('id, title, update_type, visibility_tier, published_at, body_html')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false });
+
+      const list = document.getElementById('updatesList');
+
+      if (error) {
+        list.innerHTML = '<div class="inv-empty">Failed to load updates. Please refresh.</div>';
+        return;
+      }
+
+      allUpdates = data || [];
+      renderUpdates();
+    }
+
+    function renderUpdates() {
+      const list = document.getElementById('updatesList');
+      const filtered = activeFilter === 'all'
+        ? allUpdates
+        : allUpdates.filter(u => u.update_type === activeFilter);
+
+      if (filtered.length === 0) {
+        list.innerHTML = '<div class="inv-empty">No updates in this category yet.</div>';
+        return;
+      }
+
+      list.innerHTML = filtered.map(u => UI.renderUpdateRow(u)).join('');
+
+      // Wire expand buttons
+      list.querySelectorAll('.inv-update-expand-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+          const id   = this.dataset.id;
+          const row  = this.closest('.inv-update-row');
+          const body = row.querySelector('.inv-update-body');
+          const expanded = this.getAttribute('aria-expanded') === 'true';
+
+          if (!expanded) {
+            const update = allUpdates.find(u => u.id === id);
+            if (update) body.innerHTML = update.body_html;
+            body.removeAttribute('hidden');
+            this.setAttribute('aria-expanded', 'true');
+            this.querySelector('.inv-chevron').style.transform = 'rotate(90deg)';
+            VSInvestorAuth.logAction('update_read', id,
+              allUpdates.find(u => u.id === id)?.title);
+          } else {
+            body.setAttribute('hidden', '');
+            this.setAttribute('aria-expanded', 'false');
+            this.querySelector('.inv-chevron').style.transform = '';
+          }
+        });
+      });
+    }
+
+    function bindFilters() {
+      document.getElementById('filterPills').addEventListener('click', (e) => {
+        const pill = e.target.closest('.inv-pill');
+        if (!pill) return;
+
+        document.querySelectorAll('.inv-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeFilter = pill.dataset.type;
+        renderUpdates();
+      });
+    }
+  </script>
+
+</body>
+</html>

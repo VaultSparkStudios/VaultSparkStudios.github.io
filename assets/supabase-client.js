@@ -38,6 +38,11 @@
       url:  'http://localhost:5174',
       desc: 'PromoGrind local dev',
     },
+    investor: {
+      name: 'Investor Portal',
+      url:  'https://vaultsparkstudios.com/investor',
+      desc: 'VaultSpark Studios investor area — authorised access only',
+    },
     // ── Future entries (uncomment and fill in when ready) ──
     // vaultfront: {
     //   name: 'VaultFront',
