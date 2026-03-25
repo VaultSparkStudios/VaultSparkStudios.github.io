@@ -116,12 +116,52 @@ Added 2026-03-24. The studio site is the auth hub for all Vault-gated tools.
 - `assets/supabase-client.js` — shared Supabase JS client (`window.VSSupabase`), cross-domain redirect helper (`VSGate`), gated app registry (`VAULT_GATED_APPS`)
 - `vault-member/index.html` — Supabase auth replaces localStorage; invite codes required to register
 - `supabase-schema.sql` — run once in Supabase SQL Editor to provision tables + RPCs
+- `supabase-schema-v2.sql` — run after schema v1; adds promogrind_data, vault_events, subscriptions, game_sessions, award_vault_points RPC, get_member_stats RPC
 
-**Credentials:** `assets/supabase-client.js` has two placeholders at the top (`YOUR_SUPABASE_URL`, `YOUR_SUPABASE_ANON_KEY`). Fill these in after creating the Supabase project. Never commit real credentials.
+**Credentials:** `assets/supabase-client.js` has the real credentials at the top. Never commit new credentials — the anon key is safe for browser use.
 
-**Adding a new gated tool:**
+**Supabase project:** `https://fjnpzjjyhnpmunfoycrp.supabase.co` — shared across all studio games and tools.
+
+## Vault Member Integration Standard (Required for ALL projects)
+
+Every game, tool, app, and platform built under VaultSpark Studios **must** integrate Vault Member features at launch. This is a studio-wide operating standard — not optional.
+
+### Two integration tiers
+
+**Tier 1 — Gated tool** (access restricted to Vault Members only, e.g. PromoGrind):
 1. Add entry to `VAULT_GATED_APPS` in `assets/supabase-client.js`
-2. New tool copies `promogrind/src/auth.js` + adds Supabase env vars
+2. Copy `promogrind/src/auth.js` into the tool's `src/` — handles session check + redirect
+3. Add `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` to `.env`
+4. Call `checkAuth()` at app startup; it redirects unauthenticated users automatically
+5. Add `VITE_SUPABASE_URL` + `VITE_SUPABASE_ANON_KEY` as GitHub Actions secrets for the deploy workflow
+
+**Tier 2 — Open game/app** (anyone can use it, Vault Members get extras, e.g. call-of-doodie):
+1. Use the shared Supabase project (same URL + anon key)
+2. At the point where a meaningful action completes (score submit, level complete, etc.), call `_tryAwardVaultPoints()` — see `call-of-doodie/src/storage.js` for the canonical implementation
+3. This function: checks for a non-anonymous vault session → writes to `game_sessions` → calls `award_vault_points` RPC → fails silently if no vault session
+4. Non-members are completely unaffected — the function is fire-and-forget
+
+### Points schedule (standard, override per-project if needed)
+| Event | Points |
+|---|---|
+| game_session | 3 pts |
+| calculation (tool use) | 5 pts first, 1 pt subsequent |
+| ledger_entry | 2 pts |
+| daily_login | 3 pts |
+
+### What every project gets automatically
+- Vault points accumulate in `vault_members.points`
+- Achievements unlock via `award_vault_points` RPC
+- Game sessions appear in `game_sessions` table
+- Stats show on vault-member dashboard via `get_member_stats` RPC
+- No extra UI, no extra auth — transparent to players without accounts
+
+### Adding a new gated tool checklist
+1. Add entry to `VAULT_GATED_APPS` in `assets/supabase-client.js`
+2. Copy `promogrind/src/auth.js` → new tool's `src/auth.js`
+3. Add Supabase env vars to `.env` + GitHub Actions secrets
+4. Add `_tryAwardVaultPoints` equivalent for meaningful user actions
+5. Wire daily login event on app startup
 
 **Cross-domain token flow:** vault-member sends `access_token` + `refresh_token` via URL hash to the gated tool after login. The tool calls `supabase.auth.setSession()` to establish its session. See `LATEST_HANDOFF.md` for full flow.
 
