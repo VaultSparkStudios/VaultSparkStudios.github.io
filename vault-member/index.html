@@ -2111,6 +2111,22 @@
               </div>
             </div>
 
+            <!-- Gift Points Section -->
+            <div class="dash-panel">
+              <h3>Gift Points</h3>
+              <div style="background:rgba(10,13,22,0.7);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1.25rem;margin-top:0.25rem;">
+                <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem;">Send Vault Points to another member. Minimum 10 pts, maximum 500 pts per gift.</div>
+                <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                  <input type="text" id="gift-username" placeholder="Recipient username" autocomplete="off" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.55rem 0.75rem;color:var(--text);font-family:inherit;font-size:0.88rem;width:100%;" />
+                  <div style="display:flex;gap:0.5rem;">
+                    <input type="number" id="gift-amount" placeholder="Amount (10–500)" min="10" max="500" style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.55rem 0.75rem;color:var(--text);font-family:inherit;font-size:0.88rem;" />
+                    <button onclick="giftPoints()" style="background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.25);color:var(--gold);padding:0.55rem 1rem;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">Gift ⚡</button>
+                  </div>
+                  <div id="gift-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;"></div>
+                </div>
+              </div>
+            </div>
+
             <!-- Recent Vault Activity -->
             <div class="dash-panel">
               <h3>Recent Vault Activity</h3>
@@ -4549,6 +4565,56 @@
 
     function dismissWeeklyRecap() {
       document.getElementById('weekly-recap-banner')?.classList.remove('show');
+    }
+
+    // ── Point gifting ─────────────────────────────────────────────
+    async function giftPoints() {
+      if (!_currentMember) return;
+      const recipient = (document.getElementById('gift-username')?.value || '').trim().toLowerCase();
+      const amount    = parseInt(document.getElementById('gift-amount')?.value || '0', 10);
+      const fb        = document.getElementById('gift-feedback');
+      if (!fb) return;
+
+      if (!recipient) { fb.style.color = '#f87171'; fb.textContent = 'Enter a recipient username.'; return; }
+      if (isNaN(amount) || amount < 10 || amount > 500) { fb.style.color = '#f87171'; fb.textContent = 'Amount must be 10–500 pts.'; return; }
+      if (_currentMember.points < amount) { fb.style.color = '#f87171'; fb.textContent = 'Not enough Vault Points.'; return; }
+      if (recipient === (_currentMember.username || '').toLowerCase()) { fb.style.color = '#f87171'; fb.textContent = 'You cannot gift to yourself.'; return; }
+
+      fb.style.color = 'var(--dim)'; fb.textContent = 'Sending…';
+
+      try {
+        // Look up recipient
+        const { data: recip, error: lookupErr } = await VSSupabase
+          .from('vault_members').select('id, username, points').eq('username', recipient).single();
+        if (lookupErr || !recip) { fb.style.color = '#f87171'; fb.textContent = 'Member not found.'; return; }
+
+        // Deduct from sender
+        const { error: deductErr } = await VSSupabase
+          .from('vault_members').update({ points: _currentMember.points - amount })
+          .eq('id', _currentMember._id);
+        if (deductErr) throw deductErr;
+
+        // Add to recipient
+        const { error: addErr } = await VSSupabase
+          .from('vault_members').update({ points: recip.points + amount })
+          .eq('id', recip.id);
+        if (addErr) throw addErr;
+
+        // Log for both
+        await VSSupabase.from('point_events').insert([
+          { member_id: _currentMember._id, points: -amount, reason: 'gift_sent', description: 'Gift to ' + escHtml(recip.username) },
+          { member_id: recip.id,           points:  amount, reason: 'gift_received', description: 'Gift from ' + escHtml(_currentMember.username || 'member') }
+        ]);
+
+        _currentMember.points -= amount;
+        document.getElementById('stat-points').textContent = _currentMember.points.toLocaleString();
+        document.getElementById('gift-username').value = '';
+        document.getElementById('gift-amount').value   = '';
+        fb.style.color = '#10B981'; fb.textContent = '⚡ Gift sent to ' + escHtml(recip.username) + '!';
+        setTimeout(function(){ if(fb) fb.textContent = ''; }, 3000);
+      } catch(err) {
+        fb.style.color = '#f87171'; fb.textContent = 'Error: ' + (err.message || 'Could not send gift.');
+      }
     }
 
     // ── Phase 25: Member Spotlight ────────────────────────────────
