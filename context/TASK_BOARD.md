@@ -21,40 +21,70 @@
 
 ## S-Tier Backlog (Score 9–10)
 
-- [ ] Individual journal post pages (/journal/[slug]/) [9] — SEO goldmine, each post indexable + shareable
+- [ ] Rank-up celebration sequence (full-screen confetti + badge reveal when rank increases) [9.5] — highest retention moment in any points economy, currently silent
 - [ ] PWA install prompt (beforeinstallprompt handler) [9] — manifest.json exists, near-zero effort, app-like retention
 
 ## A-Tier Backlog (Score 7–8.9)
 
 - [ ] Community polls (members vote on game features / studio decisions) [8.5] — highest-engagement community mechanic
 - [ ] Points history chart (XP over time line graph on dashboard) [8.5] — retention/motivation
+- [ ] "What's New" modal on portal login after feature deployments [8.5] — localStorage version flag, zero backend, makes product feel alive
+- [ ] Dashboard tab persistence (remember active portal tab via localStorage) [8.5] — 2 lines of code, eliminates navigation friction
 - [ ] Game wishlist + "Notify me" for unreleased games [8] — pre-launch email/push capture
 - [ ] Challenge streaks (complete same recurring challenge N days running → bonus XP) [8]
 - [ ] Lore reading progress (% of archive read, "X of 24 files unlocked") [8]
 - [ ] Game-specific challenge + point triggers (Football GM → Vault points) [8]
+- [ ] Challenge completion modal (enhanced — animated +XP, rank progress, share button) [8] — turns routine action into a moment
+- [ ] Onboarding tour completion stored in Supabase (not just localStorage) [8] — prevents tour repeat on new device/cleared storage
+- [ ] Points breakdown tooltip (hover XP → breakdown by challenges/logins/referrals/achievements) [8] — one GROUP BY on point_events
 - [ ] Member directory (/members/) with rank filter + search [7.8]
 - [ ] Referral leaderboard ("Top Recruiters" on /leaderboards/) [7.8]
+- [ ] VaultSparked perks landing page (/vaultsparked/) [7.8] — public conversion page for the subscription, shareable
+- [ ] Custom 404 page with rank theme + useful links [7.8] — GitHub Pages supports /404.html natively
 - [ ] Game screenshots + trailer embed on game pages [7.5]
 - [ ] Dynamic OG image generation per page [7.5]
 - [ ] GDPR: export your data + delete account flows [7.5]
+- [ ] Classified files search (client-side keyword filter within lore archive) [7.5]
+- [ ] Push notification opt-in UI in portal settings [7.5] — VAPID-dependent for delivery but UI buildable now
+- [ ] Challenge submission history view (when each challenge was completed, in Challenges tab) [7.5]
+- [ ] Sticky "Join the Vault" CTA bar on public pages for logged-out visitors [7.5]
+- [ ] Vault Command: challenge completion analytics (completion rate, most popular categories, zero-completion challenges) [7.5]
+- [ ] Game page Vault Points callout ("Playing this game? Earn points via Vault Challenges") [7.5]
+- [ ] Preconnect / DNS-prefetch hints for Supabase CDN + analytics [7.5] — 3-line Lighthouse win
+- [ ] Lazy-load image audit (add loading="lazy" to all below-fold images) [7.5]
 - [ ] security.txt (/.well-known/security.txt) [7] — < 10 lines, signals security maturity
 - [ ] Password change + email change in Settings [7]
+- [ ] Challenge difficulty tiers (Easy/Medium/Hard column on challenges, badge on card) [7]
+- [ ] Supabase query batching in portal (consolidate sequential SELECTs into RPCs) [7]
+- [ ] Public changelog page (/changelog/ — what shipped each phase, written for members) [7]
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
-- [ ] Journal tag filtering on main /journal/ page [6.5]
 - [ ] WebP/AVIF image audit + conversion [6.5]
 - [ ] Graceful degradation on Supabase failure (offline states, error UI) [6.5]
 - [ ] Profile themes / card backgrounds (rank-based unlockable styles) [6.5]
 
 ## B-Tier Backlog (Score 5–6.9)
 
+- [ ] Annual membership anniversary reward (auto-grant XP + badge on 1-year vault anniversary) [6.8]
+- [ ] Weekly XP recap in notification center (Monday digest: XP earned, pts to next rank) [6.8]
+- [ ] Login calendar heatmap (GitHub-style activity calendar on dashboard) [6.8]
 - [ ] Gift subscriptions (Stripe) [6.8]
 - [ ] Member-to-member point gifting [6.5]
+- [ ] First-completion micro-achievements ("First Challenge", "First Lore File", "First Referral") [6.5]
+- [ ] Member count milestone events (50/100/500/1000 members → Studio Pulse + bonus XP for all) [6.5]
+- [ ] Recently joined member feed on /community/ (last 5–10 new members) [6.5]
+- [ ] Fan art submission form (upload → Supabase Storage → moderation queue in Vault Command) [6.5]
+- [ ] Vault Command: scheduled broadcast (set Signal Broadcast to publish at future time) [6.5]
 - [ ] Co-op / team challenges [6.5]
 - [ ] Bookmark classified files [6.5]
 - [ ] Dark/light mode toggle [6.5]
 - [ ] Investor portal: KPI trend sparklines (30/60/90-day MRR + member growth) [6.5]
 - [ ] Sitemap auto-generation (GitHub Action) [6.5]
+- [ ] Vault Command: member export CSV (username, email, rank, points, joined date) [6.3]
+- [ ] Referral code QR generator (client-side QR for member's /join/?ref= URL) [6.3]
+- [ ] Investor portal "Ask a question" form (contact form → Edge Function → founder email) [6.3]
 - [ ] Game update changelogs on game pages [6.3]
+- [ ] Challenge leaderboard (by total challenges completed, tab on /leaderboards/) [6]
+- [ ] Journal post view count (journal_views table, deduplicated, shown on cards) [6]
 - [ ] Team/about page expansion [6]
 - [ ] Fan art voting / gallery contests [6]
 - [ ] Multi-admin support (is_admin column) [6]
@@ -70,7 +100,8 @@
 - [ ] Rank comparison ("You are X pts behind [member]") [5.5]
 - [ ] New members this week ticker on /community/ [5.5]
 - [ ] Rate limiting on invite code claims [5.5]
-- [ ] Reading time + author bio on journal posts [5]
+- [ ] Audit log for admin actions (broadcasts, key drops, file uploads) [5.5]
+- [ ] Lighthouse CI score gate (fail build if performance < 90) [5.5]
 
 ## C-Tier Backlog (Score 3–4.9)
 
@@ -85,6 +116,16 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 12 (2026-03-25)
+
+- ✅ Individual journal post pages (/journal/studio-os-public/, /journal/first-sparks/, /journal/vault-opened/) — full SEO, Article JSON-LD, BreadcrumbList, OG tags, author bio, reading time, post nav
+- ✅ Journal RSS feed — per-post canonical URLs (not index anchors), correct guids
+- ✅ Homepage latest-journal-post teaser — dynamic card linking to most recent post
+- ✅ Journal post pin — pinned badge on latest entry (studio-os-public)
+- ✅ Journal tag filtering — filter pills (All / Studio OS / Games / Launch / Origin / Studio / Site), client-side JS
+- ✅ Reading time + author bio on all post pages
+- ✅ Share/copy-link buttons on index updated to individual post URLs
 
 ## Completed — Phase 11 (2026-03-25)
 
