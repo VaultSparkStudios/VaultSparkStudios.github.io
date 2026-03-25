@@ -1,5 +1,5 @@
 # Vault Member — Phase 6+ Handoff
-_Last updated: 2026-03-24 — Phases 0–10 + Vault Command admin panel complete + fully deployed_
+_Last updated: 2026-03-25 — Phases 0–10 + Vault Command + 9-tier ranks + VaultSparked Discord role_
 
 ---
 
@@ -219,8 +219,8 @@ All phases fully deployed and live.
 - **Discord:** bot invited to server, 5 rank roles created (IDs mapped rank 0–4)
 - **Supabase CLI:** linked to project `fjnpzjjyhnpmunfoycrp` via access token
 
-### Pending manual step — run `supabase-admin.sql`
-The `supabase-admin.sql` file in the repo root must be run in the Supabase SQL Editor to create the three INSERT policies (studio_pulse, classified_files, beta_keys) that allow member #1 to post from the Vault Command tab.
+### Pending manual step — run `supabase-vaultsparked-discord.sql`
+Adds `is_sparked boolean default false` to `vault_members`. Run in Supabase SQL Editor.
 
 ### iOS Shortcut
 Instructions in `IOS_SHORTCUT_STUDIO_PULSE.md`. Requires the Supabase service role key (from Supabase Dashboard → Project Settings → API).
@@ -236,9 +236,41 @@ Three Vault-themed forms:
 
 All three functions live in `vault-member/index.html` as `adminPostPulse()`, `adminPostFile()`, `adminPostBetaKey()` with shared `showAdminFeedback(el, msg, ok)` helper. Buttons disable during submit; feedback auto-clears after 4 s.
 
+## This session — 2026-03-25
+
+### Vault Command Admin Panel ✅
+Hidden `⚡ Vault Command` tab in dashboard, visible only to `username_lower = 'vaultspark'`. Three forms: Signal Broadcast (studio_pulse INSERT), Classified File Uplink (classified_files INSERT → push trigger), Key Vault Drop (beta_keys INSERT). SQL policies in `supabase-admin.sql` — applied. Admin check uses `username_lower = 'vaultspark'` (not member_number) in both RLS and frontend.
+
+### Phase 1 SQL applied ✅
+`supabase-phase1.sql` — added `member_number` column + sequence + trigger + backfill. Current members: DreadSpike=#1, OneKingdom=#2, VaultSpark=#3.
+
+### 9-tier rank system ✅
+| # | Name | Points | Color |
+|---|---|---|---|
+| 0 | Spark Initiate | 0–249 | `#94a3b8` |
+| 1 | Vault Runner | 250–999 | `#1FA2FF` |
+| 2 | Rift Scout | 1,000–2,999 | `#10B981` |
+| 3 | Vault Guard | 3,000–7,499 | `#06B6D4` |
+| 4 | Vault Breacher | 7,500–14,999 | `#8B5CF6` |
+| 5 | Void Operative | 15,000–29,999 | `#2D2D2D` |
+| 6 | Vault Keeper | 30,000–59,999 | `#C85000` |
+| 7 | Forge Master | 60,000–99,999 | `#D62828` |
+| 8 | The Sparked | 100,000+ | `#FFC400` |
+
+New badge CSS classes: `badge-cyan`, `badge-void`, `badge-amber`, `badge-sparked`. Avatar glow threshold raised to index >= 6.
+
+### Discord rank roles updated ✅
+9 role IDs set via `DISCORD_ROLE_IDS` secret. `assign-discord-role` Edge Function updated with new thresholds. Role IDs:
+`{"0":"1486203949102141460","1":"1486203992798400633","2":"1486218582181285888","3":"1486219140803854429","4":"1486219626731012097","5":"1486219628178051072","6":"1486204594261459115","7":"1486204467429904594","8":"1486204663861874748"}`
+
+### VaultSparked Discord role ✅
+Separate ⚡VaultSparked⚡ role (`#c0991a`, ID: `1486223949757943818`). `DISCORD_VAULTSPARKED_ROLE_ID` secret set. `assign-discord-role` now assigns/removes it based on `vault_members.is_sparked`. `stripe-webhook` flips `is_sparked` on subscription activate/cancel/payment_failed. Both functions redeployed.
+
+**Pending:** Run `supabase-vaultsparked-discord.sql` to add `is_sparked` column.
+
 ## Next session prompt
 
-No pending build items. All phases and admin tooling are complete. Next session: run `supabase-admin.sql` if not yet applied, then confirm Vault Command tab works for member #1.
+No pending build items. One SQL step remaining: run `supabase-vaultsparked-discord.sql` in the SQL Editor to add `is_sparked boolean default false` to `vault_members`.
 
 ## Pending phases
 
