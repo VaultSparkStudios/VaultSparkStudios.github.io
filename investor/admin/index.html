@@ -215,7 +215,7 @@
           <input class="inv-input" type="email" id="investorEmail" required
                  placeholder="investor@example.com" />
           <p style="font-size:0.78rem; color:var(--dim); margin-top:0.3rem;">
-            Must match an existing auth account. The investor creates their own account at /investor/login/.
+            Must match an existing auth account. They can sign up at <strong style="color:var(--muted);">/investor/login/</strong> — a signup tab will appear once they visit.
           </p>
         </div>
 
@@ -278,6 +278,20 @@
           <textarea class="inv-textarea" id="investorNotes"
                     style="min-height:80px;"
                     placeholder="Internal notes…"></textarea>
+        </div>
+
+        <div class="inv-form-group" id="createMemberGroup">
+          <label style="display:flex; align-items:flex-start; gap:0.65rem; cursor:pointer;">
+            <input type="checkbox" id="investorCreateMember"
+                   style="width:16px; height:16px; margin-top:2px; accent-color:#1FA2FF; flex-shrink:0;" />
+            <div>
+              <span class="inv-label" style="margin:0; display:block;">Also create Vault Member account</span>
+              <span style="font-size:0.78rem; color:var(--dim); line-height:1.5;">
+                Auto-generates a Vault Handle from their name, grants 500 Vault Points (Forge Guard rank),
+                and awards the Investor achievement badge. Best for individual / angel investors.
+              </span>
+            </div>
+          </label>
         </div>
 
         <div class="inv-form-error" id="investorFormError" style="display:none;"></div>

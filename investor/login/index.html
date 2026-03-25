@@ -82,6 +82,24 @@
 
     .login-footer a:hover { color: #1FA2FF; }
 
+    .login-tab {
+      flex: 1;
+      height: 36px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: all 0.15s;
+    }
+    .login-tab.active {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+    }
+
     .login-confidential {
       text-align: center;
       font-size: 0.72rem;
@@ -104,40 +122,95 @@
     </div>
 
     <div class="login-card">
+      <!-- Tabs -->
+      <div style="display:flex; gap:0; background:rgba(255,255,255,0.04); border-radius:10px; padding:3px; margin-bottom:1.5rem;">
+        <button class="login-tab active" id="tabSignIn" onclick="switchTab('signin')">Sign in</button>
+        <button class="login-tab" id="tabSignUp" onclick="switchTab('signup')">Create account</button>
+      </div>
+
       <div class="login-error" id="loginError" role="alert"></div>
 
-      <form id="loginForm" novalidate>
-        <div class="inv-form-group">
-          <label class="inv-label" for="loginEmail">Email address</label>
-          <input
-            class="inv-input"
-            type="email"
-            id="loginEmail"
-            name="email"
-            autocomplete="email"
-            placeholder="you@example.com"
-            required
-          />
-        </div>
+      <!-- Sign in panel -->
+      <div id="panelSignin">
+        <form id="loginForm" novalidate>
+          <div class="inv-form-group">
+            <label class="inv-label" for="loginEmail">Email address</label>
+            <input
+              class="inv-input"
+              type="email"
+              id="loginEmail"
+              name="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
 
-        <div class="inv-form-group">
-          <label class="inv-label" for="loginPassword">Password</label>
-          <input
-            class="inv-input"
-            type="password"
-            id="loginPassword"
-            name="password"
-            autocomplete="current-password"
-            placeholder="••••••••"
-            required
-          />
-        </div>
+          <div class="inv-form-group">
+            <label class="inv-label" for="loginPassword">Password</label>
+            <input
+              class="inv-input"
+              type="password"
+              id="loginPassword"
+              name="password"
+              autocomplete="current-password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
 
-        <button type="submit" class="inv-btn inv-btn-primary" id="loginBtn"
-                style="width:100%; justify-content:center;">
-          Sign in
-        </button>
-      </form>
+          <button type="submit" class="inv-btn inv-btn-primary" id="loginBtn"
+                  style="width:100%; justify-content:center;">
+            Sign in
+          </button>
+        </form>
+      </div>
+
+      <!-- Sign up panel -->
+      <div id="panelSignup" style="display:none;">
+        <p style="font-size:0.82rem; color:var(--dim); margin-bottom:1.25rem; line-height:1.55;">
+          Create an account to access the investor portal. You'll need to be approved by the studio before your account is activated.
+        </p>
+        <form id="signupForm" novalidate>
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupEmail">Email address</label>
+            <input
+              class="inv-input"
+              type="email"
+              id="signupEmail"
+              name="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+            />
+          </div>
+
+          <div class="inv-form-group">
+            <label class="inv-label" for="signupPassword">Password</label>
+            <input
+              class="inv-input"
+              type="password"
+              id="signupPassword"
+              name="password"
+              autocomplete="new-password"
+              placeholder="At least 8 characters"
+              required
+              minlength="8"
+            />
+          </div>
+
+          <button type="submit" class="inv-btn inv-btn-primary" id="signupBtn"
+                  style="width:100%; justify-content:center;">
+            Create account
+          </button>
+        </form>
+        <div id="signupSuccess" style="display:none; text-align:center; padding:1rem 0;">
+          <p style="color:#a7f3d0; font-size:0.92rem; margin-bottom:0.5rem;">Account created.</p>
+          <p style="color:var(--dim); font-size:0.82rem;">
+            Send your email to the studio to request investor access. You'll be able to sign in once approved.
+          </p>
+        </div>
+      </div>
 
       <div class="inv-divider"></div>
 
@@ -171,6 +244,17 @@
     <div class="login-confidential">Confidential — Authorised access only</div>
 
   </div>
+
+  <script>
+    function switchTab(tab) {
+      const isSignin = tab === 'signin';
+      document.getElementById('panelSignin').style.display = isSignin ? '' : 'none';
+      document.getElementById('panelSignup').style.display = isSignin ? 'none' : '';
+      document.getElementById('tabSignIn').classList.toggle('active', isSignin);
+      document.getElementById('tabSignUp').classList.toggle('active', !isSignin);
+      document.getElementById('loginError').classList.remove('visible');
+    }
+  </script>
 
   <script>
     (async function () {
@@ -259,6 +343,39 @@
         window.location.replace(
           (next && next.startsWith(window.location.origin)) ? next : '/investor/'
         );
+      });
+
+      // Sign up
+      document.getElementById('signupForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email    = document.getElementById('signupEmail').value.trim();
+        const password = document.getElementById('signupPassword').value;
+        const errEl    = document.getElementById('loginError');
+        const btn      = document.getElementById('signupBtn');
+
+        errEl.classList.remove('visible');
+        if (!email || password.length < 8) {
+          errEl.textContent = 'Please enter a valid email and a password of at least 8 characters.';
+          errEl.classList.add('visible');
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Creating account…';
+
+        const { error } = await sb.auth.signUp({ email, password });
+
+        btn.disabled = false;
+        btn.textContent = 'Create account';
+
+        if (error) {
+          errEl.textContent = error.message || 'Could not create account. Please try again.';
+          errEl.classList.add('visible');
+          return;
+        }
+
+        document.getElementById('signupForm').style.display = 'none';
+        document.getElementById('signupSuccess').style.display = 'block';
       });
 
       resetForm.addEventListener('submit', async (e) => {

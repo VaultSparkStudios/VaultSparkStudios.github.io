@@ -155,6 +155,10 @@
     form.reset();
     document.getElementById('modalTitle').textContent =
       existingInvestor ? 'Edit Investor' : 'Add Investor';
+
+    // Only show "create member" checkbox when adding new
+    const memberGroup = document.getElementById('createMemberGroup');
+    if (memberGroup) memberGroup.style.display = existingInvestor ? 'none' : '';
     document.getElementById('investorId').value =
       existingInvestor?.id || '';
 
@@ -190,6 +194,9 @@
 
     const investorId = document.getElementById('investorId').value || null;
 
+    const createMember = !investorId &&
+      document.getElementById('investorCreateMember')?.checked === true;
+
     const { data, error } = await sb().rpc('admin_upsert_investor', {
       p_email:             document.getElementById('investorEmail').value.trim(),
       p_display_name:      document.getElementById('investorName').value.trim(),
@@ -199,7 +206,8 @@
       p_equity_percentage: parseFloat(document.getElementById('investorEquity').value) || null,
       p_investment_date:   document.getElementById('investorDate').value || null,
       p_notes:             document.getElementById('investorNotes').value.trim() || null,
-      p_investor_id:       investorId
+      p_investor_id:       investorId,
+      p_create_member:     createMember
     });
 
     saveBtn.disabled = false;
@@ -221,7 +229,11 @@
     }
 
     closeModal();
-    UI().showToast(`Investor ${data.action === 'created' ? 'added' : 'updated'} successfully.`, 'success');
+    const baseMsg = `Investor ${data.action === 'created' ? 'added' : 'updated'} successfully.`;
+    const memberMsg = data.member_created
+      ? ` Vault Member account created — handle: @${data.username}`
+      : '';
+    UI().showToast(baseMsg + memberMsg, 'success');
     loadRoster();
   }
 
