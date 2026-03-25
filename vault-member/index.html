@@ -1651,27 +1651,47 @@
                 <div class="rank-row">
                   <div class="rank-dot" style="background:#94a3b8;"></div>
                   <span class="rank-row-name">Spark Initiate</span>
-                  <span class="rank-row-pts">0 – 99 pts</span>
+                  <span class="rank-row-pts">0 – 249 pts</span>
                 </div>
                 <div class="rank-row">
                   <div class="rank-dot" style="background:#1FA2FF;"></div>
                   <span class="rank-row-name">Vault Runner</span>
-                  <span class="rank-row-pts">100 – 499</span>
+                  <span class="rank-row-pts">250 – 999</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-dot" style="background:#10B981;"></div>
+                  <span class="rank-row-name">Rift Scout</span>
+                  <span class="rank-row-pts">1,000 – 2,999</span>
                 </div>
                 <div class="rank-row">
                   <div class="rank-dot" style="background:#FF7A00;"></div>
-                  <span class="rank-row-name">Forge Guard</span>
-                  <span class="rank-row-pts">500 – 1,999</span>
+                  <span class="rank-row-name">Vault Guard</span>
+                  <span class="rank-row-pts">3,000 – 7,499</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-dot" style="background:#8B5CF6;"></div>
+                  <span class="rank-row-name">Vault Breacher</span>
+                  <span class="rank-row-pts">7,500 – 14,999</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-dot" style="background:#D62828;"></div>
+                  <span class="rank-row-name">Void Operative</span>
+                  <span class="rank-row-pts">15,000 – 29,999</span>
                 </div>
                 <div class="rank-row">
                   <div class="rank-dot" style="background:#FFC400;"></div>
                   <span class="rank-row-name">Vault Keeper</span>
-                  <span class="rank-row-pts">2,000 – 9,999</span>
+                  <span class="rank-row-pts">30,000 – 59,999</span>
+                </div>
+                <div class="rank-row">
+                  <div class="rank-dot" style="background:#FFC400;"></div>
+                  <span class="rank-row-name">Forge Master</span>
+                  <span class="rank-row-pts">60,000 – 99,999</span>
                 </div>
                 <div class="rank-row">
                   <div class="rank-dot" style="background:#FFC400;box-shadow:0 0 8px rgba(255,196,0,0.7);"></div>
                   <span class="rank-row-name text-gold">The Sparked</span>
-                  <span class="rank-row-pts">10,000+ pts</span>
+                  <span class="rank-row-pts">100,000+ pts</span>
                 </div>
               </div>
 
@@ -2199,9 +2219,13 @@
                   <select class="admin-select" id="admin-key-rank">
                     <option value="0">0 — Spark Initiate+</option>
                     <option value="1">1 — Vault Runner+</option>
-                    <option value="2">2 — Forge Guard+</option>
-                    <option value="3">3 — Vault Keeper+</option>
-                    <option value="4">4 — The Sparked only</option>
+                    <option value="2">2 — Rift Scout+</option>
+                    <option value="3">3 — Vault Guard+</option>
+                    <option value="4">4 — Vault Breacher+</option>
+                    <option value="5">5 — Void Operative+</option>
+                    <option value="6">6 — Vault Keeper+</option>
+                    <option value="7">7 — Forge Master+</option>
+                    <option value="8">8 — The Sparked only</option>
                   </select>
                 </div>
                 <div style="display:flex;align-items:center;">
@@ -2232,9 +2256,13 @@
                     <select class="admin-select" id="admin-file-rank">
                       <option value="0">0 — All members</option>
                       <option value="1">1 — Vault Runner+</option>
-                      <option value="2">2 — Forge Guard+</option>
-                      <option value="3">3 — Vault Keeper+</option>
-                      <option value="4">4 — The Sparked only</option>
+                      <option value="2">2 — Rift Scout+</option>
+                      <option value="3">3 — Vault Guard+</option>
+                      <option value="4">4 — Vault Breacher+</option>
+                      <option value="5">5 — Void Operative+</option>
+                      <option value="6">6 — Vault Keeper+</option>
+                      <option value="7">7 — Forge Master+</option>
+                      <option value="8">8 — The Sparked only</option>
                     </select>
                   </div>
                   <div class="admin-form-group">
@@ -2354,11 +2382,15 @@
     // ── Rank / Achievement definitions (display only — source of truth) ──────
     const VS = {
       RANKS: [
-        { name: 'Spark Initiate', min: 0,     max: 99,       color: '#94a3b8', badgeClass: 'badge-ghost' },
-        { name: 'Vault Runner',   min: 100,   max: 499,      color: '#1FA2FF', badgeClass: 'badge-blue'  },
-        { name: 'Forge Guard',    min: 500,   max: 1999,     color: '#FF7A00', badgeClass: 'badge-orange'},
-        { name: 'Vault Keeper',   min: 2000,  max: 9999,     color: '#FFC400', badgeClass: 'badge-gold'  },
-        { name: 'The Sparked',    min: 10000, max: Infinity, color: '#FFC400', badgeClass: 'badge-gold'  },
+        { name: 'Spark Initiate', min: 0,      max: 249,      color: '#94a3b8', badgeClass: 'badge-ghost'   },
+        { name: 'Vault Runner',   min: 250,    max: 999,      color: '#1FA2FF', badgeClass: 'badge-blue'    },
+        { name: 'Rift Scout',     min: 1000,   max: 2999,     color: '#10B981', badgeClass: 'badge-green'   },
+        { name: 'Vault Guard',    min: 3000,   max: 7499,     color: '#FF7A00', badgeClass: 'badge-orange'  },
+        { name: 'Vault Breacher', min: 7500,   max: 14999,    color: '#8B5CF6', badgeClass: 'badge-purple'  },
+        { name: 'Void Operative', min: 15000,  max: 29999,    color: '#D62828', badgeClass: 'badge-red'     },
+        { name: 'Vault Keeper',   min: 30000,  max: 59999,    color: '#FFC400', badgeClass: 'badge-gold'    },
+        { name: 'Forge Master',   min: 60000,  max: 99999,    color: '#FFC400', badgeClass: 'badge-gold'    },
+        { name: 'The Sparked',    min: 100000, max: Infinity, color: '#FFC400', badgeClass: 'badge-sparked' },
       ],
 
       ACHIEVEMENT_DEFS: [
@@ -2667,10 +2699,10 @@
       const foundingEl = document.getElementById('profile-founding-badge');
       if (foundingEl) foundingEl.style.display = (member.member_number && member.member_number <= 100) ? '' : 'none';
 
-      // Avatar glow for Vault Keeper + The Sparked
+      // Avatar glow for Vault Keeper, Forge Master + The Sparked
       const rankIdx = VS.RANKS.findIndex(r => r.name === rank.name);
       const profileAvEl = document.getElementById('profile-avatar');
-      if (profileAvEl) profileAvEl.classList.toggle('rank-elite', rankIdx >= 3);
+      if (profileAvEl) profileAvEl.classList.toggle('rank-elite', rankIdx >= 6);
 
       document.getElementById('pb-current-rank').textContent = rank.name;
       document.getElementById('pb-next').textContent = nextRank
@@ -3722,7 +3754,7 @@
     // ── Phase 4: Classified Archive ──────────────────────────────
     let _archiveLoaded = false;
 
-    const RANK_NAMES = ['Spark Initiate', 'Vault Runner', 'Forge Guard', 'Vault Keeper', 'The Sparked'];
+    const RANK_NAMES = ['Spark Initiate', 'Vault Runner', 'Rift Scout', 'Vault Guard', 'Vault Breacher', 'Void Operative', 'Vault Keeper', 'Forge Master', 'The Sparked'];
 
     async function loadClassifiedArchive() {
       const list = document.getElementById('archive-file-list');
