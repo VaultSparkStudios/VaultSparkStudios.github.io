@@ -9,7 +9,7 @@
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RSGLPP4KDZ');</script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vault Leaderboard | VaultSpark Studios Community</title>
+  <title>Vault Leaderboard — Community Rankings | VaultSpark Studios</title>
   <meta name="description" content="Top Vault Members ranked by community points. Climb the ranks through challenges, games, and contributions." />
   <link rel="canonical" href="https://vaultsparkstudios.com/leaderboards/" />
   <meta name="robots" content="index, follow" />
@@ -19,7 +19,13 @@
   <meta property="og:url" content="https://vaultsparkstudios.com/leaderboards/" />
   <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@VaultSpark" />
+  <meta name="twitter:site" content="@VaultSparkStudios" />
+  <meta name="twitter:title" content="Vault Leaderboard | VaultSpark Studios" />
+  <meta name="twitter:description" content="Community rankings. Earn Vault Points and climb the board." />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Leaderboard","item":"https://vaultsparkstudios.com/leaderboards/"}]}
+  </script>
   <link rel="icon" type="image/png" href="/assets/favicon.png" />
   <link rel="stylesheet" href="/assets/style.css" />
   <style>
@@ -77,6 +83,9 @@
     .lb-cta-bar p { font-size:0.9rem; color:var(--muted); margin:0; }
     @media(max-width:600px) { .lb-stats-strip{grid-template-columns:1fr 1fr;} .lb-table th:nth-child(4),.lb-table td:nth-child(4){display:none;} }
   </style>
+
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -301,8 +310,27 @@
         renderTable(s);
       }
 
-      fetch(SB+'/rest/v1/vault_members?select=username,points,created_at&order=points.desc&limit=50',{headers:H})
-        .then(function(r){return r.ok?r.json():[];})
+      var CACHE_KEY = 'vs_leaderboard_cache';
+      var CACHE_TTL = 60 * 1000; // 60 seconds
+
+      function fetchWithCache() {
+        var cached = sessionStorage.getItem(CACHE_KEY);
+        if (cached) {
+          try {
+            var parsed = JSON.parse(cached);
+            if (Date.now() - parsed.ts < CACHE_TTL) return Promise.resolve(parsed.data);
+          } catch(_) {}
+        }
+        return fetch(SB+'/rest/v1/vault_members?select=username,points,created_at&order=points.desc&limit=50',{headers:H})
+          .then(function(r){return r.ok?r.json():[];})
+          .then(function(data){
+            if(!Array.isArray(data))data=[];
+            try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data: data, ts: Date.now() })); } catch(_) {}
+            return data;
+          });
+      }
+
+      fetchWithCache()
         .then(function(data){
           if(!Array.isArray(data))data=[];
           all=data;

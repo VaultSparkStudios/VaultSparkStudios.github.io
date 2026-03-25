@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-v2';
+const CACHE_NAME = 'vaultspark-v3';
 const STATIC_ASSETS = [
   '/',
   '/assets/style.css',
@@ -11,6 +11,12 @@ const STATIC_ASSETS = [
   '/assets/vaultspark-icon.webp',
   '/assets/vaultspark-cinematic-logo.webp',
   '/404.html',
+  '/games/',
+  '/vault-member/',
+  '/leaderboards/',
+  '/community/',
+  '/ranks/',
+  '/journal/',
 ];
 
 // ── Install: cache static assets ──────────────────────────────────────────
@@ -36,7 +42,22 @@ self.addEventListener('fetch', (e) => {
   const { request } = e;
   const url = new URL(request.url);
 
-  // Only handle same-origin requests
+  // Stale-while-revalidate for Supabase API reads (cross-origin)
+  if (url.hostname.includes('supabase.co') && request.method === 'GET') {
+    e.respondWith(
+      caches.open('vaultspark-api-v1').then(async (cache) => {
+        const cached = await cache.match(request);
+        const fetchPromise = fetch(request).then((res) => {
+          if (res.ok) cache.put(request, res.clone());
+          return res;
+        }).catch(() => cached);
+        return cached || fetchPromise;
+      })
+    );
+    return;
+  }
+
+  // Only handle same-origin requests beyond this point
   if (url.origin !== self.location.origin) return;
 
   // Cache-first strategy for assets (CSS, JS, images, fonts)

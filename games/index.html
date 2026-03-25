@@ -11,7 +11,7 @@
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="supabase-key" content="sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij" />
-  <title>VaultSpark Games | Play Browser Games, Sports Sim & Fantasy Worlds</title>
+  <title>Games — All VaultSpark Studios Games | VaultSpark Studios</title>
   <meta name="description" content="Explore every VaultSpark Studios game. Play Call of Doodie, Gridiron GM, VaultSpark Football GM in your browser. Discover Dunescape, VaultFront, and everything sealed in the vault." />
   <meta name="keywords" content="VaultSpark games, Call of Doodie, Gridiron GM, browser games, sports simulation, football management game, MMORPG, VaultFront strategy game" />
   <link rel="canonical" href="https://vaultsparkstudios.com/games/" />
@@ -29,6 +29,18 @@
   <link rel="apple-touch-icon" href="../assets/icon-256.png" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="../assets/style.css" />
+
+  <!-- JSON-LD: Breadcrumb -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaultsparkstudios.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Games", "item": "https://vaultsparkstudios.com/games/" }
+  ]
+}
+</script>
 
   <!-- JSON-LD: Game listings -->
   <script type="application/ld+json">
@@ -450,6 +462,9 @@
       .hero-stat-divider { display: none; }
     }
   </style>
+
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -457,7 +472,7 @@
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="VaultSpark Studios — home">
-        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" loading="eager" fetchpriority="high" />
         <span>VaultSpark Studios<small>The vault is sparked</small></span>
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">

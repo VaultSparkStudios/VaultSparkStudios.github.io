@@ -1,0 +1,32 @@
+name: Minify & Optimise on Push
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - 'assets/**.css'
+      - 'assets/**.js'
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install -g html-minifier-terser
+
+      - name: Report HTML file sizes
+        run: |
+          echo "=== HTML File Sizes ==="
+          find . -name "*.html" \
+            ! -path "./.git/*" \
+            ! -path "./studio-hub/*" \
+            ! -path "./.claude/*" \
+            -exec wc -c {} \; | sort -n | tail -20
+
+      - name: Check for oversized scripts
+        run: |
+          echo "=== JS Files over 50KB ==="
+          find ./assets -name "*.js" -size +50k -exec ls -lh {} \;

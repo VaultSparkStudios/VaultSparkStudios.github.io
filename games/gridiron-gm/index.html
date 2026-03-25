@@ -10,8 +10,8 @@
     gtag('config', 'G-RSGLPP4KDZ');
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gridiron GM | NFL-Style Franchise Simulator — Draft, Scout &amp; Build Your Dynasty</title>
-  <meta name="description" content="Gridiron GM is a deep NFL-style franchise management sim. Run a 7-round draft with real pick values, hire scouts with 3-year lookahead, set coaching schemes, manage a $300M salary cap, and watch games simulate with animated play-by-play. 32 fictional teams. Free in your browser." />
+  <title>Gridiron GM — NFL Franchise Simulator | VaultSpark Studios</title>
+  <meta name="description" content="Gridiron GM is a free NFL franchise management simulator. Build your team, manage trades, and win championships across 32 teams." />
   <meta name="keywords" content="Gridiron GM, NFL franchise simulator, football management game, browser sports sim, VaultSpark Studios, draft simulator, salary cap game, free football game" />
   <link rel="canonical" href="https://vaultsparkstudios.com/games/gridiron-gm/" />
   <meta name="theme-color" content="#000000" />
@@ -33,23 +33,62 @@
   <link rel="stylesheet" href="../../assets/style.css" />
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "VideoGame",
-    "name": "Gridiron GM",
-    "url": "https://vaultsparkstudios.com/games/gridiron-gm/",
-    "description": "A deep NFL-style franchise simulator with 32 fictional teams, 7-round draft using real Jimmy Johnson pick values, scouting department with 3-year draft lookahead, coaching schemes with scheme-fit bonuses, $300M salary cap, live play-by-play simulation with SVG field visualization, and multi-season dynasty play. Free in browser.",
-    "genre": ["Sports", "Simulation", "Strategy", "Management", "Dynasty"],
-    "gamePlatform": "Web Browser",
-    "applicationCategory": "Game",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "publisher": {
-      "@type": "Organization",
-      "name": "VaultSpark Studios",
-      "url": "https://vaultsparkstudios.com"
-    }
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Gridiron GM",
+  "description": "NFL franchise management simulator. Manage all 32 teams, make trades, and build your championship roster.",
+  "genre": ["Sports", "Simulation", "Strategy"],
+  "gamePlatform": "Web Browser",
+  "url": "https://vaultsparkstudios.com/games/gridiron-gm/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "VaultSpark Studios",
+    "url": "https://vaultsparkstudios.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
   }
-  </script>
+}
+</script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaultsparkstudios.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Games", "item": "https://vaultsparkstudios.com/games/" },
+    { "@type": "ListItem", "position": 3, "name": "Gridiron GM", "item": "https://vaultsparkstudios.com/games/gridiron-gm/" }
+  ]
+}
+</script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Gridiron GM free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes, Gridiron GM is completely free to play in your browser." }
+    },
+    {
+      "@type": "Question",
+      "name": "How many NFL teams can I manage?",
+      "acceptedAnswer": { "@type": "Answer", "text": "All 32 NFL teams are available. You can simulate an entire league or focus on one franchise." }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this a real NFL game?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Gridiron GM is an independent simulation game and is not affiliated with the NFL or any official license." }
+    }
+  ]
+}
+</script>
 
   <style>
     .game-hero { padding: 5rem 0 0; position: relative; }
@@ -97,6 +136,9 @@
     @media (max-width: 900px) { .game-body { grid-template-columns: 1fr; } .hero-art { min-height: 260px; } }
     @media (max-width: 640px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
   </style>
+
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -104,7 +146,7 @@
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="VaultSpark Studios — home">
-        <img src="../../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <img src="../../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" loading="eager" fetchpriority="high" />
         <span>VaultSpark Studios<small>The vault is sparked</small></span>
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
@@ -283,6 +325,33 @@
                 <li>New content additions</li>
               </ul>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section style="padding:3rem 0;border-top:1px solid rgba(255,255,255,0.06);">
+      <div class="container">
+        <h2 style="font-family:Georgia,serif;font-size:1.6rem;font-weight:400;margin-bottom:1.5rem;">Frequently Asked Questions</h2>
+        <div class="faq-list" style="max-width:700px;">
+          <div style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1rem 0;">
+            <button onclick="const b=this.nextElementSibling;const open=b.style.display!=='none';b.style.display=open?'none':'block';this.querySelector('span').textContent=open?'+':'−';" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
+              Is Gridiron GM free? <span style="color:var(--dim);font-size:1.1rem;flex-shrink:0;">+</span>
+            </button>
+            <div style="display:none;padding-top:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.65;">Yes, Gridiron GM is completely free to play in your browser.</div>
+          </div>
+          <div style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1rem 0;">
+            <button onclick="const b=this.nextElementSibling;const open=b.style.display!=='none';b.style.display=open?'none':'block';this.querySelector('span').textContent=open?'+':'−';" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
+              How many NFL teams can I manage? <span style="color:var(--dim);font-size:1.1rem;flex-shrink:0;">+</span>
+            </button>
+            <div style="display:none;padding-top:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.65;">All 32 NFL teams are available. You can simulate an entire league or focus on one franchise.</div>
+          </div>
+          <div style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1rem 0;">
+            <button onclick="const b=this.nextElementSibling;const open=b.style.display!=='none';b.style.display=open?'none':'block';this.querySelector('span').textContent=open?'+':'−';" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
+              Is this a real NFL game? <span style="color:var(--dim);font-size:1.1rem;flex-shrink:0;">+</span>
+            </button>
+            <div style="display:none;padding-top:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.65;">Gridiron GM is an independent simulation game and is not affiliated with the NFL or any official license.</div>
           </div>
         </div>
       </div>

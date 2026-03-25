@@ -18,8 +18,8 @@
   <meta name="p:domain_verify" content="c8175438f6c7e03b305b86ffcae36881" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>VaultSpark Studios | Independent Game Studio | The Vault Is Sparked</title>
-  <meta name="description" content="VaultSpark Studios is an independent game studio crafting cinematic worlds, sports simulations, and playable browser games. Play Call of Doodie, Gridiron GM, VaultSpark Football GM, and more. The vault is sparked." />
+  <title>VaultSpark Studios — Independent Game Studio</title>
+  <meta name="description" content="Independent game studio building browser games, community tools, and exclusive vault member experiences. Free to play." />
   <meta name="keywords" content="VaultSpark Studios, independent game studio, browser games, Call of Doodie, Gridiron GM, sports simulation, fantasy MMORPG, Dunescape, VaultFront, DreadSpike" />
   <link rel="canonical" href="https://vaultsparkstudios.com/" />
   <meta name="theme-color" content="#000000" />
@@ -34,7 +34,7 @@
   <meta property="og:site_name" content="VaultSpark Studios" />
 
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:site" content="@VaultSpark" />
+  <meta name="twitter:site" content="@VaultSparkStudios" />
   <meta name="twitter:title" content="VaultSpark Studios | The Vault Is Sparked" />
   <meta name="twitter:description" content="Independent game studio forging cinematic worlds, sports simulations, and playable experiments." />
   <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
@@ -46,40 +46,39 @@
   <link rel="preload" href="assets/vaultspark-cinematic-logo.webp" as="image" type="image/webp" />
   <link rel="preload" href="assets/vaultspark-icon.webp" as="image" type="image/webp" />
   <link rel="preload" href="assets/darth-spike-poster.jpg" as="image" />
+  <link rel="prefetch" href="/vault-member/" />
+  <link rel="prefetch" href="/games/" />
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Organization",
-        "@id": "https://vaultsparkstudios.com/#org",
-        "name": "VaultSpark Studios",
-        "url": "https://vaultsparkstudios.com",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://vaultsparkstudios.com/assets/vaultspark-cinematic-logo.webp"
-        },
-        "description": "VaultSpark Studios is an independent game studio crafting cinematic worlds, sports simulations, and playable browser games.",
-        "sameAs": [
-          "https://github.com/VaultSparkStudios",
-          "https://x.com/VaultSpark",
-          "https://www.instagram.com/vaultsparkstudios/",
-          "https://www.youtube.com/@VaultSparkStudios",
-          "https://www.facebook.com/VaultSparkStudios/",
-          "https://www.reddit.com/r/VaultSparkStudios/"
-        ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://vaultsparkstudios.com/#website",
-        "url": "https://vaultsparkstudios.com",
-        "name": "VaultSpark Studios",
-        "publisher": { "@id": "https://vaultsparkstudios.com/#org" }
-      }
-    ]
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "VaultSpark Studios",
+  "url": "https://vaultsparkstudios.com",
+  "logo": "https://vaultsparkstudios.com/assets/vaultspark-cinematic-logo.webp",
+  "description": "Independent game studio building browser games, community tools, and exclusive member experiences.",
+  "sameAs": [
+    "https://discord.gg/bgR3mSB2",
+    "https://github.com/VaultSparkStudios"
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "VaultSpark Studios",
+  "url": "https://vaultsparkstudios.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://vaultsparkstudios.com/search/?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
   }
+}
   </script>
 
   <style>
@@ -561,6 +560,9 @@
     }
     @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
   </style>
+
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -649,7 +651,7 @@
               <span class="chip">AI Storytelling</span>
             </div>
             <div class="logo-wrap">
-              <img src="assets/vaultspark-cinematic-logo.webp" alt="VaultSpark Studios cinematic logo" />
+              <img src="assets/vaultspark-cinematic-logo.webp" alt="VaultSpark Studios cinematic logo" fetchpriority="high" />
             </div>
             <div class="hero-caption">
               <div></div>
@@ -1330,6 +1332,8 @@
       } catch(_) {}
     })();
   </script>
+
+  <script src="/assets/web-vitals.js" defer></script>
 
 </body>
 </html>

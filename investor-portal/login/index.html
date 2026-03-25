@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../../assets/style.css" />
   <link rel="stylesheet" href="../../assets/investor-theme.css" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js" crossorigin="anonymous"></script>
   <script src="../../assets/supabase-client.js"></script>
 
   <style>
@@ -111,6 +111,9 @@
       opacity: 0.5;
     }
   </style>
+
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
 </head>
 <body class="investor-portal">
 
@@ -216,6 +219,10 @@
               required
               minlength="8"
             />
+            <div id="pwStrengthBar" style="height:3px;background:rgba(255,255,255,0.07);border-radius:2px;margin-top:0.4rem;overflow:hidden;">
+              <div id="pwStrengthFill" style="height:100%;width:0%;border-radius:2px;transition:width 0.2s,background 0.2s;background:#ef4444;"></div>
+            </div>
+            <div id="pwStrengthLabel" style="font-size:0.72rem;color:var(--dim);margin-top:0.25rem;"></div>
           </div>
           <button type="button" class="inv-btn inv-btn-primary" id="signupNextBtn1"
                   style="width:100%; justify-content:center;">
@@ -410,9 +417,13 @@
         if (profile && !profile.error) {
           const params = new URLSearchParams(window.location.search);
           const next = params.get('next');
-          window.location.replace(
-            (next && next.startsWith(window.location.origin)) ? next : '/investor-portal/'
-          );
+          const isValidNext = next &&
+            (next.startsWith(window.location.origin + '/') ||
+             next.startsWith('/')) &&
+            !next.startsWith('//') &&
+            !next.includes('://');
+          const redirectTo = isValidNext ? next : '/investor-portal/';
+          window.location.replace(redirectTo);
           return;
         }
         await sb.auth.signOut();
@@ -496,9 +507,13 @@
 
         // Success — redirect
         const next = params.get('next');
-        window.location.replace(
-          (next && next.startsWith(window.location.origin)) ? next : '/investor-portal/'
-        );
+        const isValidNext = next &&
+          (next.startsWith(window.location.origin + '/') ||
+           next.startsWith('/')) &&
+          !next.startsWith('//') &&
+          !next.includes('://');
+        const redirectTo = isValidNext ? next : '/investor-portal/';
+        window.location.replace(redirectTo);
       });
 
       // ── Multi-step signup wizard ────────────────────────────────
@@ -512,6 +527,31 @@
           if (n === step) wStep.classList.add('active');
         });
       }
+
+      // Password strength indicator
+      document.getElementById('signupPassword')?.addEventListener('input', function() {
+        const pw = this.value;
+        let score = 0;
+        if (pw.length >= 8)  score++;
+        if (pw.length >= 12) score++;
+        if (/[A-Z]/.test(pw)) score++;
+        if (/[0-9]/.test(pw)) score++;
+        if (/[^A-Za-z0-9]/.test(pw)) score++;
+
+        const fill  = document.getElementById('pwStrengthFill');
+        const label = document.getElementById('pwStrengthLabel');
+        const configs = [
+          { pct:  0, color: '#ef4444', text: '' },
+          { pct: 20, color: '#ef4444', text: 'Too short' },
+          { pct: 40, color: '#f97316', text: 'Weak' },
+          { pct: 60, color: '#eab308', text: 'Fair' },
+          { pct: 80, color: '#22c55e', text: 'Good' },
+          { pct:100, color: '#10B981', text: 'Strong' },
+        ];
+        const c = configs[Math.min(score, 5)];
+        if (fill)  { fill.style.width = c.pct + '%'; fill.style.background = c.color; }
+        if (label) { label.textContent = c.text; label.style.color = c.color; }
+      });
 
       // Step 1 → 2
       document.getElementById('signupNextBtn1').addEventListener('click', () => {
