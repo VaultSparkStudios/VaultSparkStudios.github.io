@@ -5,69 +5,81 @@ Last updated: 2026-03-25
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
-## What was completed (as of 2026-03-25 — this session)
+## What was completed (as of 2026-03-25 — Phase 11 session)
 
-### Investor Portal
-- Renamed `/investor/` → `/investor-portal/` (all 40+ internal references updated)
-- Old `/investor/*` paths now redirect to `/investor-portal/*`
-- Page gate overlay: full-screen spinner until `investor:ready` fires (no content flash)
-- 3-step sign-up wizard on login page (About You → Questionnaire → complete) matching investor_requests table
-- Password strength indicator on sign-up
-- Open-redirect hardening on login `?next=` param
-- Supabase CDN pinned to `@2.49.1/dist/umd/supabase.min.js`
-- Mobile hamburger nav added to all 5 portal pages
-- Profile page: "Application on File" section pulls from `investor_requests`
-- Message Studio page added
+### Feature brainstorm + scoring
+- Brainstormed 42 improvements across all dimensions (growth, retention, monetisation, UX, SEO, security, devex)
+- Scored by impact (1–10 scale: business value × user value / effort)
+- Full scored list committed to `context/TASK_BOARD.md` in S/A/B/C tiers
 
-### New public pages
-- `/leaderboards/` — period tabs (All/Month/Week), rank bars, #1 spotlight
-- `/community/` — events, Discord CTA, fan art gallery, challenge showcase
-- `/journal/archive/` — searchable archive with tag filters
-- `/ranks/` — all 5 rank tiers with requirements and perks
-- `/member/` — dynamic public profile `?u=username`
-- `/status/` — 6 service health checks, auto-refresh 60s
-- `/search/` — client-side search of 20-page index, `?q=` support
+### Phase 11 — Top 20 features shipped (commit d1c8794, +2,147 lines)
 
-### Vault Member dashboard improvements
-- Quick-action buttons (Play Games, Leaderboard, Community, View Ranks)
-- Studio Pulse notice banner (sessionStorage dismiss)
-- Rank progress bar with next-rank label
-- Referral section with `?ref=[username]` link
+**Vault Member Portal (`vault-member/index.html`):**
+- Daily login bonus + streak system: awards 10 XP on first login each day; increments `streak_count`; milestone bonuses at 7 (50pts) / 30 (200pts) / 60 (500pts) / 100 (100pts) days; "🔥 N day streak" pill on dashboard
+- 5-step onboarding tour: dark backdrop + spotlight cutout + floating card; triggers for new members (points === 0, no localStorage flag); steps cover dashboard, challenges, archive, settings
+- In-portal notification center: 🔔 bell icon in nav; dropdown fetches last 10 Studio Pulse items + rank-up events; realtime subscription pushes new inserts; unread badge keyed to `notifications_last_read` localStorage timestamp
+- Challenge categories + filter pills: All / Daily / Weekly / Lore / Game / Social / One-Time; `expires_at` countdown badges ("Expires in Xd Xh"), greyed expired state
+- Achievement progress bars: `progress_max` column; gradient fill bars for multi-step achievements; current/max counter derived client-side from loaded data
+- Social sharing of member card: "Share Rank ⚡" button → Web Share API with image blob → Twitter/X intent fallback; "Copy Link 📋" copies `/join/?ref=username` to clipboard
 
-### Studio Hub new tabs
-- Revenue (MRR/ARR from VaultSparked count × $4.99)
-- Analytics (sessions chart + member growth)
-- Member Search (filter/search 200 members)
+**Homepage (`index.html`):**
+- Live member count: "Join X vault members" with pulsing green dot; fetched via `VSPublic.from('vault_members').headCount()`
 
-### Database (user ran both SQL files)
-- `achievements` + `member_achievements` tables, 12 seeded achievements, `get_my_achievements()` RPC
-- `challenge_submissions` table, `submit_challenge()` + `admin_get_challenge_submissions()` RPCs
+**Sentry error tracking:**
+- Added to `index.html`, `vault-member/index.html`, `investor-portal/index.html`
+- Uses `SENTRY_DSN_PLACEHOLDER` — user must replace with real DSN from sentry.io
 
-### SEO / Performance / Security (bulk pass — 62 files, +1282/-218)
-- VideoGame + FAQPage + BreadcrumbList JSON-LD on all 7 game detail pages; FAQ accordion sections
-- Organization + WebSite JSON-LD on homepage; BreadcrumbList on leaderboard/community/journal/ranks
-- Twitter Cards + OG meta tags site-wide; unique titles + descriptions on 50+ pages
-- `assets/supabase-public.js` — 1 KB REST helper (replaces 74 KB SDK on public-only pages)
-- `sw.js` v3 — 6 more pre-cached routes + stale-while-revalidate for Supabase API
-- `assets/web-vitals.js` — LCP, CLS, FCP, TTFB → GA4
-- `robots.txt` hardened: Disallow investor-portal, studio-hub, .claude
-- `.github/workflows/lighthouse.yml` — Lighthouse CI on push to main
-- `.github/workflows/minify.yml` — file-size reporting workflow
-- X-Frame-Options + Referrer-Policy meta tags bulk-added to 55 pages
-- sessionStorage 60s cache on leaderboard data fetches
-- Cookie consent banner (GDPR) added to 5 public pages
+**New page — `/join/` referral landing:**
+- Reads `?ref=username`; fetches referrer's rank/avatar from Supabase; shows personalised hero ("PlayerX [Rank] invited you")
+- All 9 rank badge colour classes; live member count pill; 3-benefit panel; CTA → `/vault-member/#register`
+- Graceful fallback when no ref param or fetch fails
+- noindex, OG/Twitter tags, Sentry included
+
+**Leaderboard (`leaderboards/index.html`):**
+- Game-specific tabs: Global | Football GM | Call of Doodie
+- Lazy-fetches `point_events` filtered by game keyword on first tab click
+- Empty state with game CTA links; existing period/sort filters preserved for Global tab
+
+**Public member profile (`member/index.html`):**
+- Pinned achievements (up to 3, with emoji + name)
+- Recent activity feed (last 5 point events with relative timestamps)
+- Founding member badge (⚡ for member_number ≤ 100)
+- Rank glow on badge for rank index ≥ 3
+- Share profile button (copies URL, "Copied!" toast)
+
+**Journal (`journal/index.html`):**
+- Emoji reactions: 🔥 Fire | ❤️ Love | 🎮 Gaming | ⚡ Sparked
+- Counts fetched on load; optimistic toggle on click; auth-gated writes (prompts sign-in if logged out); rolls back on failure
+- Session resolved from localStorage Supabase v2 key
+
+### SQL migrations (committed, not yet run)
+- `supabase-phase11.sql` — streak columns, challenge category/expires_at, achievement progress_max; idempotent
+- `supabase-journal-reactions.sql` — `journal_reactions` table with RLS (anyone reads, auth writes/deletes own)
 
 ## What is mid-flight
 
-- Nothing. Session complete and pushed to main.
+- Nothing in code. Two SQL files need running + Sentry DSN needs replacing.
 
-## What to do next
+## What to do next (in order)
 
-1. **Cloudflare proxy** — highest-ROI speed/security win; requires DNS change on registrar
-2. **Supabase dashboard** — enable CAPTCHA on auth, set session timeout, email enumeration prevention (Settings → Auth)
-3. **VaultSparked Discord role** — end-to-end test with Stripe test checkout
-4. **VAPID keys** — generate + configure to activate web push notifications
-5. **RLS audit** — run `select * from pg_policies` in Supabase SQL editor; review investor_requests policies
+1. **Run SQL** — `supabase-phase11.sql` then `supabase-journal-reactions.sql` in Supabase SQL editor
+2. **Sentry DSN** — search `SENTRY_DSN_PLACEHOLDER` in index.html, vault-member/index.html, investor-portal/index.html → replace with real DSN from sentry.io
+3. **Push** — `git push` to deploy
+4. **Cloudflare proxy** — DNS change on registrar; highest-ROI speed/security win
+5. **Supabase dashboard** — CAPTCHA on auth, session timeout, email enumeration prevention (Settings → Auth)
+6. **VAPID keys** — generate + set VAPID_PUBLIC_KEY in vault-member/index.html + Edge Function secrets → activates web push
+7. **Annual VaultSparked pricing** — add to Stripe + update Edge Function
+
+## B-tier backlog (next session candidates)
+
+- Gift subscriptions (Stripe) [6.8]
+- Bookmark classified files [6.5]
+- Dark/light mode toggle [6.5]
+- Investor portal KPI trend charts [6.5]
+- Sitemap auto-generation (GitHub Action) [6.5]
+- Game update changelogs on game pages [6.3]
+- Multi-admin support (is_admin column — SQL already drafted) [6]
+- RLS policy audit (investor_requests + challenge_submissions) [6]
 
 ## Constraints
 
@@ -76,6 +88,7 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 - Admin check is `username.toLowerCase() === 'vaultspark'` — do not change without migrating code
 - STRIPE_SECRET_KEY and STRIPE_WEBHOOK_SECRET are Edge Function secrets — never commit them
 - `assets/supabase-public.js` is for anonymous read-only public pages only (not auth/write flows)
+- Supabase CDN pinned to `@2.49.1/dist/umd/supabase.min.js` in investor portal pages
 
 ## Read these first next session
 
