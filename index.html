@@ -314,7 +314,8 @@
       flex-shrink: 0;
     }
     .dispatch-form input[type="email"] {
-      width: 240px;
+      width: 100%;
+      max-width: 340px;
       height: 48px;
       padding: 0 1.1rem;
       border-radius: 999px;
@@ -558,7 +559,7 @@
       .studio-grid { grid-template-columns: 1fr; }
       .hero-caption { position: static; margin-top: 1rem; flex-direction: column; align-items: flex-start; }
       .logo-wrap { inset: 6rem 1rem 4.2rem 1rem; }
-      .hero-visual { min-height: 600px; }
+      .hero-visual { min-height: 340px; }
       .dispatch-inner { flex-direction: column; align-items: flex-start; }
       .dispatch-form input[type="email"] { width: 100%; }
       .dispatch-form { width: 100%; }
@@ -643,7 +644,7 @@
             <a class="button-secondary" href="/vault-member/#register">Enter The Vault &nbsp;→</a>
           </div>
 
-          <div class="hero-live-bar" style="display:flex;align-items:center;gap:0.6rem;margin-top:1.25rem;font-size:0.88rem;color:var(--muted);">
+          <div class="hero-live-bar" style="display:flex;align-items:center;gap:0.6rem;margin-top:1.25rem;font-size:0.88rem;color:var(--muted);flex-wrap:wrap;">
             <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:10px;height:10px;">
               <span style="position:absolute;inset:0;border-radius:50%;background:#10B981;opacity:0.35;animation:pulse-ring 2s ease-out infinite;"></span>
               <span style="display:block;width:7px;height:7px;border-radius:50%;background:#10B981;flex-shrink:0;"></span>
@@ -1217,7 +1218,7 @@
           <strong>VaultSpark Studios</strong>
           <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
           <form id="footer-email-form" novalidate style="display:flex;gap:0.6rem;flex-wrap:wrap;">
-            <input type="email" class="input-field" placeholder="Join Vault Dispatch..." style="height:42px;font-size:0.87rem;" aria-label="Email for newsletter" />
+            <input type="email" class="input-field" placeholder="Join Vault Dispatch..." style="height:42px;font-size:0.87rem;box-sizing:border-box;width:100%;" aria-label="Email for newsletter" />
             <button type="submit" class="button button-sm">Subscribe</button>
           </form>
           <div id="footer-success" role="status" style="display:none;color:#86efac;font-size:0.88rem;margin-top:0.5rem;font-weight:600;">✓ You're subscribed.</div>

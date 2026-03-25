@@ -1449,8 +1449,87 @@
       .avatar-grid { grid-template-columns: repeat(6, 1fr); }
     }
     @media (max-width: 480px) {
-      .achievement-grid { grid-template-columns: 1fr; }
+      /* ── Fix 1: Auth panel ── */
+      .auth-card { padding: 1.2rem; }
+      .auth-tab { min-height: 44px; }
+      .auth-panel { overflow-x: hidden; }
+
+      /* ── Fix 2: Dashboard stats strip ── */
+      .profile-meta {
+        flex-wrap: wrap;
+        row-gap: 0.4rem;
+      }
+      .profile-pts { font-size: 0.82rem; }
+      .profile-card { flex-direction: column; align-items: flex-start; }
+      .profile-actions { width: 100%; flex-direction: row; align-items: center; margin-left: 0; }
+
+      /* ── Fix 3: Challenges grid ── */
+      .challenges-grid { grid-template-columns: 1fr; }
+      .challenge-card { padding: 1rem; }
+      #challenge-filter-pills {
+        overflow-x: auto;
+        white-space: nowrap;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 4px;
+      }
+
+      /* ── Fix 4: Achievements grid ── */
+      .achievement-grid { grid-template-columns: repeat(2, 1fr); }
+      .achievement.locked { overflow: hidden; }
+      .progress-bar-label { font-size: 0.75rem; }
+
+      /* ── Fix 5: Archive / file cards ── */
+      .file-card-header { flex-wrap: wrap; gap: 0.5rem; padding: 0.85rem 0.9rem; }
+      .file-title { font-size: 0.88rem; }
+      .file-meta-tags { flex-wrap: wrap; }
+
+      /* ── Fix 6: Settings tab ── */
       .avatar-grid { grid-template-columns: repeat(4, 1fr); }
+      .avatar-opt { min-height: 44px; min-width: 44px; }
+      .color-swatch { width: 36px; height: 36px; }
+      .form-group input { width: 100%; box-sizing: border-box; }
+      .settings-save-btn { width: 100%; }
+      .settings-save-row { flex-direction: column; align-items: flex-start; }
+
+      /* ── Fix 8: Card modal ── */
+      .card-modal { width: 95%; padding: 1.2rem; }
+      .card-modal-actions { flex-direction: column; align-items: stretch; }
+      .card-modal-actions .settings-save-btn,
+      .card-modal-actions .signout-btn { width: 100%; text-align: center; }
+
+      /* ── Fix 9: Onboarding tour ── */
+      #onboarding-card {
+        max-width: 92vw !important;
+        padding: 1.4rem 1.5rem !important;
+        overflow-x: hidden;
+      }
+
+      /* ── Fix 10: Tab navigation bar ── */
+      .dash-tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        flex-wrap: nowrap;
+      }
+      .dash-tab { min-height: 44px; white-space: nowrap; padding: 0.72rem 0.9rem; }
+
+      /* ── Fix 11: Admin panel ── */
+      .admin-panels-grid { grid-template-columns: 1fr; }
+      .admin-input,
+      .admin-select,
+      .admin-textarea { width: 100%; box-sizing: border-box; }
+      .admin-textarea { width: 100%; }
+      .admin-submit-btn { width: auto; }
+      #admin-pulse-btn,
+      #admin-key-btn,
+      #admin-file-btn { width: 100%; }
+
+      /* ── Fix 12: Inline fixed-width elements ── */
+      #studio-pipeline-grid { grid-template-columns: 1fr !important; }
+
+      /* ── General: ensure no horizontal overflow ── */
+      .dash-panel { overflow-x: hidden; }
+      .profile-bio { max-width: 100%; }
     }
   </style>
 
@@ -1482,7 +1561,7 @@
             <span id="notif-badge" style="display:none;position:absolute;top:5px;right:5px;min-width:16px;height:16px;background:#ef4444;border-radius:999px;font-size:0.6rem;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;padding:0 3px;line-height:1;border:2px solid #000;"></span>
           </button>
           <!-- Notification dropdown panel -->
-          <div id="notif-panel" style="display:none;position:absolute;right:0;top:calc(100% + 10px);width:340px;max-width:96vw;background:rgba(10,13,22,0.98);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:0;box-shadow:0 32px 80px rgba(0,0,0,0.6);z-index:400;overflow:hidden;">
+          <div id="notif-panel" style="display:none;position:absolute;right:-0.5rem;top:calc(100% + 10px);width:min(340px, calc(100vw - 1rem));background:rgba(10,13,22,0.98);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:0;box-shadow:0 32px 80px rgba(0,0,0,0.6);z-index:400;overflow:hidden;">
             <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.2rem 0.75rem;border-bottom:1px solid rgba(255,255,255,0.07);">
               <span style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);">Notifications</span>
               <button onclick="markNotifsRead()" style="font-size:0.76rem;color:var(--gold);background:transparent;border:none;cursor:pointer;font-family:inherit;padding:0;">Mark all read</button>

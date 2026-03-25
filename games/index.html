@@ -461,6 +461,14 @@
       .game-card-body { padding: 1.6rem; }
       .hero-stat-divider { display: none; }
     }
+    @media (max-width: 640px) {
+      .game-card-hero { min-height: 160px; }
+      .games-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .game-card { padding: 1.2rem; }
+    }
+    @media (max-width: 480px) {
+      .page-hero h1, .games-hero h1 { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+    }
   </style>
 
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />

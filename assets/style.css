@@ -873,7 +873,12 @@ section { padding: 1.6rem 0 4.2rem; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
 }
 
+@media (max-width: 768px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+
 @media (max-width: 980px) {
+  .hero { padding-top: 5rem; }
   .cards-3,
   .cards-2,
   .two-col,
@@ -985,3 +990,8 @@ section { padding: 1.6rem 0 4.2rem; }
   flex-shrink: 0;
   transition: background 0.3s;
 }
+
+/* ─── Table scroll helper ────────────────── */
+
+.table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-scroll table { min-width: 520px; }

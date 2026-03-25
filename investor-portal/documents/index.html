@@ -26,6 +26,23 @@
       margin-bottom: 0.25rem;
       border-bottom: 1px solid rgba(255,255,255,0.05);
     }
+
+    /* Wrap all doc tables in a horizontal scroll container */
+    .inv-doc-group .inv-doc-table {
+      display: block; /* becomes block so parent can scroll */
+    }
+
+    .inv-doc-group-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    @media (max-width: 480px) {
+      .inv-doc-group { margin-bottom: 1.75rem; }
+      /* On 480px, hide the size column (4th) to save space */
+      .inv-doc-table th:nth-child(4),
+      .inv-doc-table td:nth-child(4) { display: none; }
+    }
   </style>
 
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
@@ -140,20 +157,22 @@
       container.innerHTML = orderedTypes.map(type => `
         <div class="inv-doc-group">
           <div class="inv-doc-group-title">${UI.escHtml(UI.docTypeLabel(type))}</div>
-          <table class="inv-doc-table">
-            <thead>
-              <tr>
-                <th>Document</th>
-                <th>Version</th>
-                <th>Date</th>
-                <th>Size</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              ${groups[type].map(d => UI.renderDocumentRow(d)).join('')}
-            </tbody>
-          </table>
+          <div class="inv-doc-group-table-wrap">
+            <table class="inv-doc-table">
+              <thead>
+                <tr>
+                  <th>Document</th>
+                  <th>Version</th>
+                  <th>Date</th>
+                  <th>Size</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                ${groups[type].map(d => UI.renderDocumentRow(d)).join('')}
+              </tbody>
+            </table>
+          </div>
         </div>`).join('');
 
       wireDownloadButtons(container);

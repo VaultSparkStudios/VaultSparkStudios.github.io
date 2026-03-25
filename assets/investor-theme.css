@@ -649,10 +649,52 @@ body.investor-portal::after {
   .inv-doc-table td:nth-child(3),
   .inv-doc-table th:nth-child(5),
   .inv-doc-table td:nth-child(5)  { display: none; }
+
+  /* Admin tabs: scroll horizontally rather than overflow */
+  .inv-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+  }
+  .inv-tabs::-webkit-scrollbar { display: none; }
+  .inv-tab { flex-shrink: 0; }
+
+  /* Admin activity filter row: stack vertically */
+  .inv-activity-filter-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .inv-activity-filter-row .inv-select { width: 100%; }
 }
 
 @media (max-width: 480px) {
   .inv-stat-strip { grid-template-columns: 1fr; }
+
+  /* Admin table: hide less-critical columns on very small screens */
+  .inv-admin-table th:nth-child(3),
+  .inv-admin-table td:nth-child(3),
+  .inv-admin-table th:nth-child(4),
+  .inv-admin-table td:nth-child(4),
+  .inv-admin-table th:nth-child(7),
+  .inv-admin-table td:nth-child(7) { display: none; }
+
+  /* Buttons in a row: wrap and fill width */
+  .inv-btn-row {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .inv-btn-row .inv-btn { width: 100%; justify-content: center; }
+
+  /* Ensure cards have reasonable padding */
+  .inv-card { padding: 1.25rem; }
+}
+
+/* ── Table scroll wrappers ───────────────────────────────────────── */
+.inv-table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* ── Message priority badges ──────────────────────────────────── */

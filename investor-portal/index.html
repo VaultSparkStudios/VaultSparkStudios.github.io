@@ -98,6 +98,11 @@
     @media (max-width: 600px) {
       .inv-kpi-strip { grid-template-columns: 1fr 1fr; }
     }
+
+    @media (max-width: 480px) {
+      .inv-kpi-strip { grid-template-columns: 1fr; }
+      .inv-kpi-card  { padding: 1rem; }
+    }
   </style>
 
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
@@ -342,29 +347,31 @@
       }
 
       area.innerHTML = `
-        <table class="inv-doc-table">
-          <thead>
-            <tr>
-              <th>Document</th>
-              <th>Type</th>
-              <th>Date</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>${docs.map(d => `
-            <tr class="inv-doc-row">
-              <td class="inv-doc-title">${UI.escHtml(d.title)}</td>
-              <td class="inv-doc-type">${UI.escHtml(UI.docTypeLabel(d.document_type))}</td>
-              <td class="inv-doc-date">${UI.formatDateShort(d.uploaded_at)}</td>
-              <td>
-                <button class="inv-btn inv-btn-sm inv-btn-ghost inv-doc-download-btn"
-                        data-id="${UI.escHtml(d.id)}" data-title="${UI.escHtml(d.title)}">
-                  Open
-                </button>
-              </td>
-            </tr>`).join('')}
-          </tbody>
-        </table>
+        <div class="inv-table-scroll">
+          <table class="inv-doc-table">
+            <thead>
+              <tr>
+                <th>Document</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>${docs.map(d => `
+              <tr class="inv-doc-row">
+                <td class="inv-doc-title">${UI.escHtml(d.title)}</td>
+                <td class="inv-doc-type">${UI.escHtml(UI.docTypeLabel(d.document_type))}</td>
+                <td class="inv-doc-date">${UI.formatDateShort(d.uploaded_at)}</td>
+                <td>
+                  <button class="inv-btn inv-btn-sm inv-btn-ghost inv-doc-download-btn"
+                          data-id="${UI.escHtml(d.id)}" data-title="${UI.escHtml(d.title)}">
+                    Open
+                  </button>
+                </td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
         <div style="margin-top:0.75rem; text-align:right;">
           <a href="/investor-portal/documents/" class="inv-btn inv-btn-ghost inv-btn-sm">View all documents</a>
         </div>`;

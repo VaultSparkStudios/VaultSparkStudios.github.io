@@ -78,8 +78,8 @@
     .lb-stat-label { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; color:var(--dim); margin-bottom:0.4rem; }
     .lb-stat-value { font-size:1.6rem; font-weight:800; color:var(--gold); }
     /* Table */
-    .lb-table-wrap { background:var(--panel); border:1px solid var(--line); border-radius:16px; overflow:hidden; }
-    .lb-table { width:100%; border-collapse:collapse; }
+    .lb-table-wrap { background:var(--panel); border:1px solid var(--line); border-radius:16px; overflow-x:auto; -webkit-overflow-scrolling:touch; }
+    .lb-table { width:100%; border-collapse:collapse; min-width:520px; }
     .lb-table th { font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:var(--dim); padding:1rem 1.25rem; text-align:left; border-bottom:1px solid var(--line); }
     .lb-table td { padding:0.9rem 1.25rem; border-bottom:1px solid rgba(255,255,255,0.04); font-size:0.9rem; }
     .lb-table tr:last-child td { border-bottom:none; }
@@ -93,6 +93,13 @@
     .lb-cta-bar { background:rgba(31,162,255,0.06); border:1px solid rgba(31,162,255,0.15); border-radius:12px; padding:1.25rem 1.5rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-top:2rem; }
     .lb-cta-bar p { font-size:0.9rem; color:var(--muted); margin:0; }
     @media(max-width:600px) { .lb-stats-strip{grid-template-columns:1fr 1fr;} .lb-table th:nth-child(4),.lb-table td:nth-child(4){display:none;} }
+    .lb-game-tabs { overflow-x:auto; white-space:nowrap; -webkit-overflow-scrolling:touch; }
+    @media(max-width:480px) {
+      .lb-podium { flex-direction:column; align-items:center; gap:0.75rem; }
+      .podium-place { max-width:100%; width:100%; }
+      .lb-period-tabs, .lb-filters { gap:0.35rem; }
+      .lb-period-tab, .lb-filter { font-size:0.78rem; padding:0.4rem 0.7rem; }
+    }
   </style>
 
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />

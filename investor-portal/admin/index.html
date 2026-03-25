@@ -63,6 +63,75 @@
     }
 
     .inv-modal-close:hover { color: var(--text); }
+
+    /* ── Admin table scroll: roster and messages cards already have overflow:hidden;
+       override to allow horizontal scrolling ── */
+    #rosterTable,
+    #adminMessagesLog {
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* ── Activity filter row ── */
+    .inv-activity-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── Post update form: ensure max-width doesn't cause horizontal overflow ── */
+    #tab-update > div {
+      max-width: 100%;
+    }
+
+    @media (max-width: 640px) {
+      /* Stack activity filter row on small screens */
+      .inv-activity-filter-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .inv-activity-filter-row .inv-select {
+        width: 100%;
+      }
+      /* Unread filter row in messages */
+      #tab-messages > div[style*="flex"] {
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 480px) {
+      /* Modal: tighten padding */
+      .inv-modal {
+        padding: 1.25rem;
+      }
+      /* Admin header add-investor row: stack */
+      #tab-roster > div[style*="justify-content"] {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      #addInvestorBtn {
+        width: 100%;
+        justify-content: center;
+      }
+      /* Modal save/cancel button row: stack */
+      #investorForm > div[style*="justify-content"] {
+        flex-direction: column-reverse;
+        gap: 0.5rem;
+      }
+      #investorForm > div[style*="justify-content"] .inv-btn {
+        width: 100%;
+        justify-content: center;
+      }
+      /* Post update submit button: full width */
+      #postUpdateBtn {
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+      }
+    }
   </style>
 
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
@@ -192,9 +261,9 @@
 
       <!-- Tab: Activity Log -->
       <div class="inv-tab-panel" id="tab-activity">
-        <div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem;">
-          <label class="inv-label" style="margin:0;">Filter by investor:</label>
-          <select class="inv-select" id="activityInvestorFilter" style="width:220px;">
+        <div class="inv-activity-filter-row">
+          <label class="inv-label" style="margin:0; flex-shrink:0;">Filter by investor:</label>
+          <select class="inv-select" id="activityInvestorFilter" style="width:220px; max-width:100%;">
             <option value="">All investors</option>
           </select>
         </div>

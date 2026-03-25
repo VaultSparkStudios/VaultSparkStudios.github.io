@@ -110,6 +110,43 @@
       margin-top: 2rem;
       opacity: 0.5;
     }
+
+    /* ── Mobile: ensure buttons are 44px tap targets ── */
+    .inv-btn {
+      min-height: 44px;
+    }
+
+    /* ── Mobile: password reset row stacks on very small screens ── */
+    @media (max-width: 400px) {
+      #resetForm > div {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      #resetForm .inv-input { width: 100%; }
+      #resetBtn { width: 100%; justify-content: center; }
+    }
+
+    /* ── Wizard labels: hide text on 320px to prevent overflow ── */
+    @media (max-width: 340px) {
+      .inv-wizard-label { display: none; }
+      .inv-wizard-step:not(:last-child)::after {
+        left: calc(1.1rem + 0.3rem);
+      }
+    }
+
+    /* ── Step 2 back/next row: ensure full-width stacking ── */
+    @media (max-width: 360px) {
+      #signupStep2 > div[style*="flex"],
+      #signupStep3 > div[style*="flex"] {
+        flex-direction: column;
+      }
+      #signupStep2 > div[style*="flex"] .inv-btn,
+      #signupStep3 > div[style*="flex"] .inv-btn {
+        flex: none;
+        width: 100%;
+        justify-content: center;
+      }
+    }
   </style>
 
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />

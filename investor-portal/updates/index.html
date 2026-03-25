@@ -14,6 +14,25 @@
   <script src="../../assets/investor-auth.js"></script>
   <script src="../../assets/investor-ui.js"></script>
 
+  <style>
+    @media (max-width: 480px) {
+      /* Update rows: reduce padding on very small screens */
+      .inv-update-row {
+        padding: 1rem;
+      }
+      /* Ensure long titles wrap */
+      .inv-update-row-title {
+        word-break: break-word;
+        font-size: 1rem;
+      }
+      /* Update meta row: always wrap on small screens */
+      .inv-update-row-meta {
+        flex-wrap: wrap;
+        gap: 0.4rem;
+      }
+    }
+  </style>
+
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 </head>
