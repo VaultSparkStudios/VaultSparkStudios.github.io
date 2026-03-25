@@ -881,6 +881,84 @@
     #vault-card-canvas { width: 100%; border-radius: 14px; box-shadow: var(--shadow-lg); display: block; }
     .card-modal-actions { display: flex; gap: 0.75rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
 
+    /* ─── XP chip (floating earned notification) ─── */
+    .xp-chip {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 100px;
+      background: linear-gradient(135deg, rgba(255,196,0,0.18), rgba(255,196,0,0.07));
+      border: 1px solid rgba(255,196,0,0.38);
+      border-radius: 999px;
+      padding: 0.55rem 1.4rem;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--gold);
+      pointer-events: none;
+      z-index: 500;
+      opacity: 0;
+      white-space: nowrap;
+      box-shadow: 0 4px 24px rgba(255,196,0,0.12);
+      animation: xp-fly 2.4s ease-out forwards;
+    }
+    @keyframes xp-fly {
+      0%   { opacity: 0;   transform: translateX(-50%) translateY(0); }
+      12%  { opacity: 1; }
+      70%  { opacity: 1;   transform: translateX(-50%) translateY(-64px); }
+      100% { opacity: 0;   transform: translateX(-50%) translateY(-96px); }
+    }
+
+    /* ─── Activity feed ─── */
+    .activity-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.88rem;
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-icon { font-size: 1rem; width: 22px; text-align: center; flex-shrink: 0; }
+    .activity-label { flex: 1; color: var(--muted); line-height: 1.4; }
+    .activity-pts { font-weight: 800; color: var(--gold); min-width: 50px; text-align: right; font-size: 0.85rem; flex-shrink: 0; }
+    .activity-time { font-size: 0.74rem; color: var(--dim); white-space: nowrap; margin-left: 0.25rem; flex-shrink: 0; }
+    .activity-empty { font-size: 0.86rem; color: var(--dim); padding: 0.6rem 0; }
+
+    /* ─── Invite code display ─── */
+    .invite-code-display {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      background: rgba(255,196,0,0.05);
+      border: 1px solid rgba(255,196,0,0.2);
+      margin-top: 0.6rem;
+    }
+    .invite-code-value {
+      flex: 1;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      word-break: break-all;
+    }
+    .invite-copy-btn {
+      padding: 0.44rem 0.95rem;
+      border-radius: 8px;
+      background: rgba(255,196,0,0.12);
+      border: 1px solid rgba(255,196,0,0.28);
+      color: var(--gold);
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.18s;
+      white-space: nowrap;
+    }
+    .invite-copy-btn:hover { background: rgba(255,196,0,0.22); }
+
     @media (max-width: 860px) {
       .auth-wrap { grid-template-columns: 1fr; }
       .rank-sidebar { display: none; }
@@ -1245,6 +1323,12 @@
               </div>
             </div>
 
+            <!-- Recent Vault Activity -->
+            <div class="dash-panel">
+              <h3>Recent Vault Activity</h3>
+              <div id="activity-feed"><span class="activity-empty">Loading activity…</span></div>
+            </div>
+
             <!-- Achievements -->
             <div class="dash-panel dashboard-full">
               <h3>Vault Achievements</h3>
@@ -1436,6 +1520,15 @@
                   <div class="account-info-row"><span>Member Number</span><span id="info-member-number">—</span></div>
                 </div>
 
+                <div class="settings-block" style="margin-top:1.2rem;">
+                  <h3>Your Invite Code</h3>
+                  <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.3rem;line-height:1.55;">Share this code to invite someone to the Vault. You earn <strong style="color:var(--gold);">+100 pts</strong> when they join.</p>
+                  <div class="invite-code-display" id="invite-code-display">
+                    <span class="invite-code-value" id="invite-code-value">Generating…</span>
+                    <button class="invite-copy-btn" id="invite-copy-btn" onclick="copyInviteCode()">Copy</button>
+                  </div>
+                </div>
+
               </div>
 
               <!-- Full-width save row -->
@@ -1561,7 +1654,10 @@
         { id: 'visit_game', icon: '🎮', name: 'Into The Game',   desc: 'Visited a live VaultSpark game'             },
         { id: 'first_100',  icon: '⚡', name: 'Vault Runner',    desc: 'Reached 100 Vault Points'                   },
         { id: 'lore_read',  icon: '📖', name: 'Lore Keeper',     desc: 'Read the DreadSpike character lore'         },
-        { id: 'social',     icon: '🌐', name: 'Broadcast',       desc: 'Followed VaultSpark on a social platform'   },
+        { id: 'social',          icon: '🌐', name: 'Broadcast',         desc: 'Followed VaultSpark on a social platform'   },
+        { id: 'recruiter',       icon: '🤝', name: 'Recruiter',         desc: 'Invited your first member to the Vault'     },
+        { id: 'patron',          icon: '👑', name: 'Vault Patron',      desc: 'Invited 5 members — the vault grows'        },
+        { id: 'profile_complete',icon: '✍️', name: 'Identity Forged',   desc: 'Completed your Vault Member profile'        },
       ],
 
       AVATARS: [
@@ -1904,6 +2000,11 @@
 
       // Check for rank-up (delayed so dashboard renders first)
       setTimeout(() => checkRankUp(member), 800);
+
+      // Phase 2/3: load activity feed, award eligible points, load invite code
+      loadPointEvents();
+      setTimeout(() => initPointsEconomy(member), 1200);
+      loadInviteCode();
     }
 
     // ── Current member reference (for card generation etc.) ──────
@@ -2211,6 +2312,181 @@
 
     function dismissCardModal() {
       document.getElementById('card-modal-overlay').classList.remove('show');
+    }
+
+    // ── Phase 2: XP chip notification ────────────────────────────
+    function showXpChip(pts, label) {
+      const existing = document.querySelector('.xp-chip');
+      if (existing) existing.remove();
+      const chip = document.createElement('div');
+      chip.className = 'xp-chip';
+      chip.textContent = '+' + pts + ' pts — ' + (label || 'Vault Points');
+      document.body.appendChild(chip);
+      chip.addEventListener('animationend', () => chip.remove());
+    }
+
+    // ── Phase 2: Award points for this session's eligible actions ─
+    async function initPointsEconomy(member) {
+      const uid = member._id;
+      // localStorage flag prefix: vs_pts_{uid}_{reason}
+      const flag = (reason) => 'vs_pts_' + uid + '_' + reason;
+      const hasFlag = (reason) => !!localStorage.getItem(flag(reason));
+      const setFlag = (reason) => localStorage.setItem(flag(reason), '1');
+
+      const toAward = [];
+
+      // Subscribe to Vault Dispatch (25 pts, once ever)
+      if (member.subscribed && !hasFlag('subscribed')) {
+        toAward.push({ reason: 'subscribed', pts: 25, label: 'Subscribed to Vault Dispatch' });
+      }
+
+      // Bio set (15 pts, once ever)
+      if (member.bio && member.bio.trim().length > 0 && !hasFlag('bio_set')) {
+        toAward.push({ reason: 'bio_set', pts: 15, label: 'Completed your profile bio' });
+      }
+
+      // Avatar customized (10 pts, once ever)
+      if (member.avatar_id && member.avatar_id !== 'spark' && !hasFlag('avatar_customized')) {
+        toAward.push({ reason: 'avatar_customized', pts: 10, label: 'Customized your avatar' });
+      }
+
+      // Game visits (set by localStorage on game pages, award once per game)
+      const gameVisits = [
+        { key: 'vs_visited_cod',   reason: 'game_visit_cod',    pts: 10, label: 'Visited Call of Doodie' },
+        { key: 'vs_visited_gm',    reason: 'game_visit_gridiron', pts: 10, label: 'Visited Gridiron GM' },
+        { key: 'vs_visited_vsfgm', reason: 'game_visit_vsfgm',  pts: 10, label: 'Visited VaultSpark Football GM' },
+      ];
+      for (const v of gameVisits) {
+        if (localStorage.getItem(v.key) && !hasFlag(v.reason)) {
+          toAward.push({ reason: v.reason, pts: v.pts, label: v.label });
+        }
+      }
+
+      // Lore read (set by localStorage on lore page)
+      if (localStorage.getItem('vs_visited_dreadspike') && !hasFlag('lore_read_dreadspike')) {
+        toAward.push({ reason: 'lore_read_dreadspike', pts: 15, label: 'Read DreadSpike classified file' });
+      }
+
+      if (toAward.length === 0) return;
+
+      let totalAwarded = 0;
+      let lastLabel = '';
+      for (const item of toAward) {
+        try {
+          const { data } = await VSSupabase.rpc('award_points', {
+            p_reason:   item.reason,
+            p_points:   item.pts,
+            p_label:    item.label,
+            p_once_per: 'ever',
+          });
+          if (data?.ok) {
+            setFlag(item.reason);
+            totalAwarded += item.pts;
+            lastLabel = item.label;
+          } else if (data?.skipped) {
+            setFlag(item.reason); // already in DB, don't retry
+          }
+        } catch (_) { /* non-fatal */ }
+      }
+
+      if (totalAwarded > 0) {
+        showXpChip(totalAwarded, toAward.length === 1 ? lastLabel : 'Multiple actions');
+        // Refresh points display from DB
+        const { data: row } = await VSSupabase.from('vault_members').select('points').eq('id', uid).single();
+        if (row) {
+          const newPts = row.points;
+          document.getElementById('profile-pts').textContent = newPts + ' pts';
+          document.getElementById('stat-pts').textContent    = newPts;
+          document.getElementById('info-pts').textContent    = newPts + ' pts';
+          const rank = VS.getRank(newPts);
+          const progress = VS.getRankProgress(newPts);
+          document.getElementById('progress-fill').style.width = progress + '%';
+          document.getElementById('stat-rank').textContent  = rank.name;
+          document.getElementById('info-rank').textContent  = rank.name;
+          // Reload activity
+          loadPointEvents();
+        }
+      }
+    }
+
+    // ── Phase 2: Load point events feed ──────────────────────────
+    async function loadPointEvents() {
+      const feed = document.getElementById('activity-feed');
+      if (!feed) return;
+      try {
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('label, points, created_at')
+          .order('created_at', { ascending: false })
+          .limit(8);
+
+        if (!events || events.length === 0) {
+          feed.innerHTML = '<span class="activity-empty">No activity yet — explore the vault to earn points.</span>';
+          return;
+        }
+
+        const icons = { subscribed: '📡', bio_set: '✍️', avatar_customized: '🎨', referral: '🤝',
+                        game_visit: '🎮', lore_read: '📖', default: '⚡' };
+
+        feed.innerHTML = events.map(ev => {
+          const icon = Object.keys(icons).find(k => ev.label?.toLowerCase().includes(k.split('_')[0])) || 'default';
+          const timeAgo = formatTimeAgo(new Date(ev.created_at));
+          return `<div class="activity-item">
+            <span class="activity-icon">${icons[icon] || icons.default}</span>
+            <span class="activity-label">${ev.label || 'Vault Points'}</span>
+            <span class="activity-pts">+${ev.points}</span>
+            <span class="activity-time">${timeAgo}</span>
+          </div>`;
+        }).join('');
+      } catch (_) {
+        feed.innerHTML = '<span class="activity-empty">Could not load activity.</span>';
+      }
+    }
+
+    function formatTimeAgo(date) {
+      const s = Math.floor((Date.now() - date) / 1000);
+      if (s < 60) return 'just now';
+      const m = Math.floor(s / 60);
+      if (m < 60) return m + 'm ago';
+      const h = Math.floor(m / 60);
+      if (h < 24) return h + 'h ago';
+      const d = Math.floor(h / 24);
+      if (d < 30) return d + 'd ago';
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    // ── Phase 3: Load / display personal invite code ─────────────
+    async function loadInviteCode() {
+      const valEl  = document.getElementById('invite-code-value');
+      const copyEl = document.getElementById('invite-copy-btn');
+      if (!valEl) return;
+      try {
+        const { data: code } = await VSSupabase.rpc('get_or_create_my_invite_code');
+        if (code) {
+          valEl.textContent = code;
+          if (copyEl) copyEl.disabled = false;
+        } else {
+          valEl.textContent = 'Unavailable';
+        }
+      } catch (_) {
+        if (valEl) valEl.textContent = 'Unavailable';
+      }
+    }
+
+    async function copyInviteCode() {
+      const code = document.getElementById('invite-code-value')?.textContent;
+      const btn  = document.getElementById('invite-copy-btn');
+      if (!code || code === 'Generating…' || code === 'Unavailable') return;
+      try {
+        await navigator.clipboard.writeText(code);
+        if (btn) { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = 'Copy'; }, 2000); }
+      } catch (_) {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = code; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        if (btn) { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = 'Copy'; }, 2000); }
+      }
     }
 
     // ── Vault Member Card (Canvas) ───────────────────────────────

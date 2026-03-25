@@ -262,6 +262,8 @@
   </footer>
 
   <script>
+    // Vault Member: flag this game as visited for points economy
+    try { localStorage.setItem('vs_visited_cod', '1'); } catch(_) {}
     const hamburger = document.getElementById('hamburger');
     const navMenu = document.getElementById('nav-menu');
     hamburger.addEventListener('click', () => {

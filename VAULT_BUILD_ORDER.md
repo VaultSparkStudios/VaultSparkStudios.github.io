@@ -43,7 +43,7 @@ create trigger assign_member_number_tg
 
 ---
 
-## 🔜 Phase 2 — Points Economy (Next)
+## ✅ Phase 2 — Points Economy (Done)
 Make Vault Points earnable through real actions.
 
 **New table: `point_events`**
@@ -82,7 +82,7 @@ create policy "users read own events" on point_events for select using (auth.uid
 
 ---
 
-## 🔜 Phase 3 — Referral System
+## ✅ Phase 3 — Referral System (Done)
 Every member gets their own invite code to gift.
 
 **Schema changes:**
