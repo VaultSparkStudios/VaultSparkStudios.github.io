@@ -46,15 +46,43 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(request.url);
 
   // Stale-while-revalidate for Supabase API reads (cross-origin)
+  // Cache capped at 60 entries; stale entries expire after 5 minutes
   if (url.hostname.includes('supabase.co') && request.method === 'GET') {
+    const API_CACHE = CACHE_NAME + '-api';
+    const MAX_API_ENTRIES = 60;
+    const API_TTL_MS = 5 * 60 * 1000; // 5 minutes
+
     e.respondWith(
-      caches.open(CACHE_NAME + '-api').then(async (cache) => {
+      caches.open(API_CACHE).then(async (cache) => {
         const cached = await cache.match(request);
-        const fetchPromise = fetch(request).then((res) => {
-          if (res.ok) cache.put(request, res.clone());
+
+        // Check TTL on cached response
+        if (cached) {
+          const cachedAt = cached.headers.get('x-cached-at');
+          if (cachedAt && Date.now() - Number(cachedAt) > API_TTL_MS) {
+            await cache.delete(request);
+          }
+        }
+
+        const validCached = await cache.match(request);
+        const fetchPromise = fetch(request).then(async (res) => {
+          if (res.ok) {
+            // Stamp response with cache time
+            const headers = new Headers(res.headers);
+            headers.set('x-cached-at', String(Date.now()));
+            const stamped = new Response(await res.clone().arrayBuffer(), { status: res.status, headers });
+            await cache.put(request, stamped);
+
+            // Enforce max entries
+            const keys = await cache.keys();
+            if (keys.length > MAX_API_ENTRIES) {
+              await cache.delete(keys[0]);
+            }
+          }
           return res;
-        }).catch(() => cached);
-        return cached || fetchPromise;
+        }).catch(() => validCached);
+
+        return validCached || fetchPromise;
       })
     );
     return;

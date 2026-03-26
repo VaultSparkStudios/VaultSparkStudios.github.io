@@ -2,18 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Sentry: replace https://77226e22e29e4528c8a980b4c6cd9c58@o4511104924909568.ingest.us.sentry.io/4511104933298176 with your DSN from sentry.io -->
-  <script
-    src="https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js"
-    crossorigin="anonymous"
-  ></script>
-  <script>
-    Sentry.init({
-      dsn: "https://77226e22e29e4528c8a980b4c6cd9c58@o4511104924909568.ingest.us.sentry.io/4511104933298176",
-      tracesSampleRate: 0.1,
-      environment: location.hostname === 'localhost' ? 'development' : 'production',
-    });
-  </script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vault Member Portal | VaultSpark Studios Account</title>
@@ -2976,5 +2964,17 @@
   <script src="portal.js"></script>
   <script src="/assets/pwa-install.js" defer></script>
 
+  <!-- Sentry: replace https://77226e22e29e4528c8a980b4c6cd9c58@o4511104924909568.ingest.us.sentry.io/4511104933298176 with your DSN from sentry.io -->
+  <script
+    src="https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    Sentry.init({
+      dsn: "https://77226e22e29e4528c8a980b4c6cd9c58@o4511104924909568.ingest.us.sentry.io/4511104933298176",
+      tracesSampleRate: 0.1,
+      environment: location.hostname === 'localhost' ? 'development' : 'production',
+    });
+  </script>
 </body>
 </html>

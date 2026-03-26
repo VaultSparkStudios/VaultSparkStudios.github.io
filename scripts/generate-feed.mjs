@@ -68,7 +68,11 @@ for (const slug of slugs) {
   const description = getMeta(html, 'description') || '';
   const url = `${SITE_URL}/journal/${slug}/`;
 
-  items.push({ title, description, url, pubDate: new Date(pubIso), slug });
+  // Extract full post body for content:encoded
+  const bodyMatch = html.match(/<div class="post-body">([\s\S]*?)<\/div>\s*(?:<div|<aside|<\/article)/);
+  const fullContent = bodyMatch ? bodyMatch[1].trim() : description;
+
+  items.push({ title, description, fullContent, url, pubDate: new Date(pubIso), slug });
 }
 
 // Sort newest first
@@ -83,10 +87,11 @@ const itemsXml = items.map(it => `
       <guid isPermaLink="true">${it.url}</guid>
       <pubDate>${toRfc822(it.pubDate.toISOString())}</pubDate>
       <description><![CDATA[${it.description}]]></description>
+      <content:encoded><![CDATA[${it.fullContent}]]></content:encoded>
     </item>`).join('\n');
 
 const feed = `<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>${escXml(FEED_TITLE)}</title>
     <link>${SITE_URL}/journal/</link>

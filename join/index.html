@@ -2,18 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <!-- Sentry: replace SENTRY_DSN_PLACEHOLDER with your DSN from sentry.io -->
-  <script
-    src="https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js"
-    crossorigin="anonymous"
-  ></script>
-  <script>
-    Sentry.init({
-      dsn: "SENTRY_DSN_PLACEHOLDER",
-      tracesSampleRate: 0.1,
-      environment: location.hostname === 'localhost' ? 'development' : 'production',
-    });
-  </script>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, follow" />
 
@@ -381,6 +370,7 @@
   </style>
 <script src="/assets/theme-toggle.js"></script>
 <script src="/assets/analytics.js" defer></script>
+<script defer src="/assets/pwa-install.js"></script>
 <script src="/assets/cookie-consent.js" defer></script>
 </head>
 <body>
@@ -690,5 +680,17 @@
     })();
   </script>
 
+  <!-- Sentry: replace SENTRY_DSN_PLACEHOLDER with your DSN from sentry.io -->
+  <script
+    src="https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js"
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    Sentry.init({
+      dsn: "SENTRY_DSN_PLACEHOLDER",
+      tracesSampleRate: 0.1,
+      environment: location.hostname === 'localhost' ? 'development' : 'production',
+    });
+  </script>
 </body>
 </html>

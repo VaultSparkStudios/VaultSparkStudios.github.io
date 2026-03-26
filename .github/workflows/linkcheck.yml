@@ -1,0 +1,28 @@
+name: Link Check
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Every Monday at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  linkcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check links from sitemap
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --verbose
+            --no-progress
+            --accept 200,201,202,204,301,302,403,429
+            --exclude "^https://discord\.gg/"
+            --exclude "^https://discord\.com/users/"
+            --exclude "^mailto:"
+            --exclude "^https://twitter\.com/intent/"
+            --timeout 15
+            --max-retries 2
+            https://vaultsparkstudios.com/sitemap.xml
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
