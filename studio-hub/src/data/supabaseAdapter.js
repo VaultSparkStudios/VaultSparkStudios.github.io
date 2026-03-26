@@ -74,7 +74,7 @@ export async function fetchGameSessions(supabaseUrl, anonKey, ttlMs = 300000) {
   const cached = readCache(key, ttlMs);
   if (cached) return cached;
 
-  const rows = await sbFetch(supabaseUrl, anonKey, "game_sessions?select=game_slug,created_at");
+  const rows = await sbFetch(supabaseUrl, anonKey, "game_sessions?select=game,created_at");
   if (!rows) return null;
 
   const now = Date.now();
@@ -82,9 +82,9 @@ export async function fetchGameSessions(supabaseUrl, anonKey, ttlMs = 300000) {
 
   const bySlug = {};
   for (const row of rows) {
-    if (!bySlug[row.game_slug]) bySlug[row.game_slug] = { total: 0, week: 0 };
-    bySlug[row.game_slug].total++;
-    if (new Date(row.created_at).getTime() > sevenDaysAgo) bySlug[row.game_slug].week++;
+    if (!bySlug[row.game]) bySlug[row.game] = { total: 0, week: 0 };
+    bySlug[row.game].total++;
+    if (new Date(row.created_at).getTime() > sevenDaysAgo) bySlug[row.game].week++;
   }
 
   writeCache(key, bySlug);
@@ -125,10 +125,10 @@ export async function fetchBetaKeyInventory(supabaseUrl, anonKey, ttlMs = 300000
 
   const bySlug = {};
   for (const row of rows) {
-    if (!bySlug[row.game_slug]) bySlug[row.game_slug] = { total: 0, claimed: 0, available: 0 };
-    bySlug[row.game_slug].total++;
-    if (row.claimed) bySlug[row.game_slug].claimed++;
-    else bySlug[row.game_slug].available++;
+    if (!bySlug[row.game]) bySlug[row.game] = { total: 0, claimed: 0, available: 0 };
+    bySlug[row.game].total++;
+    if (row.claimed) bySlug[row.game].claimed++;
+    else bySlug[row.game].available++;
   }
 
   writeCache(key, bySlug);
@@ -265,8 +265,8 @@ export async function fetchJournalViews(supabaseUrl, anonKey, ttlMs = 300000) {
 
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
   const [allTime, recent] = await Promise.all([
-    sbFetch(supabaseUrl, anonKey, "journal_views?select=article_slug"),
-    sbFetch(supabaseUrl, anonKey, `journal_views?select=article_slug,viewed_at&viewed_at=gte.${thirtyDaysAgo}`),
+    sbFetch(supabaseUrl, anonKey, "journal_views?select=post_slug"),
+    sbFetch(supabaseUrl, anonKey, `journal_views?select=post_slug,viewed_at&viewed_at=gte.${thirtyDaysAgo}`),
   ]);
 
   if (!allTime) return null;
@@ -274,11 +274,11 @@ export async function fetchJournalViews(supabaseUrl, anonKey, ttlMs = 300000) {
   // Aggregate by slug
   const bySlug = {};
   for (const row of allTime) {
-    bySlug[row.article_slug] = (bySlug[row.article_slug] || 0) + 1;
+    bySlug[row.post_slug] = (bySlug[row.post_slug] || 0) + 1;
   }
   const recentBySlug = {};
   for (const row of (recent || [])) {
-    recentBySlug[row.article_slug] = (recentBySlug[row.article_slug] || 0) + 1;
+    recentBySlug[row.post_slug] = (recentBySlug[row.post_slug] || 0) + 1;
   }
 
   const data = {
@@ -303,14 +303,14 @@ export async function fetchFanArt(supabaseUrl, anonKey, ttlMs = 300000) {
   if (cached) return cached;
 
   const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
-  const rows = await sbFetch(supabaseUrl, anonKey, "fan_art?select=id,status,created_at&order=created_at.desc&limit=200");
+  const rows = await sbFetch(supabaseUrl, anonKey, "fan_art_submissions?select=id,status,submitted_at&order=submitted_at.desc&limit=200");
   if (!rows) return null;
 
   const data = {
     total: rows.length,
     approved: rows.filter((r) => r.status === "approved").length,
     pending: rows.filter((r) => r.status === "pending" || !r.status).length,
-    newThisWeek: rows.filter((r) => new Date(r.created_at).getTime() > new Date(sevenDaysAgo).getTime()).length,
+    newThisWeek: rows.filter((r) => new Date(r.submitted_at).getTime() > new Date(sevenDaysAgo).getTime()).length,
   };
 
   writeCache(key, data);
