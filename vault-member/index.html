@@ -1989,6 +1989,7 @@
             <button type="button" class="dash-tab" id="tab-dash-challenges" onclick="switchDashTab('challenges')">Vault Challenges</button>
             <button type="button" class="dash-tab" id="tab-dash-earlyaccess" onclick="switchDashTab('earlyaccess')">Early Access</button>
             <button type="button" class="dash-tab" id="tab-dash-polls" onclick="switchDashTab('polls')">🗳️ Polls</button>
+            <button type="button" class="dash-tab" id="tab-dash-following" onclick="switchDashTab('following')">👥 Following</button>
             <button type="button" class="dash-tab" id="tab-dash-chronicle" onclick="switchDashTab('chronicle')">Chronicle</button>
             <button type="button" class="dash-tab" id="tab-dash-settings" onclick="switchDashTab('settings')">Profile &amp; Settings</button>
             <button type="button" class="dash-tab" id="tab-dash-admin" onclick="switchDashTab('admin')" style="display:none;">⚡ Vault Command</button>
@@ -2122,6 +2123,19 @@
                     <button type="button" onclick="giftPoints()" style="background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.25);color:var(--gold);padding:0.55rem 1rem;border-radius:8px;font-size:0.85rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">Gift ⚡</button>
                   </div>
                   <div id="gift-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Phase 44: Gift VaultSparked -->
+            <div class="dash-panel" id="gift-sub-panel">
+              <h3>🎁 Gift VaultSparked</h3>
+              <div style="background:rgba(10,13,22,0.7);border:1px solid rgba(255,196,0,0.12);border-radius:12px;padding:1.25rem;margin-top:0.25rem;">
+                <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem;">Give a friend 30 days of VaultSparked for $4.99 — exclusive badge, perks, and Discord role.</div>
+                <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                  <input type="text" id="gift-sub-username" placeholder="Recipient username" autocomplete="off" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.55rem 0.75rem;color:var(--text);font-family:inherit;font-size:0.88rem;width:100%;box-sizing:border-box;" />
+                  <button type="button" onclick="startGiftSubCheckout()" id="gift-sub-btn" style="background:rgba(255,196,0,0.12);border:1px solid rgba(255,196,0,0.3);color:var(--gold);padding:0.6rem 1.2rem;border-radius:8px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:inherit;">Gift VaultSparked — $4.99 →</button>
+                  <div id="gift-sub-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;"></div>
                 </div>
               </div>
             </div>
@@ -2457,6 +2471,17 @@
               <div style="color:var(--dim);">Loading…</div>
             </div>
           </div><!-- /dash-pane-chronicle -->
+
+          <!-- ── Tab: Following (Phase 44) ── -->
+          <div class="dash-pane" id="dash-pane-following">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+              <h3 style="margin:0;">Members You Follow</h3>
+              <a href="/members/" style="font-size:0.82rem;color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.1);">Browse all members →</a>
+            </div>
+            <div id="following-list" style="display:flex;flex-direction:column;gap:0.6rem;">
+              <div style="color:var(--muted);font-size:0.88rem;">Loading…</div>
+            </div>
+          </div><!-- /dash-pane-following -->
 
           <!-- ── Tab: Settings ── -->
           <div class="dash-pane" id="dash-pane-settings">

@@ -49,6 +49,45 @@ serve(async (req: Request) => {
       // ── New checkout completed → activate subscription ──────────
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session;
+
+        // ── Gift subscription (one-time payment mode) ────────────
+        if (session.metadata?.gift === 'true') {
+          const recipientId  = session.metadata?.recipient_id;
+          const gifterId     = session.metadata?.gifter_id;
+          const durationDays = parseInt(session.metadata?.duration_days ?? '30', 10);
+
+          if (!recipientId || !gifterId) {
+            console.error('gift checkout: missing recipient_id or gifter_id');
+            break;
+          }
+
+          const expiresAt = new Date(Date.now() + durationDays * 24 * 60 * 60 * 1000).toISOString();
+
+          await supabase.from('gift_subscriptions').insert({
+            gifter_id:         gifterId,
+            recipient_id:      recipientId,
+            stripe_session_id: session.id,
+            duration_days:     durationDays,
+            activated_at:      new Date().toISOString(),
+            expires_at:        expiresAt,
+          });
+
+          await supabase.from('vault_members')
+            .update({ is_sparked: true })
+            .eq('id', recipientId);
+
+          // Award gifter 50 bonus points
+          await supabase.from('point_events').insert({
+            member_id:   gifterId,
+            points:      50,
+            reason:      'gift_sub_sent',
+            description: `Gifted VaultSparked to ${session.metadata?.recipient_name ?? 'a member'}`,
+          }).catch(() => {});
+
+          break;
+        }
+
+        // ── Regular subscription checkout ────────────────────────
         if (session.mode !== 'subscription') break;
 
         const customerId     = session.customer as string;

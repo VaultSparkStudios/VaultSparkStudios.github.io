@@ -266,6 +266,7 @@
         loadChronicle();
         renderPointsHistoryChart();
       }
+      if (which === 'following') loadFollowing();
     }
 
     // ── Nav account dropdown ─────────────────────────────────────
@@ -2078,6 +2079,41 @@
       }
     }
 
+    // ── Phase 44: Gift VaultSparked Checkout ─────────────────────
+    async function startGiftSubCheckout() {
+      const recipientInput = document.getElementById('gift-sub-username');
+      const btn            = document.getElementById('gift-sub-btn');
+      const fb             = document.getElementById('gift-sub-feedback');
+      const username       = (recipientInput?.value || '').trim();
+      if (!fb) return;
+      fb.textContent = '';
+      if (!username) { fb.style.color = '#f87171'; fb.textContent = 'Enter a recipient username.'; return; }
+      if (username.toLowerCase() === (_currentMember.username || '').toLowerCase()) {
+        fb.style.color = '#f87171'; fb.textContent = 'You cannot gift to yourself.'; return;
+      }
+      if (btn) { btn.textContent = 'Validating…'; btn.disabled = true; }
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) { showAuth(); return; }
+        const { data, error } = await VSSupabase.functions.invoke('create-gift-checkout', {
+          headers: { Authorization: `Bearer ${session.access_token}` },
+          body: { recipient_username: username },
+        });
+        if (error || !data?.url) {
+          const msg = data?.error || error?.message || 'Gift checkout unavailable.';
+          fb.style.color = '#f87171'; fb.textContent = msg;
+          if (btn) { btn.textContent = 'Gift VaultSparked — $4.99 →'; btn.disabled = false; }
+          return;
+        }
+        window.location.href = data.url;
+      } catch (err) {
+        fb.style.color = '#f87171'; fb.textContent = 'Error: ' + (err.message || 'Could not start gift.');
+        if (btn) { btn.textContent = 'Gift VaultSparked — $4.99 →'; btn.disabled = false; }
+        if (window.Sentry) Sentry.captureException(err);
+      }
+    }
+    window.startGiftSubCheckout = startGiftSubCheckout;
+
     // ── Phase 25: Member Spotlight ────────────────────────────────
     async function loadMemberSpotlight() {
       const el = document.getElementById('spotlight-content');
@@ -3230,6 +3266,41 @@
       }
     }
 
+    let _followingLoaded = false;
+    async function loadFollowing() {
+      if (_followingLoaded) return;
+      _followingLoaded = true;
+      const el = document.getElementById('following-list');
+      if (!el) return;
+      el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">Loading…</div>';
+      try {
+        const { data, error } = await VSSupabase.rpc('get_my_following', { p_limit: 50, p_offset: 0 });
+        if (error) throw error;
+        if (!data || data.length === 0) {
+          el.innerHTML = `<div style="text-align:center;padding:3rem 1rem;color:var(--dim);">
+            <div style="font-size:2.5rem;margin-bottom:0.75rem;">👥</div>
+            <div style="font-size:0.9rem;line-height:1.6;">You're not following anyone yet. Visit a member's profile and hit Follow to start building your network.</div>
+          </div>`;
+          return;
+        }
+        el.innerHTML = data.map(m => {
+          const av = m.avatar
+            ? `<img src="${m.avatar}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">`
+            : `<div style="width:40px;height:40px;border-radius:50%;background:var(--card-bg);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">⚡</div>`;
+          return `<a href="/member/?u=${encodeURIComponent(m.username)}" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);text-decoration:none;color:inherit;">
+            ${av}
+            <div>
+              <div style="font-weight:600;color:var(--text);">${esc(m.username)}</div>
+              <div style="font-size:0.8rem;color:var(--gold);">${(m.points||0).toLocaleString()} pts</div>
+            </div>
+          </a>`;
+        }).join('');
+      } catch (e) {
+        el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">Could not load following list.</div>';
+      }
+    }
+    window.loadFollowing = loadFollowing;
+
     let _pollsLoaded = false;
     async function loadPolls() {
       if (_pollsLoaded) return;
@@ -4154,6 +4225,15 @@
             localStorage.removeItem('vs_link_discord');
           }
           showDashboard(buildMember(session.user, row));
+
+          // Phase 44: gift checkout success toast
+          const qp = new URLSearchParams(window.location.search);
+          if (qp.get('gift') === 'success') {
+            const toName = qp.get('to') ? ' to ' + escHtml(qp.get('to')) : '';
+            setTimeout(() => showToast('🎁 Gift sent' + toName + '! +50 XP', { emoji: '' }), 600);
+            history.replaceState(null, '', window.location.pathname);
+          }
+
           return;
         }
 

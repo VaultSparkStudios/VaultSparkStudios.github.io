@@ -152,6 +152,14 @@
                 <div class="profile-stat-label">Member Since</div>
                 <div class="profile-stat-value" id="profile-since" style="font-size:1rem;padding-top:0.35rem;color:var(--text);">—</div>
               </div>
+              <div class="profile-stat">
+                <div class="profile-stat-label">Followers</div>
+                <div class="profile-stat-value" id="profile-followers" style="color:var(--text);">—</div>
+              </div>
+              <div class="profile-stat">
+                <div class="profile-stat-label">Following</div>
+                <div class="profile-stat-value" id="profile-following" style="color:var(--text);">—</div>
+              </div>
             </div>
             <!-- Rank progress bar -->
             <div style="margin-bottom:1.25rem;">
@@ -183,6 +191,11 @@
 
             <div style="text-align:center;margin-top:1.5rem;">
               <a href="/leaderboards/" style="font-size:0.88rem;color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.12);padding-bottom:1px;">View full leaderboard &rarr;</a>
+            </div>
+
+            <!-- Follow / Unfollow (shown when logged in viewing another member) -->
+            <div id="follow-section" style="display:none;margin-top:1.25rem;">
+              <button type="button" id="follow-btn" onclick="toggleFollow()" style="width:100%;padding:0.65rem 1.2rem;border-radius:10px;font-family:inherit;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.15s;border:1px solid rgba(31,162,255,0.35);background:rgba(31,162,255,0.1);color:#1FA2FF;">Follow</button>
             </div>
 
             <!-- Share Profile -->
@@ -522,15 +535,185 @@
       }
       window.shareProfile=shareProfile;
 
-      // Init
-      var params=new URLSearchParams(window.location.search);
-      var u=params.get('u');
-      if(u && u.trim()){
-        loadMember(u.trim());
-      } else {
-        hide('member-loading');
-        show('member-lookup');
+      // ── Phase 44: Social Graph — Follow / Unfollow ──────────────
+      var _profileUserId = null;   // user_id of the profile being viewed
+      var _isFollowing   = false;
+      var _currentUserId = null;   // logged-in viewer (may be null)
+      var _accessToken   = null;
+
+      // Load follow counts for the profile and (if logged in) check follow state
+      function loadFollowData(profileUserId) {
+        _profileUserId = profileUserId;
+
+        // Fetch follower/following counts via RPC
+        fetch(SB + '/rest/v1/rpc/get_follow_counts', {
+          method: 'POST',
+          headers: Object.assign({}, H, {'Content-Type':'application/json'}),
+          body: JSON.stringify({ p_user_id: profileUserId })
+        })
+          .then(function(r){ return r.ok ? r.json() : {}; })
+          .then(function(d) {
+            var result = Array.isArray(d) ? d[0] : d;
+            var followersEl = document.getElementById('profile-followers');
+            var followingEl = document.getElementById('profile-following');
+            if (followersEl) followersEl.textContent = (result.followers || 0).toLocaleString();
+            if (followingEl) followingEl.textContent = (result.following  || 0).toLocaleString();
+          })
+          .catch(function() {
+            var followersEl = document.getElementById('profile-followers');
+            var followingEl = document.getElementById('profile-following');
+            if (followersEl) followersEl.textContent = '—';
+            if (followingEl) followingEl.textContent = '—';
+          });
+
+        // If the user is logged in and viewing someone else's profile, show Follow button
+        if (_currentUserId && _currentUserId !== profileUserId && _accessToken) {
+          var sec = document.getElementById('follow-section');
+          if (sec) sec.style.display = '';
+
+          // Check if already following
+          fetch(SB + '/rest/v1/rpc/is_following', {
+            method: 'POST',
+            headers: Object.assign({}, H, {'Authorization':'Bearer '+_accessToken,'Content-Type':'application/json'}),
+            body: JSON.stringify({ p_target_id: profileUserId })
+          })
+            .then(function(r){ return r.ok ? r.json() : false; })
+            .then(function(result) {
+              _isFollowing = result === true;
+              renderFollowBtn();
+            })
+            .catch(function(){ renderFollowBtn(); });
+        }
       }
+
+      function renderFollowBtn() {
+        var btn = document.getElementById('follow-btn');
+        if (!btn) return;
+        if (_isFollowing) {
+          btn.textContent = '✓ Following';
+          btn.style.background = 'rgba(16,185,129,0.1)';
+          btn.style.borderColor = 'rgba(16,185,129,0.35)';
+          btn.style.color = '#10B981';
+        } else {
+          btn.textContent = 'Follow';
+          btn.style.background = 'rgba(31,162,255,0.1)';
+          btn.style.borderColor = 'rgba(31,162,255,0.35)';
+          btn.style.color = '#1FA2FF';
+        }
+      }
+
+      function toggleFollow() {
+        if (!_profileUserId || !_accessToken) {
+          window.location.href = '/vault-member/#login'; return;
+        }
+        var btn = document.getElementById('follow-btn');
+        if (btn) { btn.disabled = true; }
+
+        var authH = Object.assign({}, H, {'Authorization':'Bearer '+_accessToken,'Content-Type':'application/json'});
+
+        if (_isFollowing) {
+          // Unfollow: DELETE from member_follows
+          fetch(SB + '/rest/v1/member_follows?follower_id=eq.' + encodeURIComponent(_currentUserId) + '&following_id=eq.' + encodeURIComponent(_profileUserId), {
+            method: 'DELETE',
+            headers: authH
+          })
+            .then(function(r) {
+              if (r.ok) {
+                _isFollowing = false;
+                adjustCount('profile-followers', -1);
+              }
+              renderFollowBtn();
+              if (btn) btn.disabled = false;
+            })
+            .catch(function() { if (btn) btn.disabled = false; renderFollowBtn(); });
+        } else {
+          // Follow: POST to member_follows
+          fetch(SB + '/rest/v1/member_follows', {
+            method: 'POST',
+            headers: Object.assign({}, authH, {'Prefer':'return=minimal'}),
+            body: JSON.stringify({ follower_id: _currentUserId, following_id: _profileUserId })
+          })
+            .then(function(r) {
+              if (r.ok) {
+                _isFollowing = true;
+                adjustCount('profile-followers', 1);
+              }
+              renderFollowBtn();
+              if (btn) btn.disabled = false;
+            })
+            .catch(function() { if (btn) btn.disabled = false; renderFollowBtn(); });
+        }
+      }
+      window.toggleFollow = toggleFollow;
+
+      function adjustCount(elId, delta) {
+        var el = document.getElementById(elId);
+        if (!el) return;
+        var cur = parseInt(el.textContent.replace(/,/g,''), 10) || 0;
+        el.textContent = (cur + delta).toLocaleString();
+      }
+
+      // Check auth state then load member
+      var supabase = window.supabase
+        ? window.supabase.createClient(SB, KEY)
+        : null;
+
+      function initPage() {
+        var params = new URLSearchParams(window.location.search);
+        var u = params.get('u');
+
+        function afterAuth(userId, token) {
+          _currentUserId = userId || null;
+          _accessToken   = token  || null;
+          if (u && u.trim()) {
+            loadMemberWithFollow(u.trim());
+          } else {
+            hide('member-loading');
+            show('member-lookup');
+          }
+        }
+
+        if (supabase) {
+          supabase.auth.getSession()
+            .then(function(res) {
+              var s = res.data && res.data.session;
+              afterAuth(s ? s.user.id : null, s ? s.access_token : null);
+            })
+            .catch(function() { afterAuth(null, null); });
+        } else {
+          // No Supabase JS — fall back to CDN-less version
+          afterAuth(null, null);
+        }
+      }
+
+      function loadMemberWithFollow(username) {
+        hide('member-lookup');
+        hide('member-notfound');
+        hide('member-profile');
+        show('member-loading');
+
+        var url = SB + '/rest/v1/vault_members?select=id,username,points,rank,created_at,member_number&username_lower=eq.' + encodeURIComponent(username.toLowerCase()) + '&limit=1';
+        fetch(url, { headers: H })
+          .then(function(r){ return r.ok ? r.json() : []; })
+          .then(function(data) {
+            hide('member-loading');
+            if (!Array.isArray(data) || data.length === 0) {
+              document.getElementById('notfound-msg').textContent = 'No Vault Member with the username "' + esc(username) + '" was found.';
+              show('member-notfound');
+            } else {
+              showProfile(data[0]);
+              if (data[0].id) loadFollowData(data[0].id);
+            }
+          })
+          .catch(function() {
+            hide('member-loading');
+            document.getElementById('notfound-msg').textContent = 'Could not load profile. Please try again later.';
+            show('member-notfound');
+          });
+      }
+
+      // Init
+      initPage();
     })();
   </script>
 <script src="/assets/vault-cta.js" defer></script>
