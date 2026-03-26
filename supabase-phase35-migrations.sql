@@ -25,7 +25,7 @@ create index if not exists idx_journal_views_slug
 
 -- Prevent the same session counting twice for the same post on the same day
 create unique index if not exists uq_journal_views_session_day
-  on public.journal_views(post_slug, session_id, (created_at::date));
+  on public.journal_views(post_slug, session_id, (date_trunc('day', created_at at time zone 'utc')));
 
 alter table public.journal_views enable row level security;
 
