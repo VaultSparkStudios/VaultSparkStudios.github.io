@@ -74,7 +74,7 @@ export async function fetchGameSessions(supabaseUrl, anonKey, ttlMs = 300000) {
   const cached = readCache(key, ttlMs);
   if (cached) return cached;
 
-  const rows = await sbFetch(supabaseUrl, anonKey, "game_sessions?select=game,created_at");
+  const rows = await sbFetch(supabaseUrl, anonKey, "game_sessions?select=game_slug,created_at");
   if (!rows) return null;
 
   const now = Date.now();
@@ -82,9 +82,9 @@ export async function fetchGameSessions(supabaseUrl, anonKey, ttlMs = 300000) {
 
   const bySlug = {};
   for (const row of rows) {
-    if (!bySlug[row.game]) bySlug[row.game] = { total: 0, week: 0 };
-    bySlug[row.game].total++;
-    if (new Date(row.created_at).getTime() > sevenDaysAgo) bySlug[row.game].week++;
+    if (!bySlug[row.game_slug]) bySlug[row.game_slug] = { total: 0, week: 0 };
+    bySlug[row.game_slug].total++;
+    if (new Date(row.created_at).getTime() > sevenDaysAgo) bySlug[row.game_slug].week++;
   }
 
   writeCache(key, bySlug);
@@ -125,10 +125,10 @@ export async function fetchBetaKeyInventory(supabaseUrl, anonKey, ttlMs = 300000
 
   const bySlug = {};
   for (const row of rows) {
-    if (!bySlug[row.game]) bySlug[row.game] = { total: 0, claimed: 0, available: 0 };
-    bySlug[row.game].total++;
-    if (row.claimed) bySlug[row.game].claimed++;
-    else bySlug[row.game].available++;
+    if (!bySlug[row.game_slug]) bySlug[row.game_slug] = { total: 0, claimed: 0, available: 0 };
+    bySlug[row.game_slug].total++;
+    if (row.claimed) bySlug[row.game_slug].claimed++;
+    else bySlug[row.game_slug].available++;
   }
 
   writeCache(key, bySlug);
