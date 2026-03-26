@@ -2721,6 +2721,22 @@
               </div>
 
               <!-- Investor Requests -->
+              <!-- Fan Art Moderation -->
+              <div class="settings-block admin-panel-full">
+                <h3>Fan Art Submissions
+                  <span id="fan-art-pending-badge" style="display:none;margin-left:0.6rem;padding:0.15rem 0.55rem;border-radius:999px;font-size:0.72rem;font-weight:800;background:rgba(255,196,0,0.15);color:var(--gold);"></span>
+                </h3>
+                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">
+                  Review community fan art. Approved pieces appear in the <a href="/community/#fan-art" style="color:var(--gold);">/community</a> gallery.
+                </p>
+                <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
+                  <button class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(255,196,0,0.15);border:1px solid rgba(255,196,0,0.3);" onclick="loadFanArtQueue('pending')">Pending</button>
+                  <button class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" onclick="loadFanArtQueue('approved')">Approved</button>
+                  <button class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:transparent;border:1px solid rgba(255,255,255,0.1);" onclick="loadFanArtQueue('rejected')">Rejected</button>
+                </div>
+                <div id="fan-art-queue" style="font-size:0.88rem;color:var(--muted);">Loading…</div>
+              </div>
+
               <div class="settings-block admin-panel-full">
                 <h3>Investor Requests
                   <span id="inv-req-badge" style="display:none;margin-left:0.6rem;padding:0.15rem 0.55rem;border-radius:999px;font-size:0.72rem;font-weight:800;background:rgba(31,162,255,0.15);color:#1FA2FF;"></span>
@@ -3391,7 +3407,7 @@
       const navAdminLink  = document.getElementById('nav-admin-link');
       if (adminTabEl)   adminTabEl.style.display   = isAdmin ? '' : 'none';
       if (navAdminLink) navAdminLink.style.display = isAdmin ? '' : 'none';
-      if (isAdmin) loadInvRequests('pending');
+      if (isAdmin) { loadInvRequests('pending'); loadFanArtQueue('pending'); }
 
       // Restore active tab from last session
       const savedTab = localStorage.getItem('vs_active_tab');
@@ -5342,6 +5358,70 @@
     function escHtml(str) {
       if (!str) return '';
       return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ── Fan Art Moderation ────────────────────────────────────────
+    async function loadFanArtQueue(status = 'pending') {
+      const el = document.getElementById('fan-art-queue');
+      if (!el) return;
+      el.innerHTML = '<span style="color:var(--dim);">Loading…</span>';
+
+      const SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+      let url = `${SB_URL}/rest/v1/fan_art_submissions?status=eq.${encodeURIComponent(status)}&select=id,username,title,description,character_tag,file_path,submitted_at,admin_notes&order=submitted_at.asc&limit=20`;
+
+      const { data: { session } } = await VSSupabase.auth.getSession();
+      if (!session) { el.innerHTML = '<span style="color:var(--dim);">Not authenticated.</span>'; return; }
+
+      try {
+        const res  = await fetch(url, {
+          headers: { apikey: 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij', Authorization: 'Bearer ' + session.access_token }
+        });
+        const rows = res.ok ? await res.json() : [];
+
+        // Update pending badge
+        const badge = document.getElementById('fan-art-pending-badge');
+        if (badge && status === 'pending') {
+          badge.textContent = rows.length + ' pending';
+          badge.style.display = rows.length > 0 ? 'inline' : 'none';
+        }
+
+        if (!rows.length) { el.innerHTML = '<span style="color:var(--dim);">None in this category.</span>'; return; }
+
+        el.innerHTML = rows.map(r => {
+          const imgUrl = `${SB_URL}/storage/v1/object/public/fan-art/${r.file_path}`;
+          return `<div style="display:flex;gap:1rem;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1rem;margin-bottom:0.75rem;background:rgba(255,255,255,0.02);flex-wrap:wrap;">
+            <img src="${imgUrl}" alt="${escHtml(r.title)}" loading="lazy" style="width:96px;height:96px;object-fit:cover;border-radius:8px;flex-shrink:0;" onerror="this.style.display='none'" />
+            <div style="flex:1;min-width:200px;">
+              <div style="font-weight:700;color:var(--text);margin-bottom:0.2rem;">${escHtml(r.title)} <span style="font-size:0.75rem;color:var(--dim);font-weight:400;">by @${escHtml(r.username)}</span></div>
+              <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.1rem;">${escHtml(r.character_tag)} · ${new Date(r.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
+              ${r.description ? `<div style="font-size:0.82rem;color:var(--muted);line-height:1.5;margin-bottom:0.6rem;">${escHtml(r.description)}</div>` : ''}
+              <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+                <button onclick="moderateFanArt('${r.id}','approved')" style="padding:0.25rem 0.75rem;font-size:0.78rem;font-weight:700;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#10B981;border-radius:6px;cursor:pointer;font-family:inherit;">✓ Approve</button>
+                <button onclick="moderateFanArt('${r.id}','rejected')" style="padding:0.25rem 0.75rem;font-size:0.78rem;font-weight:700;background:rgba(214,40,40,0.08);border:1px solid rgba(214,40,40,0.2);color:#ef4444;border-radius:6px;cursor:pointer;font-family:inherit;">✕ Reject</button>
+                <a href="${imgUrl}" target="_blank" rel="noreferrer" style="padding:0.25rem 0.75rem;font-size:0.78rem;color:var(--dim);text-decoration:none;border:1px solid rgba(255,255,255,0.1);border-radius:6px;">View full →</a>
+              </div>
+            </div>
+          </div>`;
+        }).join('');
+      } catch(err) {
+        el.innerHTML = `<span style="color:#ef4444;">Error: ${escHtml(err.message)}</span>`;
+      }
+    }
+
+    async function moderateFanArt(id, status) {
+      const note = status === 'rejected' ? prompt('Optional note for rejection (internal only):') : null;
+      const { data: { session } } = await VSSupabase.auth.getSession();
+      if (!session) return;
+      const SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+      const body = { status, reviewed_at: new Date().toISOString() };
+      if (note) body.admin_notes = note;
+      const res = await fetch(`${SB_URL}/rest/v1/fan_art_submissions?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: { apikey: 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij', Authorization: 'Bearer ' + session.access_token, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(body)
+      });
+      if (res.ok) loadFanArtQueue('pending');
+      else alert('Update failed: ' + res.status);
     }
 
     // ── Vault Command (Admin — member #1 only) ───────────────────

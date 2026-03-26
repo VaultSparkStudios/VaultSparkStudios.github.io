@@ -60,13 +60,28 @@
 
     /* ── Fan Art ── */
     .fan-art-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:1.25rem; }
-    .fan-art-card { border-radius:14px; overflow:hidden; aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700; color:rgba(255,255,255,0.35); text-align:center; padding:1rem; }
-    .fan-art-card:nth-child(1) { background:linear-gradient(135deg, rgba(255,196,0,0.12), rgba(255,122,0,0.08)); border:1px solid rgba(255,196,0,0.15); }
-    .fan-art-card:nth-child(2) { background:linear-gradient(135deg, rgba(31,162,255,0.12), rgba(139,92,246,0.08)); border:1px solid rgba(31,162,255,0.15); }
-    .fan-art-card:nth-child(3) { background:linear-gradient(135deg, rgba(139,92,246,0.12), rgba(214,40,40,0.08)); border:1px solid rgba(139,92,246,0.15); }
-    .fan-art-card:nth-child(4) { background:linear-gradient(135deg, rgba(16,185,129,0.12), rgba(31,162,255,0.08)); border:1px solid rgba(16,185,129,0.15); }
+    .fan-art-card { border-radius:14px; overflow:hidden; aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700; color:rgba(255,255,255,0.35); text-align:center; padding:1rem; position:relative; cursor:default; }
+    .fan-art-card img { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:14px; }
+    .fan-art-card .fan-art-label { position:relative;z-index:1;background:rgba(0,0,0,0.55);padding:0.3rem 0.6rem;border-radius:6px;font-size:0.72rem;backdrop-filter:blur(4px); }
+    .fan-art-placeholder { background:linear-gradient(135deg, rgba(255,196,0,0.08), rgba(255,122,0,0.04)); border:1px dashed rgba(255,255,255,0.1); }
     .fan-art-submit { font-size:0.87rem; color:var(--muted); line-height:1.6; }
     .fan-art-submit a { color:var(--gold); }
+    /* Submit form */
+    .fa-form-wrap { margin-top:1.5rem;padding:1.5rem;border-radius:16px;background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.12); }
+    .fa-form-wrap h3 { font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:1rem; }
+    .fa-form-row { display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem; }
+    .fa-input { width:100%;padding:0.6rem 0.9rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.88rem;box-sizing:border-box; }
+    .fa-input:focus { outline:none;border-color:rgba(255,196,0,0.4); }
+    .fa-upload-label { display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15);border-radius:8px;cursor:pointer;margin-bottom:0.75rem;font-size:0.85rem;color:var(--muted); }
+    .fa-upload-label:hover { border-color:rgba(255,196,0,0.3);color:var(--text); }
+    .fa-preview { max-height:160px;max-width:100%;border-radius:8px;display:none;margin-bottom:0.75rem;object-fit:contain; }
+    .fa-msg { font-size:0.82rem;margin-top:0.6rem;padding:0.5rem 0.8rem;border-radius:7px;display:none; }
+    .fa-msg.ok  { background:rgba(16,185,129,0.1);color:#34d399; display:block; }
+    .fa-msg.err { background:rgba(239,68,68,0.1);color:#f87171; display:block; }
+    @media(max-width:640px){
+      .fan-art-grid { grid-template-columns:1fr 1fr; }
+      .fa-form-row  { grid-template-columns:1fr; }
+    }
 
     /* ── Leaderboard preview ── */
     .lb-preview-table { width:100%; border-collapse:collapse; background:var(--panel); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
@@ -217,13 +232,43 @@
         <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Fan Art</div>
         <h2>Fan Art Showcase</h2>
         <p style="color:var(--muted);font-size:0.95rem;max-width:52ch;line-height:1.65;margin-bottom:1.5rem;">VaultSpark-inspired creations from the community. From game art to lore illustrations — share what the vault sparks in you.</p>
-        <div class="fan-art-grid" aria-label="Fan art showcase grid">
-          <div class="fan-art-card" role="img" aria-label="Fan art placeholder — submit your artwork to the #fan-art channel">Fan Art<br>Coming Soon</div>
-          <div class="fan-art-card" role="img" aria-label="Fan art placeholder — submit your artwork to the #fan-art channel">Fan Art<br>Coming Soon</div>
-          <div class="fan-art-card" role="img" aria-label="Fan art placeholder — submit your artwork to the #fan-art channel">Fan Art<br>Coming Soon</div>
-          <div class="fan-art-card" role="img" aria-label="Fan art placeholder — submit your artwork to the #fan-art channel">Fan Art<br>Coming Soon</div>
+        <div id="fan-art-gallery" class="fan-art-grid" aria-label="Fan art showcase grid">
+          <div class="fan-art-card fan-art-placeholder" aria-hidden="true"></div>
+          <div class="fan-art-card fan-art-placeholder" aria-hidden="true"></div>
+          <div class="fan-art-card fan-art-placeholder" aria-hidden="true"></div>
+          <div class="fan-art-card fan-art-placeholder" aria-hidden="true"></div>
         </div>
-        <p class="fan-art-submit">Share your VaultSpark creations in <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord #fan-art</a> or <a href="/contact/">email us</a>. The best pieces get featured here.</p>
+        <p class="fan-art-submit">Submit below or share in <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord #fan-art</a>. The best pieces get featured here.</p>
+
+        <!-- Fan art submission form -->
+        <div class="fa-form-wrap">
+          <h3>⚡ Submit Your Art</h3>
+          <div id="fa-signin-prompt" style="font-size:0.88rem;color:var(--muted);display:none;">
+            <a href="/vault-member/" style="color:var(--gold);">Sign in as a Vault Member</a> to submit fan art.
+          </div>
+          <form id="fa-form" style="display:none;" onsubmit="return false;">
+            <label class="fa-upload-label" for="fa-file">
+              <span style="font-size:1.1rem;">🖼</span>
+              <span id="fa-file-label">Choose image (PNG, JPG, WebP — max 5 MB)</span>
+            </label>
+            <input type="file" id="fa-file" accept="image/png,image/jpeg,image/webp,image/gif" style="display:none;" required />
+            <img id="fa-preview" class="fa-preview" alt="Preview" />
+            <div class="fa-form-row">
+              <input class="fa-input" type="text" id="fa-title" placeholder="Title (required)" maxlength="80" required />
+              <select class="fa-input" id="fa-tag">
+                <option value="general">General</option>
+                <option value="dreadspike">DreadSpike</option>
+                <option value="football-gm">Football GM</option>
+                <option value="gridiron-gm">Gridiron GM</option>
+                <option value="call-of-doodie">Call of Doodie</option>
+                <option value="vaultspark">VaultSpark / Studio</option>
+              </select>
+            </div>
+            <textarea class="fa-input" id="fa-desc" placeholder="Description (optional)" rows="2" maxlength="300" style="resize:vertical;margin-bottom:0.75rem;"></textarea>
+            <button type="submit" id="fa-submit-btn" style="padding:0.6rem 1.4rem;background:rgba(255,196,0,0.12);border:1px solid rgba(255,196,0,0.3);color:var(--gold);border-radius:8px;cursor:pointer;font-family:inherit;font-size:0.9rem;font-weight:700;">Submit Art →</button>
+            <div id="fa-msg" class="fa-msg"></div>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -594,5 +639,141 @@
 })();
 </script>
 <script src="/assets/vault-cta.js" defer></script>
+
+<script>
+/* ── Fan Art Gallery + Submission ─────────────────────────────────────── */
+(function(){
+  var SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+  var KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+  var H   = { apikey: KEY, Authorization: 'Bearer ' + KEY };
+  var MAX_BYTES = 5 * 1024 * 1024;
+
+  function getSession(){
+    try {
+      var raw = localStorage.getItem('sb-fjnpzjjyhnpmunfoycrp-auth-token') || localStorage.getItem('supabase.auth.token');
+      if (!raw) return null;
+      var p = JSON.parse(raw); var s = p.currentSession || p;
+      return (s && s.access_token && s.user) ? s : null;
+    } catch(e){ return null; }
+  }
+
+  // ── Load approved gallery ────────────────────────────────────────────
+  function loadGallery(){
+    fetch(SB + '/rest/v1/fan_art_submissions?status=eq.approved&select=id,title,username,character_tag,file_path&order=submitted_at.desc&limit=8', { headers: H })
+    .then(function(r){ return r.ok ? r.json() : []; })
+    .then(function(rows){
+      var grid = document.getElementById('fan-art-gallery');
+      if (!grid) return;
+      if (!Array.isArray(rows) || rows.length === 0) return; // keep placeholders
+      grid.innerHTML = rows.map(function(row){
+        var imgUrl = SB + '/storage/v1/object/public/fan-art/' + row.file_path;
+        return '<div class="fan-art-card" title="' + esc(row.title) + ' by ' + esc(row.username) + '">' +
+          '<img src="' + imgUrl + '" alt="' + esc(row.title) + ' by ' + esc(row.username) + '" loading="lazy" />' +
+          '<span class="fan-art-label">' + esc(row.title) + '</span>' +
+          '</div>';
+      }).join('');
+    }).catch(function(){});
+  }
+
+  // ── Init form ────────────────────────────────────────────────────────
+  var session = getSession();
+  var formEl  = document.getElementById('fa-form');
+  var signIn  = document.getElementById('fa-signin-prompt');
+  if (session && formEl) {
+    formEl.style.display = '';
+  } else if (signIn) {
+    signIn.style.display = '';
+  }
+
+  // File picker → preview
+  var fileInput = document.getElementById('fa-file');
+  if (fileInput) {
+    document.querySelector('.fa-upload-label')?.addEventListener('click', function(){
+      fileInput.click();
+    });
+    fileInput.addEventListener('change', function(){
+      var file = fileInput.files[0];
+      if (!file) return;
+      document.getElementById('fa-file-label').textContent = file.name;
+      var preview = document.getElementById('fa-preview');
+      if (preview) {
+        preview.src = URL.createObjectURL(file);
+        preview.style.display = 'block';
+      }
+    });
+  }
+
+  // Submit
+  var submitBtn = document.getElementById('fa-submit-btn');
+  if (submitBtn && session) {
+    submitBtn.addEventListener('click', async function(){
+      var msg   = document.getElementById('fa-msg');
+      var file  = fileInput && fileInput.files[0];
+      var title = (document.getElementById('fa-title')?.value || '').trim();
+      var tag   = document.getElementById('fa-tag')?.value || 'general';
+      var desc  = (document.getElementById('fa-desc')?.value || '').trim();
+      if (!file)  { showMsg(msg, 'Please choose an image.', 'err'); return; }
+      if (!title) { showMsg(msg, 'Please enter a title.', 'err'); return; }
+      if (file.size > MAX_BYTES) { showMsg(msg, 'Image must be under 5 MB.', 'err'); return; }
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Uploading…';
+      showMsg(msg, '', '');
+
+      var ext = file.name.split('.').pop().toLowerCase();
+      var safeName = title.toLowerCase().replace(/[^a-z0-9]/g,'-').slice(0,40) + '-' + Date.now() + '.' + ext;
+      var filePath = session.user.id + '/' + safeName;
+
+      try {
+        // 1. Upload to Storage
+        var upRes = await fetch(SB + '/storage/v1/object/fan-art/' + filePath, {
+          method: 'POST',
+          headers: { apikey: KEY, Authorization: 'Bearer ' + session.access_token, 'Content-Type': file.type, 'x-upsert': 'false' },
+          body: file
+        });
+        if (!upRes.ok) throw new Error('Upload failed (' + upRes.status + ')');
+
+        // 2. Get username from vault_members
+        var vmRes = await fetch(SB + '/rest/v1/vault_members?id=eq.' + session.user.id + '&select=username', {
+          headers: Object.assign({},H,{Authorization:'Bearer '+session.access_token})
+        });
+        var vmRows = vmRes.ok ? await vmRes.json() : [];
+        var username = (vmRows[0] && vmRows[0].username) || 'vault_member';
+
+        // 3. Insert row into fan_art_submissions
+        var dbRes = await fetch(SB + '/rest/v1/fan_art_submissions', {
+          method: 'POST',
+          headers: Object.assign({},H,{Authorization:'Bearer '+session.access_token,'Content-Type':'application/json',Prefer:'return=minimal'}),
+          body: JSON.stringify({ member_id: session.user.id, username: username, title: title, description: desc || null, character_tag: tag, file_path: filePath })
+        });
+        if (!dbRes.ok) throw new Error('Submission failed (' + dbRes.status + ')');
+
+        showMsg(msg, '✓ Submitted! Your art is under review and will appear here once approved.', 'ok');
+        document.getElementById('fa-title').value = '';
+        document.getElementById('fa-desc').value  = '';
+        fileInput.value = '';
+        document.getElementById('fa-file-label').textContent = 'Choose image (PNG, JPG, WebP — max 5 MB)';
+        var preview = document.getElementById('fa-preview');
+        if (preview) preview.style.display = 'none';
+      } catch(err) {
+        showMsg(msg, err.message || 'Submission failed. Please try again.', 'err');
+      }
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Art →';
+    });
+  }
+
+  function showMsg(el, txt, type){
+    if (!el) return;
+    el.textContent = txt;
+    el.className = 'fa-msg' + (type ? ' ' + type : '');
+  }
+
+  function esc(s){
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  loadGallery();
+})();
+</script>
 </body>
 </html>

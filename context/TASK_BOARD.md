@@ -30,7 +30,6 @@
 
 - [ ] Gift subscriptions (Stripe) [6.8]
 - [ ] Member-to-member point gifting [6.5]
-- [ ] Fan art submission form (upload → Supabase Storage → moderation queue in Vault Command) [6.5]
 - [ ] Co-op / team challenges [6.5]
 - [ ] Team/about page expansion [6]
 - [ ] Fan art voting / gallery contests [6]
@@ -49,6 +48,13 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 40 (2026-03-25)
+
+- ✅ Fan art submission form on `/community/` — Vault Members can upload images (PNG/JPG/WebP, max 5MB) with title, description, and character tag; uploads to Supabase Storage bucket `fan-art`, row inserted to `fan_art_submissions`
+- ✅ Fan art gallery on `/community/` — loads approved submissions dynamically, `<picture>` cards with image overlay + title label
+- ✅ Fan art moderation in Vault Command — `loadFanArtQueue()` + `moderateFanArt()` with pending badge, image preview, approve/reject actions, optional rejection note
+- **SQL needed:** run `supabase-phase40-fan-art.sql` — creates `fan_art_submissions` table + RLS + Storage policies; also manually create `fan-art` bucket in Supabase Storage dashboard (public bucket)
 
 ## Completed — Phase 39 (2026-03-25)
 
