@@ -1693,7 +1693,7 @@
           const timeAgo = formatTimeAgo(new Date(ev.created_at));
           return `<div class="activity-item">
             <span class="activity-icon">${icons[icon] || icons.default}</span>
-            <span class="activity-label">${ev.label || 'Vault Points'}</span>
+            <span class="activity-label">${escHtml(ev.label || 'Vault Points')}</span>
             <span class="activity-pts">+${ev.points}</span>
             <span class="activity-time">${timeAgo}</span>
           </div>`;
@@ -2825,8 +2825,8 @@
           '<th style="text-align:right;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Pts</th>' +
           '</tr></thead><tbody>' +
           rows.map(r => '<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">' +
-            '<td style="padding:0.5rem 0.75rem;color:var(--text);">' + r.title + '</td>' +
-            '<td style="padding:0.5rem 0.75rem;color:var(--muted);">' + r.challenge_type + '</td>' +
+            '<td style="padding:0.5rem 0.75rem;color:var(--text);">' + escHtml(r.title) + '</td>' +
+            '<td style="padding:0.5rem 0.75rem;color:var(--muted);">' + escHtml(r.challenge_type) + '</td>' +
             '<td style="padding:0.5rem 0.75rem;color:var(--gold);text-align:right;">' + r.completions + '</td>' +
             '<td style="padding:0.5rem 0.75rem;color:var(--dim);text-align:right;">+' + r.points + '</td>' +
           '</tr>').join('') +

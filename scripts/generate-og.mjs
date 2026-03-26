@@ -177,6 +177,38 @@ const PAGES = [
     glow:     'rgba(100,116,139,0.12)',
     badge:    '⚡ VAULTSPARK STUDIOS',
   },
+  {
+    slug:     'og-dunescape',
+    title:    'Dunescape',
+    sub:      'Desert survival strategy · Free browser game',
+    accent:   '#F59E0B',
+    glow:     'rgba(245,158,11,0.18)',
+    badge:    '⚡ VAULTSPARK GAMES',
+  },
+  {
+    slug:     'og-mindframe',
+    title:    'MindFrame',
+    sub:      'Psychological puzzle experience · In development',
+    accent:   '#6366F1',
+    glow:     'rgba(99,102,241,0.18)',
+    badge:    '⚡ VAULTSPARK GAMES',
+  },
+  {
+    slug:     'og-project-unknown',
+    title:    'Project Unknown',
+    sub:      'Classified · Something is coming from the vault',
+    accent:   '#EF4444',
+    glow:     'rgba(239,68,68,0.15)',
+    badge:    '⚡ VAULTSPARK GAMES',
+  },
+  {
+    slug:     'og-vaultfront',
+    title:    'VaultFront',
+    sub:      'Tactical squad strategy · Free browser game',
+    accent:   '#10B981',
+    glow:     'rgba(16,185,129,0.15)',
+    badge:    '⚡ VAULTSPARK GAMES',
+  },
 ];
 
 // ── SVG template ──────────────────────────────────────────────────────────
