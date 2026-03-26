@@ -158,8 +158,8 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/dunescape/">Dunescape</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/dunescape/">Dunescape</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
         <a href="/universe/">Universe</a>
         <a href="/studio/">Studio</a>
         <a href="/contact/">Contact</a>
@@ -193,7 +193,7 @@
     <!-- Stats Strip -->
     <section class="comm-section" style="padding-top:0;">
       <div class="container">
-        <div class="comm-stats">
+        <div class="comm-stats" aria-live="polite" aria-atomic="false">
           <div class="comm-stat">
             <div class="comm-stat-label">Total Members</div>
             <div class="comm-stat-value" id="stat-members">—</div>
@@ -294,7 +294,7 @@
           <thead>
             <tr><th>#</th><th>Member</th><th>Points</th></tr>
           </thead>
-          <tbody id="lbp-tbody">
+          <tbody id="lbp-tbody" aria-live="polite" aria-atomic="false">
             <tr class="lbp-skeleton"><td><span style="width:20px;">&nbsp;</span></td><td><span style="width:100px;">&nbsp;</span></td><td><span style="width:50px;">&nbsp;</span></td></tr>
             <tr class="lbp-skeleton"><td><span style="width:20px;">&nbsp;</span></td><td><span style="width:80px;">&nbsp;</span></td><td><span style="width:40px;">&nbsp;</span></td></tr>
             <tr class="lbp-skeleton"><td><span style="width:20px;">&nbsp;</span></td><td><span style="width:90px;">&nbsp;</span></td><td><span style="width:45px;">&nbsp;</span></td></tr>
