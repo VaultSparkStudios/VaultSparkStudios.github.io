@@ -257,6 +257,120 @@ export async function fetchAnalytics(supabaseUrl, anonKey, ttlMs = 300000) {
   }
 }
 
+
+// First-party page analytics from page_views table
+export async function fetchPageViews(supabaseUrl, anonKey, ttlMs = 120000) {
+  const key = "page_views";
+  const cached = readCache(key, ttlMs);
+  if (cached) return cached;
+
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+  const sevenDaysAgo  = new Date(Date.now() - 7  * 24 * 60 * 60 * 1000).toISOString();
+
+  const [allRows, recent30, recent7] = await Promise.all([
+    sbFetch(supabaseUrl, anonKey, "page_views?select=page_path,session_id,user_id,referrer&limit=10000"),
+    sbFetch(supabaseUrl, anonKey, "page_views?select=page_path,page_title,session_id,user_id,referrer,viewed_at&viewed_at=gte." + thirtyDaysAgo + "&order=viewed_at.asc&limit=10000"),
+    sbFetch(supabaseUrl, anonKey, "page_views?select=page_path,session_id&viewed_at=gte." + sevenDaysAgo + "&limit=5000"),
+  ]);
+
+  if (!allRows) return null;
+
+  const totalViews     = allRows.length;
+  const uniqueSessions = new Set(allRows.map((r) => r.session_id).filter(Boolean)).size;
+  const loggedInViews  = allRows.filter((r) => r.user_id).length;
+
+  const rows30   = recent30 || [];
+  const views30  = rows30.length;
+  const sessions30 = new Set(rows30.map((r) => r.session_id).filter(Boolean)).size;
+  const loggedIn30 = rows30.filter((r) => r.user_id).length;
+
+  const rows7    = recent7 || [];
+  const views7   = rows7.length;
+  const sessions7 = new Set(rows7.map((r) => r.session_id).filter(Boolean)).size;
+
+  const pageCount = {}, pageTitle = {}, pageUsers = {};
+  for (const r of rows30) {
+    pageCount[r.page_path] = (pageCount[r.page_path] || 0) + 1;
+    if (r.page_title && !pageTitle[r.page_path]) pageTitle[r.page_path] = r.page_title;
+    if (r.user_id) pageUsers[r.page_path] = (pageUsers[r.page_path] || 0) + 1;
+  }
+  const topPages = Object.entries(pageCount)
+    .sort((a, b) => b[1] - a[1]).slice(0, 20)
+    .map(([p, v]) => ({ path: p, title: pageTitle[p] || p, views: v, loggedIn: pageUsers[p] || 0 }));
+
+  const dailyMap = {};
+  for (const r of rows30) { const day = r.viewed_at.slice(0, 10); dailyMap[day] = (dailyMap[day] || 0) + 1; }
+  const daily = [];
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(Date.now() - i * 86400000).toISOString().slice(0, 10);
+    daily.push({ date: d, views: dailyMap[d] || 0 });
+  }
+
+  const refCount = {};
+  for (const r of rows30) { if (!r.referrer) continue; refCount[r.referrer] = (refCount[r.referrer] || 0) + 1; }
+  const topReferrers = Object.entries(refCount).sort((a, b) => b[1] - a[1]).slice(0, 10)
+    .map(([referrer, count]) => ({ referrer, count }));
+
+  const data = { totalViews, uniqueSessions, loggedInViews, views30, sessions30, loggedIn30, views7, sessions7, topPages, daily, topReferrers };
+  writeCache(key, data);
+  return data;
+}
+
+// Rich member analytics: tier breakdown, cohorts, VaultSparked
+export async function fetchMemberAnalytics(supabaseUrl, anonKey, ttlMs = 300000) {
+  const key = "member_analytics";
+  const cached = readCache(key, ttlMs);
+  if (cached) return cached;
+
+  const [members, vaultsparked, pointEvents] = await Promise.all([
+    sbFetch(supabaseUrl, anonKey, "vault_members?select=id,username,points,rank,is_vaultsparked,created_at&order=created_at.asc&limit=5000"),
+    sbFetch(supabaseUrl, anonKey, "vault_members?select=id,username,points,rank,created_at&is_vaultsparked=eq.true&order=points.desc&limit=100"),
+    sbFetch(supabaseUrl, anonKey, "point_events?select=reason,points,created_at&order=created_at.desc&limit=2000"),
+  ]);
+
+  if (!members) return null;
+
+  const now = Date.now();
+  const tierNames = ['Spark Initiate','Vault Runner','Forge Guard','Vault Keeper','Ember Warden','Signal Breaker','Vault Sentinel','The Sparked','VaultSparked'];
+  const tierCounts = Array(9).fill(0);
+  for (const m of members) { const r = Math.min(Math.max(Number(m.rank) || 0, 0), 8); tierCounts[r]++; }
+  const tierBreakdown = tierNames.map((name, i) => ({ name, rank: i, count: tierCounts[i] }));
+
+  const buckets = [
+    {label:'0–99',min:0,max:99},{label:'100–499',min:100,max:499},{label:'500–999',min:500,max:999},
+    {label:'1K–2.4K',min:1000,max:2499},{label:'2.5K–4.9K',min:2500,max:4999},
+    {label:'5K–9.9K',min:5000,max:9999},{label:'10K+',min:10000,max:Infinity},
+  ];
+  const pointsBuckets = buckets.map((b) => ({ label: b.label, count: members.filter((m) => m.points >= b.min && m.points <= b.max).length }));
+
+  const cohortMap = {};
+  for (const m of members) {
+    const d = new Date(m.created_at);
+    const k = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+    cohortMap[k] = (cohortMap[k] || 0) + 1;
+  }
+  const cohort = Object.entries(cohortMap).sort((a, b) => a[0].localeCompare(b[0])).slice(-12)
+    .map(([month, count]) => ({ month, count }));
+
+  const topMembers = [...members].sort((a, b) => b.points - a.points).slice(0, 10)
+    .map((m) => ({ username: m.username, points: m.points, rank: m.rank, is_vaultsparked: m.is_vaultsparked }));
+
+  const vsCount   = members.filter((m) => m.is_vaultsparked).length;
+  const vsList    = (vaultsparked || []).map((m) => ({ username: m.username, points: m.points, rank: m.rank, joinedAgo: Math.floor((now - new Date(m.created_at).getTime()) / 86400000) }));
+
+  const eventTotals = {};
+  for (const e of (pointEvents || [])) { eventTotals[e.reason] = (eventTotals[e.reason] || 0) + e.points; }
+  const topEvents = Object.entries(eventTotals).sort((a, b) => b[1] - a[1]).slice(0, 12).map(([reason, pts]) => ({ reason, pts }));
+
+  const avgPoints = members.length ? Math.round(members.reduce((s, m) => s + (m.points || 0), 0) / members.length) : 0;
+  const signups7  = members.filter((m) => new Date(m.created_at).getTime() > now - 7*86400000).length;
+  const signups30 = members.filter((m) => new Date(m.created_at).getTime() > now - 30*86400000).length;
+
+  const data = { total: members.length, vsCount, signups7, signups30, avgPoints, tierBreakdown, pointsBuckets, cohort, topMembers, vsList, topEvents };
+  writeCache(key, data);
+  return data;
+}
+
 // Journal views: per-article read counts
 export async function fetchJournalViews(supabaseUrl, anonKey, ttlMs = 300000) {
   const key = "journal_views";
@@ -320,7 +434,7 @@ export async function fetchFanArt(supabaseUrl, anonKey, ttlMs = 300000) {
 // Fetch all studio Supabase data in parallel.
 export async function fetchAllSupabaseData(supabaseUrl, anonKey, ttlMs = 300000) {
   if (!supabaseUrl || !anonKey) return null;
-  const [members, sessions, pulse, challenges, betaKeys, economy, investorRequests, revenue, analytics, journalViews, fanArt] = await Promise.all([
+  const [members, sessions, pulse, challenges, betaKeys, economy, investorRequests, revenue, analytics, pageViews, memberAnalytics, journalViews, fanArt] = await Promise.all([
     fetchMemberStats(supabaseUrl, anonKey, ttlMs),
     fetchGameSessions(supabaseUrl, anonKey, ttlMs),
     fetchStudioPulse(supabaseUrl, anonKey, 60000),
@@ -333,5 +447,5 @@ export async function fetchAllSupabaseData(supabaseUrl, anonKey, ttlMs = 300000)
     fetchJournalViews(supabaseUrl, anonKey, ttlMs),
     fetchFanArt(supabaseUrl, anonKey, ttlMs),
   ]);
-  return { members, sessions, pulse, challenges, betaKeys, economy, investorRequests, revenue, analytics, journalViews, fanArt };
+  return { members, sessions, pulse, challenges, betaKeys, economy, investorRequests, revenue, analytics, pageViews, memberAnalytics, journalViews, fanArt };
 }
