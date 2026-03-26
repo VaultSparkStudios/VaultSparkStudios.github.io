@@ -1,7 +1,9 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-20260326-e5c2a1d';
+const CACHE_NAME = 'vaultspark-20260326-f6b3c2e';
+const MAX_PAGE_ENTRIES = 60;
+const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const STATIC_ASSETS = [
   '/',
   '/assets/style.css',
@@ -107,20 +109,36 @@ self.addEventListener('fetch', (e) => {
     return;
   }
 
-  // Network-first for HTML pages — fall back to cache, then 404
+  // Network-first for HTML pages — fall back to cache, then offline
+  // Cache capped at MAX_PAGE_ENTRIES; stale entries expire after PAGE_TTL_MS
   if (request.mode === 'navigate') {
     e.respondWith(
       fetch(request)
-        .then((res) => {
+        .then(async (res) => {
           if (res.ok) {
-            const clone = res.clone();
-            caches.open(CACHE_NAME).then((c) => c.put(request, clone));
+            const cache = await caches.open(CACHE_NAME);
+            const headers = new Headers(res.headers);
+            headers.set('x-cached-at', String(Date.now()));
+            const stamped = new Response(await res.clone().arrayBuffer(), { status: res.status, headers });
+            await cache.put(request, stamped);
+            const keys = await cache.keys();
+            if (keys.length > MAX_PAGE_ENTRIES) await cache.delete(keys[0]);
           }
           return res;
         })
-        .catch(() =>
-          caches.match(request).then((cached) => cached || caches.match('/offline.html'))
-        )
+        .catch(async () => {
+          const cache = await caches.open(CACHE_NAME);
+          const cached = await cache.match(request);
+          if (cached) {
+            const cachedAt = cached.headers.get('x-cached-at');
+            if (cachedAt && Date.now() - Number(cachedAt) > PAGE_TTL_MS) {
+              await cache.delete(request);
+              return caches.match('/offline.html');
+            }
+            return cached;
+          }
+          return caches.match('/offline.html');
+        })
     );
   }
 });
@@ -140,7 +158,7 @@ self.addEventListener('push', function (event) {
     self.registration.showNotification(data.title, {
       body:  data.body,
       icon:  '/assets/icon-256.png',
-      badge: '/assets/favicon.png',
+      badge: '/assets/icon-32.png',
       tag:   'vaultspark-push',
       data:  { url: data.url },
     })
