@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>You're Offline — VaultSpark Studios</title>
+  <meta name="description" content="No connection detected. The vault will be waiting when you're back online." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#000000" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="apple-touch-icon" href="/assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="/assets/style.css" />
+
+  <style>
+    .offline-page { min-height: 100vh; display: flex; flex-direction: column; }
+    .offline-hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 1.5rem;
+      gap: 1.5rem;
+    }
+    .offline-code {
+      font-size: clamp(5rem, 18vw, 10rem);
+      font-weight: 900;
+      line-height: 1;
+      color: rgba(255,255,255,0.04);
+      letter-spacing: -0.04em;
+      position: absolute;
+      pointer-events: none;
+      user-select: none;
+      z-index: 0;
+    }
+    .offline-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+    .offline-title {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      position: relative;
+      z-index: 1;
+    }
+    .offline-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 38ch;
+      line-height: 1.65;
+      position: relative;
+      z-index: 1;
+    }
+    .offline-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body class="offline-page">
+
+  <nav class="site-nav" aria-label="Primary navigation">
+    <div class="nav-inner">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img src="/assets/vaultspark-icon.webp" alt="" width="28" height="28" aria-hidden="true" />
+        <span>VaultSpark <strong>Studios</strong></span>
+      </a>
+    </div>
+  </nav>
+
+  <main class="offline-hero" aria-labelledby="offline-heading">
+    <div class="offline-code" aria-hidden="true">✗</div>
+    <div class="offline-icon" aria-hidden="true">📡</div>
+    <h1 class="offline-title" id="offline-heading">You're Offline</h1>
+    <p class="offline-sub">No connection detected. The vault will be right here when you're back online — your progress is safe.</p>
+    <div class="offline-actions">
+      <button class="button" onclick="window.location.reload()">Try Again</button>
+      <a href="/" class="button-secondary" style="padding:0.7rem 1.4rem;">Back to Home</a>
+    </div>
+  </main>
+
+  <script>
+    window.addEventListener('online', function () {
+      window.location.reload();
+    });
+  </script>
+
+</body>
+</html>

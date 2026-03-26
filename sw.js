@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-v3';
+const CACHE_NAME = 'vaultspark-v4';
 const STATIC_ASSETS = [
   '/',
   '/assets/style.css',
@@ -10,6 +10,7 @@ const STATIC_ASSETS = [
   '/assets/icon-256.png',
   '/assets/vaultspark-icon.webp',
   '/assets/vaultspark-cinematic-logo.webp',
+  '/offline.html',
   '/404.html',
   '/games/',
   '/vault-member/',
@@ -60,18 +61,18 @@ self.addEventListener('fetch', (e) => {
   // Only handle same-origin requests beyond this point
   if (url.origin !== self.location.origin) return;
 
-  // Cache-first strategy for assets (CSS, JS, images, fonts)
+  // Stale-while-revalidate for assets (CSS, JS, images, fonts)
+  // Serves cached version immediately while fetching fresh copy in background
   if (url.pathname.startsWith('/assets/')) {
     e.respondWith(
-      caches.match(request).then((cached) =>
-        cached || fetch(request).then((res) => {
-          if (res.ok) {
-            const clone = res.clone();
-            caches.open(CACHE_NAME).then((c) => c.put(request, clone));
-          }
+      caches.open(CACHE_NAME).then(async (cache) => {
+        const cached = await cache.match(request);
+        const fetchPromise = fetch(request).then((res) => {
+          if (res.ok) cache.put(request, res.clone());
           return res;
-        })
-      )
+        }).catch(() => cached);
+        return cached || fetchPromise;
+      })
     );
     return;
   }
@@ -88,7 +89,7 @@ self.addEventListener('fetch', (e) => {
           return res;
         })
         .catch(() =>
-          caches.match(request).then((cached) => cached || caches.match('/404.html'))
+          caches.match(request).then((cached) => cached || caches.match('/offline.html'))
         )
     );
   }
