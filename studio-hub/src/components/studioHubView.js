@@ -689,7 +689,7 @@ function renderProjectCard(project, ghData, sbData, socialData, settings, scoreP
 }
 
 // ── Project Section (tabbed) ──────────────────────────────────────────────────
-function renderProjectSection(ghData, sbData, socialData, settings, activeTab, scorePrev, scoreHistory, focusMode, projectFilter, tagFilter = "", contextFiles = {}) {
+function renderProjectSection(ghData, sbData, socialData, settings, activeTab, scorePrev, scoreHistory, focusMode, projectFilter, tagFilter = "", contextFiles = {}, compactCards = false) {
   const games     = PROJECTS.filter((p) => p.type === "game");
   const tools     = PROJECTS.filter((p) => p.type === "tool");
   const platforms = PROJECTS.filter((p) => p.type === "platform" || p.type === "app");
@@ -1937,7 +1937,7 @@ export function renderStudioHubView(state) {
       ${renderAlertHistoryPanel(alertHistoryFilter)}
       ${renderSnoozePanel()}
       ${gumroadSales?.length ? renderRevenueChart(gumroadSales) : ""}
-      ${renderProjectSection(ghData, sbData, socialData, settings, projectTab, scorePrev, scoreHistory, focusMode, projectFilter, tagFilter, contextFiles)}
+      ${renderProjectSection(ghData, sbData, socialData, settings, projectTab, scorePrev, scoreHistory, focusMode, projectFilter, tagFilter, contextFiles, compactCards)}
       ${renderSocialSummary(socialData)}
     </div>
   `;
