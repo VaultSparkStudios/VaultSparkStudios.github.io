@@ -68,14 +68,21 @@ jobs:
           echo "Generated $(grep -c '<url>' $OUT) URLs"
           head -30 "$OUT"
 
-      - name: Commit sitemap if changed
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate feed.xml
+        run: node scripts/generate-feed.mjs
+
+      - name: Commit generated files if changed
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet sitemap.xml; then
-            git add sitemap.xml
-            git commit -m "chore: auto-update sitemap.xml [skip ci]"
+          git add sitemap.xml feed.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: auto-update sitemap + feed [skip ci]"
             git push
           else
-            echo "Sitemap unchanged, skipping commit"
+            echo "No changes, skipping commit"
           fi

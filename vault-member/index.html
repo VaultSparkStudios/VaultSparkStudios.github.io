@@ -2759,6 +2759,38 @@
                 <div id="inv-req-list" style="font-size:0.88rem;color:var(--muted);">Loading…</div>
               </div>
 
+              <!-- ── Community Polls ── -->
+              <div class="settings-block admin-panel-full">
+                <h3>Community Polls</h3>
+                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">
+                  Create polls visible to all Vault members on the Community page. Members can vote once per poll.
+                </p>
+                <form id="create-poll-form" onsubmit="adminCreatePoll(event)" autocomplete="off">
+                  <div style="margin-bottom:0.75rem;">
+                    <label style="font-size:0.82rem;color:var(--muted);display:block;margin-bottom:0.3rem;" for="poll-question">Question</label>
+                    <input id="poll-question" type="text" maxlength="240" required placeholder="e.g. Which game should we release next?" style="width:100%;padding:0.55rem 0.75rem;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:#fff;font-size:0.9rem;" />
+                  </div>
+                  <div id="poll-options-container">
+                    <label style="font-size:0.82rem;color:var(--muted);display:block;margin-bottom:0.3rem;">Options (2–4)</label>
+                    <div style="display:flex;flex-direction:column;gap:0.5rem;" id="poll-options-list">
+                      <input type="text" maxlength="120" required placeholder="Option 1" class="poll-option-input" style="padding:0.5rem 0.75rem;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:#fff;font-size:0.88rem;" />
+                      <input type="text" maxlength="120" required placeholder="Option 2" class="poll-option-input" style="padding:0.5rem 0.75rem;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:#fff;font-size:0.88rem;" />
+                    </div>
+                    <button type="button" id="add-poll-option-btn" onclick="addPollOption()" style="margin-top:0.5rem;padding:0.3rem 0.75rem;font-size:0.8rem;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:var(--muted);cursor:pointer;">+ Add option</button>
+                  </div>
+                  <div style="margin-top:0.75rem;">
+                    <label style="font-size:0.82rem;color:var(--muted);display:block;margin-bottom:0.3rem;" for="poll-closes-at">Closes at (optional)</label>
+                    <input id="poll-closes-at" type="datetime-local" style="padding:0.5rem 0.75rem;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:#fff;font-size:0.88rem;" />
+                  </div>
+                  <button type="submit" class="admin-submit-btn" style="margin-top:1rem;" id="create-poll-btn">Create Poll</button>
+                  <p id="create-poll-status" style="margin-top:0.5rem;font-size:0.82rem;min-height:1.2em;"></p>
+                </form>
+                <div style="margin-top:1.5rem;">
+                  <h4 style="font-size:0.9rem;margin-bottom:0.6rem;color:var(--muted);">Active Polls</h4>
+                  <div id="admin-polls-list" style="font-size:0.88rem;color:var(--muted);">Loading…</div>
+                </div>
+              </div>
+
             </div>
           </div><!-- /dash-pane-admin -->
 

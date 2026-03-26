@@ -528,7 +528,7 @@
       const navAdminLink  = document.getElementById('nav-admin-link');
       if (adminTabEl)   adminTabEl.style.display   = isAdmin ? '' : 'none';
       if (navAdminLink) navAdminLink.style.display = isAdmin ? '' : 'none';
-      if (isAdmin) { loadInvRequests('pending'); loadFanArtQueue('pending'); }
+      if (isAdmin) { loadInvRequests('pending'); loadFanArtQueue('pending'); loadAdminPolls(); }
 
       // Restore active tab from last session
       const savedTab = localStorage.getItem('vs_active_tab');
@@ -2340,7 +2340,7 @@
     }
 
     // ── Phase 9: Web Push Notifications ──────────────────────────
-    const VAPID_PUBLIC_KEY = 'BH-1FBN0IzFnBUoprG7Lb7TEvW51Ix2sZjNkMzcD3MIz36Lh-VeysS_vLFQ2P8lxXhAnyEQfTAot6QYt3_KDVwY';
+    const VAPID_PUBLIC_KEY = 'BOuvjDoHcd-eIX1sYY7DRlFXKkuN7QWym5XohzVq-g2rHGtnbRW_hia1AI_TlR04mcM69eCVEvKYv9tD3gYHOFw';
 
     let _swRegistration = null;
 
@@ -3318,6 +3318,96 @@
         }
       } catch (_) {}
     }
+
+    function addPollOption() {
+      const list = document.getElementById('poll-options-list');
+      if (!list) return;
+      const count = list.querySelectorAll('.poll-option-input').length;
+      if (count >= 4) return;
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.maxLength = 120;
+      inp.required = true;
+      inp.placeholder = `Option ${count + 1}`;
+      inp.className = 'poll-option-input';
+      inp.style.cssText = 'padding:0.5rem 0.75rem;border-radius:8px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.05);color:#fff;font-size:0.88rem;';
+      list.appendChild(inp);
+      if (count + 1 >= 4) {
+        const btn = document.getElementById('add-poll-option-btn');
+        if (btn) btn.disabled = true;
+      }
+    }
+    window.addPollOption = addPollOption;
+
+    async function adminCreatePoll(e) {
+      e.preventDefault();
+      const statusEl = document.getElementById('create-poll-status');
+      const btn = document.getElementById('create-poll-btn');
+      const question = (document.getElementById('poll-question')?.value || '').trim();
+      const optionInputs = [...document.querySelectorAll('.poll-option-input')];
+      const options = optionInputs.map(i => ({ label: i.value.trim(), votes: 0 })).filter(o => o.label);
+      const closesAt = document.getElementById('poll-closes-at')?.value || null;
+      if (!question || options.length < 2) {
+        statusEl.textContent = 'Provide a question and at least 2 options.';
+        statusEl.style.color = '#f87171';
+        return;
+      }
+      btn.disabled = true;
+      statusEl.textContent = 'Creating…';
+      statusEl.style.color = 'var(--muted)';
+      try {
+        const payload = { question, options, is_active: true };
+        if (closesAt) payload.closes_at = new Date(closesAt).toISOString();
+        const { error } = await VSSupabase.from('polls').insert(payload);
+        if (error) throw error;
+        statusEl.textContent = 'Poll created!';
+        statusEl.style.color = '#4ade80';
+        document.getElementById('create-poll-form').reset();
+        const list = document.getElementById('poll-options-list');
+        // Remove extra options beyond 2
+        [...list.querySelectorAll('.poll-option-input')].slice(2).forEach(n => n.remove());
+        const addBtn = document.getElementById('add-poll-option-btn');
+        if (addBtn) addBtn.disabled = false;
+        loadAdminPolls();
+      } catch (err) {
+        statusEl.textContent = err.message || 'Failed to create poll.';
+        statusEl.style.color = '#f87171';
+      } finally {
+        btn.disabled = false;
+      }
+    }
+    window.adminCreatePoll = adminCreatePoll;
+
+    async function loadAdminPolls() {
+      const el = document.getElementById('admin-polls-list');
+      if (!el) return;
+      const { data, error } = await VSSupabase.from('polls')
+        .select('id,question,is_active,closes_at,options')
+        .order('created_at', { ascending: false })
+        .limit(20);
+      if (error || !data?.length) {
+        el.textContent = error ? error.message : 'No polls yet.';
+        return;
+      }
+      el.innerHTML = data.map(p => {
+        const totalVotes = (p.options || []).reduce((s, o) => s + (o.votes || 0), 0);
+        const closedLabel = p.closes_at ? ` · closes ${new Date(p.closes_at).toLocaleDateString()}` : '';
+        return `<div style="padding:0.65rem 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;justify-content:space-between;align-items:center;gap:0.75rem;">
+          <div>
+            <div style="font-size:0.88rem;color:#e2e8f0;">${escHtml(p.question)}</div>
+            <div style="font-size:0.75rem;color:var(--muted);margin-top:0.2rem;">${totalVotes} vote${totalVotes !== 1 ? 's' : ''}${closedLabel}</div>
+          </div>
+          <button type="button" onclick="adminClosePoll('${p.id}',${!p.is_active})" style="padding:0.25rem 0.6rem;font-size:0.75rem;border-radius:6px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:var(--muted);cursor:pointer;">${p.is_active ? 'Close' : 'Reopen'}</button>
+        </div>`;
+      }).join('');
+    }
+    window.loadAdminPolls = loadAdminPolls;
+
+    async function adminClosePoll(pollId, setActive) {
+      await VSSupabase.from('polls').update({ is_active: setActive }).eq('id', pollId);
+      loadAdminPolls();
+    }
+    window.adminClosePoll = adminClosePoll;
 
     async function loadChallenges() {
       const grid    = document.getElementById('challenges-list');
