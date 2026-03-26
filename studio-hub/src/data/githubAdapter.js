@@ -632,7 +632,7 @@ const PORTFOLIO_CONTENT_FILES = [
   "portfolio/REVENUE_SIGNALS.md",
 ];
 
-export async function fetchPortfolioFileContents(token = "", ttlMs = 600000) {
+export async function fetchPortfolioFileContents(token = "", ttlMs = 3600000) {
   const key = "portfolio_file_contents";
   const cached = readCache(key, ttlMs);
   if (cached !== null) return cached;
@@ -819,7 +819,7 @@ const PORTFOLIO_FILES_TO_TRACK = [
   "portfolio/IP_AUDIT.md",
 ];
 
-export async function fetchPortfolioFreshness(token = "", ttlMs = 300000) {
+export async function fetchPortfolioFreshness(token = "", ttlMs = 3600000) {
   const key = "portfolio_freshness";
   const cached = readCache(key, ttlMs);
   if (cached !== null) return cached;

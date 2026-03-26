@@ -300,9 +300,9 @@ export function renderAgentCommandsView() {
       `)}
 
       <!-- Agent Roles -->
-      ${card("AGENT ROLES — 22 ROLES ACTIVE", "var(--blue)", `
+      ${card("AGENT ROLES — 23 ROLES ACTIVE", "var(--blue)", `
         <div style="margin-bottom:16px; font-size:12px; color:var(--muted); line-height:1.6;">
-          22 agent roles operate across VaultSpark Studio OS — 6 automated via GitHub Actions, 16 manual/triggered.
+          23 agent roles operate across VaultSpark Studio OS — 7 automated via GitHub Actions, 16 manual/triggered.
           Role definitions live in <code>vaultspark-studio-ops/agents/</code>.
           Full profiles, trigger instructions, and score impact for every agent are in the
           <a href="#" onclick="window.dispatchEvent(new CustomEvent('navigate',{detail:'agents'})); return false;"
@@ -311,13 +311,14 @@ export function renderAgentCommandsView() {
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
           <div>
-            <div style="font-size:10px; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:8px;">Automated (6) — GitHub Actions</div>
+            <div style="font-size:10px; font-weight:700; color:var(--green); text-transform:uppercase; letter-spacing:0.07em; margin-bottom:8px;">Automated (7) — GitHub Actions</div>
             <div style="display:flex; flex-direction:column; gap:4px;">
               ${[
+                ["🔭", "Repo Scanner", "Monday 06:00 UTC"],
                 ["🔒", "Studio OS Enforcer", "Daily 08:00 UTC"],
                 ["🔧", "Technical Debt Watchdog", "Daily 09:00 UTC"],
                 ["📊", "Studio Weekly Digest", "Monday 07:00 UTC"],
-                ["🧠", "Agent Coordinator", "After Weekly Digest"],
+                ["🧠", "Agent Coordinator", "Daily 10:00 UTC + after Digest"],
                 ["🎬", "Media Asset Tracker", "Monthly 1st"],
                 ["⚖️", "Legal & IP Monitor", "Monthly 1st"],
               ].map(([icon, name, when]) => `

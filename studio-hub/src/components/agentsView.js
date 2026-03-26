@@ -1,4 +1,4 @@
-// Agents View — roster and profiles for all 22 VaultSpark Studio OS agents
+// Agents View — roster and profiles for all 23 VaultSpark Studio OS agents
 
 const AGENTS = [
   {
@@ -204,13 +204,13 @@ const AGENTS = [
     name: "Agent Coordinator",
     emoji: "🧠",
     color: "#c084fc",
-    trigger: "Monday 10:00 UTC",
-    schedule: "Weekly",
+    trigger: "After Weekly Digest (Mon) + daily 10:00 UTC",
+    schedule: "Daily (Option D active)",
     purpose: "Hive brain orchestrator. Reads ALL agent portfolio outputs, detects conflicts, writes STUDIO_BRAIN.md — the shared truth document every other agent reads before acting. Makes all agents smarter by giving them unified context.",
     inputs: ["All portfolio/ files", "Open agent-request GitHub Issues", "PROJECT_REGISTRY.json"],
     outputs: ["portfolio/STUDIO_BRAIN.md"],
     scoreImpact: ["Process Quality: +1 (STUDIO_BRAIN.md fresh)", "Risk: conflicts caught early", "All pillars: shared context improves agent accuracy"],
-    howToUse: "Runs automatically every Monday at 10:00 UTC after Weekly Digest. Manual: Actions tab → Agent Coordinator → Run workflow.",
+    howToUse: "Runs automatically: daily 10:00 UTC + after Weekly Digest on Mondays. Manual: Actions tab → Agent Coordinator → Run workflow.",
     automated: true,
     workflowFile: ".github/workflows/agent-coordinator.yml",
     cron: "0 10 * * *",
@@ -374,6 +374,10 @@ export function renderAgentsView(agentRequests = [], agentRunHistory = {}) {
         const conclusionIcon = run.conclusion === "success" ? "✓"
           : run.conclusion === "failure" ? "✗"
           : "⟳";
+        const streak = run.streak ?? null;
+        const streakBadge = streak != null && streak >= 3
+          ? `<span style="font-size:10px; color:var(--green); padding:2px 8px; border:1px solid rgba(110,231,183,0.3); border-radius:8px;">🔥 ${streak}-run streak</span>`
+          : "";
         runBadge = `
           <a href="${run.url}" target="_blank" rel="noopener"
              style="font-size:10px; color:${conclusionColor}; text-decoration:none; display:flex; align-items:center; gap:4px;
@@ -381,7 +385,8 @@ export function renderAgentsView(agentRequests = [], agentRunHistory = {}) {
             <span>${conclusionIcon}</span>
             <span>${ago ? `last run ${ago}` : "ran recently"}</span>
           </a>
-          ${nextRun ? `<span style="font-size:10px; color:var(--muted); padding:2px 8px; border:1px solid var(--border); border-radius:8px;">next ${nextRun}</span>` : ""}`;
+          ${nextRun ? `<span style="font-size:10px; color:var(--muted); padding:2px 8px; border:1px solid var(--border); border-radius:8px;">next ${nextRun}</span>` : ""}
+          ${streakBadge}`;
       } else {
         runBadge = `
           <span style="font-size:10px; color:var(--muted); padding:2px 8px; border:1px solid var(--border); border-radius:8px;">no runs yet</span>
@@ -575,7 +580,7 @@ export function renderAgentsView(agentRequests = [], agentRunHistory = {}) {
           <div style="font-size:12px; color:var(--muted); line-height:1.7;">
             1. Go to <strong style="color:var(--text);">github.com/VaultSparkStudios/vaultspark-studio-ops</strong> → Settings → Secrets and variables → Actions<br>
             2. Add secret <code>ORG_PAT</code> — a GitHub Personal Access Token with <code>repo</code> scope for all VaultSparkStudios repos<br>
-            3. All six automated workflows activate immediately: Enforcer (daily 08:00), Watchdog (daily 09:00), Weekly Digest (Mon 07:00), Agent Coordinator (Mon 10:00), Media Asset Tracker (monthly), Legal &amp; IP Monitor (monthly)<br>
+            3. All seven automated workflows activate immediately: Repo Scanner (Mon 06:00), Enforcer (daily 08:00), Watchdog (daily 09:00), Weekly Digest (Mon 07:00), Agent Coordinator (daily 10:00 + after Digest), Media Asset Tracker (monthly), Legal &amp; IP Monitor (monthly)<br>
             4. Manual trigger anytime: Actions tab → select workflow → Run workflow
           </div>
         </div>

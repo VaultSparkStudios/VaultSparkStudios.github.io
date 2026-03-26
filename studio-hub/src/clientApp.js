@@ -442,6 +442,9 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
+// Re-render when a Brain flag is acknowledged (mark resolved button)
+window.addEventListener("brain-flag-resolved", () => render());
+
 window.addEventListener("popstate", (e) => {
   const view = e.state?.view || "studio-hub";
   state.activeView = view;

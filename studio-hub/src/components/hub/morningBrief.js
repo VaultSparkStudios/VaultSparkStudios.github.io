@@ -3,12 +3,34 @@ import { daysSince } from "../../utils/helpers.js";
 import { getDecayingProjects } from "../../utils/scoreForecast.js";
 import { computeHotStreak } from "./hubHelpers.js";
 
+// Keys resolved Brain flags by flag content hash to avoid re-surfacing acknowledged items.
+const BRAIN_RESOLVED_KEY = "vshub_brain_resolved";
+function loadResolvedFlags() {
+  try { return new Set(JSON.parse(localStorage.getItem(BRAIN_RESOLVED_KEY) || "[]")); } catch { return new Set(); }
+}
+function resolveFlag(key) {
+  const s = loadResolvedFlags();
+  s.add(key);
+  // Cap at 50 entries to avoid unbounded growth
+  const arr = [...s].slice(-50);
+  try { localStorage.setItem(BRAIN_RESOLVED_KEY, JSON.stringify(arr)); } catch {}
+}
+// Called by clientApp event delegation — exposed on window for inline onclick
+window._resolveBrainFlag = (key) => {
+  resolveFlag(key);
+  // Re-render morning brief by dispatching a lightweight custom event
+  window.dispatchEvent(new CustomEvent("brain-flag-resolved"));
+};
+
 export function renderMorningBrief(ghData, sbData, allScores, scoreHistory, beaconData, beaconSessionStarts = {}, studioBrain = null, portfolioFreshness = {}) {
   const lines = [];
+  const resolved = loadResolvedFlags();
 
   // Studio Brain priority flags (studio-level, highest priority)
   if (studioBrain?.flags?.length) {
     for (const flag of studioBrain.flags) {
+      const flagKey = `${flag.type}:${flag.text}`;
+      if (resolved.has(flagKey)) continue; // skip acknowledged flags
       const iconMap = { CONFLICT: "⚡", GAP: "○", STALE: "⏸", PENDING: "↻" };
       const colorMap = { CONFLICT: "#f87171", GAP: "#c084fc", STALE: "var(--gold)", PENDING: "var(--muted)" };
       lines.push({
@@ -17,6 +39,7 @@ export function renderMorningBrief(ghData, sbData, allScores, scoreHistory, beac
         color: colorMap[flag.type] || "#c084fc",
         text: `[Studio] ${flag.text}`,
         studio: true,
+        flagKey,
       });
     }
   }
@@ -130,7 +153,11 @@ export function renderMorningBrief(ghData, sbData, allScores, scoreHistory, beac
         ${shown.map((l) => `
           <div style="display:flex; align-items:center; gap:10px; padding:6px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
             <span style="color:${l.color}; font-size:13px; flex-shrink:0; width:16px; text-align:center;">${l.icon}</span>
-            <span style="font-size:13px; color:var(--text);">${l.text}</span>
+            <span style="font-size:13px; color:var(--text); flex:1;">${l.text}</span>
+            ${l.flagKey ? `<button onclick="window._resolveBrainFlag(${JSON.stringify(l.flagKey)})"
+              style="font-size:9px; color:var(--muted); background:transparent; border:1px solid var(--border);
+                     border-radius:6px; padding:1px 6px; cursor:pointer; flex-shrink:0; opacity:0.6;"
+              title="Mark as resolved — won't show again">✓ resolved</button>` : ""}
           </div>
         `).join("")}
       </div>
