@@ -4287,11 +4287,19 @@
       const feed = document.getElementById('activity-feed');
       if (!feed) return;
       try {
-        const { data: events } = await VSSupabase
-          .from('point_events')
-          .select('label, points, created_at')
-          .order('created_at', { ascending: false })
-          .limit(8);
+        // Phase 38: use prefetched events from bootstrap RPC on first load
+        let events;
+        if (window._prefetchedEvents && window._prefetchedEvents.length > 0) {
+          events = window._prefetchedEvents;
+          window._prefetchedEvents = null; // consume once
+        } else {
+          const res = await VSSupabase
+            .from('point_events')
+            .select('label, points, created_at')
+            .order('created_at', { ascending: false })
+            .limit(8);
+          events = res.data;
+        }
 
         if (!events || events.length === 0) {
           feed.innerHTML = '<span class="activity-empty">No activity yet — explore the vault to earn points.</span>';
@@ -6031,7 +6039,10 @@
     // Auto-complete challenges based on detected member state
     async function initChallenges(member) {
       try {
-        const { data: challenges } = await VSSupabase.rpc('get_challenges');
+        // Reuse cached challenges if loadChallenges() already ran; else fetch
+        const { data: challenges } = _allChallenges && _allChallenges.length > 0
+          ? { data: _allChallenges }
+          : await VSSupabase.rpc('get_challenges');
         if (!challenges) return;
 
         const achIds = (member.achievements || []).map(a => a.id);
@@ -6074,7 +6085,10 @@
 
     async function completeChallengeByActionKey(actionKey) {
       try {
-        const { data: challenges } = await VSSupabase.rpc('get_challenges');
+        // Reuse cached challenges; only fetch if cache is empty
+        const { data: challenges } = _allChallenges && _allChallenges.length > 0
+          ? { data: _allChallenges }
+          : await VSSupabase.rpc('get_challenges');
         if (!challenges) return;
         const ch = challenges.find(c => c.action_key === actionKey && !c.completed);
         if (!ch) return;
@@ -6220,9 +6234,9 @@
 
     async function refreshPointsDisplay() {
       try {
-        const { data: { session } } = await VSSupabase.auth.getSession();
-        if (!session) return;
-        const { data: row } = await VSSupabase.from('vault_members').select('points').eq('id', session.user.id).single();
+        const uid = _currentMember?._id;
+        if (!uid) return;
+        const { data: row } = await VSSupabase.from('vault_members').select('points').eq('id', uid).single();
         if (!row) return;
         const pts  = row.points;
         const rank = VS.getRank(pts);
@@ -6568,13 +6582,15 @@
       const { data: { session } } = await VSSupabase.auth.getSession();
 
       if (session) {
-        const { data: row } = await VSSupabase
-          .from('vault_members')
-          .select('*')
-          .eq('id', session.user.id)
-          .single();
+        // Phase 38: single bootstrap RPC combines vault_members + recent point_events
+        const { data: boot } = await VSSupabase.rpc('get_member_bootstrap');
+        const row = boot?.member || null;
 
         if (row) {
+          // Cache prefetched events so loadPointEvents() can skip an extra round-trip
+          if (Array.isArray(boot.events) && boot.events.length > 0) {
+            window._prefetchedEvents = boot.events;
+          }
           // Phase 7: auto-save discord_id if user has a Discord identity not yet stored.
           // This handles both Discord OAuth users and returning "Connect Discord" linkers.
           if (!row.discord_id) {

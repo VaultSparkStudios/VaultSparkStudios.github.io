@@ -24,9 +24,6 @@
 *(empty — rank-up ceremony already shipped)*
 
 ## A-Tier Backlog (Score 7–8.9)
-
-- [ ] Dynamic OG image generation per page [7.5]
-- [ ] Supabase query batching in portal (consolidate sequential SELECTs into RPCs) [7]
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
 - [ ] WebP/AVIF image audit + conversion [6.5]
 
@@ -53,6 +50,19 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 38 (2026-03-25)
+
+- ✅ Supabase query batching — `get_member_bootstrap` RPC combines vault_members + recent point_events into one startup round-trip; `loadPointEvents` uses prefetched events on first load
+- ✅ `initChallenges` and `completeChallengeByActionKey` now reuse `_allChallenges` cache instead of making redundant `get_challenges` RPC calls
+- ✅ `refreshPointsDisplay` no longer calls `getSession()` — uses `_currentMember._id` directly
+- **SQL needed:** run `supabase-phase38-bootstrap.sql` — adds `get_member_bootstrap()` RPC
+
+## Completed — Phase 37 (2026-03-25)
+
+- ✅ Per-page OG image generation — `scripts/generate-og.mjs` (Node.js + sharp) generates 14 branded 1200×630 PNGs; GitHub Action in `.github/workflows/og-images.yml` regenerates on script changes
+- ✅ All previously broken OG image refs fixed (og-roadmap, og-studio, og-vault-member, og-vsfgm were 404s)
+- ✅ 14 pages updated from generic `og-image.png` to page-specific images
 
 ## Completed — Phase 36 (2026-03-25)
 
