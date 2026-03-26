@@ -22,7 +22,7 @@ window._resolveBrainFlag = (key) => {
   window.dispatchEvent(new CustomEvent("brain-flag-resolved"));
 };
 
-export function renderMorningBrief(ghData, sbData, allScores, scoreHistory, beaconData, beaconSessionStarts = {}, studioBrain = null, portfolioFreshness = {}) {
+export function renderMorningBrief(ghData, sbData, allScores, scoreHistory, beaconData, beaconSessionStarts = {}, studioBrain = null, portfolioFreshness = {}, agentRunHistory = {}) {
   const lines = [];
   const resolved = loadResolvedFlags();
 
@@ -75,6 +75,13 @@ export function renderMorningBrief(ghData, sbData, allScores, scoreHistory, beac
     const durationMin = startTs ? Math.floor((Date.now() - startTs) / 60000) : null;
     const durStr = durationMin !== null ? ` · ${durationMin}m` : "";
     lines.push({ priority: 0, icon: "●", color: "var(--cyan)",  text: `Active session: ${p?.name || s.project} (${s.agent || "claude-code"}${durStr})` });
+  }
+
+  // Automated workflow failures (studio-ops workflows)
+  for (const [wfName, run] of Object.entries(agentRunHistory)) {
+    if (run?.conclusion === "failure") {
+      lines.push({ priority: 1, icon: "⚠", color: "var(--red)", text: `Workflow failing: ${wfName}` });
+    }
   }
 
   // CI failures

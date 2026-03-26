@@ -768,7 +768,21 @@ export async function fetchStudioBrain(token = "", ttlMs = 300000) {
         if (m) flags.push({ type: m[1], text: m[2].trim() });
       }
     }
-    const result = { flags, raw };
+    // Parse archive entries (## Archive > ### YYYY-MM-DD subsections)
+    const archive = [];
+    const archiveIdx = raw.indexOf("## Archive");
+    if (archiveIdx !== -1) {
+      const archiveText = raw.slice(archiveIdx + "## Archive".length);
+      const entryRegex = /### (\d{4}-\d{2}-\d{2})\n([\s\S]*?)(?=### \d{4}-\d{2}-\d{2}|$)/g;
+      let m;
+      while ((m = entryRegex.exec(archiveText)) !== null) {
+        const snapshot = m[2].trim();
+        // Extract session startup brief as summary if present
+        const briefMatch = snapshot.match(/> (.+)/);
+        archive.push({ date: m[1], snapshot, summary: briefMatch ? briefMatch[1].trim() : "" });
+      }
+    }
+    const result = { flags, raw, archive };
     writeCache(key, result);
     return result;
   } catch {

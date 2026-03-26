@@ -1709,6 +1709,87 @@ function renderGoalsDashboard(ghData, sbData, socialData, scoreHistory) {
 }
 
 // ── Studio Brain inline viewer ────────────────────────────────────────────────
+// ── Studio Score Ledger ────────────────────────────────────────────────────────
+function renderScoreLedger(studioScore, agentRunHistory, agentRequests, studioBrain) {
+  const workflowEntries = Object.entries(agentRunHistory);
+  const wfTotal    = workflowEntries.length;
+  const wfFailing  = workflowEntries.filter(([, r]) => r?.conclusion === "failure").length;
+  const wfHealthy  = wfTotal - wfFailing;
+  const wfColor    = wfFailing > 0 ? "var(--red)" : wfTotal > 0 ? "var(--green)" : "var(--muted)";
+  const wfLabel    = wfTotal > 0 ? `${wfHealthy}/${wfTotal}` : "—";
+
+  const openRequests = agentRequests?.length ?? 0;
+  const reqColor  = openRequests > 0 ? "var(--gold)" : "var(--green)";
+
+  // SIL coverage from brain snapshot table
+  let silLabel = "—";
+  let silColor = "var(--muted)";
+  if (studioBrain?.raw) {
+    const m = studioBrain.raw.match(/Active SIL \(14d\)\s*\|\s*([\d]+\s*\/\s*[\d]+)/);
+    if (m) {
+      silLabel = m[1].replace(/\s*/g, "");
+      const [fresh, total] = silLabel.split("/").map(Number);
+      silColor = fresh === total ? "var(--green)" : fresh >= total / 2 ? "var(--gold)" : "var(--red)";
+    }
+  }
+
+  // CI failures across hub projects (from vitals data already in studioScore context)
+  const metrics = [
+    { label: "Workflows", value: wfLabel, sub: wfFailing > 0 ? `${wfFailing} failing` : "healthy", color: wfColor },
+    { label: "Avg Score",  value: studioScore.average || "—", sub: `Grade ${studioScore.grade}`, color: studioScore.gradeColor || "var(--muted)" },
+    { label: "Agent Reqs", value: String(openRequests), sub: openRequests > 0 ? "pending" : "clear", color: reqColor },
+    { label: "SIL Active", value: silLabel, sub: "14-day window", color: silColor },
+  ];
+
+  return `
+    <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+      ${metrics.map(({ label, value, sub, color }) => `
+        <div style="background:var(--panel); border:1px solid var(--border); border-radius:8px;
+                    padding:8px 14px; min-width:90px; text-align:center; flex:1;">
+          <div style="font-size:18px; font-weight:800; color:${color}; line-height:1.1;">${value}</div>
+          <div style="font-size:10px; color:var(--muted); margin-top:1px; text-transform:uppercase; letter-spacing:0.04em;">${label}</div>
+          <div style="font-size:10px; color:var(--muted); opacity:0.7;">${sub}</div>
+        </div>
+      `).join("")}
+    </div>
+  `;
+}
+
+// ── Studio Brain version history ──────────────────────────────────────────────
+function renderBrainHistoryPanel(studioBrain) {
+  if (!studioBrain?.archive?.length) return "";
+  const entries = studioBrain.archive.slice(0, 7); // max 7 snapshots shown
+  return `
+    <details style="margin-bottom:24px;">
+      <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:10px;
+                      padding:10px 16px; background:rgba(192,132,252,0.04); border:1px solid rgba(192,132,252,0.12);
+                      border-radius:8px; user-select:none;">
+        <span style="color:#c084fc; font-size:13px;">🗂</span>
+        <span style="font-size:12px; font-weight:700; color:#c084fc; text-transform:uppercase; letter-spacing:0.06em;">Brain History</span>
+        <span style="font-size:11px; color:var(--muted);">${entries.length} snapshot${entries.length !== 1 ? "s" : ""}</span>
+        <span style="margin-left:auto; font-size:11px; color:var(--muted);">▸ expand</span>
+      </summary>
+      <div style="margin-top:4px; border:1px solid rgba(192,132,252,0.12); border-top:none;
+                  border-radius:0 0 8px 8px; overflow:hidden;">
+        ${entries.map((entry, i) => `
+          <details style="border-top:${i > 0 ? "1px solid rgba(255,255,255,0.05)" : "none"};">
+            <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:8px;
+                            padding:8px 16px; background:rgba(192,132,252,0.03); user-select:none;">
+              <span style="font-size:11px; font-weight:700; color:var(--text);">${entry.date}</span>
+              ${entry.summary ? `<span style="font-size:11px; color:var(--muted); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${entry.summary}</span>` : ""}
+              <span style="font-size:10px; color:var(--muted);">▸</span>
+            </summary>
+            <div style="padding:12px 16px; background:rgba(192,132,252,0.02);">
+              <pre style="margin:0; font-size:10px; color:var(--text); line-height:1.5; white-space:pre-wrap;
+                          word-break:break-word; font-family:monospace; opacity:0.8;">${entry.snapshot.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>
+            </div>
+          </details>
+        `).join("")}
+      </div>
+    </details>
+  `;
+}
+
 function renderStudioBrainPanel(studioBrain) {
   if (!studioBrain?.raw) return "";
   const date = studioBrain.raw.match(/## CURRENT — (\d{4}-\d{2}-\d{2})/)?.[1] || null;
@@ -1799,6 +1880,7 @@ export function renderStudioHubView(state) {
     bulkTagMode = false,
     studioBrain = null, portfolioFreshness = {},
     portfolioFiles = {}, agentRequests = [],
+    agentRunHistory = {},
   } = state;
   const gumroadSales = socialData?.gumroadSales || null;
 
@@ -1868,6 +1950,7 @@ export function renderStudioHubView(state) {
         </div>
       </div>
 
+      ${renderScoreLedger(studioScore, agentRunHistory, agentRequests, studioBrain)}
       ${renderOfflineBanner()}
       ${renderHubSelfMonitor(syncMeta)}
       ${renderSyncErrorBanner(syncStatus, syncError)}
@@ -1875,8 +1958,9 @@ export function renderStudioHubView(state) {
       ${renderSessionDiffBanner(allScores, scorePrev, scoreHistory)}
       ${renderSessionNotesPanel()}
       ${renderBestActionDirective(ghData, sbData, allScores, scoreHistory)}
-      ${renderMorningBrief(ghData, sbData, allScores, scoreHistory, beaconData, beaconSessionStarts, studioBrain, portfolioFreshness)}
+      ${renderMorningBrief(ghData, sbData, allScores, scoreHistory, beaconData, beaconSessionStarts, studioBrain, portfolioFreshness, agentRunHistory)}
       ${renderStudioBrainPanel(studioBrain)}
+      ${renderBrainHistoryPanel(studioBrain)}
       ${renderAgentIntelligencePanel(portfolioFiles, portfolioFreshness)}
       ${renderCriticalBanner(ghData)}
       ${renderVitals(ghData, sbData, socialData, studioScore, beaconData, { portfolioFreshness, agentRequests, studioBrain })}
