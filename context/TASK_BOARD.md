@@ -25,7 +25,6 @@
 
 ## A-Tier Backlog (Score 7–8.9)
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
-- [ ] WebP/AVIF image audit + conversion [6.5]
 
 ## B-Tier Backlog (Score 5–6.9)
 
@@ -50,6 +49,13 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 39 (2026-03-25)
+
+- ✅ WebP conversion — `scripts/convert-webp.mjs` generates WebP for all darth-spike images (5–15% smaller)
+- ✅ Updated `<picture>` elements on `index.html`, `universe/index.html`, `universe/dreadspike/index.html` with WebP source + JPG fallback for still images
+- ✅ Video poster attributes updated to use `.webp` on all 3 pages
+- ✅ Preload hint for darth-spike-poster updated to WebP with `type="image/webp"`
 
 ## Completed — Phase 38 (2026-03-25)
 
