@@ -1969,6 +1969,8 @@
                   🔥 <span id="streak-count-display">0</span> day streak
                 </span>
               </div>
+              <!-- Phase 42: Currently playing badge -->
+              <div id="currently-playing-badge" style="display:none;margin-top:0.35rem;"></div>
               <p class="profile-bio" id="profile-bio"></p>
             </div>
             <div class="profile-actions">
@@ -2125,6 +2127,12 @@
                   <div id="gift-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;"></div>
                 </div>
               </div>
+            </div>
+
+            <!-- Phase 43: Team Panel -->
+            <div class="dash-panel" id="team-panel">
+              <h3>Vault Team</h3>
+              <div id="team-content" style="font-size:0.85rem;color:var(--muted);">Loading…</div>
             </div>
 
             <!-- Recent Vault Activity -->
@@ -3372,7 +3380,8 @@
 
       // Phase 2/3: load activity feed, award eligible points, load invite code
       loadPointEvents();
-      setTimeout(() => { initPointsEconomy(member); initGameSessionMilestones(member); }, 1200);
+      setTimeout(() => { initPointsEconomy(member); initGameSessionMilestones(member); loadCurrentlyPlaying(member); }, 1200);
+      loadTeamPanel(member);
       loadInviteCode();
 
       // Feature 1: daily login bonus + streak
@@ -4300,6 +4309,211 @@
           setTimeout(() => refreshPointsDisplay(), 1800);
         }
       } catch (_) {}
+    }
+
+    // ── Phase 42: Currently playing badge ────────────────────────
+    async function loadCurrentlyPlaying(member) {
+      const GAME_NAMES = {
+        'call-of-doodie':         'Call of Doodie',
+        'gridiron-gm':            'Gridiron GM',
+        'vaultspark-football-gm': 'VaultSpark Football GM',
+      };
+      try {
+        const { data } = await VSSupabase
+          .from('game_sessions')
+          .select('game_slug,played_at')
+          .eq('user_id', member._id)
+          .order('played_at', { ascending: false })
+          .limit(1)
+          .single();
+        if (!data) return;
+        const badge = document.getElementById('currently-playing-badge');
+        if (!badge) return;
+        const name     = GAME_NAMES[data.game_slug] || data.game_slug;
+        const today    = new Date().toISOString().slice(0, 10);
+        const isToday  = data.played_at.slice(0, 10) === today;
+        const label    = isToday ? 'Playing' : 'Last played';
+        const color    = isToday ? '#10B981' : '#94a3b8';
+        const bg       = isToday ? 'rgba(16,185,129,0.1)' : 'rgba(148,163,184,0.08)';
+        const border   = isToday ? 'rgba(16,185,129,0.25)' : 'rgba(148,163,184,0.18)';
+        badge.style.display = '';
+        badge.innerHTML = `<span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.78rem;font-weight:700;color:${color};background:${bg};border:1px solid ${border};border-radius:999px;padding:0.22rem 0.65rem;">🎮 ${label}: ${name}</span>`;
+      } catch (_) {}
+    }
+
+    // ── Phase 43: Teams ──────────────────────────────────────────
+    const TEAM_SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+    const TEAM_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+
+    function teamAuthH(tok) {
+      return { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json' };
+    }
+
+    async function loadTeamPanel(member) {
+      const el = document.getElementById('team-content');
+      if (!el || !member) return;
+      try {
+        const { data } = await VSSupabase.rpc('get_my_team');
+        if (!data) {
+          renderNoTeam(el, member);
+        } else {
+          renderTeam(el, data, member);
+        }
+      } catch (_) { el.innerHTML = '<span style="color:var(--dim);">Unable to load team.</span>'; }
+    }
+
+    function renderNoTeam(el, member) {
+      el.innerHTML = `
+        <div style="margin-bottom:1rem;color:var(--muted);font-size:0.82rem;line-height:1.5;">
+          You're not on a team yet. Create one or join with an invite code.
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <div>
+            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:0.4rem;">Create a Team</div>
+            <div style="display:flex;gap:0.5rem;">
+              <input id="team-create-name" type="text" maxlength="30" placeholder="Team name" autocomplete="off"
+                style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.5rem 0.75rem;color:var(--text);font-family:inherit;font-size:0.85rem;" />
+              <button onclick="createTeam('${member._id}')"
+                style="background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.25);color:var(--gold);padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
+                Create
+              </button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:0.4rem;">Join a Team</div>
+            <div style="display:flex;gap:0.5rem;">
+              <input id="team-join-code" type="text" maxlength="6" placeholder="6-char invite code" autocomplete="off"
+                style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.5rem 0.75rem;color:var(--text);font-family:inherit;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;" />
+              <button onclick="joinTeam('${member._id}')"
+                style="background:rgba(31,162,255,0.1);border:1px solid rgba(31,162,255,0.25);color:#1FA2FF;padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
+                Join
+              </button>
+            </div>
+          </div>
+          <div id="team-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;"></div>
+        </div>`;
+    }
+
+    function renderTeam(el, data, member) {
+      const t = data.team;
+      const roster = Array.isArray(data.roster) ? data.roster : [];
+      const isLeader = roster.some(r => r.user_id === member._id && r.role === 'leader');
+      const rosterHtml = roster.map(r =>
+        `<div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+          <span style="font-size:1rem;">${r.role === 'leader' ? '👑' : '🏃'}</span>
+          <span style="flex:1;font-size:0.85rem;color:var(--text);font-weight:${r.user_id === member._id ? '700' : '400'};">${escHtml(r.username)}${r.user_id === member._id ? ' <span style="font-size:0.7rem;color:var(--dim);">(you)</span>' : ''}</span>
+          <span style="font-size:0.72rem;color:var(--dim);">${r.role}</span>
+        </div>`
+      ).join('');
+      el.innerHTML = `
+        <div style="background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.12);border-radius:12px;padding:1rem;margin-bottom:0.75rem;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.5rem;">
+            <div>
+              <div style="font-weight:700;font-size:1rem;color:var(--text);">${escHtml(t.name)}</div>
+              <div style="font-size:0.72rem;color:var(--dim);margin-top:0.2rem;">
+                Invite code: <code style="background:rgba(255,255,255,0.07);padding:0.1rem 0.4rem;border-radius:4px;letter-spacing:0.1em;">${t.invite_code}</code>
+                <button onclick="navigator.clipboard.writeText('${t.invite_code}');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)"
+                  style="background:transparent;border:none;color:#1FA2FF;font-size:0.7rem;cursor:pointer;padding:0 0.3rem;font-family:inherit;">Copy</button>
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--gold);">${(t.total_points||0).toLocaleString()}</div>
+              <div style="font-size:0.7rem;color:var(--dim);">team pts</div>
+            </div>
+          </div>
+          <div style="font-size:0.72rem;color:var(--dim);margin-bottom:0.6rem;">${roster.length} member${roster.length!==1?'s':''}</div>
+          ${rosterHtml}
+        </div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          ${isLeader ? `<button onclick="disbandTeam('${t.id}','${member._id}')" style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171;padding:0.45rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;">Disband Team</button>` : ''}
+          <button onclick="leaveTeam('${member._id}')" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:var(--muted);padding:0.45rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;">Leave Team</button>
+          <a href="/leaderboards/" style="background:rgba(31,162,255,0.07);border:1px solid rgba(31,162,255,0.18);color:#1FA2FF;padding:0.45rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;">Team Rankings →</a>
+        </div>
+        <div id="team-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;margin-top:0.5rem;"></div>`;
+    }
+
+    function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    async function createTeam(memberId) {
+      const nameEl = document.getElementById('team-create-name');
+      const fb     = document.getElementById('team-feedback');
+      const name   = (nameEl?.value || '').trim();
+      if (!name) { if(fb) fb.textContent = 'Enter a team name.'; return; }
+      if (name.length < 2) { if(fb) fb.textContent = 'Name must be at least 2 characters.'; return; }
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      try {
+        const res = await fetch(TEAM_SB + '/rest/v1/teams', {
+          method: 'POST',
+          headers: Object.assign({}, teamAuthH(tok), { Prefer: 'return=representation' }),
+          body: JSON.stringify({ name, created_by: memberId })
+        });
+        if (!res.ok) throw new Error((await res.json())?.message || 'Create failed');
+        const [team] = await res.json();
+        // join as leader
+        await fetch(TEAM_SB + '/rest/v1/team_members', {
+          method: 'POST',
+          headers: Object.assign({}, teamAuthH(tok), { Prefer: 'return=minimal' }),
+          body: JSON.stringify({ team_id: team.id, user_id: memberId, role: 'leader' })
+        });
+        if(nameEl) nameEl.value = '';
+        loadTeamPanel(_currentMember);
+      } catch(e) { if(fb) fb.textContent = e.message || 'Failed to create team.'; }
+    }
+
+    async function joinTeam(memberId) {
+      const codeEl = document.getElementById('team-join-code');
+      const fb     = document.getElementById('team-feedback');
+      const code   = (codeEl?.value || '').trim().toUpperCase();
+      if (code.length !== 6) { if(fb) fb.textContent = 'Invite codes are 6 characters.'; return; }
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      try {
+        // find team by invite code
+        const res = await fetch(TEAM_SB + '/rest/v1/teams?invite_code=eq.' + encodeURIComponent(code) + '&select=id', {
+          headers: { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok }
+        });
+        const teams = res.ok ? await res.json() : [];
+        if (!teams.length) { if(fb) fb.textContent = 'Team not found. Check the code.'; return; }
+        const teamId = teams[0].id;
+        const joinRes = await fetch(TEAM_SB + '/rest/v1/team_members', {
+          method: 'POST',
+          headers: Object.assign({}, teamAuthH(tok), { Prefer: 'return=minimal' }),
+          body: JSON.stringify({ team_id: teamId, user_id: memberId, role: 'member' })
+        });
+        if (!joinRes.ok) {
+          const err = await joinRes.json();
+          throw new Error(err?.message?.includes('unique') ? 'You are already on a team.' : 'Join failed.');
+        }
+        if(codeEl) codeEl.value = '';
+        loadTeamPanel(_currentMember);
+      } catch(e) { if(fb) fb.textContent = e.message || 'Failed to join team.'; }
+    }
+
+    async function leaveTeam(memberId) {
+      if (!confirm('Leave your team?')) return;
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      await fetch(TEAM_SB + '/rest/v1/team_members?user_id=eq.' + memberId, {
+        method: 'DELETE',
+        headers: { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok }
+      });
+      loadTeamPanel(_currentMember);
+    }
+
+    async function disbandTeam(teamId, memberId) {
+      if (!confirm('Disband the team? This cannot be undone.')) return;
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      await fetch(TEAM_SB + '/rest/v1/teams?id=eq.' + teamId, {
+        method: 'DELETE',
+        headers: { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok }
+      });
+      loadTeamPanel(_currentMember);
     }
 
     // ── Phase 2: Load point events feed ──────────────────────────

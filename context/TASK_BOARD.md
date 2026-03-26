@@ -29,7 +29,6 @@
 ## B-Tier Backlog (Score 5–6.9)
 
 - [ ] Gift subscriptions (Stripe) [6.8]
-- [ ] Co-op / team challenges [6.5]
 - [ ] Monthly investor update email (automated digest) [6]
 
 ## C-Tier Backlog (Score 3–4.9)
@@ -45,6 +44,16 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 43 (2026-03-25)
+
+- ✅ Co-op teams — members can create a team (auto-generates 6-char invite code) or join via code; team roster displayed with leader/member roles; team points accumulate via Postgres trigger on `point_events` inserts; team panel on vault-member dashboard with create/join/leave/disband actions
+- ✅ Team leaderboard tab on `/leaderboards/` — lazy-loaded on first click, shows rank, team name, member count, total points with medal icons for top 3
+- **SQL needed:** run `supabase-phase43-teams.sql` — creates `teams`, `team_members` tables, `accrue_team_points` trigger, `get_my_team()` RPC
+
+## Completed — Phase 42 (2026-03-25)
+
+- ✅ Currently playing badge on member profile card — queries latest `game_sessions` row for the member; shows "🎮 Playing: [game]" (green) if played today, "🎮 Last played: [game]" (grey) if older; sits below streak badge above bio
 
 ## Completed — Phase 41 (2026-03-25)
 
