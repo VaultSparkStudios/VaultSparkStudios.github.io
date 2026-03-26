@@ -43,6 +43,45 @@ function applyAccent(color) {
 }
 applyAccent(appSettings.accent);
 
+// ── Toast notification ─────────────────────────────────────────────────────────
+function showToast(message, type = "success") {
+  const existing = document.getElementById("vshub-toast");
+  if (existing) existing.remove();
+
+  const colors = {
+    success: { bg: "rgba(106,227,178,0.12)", border: "rgba(106,227,178,0.35)", text: "var(--green)" },
+    error:   { bg: "rgba(248,113,113,0.12)", border: "rgba(248,113,113,0.35)", text: "var(--red)" },
+  };
+  const c = colors[type] || colors.success;
+
+  const toast = document.createElement("div");
+  toast.id = "vshub-toast";
+  toast.setAttribute("role", "status");
+  toast.setAttribute("aria-live", "polite");
+  toast.style.cssText = `
+    position:fixed; bottom:24px; right:24px; z-index:9999;
+    background:${c.bg}; border:1px solid ${c.border}; border-radius:10px;
+    padding:12px 20px; font-size:13px; font-weight:600; color:${c.text};
+    box-shadow:0 4px 24px rgba(0,0,0,0.4); display:flex; align-items:center; gap:8px;
+    animation:vsToastIn 0.2s ease; pointer-events:none;
+  `;
+  toast.innerHTML = `<span style="font-size:15px;">${type === "error" ? "✕" : "✓"}</span> ${message}`;
+
+  if (!document.getElementById("vshub-toast-style")) {
+    const style = document.createElement("style");
+    style.id = "vshub-toast-style";
+    style.textContent = `@keyframes vsToastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+      @keyframes vsToastOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(8px)}}`;
+    document.head.appendChild(style);
+  }
+
+  document.body.appendChild(toast);
+  setTimeout(() => {
+    toast.style.animation = "vsToastOut 0.2s ease forwards";
+    setTimeout(() => toast.remove(), 200);
+  }, 2500);
+}
+
 // ── Privacy gate ──────────────────────────────────────────────────────────────
 function mountGate() {
   const gateEl = document.createElement("div");
@@ -168,7 +207,12 @@ function bindEvents() {
     state.supabaseAnonKey = config.supabaseAnonKey;
 
     const statusEl = document.getElementById("settings-status");
-    if (statusEl) statusEl.textContent = "Saved — reloading data…";
+    if (statusEl) {
+      statusEl.textContent = "";
+    }
+
+    // Show toast
+    showToast("Settings saved");
 
     syncAll();
   });
