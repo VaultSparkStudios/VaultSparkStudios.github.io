@@ -114,7 +114,7 @@
           window.location.href = data.url;
         } catch (err) {
           if (btn) { btn.textContent = 'Get VaultSparked →'; btn.disabled = false; }
-          console.error('[VaultSparked] Checkout error:', err.message);
+          if (window.Sentry) Sentry.captureException(err);
         }
       },
 

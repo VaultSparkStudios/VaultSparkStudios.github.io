@@ -48,7 +48,7 @@ self.addEventListener('fetch', (e) => {
   // Stale-while-revalidate for Supabase API reads (cross-origin)
   if (url.hostname.includes('supabase.co') && request.method === 'GET') {
     e.respondWith(
-      caches.open('vaultspark-api-v1').then(async (cache) => {
+      caches.open(CACHE_NAME + '-api').then(async (cache) => {
         const cached = await cache.match(request);
         const fetchPromise = fetch(request).then((res) => {
           if (res.ok) cache.put(request, res.clone());

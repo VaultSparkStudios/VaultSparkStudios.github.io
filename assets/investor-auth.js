@@ -52,7 +52,7 @@
 
     // Supabase client must be available
     if (!window.VSSupabase) {
-      console.error('[investor-auth] VSSupabase not found — check script load order');
+      redirect('missing_client');
       return;
     }
 

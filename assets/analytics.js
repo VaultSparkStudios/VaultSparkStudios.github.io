@@ -13,8 +13,9 @@
     path.startsWith('/offline')
   ) return;
 
-  // Respect DoNotTrack
+  // Respect DoNotTrack and explicit cookie consent decline
   if (navigator.doNotTrack === '1' || window.doNotTrack === '1') return;
+  try { if (localStorage.getItem('vs_cookie_consent') === 'declined') return; } catch (e) {}
 
   var SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
   var SB_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
