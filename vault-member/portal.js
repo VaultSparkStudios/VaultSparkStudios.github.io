@@ -265,8 +265,10 @@
         _chronicleLoaded = true;
         loadChronicle();
         renderPointsHistoryChart();
+        renderPointsSummary();
       }
       if (which === 'following') loadFollowing();
+      if (which === 'settings') loadPwaSettings();
     }
 
     // ── Nav account dropdown ─────────────────────────────────────
@@ -2329,6 +2331,68 @@
       setTimeout(() => { const m = document.getElementById('challenge-complete-modal'); if (m) m.remove(); }, 6000);
     }
 
+    // ── Points summary: totals + top sources ─────────────────────
+    let _pointsSummaryLoaded = false;
+    async function renderPointsSummary() {
+      if (_pointsSummaryLoaded) return;
+      _pointsSummaryLoaded = true;
+
+      // All-time total
+      const { data: allRows } = await VSSupabase
+        .from('point_events')
+        .select('points,created_at,label,reason')
+        .order('created_at', { ascending: false })
+        .limit(1000);
+
+      if (!allRows || allRows.length === 0) return;
+
+      const alltime = allRows.reduce((s, r) => s + (r.points || 0), 0);
+
+      const cutoff = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+      const recent = allRows.filter(r => new Date(r.created_at) >= cutoff);
+      const total30 = recent.reduce((s, r) => s + (r.points || 0), 0);
+
+      // Active days (days with at least one event) in last 30
+      const activeDays = new Set(recent.map(r => new Date(r.created_at).toDateString())).size;
+
+      const atEl = document.getElementById('pts-total-alltime');
+      const t30El = document.getElementById('pts-total-30d');
+      const adEl = document.getElementById('pts-active-days');
+      if (atEl) atEl.textContent = alltime.toLocaleString();
+      if (t30El) t30El.textContent = (total30 > 0 ? '+' : '') + total30.toLocaleString();
+      if (adEl) adEl.textContent = activeDays;
+
+      // Top sources: group by label, sum points, top 5
+      const sourceMap = {};
+      allRows.forEach(r => {
+        const key = r.label || r.reason || 'Other';
+        sourceMap[key] = (sourceMap[key] || 0) + (r.points || 0);
+      });
+      const top = Object.entries(sourceMap)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+
+      if (top.length === 0) return;
+      const maxPts = top[0][1];
+      const listEl = document.getElementById('points-sources-list');
+      const wrap = document.getElementById('points-top-sources');
+      if (!listEl || !wrap) return;
+
+      listEl.innerHTML = top.map(([label, pts]) => {
+        const pct = Math.max(4, Math.round(pts / maxPts * 100));
+        return `<div style="margin-bottom:0.65rem;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.3rem;">
+            <span style="font-size:0.84rem;color:var(--muted);">${escHtml(label)}</span>
+            <span style="font-size:0.8rem;font-weight:700;color:var(--gold);">${pts.toLocaleString()} pts</span>
+          </div>
+          <div style="height:4px;border-radius:2px;background:rgba(255,255,255,0.06);">
+            <div style="height:4px;border-radius:2px;background:var(--gold);width:${pct}%;transition:width 0.4s ease;"></div>
+          </div>
+        </div>`;
+      }).join('');
+      wrap.style.display = '';
+    }
+
     // ── Phase 14: Points history SVG chart ───────────────────────
     async function renderPointsHistoryChart() {
       const el = document.getElementById('points-chart-svg');
@@ -2379,6 +2443,49 @@
     const VAPID_PUBLIC_KEY = 'BOuvjDoHcd-eIX1sYY7DRlFXKkuN7QWym5XohzVq-g2rHGtnbRW_hia1AI_TlR04mcM69eCVEvKYv9tD3gYHOFw';
 
     let _swRegistration = null;
+
+    // ── PWA Install — settings block ─────────────────────────────
+    function loadPwaSettings() {
+      const el = document.getElementById('pwa-settings-content');
+      if (!el) return;
+
+      const state = typeof window.vsPwaState === 'function' ? window.vsPwaState() : 'unavailable';
+
+      if (state === 'installed') {
+        el.innerHTML = `<div style="display:flex;align-items:center;gap:0.6rem;padding:0.85rem 1rem;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:12px;">
+          <span style="font-size:1.3rem;">✓</span>
+          <div>
+            <div style="font-size:0.88rem;font-weight:700;color:#10B981;">App installed</div>
+            <div style="font-size:0.8rem;color:var(--dim);margin-top:0.15rem;">VaultSpark is running as an installed app on this device.</div>
+          </div>
+        </div>`;
+        return;
+      }
+
+      if (state === 'ios') {
+        el.innerHTML = `<p style="font-size:0.84rem;color:var(--muted);line-height:1.6;margin-bottom:0.75rem;">Add VaultSpark to your home screen for instant access:</p>
+          <ol style="font-size:0.84rem;color:var(--muted);line-height:1.9;padding-left:1.25rem;margin:0;">
+            <li>Tap the <strong style="color:var(--text);">Share</strong> button in Safari</li>
+            <li>Scroll down and tap <strong style="color:var(--text);">Add to Home Screen</strong></li>
+            <li>Tap <strong style="color:var(--text);">Add</strong></li>
+          </ol>`;
+        return;
+      }
+
+      if (state === 'ready') {
+        el.innerHTML = `<p style="font-size:0.84rem;color:var(--muted);line-height:1.55;margin-bottom:0.9rem;">Install the Vault app for instant access, offline support, and a full-screen experience — no browser chrome.</p>
+          <button type="button" id="pwa-settings-install-btn" style="padding:0.6rem 1.4rem;background:var(--gold);color:#000;font-weight:800;font-size:0.88rem;border:none;border-radius:10px;cursor:pointer;font-family:inherit;">Install App</button>`;
+        document.getElementById('pwa-settings-install-btn')?.addEventListener('click', function () {
+          const ok = window.vsPwaInstall && window.vsPwaInstall();
+          if (!ok) this.textContent = 'Prompt unavailable — try refreshing';
+          window.addEventListener('vsPwaInstalled', function () { loadPwaSettings(); }, { once: true });
+        });
+        return;
+      }
+
+      // unavailable
+      el.innerHTML = `<p style="font-size:0.84rem;color:var(--dim);line-height:1.55;">To install, open this site in Chrome or Edge on your device, then use the browser menu to <strong style="color:var(--muted);">Add to Home Screen</strong> or <strong style="color:var(--muted);">Install App</strong>.</p>`;
+    }
 
     async function registerServiceWorker() {
       if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;

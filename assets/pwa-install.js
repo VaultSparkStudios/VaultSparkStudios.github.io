@@ -72,5 +72,27 @@
     var banner = document.getElementById('pwa-install-banner');
     if (banner) banner.remove();
     deferredPrompt = null;
+    window.dispatchEvent(new CustomEvent('vsPwaInstalled'));
   });
+
+  // Public API for settings page and other callers
+  window.vsPwaInstall = function () {
+    if (!deferredPrompt) return false;
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function (result) {
+      deferredPrompt = null;
+      if (result.outcome !== 'accepted') {
+        localStorage.setItem(DISMISS_KEY, Date.now().toString());
+      }
+    });
+    return true;
+  };
+
+  window.vsPwaState = function () {
+    if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) return 'installed';
+    var isIos = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+    if (isIos) return 'ios';
+    if (deferredPrompt) return 'ready';
+    return 'unavailable';
+  };
 })();
