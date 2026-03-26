@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: npm install -g html-minifier-terser
+        run: npm install -g html-minifier-terser clean-css-cli terser
 
       - name: Report HTML file sizes
         run: |
@@ -48,3 +48,25 @@ jobs:
             exit 1
           fi
           echo "All HTML files within budget."
+
+      - name: CSS minification savings report
+        run: |
+          echo "=== CSS Minification Savings ==="
+          for f in assets/*.css; do
+            [ -f "$f" ] || continue
+            orig=$(wc -c < "$f")
+            min=$(cleancss "$f" | wc -c)
+            saving=$(( (orig - min) * 100 / orig ))
+            echo "$f: ${orig}B → ${min}B (saves ${saving}%)"
+          done
+
+      - name: JS minification savings report
+        run: |
+          echo "=== JS Minification Savings ==="
+          for f in assets/*.js vault-member/portal.js; do
+            [ -f "$f" ] || continue
+            orig=$(wc -c < "$f")
+            min=$(terser "$f" --compress --mangle 2>/dev/null | wc -c)
+            saving=$(( (orig - min) * 100 / orig ))
+            echo "$f: ${orig}B → ${min}B (saves ${saving}%)"
+          done

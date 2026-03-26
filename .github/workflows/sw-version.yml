@@ -1,0 +1,44 @@
+name: Bump SW Cache Version
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/**.css'
+      - 'assets/**.js'
+      - 'sw.js'
+      - '**.html'
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    # Skip if this commit was itself the version bump (avoid infinite loop)
+    if: "!contains(github.event.head_commit.message, '[sw-bump]')"
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump CACHE_NAME with build date
+        run: |
+          DATE=$(date -u +%Y%m%d)
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+          NEW_VERSION="vaultspark-${DATE}-${SHORT_SHA}"
+          echo "Setting CACHE_NAME to: $NEW_VERSION"
+          sed -i "s/const CACHE_NAME = '[^']*'/const CACHE_NAME = '$NEW_VERSION'/" sw.js
+          # Verify the change
+          grep "CACHE_NAME" sw.js
+
+      - name: Commit updated sw.js
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add sw.js
+          if git diff --cached --quiet; then
+            echo "No change to sw.js — skipping commit"
+          else
+            git commit -m "chore: bump SW cache version [sw-bump]"
+            git push
+          fi
