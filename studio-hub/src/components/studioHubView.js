@@ -1710,6 +1710,37 @@ function renderGoalsDashboard(ghData, sbData, socialData, scoreHistory) {
 
 // ── Studio Brain inline viewer ────────────────────────────────────────────────
 // ── Studio Score Ledger ────────────────────────────────────────────────────────
+const LEDGER_SNAPSHOT_KEY = "vshub_ledger_snapshot";
+
+function getLedgerSnapshot() {
+  try {
+    const raw = localStorage.getItem(LEDGER_SNAPSHOT_KEY);
+    if (!raw) return null;
+    const snap = JSON.parse(raw);
+    // Only use snapshots from >6h ago (avoid comparing to a snapshot taken this session)
+    if (!snap.ts || Date.now() - snap.ts < 6 * 3600000) return null;
+    return snap;
+  } catch { return null; }
+}
+
+function saveLedgerSnapshot(values) {
+  try {
+    const existing = JSON.parse(localStorage.getItem(LEDGER_SNAPSHOT_KEY) || "null");
+    // Refresh snapshot once per day (if >23h old or missing)
+    if (!existing || Date.now() - (existing.ts || 0) > 23 * 3600000) {
+      localStorage.setItem(LEDGER_SNAPSHOT_KEY, JSON.stringify({ ts: Date.now(), ...values }));
+    }
+  } catch {}
+}
+
+function ledgerDelta(current, prev) {
+  if (prev == null || current == null || isNaN(current) || isNaN(prev)) return "";
+  const d = current - prev;
+  if (d === 0) return "";
+  const color = d > 0 ? "var(--green)" : "var(--red)";
+  return `<span style="font-size:9px; font-weight:700; color:${color}; margin-left:3px;">${d > 0 ? "↑" : "↓"}${Math.abs(d)}</span>`;
+}
+
 function renderScoreLedger(studioScore, agentRunHistory, agentRequests, studioBrain) {
   const workflowEntries = Object.entries(agentRunHistory);
   const wfTotal    = workflowEntries.length;
@@ -1724,29 +1755,54 @@ function renderScoreLedger(studioScore, agentRunHistory, agentRequests, studioBr
   // SIL coverage from brain snapshot table
   let silLabel = "—";
   let silColor = "var(--muted)";
+  let silFresh = null, silTotal = null;
   if (studioBrain?.raw) {
     const m = studioBrain.raw.match(/Active SIL \(14d\)\s*\|\s*([\d]+\s*\/\s*[\d]+)/);
     if (m) {
       silLabel = m[1].replace(/\s*/g, "");
-      const [fresh, total] = silLabel.split("/").map(Number);
-      silColor = fresh === total ? "var(--green)" : fresh >= total / 2 ? "var(--gold)" : "var(--red)";
+      [silFresh, silTotal] = silLabel.split("/").map(Number);
+      silColor = silFresh === silTotal ? "var(--green)" : silFresh >= silTotal / 2 ? "var(--gold)" : "var(--red)";
     }
   }
 
-  // CI failures across hub projects (from vitals data already in studioScore context)
+  // Trend deltas vs previous daily snapshot
+  const snap = getLedgerSnapshot();
+  const avgScore = studioScore.average || null;
+  saveLedgerSnapshot({ wfHealthy, avgScore, openRequests, silFresh });
+
   const metrics = [
-    { label: "Workflows", value: wfLabel, sub: wfFailing > 0 ? `${wfFailing} failing` : "healthy", color: wfColor },
-    { label: "Avg Score",  value: studioScore.average || "—", sub: `Grade ${studioScore.grade}`, color: studioScore.gradeColor || "var(--muted)" },
-    { label: "Agent Reqs", value: String(openRequests), sub: openRequests > 0 ? "pending" : "clear", color: reqColor },
-    { label: "SIL Active", value: silLabel, sub: "14-day window", color: silColor },
+    {
+      label: "Workflows", value: wfLabel,
+      sub: wfFailing > 0 ? `${wfFailing} failing` : "healthy",
+      color: wfColor,
+      delta: snap ? ledgerDelta(wfHealthy, snap.wfHealthy) : "",
+    },
+    {
+      label: "Avg Score", value: avgScore || "—",
+      sub: `Grade ${studioScore.grade}`,
+      color: studioScore.gradeColor || "var(--muted)",
+      delta: snap && avgScore != null ? ledgerDelta(avgScore, snap.avgScore) : "",
+    },
+    {
+      label: "Agent Reqs", value: String(openRequests),
+      sub: openRequests > 0 ? "pending" : "clear",
+      color: reqColor,
+      delta: snap ? ledgerDelta(openRequests, snap.openRequests) : "",
+    },
+    {
+      label: "SIL Active", value: silLabel,
+      sub: "14-day window",
+      color: silColor,
+      delta: snap && silFresh != null ? ledgerDelta(silFresh, snap.silFresh) : "",
+    },
   ];
 
   return `
     <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
-      ${metrics.map(({ label, value, sub, color }) => `
+      ${metrics.map(({ label, value, sub, color, delta }) => `
         <div style="background:var(--panel); border:1px solid var(--border); border-radius:8px;
                     padding:8px 14px; min-width:90px; text-align:center; flex:1;">
-          <div style="font-size:18px; font-weight:800; color:${color}; line-height:1.1;">${value}</div>
+          <div style="font-size:18px; font-weight:800; color:${color}; line-height:1.1;">${value}${delta}</div>
           <div style="font-size:10px; color:var(--muted); margin-top:1px; text-transform:uppercase; letter-spacing:0.04em;">${label}</div>
           <div style="font-size:10px; color:var(--muted); opacity:0.7;">${sub}</div>
         </div>
@@ -1790,6 +1846,32 @@ function renderBrainHistoryPanel(studioBrain) {
   `;
 }
 
+function _brainDiffHtml(currentRaw, prevSnapshot) {
+  if (!currentRaw || !prevSnapshot) return "";
+  const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const meaningful = l => l.trim().length > 0 && !l.startsWith("##") && !l.startsWith("---") && !l.startsWith("===");
+  const currentLines = new Set(currentRaw.split("\n").filter(meaningful).map(l => l.trim()));
+  const prevLines    = new Set(prevSnapshot.split("\n").filter(meaningful).map(l => l.trim()));
+  const added   = [...currentLines].filter(l => !prevLines.has(l));
+  const removed = [...prevLines].filter(l => !currentLines.has(l));
+  if (added.length === 0 && removed.length === 0) return `<div style="font-size:10px; color:var(--muted); margin-top:10px; opacity:0.6;">No changes vs previous snapshot.</div>`;
+  const rows = [
+    ...added.slice(0, 8).map(l => `<div style="color:#6ae3b2; font-size:10px; line-height:1.5;"><span style="opacity:0.6; margin-right:4px;">+</span>${esc(l)}</div>`),
+    ...removed.slice(0, 8).map(l => `<div style="color:#f87171; font-size:10px; line-height:1.5; text-decoration:line-through; opacity:0.7;"><span style="margin-right:4px;">−</span>${esc(l)}</div>`),
+  ];
+  const more = (added.length > 8 ? added.length - 8 : 0) + (removed.length > 8 ? removed.length - 8 : 0);
+  return `
+    <div style="margin-top:10px; padding:8px 10px; background:rgba(192,132,252,0.04);
+                border:1px solid rgba(192,132,252,0.12); border-radius:6px;">
+      <div style="font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">
+        Changes vs archive — +${added.length} / −${removed.length}
+      </div>
+      ${rows.join("")}
+      ${more > 0 ? `<div style="font-size:10px; color:var(--muted); margin-top:4px; opacity:0.6;">…${more} more lines changed</div>` : ""}
+    </div>
+  `;
+}
+
 function renderStudioBrainPanel(studioBrain) {
   if (!studioBrain?.raw) return "";
   const date = studioBrain.raw.match(/## CURRENT — (\d{4}-\d{2}-\d{2})/)?.[1] || null;
@@ -1797,6 +1879,8 @@ function renderStudioBrainPanel(studioBrain) {
   // Strip the top boilerplate (before ## CURRENT) for the preview
   const currentIdx = lines.findIndex(l => l.startsWith("## CURRENT"));
   const preview = lines.slice(currentIdx >= 0 ? currentIdx : 0).join("\n");
+  const prevSnapshot = studioBrain.archive?.[0]?.snapshot || null;
+  const diffHtml = _brainDiffHtml(preview, prevSnapshot);
   return `
     <details style="margin-bottom:24px;">
       <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:10px;
@@ -1805,12 +1889,14 @@ function renderStudioBrainPanel(studioBrain) {
         <span style="color:#c084fc; font-size:13px;">🧠</span>
         <span style="font-size:12px; font-weight:700; color:#c084fc; text-transform:uppercase; letter-spacing:0.06em;">Studio Brain</span>
         ${date ? `<span style="font-size:11px; color:var(--muted);">generated ${date}</span>` : ""}
+        ${prevSnapshot ? `<span style="font-size:10px; color:var(--muted); background:rgba(192,132,252,0.08); border:1px solid rgba(192,132,252,0.2); border-radius:6px; padding:1px 7px;">diff ✦</span>` : ""}
         <span style="margin-left:auto; font-size:11px; color:var(--muted);">▸ expand</span>
       </summary>
       <div style="margin-top:4px; padding:14px 16px; background:rgba(192,132,252,0.04);
                   border:1px solid rgba(192,132,252,0.15); border-top:none; border-radius:0 0 8px 8px;">
         <pre style="margin:0; font-size:11px; color:var(--text); line-height:1.6; white-space:pre-wrap;
                     word-break:break-word; font-family:monospace; opacity:0.9;">${preview.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>
+        ${diffHtml}
       </div>
     </details>
   `;
@@ -1937,9 +2023,10 @@ export function renderStudioHubView(state) {
             </div>
             <div style="font-size:11px; color:var(--muted);">Studio Score</div>
           </div>
-          <div style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:10px 16px; text-align:center;">
+          <div style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:10px 16px; text-align:center;"
+               title="S ≥100 · A+ ≥85 · A ≥75 · B+ ≥65 · B ≥55 · C+ ≥45 · C ≥35 · D ≥25 · F <25&#10;S-tier requires full Studio OS governance bonus.">
             <div style="font-size:28px; font-weight:800; color:${studioScore.gradeColor}; line-height:1;">${studioScore.grade}</div>
-            <div style="font-size:11px; color:var(--muted);">Grade</div>
+            <div style="font-size:11px; color:var(--muted);">Grade <span style="cursor:help; opacity:0.4; font-size:10px;">ⓘ</span></div>
           </div>
           ${scoreHistory.length >= 2 ? `
           <div style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:10px 16px; text-align:center;">

@@ -378,6 +378,17 @@ export function renderAgentsView(agentRequests = [], agentRunHistory = {}) {
         const streakBadge = streak != null && streak >= 3
           ? `<span style="font-size:10px; color:var(--green); padding:2px 8px; border:1px solid rgba(110,231,183,0.3); border-radius:8px;">🔥 ${streak}-run streak</span>`
           : "";
+        // Sparkline: pass/fail dots for last 7 runs
+        const sparkline = run.history?.length > 0
+          ? `<span style="display:inline-flex; align-items:center; gap:2px; padding:2px 6px; border:1px solid var(--border); border-radius:8px;" title="Last ${run.history.length} runs (oldest→newest)">${
+              run.history.map(h => {
+                const c = h.conclusion === "success" ? "#6ae3b2"
+                        : h.conclusion === "failure" ? "#f87171"
+                        : "#ffc874";
+                return `<span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:${c};"></span>`;
+              }).join("")
+            }</span>`
+          : "";
         runBadge = `
           <a href="${run.url}" target="_blank" rel="noopener"
              style="font-size:10px; color:${conclusionColor}; text-decoration:none; display:flex; align-items:center; gap:4px;
@@ -385,6 +396,7 @@ export function renderAgentsView(agentRequests = [], agentRunHistory = {}) {
             <span>${conclusionIcon}</span>
             <span>${ago ? `last run ${ago}` : "ran recently"}</span>
           </a>
+          ${sparkline}
           ${nextRun ? `<span style="font-size:10px; color:var(--muted); padding:2px 8px; border:1px solid var(--border); border-radius:8px;">next ${nextRun}</span>` : ""}
           ${streakBadge}`;
       } else {

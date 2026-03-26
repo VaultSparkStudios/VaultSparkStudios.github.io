@@ -674,7 +674,7 @@ export async function fetchAgentRunHistory(token = "", ttlMs = 300000) {
       token
     );
     if (!data?.workflow_runs) { writeCache(key, {}); return {}; }
-    // Group by workflow name — keep only the most recent run per workflow
+    // Group by workflow name — keep most recent run + last 7 for sparkline + compute streak
     const byName = {};
     for (const run of data.workflow_runs) {
       const name = run.name;
@@ -683,8 +683,21 @@ export async function fetchAgentRunHistory(token = "", ttlMs = 300000) {
           conclusion: run.conclusion,       // "success" | "failure" | null (in_progress)
           runAt:      run.updated_at,
           url:        run.html_url,
+          history:    [],                   // last 7 runs oldest→newest
         };
       }
+      if (byName[name].history.length < 7) {
+        byName[name].history.unshift({ conclusion: run.conclusion });
+      }
+    }
+    // Compute streak (consecutive successes from most recent)
+    for (const entry of Object.values(byName)) {
+      let streak = 0;
+      for (let i = entry.history.length - 1; i >= 0; i--) {
+        if (entry.history[i].conclusion === "success") streak++;
+        else break;
+      }
+      entry.streak = streak >= 2 ? streak : null;
     }
     writeCache(key, byName);
     return byName;

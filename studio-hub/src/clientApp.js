@@ -1085,7 +1085,7 @@ function bindEvents() {
             if (ud.login) loginStr = `as @${ud.login} · `;
           }
         } catch {}
-        if (statusEl) { statusEl.textContent = `✓ Authenticated ${loginStr}${rem}/${lim} remaining`; statusEl.style.color = "var(--green)"; }
+        if (statusEl) { statusEl.textContent = `✓ Authenticated ${loginStr}${Number(rem).toLocaleString()} / ${Number(lim).toLocaleString()} remaining`; statusEl.style.color = "var(--green)"; }
       } else if (res.status === 401) {
         if (statusEl) { statusEl.textContent = "✗ Invalid token (401 Unauthorized)"; statusEl.style.color = "var(--red)"; }
       } else {
