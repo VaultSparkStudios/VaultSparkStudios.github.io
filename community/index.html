@@ -66,6 +66,10 @@
     .fan-art-placeholder { background:linear-gradient(135deg, rgba(255,196,0,0.08), rgba(255,122,0,0.04)); border:1px dashed rgba(255,255,255,0.1); }
     .fan-art-submit { font-size:0.87rem; color:var(--muted); line-height:1.6; }
     .fan-art-submit a { color:var(--gold); }
+    .fan-art-vote { position:absolute;bottom:0.5rem;right:0.5rem;z-index:2;display:flex;align-items:center;gap:0.3rem;background:rgba(0,0,0,0.62);border:none;border-radius:999px;padding:0.25rem 0.65rem;cursor:pointer;font-size:0.75rem;color:rgba(255,255,255,0.65);backdrop-filter:blur(4px);transition:color 0.15s,transform 0.12s;line-height:1; }
+    .fan-art-vote:hover { color:#fff; transform:scale(1.06); }
+    .fan-art-vote.voted { color:#f87171; }
+    .fan-art-vote .hrt { font-size:0.88rem; }
     /* Submit form */
     .fa-form-wrap { margin-top:1.5rem;padding:1.5rem;border-radius:16px;background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.12); }
     .fa-form-wrap h3 { font-size:0.85rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:1rem; }
@@ -659,20 +663,76 @@
 
   // ── Load approved gallery ────────────────────────────────────────────
   function loadGallery(){
+    var grid = document.getElementById('fan-art-gallery');
+    if (!grid) return;
     fetch(SB + '/rest/v1/fan_art_submissions?status=eq.approved&select=id,title,username,character_tag,file_path&order=submitted_at.desc&limit=8', { headers: H })
     .then(function(r){ return r.ok ? r.json() : []; })
     .then(function(rows){
-      var grid = document.getElementById('fan-art-gallery');
-      if (!grid) return;
       if (!Array.isArray(rows) || rows.length === 0) return; // keep placeholders
-      grid.innerHTML = rows.map(function(row){
-        var imgUrl = SB + '/storage/v1/object/public/fan-art/' + row.file_path;
-        return '<div class="fan-art-card" title="' + esc(row.title) + ' by ' + esc(row.username) + '">' +
-          '<img src="' + imgUrl + '" alt="' + esc(row.title) + ' by ' + esc(row.username) + '" loading="lazy" />' +
-          '<span class="fan-art-label">' + esc(row.title) + '</span>' +
-          '</div>';
-      }).join('');
+      var ids = rows.map(function(r){ return r.id; });
+      // fetch votes for these art pieces
+      return fetch(SB + '/rest/v1/fan_art_votes?fan_art_id=in.(' + ids.join(',') + ')&select=fan_art_id,user_id', { headers: H })
+        .then(function(r){ return r.ok ? r.json() : []; })
+        .then(function(votes){
+          // build counts and user-voted set
+          var counts = {}, userVoted = {};
+          if (Array.isArray(votes)) {
+            votes.forEach(function(v){
+              counts[v.fan_art_id] = (counts[v.fan_art_id] || 0) + 1;
+              if (session && v.user_id === session.user.id) userVoted[v.fan_art_id] = true;
+            });
+          }
+          grid.innerHTML = rows.map(function(row){
+            var imgUrl = SB + '/storage/v1/object/public/fan-art/' + row.file_path;
+            var cnt    = counts[row.id] || 0;
+            var voted  = userVoted[row.id] ? ' voted' : '';
+            var voteBtn = session
+              ? '<button class="fan-art-vote' + voted + '" data-id="' + row.id + '" aria-label="Like this artwork" title="' + (voted ? 'Unlike' : 'Like') + '">' +
+                  '<span class="hrt">♥</span><span class="vcnt">' + cnt + '</span>' +
+                '</button>'
+              : '<span class="fan-art-vote" style="cursor:default;" title="Sign in to vote">' +
+                  '<span class="hrt">♥</span><span class="vcnt">' + cnt + '</span>' +
+                '</span>';
+            return '<div class="fan-art-card" title="' + esc(row.title) + ' by ' + esc(row.username) + '">' +
+              '<img src="' + imgUrl + '" alt="' + esc(row.title) + ' by ' + esc(row.username) + '" loading="lazy" />' +
+              '<span class="fan-art-label">' + esc(row.title) + '</span>' +
+              voteBtn +
+              '</div>';
+          }).join('');
+          // attach vote handlers
+          grid.querySelectorAll('button.fan-art-vote').forEach(function(btn){
+            btn.addEventListener('click', function(e){
+              e.stopPropagation();
+              toggleVote(btn.dataset.id, btn.classList.contains('voted'), btn);
+            });
+          });
+        });
     }).catch(function(){});
+  }
+
+  // ── Toggle vote ───────────────────────────────────────────────────────
+  function toggleVote(artId, isVoted, btn){
+    if (!session) return;
+    var authH = Object.assign({}, H, { Authorization: 'Bearer ' + session.access_token, 'Content-Type': 'application/json' });
+    var cntEl = btn.querySelector('.vcnt');
+    var cur   = parseInt(cntEl.textContent, 10) || 0;
+    if (isVoted) {
+      // delete vote
+      fetch(SB + '/rest/v1/fan_art_votes?fan_art_id=eq.' + artId + '&user_id=eq.' + session.user.id, {
+        method: 'DELETE', headers: authH
+      }).then(function(r){
+        if (r.ok) { btn.classList.remove('voted'); btn.title = 'Like'; cntEl.textContent = Math.max(0, cur - 1); }
+      }).catch(function(){});
+    } else {
+      // insert vote
+      fetch(SB + '/rest/v1/fan_art_votes', {
+        method: 'POST',
+        headers: Object.assign({}, authH, { Prefer: 'return=minimal' }),
+        body: JSON.stringify({ fan_art_id: artId, user_id: session.user.id })
+      }).then(function(r){
+        if (r.ok || r.status === 201) { btn.classList.add('voted'); btn.title = 'Unlike'; cntEl.textContent = cur + 1; }
+      }).catch(function(){});
+    }
   }
 
   // ── Init form ────────────────────────────────────────────────────────

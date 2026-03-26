@@ -29,10 +29,7 @@
 ## B-Tier Backlog (Score 5–6.9)
 
 - [ ] Gift subscriptions (Stripe) [6.8]
-- [ ] Member-to-member point gifting [6.5]
 - [ ] Co-op / team challenges [6.5]
-- [ ] Team/about page expansion [6]
-- [ ] Fan art voting / gallery contests [6]
 - [ ] Monthly investor update email (automated digest) [6]
 
 ## C-Tier Backlog (Score 3–4.9)
@@ -48,6 +45,11 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Phase 41 (2026-03-25)
+
+- ✅ Fan art voting — heart/like buttons on every gallery card; shows live vote count; Vault Members can toggle their vote (upsert/delete); non-members see read-only count; optimistic UI update
+- **SQL needed:** run `supabase-phase41-fan-art-votes.sql` — creates `fan_art_votes` table (fan_art_id, user_id, unique constraint) + RLS policies (public read, authenticated insert/delete own)
 
 ## Completed — Phase 40 (2026-03-25)
 
