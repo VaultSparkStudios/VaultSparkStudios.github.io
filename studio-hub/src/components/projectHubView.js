@@ -290,7 +290,7 @@ function renderActionQueue(project) {
               ${items.map((item, idx) => `
                 <li style="font-size:13px; color:var(--text); padding:4px 0; display:flex; align-items:flex-start; gap:8px; list-style:none; padding-left:0; margin-left:0;">
                   <span style="color:var(--cyan); font-size:11px; font-weight:700; min-width:18px; flex-shrink:0; margin-top:1px;">${idx + 1}.</span>
-                  <span style="flex:1; line-height:1.4;">${item.text}</span>
+                  <span style="flex:1; line-height:1.4;">${escapeHtml(item.text)}</span>
                   <button data-aq-delete="${project.id}" data-aq-id="${item.id}"
                     style="flex-shrink:0; background:none; border:none; color:var(--muted); cursor:pointer; font-size:12px; padding:2px 4px; line-height:1;">✕</button>
                 </li>
@@ -660,7 +660,7 @@ function renderTagsSection(project) {
             ${currentTags.map((t) => `
               <span style="font-size:11px; font-weight:600; padding:3px 9px; border-radius:20px;
                            background:rgba(122,231,199,0.1); color:var(--cyan); border:1px solid rgba(122,231,199,0.2);">
-                ${t}
+                ${escapeHtml(t)}
               </span>
             `).join("")}
           </div>
@@ -1297,7 +1297,7 @@ function renderActionItemTracker(project) {
                            color:var(--green); font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center; transition:all 0.1s;"
                   >${item.done ? "✓" : ""}</button>
                   <span style="flex:1; font-size:13px; color:${item.done ? "var(--muted)" : "var(--text)"};
-                               text-decoration:${item.done ? "line-through" : "none"}; line-height:1.4;">${item.text}</span>
+                               text-decoration:${item.done ? "line-through" : "none"}; line-height:1.4;">${escapeHtml(item.text)}</span>
                   <button data-checklist-delete="${project.id}" data-checklist-id="${item.id}"
                     aria-label="Delete item"
                     style="flex-shrink:0; background:none; border:none; color:var(--muted); cursor:pointer; font-size:13px; padding:2px 4px;">✕</button>

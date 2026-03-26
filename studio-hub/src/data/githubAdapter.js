@@ -59,7 +59,14 @@ async function ghFetch(path, token, retries = 2) {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       if (attempt > 0) await new Promise(r => setTimeout(r, 500 * Math.pow(2, attempt - 1)));
-      const res = await fetch(`${BASE}${path}`, { headers });
+      const controller = new AbortController();
+      const timeoutId  = setTimeout(() => controller.abort(), 30000);
+      let res;
+      try {
+        res = await fetch(`${BASE}${path}`, { headers, signal: controller.signal });
+      } finally {
+        clearTimeout(timeoutId);
+      }
       const remaining = res.headers.get("X-RateLimit-Remaining");
       const limit     = res.headers.get("X-RateLimit-Limit");
       const reset     = res.headers.get("X-RateLimit-Reset");
