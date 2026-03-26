@@ -21,7 +21,7 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Signal Log","item":"https://vaultsparkstudios.com/journal/"},{"@type":"ListItem","position":3,"name":"Archive","item":"https://vaultsparkstudios.com/journal/archive/"}]}
   </script>
   <link rel="alternate" type="application/rss+xml" title="VaultSpark Signal Log" href="/feed.xml" />
-  <link rel="icon" type="image/png" href="/assets/favicon.png" />
+  <link rel="icon" type="image/png" href="/assets/icon-32.png" />
   <link rel="stylesheet" href="/assets/style.css" />
   <style>
     /* ── Hero ── */
@@ -161,10 +161,12 @@
             <button class="tag-btn" data-tag="Games">Games</button>
             <button class="tag-btn" data-tag="Community">Community</button>
             <button class="tag-btn" data-tag="Lore">Lore</button>
+            <button class="tag-btn" data-tag="Launch">Launch</button>
+            <button class="tag-btn" data-tag="Site">Site</button>
           </div>
         </div>
 
-        <p class="arc-count">Showing <strong id="arc-result-count">3</strong> entries</p>
+        <p class="arc-count">Showing <strong id="arc-result-count">8</strong> entries</p>
 
         <div class="arc-list" id="arc-list" role="list" aria-label="Signal Log entries"></div>
         <div class="arc-empty" id="arc-empty" role="status" aria-live="polite">
@@ -244,6 +246,11 @@
   </script>
   <script>
     var entries = [
+      { date:'March 2026', title:'Q1 2026: The Vault Accelerates', tags:['Studio','Launch'], excerpt:'A full quarter recap — games, membership, community, Signal Log, investor portal. Everything VaultSpark shipped in Q1 2026 and where the studio is headed in Q2.', id:'q1-2026-dispatch', readTime:4 },
+      { date:'March 2026', title:'Community Enters The Vault', tags:['Community','Studio'], excerpt:'Vault members can now vote in polls, follow each other, and shape what the studio builds next. The vault gets social.', id:'community-enters-the-vault', readTime:3 },
+      { date:'March 2026', title:'DreadSpike: The Character Who Arrived First', tags:['Lore'], excerpt:'DreadSpike wasn\'t built for a game. He arrived through a Sora-generated cinematic and something larger began to take shape around him.', id:'dreadspike-origins', readTime:3 },
+      { date:'March 2026', title:'Building The Vault Membership Portal', tags:['Studio','Site'], excerpt:'Real accounts, live XP, cross-game leaderboards. A behind-the-scenes look at how the Vault Member portal was built with Supabase.', id:'building-vault-membership', readTime:3 },
+      { date:'March 2026', title:'The Signal Log Is Live', tags:['Studio','Community'], excerpt:'VaultSpark is publishing openly. What the Signal Log is, why we started it, and what dispatches from the forge actually look like.', id:'signal-log-launches', readTime:2 },
       { date:'March 2026', title:'We Made The System Visible', tags:['Studio','Community'], excerpt:'The Studio OS is now live. A behind-the-scenes look at how VaultSpark runs, builds, and ships.', id:'studio-os-public', readTime:3 },
       { date:'2026', title:'Three Worlds Leave The Vault', tags:['Games'], excerpt:'Call of Doodie, Gridiron GM, VaultSpark Football GM, and DreadSpike all launched. Here is how it happened.', id:'first-sparks', readTime:2 },
       { date:'2026', title:'The Vault Was Opened', tags:['Studio'], excerpt:'The origin story — how VaultSpark Studios started and why the vault is sparked.', id:'vault-opened', readTime:3 }

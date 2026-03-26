@@ -2440,7 +2440,7 @@
     }
 
     // ── Phase 9: Web Push Notifications ──────────────────────────
-    const VAPID_PUBLIC_KEY = 'BOuvjDoHcd-eIX1sYY7DRlFXKkuN7QWym5XohzVq-g2rHGtnbRW_hia1AI_TlR04mcM69eCVEvKYv9tD3gYHOFw';
+    const VAPID_PUBLIC_KEY = 'BO_lCzoROyH94wskfOH2SQudZpJJHZ5x9-oKOPC4W34A6YC90N9P1ZCgLLG2wppfYMwJdcAy3wqG8F1jtXKFofI';
 
     let _swRegistration = null;
 

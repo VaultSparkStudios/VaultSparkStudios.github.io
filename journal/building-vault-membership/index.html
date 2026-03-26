@@ -4,29 +4,29 @@
   <meta charset="UTF-8" />
   <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Three Worlds Leave The Vault | Signal Log — VaultSpark Studios</title>
-  <meta name="description" content="Call of Doodie, Gridiron GM, VaultSpark Football GM, and DreadSpike all shipped in 2026. The year the vault started unsealing things — how four projects left the forge." />
-  <link rel="canonical" href="https://vaultsparkstudios.com/journal/first-sparks/" />
+  <title>Building The Vault Membership Portal | Signal Log — VaultSpark Studios</title>
+  <meta name="description" content="A behind-the-scenes dispatch on how we built the Vault Member portal — real accounts, live XP, cross-game leaderboards, and a dashboard that actually works." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/journal/building-vault-membership/" />
   <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="Three Worlds Leave The Vault | VaultSpark Studios" />
-  <meta property="og:description" content="Call of Doodie, Gridiron GM, VaultSpark Football GM, and DreadSpike all shipped in 2026. Here is how it happened." />
+  <meta property="og:title" content="Building The Vault Membership Portal | VaultSpark Studios" />
+  <meta property="og:description" content="Real accounts, live XP, cross-game leaderboards. How the Vault Member portal was built from scratch with Supabase." />
   <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://vaultsparkstudios.com/journal/first-sparks/" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/journal/building-vault-membership/" />
   <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-journal.png" />
-  <meta property="article:published_time" content="2026-03-01T00:00:00Z" />
+  <meta property="article:published_time" content="2026-03-10T00:00:00Z" />
   <meta property="article:author" content="VaultSpark Studios" />
-  <meta property="article:tag" content="Games" />
-  <meta property="article:tag" content="Launch" />
+  <meta property="article:tag" content="Studio" />
+  <meta property="article:tag" content="Site" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@VaultSparkStudios" />
-  <meta name="twitter:title" content="Three Worlds Leave The Vault | VaultSpark Studios" />
-  <meta name="twitter:description" content="Call of Doodie, Gridiron GM, VaultSpark Football GM, and DreadSpike all shipped in 2026." />
+  <meta name="twitter:title" content="Building The Vault Membership Portal | VaultSpark Studios" />
+  <meta name="twitter:description" content="Real accounts, live XP, cross-game leaderboards. How the Vault Member portal was built." />
   <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-journal.png" />
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Three Worlds Leave The Vault","description":"Call of Doodie, Gridiron GM, VaultSpark Football GM, and DreadSpike all shipped in 2026.","url":"https://vaultsparkstudios.com/journal/first-sparks/","datePublished":"2026-03-01T00:00:00Z","dateModified":"2026-03-01T00:00:00Z","author":{"@type":"Organization","name":"VaultSpark Studios","url":"https://vaultsparkstudios.com"},"publisher":{"@type":"Organization","name":"VaultSpark Studios","logo":{"@type":"ImageObject","url":"https://vaultsparkstudios.com/assets/icon-256.png"}},"image":"https://vaultsparkstudios.com/assets/og-image.png","keywords":"games launch, Call of Doodie, Gridiron GM, VaultSpark Football GM, DreadSpike"}
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"Building The Vault Membership Portal","description":"A behind-the-scenes dispatch on how we built the Vault Member portal — real accounts, live XP, cross-game leaderboards.","url":"https://vaultsparkstudios.com/journal/building-vault-membership/","datePublished":"2026-03-10T00:00:00Z","dateModified":"2026-03-10T00:00:00Z","author":{"@type":"Organization","name":"VaultSpark Studios","url":"https://vaultsparkstudios.com"},"publisher":{"@type":"Organization","name":"VaultSpark Studios","logo":{"@type":"ImageObject","url":"https://vaultsparkstudios.com/assets/icon-256.png"}},"image":"https://vaultsparkstudios.com/assets/og-journal.png","keywords":"Vault membership, Supabase auth, XP system, leaderboards, indie game portal"}
   </script>
   <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Signal Log","item":"https://vaultsparkstudios.com/journal/"},{"@type":"ListItem","position":3,"name":"Three Worlds Leave The Vault","item":"https://vaultsparkstudios.com/journal/first-sparks/"}]}
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Signal Log","item":"https://vaultsparkstudios.com/journal/"},{"@type":"ListItem","position":3,"name":"Building The Vault Membership Portal","item":"https://vaultsparkstudios.com/journal/building-vault-membership/"}]}
   </script>
   <link rel="alternate" type="application/rss+xml" title="Signal Log — VaultSpark Studios" href="https://vaultsparkstudios.com/feed.xml" />
   <link rel="icon" type="image/png" href="/assets/icon-32.png" />
@@ -123,22 +123,22 @@
         <span aria-hidden="true">›</span>
         <a href="/journal/">Signal Log</a>
         <span aria-hidden="true">›</span>
-        <span aria-current="page">Three Worlds Leave The Vault</span>
+        <span aria-current="page">Building The Vault Membership Portal</span>
       </nav>
 
       <div class="post-layout">
         <article class="post-article">
           <header>
             <div class="post-meta">
-              <span class="post-date">2026</span>
-              <span class="post-read-time">· 2 min read</span>
+              <span class="post-date">March 2026</span>
+              <span class="post-read-time">· 3 min read</span>
               <span id="post-view-count" style="font-size:0.78rem;color:var(--dim);"></span>
-              <span class="entry-tag">Games</span>
-              <span class="entry-tag">Launch</span>
+              <span class="entry-tag">Studio</span>
+              <span class="entry-tag">Site</span>
             </div>
-            <h1 class="post-title">Three Worlds Leave The Vault</h1>
+            <h1 class="post-title">Building The Vault Membership Portal</h1>
             <div class="author-bio">
-              <img src="/assets/vaultspark-icon.webp" alt="VaultSpark Studios" loading="lazy" />
+              <img src="/assets/vaultspark-icon.webp" alt="VaultSpark Studios" loading="lazy" width="42" height="42" />
               <div class="author-bio-text">
                 <strong>VaultSpark Studios</strong>
                 Independent game studio forging cinematic worlds, sports simulations, and playable experiments.
@@ -148,44 +148,40 @@
 
           <div class="post-body">
             <p>
-              The year the vault started unsealing things.
+              The Vault Member portal had one rule from the start: everything in it has to be real.
             </p>
             <p>
-              <strong>Call of Doodie</strong> went live first — action comedy chaos, punchlines via ammunition,
-              free to play in your browser with no download. It proved the studio could ship something playable
-              and funny and fast. It was the proof of concept for everything that followed.
+              No fake progress bars. No placeholder dashboards. No "coming soon" sections dressed up as features. When a member logs in, they see actual XP they earned through actual actions — signing up, logging in daily, reacting to journal posts, playing games. The leaderboard reflects actual rankings. The rank system has actual tiers. Everything that displays is live data.
             </p>
             <p>
-              <strong>Gridiron GM</strong> came next. A deeper game — dynasty football franchise management
-              across multiple seasons. Every draft pick matters. Every trade has consequences. The slow-burn
-              satisfaction of building something that wins, years later, from decisions you made in the first
-              offseason. This one had staying power.
-            </p>
-            <p>
-              <strong>VaultSpark Football GM</strong> entered client beta. The deepest simulation in the vault —
-              NFL front-office mechanics, realistic career arcs, league-wide dynamics. It's still being refined,
-              but the core is there.
+              The stack is straightforward: <strong>Supabase</strong> for auth, database, row-level security, and Edge Functions. A single-page portal built in vanilla JavaScript with no framework overhead. The goal was something fast to load, easy to maintain, and impossible to fake.
             </p>
             <div class="entry-divider"></div>
             <p>
-              And then DreadSpike appeared. A Sora-generated cinematic — crimson light, frozen space, fiery ash
-              in suspension. A character from a wrong transmission that crossed a threshold that should have
-              stayed closed. He wasn't built for a specific game. He arrived first and the lore followed.
-              That's how the VaultSpark universe works.
+              The XP system was designed to reward engagement without gamifying in the bad sense — where the mechanics override the actual product. Members earn XP for things that matter: being part of the community, showing up consistently, engaging with studio content. The <strong>rank tiers</strong> go from Recruit up through Operator, Enforcer, Sentinel, and eventually Vault Guardian — each with its own identity inside the universe.
+            </p>
+            <p>
+              Cross-game leaderboards were the hardest part. When multiple games eventually feed into a shared account system, the XP and scores need to aggregate correctly without any one game dominating. The schema was built to handle this from day one — game-scoped entries with a rollup layer on top.
+            </p>
+            <p>
+              The portal also handles: push notification preferences, PWA install state, community polls, social following between members, and — once the LLC is finalized — gifted memberships via Stripe. The backend is already wired. It's waiting on the legal layer.
+            </p>
+            <p style="color:var(--dim);font-size:0.87rem;">
+              <a href="/vault-member/">Join the Vault</a> — free accounts are open.
             </p>
           </div>
 
           <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;align-items:center;">
             <span style="font-size:0.8rem;color:var(--dim);">Share:</span>
-            <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/first-sparks/&text=Three+Worlds+Leave+The+Vault+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+            <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/building-vault-membership/&text=Building+The+Vault+Membership+Portal+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
               𝕏 Share
             </a>
-            <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/first-sparks/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+            <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/building-vault-membership/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
               Copy link
             </button>
           </div>
 
-          <div class="reaction-row" id="reactions-first-sparks" data-slug="first-sparks">
+          <div class="reaction-row" id="reactions-building-vault-membership" data-slug="building-vault-membership">
             <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
             <button type="button" class="reaction-btn" data-emoji="love" onclick="jrnReact(this)"><span class="reaction-emoji">❤️</span><span class="reaction-count">0</span></button>
             <button type="button" class="reaction-btn" data-emoji="gaming" onclick="jrnReact(this)"><span class="reaction-emoji">🎮</span><span class="reaction-count">0</span></button>
@@ -193,40 +189,36 @@
           </div>
 
           <nav class="post-nav" aria-label="Post navigation">
-            <a class="prev-post" href="/journal/studio-os-public/">← We Made The System Visible</a>
-            <a class="next-post" href="/journal/vault-opened/">The Vault Was Opened →</a>
+            <a class="prev-post" href="/journal/signal-log-launches/">← The Signal Log Is Live</a>
+            <a class="next-post" href="/journal/dreadspike-origins/">DreadSpike: The Character Who Arrived First →</a>
           </nav>
         </article>
 
         <aside class="post-sidebar">
           <div class="sidebar-block">
             <h3>More Dispatches</h3>
+            <a class="archive-link" href="/journal/signal-log-launches/">
+              <span>The Signal Log Is Live</span>
+              <small>Mar 2026</small>
+            </a>
             <a class="archive-link" href="/journal/studio-os-public/">
               <span>We Made The System Visible</span>
               <small>Mar 2026</small>
             </a>
-            <a class="archive-link" href="/journal/vault-opened/">
-              <span>The Vault Was Opened</span>
+            <a class="archive-link" href="/journal/first-sparks/">
+              <span>Three Worlds Leave The Vault</span>
               <small>2026</small>
             </a>
           </div>
           <div class="sidebar-block">
-            <h3>The Games</h3>
-            <a class="archive-link" href="/games/call-of-doodie/">
-              <span>Call of Doodie</span>
-            </a>
-            <a class="archive-link" href="/games/gridiron-gm/">
-              <span>Gridiron GM</span>
-            </a>
-            <a class="archive-link" href="/games/vaultspark-football-gm/">
-              <span>VaultSpark Football GM</span>
-            </a>
+            <h3>The Vault</h3>
+            <a class="archive-link" href="/vault-member/"><span>Join The Vault</span></a>
+            <a class="archive-link" href="/leaderboards/"><span>Leaderboards</span></a>
+            <a class="archive-link" href="/community/"><span>Community Hub</span></a>
           </div>
           <div class="sidebar-block">
             <h3>Get Dispatches</h3>
-            <p style="font-size:0.85rem;color:var(--muted);line-height:1.6;margin-bottom:0.9rem;">
-              Studio updates and lore signals delivered direct.
-            </p>
+            <p style="font-size:0.85rem;color:var(--muted);line-height:1.6;margin-bottom:0.9rem;">Studio updates and lore signals delivered direct.</p>
             <a class="button" href="/#vault-dispatch" style="width:100%;justify-content:center;display:flex;">Subscribe Free</a>
           </div>
         </aside>
@@ -281,7 +273,7 @@
   var SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
   var KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
   var H   = { apikey: KEY, Authorization: 'Bearer ' + KEY, 'Content-Type': 'application/json' };
-  var SLUG = 'first-sparks';
+  var SLUG = 'building-vault-membership';
 
   function getSession(){
     try {
@@ -293,121 +285,28 @@
       return null;
     } catch(e){ return null; }
   }
-
-  function showToast(msg){
-    var t = document.getElementById('jrn-toast');
-    if(!t) return;
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(function(){ t.classList.remove('show'); }, 2500);
-  }
-
+  function showToast(msg){ var t=document.getElementById('jrn-toast');if(!t)return;t.textContent=msg;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2500); }
   function loadReactions(){
-    var session = getSession();
-    var userId  = session && session.user ? session.user.id : null;
-    fetch(SB+'/rest/v1/journal_reactions?select=emoji&post_slug=eq.'+SLUG, { headers: { apikey: KEY, Accept: 'application/json' } })
-      .then(function(r){ return r.ok ? r.json() : []; })
-      .then(function(rows){
-        if(!Array.isArray(rows)) rows = [];
-        var counts = {};
-        rows.forEach(function(r){ counts[r.emoji] = (counts[r.emoji]||0) + 1; });
-        var row = document.getElementById('reactions-'+SLUG);
-        if(row) row.querySelectorAll('.reaction-btn').forEach(function(btn){
-          var c = btn.querySelector('.reaction-count');
-          if(c) c.textContent = counts[btn.dataset.emoji] || 0;
-        });
-        if(userId){
-          fetch(SB+'/rest/v1/journal_reactions?select=emoji&post_slug=eq.'+SLUG+'&user_id=eq.'+encodeURIComponent(userId), {
-            headers: { apikey: KEY, Authorization: 'Bearer '+session.access_token, Accept: 'application/json' }
-          }).then(function(r){ return r.ok ? r.json() : []; })
-          .then(function(mine){
-            if(!Array.isArray(mine)) return;
-            var row2 = document.getElementById('reactions-'+SLUG);
-            if(!row2) return;
-            mine.forEach(function(rx){
-              var btn = row2.querySelector('[data-emoji="'+rx.emoji+'"]');
-              if(btn) btn.classList.add('reacted');
-            });
-          }).catch(function(){});
-        }
+    var session=getSession();var userId=session&&session.user?session.user.id:null;
+    fetch(SB+'/rest/v1/journal_reactions?select=emoji&post_slug=eq.'+SLUG,{headers:{apikey:KEY,Accept:'application/json'}})
+      .then(function(r){return r.ok?r.json():[];}).then(function(rows){
+        if(!Array.isArray(rows))rows=[];var counts={};rows.forEach(function(r){counts[r.emoji]=(counts[r.emoji]||0)+1;});
+        var row=document.getElementById('reactions-'+SLUG);
+        if(row)row.querySelectorAll('.reaction-btn').forEach(function(btn){var c=btn.querySelector('.reaction-count');if(c)c.textContent=counts[btn.dataset.emoji]||0;});
+        if(userId){fetch(SB+'/rest/v1/journal_reactions?select=emoji&post_slug=eq.'+SLUG+'&user_id=eq.'+encodeURIComponent(userId),{headers:{apikey:KEY,Authorization:'Bearer '+session.access_token,Accept:'application/json'}})
+          .then(function(r){return r.ok?r.json():[];}).then(function(mine){if(!Array.isArray(mine))return;var row2=document.getElementById('reactions-'+SLUG);if(!row2)return;mine.forEach(function(rx){var btn=row2.querySelector('[data-emoji="'+rx.emoji+'"]');if(btn)btn.classList.add('reacted');});}).catch(function(){});}
       }).catch(function(){});
   }
-
-  window.jrnReact = function(btn){
-    var row   = btn.closest('.reaction-row');
-    var slug  = row ? row.dataset.slug : null;
-    var emoji = btn.dataset.emoji;
-    if(!slug || !emoji) return;
-    var session = getSession();
-    if(!session || !session.user){
-      showToast('Sign in to react → /vault-member/');
-      setTimeout(function(){ window.location.href = '/vault-member/'; }, 1800);
-      return;
-    }
-    var userId = session.user.id;
-    var authH  = Object.assign({}, H, { Authorization: 'Bearer '+session.access_token });
-    var isReacted = btn.classList.contains('reacted');
-    var countEl   = btn.querySelector('.reaction-count');
-    var current   = parseInt(countEl ? countEl.textContent : '0', 10) || 0;
-    if(isReacted){ btn.classList.remove('reacted'); if(countEl) countEl.textContent = Math.max(0, current-1); }
-    else          { btn.classList.add('reacted');    if(countEl) countEl.textContent = current+1; }
-    if(isReacted){
-      fetch(SB+'/rest/v1/journal_reactions?post_slug=eq.'+encodeURIComponent(slug)+'&emoji=eq.'+encodeURIComponent(emoji)+'&user_id=eq.'+encodeURIComponent(userId), { method:'DELETE', headers:authH })
-        .catch(function(){ btn.classList.add('reacted'); if(countEl) countEl.textContent = current; });
-    } else {
-      fetch(SB+'/rest/v1/journal_reactions', {
-        method:'POST', headers:Object.assign({},authH,{Prefer:'return=minimal'}),
-        body:JSON.stringify({post_slug:slug,emoji:emoji,user_id:userId})
-      }).catch(function(){ btn.classList.remove('reacted'); if(countEl) countEl.textContent = current; });
-    }
-  };
-
-  function loadViewCount(){
-    fetch(SB+'/rest/v1/journal_views?post_slug=eq.'+SLUG+'&select=id', {
-      headers: Object.assign({}, H, { Prefer: 'count=exact', Range: '0-0' })
-    }).then(function(r){
-      var cr = r.headers.get('Content-Range');
-      if(cr){ var n = parseInt(cr.split('/')[1],10); if(!isNaN(n)){
-        var el = document.getElementById('post-view-count');
-        if(el) el.textContent = '· \uD83D\uDC41\uFE0F ' + n.toLocaleString() + ' view' + (n===1?'':'s');
-      }}
-    }).catch(function(){});
-  }
-
-  function recordView(){
-    var today = new Date().toISOString().slice(0,10);
-    var key   = 'vs_view_'+SLUG+'_'+today;
-    if(localStorage.getItem(key)) { loadViewCount(); return; }
-    var sid = localStorage.getItem('vs_session_id') || (function(){
-      var id = Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);
-      localStorage.setItem('vs_session_id', id); return id;
-    })();
-    fetch(SB+'/rest/v1/journal_views', {
-      method:'POST', headers:Object.assign({},H,{Prefer:'return=minimal'}),
-      body:JSON.stringify({post_slug:SLUG, session_id:sid})
-    }).then(function(r){ if(r.ok || r.status===409){ localStorage.setItem(key,'1'); loadViewCount(); } })
-    .catch(function(){ loadViewCount(); });
-  }
-
-  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', function(){ loadReactions(); recordView(); }); }
-  else { loadReactions(); recordView(); }
+  window.jrnReact=function(btn){var row=btn.closest('.reaction-row');var slug=row?row.dataset.slug:null;var emoji=btn.dataset.emoji;if(!slug||!emoji)return;var session=getSession();if(!session||!session.user){showToast('Sign in to react → /vault-member/');setTimeout(function(){window.location.href='/vault-member/';},1800);return;}var userId=session.user.id;var authH=Object.assign({},H,{Authorization:'Bearer '+session.access_token});var isReacted=btn.classList.contains('reacted');var countEl=btn.querySelector('.reaction-count');var current=parseInt(countEl?countEl.textContent:'0',10)||0;if(isReacted){btn.classList.remove('reacted');if(countEl)countEl.textContent=Math.max(0,current-1);}else{btn.classList.add('reacted');if(countEl)countEl.textContent=current+1;}if(isReacted){fetch(SB+'/rest/v1/journal_reactions?post_slug=eq.'+encodeURIComponent(slug)+'&emoji=eq.'+encodeURIComponent(emoji)+'&user_id=eq.'+encodeURIComponent(userId),{method:'DELETE',headers:authH}).catch(function(){btn.classList.add('reacted');if(countEl)countEl.textContent=current;});}else{fetch(SB+'/rest/v1/journal_reactions',{method:'POST',headers:Object.assign({},authH,{Prefer:'return=minimal'}),body:JSON.stringify({post_slug:slug,emoji:emoji,user_id:userId})}).catch(function(){btn.classList.remove('reacted');if(countEl)countEl.textContent=current;});}};
+  function loadViewCount(){fetch(SB+'/rest/v1/journal_views?post_slug=eq.'+SLUG+'&select=id',{headers:Object.assign({},H,{Prefer:'count=exact',Range:'0-0'})}).then(function(r){var cr=r.headers.get('Content-Range');if(cr){var n=parseInt(cr.split('/')[1],10);if(!isNaN(n)){var el=document.getElementById('post-view-count');if(el)el.textContent='· \uD83D\uDC41\uFE0F '+n.toLocaleString()+' view'+(n===1?'':'s');}}}).catch(function(){});}
+  function recordView(){var today=new Date().toISOString().slice(0,10);var key='vs_view_'+SLUG+'_'+today;if(localStorage.getItem(key)){loadViewCount();return;}var sid=localStorage.getItem('vs_session_id')||(function(){var id=Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2);localStorage.setItem('vs_session_id',id);return id;})();fetch(SB+'/rest/v1/journal_views',{method:'POST',headers:Object.assign({},H,{Prefer:'return=minimal'}),body:JSON.stringify({post_slug:SLUG,session_id:sid})}).then(function(r){if(r.ok||r.status===409){localStorage.setItem(key,'1');loadViewCount();}}).catch(function(){loadViewCount();});}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){loadReactions();recordView();});}else{loadReactions();recordView();}
 })();
 </script>
 <script>
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
-  hamburger.addEventListener('click', () => {
-    const isOpen = navMenu.classList.toggle('open');
-    hamburger.setAttribute('aria-expanded', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  });
-  navMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navMenu.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    });
-  });
+  const hamburger=document.getElementById('hamburger'),navMenu=document.getElementById('nav-menu');
+  hamburger.addEventListener('click',()=>{const o=navMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
+  navMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{navMenu.classList.remove('open');hamburger.setAttribute('aria-expanded','false');document.body.style.overflow='';}));
 </script>
 <script src="/assets/cookie-consent.js" defer></script>
 </body>
