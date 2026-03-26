@@ -1957,7 +1957,7 @@
               <div class="progress-bar-wrap">
                 <div class="progress-bar-label">
                   <span id="pb-current-rank">Spark Initiate</span>
-                  <span id="pb-next">→ Vault Runner at 100 pts</span>
+                  <span id="pb-next">→ Vault Runner at 250 pts</span>
                 </div>
                 <div class="progress-bar">
                   <div class="progress-fill" id="progress-fill" style="width:10%;"></div>
@@ -3703,10 +3703,14 @@
 
     // ── Rank-up ceremony ────────────────────────────────────────
     const RANK_FLAVOR = {
-      'Vault Runner': 'The signal grows stronger. You\'ve crossed the threshold and the vault takes notice.',
-      'Forge Guard':  'Forged in the vault\'s heat. Few make it this deep — and now you\'re one of them.',
-      'Vault Keeper': 'The vault keeps no secrets from you now. You guard what most will never find.',
-      'The Sparked':  'Maximum rank — achieved. You are the reason the vault exists. The spark is yours.',
+      'Vault Runner':   'The signal grows stronger. The vault takes notice.',
+      'Rift Scout':     'You\'ve scouted beyond the threshold. The rift opens wider.',
+      'Vault Guard':    'The vault entrusts you to guard its signal. Stand firm.',
+      'Vault Breacher': 'You go where others can\'t. The vault\'s inner layers are yours.',
+      'Void Operative': 'Clearance level: deep. The void doesn\'t scare you anymore.',
+      'Vault Keeper':   'The vault keeps no secrets from you now. You guard what most will never find.',
+      'Forge Master':   'Forged in the vault\'s heat. Few make it this deep — and now you\'re one of them.',
+      'The Sparked':    'Maximum rank — achieved. You are the reason the vault exists. The spark is yours.',
     };
 
     function checkRankUp(member) {
@@ -3720,7 +3724,7 @@
     }
 
     function showRankCeremony(rank) {
-      const RANK_EMOJIS = { 'Vault Runner': '🏃', 'Forge Guard': '🔥', 'Vault Keeper': '🔒', 'The Sparked': '🌟' };
+      const RANK_EMOJIS = { 'Vault Runner': '🏃', 'Rift Scout': '🔭', 'Vault Guard': '🛡️', 'Vault Breacher': '🔧', 'Void Operative': '🕵️', 'Vault Keeper': '🔒', 'Forge Master': '🔥', 'The Sparked': '🌟' };
       document.getElementById('ceremony-emoji').textContent     = RANK_EMOJIS[rank.name] || '⚡';
       document.getElementById('ceremony-rank-name').textContent = rank.name;
       document.getElementById('ceremony-rank-name').style.color = rank.color;
@@ -5469,12 +5473,15 @@
           .select('username,points,created_at,member_number,subscribed')
           .order('points', { ascending: false });
         if (!members || !members.length) { showAdminFeedback(fb, 'No members found.', false); return; }
-        const RANK_NAMES_CSV = ['Spark Initiate','Vault Runner','Forge Guard','Vault Keeper','The Sparked'];
         function getCSVRank(pts) {
-          if (pts >= 5000) return 'The Sparked';
-          if (pts >= 1500) return 'Vault Keeper';
-          if (pts >= 500) return 'Forge Guard';
-          if (pts >= 100) return 'Vault Runner';
+          if (pts >= 100000) return 'The Sparked';
+          if (pts >= 60000)  return 'Forge Master';
+          if (pts >= 30000)  return 'Vault Keeper';
+          if (pts >= 15000)  return 'Void Operative';
+          if (pts >= 7500)   return 'Vault Breacher';
+          if (pts >= 3000)   return 'Vault Guard';
+          if (pts >= 1000)   return 'Rift Scout';
+          if (pts >= 250)    return 'Vault Runner';
           return 'Spark Initiate';
         }
         const header = 'rank,username,points,vault_rank,member_number,subscribed,joined_date';
