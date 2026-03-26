@@ -356,7 +356,7 @@ function commitHeatmap(commits) {
 }
 
 // ── Project Card ──────────────────────────────────────────────────────────────
-function renderProjectCard(project, ghData, sbData, socialData, settings, scorePrev, scoreHistory, scoreForecasts, decayingIds, focusMode, cardIndex, rankMap = {}, fetchErrors = {}, contextFiles = {}, compactCards = false) {
+function renderProjectCard(project, ghData, sbData, socialData, settings, scorePrev, scoreHistory, scoreForecasts, decayingIds, focusMode, cardIndex, rankMap = {}, fetchErrors = {}, contextFiles = {}, compactCards = false, bulkTagMode = false) {
   const repoData   = ghData[project.githubRepo] || null;
   const scoring    = scoreProject(project, repoData, sbData, socialData);
   const ci         = ciStatus(repoData?.ciRuns);
@@ -689,7 +689,7 @@ function renderProjectCard(project, ghData, sbData, socialData, settings, scoreP
 }
 
 // ── Project Section (tabbed) ──────────────────────────────────────────────────
-function renderProjectSection(ghData, sbData, socialData, settings, activeTab, scorePrev, scoreHistory, focusMode, projectFilter, tagFilter = "", contextFiles = {}, compactCards = false) {
+function renderProjectSection(ghData, sbData, socialData, settings, activeTab, scorePrev, scoreHistory, focusMode, projectFilter, tagFilter = "", contextFiles = {}, compactCards = false, bulkTagMode = false) {
   const games     = PROJECTS.filter((p) => p.type === "game");
   const tools     = PROJECTS.filter((p) => p.type === "tool");
   const platforms = PROJECTS.filter((p) => p.type === "platform" || p.type === "app");
@@ -754,7 +754,7 @@ function renderProjectSection(ghData, sbData, socialData, settings, activeTab, s
   const pinnedSet      = loadPinned();
 
   const cards = sorted.map((p, i) =>
-    renderProjectCard(p, ghData, sbData, socialData, settings, scorePrev, scoreHistory, scoreForecasts, decayingIds, focusMode, i, rankMap, fetchErrors, contextFiles, compactCards)
+    renderProjectCard(p, ghData, sbData, socialData, settings, scorePrev, scoreHistory, scoreForecasts, decayingIds, focusMode, i, rankMap, fetchErrors, contextFiles, compactCards, bulkTagMode)
   ).join("");
 
   const visibleCount = sorted.filter((p) => {
@@ -775,7 +775,7 @@ function renderProjectSection(ghData, sbData, socialData, settings, activeTab, s
         <span style="flex:1; height:1px; background:rgba(255,200,116,0.2); display:inline-block;"></span>
       </div>
       <div class="project-grid">
-        ${pinnedInTab.map((p) => renderProjectCard(p, ghData, sbData, socialData, settings, scorePrev, scoreHistory, scoreForecasts, decayingIds, false, null, rankMap, fetchErrors, contextFiles, compactCards)).join("")}
+        ${pinnedInTab.map((p) => renderProjectCard(p, ghData, sbData, socialData, settings, scorePrev, scoreHistory, scoreForecasts, decayingIds, false, null, rankMap, fetchErrors, contextFiles, compactCards, bulkTagMode)).join("")}
       </div>
     </div>
   ` : "";
@@ -1937,7 +1937,7 @@ export function renderStudioHubView(state) {
       ${renderAlertHistoryPanel(alertHistoryFilter)}
       ${renderSnoozePanel()}
       ${gumroadSales?.length ? renderRevenueChart(gumroadSales) : ""}
-      ${renderProjectSection(ghData, sbData, socialData, settings, projectTab, scorePrev, scoreHistory, focusMode, projectFilter, tagFilter, contextFiles, compactCards)}
+      ${renderProjectSection(ghData, sbData, socialData, settings, projectTab, scorePrev, scoreHistory, focusMode, projectFilter, tagFilter, contextFiles, compactCards, bulkTagMode)}
       ${renderSocialSummary(socialData)}
     </div>
   `;
