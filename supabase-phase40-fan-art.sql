@@ -60,19 +60,19 @@ create policy "fan_art_admin_update"
 
 
 -- ── Storage policies (run AFTER creating the "fan-art" bucket) ────────────
+-- Storage policies are RLS policies on storage.objects
+
 -- Allow authenticated users to upload to their own folder
-insert into storage.policies (name, bucket_id, operation, definition)
-values
-  (
-    'fan_art_upload_own',
-    'fan-art',
-    'INSERT',
-    '(auth.uid()::text = (storage.foldername(name))[1])'
-  ),
-  (
-    'fan_art_read_public',
-    'fan-art',
-    'SELECT',
-    'true'
-  )
-on conflict do nothing;
+create policy "fan_art_upload_own"
+  on storage.objects for insert
+  to authenticated
+  with check (
+    bucket_id = 'fan-art'
+    and auth.uid()::text = (storage.foldername(name))[1]
+  );
+
+-- Allow public read of all files in the fan-art bucket
+create policy "fan_art_read_public"
+  on storage.objects for select
+  to anon, authenticated
+  using (bucket_id = 'fan-art');
