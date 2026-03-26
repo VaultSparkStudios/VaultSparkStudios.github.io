@@ -33,7 +33,7 @@ CREATE POLICY "polls_admin_all" ON polls
   FOR ALL USING (
     EXISTS (
       SELECT 1 FROM vault_members
-      WHERE user_id = auth.uid() AND member_number = 1
+      WHERE id = auth.uid() AND member_number = 1
     )
   );
 
