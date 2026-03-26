@@ -10,6 +10,8 @@ const STATIC_ASSETS = [
   '/assets/icon-256.png',
   '/assets/vaultspark-icon.webp',
   '/assets/vaultspark-cinematic-logo.webp',
+  '/vault-member/portal.js',
+  '/assets/game-utils.js',
   '/offline.html',
   '/404.html',
   '/games/',

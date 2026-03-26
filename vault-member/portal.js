@@ -1,0 +1,4095 @@
+    // ── Mobile nav ──────────────────────────────────────────────
+    const hamburger = document.getElementById('hamburger');
+    const navMenu   = document.getElementById('nav-menu');
+    hamburger.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', isOpen);
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      });
+    });
+
+    // ── Tab switching ───────────────────────────────────────────
+    // 'forgot' and 'reset' are overlay panels with no tab button
+    function switchTab(which) {
+      const noTab = which === 'forgot' || which === 'reset';
+      document.querySelectorAll('.auth-tab').forEach(t => {
+        t.classList.toggle('active', !noTab && t.id === 'tab-' + which);
+        t.setAttribute('aria-selected', !noTab && t.id === 'tab-' + which);
+      });
+      document.querySelectorAll('.auth-panel').forEach(p => {
+        p.classList.toggle('active', p.id === 'panel-' + which);
+      });
+    }
+
+    // ── Rank / Achievement definitions (display only — source of truth) ──────
+    const VS = {
+      RANKS: [
+        { name: 'Spark Initiate', min: 0,      max: 249,      color: '#94a3b8', badgeClass: 'badge-ghost'   },
+        { name: 'Vault Runner',   min: 250,    max: 999,      color: '#1FA2FF', badgeClass: 'badge-blue'    },
+        { name: 'Rift Scout',     min: 1000,   max: 2999,     color: '#10B981', badgeClass: 'badge-green'   },
+        { name: 'Vault Guard',    min: 3000,   max: 7499,     color: '#06B6D4', badgeClass: 'badge-cyan'    },
+        { name: 'Vault Breacher', min: 7500,   max: 14999,    color: '#8B5CF6', badgeClass: 'badge-purple'  },
+        { name: 'Void Operative', min: 15000,  max: 29999,    color: '#2D2D2D', badgeClass: 'badge-void'    },
+        { name: 'Vault Keeper',   min: 30000,  max: 59999,    color: '#C85000', badgeClass: 'badge-amber'   },
+        { name: 'Forge Master',   min: 60000,  max: 99999,    color: '#D62828', badgeClass: 'badge-red'     },
+        { name: 'The Sparked',    min: 100000, max: Infinity, color: '#FFC400', badgeClass: 'badge-sparked' },
+      ],
+
+      ACHIEVEMENT_DEFS: [
+        { id: 'joined',     icon: '🔓', name: 'Vault Opened',    desc: 'Created your Studio Member account'         },
+        { id: 'subscribed', icon: '📡', name: 'Signal Received', desc: 'Subscribed to Vault Dispatch'               },
+        { id: 'visit_game', icon: '🎮', name: 'Into The Game',   desc: 'Visited a live VaultSpark game'             },
+        { id: 'first_100',  icon: '⚡', name: 'Vault Runner',    desc: 'Reached 100 Vault Points'                   },
+        { id: 'lore_read',  icon: '📖', name: 'Lore Keeper',     desc: 'Read the DreadSpike character lore'         },
+        { id: 'social',          icon: '🌐', name: 'Broadcast',         desc: 'Followed VaultSpark on a social platform'   },
+        { id: 'recruiter',       icon: '🤝', name: 'Recruiter',         desc: 'Invited your first member to the Vault'     },
+        { id: 'patron',          icon: '👑', name: 'Vault Patron',      desc: 'Invited 5 members — the vault grows'        },
+        { id: 'profile_complete',icon: '✍️', name: 'Identity Forged',   desc: 'Completed your Vault Member profile'        },
+      ],
+
+      AVATARS: [
+        { id: 'spark',      emoji: '⚡', bg: 'rgba(255,196,0,0.18)',   label: 'Spark'        },
+        { id: 'dreadspike', emoji: '💀', bg: 'rgba(214,40,40,0.18)',   label: 'DreadSpike'   },
+        { id: 'gridiron',   emoji: '🏈', bg: 'rgba(31,162,255,0.16)',  label: 'Gridiron'     },
+        { id: 'doodie',     emoji: '💩', bg: 'rgba(255,122,0,0.16)',   label: 'Doodie'       },
+        { id: 'vaultfront', emoji: '⚔️', bg: 'rgba(201,206,214,0.12)', label: 'VaultFront'   },
+        { id: 'dunescape',  emoji: '🏜️', bg: 'rgba(251,191,36,0.14)',  label: 'Dunescape'    },
+        { id: 'mindframe',  emoji: '🧠', bg: 'rgba(139,92,246,0.16)',  label: 'MindFrame'    },
+        { id: 'vault',      emoji: '🔒', bg: 'rgba(255,196,0,0.12)',   label: 'Vault Keeper' },
+        { id: 'sparked',    emoji: '🌟', bg: 'rgba(255,196,0,0.22)',   label: 'The Sparked'  },
+        { id: 'runner',     emoji: '🏃', bg: 'rgba(31,162,255,0.14)',  label: 'Vault Runner' },
+        { id: 'forge',      emoji: '🔥', bg: 'rgba(255,122,0,0.14)',   label: 'Forge Guard'  },
+        { id: 'unknown',    emoji: '❓', bg: 'rgba(255,255,255,0.06)', label: 'Unknown'      },
+      ],
+
+      ACCENT_COLORS: [
+        { color: '#FFC400', label: 'Vault Gold'   },
+        { color: '#1FA2FF', label: 'Vault Blue'   },
+        { color: '#FF7A00', label: 'Forge Orange' },
+        { color: '#8B5CF6', label: 'MindFrame'    },
+        { color: '#10B981', label: 'Emerald'      },
+        { color: '#D62828', label: 'DreadSpike'   },
+        { color: '#EC4899', label: 'Neon Pink'    },
+        { color: '#C9CED6', label: 'Steel'        },
+      ],
+
+      getRank(pts) {
+        return this.RANKS.find(r => pts >= r.min && pts <= r.max) || this.RANKS[0];
+      },
+      getNextRank(pts) {
+        const idx = this.RANKS.findIndex(r => pts >= r.min && pts <= r.max);
+        return this.RANKS[idx + 1] || null;
+      },
+      getRankProgress(pts) {
+        const rank = this.getRank(pts);
+        if (rank.max === Infinity) return 100;
+        return Math.min(100, Math.round(((pts - rank.min) / (rank.max - rank.min + 1)) * 100));
+      },
+      getAvatar(id) {
+        return this.AVATARS.find(a => a.id === id) || this.AVATARS[0];
+      },
+
+      async logout() {
+        await VSSupabase.auth.signOut();
+        showAuth();
+      },
+
+      async startVaultSparkedCheckout() {
+        const btn = document.getElementById('vaultsparked-upgrade-btn');
+        if (btn) { btn.textContent = 'Redirecting…'; btn.disabled = true; }
+        try {
+          const { data: { session } } = await VSSupabase.auth.getSession();
+          if (!session) { showAuth(); return; }
+          const { data, error } = await VSSupabase.functions.invoke('create-checkout', {
+            headers: { Authorization: `Bearer ${session.access_token}` },
+            body: { plan: 'vault_sparked' },
+          });
+          if (error || !data?.url) throw new Error(error?.message || 'Checkout unavailable');
+          window.location.href = data.url;
+        } catch (err) {
+          if (btn) { btn.textContent = 'Get VaultSparked →'; btn.disabled = false; }
+          console.error('[VaultSparked] Checkout error:', err.message);
+        }
+      },
+
+      async savePrefs() {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const prefs = {
+          updates: document.getElementById('toggle-updates')?.checked ?? true,
+          lore:    document.getElementById('toggle-lore')?.checked    ?? true,
+          access:  document.getElementById('toggle-access')?.checked  ?? true,
+        };
+        await VSSupabase.from('vault_members')
+          .update({ prefs, subscribed: prefs.updates })
+          .eq('id', session.user.id);
+        if (session.user.email && typeof VaultKit !== 'undefined') {
+          VaultKit.syncPreferences(session.user.email, {
+            'studio-updates':     prefs.updates,
+            'lore-dispatches':    prefs.lore,
+            'early-vault-access': prefs.access,
+          }).catch(() => {});
+        }
+      },
+
+      showCardModal() {
+        if (!_currentMember) return;
+        buildCardThemeRow(_currentMember);
+        generateMemberCard(_currentMember);
+        _lastFocus = document.activeElement;
+        document.getElementById('card-modal-overlay').classList.add('show');
+        setTimeout(() => _trapFocus(document.querySelector('.card-modal')), 50);
+      },
+
+      downloadCard() {
+        const canvas = document.getElementById('vault-card-canvas');
+        const link = document.createElement('a');
+        link.download = 'vault-member-card.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      },
+
+      async shareCard() {
+        if (!_currentMember) return;
+        const canvas = document.getElementById('vault-card-canvas');
+        const rankName = _currentMember.rank_name || 'Vault Member';
+        const inviteCode = _currentMember.invite_code || '';
+        const refUrl = 'https://vaultsparkstudios.com/join/' + (inviteCode ? '?ref=' + _currentMember.username : '');
+        const shareText = 'I\'m a ' + rankName + ' at VaultSpark Studios — join the Vault! ⚡';
+
+        if (navigator.share && navigator.canShare) {
+          try {
+            canvas.toBlob(async (blob) => {
+              const file = new File([blob], 'vault-member-card.png', { type: 'image/png' });
+              if (navigator.canShare({ files: [file] })) {
+                await navigator.share({ files: [file], text: shareText, url: refUrl });
+              } else {
+                await navigator.share({ text: shareText, url: refUrl });
+              }
+            }, 'image/png');
+            return;
+          } catch (e) { /* fall through to Twitter */ }
+        }
+
+        // Desktop fallback: open Twitter/X share intent
+        const tweetUrl = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(refUrl);
+        window.open(tweetUrl, '_blank', 'noopener,noreferrer');
+      },
+
+      copyInviteLink() {
+        if (!_currentMember) return;
+        const refUrl = 'https://vaultsparkstudios.com/join/?ref=' + _currentMember.username;
+        navigator.clipboard.writeText(refUrl).then(() => {
+          showToast('Link copied!', { icon: '📋' });
+        }).catch(() => {
+          prompt('Copy this link:', refUrl);
+        });
+      },
+
+      async saveSettings() {
+        const btn      = document.getElementById('settings-save-btn');
+        const feedback = document.getElementById('settings-feedback');
+        btn.disabled   = true;
+        btn.textContent = 'Saving…';
+        feedback.classList.remove('show');
+
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) { btn.disabled = false; btn.textContent = 'Save Changes'; return; }
+
+        const bio       = (document.getElementById('settings-bio')?.value || '').slice(0, 160);
+        const avatarId  = document.querySelector('.avatar-opt.selected')?.dataset.id || 'spark';
+        const accent    = document.querySelector('.color-swatch.selected')?.dataset.color || '#FFC400';
+
+        const { error } = await VSSupabase.from('vault_members')
+          .update({ bio, avatar_id: avatarId, accent })
+          .eq('id', session.user.id);
+
+        btn.disabled = false;
+        btn.textContent = 'Save Changes';
+        if (!error) {
+          feedback.classList.add('show');
+          setTimeout(() => feedback.classList.remove('show'), 2800);
+          // Apply live
+          applyAvatar(avatarId, accent);
+        }
+      },
+    };
+
+    // ── Avatar / accent helpers ──────────────────────────────────
+    function applyAvatar(avatarId, accent) {
+      const av = VS.getAvatar(avatarId);
+      // Profile card avatar
+      const profileAv = document.getElementById('profile-avatar');
+      if (profileAv) {
+        profileAv.textContent = av.emoji;
+        profileAv.style.background = av.bg;
+        profileAv.style.borderColor = accent + '55';
+      }
+      // Nav mini avatar
+      const navAv = document.getElementById('nav-account-avatar-sm');
+      if (navAv) { navAv.textContent = av.emoji; navAv.style.background = av.bg; }
+      // Progress fill accent
+      const fill = document.getElementById('progress-fill');
+      if (fill) fill.style.background = 'linear-gradient(90deg,' + accent + ',#fff9e0)';
+    }
+
+    // ── Dashboard tab switcher ───────────────────────────────────
+    function switchDashTab(which) {
+      localStorage.setItem('vs_active_tab', which);
+      document.querySelectorAll('.dash-tab').forEach(t => {
+        t.classList.toggle('active', t.id === 'tab-dash-' + which);
+      });
+      document.querySelectorAll('.dash-pane').forEach(p => {
+        p.classList.toggle('active', p.id === 'dash-pane-' + which);
+      });
+      document.getElementById('dashboard-view')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Lazy-load archive on first open; reload challenges each time (weekly resets); lazy-load chronicle
+      if (which === 'archive' && !_archiveLoaded) {
+        _archiveLoaded = true;
+        loadClassifiedArchive();
+      }
+      if (which === 'challenges') loadChallenges();
+      if (which === 'polls') loadPolls();
+      if (which === 'earlyaccess' && !_betaKeysLoaded) {
+        _betaKeysLoaded = true;
+        loadBetaKeys();
+      }
+      if (which === 'chronicle' && !_chronicleLoaded) {
+        _chronicleLoaded = true;
+        loadChronicle();
+        renderPointsHistoryChart();
+      }
+    }
+
+    // ── Nav account dropdown ─────────────────────────────────────
+    function closeNavDropdown() {
+      const wrap = document.getElementById('nav-account-wrap');
+      if (wrap) { wrap.classList.remove('open'); }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const trigger = document.getElementById('nav-account-trigger');
+      const wrap    = document.getElementById('nav-account-wrap');
+      if (trigger && wrap) {
+        trigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const isOpen = wrap.classList.toggle('open');
+          trigger.setAttribute('aria-expanded', isOpen);
+        });
+        document.addEventListener('click', function() { closeNavDropdown(); });
+      }
+
+      // Bio character counter
+      const bioInput = document.getElementById('settings-bio');
+      const bioCount = document.getElementById('bio-char-count');
+      if (bioInput && bioCount) {
+        bioInput.addEventListener('input', function() {
+          bioCount.textContent = this.value.length;
+        });
+      }
+    });
+
+    // ── Build avatar selector ────────────────────────────────────
+    function buildAvatarGrid(selectedId) {
+      const grid = document.getElementById('avatar-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      VS.AVATARS.forEach(av => {
+        const el = document.createElement('div');
+        el.className = 'avatar-opt' + (av.id === selectedId ? ' selected' : '');
+        el.dataset.id = av.id;
+        el.title = av.label;
+        el.style.background = av.bg;
+        el.textContent = av.emoji;
+        el.addEventListener('click', function() {
+          grid.querySelectorAll('.avatar-opt').forEach(o => o.classList.remove('selected'));
+          this.classList.add('selected');
+          document.getElementById('avatar-label').textContent = av.label;
+        });
+        grid.appendChild(el);
+      });
+    }
+
+    // ── Build color palette ──────────────────────────────────────
+    function buildColorPalette(selectedColor) {
+      const palette = document.getElementById('color-palette');
+      if (!palette) return;
+      palette.innerHTML = '';
+      VS.ACCENT_COLORS.forEach(ac => {
+        const el = document.createElement('div');
+        el.className = 'color-swatch' + (ac.color === selectedColor ? ' selected' : '');
+        el.dataset.color = ac.color;
+        el.title = ac.label;
+        el.style.background = ac.color;
+        el.addEventListener('click', function() {
+          palette.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+          this.classList.add('selected');
+        });
+        palette.appendChild(el);
+      });
+    }
+
+    // ── UI helpers ──────────────────────────────────────────────
+    function showAuth() {
+      // Phase 10: tear down realtime channel on logout/auth switch
+      if (_pulseChannel) { VSSupabase.removeChannel(_pulseChannel); _pulseChannel = null; }
+      // Feature 3: tear down notification realtime channel
+      if (_notifRealtimeCh) { VSSupabase.removeChannel(_notifRealtimeCh); _notifRealtimeCh = null; }
+      document.getElementById('auth-view').style.display = '';
+      document.getElementById('dashboard-view').style.display = 'none';
+      document.getElementById('nav-account-wrap').style.display = 'none';
+      const bellWrap = document.getElementById('notif-bell-wrap');
+      if (bellWrap) bellWrap.style.display = 'none';
+      document.getElementById('nav-signin-link').style.display = '';
+      document.getElementById('nav-join-btn').style.display = '';
+    }
+
+    function showDashboard(member) {
+      _currentMember = member;
+
+      document.getElementById('auth-view').style.display = 'none';
+      document.getElementById('dashboard-view').style.display = 'block';
+
+      // Nav — show account dropdown, hide sign-in/join
+      const navWrap = document.getElementById('nav-account-wrap');
+      navWrap.style.display = '';
+      document.getElementById('nav-account-name').textContent = member.username;
+      document.getElementById('nav-signin-link').style.display = 'none';
+      document.getElementById('nav-join-btn').style.display = 'none';
+
+      const rank     = VS.getRank(member.points);
+      const nextRank = VS.getNextRank(member.points);
+      const progress = VS.getRankProgress(member.points);
+      const createdDate = new Date(member.createdAt);
+      const daysInVault = Math.floor((Date.now() - createdDate) / 86400000);
+
+      // Avatar + accent
+      applyAvatar(member.avatar_id || 'spark', member.accent || '#FFC400');
+
+      // Profile card
+      document.getElementById('profile-username').textContent = member.username;
+
+      const rankBadge = document.getElementById('profile-rank-badge');
+      rankBadge.textContent = rank.name;
+      rankBadge.className   = 'rank-badge badge ' + rank.badgeClass;
+
+      document.getElementById('profile-pts').textContent = member.points + ' pts';
+      document.getElementById('profile-since').textContent =
+        'Member since ' + createdDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+      // Bio
+      const bioEl = document.getElementById('profile-bio');
+      if (bioEl) { bioEl.textContent = member.bio || ''; bioEl.style.display = member.bio ? '' : 'none'; }
+
+      // Member number + founding badge
+      const numEl = document.getElementById('profile-member-number');
+      if (numEl) numEl.textContent = member.member_number ? '#' + member.member_number : '';
+      const foundingEl = document.getElementById('profile-founding-badge');
+      if (foundingEl) foundingEl.style.display = (member.member_number && member.member_number <= 100) ? '' : 'none';
+
+      // Avatar glow for Vault Keeper, Forge Master + The Sparked
+      const rankIdx = VS.RANKS.findIndex(r => r.name === rank.name);
+      const profileAvEl = document.getElementById('profile-avatar');
+      if (profileAvEl) profileAvEl.classList.toggle('rank-elite', rankIdx >= 6);
+
+      document.getElementById('pb-current-rank').textContent = rank.name;
+      document.getElementById('pb-next').textContent = nextRank
+        ? '→ ' + nextRank.name + ' at ' + nextRank.min + ' pts'
+        : '✦ Maximum rank achieved';
+      document.getElementById('progress-fill').style.width = progress + '%';
+
+      // Feature 1: show streak badge immediately from cached member data
+      updateStreakBadge(member.streak_count || 0);
+
+      // Stats panel
+      document.getElementById('stat-pts').textContent   = member.points;
+      document.getElementById('stat-rank').textContent  = rank.name;
+      document.getElementById('stat-since').textContent =
+        createdDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+
+      // Rank progress bar in stats panel
+      updateRankProgress(member.points);
+
+      // Referral link
+      const refLink = document.getElementById('referralLink');
+      if (refLink && member.username) {
+        refLink.textContent = 'https://vaultsparkstudios.com/vault-member/?ref=' + member.username;
+      }
+
+      const achEarned = (member.achievements || []).map(a => a.id);
+      document.getElementById('stat-achievements').textContent =
+        achEarned.length + ' / ' + VS.ACHIEVEMENT_DEFS.length;
+
+      // VaultSparked badge + CTA visibility (async subscription check)
+      const sparkedBadge = document.getElementById('profile-sparked-badge');
+      const ctaPanel     = document.getElementById('vaultsparked-cta-panel');
+      VSSupabase.from('subscriptions')
+        .select('status, plan')
+        .eq('user_id', member._id)
+        .maybeSingle()
+        .then(({ data: sub }) => {
+          const isSparked = sub && sub.status === 'active' && (sub.plan === 'vault_sparked' || sub.plan === 'pro');
+          if (sparkedBadge) sparkedBadge.style.display = isSparked ? '' : 'none';
+          if (ctaPanel)     ctaPanel.style.display     = isSparked ? 'none' : '';
+        }).catch(() => {
+          if (sparkedBadge) sparkedBadge.style.display = 'none';
+          if (ctaPanel)     ctaPanel.style.display     = '';
+        });
+
+      // Extended stats (PromoGrind / Ledger)
+      VSSupabase.rpc('get_member_stats', { p_user_id: member._id }).then(({ data: stats }) => {
+        const calcsEl  = document.getElementById('stat-calcs');
+        const ledgerEl = document.getElementById('stat-ledger');
+        if (stats && calcsEl)  calcsEl.textContent  = stats.calc_count   ?? '0';
+        if (stats && ledgerEl) ledgerEl.textContent = stats.ledger_count ?? '0';
+      }).catch(() => {
+        const calcsEl  = document.getElementById('stat-calcs');
+        const ledgerEl = document.getElementById('stat-ledger');
+        if (calcsEl)  calcsEl.textContent  = '—';
+        if (ledgerEl) ledgerEl.textContent = '—';
+      });
+
+      // Achievements grid (Feature 5: with progress bars)
+      renderAchievementsGrid(member, achEarned);
+
+      // Newsletter prefs
+      if (member.prefs) {
+        const up   = document.getElementById('toggle-updates');
+        const lore = document.getElementById('toggle-lore');
+        const acc  = document.getElementById('toggle-access');
+        if (up)   up.checked   = member.prefs.updates !== false;
+        if (lore) lore.checked = member.prefs.lore    !== false;
+        if (acc)  acc.checked  = member.prefs.access  !== false;
+      }
+
+      // Settings tab — populate
+      buildAvatarGrid(member.avatar_id || 'spark');
+      buildColorPalette(member.accent  || '#FFC400');
+      const bioInput = document.getElementById('settings-bio');
+      const bioCount = document.getElementById('bio-char-count');
+      if (bioInput) { bioInput.value = member.bio || ''; }
+      if (bioCount) { bioCount.textContent = (member.bio || '').length; }
+
+      // Account info
+      const setInfo = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      setInfo('info-username',      member.username);
+      setInfo('info-email',         member.email || '—');
+      setInfo('info-rank',          rank.name);
+      setInfo('info-pts',           member.points + ' pts');
+      setInfo('info-since',         createdDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
+      setInfo('info-days',          daysInVault === 0 ? 'Joined today' : daysInVault + (daysInVault === 1 ? ' day' : ' days'));
+      setInfo('info-member-number', member.member_number ? '#' + member.member_number + (member.member_number <= 100 ? ' — Founding Member ✦' : '') : '—');
+
+      // Check for rank-up (delayed so dashboard renders first)
+      setTimeout(() => checkRankUp(member), 800);
+
+      // Phase 2/3: load activity feed, award eligible points, load invite code
+      loadPointEvents();
+      setTimeout(() => { initPointsEconomy(member); initGameSessionMilestones(member); loadCurrentlyPlaying(member); }, 1200);
+      loadTeamPanel(member);
+      loadInviteCode();
+
+      // Feature 1: daily login bonus + streak
+      setTimeout(() => checkDailyLogin(member), 600);
+
+      // Phase 7: populate Discord status in settings
+      updateDiscordUI(member.discord_id);
+
+      // Phase 9: register service worker + load push toggle state
+      registerServiceWorker().then(() => loadPushStatus());
+
+      // Phase 10: start live studio pulse
+      initStudioPulse();
+      loadPulseNotice();
+
+      // Phase 4/5/6/7/8: load challenges, auto-complete eligible ones, reset lazy-load flags
+      _archiveLoaded   = false;
+      _chronicleLoaded = false;
+      _betaKeysLoaded  = false;
+      loadChallenges();
+      setTimeout(() => initChallenges(member), 1800);
+
+      // Feature 2: onboarding tour for new members
+      setTimeout(() => maybeStartOnboarding(member), 1200);
+
+      // Feature 3: notification center
+      initNotifCenter();
+
+      // Vault Command tab — VaultSpark account only
+      const isAdmin = member.username.toLowerCase() === 'vaultspark';
+      const adminTabEl    = document.getElementById('tab-dash-admin');
+      const navAdminLink  = document.getElementById('nav-admin-link');
+      if (adminTabEl)   adminTabEl.style.display   = isAdmin ? '' : 'none';
+      if (navAdminLink) navAdminLink.style.display = isAdmin ? '' : 'none';
+      if (isAdmin) { loadInvRequests('pending'); loadFanArtQueue('pending'); }
+
+      // Restore active tab from last session
+      const savedTab = localStorage.getItem('vs_active_tab');
+      if (savedTab && savedTab !== 'dashboard') switchDashTab(savedTab);
+
+      // What's New modal — check for unread Studio Pulse entries
+      setTimeout(() => checkWhatsNew(), 2500);
+
+      // Phase 24: anniversary check + weekly recap
+      setTimeout(() => checkVaultAnniversary(member), 3200);
+      checkWeeklyRecap(member);
+
+      // Phase 25: member spotlight + rank comparison
+      setTimeout(() => loadMemberSpotlight(), 1500);
+      setTimeout(() => loadRankComparison(member), 1800);
+    }
+
+    // ── Current member reference (for card generation etc.) ──────
+    let _currentMember = null;
+    let _lastFocus = null; // restored when a modal closes
+
+    // Traps keyboard focus inside a modal dialog; focuses first focusable element
+    function _trapFocus(el) {
+      const FOCUSABLE = 'button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+      const nodes = [...el.querySelectorAll(FOCUSABLE)];
+      if (!nodes.length) return;
+      nodes[0].focus();
+      function onKey(e) {
+        if (e.key === 'Escape') { el.dispatchEvent(new CustomEvent('vs:close')); return; }
+        if (e.key !== 'Tab') return;
+        const first = nodes[0], last = nodes[nodes.length - 1];
+        if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } }
+        else            { if (document.activeElement === last)  { e.preventDefault(); first.focus(); } }
+      }
+      el._trapHandler = onKey;
+      el.addEventListener('keydown', onKey);
+    }
+    function _releaseFocus(el) {
+      if (el && el._trapHandler) { el.removeEventListener('keydown', el._trapHandler); el._trapHandler = null; }
+      if (_lastFocus) { try { _lastFocus.focus(); } catch(_) {} _lastFocus = null; }
+    }
+
+    // ── Maps a Supabase vault_members row + user to the member shape ──────────
+    function buildMember(user, row) {
+      return {
+        _id:             user.id,
+        username:        row.username,
+        points:          row.points,
+        subscribed:      row.subscribed,
+        prefs:           row.prefs           || { updates: true, lore: true, access: true },
+        achievements:    row.achievements    || [],
+        createdAt:       row.created_at,
+        email:           user.email,
+        bio:             row.bio             || '',
+        avatar_id:       row.avatar_id       || 'spark',
+        accent:          row.accent          || '#FFC400',
+        member_number:   row.member_number   || null,
+        discord_id:      row.discord_id      || null,
+        streak_count:         row.streak_count         || 0,
+        last_login_date:      row.last_login_date      || null,
+        onboarding_completed: row.onboarding_completed || false,
+        challenge_streak:     row.challenge_streak     || 0,
+        last_challenge_date:  row.last_challenge_date  || null,
+      };
+    }
+
+    // ── Form: Register ───────────────────────────────────────────
+    document.getElementById('register-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const email      = document.getElementById('reg-email').value.trim();
+      const username   = document.getElementById('reg-username').value.trim();
+      const password   = document.getElementById('reg-password').value;
+      const inviteCode = document.getElementById('reg-invite').value.trim().toUpperCase();
+      const subscribe  = document.getElementById('reg-subscribe').checked;
+      const errEl      = document.getElementById('reg-error');
+      const btn        = this.querySelector('button[type="submit"]');
+
+      errEl.classList.remove('show');
+
+      // Client-side rate limit: max 3 registration attempts per 10 minutes
+      const rlKey = 'vs_reg_attempts';
+      const now   = Date.now();
+      try {
+        const stored = JSON.parse(localStorage.getItem(rlKey) || '[]');
+        const recent = stored.filter(function(t){ return now - t < 600000; }); // 10 min window
+        if (recent.length >= 3) {
+          errEl.textContent = 'Too many attempts. Please wait a few minutes before trying again.';
+          errEl.classList.add('show');
+          return;
+        }
+        recent.push(now);
+        localStorage.setItem(rlKey, JSON.stringify(recent));
+      } catch(_) {}
+
+      btn.textContent = 'Creating account…';
+      btn.disabled    = true;
+
+      try {
+        // 1. Validate invite code exists and is unused (fast client-side check)
+        const { data: codeCheck } = await VSSupabase
+          .from('invite_codes')
+          .select('code')
+          .eq('code', inviteCode)
+          .single();
+
+        if (!codeCheck) {
+          throw new Error('Invalid or already used invite code.');
+        }
+
+        // 2. Create Supabase auth user
+        const { data: authData, error: authErr } = await VSSupabase.auth.signUp({
+          email,
+          password,
+          options: { data: { username } },
+        });
+
+        if (authErr) throw new Error(authErr.message);
+
+        // 3. Register vault member + redeem code (server-side RPC)
+        const { data: rpcResult, error: rpcErr } = await VSSupabase
+          .rpc('register_with_invite', {
+            p_invite_code: inviteCode,
+            p_username:    username,
+            p_subscribe:   subscribe,
+          });
+
+        if (rpcErr) throw new Error(rpcErr.message);
+        if (rpcResult?.error) throw new Error(rpcResult.error);
+
+        // 4. Subscribe to Kit newsletter
+        if (subscribe && typeof VaultKit !== 'undefined') {
+          VaultKit.subscribe(email, VaultKit.ALL_TAGS).catch(() => {});
+        }
+
+        // 5. Show confirmation — user must verify email before logging in
+        errEl.style.background = 'rgba(16,185,129,0.08)';
+        errEl.style.borderColor = 'rgba(16,185,129,0.25)';
+        errEl.style.color = '#34d399';
+        errEl.textContent = 'Account created! Check your email to confirm your address, then sign in below.';
+        errEl.classList.add('show');
+        btn.textContent = 'Check your email →';
+        switchTab('login');
+
+      } catch (err) {
+        errEl.style = '';
+        errEl.textContent = err.message || 'Something went wrong. Please try again.';
+        errEl.classList.add('show');
+        btn.textContent = 'Open The Vault →';
+        btn.disabled = false;
+      }
+    });
+
+    // ── Form: Login ──────────────────────────────────────────────
+    document.getElementById('login-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const emailOrUsername = document.getElementById('login-email').value.trim();
+      const password        = document.getElementById('login-password').value;
+      const errEl           = document.getElementById('login-error');
+      const btn             = this.querySelector('button[type="submit"]');
+
+      errEl.classList.remove('show');
+      btn.textContent = 'Entering…';
+      btn.disabled    = true;
+
+      try {
+        // Supabase sign-in requires email. If they entered a Vault Handle,
+        // look up their email via RPC (which can read auth.users server-side).
+        let email = emailOrUsername;
+        if (!emailOrUsername.includes('@')) {
+          const { data: lookedUp } = await VSSupabase
+            .rpc('get_email_by_username', { p_username: emailOrUsername });
+
+          if (!lookedUp) throw new Error('No account found with that email or handle.');
+          email = lookedUp;
+        }
+
+        const { data, error } = await VSSupabase.auth.signInWithPassword({ email, password });
+        if (error) throw new Error(error.message);
+
+        // Load vault_members row
+        const { data: row, error: rowErr } = await VSSupabase
+          .from('vault_members')
+          .select('*')
+          .eq('id', data.user.id)
+          .single();
+
+        if (rowErr || !row) throw new Error('Account found but member profile is missing. Contact support.');
+
+        const member = buildMember(data.user, row);
+
+        // If a ?next= gated app is waiting, redirect with tokens
+        if (VSGate.redirect(data.session)) return;
+
+        showDashboard(member);
+
+      } catch (err) {
+        errEl.textContent = err.message || 'Sign-in failed. Please try again.';
+        errEl.classList.add('show');
+        btn.textContent = 'Enter The Vault →';
+        btn.disabled = false;
+      }
+    });
+
+    // ── OAuth Sign-In ────────────────────────────────────────────
+    // Signs in or registers existing members. New OAuth users who have
+    // never registered will be prompted to complete their profile.
+    async function oauthSignIn(provider) {
+      const { error } = await VSSupabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: window.location.origin + window.location.pathname,
+        },
+      });
+      if (error) {
+        const errEl = document.getElementById('login-error');
+        errEl.textContent = error.message;
+        errEl.classList.add('show');
+      }
+      // Browser redirects to provider — no further action needed here
+    }
+
+    // ── Form: Forgot Password ────────────────────────────────────
+    document.getElementById('forgot-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const errEl     = document.getElementById('forgot-error');
+      const successEl = document.getElementById('forgot-success');
+      const btn       = this.querySelector('button[type="submit"]');
+      const email     = document.getElementById('forgot-email').value.trim();
+      errEl.classList.remove('show');
+      successEl.style.display = 'none';
+      btn.textContent = 'Sending…';
+      btn.disabled    = true;
+      try {
+        const redirectTo = window.location.origin + window.location.pathname + '#reset';
+        const { error } = await VSSupabase.auth.resetPasswordForEmail(email, { redirectTo });
+        if (error) throw new Error(error.message);
+        successEl.textContent = 'Reset link sent! Check your inbox (and spam folder) for an email from VaultSpark Studios.';
+        successEl.style.display = 'block';
+        btn.textContent = 'Sent ✓';
+      } catch(err) {
+        errEl.textContent = err.message || 'Could not send reset email. Please try again.';
+        errEl.classList.add('show');
+        btn.textContent = 'Send Reset Link →';
+        btn.disabled    = false;
+      }
+    });
+
+    // ── Form: Set New Password ───────────────────────────────────
+    document.getElementById('reset-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const errEl   = document.getElementById('reset-error');
+      const btn     = this.querySelector('button[type="submit"]');
+      const pw      = document.getElementById('reset-password').value;
+      const confirm = document.getElementById('reset-confirm').value;
+      errEl.classList.remove('show');
+      if (pw !== confirm) {
+        errEl.textContent = 'Passwords do not match.';
+        errEl.classList.add('show');
+        return;
+      }
+      btn.textContent = 'Saving…';
+      btn.disabled    = true;
+      try {
+        const { error } = await VSSupabase.auth.updateUser({ password: pw });
+        if (error) throw new Error(error.message);
+        // Password updated — sign them in and go to dashboard
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (session) {
+          const { data: row } = await VSSupabase.from('vault_members').select('*').eq('id', session.user.id).single();
+          if (row) { showDashboard(buildMember(session.user, row)); return; }
+        }
+        switchTab('login');
+        document.getElementById('login-error').textContent = 'Password updated! Please sign in.';
+        document.getElementById('login-error').classList.add('show');
+      } catch(err) {
+        errEl.textContent = err.message || 'Could not update password. Try requesting a new reset link.';
+        errEl.classList.add('show');
+        btn.textContent = 'Set New Password →';
+        btn.disabled    = false;
+      }
+    });
+
+    // ── Form: OAuth Complete Profile ─────────────────────────────
+    document.getElementById('oauth-complete-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const errEl    = document.getElementById('oauth-complete-error');
+      const btn      = this.querySelector('button[type="submit"]');
+      const username = document.getElementById('oauth-username').value.trim();
+      const invite   = document.getElementById('oauth-invite').value.trim().toUpperCase();
+      const subscribe = document.getElementById('oauth-subscribe').checked;
+      errEl.classList.remove('show');
+      btn.textContent = 'Completing…';
+      btn.disabled    = true;
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) throw new Error('Session expired. Please sign in again.');
+        const { error: rpcErr } = await VSSupabase.rpc('register_with_invite', {
+          p_invite_code: invite,
+          p_username:    username,
+          p_subscribe:   subscribe,
+        });
+        if (rpcErr) throw new Error(rpcErr.message);
+        const { data: row } = await VSSupabase.from('vault_members').select('*').eq('id', session.user.id).single();
+        if (subscribe && session.user.email) {
+          VS.kitSubscribe(session.user.email, username, { updates: true, lore: true, access: true });
+        }
+        if (row) { showDashboard(buildMember(session.user, row)); }
+      } catch(err) {
+        errEl.textContent = err.message || 'Could not complete registration. Please try again.';
+        errEl.classList.add('show');
+        btn.textContent = 'Complete Registration →';
+        btn.disabled    = false;
+      }
+    });
+
+    // ── Rank-up ceremony ────────────────────────────────────────
+    const RANK_FLAVOR = {
+      'Vault Runner':   'The signal grows stronger. The vault takes notice.',
+      'Rift Scout':     'You\'ve scouted beyond the threshold. The rift opens wider.',
+      'Vault Guard':    'The vault entrusts you to guard its signal. Stand firm.',
+      'Vault Breacher': 'You go where others can\'t. The vault\'s inner layers are yours.',
+      'Void Operative': 'Clearance level: deep. The void doesn\'t scare you anymore.',
+      'Vault Keeper':   'The vault keeps no secrets from you now. You guard what most will never find.',
+      'Forge Master':   'Forged in the vault\'s heat. Few make it this deep — and now you\'re one of them.',
+      'The Sparked':    'Maximum rank — achieved. You are the reason the vault exists. The spark is yours.',
+    };
+
+    function checkRankUp(member) {
+      const rankIdx = VS.RANKS.findIndex(r => r.name === VS.getRank(member.points).name);
+      const key = 'vs_rank_' + member._id;
+      const stored = localStorage.getItem(key);
+      if (stored !== null && rankIdx > parseInt(stored, 10)) {
+        showRankCeremony(VS.RANKS[rankIdx]);
+      }
+      localStorage.setItem(key, rankIdx);
+    }
+
+    function showRankCeremony(rank) {
+      const RANK_EMOJIS = { 'Vault Runner': '🏃', 'Rift Scout': '🔭', 'Vault Guard': '🛡️', 'Vault Breacher': '🔧', 'Void Operative': '🕵️', 'Vault Keeper': '🔒', 'Forge Master': '🔥', 'The Sparked': '🌟' };
+      document.getElementById('ceremony-emoji').textContent     = RANK_EMOJIS[rank.name] || '⚡';
+      document.getElementById('ceremony-rank-name').textContent = rank.name;
+      document.getElementById('ceremony-rank-name').style.color = rank.color;
+      document.getElementById('ceremony-flavor').textContent    = RANK_FLAVOR[rank.name] || 'The vault recognizes your signal.';
+
+      // Spawn particles
+      const container = document.getElementById('cer-particles');
+      container.innerHTML = '';
+      const colors = ['#FFC400','#FF7A00','#1FA2FF','#ffffff','#34d399'];
+      for (let i = 0; i < 24; i++) {
+        const p = document.createElement('div');
+        p.className = 'cer-particle';
+        const angle = (i / 24) * 360;
+        const dist  = 140 + Math.random() * 120;
+        p.style.cssText = [
+          'background:' + colors[i % colors.length],
+          '--tx:' + (Math.cos(angle * Math.PI / 180) * dist) + 'px',
+          '--ty:' + (Math.sin(angle * Math.PI / 180) * dist) + 'px',
+          'animation-delay:' + (Math.random() * 0.25) + 's',
+        ].join(';');
+        container.appendChild(p);
+      }
+      _lastFocus = _lastFocus || document.activeElement;
+      document.getElementById('ceremony-overlay').classList.add('show');
+      setTimeout(() => { const btn = document.querySelector('#ceremony-overlay .ceremony-dismiss'); if (btn) btn.focus(); }, 50);
+    }
+
+    function dismissCeremony() {
+      document.getElementById('ceremony-overlay').classList.remove('show');
+      _releaseFocus(document.querySelector('.ceremony-card'));
+    }
+
+    function dismissCardModal() {
+      document.getElementById('card-modal-overlay').classList.remove('show');
+      _releaseFocus(document.querySelector('.card-modal'));
+    }
+
+    // ── Feature 2: Onboarding tour ────────────────────────────────
+    const ONBOARDING_STEPS = [
+      {
+        title:      'Welcome to the Vault',
+        desc:       'You\'re in. This is your Vault Member portal — the hub for your rank, achievements, challenges, and classified lore. Let\'s take a quick look around.',
+        targetId:   'profile-card',
+        emoji:      '🔓',
+      },
+      {
+        title:      'Your Dashboard',
+        desc:       'This rank progress bar tracks your Vault Points. Earn XP to rank up through 9 tiers — from Spark Initiate all the way to The Sparked — and unlock exclusive lore.',
+        targetId:   'profile-card',
+        emoji:      '⚡',
+      },
+      {
+        title:      'Take on Challenges',
+        desc:       'Complete challenges to earn XP fast. New challenges drop weekly — check back every Monday for a fresh set of missions.',
+        targetId:   'tab-dash-challenges',
+        emoji:      '🎯',
+      },
+      {
+        title:      'Classified Archive',
+        desc:       'Your rank unlocks classified intel files. Keep grinding — higher ranks reveal deeper secrets about the Vault universe and its entities.',
+        targetId:   'tab-dash-archive',
+        emoji:      '📁',
+      },
+      {
+        title:      'Customize Your Profile',
+        desc:       'Set your avatar and write a bio to earn your first bonus XP. Your member card is unique — download it and share your rank with the world.',
+        targetId:   'tab-dash-settings',
+        emoji:      '✍️',
+      },
+    ];
+
+    let _onboardingStep = 0;
+
+    function maybeStartOnboarding(member) {
+      // Check DB flag first (populated after SQL migration: ALTER TABLE vault_members ADD COLUMN onboarding_completed boolean DEFAULT false)
+      if (member.onboarding_completed) { localStorage.setItem('onboarding_complete', '1'); return; }
+      if (localStorage.getItem('onboarding_complete')) return;
+      if (member.points > 0) { localStorage.setItem('onboarding_complete', '1'); return; }
+      _lastFocus = document.activeElement;
+      _onboardingStep = 0;
+      renderOnboardingStep();
+      document.getElementById('onboarding-overlay').style.display = '';
+      setTimeout(() => _trapFocus(document.getElementById('onboarding-card')), 50);
+    }
+
+    function renderOnboardingStep() {
+      const step  = ONBOARDING_STEPS[_onboardingStep];
+      const total = ONBOARDING_STEPS.length;
+      const overlay = document.getElementById('onboarding-overlay');
+      if (!overlay || !step) return;
+
+      document.getElementById('onboarding-step-label').textContent = 'Step ' + (_onboardingStep + 1) + ' / ' + total;
+      document.getElementById('onboarding-title').textContent      = step.emoji + ' ' + step.title;
+      document.getElementById('onboarding-desc').textContent       = step.desc;
+      document.getElementById('onboarding-next-btn').textContent   = _onboardingStep === total - 1 ? 'Enter the Vault →' : 'Next →';
+
+      // Build step dots
+      const dotsEl = document.getElementById('onboarding-dots');
+      if (dotsEl) {
+        dotsEl.innerHTML = ONBOARDING_STEPS.map((_, i) =>
+          '<div style="width:7px;height:7px;border-radius:50%;background:' + (i === _onboardingStep ? 'var(--gold)' : 'rgba(255,255,255,0.18)') + ';transition:background 0.2s;"></div>'
+        ).join('');
+      }
+
+      // Position spotlight on target element
+      const targetEl = step.targetId ? document.getElementById(step.targetId) : null;
+      const spotlight = document.getElementById('onboarding-spotlight');
+      const card      = document.getElementById('onboarding-card');
+
+      if (targetEl && spotlight) {
+        const rect    = targetEl.getBoundingClientRect();
+        const pad     = 8;
+        spotlight.style.left   = (rect.left - pad) + 'px';
+        spotlight.style.top    = (rect.top + window.scrollY - pad) + 'px';
+        spotlight.style.width  = (rect.width + pad * 2) + 'px';
+        spotlight.style.height = (rect.height + pad * 2) + 'px';
+
+        // Position card below or above target
+        if (card) {
+          const cardH = 220;
+          const cardW = 360;
+          let cardTop  = rect.bottom + window.scrollY + 18;
+          let cardLeft = rect.left;
+          if (cardTop + cardH > window.innerHeight + window.scrollY - 20) {
+            cardTop = rect.top + window.scrollY - cardH - 18;
+          }
+          if (cardLeft + cardW > window.innerWidth - 16) {
+            cardLeft = window.innerWidth - cardW - 16;
+          }
+          if (cardLeft < 8) cardLeft = 8;
+          card.style.left = cardLeft + 'px';
+          card.style.top  = cardTop + 'px';
+          card.style.bottom = '';
+          card.style.right  = '';
+        }
+      } else if (card) {
+        // Centre card if no target
+        card.style.left   = '50%';
+        card.style.top    = '50%';
+        card.style.transform = 'translate(-50%,-50%)';
+        if (spotlight) { spotlight.style.width = '0'; spotlight.style.height = '0'; }
+      }
+
+      // Highlight the target element briefly
+      if (targetEl) {
+        targetEl.style.position = 'relative';
+        targetEl.style.zIndex   = '1103';
+      }
+    }
+
+    function onboardingNext() {
+      // Clear z-index on current target
+      const cur = ONBOARDING_STEPS[_onboardingStep];
+      if (cur && cur.targetId) {
+        const el = document.getElementById(cur.targetId);
+        if (el) { el.style.zIndex = ''; }
+      }
+
+      _onboardingStep++;
+      if (_onboardingStep >= ONBOARDING_STEPS.length) {
+        onboardingSkip();
+      } else {
+        renderOnboardingStep();
+      }
+    }
+
+    function onboardingSkip() {
+      // Clear any lingering z-index overrides
+      ONBOARDING_STEPS.forEach(s => {
+        if (s.targetId) {
+          const el = document.getElementById(s.targetId);
+          if (el) el.style.zIndex = '';
+        }
+      });
+      localStorage.setItem('onboarding_complete', '1');
+      const overlay = document.getElementById('onboarding-overlay');
+      if (overlay) overlay.style.display = 'none';
+      _releaseFocus(document.getElementById('onboarding-card'));
+      // Persist to DB so new devices skip the tour
+      VSSupabase.auth.getSession().then(({ data: { session } }) => {
+        if (session) VSSupabase.from('vault_members').update({ onboarding_completed: true }).eq('id', session.user.id).catch(() => {});
+      });
+    }
+
+    // ── Phase 2: XP chip notification ────────────────────────────
+    function showXpChip(pts, label) {
+      const existing = document.querySelector('.xp-chip');
+      if (existing) existing.remove();
+      const chip = document.createElement('div');
+      chip.className = 'xp-chip';
+      chip.setAttribute('role', 'status');
+      chip.setAttribute('aria-live', 'assertive');
+      chip.textContent = '+' + pts + ' pts — ' + (label || 'Vault Points');
+      document.body.appendChild(chip);
+      chip.addEventListener('animationend', () => chip.remove());
+    }
+
+    // ── Feature 3: In-portal notification center ─────────────────
+    let _notifPanelOpen   = false;
+    let _notifRealtimeCh  = null;
+    let _notifItems       = [];   // cache for badge counting
+
+    const NOTIF_TYPE_ICONS = { update: '🚀', alert: '⚠️', drop: '💎', rank_up: '⭐', default: '📢' };
+
+    function toggleNotifPanel() {
+      _notifPanelOpen = !_notifPanelOpen;
+      const panel = document.getElementById('notif-panel');
+      if (!panel) return;
+      panel.style.display = _notifPanelOpen ? 'block' : 'none';
+      if (_notifPanelOpen) {
+        loadNotifications();
+        markNotifsRead();
+      }
+    }
+
+    function closeNotifPanel() {
+      _notifPanelOpen = false;
+      const panel = document.getElementById('notif-panel');
+      if (panel) panel.style.display = 'none';
+    }
+
+    function markNotifsRead() {
+      localStorage.setItem('notifications_last_read', new Date().toISOString());
+      updateNotifBadge(0);
+    }
+
+    function updateNotifBadge(count) {
+      const badge = document.getElementById('notif-badge');
+      if (!badge) return;
+      if (count > 0) {
+        badge.textContent   = count > 9 ? '9+' : count;
+        badge.style.display = 'flex';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
+    function countUnread(items) {
+      const lastRead = localStorage.getItem('notifications_last_read');
+      if (!lastRead) return items.length;
+      return items.filter(n => new Date(n.created_at) > new Date(lastRead)).length;
+    }
+
+    async function loadNotifications() {
+      const list = document.getElementById('notif-list');
+      if (!list) return;
+      list.innerHTML = '<div style="padding:1rem 1.2rem;font-size:0.86rem;color:var(--dim);">Loading…</div>';
+
+      try {
+        // Fetch Studio Pulse (last 10)
+        const [{ data: pulseItems }, { data: rankUps }] = await Promise.all([
+          VSSupabase.from('studio_pulse').select('id,type,message,created_at').order('created_at', { ascending: false }).limit(10),
+          VSSupabase.from('point_events').select('id,label,created_at').or('label.ilike.%rank up%,reason.ilike.%rank_up%').order('created_at', { ascending: false }).limit(5),
+        ]);
+
+        const combined = [
+          ...(pulseItems || []).map(p => ({ ...p, _kind: 'pulse'   })),
+          ...(rankUps   || []).map(r => ({ ...r, type: 'rank_up', message: r.label || 'Rank Up!', _kind: 'rankup' })),
+        ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 12);
+
+        _notifItems = combined;
+        updateNotifBadge(countUnread(combined));
+
+        if (combined.length === 0) {
+          list.innerHTML = '<div style="padding:1.2rem 1.2rem;font-size:0.86rem;color:var(--dim);line-height:1.55;">No notifications yet. Studio Pulse broadcasts will appear here.</div>';
+          return;
+        }
+
+        const lastRead = localStorage.getItem('notifications_last_read');
+        list.innerHTML = combined.map(n => {
+          const isUnread = lastRead ? new Date(n.created_at) > new Date(lastRead) : true;
+          const icon     = NOTIF_TYPE_ICONS[n.type] || NOTIF_TYPE_ICONS.default;
+          const time     = formatTimeAgo(new Date(n.created_at));
+          const click    = n._kind === 'rankup' ? 'onclick="switchDashTab(\'dashboard\');closeNotifPanel();"' : '';
+          const cursor   = n._kind === 'rankup' ? 'cursor:pointer;' : '';
+          return `<div ${click} style="${cursor}display:flex;align-items:flex-start;gap:0.75rem;padding:0.75rem 1.2rem;border-bottom:1px solid rgba(255,255,255,0.05);${isUnread ? 'background:rgba(255,196,0,0.03);' : ''}transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='${isUnread ? 'rgba(255,196,0,0.03)' : 'transparent'}'">
+            <span style="font-size:1rem;flex-shrink:0;margin-top:2px;">${icon}</span>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.855rem;color:var(--text);line-height:1.4;">${escHtml(n.message)}</div>
+              <div style="font-size:0.72rem;color:var(--dim);margin-top:0.2rem;">${time}</div>
+            </div>
+            ${isUnread ? '<span style="width:7px;height:7px;border-radius:50%;background:#ef4444;flex-shrink:0;margin-top:6px;"></span>' : ''}
+          </div>`;
+        }).join('');
+
+      } catch (_) {
+        list.innerHTML = '<div style="padding:1rem 1.2rem;font-size:0.86rem;color:var(--dim);">Could not load notifications.</div>';
+      }
+    }
+
+    function initNotifCenter() {
+      const wrap = document.getElementById('notif-bell-wrap');
+      if (wrap) wrap.style.display = '';
+
+      // Realtime: watch studio_pulse for new inserts
+      if (_notifRealtimeCh) { VSSupabase.removeChannel(_notifRealtimeCh); _notifRealtimeCh = null; }
+      _notifRealtimeCh = VSSupabase.channel('notif-pulse-ch')
+        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'studio_pulse' }, (payload) => {
+          _notifItems.unshift({ ...payload.new, _kind: 'pulse' });
+          updateNotifBadge(countUnread(_notifItems));
+          if (_notifPanelOpen) loadNotifications();
+        })
+        .subscribe();
+
+      // Set initial unread count from cached data (runs after loadNotifications is called elsewhere)
+      // We set it on open; show 0 initially then a quick fetch
+      setTimeout(async () => {
+        try {
+          const { data: pulse } = await VSSupabase.from('studio_pulse').select('id,created_at').order('created_at', { ascending: false }).limit(10);
+          _notifItems = (pulse || []).map(p => ({ ...p, _kind: 'pulse' }));
+          updateNotifBadge(countUnread(_notifItems));
+        } catch (_) {}
+      }, 500);
+    }
+
+    // Close notif panel on outside click
+    document.addEventListener('click', function(e) {
+      if (_notifPanelOpen) {
+        const wrap = document.getElementById('notif-bell-wrap');
+        if (wrap && !wrap.contains(e.target)) closeNotifPanel();
+      }
+    });
+
+    // ── Generic toast notification ────────────────────────────────
+    function showToast(message, opts) {
+      // opts: { emoji, color, duration }
+      opts = opts || {};
+      const bg    = opts.color || 'rgba(255,196,0,0.15)';
+      const bd    = opts.color ? opts.color.replace('0.15', '0.4') : 'rgba(255,196,0,0.4)';
+      const dur   = opts.duration || 3200;
+      const toast = document.createElement('div');
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+      toast.style.cssText = [
+        'position:fixed',
+        'left:50%',
+        'transform:translateX(-50%)',
+        'bottom:130px',
+        'background:' + bg,
+        'border:1px solid ' + bd,
+        'border-radius:999px',
+        'padding:0.6rem 1.5rem',
+        'font-size:0.98rem',
+        'font-weight:700',
+        'color:#fff',
+        'pointer-events:none',
+        'z-index:510',
+        'white-space:nowrap',
+        'box-shadow:0 4px 24px rgba(0,0,0,0.3)',
+        'animation:xp-fly ' + (dur / 1000) + 's ease-out forwards',
+      ].join(';');
+      toast.textContent = (opts.emoji ? opts.emoji + ' ' : '') + message;
+      document.body.appendChild(toast);
+      toast.addEventListener('animationend', () => toast.remove());
+    }
+
+    // ── Feature 1: Daily login bonus + streak system ──────────────
+    async function checkDailyLogin(member) {
+      try {
+        const todayUTC = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+        if (member.last_login_date === todayUTC) {
+          // Already logged in today — just update streak badge
+          updateStreakBadge(member.streak_count);
+          return;
+        }
+
+        // Work out new streak count
+        const yesterday = new Date();
+        yesterday.setUTCDate(yesterday.getUTCDate() - 1);
+        const yesterdayUTC = yesterday.toISOString().slice(0, 10);
+        const wasConsecutive = member.last_login_date === yesterdayUTC;
+        const newStreak = wasConsecutive ? member.streak_count + 1 : 1;
+
+        // 1. Award daily login XP
+        await VSSupabase.rpc('award_points', {
+          p_reason:   'daily_login',
+          p_points:   10,
+          p_label:    'Daily Login',
+          p_once_per: null,
+        }).catch(() => {});
+
+        // 2. Update streak + last_login_date in vault_members
+        await VSSupabase.from('vault_members')
+          .update({ last_login_date: todayUTC, streak_count: newStreak })
+          .eq('id', member._id)
+          .catch(() => {});
+
+        // Update local reference so refreshes are correct
+        member.streak_count    = newStreak;
+        member.last_login_date = todayUTC;
+
+        // 3. Show streak toast
+        showToast('Day ' + newStreak + ' streak! +10 XP', {
+          emoji: '🔥', color: 'rgba(251,146,60,0.18)', duration: 3200
+        });
+
+        // 4. Streak milestone bonuses
+        const MILESTONES = { 7: 50, 14: 100, 30: 200, 60: 500, 100: 1000 };
+        if (MILESTONES[newStreak]) {
+          const bonus = MILESTONES[newStreak];
+          await VSSupabase.rpc('award_points', {
+            p_reason:   'streak_milestone_' + newStreak,
+            p_points:   bonus,
+            p_label:    newStreak + '-Day Streak Bonus',
+            p_once_per: null,
+          }).catch(() => {});
+          setTimeout(() => {
+            showToast(newStreak + '-Day Streak! +' + bonus + ' bonus XP', {
+              emoji: '🏆', color: 'rgba(255,196,0,0.18)', duration: 4000
+            });
+          }, 1600);
+        }
+
+        updateStreakBadge(newStreak);
+        // Refresh points after a short delay
+        setTimeout(() => refreshPointsDisplay(), 1800);
+
+      } catch (_) { /* non-fatal */ }
+    }
+
+    function updateStreakBadge(streak) {
+      const badge = document.getElementById('streak-badge');
+      const cnt   = document.getElementById('streak-count-display');
+      if (!badge || !cnt) return;
+      if (streak && streak > 0) {
+        cnt.textContent  = streak;
+        badge.style.display = '';
+      } else {
+        badge.style.display = 'none';
+      }
+    }
+
+    // ── Phase 2: Award points for this session's eligible actions ─
+    async function initPointsEconomy(member) {
+      const uid = member._id;
+      // localStorage flag prefix: vs_pts_{uid}_{reason}
+      const flag = (reason) => 'vs_pts_' + uid + '_' + reason;
+      const hasFlag = (reason) => !!localStorage.getItem(flag(reason));
+      const setFlag = (reason) => localStorage.setItem(flag(reason), '1');
+
+      const toAward = [];
+
+      // Subscribe to Vault Dispatch (25 pts, once ever)
+      if (member.subscribed && !hasFlag('subscribed')) {
+        toAward.push({ reason: 'subscribed', pts: 25, label: 'Subscribed to Vault Dispatch' });
+      }
+
+      // Bio set (15 pts, once ever)
+      if (member.bio && member.bio.trim().length > 0 && !hasFlag('bio_set')) {
+        toAward.push({ reason: 'bio_set', pts: 15, label: 'Completed your profile bio' });
+      }
+
+      // Avatar customized (10 pts, once ever)
+      if (member.avatar_id && member.avatar_id !== 'spark' && !hasFlag('avatar_customized')) {
+        toAward.push({ reason: 'avatar_customized', pts: 10, label: 'Customized your avatar' });
+      }
+
+      // Game visits (set by localStorage on game pages, award once per game)
+      const gameVisits = [
+        { key: 'vs_visited_cod',   reason: 'game_visit_cod',    pts: 10, label: 'Visited Call of Doodie' },
+        { key: 'vs_visited_gm',    reason: 'game_visit_gridiron', pts: 10, label: 'Visited Gridiron GM' },
+        { key: 'vs_visited_vsfgm', reason: 'game_visit_vsfgm',  pts: 10, label: 'Visited VaultSpark Football GM' },
+      ];
+      for (const v of gameVisits) {
+        if (localStorage.getItem(v.key) && !hasFlag(v.reason)) {
+          toAward.push({ reason: v.reason, pts: v.pts, label: v.label });
+        }
+      }
+
+      // Lore read (set by localStorage on lore page)
+      if (localStorage.getItem('vs_visited_dreadspike') && !hasFlag('lore_read_dreadspike')) {
+        toAward.push({ reason: 'lore_read_dreadspike', pts: 15, label: 'Read DreadSpike classified file' });
+      }
+
+      if (toAward.length === 0) return;
+
+      let totalAwarded = 0;
+      let lastLabel = '';
+      for (const item of toAward) {
+        try {
+          const { data } = await VSSupabase.rpc('award_points', {
+            p_reason:   item.reason,
+            p_points:   item.pts,
+            p_label:    item.label,
+            p_once_per: 'ever',
+          });
+          if (data?.ok) {
+            setFlag(item.reason);
+            totalAwarded += item.pts;
+            lastLabel = item.label;
+          } else if (data?.skipped) {
+            setFlag(item.reason); // already in DB, don't retry
+          }
+        } catch (_) { /* non-fatal */ }
+      }
+
+      if (totalAwarded > 0) {
+        showXpChip(totalAwarded, toAward.length === 1 ? lastLabel : 'Multiple actions');
+        // Refresh points display from DB
+        const { data: row } = await VSSupabase.from('vault_members').select('points').eq('id', uid).single();
+        if (row) {
+          const newPts = row.points;
+          document.getElementById('profile-pts').textContent = newPts + ' pts';
+          document.getElementById('stat-pts').textContent    = newPts;
+          document.getElementById('info-pts').textContent    = newPts + ' pts';
+          const rank = VS.getRank(newPts);
+          const progress = VS.getRankProgress(newPts);
+          document.getElementById('progress-fill').style.width = progress + '%';
+          document.getElementById('stat-rank').textContent  = rank.name;
+          document.getElementById('info-rank').textContent  = rank.name;
+          updateRankProgress(newPts);
+          // Reload activity
+          loadPointEvents();
+        }
+      }
+    }
+
+    // ── Phase 36: Game session milestone awards ───────────────────
+    async function initGameSessionMilestones(member) {
+      const uid = member._id;
+      const flag    = (r) => 'vs_pts_' + uid + '_' + r;
+      const hasFlag = (r) => !!localStorage.getItem(flag(r));
+      const setFlag = (r) => localStorage.setItem(flag(r), '1');
+
+      const MILESTONES = [
+        { game: 'call-of-doodie',         steps: [
+          { n: 5,  reason: 'gs_cod_5',   pts: 25,  label: '5 Call of Doodie sessions' },
+          { n: 10, reason: 'gs_cod_10',  pts: 50,  label: '10 Call of Doodie sessions' },
+          { n: 25, reason: 'gs_cod_25',  pts: 100, label: '25 Call of Doodie sessions' },
+        ]},
+        { game: 'gridiron-gm',            steps: [
+          { n: 5,  reason: 'gs_ggm_5',   pts: 25,  label: '5 Gridiron GM sessions' },
+          { n: 10, reason: 'gs_ggm_10',  pts: 50,  label: '10 Gridiron GM sessions' },
+          { n: 25, reason: 'gs_ggm_25',  pts: 100, label: '25 Gridiron GM sessions' },
+        ]},
+        { game: 'vaultspark-football-gm', steps: [
+          { n: 5,  reason: 'gs_vsfgm_5',   pts: 25,  label: '5 Football GM sessions' },
+          { n: 10, reason: 'gs_vsfgm_10',  pts: 50,  label: '10 Football GM sessions' },
+          { n: 25, reason: 'gs_vsfgm_25',  pts: 100, label: '25 Football GM sessions' },
+        ]},
+      ];
+
+      // Only proceed if any milestone is not yet locally flagged
+      const needsCheck = MILESTONES.some(g => g.steps.some(s => !hasFlag(s.reason)));
+      if (!needsCheck) return;
+
+      try {
+        // Single query: count sessions grouped by game_slug for this user
+        const { data: rows } = await VSSupabase
+          .from('game_sessions')
+          .select('game_slug')
+          .eq('user_id', uid);
+        if (!Array.isArray(rows)) return;
+
+        const counts = {};
+        rows.forEach(r => { counts[r.game_slug] = (counts[r.game_slug] || 0) + 1; });
+
+        const toAward = [];
+        for (const g of MILESTONES) {
+          const count = counts[g.game] || 0;
+          for (const step of g.steps) {
+            if (count >= step.n && !hasFlag(step.reason)) {
+              toAward.push(step);
+            }
+          }
+        }
+
+        let totalAwarded = 0;
+        for (const item of toAward) {
+          try {
+            const { data } = await VSSupabase.rpc('award_points', {
+              p_reason:   item.reason,
+              p_points:   item.pts,
+              p_label:    item.label,
+              p_once_per: 'ever',
+            });
+            if (data?.ok || data?.skipped) setFlag(item.reason);
+            if (data?.ok) totalAwarded += item.pts;
+          } catch (_) {}
+        }
+
+        if (totalAwarded > 0) {
+          showXpChip(totalAwarded, toAward.length === 1 ? toAward[0].label : 'Game milestones reached');
+          setTimeout(() => refreshPointsDisplay(), 1800);
+        }
+      } catch (_) {}
+    }
+
+    // ── Phase 42: Currently playing badge ────────────────────────
+    async function loadCurrentlyPlaying(member) {
+      const GAME_NAMES = {
+        'call-of-doodie':         'Call of Doodie',
+        'gridiron-gm':            'Gridiron GM',
+        'vaultspark-football-gm': 'VaultSpark Football GM',
+      };
+      try {
+        const { data } = await VSSupabase
+          .from('game_sessions')
+          .select('game_slug,played_at')
+          .eq('user_id', member._id)
+          .order('played_at', { ascending: false })
+          .limit(1)
+          .single();
+        if (!data) return;
+        const badge = document.getElementById('currently-playing-badge');
+        if (!badge) return;
+        const name     = GAME_NAMES[data.game_slug] || data.game_slug;
+        const today    = new Date().toISOString().slice(0, 10);
+        const isToday  = data.played_at.slice(0, 10) === today;
+        const label    = isToday ? 'Playing' : 'Last played';
+        const color    = isToday ? '#10B981' : '#94a3b8';
+        const bg       = isToday ? 'rgba(16,185,129,0.1)' : 'rgba(148,163,184,0.08)';
+        const border   = isToday ? 'rgba(16,185,129,0.25)' : 'rgba(148,163,184,0.18)';
+        badge.style.display = '';
+        badge.innerHTML = `<span style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.78rem;font-weight:700;color:${color};background:${bg};border:1px solid ${border};border-radius:999px;padding:0.22rem 0.65rem;">🎮 ${label}: ${name}</span>`;
+      } catch (_) {}
+    }
+
+    // ── Phase 43: Teams ──────────────────────────────────────────
+    const TEAM_SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+    const TEAM_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+
+    function teamAuthH(tok) {
+      return { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json' };
+    }
+
+    async function loadTeamPanel(member) {
+      const el = document.getElementById('team-content');
+      if (!el || !member) return;
+      try {
+        const { data } = await VSSupabase.rpc('get_my_team');
+        if (!data) {
+          renderNoTeam(el, member);
+        } else {
+          renderTeam(el, data, member);
+        }
+      } catch (_) { el.innerHTML = '<span style="color:var(--dim);">Unable to load team.</span>'; }
+    }
+
+    function renderNoTeam(el, member) {
+      el.innerHTML = `
+        <div style="margin-bottom:1rem;color:var(--muted);font-size:0.82rem;line-height:1.5;">
+          You're not on a team yet. Create one or join with an invite code.
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+          <div>
+            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:0.4rem;">Create a Team</div>
+            <div style="display:flex;gap:0.5rem;">
+              <input id="team-create-name" type="text" maxlength="30" placeholder="Team name" autocomplete="off"
+                style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.5rem 0.75rem;color:var(--text);font-family:inherit;font-size:0.85rem;" />
+              <button onclick="createTeam('${member._id}')"
+                style="background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.25);color:var(--gold);padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
+                Create
+              </button>
+            </div>
+          </div>
+          <div>
+            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:0.4rem;">Join a Team</div>
+            <div style="display:flex;gap:0.5rem;">
+              <input id="team-join-code" type="text" maxlength="6" placeholder="6-char invite code" autocomplete="off"
+                style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.5rem 0.75rem;color:var(--text);font-family:inherit;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;" />
+              <button onclick="joinTeam('${member._id}')"
+                style="background:rgba(31,162,255,0.1);border:1px solid rgba(31,162,255,0.25);color:#1FA2FF;padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
+                Join
+              </button>
+            </div>
+          </div>
+          <div id="team-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;"></div>
+        </div>`;
+    }
+
+    function renderTeam(el, data, member) {
+      const t = data.team;
+      const roster = Array.isArray(data.roster) ? data.roster : [];
+      const isLeader = roster.some(r => r.user_id === member._id && r.role === 'leader');
+      const rosterHtml = roster.map(r =>
+        `<div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+          <span style="font-size:1rem;">${r.role === 'leader' ? '👑' : '🏃'}</span>
+          <span style="flex:1;font-size:0.85rem;color:var(--text);font-weight:${r.user_id === member._id ? '700' : '400'};">${escHtml(r.username)}${r.user_id === member._id ? ' <span style="font-size:0.7rem;color:var(--dim);">(you)</span>' : ''}</span>
+          <span style="font-size:0.72rem;color:var(--dim);">${r.role}</span>
+        </div>`
+      ).join('');
+      el.innerHTML = `
+        <div style="background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.12);border-radius:12px;padding:1rem;margin-bottom:0.75rem;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.5rem;">
+            <div>
+              <div style="font-weight:700;font-size:1rem;color:var(--text);">${escHtml(t.name)}</div>
+              <div style="font-size:0.72rem;color:var(--dim);margin-top:0.2rem;">
+                Invite code: <code style="background:rgba(255,255,255,0.07);padding:0.1rem 0.4rem;border-radius:4px;letter-spacing:0.1em;">${t.invite_code}</code>
+                <button onclick="navigator.clipboard.writeText('${t.invite_code}');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)"
+                  style="background:transparent;border:none;color:#1FA2FF;font-size:0.7rem;cursor:pointer;padding:0 0.3rem;font-family:inherit;">Copy</button>
+              </div>
+            </div>
+            <div style="text-align:right;flex-shrink:0;">
+              <div style="font-size:1.1rem;font-weight:800;color:var(--gold);">${(t.total_points||0).toLocaleString()}</div>
+              <div style="font-size:0.7rem;color:var(--dim);">team pts</div>
+            </div>
+          </div>
+          <div style="font-size:0.72rem;color:var(--dim);margin-bottom:0.6rem;">${roster.length} member${roster.length!==1?'s':''}</div>
+          ${rosterHtml}
+        </div>
+        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+          ${isLeader ? `<button onclick="disbandTeam('${t.id}','${member._id}')" style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171;padding:0.45rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;">Disband Team</button>` : ''}
+          <button onclick="leaveTeam('${member._id}')" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:var(--muted);padding:0.45rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;">Leave Team</button>
+          <a href="/leaderboards/" style="background:rgba(31,162,255,0.07);border:1px solid rgba(31,162,255,0.18);color:#1FA2FF;padding:0.45rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;">Team Rankings →</a>
+        </div>
+        <div id="team-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;margin-top:0.5rem;"></div>`;
+    }
+
+    function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    async function createTeam(memberId) {
+      const nameEl = document.getElementById('team-create-name');
+      const fb     = document.getElementById('team-feedback');
+      const name   = (nameEl?.value || '').trim();
+      if (!name) { if(fb) fb.textContent = 'Enter a team name.'; return; }
+      if (name.length < 2) { if(fb) fb.textContent = 'Name must be at least 2 characters.'; return; }
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      try {
+        const res = await fetch(TEAM_SB + '/rest/v1/teams', {
+          method: 'POST',
+          headers: Object.assign({}, teamAuthH(tok), { Prefer: 'return=representation' }),
+          body: JSON.stringify({ name, created_by: memberId })
+        });
+        if (!res.ok) throw new Error((await res.json())?.message || 'Create failed');
+        const [team] = await res.json();
+        // join as leader
+        await fetch(TEAM_SB + '/rest/v1/team_members', {
+          method: 'POST',
+          headers: Object.assign({}, teamAuthH(tok), { Prefer: 'return=minimal' }),
+          body: JSON.stringify({ team_id: team.id, user_id: memberId, role: 'leader' })
+        });
+        if(nameEl) nameEl.value = '';
+        loadTeamPanel(_currentMember);
+      } catch(e) { if(fb) fb.textContent = e.message || 'Failed to create team.'; }
+    }
+
+    async function joinTeam(memberId) {
+      const codeEl = document.getElementById('team-join-code');
+      const fb     = document.getElementById('team-feedback');
+      const code   = (codeEl?.value || '').trim().toUpperCase();
+      if (code.length !== 6) { if(fb) fb.textContent = 'Invite codes are 6 characters.'; return; }
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      try {
+        // find team by invite code
+        const res = await fetch(TEAM_SB + '/rest/v1/teams?invite_code=eq.' + encodeURIComponent(code) + '&select=id', {
+          headers: { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok }
+        });
+        const teams = res.ok ? await res.json() : [];
+        if (!teams.length) { if(fb) fb.textContent = 'Team not found. Check the code.'; return; }
+        const teamId = teams[0].id;
+        const joinRes = await fetch(TEAM_SB + '/rest/v1/team_members', {
+          method: 'POST',
+          headers: Object.assign({}, teamAuthH(tok), { Prefer: 'return=minimal' }),
+          body: JSON.stringify({ team_id: teamId, user_id: memberId, role: 'member' })
+        });
+        if (!joinRes.ok) {
+          const err = await joinRes.json();
+          throw new Error(err?.message?.includes('unique') ? 'You are already on a team.' : 'Join failed.');
+        }
+        if(codeEl) codeEl.value = '';
+        loadTeamPanel(_currentMember);
+      } catch(e) { if(fb) fb.textContent = e.message || 'Failed to join team.'; }
+    }
+
+    async function leaveTeam(memberId) {
+      if (!confirm('Leave your team?')) return;
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      await fetch(TEAM_SB + '/rest/v1/team_members?user_id=eq.' + memberId, {
+        method: 'DELETE',
+        headers: { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok }
+      });
+      loadTeamPanel(_currentMember);
+    }
+
+    async function disbandTeam(teamId, memberId) {
+      if (!confirm('Disband the team? This cannot be undone.')) return;
+      const s = await VSSupabase.auth.getSession();
+      const tok = s?.data?.session?.access_token;
+      if (!tok) return;
+      await fetch(TEAM_SB + '/rest/v1/teams?id=eq.' + teamId, {
+        method: 'DELETE',
+        headers: { apikey: TEAM_KEY, Authorization: 'Bearer ' + tok }
+      });
+      loadTeamPanel(_currentMember);
+    }
+
+    // ── Phase 2: Load point events feed ──────────────────────────
+    async function loadPointEvents() {
+      const feed = document.getElementById('activity-feed');
+      if (!feed) return;
+      try {
+        // Phase 38: use prefetched events from bootstrap RPC on first load
+        let events;
+        if (window._prefetchedEvents && window._prefetchedEvents.length > 0) {
+          events = window._prefetchedEvents;
+          window._prefetchedEvents = null; // consume once
+        } else {
+          const res = await VSSupabase
+            .from('point_events')
+            .select('label, points, created_at')
+            .order('created_at', { ascending: false })
+            .limit(8);
+          events = res.data;
+        }
+
+        if (!events || events.length === 0) {
+          feed.innerHTML = '<span class="activity-empty">No activity yet — explore the vault to earn points.</span>';
+          return;
+        }
+
+        const icons = { subscribed: '📡', bio_set: '✍️', avatar_customized: '🎨', referral: '🤝',
+                        game_visit: '🎮', lore_read: '📖', default: '⚡' };
+
+        feed.innerHTML = events.map(ev => {
+          const icon = Object.keys(icons).find(k => ev.label?.toLowerCase().includes(k.split('_')[0])) || 'default';
+          const timeAgo = formatTimeAgo(new Date(ev.created_at));
+          return `<div class="activity-item">
+            <span class="activity-icon">${icons[icon] || icons.default}</span>
+            <span class="activity-label">${ev.label || 'Vault Points'}</span>
+            <span class="activity-pts">+${ev.points}</span>
+            <span class="activity-time">${timeAgo}</span>
+          </div>`;
+        }).join('');
+      } catch (_) {
+        feed.innerHTML = '<span class="activity-empty">Could not load activity.</span>';
+      }
+    }
+
+    function formatTimeAgo(date) {
+      const s = Math.floor((Date.now() - date) / 1000);
+      if (s < 60) return 'just now';
+      const m = Math.floor(s / 60);
+      if (m < 60) return m + 'm ago';
+      const h = Math.floor(m / 60);
+      if (h < 24) return h + 'h ago';
+      const d = Math.floor(h / 24);
+      if (d < 30) return d + 'd ago';
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    // ── Phase 3: Load / display personal invite code ─────────────
+    async function loadInviteCode() {
+      const valEl  = document.getElementById('invite-code-value');
+      const copyEl = document.getElementById('invite-copy-btn');
+      if (!valEl) return;
+      try {
+        const { data: code } = await VSSupabase.rpc('get_or_create_my_invite_code');
+        if (code) {
+          valEl.textContent = code;
+          if (copyEl) copyEl.disabled = false;
+        } else {
+          valEl.textContent = 'Unavailable';
+        }
+      } catch (_) {
+        if (valEl) valEl.textContent = 'Unavailable';
+      }
+    }
+
+    async function copyInviteCode() {
+      const code = document.getElementById('invite-code-value')?.textContent;
+      const btn  = document.getElementById('invite-copy-btn');
+      if (!code || code === 'Generating…' || code === 'Unavailable') return;
+      try {
+        await navigator.clipboard.writeText(code);
+        if (btn) { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = 'Copy'; }, 2000); }
+      } catch (_) {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = code; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        if (btn) { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = 'Copy'; }, 2000); }
+      }
+    }
+
+    // ── Phase 6: Activity Chronicle ──────────────────────────────
+    let _chronicleLoaded = false;
+
+    const CHRONICLE_ICONS = {
+      challenge:  { icon: '⚡', bg: 'rgba(255,196,0,0.12)',   color: '#fbbf24' },
+      file:       { icon: '📄', bg: 'rgba(31,162,255,0.1)',   color: '#7dd3fc' },
+      game:       { icon: '🎮', bg: 'rgba(52,211,153,0.1)',   color: '#34d399' },
+      subscribed: { icon: '📡', bg: 'rgba(167,139,250,0.1)',  color: '#a78bfa' },
+      profile:    { icon: '🔧', bg: 'rgba(255,255,255,0.06)', color: 'var(--muted)' },
+      referral:   { icon: '🤝', bg: 'rgba(255,196,0,0.1)',    color: '#fbbf24' },
+      joined:     { icon: '🔑', bg: 'rgba(255,196,0,0.14)',   color: 'var(--gold)' },
+      points:     { icon: '✦',  bg: 'rgba(255,255,255,0.05)', color: 'var(--dim)' },
+    };
+
+    async function loadChronicle() {
+      const el = document.getElementById('chronicle-timeline');
+      if (!el) return;
+      el.innerHTML = '<div style="color:var(--dim);">Loading…</div>';
+      loadLoginHeatmap(); // non-blocking
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        const [{ data: events, error }, { data: row }] = await Promise.all([
+          VSSupabase.rpc('get_activity_timeline', { p_limit: 50 }),
+          VSSupabase.from('vault_members').select('created_at').eq('id', session.user.id).single(),
+        ]);
+
+        if (error) throw error;
+
+        const items = [...(events || [])];
+        if (row?.created_at) {
+          items.push({ type: 'joined', label: 'Joined the Vault', points: 0, occurred_at: row.created_at });
+        }
+
+        if (items.length === 0) {
+          el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">No activity yet — start earning points to build your Chronicle.</div>';
+          return;
+        }
+
+        const today     = new Date();
+        const yesterday = new Date(today); yesterday.setDate(today.getDate() - 1);
+
+        let html = '<div class="chronicle-timeline">';
+        let lastDay = null;
+
+        for (const ev of items) {
+          const d      = new Date(ev.occurred_at);
+          const dayKey = d.toDateString();
+
+          if (dayKey !== lastDay) {
+            let dayLabel;
+            if (dayKey === today.toDateString())     dayLabel = 'Today';
+            else if (dayKey === yesterday.toDateString()) dayLabel = 'Yesterday';
+            else dayLabel = d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+            html += `<div class="chronicle-day-header">${dayLabel}</div>`;
+            lastDay = dayKey;
+          }
+
+          const style   = CHRONICLE_ICONS[ev.type] || CHRONICLE_ICONS.points;
+          const timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+          const ptsHtml = ev.points > 0 ? `<div class="chronicle-pts">+${ev.points} pts</div>` : '';
+
+          html += `<div class="chronicle-item">
+            <div class="chronicle-icon" style="background:${style.bg};color:${style.color};">${style.icon}</div>
+            <div class="chronicle-body">
+              <div class="chronicle-label">${ev.label || ev.type}</div>
+              <div class="chronicle-time">${timeStr}</div>
+            </div>
+            ${ptsHtml}
+          </div>`;
+        }
+
+        html += '</div>';
+        el.innerHTML = html;
+      } catch (_) {
+        if (el) el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load activity chronicle.</div>';
+      }
+    }
+
+    // ── Phase 24: QR Code for referral link ──────────────────────
+    function showReferralQR() {
+      const link = document.getElementById('referralLink')?.textContent?.trim();
+      if (!link) return;
+      const overlay = document.getElementById('qr-modal-overlay');
+      const wrap    = document.getElementById('qr-canvas-wrap');
+      if (!overlay || !wrap) return;
+      wrap.innerHTML = '';
+      _lastFocus = document.activeElement;
+      overlay.classList.add('show');
+      setTimeout(() => _trapFocus(document.querySelector('.qr-modal')), 50);
+      // Use QRCode library (loaded via CDN with defer)
+      if (typeof QRCode !== 'undefined') {
+        const canvas = document.createElement('canvas');
+        wrap.appendChild(canvas);
+        QRCode.toCanvas(canvas, link, {
+          width: 200, margin: 1,
+          color: { dark: '#000000', light: '#ffffff' }
+        }, () => {});
+      } else {
+        // Fallback: show link in text if library not loaded
+        wrap.innerHTML = '<p style="font-size:0.75rem;color:var(--muted);word-break:break-all;">' + link + '</p>';
+      }
+    }
+
+    function dismissQRModal() {
+      document.getElementById('qr-modal-overlay')?.classList.remove('show');
+      _releaseFocus(document.querySelector('.qr-modal'));
+    }
+
+    // ── Phase 24: Login heatmap (12-week activity calendar) ───────
+    async function loadLoginHeatmap() {
+      const el = document.getElementById('login-heatmap');
+      if (!el) return;
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        // Fetch point_events (login + other activity) for last 84 days
+        const since = new Date(Date.now() - 84 * 86400000).toISOString();
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('occurred_at')
+          .eq('user_id', session.user.id)
+          .gte('occurred_at', since)
+          .order('occurred_at', { ascending: true });
+
+        // Build day bucket map: 'YYYY-MM-DD' → count
+        const dayMap = {};
+        (events || []).forEach(ev => {
+          const key = ev.occurred_at.slice(0, 10);
+          dayMap[key] = (dayMap[key] || 0) + 1;
+        });
+
+        // Build 12 weeks (84 days) grid, 7 rows × 12 cols
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const cells = []; // array of 84 day objects from oldest to newest
+        for (let i = 83; i >= 0; i--) {
+          const d = new Date(today - i * 86400000);
+          const key = d.toISOString().slice(0, 10);
+          const count = dayMap[key] || 0;
+          let heat = 0;
+          if (count >= 1) heat = 1;
+          if (count >= 3) heat = 2;
+          if (count >= 6) heat = 3;
+          if (count >= 10) heat = 4;
+          cells.push({ key, heat, count, label: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) });
+        }
+
+        // Render: 12 columns of 7 cells each
+        let html = '';
+        for (let col = 0; col < 12; col++) {
+          html += '<div class="heatmap-col">';
+          for (let row = 0; row < 7; row++) {
+            const idx = col * 7 + row;
+            const c = cells[idx];
+            const cls = c.heat > 0 ? ` heat-${c.heat}` : '';
+            const label = c.count > 0 ? `${c.label}: ${c.count} event${c.count === 1 ? '' : 's'}` : c.label;
+            html += `<div class="heatmap-cell${cls}" title="${label}"></div>`;
+          }
+          html += '</div>';
+        }
+        el.innerHTML = html;
+      } catch (_) {
+        if (el) el.innerHTML = '<span style="font-size:0.78rem;color:var(--dim);">Heatmap unavailable.</span>';
+      }
+    }
+
+    // ── Phase 24: Annual vault anniversary check ──────────────────
+    async function checkVaultAnniversary(member) {
+      try {
+        if (!member?.createdAt) return;
+        const joined = new Date(member.createdAt);
+        const now    = new Date();
+        const years  = now.getFullYear() - joined.getFullYear();
+        if (years <= 0) return; // not a year yet
+        const anniv = new Date(joined);
+        anniv.setFullYear(now.getFullYear());
+        const daysDiff = Math.abs(now - anniv) / 86400000;
+        if (daysDiff > 1) return; // not within 1 day of anniversary
+
+        // Check we haven't already awarded this year
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const yearKey = now.getFullYear();
+        const alreadyKey = `vs_anniversary_awarded_${yearKey}`;
+        if (localStorage.getItem(alreadyKey)) return;
+
+        // Check point_events for this year's anniversary
+        const startOfYear = `${yearKey}-01-01T00:00:00Z`;
+        const { data: existing } = await VSSupabase
+          .from('point_events')
+          .select('id')
+          .eq('user_id', session.user.id)
+          .eq('reason', 'anniversary')
+          .gte('occurred_at', startOfYear)
+          .limit(1);
+
+        if (existing && existing.length > 0) {
+          localStorage.setItem(alreadyKey, '1');
+          return;
+        }
+
+        // Award anniversary bonus
+        const bonus = years * 50; // 50 pts per year
+        await VSSupabase.rpc('award_points', {
+          p_user_id: session.user.id,
+          p_amount: bonus,
+          p_reason: 'anniversary',
+          p_source: 'vault_member',
+        });
+        localStorage.setItem(alreadyKey, '1');
+
+        // Show celebration toast
+        showXPChip(`🎂 Vault Anniversary! Year ${years} — +${bonus} pts`);
+        setTimeout(() => {
+          if (typeof showToast === 'function') {
+            showToast(`Happy ${years}-year Vault anniversary! You've earned ${bonus} bonus points.`, 'success', 5000);
+          }
+        }, 800);
+      } catch (_) {}
+    }
+
+    // ── Phase 24: Weekly XP recap (shown Mondays) ─────────────────
+    async function checkWeeklyRecap(member) {
+      try {
+        const today = new Date();
+        if (today.getDay() !== 1) return; // Monday only
+
+        // ISO week key: YYYY-WW
+        const startOfYear = new Date(today.getFullYear(), 0, 1);
+        const weekNum = Math.ceil(((today - startOfYear) / 86400000 + startOfYear.getDay() + 1) / 7);
+        const weekKey = `vs_weekly_recap_${today.getFullYear()}_${weekNum}`;
+        if (localStorage.getItem(weekKey)) return;
+
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        // Fetch last week's points
+        const lastMonday = new Date(today - 7 * 86400000);
+        lastMonday.setHours(0, 0, 0, 0);
+        const lastSunday = new Date(today);
+        lastSunday.setHours(0, 0, 0, 0);
+
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('amount')
+          .eq('user_id', session.user.id)
+          .gte('occurred_at', lastMonday.toISOString())
+          .lt('occurred_at', lastSunday.toISOString());
+
+        const weekPts = (events || []).reduce((s, e) => s + (e.amount || 0), 0);
+        if (weekPts === 0) return;
+
+        const rank = VS.getRank(member.points);
+        const nextRank = VS.getNextRank(member.points);
+        const ptsToNext = nextRank ? (nextRank.min - member.points) : 0;
+
+        localStorage.setItem(weekKey, '1');
+
+        const banner  = document.getElementById('weekly-recap-banner');
+        const textEl  = document.getElementById('weekly-recap-text');
+        if (!banner || !textEl) return;
+
+        const ptsLine = ptsToNext > 0
+          ? ` You're <strong>${ptsToNext} pts</strong> away from <strong>${nextRank.name}</strong>.`
+          : ' You\'ve reached maximum rank!';
+
+        textEl.innerHTML =
+          `📊 <strong>Last week you earned ${weekPts.toLocaleString()} Vault Points.</strong>${ptsLine} Keep the streak going this week.`;
+        banner.classList.add('show');
+      } catch (_) {}
+    }
+
+    function dismissWeeklyRecap() {
+      document.getElementById('weekly-recap-banner')?.classList.remove('show');
+    }
+
+    // ── Point gifting ─────────────────────────────────────────────
+    async function giftPoints() {
+      if (!_currentMember) return;
+      const recipient = (document.getElementById('gift-username')?.value || '').trim().toLowerCase();
+      const amount    = parseInt(document.getElementById('gift-amount')?.value || '0', 10);
+      const fb        = document.getElementById('gift-feedback');
+      if (!fb) return;
+
+      if (!recipient) { fb.style.color = '#f87171'; fb.textContent = 'Enter a recipient username.'; return; }
+      if (isNaN(amount) || amount < 10 || amount > 500) { fb.style.color = '#f87171'; fb.textContent = 'Amount must be 10–500 pts.'; return; }
+      if (_currentMember.points < amount) { fb.style.color = '#f87171'; fb.textContent = 'Not enough Vault Points.'; return; }
+      if (recipient === (_currentMember.username || '').toLowerCase()) { fb.style.color = '#f87171'; fb.textContent = 'You cannot gift to yourself.'; return; }
+
+      fb.style.color = 'var(--dim)'; fb.textContent = 'Sending…';
+
+      try {
+        // Look up recipient
+        const { data: recip, error: lookupErr } = await VSSupabase
+          .from('vault_members').select('id, username, points').eq('username', recipient).single();
+        if (lookupErr || !recip) { fb.style.color = '#f87171'; fb.textContent = 'Member not found.'; return; }
+
+        // Deduct from sender
+        const { error: deductErr } = await VSSupabase
+          .from('vault_members').update({ points: _currentMember.points - amount })
+          .eq('id', _currentMember._id);
+        if (deductErr) throw deductErr;
+
+        // Add to recipient
+        const { error: addErr } = await VSSupabase
+          .from('vault_members').update({ points: recip.points + amount })
+          .eq('id', recip.id);
+        if (addErr) throw addErr;
+
+        // Log for both
+        await VSSupabase.from('point_events').insert([
+          { member_id: _currentMember._id, points: -amount, reason: 'gift_sent', description: 'Gift to ' + escHtml(recip.username) },
+          { member_id: recip.id,           points:  amount, reason: 'gift_received', description: 'Gift from ' + escHtml(_currentMember.username || 'member') }
+        ]);
+
+        _currentMember.points -= amount;
+        document.getElementById('stat-points').textContent = _currentMember.points.toLocaleString();
+        document.getElementById('gift-username').value = '';
+        document.getElementById('gift-amount').value   = '';
+        fb.style.color = '#10B981'; fb.textContent = '⚡ Gift sent to ' + escHtml(recip.username) + '!';
+        setTimeout(function(){ if(fb) fb.textContent = ''; }, 3000);
+      } catch(err) {
+        fb.style.color = '#f87171'; fb.textContent = 'Error: ' + (err.message || 'Could not send gift.');
+      }
+    }
+
+    // ── Phase 25: Member Spotlight ────────────────────────────────
+    async function loadMemberSpotlight() {
+      const el = document.getElementById('spotlight-content');
+      if (!el) return;
+      try {
+        // Pick a random top-50 member that isn't the current user
+        const { data: members } = await VSSupabase
+          .from('vault_members')
+          .select('username, points, member_number, avatar_id, accent')
+          .order('points', { ascending: false })
+          .limit(50);
+
+        if (!members || members.length === 0) { el.textContent = 'No members yet.'; return; }
+
+        // Pick random, exclude current member
+        const pool = members.filter(m => m.username !== (_currentMember?.username || ''));
+        if (pool.length === 0) { el.textContent = 'You\'re the top member!'; return; }
+        const featured = pool[Math.floor(Math.random() * Math.min(pool.length, 20))];
+
+        const rank = VS.getRank(featured.points);
+        const av   = VS.getAvatar(featured.avatar_id || 'spark');
+        const accent = featured.accent || '#FFC400';
+
+        el.innerHTML = `
+          <a href="/member/?u=${encodeURIComponent(featured.username)}"
+             style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:inherit;">
+            <div style="width:40px;height:40px;border-radius:50%;background:${av.bg};
+                        border:2px solid ${accent}44;display:flex;align-items:center;
+                        justify-content:center;font-size:1.3rem;flex-shrink:0;">${av.emoji}</div>
+            <div>
+              <div style="font-size:0.9rem;font-weight:700;color:#fff;">${escHtml(featured.username)}</div>
+              <div style="font-size:0.75rem;color:var(--muted);">${rank.name} &nbsp;·&nbsp; ${featured.points.toLocaleString()} pts</div>
+            </div>
+            <div style="margin-left:auto;font-size:0.72rem;color:var(--dim);">View →</div>
+          </a>`;
+      } catch (_) {
+        if (el) el.textContent = 'Spotlight unavailable.';
+      }
+    }
+
+    // ── Phase 25: Rank Comparison (who's just above you) ──────────
+    async function loadRankComparison(member) {
+      const el = document.getElementById('rank-compare-content');
+      if (!el) return;
+      try {
+        const { data: above } = await VSSupabase
+          .from('vault_members')
+          .select('username, points')
+          .gt('points', member.points)
+          .order('points', { ascending: true })
+          .limit(1);
+
+        if (!above || above.length === 0) {
+          el.innerHTML = '<span style="color:#FFC400;font-weight:700;">You\'re at the top of the leaderboard!</span>';
+          return;
+        }
+
+        const rival = above[0];
+        const diff  = rival.points - member.points;
+        el.innerHTML = `
+          <div style="font-size:0.88rem;color:rgba(255,255,255,0.85);line-height:1.55;">
+            You are <strong style="color:#FFC400;">${diff.toLocaleString()} pts</strong> behind
+            <a href="/member/?u=${encodeURIComponent(rival.username)}"
+               style="color:#1FA2FF;font-weight:700;text-decoration:none;">${escHtml(rival.username)}</a>
+            on the leaderboard.
+          </div>
+          <div style="margin-top:0.5rem;">
+            <div style="height:4px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;">
+              <div style="height:100%;width:${Math.round((member.points / rival.points) * 100)}%;
+                           background:linear-gradient(90deg,#1FA2FF,#FFC400);border-radius:999px;"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">
+              <span>You · ${member.points.toLocaleString()} pts</span>
+              <span>${escHtml(rival.username)} · ${rival.points.toLocaleString()} pts</span>
+            </div>
+          </div>`;
+      } catch (_) {
+        if (el) el.textContent = 'Comparison unavailable.';
+      }
+    }
+
+    // ── Phase 14: What's New modal ───────────────────────────────
+    async function checkWhatsNew() {
+      try {
+        const { data: pulses } = await VSSupabase
+          .from('studio_pulse')
+          .select('id,message,type,created_at')
+          .order('created_at', { ascending: false })
+          .limit(5);
+        if (!pulses || pulses.length === 0) return;
+        const lastSeen = localStorage.getItem('vs_last_pulse_seen_ts') || '1970-01-01';
+        const unseen = pulses.filter(p => p.created_at > lastSeen);
+        if (unseen.length === 0) return;
+        showWhatsNewModal(unseen, pulses[0].created_at);
+      } catch (_) {}
+    }
+
+    function showWhatsNewModal(items, latestTs) {
+      if (document.getElementById('whats-new-modal')) return;
+      const modal = document.createElement('div');
+      modal.id = 'whats-new-modal';
+      modal.style.cssText = 'position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);';
+      const typeEmoji = { info:'ℹ️', update:'🔔', lore:'📁', alert:'⚡', milestone:'🏆' };
+      const safeTs = latestTs.replace(/'/g, '');
+      const itemsHtml = items.slice(0, 4).map(p =>
+        '<div style="display:flex;gap:0.65rem;padding:0.7rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">'
+        + '<span style="font-size:1rem;flex-shrink:0;margin-top:0.1rem;">' + (typeEmoji[p.type] || '⚡') + '</span>'
+        + '<div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">' + p.message + '</div>'
+        + '</div>'
+      ).join('');
+      modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="whats-new-title" style="background:rgba(13,17,28,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:1.75rem;max-width:400px;width:100%;max-height:80vh;overflow-y:auto;">'
+        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;">'
+        + '<h3 id="whats-new-title" style="font-size:1.05rem;font-weight:800;margin:0;">What\'s New in the Vault</h3>'
+        + '<span style="font-size:0.75rem;font-weight:700;padding:0.2rem 0.55rem;background:rgba(255,196,0,0.15);border:1px solid rgba(255,196,0,0.3);border-radius:999px;color:var(--gold);">'
+        + items.length + ' update' + (items.length > 1 ? 's' : '') + '</span>'
+        + '</div>'
+        + '<div style="margin-bottom:1.25rem;">' + itemsHtml + '</div>'
+        + '<button id="whats-new-close-btn" style="width:100%;padding:0.6rem;background:var(--gold);color:#000;font-weight:800;font-size:0.88rem;border:none;border-radius:10px;cursor:pointer;font-family:inherit;">Got it — I\'m up to speed</button>'
+        + '</div>';
+      document.body.appendChild(modal);
+      const _wnPrev = document.activeElement;
+      document.getElementById('whats-new-close-btn')?.focus();
+      const closeModal = () => {
+        modal.remove();
+        try { _wnPrev?.focus(); } catch(_) {}
+        localStorage.setItem('vs_last_pulse_seen_ts', safeTs);
+      };
+      document.getElementById('whats-new-close-btn').addEventListener('click', closeModal);
+      modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+      modal.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    }
+
+    // ── Phase 14: Points breakdown modal ─────────────────────────
+    async function showPtsBreakdown() {
+      if (document.getElementById('pts-breakdown-modal')) return;
+      try {
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('reason,points')
+          .order('created_at', { ascending: false })
+          .limit(300);
+        if (!events || events.length === 0) return;
+        const cats = {};
+        events.forEach(e => {
+          const cat = (e.reason || 'other').replace(/_\d+$/, '').replace(/_/g, ' ');
+          cats[cat] = (cats[cat] || 0) + (e.points || 0);
+        });
+        const sorted = Object.entries(cats).sort((a, b) => b[1] - a[1]).slice(0, 7);
+        const total = sorted.reduce((s, c) => s + c[1], 0);
+        const rows = sorted.map(([cat, pts]) => {
+          const pct = total > 0 ? Math.round(pts / total * 100) : 0;
+          return '<div style="margin-bottom:0.7rem;">'
+            + '<div style="display:flex;justify-content:space-between;font-size:0.84rem;margin-bottom:0.25rem;">'
+            + '<span style="color:var(--muted);text-transform:capitalize;">' + cat + '</span>'
+            + '<span style="font-weight:700;color:var(--text);">' + pts + ' pts</span>'
+            + '</div>'
+            + '<div style="height:5px;background:rgba(255,255,255,0.08);border-radius:999px;">'
+            + '<div style="height:5px;background:var(--gold);border-radius:999px;width:' + pct + '%;"></div>'
+            + '</div></div>';
+        }).join('');
+        const modal = document.createElement('div');
+        modal.id = 'pts-breakdown-modal';
+        modal.style.cssText = 'position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);';
+        modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="pts-breakdown-title" style="background:rgba(13,17,28,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:1.5rem;max-width:340px;width:100%;">'
+          + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.1rem;">'
+          + '<h3 id="pts-breakdown-title" style="font-size:0.95rem;font-weight:800;margin:0;">Points Breakdown</h3>'
+          + '<button id="pts-breakdown-close" style="background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer;line-height:1;padding:0;" aria-label="Close">&times;</button>'
+          + '</div>'
+          + '<div style="margin-bottom:0.5rem;font-size:0.8rem;color:var(--dim);">Total earned: ' + total + ' pts</div>'
+          + rows + '</div>';
+        document.body.appendChild(modal);
+        const _pbPrev = document.activeElement;
+        document.getElementById('pts-breakdown-close')?.focus();
+        const closeBreakdown = () => { modal.remove(); try { _pbPrev?.focus(); } catch(_) {} };
+        document.getElementById('pts-breakdown-close').addEventListener('click', closeBreakdown);
+        modal.addEventListener('click', e => { if (e.target === modal) closeBreakdown(); });
+        modal.addEventListener('keydown', e => { if (e.key === 'Escape') closeBreakdown(); });
+      } catch (_) {}
+    }
+
+    // ── Phase 14: Challenge complete modal ───────────────────────
+    function showChallengeCompleteModal(pts, title) {
+      const existing = document.getElementById('challenge-complete-modal');
+      if (existing) existing.remove();
+      const currentPts = parseInt(document.getElementById('stat-pts').textContent, 10) || 0;
+      const newPts = currentPts + pts;
+      const rank = VS.getRank(newPts);
+      const nextRank = VS.getNextRank(newPts);
+      const prog = VS.getRankProgress(newPts);
+      const progressHtml = nextRank
+        ? '<div style="margin-top:0.85rem;">'
+          + '<div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--dim);margin-bottom:0.3rem;">'
+          + '<span>' + rank.name + '</span><span>' + (nextRank.min - newPts) + ' pts to ' + nextRank.name + '</span>'
+          + '</div>'
+          + '<div style="height:5px;background:rgba(255,255,255,0.08);border-radius:999px;">'
+          + '<div style="height:5px;background:var(--gold);border-radius:999px;width:' + prog + '%;transition:width 0.6s ease;"></div>'
+          + '</div></div>'
+        : '';
+      const modal = document.createElement('div');
+      modal.id = 'challenge-complete-modal';
+      modal.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:1300;max-width:360px;width:calc(100% - 2rem);background:rgba(13,17,28,0.97);border:1px solid rgba(255,196,0,0.4);border-radius:20px;padding:1.4rem;box-shadow:0 8px 40px rgba(0,0,0,0.6);animation:vs-slide-up 0.3s ease;';
+      modal.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">'
+        + '<div>'
+        + '<div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.2rem;">Challenge Complete ⚡</div>'
+        + '<div style="font-size:0.95rem;font-weight:800;color:var(--text);">' + title + '</div>'
+        + '</div>'
+        + '<button onclick="document.getElementById(\'challenge-complete-modal\').remove()" style="background:none;border:none;color:var(--dim);font-size:1.3rem;cursor:pointer;line-height:1;padding:0 0 0 0.5rem;" aria-label="Close">&times;</button>'
+        + '</div>'
+        + '<div style="font-size:1.8rem;font-weight:900;color:var(--gold);letter-spacing:-0.02em;">+' + pts + ' pts</div>'
+        + '<div style="font-size:0.82rem;color:var(--muted);margin-top:0.2rem;">Total: ' + newPts + ' pts · ' + rank.name + '</div>'
+        + progressHtml;
+      document.body.appendChild(modal);
+      setTimeout(() => { const m = document.getElementById('challenge-complete-modal'); if (m) m.remove(); }, 6000);
+    }
+
+    // ── Phase 14: Points history SVG chart ───────────────────────
+    async function renderPointsHistoryChart() {
+      const el = document.getElementById('points-chart-svg');
+      if (!el) return;
+      try {
+        const { data: events } = await VSSupabase
+          .from('point_events')
+          .select('points,created_at')
+          .gte('created_at', new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString())
+          .order('created_at', { ascending: true });
+
+        if (!events || events.length === 0) {
+          el.textContent = 'No activity in the last 30 days.';
+          return;
+        }
+
+        // Build a map of day → total points
+        const dayMap = {};
+        for (let i = 29; i >= 0; i--) {
+          const d = new Date();
+          d.setDate(d.getDate() - i);
+          dayMap[d.toDateString()] = 0;
+        }
+        events.forEach(e => {
+          const key = new Date(e.created_at).toDateString();
+          if (key in dayMap) dayMap[key] += (e.points || 0);
+        });
+
+        const days = Object.entries(dayMap);
+        const maxPts = Math.max(...days.map(d => d[1]), 1);
+        const W = 600, H = 80, barGap = 2;
+        const barW = Math.floor((W - barGap * (days.length - 1)) / days.length);
+        const bars = days.map(([day, pts], i) => {
+          const barH = pts > 0 ? Math.max(3, Math.round(pts / maxPts * H)) : 2;
+          const x = i * (barW + barGap);
+          const y = H - barH;
+          const opacity = pts > 0 ? '1' : '0.25';
+          return `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="2" fill="var(--gold)" opacity="${opacity}"><title>${new Date(day).toLocaleDateString('en-US',{month:'short',day:'numeric'})}: ${pts} pts</title></rect>`;
+        }).join('');
+
+        el.innerHTML = `<svg viewBox="0 0 ${W} ${H + 20}" style="width:100%;height:auto;display:block;" role="img" aria-label="Points earned over last 30 days">${bars}<text x="0" y="${H + 16}" font-size="10" fill="var(--dim)">${new Date(days[0][0]).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</text><text x="${W}" y="${H + 16}" text-anchor="end" font-size="10" fill="var(--dim)">Today</text></svg>`;
+      } catch (_) {
+        el.textContent = 'Could not load chart.';
+      }
+    }
+
+    // ── Phase 9: Web Push Notifications ──────────────────────────
+    const VAPID_PUBLIC_KEY = 'BH-1FBN0IzFnBUoprG7Lb7TEvW51Ix2sZjNkMzcD3MIz36Lh-VeysS_vLFQ2P8lxXhAnyEQfTAot6QYt3_KDVwY';
+
+    let _swRegistration = null;
+
+    async function registerServiceWorker() {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+      try {
+        _swRegistration = await navigator.serviceWorker.register('/sw.js');
+      } catch (_) {}
+    }
+
+    async function loadPushStatus() {
+      const toggle   = document.getElementById('toggle-push');
+      const statusEl = document.getElementById('push-status-msg');
+      if (!toggle) return;
+
+      if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        toggle.disabled = true;
+        if (statusEl) statusEl.textContent = 'Push notifications are not supported in this browser.';
+        return;
+      }
+      toggle.disabled = false;
+      try {
+        const reg = _swRegistration || await navigator.serviceWorker.getRegistration('/sw.js');
+        if (!reg) { if (statusEl) statusEl.textContent = 'Service worker not yet registered — reload the page.'; return; }
+        const sub = await reg.pushManager.getSubscription();
+        toggle.checked = !!sub;
+        if (statusEl) statusEl.textContent = sub
+          ? 'Push notifications are on. You\'ll hear from the Vault.'
+          : 'Enable to get browser notifications when new files and alerts drop.';
+      } catch (_) {
+        if (statusEl) statusEl.textContent = 'Could not check push notification status.';
+      }
+    }
+
+    async function togglePushNotifications(checked) {
+      if (checked) await subscribePush();
+      else await unsubscribePush();
+    }
+
+    function urlBase64ToUint8Array(b64) {
+      const padding = '='.repeat((4 - b64.length % 4) % 4);
+      const base64  = (b64 + padding).replace(/-/g, '+').replace(/_/g, '/');
+      const raw     = atob(base64);
+      return Uint8Array.from([...raw].map(c => c.charCodeAt(0)));
+    }
+
+    async function subscribePush() {
+      const toggle   = document.getElementById('toggle-push');
+      const statusEl = document.getElementById('push-status-msg');
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+          if (toggle)   toggle.checked = false;
+          if (statusEl) statusEl.textContent = 'Notification permission denied.';
+          return;
+        }
+        const reg = _swRegistration || await navigator.serviceWorker.getRegistration('/sw.js');
+        if (!reg) throw new Error('Service worker not available.');
+        const sub = await reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+        });
+        const json = sub.toJSON();
+        await VSSupabase.rpc('upsert_push_subscription', { p_endpoint: json.endpoint, p_keys: json.keys });
+        if (statusEl) statusEl.textContent = 'Push notifications enabled. You\'ll hear from the Vault.';
+      } catch (err) {
+        if (toggle)   toggle.checked = false;
+        if (statusEl) statusEl.textContent = 'Could not enable push: ' + (err.message || 'unknown error');
+      }
+    }
+
+    async function unsubscribePush() {
+      const statusEl = document.getElementById('push-status-msg');
+      try {
+        const reg = _swRegistration || await navigator.serviceWorker.getRegistration('/sw.js');
+        if (reg) {
+          const sub = await reg.pushManager.getSubscription();
+          if (sub) {
+            await VSSupabase.rpc('delete_push_subscription', { p_endpoint: sub.endpoint }).catch(() => {});
+            await sub.unsubscribe();
+          }
+        }
+        if (statusEl) statusEl.textContent = 'Push notifications disabled.';
+      } catch (_) {
+        if (statusEl) statusEl.textContent = 'Could not disable push notifications.';
+      }
+    }
+
+    // ── Phase 10: Live Studio Pulse ───────────────────────────────
+    let _pulseChannel = null;
+
+    const PULSE_TYPE_STYLES = {
+      update: { dot: '#1FA2FF', shadow: 'rgba(31,162,255,0.4)' },
+      alert:  { dot: '#f87171', shadow: 'rgba(248,113,113,0.4)' },
+      drop:   { dot: '#FFC400', shadow: 'rgba(255,196,0,0.4)'   },
+    };
+
+    function renderPulseItem(item) {
+      const s = PULSE_TYPE_STYLES[item.type] || PULSE_TYPE_STYLES.update;
+      const t = formatTimeAgo(new Date(item.created_at));
+      return `<div class="pulse-item">
+        <span class="pulse-type-dot" style="background:${s.dot};box-shadow:0 0 5px ${s.shadow};"></span>
+        <div class="pulse-body">
+          <div class="pulse-message">${item.message}</div>
+          <div class="pulse-time">${t}</div>
+        </div>
+      </div>`;
+    }
+
+    async function initStudioPulse() {
+      const el = document.getElementById('pulse-feed');
+      if (!el) return;
+
+      // Tear down any existing channel before re-subscribing
+      if (_pulseChannel) { VSSupabase.removeChannel(_pulseChannel); _pulseChannel = null; }
+
+      try {
+        const { data: items } = await VSSupabase
+          .from('studio_pulse')
+          .select('*')
+          .order('created_at', { ascending: false })
+          .limit(10);
+
+        if (!items || items.length === 0) {
+          el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">No transmissions yet. Stand by.</div>';
+        } else {
+          el.innerHTML = '<div class="pulse-feed">' + items.map(renderPulseItem).join('') + '</div>';
+        }
+
+        // Show LIVE badge
+        const badge = document.getElementById('pulse-live-badge');
+        if (badge) badge.style.display = 'inline-flex';
+
+        // Subscribe to new inserts in real time
+        _pulseChannel = VSSupabase.channel('studio-pulse-ch')
+          .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'studio_pulse' }, (payload) => {
+            const feedEl = document.getElementById('pulse-feed');
+            if (!feedEl) return;
+            let feedDiv = feedEl.querySelector('.pulse-feed');
+            if (!feedDiv) {
+              feedEl.innerHTML = '<div class="pulse-feed"></div>';
+              feedDiv = feedEl.querySelector('.pulse-feed');
+            }
+            feedDiv.insertAdjacentHTML('afterbegin', renderPulseItem(payload.new));
+          })
+          .subscribe();
+      } catch (_) {
+        if (el) el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load studio pulse.</div>';
+      }
+    }
+
+    // ── Phase 7: Discord Role Sync ───────────────────────────────
+
+    function updateDiscordUI(discordId) {
+      const area = document.getElementById('discord-status-area');
+      const desc = document.getElementById('discord-status-desc');
+      if (!area) return;
+      if (discordId) {
+        area.innerHTML = '<span class="discord-connected-badge">✓ Discord Connected</span>';
+        if (desc) desc.textContent = 'Your Discord account is linked. You\'ll automatically receive rank roles when you level up.';
+      } else {
+        area.innerHTML = `<button class="discord-connect-btn" onclick="connectDiscord()"><svg width="16" height="12" viewBox="0 0 127.14 96.36" fill="currentColor" aria-hidden="true"><path d="M107.7,8.07A105.15,105.15,0,0,0,81.47,0a72.06,72.06,0,0,0-3.36,6.83A97.68,97.68,0,0,0,49,6.83,72.37,72.37,0,0,0,45.64,0,105.89,105.89,0,0,0,19.39,8.09C2.79,32.65-1.71,56.6.54,80.21h0A105.73,105.73,0,0,0,32.71,96.36,77.7,77.7,0,0,0,39.6,85.25a68.42,68.42,0,0,1-10.85-5.18c.91-.66,1.8-1.34,2.66-2a75.57,75.57,0,0,0,64.32,0c.87.71,1.76,1.39,2.66,2a68.68,68.68,0,0,1-10.87,5.19,77,77,0,0,0,6.89,11.1A105.25,105.25,0,0,0,126.6,80.22h0C129.24,52.84,122.09,29.11,107.7,8.07ZM42.45,65.69C36.18,65.69,31,60,31,53s5-12.74,11.43-12.74S54,46,53.89,53,48.84,65.69,42.45,65.69Zm42.24,0C78.41,65.69,73.25,60,73.25,53s5-12.74,11.44-12.74S96.23,46,96.12,53,91.08,65.69,84.69,65.69Z"/></svg> Connect Discord</button>`;
+      }
+    }
+
+    async function connectDiscord() {
+      localStorage.setItem('vs_link_discord', '1');
+      const { error } = await VSSupabase.auth.signInWithOAuth({
+        provider: 'discord',
+        options: {
+          scopes: 'identify',
+          redirectTo: window.location.origin + window.location.pathname,
+        },
+      });
+      if (error) {
+        localStorage.removeItem('vs_link_discord');
+        const area = document.getElementById('discord-status-area');
+        if (area) area.innerHTML += `<span style="font-size:0.8rem;color:#f87171;margin-left:0.5rem;">${error.message}</span>`;
+      }
+    }
+
+    // ── Phase 8: Beta Key Vault ───────────────────────────────────
+    let _betaKeysLoaded = false;
+
+    const BETA_GAMES = [
+      { slug: 'call-of-doodie',         name: 'Call of Doodie',         icon: '💩' },
+      { slug: 'gridiron-gm',            name: 'Gridiron GM',            icon: '🏈' },
+      { slug: 'vaultspark-football-gm', name: 'VaultSpark Football GM', icon: '⚡' },
+    ];
+
+    async function loadBetaKeys() {
+      const el = document.getElementById('beta-keys-list');
+      if (!el) return;
+      el.innerHTML = '<div style="color:var(--dim);">Loading…</div>';
+      try {
+        const { data: keys, error } = await VSSupabase.from('beta_keys').select('*');
+        if (error) throw error;
+
+        if (!keys || keys.length === 0) {
+          el.innerHTML = '<p style="color:var(--dim);font-size:0.88rem;line-height:1.6;">No beta keys are available for your rank yet. Earn more Vault Points to unlock early access.</p>';
+          return;
+        }
+
+        // Group by game_slug
+        const byGame = {};
+        for (const k of keys) {
+          if (!byGame[k.game_slug]) byGame[k.game_slug] = { claimed: null, available: [] };
+          if (k.claimed_by)         byGame[k.game_slug].claimed = k;
+          else                      byGame[k.game_slug].available.push(k);
+        }
+
+        const cards = Object.entries(byGame).map(([slug, info]) => {
+          const game = BETA_GAMES.find(g => g.slug === slug) || { name: slug, icon: '🔑' };
+          return buildKeyCard(slug, game.name, game.icon, info);
+        }).join('');
+
+        el.innerHTML = `<div class="beta-keys-grid">${cards}</div>`;
+      } catch (_) {
+        if (el) el.innerHTML = '<p style="color:var(--dim);font-size:0.88rem;">Could not load early access keys.</p>';
+      }
+    }
+
+    function buildKeyCard(slug, name, icon, info) {
+      let actionHtml;
+      if (info.claimed) {
+        actionHtml = `
+          <div class="beta-key-code" id="key-code-${slug}">${info.claimed.key_code}</div>
+          <div class="beta-key-actions">
+            <button class="beta-copy-btn" onclick="copyKeyCode('${slug}')">Copy Key</button>
+            <span style="font-size:0.75rem;color:#34d399;font-weight:700;">✓ Claimed</span>
+          </div>`;
+      } else if (info.available.length > 0) {
+        actionHtml = `
+          <p style="font-size:0.82rem;color:var(--muted);line-height:1.5;margin:0;">A beta key is available for your Vault Rank.</p>
+          <div class="beta-key-actions">
+            <button class="beta-claim-btn" id="claim-btn-${slug}" onclick="claimKey('${slug}')">Claim Key →</button>
+          </div>`;
+      } else {
+        actionHtml = '<p style="font-size:0.82rem;color:var(--dim);margin:0;">No keys available right now.</p>';
+      }
+      return `<div class="beta-key-card">
+        <div class="beta-key-game">
+          <span class="beta-key-game-icon">${icon}</span>
+          <span class="beta-key-game-name">${name}</span>
+        </div>
+        ${actionHtml}
+      </div>`;
+    }
+
+    async function claimKey(gameSlug) {
+      const btn = document.getElementById('claim-btn-' + gameSlug);
+      if (btn) { btn.disabled = true; btn.textContent = 'Claiming…'; }
+      try {
+        const { data, error } = await VSSupabase.rpc('claim_beta_key', { p_game_slug: gameSlug });
+        if (error) throw error;
+        if (data?.ok) {
+          showXpChip(0, 'Beta key claimed!');
+          _betaKeysLoaded = false;
+          loadBetaKeys();
+        } else {
+          if (btn) { btn.disabled = false; btn.textContent = 'Claim Key →'; }
+          const msg = data?.error === 'no_keys_available' ? 'No keys available right now.' : 'Could not claim key. Try again.';
+          if (btn) btn.insertAdjacentHTML('afterend', `<span style="font-size:0.78rem;color:#f87171;"> ${msg}</span>`);
+        }
+      } catch (_) {
+        if (btn) { btn.disabled = false; btn.textContent = 'Claim Key →'; }
+      }
+    }
+
+    function copyKeyCode(gameSlug) {
+      const codeEl = document.getElementById('key-code-' + gameSlug);
+      if (!codeEl) return;
+      const code = codeEl.textContent.trim();
+      const btn = codeEl.nextElementSibling?.querySelector('button');
+      const finish = () => { if (btn) { btn.textContent = 'Copied ✓'; setTimeout(() => { btn.textContent = 'Copy Key'; }, 2000); } };
+      navigator.clipboard.writeText(code).then(finish).catch(() => {
+        const ta = document.createElement('textarea');
+        ta.value = code; ta.style.cssText = 'position:fixed;opacity:0;';
+        document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+        finish();
+      });
+    }
+
+    // ── Investor Requests ─────────────────────────────────────────
+
+    const INV_RANGE_LABELS = {
+      under_10k: 'Under $10k', '10k_50k': '$10k–$50k',
+      '50k_250k': '$50k–$250k', '250k_plus': '$250k+', unspecified: 'Not specified'
+    };
+    const INV_STATUS_COLORS = {
+      pending: '#1FA2FF', contacted: '#FFC400', approved: '#10B981', rejected: '#ef4444'
+    };
+
+    async function loadInvRequests(status) {
+      const list = document.getElementById('inv-req-list');
+      if (!list) return;
+
+      // Update filter button styles
+      document.querySelectorAll('#inv-req-filters button').forEach(btn => {
+        const active = btn.dataset.filter === (status || 'all');
+        btn.style.background = active ? 'rgba(31,162,255,0.15)' : 'transparent';
+        btn.style.borderColor = active ? 'rgba(31,162,255,0.3)' : 'rgba(255,255,255,0.1)';
+      });
+
+      list.innerHTML = '<span style="color:var(--dim);">Loading…</span>';
+
+      const { data, error } = await VSSupabase.rpc('admin_get_investor_requests', {
+        p_status: status || null
+      });
+
+      if (error || data?.error) {
+        list.innerHTML = `<span style="color:#ef4444;">Error: ${data?.error || error?.message}</span>`;
+        return;
+      }
+
+      const requests = Array.isArray(data) ? data : [];
+
+      // Update badge
+      const badge = document.getElementById('inv-req-badge');
+      if (badge) {
+        const pending = requests.filter(r => r.status === 'pending').length;
+        if (pending > 0 && !status) {
+          badge.textContent = pending + ' pending';
+          badge.style.display = 'inline';
+        } else { badge.style.display = 'none'; }
+      }
+
+      if (requests.length === 0) {
+        list.innerHTML = '<span style="color:var(--dim);">No requests in this category.</span>';
+        return;
+      }
+
+      list.innerHTML = requests.map(r => `
+        <div style="border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:0.75rem;background:rgba(255,255,255,0.02);">
+          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;flex-wrap:wrap;">
+            <strong style="color:var(--text);">${escHtml(r.full_name)}</strong>
+            <a href="mailto:${escHtml(r.email)}" style="color:#1FA2FF;font-size:0.85rem;">${escHtml(r.email)}</a>
+            <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.15rem 0.5rem;border-radius:4px;background:rgba(31,162,255,0.08);color:${INV_STATUS_COLORS[r.status] || '#8a9bbf'};">${r.status}</span>
+            ${r.organization ? `<span style="font-size:0.82rem;color:var(--muted);">${escHtml(r.organization)}</span>` : ''}
+            <span style="font-size:0.78rem;color:var(--dim);margin-left:auto;">${INV_RANGE_LABELS[r.investment_range] || '—'} · ${new Date(r.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
+            <div>
+              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Why approve?</div>
+              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.why_approve)}</div>
+            </div>
+            <div>
+              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Interest in VaultSpark</div>
+              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.why_vaultspark)}</div>
+            </div>
+            ${r.investing_history ? `
+            <div>
+              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Investing history</div>
+              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.investing_history)}</div>
+            </div>` : ''}
+            ${r.value_beyond_capital ? `
+            <div>
+              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Value beyond capital</div>
+              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.value_beyond_capital)}</div>
+            </div>` : ''}
+          </div>
+          <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+            <button onclick="updateInvRequest('${r.id}','contacted')" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.25);color:#FFC400;">Mark Contacted</button>
+            <button onclick="updateInvRequest('${r.id}','approved')" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#10B981;">Approve</button>
+            <button onclick="updateInvRequest('${r.id}','rejected')" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(214,40,40,0.08);border:1px solid rgba(214,40,40,0.2);color:#ef4444;">Reject</button>
+            ${r.prior_gaming ? '<span style="font-size:0.78rem;color:var(--dim);">· Prior gaming investor</span>' : ''}
+            ${r.how_heard ? `<span style="font-size:0.78rem;color:var(--dim);">· Found us via: ${escHtml(r.how_heard)}</span>` : ''}
+          </div>
+          ${r.admin_notes ? `<div style="margin-top:0.6rem;font-size:0.82rem;color:var(--dim);font-style:italic;">Note: ${escHtml(r.admin_notes)}</div>` : ''}
+        </div>`).join('');
+    }
+
+    async function updateInvRequest(id, status) {
+      const note = status === 'rejected' ? prompt('Optional note (visible to you only):') : null;
+      const { data, error } = await VSSupabase.rpc('admin_update_investor_request', {
+        p_request_id: id,
+        p_status: status,
+        p_notes: note || null
+      });
+      if (error || data?.error) {
+        alert('Error: ' + (data?.error || error?.message));
+        return;
+      }
+      // Reload current filter
+      const activeFilter = document.querySelector('#inv-req-filters button[style*="rgba(31,162,255"]');
+      loadInvRequests(activeFilter?.dataset.filter === 'all' ? null : activeFilter?.dataset.filter || 'pending');
+    }
+
+    function escHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    // ── Fan Art Moderation ────────────────────────────────────────
+    async function loadFanArtQueue(status = 'pending') {
+      const el = document.getElementById('fan-art-queue');
+      if (!el) return;
+      el.innerHTML = '<span style="color:var(--dim);">Loading…</span>';
+
+      const SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+      let url = `${SB_URL}/rest/v1/fan_art_submissions?status=eq.${encodeURIComponent(status)}&select=id,username,title,description,character_tag,file_path,submitted_at,admin_notes&order=submitted_at.asc&limit=20`;
+
+      const { data: { session } } = await VSSupabase.auth.getSession();
+      if (!session) { el.innerHTML = '<span style="color:var(--dim);">Not authenticated.</span>'; return; }
+
+      try {
+        const res  = await fetch(url, {
+          headers: { apikey: 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij', Authorization: 'Bearer ' + session.access_token }
+        });
+        const rows = res.ok ? await res.json() : [];
+
+        // Update pending badge
+        const badge = document.getElementById('fan-art-pending-badge');
+        if (badge && status === 'pending') {
+          badge.textContent = rows.length + ' pending';
+          badge.style.display = rows.length > 0 ? 'inline' : 'none';
+        }
+
+        if (!rows.length) { el.innerHTML = '<span style="color:var(--dim);">None in this category.</span>'; return; }
+
+        el.innerHTML = rows.map(r => {
+          const imgUrl = `${SB_URL}/storage/v1/object/public/fan-art/${r.file_path}`;
+          return `<div style="display:flex;gap:1rem;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1rem;margin-bottom:0.75rem;background:rgba(255,255,255,0.02);flex-wrap:wrap;">
+            <img src="${imgUrl}" alt="${escHtml(r.title)}" loading="lazy" style="width:96px;height:96px;object-fit:cover;border-radius:8px;flex-shrink:0;" onerror="this.style.display='none'" />
+            <div style="flex:1;min-width:200px;">
+              <div style="font-weight:700;color:var(--text);margin-bottom:0.2rem;">${escHtml(r.title)} <span style="font-size:0.75rem;color:var(--dim);font-weight:400;">by @${escHtml(r.username)}</span></div>
+              <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.1rem;">${escHtml(r.character_tag)} · ${new Date(r.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
+              ${r.description ? `<div style="font-size:0.82rem;color:var(--muted);line-height:1.5;margin-bottom:0.6rem;">${escHtml(r.description)}</div>` : ''}
+              <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+                <button onclick="moderateFanArt('${r.id}','approved')" style="padding:0.25rem 0.75rem;font-size:0.78rem;font-weight:700;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#10B981;border-radius:6px;cursor:pointer;font-family:inherit;">✓ Approve</button>
+                <button onclick="moderateFanArt('${r.id}','rejected')" style="padding:0.25rem 0.75rem;font-size:0.78rem;font-weight:700;background:rgba(214,40,40,0.08);border:1px solid rgba(214,40,40,0.2);color:#ef4444;border-radius:6px;cursor:pointer;font-family:inherit;">✕ Reject</button>
+                <a href="${imgUrl}" target="_blank" rel="noreferrer" style="padding:0.25rem 0.75rem;font-size:0.78rem;color:var(--dim);text-decoration:none;border:1px solid rgba(255,255,255,0.1);border-radius:6px;">View full →</a>
+              </div>
+            </div>
+          </div>`;
+        }).join('');
+      } catch(err) {
+        el.innerHTML = `<span style="color:#ef4444;">Error: ${escHtml(err.message)}</span>`;
+      }
+    }
+
+    async function moderateFanArt(id, status) {
+      const note = status === 'rejected' ? prompt('Optional note for rejection (internal only):') : null;
+      const { data: { session } } = await VSSupabase.auth.getSession();
+      if (!session) return;
+      const SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
+      const body = { status, reviewed_at: new Date().toISOString() };
+      if (note) body.admin_notes = note;
+      const res = await fetch(`${SB_URL}/rest/v1/fan_art_submissions?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: { apikey: 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij', Authorization: 'Bearer ' + session.access_token, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(body)
+      });
+      if (res.ok) loadFanArtQueue('pending');
+      else alert('Update failed: ' + res.status);
+    }
+
+    // ── Vault Command (Admin — member #1 only) ───────────────────
+
+    async function loadChallengeAnalytics() {
+      const listEl = document.getElementById('admin-analytics-list');
+      if (!listEl) return;
+      listEl.textContent = 'Loading…';
+      try {
+        const [{ data: challenges }, { data: submissions }] = await Promise.all([
+          VSSupabase.from('challenges').select('id,title,challenge_type,points').eq('is_active', true),
+          VSSupabase.from('challenge_submissions').select('challenge_id'),
+        ]);
+        if (!challenges) { listEl.textContent = 'Could not load.'; return; }
+        const countMap = {};
+        (submissions || []).forEach(s => { countMap[s.challenge_id] = (countMap[s.challenge_id] || 0) + 1; });
+        const totalMembers = parseInt(document.getElementById('stat-pts')?.closest('[data-members]')?.dataset?.members || '0') || 1;
+        const rows = challenges.map(c => ({
+          ...c,
+          completions: countMap[c.id] || 0,
+        })).sort((a, b) => b.completions - a.completions);
+        listEl.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:0.82rem;">' +
+          '<thead><tr style="border-bottom:1px solid rgba(255,255,255,0.08);">' +
+          '<th style="text-align:left;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Challenge</th>' +
+          '<th style="text-align:left;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Type</th>' +
+          '<th style="text-align:right;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Completions</th>' +
+          '<th style="text-align:right;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Pts</th>' +
+          '</tr></thead><tbody>' +
+          rows.map(r => '<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">' +
+            '<td style="padding:0.5rem 0.75rem;color:var(--text);">' + r.title + '</td>' +
+            '<td style="padding:0.5rem 0.75rem;color:var(--muted);">' + r.challenge_type + '</td>' +
+            '<td style="padding:0.5rem 0.75rem;color:var(--gold);text-align:right;">' + r.completions + '</td>' +
+            '<td style="padding:0.5rem 0.75rem;color:var(--dim);text-align:right;">+' + r.points + '</td>' +
+          '</tr>').join('') +
+          '</tbody></table>';
+      } catch (_) { listEl.textContent = 'Error loading analytics.'; }
+    }
+
+    async function exportMemberCSV() {
+      const btn = document.getElementById('admin-csv-btn');
+      const fb = document.getElementById('admin-csv-fb');
+      if (btn) { btn.disabled = true; btn.textContent = 'Generating…'; }
+      try {
+        const { data: members } = await VSSupabase.from('vault_members')
+          .select('username,points,created_at,member_number,subscribed')
+          .order('points', { ascending: false });
+        if (!members || !members.length) { showAdminFeedback(fb, 'No members found.', false); return; }
+        function getCSVRank(pts) {
+          if (pts >= 100000) return 'The Sparked';
+          if (pts >= 60000)  return 'Forge Master';
+          if (pts >= 30000)  return 'Vault Keeper';
+          if (pts >= 15000)  return 'Void Operative';
+          if (pts >= 7500)   return 'Vault Breacher';
+          if (pts >= 3000)   return 'Vault Guard';
+          if (pts >= 1000)   return 'Rift Scout';
+          if (pts >= 250)    return 'Vault Runner';
+          return 'Spark Initiate';
+        }
+        const header = 'rank,username,points,vault_rank,member_number,subscribed,joined_date';
+        const rows = members.map((m, i) =>
+          [i+1, m.username, m.points, getCSVRank(m.points), m.member_number || '', m.subscribed ? 'yes' : 'no',
+           m.created_at ? m.created_at.slice(0, 10) : ''].join(',')
+        );
+        const csv = [header, ...rows].join('\n');
+        const blob = new Blob([csv], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'vault-members-' + new Date().toISOString().slice(0,10) + '.csv';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showAdminFeedback(fb, '✓ Downloaded ' + members.length + ' members', true);
+      } catch (_) { showAdminFeedback(fb, 'Export failed.', false); }
+      if (btn) { btn.disabled = false; btn.textContent = '⬇ Download Members CSV'; }
+    }
+
+    function showAdminFeedback(el, msg, ok) {
+      el.textContent = msg;
+      el.className = 'admin-feedback show ' + (ok ? 'ok' : 'err');
+      setTimeout(() => { el.className = 'admin-feedback'; }, 4000);
+    }
+
+    async function adminPostPulse() {
+      const msg      = document.getElementById('admin-pulse-msg').value.trim();
+      const type     = document.getElementById('admin-pulse-type').value;
+      const fb       = document.getElementById('admin-pulse-fb');
+      const btn      = document.getElementById('admin-pulse-btn');
+      const schedOn  = document.getElementById('admin-pulse-schedule-toggle').checked;
+      const schedVal = document.getElementById('admin-pulse-schedule-time').value;
+      if (!msg) { showAdminFeedback(fb, 'Signal text required', false); return; }
+      if (schedOn && !schedVal) { showAdminFeedback(fb, 'Pick a schedule time', false); return; }
+      if (schedOn && new Date(schedVal) <= new Date()) { showAdminFeedback(fb, 'Schedule time must be in the future', false); return; }
+      btn.disabled = true; fb.className = 'admin-feedback show'; fb.textContent = schedOn ? 'Scheduling…' : 'Broadcasting…';
+      try {
+        const payload = { message: msg, type };
+        if (schedOn) payload.publish_at = new Date(schedVal).toISOString();
+        const { error } = await VSSupabase.from('studio_pulse').insert(payload);
+        if (error) throw error;
+        document.getElementById('admin-pulse-msg').value = '';
+        document.getElementById('admin-pulse-schedule-toggle').checked = false;
+        document.getElementById('admin-pulse-schedule-time').value = '';
+        document.getElementById('admin-pulse-schedule-wrap').style.display = 'none';
+        showAdminFeedback(fb, schedOn ? 'Signal scheduled ✓' : 'Signal broadcast ✓', true);
+      } catch (err) {
+        showAdminFeedback(fb, 'Error: ' + (err.message || 'unknown'), false);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function adminPostFile() {
+      const title          = document.getElementById('admin-file-title').value.trim();
+      const slug           = document.getElementById('admin-file-slug').value.trim();
+      const classification = document.getElementById('admin-file-classification').value.trim();
+      const rank_required  = parseInt(document.getElementById('admin-file-rank').value, 10);
+      const universe_tag   = document.getElementById('admin-file-universe').value.trim();
+      const content_html   = document.getElementById('admin-file-html').value.trim();
+      const fb  = document.getElementById('admin-file-fb');
+      const btn = document.getElementById('admin-file-btn');
+      if (!title || !slug || !content_html) {
+        showAdminFeedback(fb, 'Title, slug, and content are required', false); return;
+      }
+      btn.disabled = true; fb.className = 'admin-feedback show'; fb.textContent = 'Uploading…';
+      try {
+        const { error } = await VSSupabase.from('classified_files').insert({
+          title, slug, classification, rank_required, universe_tag, content_html,
+          published_at: new Date().toISOString()
+        });
+        if (error) throw error;
+        ['admin-file-title','admin-file-slug','admin-file-classification','admin-file-universe','admin-file-html']
+          .forEach(id => { document.getElementById(id).value = ''; });
+        document.getElementById('admin-file-rank').value = '0';
+        _archiveLoaded = false; // force reload next time Archive tab is opened
+        showAdminFeedback(fb, 'File uplinked to Archive ✓', true);
+      } catch (err) {
+        showAdminFeedback(fb, 'Error: ' + (err.message || 'unknown'), false);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    async function adminPostBetaKey() {
+      const game_slug = document.getElementById('admin-key-slug').value;
+      const key_code  = document.getElementById('admin-key-code').value.trim();
+      const min_rank  = parseInt(document.getElementById('admin-key-rank').value, 10);
+      const fb  = document.getElementById('admin-key-fb');
+      const btn = document.getElementById('admin-key-btn');
+      if (!key_code) { showAdminFeedback(fb, 'Key code required', false); return; }
+      btn.disabled = true; fb.className = 'admin-feedback show'; fb.textContent = 'Deploying…';
+      try {
+        const { error } = await VSSupabase.from('beta_keys').insert({ game_slug, key_code, min_rank });
+        if (error) throw error;
+        document.getElementById('admin-key-code').value = '';
+        _betaKeysLoaded = false; // force reload next time Early Access tab is opened
+        showAdminFeedback(fb, 'Key deployed to Vault ✓', true);
+      } catch (err) {
+        showAdminFeedback(fb, 'Error: ' + (err.message || 'unknown'), false);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    // ── Phase 4: Classified Archive ──────────────────────────────
+    let _archiveLoaded = false;
+
+    const RANK_NAMES = ['Spark Initiate', 'Vault Runner', 'Rift Scout', 'Vault Guard', 'Vault Breacher', 'Void Operative', 'Vault Keeper', 'Forge Master', 'The Sparked'];
+
+    async function loadClassifiedArchive() {
+      const list = document.getElementById('archive-file-list');
+      const badge = document.getElementById('archive-access-badge');
+      if (!list) return;
+
+      try {
+        const { data: files, error } = await VSSupabase.rpc('get_classified_files');
+        if (error || !files) {
+          list.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load files.</div>';
+          return;
+        }
+
+        // Determine user's rank index from unlocked files
+        const maxUnlocked = files.filter(f => !f.locked).reduce((m, f) => Math.max(m, f.rank_required), 0);
+        if (badge) {
+          const rankLabel = RANK_NAMES[maxUnlocked] || 'Spark Initiate';
+          badge.textContent = '🔓 Access: ' + rankLabel + '+';
+        }
+
+        // Build list of already-read slugs from point_events
+        const { data: readEvents } = await VSSupabase
+          .from('point_events')
+          .select('reason')
+          .like('reason', 'file_read_%');
+        const readSlugs = new Set((readEvents || []).map(e => e.reason.replace('file_read_', '')));
+
+        if (files.length === 0) {
+          list.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">No files available yet.</div>';
+          return;
+        }
+
+        const unlocked = files.filter(f => !f.locked);
+        const readCount = unlocked.filter(f => readSlugs.has(f.slug)).length;
+        const totalUnlocked = unlocked.length;
+
+        // Update reading progress bar
+        const progressWrap = document.getElementById('archive-progress-bar-wrap');
+        const progressFill = document.getElementById('archive-progress-fill');
+        const progressLabel = document.getElementById('archive-progress-label');
+        if (progressWrap && totalUnlocked > 0) {
+          progressWrap.style.display = '';
+          const pct = Math.round((readCount / totalUnlocked) * 100);
+          if (progressFill) progressFill.style.width = pct + '%';
+          if (progressLabel) progressLabel.textContent = readCount + ' of ' + totalUnlocked + ' files read (' + pct + '%)';
+        }
+
+        // Store for search/bookmark filtering
+        window._archiveFiles = files;
+        window._archiveReadSlugs = readSlugs;
+
+        renderArchiveFiles();
+
+        // Wire up search
+        const searchInput = document.getElementById('archive-search');
+        if (searchInput) {
+          let searchTimer;
+          searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(renderArchiveFiles, 150);
+          });
+        }
+
+        // Wire up header click toggles
+        function wireArchiveClicks() {
+          list.querySelectorAll('.file-card:not(.locked) .file-card-header').forEach(hdr => {
+            hdr.addEventListener('click', function() {
+              const card = this.closest('.file-card');
+              const wasExpanded = card.classList.contains('expanded');
+              list.querySelectorAll('.file-card.expanded').forEach(c => c.classList.remove('expanded'));
+              if (!wasExpanded) {
+                card.classList.add('expanded');
+                const slug = card.dataset.slug;
+                if (!readSlugs.has(slug)) {
+                  readSlugs.add(slug);
+                  readFile(card, slug, card.dataset.title);
+                }
+              }
+            });
+          });
+        }
+        wireArchiveClicks();
+
+      } catch (_) {
+        if (list) list.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load files.</div>';
+      }
+    }
+
+    let _archiveShowBookmarks = false;
+
+    function renderArchiveFiles() {
+      const list = document.getElementById('archive-file-list');
+      if (!list || !window._archiveFiles) return;
+      const files = window._archiveFiles;
+      const readSlugs = window._archiveReadSlugs || new Set();
+      const query = (document.getElementById('archive-search')?.value || '').toLowerCase().trim();
+      const bookmarks = getArchiveBookmarks();
+
+      const filtered = files.filter(f => {
+        if (_archiveShowBookmarks && !bookmarks.has(f.slug)) return false;
+        if (!query) return true;
+        return (f.title || '').toLowerCase().includes(query) ||
+               (f.content_html || '').toLowerCase().includes(query) ||
+               (f.classification || '').toLowerCase().includes(query);
+      });
+
+      if (filtered.length === 0) {
+        list.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;padding:0.75rem 0;">' +
+          (_archiveShowBookmarks ? 'No bookmarked files.' : 'No files match your search.') + '</div>';
+        return;
+      }
+
+      list.innerHTML = filtered.map(f => buildFileCard(f, readSlugs.has(f.slug))).join('');
+
+      // Re-wire clicks
+      list.querySelectorAll('.file-card:not(.locked) .file-card-header').forEach(hdr => {
+        hdr.addEventListener('click', function() {
+          const card = this.closest('.file-card');
+          const wasExpanded = card.classList.contains('expanded');
+          list.querySelectorAll('.file-card.expanded').forEach(c => c.classList.remove('expanded'));
+          if (!wasExpanded) {
+            card.classList.add('expanded');
+            const slug = card.dataset.slug;
+            if (!readSlugs.has(slug)) {
+              readSlugs.add(slug);
+              readFile(card, slug, card.dataset.title);
+            }
+          }
+        });
+      });
+    }
+
+    function getArchiveBookmarks() {
+      try { return new Set(JSON.parse(localStorage.getItem('vs_arc_bookmarks') || '[]')); }
+      catch (_) { return new Set(); }
+    }
+
+    function toggleFileBookmark(slug, btn) {
+      const bm = getArchiveBookmarks();
+      if (bm.has(slug)) { bm.delete(slug); btn.textContent = '🔖'; btn.title = 'Bookmark'; }
+      else { bm.add(slug); btn.textContent = '🔖✓'; btn.title = 'Bookmarked'; }
+      localStorage.setItem('vs_arc_bookmarks', JSON.stringify([...bm]));
+    }
+
+    function toggleArchiveBookmarks() {
+      _archiveShowBookmarks = !_archiveShowBookmarks;
+      const btn = document.getElementById('archive-bookmarks-toggle');
+      if (btn) {
+        btn.style.background = _archiveShowBookmarks ? 'rgba(255,196,0,0.12)' : 'transparent';
+        btn.style.borderColor = _archiveShowBookmarks ? 'rgba(255,196,0,0.4)' : 'rgba(255,255,255,0.1)';
+        btn.style.color = _archiveShowBookmarks ? 'var(--gold)' : 'var(--dim)';
+      }
+      renderArchiveFiles();
+    }
+
+    function buildFileCard(f, isRead) {
+      const tagClass = { 'EYES ONLY': 'ctag-eyes', 'RESTRICTED': 'ctag-rest', 'TOP SECRET': 'ctag-top', 'VAULT KEEPER EYES ONLY': 'ctag-vk' }[f.classification] || 'ctag-eyes';
+      const rankLabel = RANK_NAMES[f.rank_required] || 'Vault Runner';
+      const uTag = f.universe_tag ? f.universe_tag.charAt(0).toUpperCase() + f.universe_tag.slice(1) : '';
+
+      if (f.locked) {
+        return `<div class="file-card locked">
+          <div class="file-card-header">
+            <span class="classification-tag ${tagClass}">${f.classification}</span>
+            <span class="file-title">${f.title}</span>
+            <div class="file-meta-tags">
+              ${uTag ? `<span class="file-universe-tag">${uTag}</span>` : ''}
+              <span class="file-rank-lock">🔒 ${rankLabel}+</span>
+            </div>
+          </div>
+        </div>`;
+      }
+
+      const bm = getArchiveBookmarks();
+      const isBookmarked = bm.has(f.slug);
+      return `<div class="file-card" data-slug="${f.slug}" data-title="${f.title.replace(/"/g,'&quot;')}">
+        <div class="file-card-header">
+          <span class="classification-tag ${tagClass}">${f.classification}</span>
+          <span class="file-title">${f.title}</span>
+          <div class="file-meta-tags">
+            ${uTag ? `<span class="file-universe-tag">${uTag}</span>` : ''}
+            ${isRead ? '<span class="file-read-dot" title="Read"></span>' : ''}
+            <button onclick="event.stopPropagation();toggleFileBookmark('${f.slug}',this)" title="${isBookmarked ? 'Bookmarked' : 'Bookmark'}" style="background:none;border:none;cursor:pointer;font-size:0.75rem;padding:0.15rem 0.3rem;color:var(--dim);border-radius:4px;transition:color 0.15s;" onmouseenter="this.style.color='var(--gold)'" onmouseleave="this.style.color='var(--dim)'">${isBookmarked ? '🔖✓' : '🔖'}</button>
+            <span class="file-caret">▼</span>
+          </div>
+        </div>
+        <div class="file-content-body">
+          ${f.content_html}
+          ${isRead
+            ? '<div class="file-pts-awarded">✓ Points already earned for this file</div>'
+            : '<div class="file-pts-awarded" id="pts-' + f.slug + '" style="display:none;">⚡ +20 pts awarded</div>'}
+        </div>
+      </div>`;
+    }
+
+    async function readFile(card, slug, title) {
+      try {
+        const { data } = await VSSupabase.rpc('award_points', {
+          p_reason:   'file_read_' + slug,
+          p_points:   20,
+          p_label:    'Read: ' + title,
+          p_once_per: 'ever',
+        });
+        if (data?.ok) {
+          showXpChip(20, 'Read: ' + title);
+          const ptsEl = document.getElementById('pts-' + slug);
+          if (ptsEl) ptsEl.style.display = '';
+          // Mark read dot
+          const hdr = card.querySelector('.file-card-header');
+          if (hdr && !hdr.querySelector('.file-read-dot')) {
+            const dot = document.createElement('span');
+            dot.className = 'file-read-dot'; dot.title = 'Read';
+            hdr.querySelector('.file-caret')?.before(dot);
+          }
+          // Refresh points
+          refreshPointsDisplay();
+          // Try to complete 'read_file' challenge
+          completeChallengeByActionKey('read_file');
+        }
+      } catch (_) {}
+    }
+
+    // ── Phase 5 / Feature 4: Vault Challenges ────────────────────
+    let _allChallenges     = [];
+    let _challengeFilter   = 'All';
+
+    const CATEGORY_FILTER_LIST = ['All', 'Daily', 'Weekly', 'Lore', 'Game', 'Social', 'One-Time', 'General'];
+
+    let _challengeHistoryLoaded = false;
+    async function toggleChallengeHistory(btn) {
+      const el = document.getElementById('challenge-history-list');
+      if (!el) return;
+      if (el.style.display !== 'none') {
+        el.style.display = 'none';
+        btn.textContent = '▸ Show completion history';
+        return;
+      }
+      el.style.display = '';
+      btn.textContent = '▾ Hide completion history';
+      if (_challengeHistoryLoaded) return;
+      _challengeHistoryLoaded = true;
+      el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">Loading…</div>';
+      try {
+        const { data } = await VSSupabase
+          .from('challenge_submissions')
+          .select('challenge_id, created_at, challenges(title, points)')
+          .order('created_at', { ascending: false })
+          .limit(50);
+        if (!data || data.length === 0) {
+          el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">No completions yet.</div>';
+          return;
+        }
+        el.innerHTML = data.map(s => {
+          const title = s.challenges?.title || 'Challenge';
+          const pts = s.challenges?.points || 0;
+          const when = s.created_at ? new Date(s.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+          return `<div style="display:flex;align-items:center;justify-content:space-between;padding:0.55rem 0;border-bottom:1px solid rgba(255,255,255,0.04);gap:1rem;flex-wrap:wrap;">
+            <div>
+              <div style="font-size:0.85rem;color:var(--text);font-weight:600;">${title}</div>
+              <div style="font-size:0.75rem;color:var(--dim);">${when}</div>
+            </div>
+            <span style="font-size:0.82rem;font-weight:700;color:var(--gold);flex-shrink:0;">+${pts} pts</span>
+          </div>`;
+        }).join('');
+      } catch (_) {
+        el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">Could not load history.</div>';
+      }
+    }
+
+    let _pollsLoaded = false;
+    async function loadPolls() {
+      if (_pollsLoaded) return;
+      _pollsLoaded = true;
+      const el = document.getElementById('portal-polls-list');
+      if (!el) return;
+
+      try {
+        const { data: polls, error } = await VSSupabase.from('polls')
+          .select('id, question, options, closes_at, is_active')
+          .eq('is_active', true)
+          .order('created_at', { ascending: false })
+          .limit(5);
+
+        if (error || !polls || polls.length === 0) {
+          el.innerHTML = `<div style="text-align:center;padding:3rem 1rem;color:var(--dim);">
+            <div style="font-size:2.5rem;margin-bottom:0.75rem;">🗳️</div>
+            <div style="font-size:0.9rem;line-height:1.6;">No active polls right now. Check back soon — the studio posts polls regularly to get your input on game decisions and community direction.</div>
+          </div>`;
+          return;
+        }
+
+        // Fetch current member's votes
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        let myVotes = {};
+        if (session) {
+          const { data: votes } = await VSSupabase.from('poll_votes')
+            .select('poll_id, option_index')
+            .eq('user_id', session.user.id);
+          (votes || []).forEach(v => { myVotes[v.poll_id] = v.option_index; });
+        }
+
+        el.innerHTML = polls.map(poll => {
+          const opts = Array.isArray(poll.options) ? poll.options : [];
+          const total = opts.reduce((s, o) => s + (o.votes || 0), 0) || 1;
+          const myVote = myVotes[poll.id];
+          const hasVoted = myVote !== undefined;
+          const closesStr = poll.closes_at
+            ? 'Closes ' + new Date(poll.closes_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+            : '';
+
+          return `<div style="background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:1.5rem;margin-bottom:1rem;">
+            <div style="font-weight:700;color:var(--text);margin-bottom:1rem;font-size:0.95rem;">${poll.question}</div>
+            <div style="display:flex;flex-direction:column;gap:0.55rem;">
+              ${opts.map((o, idx) => {
+                const pct = Math.round(((o.votes || 0) / total) * 100);
+                const isMyVote = hasVoted && myVote === idx;
+                const label = typeof o === 'object' ? o.label : String(o);
+                if (hasVoted) {
+                  return `<div style="display:flex;align-items:center;gap:0.75rem;">
+                    <div style="min-width:110px;font-size:0.83rem;color:${isMyVote ? 'var(--gold)' : 'var(--text)'};">${label}${isMyVote ? ' ✓' : ''}</div>
+                    <div style="flex:1;height:28px;background:rgba(255,255,255,0.04);border:1px solid ${isMyVote ? 'rgba(255,196,0,0.3)' : 'rgba(255,255,255,0.07)'};border-radius:6px;overflow:hidden;position:relative;">
+                      <div style="height:100%;border-radius:6px;background:${isMyVote ? 'rgba(255,196,0,0.18)' : 'rgba(255,255,255,0.06)'};width:${pct}%;transition:width 0.5s ease;"></div>
+                      <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.73rem;font-weight:700;color:var(--muted);">${pct}%</span>
+                    </div>
+                  </div>`;
+                }
+                return `<button onclick="castVote('${poll.id}',${idx},this.closest('.poll-wrap'))" style="display:flex;align-items:center;gap:0.75rem;background:transparent;border:none;padding:0;cursor:pointer;font-family:inherit;width:100%;text-align:left;">
+                  <div style="min-width:110px;font-size:0.83rem;color:var(--text);">${label}</div>
+                  <div style="flex:1;height:28px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;overflow:hidden;position:relative;transition:border-color 0.15s;" onmouseenter="this.style.borderColor='rgba(255,196,0,0.35)'" onmouseleave="this.style.borderColor='rgba(255,255,255,0.08)'">
+                    <div style="height:100%;border-radius:6px;background:rgba(255,255,255,0.06);width:${pct}%;"></div>
+                    <span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);font-size:0.73rem;font-weight:700;color:var(--dim);">${pct}%</span>
+                  </div>
+                </button>`;
+              }).join('')}
+            </div>
+            ${closesStr ? `<div style="font-size:0.72rem;color:var(--dim);margin-top:0.75rem;">${closesStr}</div>` : ''}
+          </div>`;
+        }).join('');
+      } catch (_) {
+        if (el) el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load polls.</div>';
+      }
+    }
+
+    async function castVote(pollId, optionIndex, container) {
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) { showXpChip(0, 'Sign in to vote'); return; }
+        const { error } = await VSSupabase.from('poll_votes').upsert(
+          { poll_id: pollId, user_id: session.user.id, option_index: optionIndex },
+          { onConflict: 'poll_id,user_id' }
+        );
+        if (!error) {
+          _pollsLoaded = false;
+          loadPolls();
+        }
+      } catch (_) {}
+    }
+
+    async function loadChallenges() {
+      const grid    = document.getElementById('challenges-list');
+      const summary = document.getElementById('challenges-summary');
+      if (!grid) return;
+
+      // Show challenge streak badge
+      const streakBadge = document.getElementById('challenge-streak-badge');
+      if (streakBadge && _currentMember && _currentMember.challenge_streak > 0) {
+        streakBadge.textContent = '🔥 ' + _currentMember.challenge_streak + '-day streak';
+        streakBadge.style.display = '';
+      }
+
+      try {
+        const { data: challenges, error } = await VSSupabase.rpc('get_challenges');
+        if (error || !challenges || challenges.length === 0) {
+          grid.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;grid-column:1/-1;">No challenges available right now.</div>';
+          buildChallengeFilterPills([]);
+          return;
+        }
+
+        _allChallenges = challenges;
+
+        const done  = challenges.filter(c => c.completed).length;
+        const total = challenges.length;
+        if (summary) summary.textContent = done + ' / ' + total + ' completed';
+
+        buildChallengeFilterPills(challenges);
+        renderFilteredChallenges();
+
+      } catch (_) {
+        if (grid) grid.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;grid-column:1/-1;">Could not load challenges.</div>';
+      }
+    }
+
+    function buildChallengeFilterPills(challenges) {
+      const pillsEl = document.getElementById('challenge-filter-pills');
+      if (!pillsEl) return;
+
+      // Only show categories that have at least one challenge (plus All)
+      const existingCats = new Set((challenges || []).map(c => c.category || 'General'));
+      const toShow = CATEGORY_FILTER_LIST.filter(cat => cat === 'All' || existingCats.has(cat));
+
+      pillsEl.innerHTML = toShow.map(cat => {
+        const isActive = cat === _challengeFilter;
+        return `<button onclick="setChallengeFilter('${cat}')" data-cat="${cat}" style="
+          padding:0.3rem 0.85rem;border-radius:999px;font-size:0.78rem;font-weight:700;
+          font-family:inherit;cursor:pointer;transition:all 0.16s;border:1px solid;
+          background:${isActive ? 'rgba(255,196,0,0.15)' : 'rgba(255,255,255,0.04)'};
+          border-color:${isActive ? 'rgba(255,196,0,0.45)' : 'rgba(255,255,255,0.1)'};
+          color:${isActive ? 'var(--gold)' : 'var(--dim)'};
+        ">${cat}</button>`;
+      }).join('');
+    }
+
+    function setChallengeFilter(cat) {
+      _challengeFilter = cat;
+      // Rebuild pills to reflect new active state
+      buildChallengeFilterPills(_allChallenges);
+      renderFilteredChallenges();
+    }
+
+    function renderFilteredChallenges() {
+      const grid = document.getElementById('challenges-list');
+      if (!grid) return;
+      const now = Date.now();
+      const filtered = _allChallenges.filter(ch => {
+        if (_challengeFilter === 'All') return true;
+        const cat = ch.category || 'General';
+        // Map 'One-Time' filter to challenge_type one-time or category One-Time
+        if (_challengeFilter === 'One-Time') return cat === 'One-Time' || ch.challenge_type === 'one-time';
+        return cat === _challengeFilter;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div style="color:var(--dim);font-size:0.88rem;grid-column:1/-1;">No ${_challengeFilter !== 'All' ? _challengeFilter : ''} challenges right now.</div>`;
+        return;
+      }
+      grid.innerHTML = filtered.map(ch => buildChallengeCard(ch, now)).join('');
+    }
+
+    function buildChallengeExpiry(ch, now) {
+      if (!ch.expires_at) {
+        return ch.challenge_type === 'weekly' ? 'Resets Monday' : '';
+      }
+      const exp = new Date(ch.expires_at).getTime();
+      if (exp < now) return 'expired';
+      const diffMs = exp - now;
+      const days  = Math.floor(diffMs / 86400000);
+      const hours = Math.floor((diffMs % 86400000) / 3600000);
+      if (days <= 7) {
+        return 'Expires in ' + (days > 0 ? days + 'd ' : '') + hours + 'h';
+      }
+      return 'Expires ' + new Date(ch.expires_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    }
+
+    function buildChallengeCard(ch, nowTs) {
+      const now = nowTs || Date.now();
+      const typeMap   = { weekly: 'ctype-weekly', monthly: 'ctype-monthly', 'one-time': 'ctype-once' };
+      const typeLabel = ch.challenge_type === 'one-time' ? 'One-Time' : ch.challenge_type.charAt(0).toUpperCase() + ch.challenge_type.slice(1);
+      const expiryStr = buildChallengeExpiry(ch, now);
+      const isExpired = expiryStr === 'expired';
+      const cat       = ch.category || 'General';
+
+      // Difficulty badge
+      const diffMap = {
+        Easy:      { bg: 'rgba(16,185,129,0.1)',  border: 'rgba(16,185,129,0.25)',  color: '#10B981' },
+        Medium:    { bg: 'rgba(31,162,255,0.1)',  border: 'rgba(31,162,255,0.25)',  color: '#1FA2FF' },
+        Hard:      { bg: 'rgba(251,146,60,0.1)',  border: 'rgba(251,146,60,0.25)',  color: '#fb923c' },
+        Legendary: { bg: 'rgba(255,196,0,0.12)',  border: 'rgba(255,196,0,0.35)',   color: '#FFC400' },
+      };
+      const diff = ch.difficulty || 'Medium';
+      const dc = diffMap[diff] || diffMap.Medium;
+      const diffBadge = `<span style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;padding:0.16rem 0.48rem;border-radius:4px;background:${dc.bg};color:${dc.color};border:1px solid ${dc.border};white-space:nowrap;">${diff}</span>`;
+
+      // Category badge (if not already expressed by challenge_type)
+      const catBadge = (cat !== 'General' && cat.toLowerCase() !== ch.challenge_type)
+        ? `<span style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.07em;padding:0.16rem 0.48rem;border-radius:4px;background:rgba(139,92,246,0.1);color:#a78bfa;border:1px solid rgba(139,92,246,0.2);white-space:nowrap;">${cat}</span>`
+        : '';
+
+      // Expiry badge
+      const expiryBadge = expiryStr
+        ? `<span class="challenge-expires" style="${isExpired ? 'color:#f87171;' : expiryStr.startsWith('Expires in') ? 'color:#fb923c;' : 'color:var(--dim);'}font-size:0.73rem;">${isExpired ? '⛔ Expired' : expiryStr}</span>`
+        : '';
+
+      if (isExpired) {
+        return `<div class="challenge-card" style="opacity:0.45;filter:grayscale(0.5);">
+          <div class="challenge-card-top">
+            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+              <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
+              ${diffBadge}${catBadge}
+            </div>
+            <span class="challenge-pts-badge">+${ch.points} pts</span>
+          </div>
+          <div class="challenge-title">${ch.title}</div>
+          <div class="challenge-desc">${ch.description || ''}</div>
+          <div class="challenge-footer">${expiryBadge}</div>
+        </div>`;
+      }
+
+      if (ch.completed) {
+        const when = ch.completed_at ? formatTimeAgo(new Date(ch.completed_at)) : 'Complete';
+        return `<div class="challenge-card completed">
+          <div class="challenge-card-top">
+            <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+              <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
+              ${diffBadge}${catBadge}
+            </div>
+            <span class="challenge-pts-badge">+${ch.points} pts</span>
+          </div>
+          <div class="challenge-title">${ch.title}</div>
+          <div class="challenge-desc">${ch.description || ''}</div>
+          <div class="challenge-footer">
+            <span class="challenge-done">✓ Earned — ${when}</span>
+            ${expiryBadge}
+          </div>
+        </div>`;
+      }
+
+      return `<div class="challenge-card">
+        <div class="challenge-card-top">
+          <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
+            <span class="challenge-type-chip ${typeMap[ch.challenge_type] || 'ctype-once'}">${typeLabel}</span>
+            ${diffBadge}${catBadge}
+          </div>
+          <span class="challenge-pts-badge">+${ch.points} pts</span>
+        </div>
+        <div class="challenge-title">${ch.title}</div>
+        <div class="challenge-desc">${ch.description || ''}</div>
+        <div class="challenge-footer">
+          ${expiryBadge || '<span style="color:var(--dim);font-size:0.78rem;">Complete an action to earn</span>'}
+        </div>
+      </div>`;
+    }
+
+    // Auto-complete challenges based on detected member state
+    async function initChallenges(member) {
+      try {
+        // Reuse cached challenges if loadChallenges() already ran; else fetch
+        const { data: challenges } = _allChallenges && _allChallenges.length > 0
+          ? { data: _allChallenges }
+          : await VSSupabase.rpc('get_challenges');
+        if (!challenges) return;
+
+        const achIds = (member.achievements || []).map(a => a.id);
+        const pending = challenges.filter(c => !c.completed);
+        let totalBonus = 0;
+
+        for (const ch of pending) {
+          let should = false;
+          switch (ch.action_key) {
+            case 'subscribed':     should = !!member.subscribed; break;
+            case 'weekly_login':   should = true; break;
+            case 'profile_complete':
+              should = !!(member.bio && member.bio.trim().length > 0
+                         && member.avatar_id && member.avatar_id !== 'spark'); break;
+            case 'visit_game':
+              should = !!(localStorage.getItem('vs_visited_cod')
+                        || localStorage.getItem('vs_visited_gm')
+                        || localStorage.getItem('vs_visited_vsfgm')); break;
+            case 'visit_all_games':
+              should = !!(localStorage.getItem('vs_visited_cod')
+                        && localStorage.getItem('vs_visited_gm')
+                        && localStorage.getItem('vs_visited_vsfgm')); break;
+            case 'referral_1':     should = achIds.includes('recruiter'); break;
+            case 'referral_5':     should = achIds.includes('patron'); break;
+          }
+          if (should) {
+            const { data } = await VSSupabase.rpc('complete_challenge', { p_challenge_id: ch.id });
+            if (data?.ok) totalBonus += data.points;
+          }
+        }
+
+        if (totalBonus > 0) {
+          showXpChip(totalBonus, 'Challenge bonus');
+          refreshPointsDisplay();
+          loadPointEvents();
+        }
+        loadChallenges();
+      } catch (_) {}
+    }
+
+    async function completeChallengeByActionKey(actionKey) {
+      try {
+        // Reuse cached challenges; only fetch if cache is empty
+        const { data: challenges } = _allChallenges && _allChallenges.length > 0
+          ? { data: _allChallenges }
+          : await VSSupabase.rpc('get_challenges');
+        if (!challenges) return;
+        const ch = challenges.find(c => c.action_key === actionKey && !c.completed);
+        if (!ch) return;
+        const { data } = await VSSupabase.rpc('complete_challenge', { p_challenge_id: ch.id });
+        if (data?.ok) {
+          showChallengeCompleteModal(data.points, data.title);
+          refreshPointsDisplay();
+          loadChallenges();
+          await updateChallengeStreakAndMicro();
+        }
+      } catch (_) {}
+    }
+
+    // Update challenge streak and check micro-achievements after a completion
+    async function updateChallengeStreakAndMicro() {
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const today = new Date().toISOString().slice(0, 10);
+        const { data: row } = await VSSupabase.from('vault_members')
+          .select('challenge_streak, last_challenge_date')
+          .eq('id', session.user.id).single();
+        if (!row) return;
+
+        const lastDate = row.last_challenge_date;
+        const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+        let newStreak = 1;
+        if (lastDate === today) {
+          newStreak = row.challenge_streak || 1; // already counted today
+        } else if (lastDate === yesterday) {
+          newStreak = (row.challenge_streak || 0) + 1;
+        }
+
+        await VSSupabase.from('vault_members')
+          .update({ challenge_streak: newStreak, last_challenge_date: today })
+          .eq('id', session.user.id);
+
+        if (_currentMember) {
+          _currentMember.challenge_streak = newStreak;
+          _currentMember.last_challenge_date = today;
+        }
+
+        // Update streak badge display
+        const streakBadge = document.getElementById('challenge-streak-badge');
+        if (streakBadge && newStreak > 1) {
+          streakBadge.textContent = '🔥 ' + newStreak + '-day streak';
+          streakBadge.style.display = '';
+        }
+
+        // Streak milestone bonuses
+        if (newStreak === 7 || newStreak === 30) {
+          const bonus = newStreak === 7 ? 50 : 200;
+          await VSSupabase.rpc('award_points', { p_user_id: session.user.id, p_points: bonus, p_reason: 'challenge_streak_' + newStreak });
+          showXpChip(bonus, newStreak + '-day challenge streak!');
+          refreshPointsDisplay();
+        }
+
+        // First-completion micro-achievements
+        const { count } = await VSSupabase.from('challenge_submissions')
+          .select('id', { count: 'exact', head: true })
+          .eq('user_id', session.user.id);
+        const milestones = { 1: 'first_challenge', 5: 'challenge_5', 10: 'challenge_10' };
+        if (milestones[count]) {
+          // Award if not already in achievements
+          const alreadyHas = (_currentMember?.achievements || []).some(a => a.id === milestones[count]);
+          if (!alreadyHas) {
+            await VSSupabase.rpc('award_points', { p_user_id: session.user.id, p_points: 25, p_reason: milestones[count] });
+            const labels = { first_challenge: 'First Challenge', challenge_5: '5 Challenges', challenge_10: '10 Challenges' };
+            showXpChip(25, labels[milestones[count]] + ' milestone!');
+          }
+        }
+      } catch (_) {}
+    }
+
+    async function sendPasswordReset() {
+      const btn = document.getElementById('pw-reset-btn');
+      const msg = document.getElementById('pw-reset-msg');
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const { error } = await VSSupabase.auth.resetPasswordForEmail(session.user.email, {
+          redirectTo: window.location.origin + '/vault-member/',
+        });
+        if (!error) {
+          if (msg) { msg.style.display = ''; }
+          if (btn) { btn.textContent = 'Email Sent'; }
+        } else {
+          if (btn) { btn.disabled = false; btn.textContent = 'Send Password Reset Email'; }
+        }
+      } catch (_) {
+        if (btn) { btn.disabled = false; btn.textContent = 'Send Password Reset Email'; }
+      }
+    }
+
+    async function exportMyData() {
+      const btn = document.getElementById('export-data-btn');
+      if (btn) { btn.disabled = true; btn.textContent = 'Preparing…'; }
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        const uid = session.user.id;
+
+        const [{ data: profile }, { data: points }, { data: challenges }] = await Promise.all([
+          VSSupabase.from('vault_members').select('*').eq('id', uid).single(),
+          VSSupabase.from('point_events').select('points,reason,label,created_at').eq('user_id', uid).order('created_at', { ascending: false }).limit(500),
+          VSSupabase.from('challenge_submissions').select('challenge_id,created_at').eq('user_id', uid).order('created_at', { ascending: false }),
+        ]);
+
+        const exportData = {
+          exported_at: new Date().toISOString(),
+          email: session.user.email,
+          profile: profile || {},
+          point_history: points || [],
+          challenge_completions: challenges || [],
+        };
+
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = 'vaultspark-data-' + (profile?.username || uid) + '.json';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch (_) {}
+      if (btn) { btn.disabled = false; btn.textContent = '⬇ Export My Data'; }
+    }
+
+    function requestDeleteAccount() {
+      const confirmed = confirm(
+        'Delete your Vault Member account?\n\n' +
+        'This is permanent and irreversible. All your points, achievements, and data will be erased.\n\n' +
+        'To confirm, click OK. You will be signed out immediately and your account will be queued for deletion.'
+      );
+      if (!confirmed) return;
+      VSSupabase.auth.getSession().then(async ({ data: { session } }) => {
+        if (!session) return;
+        // Mark for deletion in vault_members (soft delete — admin can confirm)
+        await VSSupabase.from('vault_members').update({ delete_requested: true }).eq('id', session.user.id).catch(() => {});
+        await VSSupabase.auth.signOut();
+        window.location.href = '/';
+      });
+    }
+
+    async function refreshPointsDisplay() {
+      try {
+        const uid = _currentMember?._id;
+        if (!uid) return;
+        const { data: row } = await VSSupabase.from('vault_members').select('points').eq('id', uid).single();
+        if (!row) return;
+        const pts  = row.points;
+        const rank = VS.getRank(pts);
+        const prog = VS.getRankProgress(pts);
+        document.getElementById('profile-pts').textContent  = pts + ' pts';
+        document.getElementById('stat-pts').textContent     = pts;
+        document.getElementById('info-pts').textContent     = pts + ' pts';
+        document.getElementById('stat-rank').textContent    = rank.name;
+        document.getElementById('info-rank').textContent    = rank.name;
+        document.getElementById('progress-fill').style.width = prog + '%';
+        const nxt = VS.getNextRank(pts);
+        document.getElementById('pb-current-rank').textContent = rank.name;
+        document.getElementById('pb-next').textContent = nxt ? '→ ' + nxt.name + ' at ' + nxt.min + ' pts' : '✦ Maximum rank achieved';
+        updateRankProgress(pts);
+        loadPointEvents();
+      } catch (_) {}
+    }
+
+    // ── Vault Member Card (Canvas) ───────────────────────────────
+    function rrect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y); ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r); ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h); ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r); ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    // ── Card background themes ───────────────────────────────────────
+    const CARD_THEMES = [
+      { id: 'default',   label: 'Default',   rankReq: 0, accentColor: null,      bg: ['#08080f','#060810','#0c0d18'], glowColor: null        },
+      { id: 'rift',      label: 'Rift Blue',  rankReq: 2, accentColor: '#10B981', bg: ['#030e1a','#04111e','#061420'], glowColor: '#1FA2FF'   },
+      { id: 'breacher',  label: 'Void',       rankReq: 4, accentColor: '#8B5CF6', bg: ['#0a0414','#090213','#0e0520'], glowColor: '#8B5CF6'   },
+      { id: 'forge',     label: 'Forge Fire', rankReq: 7, accentColor: '#D62828', bg: ['#150604','#160505','#1c0807'], glowColor: '#FF7A00'   },
+      { id: 'sparked',   label: 'Sparked',    rankReq: 8, accentColor: '#FFC400', bg: ['#0f0b00','#120d00','#180f00'], glowColor: '#FFC400'   },
+    ];
+
+    function getCardTheme() {
+      return localStorage.getItem('vs_card_theme') || 'default';
+    }
+
+    function buildCardThemeRow(member) {
+      const row = document.getElementById('card-theme-row');
+      if (!row) return;
+      const rankIdx = VS.RANKS.findIndex(r => r.name === VS.getRank(member.points).name);
+      const active  = getCardTheme();
+      row.innerHTML = '';
+      CARD_THEMES.forEach(function(t) {
+        const locked = rankIdx < t.rankReq;
+        const btn = document.createElement('button');
+        btn.className = 'card-theme-btn' + (t.id === active ? ' active' : '') + (locked ? ' locked' : '');
+        btn.setAttribute('aria-label', t.label + (locked ? ' (locked — requires rank ' + t.rankReq + ')' : ''));
+        btn.disabled = locked;
+        if (t.id === active) btn.style.background = t.accentColor || '#FFC400';
+        else if (!locked && t.accentColor) btn.style.borderColor = t.accentColor + '55';
+        btn.innerHTML = t.label + (locked ? '<span class="card-theme-rank-req">Rank ' + t.rankReq + '+</span>' : '');
+        if (!locked) {
+          btn.addEventListener('click', function() {
+            localStorage.setItem('vs_card_theme', t.id);
+            buildCardThemeRow(member);
+            generateMemberCard(member);
+          });
+        }
+        row.appendChild(btn);
+      });
+    }
+
+    function generateMemberCard(member) {
+      const canvas = document.getElementById('vault-card-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = 680, H = 380;
+      canvas.width = W; canvas.height = H;
+
+      const rank   = VS.getRank(member.points);
+      const av     = VS.getAvatar(member.avatar_id || 'spark');
+      const themeId = getCardTheme();
+      const theme   = CARD_THEMES.find(t => t.id === themeId) || CARD_THEMES[0];
+      const accent  = theme.accentColor || member.accent || '#FFC400';
+      const glowC   = theme.glowColor   || accent;
+
+      // Background
+      const bgGrad = ctx.createLinearGradient(0, 0, W, H);
+      bgGrad.addColorStop(0, theme.bg[0]); bgGrad.addColorStop(0.6, theme.bg[1]); bgGrad.addColorStop(1, theme.bg[2]);
+      ctx.fillStyle = bgGrad;
+      rrect(ctx, 0, 0, W, H, 22); ctx.fill();
+
+      // Grid lines
+      ctx.strokeStyle = 'rgba(255,255,255,0.022)'; ctx.lineWidth = 1;
+      for (let x = 0; x <= W; x += 40) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+      for (let y = 0; y <= H; y += 40) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+
+      // Accent glow blob
+      const glowGrad = ctx.createRadialGradient(130, H/2, 0, 130, H/2, 140);
+      glowGrad.addColorStop(0, glowC + '30'); glowGrad.addColorStop(1, 'transparent');
+      ctx.fillStyle = glowGrad; ctx.fillRect(0, 0, W, H);
+      // Secondary right-side glow for themed cards
+      if (themeId !== 'default') {
+        const glowGrad2 = ctx.createRadialGradient(W, 0, 0, W, 0, 200);
+        glowGrad2.addColorStop(0, glowC + '18'); glowGrad2.addColorStop(1, 'transparent');
+        ctx.fillStyle = glowGrad2; ctx.fillRect(0, 0, W, H);
+      }
+
+      // Left accent bar
+      const barGrad = ctx.createLinearGradient(0, 0, 0, H);
+      barGrad.addColorStop(0, accent); barGrad.addColorStop(1, accent + '44');
+      ctx.fillStyle = barGrad; rrect(ctx, 0, 0, 5, H, [22, 0, 0, 22]); ctx.fill();
+
+      // Avatar circle
+      ctx.save();
+      ctx.beginPath(); ctx.arc(125, H/2, 64, 0, Math.PI*2);
+      ctx.fillStyle = av.bg; ctx.fill();
+      ctx.strokeStyle = accent + '70'; ctx.lineWidth = 2; ctx.stroke();
+      ctx.restore();
+
+      // Avatar emoji
+      ctx.font = '54px serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(av.emoji, 125, H/2 + 4);
+
+      // "VAULT MEMBER" label
+      ctx.font = 'bold 10px system-ui,sans-serif'; ctx.fillStyle = accent + 'bb';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+      ctx.fillText('VAULT MEMBER', 215, 38);
+
+      // Member number (top right)
+      if (member.member_number) {
+        ctx.font = '600 10px system-ui,sans-serif';
+        ctx.textAlign = 'right'; ctx.fillStyle = 'rgba(255,255,255,0.28)';
+        ctx.fillText('#' + member.member_number, W - 28, 38);
+      }
+
+      // Username
+      ctx.font = 'bold 40px system-ui,sans-serif';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle'; ctx.fillStyle = '#ffffff';
+      let uname = member.username || 'VaultMember';
+      while (ctx.measureText(uname).width > W - 245 && uname.length > 3) uname = uname.slice(0,-1);
+      ctx.fillText(uname, 215, H/2 - 35);
+
+      // Rank pill
+      ctx.font = 'bold 10.5px system-ui,sans-serif';
+      const rt = rank.name.toUpperCase();
+      const rw = ctx.measureText(rt).width + 24;
+      ctx.fillStyle = accent + '1e'; rrect(ctx, 215, H/2 - 4, rw, 22, 5); ctx.fill();
+      ctx.strokeStyle = accent + '44'; ctx.lineWidth = 1; rrect(ctx, 215, H/2 - 4, rw, 22, 5); ctx.stroke();
+      ctx.fillStyle = accent; ctx.textBaseline = 'middle'; ctx.fillText(rt, 227, H/2 + 7);
+
+      // Points
+      ctx.font = '600 12px system-ui,sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.45)';
+      ctx.fillText(member.points + ' pts', 215 + rw + 12, H/2 + 7);
+
+      // Founding badge (if applicable)
+      if (member.member_number && member.member_number <= 100) {
+        ctx.font = 'bold 9px system-ui,sans-serif';
+        const fb = '✦ FOUNDING MEMBER';
+        const fw = ctx.measureText(fb).width + 18;
+        rrect(ctx, 215 + rw + 60, H/2 - 4, fw, 22, 4);
+        ctx.fillStyle = 'rgba(255,196,0,0.1)'; ctx.fill();
+        ctx.strokeStyle = 'rgba(255,196,0,0.22)'; ctx.lineWidth = 1; ctx.stroke();
+        ctx.fillStyle = '#FFC400'; ctx.textBaseline = 'middle';
+        ctx.fillText(fb, 215 + rw + 69, H/2 + 7);
+      }
+
+      // Divider
+      ctx.strokeStyle = 'rgba(255,255,255,0.06)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(215, H/2 + 28); ctx.lineTo(W - 28, H/2 + 28); ctx.stroke();
+
+      // Member since
+      const since = new Date(member.createdAt).toLocaleDateString('en-US',{month:'short',year:'numeric'});
+      ctx.font = '500 11px system-ui,sans-serif'; ctx.fillStyle = 'rgba(255,255,255,0.32)';
+      ctx.textBaseline = 'top'; ctx.fillText('Member since ' + since, 215, H/2 + 36);
+
+      // Bottom branding
+      ctx.font = '600 10px system-ui,sans-serif';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'bottom'; ctx.fillStyle = 'rgba(255,255,255,0.18)';
+      ctx.fillText('VAULTSPARKSTUDIOS.COM', 215, H - 26);
+      ctx.textAlign = 'right'; ctx.fillStyle = accent + '55';
+      ctx.fillText('THE VAULT IS SPARKED', W - 28, H - 26);
+
+      // Card border
+      ctx.strokeStyle = 'rgba(255,255,255,0.055)'; ctx.lineWidth = 1;
+      rrect(ctx, 0.5, 0.5, W - 1, H - 1, 21.5); ctx.stroke();
+    }
+
+    // ── Feature 5: Achievement progress tracking ─────────────────
+
+    // progress_max values keyed by achievement id (mirrors DB, used client-side)
+    const ACHIEVEMENT_PROGRESS_MAX = {
+      first_100:        100,
+      patron:           5,
+      recruiter:        1,
+      joined:           1,
+      subscribed:       1,
+      visit_game:       1,
+      lore_read:        1,
+      social:           1,
+      profile_complete: 1,
+    };
+
+    function getAchievementProgress(defId, member, completedChallenges) {
+      // Returns { current, max } for display
+      const max = ACHIEVEMENT_PROGRESS_MAX[defId] || 1;
+      if (max <= 1) return { current: 0, max: 1 };
+      switch (defId) {
+        case 'first_100':
+          return { current: Math.min(member.points, max), max };
+        case 'patron':
+        case 'recruiter': {
+          // Count how many members member's invite code has brought in
+          // We don't have that count client-side; use achievement list as proxy
+          return { current: 0, max };
+        }
+        default:
+          return { current: 0, max };
+      }
+    }
+
+    function renderAchievementsGrid(member, achEarned) {
+      const grid = document.getElementById('achievement-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      VS.ACHIEVEMENT_DEFS.forEach(def => {
+        const earned = achEarned.includes(def.id);
+        const max    = ACHIEVEMENT_PROGRESS_MAX[def.id] || 1;
+        const { current } = getAchievementProgress(def.id, member, []);
+        const el = document.createElement('div');
+        el.className = 'achievement' + (earned ? '' : ' locked');
+
+        let progressHtml = '';
+        if (!earned && max > 1) {
+          const pct = Math.min(100, Math.round((current / max) * 100));
+          progressHtml = `
+            <div style="margin-top:0.5rem;">
+              <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:var(--dim);margin-bottom:0.2rem;">
+                <span>${current} / ${max}</span>
+                <span>${pct}%</span>
+              </div>
+              <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;">
+                <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--gold),#fff6c0);border-radius:2px;transition:width 0.6s ease;"></div>
+              </div>
+            </div>`;
+        } else if (earned && max > 1) {
+          progressHtml = `
+            <div style="margin-top:0.5rem;">
+              <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:#34d399;margin-bottom:0.2rem;">
+                <span>${max} / ${max}</span><span>✓ Complete</span>
+              </div>
+              <div style="height:4px;background:rgba(52,211,153,0.15);border-radius:2px;overflow:hidden;">
+                <div style="height:100%;width:100%;background:linear-gradient(90deg,#10B981,#34d399);border-radius:2px;"></div>
+              </div>
+            </div>`;
+        } else if (earned) {
+          progressHtml = `<div style="margin-top:0.3rem;height:3px;background:linear-gradient(90deg,#10B981,#34d399);border-radius:2px;opacity:0.5;"></div>`;
+        }
+
+        el.innerHTML = `
+          <div class="ach-icon">${def.icon}</div>
+          <div class="ach-name">${def.name}</div>
+          <div class="ach-desc">${earned ? def.desc : 'Locked — keep playing to unlock'}</div>
+          ${progressHtml}
+          ${(!earned && max <= 1) ? '<div style="margin-top:.3rem;font-size:.7rem;color:var(--dim);">🔒 Locked</div>' : ''}
+        `;
+        grid.appendChild(el);
+      });
+    }
+
+    // ── Rank progress bar (Vault Stats panel) ────────────────────
+    function updateRankProgress(points) {
+      const rank    = VS.getRank(points);
+      const next    = VS.getNextRank(points);
+      const bar     = document.getElementById('rankProgressBar');
+      const pct     = document.getElementById('rankProgressPct');
+      const label   = document.getElementById('rankNextLabel');
+      const heading = document.getElementById('rankProgressLabel');
+      if (!bar) return;
+      if (!next) {
+        bar.style.width      = '100%';
+        bar.style.background = '#FFC400';
+        if (pct)     pct.textContent     = 'MAX';
+        if (label)   label.textContent   = 'Top rank achieved';
+        if (heading) heading.textContent = 'Rank progress';
+        return;
+      }
+      const range    = rank.max - rank.min + 1;
+      const progress = Math.min(100, Math.round(((points - rank.min) / range) * 100));
+      bar.style.width      = progress + '%';
+      bar.style.background = 'linear-gradient(90deg,#1FA2FF,#8B5CF6)';
+      if (pct)     pct.textContent   = progress + '%';
+      if (label)   label.textContent = (rank.max - points + 1) + ' pts to ' + next.name;
+      if (heading) heading.textContent = 'Progress to ' + next.name;
+    }
+
+    // ── Studio Pulse notice banner ────────────────────────────────
+    async function loadPulseNotice() {
+      try {
+        const { data } = await VSSupabase
+          .from('studio_pulse')
+          .select('message, type, created_at')
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        if (data) {
+          const notice = document.getElementById('pulseNotice');
+          const text   = document.getElementById('pulseNoticeText');
+          const date   = document.getElementById('pulseNoticeDate');
+          if (notice && text) {
+            text.textContent = data.message || '';
+            if (date) date.textContent = new Date(data.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            const dismissed = sessionStorage.getItem('pulse-dismissed-' + data.created_at);
+            if (!dismissed) {
+              notice.style.display = 'block';
+              const closeBtn = notice.querySelector('button');
+              if (closeBtn) {
+                closeBtn.addEventListener('click', () => {
+                  sessionStorage.setItem('pulse-dismissed-' + data.created_at, '1');
+                });
+              }
+            }
+          }
+        }
+      } catch (_) {}
+    }
+
+    // ── Init: restore session ────────────────────────────────────
+    (async function init() {
+      // Password reset: Supabase redirects with #access_token=...&type=recovery
+      const hash = window.location.hash;
+      if (hash.includes('type=recovery')) {
+        const params = new URLSearchParams(hash.slice(1));
+        if (params.get('type') === 'recovery') {
+          const access_token  = params.get('access_token');
+          const refresh_token = params.get('refresh_token');
+          if (access_token && refresh_token) {
+            await VSSupabase.auth.setSession({ access_token, refresh_token });
+          }
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+          showAuth();
+          switchTab('reset');
+          return;
+        }
+      }
+
+      const { data: { session } } = await VSSupabase.auth.getSession();
+
+      if (session) {
+        // Phase 38: single bootstrap RPC combines vault_members + recent point_events
+        const { data: boot } = await VSSupabase.rpc('get_member_bootstrap');
+        const row = boot?.member || null;
+
+        if (row) {
+          // Cache prefetched events so loadPointEvents() can skip an extra round-trip
+          if (Array.isArray(boot.events) && boot.events.length > 0) {
+            window._prefetchedEvents = boot.events;
+          }
+          // Phase 7: auto-save discord_id if user has a Discord identity not yet stored.
+          // This handles both Discord OAuth users and returning "Connect Discord" linkers.
+          if (!row.discord_id) {
+            const discordIdentity = session.user.identities?.find(i => i.provider === 'discord');
+            if (discordIdentity) {
+              const did = String(discordIdentity.id || discordIdentity.user_id || '');
+              if (did) {
+                await VSSupabase.rpc('save_discord_id', { p_discord_id: did }).catch(() => {});
+                row.discord_id = did;
+              }
+            }
+          }
+          if (localStorage.getItem('vs_link_discord') === '1') {
+            localStorage.removeItem('vs_link_discord');
+          }
+          showDashboard(buildMember(session.user, row));
+          return;
+        }
+
+        // Authenticated but no vault_members row → OAuth new user needs to complete profile
+        showAuth();
+        switchTab('oauth-complete');
+        // Pre-fill username from OAuth metadata if available
+        const oauthName = session.user.user_metadata?.full_name || session.user.user_metadata?.name || '';
+        if (oauthName) {
+          const handle = oauthName.replace(/[^a-zA-Z0-9_]/g,'').slice(0,24);
+          const userInput = document.getElementById('oauth-username');
+          if (userInput && !userInput.value) userInput.value = handle;
+        }
+        return;
+      }
+
+      showAuth();
+      if (hash === '#register') switchTab('register');
+      else if (hash === '#login') switchTab('login');
+
+      // Show app name in subtitle if redirected from a gated tool
+      const appName = VSGate.getNextAppName();
+      if (appName) {
+        const heroP = document.querySelector('.member-page-hero p');
+        if (heroP) {
+          heroP.textContent = `Sign in or create your Vault Member account to access ${appName}.`;
+        }
+      }
+    })();
