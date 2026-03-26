@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-20260326-4443495';
+const CACHE_NAME = 'vaultspark-20260326-b1b19a6';
 const STATIC_ASSETS = [
   '/',
   '/assets/style.css',
