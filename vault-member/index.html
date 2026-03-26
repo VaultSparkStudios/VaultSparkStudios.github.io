@@ -1978,6 +1978,7 @@
             <button type="button" class="dash-tab" id="tab-dash-earlyaccess" onclick="switchDashTab('earlyaccess')">Early Access</button>
             <button type="button" class="dash-tab" id="tab-dash-polls" onclick="switchDashTab('polls')">🗳️ Polls</button>
             <button type="button" class="dash-tab" id="tab-dash-following" onclick="switchDashTab('following')">👥 Following</button>
+            <button type="button" class="dash-tab" id="tab-dash-seasonpass" onclick="switchDashTab('seasonpass')">🏆 Season Pass</button>
             <button type="button" class="dash-tab" id="tab-dash-chronicle" onclick="switchDashTab('chronicle')">Chronicle</button>
             <button type="button" class="dash-tab" id="tab-dash-settings" onclick="switchDashTab('settings')">Profile &amp; Settings</button>
             <button type="button" class="dash-tab" id="tab-dash-admin" onclick="switchDashTab('admin')" style="display:none;">⚡ Vault Command</button>
@@ -2588,6 +2589,21 @@
                 </div>
               </div>
 
+              <!-- Full-width: Monthly Newsletter -->
+              <div class="settings-full">
+                <div class="settings-block">
+                  <h3>Monthly Newsletter</h3>
+                  <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.85rem;line-height:1.55;">Receive a monthly Vault Dispatch with your XP summary, top members, and studio updates.</p>
+                  <div style="display:flex;align-items:center;gap:0.75rem;">
+                    <label class="toggle-switch" style="flex-shrink:0;" aria-label="Monthly newsletter">
+                      <input type="checkbox" id="toggle-newsletter" onchange="toggleNewsletter(this.checked)" />
+                      <span class="slider"></span>
+                    </label>
+                    <span id="newsletter-status-msg" style="font-size:0.82rem;color:var(--muted);">Loading…</span>
+                  </div>
+                </div>
+              </div>
+
               <!-- Full-width: Change Password -->
               <div class="settings-full">
                 <div class="settings-block">
@@ -2838,6 +2854,18 @@
 
             </div>
           </div><!-- /dash-pane-admin -->
+
+          <!-- ── Tab: Season Pass ── -->
+          <div class="dash-pane" id="dash-pane-seasonpass">
+            <div class="dash-panel">
+              <div id="season-pass-content" style="min-height:200px;">
+                <!-- Populated by loadSeasonPass() in portal.js -->
+                <div class="lb-skeleton" style="height:80px;border-radius:12px;margin-bottom:1rem;"></div>
+                <div class="lb-skeleton" style="height:40px;border-radius:8px;margin-bottom:0.5rem;"></div>
+                <div class="lb-skeleton" style="height:40px;border-radius:8px;"></div>
+              </div>
+            </div>
+          </div><!-- /dash-pane-seasonpass -->
 
         </div>
       </section>

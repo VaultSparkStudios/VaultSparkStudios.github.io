@@ -256,7 +256,7 @@
           </div>
           <div class="lb-table-wrap" id="football-table-wrap">
             <table class="lb-table" aria-label="Football GM leaderboard">
-              <thead><tr><th>Rank</th><th>Member</th><th>Points</th><th>Activity</th></tr></thead>
+              <thead><tr><th>Rank</th><th>Member</th><th>High Score</th><th>Rank</th></tr></thead>
               <tbody id="football-tbody">
                 <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
                 <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -276,11 +276,11 @@
         <!-- Call of Doodie Panel -->
         <div class="lb-game-panel" id="lb-panel-doodie" role="tabpanel" aria-labelledby="tab-doodie">
           <div class="lb-game-notice">
-            Game leaderboard syncs when Call of Doodie reports scores. Global vault points earned through Call of Doodie challenges are tracked below.
+            High scores submitted by vault members playing Call of Doodie. Sign in and play to appear on the board.
           </div>
           <div class="lb-table-wrap" id="doodie-table-wrap">
             <table class="lb-table" aria-label="Call of Doodie leaderboard">
-              <thead><tr><th>Rank</th><th>Member</th><th>Points</th><th>Activity</th></tr></thead>
+              <thead><tr><th>Rank</th><th>Member</th><th>High Score</th><th>Rank</th></tr></thead>
               <tbody id="doodie-tbody">
                 <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
                 <tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
@@ -543,31 +543,25 @@
           return '<tr>' +
             '<td><span class="lb-rank-num">' + (i + 1) + '</span></td>' +
             '<td><span class="lb-username">' + esc(r.username) + '</span></td>' +
-            '<td><span class="lb-points">' + (r.total_pts || 0).toLocaleString() + '</span></td>' +
-            '<td><span class="lb-rank-title" style="color:var(--muted)">' + esc(r.latest_label || '') + '</span></td>' +
+            '<td><span class="lb-points">' + (r.score || 0).toLocaleString() + '</span></td>' +
+            '<td><span class="lb-rank-title" style="color:var(--muted)">' + esc(r.rank_title || '') + '</span></td>' +
             '</tr>';
         }).join('');
       }
 
-      function fetchGameLeaderboard(keyword, tbodyId, wrapId, emptyId) {
-        // Fetch point_events where label ilike *keyword* joined to vault_members
-        fetch(SB+'/rest/v1/point_events?select=user_id,points,label,vault_members(username)&label=ilike.*'+encodeURIComponent(keyword)+'*&order=created_at.desc&limit=200', {headers:H})
+      function fetchGameLeaderboard(gameSlug, tbodyId, wrapId, emptyId) {
+        // Query game_scores table for this game's high scores
+        fetch(SB+'/rest/v1/game_scores?select=score,vault_members(username,rank_title)&game_slug=eq.'+encodeURIComponent(gameSlug)+'&order=score.desc&limit=25', {headers:H})
           .then(function(r){return r.ok?r.json():[];})
-          .then(function(events){
-            if(!Array.isArray(events)||events.length===0){
+          .then(function(data){
+            if(!Array.isArray(data)||data.length===0){
               renderGameTable(tbodyId, wrapId, emptyId, []);
               return;
             }
-            // Aggregate: sum points per user
-            var agg = {};
-            events.forEach(function(ev){
-              var uname = ev.vault_members && ev.vault_members.username ? ev.vault_members.username : ev.user_id;
-              if(!uname) return;
-              if(!agg[uname]){agg[uname]={username:uname,total_pts:0,latest_label:''};}
-              agg[uname].total_pts += (ev.points||0);
-              if(!agg[uname].latest_label) agg[uname].latest_label = ev.label||'';
+            var rows = data.map(function(row){
+              var m = row.vault_members || {};
+              return { username: m.username || '—', score: row.score || 0, rank_title: m.rank_title || '' };
             });
-            var rows = Object.values(agg).sort(function(a,b){return b.total_pts-a.total_pts;});
             renderGameTable(tbodyId, wrapId, emptyId, rows);
           })
           .catch(function(){renderGameTable(tbodyId, wrapId, emptyId, []);});
@@ -711,11 +705,11 @@
           }
           if(b.dataset.game==='football' && !footballFetched){
             footballFetched=true;
-            fetchGameLeaderboard('football','football-tbody','football-table-wrap','football-empty');
+            fetchGameLeaderboard('vaultspark-football-gm','football-tbody','football-table-wrap','football-empty');
           }
           if(b.dataset.game==='doodie' && !doodieFetched){
             doodieFetched=true;
-            fetchGameLeaderboard('doodie','doodie-tbody','doodie-table-wrap','doodie-empty');
+            fetchGameLeaderboard('call-of-doodie','doodie-tbody','doodie-table-wrap','doodie-empty');
           }
           if(b.dataset.game==='teams' && !teamsFetched){
             teamsFetched=true;

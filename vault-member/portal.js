@@ -268,7 +268,11 @@
         renderPointsSummary();
       }
       if (which === 'following') loadFollowing();
-      if (which === 'settings') loadPwaSettings();
+      if (which === 'settings') { loadPwaSettings(); loadNewsletterPreference(); }
+      if (which === 'seasonpass' && !_seasonPassLoaded) {
+        _seasonPassLoaded = true;
+        loadSeasonPass();
+      }
     }
 
     // ── Nav account dropdown ─────────────────────────────────────
@@ -516,6 +520,7 @@
       _archiveLoaded   = false;
       _chronicleLoaded = false;
       _betaKeysLoaded  = false;
+      _seasonPassLoaded = false;
       loadChallenges();
       setTimeout(() => initChallenges(member), 1800);
 
@@ -2443,6 +2448,94 @@
     const VAPID_PUBLIC_KEY = 'BO_lCzoROyH94wskfOH2SQudZpJJHZ5x9-oKOPC4W34A6YC90N9P1ZCgLLG2wppfYMwJdcAy3wqG8F1jtXKFofI';
 
     let _swRegistration = null;
+
+    // ── Season Pass ───────────────────────────────────────────────
+    let _seasonPassLoaded = false;
+
+    async function loadSeasonPass() {
+      const el = document.getElementById('season-pass-content');
+      if (!el) return;
+
+      try {
+        const { data, error } = await VSSupabase.rpc('get_season_pass');
+        if (error) throw new Error(error.message);
+
+        if (!data || !data.season) {
+          el.innerHTML = '<p style="font-size:0.9rem;color:var(--muted);padding:1rem 0;">No active season right now. Check back soon.</p>';
+          return;
+        }
+
+        const { season, member_xp, tiers } = data;
+        const xp = member_xp || 0;
+        const maxXp = tiers && tiers.length ? tiers[tiers.length - 1].xp_required : 1;
+        const barPct = Math.min(100, Math.round((xp / maxXp) * 100));
+
+        const endDate = season.end_at ? new Date(season.end_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
+
+        const tiersHtml = (tiers || []).map(tier => {
+          const unlocked = xp >= tier.xp_required;
+          return `<div style="display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.9rem;border-radius:10px;background:${unlocked ? 'rgba(255,196,0,0.06)' : 'rgba(255,255,255,0.02)'};border:1px solid ${unlocked ? 'rgba(255,196,0,0.2)' : 'rgba(255,255,255,0.06)'};margin-bottom:0.4rem;">
+            <span style="font-size:1.2rem;flex-shrink:0;">${unlocked ? '🔓' : '🔒'}</span>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.88rem;font-weight:700;color:${unlocked ? '#fff' : 'var(--muted)'};">Tier ${tier.tier} — ${tier.reward_label}</div>
+              <div style="font-size:0.75rem;color:var(--dim);margin-top:0.1rem;">${tier.xp_required.toLocaleString()} XP required</div>
+            </div>
+            ${unlocked ? '<span style="font-size:0.75rem;font-weight:700;color:var(--gold);flex-shrink:0;">Unlocked</span>' : ''}
+          </div>`;
+        }).join('');
+
+        el.innerHTML = `
+          <div style="background:rgba(255,196,0,0.05);border:1px solid rgba(255,196,0,0.2);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1.25rem;">
+            <div style="font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.35rem;">Active Season</div>
+            <div style="font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:0.2rem;">${escHtml(season.name)}</div>
+            ${season.banner_text ? `<div style="font-size:0.83rem;color:var(--muted);margin-bottom:0.75rem;">${escHtml(season.banner_text)}</div>` : ''}
+            ${endDate ? `<div style="font-size:0.78rem;color:var(--dim);">Ends ${endDate}</div>` : ''}
+          </div>
+
+          <div style="margin-bottom:1.25rem;">
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.5rem;">
+              <span style="font-size:0.82rem;font-weight:700;color:var(--muted);">Season XP</span>
+              <span style="font-size:0.88rem;font-weight:800;color:var(--gold);">${xp.toLocaleString()} / ${maxXp.toLocaleString()}</span>
+            </div>
+            <div style="width:100%;height:8px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;">
+              <div style="height:8px;border-radius:4px;background:var(--gold);width:${barPct}%;transition:width 0.6s ease;"></div>
+            </div>
+          </div>
+
+          <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);margin-bottom:0.65rem;">Battle Pass Tiers</div>
+          ${tiersHtml}`;
+      } catch (err) {
+        if (el) el.innerHTML = `<p style="font-size:0.84rem;color:var(--dim);padding:1rem 0;">Could not load season pass. Try again later.</p>`;
+      }
+    }
+
+    // ── Monthly Newsletter Preference ─────────────────────────────
+    async function loadNewsletterPreference() {
+      const toggle = document.getElementById('toggle-newsletter');
+      const msg    = document.getElementById('newsletter-status-msg');
+      if (!toggle) return;
+      try {
+        const { data, error } = await VSSupabase.rpc('get_newsletter_preference');
+        if (error) throw new Error(error.message);
+        const optedOut = data?.opted_out ?? false;
+        toggle.checked = !optedOut;
+        if (msg) msg.textContent = optedOut ? 'Monthly newsletter is off.' : 'Monthly newsletter is on.';
+      } catch (_) {
+        if (msg) msg.textContent = 'Could not load preference.';
+      }
+    }
+
+    async function toggleNewsletter(checked) {
+      const msg = document.getElementById('newsletter-status-msg');
+      try {
+        const { error } = await VSSupabase.rpc('toggle_newsletter_opt_out', { p_opted_out: !checked });
+        if (error) throw new Error(error.message);
+        if (msg) msg.textContent = checked ? 'Monthly newsletter is on.' : 'Monthly newsletter is off.';
+      } catch (_) {
+        if (msg) msg.textContent = 'Could not save preference.';
+      }
+    }
+    window.toggleNewsletter = toggleNewsletter;
 
     // ── PWA Install — settings block ─────────────────────────────
     function loadPwaSettings() {
