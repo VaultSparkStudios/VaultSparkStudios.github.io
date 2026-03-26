@@ -257,10 +257,70 @@ export async function fetchAnalytics(supabaseUrl, anonKey, ttlMs = 300000) {
   }
 }
 
+// Journal views: per-article read counts
+export async function fetchJournalViews(supabaseUrl, anonKey, ttlMs = 300000) {
+  const key = "journal_views";
+  const cached = readCache(key, ttlMs);
+  if (cached) return cached;
+
+  const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+  const [allTime, recent] = await Promise.all([
+    sbFetch(supabaseUrl, anonKey, "journal_views?select=article_slug"),
+    sbFetch(supabaseUrl, anonKey, `journal_views?select=article_slug,viewed_at&viewed_at=gte.${thirtyDaysAgo}`),
+  ]);
+
+  if (!allTime) return null;
+
+  // Aggregate by slug
+  const bySlug = {};
+  for (const row of allTime) {
+    bySlug[row.article_slug] = (bySlug[row.article_slug] || 0) + 1;
+  }
+  const recentBySlug = {};
+  for (const row of (recent || [])) {
+    recentBySlug[row.article_slug] = (recentBySlug[row.article_slug] || 0) + 1;
+  }
+
+  const data = {
+    total: allTime.length,
+    recent30d: (recent || []).length,
+    bySlug,
+    recentBySlug,
+    topArticles: Object.entries(bySlug)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([slug, views]) => ({ slug, views, recent: recentBySlug[slug] || 0 })),
+  };
+
+  writeCache(key, data);
+  return data;
+}
+
+// Fan art submissions
+export async function fetchFanArt(supabaseUrl, anonKey, ttlMs = 300000) {
+  const key = "fan_art";
+  const cached = readCache(key, ttlMs);
+  if (cached) return cached;
+
+  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
+  const rows = await sbFetch(supabaseUrl, anonKey, "fan_art?select=id,status,created_at&order=created_at.desc&limit=200");
+  if (!rows) return null;
+
+  const data = {
+    total: rows.length,
+    approved: rows.filter((r) => r.status === "approved").length,
+    pending: rows.filter((r) => r.status === "pending" || !r.status).length,
+    newThisWeek: rows.filter((r) => new Date(r.created_at).getTime() > new Date(sevenDaysAgo).getTime()).length,
+  };
+
+  writeCache(key, data);
+  return data;
+}
+
 // Fetch all studio Supabase data in parallel.
 export async function fetchAllSupabaseData(supabaseUrl, anonKey, ttlMs = 300000) {
   if (!supabaseUrl || !anonKey) return null;
-  const [members, sessions, pulse, challenges, betaKeys, economy, investorRequests, revenue, analytics] = await Promise.all([
+  const [members, sessions, pulse, challenges, betaKeys, economy, investorRequests, revenue, analytics, journalViews, fanArt] = await Promise.all([
     fetchMemberStats(supabaseUrl, anonKey, ttlMs),
     fetchGameSessions(supabaseUrl, anonKey, ttlMs),
     fetchStudioPulse(supabaseUrl, anonKey, 60000),
@@ -270,6 +330,8 @@ export async function fetchAllSupabaseData(supabaseUrl, anonKey, ttlMs = 300000)
     fetchInvestorRequestCount(supabaseUrl, anonKey, 60000),
     fetchRevenue(supabaseUrl, anonKey, ttlMs),
     fetchAnalytics(supabaseUrl, anonKey, ttlMs),
+    fetchJournalViews(supabaseUrl, anonKey, ttlMs),
+    fetchFanArt(supabaseUrl, anonKey, ttlMs),
   ]);
-  return { members, sessions, pulse, challenges, betaKeys, economy, investorRequests, revenue, analytics };
+  return { members, sessions, pulse, challenges, betaKeys, economy, investorRequests, revenue, analytics, journalViews, fanArt };
 }

@@ -93,6 +93,24 @@ export function renderSettingsView(state) {
               </div>
             </div>
 
+            <div>
+              <label style="${labelStyle}">GA4 OAuth Client ID</label>
+              <input type="password" id="setting-ga-client-id" value="${stored.gaClientId || ""}" placeholder="123456789-abc.apps.googleusercontent.com" autocomplete="off" style="${inputStyle}" />
+              <div style="${hintStyle}">
+                Create at <a href="https://console.cloud.google.com/" target="_blank" rel="noopener" style="color:var(--blue);">console.cloud.google.com ↗</a>
+                → APIs &amp; Services → Credentials → OAuth 2.0 Web Client.
+                Enable the "Google Analytics Data API". Add your studio-hub URL as an authorised JS origin.
+              </div>
+            </div>
+
+            <div>
+              <label style="${labelStyle}">GA4 Property ID</label>
+              <input type="text" id="setting-ga-property-id" value="${stored.gaPropertyId || ""}" placeholder="123456789" autocomplete="off" style="${inputStyle}" />
+              <div style="${hintStyle}">
+                Found in GA4 → Admin → Property → Property details. Numbers only (e.g. 123456789).
+              </div>
+            </div>
+
             <div style="background:rgba(122,231,199,0.06); border:1px solid rgba(122,231,199,0.15); border-radius:10px; padding:14px 16px;">
               <div style="font-size:12px; font-weight:700; color:var(--cyan); margin-bottom:6px;">Pre-configured</div>
               <div style="font-size:12px; color:var(--muted); line-height:1.8;">
@@ -186,6 +204,7 @@ export function renderSettingsView(state) {
               { name: "Bluesky", ok: true, note: "AT Protocol" },
               { name: "YouTube", ok: !!stored.youtubeApiKey, note: stored.youtubeApiKey ? "Key configured" : "Add key above" },
               { name: "Gumroad", ok: null, note: "Public products only" },
+              { name: "Google Analytics 4 (GA4)", ok: !!(stored.gaClientId && stored.gaPropertyId), note: (stored.gaClientId && stored.gaPropertyId) ? "Client ID + Property ID configured" : "Add Client ID + Property ID above" },
               { name: "X / Instagram / TikTok / Meta", ok: false, note: "API access pending" },
               { name: "Discord", ok: false, note: "Bot required — VPS deployment" },
               { name: "Pinterest / Suno / Sora", ok: false, note: "No public API" },

@@ -41,6 +41,7 @@ export function renderNavigation(state) {
 
       <div class="nav-section">
         ${navItem("studio-hub", "Studio Hub")}
+        ${navItem("analytics", "Site Analytics")}
         ${navItem("social", "Social Accounts")}
         ${navItem("vault-admin", "Vault Admin")}
         ${navItem("settings", "Settings")}

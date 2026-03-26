@@ -9,6 +9,7 @@ import { renderProjectHubView } from "./components/projectHubView.js";
 import { renderVaultAdminView, initMemberSearch } from "./components/vaultAdminView.js";
 import { renderSocialView } from "./components/socialView.js";
 import { renderSettingsView, saveCredentials, saveSettings, loadSettings, loadStoredCredentials } from "./components/settingsView.js";
+import { renderAnalyticsView, bindAnalyticsEvents, setAnalyticsRenderCallback } from "./components/analyticsView.js";
 import { renderGate, isUnlocked, attemptUnlock, setHubPassword, clearHubPassword, isPasswordSet } from "./components/privacyGate.js";
 
 // ── Config ────────────────────────────────────────────────────────────────────
@@ -81,6 +82,7 @@ function render() {
 function renderActiveView() {
   const { activeView } = state;
   if (activeView === "studio-hub")  return renderStudioHubView(state);
+  if (activeView === "analytics")   return renderAnalyticsView(state);
   if (activeView === "social")      return renderSocialView(state);
   if (activeView === "vault-admin") return renderVaultAdminView(state);
   if (activeView === "settings")    return renderSettingsView(state);
@@ -139,6 +141,8 @@ function bindEvents() {
   document.getElementById("save-settings-btn")?.addEventListener("click", async () => {
     const githubToken    = document.getElementById("setting-github-token")?.value?.trim() || "";
     const youtubeApiKey  = document.getElementById("setting-youtube-key")?.value?.trim() || "";
+    const gaClientId     = document.getElementById("setting-ga-client-id")?.value?.trim() || "";
+    const gaPropertyId   = document.getElementById("setting-ga-property-id")?.value?.trim() || "";
     const hubPassword    = document.getElementById("setting-hub-password")?.value?.trim() || "";
     const accent         = document.getElementById("setting-accent")?.value || "#7ae7c7";
     const showScores     = document.getElementById("setting-show-scores")?.value !== "false";
@@ -147,7 +151,7 @@ function bindEvents() {
 
     // Credentials
     const existing = loadStoredCredentials();
-    saveCredentials({ ...existing, githubToken, youtubeApiKey });
+    saveCredentials({ ...existing, githubToken, youtubeApiKey, gaClientId, gaPropertyId });
 
     // Hub password
     if (hubPassword) await setHubPassword(hubPassword);
@@ -185,6 +189,9 @@ function bindEvents() {
     applyAccent("#7ae7c7");
     render();
   });
+
+  // Analytics tab switching + GA connect
+  bindAnalyticsEvents(config);
 
   // Studio Pulse publish
   document.getElementById("publish-pulse-btn")?.addEventListener("click", async () => {
@@ -236,6 +243,9 @@ async function syncAll() {
 }
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
+// Allow analytics view to trigger a re-render when GA connects
+setAnalyticsRenderCallback(render);
+
 if (!isUnlocked()) {
   render(); // render shell behind gate
   mountGate();
