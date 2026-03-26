@@ -2778,7 +2778,7 @@
     <!-- Spotlight cutout (positioned by JS) -->
     <div id="onboarding-spotlight" style="position:absolute;border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,0.72);pointer-events:none;transition:all 0.3s ease;z-index:1101;"></div>
     <!-- Floating card -->
-    <div id="onboarding-card" style="position:absolute;background:rgba(10,13,22,0.98);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:1.8rem 2rem;max-width:360px;width:92%;z-index:1102;pointer-events:auto;box-shadow:0 32px 80px rgba(0,0,0,0.6);">
+    <div id="onboarding-card" role="dialog" aria-modal="true" aria-labelledby="onboarding-title" style="position:absolute;background:rgba(10,13,22,0.98);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:1.8rem 2rem;max-width:360px;width:92%;z-index:1102;pointer-events:auto;box-shadow:0 32px 80px rgba(0,0,0,0.6);">
       <div style="font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:var(--gold);margin-bottom:0.6rem;" id="onboarding-step-label">Step 1 / 5</div>
       <h3 style="font-size:1.2rem;font-weight:800;margin:0 0 0.55rem;letter-spacing:-0.02em;" id="onboarding-title">Welcome to the Vault</h3>
       <p style="font-size:0.9rem;color:var(--muted);line-height:1.6;margin:0 0 1.4rem;" id="onboarding-desc">You're in. Your rank, your progress, your lore — all here.</p>
@@ -2794,7 +2794,7 @@
   <!-- ── Rank-Up Ceremony Overlay ── -->
   <div class="ceremony-overlay" id="ceremony-overlay" onclick="dismissCeremony()">
     <div class="cer-particles" id="cer-particles"></div>
-    <div class="ceremony-card" onclick="event.stopPropagation()">
+    <div class="ceremony-card" role="dialog" aria-modal="true" aria-labelledby="ceremony-rank-name" onclick="event.stopPropagation()">
       <span class="ceremony-emoji" id="ceremony-emoji">⚡</span>
       <p class="ceremony-label">Rank Up — You are now</p>
       <p class="ceremony-rank-name" id="ceremony-rank-name">Vault Runner</p>
@@ -2806,8 +2806,8 @@
   <!-- ── Vault Member Card Modal ── -->
   <!-- QR Code Modal -->
   <div class="qr-modal-overlay" id="qr-modal-overlay" onclick="dismissQRModal()">
-    <div class="qr-modal" onclick="event.stopPropagation()">
-      <h4>Your Referral QR</h4>
+    <div class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qr-modal-heading" onclick="event.stopPropagation()">
+      <h4 id="qr-modal-heading">Your Referral QR</h4>
       <p>Share this code to invite friends — you earn 100 pts per signup.</p>
       <div id="qr-canvas-wrap"></div>
       <button class="qr-modal-close" onclick="dismissQRModal()">Close</button>
@@ -2815,8 +2815,8 @@
   </div>
 
   <div class="card-modal-overlay" id="card-modal-overlay" onclick="dismissCardModal()">
-    <div class="card-modal" onclick="event.stopPropagation()">
-      <h3>Your Vault Member Card</h3>
+    <div class="card-modal" role="dialog" aria-modal="true" aria-labelledby="card-modal-heading" onclick="event.stopPropagation()">
+      <h3 id="card-modal-heading">Your Vault Member Card</h3>
       <canvas id="vault-card-canvas" width="680" height="380"></canvas>
       <div class="card-theme-row" id="card-theme-row" aria-label="Card background theme"></div>
       <div class="card-modal-actions">
@@ -3032,7 +3032,9 @@
         if (!_currentMember) return;
         buildCardThemeRow(_currentMember);
         generateMemberCard(_currentMember);
+        _lastFocus = document.activeElement;
         document.getElementById('card-modal-overlay').classList.add('show');
+        setTimeout(() => _trapFocus(document.querySelector('.card-modal')), 50);
       },
 
       downloadCard() {
@@ -3436,6 +3438,28 @@
 
     // ── Current member reference (for card generation etc.) ──────
     let _currentMember = null;
+    let _lastFocus = null; // restored when a modal closes
+
+    // Traps keyboard focus inside a modal dialog; focuses first focusable element
+    function _trapFocus(el) {
+      const FOCUSABLE = 'button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+      const nodes = [...el.querySelectorAll(FOCUSABLE)];
+      if (!nodes.length) return;
+      nodes[0].focus();
+      function onKey(e) {
+        if (e.key === 'Escape') { el.dispatchEvent(new CustomEvent('vs:close')); return; }
+        if (e.key !== 'Tab') return;
+        const first = nodes[0], last = nodes[nodes.length - 1];
+        if (e.shiftKey) { if (document.activeElement === first) { e.preventDefault(); last.focus(); } }
+        else            { if (document.activeElement === last)  { e.preventDefault(); first.focus(); } }
+      }
+      el._trapHandler = onKey;
+      el.addEventListener('keydown', onKey);
+    }
+    function _releaseFocus(el) {
+      if (el && el._trapHandler) { el.removeEventListener('keydown', el._trapHandler); el._trapHandler = null; }
+      if (_lastFocus) { try { _lastFocus.focus(); } catch(_) {} _lastFocus = null; }
+    }
 
     // ── Maps a Supabase vault_members row + user to the member shape ──────────
     function buildMember(user, row) {
@@ -3756,15 +3780,19 @@
         ].join(';');
         container.appendChild(p);
       }
+      _lastFocus = _lastFocus || document.activeElement;
       document.getElementById('ceremony-overlay').classList.add('show');
+      setTimeout(() => { const btn = document.querySelector('#ceremony-overlay .ceremony-dismiss'); if (btn) btn.focus(); }, 50);
     }
 
     function dismissCeremony() {
       document.getElementById('ceremony-overlay').classList.remove('show');
+      _releaseFocus(document.querySelector('.ceremony-card'));
     }
 
     function dismissCardModal() {
       document.getElementById('card-modal-overlay').classList.remove('show');
+      _releaseFocus(document.querySelector('.card-modal'));
     }
 
     // ── Feature 2: Onboarding tour ────────────────────────────────
@@ -3808,9 +3836,11 @@
       if (member.onboarding_completed) { localStorage.setItem('onboarding_complete', '1'); return; }
       if (localStorage.getItem('onboarding_complete')) return;
       if (member.points > 0) { localStorage.setItem('onboarding_complete', '1'); return; }
+      _lastFocus = document.activeElement;
       _onboardingStep = 0;
       renderOnboardingStep();
       document.getElementById('onboarding-overlay').style.display = '';
+      setTimeout(() => _trapFocus(document.getElementById('onboarding-card')), 50);
     }
 
     function renderOnboardingStep() {
@@ -3905,6 +3935,7 @@
       localStorage.setItem('onboarding_complete', '1');
       const overlay = document.getElementById('onboarding-overlay');
       if (overlay) overlay.style.display = 'none';
+      _releaseFocus(document.getElementById('onboarding-card'));
       // Persist to DB so new devices skip the tour
       VSSupabase.auth.getSession().then(({ data: { session } }) => {
         if (session) VSSupabase.from('vault_members').update({ onboarding_completed: true }).eq('id', session.user.id).catch(() => {});
@@ -4696,7 +4727,9 @@
       const wrap    = document.getElementById('qr-canvas-wrap');
       if (!overlay || !wrap) return;
       wrap.innerHTML = '';
+      _lastFocus = document.activeElement;
       overlay.classList.add('show');
+      setTimeout(() => _trapFocus(document.querySelector('.qr-modal')), 50);
       // Use QRCode library (loaded via CDN with defer)
       if (typeof QRCode !== 'undefined') {
         const canvas = document.createElement('canvas');
@@ -4713,6 +4746,7 @@
 
     function dismissQRModal() {
       document.getElementById('qr-modal-overlay')?.classList.remove('show');
+      _releaseFocus(document.querySelector('.qr-modal'));
     }
 
     // ── Phase 24: Login heatmap (12-week activity calendar) ───────
@@ -5044,9 +5078,9 @@
         + '<div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">' + p.message + '</div>'
         + '</div>'
       ).join('');
-      modal.innerHTML = '<div style="background:rgba(13,17,28,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:1.75rem;max-width:400px;width:100%;max-height:80vh;overflow-y:auto;">'
+      modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="whats-new-title" style="background:rgba(13,17,28,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:1.75rem;max-width:400px;width:100%;max-height:80vh;overflow-y:auto;">'
         + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;">'
-        + '<h3 style="font-size:1.05rem;font-weight:800;margin:0;">What\'s New in the Vault</h3>'
+        + '<h3 id="whats-new-title" style="font-size:1.05rem;font-weight:800;margin:0;">What\'s New in the Vault</h3>'
         + '<span style="font-size:0.75rem;font-weight:700;padding:0.2rem 0.55rem;background:rgba(255,196,0,0.15);border:1px solid rgba(255,196,0,0.3);border-radius:999px;color:var(--gold);">'
         + items.length + ' update' + (items.length > 1 ? 's' : '') + '</span>'
         + '</div>'
@@ -5054,12 +5088,16 @@
         + '<button id="whats-new-close-btn" style="width:100%;padding:0.6rem;background:var(--gold);color:#000;font-weight:800;font-size:0.88rem;border:none;border-radius:10px;cursor:pointer;font-family:inherit;">Got it — I\'m up to speed</button>'
         + '</div>';
       document.body.appendChild(modal);
+      const _wnPrev = document.activeElement;
+      document.getElementById('whats-new-close-btn')?.focus();
       const closeModal = () => {
         modal.remove();
+        try { _wnPrev?.focus(); } catch(_) {}
         localStorage.setItem('vs_last_pulse_seen_ts', safeTs);
       };
       document.getElementById('whats-new-close-btn').addEventListener('click', closeModal);
       modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+      modal.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
     }
 
     // ── Phase 14: Points breakdown modal ─────────────────────────
@@ -5093,16 +5131,20 @@
         const modal = document.createElement('div');
         modal.id = 'pts-breakdown-modal';
         modal.style.cssText = 'position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);';
-        modal.innerHTML = '<div style="background:rgba(13,17,28,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:1.5rem;max-width:340px;width:100%;">'
+        modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="pts-breakdown-title" style="background:rgba(13,17,28,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:1.5rem;max-width:340px;width:100%;">'
           + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.1rem;">'
-          + '<h3 style="font-size:0.95rem;font-weight:800;margin:0;">Points Breakdown</h3>'
+          + '<h3 id="pts-breakdown-title" style="font-size:0.95rem;font-weight:800;margin:0;">Points Breakdown</h3>'
           + '<button id="pts-breakdown-close" style="background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer;line-height:1;padding:0;" aria-label="Close">&times;</button>'
           + '</div>'
           + '<div style="margin-bottom:0.5rem;font-size:0.8rem;color:var(--dim);">Total earned: ' + total + ' pts</div>'
           + rows + '</div>';
         document.body.appendChild(modal);
-        document.getElementById('pts-breakdown-close').addEventListener('click', () => modal.remove());
-        modal.addEventListener('click', e => { if (e.target === modal) modal.remove(); });
+        const _pbPrev = document.activeElement;
+        document.getElementById('pts-breakdown-close')?.focus();
+        const closeBreakdown = () => { modal.remove(); try { _pbPrev?.focus(); } catch(_) {} };
+        document.getElementById('pts-breakdown-close').addEventListener('click', closeBreakdown);
+        modal.addEventListener('click', e => { if (e.target === modal) closeBreakdown(); });
+        modal.addEventListener('keydown', e => { if (e.key === 'Escape') closeBreakdown(); });
       } catch (_) {}
     }
 

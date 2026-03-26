@@ -319,7 +319,7 @@
         <h2 style="font-family:Georgia,serif;font-size:1.6rem;font-weight:400;margin-bottom:1.5rem;">Patch Notes</h2>
         <div class="patch-notes">
           <div class="patch-item" style="border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin-bottom:0.75rem;overflow:hidden;">
-            <button class="patch-toggle" style="width:100%;text-align:left;background:rgba(10,13,22,0.8);border:none;padding:1rem 1.25rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);font-family:inherit;font-size:0.95rem;font-weight:600;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+            <button class="patch-toggle" style="width:100%;text-align:left;background:rgba(10,13,22,0.8);border:none;padding:1rem 1.25rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);font-family:inherit;font-size:0.95rem;font-weight:600;" onclick="vsTogglePatch(this)">
               <span>v1.2.0 — March 2026</span>
               <span style="color:var(--dim);font-size:0.75rem;font-weight:400;">Latest</span>
             </button>
@@ -333,7 +333,7 @@
             </div>
           </div>
           <div class="patch-item" style="border:1px solid rgba(255,255,255,0.07);border-radius:12px;margin-bottom:0.75rem;overflow:hidden;">
-            <button class="patch-toggle" style="width:100%;text-align:left;background:rgba(10,13,22,0.8);border:none;padding:1rem 1.25rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);font-family:inherit;font-size:0.95rem;font-weight:600;" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+            <button class="patch-toggle" style="width:100%;text-align:left;background:rgba(10,13,22,0.8);border:none;padding:1rem 1.25rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;color:var(--text);font-family:inherit;font-size:0.95rem;font-weight:600;" onclick="vsTogglePatch(this)">
               <span>v1.1.0 — January 2026</span>
               <span style="color:var(--dim);font-size:0.75rem;font-weight:400;">Previous</span>
             </button>
@@ -355,19 +355,19 @@
         <h2 style="font-family:Georgia,serif;font-size:1.6rem;font-weight:400;margin-bottom:1.5rem;">Frequently Asked Questions</h2>
         <div class="faq-list" style="max-width:700px;">
           <div style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1rem 0;">
-            <button onclick="const b=this.nextElementSibling;const open=b.style.display!=='none';b.style.display=open?'none':'block';this.querySelector('span').textContent=open?'+':'−';" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
+            <button onclick="vsToggleFaq(this)" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
               Is Gridiron GM free? <span style="color:var(--dim);font-size:1.1rem;flex-shrink:0;">+</span>
             </button>
             <div style="display:none;padding-top:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.65;">Yes, Gridiron GM is completely free to play in your browser.</div>
           </div>
           <div style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1rem 0;">
-            <button onclick="const b=this.nextElementSibling;const open=b.style.display!=='none';b.style.display=open?'none':'block';this.querySelector('span').textContent=open?'+':'−';" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
+            <button onclick="vsToggleFaq(this)" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
               How many NFL teams can I manage? <span style="color:var(--dim);font-size:1.1rem;flex-shrink:0;">+</span>
             </button>
             <div style="display:none;padding-top:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.65;">All 32 NFL teams are available. You can simulate an entire league or focus on one franchise.</div>
           </div>
           <div style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1rem 0;">
-            <button onclick="const b=this.nextElementSibling;const open=b.style.display!=='none';b.style.display=open?'none':'block';this.querySelector('span').textContent=open?'+':'−';" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
+            <button onclick="vsToggleFaq(this)" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
               Is this a real NFL game? <span style="color:var(--dim);font-size:1.1rem;flex-shrink:0;">+</span>
             </button>
             <div style="display:none;padding-top:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.65;">Gridiron GM is an independent simulation game and is not affiliated with the NFL or any official license.</div>
@@ -536,22 +536,15 @@
     }());
   </script>
 
+  <script src="/assets/game-utils.js"></script>
   <script>
   (function(){
-    var SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
-    var KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
-    var H   = { apikey: KEY, Authorization: 'Bearer ' + KEY };
+    var SB   = VSGame.SB_URL;
+    var KEY  = VSGame.SB_KEY;
+    var H    = VSGame.headers();
     var GAME = 'gridiron-gm';
 
-    function getSession(){
-      try {
-        var raw = localStorage.getItem('sb-fjnpzjjyhnpmunfoycrp-auth-token') || localStorage.getItem('supabase.auth.token');
-        if(!raw) return null;
-        var p = JSON.parse(raw);
-        var s = p.currentSession || p;
-        return (s && s.access_token && s.user) ? s : null;
-      } catch(e){ return null; }
-    }
+    function getSession(){ return VSGame.getSession(); }
 
     function renderStars(userRating, avgRating, count) {
       var row = document.getElementById('star-row');
