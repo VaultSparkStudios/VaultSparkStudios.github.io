@@ -741,6 +741,174 @@ a { color: inherit; text-decoration: none; }
 
 @media (max-width: 1100px) {
   .two-col, .three-col { grid-template-columns: 1fr; }
-  .shell { grid-template-columns: 1fr; }
-  .sidebar { position: static; height: auto; }
+}
+
+/* ── COLLAPSIBLE SIDEBAR ── */
+.shell.sidebar-collapsed {
+  grid-template-columns: 52px minmax(0, 1fr);
+}
+.shell.sidebar-collapsed .sidebar {
+  overflow: hidden;
+}
+.shell.sidebar-collapsed .nav-section-label,
+.shell.sidebar-collapsed .sidebar-logo .logo-sub,
+.shell.sidebar-collapsed .sidebar-logo .logo-name,
+.shell.sidebar-collapsed .nav-item-label,
+.shell.sidebar-collapsed .nav-badge,
+.shell.sidebar-collapsed .sync-status > :not(.sync-dot) {
+  display: none;
+}
+.shell.sidebar-collapsed .nav-item {
+  padding: 10px;
+  justify-content: center;
+}
+.shell.sidebar-collapsed .nav-item .nav-dot {
+  margin: 0;
+}
+.shell.sidebar-collapsed .sidebar-logo {
+  padding: 12px 0;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.shell.sidebar-collapsed .sidebar-alert-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 0;
+  line-height: 0;
+}
+.shell.sidebar-collapsed .sidebar-bottom {
+  padding: 12px 0;
+  display: flex;
+  justify-content: center;
+}
+#sidebar-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color 0.15s;
+  line-height: 1;
+}
+#sidebar-toggle-btn:hover { color: var(--text); }
+
+/* ── KEYBOARD FOCUSED CARD ── */
+.project-card.kb-focused {
+  outline: 2px solid var(--cyan);
+  outline-offset: 1px;
+}
+
+/* ── LIGHT THEME ── */
+body.theme-light {
+  --bg: #f0f4fb;
+  --panel: rgba(255, 255, 255, 0.95);
+  --panel-2: rgba(240, 245, 255, 0.9);
+  --border: rgba(30, 60, 120, 0.12);
+  --text: #0f1a2e;
+  --muted: #5a6a85;
+  --silver: #1a2a40;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
+}
+body.theme-light {
+  background:
+    radial-gradient(circle at top left, rgba(105,179,255,0.08), transparent 24%),
+    radial-gradient(circle at 85% 10%, rgba(122,231,199,0.06), transparent 22%),
+    linear-gradient(145deg, #f0f4fb 0%, #e8eef8 100%);
+}
+body.theme-light::before {
+  background-image:
+    linear-gradient(rgba(0,30,80,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,30,80,0.04) 1px, transparent 1px);
+}
+body.theme-light .sidebar,
+body.theme-light .panel,
+body.theme-light .hub-section,
+body.theme-light .vital-card {
+  background: var(--panel);
+}
+body.theme-light .panel-title,
+body.theme-light .hub-section-title { color: #1a2a40; }
+body.theme-light .project-card { background: var(--panel); }
+body.theme-light .commit-item,
+body.theme-light .issue-item { background: var(--panel-2); }
+
+/* ── MOBILE LAYOUT ── */
+@media (max-width: 768px) {
+  :root { --sidebar-w: 0px; }
+
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 270px;
+    height: 100vh;
+    z-index: 100;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.4);
+  }
+
+  .shell.mobile-nav-open .sidebar {
+    display: flex;
+  }
+
+  .main-panel {
+    padding: 16px;
+  }
+
+  .vitals-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .two-col, .three-col {
+    grid-template-columns: 1fr;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Mobile nav toggle */
+  #mobile-nav-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--panel);
+    cursor: pointer;
+    margin-bottom: 16px;
+  }
+
+  /* Mobile overlay */
+  .mobile-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 99;
+  }
+  .shell.mobile-nav-open .mobile-overlay {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  #mobile-nav-btn { display: none; }
+  .mobile-overlay { display: none !important; }
 }

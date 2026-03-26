@@ -57,13 +57,15 @@ export async function fetchYouTubeStats(apiKey, ttlMs = 600000) {
       subscribers: Number(channel.statistics?.subscriberCount || 0),
       totalViews: Number(channel.statistics?.viewCount || 0),
       videoCount: Number(channel.statistics?.videoCount || 0),
-      latestVideos: (videosData?.items || []).map((v) => ({
-        id: v.id?.videoId,
-        title: v.snippet?.title,
-        publishedAt: v.snippet?.publishedAt,
-        thumbnail: v.snippet?.thumbnails?.default?.url,
-        url: `https://www.youtube.com/watch?v=${v.id?.videoId}`,
-      })),
+      latestVideos: (videosData?.items || [])
+        .filter((v) => v.id?.videoId)
+        .map((v) => ({
+          id: v.id.videoId,
+          title: v.snippet?.title,
+          publishedAt: v.snippet?.publishedAt,
+          thumbnail: v.snippet?.thumbnails?.default?.url,
+          url: `https://www.youtube.com/watch?v=${v.id.videoId}`,
+        })),
     };
 
     writeCache(key, data);
@@ -157,44 +159,133 @@ export async function fetchBlueskyStats(ttlMs = 600000) {
 }
 
 // ── Gumroad ──────────────────────────────────────────────────────────────────
-// Uses public Gumroad profile page scraping (no API key required for public products).
-// For full sales data, a Gumroad API access token is needed.
-export async function fetchGumroadProducts(ttlMs = 600000) {
+// With an access token: returns full product + sales data.
+// Without a token: returns 401, falls back to profile link only.
+export async function fetchGumroadProducts(accessToken = "", ttlMs = 600000) {
   const key = "gumroad";
   const cached = readCache(key, ttlMs);
   if (cached) return cached;
 
-  // Gumroad public API: lists products for a user (no auth for public products)
+  const fallback = { profileUrl: "https://vaultsparkstudios.gumroad.com/", products: [], hasToken: !!accessToken };
+
+  if (!accessToken) return fallback;
+
   try {
-    const res = await fetch("https://api.gumroad.com/v2/products", {
-      headers: { "Content-Type": "application/json" },
-    });
-    // Without an access token this returns 401 — fall back gracefully
-    if (!res.ok) return { profileUrl: "https://vaultsparkstudios.gumroad.com/", products: [] };
+    const res = await fetch(`https://api.gumroad.com/v2/products?access_token=${accessToken}`);
+    if (!res.ok) return fallback;
     const data = await res.json();
+    if (!data.success) return fallback;
     const result = {
       profileUrl: "https://vaultsparkstudios.gumroad.com/",
+      hasToken: true,
       products: (data.products || []).map((p) => ({
         name: p.name,
-        price: p.formatted_price,
-        sales: p.sales_count,
-        url: p.short_url,
+        price: p.formatted_price || "Free",
+        sales: p.sales_count ?? 0,
+        url: p.short_url || p.url,
+        published: p.published,
       })),
     };
     writeCache(key, result);
     return result;
   } catch {
-    return { profileUrl: "https://vaultsparkstudios.gumroad.com/", products: [] };
+    return fallback;
+  }
+}
+
+// Fetch recent Gumroad sales (last 30 days) for revenue charting.
+export async function fetchGumroadSales(accessToken = "", ttlMs = 600000) {
+  if (!accessToken) return null;
+  const key = "gumroad_sales";
+  const cached = readCache(key, ttlMs);
+  if (cached) return cached;
+
+  try {
+    const after = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
+    const res = await fetch(`https://api.gumroad.com/v2/sales?access_token=${accessToken}&after=${after}`);
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (!json.success) return null;
+    const sales = (json.sales || []).map((s) => ({
+      id: s.id,
+      productName: s.product_name,
+      price: Number(s.price || 0) / 100,  // cents to dollars
+      createdAt: s.created_at,
+    }));
+    writeCache(key, sales);
+    return sales;
+  } catch {
+    return null;
+  }
+}
+
+// ── Social data normalizer ────────────────────────────────────────────────────
+// Maps each platform's raw data to a consistent shape for views to consume.
+// Returns { platform, count, label, secondaryStat, url }
+export function normalizeSocialData(platform, data) {
+  if (!data) return { platform, count: null, label: "—", secondaryStat: "—", url: null }
+
+  switch (platform) {
+    case "youtube":
+      return {
+        platform,
+        count: data.subscribers ?? null,
+        label: "subscribers",
+        secondaryStat: "total views: " + (data.totalViews ?? "—"),
+        url: data.channelId ? `https://www.youtube.com/channel/${data.channelId}` : "https://youtube.com/@VaultSparkStudios",
+      }
+    case "reddit":
+      return {
+        platform,
+        count: data.subscribers ?? null,
+        label: "members",
+        secondaryStat: "online: " + (data.activeUsers ?? "—"),
+        url: "https://reddit.com/r/VaultSparkStudios",
+      }
+    case "bluesky":
+      return {
+        platform,
+        count: data.followers ?? null,
+        label: "followers",
+        secondaryStat: "posts: " + (data.posts ?? "—"),
+        url: data.handle ? `https://bsky.app/profile/${data.handle}` : "https://bsky.app/profile/vaultsparkstudios.bsky.social",
+      }
+    case "gumroad": {
+      const totalSales   = (data.products || []).reduce((s, p) => s + (p.sales || 0), 0)
+      const totalRevenue = null // revenue requires gumroadSales endpoint, not available here
+      return {
+        platform,
+        count: totalSales,
+        label: "sales",
+        secondaryStat: totalRevenue != null ? `revenue: $${totalRevenue}` : "revenue: see sales tab",
+        url: data.profileUrl || "https://vaultsparkstudios.gumroad.com/",
+      }
+    }
+    default:
+      return { platform, count: null, label: "—", secondaryStat: "—", url: null }
   }
 }
 
 // Fetch all live social feeds in parallel.
-export async function fetchAllSocialFeeds(youtubeApiKey = "", ttlMs = 600000) {
-  const [youtube, reddit, bluesky, gumroad] = await Promise.all([
-    fetchYouTubeStats(youtubeApiKey, ttlMs),
-    fetchRedditStats(ttlMs),
-    fetchBlueskyStats(ttlMs),
-    fetchGumroadProducts(ttlMs),
+// Returns { youtube, reddit, bluesky, gumroad, gumroadSales, _errors }
+// _errors maps platform name → error message when a fetch fails.
+export async function fetchAllSocialFeeds(youtubeApiKey = "", ttlMs = 600000, gumroadToken = "") {
+  const _errors = {};
+  const safe = async (label, fn) => {
+    try { return await fn(); }
+    catch (err) { _errors[label] = err?.message || "fetch failed"; return null; }
+  };
+
+  const [youtube, reddit, bluesky, gumroad, gumroadSales] = await Promise.all([
+    safe("youtube",      () => fetchYouTubeStats(youtubeApiKey, ttlMs)),
+    safe("reddit",       () => fetchRedditStats(ttlMs)),
+    safe("bluesky",      () => fetchBlueskyStats(ttlMs)),
+    safe("gumroad",      () => fetchGumroadProducts(gumroadToken, ttlMs)),
+    safe("gumroadSales", () => fetchGumroadSales(gumroadToken, ttlMs)),
   ]);
-  return { youtube, reddit, bluesky, gumroad };
+
+  if (!youtubeApiKey && !_errors.youtube) _errors.youtube = "no_key";
+  if (!gumroadToken  && !_errors.gumroad) _errors.gumroad = "no_token";
+
+  return { youtube, reddit, bluesky, gumroad, gumroadSales, _errors };
 }

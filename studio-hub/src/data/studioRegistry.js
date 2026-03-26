@@ -2,6 +2,9 @@
 // VaultSpark Studios — Project & Social Registry
 // Add a new project: push one entry to PROJECTS.
 // Add a new social account: push one entry to SOCIAL_ACCOUNTS.
+//
+// studioOsApplied: true = AGENTS.md + context/ files confirmed in repo.
+//                  false = Studio OS not yet applied — see studio-ops/docs/STUDIO_HUB_ONBOARDING.md
 // ─────────────────────────────────────────────
 
 export const PROJECTS = [
@@ -18,6 +21,7 @@ export const PROJECTS = [
     deployedUrl: "https://vaultsparkstudios.com/call-of-doodie/",
     localFolder: "Call-Of-Doodie",
     color: "#ff9478",
+    studioOsApplied: true,
   },
   {
     id: "gridiron-gm",
@@ -31,6 +35,7 @@ export const PROJECTS = [
     deployedUrl: null,
     localFolder: "Gridiron-GM",
     color: "#6ae3b2",
+    studioOsApplied: true,
   },
   {
     id: "football-gm",
@@ -44,6 +49,7 @@ export const PROJECTS = [
     deployedUrl: "https://vaultsparkstudios.com/vaultspark-football-gm/",
     localFolder: "VaultSpark Football GM",
     color: "#69b3ff",
+    studioOsApplied: true,
   },
   {
     id: "dunescape",
@@ -57,6 +63,7 @@ export const PROJECTS = [
     deployedUrl: null,
     localFolder: "Dunescape",
     color: "#ffc874",
+    studioOsApplied: true,
   },
   {
     id: "vaultfront",
@@ -71,6 +78,7 @@ export const PROJECTS = [
     deployedUrl: null,
     localFolder: "OpenFrontIO",
     color: "#c084fc",
+    studioOsApplied: true,
   },
   {
     id: "vaultspark-forge",
@@ -84,6 +92,7 @@ export const PROJECTS = [
     deployedUrl: null,
     localFolder: "VaultSpark-Forge",
     color: "#fb923c",
+    studioOsApplied: true,
   },
   {
     id: "the-exodus",
@@ -97,6 +106,7 @@ export const PROJECTS = [
     deployedUrl: null,
     localFolder: "The-Exodus",
     color: "#f472b6",
+    studioOsApplied: true,
   },
   {
     id: "voidfall",
@@ -110,6 +120,7 @@ export const PROJECTS = [
     deployedUrl: null,
     localFolder: "Voidfall",
     color: "#818cf8",
+    studioOsApplied: true,
   },
 
   // ── TOOLS ──────────────────────────────────
@@ -125,6 +136,7 @@ export const PROJECTS = [
     deployedUrl: null,
     localFolder: "PromoGrind",
     color: "#7ae7c7",
+    studioOsApplied: true,
   },
   {
     id: "mindframe",
@@ -138,6 +150,7 @@ export const PROJECTS = [
     deployedUrl: null,
     localFolder: "mindframe",
     color: "#38bdf8",
+    studioOsApplied: true,
   },
   {
     id: "cryptomatrix-pro",
@@ -151,9 +164,54 @@ export const PROJECTS = [
     deployedUrl: null,
     localFolder: "CryptoMatrix Pro",
     color: "#4ade80",
+    studioOsApplied: false,
+  },
+
+  // ── PLATFORMS ──────────────────────────────
+  {
+    id: "statsforge",
+    name: "StatsForge",
+    type: "platform",
+    status: "in-development",
+    statusLabel: "In Development",
+    description: "Sports analytics platform. ForgeRating · ForgeAI · 500K+ programmatic SEO pages.",
+    githubRepo: "VaultSparkStudios/statsforge",
+    supabaseGameSlug: null,
+    deployedUrl: null,
+    localFolder: "statsforge",
+    color: "#f97316",
+    studioOsApplied: false,
+  },
+  {
+    id: "vorn",
+    name: "Vorn",
+    type: "platform",
+    status: "in-development",
+    statusLabel: "In Development",
+    description: "Social-first, agent-native platform for AI app building and community. Give your agent a home.",
+    githubRepo: "VaultSparkStudios/vorn",
+    supabaseGameSlug: null,
+    deployedUrl: null,
+    localFolder: "vorn",
+    color: "#a78bfa",
+    studioOsApplied: true,
   },
 
   // ── STUDIO INFRASTRUCTURE ──────────────────
+  {
+    id: "studio-ops",
+    name: "Studio Ops",
+    type: "infrastructure",
+    status: "live",
+    statusLabel: "Live",
+    description: "VaultSpark Studios internal operations, planning, and context files.",
+    githubRepo: "VaultSparkStudios/vaultspark-studio-ops",
+    supabaseGameSlug: null,
+    deployedUrl: null,
+    localFolder: "vaultspark-studio-ops",
+    color: "#94a3b8",
+    studioOsApplied: true,
+  },
   {
     id: "social-dashboard",
     name: "Social Dashboard",
@@ -166,6 +224,7 @@ export const PROJECTS = [
     deployedUrl: "https://app-social-dashboard.vaultsparkstudios.com",
     localFolder: "vaultspark-studios-social-dashboard",
     color: "#7ae7c7",
+    studioOsApplied: true,
   },
   {
     id: "website",
@@ -179,6 +238,7 @@ export const PROJECTS = [
     deployedUrl: "https://vaultsparkstudios.com",
     localFolder: "VaultSparkStudios.github.io",
     color: "#69b3ff",
+    studioOsApplied: true,
   },
 ];
 
@@ -348,4 +408,21 @@ export function getProjectById(id) {
 
 export function getProjectsByType(type) {
   return PROJECTS.filter((p) => p.type === type);
+}
+
+// ── Registry validation ───────────────────────────────────────────────────────
+const VALID_TYPES   = new Set(["game", "tool", "infrastructure", "platform", "app"]);
+const VALID_STATUSES = new Set(["live", "client-beta", "playable-prototype", "in-development", "archived"]);
+
+export function validateRegistry() {
+  const ids = new Set();
+  for (const p of PROJECTS) {
+    if (!p.id)     console.warn(`[Registry] Project missing id:`, p);
+    if (!p.name)   console.warn(`[Registry] Project "${p.id}" missing name`);
+    if (!VALID_TYPES.has(p.type))     console.warn(`[Registry] Project "${p.id}" has invalid type: "${p.type}"`);
+    if (!VALID_STATUSES.has(p.status)) console.warn(`[Registry] Project "${p.id}" has invalid status: "${p.status}"`);
+    if (!p.githubRepo) console.warn(`[Registry] Project "${p.id}" has no githubRepo — GitHub data will not load`);
+    if (ids.has(p.id)) console.warn(`[Registry] Duplicate project id: "${p.id}"`);
+    ids.add(p.id);
+  }
 }

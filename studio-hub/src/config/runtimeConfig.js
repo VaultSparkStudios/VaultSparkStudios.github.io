@@ -22,10 +22,11 @@ function getStored(name, fallback = "") {
 // Priority: query param → localStorage → meta tag → hardcoded default
 export function getHubRuntimeConfig() {
   return {
-    githubToken: getParam("githubToken", getStored("githubToken", getMeta("hub-github-token", ""))),
-    supabaseUrl: getParam("supabaseUrl", getMeta("hub-supabase-url", "https://fjnpzjjyhnpmunfoycrp.supabase.co")),
-    supabaseAnonKey: getParam("supabaseAnonKey", getMeta("hub-supabase-anon-key", "")),
-    youtubeApiKey: getParam("youtubeApiKey", getStored("youtubeApiKey", getMeta("hub-youtube-api-key", ""))),
+    githubToken:    getParam("githubToken",    getStored("githubToken",    getMeta("hub-github-token",    ""))),
+    supabaseUrl:    getParam("supabaseUrl",    getMeta("hub-supabase-url", "https://fjnpzjjyhnpmunfoycrp.supabase.co")),
+    supabaseAnonKey: getParam("supabaseAnonKey", getStored("supabaseAnonKey", getMeta("hub-supabase-anon-key", ""))),
+    youtubeApiKey:  getParam("youtubeApiKey",  getStored("youtubeApiKey",  getMeta("hub-youtube-api-key", ""))),
+    gumroadToken:   getParam("gumroadToken",   getStored("gumroadToken",   getMeta("hub-gumroad-token",   ""))),
     githubCacheTtlMs: 300000,
     socialCacheTtlMs: 600000,
   };
