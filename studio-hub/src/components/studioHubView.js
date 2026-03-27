@@ -14,11 +14,16 @@ import {
 } from "./hub/alertPanel.js";
 import { deltaBadge, computeHotStreak } from "./hub/hubHelpers.js";
 import { loadAnnotations, loadGoals, loadSprint, loadPinned } from "./hub/hubStorage.js";
-import { renderMorningBrief } from "./hub/morningBrief.js";
+import { renderMorningBrief, getVisitDiff, renderFounderFocusMode } from "./hub/morningBrief.js";
+import { getCompetitorAlerts } from "./competitiveView.js";
 import { renderVitals } from "./hub/vitalsStrip.js";
 import { renderLeaderboard } from "./hub/leaderboard.js";
 import { renderSocialSummary } from "./hub/socialSummary.js";
 import { renderSprintPanel } from "./hub/sprintPanel.js";
+import { renderScoreLedger, getLedgerEntries } from "./hub/scoreLedger.js";
+import { renderStudioHealthTimeline } from "./hub/healthTimeline.js";
+import { renderStudioBrainPanel, renderBrainHistoryPanel } from "./hub/brainPanel.js";
+import { renderAgentIntelligencePanel } from "./hub/agentIntelligence.js";
 
 // Re-export for backwards compatibility (clientApp.js imports these from here)
 export { _pushAlertHistory as pushAlertHistory, _snoozeAlert as snoozeAlert };
@@ -163,6 +168,93 @@ function portfolioSparkline(scoreHistory) {
 
 
 
+// ── Portfolio Health Score Gauge (SIL) ───────────────────────────────────────
+// Composite studio-health metric: avg grade, CI rate, SIL coverage, OS compliance.
+function renderPortfolioHealthGauge(allScores, ghData, studioOps = {}) {
+  const { portfolioFreshness = {}, agentRequests = [], studioBrain = null } = studioOps;
+
+  // Sub-metric 1: % projects scoring A (≥75)
+  const gradeACount = allScores.filter(({ scoring }) => scoring.total >= 75).length;
+  const gradeARate  = allScores.length ? Math.round((gradeACount / allScores.length) * 100) : 0;
+
+  // Sub-metric 2: CI pass rate
+  const reposWithCI    = Object.values(ghData).filter((d) => d?.ciRuns?.length > 0).length;
+  const passingBuilds  = Object.values(ghData).filter((d) => d?.ciRuns?.[0]?.conclusion === "success").length;
+  const ciRate         = reposWithCI > 0 ? Math.round((passingBuilds / reposWithCI) * 100) : null;
+
+  // Sub-metric 3: SIL / compliance coverage (% projects with governance bonus signals)
+  const silCount = allScores.filter(({ scoring }) =>
+    scoring.pillars.risk.signals.some((s) => /SIL|Studio OS/i.test(s))
+  ).length;
+  const silRate = allScores.length ? Math.round((silCount / allScores.length) * 100) : 0;
+
+  // Sub-metric 4: Agent ops health (freshness)
+  const freshnessList = Object.values(portfolioFreshness).filter(Boolean);
+  const agentOpsRate  = freshnessList.length
+    ? Math.round((freshnessList.filter((f) => f.daysOld <= 14).length / freshnessList.length) * 100)
+    : null;
+
+  // Composite health: weighted average of available sub-metrics
+  const available = [
+    { label: "Projects A+",  pct: gradeARate,  weight: 0.35, color: "var(--green)" },
+    { label: "CI passing",   pct: ciRate,       weight: 0.30, color: "var(--blue)" },
+    { label: "SIL coverage", pct: silRate,      weight: 0.20, color: "#c084fc" },
+    { label: "Agent ops",    pct: agentOpsRate, weight: 0.15, color: "var(--gold)" },
+  ].filter((m) => m.pct !== null);
+
+  const totalWeight = available.reduce((s, m) => s + m.weight, 0);
+  const composite = totalWeight > 0
+    ? Math.round(available.reduce((s, m) => s + m.pct * m.weight, 0) / totalWeight)
+    : 0;
+
+  const gaugeColor = composite >= 80 ? "var(--green)" : composite >= 60 ? "var(--gold)" : "var(--red)";
+
+  // SVG arc gauge (180° semi-circle)
+  const R = 42, CX = 56, CY = 52;
+  const startAngle = Math.PI;
+  const sweep = (composite / 100) * Math.PI;
+  const endAngle = startAngle + sweep;
+  const x1 = CX + R * Math.cos(startAngle), y1 = CY + R * Math.sin(startAngle);
+  const x2 = CX + R * Math.cos(endAngle),   y2 = CY + R * Math.sin(endAngle);
+  const largeArc = sweep > Math.PI ? 1 : 0;
+
+  const gaugeSvg = `
+    <svg width="112" height="60" viewBox="0 0 112 60" style="display:block; overflow:visible;">
+      <path d="M ${CX - R} ${CY} A ${R} ${R} 0 0 1 ${CX + R} ${CY}"
+            fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="8" stroke-linecap="round"/>
+      ${composite > 0 ? `<path d="M ${x1.toFixed(1)} ${y1.toFixed(1)} A ${R} ${R} 0 ${largeArc} 1 ${x2.toFixed(1)} ${y2.toFixed(1)}"
+            fill="none" stroke="${gaugeColor}" stroke-width="8" stroke-linecap="round" opacity="0.9"/>` : ""}
+      <text x="${CX}" y="${CY - 2}" text-anchor="middle" font-size="18" font-weight="800"
+            fill="${gaugeColor}" font-family="monospace">${composite}%</text>
+      <text x="${CX}" y="${CY + 10}" text-anchor="middle" font-size="9" fill="var(--muted)"
+            font-family="monospace" letter-spacing="0.06em">HEALTH</text>
+    </svg>`;
+
+  return `
+    <div class="panel" style="margin-bottom:20px;">
+      <div class="panel-header">
+        <span class="panel-title">PORTFOLIO HEALTH</span>
+        <span style="font-size:10px; color:var(--muted);">${allScores.length} projects · composite</span>
+      </div>
+      <div class="panel-body" style="display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+        <div style="flex-shrink:0;">${gaugeSvg}</div>
+        <div style="flex:1; min-width:180px;">
+          ${available.map(({ label, pct, color }) => `
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:7px;">
+              <span style="font-size:11px; color:var(--muted); min-width:90px; flex-shrink:0;">${label}</span>
+              <div style="flex:1; height:4px; background:rgba(255,255,255,0.07); border-radius:2px; overflow:hidden;">
+                <div style="width:${pct}%; height:100%; background:${color}; border-radius:2px;"></div>
+              </div>
+              <span style="font-size:11px; font-weight:700; color:${color}; min-width:32px; text-align:right;">${pct}%</span>
+            </div>
+          `).join("")}
+          ${agentRequests.length > 0 ? `<div style="font-size:10px; color:var(--gold); margin-top:4px;">${agentRequests.length} pending agent request${agentRequests.length > 1 ? "s" : ""}</div>` : ""}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 // ── First-run Onboarding Banner ───────────────────────────────────────────────
 function renderOnboardingBanner(ghData, settings) {
   const anyData = Object.values(ghData).some((v) => v !== null);
@@ -183,6 +275,47 @@ function renderOnboardingBanner(ghData, settings) {
           <button class="open-hub-btn" data-view="settings" style="font-size:12px; color:var(--cyan); border-color:var(--cyan);">→ Open Settings</button>
           <button id="onboarding-modal-btn" style="font-size:12px; padding:6px 14px; background:none; border:1px solid var(--border); border-radius:6px; color:var(--muted); cursor:pointer;">? Setup Guide</button>
         </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── "What Changed Since Last Visit" Banner (#10) ─────────────────────────────
+function renderVisitDiffPanel(scoreHistory, prevLastOpened) {
+  if (!prevLastOpened) return "";
+  const diffs = getVisitDiff(scoreHistory, prevLastOpened);
+  if (!diffs.length) return "";
+
+  const elapsed = Date.now() - Number(prevLastOpened);
+  const hours = Math.round(elapsed / 3600000);
+  const timeStr = hours < 1 ? "< 1 hour ago" : hours < 24 ? `${hours}h ago` : `${Math.round(hours / 24)}d ago`;
+
+  const gainers  = diffs.filter((d) => d.delta > 0);
+  const droppers = diffs.filter((d) => d.delta < 0);
+
+  return `
+    <div style="background:rgba(105,179,255,0.04); border:1px solid rgba(105,179,255,0.18);
+                border-radius:12px; padding:14px 18px; margin-bottom:16px;">
+      <div style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+                  color:var(--blue); margin-bottom:10px; display:flex; align-items:center; gap:10px;">
+        SINCE YOUR LAST VISIT
+        <span style="font-size:10px; font-weight:400; color:var(--muted); text-transform:none; letter-spacing:0;">${timeStr}</span>
+      </div>
+      <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        ${gainers.map((d) => `
+          <div style="display:flex; align-items:center; gap:5px; background:rgba(106,227,178,0.08);
+                      border:1px solid rgba(106,227,178,0.18); border-radius:8px; padding:4px 10px;">
+            <span style="font-size:12px; font-weight:600; color:var(--text);">${d.project.name}</span>
+            <span style="font-size:12px; color:var(--green); font-weight:700;">+${d.delta}</span>
+            <span style="font-size:11px; color:var(--muted);">${d.prev}→${d.curr}</span>
+          </div>`).join("")}
+        ${droppers.map((d) => `
+          <div style="display:flex; align-items:center; gap:5px; background:rgba(248,113,113,0.06);
+                      border:1px solid rgba(248,113,113,0.18); border-radius:8px; padding:4px 10px;">
+            <span style="font-size:12px; font-weight:600; color:var(--text);">${d.project.name}</span>
+            <span style="font-size:12px; color:var(--red); font-weight:700;">${d.delta}</span>
+            <span style="font-size:11px; color:var(--muted);">${d.prev}→${d.curr}</span>
+          </div>`).join("")}
       </div>
     </div>
   `;
@@ -249,6 +382,30 @@ function renderOfflineBanner() {
     `;
   }
   return "";
+}
+
+// ── Score confidence sigma (based on recent history variance) ─────────────────
+function getForecastSigma(projectId, scoreHistory) {
+  const scores = scoreHistory.slice(-6).map((h) => h.scores?.[projectId]).filter((v) => v != null);
+  if (scores.length < 3) return null;
+  const deltas = scores.slice(1).map((v, i) => v - scores[i]);
+  const mean = deltas.reduce((s, d) => s + d, 0) / deltas.length;
+  const variance = deltas.reduce((s, d) => s + (d - mean) ** 2, 0) / deltas.length;
+  return Math.max(1, Math.round(Math.sqrt(variance)));
+}
+
+// ── GitHub Platform Status Banner (#8) ────────────────────────────────────────
+function renderGithubStatusBanner(githubStatusAlert) {
+  if (!githubStatusAlert) return "";
+  return `
+    <div style="background:rgba(255,200,116,0.08); border:1px solid rgba(255,200,116,0.3);
+                border-radius:10px; padding:10px 16px; margin-bottom:12px;
+                display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      <span style="color:var(--gold); font-weight:800; font-size:13px; flex-shrink:0;">⚠ GITHUB STATUS</span>
+      <span style="color:var(--text); font-size:13px; flex:1;">${githubStatusAlert}</span>
+      <a href="https://www.githubstatus.com/" target="_blank" rel="noopener"
+         style="color:var(--muted); font-size:11px; flex-shrink:0;">githubstatus.com →</a>
+    </div>`;
 }
 
 // ── Sync Error Banner ─────────────────────────────────────────────────────────
@@ -472,6 +629,10 @@ function renderProjectCard(project, ghData, sbData, socialData, settings, scoreP
               title="A+: ≥85 · A: ≥75 · B+: ≥65 · B: ≥55 · C+: ≥45 · C: ≥35 · D: ≥25 · F: <25"
             >${scoring.grade}</div>
             ${forecast !== undefined ? `<div style="font-size:10px; color:var(--muted);" title="${forecastUncertain ? "High variance — forecast uncertain" : "Forecasted next score"}">→ ${forecast}${forecastUncertain ? "?" : ""}</div>` : ""}
+            ${(() => {
+              const sigma = getForecastSigma(project.id, scoreHistory);
+              return sigma !== null ? `<div style="font-size:9px; color:var(--muted); margin-top:1px; font-variant-numeric:tabular-nums;" title="Score confidence range — ±${sigma} pts based on recent history variance">±${sigma}</div>` : "";
+            })()}
             <div style="margin-top:3px;">${scoreSparkline(project.id, scoreHistory)}</div>
             ${allTime ? `<div style="font-size:9px; color:var(--muted); margin-top:2px;" title="All-time high/low">H:${allTime.high} L:${allTime.low}</div>` : ""}
             ${sessionsToA ? `<div style="font-size:9px; color:var(--blue); margin-top:1px;" title="Estimated sessions to reach grade A at current trend">~${sessionsToA}s→A</div>` : ""}
@@ -1708,380 +1869,9 @@ function renderGoalsDashboard(ghData, sbData, socialData, scoreHistory) {
   `;
 }
 
-// ── Studio Brain inline viewer ────────────────────────────────────────────────
-// ── Studio Score Ledger ────────────────────────────────────────────────────────
-const LEDGER_SNAPSHOT_KEY = "vshub_ledger_snapshot";
-const LEDGER_MAX_ENTRIES  = 7;
-
-function getLedgerEntries() {
-  try {
-    const raw = localStorage.getItem(LEDGER_SNAPSHOT_KEY);
-    if (!raw) return [];
-    const snap = JSON.parse(raw);
-    // Support both old shape ({ ts, wfHealthy, ... }) and new shape ({ entries: [...] })
-    if (Array.isArray(snap.entries)) return snap.entries;
-    if (snap.ts) return [snap]; // migrate single entry
-    return [];
-  } catch { return []; }
-}
-
-function getLedgerSnapshot() {
-  // Return the oldest non-current entry for ↑/↓ delta (skip entries < 6h old)
-  const entries = getLedgerEntries();
-  const sixHoursAgo = Date.now() - 6 * 3600000;
-  return entries.filter((e) => e.ts && e.ts < sixHoursAgo)[0] || null;
-}
-
-function saveLedgerSnapshot(values) {
-  try {
-    const entries = getLedgerEntries();
-    const last = entries[entries.length - 1];
-    // Refresh once per day
-    if (!last || Date.now() - (last.ts || 0) > 23 * 3600000) {
-      entries.push({ ts: Date.now(), ...values });
-      if (entries.length > LEDGER_MAX_ENTRIES) entries.splice(0, entries.length - LEDGER_MAX_ENTRIES);
-      localStorage.setItem(LEDGER_SNAPSHOT_KEY, JSON.stringify({ entries }));
-    }
-  } catch {}
-}
-
-function ledgerDelta(current, prev) {
-  if (prev == null || current == null || isNaN(current) || isNaN(prev)) return "";
-  const d = current - prev;
-  if (d === 0) return "";
-  const color = d > 0 ? "var(--green)" : "var(--red)";
-  return `<span style="font-size:9px; font-weight:700; color:${color}; margin-left:3px;">${d > 0 ? "↑" : "↓"}${Math.abs(d)}</span>`;
-}
-
-function ledgerSparkline(entries, key, color) {
-  if (!entries || entries.length < 2) return "";
-  const vals = entries.map((e) => e[key]).filter((v) => v != null);
-  if (vals.length < 2) return "";
-  const min = Math.min(...vals);
-  const max = Math.max(...vals);
-  const range = max - min || 1;
-  const W = 36, H = 12;
-  const pts = vals.map((v, i) => {
-    const x = (i / (vals.length - 1)) * W;
-    const y = H - ((v - min) / range) * H;
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  }).join(" ");
-  return `<svg width="${W}" height="${H}" style="display:block; margin:2px auto 0; overflow:visible;">
-    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
-  </svg>`;
-}
-
-function renderScoreLedger(studioScore, agentRunHistory, agentRequests, studioBrain) {
-  const workflowEntries = Object.entries(agentRunHistory);
-  const wfTotal    = workflowEntries.length;
-  const wfFailing  = workflowEntries.filter(([, r]) => r?.conclusion === "failure").length;
-  const wfHealthy  = wfTotal - wfFailing;
-  const wfColor    = wfFailing > 0 ? "var(--red)" : wfTotal > 0 ? "var(--green)" : "var(--muted)";
-  const wfLabel    = wfTotal > 0 ? `${wfHealthy}/${wfTotal}` : "—";
-
-  const openRequests = agentRequests?.length ?? 0;
-  const reqColor  = openRequests > 0 ? "var(--gold)" : "var(--green)";
-
-  // SIL coverage from brain snapshot table
-  let silLabel = "—";
-  let silColor = "var(--muted)";
-  let silFresh = null, silTotal = null;
-  if (studioBrain?.raw) {
-    const m = studioBrain.raw.match(/Active SIL \(14d\)\s*\|\s*([\d]+\s*\/\s*[\d]+)/);
-    if (m) {
-      silLabel = m[1].replace(/\s*/g, "");
-      [silFresh, silTotal] = silLabel.split("/").map(Number);
-      silColor = silFresh === silTotal ? "var(--green)" : silFresh >= silTotal / 2 ? "var(--gold)" : "var(--red)";
-    }
-  }
-
-  // Agent performance scorecard (5th KPI)
-  const automatedAgents = workflowEntries.filter(([, r]) => r?.history?.length > 0);
-  let agentCompliance = null;
-  if (automatedAgents.length > 0) {
-    const totalRuns = automatedAgents.reduce((s, [, r]) => s + (r.history?.length || 0), 0);
-    const successRuns = automatedAgents.reduce((s, [, r]) => s + (r.history || []).filter((h) => h.conclusion === "success").length, 0);
-    agentCompliance = totalRuns > 0 ? Math.round((successRuns / totalRuns) * 100) : null;
-  }
-
-  // Trend deltas vs previous daily snapshot (7-day rolling)
-  const allEntries = getLedgerEntries();
-  const snap = getLedgerSnapshot();
-  const avgScore = studioScore.average || null;
-  saveLedgerSnapshot({ wfHealthy, avgScore, openRequests, silFresh, agentCompliance });
-
-  const metrics = [
-    {
-      label: "Workflows", value: wfLabel,
-      sub: wfFailing > 0 ? `${wfFailing} failing` : "healthy",
-      color: wfColor,
-      delta: snap ? ledgerDelta(wfHealthy, snap.wfHealthy) : "",
-      sparkline: ledgerSparkline(allEntries, "wfHealthy", wfColor),
-    },
-    {
-      label: "Avg Score", value: avgScore || "—",
-      sub: `Grade ${studioScore.grade}`,
-      color: studioScore.gradeColor || "var(--muted)",
-      delta: snap && avgScore != null ? ledgerDelta(avgScore, snap.avgScore) : "",
-      sparkline: ledgerSparkline(allEntries, "avgScore", studioScore.gradeColor || "var(--cyan)"),
-    },
-    {
-      label: "Agent Reqs", value: String(openRequests),
-      sub: openRequests > 0 ? "pending" : "clear",
-      color: reqColor,
-      delta: snap ? ledgerDelta(openRequests, snap.openRequests) : "",
-      sparkline: ledgerSparkline(allEntries, "openRequests", reqColor),
-    },
-    {
-      label: "SIL Active", value: silLabel,
-      sub: "14-day window",
-      color: silColor,
-      delta: snap && silFresh != null ? ledgerDelta(silFresh, snap.silFresh) : "",
-      sparkline: ledgerSparkline(allEntries, "silFresh", silColor),
-    },
-    ...(agentCompliance != null ? [{
-      label: "Agent Perf",
-      value: `${agentCompliance}%`,
-      sub: "run compliance",
-      color: agentCompliance >= 90 ? "var(--green)" : agentCompliance >= 70 ? "var(--gold)" : "var(--red)",
-      delta: snap?.agentCompliance != null ? ledgerDelta(agentCompliance, snap.agentCompliance) : "",
-      sparkline: ledgerSparkline(allEntries, "agentCompliance", agentCompliance >= 90 ? "var(--green)" : "var(--gold)"),
-    }] : []),
-  ];
-
-  return `
-    <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
-      ${metrics.map(({ label, value, sub, color, delta, sparkline }) => `
-        <div style="background:var(--panel); border:1px solid var(--border); border-radius:8px;
-                    padding:8px 14px; min-width:90px; text-align:center; flex:1;">
-          <div style="font-size:18px; font-weight:800; color:${color}; line-height:1.1;">${value}${delta}</div>
-          <div style="font-size:10px; color:var(--muted); margin-top:1px; text-transform:uppercase; letter-spacing:0.04em;">${label}</div>
-          <div style="font-size:10px; color:var(--muted); opacity:0.7;">${sub}</div>
-          ${sparkline}
-        </div>
-      `).join("")}
-    </div>
-  `;
-}
-
-// ── Studio Health Timeline ─────────────────────────────────────────────────────
-// 30-day composite chart: avg score / workflow compliance / SIL coverage / agent compliance
-// Uses the 7-entry rolling ledger from getLedgerEntries().
-function renderStudioHealthTimeline() {
-  const entries = getLedgerEntries();
-  if (entries.length < 2) return "";
-
-  const W = 500, H = 80;
-  const labeled = entries.map((e) => ({
-    ts: e.ts,
-    avgScore:       e.avgScore       ?? null,
-    wfHealthy:      typeof e.wfHealthy === "boolean" ? (e.wfHealthy ? 100 : 0) : (e.wfHealthy ?? null),
-    silFresh:       e.silFresh       != null ? Math.min(100, e.silFresh * 10) : null, // scale to 0–100
-    agentCompliance: e.agentCompliance ?? null,
-  }));
-
-  const series = [
-    { key: "avgScore",        label: "Avg Score",      color: "var(--cyan)",  dash: "" },
-    { key: "wfHealthy",       label: "WF Health",      color: "var(--green)", dash: "4,3" },
-    { key: "silFresh",        label: "SIL Coverage",   color: "#c084fc",      dash: "2,4" },
-    { key: "agentCompliance", label: "Agent Perf",     color: "var(--gold)",  dash: "6,2" },
-  ];
-
-  function makePath(key, color, dash) {
-    const pts = labeled.map((e, i) => {
-      const v = e[key];
-      if (v == null) return null;
-      const x = (i / (labeled.length - 1)) * W;
-      const y = H - (Math.max(0, Math.min(100, v)) / 100) * (H - 8) - 4;
-      return `${x.toFixed(1)},${y.toFixed(1)}`;
-    }).filter(Boolean);
-    if (pts.length < 2) return "";
-    return `<polyline points="${pts.join(" ")}" fill="none" stroke="${color}" stroke-width="2"
-      stroke-linecap="round" stroke-linejoin="round" opacity="0.8"
-      ${dash ? `stroke-dasharray="${dash}"` : ""}/>`;
-  }
-
-  const latest = labeled[labeled.length - 1];
-
-  return `
-    <div class="panel" style="margin-bottom:24px;">
-      <div class="panel-header">
-        <span class="panel-title">STUDIO HEALTH TIMELINE</span>
-        <span style="font-size:11px; color:var(--muted);">${entries.length}-day rolling · daily snapshots</span>
-      </div>
-      <div class="panel-body">
-        <svg width="${W}" height="${H}" style="width:100%; display:block; overflow:visible; margin-bottom:8px;">
-          ${[75, 50, 25].map((y) => {
-            const cy = H - (y / 100) * (H - 8) - 4;
-            return `<line x1="0" y1="${cy.toFixed(1)}" x2="${W}" y2="${cy.toFixed(1)}"
-              stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
-            <text x="2" y="${(cy - 3).toFixed(1)}" font-size="9" fill="rgba(149,163,183,0.35)">${y}</text>`;
-          }).join("")}
-          ${series.map((s) => makePath(s.key, s.color, s.dash)).join("")}
-        </svg>
-        <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--muted); margin-bottom:10px;">
-          <span>${new Date(entries[0].ts).toLocaleDateString("en-US", { month:"short", day:"numeric" })}</span>
-          <span>${new Date(entries[entries.length - 1].ts).toLocaleDateString("en-US", { month:"short", day:"numeric" })}</span>
-        </div>
-        <div style="display:flex; gap:16px; flex-wrap:wrap;">
-          ${series.map((s) => {
-            const val = latest[s.key];
-            if (val == null) return "";
-            const display = s.key === "wfHealthy" ? (val >= 50 ? "Healthy" : "Failing") : `${Math.round(val)}`;
-            return `<div style="display:flex; align-items:center; gap:5px; font-size:11px;">
-              <svg width="20" height="8" style="flex-shrink:0; overflow:visible;">
-                <line x1="0" y1="4" x2="20" y2="4" stroke="${s.color}" stroke-width="2"
-                  ${s.dash ? `stroke-dasharray="${s.dash}"` : ""}/>
-              </svg>
-              <span style="color:var(--muted);">${s.label}</span>
-              <span style="font-weight:700; color:${s.color};">${display}${s.key !== "wfHealthy" ? (s.key === "avgScore" ? "" : "%") : ""}</span>
-            </div>`;
-          }).join("")}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-// ── Studio Brain version history ──────────────────────────────────────────────
-function renderBrainHistoryPanel(studioBrain) {
-  if (!studioBrain?.archive?.length) return "";
-  const entries = studioBrain.archive.slice(0, 7); // max 7 snapshots shown
-  return `
-    <details style="margin-bottom:24px;">
-      <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:10px;
-                      padding:10px 16px; background:rgba(192,132,252,0.04); border:1px solid rgba(192,132,252,0.12);
-                      border-radius:8px; user-select:none;">
-        <span style="color:#c084fc; font-size:13px;">🗂</span>
-        <span style="font-size:12px; font-weight:700; color:#c084fc; text-transform:uppercase; letter-spacing:0.06em;">Brain History</span>
-        <span style="font-size:11px; color:var(--muted);">${entries.length} snapshot${entries.length !== 1 ? "s" : ""}</span>
-        <span style="margin-left:auto; font-size:11px; color:var(--muted);">▸ expand</span>
-      </summary>
-      <div style="margin-top:4px; border:1px solid rgba(192,132,252,0.12); border-top:none;
-                  border-radius:0 0 8px 8px; overflow:hidden;">
-        ${entries.map((entry, i) => `
-          <details style="border-top:${i > 0 ? "1px solid rgba(255,255,255,0.05)" : "none"};">
-            <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:8px;
-                            padding:8px 16px; background:rgba(192,132,252,0.03); user-select:none;">
-              <span style="font-size:11px; font-weight:700; color:var(--text);">${entry.date}</span>
-              ${entry.summary ? `<span style="font-size:11px; color:var(--muted); flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${entry.summary}</span>` : ""}
-              <span style="font-size:10px; color:var(--muted);">▸</span>
-            </summary>
-            <div style="padding:12px 16px; background:rgba(192,132,252,0.02);">
-              <pre style="margin:0; font-size:10px; color:var(--text); line-height:1.5; white-space:pre-wrap;
-                          word-break:break-word; font-family:monospace; opacity:0.8;">${entry.snapshot.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>
-            </div>
-          </details>
-        `).join("")}
-      </div>
-    </details>
-  `;
-}
-
-function _brainDiffHtml(currentRaw, prevSnapshot) {
-  if (!currentRaw || !prevSnapshot) return "";
-  const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  const meaningful = l => l.trim().length > 0 && !l.startsWith("##") && !l.startsWith("---") && !l.startsWith("===");
-  const currentLines = new Set(currentRaw.split("\n").filter(meaningful).map(l => l.trim()));
-  const prevLines    = new Set(prevSnapshot.split("\n").filter(meaningful).map(l => l.trim()));
-  const added   = [...currentLines].filter(l => !prevLines.has(l));
-  const removed = [...prevLines].filter(l => !currentLines.has(l));
-  if (added.length === 0 && removed.length === 0) return `<div style="font-size:10px; color:var(--muted); margin-top:10px; opacity:0.6;">No changes vs previous snapshot.</div>`;
-  const rows = [
-    ...added.slice(0, 8).map(l => `<div style="color:#6ae3b2; font-size:10px; line-height:1.5;"><span style="opacity:0.6; margin-right:4px;">+</span>${esc(l)}</div>`),
-    ...removed.slice(0, 8).map(l => `<div style="color:#f87171; font-size:10px; line-height:1.5; text-decoration:line-through; opacity:0.7;"><span style="margin-right:4px;">−</span>${esc(l)}</div>`),
-  ];
-  const more = (added.length > 8 ? added.length - 8 : 0) + (removed.length > 8 ? removed.length - 8 : 0);
-  return `
-    <div style="margin-top:10px; padding:8px 10px; background:rgba(192,132,252,0.04);
-                border:1px solid rgba(192,132,252,0.12); border-radius:6px;">
-      <div style="font-size:10px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px;">
-        Changes vs archive — +${added.length} / −${removed.length}
-      </div>
-      ${rows.join("")}
-      ${more > 0 ? `<div style="font-size:10px; color:var(--muted); margin-top:4px; opacity:0.6;">…${more} more lines changed</div>` : ""}
-    </div>
-  `;
-}
-
-function renderStudioBrainPanel(studioBrain) {
-  if (!studioBrain?.raw) return "";
-  const date = studioBrain.raw.match(/## CURRENT — (\d{4}-\d{2}-\d{2})/)?.[1] || null;
-  const lines = studioBrain.raw.split("\n");
-  // Strip the top boilerplate (before ## CURRENT) for the preview
-  const currentIdx = lines.findIndex(l => l.startsWith("## CURRENT"));
-  const preview = lines.slice(currentIdx >= 0 ? currentIdx : 0).join("\n");
-  const prevSnapshot = studioBrain.archive?.[0]?.snapshot || null;
-  const diffHtml = _brainDiffHtml(preview, prevSnapshot);
-  return `
-    <details style="margin-bottom:24px;">
-      <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:10px;
-                      padding:10px 16px; background:rgba(192,132,252,0.06); border:1px solid rgba(192,132,252,0.2);
-                      border-radius:8px; user-select:none;">
-        <span style="color:#c084fc; font-size:13px;">🧠</span>
-        <span style="font-size:12px; font-weight:700; color:#c084fc; text-transform:uppercase; letter-spacing:0.06em;">Studio Brain</span>
-        ${date ? `<span style="font-size:11px; color:var(--muted);">generated ${date}</span>` : ""}
-        ${prevSnapshot ? `<span style="font-size:10px; color:var(--muted); background:rgba(192,132,252,0.08); border:1px solid rgba(192,132,252,0.2); border-radius:6px; padding:1px 7px;">diff ✦</span>` : ""}
-        <span style="margin-left:auto; font-size:11px; color:var(--muted);">▸ expand</span>
-      </summary>
-      <div style="margin-top:4px; padding:14px 16px; background:rgba(192,132,252,0.04);
-                  border:1px solid rgba(192,132,252,0.15); border-top:none; border-radius:0 0 8px 8px;">
-        <pre style="margin:0; font-size:11px; color:var(--text); line-height:1.6; white-space:pre-wrap;
-                    word-break:break-word; font-family:monospace; opacity:0.9;">${preview.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>
-        ${diffHtml}
-      </div>
-    </details>
-  `;
-}
-
-// ── Agent Intelligence panel (portfolio file viewer) ─────────────────────────
-function renderAgentIntelligencePanel(portfolioFiles, portfolioFreshness) {
-  const FILES = [
-    { path: "portfolio/WEEKLY_DIGEST.md",   label: "Weekly Digest",    icon: "📊", color: "#69b3ff" },
-    { path: "portfolio/DEBT_REPORT.md",     label: "Debt Report",      icon: "🔧", color: "#fb923c" },
-    { path: "portfolio/REVENUE_SIGNALS.md", label: "Revenue Signals",  icon: "💰", color: "#34d399" },
-  ];
-  const anyFile = FILES.some(f => portfolioFiles[f.path]);
-  if (!anyFile) return "";
-
-  return `
-    <div class="panel" style="margin-bottom:24px; border-color:rgba(105,179,255,0.2);">
-      <div class="panel-header">
-        <span class="panel-title">AGENT INTELLIGENCE</span>
-        <span style="font-size:11px; color:var(--muted);">latest portfolio outputs</span>
-      </div>
-      <div class="panel-body" style="padding:12px 16px; display:flex; flex-direction:column; gap:8px;">
-        ${FILES.map(({ path, label, icon, color }) => {
-          const file = portfolioFiles[path];
-          const freshness = portfolioFreshness[path];
-          const daysOld = freshness?.daysOld ?? null;
-          const ageStr = daysOld === null ? "" : daysOld === 0 ? "today" : `${daysOld}d ago`;
-          const ageColor = daysOld !== null && daysOld > 14 ? "var(--gold)" : "var(--muted)";
-          if (!file) return `
-            <div style="padding:8px 10px; background:var(--border); border-radius:6px; opacity:0.4;
-                        font-size:11px; color:var(--muted);">${icon} ${label} — not yet generated</div>
-          `;
-          return `
-            <details style="background:var(--border); border-radius:6px; overflow:hidden;">
-              <summary style="cursor:pointer; list-style:none; display:flex; align-items:center; gap:8px;
-                              padding:9px 12px; user-select:none;">
-                <span style="font-size:13px;">${icon}</span>
-                <span style="font-size:12px; font-weight:700; color:${color};">${label}</span>
-                ${ageStr ? `<span style="font-size:10px; color:${ageColor}; margin-left:4px;">${ageStr}</span>` : ""}
-                ${file.truncated ? `<span style="font-size:10px; color:var(--muted); margin-left:auto;">first 60 lines ▸</span>` : `<span style="margin-left:auto; font-size:10px; color:var(--muted);">▸</span>`}
-              </summary>
-              <div style="padding:12px 14px; border-top:1px solid rgba(255,255,255,0.06);">
-                <pre style="margin:0; font-size:11px; color:var(--text); line-height:1.6; white-space:pre-wrap;
-                            word-break:break-word; font-family:monospace; opacity:0.85;">${file.content.replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>
-                ${file.truncated ? `<div style="margin-top:8px; font-size:10px; color:var(--muted); font-style:italic;">— truncated — open studio-ops repo for full file</div>` : ""}
-              </div>
-            </details>
-          `;
-        }).join("")}
-      </div>
-    </div>
-  `;
-}
+// ── Score Ledger, Health Timeline, Brain Panel, Agent Intelligence ─────────────
+// All extracted to hub/ submodules in Sprint O (#18 decomposition).
+// See: hub/scoreLedger.js, hub/healthTimeline.js, hub/brainPanel.js, hub/agentIntelligence.js
 
 // ── Main export ───────────────────────────────────────────────────────────────
 export function renderStudioHubView(state) {
@@ -2099,6 +1889,8 @@ export function renderStudioHubView(state) {
     studioBrain = null, portfolioFreshness = {},
     portfolioFiles = {}, agentRequests = [],
     agentRunHistory = {},
+    githubStatusAlert = null,
+    competitorData = null,
   } = state;
   const gumroadSales = socialData?.gumroadSales || null;
 
@@ -2171,18 +1963,25 @@ export function renderStudioHubView(state) {
 
       ${renderScoreLedger(studioScore, agentRunHistory, agentRequests, studioBrain)}
       ${renderOfflineBanner()}
+      ${renderGithubStatusBanner(githubStatusAlert)}
       ${renderHubSelfMonitor(syncMeta)}
       ${renderSyncErrorBanner(syncStatus, syncError)}
       ${renderOnboardingBanner(ghData, settings)}
+      ${renderFounderFocusMode(ghData, allScores, scoreHistory)}
       ${renderSessionDiffBanner(allScores, scorePrev, scoreHistory)}
       ${renderSessionNotesPanel()}
       ${renderBestActionDirective(ghData, sbData, allScores, scoreHistory)}
-      ${renderMorningBrief(ghData, sbData, allScores, scoreHistory, beaconData, beaconSessionStarts, studioBrain, portfolioFreshness, agentRunHistory)}
+      ${renderVisitDiffPanel(scoreHistory, prevLastOpened)}
+      ${(() => {
+        const competitorAlerts = getCompetitorAlerts(competitorData);
+        return renderMorningBrief(ghData, sbData, allScores, scoreHistory, beaconData, beaconSessionStarts, studioBrain, portfolioFreshness, agentRunHistory, prevLastOpened, competitorAlerts);
+      })()}
       ${renderStudioBrainPanel(studioBrain)}
       ${renderBrainHistoryPanel(studioBrain)}
       ${renderAgentIntelligencePanel(portfolioFiles, portfolioFreshness)}
       ${renderCriticalBanner(ghData)}
       ${renderVitals(ghData, sbData, socialData, studioScore, beaconData, { portfolioFreshness, agentRequests, studioBrain })}
+      ${renderPortfolioHealthGauge(allScores, ghData, { portfolioFreshness, agentRequests, studioBrain })}
 
       <div class="two-col" style="margin-bottom:24px; align-items:start;">
         <div class="panel">

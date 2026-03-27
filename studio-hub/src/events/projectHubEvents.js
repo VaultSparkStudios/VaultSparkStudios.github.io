@@ -1,5 +1,8 @@
 // Project hub view event handlers — extracted from clientApp.js
 
+import { fetchPrescription, invalidatePrescriptionFor, fetchDevlogDraft, invalidateDevlogDraft } from "../utils/aiPrescriptions.js";
+import { scoreProject } from "../utils/projectScoring.js";
+
 const TAGS_KEY    = "vshub_tags";
 const PRESETS_KEY = "vshub_filter_presets";
 
@@ -490,6 +493,77 @@ export function bindProjectHubEvents(ctx) {
         }
       });
       if (label) label.textContent = shown > 0 ? `Showing ${shown} commit${shown !== 1 ? "s" : ""} — click again to clear` : `No commits ${daysAgo === 0 ? "today" : `${daysAgo}d ago`}`;
+    });
+  });
+
+  // ── Devlog Draft generate/refresh/copy ───────────────────────────────────────
+  async function _generateDevlog(btn, projectId, forceRefresh) {
+    const project = PROJECTS.find((p) => p.id === projectId);
+    if (!project) return;
+    const claudeApiKey = ctx.loadStoredCredentials().claudeApiKey;
+    if (!claudeApiKey) {
+      btn.textContent = "No API key — add in Settings";
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = forceRefresh ? "↺ Regenerate" : "✎ Generate Devlog Draft"; btn.disabled = false; }, 2500);
+      return;
+    }
+    btn.textContent = "Generating…";
+    btn.disabled = true;
+    try {
+      if (forceRefresh) invalidateDevlogDraft(projectId);
+      const repoData = state.ghData?.[project.githubRepo] || null;
+      await fetchDevlogDraft(project, repoData, claudeApiKey);
+      render();
+    } catch {
+      btn.textContent = "Error";
+      btn.disabled = false;
+      setTimeout(() => { btn.textContent = forceRefresh ? "↺ Regenerate" : "✎ Generate Devlog Draft"; btn.disabled = false; }, 2000);
+    }
+  }
+
+  document.querySelectorAll("[id^='generate-devlog-btn-']").forEach((btn) => {
+    btn.addEventListener("click", () => _generateDevlog(btn, btn.dataset.projectId, false));
+  });
+  document.querySelectorAll("[id^='refresh-devlog-btn-']").forEach((btn) => {
+    btn.addEventListener("click", () => _generateDevlog(btn, btn.dataset.projectId, true));
+  });
+  document.querySelectorAll("[id^='copy-devlog-btn-']").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const textEl = document.getElementById(`devlog-draft-text-${btn.dataset.projectId}`);
+      if (textEl) {
+        navigator.clipboard.writeText(textEl.textContent.trim()).then(() => {
+          btn.textContent = "✓ Copied";
+          setTimeout(() => { btn.textContent = "⎘ Copy"; }, 1500);
+        }).catch(() => {});
+      }
+    });
+  });
+
+  // ── AI Prescription refresh ──────────────────────────────────────────────────
+  document.querySelectorAll("[id^='refresh-ai-prescription-']").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const projectId = btn.dataset.projectId;
+      const project = PROJECTS.find((p) => p.id === projectId);
+      if (!project) return;
+      const claudeApiKey = ctx.loadStoredCredentials().claudeApiKey;
+      if (!claudeApiKey) {
+        btn.textContent = "No API key";
+        setTimeout(() => { btn.textContent = "↺ Refresh"; }, 2000);
+        return;
+      }
+      btn.textContent = "Fetching…";
+      btn.disabled = true;
+      try {
+        invalidatePrescriptionFor(projectId);
+        const repoData = state.ghData?.[project.githubRepo] || null;
+        const scoring  = scoreProject(project, repoData, state.sbData, state.socialData);
+        await fetchPrescription(project, scoring, repoData, claudeApiKey);
+        render();
+      } catch {
+        btn.textContent = "Error";
+        btn.disabled = false;
+        setTimeout(() => { btn.textContent = "↺ Refresh"; }, 2000);
+      }
     });
   });
 }

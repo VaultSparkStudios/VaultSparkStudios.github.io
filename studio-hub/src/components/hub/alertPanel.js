@@ -183,6 +183,18 @@ export function renderAlerts(ghData, sbData, allScores, scoreHistory) {
   const deduped = alerts.filter((a) => { if (seen.has(a.msg)) return false; seen.add(a.msg); return true; });
   const visible = deduped.filter((a) => !isAlertSnoozed(a.msg));
 
+  // ── Type-pattern deduplication (#25) ─────────────────────────────────────
+  // When 3+ alerts share the same signal pattern across different projects,
+  // collapse them into a single "N projects — [pattern]" summary entry.
+  const PATTERNS = [
+    { match: /CI build failing/,         label: "CI build failing" },
+    { match: /Score declining/,          label: "Score declining 3 sessions" },
+    { match: /No commits in \d+/,        label: "No commits (stale)" },
+    { match: /may be abandoned/,         label: "May be abandoned" },
+    { match: /PRs? awaiting review|PR #.* open \d+d/, label: "PR review lag" },
+    { match: /Health score \d+ \(\w+\)/, label: "Low health score" },
+  ];
+
   if (!visible.length) {
     const snoozeCount = deduped.length;
     return `<div class="empty-state">All ${snoozeCount} alert${snoozeCount !== 1 ? "s" : ""} snoozed.</div>`;
@@ -214,6 +226,24 @@ export function renderAlerts(ghData, sbData, allScores, scoreHistory) {
   function renderGroup(items) {
     const groups = groupByProject(items);
     return [...groups.entries()].map(([projectKey, groupAlerts]) => {
+      // Summary (type-pattern collapsed) alert
+      const sa = groupAlerts[0];
+      if (groupAlerts.length === 1 && sa._summary) {
+        return `
+          <details class="alert-item ${sa.type}" style="padding:0;">
+            <summary style="display:flex; align-items:center; gap:8px; justify-content:space-between; padding:6px 0; cursor:pointer; list-style:none;">
+              <span style="flex:1; min-width:0; font-weight:700;">${sa.msg}</span>
+              <span style="font-size:9px; color:var(--muted);">▾</span>
+            </summary>
+            ${sa._children.map((c) => `
+              <div style="display:flex; align-items:center; gap:8px; justify-content:space-between; padding:4px 0 4px 12px; border-top:1px solid rgba(255,255,255,0.05); font-size:11px;">
+                <span style="flex:1; min-width:0; color:var(--muted);">${c.msg}</span>
+                <div style="display:flex; gap:3px; flex-shrink:0;">${snoozeBtn(c.msg, "24h", 86400000)}</div>
+              </div>
+            `).join("")}
+          </details>
+        `;
+      }
       if (groupAlerts.length === 1) {
         const a = groupAlerts[0];
         return `
@@ -227,7 +257,6 @@ export function renderAlerts(ghData, sbData, allScores, scoreHistory) {
         `;
       }
       // Multiple alerts for same project — collapsible group
-      const groupId = `alert-group-${projectKey.replace(/\s+/g, "-").toLowerCase().slice(0, 20)}`;
       const worstType = groupAlerts.some((a) => a.type === "error") ? "error" : groupAlerts.some((a) => a.type === "warning") ? "warning" : "info";
       return `
         <details class="alert-item ${worstType}" style="padding:0;">
@@ -248,9 +277,30 @@ export function renderAlerts(ghData, sbData, allScores, scoreHistory) {
     }).join("");
   }
 
-  const errors   = visible.filter((a) => a.type === "error");
-  const warnings = visible.filter((a) => a.type === "warning");
-  const infos    = visible.filter((a) => a.type === "info");
+  // Collapse patterns with 3+ matches into summary entries, leave rest as-is
+  const collapsed = new Set();
+  const summaryAlerts = [];
+  for (const pat of PATTERNS) {
+    const matches = visible.filter((a) => pat.match.test(a.msg));
+    if (matches.length >= 3) {
+      matches.forEach((a) => collapsed.add(a));
+      const worstType = matches.some((a) => a.type === "error") ? "error" : "warning";
+      summaryAlerts.push({
+        type: worstType,
+        msg: `${matches.length} projects — ${pat.label}`,
+        _summary: true,
+        _children: matches,
+      });
+    }
+  }
+  const finalAlerts = [
+    ...summaryAlerts,
+    ...visible.filter((a) => !collapsed.has(a)),
+  ];
+
+  const errors   = finalAlerts.filter((a) => a.type === "error");
+  const warnings = finalAlerts.filter((a) => a.type === "warning");
+  const infos    = finalAlerts.filter((a) => a.type === "info");
 
   return `
     <div class="alerts-list">

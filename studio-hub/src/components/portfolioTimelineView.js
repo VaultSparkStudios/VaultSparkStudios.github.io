@@ -1,8 +1,9 @@
 // Portfolio Timeline View
-// Chronological feed of all events across all projects:
-// commits, releases, CI events, score snapshots, alerts
+// Feed: chronological event stream across all projects.
+// Gantt: 90-day activity bars per project with release markers.
 
 import { PROJECTS } from "../data/studioRegistry.js";
+import { scoreProject } from "../utils/projectScoring.js";
 
 function timeAgo(iso) {
   if (!iso) return "—";
@@ -21,8 +22,105 @@ function fullDate(iso) {
   return new Date(iso).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
+// ── Gantt view ────────────────────────────────────────────────────────────────
+function renderGanttView(state) {
+  const { ghData = {}, sbData = null, socialData = null } = state;
+  const now        = Date.now();
+  const WINDOW_MS  = 90 * 86400000;
+  const windowStart = now - WINDOW_MS;
+
+  // Month tick marks along the 90-day axis
+  const ticks = [];
+  const d = new Date(windowStart);
+  d.setDate(1);
+  while (d.getTime() < now) {
+    ticks.push({ ts: d.getTime(), label: d.toLocaleDateString("en-US", { month: "short" }) });
+    d.setMonth(d.getMonth() + 1);
+  }
+
+  function barColor(score) {
+    if (score >= 80) return "var(--green)";
+    if (score >= 60) return "var(--gold)";
+    return "var(--red)";
+  }
+
+  const rows = PROJECTS.map((p) => {
+    const repoData = ghData[p.githubRepo] || null;
+    const scoring  = scoreProject(p, repoData, sbData, socialData);
+    const commits  = (repoData?.commits || [])
+      .map((c) => new Date(c.date).getTime())
+      .filter((t) => t >= windowStart && t <= now);
+
+    let bar = null;
+    if (commits.length) {
+      const earliest = Math.min(...commits);
+      const latest   = Math.max(...commits);
+      const left  = ((earliest - windowStart) / WINDOW_MS) * 100;
+      const right = ((latest  - windowStart) / WINDOW_MS) * 100;
+      bar = { left: Math.max(0, left), width: Math.max(1, Math.min(100 - Math.max(0, left), right - left)) };
+    }
+
+    let release = null;
+    if (repoData?.latestRelease) {
+      const rt = new Date(repoData.latestRelease.publishedAt).getTime();
+      if (rt >= windowStart && rt <= now) {
+        release = { left: ((rt - windowStart) / WINDOW_MS) * 100, tag: repoData.latestRelease.tag };
+      }
+    }
+
+    return `
+      <div style="display:flex; align-items:center; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
+        <div style="width:130px; flex-shrink:0; padding-right:12px; overflow:hidden;">
+          <div style="font-size:11px; font-weight:700; color:${p.color}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${p.name}">${p.name}</div>
+          <div style="font-size:10px; color:var(--muted);">${scoring.total}/100 · ${scoring.grade}</div>
+        </div>
+        <div style="flex:1; position:relative; height:18px; background:rgba(255,255,255,0.03); border-radius:3px;">
+          ${bar ? `
+            <div style="position:absolute; left:${bar.left.toFixed(1)}%; width:${bar.width.toFixed(1)}%; height:100%;
+                        background:${barColor(scoring.total)}; border-radius:3px; opacity:0.7;"></div>
+          ` : `
+            <span style="position:absolute; inset:0; display:flex; align-items:center; padding-left:8px; font-size:9px; color:var(--muted);">No recent activity</span>
+          `}
+          ${release ? `
+            <div title="Release ${release.tag}" style="position:absolute; left:calc(${release.left.toFixed(1)}% - 1px); top:-4px; bottom:-4px;
+                        width:2px; background:var(--blue); border-radius:1px; z-index:1;"></div>
+          ` : ""}
+        </div>
+        ${release ? `
+          <div style="width:60px; flex-shrink:0; padding-left:6px; font-size:9px; color:var(--blue); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${release.tag}">${release.tag}</div>
+        ` : `<div style="width:60px; flex-shrink:0;"></div>`}
+      </div>
+    `;
+  }).join("");
+
+  const tickMarks = ticks.map((t) => {
+    const left = ((t.ts - windowStart) / WINDOW_MS) * 100;
+    return `<div style="position:absolute; left:${left.toFixed(1)}%; font-size:9px; color:var(--muted); transform:translateX(-50%); pointer-events:none;">${t.label}</div>`;
+  }).join("");
+
+  return `
+    <div class="panel" style="padding:0; overflow:hidden;">
+      <div style="padding:14px 20px 10px; border-bottom:1px solid var(--border);">
+        <div style="display:flex; align-items:center;">
+          <div style="width:130px; flex-shrink:0; font-size:9px; font-weight:700; color:var(--muted); letter-spacing:0.08em; text-transform:uppercase;">Project</div>
+          <div style="flex:1; position:relative; height:16px;">${tickMarks}</div>
+          <div style="width:60px; flex-shrink:0; font-size:9px; color:var(--muted); padding-left:6px; text-transform:uppercase; letter-spacing:0.06em;">Release</div>
+        </div>
+      </div>
+      <div style="padding:0 20px;">${rows}</div>
+      <div style="padding:10px 20px; border-top:1px solid var(--border); font-size:10px; color:var(--muted); display:flex; gap:16px; align-items:center;">
+        Last 90 days.
+        <span><span style="display:inline-block; width:8px; height:3px; background:var(--blue); border-radius:1px; margin-right:4px; vertical-align:middle;"></span>Release marker</span>
+        <span><span style="display:inline-block; width:8px; height:8px; background:var(--green); border-radius:2px; opacity:0.7; margin-right:4px; vertical-align:middle;"></span>≥80</span>
+        <span><span style="display:inline-block; width:8px; height:8px; background:var(--gold); border-radius:2px; opacity:0.7; margin-right:4px; vertical-align:middle;"></span>60–79</span>
+        <span><span style="display:inline-block; width:8px; height:8px; background:var(--red); border-radius:2px; opacity:0.7; margin-right:4px; vertical-align:middle;"></span>&lt;60</span>
+      </div>
+    </div>
+  `;
+}
+
 export function renderPortfolioTimelineView(state) {
-  const { ghData = {}, scoreHistory = [], ghActivity = [], timelineTypeFilter = "all", timelineProjectFilter = "" } = state;
+  const { ghData = {}, scoreHistory = [], ghActivity = [], timelineTypeFilter = "all", timelineProjectFilter = "", timelineMode = "feed" } = state;
 
   const events = [];
 
@@ -197,43 +295,56 @@ export function renderPortfolioTimelineView(state) {
     `;
   }).join("");
 
+  const modeBtn = (mode, label) => `
+    <button data-timeline-mode="${mode}"
+      style="font-size:11px; padding:4px 12px; border-radius:6px; cursor:pointer; border:1px solid var(--border);
+             background:${timelineMode === mode ? "rgba(122,231,199,0.12)" : "none"};
+             color:${timelineMode === mode ? "var(--cyan)" : "var(--muted)"}; transition:all 0.1s;">${label}</button>
+  `;
+
   return `
     <div class="main-panel">
       <div class="view-header">
         <div>
           <div class="view-title">Portfolio Timeline</div>
-          <div class="view-subtitle">All events across all projects — commits, releases, CI, score changes, alerts</div>
+          <div class="view-subtitle">${timelineMode === "gantt" ? "90-day activity bars with release markers" : "All events across all projects — commits, releases, CI, score changes, alerts"}</div>
         </div>
-        <span style="font-size:11px; color:var(--muted);">${shown.length} events</span>
+        <div style="display:flex; gap:4px;">
+          ${modeBtn("feed", "Feed")}
+          ${modeBtn("gantt", "Gantt")}
+        </div>
       </div>
 
-      <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
-        <div style="display:flex; gap:4px; flex-wrap:wrap;">
-          ${["all","commit","release","ci","snapshot","alert"].map((t) => `
-            <button data-timeline-type="${t}"
-              style="font-size:11px; padding:4px 10px; border-radius:6px; cursor:pointer; border:1px solid var(--border);
-                     background:${timelineTypeFilter === t || (t === "ci" && (timelineTypeFilter === "ci-fail" || timelineTypeFilter === "ci-pass")) ? "rgba(122,231,199,0.12)" : "none"};
-                     color:${timelineTypeFilter === t ? "var(--cyan)" : "var(--muted)"};
-                     transition:all 0.1s;"
-              onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='${timelineTypeFilter === t ? "var(--cyan)" : "var(--muted)"}'">
-              ${t === "all" ? "All" : t === "ci" ? "CI" : t.charAt(0).toUpperCase() + t.slice(1)}
-            </button>
-          `).join("")}
+      ${timelineMode === "gantt" ? renderGanttView(state) : `
+        <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
+          <div style="display:flex; gap:4px; flex-wrap:wrap;">
+            ${["all","commit","release","ci","snapshot","alert"].map((t) => `
+              <button data-timeline-type="${t}"
+                style="font-size:11px; padding:4px 10px; border-radius:6px; cursor:pointer; border:1px solid var(--border);
+                       background:${timelineTypeFilter === t || (t === "ci" && (timelineTypeFilter === "ci-fail" || timelineTypeFilter === "ci-pass")) ? "rgba(122,231,199,0.12)" : "none"};
+                       color:${timelineTypeFilter === t ? "var(--cyan)" : "var(--muted)"};
+                       transition:all 0.1s;"
+                onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='${timelineTypeFilter === t ? "var(--cyan)" : "var(--muted)"}'">
+                ${t === "all" ? "All" : t === "ci" ? "CI" : t.charAt(0).toUpperCase() + t.slice(1)}
+              </button>
+            `).join("")}
+          </div>
+          <select id="timeline-project-filter"
+            style="font-size:11px; padding:4px 8px; border-radius:6px; border:1px solid var(--border);
+                   background:rgba(12,19,31,0.8); color:var(--text); cursor:pointer; outline:none;">
+            <option value="">All projects</option>
+            ${PROJECTS.map((p) => `<option value="${p.id}" ${timelineProjectFilter === p.id ? "selected" : ""}>${p.name}</option>`).join("")}
+          </select>
+          <span style="font-size:11px; color:var(--muted); margin-left:auto;">${shown.length} events</span>
         </div>
-        <select id="timeline-project-filter"
-          style="font-size:11px; padding:4px 8px; border-radius:6px; border:1px solid var(--border);
-                 background:rgba(12,19,31,0.8); color:var(--text); cursor:pointer; outline:none;">
-          <option value="">All projects</option>
-          ${PROJECTS.map((p) => `<option value="${p.id}" ${timelineProjectFilter === p.id ? "selected" : ""}>${p.name}</option>`).join("")}
-        </select>
-      </div>
 
-      <div class="panel" style="padding:0; overflow:hidden;">
-        ${shown.length === 0
-          ? `<div class="empty-state" style="padding:40px;">No events yet — sync data to populate the timeline.</div>`
-          : rows
-        }
-      </div>
+        <div class="panel" style="padding:0; overflow:hidden;">
+          ${shown.length === 0
+            ? `<div class="empty-state" style="padding:40px;">No events yet — sync data to populate the timeline.</div>`
+            : rows
+          }
+        </div>
+      `}
     </div>
   `;
 }

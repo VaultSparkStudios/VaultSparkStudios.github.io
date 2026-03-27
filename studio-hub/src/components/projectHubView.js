@@ -2,6 +2,7 @@ import { scoreProject } from "../utils/projectScoring.js";
 import { timeAgo, fmt, escapeHtml } from "../utils/helpers.js";
 import { scorePotential, scoreMomentumIndex, potentialLabel, momentumLabel } from "../utils/proprietaryScores.js";
 import { getForecastAccuracy } from "../utils/scoreForecast.js";
+import { getCachedPrescription, getCachedDevlogDraft } from "../utils/aiPrescriptions.js";
 
 const LOCAL_PATHS_KEY = "vshub_local_paths";
 function loadLocalPaths() { try { return JSON.parse(localStorage.getItem(LOCAL_PATHS_KEY) || "{}"); } catch { return {}; } }
@@ -1690,13 +1691,32 @@ function renderIssueSignalCorrelation(project, repoData) {
   `;
 }
 
-function renderScorePillarChart(project, repoData, sbData, socialData) {
+function renderScorePillarChart(project, repoData, sbData, socialData, scoreHistory = []) {
   const scoring = scoreProject(project, repoData, sbData, socialData);
+
+  // Per-pillar trend: compare current scores to previous snapshot's pillars
+  const prevPillars = (() => {
+    for (let i = scoreHistory.length - 1; i >= 0; i--) {
+      const p = scoreHistory[i]?.pillars?.[project.id];
+      if (p) return p;
+    }
+    return null;
+  })();
+  function pillarTrend(key, currentScore) {
+    if (!prevPillars) return "";
+    const prev = prevPillars[key];
+    if (prev == null) return "";
+    const delta = currentScore - prev;
+    if (delta > 0) return ` <span style="color:var(--green); font-size:10px; font-weight:700;">↑${delta}</span>`;
+    if (delta < 0) return ` <span style="color:var(--red); font-size:10px; font-weight:700;">↓${Math.abs(delta)}</span>`;
+    return ` <span style="color:var(--muted); font-size:10px;">→</span>`;
+  }
+
   const pillars = [
-    { key: "development", label: "Dev",      max: 30,                       color: "#69b3ff" },
-    { key: "engagement",  label: "Engage",   max: 25,                       color: "#7ae7c7" },
-    { key: "momentum",    label: "Momentum", max: 25,                       color: "#ffc874" },
-    { key: "risk",        label: "Risk",     max: scoring.pillars.risk.max, color: "#6ae3b2" },
+    { key: "development", trendKey: "dev",      label: "Dev",      max: 30,                       color: "#69b3ff" },
+    { key: "engagement",  trendKey: "engage",    label: "Engage",   max: 25,                       color: "#7ae7c7" },
+    { key: "momentum",    trendKey: "momentum",  label: "Momentum", max: 25,                       color: "#ffc874" },
+    { key: "risk",        trendKey: "risk",      label: "Risk",     max: scoring.pillars.risk.max, color: "#6ae3b2" },
   ];
   return `
     <div class="hub-section">
@@ -1706,7 +1726,7 @@ function renderScorePillarChart(project, repoData, sbData, socialData) {
       </div>
       <div class="hub-section-body">
         <div style="display:flex; flex-direction:column; gap:10px;">
-          ${pillars.map(({ key, label, max, color }) => {
+          ${pillars.map(({ key, trendKey, label, max, color }) => {
             const p = scoring.pillars[key];
             const pct = Math.round((p.score / max) * 100);
             return `
@@ -1715,6 +1735,7 @@ function renderScorePillarChart(project, repoData, sbData, socialData) {
                   <span style="font-size:11px; font-weight:700; color:${color};">${label}</span>
                   <span style="font-size:11px; color:${color};">${p.score}<span style="color:var(--muted);">/${max}</span>
                     <span style="font-size:10px; color:var(--muted); margin-left:4px;">${pct}%</span>
+                    ${pillarTrend(trendKey, p.score)}
                   </span>
                 </div>
                 <div style="height:6px; background:rgba(255,255,255,0.07); border-radius:3px; overflow:hidden;">
@@ -1803,8 +1824,286 @@ function renderProprietaryScoresSection(project, repoData, socialData, scoreHist
   `;
 }
 
+// ── AI Prescription (#21) ─────────────────────────────────────────────────────
+// Renders the cached Claude AI recommendation for this project.
+// Fetch is triggered from clientApp.js after sync; this only reads the cache.
+function renderAiPrescription(project) {
+  const text = getCachedPrescription(project.id);
+  if (!text) return "";
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">AI PRESCRIPTION</span>
+        <span class="hub-section-badge" style="color:#c084fc; font-size:10px;">claude haiku · cached 12h</span>
+      </div>
+      <div class="hub-section-body">
+        <div style="padding:12px 14px; background:rgba(192,132,252,0.05); border:1px solid rgba(192,132,252,0.15);
+                    border-radius:8px; font-size:13px; color:var(--text); line-height:1.65;">
+          ${escapeHtml(text)}
+        </div>
+        <button id="refresh-ai-prescription-${project.id}"
+          data-project-id="${project.id}"
+          style="margin-top:8px; font-size:11px; padding:4px 10px; background:rgba(192,132,252,0.08);
+                 border:1px solid rgba(192,132,252,0.2); border-radius:6px; color:#c084fc; cursor:pointer;">
+          ↺ Refresh
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// ── Automated Devlog Draft (#22) ─────────────────────────────────────────────
+function renderDevlogDraftPanel(project) {
+  const text = getCachedDevlogDraft(project.id);
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">DEVLOG DRAFT</span>
+        <span class="hub-section-badge" style="color:var(--gold); font-size:10px;">claude haiku · 24h cache</span>
+      </div>
+      <div class="hub-section-body">
+        ${text ? `
+          <div id="devlog-draft-text-${escapeHtml(project.id)}"
+               style="padding:12px 14px; background:rgba(255,200,116,0.05); border:1px solid rgba(255,200,116,0.15);
+                      border-radius:8px; font-size:13px; color:var(--text); line-height:1.65; margin-bottom:8px;">
+            ${escapeHtml(text)}
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button id="copy-devlog-btn-${escapeHtml(project.id)}"
+              data-project-id="${escapeHtml(project.id)}"
+              style="font-size:11px; padding:4px 10px; background:rgba(255,200,116,0.08);
+                     border:1px solid rgba(255,200,116,0.2); border-radius:6px; color:var(--gold); cursor:pointer;">
+              ⎘ Copy
+            </button>
+            <button id="refresh-devlog-btn-${escapeHtml(project.id)}"
+              data-project-id="${escapeHtml(project.id)}"
+              style="font-size:11px; padding:4px 10px; background:rgba(255,255,255,0.04);
+                     border:1px solid var(--border); border-radius:6px; color:var(--muted); cursor:pointer;">
+              ↺ Regenerate
+            </button>
+          </div>
+        ` : `
+          <div style="font-size:12px; color:var(--muted); margin-bottom:10px; line-height:1.5;">
+            Generate a weekly devlog entry from recent commit activity using Claude.
+          </div>
+          <button id="generate-devlog-btn-${escapeHtml(project.id)}"
+            data-project-id="${escapeHtml(project.id)}"
+            style="font-size:12px; padding:7px 14px; background:rgba(255,200,116,0.08);
+                   border:1px solid rgba(255,200,116,0.25); border-radius:8px; color:var(--gold); cursor:pointer;">
+            ✎ Generate Devlog Draft
+          </button>
+        `}
+      </div>
+    </div>
+  `;
+}
+
+// ── Launch Readiness Checklist (#13) ─────────────────────────────────────────
+// Shows only for non-live, non-archived projects. Evaluates launch criteria
+// derived directly from the scoring model and GitHub signals.
+function renderLaunchReadiness(project, repoData, sbData, socialData) {
+  if (project.status === "live" || project.status === "archived") return "";
+  const scoring = scoreProject(project, repoData, sbData, socialData);
+  const now = Date.now();
+  const commits = repoData?.commits || [];
+  const lastCommitDays = commits.length ? (now - new Date(commits[0].date).getTime()) / 86400000 : Infinity;
+  const openIssues = repoData?.repo?.openIssues ?? null;
+  const overdueMilestones = (repoData?.milestones || []).filter((m) => m.dueOn && new Date(m.dueOn) < now && m.state === "open");
+  const hasRelease = !!(repoData?.latestRelease || repoData?.deployments?.length);
+  const ciPassing = repoData?.ciRuns?.[0]?.conclusion === "success";
+
+  const criteria = [
+    { label: "Health score ≥ 85 (A+)", ok: scoring.total >= 85, note: `Current: ${scoring.total}` },
+    { label: "CI passing",             ok: ciPassing,           note: ciPassing ? "" : "Fix CI before launch" },
+    { label: "Open issues < 10",       ok: openIssues !== null && openIssues < 10, note: openIssues !== null ? `${openIssues} open` : "No data" },
+    { label: "No overdue milestones",  ok: overdueMilestones.length === 0, note: overdueMilestones.length ? `${overdueMilestones.length} overdue` : "" },
+    { label: "Has release or deployment", ok: hasRelease,       note: hasRelease ? "" : "Tag a release or deploy" },
+    { label: "Active development (< 7d)", ok: lastCommitDays < 7, note: lastCommitDays < Infinity ? `Last: ${Math.round(lastCommitDays)}d ago` : "No commits" },
+  ];
+
+  const passCount = criteria.filter((c) => c.ok).length;
+  const pct = Math.round((passCount / criteria.length) * 100);
+  const barColor = pct >= 80 ? "var(--green)" : pct >= 50 ? "var(--gold)" : "var(--red)";
+
+  return `
+    <div class="hub-section" style="margin-bottom:20px;">
+      <div class="hub-section-header">
+        <span class="hub-section-title">LAUNCH READINESS</span>
+        <span style="font-size:11px; font-weight:700; color:${barColor};">${pct}% — ${passCount}/${criteria.length} criteria</span>
+      </div>
+      <div class="hub-section-body">
+        <div style="height:4px; background:var(--border); border-radius:2px; margin-bottom:12px;">
+          <div style="height:100%; width:${pct}%; background:${barColor}; border-radius:2px; transition:width 0.3s;"></div>
+        </div>
+        ${criteria.map((c) => `
+          <div style="display:flex; align-items:center; gap:10px; padding:5px 0; border-bottom:1px solid rgba(255,255,255,0.03);">
+            <span style="font-size:13px; color:${c.ok ? "var(--green)" : "var(--red)"}; flex-shrink:0;">${c.ok ? "✓" : "✗"}</span>
+            <span style="font-size:12px; color:${c.ok ? "var(--text)" : "var(--muted)"}; flex:1;">${c.label}</span>
+            ${c.note && !c.ok ? `<span style="font-size:10px; color:var(--muted);">${c.note}</span>` : ""}
+          </div>
+        `).join("")}
+      </div>
+    </div>
+  `;
+}
+
+// ── Project Doctor (#12) ──────────────────────────────────────────────────────
+// Generates a ranked, deterministic action list from the scoring model:
+// "Do X to gain ~N pts in [pillar]" — ordered by weighted point gain.
+function renderProjectDoctor(project, repoData, sbData, socialData) {
+  const scoring = scoreProject(project, repoData, sbData, socialData);
+  if (scoring.total >= 95) return ""; // already excellent
+  const actions = [];
+
+  // Dev pillar gap
+  const devGap  = 30 - scoring.pillars.development.score;
+  const devSigs = scoring.pillars.development.signals || [];
+  if (devSigs.some((s) => s.toLowerCase().includes("fail"))) {
+    actions.push({ pts: 12, pillar: "Dev", label: "Fix CI build", detail: "CI passing adds +15 Dev pts" });
+  } else if (devGap >= 10 && devSigs.some((s) => s.toLowerCase().includes("no recent") || s.toLowerCase().includes("no commit"))) {
+    actions.push({ pts: 8, pillar: "Dev", label: "Push commits", detail: "Any commit this week adds +12 Dev pts" });
+  } else if (devGap >= 8) {
+    actions.push({ pts: 5, pillar: "Dev", label: "Improve CI or commit cadence", detail: `Dev at ${scoring.pillars.development.score}/30` });
+  }
+
+  // Momentum pillar gap
+  const momGap   = 25 - scoring.pillars.momentum.score;
+  const momSigs  = scoring.pillars.momentum.signals || [];
+  const hasRelease = momSigs.some((s) => s.includes("Released") || s.includes("this week") || s.includes("this month"));
+  if (!hasRelease && momGap >= 10) {
+    actions.push({ pts: 10, pillar: "Momentum", label: "Ship a release", detail: "Release this month adds +7 Momentum pts; this week +10" });
+  }
+  if (!repoData?.prs?.length && momGap >= 6) {
+    actions.push({ pts: 5, pillar: "Momentum", label: "Open a PR", detail: "Active PRs add +5 Momentum pts" });
+  }
+
+  // Risk pillar gap
+  const riskGap   = 20 - scoring.pillars.risk.base;
+  const openIssues = repoData?.repo?.openIssues || 0;
+  if (riskGap >= 6 && openIssues > 5) {
+    actions.push({ pts: Math.min(10, riskGap), pillar: "Risk", label: `Close ${Math.min(10, openIssues)} issues`, detail: `${openIssues} open now; reducing to <6 removes −3 Risk penalty` });
+  }
+  const stalePRs = (repoData?.prs || []).filter((pr) => !pr.draft && (Date.now() - new Date(pr.createdAt).getTime()) / 86400000 > 30);
+  if (stalePRs.length) {
+    actions.push({ pts: 2, pillar: "Risk", label: `Merge/close ${stalePRs.length} stale PR${stalePRs.length > 1 ? "s" : ""}`, detail: "Stale PRs (>30 days) cost −2 Risk pts" });
+  }
+
+  // Engagement pillar gap
+  const engGap = 25 - scoring.pillars.engagement.score;
+  if (engGap >= 12 && !project.deployedUrl) {
+    actions.push({ pts: 5, pillar: "Engagement", label: "Deploy the project", detail: "Live deployed URL adds +5 Engagement pts" });
+  }
+  if (engGap >= 8 && !project.supabaseGameSlug) {
+    actions.push({ pts: 3, pillar: "Engagement", label: "Update context files", detail: "Recent context commits add +3 Engagement pts" });
+  }
+
+  // Studio OS governance gap
+  const govGap = 5 - (scoring.pillars.risk.governance || 0);
+  if (govGap >= 2) {
+    actions.push({ pts: govGap, pillar: "Governance", label: "Complete Studio OS compliance", detail: "Full compliance + SIL fresh + CDR active = +5 bonus pts" });
+  }
+
+  if (!actions.length) return "";
+  actions.sort((a, b) => b.pts - a.pts);
+  const top5 = actions.slice(0, 5);
+  const totalPossible = top5.reduce((s, a) => s + a.pts, 0);
+
+  const pillarColors = { Dev: "var(--blue)", Momentum: "var(--cyan)", Risk: "var(--green)", Engagement: "var(--gold)", Governance: "#c084fc" };
+
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">PROJECT DOCTOR</span>
+        <span class="hub-section-badge" style="color:var(--green);">+${totalPossible} pts possible</span>
+      </div>
+      <div class="hub-section-body">
+        <div style="font-size:11px; color:var(--muted); margin-bottom:12px;">
+          Ranked actions to close the gap to grade A (90+). Currently ${scoring.total}/100.
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          ${top5.map((a, i) => `
+            <div style="display:flex; align-items:flex-start; gap:12px; padding:10px 12px;
+                        background:${pillarColors[a.pillar]}0a; border:1px solid ${pillarColors[a.pillar]}1e;
+                        border-radius:8px;">
+              <div style="font-size:13px; font-weight:800; color:var(--muted); min-width:18px; text-align:center;
+                          opacity:0.5;">${i + 1}</div>
+              <div style="flex:1; min-width:0;">
+                <div style="font-size:13px; font-weight:600; color:var(--text); margin-bottom:2px;">${a.label}</div>
+                <div style="font-size:11px; color:var(--muted);">${a.detail}</div>
+              </div>
+              <div style="text-align:right; flex-shrink:0;">
+                <div style="font-size:13px; font-weight:800; color:${pillarColors[a.pillar]};">+${a.pts}</div>
+                <div style="font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:0.04em;">${a.pillar}</div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderRevenueAttribution(project, gumroadSales, repoData) {
+  if (!gumroadSales) return "";
+
+  // Filter sales to this project's product name (fuzzy — includes project name)
+  const slug = project.name.toLowerCase().replace(/\s+/g, "");
+  const relevant = gumroadSales.filter((s) =>
+    s.productName?.toLowerCase().replace(/\s+/g, "").includes(slug) ||
+    slug.includes(s.productName?.toLowerCase().replace(/\s+/g, "") || "____")
+  );
+
+  // Aggregate by day
+  const byDay = {};
+  for (const sale of (relevant.length ? relevant : gumroadSales)) {
+    const day = (sale.createdAt || "").slice(0, 10);
+    if (!day) continue;
+    byDay[day] = (byDay[day] || 0) + sale.price;
+  }
+
+  const days = Object.keys(byDay).sort();
+  if (!days.length) return "";
+
+  const total = Object.values(byDay).reduce((s, v) => s + v, 0);
+  const releaseTag = repoData?.latestRelease?.tag || null;
+  const releaseDate = repoData?.latestRelease?.publishedAt?.slice(0, 10) || null;
+  const maxVal = Math.max(...Object.values(byDay), 1);
+
+  const bars = days.map((d) => {
+    const val = byDay[d] || 0;
+    const pct = Math.round((val / maxVal) * 100);
+    const isRelease = d === releaseDate;
+    return `<div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; min-width:0;"
+                 title="${d}: $${val.toFixed(2)}${isRelease ? ` · Release ${releaseTag}` : ""}">
+      ${isRelease ? `<div style="width:2px; height:4px; background:var(--gold); border-radius:1px; flex-shrink:0;"></div>` : `<div style="height:4px;"></div>`}
+      <div style="width:100%; height:${Math.max(2, pct)}%; background:${isRelease ? "var(--gold)" : "rgba(122,231,199,0.5)"}; border-radius:2px 2px 0 0; min-height:2px;"></div>
+    </div>`;
+  }).join("");
+
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">REVENUE ATTRIBUTION</span>
+        <span class="hub-section-badge" style="color:var(--green);">$${total.toFixed(2)} / 30d</span>
+      </div>
+      <div class="hub-section-body">
+        <div style="display:flex; align-items:flex-end; gap:2px; height:60px; padding-bottom:4px; border-bottom:1px solid var(--border);">
+          ${bars}
+        </div>
+        <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--muted); margin-top:4px;">
+          <span>${days[0]}</span>
+          ${releaseDate ? `<span style="color:var(--gold);">▲ ${releaseTag || "release"}</span>` : ""}
+          <span>${days[days.length - 1]}</span>
+        </div>
+        <div style="font-size:11px; color:var(--muted); margin-top:8px;">${relevant.length ? `${relevant.length} sale${relevant.length !== 1 ? "s" : ""} matched to this project` : `${gumroadSales.length} total sales (all products — project match unavailable)`}</div>
+      </div>
+    </div>
+  `;
+}
+
 export function renderProjectHubView(project, state) {
   const { ghData = {}, sbData = null, socialData = null, contextFiles = {}, scoreHistory = [], contextFilesLoading = new Set(), projectExtendedData = {}, projectExtendedLoading = new Set(), tickets = [] } = state;
+  const gumroadSales = socialData?.gumroadSales || null;
   const repoData = project.githubRepo ? (ghData[project.githubRepo] || null) : null;
   const isLoadingCtx = contextFilesLoading.has(project.id);
   const extData = projectExtendedData[project.id];
@@ -1834,7 +2133,11 @@ export function renderProjectHubView(project, state) {
       </div>
 
       <div class="hub-sections">
-        ${renderScorePillarChart(project, repoData, sbData, socialData)}
+        ${renderScorePillarChart(project, repoData, sbData, socialData, scoreHistory)}
+        ${renderLaunchReadiness(project, repoData, sbData, socialData)}
+        ${renderProjectDoctor(project, repoData, sbData, socialData)}
+        ${renderAiPrescription(project)}
+        ${renderDevlogDraftPanel(project)}
         ${renderForecastAccuracy(project)}
         ${renderProprietaryScoresSection(project, repoData, socialData, scoreHistory)}
         ${renderHealthPrescription(project, repoData, sbData, socialData)}
@@ -1845,6 +2148,7 @@ export function renderProjectHubView(project, state) {
         ${renderNotesSection(project)}
         ${renderAnnotationSection(project)}
         ${renderTagsSection(project)}
+        ${renderRevenueAttribution(project, gumroadSales, repoData)}
         ${renderScoreHistoryLineChart(project, scoreHistory)}
         ${renderScoreChangelog(project, scoreHistory)}
         ${renderScoreCalibration(project, repoData, sbData, socialData)}

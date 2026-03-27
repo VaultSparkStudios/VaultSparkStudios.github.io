@@ -85,81 +85,169 @@ export function generateStandup(state, logActivity) {
 export function generateWeeklyDigest(state, logActivity) {
   const weekMs = 7 * 86400000;
   const since  = Date.now() - weekMs;
-  const date   = new Date().toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
+  const now    = new Date();
+  const date   = now.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+  const weekStart = new Date(Date.now() - weekMs).toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  const weekEnd   = now.toLocaleDateString("en-US", { month: "short", day: "numeric" });
 
-  const lines = [`# VaultSpark Studio — Weekly Digest`, `_${date}_`, ""];
-
-  // Score changes
+  // ── Gather all data ──────────────────────────────────────────────────────
   const scored = PROJECTS.map((p) => {
     const rd = state.ghData[p.githubRepo];
     const sc = scoreProject(p, rd || null, state.sbData, state.socialData);
-    return { project: p, score: sc.total, grade: sc.grade };
+    return { project: p, score: sc.total, grade: sc.grade, name: p.name };
   }).sort((a, b) => b.score - a.score);
 
-  lines.push("## Portfolio Health");
   const studioAvg = Math.round(scored.reduce((s, p) => s + p.score, 0) / (scored.length || 1));
-  lines.push(`Overall studio average: **${studioAvg}/100**`);
+  const topProject = scored[0];
+  const bottomProject = scored[scored.length - 1];
 
-  // Top movers
+  let gainers = [], droppers = [];
   if (state.scoreHistory.length >= 2) {
     const prev = state.scoreHistory[state.scoreHistory.length - 2].scores || {};
     const curr = state.scoreHistory[state.scoreHistory.length - 1].scores || {};
-    const gainers = PROJECTS.map((p) => ({ name: p.name, delta: (curr[p.id] ?? 0) - (prev[p.id] ?? 0) }))
+    gainers = PROJECTS.map((p) => ({ name: p.name, delta: (curr[p.id] ?? 0) - (prev[p.id] ?? 0) }))
       .filter((p) => p.delta > 0).sort((a, b) => b.delta - a.delta).slice(0, 3);
-    const droppers = PROJECTS.map((p) => ({ name: p.name, delta: (curr[p.id] ?? 0) - (prev[p.id] ?? 0) }))
+    droppers = PROJECTS.map((p) => ({ name: p.name, delta: (curr[p.id] ?? 0) - (prev[p.id] ?? 0) }))
       .filter((p) => p.delta < 0).sort((a, b) => a.delta - b.delta).slice(0, 3);
-    if (gainers.length) { lines.push(""); lines.push("**Top movers (↑):** " + gainers.map((g) => `${g.name} +${g.delta}`).join(", ")); }
-    if (droppers.length) lines.push("**Needs attention (↓):** " + droppers.map((d) => `${d.name} ${d.delta}`).join(", "));
   }
 
-  // CI status
   const failing = PROJECTS.filter((p) => state.ghData[p.githubRepo]?.ciRuns?.[0]?.conclusion === "failure");
   const passing = PROJECTS.filter((p) => state.ghData[p.githubRepo]?.ciRuns?.[0]?.conclusion === "success");
-  lines.push(""); lines.push("## CI Status");
-  lines.push(`✓ Passing: ${passing.length} · ✗ Failing: ${failing.length}`);
-  if (failing.length) lines.push(`Failed builds: ${failing.map((p) => p.name).join(", ")}`);
 
-  // Commits this week
-  lines.push(""); lines.push("## Development Activity");
   let commitCount = 0, activeRepos = 0;
   const newReleases = [];
+  const projectActivity = [];
   for (const p of PROJECTS) {
     const d = state.ghData[p.githubRepo];
     if (!d) continue;
     const wk = (d.commits || []).filter((c) => new Date(c.date).getTime() > since);
-    if (wk.length) { commitCount += wk.length; activeRepos++; }
+    if (wk.length) {
+      commitCount += wk.length;
+      activeRepos++;
+      projectActivity.push({ name: p.name, commits: wk.length, latest: wk[0].message.slice(0, 60) });
+    }
     if (d.latestRelease && new Date(d.latestRelease.publishedAt).getTime() > since)
-      newReleases.push(`${p.name} ${d.latestRelease.tag}`);
+      newReleases.push({ name: p.name, tag: d.latestRelease.tag });
   }
-  lines.push(`Commits this week: **${commitCount}** across ${activeRepos} projects`);
-  if (newReleases.length) lines.push(`New releases: ${newReleases.join(", ")}`);
+  projectActivity.sort((a, b) => b.commits - a.commits);
 
-  // Stale repos
   const stale = PROJECTS.filter((p) => {
     const last = state.ghData[p.githubRepo]?.commits?.[0];
     return last && (Date.now() - new Date(last.date).getTime()) > 14 * 86400000;
   });
-  if (stale.length) {
-    lines.push(""); lines.push("## Needs Attention");
-    lines.push(`Inactive 14+ days: ${stale.map((p) => p.name).join(", ")}`);
-  }
 
-  // Revenue
+  let weekRev = 0;
   const gumroadSales = state.socialData?.gumroadSales;
   if (gumroadSales?.length) {
-    const weekRev = gumroadSales.filter((s) => new Date(s.createdAt).getTime() > since).reduce((t, s) => t + (s.price || 0), 0);
-    if (weekRev > 0) {
-      lines.push(""); lines.push("## Revenue");
-      lines.push(`Gumroad this week: **$${weekRev.toFixed(2)}**`);
+    weekRev = gumroadSales.filter((s) => new Date(s.createdAt).getTime() > since).reduce((t, s) => t + (s.price || 0), 0);
+  }
+
+  // ── Build newsletter ────────────────────────────────────────────────────
+  const lines = [];
+
+  // Header
+  lines.push(`# VaultSpark Studio — Weekly Digest`);
+  lines.push(`**Week of ${weekStart} – ${weekEnd}** · _${date}_`);
+  lines.push("");
+
+  // Editorial lead
+  const healthWord = studioAvg >= 75 ? "strong" : studioAvg >= 50 ? "steady" : "under pressure";
+  const activityNote = commitCount > 0
+    ? `${commitCount} commits landed across ${activeRepos} project${activeRepos !== 1 ? "s" : ""}`
+    : "a quiet week on the commit front";
+  lines.push(`> The studio is looking **${healthWord}** this week with a portfolio average of **${studioAvg}/100**. We saw ${activityNote}${newReleases.length > 0 ? `, along with ${newReleases.length} fresh release${newReleases.length !== 1 ? "s" : ""}` : ""}. Here's everything you need to know.`);
+  lines.push("");
+
+  // Portfolio snapshot
+  lines.push("---");
+  lines.push("## Portfolio Snapshot");
+  lines.push("");
+  lines.push(`| Metric | Value |`);
+  lines.push(`| --- | --- |`);
+  lines.push(`| Studio Average | **${studioAvg}/100** |`);
+  lines.push(`| Top Performer | ${topProject ? `${topProject.name} (${topProject.score} · ${topProject.grade})` : "—"} |`);
+  lines.push(`| Needs Love | ${bottomProject ? `${bottomProject.name} (${bottomProject.score} · ${bottomProject.grade})` : "—"} |`);
+  lines.push(`| Active Projects | ${activeRepos} of ${PROJECTS.length} |`);
+  lines.push(`| CI Health | ${passing.length} passing · ${failing.length} failing |`);
+  if (weekRev > 0) lines.push(`| Revenue (Gumroad) | **$${weekRev.toFixed(2)}** |`);
+  lines.push("");
+
+  // Movers & shakers
+  if (gainers.length || droppers.length) {
+    lines.push("## Movers & Shakers");
+    lines.push("");
+    if (gainers.length) {
+      lines.push("**Rising this week:**");
+      for (const g of gainers) lines.push(`- ${g.name} — up **+${g.delta}** points`);
+      lines.push("");
+    }
+    if (droppers.length) {
+      lines.push("**Sliding this week:**");
+      for (const d of droppers) lines.push(`- ${d.name} — down **${d.delta}** points`);
+      lines.push("");
     }
   }
+
+  // Dev activity
+  if (projectActivity.length) {
+    lines.push("---");
+    lines.push("## Development Roundup");
+    lines.push("");
+    if (commitCount === 0) {
+      lines.push("No commits this week — the repos are resting.");
+    } else {
+      lines.push(`A total of **${commitCount} commits** shipped this week. Here's where the action was:`);
+      lines.push("");
+      for (const pa of projectActivity.slice(0, 6)) {
+        lines.push(`- **${pa.name}** — ${pa.commits} commit${pa.commits !== 1 ? "s" : ""} · _"${pa.latest}"_`);
+      }
+      if (projectActivity.length > 6) lines.push(`- ...and ${projectActivity.length - 6} more active project${projectActivity.length - 6 !== 1 ? "s" : ""}`);
+    }
+    lines.push("");
+  }
+
+  // Releases
+  if (newReleases.length) {
+    lines.push("## Fresh Releases");
+    lines.push("");
+    for (const r of newReleases) lines.push(`- **${r.name}** shipped \`${r.tag}\``);
+    lines.push("");
+  }
+
+  // CI report
+  lines.push("---");
+  lines.push("## Build & CI Report");
+  lines.push("");
+  if (failing.length === 0) {
+    lines.push("All green across the board — every project is passing CI.");
+  } else {
+    lines.push(`${passing.length} project${passing.length !== 1 ? "s" : ""} passing, but **${failing.length} need${failing.length === 1 ? "s" : ""} attention**:`);
+    lines.push("");
+    for (const p of failing) lines.push(`- **${p.name}** — CI failing`);
+  }
+  lines.push("");
+
+  // Stale repos
+  if (stale.length) {
+    lines.push("## On the Shelf");
+    lines.push("");
+    lines.push(`These projects haven't seen a commit in over two weeks:`);
+    lines.push("");
+    for (const p of stale) lines.push(`- ${p.name}`);
+    lines.push("");
+  }
+
+  // Sign-off
+  lines.push("---");
+  lines.push(`_That's a wrap for this week. Keep shipping._`);
+  lines.push(`_— VaultSpark Studio Hub_`);
 
   const text = lines.join("\n");
 
   showCopyModal({
     id:        "digest-modal",
     title:     "WEEKLY DIGEST",
-    subtitle:  date,
+    subtitle:  `${weekStart} – ${weekEnd}`,
     text,
     copyLabel: "Copy markdown",
   });

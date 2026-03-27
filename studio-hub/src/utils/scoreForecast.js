@@ -2,6 +2,50 @@
 // Operates on the score history array stored in localStorage by clientApp.js.
 // History format: [{ ts, scores: {projectId: number}, ci: {projectId: string}, issues: {projectId: number} }, ...]
 
+// ── Monte Carlo forecast ───────────────────────────────────────────────────────
+// Runs N simulations per project, varying each delta by its historical volatility
+// (sampled from observed deltas with Gaussian noise). Returns confidence band:
+// { projectId: { median, low, high, simulations } }
+// Requires 4+ history entries; returns {} otherwise.
+export function monteCarloForecast(history, simulations = 500) {
+  if (!history || history.length < 4) return {};
+  const result = {};
+  const allIds = Object.keys(history[history.length - 1].scores || {});
+
+  for (const id of allIds) {
+    const vals = history.map((h) => h.scores?.[id]).filter((v) => v != null);
+    if (vals.length < 4) continue;
+
+    // Build observed delta series
+    const deltas = vals.slice(1).map((v, i) => v - vals[i]);
+    const mean = deltas.reduce((s, d) => s + d, 0) / deltas.length;
+    const variance = deltas.reduce((s, d) => s + Math.pow(d - mean, 2), 0) / deltas.length;
+    const stdDev = Math.sqrt(variance);
+    const current = vals[vals.length - 1];
+
+    // Box-Muller for Gaussian samples
+    function gaussianSample(mu, sigma) {
+      const u1 = Math.random(), u2 = Math.random();
+      const z = Math.sqrt(-2 * Math.log(u1 + 1e-10)) * Math.cos(2 * Math.PI * u2);
+      return mu + sigma * z;
+    }
+
+    const outcomes = [];
+    for (let i = 0; i < simulations; i++) {
+      const simulatedDelta = gaussianSample(mean, stdDev || 1);
+      outcomes.push(Math.max(0, Math.min(105, Math.round(current + simulatedDelta))));
+    }
+    outcomes.sort((a, b) => a - b);
+    result[id] = {
+      median: outcomes[Math.floor(simulations / 2)],
+      low:    outcomes[Math.floor(simulations * 0.16)],  // -1σ (16th percentile)
+      high:   outcomes[Math.floor(simulations * 0.84)],  // +1σ (84th percentile)
+      simulations,
+    };
+  }
+  return result;
+}
+
 // Returns { projectId: forecastedScore } using the average of the last 2 deltas.
 // Returns {} if not enough history to compute.
 export function forecastScores(history) {

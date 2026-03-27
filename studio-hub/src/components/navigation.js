@@ -138,8 +138,10 @@ export function renderNavigation(state) {
         ${navItem("studio-hub",     "Studio Hub", alertCount > 0 ? String(alertCount) : "")}
         ${navItem("virtual-office", "Studio Floor")}
         ${navItem("heatmap",        "Heatmap")}
+        ${navItem("analytics",      "Analytics")}
         ${navItem("timeline",       "Timeline")}
         ${navItem("compare",        "Compare")}
+        ${navItem("competitive",    "Competitive")}
         ${navItem("social",         "Social Accounts")}
         ${navItem("vault-admin",    "Vault Admin")}
         ${navItem("ticketing",      "Ticketing")}

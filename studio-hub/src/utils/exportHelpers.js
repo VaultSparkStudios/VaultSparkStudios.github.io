@@ -44,6 +44,29 @@ export function downloadJSON(state) {
   URL.revokeObjectURL(url);
 }
 
+export function downloadScoreHistoryCSV(state) {
+  const history = state.scoreHistory || [];
+  if (!history.length) return;
+  const projectIds = Object.keys(history[0]?.scores || {});
+  const headers = ["date", "studioAvg", ...projectIds];
+  const rows = history.map((h) => {
+    const vals = projectIds.map((id) => JSON.stringify(h.scores?.[id] ?? ""));
+    const avg = projectIds.length
+      ? Math.round(projectIds.reduce((s, id) => s + (h.scores?.[id] ?? 0), 0) / projectIds.length)
+      : "";
+    return [JSON.stringify(h.date || ""), JSON.stringify(avg), ...vals].join(",");
+  });
+  const csv  = [headers.join(","), ...rows].join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement("a"), {
+    href: url,
+    download: `vshub-score-history-${new Date().toISOString().slice(0, 10)}.csv`,
+  });
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export function downloadCSV(state) {
   const data = buildExportData(state);
   const headers = ["id","name","type","status","score","grade","lastCommit","openIssues","openPRs","ciStatus","latestRelease","stars"];

@@ -56,7 +56,15 @@ function scoreDevelopment(repoData) {
     score += 5; signals.push("No CI configured");
   }
 
-  // Commit recency
+  // Code coverage signal (#4) — detects test/coverage CI workflows
+  const testRun = runs.find((r) => /test|coverage|jest|vitest|mocha|pytest|spec/i.test(r.name || ""));
+  if (testRun) {
+    if (testRun.conclusion === "success") { score += 3; signals.push("Tests passing"); }
+    else if (testRun.conclusion === "failure") { signals.push("Tests failing"); }
+    else if (testRun.status === "in_progress") { score += 1; signals.push("Tests running"); }
+  }
+
+  // Commit recency — computed early so depFreshness can reuse it
   if (commits.length > 0) {
     const latest = commits[0];
     const ageMs = Date.now() - new Date(latest.date).getTime();
@@ -65,6 +73,20 @@ function scoreDevelopment(repoData) {
     else if (ageDays < 7)  { score += 12; signals.push("Committed this week"); }
     else if (ageDays < 30) { score += 7;  signals.push("Committed this month"); }
     else                   { score += 2;  signals.push("No recent commits"); }
+  }
+
+  // Dependency freshness (#3) — flag if no dep-related commit in 90 days
+  // Heuristic: commit message starts with chore/build/deps/bump/renovate keywords.
+  // Only penalizes active projects (has commits, not trivially small).
+  if (commits.length > 5) {
+    const depCommit = commits.find((c) => /^(chore|build|deps?|bump|update.*dep|renovate|dependabot)/i.test(c.message || "")
+      || /package(-lock)?\.json/i.test(c.message || ""));
+    const depAgeDays = depCommit ? (Date.now() - new Date(depCommit.date).getTime()) / 86400000 : null;
+    if (depAgeDays === null) {
+      score -= 1; signals.push("No dep updates detected");
+    } else if (depAgeDays > 90) {
+      score -= 2; signals.push(`Deps last updated ${Math.round(depAgeDays)}d ago`);
+    }
   }
 
   return { score: Math.min(score, 30), signals };
@@ -184,6 +206,34 @@ function scoreMomentum(repoData, project) {
   else if (project.status === "client-beta")   { score += 5; signals.push("Client beta"); }
   else if (project.status === "playable-prototype") { score += 4; signals.push("Playable prototype"); }
   else if (project.status === "in-development"){ score += 2; signals.push("In development"); }
+
+  // ── PR review lag (#2) ───────────────────────────────────────────────────────
+  // Non-draft PRs open >7d with no recent commit activity suggest review bottleneck.
+  const now2 = Date.now();
+  const laggedPRs = prs.filter((pr) => !pr.draft && (now2 - new Date(pr.createdAt).getTime()) > 7 * 86400000);
+  if (laggedPRs.length >= 2) {
+    score = Math.max(0, score - 3); signals.push(`${laggedPRs.length} PRs awaiting review`);
+  } else if (laggedPRs.length === 1) {
+    score = Math.max(0, score - 1); signals.push("PR awaiting review");
+  }
+
+  // ── Weighted momentum decay (#1) ────────────────────────────────────────────
+  // A velocity burst followed by silence decays momentum more aggressively
+  // than a consistently slow project. This surfaces "burst then stall" patterns.
+  const allCommits = repoData?.commits || [];
+  if (allCommits.length > 0) {
+    const now = Date.now();
+    const last7d  = allCommits.filter((c) => (now - new Date(c.date).getTime()) < 7 * 86400000).length;
+    const prev14d = allCommits.filter((c) => {
+      const ms = now - new Date(c.date).getTime();
+      return ms >= 7 * 86400000 && ms < 21 * 86400000;
+    }).length;
+    if (last7d === 0 && prev14d >= 5) {
+      score = Math.max(0, score - 5); signals.push("Stall after burst");
+    } else if (last7d === 0 && prev14d >= 3) {
+      score = Math.max(0, score - 3); signals.push("Momentum cooling");
+    }
+  }
 
   return { score: Math.min(score, 25), signals };
 }

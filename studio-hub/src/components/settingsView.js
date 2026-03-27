@@ -156,8 +156,17 @@ export function renderSettingsView(state) {
 
       <div style="max-width:740px;">
 
+        <!-- SEARCH -->
+        <div style="position:relative; margin-bottom:16px;">
+          <input id="settings-search" type="search" placeholder="Search settings…"
+            style="width:100%; padding:9px 12px 9px 34px; background:rgba(12,19,31,0.8);
+                   border:1px solid var(--border); border-radius:8px; color:var(--text);
+                   font:inherit; font-size:13px; outline:none; box-sizing:border-box;" />
+          <span style="position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none; font-size:14px;">⌕</span>
+        </div>
+
         <!-- TABS -->
-        <div class="settings-tabs">
+        <div class="settings-tabs" id="settings-tabs-bar">
           <button class="settings-tab active" data-settings-tab="appearance">Appearance</button>
           <button class="settings-tab" data-settings-tab="features">Features</button>
           <button class="settings-tab" data-settings-tab="projects">Projects</button>
@@ -535,6 +544,7 @@ export function renderSettingsView(state) {
               <div style="display:flex; gap:10px; flex-wrap:wrap;">
                 <button class="btn-primary" id="export-json-btn">Download JSON</button>
                 <button class="btn-primary" id="export-csv-btn" style="background:rgba(105,179,255,0.1); border-color:rgba(105,179,255,0.25); color:var(--blue);">Download CSV</button>
+                <button class="btn-primary" id="export-score-history-csv-btn" style="background:rgba(122,231,199,0.1); border-color:rgba(122,231,199,0.25); color:var(--green);">Score History CSV</button>
                 <input type="file" id="import-json-file" accept=".json" style="display:none;" />
                 <button class="btn-primary" id="import-json-btn" style="background:rgba(122,231,199,0.06); border-color:rgba(122,231,199,0.2); color:var(--muted);">Import JSON</button>
               </div>
@@ -616,6 +626,29 @@ export function renderSettingsView(state) {
                 <label style="${labelStyle}">Active Session Beacon — GitHub Gist ID</label>
                 <input type="text" id="setting-beacon-gist" value="${stored.beaconGistId || ""}" placeholder="e.g. abc123def456…" autocomplete="off" style="${inputStyle}" />
                 <div style="${hintStyle}">Optional. Configure Claude Code hooks to write active session data to this Gist.</div>
+              </div>
+
+              <div>
+                <label style="${labelStyle}">Claude API Key <span style="font-size:10px; color:var(--muted); font-weight:400;">(AI prescriptions)</span></label>
+                <input type="password" id="setting-claude-api-key" value="${stored.claudeApiKey || ""}" placeholder="sk-ant-…" autocomplete="off" style="${inputStyle}" />
+                <div style="${hintStyle}">Optional. Enables AI-generated project prescriptions in each Project Hub. Key stored locally only.</div>
+              </div>
+
+              <div>
+                <label style="${labelStyle}">Discord Webhook URL <span style="font-size:10px; color:var(--muted); font-weight:400;">(push alerts)</span></label>
+                <input type="password" id="setting-discord-webhook" value="${stored.discordWebhookUrl || ""}" placeholder="https://discord.com/api/webhooks/…" autocomplete="off" style="${inputStyle}" />
+                <div style="${hintStyle}">Optional. Critical CI failures will be sent as Discord messages. URL stored locally only.</div>
+              </div>
+
+              <div>
+                <label style="${labelStyle}">Cloud Sync Gist ID <span style="font-size:10px; color:var(--muted); font-weight:400;">(score history backup)</span></label>
+                <input type="text" id="setting-cloud-sync-gist" value="${stored.cloudSyncGistId || ""}" placeholder="Gist ID for cross-device sync…" autocomplete="off" style="${inputStyle}" />
+                <div style="${hintStyle}">Optional. Backs up score history, forecast log, and notes to a GitHub Gist. Works across browsers and devices.</div>
+                <div style="display:flex; gap:8px; margin-top:8px; flex-wrap:wrap;">
+                  <button id="gist-push-btn" style="font-size:11px; padding:6px 14px; background:rgba(122,231,199,0.08); border:1px solid rgba(122,231,199,0.2); border-radius:7px; color:var(--cyan); cursor:pointer;">↑ Push to Gist</button>
+                  <button id="gist-pull-btn" style="font-size:11px; padding:6px 14px; background:rgba(105,179,255,0.08); border:1px solid rgba(105,179,255,0.2); border-radius:7px; color:var(--blue); cursor:pointer;">↓ Pull from Gist</button>
+                  <span id="gist-sync-status" style="font-size:11px; color:var(--muted); align-self:center;"></span>
+                </div>
               </div>
 
               <div>

@@ -7,7 +7,7 @@ export function bindSettingsEvents(ctx) {
     setHubPassword, clearHubPassword,
     invalidateWeightsCache, clearSessionCache,
     scoreProject, PROJECTS,
-    downloadJSON, downloadCSV,
+    downloadJSON, downloadCSV, downloadScoreHistoryCSV,
     generateWeeklyDigest, generateStandup,
     loadScoreHistory, scorePrevFromHistory,
     applyAccent, applyTheme, applyDensity, getHubRuntimeConfig,
@@ -102,6 +102,10 @@ export function bindSettingsEvents(ctx) {
   // Export — CSV
   document.getElementById("export-csv-btn")?.addEventListener("click", () => {
     downloadCSV(state);
+  });
+
+  document.getElementById("export-score-history-csv-btn")?.addEventListener("click", () => {
+    downloadScoreHistoryCSV(state);
     const s = document.getElementById("export-status");
     if (s) { s.textContent = "CSV downloaded."; setTimeout(() => { s.textContent = ""; }, 2500); }
   });
@@ -200,6 +204,53 @@ export function bindSettingsEvents(ctx) {
       }
     };
     reader.readAsText(file);
+  });
+
+  // ── Gist Cloud Sync — push (#8) ──────────────────────────────────────────
+  document.getElementById("gist-push-btn")?.addEventListener("click", async () => {
+    const statusEl = document.getElementById("gist-sync-status");
+    const creds = loadStoredCredentials();
+    const token = creds.githubToken;
+    const gistId = document.getElementById("setting-cloud-sync-gist")?.value?.trim() || creds.cloudSyncGistId;
+    if (!token || !gistId) {
+      if (statusEl) { statusEl.textContent = "Set GitHub token + Cloud Sync Gist ID first"; statusEl.style.color = "var(--red)"; }
+      return;
+    }
+    if (statusEl) { statusEl.textContent = "Pushing…"; statusEl.style.color = "var(--muted)"; }
+    const result = await window._vshubGistPush?.(token, gistId);
+    if (result?.ok) {
+      if (statusEl) { statusEl.textContent = "✓ Pushed to Gist"; statusEl.style.color = "var(--green)"; }
+      logActivity("gist_push", gistId);
+    } else {
+      if (statusEl) { statusEl.textContent = `✗ ${result?.error || "Push failed"}`; statusEl.style.color = "var(--red)"; }
+    }
+    setTimeout(() => { if (statusEl) statusEl.textContent = ""; }, 4000);
+  });
+
+  // ── Gist Cloud Sync — pull (#8) ──────────────────────────────────────────
+  document.getElementById("gist-pull-btn")?.addEventListener("click", async () => {
+    const statusEl = document.getElementById("gist-sync-status");
+    const creds = loadStoredCredentials();
+    const token = creds.githubToken;
+    const gistId = document.getElementById("setting-cloud-sync-gist")?.value?.trim() || creds.cloudSyncGistId;
+    if (!token || !gistId) {
+      if (statusEl) { statusEl.textContent = "Set GitHub token + Cloud Sync Gist ID first"; statusEl.style.color = "var(--red)"; }
+      return;
+    }
+    if (!confirm("Pull from Gist? This will overwrite local score history and notes with the Gist backup.")) return;
+    if (statusEl) { statusEl.textContent = "Pulling…"; statusEl.style.color = "var(--muted)"; }
+    const result = await window._vshubGistPull?.(token, gistId);
+    if (result?.ok) {
+      state.scoreHistory = loadScoreHistory();
+      state.scorePrev = scorePrevFromHistory(state.scoreHistory);
+      const syncDate = result.syncedAt ? new Date(Number(result.syncedAt)).toLocaleDateString() : "unknown date";
+      if (statusEl) { statusEl.textContent = `✓ Restored ${result.restored} keys (synced ${syncDate})`; statusEl.style.color = "var(--green)"; }
+      logActivity("gist_pull", gistId);
+      render();
+    } else {
+      if (statusEl) { statusEl.textContent = `✗ ${result?.error || "Pull failed"}`; statusEl.style.color = "var(--red)"; }
+    }
+    setTimeout(() => { if (statusEl) statusEl.textContent = ""; }, 5000);
   });
 
   // Reset score weights
@@ -326,9 +377,43 @@ export function bindSettingsEvents(ctx) {
     }
   });
 
+  // ── Settings search ────────────────────────────────────────────────────────
+  function applySettingsSearch(query) {
+    const q = query.toLowerCase().trim();
+    const tabsBar  = document.getElementById("settings-tabs-bar");
+    const sections = document.querySelectorAll(".settings-section");
+    if (!q) {
+      // Restore tab-controlled visibility
+      if (tabsBar) tabsBar.style.display = "";
+      sections.forEach((s) => {
+        s.style.removeProperty("display");
+        s.querySelectorAll(".panel").forEach((p) => p.style.removeProperty("display"));
+      });
+      return;
+    }
+    // Hide tabs, show all sections with matching panels
+    if (tabsBar) tabsBar.style.display = "none";
+    sections.forEach((s) => {
+      let any = false;
+      s.querySelectorAll(".panel").forEach((p) => {
+        const visible = p.textContent.toLowerCase().includes(q);
+        p.style.display = visible ? "" : "none";
+        if (visible) any = true;
+      });
+      s.style.display = any ? "flex" : "none";
+    });
+  }
+
+  document.getElementById("settings-search")?.addEventListener("input", (e) => {
+    applySettingsSearch(e.target.value);
+  });
+
   // ── Settings tabs ──────────────────────────────────────────────────────────
   document.querySelectorAll("[data-settings-tab]").forEach((tab) => {
     tab.addEventListener("click", () => {
+      // Clear any active search when switching tabs
+      const searchEl = document.getElementById("settings-search");
+      if (searchEl?.value) { searchEl.value = ""; applySettingsSearch(""); }
       document.querySelectorAll(".settings-tab").forEach((t) => t.classList.remove("active"));
       document.querySelectorAll(".settings-section").forEach((s) => s.classList.remove("active"));
       tab.classList.add("active");
@@ -491,8 +576,11 @@ export function bindSettingsEvents(ctx) {
     const gumroadToken    = document.getElementById("setting-gumroad-token")?.value?.trim() || "";
     const beaconGistId    = document.getElementById("setting-beacon-gist")?.value?.trim() || "";
     const supabaseAnonKey = document.getElementById("setting-supabase-anon-key")?.value?.trim() || "";
+    const claudeApiKey      = document.getElementById("setting-claude-api-key")?.value?.trim() || "";
+    const cloudSyncGistId   = document.getElementById("setting-cloud-sync-gist")?.value?.trim() || "";
+    const discordWebhookUrl = document.getElementById("setting-discord-webhook")?.value?.trim() || "";
     const existing = loadStoredCredentials();
-    saveCredentials({ ...existing, githubToken, youtubeApiKey, gumroadToken, beaconGistId, ...(supabaseAnonKey ? { supabaseAnonKey } : {}) });
+    saveCredentials({ ...existing, githubToken, youtubeApiKey, gumroadToken, beaconGistId, claudeApiKey, cloudSyncGistId, discordWebhookUrl, ...(supabaseAnonKey ? { supabaseAnonKey } : {}) });
     clearSessionCache();
     Object.assign(config, getHubRuntimeConfig());
     state.supabaseAnonKey = config.supabaseAnonKey;
