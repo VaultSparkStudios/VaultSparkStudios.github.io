@@ -1,5 +1,6 @@
 import { PROJECTS } from "../../data/studioRegistry.js";
 import { fmt } from "../../utils/helpers.js";
+import { getXPState } from "../../utils/studioXP.js";
 
 export function renderVitals(ghData, sbData, socialData, studioScore, beaconData, studioOps = {}) {
   const totalIssues   = Object.values(ghData).reduce((s, d) => s + (d?.repo?.openIssues || 0), 0);
@@ -44,6 +45,15 @@ export function renderVitals(ghData, sbData, socialData, studioScore, beaconData
       cls: totalOpenPRs > 10 ? "gold" : totalOpenPRs > 0 ? "blue" : "green",
     },
   ];
+
+  // XP & Level vital
+  const xpState = getXPState();
+  vitals.push({
+    label: "Studio Level",
+    value: `Lv.${xpState.level}`,
+    sub: `${xpState.name} · ${fmt(xpState.totalXP)} XP`,
+    cls: "", style: `color:${xpState.color}`,
+  });
 
   if (activeSessions > 0) {
     vitals.push({ label: "Active Sessions", value: String(activeSessions), sub: "Claude Code live", cls: "cyan" });

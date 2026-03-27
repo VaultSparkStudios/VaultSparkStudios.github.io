@@ -1318,3 +1318,34 @@ body.density-spacious .nav-item { padding: 10px 20px; }
 .shell.sidebar-collapsed .nav-search-wrap { display: none; }
 .shell.sidebar-collapsed .nav-score-badge { display: none; }
 .shell.sidebar-collapsed .nav-pinned-icon { display: none; }
+
+/* ── GAMIFICATION ANIMATIONS ── */
+@keyframes achievementSlideIn {
+  0%   { transform: translateX(100px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes achievementGlow {
+  0%, 100% { box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+  50%      { box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 24px rgba(255,215,0,0.15); }
+}
+
+@keyframes xpPulse {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes levelUpShine {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.achievement-toast {
+  animation: achievementSlideIn 0.5s ease-out, achievementGlow 2s ease-in-out infinite !important;
+}
+
+.achievement-toast:hover {
+  transform: scale(1.02);
+  transition: transform 0.15s ease;
+}

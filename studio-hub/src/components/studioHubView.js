@@ -24,9 +24,15 @@ import { renderScoreLedger, getLedgerEntries } from "./hub/scoreLedger.js";
 import { renderStudioHealthTimeline } from "./hub/healthTimeline.js";
 import { renderStudioBrainPanel, renderBrainHistoryPanel } from "./hub/brainPanel.js";
 import { renderAgentIntelligencePanel } from "./hub/agentIntelligence.js";
+import { renderXPBar, renderAchievementToasts, renderTrophyShowcase, renderChallengePanel, renderVaultMembershipPanel, renderXPActivityFeed } from "./hub/gamificationPanel.js";
+import { evaluateAchievements, clearNotifications } from "../utils/achievements.js";
+import { grantDailyBonus, grantWeeklyBonus, syncAchievementXP, grantScoreImprovementXP } from "../utils/studioXP.js";
+import { getActiveChallenges, claimChallengeXP } from "../utils/challenges.js";
 
 // Re-export for backwards compatibility (clientApp.js imports these from here)
 export { _pushAlertHistory as pushAlertHistory, _snoozeAlert as snoozeAlert };
+// Re-export gamification handlers for event wiring
+export { claimChallengeXP, clearNotifications };
 
 function stalenessColor(days) {
   if (days < 7)  return "var(--green)";
@@ -1897,6 +1903,20 @@ export function renderStudioHubView(state) {
   const studioScore = scoreStudio(PROJECTS, ghData, sbData, socialData);
   const allScores   = PROJECTS.map((p) => ({ project: p, scoring: scoreProject(p, ghData[p.githubRepo] || null, sbData, socialData) }));
 
+  // ── Gamification Engine ──────────────────────────────────────────────────
+  // 1. Evaluate achievements
+  const newAchievements = evaluateAchievements(allScores, ghData, sbData, socialData, scoreHistory, scorePrev, studioScore);
+  // 2. Sync XP from new achievements
+  if (newAchievements.length > 0) syncAchievementXP(newAchievements);
+  // 3. Grant daily login bonus
+  grantDailyBonus();
+  // 4. Grant weekly consistency bonus
+  grantWeeklyBonus(scoreHistory);
+  // 5. Grant score improvement XP
+  grantScoreImprovementXP(allScores, scorePrev);
+  // 6. Get active challenges
+  const activeChallenges = getActiveChallenges(ghData, sbData, socialData, scorePrev, studioScore);
+
   // Portfolio week-over-week trend
   const prevStudioAvg = (() => {
     if (scoreHistory.length < 2) return null;
@@ -1908,6 +1928,7 @@ export function renderStudioHubView(state) {
 
   return `
     <div class="main-panel">
+      ${renderAchievementToasts()}
       ${syncStatus === "syncing" ? `
   <style>
     @keyframes vshub-sync-pulse {
@@ -1981,7 +2002,9 @@ export function renderStudioHubView(state) {
       ${renderAgentIntelligencePanel(portfolioFiles, portfolioFreshness)}
       ${renderCriticalBanner(ghData)}
       ${renderVitals(ghData, sbData, socialData, studioScore, beaconData, { portfolioFreshness, agentRequests, studioBrain })}
+      ${renderXPBar()}
       ${renderPortfolioHealthGauge(allScores, ghData, { portfolioFreshness, agentRequests, studioBrain })}
+      ${renderChallengePanel(activeChallenges)}
 
       <div class="two-col" style="margin-bottom:24px; align-items:start;">
         <div class="panel">
@@ -2030,6 +2053,9 @@ export function renderStudioHubView(state) {
       ${renderGoalsDashboard(ghData, sbData, socialData, scoreHistory)}
       ${renderPathToGradeA(ghData, sbData, socialData)}
       ${renderSprintPanel(allScores)}
+      ${renderVaultMembershipPanel(sbData)}
+      ${renderTrophyShowcase()}
+      ${renderXPActivityFeed()}
       ${renderVelocityChart(ghData)}
       ${renderStudioHealthTimeline()}
       ${renderScoreHistoryOverlay(scoreHistory)}

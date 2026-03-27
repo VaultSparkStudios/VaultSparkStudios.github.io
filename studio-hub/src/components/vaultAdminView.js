@@ -17,30 +17,56 @@ function renderMembersTab(sbData) {
   const { members, economy } = sbData;
 
   const tiers = [
-    { name: "Spark Initiate", rank: 0 },
-    { name: "Vault Runner", rank: 1 },
-    { name: "Forge Guard", rank: 2 },
-    { name: "Vault Keeper", rank: 3 },
-    { name: "The Sparked", rank: 4 },
+    { name: "Spark Initiate", rank: 0, icon: "⚡", color: "#95a3b7", desc: "New member — just joined the Vault" },
+    { name: "Vault Runner",   rank: 1, icon: "🏃", color: "#cd7f32", desc: "Active participant — engaging with content" },
+    { name: "Forge Guard",    rank: 2, icon: "🛡️", color: "#c0c0c0", desc: "Trusted contributor — consistent engagement" },
+    { name: "Vault Keeper",   rank: 3, icon: "🔑", color: "#ffd700", desc: "Core member — high loyalty & activity" },
+    { name: "The Sparked",    rank: 4, icon: "👑", color: "#b9f2ff", desc: "Legendary status — founding or top-tier" },
   ];
+
+  // Growth metrics
+  const growthRate = members.total > 0 && members.newThisWeek > 0
+    ? ((members.newThisWeek / members.total) * 100).toFixed(1) : "0.0";
+  const retentionEst = members.total > 0
+    ? Math.round(((members.total - (members.newThisMonth || 0)) / members.total) * 100) : 0;
 
   return `
     <div style="display:flex; flex-direction:column; gap:24px;">
       <div>
         <div style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:12px;">Member Overview</div>
-        <div class="vitals-strip" style="grid-template-columns:repeat(3,1fr);">
+        <div class="vitals-strip" style="grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));">
           <div class="vital-card">
             <div class="vital-label">Total Members</div>
             <div class="vital-value cyan">${fmt(members.total)}</div>
           </div>
           <div class="vital-card">
             <div class="vital-label">Joined This Week</div>
-            <div class="vital-value blue">${fmt(members.newThisWeek)}</div>
+            <div class="vital-value green">+${fmt(members.newThisWeek)}</div>
+            <div class="vital-sub">${growthRate}% growth</div>
           </div>
           <div class="vital-card">
             <div class="vital-label">Joined This Month</div>
-            <div class="vital-value">${fmt(members.newThisMonth)}</div>
+            <div class="vital-value blue">+${fmt(members.newThisMonth)}</div>
           </div>
+          <div class="vital-card">
+            <div class="vital-label">Est. Retention</div>
+            <div class="vital-value" style="color:${retentionEst >= 80 ? "var(--green)" : retentionEst >= 50 ? "var(--gold)" : "var(--red)"};">${retentionEst}%</div>
+            <div class="vital-sub">Returning members</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:11px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:12px;">Membership Tiers</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(180px, 1fr)); gap:10px;">
+          ${tiers.map(t => `
+            <div style="background:${t.color}08; border:1px solid ${t.color}25; border-radius:12px; padding:14px; text-align:center;">
+              <div style="font-size:24px; margin-bottom:6px;">${t.icon}</div>
+              <div style="font-size:13px; font-weight:700; color:${t.color}; margin-bottom:2px;">${t.name}</div>
+              <div style="font-size:10px; color:var(--muted); line-height:1.4;">${t.desc}</div>
+              <div style="font-size:9px; padding:2px 6px; border-radius:4px; background:${t.color}12; color:${t.color}; font-weight:700; margin-top:6px; display:inline-block;">Rank ${t.rank}</div>
+            </div>
+          `).join("")}
         </div>
       </div>
 

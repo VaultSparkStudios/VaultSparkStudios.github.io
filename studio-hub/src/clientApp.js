@@ -6,7 +6,9 @@ import { fetchAllProjectContextFiles, fetchRepoLanguages, fetchRepoBranches, fet
 import { fetchAllSupabaseData } from "./data/supabaseAdapter.js";
 import { fetchAllSocialFeeds } from "./data/socialFeedsAdapter.js";
 import { renderNavigation } from "./components/navigation.js";
-import { renderStudioHubView, pushAlertHistory, snoozeAlert } from "./components/studioHubView.js";
+import { renderStudioHubView, pushAlertHistory, snoozeAlert, claimChallengeXP, clearNotifications } from "./components/studioHubView.js";
+import { grantXP } from "./utils/studioXP.js";
+import { dismissNotification } from "./utils/achievements.js";
 import { renderPortfolioTimelineView } from "./components/portfolioTimelineView.js";
 import { renderProjectHubView } from "./components/projectHubView.js";
 import { renderVaultAdminView } from "./components/vaultAdminView.js";
@@ -1009,6 +1011,25 @@ function bindEvents() {
       if (msg) snoozeAlert(msg, dur);
     });
     render();
+  });
+
+  // ── Gamification events ──────────────────────────────────────────────────────
+  document.querySelectorAll("[data-claim-challenge]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.claimChallenge;
+      const type = btn.dataset.challengeType;
+      const xp = claimChallengeXP(id, type);
+      if (xp > 0) grantXP(xp, `Challenge: ${id}`);
+      render();
+    });
+  });
+  document.querySelectorAll("[data-achievement-dismiss]").forEach((el) => {
+    el.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dismissNotification(el.dataset.achievementDismiss);
+      el.remove();
+    });
   });
 
   // ── Timeline / floor / changelog filters ────────────────────────────────────
