@@ -365,6 +365,38 @@ export async function fetchTodoSearch(org, token = "", ttlMs = 300000) {
   }
 }
 
+// Search GitHub repositories by query string.
+// Returns { total_count, items: [...] } or null on error.
+// 15-min cache because search results change slowly.
+export async function fetchCompetitorSearch(query, token = "", ttlMs = 900000) {
+  const key = `comp_search_${query.replace(/\W+/g, "_").slice(0, 60)}`;
+  const cached = readCache(key, ttlMs);
+  if (cached) return cached;
+
+  try {
+    const q = encodeURIComponent(query);
+    const res = await ghFetch(`/search/repositories?q=${q}&sort=stars&order=desc&per_page=20`, token);
+    if (isError(res) || !res.items) return null;
+    const data = {
+      total_count: res.total_count,
+      items: res.items.map((r) => ({
+        full_name: r.full_name,
+        description: r.description,
+        stargazers_count: r.stargazers_count,
+        forks_count: r.forks_count,
+        language: r.language,
+        pushed_at: r.pushed_at,
+        topics: r.topics || [],
+        html_url: r.html_url,
+      })),
+    };
+    writeCache(key, data);
+    return data;
+  } catch {
+    return null;
+  }
+}
+
 // Fetch language byte-count breakdown for a repo.
 // Returns { JavaScript: 12345, CSS: 5000, ... } or null on error.
 // Long TTL (1 hour) because language composition rarely changes.

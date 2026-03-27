@@ -3,6 +3,15 @@
 
 const COMPETITORS_KEY = "vshub_competitors";
 const BASELINE_KEY    = "vshub_competitor_baseline";
+const DISMISSED_KEY   = "vshub_dismissed_competitors";
+
+export function loadDismissedCompetitors() {
+  try { return JSON.parse(localStorage.getItem(DISMISSED_KEY) || "[]"); } catch { return []; }
+}
+
+export function saveDismissedCompetitors(list) {
+  try { localStorage.setItem(DISMISSED_KEY, JSON.stringify(list)); } catch {}
+}
 
 export function loadCompetitorList() {
   try { return JSON.parse(localStorage.getItem(COMPETITORS_KEY) || "[]"); } catch { return []; }
@@ -67,6 +76,9 @@ export function renderCompetitiveView(state) {
       <span style="font-size:11px; color:var(--muted); margin-left:auto;">
         Stars &amp; forks updated on each view — session delta shown
       </span>
+      <button class="btn-secondary" id="competitor-discover-btn" style="font-size:11px; padding:4px 10px;${state.discoveryLoading ? " opacity:0.5; pointer-events:none;" : ""}">
+        ${state.discoveryLoading ? "Discovering..." : "Discover"}
+      </button>
       <button class="btn-secondary" id="competitor-edit-btn" style="font-size:11px; padding:4px 10px;">
         ${repos.length ? "Edit List" : "Add Repos"}
       </button>
@@ -87,12 +99,12 @@ export function renderCompetitiveView(state) {
       </div>
     </div>` : "";
 
-  if (repos.length === 0) {
+  if (repos.length === 0 && !state.discoveredCompetitors?.length) {
     return `
       <div style="padding:24px 28px; max-width:900px; margin:0 auto;">
         ${headerHtml}
         ${editorHtml}
-        <p style="color:var(--muted); font-size:13px;">No competitor repos configured yet. Add some above to get started.</p>
+        <p style="color:var(--muted); font-size:13px;">No competitor repos configured yet. Click <strong>Discover</strong> to auto-find competitors based on your projects, or add repos manually above.</p>
       </div>`;
   }
 
@@ -161,10 +173,80 @@ export function renderCompetitiveView(state) {
       </p>`;
   }
 
+  // ── Discovered competitors section ──
+  const discovered = state.discoveredCompetitors || [];
+  let discoveryHtml = "";
+
+  if (discovered.length > 0) {
+    const discRows = discovered.map((repo) => `
+      <tr style="border-bottom:1px solid var(--border);">
+        <td style="padding:10px 12px; white-space:nowrap;">
+          <a href="https://github.com/${repo.full_name}" target="_blank" rel="noopener"
+             style="color:var(--cyan); text-decoration:none; font-weight:500;">
+            ${repo.full_name}
+          </a>
+          ${repo.description ? `<div style="font-size:10px; color:var(--muted); max-width:280px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${repo.description}</div>` : ""}
+        </td>
+        <td style="padding:10px 12px; text-align:right; font-variant-numeric:tabular-nums;">
+          ${(repo.stars ?? 0).toLocaleString()}
+        </td>
+        <td style="padding:10px 12px; text-align:right; font-variant-numeric:tabular-nums;">
+          ${(repo.forks ?? 0).toLocaleString()}
+        </td>
+        <td style="padding:10px 12px; color:var(--muted); font-size:12px;">
+          ${repo.language || "—"}
+        </td>
+        <td style="padding:10px 12px; color:var(--muted); font-size:11px;">
+          ${(repo.matchedProjects || []).join(", ") || "—"}
+        </td>
+        <td style="padding:10px 12px; white-space:nowrap;">
+          <button data-track-repo="${repo.full_name}" class="btn-primary" style="font-size:10px; padding:3px 8px; margin-right:4px;">+ Track</button>
+          <button data-dismiss-repo="${repo.full_name}" class="btn-secondary" style="font-size:10px; padding:3px 8px;">Dismiss</button>
+        </td>
+      </tr>`).join("");
+
+    discoveryHtml = `
+      <div style="margin-top:28px; border-top:1px solid var(--border); padding-top:20px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+          <h3 style="margin:0; font-size:15px; font-weight:700;">Suggested Competitors</h3>
+          <span style="font-size:10px; background:rgba(255,255,255,0.08); border:1px solid var(--border); border-radius:10px; padding:2px 8px; color:var(--muted);">
+            ${discovered.length} found
+          </span>
+        </div>
+        <div style="font-size:11px; color:var(--muted); margin-bottom:12px;">
+          Auto-discovered from your project profiles via GitHub Search. Click <strong>+ Track</strong> to add to your tracked list.
+        </div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; font-size:13px;">
+            <thead>
+              <tr style="border-bottom:2px solid var(--border); text-align:left; color:var(--muted); font-size:11px; letter-spacing:0.05em; text-transform:uppercase;">
+                <th style="padding:8px 12px; font-weight:500;">Repository</th>
+                <th style="padding:8px 12px; text-align:right; font-weight:500;">Stars</th>
+                <th style="padding:8px 12px; text-align:right; font-weight:500;">Forks</th>
+                <th style="padding:8px 12px; font-weight:500;">Language</th>
+                <th style="padding:8px 12px; font-weight:500;">Matched To</th>
+                <th style="padding:8px 12px; font-weight:500;">Actions</th>
+              </tr>
+            </thead>
+            <tbody>${discRows}</tbody>
+          </table>
+        </div>
+        <p style="font-size:10px; color:var(--muted); margin-top:10px;">
+          ${state.discoveryFetchedAt ? `Last discovered: ${new Date(state.discoveryFetchedAt).toLocaleTimeString()}` : ""}
+        </p>
+      </div>`;
+  } else if (state.discoveryLoading) {
+    discoveryHtml = `
+      <div style="margin-top:28px; border-top:1px solid var(--border); padding-top:20px; text-align:center;">
+        <div style="font-size:13px; color:var(--muted); padding:20px 0;">Searching GitHub for competitors based on your project profiles...</div>
+      </div>`;
+  }
+
   return `
-    <div style="padding:24px 28px; max-width:900px; margin:0 auto;">
+    <div style="padding:24px 28px; max-width:1000px; margin:0 auto;">
       ${headerHtml}
       ${editorHtml}
       ${tableHtml}
+      ${discoveryHtml}
     </div>`;
 }

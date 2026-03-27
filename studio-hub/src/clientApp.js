@@ -20,7 +20,7 @@ import { renderHeatmapView } from "./components/heatmapView.js";
 import { renderTicketingView } from "./components/ticketingView.js";
 import { renderAgentCommandsView } from "./components/agentCommandsView.js";
 import { renderAgentsView } from "./components/agentsView.js";
-import { renderCompetitiveView, loadCompetitorList, saveCompetitorList } from "./components/competitiveView.js";
+import { renderCompetitiveView, loadCompetitorList, saveCompetitorList, loadDismissedCompetitors, saveDismissedCompetitors } from "./components/competitiveView.js";
 import { renderAnalyticsView } from "./components/analyticsView.js";
 import { mountCommandPalette, unmountCommandPalette, isPaletteOpen } from "./components/commandPalette.js";
 import { downloadJSON, downloadCSV, downloadScoreHistoryCSV } from "./utils/exportHelpers.js";
@@ -29,6 +29,7 @@ import { loadScoreHistory, pushScoreHistory, storeSessionStartScores, scorePrevF
 import { pushToGist, pullFromGist } from "./engine/gistSync.js";
 import { createSyncEngine } from "./engine/syncEngine.js";
 import { fetchPageSpeedData, fetchSiteProbe } from "./data/websiteAnalytics.js";
+import { discoverCompetitors } from "./data/competitorDiscovery.js";
 import { bindSettingsEvents }   from "./events/settingsEvents.js";
 import { bindProjectHubEvents } from "./events/projectHubEvents.js";
 import { bindHeatmapEvents }    from "./events/heatmapEvents.js";
@@ -153,6 +154,10 @@ const state = {
   competitorLoading:   false,
   competitorFetchedAt: null,
   competitorEditing:   false,
+  discoveredCompetitors: null,
+  discoveryLoading:      false,
+  discoveryFetchedAt:    null,
+  dismissedCompetitors:  loadDismissedCompetitors(),
 
   websitePsi:          null,
   websiteProbe:        null,
@@ -696,6 +701,27 @@ async function loadCompetitorData() {
   if (state.activeView === "competitive") render();
 }
 
+// ── Competitor auto-discovery ─────────────────────────────────────────────────
+async function runCompetitorDiscovery() {
+  if (state.discoveryLoading) return;
+  state.discoveryLoading = true;
+  if (state.activeView === "competitive") render();
+
+  const token = config.githubToken || loadStoredCredentials().githubToken || "";
+  const dismissed = new Set(state.dismissedCompetitors);
+  const manual = new Set(loadCompetitorList());
+
+  try {
+    const result = await discoverCompetitors(state.ghData, token, dismissed, manual);
+    state.discoveredCompetitors = result.discovered;
+    state.discoveryFetchedAt = Date.now();
+  } catch {
+    state.discoveredCompetitors = [];
+  }
+  state.discoveryLoading = false;
+  if (state.activeView === "competitive") render();
+}
+
 // ── Browser Notifications — see engine/syncEngine.js (checkCiNotifications) ───
 
 // ── Modal wrappers (implementations in hub/hubModals.js) ──────────────────────
@@ -1087,6 +1113,41 @@ function bindEvents() {
   document.getElementById("competitor-refresh-btn")?.addEventListener("click", () => {
     state.competitorData = null;
     loadCompetitorData();
+  });
+  document.getElementById("competitor-discover-btn")?.addEventListener("click", () => {
+    runCompetitorDiscovery();
+  });
+  document.querySelectorAll("[data-track-repo]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const repo = btn.dataset.trackRepo;
+      if (!repo) return;
+      const list = loadCompetitorList();
+      if (!list.includes(repo)) {
+        list.push(repo);
+        saveCompetitorList(list);
+      }
+      // Remove from discovered
+      if (state.discoveredCompetitors) {
+        state.discoveredCompetitors = state.discoveredCompetitors.filter((r) => r.full_name !== repo);
+      }
+      state.competitorData = null; // force re-fetch tracked list
+      render();
+      loadCompetitorData();
+    });
+  });
+  document.querySelectorAll("[data-dismiss-repo]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const repo = btn.dataset.dismissRepo;
+      if (!repo) return;
+      if (!state.dismissedCompetitors.includes(repo)) {
+        state.dismissedCompetitors.push(repo);
+        saveDismissedCompetitors(state.dismissedCompetitors);
+      }
+      if (state.discoveredCompetitors) {
+        state.discoveredCompetitors = state.discoveredCompetitors.filter((r) => r.full_name !== repo);
+      }
+      render();
+    });
   });
 
   // ── Delegate to view-specific modules ──────────────────────────────────────
