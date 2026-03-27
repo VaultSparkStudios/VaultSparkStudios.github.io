@@ -1273,12 +1273,244 @@ function renderAgentOps(aas, beaconData, agentRequests, agentRunHistory, studioB
 // MAIN EXPORT
 // ════════════════════════════════════════════════════════════════════════════
 
+// ── Advanced Stats section ─────────────────────────────────────────────────
+function renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  const now = Date.now();
+  const oneWeekAgo = now - 7 * 86400000;
+  const twoWeeksAgo = now - 14 * 86400000;
+  const thirtyDaysAgo = now - 30 * 86400000;
+
+  // ── Code churn: commits this week vs last week ──
+  let thisWeekCommits = 0, lastWeekCommits = 0;
+  for (const p of active) {
+    const commits = ghData[p.githubRepo]?.commits || [];
+    for (const c of commits) {
+      const t = new Date(c.date).getTime();
+      if (t > oneWeekAgo) thisWeekCommits++;
+      else if (t > twoWeeksAgo) lastWeekCommits++;
+    }
+  }
+  const churnDelta = lastWeekCommits > 0 ? Math.round(((thisWeekCommits - lastWeekCommits) / lastWeekCommits) * 100) : 0;
+  const churnLabel = churnDelta > 0 ? `+${churnDelta}%` : `${churnDelta}%`;
+  const churnColor = churnDelta > 10 ? "var(--green)" : churnDelta < -10 ? "var(--red)" : "var(--cyan)";
+
+  // ── PR merge velocity ──
+  let totalPRs = 0, mergedPRs = 0, totalPRAgeHours = 0, oldestPRDays = 0;
+  for (const p of active) {
+    const prs = ghData[p.githubRepo]?.prs || [];
+    for (const pr of prs) {
+      totalPRs++;
+      const ageMs = now - new Date(pr.createdAt).getTime();
+      const ageDays = ageMs / 86400000;
+      totalPRAgeHours += ageMs / 3600000;
+      if (ageDays > oldestPRDays) oldestPRDays = ageDays;
+    }
+  }
+  const avgPRAgeHours = totalPRs > 0 ? Math.round(totalPRAgeHours / totalPRs) : 0;
+  const avgPRAgeDays = (avgPRAgeHours / 24).toFixed(1);
+
+  // ── Issue resolution rate ──
+  let totalOpen = 0, totalClosed = 0;
+  for (const p of active) {
+    const rd = ghData[p.githubRepo];
+    totalOpen += rd?.repo?.openIssues || 0;
+    // Estimate closed from total commits with "fix" or "close" keywords
+    const fixCommits = (rd?.commits || []).filter((c) =>
+      /\b(fix|close|resolve|closes|fixes)\b/i.test(c.message)
+    ).length;
+    totalClosed += fixCommits;
+  }
+  const issueResolutionRate = (totalOpen + totalClosed) > 0
+    ? Math.round((totalClosed / (totalOpen + totalClosed)) * 100) : 0;
+
+  // ── Repo health distribution ──
+  const healthBuckets = { excellent: 0, good: 0, fair: 0, poor: 0 };
+  for (const s of allScores) {
+    if (s.total >= 80) healthBuckets.excellent++;
+    else if (s.total >= 60) healthBuckets.good++;
+    else if (s.total >= 40) healthBuckets.fair++;
+    else healthBuckets.poor++;
+  }
+  const totalProj = allScores.length || 1;
+
+  // ── Commit pattern (weekday distribution) ──
+  const dayBuckets = [0, 0, 0, 0, 0, 0, 0]; // Sun–Sat
+  const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  for (const p of active) {
+    for (const c of (ghData[p.githubRepo]?.commits || [])) {
+      const d = new Date(c.date);
+      dayBuckets[d.getDay()]++;
+    }
+  }
+  const maxDay = Math.max(...dayBuckets, 1);
+  const peakDay = dayLabels[dayBuckets.indexOf(Math.max(...dayBuckets))];
+
+  // ── Social growth rates ──
+  let socialGrowthCards = "";
+  const prevSocial = (() => { try { return JSON.parse(localStorage.getItem("vshub_social_prev") || "{}"); } catch { return {}; } })();
+  if (socialData?.youtube?.subscribers != null) {
+    const delta = prevSocial.ytSubs ? socialData.youtube.subscribers - prevSocial.ytSubs : 0;
+    const pct = prevSocial.ytSubs > 0 ? ((delta / prevSocial.ytSubs) * 100).toFixed(1) : "—";
+    socialGrowthCards += statCard("YOUTUBE SUBS", fmt(socialData.youtube.subscribers), delta !== 0 ? `${delta > 0 ? "+" : ""}${delta} (${pct}%)` : "no prior data");
+  }
+  if (socialData?.reddit?.subscribers != null) {
+    const delta = prevSocial.rdSubs ? socialData.reddit.subscribers - prevSocial.rdSubs : 0;
+    const pct = prevSocial.rdSubs > 0 ? ((delta / prevSocial.rdSubs) * 100).toFixed(1) : "—";
+    socialGrowthCards += statCard("REDDIT MEMBERS", fmt(socialData.reddit.subscribers), delta !== 0 ? `${delta > 0 ? "+" : ""}${delta} (${pct}%)` : "no prior data");
+  }
+  if (socialData?.bluesky?.followers != null) {
+    const delta = prevSocial.bkFollowers ? socialData.bluesky.followers - prevSocial.bkFollowers : 0;
+    const pct = prevSocial.bkFollowers > 0 ? ((delta / prevSocial.bkFollowers) * 100).toFixed(1) : "—";
+    socialGrowthCards += statCard("BLUESKY FOLLOWERS", fmt(socialData.bluesky.followers), delta !== 0 ? `${delta > 0 ? "+" : ""}${delta} (${pct}%)` : "no prior data");
+  }
+  if (sbData?.members?.total != null) {
+    socialGrowthCards += statCard("VAULT MEMBERS", fmt(sbData.members.total), `+${sbData.members.newThisWeek || 0} this week`);
+  }
+
+  // ── Stars + forks aggregate ──
+  let totalStars = 0, totalForks = 0, totalWatchers = 0;
+  for (const p of active) {
+    const repo = ghData[p.githubRepo]?.repo;
+    if (repo) {
+      totalStars += repo.stars || 0;
+      totalForks += repo.forks || 0;
+      totalWatchers += repo.watchers || 0;
+    }
+  }
+
+  // ── Score volatility (σ across snapshots) ──
+  let scoreVolatility = "—";
+  if (scoreHistory.length >= 3) {
+    const avgs = scoreHistory.slice(-10).map((snap) => {
+      const vals = Object.values(snap.scores || {}).filter((v) => v != null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+    }).filter((v) => v != null);
+    if (avgs.length >= 3) {
+      const mean = avgs.reduce((a, b) => a + b, 0) / avgs.length;
+      const variance = avgs.reduce((s, v) => s + (v - mean) ** 2, 0) / avgs.length;
+      scoreVolatility = Math.sqrt(variance).toFixed(1);
+    }
+  }
+
+  // ── Deployment frequency ──
+  let deploys30d = 0;
+  for (const p of active) {
+    const deps = ghData[p.githubRepo]?.deployments || [];
+    deploys30d += deps.filter((d) => new Date(d.createdAt).getTime() > thirtyDaysAgo).length;
+  }
+
+  // ── Release freshness ──
+  let releasesTotal = 0, freshReleases = 0;
+  for (const p of active) {
+    const rel = ghData[p.githubRepo]?.latestRelease;
+    if (rel) {
+      releasesTotal++;
+      if (new Date(rel.publishedAt).getTime() > thirtyDaysAgo) freshReleases++;
+    }
+  }
+
+  return `
+    ${section("Code Velocity + Churn Analysis", "📊", `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+        ${statCard("THIS WEEK", thisWeekCommits + " commits", `vs ${lastWeekCommits} last week`)}
+        ${statCard("WEEK-OVER-WEEK", churnLabel, `<span style="color:${churnColor}">${churnDelta > 0 ? "acceleration" : churnDelta < 0 ? "deceleration" : "stable"}</span>`)}
+        ${statCard("AVG PR AGE", avgPRAgeDays + "d", `${totalPRs} open PRs`)}
+        ${statCard("OLDEST PR", Math.round(oldestPRDays) + " days", totalPRs > 0 ? "review needed" : "none open")}
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        ${statCard("DEPLOYS (30d)", String(deploys30d), `across ${active.length} projects`)}
+        ${statCard("FRESH RELEASES", `${freshReleases}/${releasesTotal}`, "shipped in last 30d")}
+        ${statCard("FIX COMMITS", String(totalClosed), `${issueResolutionRate}% resolution signal`)}
+        ${statCard("SCORE VOLATILITY", scoreVolatility + " σ", "portfolio avg std dev")}
+      </div>
+    `)}
+
+    ${section("Commit Pattern Analysis", "🗓", `
+      <div style="margin-bottom:12px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px;">Commits by Day of Week · Peak day: <span style="color:var(--cyan);font-weight:700;">${peakDay}</span></div>
+        <div style="display:flex;gap:8px;align-items:flex-end;height:80px;">
+          ${dayBuckets.map((count, i) => {
+            const h = Math.round((count / maxDay) * 70);
+            const isMax = count === Math.max(...dayBuckets);
+            return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <span style="font-size:9px;color:var(--muted);">${count}</span>
+              <div style="width:100%;height:${h}px;background:${isMax ? "var(--cyan)" : "rgba(255,255,255,0.1)"};border-radius:4px 4px 0 0;transition:height 0.3s;"></div>
+              <span style="font-size:9px;color:var(--muted);">${dayLabels[i]}</span>
+            </div>`;
+          }).join("")}
+        </div>
+      </div>
+    `)}
+
+    ${section("Repo Health Distribution", "🏥", `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+        ${statCard("EXCELLENT (80+)", String(healthBuckets.excellent), `${Math.round(healthBuckets.excellent / totalProj * 100)}% of portfolio`)}
+        ${statCard("GOOD (60–79)", String(healthBuckets.good), `${Math.round(healthBuckets.good / totalProj * 100)}% of portfolio`)}
+        ${statCard("FAIR (40–59)", String(healthBuckets.fair), `${Math.round(healthBuckets.fair / totalProj * 100)}% of portfolio`)}
+        ${statCard("POOR (<40)", String(healthBuckets.poor), `${Math.round(healthBuckets.poor / totalProj * 100)}% of portfolio`)}
+      </div>
+      <div style="display:flex;height:18px;border-radius:6px;overflow:hidden;">
+        ${healthBuckets.excellent > 0 ? `<div style="flex:${healthBuckets.excellent};background:var(--green);" title="${healthBuckets.excellent} excellent"></div>` : ""}
+        ${healthBuckets.good > 0 ? `<div style="flex:${healthBuckets.good};background:var(--cyan);" title="${healthBuckets.good} good"></div>` : ""}
+        ${healthBuckets.fair > 0 ? `<div style="flex:${healthBuckets.fair};background:var(--yellow);" title="${healthBuckets.fair} fair"></div>` : ""}
+        ${healthBuckets.poor > 0 ? `<div style="flex:${healthBuckets.poor};background:var(--red);" title="${healthBuckets.poor} poor"></div>` : ""}
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:9px;color:var(--muted);">
+        <span>Excellent</span><span>Good</span><span>Fair</span><span>Poor</span>
+      </div>
+    `)}
+
+    ${socialGrowthCards ? section("Growth & Audience Metrics", "📈", `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+        ${socialGrowthCards}
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        ${statCard("TOTAL STARS", fmt(totalStars), "across all repos")}
+        ${statCard("TOTAL FORKS", fmt(totalForks), "across all repos")}
+        ${statCard("OPEN ISSUES", fmt(totalOpen), `${active.length} repos tracked`)}
+      </div>
+    `) : section("Growth & Audience Metrics", "📈", `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        ${statCard("TOTAL STARS", fmt(totalStars), "across all repos")}
+        ${statCard("TOTAL FORKS", fmt(totalForks), "across all repos")}
+        ${statCard("OPEN ISSUES", fmt(totalOpen), `${active.length} repos tracked`)}
+      </div>
+    `)}
+  `;
+}
+
+// ── Analytics tab bar helper ──────────────────────────────────────────────────
+function analyticsTabBar(activeTab) {
+  const tabs = [
+    { id: "overview",     label: "Overview" },
+    { id: "portfolio",    label: "Portfolio" },
+    { id: "development",  label: "Development" },
+    { id: "engagement",   label: "Engagement" },
+    { id: "intelligence", label: "Intelligence" },
+    { id: "advanced",     label: "Advanced" },
+  ];
+  return `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:12px;">
+      ${tabs.map((t) => `
+        <div data-analytics-tab="${t.id}" style="
+          padding:7px 16px;font-size:12px;font-weight:600;border-radius:6px;cursor:pointer;
+          transition:all 0.15s;letter-spacing:0.02em;
+          ${activeTab === t.id
+            ? "background:var(--cyan);color:#000;"
+            : "background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid var(--border);"
+          }" tabindex="0" role="tab" aria-selected="${activeTab === t.id}">${t.label}</div>
+      `).join("")}
+    </div>`;
+}
+
 export function renderAnalyticsView(state) {
   const {
     ghData = {}, sbData = null, socialData = null, beaconData = null,
     scoreHistory = [], scorePrev = {}, alertCount = 0,
     agentRequests = [], agentRunHistory = {}, portfolioFreshness = {},
     studioBrain = null, competitorData = null, syncMeta = null,
+    analyticsTab = "overview",
   } = state;
 
   // Compute all project scores (uses existing cache — fast)
@@ -1306,6 +1538,30 @@ export function renderAnalyticsView(state) {
 
   const lastSync = syncMeta?.gh ? `Last synced ${timeAgo(new Date(syncMeta.gh).toISOString())}` : "Not synced yet";
 
+  // Tab-specific content
+  const tabContent = {
+    overview: () => `
+      ${renderCockpit({ svi, pbs, rcr, crs, crs2, dti, socr, eci, fcr, aas })}
+      ${renderVitality(svi, scoreHistory)}
+      ${renderLeaderboard(allScores, scorePrev, pbs)}`,
+    portfolio: () => `
+      ${renderLeaderboard(allScores, scorePrev, pbs)}
+      ${renderForecast(fcr, scoreHistory, ghData, scorePrev)}
+      ${renderGovernance(socr, portfolioFreshness)}`,
+    development: () => `
+      ${renderCI(crs, dti, ghData)}
+      ${renderRelease(rcr, ghData)}
+      ${renderGitHub(ghData, competitorData)}`,
+    engagement: () => `
+      ${renderEngagement(eci, sbData)}
+      ${renderSocial(crs2, socialData)}`,
+    intelligence: () => `
+      ${renderForecast(fcr, scoreHistory, ghData, scorePrev)}
+      ${renderGovernance(socr, portfolioFreshness)}
+      ${renderAgentOps(aas, beaconData, agentRequests, agentRunHistory, studioBrain)}`,
+    advanced: () => renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores),
+  };
+
   return `
     <div class="main-panel">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:8px;">
@@ -1323,16 +1579,7 @@ export function renderAnalyticsView(state) {
         </div>
       </div>
 
-      ${renderCockpit({ svi, pbs, rcr, crs, crs2, dti, socr, eci, fcr, aas })}
-      ${renderVitality(svi, scoreHistory)}
-      ${renderLeaderboard(allScores, scorePrev, pbs)}
-      ${renderCI(crs, dti, ghData)}
-      ${renderRelease(rcr, ghData)}
-      ${renderEngagement(eci, sbData)}
-      ${renderSocial(crs2, socialData)}
-      ${renderForecast(fcr, scoreHistory, ghData, scorePrev)}
-      ${renderGovernance(socr, portfolioFreshness)}
-      ${renderGitHub(ghData, competitorData)}
-      ${renderAgentOps(aas, beaconData, agentRequests, agentRunHistory, studioBrain)}
+      ${analyticsTabBar(analyticsTab)}
+      ${(tabContent[analyticsTab] || tabContent.overview)()}
     </div>`;
 }

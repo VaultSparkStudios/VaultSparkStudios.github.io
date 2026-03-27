@@ -3,8 +3,13 @@ import { fmt, timeAgo } from "../utils/helpers.js";
 function renderMembersTab(sbData) {
   if (!sbData?.members) {
     return `
-      <div class="empty-state" style="padding:40px;">
-        No member data — configure the Supabase anon key to load live Vault Member stats.
+      <div class="empty-state" style="padding:40px;text-align:center;">
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px;">No member data available</div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.6;">
+          The Supabase anon key is required to load Vault Member stats.<br>
+          Go to <strong>Settings → Credentials</strong> and paste your Supabase anon key,<br>
+          or ensure the <code>hub-supabase-anon-key</code> meta tag is set in your deployed index.html.
+        </div>
       </div>
     `;
   }

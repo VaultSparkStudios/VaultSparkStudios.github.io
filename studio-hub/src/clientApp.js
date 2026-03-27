@@ -89,6 +89,7 @@ try { saveUiState({ ...uiState, lastOpened: Date.now() }); } catch {}
 const state = {
   activeView:         "studio-hub",
   adminTab:           "members",
+  analyticsTab:       "overview",
   projectTab:         "games",
   syncStatus:         "idle",
   syncError:          null,
@@ -848,6 +849,12 @@ function bindEvents() {
     el.addEventListener("click", () => {
       const tab = el.getAttribute("data-admin-tab");
       if (tab && tab !== state.adminTab) { state.adminTab = tab; render(); }
+    });
+  });
+  document.querySelectorAll("[data-analytics-tab]").forEach((el) => {
+    el.addEventListener("click", () => {
+      const tab = el.getAttribute("data-analytics-tab");
+      if (tab && tab !== state.analyticsTab) { state.analyticsTab = tab; render(); }
     });
   });
   document.getElementById("focus-mode-btn")?.addEventListener("click", () => {
