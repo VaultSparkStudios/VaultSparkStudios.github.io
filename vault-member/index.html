@@ -2020,6 +2020,22 @@
             </a>
           </div>
 
+          <!-- Complete Your Vault Checklist -->
+          <div id="cvault-panel" style="display:none;background:rgba(255,196,0,0.03);border:1px solid rgba(255,196,0,0.14);border-radius:16px;padding:1.2rem 1.5rem;margin:0 0 1.5rem;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:0.9rem;">
+              <div>
+                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.25rem;">Getting Started</div>
+                <div style="font-size:1rem;font-weight:700;color:var(--text);">Complete Your Vault</div>
+              </div>
+              <button type="button" onclick="localStorage.setItem('vs_cvault_dismissed','1');document.getElementById('cvault-panel').style.display='none'" style="background:transparent;border:none;color:var(--dim);cursor:pointer;font-size:1.15rem;padding:0;flex-shrink:0;line-height:1;" aria-label="Dismiss checklist">&times;</button>
+            </div>
+            <div style="height:4px;background:rgba(255,255,255,0.06);border-radius:999px;margin-bottom:1rem;overflow:hidden;">
+              <div id="cvault-bar" style="height:100%;background:var(--gold);border-radius:999px;transition:width 0.4s ease;width:20%;"></div>
+            </div>
+            <div id="cvault-steps"></div>
+            <div id="cvault-done" style="display:none;text-align:center;padding:0.25rem 0;font-size:0.87rem;color:#10B981;font-weight:700;">&#127942; Vault fully activated — you're locked in.</div>
+          </div>
+
           <div class="dashboard-grid">
 
             <!-- Connected Games -->
@@ -2990,6 +3006,92 @@
   </script>
 
   <script src="portal.js"></script>
+
+  <script>
+    // Complete Your Vault — onboarding checklist
+    (function () {
+      if (localStorage.getItem('vs_cvault_dismissed')) return;
+
+      var attempts = 0;
+      var poll = setInterval(function () {
+        if (++attempts > 60) { clearInterval(poll); return; }
+        if (typeof _currentMember === 'undefined' || !_currentMember || !_currentMember.id) return;
+        clearInterval(poll);
+        run(_currentMember);
+      }, 500);
+
+      function run(member) {
+        Promise.all([
+          VSSupabase.from('challenge_submissions').select('id', { count: 'exact', head: true }).eq('user_id', member.id),
+          VSSupabase.from('game_sessions').select('id', { count: 'exact', head: true }).eq('user_id', member.id),
+        ]).then(function (results) {
+          render(member, results[0].count || 0, results[1].count || 0);
+        }).catch(function () {
+          render(member, 0, 0);
+        });
+      }
+
+      function render(member, challengeCount, gameCount) {
+        var steps = [
+          { icon: '🔓', label: 'Join the Vault',       done: true,                                                           cta: null },
+          { icon: '⚡', label: 'Set your avatar',       done: !!(member.avatar_id && member.avatar_id !== 'spark'),           cta: { text: 'Set Avatar',      tab: 'settings'   } },
+          { icon: '✍️', label: 'Write your bio',        done: !!(member.bio && member.bio.trim().length > 5),                cta: { text: 'Add Bio',         tab: 'settings'   } },
+          { icon: '🎯', label: 'Complete a challenge',  done: challengeCount > 0,                                             cta: { text: 'View Challenges', tab: 'challenges' } },
+          { icon: '🎮', label: 'Play a connected game', done: gameCount > 0,                                                  cta: { text: 'Play Games',      href: '/games/'   } },
+        ];
+
+        var doneCount = steps.filter(function (s) { return s.done; }).length;
+        document.getElementById('cvault-bar').style.width = Math.round((doneCount / steps.length) * 100) + '%';
+
+        if (doneCount === steps.length) {
+          document.getElementById('cvault-done').style.display = '';
+        } else {
+          var el = document.getElementById('cvault-steps');
+          steps.forEach(function (step) {
+            var row = document.createElement('div');
+            row.style.cssText = 'display:flex;align-items:center;gap:0.7rem;padding:0.4rem 0;border-bottom:1px solid rgba(255,255,255,0.04);';
+
+            var check = document.createElement('span');
+            check.style.cssText = 'width:17px;height:17px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:0.62rem;font-weight:800;'
+              + (step.done
+                ? 'background:rgba(16,185,129,0.15);color:#10B981;border:1px solid rgba(16,185,129,0.3);'
+                : 'background:transparent;border:1px solid rgba(255,255,255,0.12);');
+            check.textContent = step.done ? '\u2713' : '';
+
+            var lbl = document.createElement('span');
+            lbl.style.cssText = 'flex:1;font-size:0.86rem;' + (step.done ? 'color:var(--dim);text-decoration:line-through;' : 'color:var(--text);');
+            lbl.textContent = step.icon + '\u00a0' + step.label;
+
+            row.appendChild(check);
+            row.appendChild(lbl);
+
+            if (!step.done && step.cta) {
+              var btn = document.createElement('a');
+              btn.style.cssText = 'font-size:0.73rem;font-weight:700;color:var(--gold);text-decoration:none;white-space:nowrap;flex-shrink:0;';
+              btn.textContent = step.cta.text + ' \u2192';
+              if (step.cta.href) {
+                btn.href = step.cta.href;
+              } else {
+                btn.href = '#';
+                (function (tab) {
+                  btn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    if (typeof switchDashTab === 'function') switchDashTab(tab);
+                  });
+                })(step.cta.tab);
+              }
+              row.appendChild(btn);
+            }
+
+            el.appendChild(row);
+          });
+        }
+
+        document.getElementById('cvault-panel').style.display = '';
+      }
+    })();
+  </script>
+
   <script src="/assets/pwa-install.js" defer></script>
 
   <!-- Sentry: replace https://77226e22e29e4528c8a980b4c6cd9c58@o4511104924909568.ingest.us.sentry.io/4511104933298176 with your DSN from sentry.io -->

@@ -722,6 +722,20 @@
       </div>
     </section>
 
+    <!-- ── Vault Signal — Live Activity ──────────────────── -->
+    <section id="vault-signal-section" aria-labelledby="vault-signal-heading" style="padding:2.5rem 0;border-top:1px solid rgba(255,255,255,0.05);">
+      <div class="container">
+        <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1.25rem;">
+          <div>
+            <span class="eyebrow">Live Signal</span>
+            <h2 id="vault-signal-heading" style="margin:0.4rem 0 0;font-size:clamp(1.4rem,3vw,2rem);">Vault Activity</h2>
+          </div>
+          <a href="/members/" class="button-secondary button-sm">Browse Members</a>
+        </div>
+        <div id="vault-signal-feed" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0.65rem;" aria-live="polite" aria-label="Recent vault member activity"></div>
+      </div>
+    </section>
+
     <!-- ── Forged From The Vault (Projects) ──────────────── -->
     <section id="vault-forged" aria-labelledby="projects-heading">
       <div class="container">
@@ -1339,19 +1353,6 @@
   <script>
     (async function() {
       try {
-        const count = await VSPublic.from('vault_members').headCount();
-        if (count > 0) {
-          document.querySelectorAll('.hero-member-count').forEach(el => {
-            el.textContent = count.toLocaleString('en-US');
-          });
-        }
-      } catch(_) {}
-    })();
-  </script>
-
-  <script>
-    (async function() {
-      try {
         const SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
         const SUPABASE_ANON = document.querySelector('meta[name="supabase-key"]')?.content || '';
         if (!SUPABASE_ANON) return;
@@ -1368,6 +1369,45 @@
           bar.style.display = 'block';
         }
       } catch(_) {}
+    })();
+  </script>
+
+  <script>
+    // Vault Signal — live activity feed + member count
+    (function () {
+      function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+      function timeAgo(iso) {
+        var d = Math.floor((Date.now() - new Date(iso)) / 1000);
+        if (d < 60) return 'just now';
+        if (d < 3600) return Math.floor(d / 60) + 'm ago';
+        if (d < 86400) return Math.floor(d / 3600) + 'h ago';
+        return Math.floor(d / 86400) + 'd ago';
+      }
+      VSPublic.from('vault_members').select('username,rank_title,created_at').order('created_at', false).limit(8).count().get()
+        .then(function (res) {
+          if (res.count > 0) {
+            document.querySelectorAll('.hero-member-count').forEach(function (el) {
+              el.textContent = res.count.toLocaleString('en-US');
+            });
+          }
+          var members = res.data;
+          if (!members || !members.length) { document.getElementById('vault-signal-section').style.display = 'none'; return; }
+          var feed = document.getElementById('vault-signal-feed');
+          members.forEach(function (m) {
+            var card = document.createElement('div');
+            card.style.cssText = 'display:flex;align-items:center;gap:0.7rem;padding:0.65rem 0.9rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden;';
+            var dot = document.createElement('span');
+            dot.style.cssText = 'width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;';
+            var txt = document.createElement('span');
+            txt.style.cssText = 'font-size:0.82rem;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+            txt.innerHTML = '<strong style="color:var(--text);">' + esc(m.username) + '</strong> joined \u00b7 ' + esc(m.rank_title || 'Spark Initiate');
+            var ago = document.createElement('span');
+            ago.style.cssText = 'font-size:0.73rem;color:var(--dim);white-space:nowrap;flex-shrink:0;';
+            ago.textContent = timeAgo(m.created_at);
+            card.appendChild(dot); card.appendChild(txt); card.appendChild(ago);
+            feed.appendChild(card);
+          });
+        }).catch(function () { document.getElementById('vault-signal-section').style.display = 'none'; });
     })();
   </script>
 
