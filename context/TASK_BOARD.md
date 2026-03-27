@@ -5,6 +5,8 @@
 - [SIL] "Complete Your Vault" persistent onboarding CTA — post-registration checklist (avatar, first challenge, refer a friend) with bonus points [7.5]
 - [SIL] Terms of Service page — legal requirement for user accounts + payment; investor red flag until done [7.0]
 - [SIL] Vault Dispatch weekly email digest — infra ready (Resend), needs template + monthly cron trigger [8.5]
+- [SIL] Live Activity Feed on homepage — real vault events (rank-ups, challenge completions, leaderboard changes) surfaced publicly; highest-conversion improvement for new visitors [8.5]
+- [SIL] Per-game weekly high score leaderboard with reset — natural follow-on to VaultScore hookup; weekly competition loop that pulls players back [8.0]
 
 ## Next (Pending External Action)
 

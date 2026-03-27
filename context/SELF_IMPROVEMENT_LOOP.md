@@ -41,10 +41,10 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▁▄▅
-3-session avg: Dev 7.5 | Align 8.0 | Momentum 7.5 | Engage 3.0 | Process 7.0 [N=2 except Process N=3]
-Avg total: 34.0 / 50 [N=2]  |  Velocity trend: →  |  Debt: →
-Last session: 2026-03-27 | Session 2 | Total: 36/50 | Velocity: 0
+Sparkline (last 5 totals): ▁▄▅▅
+3-session avg: Dev 7.7 | Align 8.0 | Momentum 7.3 | Engage 3.0 | Process 8.3 [N=3]
+Avg total: 34.3 / 50 [N=3]  |  Velocity trend: →  |  Debt: →
+Last session: 2026-03-27 | Session 3 | Total: 35/50 | Velocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -133,3 +133,32 @@ Rolling avg (last 3): Dev 7.5 | Align 8.0 | Momentum 7.5 | Engage 3.0 | Process 
 5. Portal.js module split (auth / challenges / chronicle / settings) — Dev Health ceiling item; portal is at 4,465 lines and will compound
 
 **Committed to TASK_BOARD:** [SIL] Terms of Service page · [SIL] Vault Dispatch weekly email digest
+
+---
+
+## 2026-03-27 — Session 3 | Total: 35/50 | Velocity: 0 | Debt: →
+Rolling avg (last 3): Dev 7.7 | Align 8.0 | Momentum 7.3 | Engage 3.0 | Process 8.3 [N=3]
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 8 | → | No code changes; codebase unchanged from Session 2 |
+| Creative Alignment | 8 | → | No creative direction given; protocol alignment maintained |
+| Momentum | 7 | ↓ | Velocity 0; session was pure closeout to resolve compacted-resume gap |
+| Engagement | 3 | → | Pre-activation; unchanged |
+| Process Quality | 9 | → | Full closeout protocol executed correctly after context reset; compacted resume handled cleanly |
+| **Total** | **35/50** | ↓ | |
+
+**Top win:** Session 2 closeout completed without data loss after context window reset — CDR, audit JSON, PROJECT_STATUS, and git push all landed correctly.
+**Top gap:** Memory files still show stale Session 1 SIL data; need update every closeout to stay current.
+**Intent outcome:** Achieved — compacted resume resolved; all Session 2 closeout files committed and pushed.
+
+**IGNIS note:** Compacted-resume sessions can resolve outstanding protocol debt cleanly when the closeout prompt's file list is explicit enough — this session proved the Studio OS protocol is resilient to context interruption.
+
+**Brainstorm**
+1. Live Activity Feed on homepage — real vault events (rank-ups, challenge completions, leaderboard changes) surfaced publicly; highest-conversion improvement for new visitors at this stage
+2. Per-game weekly high score leaderboard with reset — natural follow-on to VaultScore hookup; adds weekly competition loop that pulls players back; 1-day build
+3. Portal.js module split (auth / challenges / chronicle / settings) — Dev Health ceiling item at 4,465 lines; splitting now prevents compounding complexity
+4. Google Search Console + Bing Webmaster + sitemap submission — 2-step activation task; immediately enables organic traffic signals for all 40+ indexed pages
+5. Vault Treasury / Points Marketplace — transforms points economy from earn-only to earn+spend; the "endgame" that drives long-term retention
+
+**Committed to TASK_BOARD:** [SIL] Live Activity Feed on homepage · [SIL] Per-game weekly high score leaderboard
