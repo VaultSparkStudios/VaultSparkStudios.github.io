@@ -59,6 +59,10 @@
   // ── Create Supabase client ──────────────────────────────────────────────────
   // Requires the Supabase CDN script to be loaded before this file.
   // <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  if (!window.supabase) {
+    console.error('[VaultSpark] Supabase CDN failed to load — auth will not work.');
+    return;
+  }
   const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   // ── VSGate: redirect helper for vault-member page ──────────────────────────
