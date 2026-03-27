@@ -396,7 +396,7 @@
           <div id="vs-score-panel" style="display:none;margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid rgba(255,196,0,0.15);">
             <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);margin-bottom:0.65rem;">📊 Submit Your Score</div>
             <div style="display:flex;gap:0.6rem;align-items:center;flex-wrap:wrap;">
-              <input type="number" id="vs-score-input" placeholder="Your score" min="0" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,196,0,0.25);border-radius:8px;padding:0.45rem 0.85rem;color:var(--text);font-size:0.9rem;width:160px;outline:none;font-family:inherit;" />
+              <input type="number" id="vs-score-input" placeholder="Your score" min="1" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,196,0,0.25);border-radius:8px;padding:0.45rem 0.85rem;color:var(--text);font-size:0.9rem;width:160px;outline:none;font-family:inherit;" />
               <button type="button" id="vs-score-btn" onclick="vsSubmitScore()" style="background:#FFC400;color:#000;border:none;border-radius:8px;padding:0.45rem 1.1rem;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:inherit;">Submit</button>
               <span id="vs-score-best" style="font-size:0.82rem;color:var(--muted);"></span>
             </div>
@@ -633,32 +633,16 @@
   <script>
   (function(){
     var GAME='call-of-doodie';
-    function getSession(){
-      try{
-        var raw=localStorage.getItem('sb-fjnpzjjyhnpmunfoycrp-auth-token')||localStorage.getItem('supabase.auth.token');
-        if(!raw)return null;
-        var p=JSON.parse(raw),s=p.currentSession||p;
-        return(s&&s.access_token&&s.user)?s:null;
-      }catch(e){return null;}
-    }
-    var session=getSession();
-    if(!session)return;
-    var panel=document.getElementById('vs-score-panel');
-    if(panel)panel.style.display='block';
-    VaultScore.getLeaderboard(GAME,200).then(function(rows){
-      var me=Array.isArray(rows)&&rows.find(function(r){return r.user_id===session.user.id;});
-      var el=document.getElementById('vs-score-best');
-      if(me&&el)el.textContent='Your best: '+me.score.toLocaleString();
-    }).catch(function(){});
     window.vsSubmitScore=function(){
       var scoreEl=document.getElementById('vs-score-input');
       var resultEl=document.getElementById('vs-score-result');
       var btn=document.getElementById('vs-score-btn');
       var score=parseInt(scoreEl.value,10);
-      if(!score||score<0){resultEl.textContent='Enter a valid score.';resultEl.style.color='var(--muted)';return;}
+      if(isNaN(score)||score<1){resultEl.textContent='Enter a valid score.';resultEl.style.color='var(--muted)';return;}
       btn.disabled=true;btn.textContent='Submitting\u2026';resultEl.textContent='';
       VaultScore.submit(GAME,score).then(function(res){
         if(res.ok){
+          scoreEl.value='';
           if(res.is_new_best){
             resultEl.textContent='\uD83C\uDFC6 New high score! +'+res.xp_awarded+' XP awarded.';
             resultEl.style.color='#FFC400';
@@ -673,8 +657,19 @@
           resultEl.style.color='var(--muted)';
         }
         btn.disabled=false;btn.textContent='Submit';
+      }).catch(function(){
+        resultEl.textContent='Network error. Please try again.';
+        resultEl.style.color='var(--muted)';
+        btn.disabled=false;btn.textContent='Submit';
       });
     };
+    if(!VSGame.getSession())return;
+    var panel=document.getElementById('vs-score-panel');
+    if(panel)panel.style.display='block';
+    VaultScore.getMyScore(GAME).then(function(row){
+      var el=document.getElementById('vs-score-best');
+      if(row&&el)el.textContent='Your best: '+row.score.toLocaleString();
+    }).catch(function(){});
   })();
   </script>
 

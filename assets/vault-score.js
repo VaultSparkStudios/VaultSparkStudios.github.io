@@ -74,5 +74,24 @@
         .then(function (r) { return r.ok ? r.json() : []; })
         .catch(function () { return []; });
     },
+
+    /**
+     * Fetch the signed-in user's personal best score for a game.
+     * @param {string} gameSlug
+     * @returns {Promise<{score: number}|null>}
+     */
+    getMyScore: function (gameSlug) {
+      var session = getSession();
+      if (!session) return Promise.resolve(null);
+      return fetch(
+        SB + '/rest/v1/game_scores?select=score&game_slug=eq.' + encodeURIComponent(gameSlug) +
+        '&user_id=eq.' + encodeURIComponent(session.user.id) +
+        '&order=score.desc&limit=1',
+        { headers: { apikey: KEY, Authorization: 'Bearer ' + session.access_token, Accept: 'application/json' } }
+      )
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (rows) { return (Array.isArray(rows) && rows[0]) ? rows[0] : null; })
+        .catch(function () { return null; });
+    },
   };
 })();
