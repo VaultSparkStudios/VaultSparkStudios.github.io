@@ -173,6 +173,7 @@ const state = {
   ticketSuccess:      null,
   ticketError:        null,
   compactCards:       false,
+  navProjectSearch:   "",
   changelogFilter:    "",
   bulkTagMode:        false,
   floorSearch:        "",
@@ -202,15 +203,25 @@ function applyAccent(color) {
 applyAccent(appSettings.accent);
 
 // ── Theme ─────────────────────────────────────────────────────────────────────
+const ALL_THEMES = ["theme-light", "theme-midnight", "theme-terminal", "theme-slate", "theme-dusk", "theme-steel", "theme-ember"];
 function applyTheme(theme) {
-  document.body.classList.toggle("theme-light", theme === "light");
+  document.body.classList.remove(...ALL_THEMES);
+  if (theme && theme !== "dark") document.body.classList.add(`theme-${theme}`);
 }
-// Auto-detect system theme on first visit (no stored preference)
+// Auto-detect system theme on first visit (no stored preference) — default dark
 if (!appSettings.theme && typeof window.matchMedia === "function") {
   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
   state.theme = prefersDark ? "dark" : "light";
 }
 applyTheme(state.theme);
+
+// ── Density ───────────────────────────────────────────────────────────────────
+function applyDensity(density) {
+  document.body.classList.remove("density-compact", "density-spacious");
+  if (density === "compact") document.body.classList.add("density-compact");
+  else if (density === "spacious") document.body.classList.add("density-spacious");
+}
+applyDensity(appSettings.density);
 
 // ── Session timeout ───────────────────────────────────────────────────────────
 const SESSION_TIMEOUT_MS = 8 * 60 * 60 * 1000; // 8 hours
@@ -324,8 +335,9 @@ function render() {
     mainPanel.style.transition = "opacity 0.2s";
   }
   bindEvents();
-  // Re-apply theme/sidebar classes (innerHTML wipes them)
+  // Re-apply theme/density/sidebar classes (innerHTML wipes them)
   applyTheme(state.theme);
+  applyDensity(state.settings.density);
   // Re-apply keyboard focus after DOM rebuild
   if (_kbFocusIndex >= 0) {
     const cards = [...document.querySelectorAll(".project-card[data-project-index]")];
@@ -837,7 +849,7 @@ function buildEventCtx() {
     downloadJSON, downloadCSV,
     generateWeeklyDigest, generateStandup,
     loadScoreHistory, scorePrevFromHistory,
-    applyAccent, applyTheme, getHubRuntimeConfig,
+    applyAccent, applyTheme, applyDensity, getHubRuntimeConfig,
     loadTickets, submitProjectTicket,
     commitVelocity, daysSince,
   };
@@ -877,8 +889,23 @@ function bindEvents() {
   document.getElementById("theme-toggle-btn")?.addEventListener("click", () => {
     state.theme = state.theme === "light" ? "dark" : "light";
     saveUiState({ ...loadUiState(), theme: state.theme });
+    saveSettings({ ...loadSettings(), theme: state.theme });
     applyTheme(state.theme);
     render();
+  });
+  document.getElementById("nav-project-search")?.addEventListener("input", (e) => {
+    state.navProjectSearch = e.target.value;
+    // Filter project nav items without full re-render
+    const search = (e.target.value || "").toLowerCase().trim();
+    document.querySelectorAll(".nav-item[data-project-id]").forEach((item) => {
+      const name = (item.dataset.projectName || "").toLowerCase();
+      item.style.display = (!search || name.includes(search)) ? "" : "none";
+    });
+    document.querySelectorAll(".nav-project-group").forEach((group) => {
+      const anyVisible = [...group.querySelectorAll(".nav-item[data-project-id]")]
+        .some((i) => i.style.display !== "none");
+      group.style.display = (!search || anyVisible) ? "" : "none";
+    });
   });
   document.getElementById("mobile-nav-btn")?.addEventListener("click", () => {
     state.mobileNavOpen = !state.mobileNavOpen;

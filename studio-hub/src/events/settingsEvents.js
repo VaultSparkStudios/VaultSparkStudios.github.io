@@ -10,59 +10,8 @@ export function bindSettingsEvents(ctx) {
     downloadJSON, downloadCSV,
     generateWeeklyDigest, generateStandup,
     loadScoreHistory, scorePrevFromHistory,
-    applyAccent, applyTheme, getHubRuntimeConfig,
+    applyAccent, applyTheme, applyDensity, getHubRuntimeConfig,
   } = ctx;
-
-  // Settings — save
-  document.getElementById("save-settings-btn")?.addEventListener("click", async () => {
-    const githubToken     = document.getElementById("setting-github-token")?.value?.trim() || "";
-    const youtubeApiKey   = document.getElementById("setting-youtube-key")?.value?.trim() || "";
-    const gumroadToken    = document.getElementById("setting-gumroad-token")?.value?.trim() || "";
-    const beaconGistId    = document.getElementById("setting-beacon-gist")?.value?.trim() || "";
-    const supabaseAnonKey = document.getElementById("setting-supabase-anon-key")?.value?.trim() || "";
-    const hubPassword   = document.getElementById("setting-hub-password")?.value?.trim() || "";
-    const accent        = document.getElementById("setting-accent")?.value || "#7ae7c7";
-    const theme         = document.getElementById("setting-theme")?.value || "dark";
-    const showScores    = document.getElementById("setting-show-scores")?.value !== "false";
-    const sort          = document.getElementById("setting-sort")?.value || "score";
-    const refreshMs     = Number(document.getElementById("setting-refresh")?.value ?? 300000);
-    const weights = {
-      dev:      Number(document.getElementById("setting-weight-dev")?.value      ?? 30),
-      engage:   Number(document.getElementById("setting-weight-engage")?.value   ?? 25),
-      momentum: Number(document.getElementById("setting-weight-momentum")?.value ?? 25),
-      risk:     Number(document.getElementById("setting-weight-risk")?.value     ?? 20),
-    };
-
-    const existing = loadStoredCredentials();
-    saveCredentials({ ...existing, githubToken, youtubeApiKey, gumroadToken, beaconGistId, ...(supabaseAnonKey ? { supabaseAnonKey } : {}) });
-    if (hubPassword) await setHubPassword(hubPassword);
-
-    const alertThresholds = {
-      issues:    Number(document.getElementById("setting-thresh-issues")?.value     ?? 20),
-      staleWarn: Number(document.getElementById("setting-thresh-stale-warn")?.value ?? 14),
-      staleErr:  Number(document.getElementById("setting-thresh-stale-err")?.value  ?? 30),
-      scoreCrit: Number(document.getElementById("setting-thresh-score-crit")?.value ?? 24),
-      scoreWarn: Number(document.getElementById("setting-thresh-score-warn")?.value ?? 35),
-      prAge:     Number(document.getElementById("setting-thresh-pr-age")?.value     ?? 3),
-    };
-
-    const newSettings = { accent, theme, showScores, sort, refreshMs, weights, alertThresholds };
-    saveSettings(newSettings);
-    invalidateWeightsCache();
-    Object.assign(state.settings, newSettings);
-    applyAccent(accent);
-    state.theme = theme;
-    applyTheme(theme);
-
-    clearSessionCache();
-    Object.assign(config, getHubRuntimeConfig());
-    state.supabaseAnonKey = config.supabaseAnonKey;
-
-    const statusEl = document.getElementById("settings-status");
-    if (statusEl) statusEl.textContent = "Saved — reloading data…";
-    logActivity("settings_save", "");
-    syncAll();
-  });
 
   // Settings — remove password
   document.getElementById("clear-password-btn")?.addEventListener("click", async () => {
@@ -375,5 +324,243 @@ export function bindSettingsEvents(ctx) {
       state.pwaInstallPrompt.prompt();
       state.pwaInstallPrompt.userChoice.then(() => { state.pwaInstallPrompt = null; render(); }).catch(() => {});
     }
+  });
+
+  // ── Settings tabs ──────────────────────────────────────────────────────────
+  document.querySelectorAll("[data-settings-tab]").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      document.querySelectorAll(".settings-tab").forEach((t) => t.classList.remove("active"));
+      document.querySelectorAll(".settings-section").forEach((s) => s.classList.remove("active"));
+      tab.classList.add("active");
+      document.getElementById(`settings-section-${tab.dataset.settingsTab}`)?.classList.add("active");
+    });
+  });
+
+  // ── Theme swatches — apply immediately ────────────────────────────────────
+  document.querySelectorAll("[data-theme-select]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const theme = btn.dataset.themeSelect;
+      state.theme = theme;
+      applyTheme(theme);
+      document.querySelectorAll(".theme-swatch").forEach((s) => s.classList.remove("active-theme"));
+      btn.classList.add("active-theme");
+      saveSettings({ ...loadSettings(), theme });
+      Object.assign(state.settings, { theme });
+    });
+  });
+
+  // ── Accent swatches — apply immediately ───────────────────────────────────
+  document.querySelectorAll("[data-accent-select]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const accent = btn.dataset.accentSelect;
+      applyAccent(accent);
+      document.querySelectorAll(".accent-swatch").forEach((s) => s.classList.remove("active-accent"));
+      btn.classList.add("active-accent");
+      document.getElementById("accent-custom-picker") && (document.getElementById("accent-custom-picker").value = accent);
+      saveSettings({ ...loadSettings(), accent });
+      Object.assign(state.settings, { accent });
+    });
+  });
+
+  // Custom color picker
+  document.getElementById("accent-custom-picker")?.addEventListener("input", (e) => {
+    const accent = e.target.value;
+    applyAccent(accent);
+    document.querySelectorAll(".accent-swatch").forEach((s) => s.classList.remove("active-accent"));
+    saveSettings({ ...loadSettings(), accent });
+    Object.assign(state.settings, { accent });
+  });
+
+  // ── Density — apply immediately ───────────────────────────────────────────
+  document.querySelectorAll("[data-density-select]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const density = btn.dataset.densitySelect;
+      applyDensity(density);
+      document.querySelectorAll("[data-density-select]").forEach((b) => b.classList.remove("active-density"));
+      btn.classList.add("active-density");
+      saveSettings({ ...loadSettings(), density });
+      Object.assign(state.settings, { density });
+    });
+  });
+
+  // ── Save features ─────────────────────────────────────────────────────────
+  document.getElementById("save-features-btn")?.addEventListener("click", () => {
+    const featureKeys = [
+      "feat-morning-brief", "feat-vitals-strip", "feat-score-ledger", "feat-leaderboard",
+      "feat-social-summary", "feat-agent-panel", "feat-sprint-panel",
+      "feat-show-scores", "feat-show-forecast", "feat-show-delta", "feat-show-ci",
+      "feat-compact-default", "feat-nav-score-badge", "feat-nav-sort-score",
+      "feat-reduce-motion", "feat-auto-dark",
+    ];
+    const featureMap = {
+      "feat-morning-brief":   "showMorningBrief",
+      "feat-vitals-strip":    "showVitalsStrip",
+      "feat-score-ledger":    "showScoreLedger",
+      "feat-leaderboard":     "showLeaderboard",
+      "feat-social-summary":  "showSocialSummary",
+      "feat-agent-panel":     "showAgentPanel",
+      "feat-sprint-panel":    "showSprintPanel",
+      "feat-show-scores":     "showScores",
+      "feat-show-forecast":   "showForecast",
+      "feat-show-delta":      "showScoreDelta",
+      "feat-show-ci":         "showCiBadge",
+      "feat-compact-default": "defaultCompactCards",
+      "feat-nav-score-badge": "navScoreBadge",
+      "feat-nav-sort-score":  "navSortByScore",
+      "feat-reduce-motion":   "reduceMotion",
+      "feat-auto-dark":       "autoDark",
+    };
+    const updates = {};
+    for (const id of featureKeys) {
+      const el = document.getElementById(id);
+      if (el) updates[featureMap[id]] = el.checked;
+    }
+    saveSettings({ ...loadSettings(), ...updates });
+    Object.assign(state.settings, updates);
+    // Apply reduce-motion immediately
+    document.body.classList.toggle("reduce-motion", updates.reduceMotion === true);
+    const s = document.getElementById("features-status");
+    if (s) { s.textContent = "Saved ✓"; s.style.color = "var(--green)"; setTimeout(() => { s.textContent = ""; }, 2500); }
+    logActivity("features_save", "");
+    render();
+  });
+
+  // ── Save project settings ─────────────────────────────────────────────────
+  document.getElementById("save-projects-btn")?.addEventListener("click", () => {
+    const sort       = document.getElementById("setting-sort")?.value || "score";
+    const defaultTab = document.getElementById("setting-default-tab")?.value || "games";
+    saveSettings({ ...loadSettings(), sort, defaultTab });
+    Object.assign(state.settings, { sort, defaultTab });
+    const s = document.getElementById("projects-status");
+    if (s) { s.textContent = "Saved ✓"; s.style.color = "var(--green)"; setTimeout(() => { s.textContent = ""; }, 2500); }
+    logActivity("projects_save", "");
+  });
+
+  // ── Save scoring weights (duplicate of main save for this tab) ────────────
+  document.getElementById("save-settings-btn-scoring")?.addEventListener("click", async () => {
+    const weights = {
+      dev:      Number(document.getElementById("setting-weight-dev")?.value      ?? 30),
+      engage:   Number(document.getElementById("setting-weight-engage")?.value   ?? 25),
+      momentum: Number(document.getElementById("setting-weight-momentum")?.value ?? 25),
+      risk:     Number(document.getElementById("setting-weight-risk")?.value     ?? 20),
+    };
+    saveSettings({ ...loadSettings(), weights });
+    invalidateWeightsCache();
+    Object.assign(state.settings, { weights });
+    const s = document.getElementById("scoring-status");
+    if (s) { s.textContent = "Saved ✓"; s.style.color = "var(--green)"; setTimeout(() => { s.textContent = ""; }, 2500); }
+    logActivity("scoring_save", "");
+    render();
+  });
+
+  // ── Save alert thresholds ─────────────────────────────────────────────────
+  document.getElementById("save-alerts-btn")?.addEventListener("click", () => {
+    const alertThresholds = {
+      issues:    Number(document.getElementById("setting-thresh-issues")?.value     ?? 20),
+      staleWarn: Number(document.getElementById("setting-thresh-stale-warn")?.value ?? 14),
+      staleErr:  Number(document.getElementById("setting-thresh-stale-err")?.value  ?? 30),
+      scoreCrit: Number(document.getElementById("setting-thresh-score-crit")?.value ?? 24),
+      scoreWarn: Number(document.getElementById("setting-thresh-score-warn")?.value ?? 35),
+      prAge:     Number(document.getElementById("setting-thresh-pr-age")?.value     ?? 3),
+    };
+    // Also save notification prefs
+    const notif_ci_fail    = document.getElementById("notif_ci_fail")?.checked !== false;
+    const notif_score_drop = document.getElementById("notif_score_drop")?.checked !== false;
+    const notif_pr_stale   = document.getElementById("notif_pr_stale")?.checked !== false;
+    const notif_dormant    = document.getElementById("notif_dormant")?.checked !== false;
+    saveSettings({ ...loadSettings(), alertThresholds, notif_ci_fail, notif_score_drop, notif_pr_stale, notif_dormant });
+    Object.assign(state.settings, { alertThresholds });
+    const s = document.getElementById("alerts-status");
+    if (s) { s.textContent = "Saved ✓"; s.style.color = "var(--green)"; setTimeout(() => { s.textContent = ""; }, 2500); }
+    logActivity("alerts_save", "");
+  });
+
+  // ── Save data/sync settings ───────────────────────────────────────────────
+  document.getElementById("save-data-btn")?.addEventListener("click", () => {
+    const refreshMs = Number(document.getElementById("setting-refresh")?.value ?? 300000);
+    saveSettings({ ...loadSettings(), refreshMs });
+    Object.assign(state.settings, { refreshMs });
+    const s = document.getElementById("data-status");
+    if (s) { s.textContent = "Saved ✓"; s.style.color = "var(--green)"; setTimeout(() => { s.textContent = ""; }, 2500); }
+  });
+
+  // ── Save credentials ──────────────────────────────────────────────────────
+  document.getElementById("save-credentials-btn")?.addEventListener("click", async () => {
+    const githubToken     = document.getElementById("setting-github-token")?.value?.trim() || "";
+    const youtubeApiKey   = document.getElementById("setting-youtube-key")?.value?.trim() || "";
+    const gumroadToken    = document.getElementById("setting-gumroad-token")?.value?.trim() || "";
+    const beaconGistId    = document.getElementById("setting-beacon-gist")?.value?.trim() || "";
+    const supabaseAnonKey = document.getElementById("setting-supabase-anon-key")?.value?.trim() || "";
+    const existing = loadStoredCredentials();
+    saveCredentials({ ...existing, githubToken, youtubeApiKey, gumroadToken, beaconGistId, ...(supabaseAnonKey ? { supabaseAnonKey } : {}) });
+    clearSessionCache();
+    Object.assign(config, getHubRuntimeConfig());
+    state.supabaseAnonKey = config.supabaseAnonKey;
+    const s = document.getElementById("credentials-status");
+    if (s) { s.textContent = "Saved — reloading data…"; s.style.color = "var(--green)"; }
+    logActivity("credentials_save", "");
+    syncAll();
+  });
+
+  // ── Save security / password ──────────────────────────────────────────────
+  document.getElementById("save-security-btn")?.addEventListener("click", async () => {
+    const hubPassword = document.getElementById("setting-hub-password")?.value?.trim() || "";
+    if (hubPassword) await setHubPassword(hubPassword);
+    const s = document.getElementById("security-status");
+    if (s) { s.textContent = hubPassword ? "Password updated ✓" : "No changes."; s.style.color = "var(--green)"; setTimeout(() => { s.textContent = ""; }, 2500); }
+    logActivity("security_save", "");
+    render();
+  });
+
+  // ── Main "Save & Apply" (Appearance tab — also saves everything) ───────────
+  document.getElementById("save-settings-btn")?.addEventListener("click", async () => {
+    const githubToken     = document.getElementById("setting-github-token")?.value?.trim() || "";
+    const youtubeApiKey   = document.getElementById("setting-youtube-key")?.value?.trim() || "";
+    const gumroadToken    = document.getElementById("setting-gumroad-token")?.value?.trim() || "";
+    const beaconGistId    = document.getElementById("setting-beacon-gist")?.value?.trim() || "";
+    const supabaseAnonKey = document.getElementById("setting-supabase-anon-key")?.value?.trim() || "";
+    const hubPassword   = document.getElementById("setting-hub-password")?.value?.trim() || "";
+    const accent        = document.querySelector(".accent-swatch.active-accent")?.dataset.accentSelect
+                          || document.getElementById("accent-custom-picker")?.value
+                          || loadSettings().accent || "#7ae7c7";
+    const theme         = document.querySelector(".theme-swatch.active-theme")?.dataset.themeSelect
+                          || loadSettings().theme || "dark";
+    const density       = document.querySelector("[data-density-select].active-density")?.dataset.densitySelect
+                          || loadSettings().density || "comfortable";
+    const showScores    = document.getElementById("setting-show-scores")?.value !== "false";
+    const sort          = document.getElementById("setting-sort")?.value || "score";
+    const refreshMs     = Number(document.getElementById("setting-refresh")?.value ?? 300000);
+    const weights = {
+      dev:      Number(document.getElementById("setting-weight-dev")?.value      ?? 30),
+      engage:   Number(document.getElementById("setting-weight-engage")?.value   ?? 25),
+      momentum: Number(document.getElementById("setting-weight-momentum")?.value ?? 25),
+      risk:     Number(document.getElementById("setting-weight-risk")?.value     ?? 20),
+    };
+    const alertThresholds = {
+      issues:    Number(document.getElementById("setting-thresh-issues")?.value     ?? 20),
+      staleWarn: Number(document.getElementById("setting-thresh-stale-warn")?.value ?? 14),
+      staleErr:  Number(document.getElementById("setting-thresh-stale-err")?.value  ?? 30),
+      scoreCrit: Number(document.getElementById("setting-thresh-score-crit")?.value ?? 24),
+      scoreWarn: Number(document.getElementById("setting-thresh-score-warn")?.value ?? 35),
+      prAge:     Number(document.getElementById("setting-thresh-pr-age")?.value     ?? 3),
+    };
+    const existing = loadStoredCredentials();
+    saveCredentials({ ...existing, githubToken, youtubeApiKey, gumroadToken, beaconGistId, ...(supabaseAnonKey ? { supabaseAnonKey } : {}) });
+    if (hubPassword) await setHubPassword(hubPassword);
+    const newSettings = { accent, theme, density, showScores, sort, refreshMs, weights, alertThresholds };
+    saveSettings({ ...loadSettings(), ...newSettings });
+    invalidateWeightsCache();
+    Object.assign(state.settings, newSettings);
+    applyAccent(accent);
+    applyTheme(theme);
+    applyDensity(density);
+    state.theme = theme;
+    clearSessionCache();
+    Object.assign(config, getHubRuntimeConfig());
+    state.supabaseAnonKey = config.supabaseAnonKey;
+    const statusEl = document.getElementById("settings-status");
+    if (statusEl) { statusEl.textContent = "Saved — reloading data…"; statusEl.style.color = "var(--green)"; }
+    logActivity("settings_save", "");
+    syncAll();
   });
 }
