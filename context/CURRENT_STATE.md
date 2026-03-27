@@ -4,11 +4,19 @@
 
 - Date: 2026-03-27
 - Overall status: Live and active
-- Current phase: Phase 43 complete · audit session 2 done (2026-03-27)
+- Current phase: Session 5 sprint complete (2026-03-27) — 9 features shipped, SQL migrations pending user action
 
 ## What exists
 
 - systems:
+  - Vault Treasury / Points Marketplace: /vault-treasury/ public page + portal panel; 8 seeded items (cosmetic/lore/access/boost); purchase_treasury_item RPC with point deduction + negative point_events logging (supabase-phase46-treasury.sql — PENDING RUN)
+  - Per-Game Weekly High Score Leaderboard: Weekly tab on /leaderboards/ with game selector, reset countdown, medals; submit_weekly_score + get_weekly_leaderboard RPCs (supabase-phase47-weekly-leaderboard.sql — PENDING RUN)
+  - Vault Seasons Cross-Game XP: award_season_xp() RPC; triggers on game_scores (score/100 XP capped 500), challenge_submissions (50 XP), game_sessions (25 XP); season progress widget in portal dashboard (supabase-phase48-seasons-xp.sql — PENDING RUN)
+  - Member Social Graph: member_follows table; follow/unfollow button on /member/ profiles; Following Feed tab in vault portal; follower/following counts display; get_following_feed RPC (supabase-phase49-social-graph.sql — PENDING RUN)
+  - Game Demo Embeds: demo section on call-of-doodie, gridiron-gm, vaultspark-football-gm; responsive iframe slot + "Demo Coming Soon" placeholder; replace placeholder with iframe src when build ready
+  - Activity Feed (expanded): homepage vault-signal-section now shows joins + challenge completions + game sessions via Promise.allSettled; type-coded dots (gold=join, blue=challenge, green=game)
+  - Accessibility: body.light-mode :focus-visible uses #1a2040 outline (passes WCAG AA); aria-live="polite" on toast + points display in portal
+  - Unreleased game content: Dunescape (MMORPG factions, economy, 6 feature items, stats grid, Late 2026 target), MindFrame (60 chambers, adaptive engine, competitive mode, Mid 2027 target), VaultFront (asymmetric RTS, convoy timing, 6 feature items, stats grid, Summer 2026 closed beta), Project Unknown (classified aesthetic maintained, Rift Scout rank required for brief)
   - Supabase auth (email/password, Google OAuth, Discord OAuth)
   - Vault Member portal (`vault-member/index.html`) — single-file SPA
   - 9-tier rank system with distinct badge colors and Discord role sync
@@ -108,7 +116,14 @@
 
 ## In progress
 
-- None. All committed and pushed.
+- None. All committed and pushed (session 5 complete).
+
+## SQL Migrations Pending (user must run in Supabase dashboard)
+
+- supabase-phase46-treasury.sql — treasury_items, treasury_purchases, purchase_treasury_item RPC
+- supabase-phase47-weekly-leaderboard.sql — weekly_game_scores, get_weekly_leaderboard, submit_weekly_score RPCs
+- supabase-phase48-seasons-xp.sql — award_season_xp RPC, triggers on game_scores/challenge_submissions/game_sessions, season_xp column on vault_members
+- supabase-phase49-social-graph.sql — member_follows, get_follow_counts, get_following_feed RPCs
 
 ## Blockers
 
@@ -119,6 +134,6 @@
 
 ## Next 3 moves
 
-1. Enable Cloudflare proxy (DNS change on registrar — unblocks HTTP security headers + CDN)
-2. Generate VAPID keys + set secrets (unblocks web push)
-3. Run pending Supabase SQL migrations (phases 40, 41, 43, 45)
+1. Run pending SQL migrations (phases 40, 41, 43, 45, 46, 47, 48, 49) — activates all coded features
+2. Enable Cloudflare proxy (DNS change on registrar — unblocks HTTP security headers + CDN)
+3. Generate VAPID keys + set secrets (unblocks web push)

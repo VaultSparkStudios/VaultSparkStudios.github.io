@@ -1373,7 +1373,7 @@
   </script>
 
   <script>
-    // Vault Signal — live activity feed + member count
+    // Vault Signal — live activity feed (joins + challenges + game sessions) + member count
     (function () {
       function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
       function timeAgo(iso) {
@@ -1383,31 +1383,72 @@
         if (d < 86400) return Math.floor(d / 3600) + 'h ago';
         return Math.floor(d / 86400) + 'd ago';
       }
-      VSPublic.from('vault_members').select('username,rank_title,created_at').order('created_at', false).limit(8).count().get()
-        .then(function (res) {
+      var GAME_NAMES = { 'call-of-doodie': 'Call of Doodie', 'gridiron-gm': 'Gridiron GM', 'vaultspark-football-gm': 'Football GM' };
+      function gameLabel(slug) { return GAME_NAMES[slug] || slug; }
+
+      Promise.allSettled([
+        VSPublic.from('vault_members').select('username,rank_title,created_at').order('created_at', false).limit(6).count().get(),
+        VSPublic.from('challenge_submissions').select('user_id,created_at').order('created_at', false).limit(5).get(),
+        VSPublic.from('game_sessions').select('game_slug,played_at').order('played_at', false).limit(5).get()
+      ]).then(function (results) {
+        var events = [];
+
+        // Joins — also read member count
+        if (results[0].status === 'fulfilled') {
+          var res = results[0].value;
           if (res.count > 0) {
             document.querySelectorAll('.hero-member-count').forEach(function (el) {
               el.textContent = res.count.toLocaleString('en-US');
             });
           }
-          var members = res.data;
-          if (!members || !members.length) { document.getElementById('vault-signal-section').style.display = 'none'; return; }
-          var feed = document.getElementById('vault-signal-feed');
-          members.forEach(function (m) {
-            var card = document.createElement('div');
-            card.style.cssText = 'display:flex;align-items:center;gap:0.7rem;padding:0.65rem 0.9rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden;';
-            var dot = document.createElement('span');
-            dot.style.cssText = 'width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0;';
-            var txt = document.createElement('span');
-            txt.style.cssText = 'font-size:0.82rem;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
-            txt.innerHTML = '<strong style="color:var(--text);">' + esc(m.username) + '</strong> joined \u00b7 ' + esc(m.rank_title || 'Spark Initiate');
-            var ago = document.createElement('span');
-            ago.style.cssText = 'font-size:0.73rem;color:var(--dim);white-space:nowrap;flex-shrink:0;';
-            ago.textContent = timeAgo(m.created_at);
-            card.appendChild(dot); card.appendChild(txt); card.appendChild(ago);
-            feed.appendChild(card);
+          (res.data || []).forEach(function (m) {
+            events.push({ type: 'join', username: m.username, rank: m.rank_title || 'Spark Initiate', ts: m.created_at });
           });
-        }).catch(function () { document.getElementById('vault-signal-section').style.display = 'none'; });
+        }
+
+        // Challenge completions
+        if (results[1].status === 'fulfilled') {
+          (results[1].value.data || []).forEach(function (c) {
+            events.push({ type: 'challenge', ts: c.created_at });
+          });
+        }
+
+        // Game sessions
+        if (results[2].status === 'fulfilled') {
+          (results[2].value.data || []).forEach(function (g) {
+            events.push({ type: 'game', slug: g.game_slug, ts: g.played_at });
+          });
+        }
+
+        if (!events.length) { document.getElementById('vault-signal-section').style.display = 'none'; return; }
+
+        // Sort by timestamp desc, take 9
+        events.sort(function (a, b) { return new Date(b.ts) - new Date(a.ts); });
+        events = events.slice(0, 9);
+
+        var feed = document.getElementById('vault-signal-feed');
+        var DOT = { join: 'var(--gold)', challenge: 'var(--blue)', game: 'var(--green)' };
+        events.forEach(function (e) {
+          var card = document.createElement('div');
+          card.style.cssText = 'display:flex;align-items:center;gap:0.7rem;padding:0.65rem 0.9rem;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:12px;overflow:hidden;';
+          var dot = document.createElement('span');
+          dot.style.cssText = 'width:6px;height:6px;border-radius:50%;background:' + DOT[e.type] + ';flex-shrink:0;';
+          var txt = document.createElement('span');
+          txt.style.cssText = 'font-size:0.82rem;color:var(--muted);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+          if (e.type === 'join') {
+            txt.innerHTML = '<strong style="color:var(--text);">' + esc(e.username) + '</strong> joined \u00b7 ' + esc(e.rank);
+          } else if (e.type === 'challenge') {
+            txt.innerHTML = 'A vault member <strong style="color:var(--text);">completed a challenge</strong>';
+          } else {
+            txt.innerHTML = 'Someone played <strong style="color:var(--text);">' + esc(gameLabel(e.slug)) + '</strong>';
+          }
+          var ago = document.createElement('span');
+          ago.style.cssText = 'font-size:0.73rem;color:var(--dim);white-space:nowrap;flex-shrink:0;';
+          ago.textContent = timeAgo(e.ts);
+          card.appendChild(dot); card.appendChild(txt); card.appendChild(ago);
+          feed.appendChild(card);
+        });
+      }).catch(function () { document.getElementById('vault-signal-section').style.display = 'none'; });
     })();
   </script>
 

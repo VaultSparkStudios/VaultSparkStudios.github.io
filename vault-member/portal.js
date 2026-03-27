@@ -273,6 +273,10 @@
         _seasonPassLoaded = true;
         loadSeasonPass();
       }
+      if (which === 'treasury' && !_treasuryLoaded) {
+        _treasuryLoaded = true;
+        loadTreasury();
+      }
     }
 
     // ── Nav account dropdown ─────────────────────────────────────
@@ -424,6 +428,9 @@
       // Rank progress bar in stats panel
       updateRankProgress(member.points);
 
+      // Season XP mini-widget
+      updateSeasonXpWidget(member);
+
       // Referral link
       const refLink = document.getElementById('referralLink');
       if (refLink && member.username) {
@@ -521,6 +528,7 @@
       _chronicleLoaded = false;
       _betaKeysLoaded  = false;
       _seasonPassLoaded = false;
+      _treasuryLoaded  = false;
       loadChallenges();
       setTimeout(() => initChallenges(member), 1800);
 
@@ -2451,6 +2459,7 @@
 
     // ── Season Pass ───────────────────────────────────────────────
     let _seasonPassLoaded = false;
+    let _treasuryLoaded  = false;
 
     async function loadSeasonPass() {
       const el = document.getElementById('season-pass-content');
@@ -2508,6 +2517,107 @@
         if (el) el.innerHTML = `<p style="font-size:0.84rem;color:var(--dim);padding:1rem 0;">Could not load season pass. Try again later.</p>`;
       }
     }
+
+    // ── Vault Treasury ────────────────────────────────────────────
+    async function loadTreasury() {
+      const gridEl   = document.getElementById('treasury-items-grid');
+      const balEl    = document.getElementById('treasury-balance');
+      const bannerEl = document.getElementById('treasury-purchases-banner');
+      if (!gridEl) return;
+
+      // Show live balance
+      if (balEl && _currentMember) {
+        balEl.textContent = ((_currentMember.points || 0)).toLocaleString() + ' pts';
+      }
+
+      try {
+        const userId = _currentMember && _currentMember._id;
+
+        // Fetch catalog + owned purchases in parallel
+        const [itemsRes, ownedRes] = await Promise.all([
+          VSSupabase.from('treasury_items').select('*').eq('is_active', true).order('cost', { ascending: true }),
+          userId ? VSSupabase.from('treasury_purchases').select('item_id').eq('user_id', userId) : Promise.resolve({ data: [] })
+        ]);
+
+        if (itemsRes.error) throw itemsRes.error;
+        const items = itemsRes.data || [];
+        const ownedIds = new Set((ownedRes.data || []).map(r => r.item_id));
+
+        if (items.length === 0) {
+          gridEl.innerHTML = '<p style="color:var(--muted);font-size:0.9rem;grid-column:1/-1;">No items available right now.</p>';
+          return;
+        }
+
+        // Show how many items owned
+        if (bannerEl && ownedIds.size > 0) {
+          bannerEl.style.display = '';
+          bannerEl.textContent = `You own ${ownedIds.size} item${ownedIds.size === 1 ? '' : 's'} from the Treasury.`;
+        }
+
+        const CATEGORY_COLORS = { cosmetic: '#1FA2FF', access: '#7C3AED', lore: '#F59E0B', boost: '#10B981' };
+        const balance = _currentMember ? (_currentMember.points || 0) : 0;
+
+        gridEl.innerHTML = items.map(item => {
+          const owned       = ownedIds.has(item.id);
+          const affordable  = balance >= item.cost;
+          const cat         = item.category || 'cosmetic';
+          const catColor    = CATEGORY_COLORS[cat] || '#888';
+          const btnLabel    = owned ? 'Owned' : (affordable ? 'Redeem' : 'Not enough points');
+          const btnDisabled = owned || !affordable;
+
+          return `<div style="background:rgba(255,255,255,0.03);border:1px solid ${owned ? 'rgba(255,196,0,0.25)' : 'rgba(255,255,255,0.08)'};border-radius:14px;padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:0.65rem;">
+            <div style="display:flex;align-items:flex-start;gap:0.75rem;">
+              <span style="font-size:1.6rem;flex-shrink:0;line-height:1;">${escHtml(item.icon || '🏆')}</span>
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:${catColor};margin-bottom:0.2rem;">${escHtml(cat)}</div>
+                <div style="font-size:0.95rem;font-weight:800;color:#fff;line-height:1.3;">${escHtml(item.name)}</div>
+              </div>
+              ${owned ? '<span style="font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);flex-shrink:0;margin-top:0.15rem;">✓ Owned</span>' : ''}
+            </div>
+            <div style="font-size:0.8rem;color:var(--muted);line-height:1.5;">${escHtml(item.description)}</div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem;margin-top:auto;">
+              <span style="font-size:1rem;font-weight:800;color:var(--gold);">${item.cost.toLocaleString()} pts</span>
+              <button type="button"
+                onclick="buyTreasuryItem('${escHtml(item.id)}','${escHtml(item.name)}',${item.cost})"
+                ${btnDisabled ? 'disabled' : ''}
+                style="height:34px;padding:0 1rem;border-radius:8px;font-size:0.8rem;font-weight:700;font-family:inherit;cursor:${btnDisabled ? 'not-allowed' : 'pointer'};border:1px solid ${owned ? 'rgba(255,196,0,0.3)' : (affordable ? 'rgba(31,162,255,0.4)' : 'rgba(255,255,255,0.1)')};background:${owned ? 'rgba(255,196,0,0.08)' : (affordable ? 'rgba(31,162,255,0.12)' : 'rgba(255,255,255,0.04)')};color:${owned ? 'var(--gold)' : (affordable ? '#1FA2FF' : 'var(--dim)')};transition:background 0.18s,border-color 0.18s;"
+              >${escHtml(btnLabel)}</button>
+            </div>
+          </div>`;
+        }).join('');
+      } catch (err) {
+        gridEl.innerHTML = '<p style="color:var(--dim);font-size:0.84rem;grid-column:1/-1;">Could not load treasury. Try again later.</p>';
+      }
+    }
+
+    async function buyTreasuryItem(itemId, itemName, cost) {
+      const userId = _currentMember && _currentMember._id;
+      if (!userId) return;
+      const balance = _currentMember ? (_currentMember.points || 0) : 0;
+      if (balance < cost) return;
+      if (!confirm(`Spend ${cost.toLocaleString()} pts to redeem "${itemName}"?`)) return;
+
+      try {
+        const { data, error } = await VSSupabase.rpc('purchase_treasury_item', { p_user_id: userId, p_item_id: itemId });
+        if (error) throw error;
+        if (data && data.ok === false) throw new Error(data.error || 'purchase_failed');
+
+        // Update cached balance
+        if (_currentMember) _currentMember.points = Math.max(0, (_currentMember.points || 0) - cost);
+        const balEl = document.getElementById('treasury-balance');
+        if (balEl) balEl.textContent = (_currentMember.points || 0).toLocaleString() + ' pts';
+
+        // Reload treasury to reflect owned state
+        _treasuryLoaded = false;
+        loadTreasury();
+      } catch (err) {
+        const msg = err.message === 'already_owned' ? 'You already own this item.'
+                  : err.message === 'insufficient_points' ? 'Not enough points.'
+                  : 'Purchase failed. Please try again.';
+        alert(msg);
+      }
+    }
+    window.buyTreasuryItem = buyTreasuryItem;
 
     // ── Monthly Newsletter Preference ─────────────────────────────
     async function loadNewsletterPreference() {
@@ -3470,33 +3580,35 @@
     async function loadFollowing() {
       if (_followingLoaded) return;
       _followingLoaded = true;
-      const el = document.getElementById('following-list');
-      if (!el) return;
-      el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">Loading…</div>';
+      const feedEl  = document.getElementById('following-feed-list');
+      const emptyEl = document.getElementById('following-empty');
+      if (!feedEl) return;
+      feedEl.innerHTML = '<p style="color:var(--muted);font-size:0.92rem;">Loading your following feed…</p>';
+      if (emptyEl) emptyEl.style.display = 'none';
       try {
-        const { data, error } = await VSSupabase.rpc('get_my_following', { p_limit: 50, p_offset: 0 });
+        const userId = _currentMember && _currentMember._id;
+        if (!userId) throw new Error('not authenticated');
+        const { data, error } = await VSSupabase.rpc('get_following_feed', { p_user_id: userId, p_limit: 20 });
         if (error) throw error;
         if (!data || data.length === 0) {
-          el.innerHTML = `<div style="text-align:center;padding:3rem 1rem;color:var(--dim);">
-            <div style="font-size:2.5rem;margin-bottom:0.75rem;">👥</div>
-            <div style="font-size:0.9rem;line-height:1.6;">You're not following anyone yet. Visit a member's profile and hit Follow to start building your network.</div>
-          </div>`;
+          feedEl.innerHTML = '';
+          if (emptyEl) emptyEl.style.display = '';
           return;
         }
-        el.innerHTML = data.map(m => {
-          const av = m.avatar
-            ? `<img src="${m.avatar}" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">`
-            : `<div style="width:40px;height:40px;border-radius:50%;background:var(--card-bg);display:flex;align-items:center;justify-content:center;font-size:1.2rem;">⚡</div>`;
-          return `<a href="/member/?u=${encodeURIComponent(m.username)}" style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05);text-decoration:none;color:inherit;">
-            ${av}
-            <div>
-              <div style="font-weight:600;color:var(--text);">${esc(m.username)}</div>
-              <div style="font-size:0.8rem;color:var(--gold);">${(m.points||0).toLocaleString()} pts</div>
+        feedEl.innerHTML = data.map(ev => {
+          const initial = (ev.username || '?').charAt(0).toUpperCase();
+          const when    = ev.created_at ? formatTimeAgo(new Date(ev.created_at)) : '';
+          return `<div style="display:flex;align-items:center;gap:0.85rem;padding:0.75rem 1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:rgba(31,162,255,0.15);color:#1FA2FF;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1rem;flex-shrink:0;">${escHtml(initial)}</div>
+            <div style="flex:1;min-width:0;">
+              <div style="font-size:0.88rem;font-weight:600;color:var(--text);"><a href="/member/?u=${encodeURIComponent(ev.username)}" style="color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.1);">${escHtml(ev.username)}</a></div>
+              <div style="font-size:0.82rem;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escHtml(ev.label || 'Vault activity')}</div>
             </div>
-          </a>`;
+            <div style="font-size:0.75rem;color:var(--dim);white-space:nowrap;flex-shrink:0;">${escHtml(when)}</div>
+          </div>`;
         }).join('');
       } catch (e) {
-        el.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">Could not load following list.</div>';
+        feedEl.innerHTML = '<div style="color:var(--dim);font-size:0.84rem;">Could not load following feed.</div>';
       }
     }
     window.loadFollowing = loadFollowing;
@@ -4345,6 +4457,25 @@
       if (pct)     pct.textContent   = progress + '%';
       if (label)   label.textContent = (rank.max - points + 1) + ' pts to ' + next.name;
       if (heading) heading.textContent = 'Progress to ' + next.name;
+    }
+
+    // ── Season XP dashboard mini-widget ──────────────────────────
+    function updateSeasonXpWidget(member) {
+      const widget = document.getElementById('season-xp-widget');
+      if (!widget) return;
+      const xp = member.season_xp || 0;
+      if (xp === 0 && !member.current_season_id) { widget.style.display = 'none'; return; }
+      widget.style.display = '';
+      const valEl   = document.getElementById('season-xp-val');
+      const barEl   = document.getElementById('season-xp-bar');
+      const labelEl = document.getElementById('season-xp-label');
+      if (valEl)   valEl.textContent  = xp.toLocaleString() + ' XP';
+      // Cap bar at 2000 XP (max season tier approximation until we have live season data)
+      const pct = Math.min(100, Math.round((xp / 2000) * 100));
+      if (barEl)   barEl.style.width  = pct + '%';
+      if (labelEl) labelEl.textContent = xp > 0
+        ? 'Season XP earned this season — open Season Pass for tier rewards'
+        : 'Play games and complete challenges to earn Season XP';
     }
 
     // ── Studio Pulse notice banner ────────────────────────────────

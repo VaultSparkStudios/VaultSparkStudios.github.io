@@ -1934,7 +1934,7 @@
                 <span class="vaultsparked-badge" id="profile-sparked-badge" style="display:none;">
                   <i class="vs-spark">⚡</i><span class="vs-text">VaultSparked</span>
                 </span>
-                <span class="profile-pts" id="profile-pts">10 pts</span>
+                <span class="profile-pts" id="profile-pts" aria-live="polite" aria-atomic="true">10 pts</span>
                 <span class="profile-pts" id="profile-since"></span>
                 <span class="member-number" id="profile-member-number"></span>
                 <span class="founding-badge" id="profile-founding-badge" style="display:none;">✦ Founding Member</span>
@@ -1979,6 +1979,7 @@
             <button type="button" class="dash-tab" id="tab-dash-polls" onclick="switchDashTab('polls')">🗳️ Polls</button>
             <button type="button" class="dash-tab" id="tab-dash-following" onclick="switchDashTab('following')">👥 Following</button>
             <button type="button" class="dash-tab" id="tab-dash-seasonpass" onclick="switchDashTab('seasonpass')">🏆 Season Pass</button>
+            <button type="button" class="dash-tab" id="tab-dash-treasury" onclick="switchDashTab('treasury')">🏦 Treasury</button>
             <button type="button" class="dash-tab" id="tab-dash-chronicle" onclick="switchDashTab('chronicle')">Chronicle</button>
             <button type="button" class="dash-tab" id="tab-dash-settings" onclick="switchDashTab('settings')">Profile &amp; Settings</button>
             <button type="button" class="dash-tab" id="tab-dash-admin" onclick="switchDashTab('admin')" style="display:none;">⚡ Vault Command</button>
@@ -2099,6 +2100,18 @@
                   <div id="rankProgressBar" style="height:100%;background:linear-gradient(90deg,#1FA2FF,#8B5CF6);border-radius:2px;transition:width 0.5s ease;width:0%;"></div>
                 </div>
                 <div id="rankNextLabel" style="font-size:0.72rem;color:var(--dim);margin-top:0.3rem;"></div>
+              </div>
+
+              <!-- Season XP Mini-Widget -->
+              <div id="season-xp-widget" style="display:none;margin-top:1rem;background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.15);border-radius:10px;padding:0.75rem 1rem;">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem;margin-bottom:0.45rem;">
+                  <span style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);">Season XP</span>
+                  <span id="season-xp-val" style="font-size:0.82rem;font-weight:800;color:var(--gold);">0</span>
+                </div>
+                <div style="height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;">
+                  <div id="season-xp-bar" style="height:100%;background:linear-gradient(90deg,#FFC400,#FF8C00);border-radius:2px;transition:width 0.5s ease;width:0%;"></div>
+                </div>
+                <div id="season-xp-label" style="font-size:0.68rem;color:var(--dim);margin-top:0.3rem;">Loading season…</div>
               </div>
             </div>
 
@@ -2499,14 +2512,18 @@
             </div>
           </div><!-- /dash-pane-chronicle -->
 
-          <!-- ── Tab: Following (Phase 44) ── -->
+          <!-- ── Tab: Following (Phase 49) ── -->
           <div class="dash-pane" id="dash-pane-following">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
-              <h3 style="margin:0;">Members You Follow</h3>
-              <a href="/members/" style="font-size:0.82rem;color:var(--muted);text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.1);">Browse all members →</a>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.75rem;">
+              <h3 style="margin:0;font-size:1.15rem;">Following Feed</h3>
+              <a href="/members/" class="button-secondary button-sm">Find Members to Follow</a>
             </div>
-            <div id="following-list" style="display:flex;flex-direction:column;gap:0.6rem;">
-              <div style="color:var(--muted);font-size:0.88rem;">Loading…</div>
+            <div id="following-feed-list" style="display:grid;gap:0.75rem;">
+              <p style="color:var(--muted);font-size:0.92rem;">Loading your following feed…</p>
+            </div>
+            <div id="following-empty" style="display:none;padding:2rem;text-align:center;">
+              <p style="color:var(--muted);font-size:0.95rem;margin-bottom:1rem;">You're not following anyone yet.</p>
+              <a href="/members/" class="button">Browse Members</a>
             </div>
           </div><!-- /dash-pane-following -->
 
@@ -2882,6 +2899,29 @@
               </div>
             </div>
           </div><!-- /dash-pane-seasonpass -->
+
+          <!-- ── Tab: Treasury ── -->
+          <div class="dash-pane" id="dash-pane-treasury">
+            <div class="dash-panel">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;margin-bottom:1.25rem;flex-wrap:wrap;">
+                <div>
+                  <div style="font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.25rem;">Vault Treasury</div>
+                  <h2 style="font-size:1.25rem;font-weight:800;margin:0;letter-spacing:-0.02em;">Points Marketplace</h2>
+                </div>
+                <div style="text-align:right;">
+                  <div style="font-size:0.72rem;color:var(--dim);margin-bottom:0.2rem;">Your Balance</div>
+                  <div id="treasury-balance" style="font-size:1.5rem;font-weight:900;color:var(--gold);letter-spacing:-0.03em;">—</div>
+                </div>
+              </div>
+              <div id="treasury-purchases-banner" style="display:none;background:rgba(31,162,255,0.07);border:1px solid rgba(31,162,255,0.15);border-radius:10px;padding:0.75rem 1rem;font-size:0.82rem;color:var(--muted);margin-bottom:1rem;"></div>
+              <div id="treasury-items-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:0.9rem;">
+                <!-- Populated by loadTreasury() in portal.js -->
+                <div class="lb-skeleton" style="height:130px;border-radius:12px;"></div>
+                <div class="lb-skeleton" style="height:130px;border-radius:12px;"></div>
+                <div class="lb-skeleton" style="height:130px;border-radius:12px;"></div>
+              </div>
+            </div>
+          </div><!-- /dash-pane-treasury -->
 
         </div>
       </section>

@@ -149,6 +149,7 @@
           <button class="lb-game-tab" role="tab" aria-selected="false" aria-controls="lb-panel-football" data-game="football">Football GM</button>
           <button class="lb-game-tab" role="tab" aria-selected="false" aria-controls="lb-panel-doodie" data-game="doodie">Call of Doodie</button>
           <button class="lb-game-tab" role="tab" aria-selected="false" aria-controls="lb-panel-teams" data-game="teams">🤝 Teams</button>
+          <button class="lb-game-tab" role="tab" aria-selected="false" aria-controls="lb-panel-weekly" data-game="weekly">⚡ Weekly</button>
         </div>
 
         <!-- Global Panel -->
@@ -313,6 +314,34 @@
             <a href="/vault-member/" class="button button-sm">Go to Dashboard</a>
           </div>
         </div><!-- /lb-panel-teams -->
+
+        <div class="lb-game-panel" id="lb-panel-weekly" role="tabpanel" aria-labelledby="tab-weekly">
+          <div class="lb-game-notice">
+            Top scores per game this week — resets every Monday. Submit scores by playing games as a signed-in Vault Member.
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin:1.25rem 0 1rem;">
+            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;" id="weekly-game-pills">
+              <button class="lb-period-tab active" data-wgame="call-of-doodie">Call of Doodie</button>
+              <button class="lb-period-tab" data-wgame="gridiron-gm">Gridiron GM</button>
+              <button class="lb-period-tab" data-wgame="vaultspark-football-gm">Football GM</button>
+            </div>
+            <div id="weekly-reset-countdown" style="font-size:0.82rem;color:var(--muted);"></div>
+          </div>
+          <div class="lb-table-wrap" id="weekly-table-wrap">
+            <table class="lb-table" aria-label="Weekly high score leaderboard">
+              <thead><tr><th>Rank</th><th>Player</th><th>Vault Rank</th><th>Score</th></tr></thead>
+              <tbody id="weekly-tbody"><tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody>
+            </table>
+          </div>
+          <div id="weekly-empty" style="display:none;padding:2rem;text-align:center;">
+            <p style="color:var(--muted);font-size:0.95rem;margin-bottom:1rem;">No scores recorded this week yet. Be the first!</p>
+            <a href="/games/" class="button button-sm">Play Games</a>
+          </div>
+          <div class="lb-cta-bar" style="margin-top:1.5rem;">
+            <p>Weekly board resets every Monday. Top 3 earn bonus Vault Points.</p>
+            <a href="/vault-member/#register" class="button button-sm">Join To Compete</a>
+          </div>
+        </div><!-- /lb-panel-weekly -->
 
       </div>
     </section>
@@ -691,8 +720,75 @@
           });
       }
 
+      // ── Weekly leaderboard ─────────────────────────────────────
+      function weeklyResetCountdown() {
+        var now = new Date();
+        var next = new Date(now);
+        var day = now.getDay(); // 0=Sun,1=Mon...
+        var daysUntilMon = day === 1 ? 7 : (8 - day) % 7 || 7;
+        next.setDate(now.getDate() + daysUntilMon);
+        next.setHours(0,0,0,0);
+        var diff = Math.max(0, next - now);
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var el = document.getElementById('weekly-reset-countdown');
+        if (el) el.textContent = 'Resets in ' + d + 'd ' + h + 'h ' + m + 'm';
+      }
+      weeklyResetCountdown();
+
+      var _weeklyGame = 'call-of-doodie';
+      function fetchWeeklyLeaderboard(gameSlug) {
+        _weeklyGame = gameSlug || _weeklyGame;
+        var tbody = document.getElementById('weekly-tbody');
+        var wrap  = document.getElementById('weekly-table-wrap');
+        var empty = document.getElementById('weekly-empty');
+        if (tbody) tbody.innerHTML = '<tr class="lb-skeleton"><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>'.repeat(3);
+
+        // ISO week start (Monday)
+        var now = new Date();
+        var day = now.getDay();
+        var weekStart = new Date(now);
+        weekStart.setDate(now.getDate() - (day === 0 ? 6 : day - 1));
+        weekStart.setHours(0,0,0,0);
+        var ws = weekStart.toISOString().slice(0,10);
+
+        fetch(SB+'/rest/v1/weekly_game_scores?select=rank,username,rank_title,score,week_start&game_slug=eq.'+encodeURIComponent(_weeklyGame)+'&week_start=eq.'+ws+'&order=score.desc&limit=25',{headers:H})
+          .then(function(r){return r.ok?r.json():[];})
+          .then(function(rows){
+            if(!Array.isArray(rows)||!rows.length){
+              if(wrap)wrap.style.display='none';
+              if(empty)empty.style.display='';
+              return;
+            }
+            if(wrap)wrap.style.display='';
+            if(empty)empty.style.display='none';
+            if(!tbody)return;
+            tbody.innerHTML=rows.map(function(r,i){
+              var medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':'';
+              return '<tr>'+
+                '<td><span class="lb-rank-num">'+(medal||i+1)+'</span></td>'+
+                '<td><span class="lb-username">'+esc(r.username)+'</span></td>'+
+                '<td><span class="lb-rank-title" style="color:var(--muted)">'+esc(r.rank_title||'')+'</span></td>'+
+                '<td><span class="lb-points">'+(r.score||0).toLocaleString()+'</span></td>'+
+                '</tr>';
+            }).join('');
+          })
+          .catch(function(){
+            if(tbody)tbody.innerHTML='<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:2rem;">Leaderboard temporarily unavailable.</td></tr>';
+          });
+      }
+
+      document.querySelectorAll('#weekly-game-pills [data-wgame]').forEach(function(pill){
+        pill.addEventListener('click',function(){
+          document.querySelectorAll('#weekly-game-pills [data-wgame]').forEach(function(p){p.classList.remove('active');});
+          pill.classList.add('active');
+          fetchWeeklyLeaderboard(pill.dataset.wgame);
+        });
+      });
+
       // Fetch game data on first tab activation (lazy)
-      var footballFetched = false, doodieFetched = false, challengesFetched = false, referralsFetched = false, teamsFetched = false;
+      var footballFetched = false, doodieFetched = false, challengesFetched = false, referralsFetched = false, teamsFetched = false, weeklyFetched = false;
       document.querySelectorAll('.lb-game-tab').forEach(function(b){
         b.addEventListener('click',function(){
           if(b.dataset.game==='challenges' && !challengesFetched){
@@ -714,6 +810,10 @@
           if(b.dataset.game==='teams' && !teamsFetched){
             teamsFetched=true;
             fetchTeamsLeaderboard();
+          }
+          if(b.dataset.game==='weekly' && !weeklyFetched){
+            weeklyFetched=true;
+            fetchWeeklyLeaderboard('call-of-doodie');
           }
         });
       });
