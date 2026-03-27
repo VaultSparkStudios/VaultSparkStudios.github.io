@@ -2,7 +2,8 @@
 
 ## Now
 
-- Nothing active.
+- [SIL] Hook VaultScore.submit() into game pages (Call of Doodie, VaultSpark Football GM) — SDK built, ~30 mins work [9.0]
+- [SIL] "Complete Your Vault" persistent onboarding CTA — post-registration checklist (avatar, first challenge, refer a friend) with bonus points [7.5]
 
 ## Next (Pending External Action)
 

@@ -39,6 +39,15 @@ Rate 0–10 per category at each closeout:
 
 ---
 
+<!-- rolling-status-start -->
+## Rolling Status (auto-updated each closeout)
+Sparkline (last 5 totals): ▁▃
+3-session avg: Dev 7.0 | Align 8.0 | Momentum 7.0 | Engage 3.0 | Process 6.0
+Avg total: 32.0 / 50  |  Velocity trend: →  |  Debt: →
+Last session: 2026-03-26 | Session 1 | Total: 32/50 | Velocity: 6
+─────────────────────────────────────────────────────────────────────
+<!-- rolling-status-end -->
+
 ## Entries
 
 ### 2026-03-26 — Studio OS onboarding
@@ -70,3 +79,28 @@ Rate 0–10 per category at each closeout:
 
 - [SIL] Fill out all context files with project-specific content
 - [SIL] Define first concrete milestone for Momentum tracking
+
+---
+
+## 2026-03-26 — Session 1 | Total: 32/50 | Velocity: 6 | Debt: →
+Rolling avg (last 3): Dev 7.0 | Align 8.0 | Momentum 7.0 | Engage 3.0 | Process 6.0 [N=1]
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 7 | ↑ | Solid Supabase RLS, PWA, CI, WebP, mobile pass; no real test suite, monolith SPA, pending SQL migrations |
+| Creative Alignment | 8 | ↑ | SOUL.md well adhered — dark atmosphere, Vault vocabulary, earned rank system; thin content holds back ceiling |
+| Momentum | 7 | ↑ | Historically extreme velocity (43 phases); externally stalled now (LLC, VAPID, Cloudflare) |
+| Engagement | 3 | ↑ | Pre-activation; all systems live but zero real member signals |
+| Process Quality | 7 | ↑ | Studio OS files bootstrapped + corrected this session; SIL markers added; PROJECT_STATUS fixed; context files updated |
+| **Total** | **32/50** | ↑ | |
+
+**Top win:** Full site audit completed — 67/100 score with clear category breakdown and 25-item innovation backlog
+**Top gap:** Engagement and business readiness are functionally blocked by LLC/VAPID/Cloudflare — no member activation until these unlock
+**Intent outcome:** Achieved — comprehensive audit, Studio Ops staleness corrected, innovation brainstorm delivered
+
+**Brainstorm**
+1. VaultScore.submit() hook in game pages — SDK built, ~30 mins work, activates season pass and game leaderboards immediately
+2. "Complete Your Vault" persistent onboarding CTA — converts new registrations to active members faster
+3. Vault Treasury / Points Marketplace — transforms points economy from earn-only to earn+spend, the missing endgame
+
+**Committed to TASK_BOARD:** [SIL] VaultScore.submit() hook into game pages · [SIL] "Complete Your Vault" persistent onboarding CTA
