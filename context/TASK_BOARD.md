@@ -2,10 +2,10 @@
 
 ## Now
 
-- [SIL] "Complete Your Vault" persistent onboarding CTA — post-registration checklist (avatar, first challenge, refer a friend) with bonus points [7.5]
 - [SIL] Vault Dispatch weekly email digest — infra ready (Resend), needs template + monthly cron trigger [8.5]
-- [SIL] Live Activity Feed on homepage — real vault events (rank-ups, challenge completions, leaderboard changes) surfaced publicly; highest-conversion improvement for new visitors [8.5]
 - [SIL] Per-game weekly high score leaderboard with reset — natural follow-on to VaultScore hookup; weekly competition loop that pulls players back [8.0]
+- [SIL] Expand Activity Feed to rank-ups, challenge completions, and game sessions — currently shows only joins; richer social proof for new visitors [8.0]
+- [SIL] Portal.js module split (auth / challenges / chronicle / settings) — 4,465+ lines; escalated after 3-session skip [7.5]
 
 ## Next (Pending External Action)
 
@@ -47,6 +47,13 @@
 - [ ] Game-specific Discord channels linked from game pages [4]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
+
+## Completed — Session 4 (2026-03-27)
+
+- ✅ Terms of Service page — `/terms/index.html`; 14 legal sections; footer link added to all 47 public HTML pages; sitemap entry added
+- ✅ "Complete Your Vault" onboarding checklist — `vault-member/index.html`; 5-step panel with progress bar; polls `_currentMember`; checks avatar, bio, challenge, game session via `Promise.all` count queries; dismissible; localStorage guard
+- ✅ Live Activity Feed on homepage — `index.html`; `#vault-signal-section` between dispatch strip and hero; `VSPublic.count().get()` single round-trip (data + total count); XSS-safe via `esc()` helper; hero member count updated from same response
+- ✅ Simplify fixes: XSS esc() applied to username/rank_title innerHTML, headCount() merged into feed request (double-fetch eliminated), select('*') → select('id') in vault-member count queries
 
 ## Completed — Phase 43 (2026-03-25)
 

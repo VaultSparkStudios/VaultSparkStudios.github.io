@@ -41,10 +41,10 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▁▄▅▅
-3-session avg: Dev 7.7 | Align 8.0 | Momentum 7.3 | Engage 3.0 | Process 8.3 [N=3]
-Avg total: 34.3 / 50 [N=3]  |  Velocity trend: →  |  Debt: →
-Last session: 2026-03-27 | Session 3 | Total: 35/50 | Velocity: 0
+Sparkline (last 5 totals): ▄▅▄▅
+3-session avg: Dev 8.0 | Align 8.0 | Momentum 8.0 | Engage 3.0 | Process 8.7
+Avg total: 35.7 / 50  |  Velocity trend: ↑  |  Debt: →
+Last session: 2026-03-27 | Session 4 | Total: 36/50 | Velocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -162,3 +162,32 @@ Rolling avg (last 3): Dev 7.7 | Align 8.0 | Momentum 7.3 | Engage 3.0 | Process 
 5. Vault Treasury / Points Marketplace — transforms points economy from earn-only to earn+spend; the "endgame" that drives long-term retention
 
 **Committed to TASK_BOARD:** [SIL] Live Activity Feed on homepage · [SIL] Per-game weekly high score leaderboard
+
+---
+
+## 2026-03-27 — Session 4 | Total: 36/50 | Velocity: 3 | Debt: →
+Rolling avg (last 3): Dev 8.0 | Align 8.0 | Momentum 8.0 | Engage 3.0 | Process 8.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 8 | → | XSS introduced + fixed via simplify; double-fetch eliminated; select('id') cleanup; no test suite still |
+| Creative Alignment | 8 | → | ToS, onboarding CTA, Activity Feed all SOUL-aligned — legal completeness, member activation, social proof |
+| Momentum | 9 | ↑ | 3 real features shipped: Terms of Service, Complete Your Vault onboarding, Live Activity Feed |
+| Engagement | 3 | → | Pre-activation; Activity Feed ready to show real data once members exist |
+| Process Quality | 8 | ↓ | XSS snuck through initial write, caught only by simplify — gap in default innerHTML pattern; otherwise protocol solid |
+| **Total** | **36/50** | ↑ | |
+
+**Top win:** Three significant features shipped in one session — Terms of Service, Complete Your Vault onboarding checklist, Live Activity Feed — plus a simplify pass fixing XSS and eliminating a double round-trip to vault_members.
+**Top gap:** XSS in Activity Feed innerHTML was written without an esc() helper on first pass — simplify caught it, but it should be caught at write time; need esc() as a default in any future inline HTML construction.
+**Intent outcome:** Achieved — all three planned features from the SIL backlog shipped and simplify fixes pushed to main.
+
+**IGNIS note:** Shipping three features in one session while simplify caught an XSS mid-flight confirms that inline innerHTML construction needs an in-scope esc() helper as a default pattern — make it a rule at write time, not a remediation step.
+
+**Brainstorm**
+1. Real-time Activity Feed expansion — currently shows only member joins from vault_members; extend to rank-ups, challenge completions, game sessions for a richer social proof feed
+2. Portal.js module split — skipped 3 sessions; at 4,465+ lines this is the top Dev Health ceiling item; escalate to Now
+3. New member onboarding email sequence — first email on join + 3-day nudge; pairs with Complete Your Vault checklist to reduce cold signup abandonment (Resend infra ready)
+4. XSS-safe innerHTML pattern — extract esc() to assets/dom-utils.js so all future HTML-building code imports it automatically rather than re-declaring per script
+5. Vault Treasury / Points Marketplace — earn-only economy has no endgame; a basic redemption catalog (Discord cosmetics, avatar unlocks) transforms retention
+
+**Committed to TASK_BOARD:** [SIL] Expand Activity Feed to rank-ups, challenges, game sessions · [SIL] Portal.js module split (escalated to Now)

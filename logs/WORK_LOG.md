@@ -4,6 +4,24 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-27 — Session 4: Terms / Onboarding / Activity Feed + Simplify
+
+- Goal: Ship Terms of Service page, "Complete Your Vault" onboarding CTA, Live Activity Feed; apply simplify fixes
+- What changed:
+  - `terms/index.html`: created — 14-section Terms of Service page
+  - 47 public HTML files: footer updated with Terms of Service link
+  - `sitemap.xml`: `/terms/` entry added
+  - `vault-member/index.html`: "Complete Your Vault" 5-step onboarding panel + inline script; select('*') → select('id') in count queries
+  - `index.html`: Live Activity Feed section + script; headCount() block removed; script updated with esc(), .count().get(), hero member count update
+  - Context files: SELF_IMPROVEMENT_LOOP.md, TASK_BOARD.md, LATEST_HANDOFF.md, WORK_LOG.md updated
+  - `audits/2026-03-27-3.json`: Session 4 audit JSON created (36/50)
+  - `context/PROJECT_STATUS.json`: SIL fields updated (silScore 35→36, silAvg3→35.7, silVelocity→3)
+- Commits: fa77136 (Terms + footer + sitemap), 5f4436b (simplify: XSS fix, double-fetch merge, select cleanup)
+- Risks created or removed: XSS risk removed (esc() applied to username/rank_title in Activity Feed)
+- Recommended next move: Vault Dispatch weekly email, per-game leaderboard, expand Activity Feed events
+
+---
+
 ### 2026-03-27 — Session 3: compacted-resume closeout
 
 - Goal: Complete Session 2 closeout after context window reset

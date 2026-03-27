@@ -2,20 +2,34 @@
 
 Last updated: 2026-03-27
 
-Session Intent (2026-03-27): Complete Session 2 closeout (CDR, audit JSON, PROJECT_STATUS) after context window reset.
+Session Intent (2026-03-27): Ship Terms of Service, "Complete Your Vault" onboarding, and Live Activity Feed; simplify fixes.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
-## Where We Left Off (Session 3)
+## Where We Left Off (Session 4)
 
-- Shipped: 0 code changes — closeout-only session (completed compacted Session 2 closeout: CDR entry, audit JSON, PROJECT_STATUS SIL fields, git commit 8ef3a60 pushed to origin)
+- Shipped: 4 improvements across 3 groups — legal (Terms of Service + footer links on 47 pages), member activation ("Complete Your Vault" onboarding checklist in vault portal), homepage conversion (Live Activity Feed with esc() XSS safety + merged member count fetch)
 - Tests: N/A — no test suite
-- Deploy: deployed (all session 2 + session 3 closeout commits on main)
+- Deploy: deployed to main (commit 5f4436b pushed)
 
 ---
 
-## What was completed (as of 2026-03-27 — this session)
+## What was completed (as of 2026-03-27 — Session 4)
+
+### Session 4 — Terms / Onboarding / Activity Feed + Simplify (2026-03-27)
+
+**Shipped:**
+- Terms of Service page (`/terms/index.html`) — 14 legal sections, full SEO meta; footer link added to all 47 public HTML pages; `/terms/` entry in sitemap.xml
+- "Complete Your Vault" onboarding panel in vault-member portal — 5-step checklist with gold progress bar; polls `_currentMember` via 500ms setInterval (30s max); checks avatar, bio, challenge, game session via `Promise.all` count queries; dismissible with localStorage guard
+- Live Activity Feed on homepage (`#vault-signal-section`) — 8-card grid between dispatch strip and hero section; single `VSPublic.count().get()` round-trip returns both member rows and total count; hero member count updated from same response (eliminates headCount() double-fetch)
+- Simplify pass: `esc()` HTML escape helper applied to `m.username` and `m.rank_title`; `select('*')` → `select('id')` in vault-member count queries
+
+**Commits:** fa77136 (Terms of Service), 5f4436b (simplify fixes — XSS, double-fetch, select)
+
+---
+
+## What was completed (as of 2026-03-27 — Session 3/2 closeout)
 
 ### Audit Session 2 — Leverage Items + Simplify (2026-03-27)
 
@@ -66,18 +80,19 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## What is mid-flight
 
-- Nothing. All pushed to main (949f9d9).
+- Nothing. All pushed to main (5f4436b).
 
 ---
 
 ## What to do next (in order)
 
-1. **[SIL] Terms of Service page** — legal requirement; 2-hour content task; investor red flag until done [7.0]
-2. **[SIL] "Complete Your Vault" onboarding CTA** — post-registration checklist to convert signups to active members [7.5]
-3. **[SIL] Vault Dispatch weekly email** — Resend infra ready; needs template + cron trigger [8.5]
-4. **Cloudflare proxy** — DNS change on registrar; unblocks HTTP security headers (HSTS, CSP, X-Content-Type-Options) [10]
-5. **VAPID keys** — generate + set secrets → activates web push end-to-end [9]
-6. **Run pending SQL migrations** — phases 40, 41, 43, 45 (fan art, teams, game scores, seasons, newsletter)
+1. **[SIL] Vault Dispatch weekly email** — Resend infra ready; needs template + cron trigger [8.5]
+2. **[SIL] Per-game weekly high score leaderboard** — natural follow-on to VaultScore hookup [8.0]
+3. **[SIL] Expand Activity Feed** — add rank-ups, challenge completions, game sessions (currently joins only) [8.0]
+4. **[SIL] Portal.js module split** — escalated; 4,465+ lines is top Dev Health ceiling item [7.5]
+5. **Cloudflare proxy** — DNS change on registrar; unblocks HTTP security headers (HSTS, CSP, X-Content-Type-Options) [10]
+6. **VAPID keys** — generate + set secrets → activates web push end-to-end [9]
+7. **Run pending SQL migrations** — phases 40, 41, 43, 45 (fan art, teams, game scores, seasons, newsletter)
 
 ## Human Action Required
 
