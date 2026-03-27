@@ -21,7 +21,7 @@
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="../assets/style.css" />
   <script src="../assets/kit.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js" integrity="sha384-tuevtT+97g9yLeuT/m52ejUJbc0hzsN6MPLiQEccySreiGjrcgk2tMBJR7/l6HGM" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" integrity="sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb" crossorigin="anonymous" defer></script>
   <script src="../assets/supabase-client.js"></script>
 
@@ -1619,7 +1619,12 @@
     }
   </style>
 
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/cookie-consent.js" defer></script>
@@ -1635,7 +1640,7 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/dunescape/">Dunescape</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
         <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
         <a href="/universe/">Universe</a>
         <a href="/studio/">Studio</a>
@@ -2065,7 +2070,7 @@
                 </div>
                 <div class="game-connection">
                   <div class="game-dot" style="background:#10B981;"></div>
-                  <span class="game-name">Dunescape</span>
+                  <span class="game-name">Solara</span>
                   <span class="game-status" style="background:rgba(148,163,184,0.1);color:#94a3b8;border:1px solid rgba(148,163,184,0.18);font-size:.77rem;padding:.28rem .6rem;border-radius:999px;font-weight:700;">In Dev</span>
                 </div>
               </div>
@@ -2262,7 +2267,7 @@
                 </div>
                 <div style="padding:0.85rem 1rem;border-radius:14px;border:1px solid rgba(31,162,255,0.18);background:rgba(31,162,255,0.04);">
                   <div style="display:flex;justify-content:space-between;align-items:center;gap:0.5rem;margin-bottom:0.3rem;">
-                    <span style="font-weight:700;font-size:0.88rem;">Dunescape</span>
+                    <span style="font-weight:700;font-size:0.88rem;">Solara</span>
                     <span style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#7dd3fc;">In Dev</span>
                   </div>
                   <span style="font-size:0.78rem;color:var(--dim);">Fantasy MMORPG</span>
@@ -2318,7 +2323,7 @@
                 <div style="padding:1.2rem;border-radius:14px;border:1px solid rgba(31,162,255,0.14);background:rgba(31,162,255,0.03);">
                   <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:#7dd3fc;margin-bottom:0.65rem;">NEXT SIGNAL // WHAT'S COMING</div>
                   <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;margin-bottom:0.75rem;">
-                    The DreadSpike chapter in the Vault Universe is not a standalone arc. The entity is woven through the foundation of every world we're building — present in Dunescape's mythic layer, referenced in VaultFront's intel reports, and structurally embedded in what MindFrame is about.
+                    The DreadSpike chapter in the Vault Universe is not a standalone arc. The entity is woven through the foundation of every world we're building — present in Solara's mythic layer, referenced in VaultFront's intel reports, and structurally embedded in what MindFrame is about.
                   </p>
                   <p style="color:var(--muted);font-size:0.9rem;line-height:1.7;">
                     Vault Members will receive the next classified file <strong style="color:#fff;">before it becomes public</strong>. The next drop: <em>The Cartographers — those who mapped DreadSpike and didn't return whole</em>.
@@ -3139,17 +3144,6 @@
 
   <script src="/assets/pwa-install.js" defer></script>
 
-  <!-- Sentry: replace https://77226e22e29e4528c8a980b4c6cd9c58@o4511104924909568.ingest.us.sentry.io/4511104933298176 with your DSN from sentry.io -->
-  <script
-    src="https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js"
-    crossorigin="anonymous"
-  ></script>
-  <script>
-    Sentry.init({
-      dsn: "https://77226e22e29e4528c8a980b4c6cd9c58@o4511104924909568.ingest.us.sentry.io/4511104933298176",
-      tracesSampleRate: 0.1,
-      environment: location.hostname === 'localhost' ? 'development' : 'production',
-    });
-  </script>
+  <script src="/assets/sentry-init.js" defer></script>
 </body>
 </html>

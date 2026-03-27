@@ -437,7 +437,7 @@
       btn.textContent = 'Sending…';
       btn.disabled    = true;
       try {
-        const redirectTo = window.location.origin + window.location.pathname + '#reset';
+        const redirectTo = window.location.origin + '/vault-member/';
         const { error } = await VSSupabase.auth.resetPasswordForEmail(email, { redirectTo });
         if (error) throw new Error(error.message);
         successEl.textContent = 'Reset link sent! Check your inbox (and spam folder) for an email from VaultSpark Studios.';

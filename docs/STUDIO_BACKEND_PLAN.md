@@ -91,8 +91,8 @@ For example:
 
 - `vaultfront-play`
 - `vaultfront-api`
-- `dunescape-play`
-- `dunescape-api`
+- `solara-play`
+- `solara-api`
 
 ## Data model standard
 
@@ -103,7 +103,7 @@ Default database rule:
 Examples:
 
 - `vaultfront_db`
-- `dunescape_db`
+- `solara_db`
 
 Do not share a single schema/database across all games unless there is a strong
 technical reason.
@@ -113,7 +113,7 @@ Redis may be shared, but use per-game key prefixes.
 Examples:
 
 - `vaultfront:*`
-- `dunescape:*`
+- `solara:*`
 
 ## Reverse proxy standard
 

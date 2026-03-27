@@ -178,8 +178,8 @@ const PAGES = [
     badge:    '⚡ VAULTSPARK STUDIOS',
   },
   {
-    slug:     'og-dunescape',
-    title:    'Dunescape',
+    slug:     'og-solara',
+    title:    'Solara',
     sub:      'Desert survival strategy · Free browser game',
     accent:   '#F59E0B',
     glow:     'rgba(245,158,11,0.18)',

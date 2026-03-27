@@ -48,7 +48,7 @@ Repo names are lowercase with hyphens. Repo name and public slug are always iden
 
 | Game | Repo name | Public slug | Public URL |
 |---|---|---|---|
-| Dunescape | `dunescape` | `dunescape` | `https://vaultsparkstudios.com/dunescape/` |
+| Solara | `solara` | `solara` | `https://vaultsparkstudios.com/solara/` |
 | VaultFront | `vaultfront` | `vaultfront` | `https://vaultsparkstudios.com/vaultfront/` |
 | Call Of Doodie | `call-of-doodie` | `call-of-doodie` | `https://vaultsparkstudios.com/call-of-doodie/` |
 | Gridiron GM | `gridiron-gm` | `gridiron-gm` | `https://vaultsparkstudios.com/gridiron-gm/` |

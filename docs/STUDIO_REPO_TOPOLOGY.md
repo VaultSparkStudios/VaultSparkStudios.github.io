@@ -31,7 +31,7 @@ Suggested naming:
 - `vaultfront`
 - `gridiron-gm`
 - `call-of-doodie`
-- `dunescape`
+- `solara`
 
 Purpose:
 

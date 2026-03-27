@@ -53,7 +53,7 @@ Keep one repo per game plus one studio-site repo.
   - `VaultSparkStudios.github.io`
 - Game repos (lowercase with hyphens — GitHub recommended convention):
   - `vaultfront`
-  - `dunescape`
+  - `solara`
   - `call-of-doodie`
   - `gridiron-gm`
 
@@ -75,7 +75,7 @@ Every game gets a slug. The slug is identical to the repo name.
 | Repo name | Public slug | Game deploy URL | Studio landing page |
 |---|---|---|---|
 | `vaultfront` | `vaultfront` | `https://vaultsparkstudios.com/vaultfront/` | `https://vaultsparkstudios.com/games/vaultfront/` |
-| `dunescape` | `dunescape` | `https://vaultsparkstudios.com/dunescape/` | `https://vaultsparkstudios.com/games/dunescape/` |
+| `solara` | `solara` | `https://vaultsparkstudios.com/solara/` | `https://vaultsparkstudios.com/games/solara/` |
 | `call-of-doodie` | `call-of-doodie` | `https://vaultsparkstudios.com/call-of-doodie/` | `https://vaultsparkstudios.com/games/call-of-doodie/` |
 | `gridiron-gm` | `gridiron-gm` | `https://vaultsparkstudios.com/gridiron-gm/` | `https://vaultsparkstudios.com/games/gridiron-gm/` |
 | `vaultspark-football-gm` | `vaultspark-football-gm` | `https://vaultsparkstudios.com/vaultspark-football-gm/` | `https://vaultsparkstudios.com/games/vaultspark-football-gm/` |
@@ -112,8 +112,8 @@ Examples:
 
 - `https://play-vaultfront.vaultsparkstudios.com`
 - `https://api-vaultfront.vaultsparkstudios.com`
-- `https://play-dunescape.vaultsparkstudios.com`
-- `https://api-dunescape.vaultsparkstudios.com`
+- `https://play-solara.vaultsparkstudios.com`
+- `https://api-solara.vaultsparkstudios.com`
 
 Rules:
 
@@ -184,9 +184,9 @@ Per game repo, define the same variable names.
 
 Variables:
 
-- `GAME_SLUG` — lowercase public slug (e.g. `dunescape`)
-- `GAME_SERVICE_ORIGIN` — e.g. `https://play-dunescape.vaultsparkstudios.com`
-- `API_DOMAIN` — e.g. `api-dunescape.vaultsparkstudios.com`
+- `GAME_SLUG` — lowercase public slug (e.g. `solara`)
+- `GAME_SERVICE_ORIGIN` — e.g. `https://play-solara.vaultsparkstudios.com`
+- `API_DOMAIN` — e.g. `api-solara.vaultsparkstudios.com`
 - `STUDIO_SITE_BRANCH` — branch to push bundle into (typically `main`)
 
 Secrets:

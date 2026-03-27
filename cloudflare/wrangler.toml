@@ -1,0 +1,8 @@
+name = "vaultspark-security-headers"
+main = "security-headers-worker.js"
+compatibility_date = "2024-01-01"
+
+[env.production]
+routes = [
+  { pattern = "vaultsparkstudios.com/*", zone_name = "vaultsparkstudios.com" }
+]

@@ -39,7 +39,7 @@
 - [x] Per-game weekly high score leaderboard with reset ✅ CODED (session 5) — needs SQL migration run
 - [x] Expand Activity Feed ✅ SHIPPED (session 5) — rank-ups, challenges, game sessions now in feed
 - [x] Accessibility: focus ring + aria-live ✅ SHIPPED (session 5)
-- [x] Unreleased game pages content fill ✅ SHIPPED (session 5) — Dunescape, MindFrame, VaultFront, Project Unknown
+- [x] Unreleased game pages content fill ✅ SHIPPED (session 5) — Solara, MindFrame, VaultFront, Project Unknown
 - [ ] Member Social Graph ✅ CODED (session 5) — follow/unfollow + Following Feed; needs SQL migration run
 - [ ] Annual VaultSparked pricing tier [8.5] — pending LLC + Stripe production
 - [ ] Gift subscriptions (Stripe) [6.8] — pending LLC + Stripe production
@@ -77,7 +77,7 @@
 - ✅ Game Demo Embed Infrastructure — demo section on call-of-doodie, gridiron-gm, vaultspark-football-gm; responsive iframe slot + "Demo Coming Soon" placeholder state
 - ✅ Expand Activity Feed — homepage feed now shows rank-ups, challenge completions, game sessions alongside joins via Promise.allSettled
 - ✅ Accessibility: focus ring light-mode fix — body.light-mode :focus-visible outline-color: #1a2040; aria-live on toast + points display in portal
-- ✅ Unreleased game pages content — Dunescape (MMORPG mechanics, factions, stats), MindFrame (cognitive puzzle, adaptive engine, 60 chambers), VaultFront (asymmetric RTS, convoy timing), Project Unknown (classified aesthetic, lore-gated brief)
+- ✅ Unreleased game pages content — Solara (MMORPG mechanics, factions, stats), MindFrame (cognitive puzzle, adaptive engine, 60 chambers), VaultFront (asymmetric RTS, convoy timing), Project Unknown (classified aesthetic, lore-gated brief)
 
 ## Completed — Session 4 (2026-03-27)
 

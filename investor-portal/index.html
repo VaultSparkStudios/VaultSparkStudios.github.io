@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../assets/style.css" />
   <link rel="stylesheet" href="../assets/investor-theme.css" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js" integrity="sha384-tuevtT+97g9yLeuT/m52ejUJbc0hzsN6MPLiQEccySreiGjrcgk2tMBJR7/l6HGM" crossorigin="anonymous"></script>
   <script src="../assets/supabase-client.js"></script>
   <script src="../assets/investor-auth.js"></script>
   <script src="../assets/investor-ui.js"></script>
@@ -177,7 +177,12 @@
     .inv-ask-status.err { color: #D62828; }
   </style>
 
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 </head>
 <body class="investor-portal">
@@ -732,12 +737,6 @@
     });
   </script>
 
-  <!-- Sentry: replace DSN below with your DSN from sentry.io -->
-  <script
-    src="https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js"
-    crossorigin="anonymous"
-    async
-    onload="Sentry.init({dsn:'https://77226e22e29e4528c8a980b4c6cd9c58@o4511104924909568.ingest.us.sentry.io/4511104933298176',tracesSampleRate:0.1,environment:location.hostname==='localhost'?'development':'production'})"
-  ></script>
+  <script src="/assets/sentry-init.js" defer></script>
 </body>
 </html>

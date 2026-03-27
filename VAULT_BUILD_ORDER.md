@@ -114,7 +114,7 @@ create table public.classified_files (
   title        text not null,
   classification text not null,  -- 'EYES ONLY', 'RESTRICTED', etc.
   rank_required integer not null default 0,  -- min RANKS index (0=all, 3=Vault Keeper+)
-  universe_tag text,             -- 'dreadspike', 'dunescape', etc.
+  universe_tag text,             -- 'dreadspike', 'solara', etc.
   content_html text not null,
   published_at timestamptz,
   created_at   timestamptz default now()

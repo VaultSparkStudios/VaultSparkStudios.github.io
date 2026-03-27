@@ -130,7 +130,12 @@
     }
   </style>
 
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 <script src="/assets/theme-toggle.js"></script>
 <script src="/assets/analytics.js" defer></script>
@@ -147,7 +152,7 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/dunescape/">Dunescape</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
         <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
         <a href="/universe/">Universe</a>
         <a href="/studio/">Studio</a>
@@ -255,21 +260,17 @@
 
   <script src="/assets/kit.js" defer></script>
   <script src="/assets/cookie-consent.js" defer></script>
-  <script>
-    const hamburger=document.getElementById('hamburger'),navMenu=document.getElementById('nav-menu');
-    hamburger.addEventListener('click',()=>{const o=navMenu.classList.toggle('open');hamburger.setAttribute('aria-expanded',o);document.body.style.overflow=o?'hidden':'';});
-    navMenu.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{navMenu.classList.remove('open');hamburger.setAttribute('aria-expanded','false');document.body.style.overflow='';}));
-  </script>
+  <script src="/assets/nav-toggle.js" defer></script>
   <script>
     (function() {
       'use strict';
 
       var SEARCH_INDEX = [
-        { title: 'Games Hub', url: '/games/', desc: 'All VaultSpark Studios games — Call of Doodie, Gridiron GM, Football GM, VaultFront, Dunescape', tags: ['games'] },
+        { title: 'Games Hub', url: '/games/', desc: 'All VaultSpark Studios games — Call of Doodie, Gridiron GM, Football GM, VaultFront, Solara', tags: ['games'] },
         { title: 'Call of Doodie', url: '/games/call-of-doodie/', desc: 'Fast-paced browser-based action comedy shooter', tags: ['games', 'action'] },
         { title: 'Gridiron GM', url: '/games/gridiron-gm/', desc: 'NFL franchise management simulator with 32 teams', tags: ['games', 'sports', 'simulation'] },
         { title: 'VaultSpark Football GM', url: '/games/vaultspark-football-gm/', desc: 'Deep NFL front-office simulation game', tags: ['games', 'sports'] },
-        { title: 'Dunescape', url: '/games/dunescape/', desc: 'Desert survival strategy game', tags: ['games', 'strategy'] },
+        { title: 'Solara', url: '/games/solara/', desc: 'Desert survival strategy game', tags: ['games', 'strategy'] },
         { title: 'Vault Member', url: '/vault-member/', desc: 'Join the Vault — earn points, climb ranks, access exclusive content', tags: ['membership', 'community'] },
         { title: 'Leaderboards', url: '/leaderboards/', desc: 'Vault Points leaderboard — top community members ranked', tags: ['community', 'leaderboard'] },
         { title: 'Community Hub', url: '/community/', desc: 'Discord, fan art, challenges, and community events', tags: ['community'] },

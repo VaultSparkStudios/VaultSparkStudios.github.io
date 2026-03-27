@@ -44,7 +44,7 @@ studio handoff (2026-03-10). All work is committed and deployed to GitHub Pages.
 |------|------|--------|------------|
 | Call of Doodie | `call-of-doodie` | Playable Prototype | `https://vaultsparkstudios.com/call-of-doodie/` |
 | VaultSpark Football GM | `vaultspark-football-gm` | Client Beta | `https://vaultsparkstudios.com/vaultspark-football-gm/` |
-| Dunescape | `dunescape` | In Development | — |
+| Solara | `solara` | In Development | — |
 | VaultFront | `vaultfront` | In Development | — |
 
 ## Next required studio-side actions

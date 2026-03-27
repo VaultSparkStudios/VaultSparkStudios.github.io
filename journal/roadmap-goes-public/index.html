@@ -80,7 +80,12 @@
     @media (max-width: 900px) { .post-layout { grid-template-columns: 1fr; } .post-sidebar { display: none; } }
     @media (max-width: 640px) { .post-title { font-size: clamp(1.6rem, 7vw, 2.2rem); } }
   </style>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
 <script src="/assets/theme-toggle.js"></script>
 <script src="/assets/analytics.js" defer></script>
@@ -97,7 +102,7 @@
     </a>
     <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
       <a href="/">Home</a>
-      <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/dunescape/">Dunescape</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+      <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
       <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
       <a href="/universe/">Universe</a>
       <a href="/studio/">Studio</a>
@@ -165,7 +170,7 @@
             </p>
             <div class="entry-divider"></div>
             <p>
-              The Vault Pipeline currently shows six active projects alongside the three games already live. VaultFront, Dunescape, MindFrame, and Project Unknown are all in various stages of development. PromoGrind and Signal Log are live projects. The pipeline page shows the current status of each — from early concept through active build to shipped.
+              The Vault Pipeline currently shows six active projects alongside the three games already live. VaultFront, Solara, MindFrame, and Project Unknown are all in various stages of development. PromoGrind and Signal Log are live projects. The pipeline page shows the current status of each — from early concept through active build to shipped.
             </p>
             <p>
               We update it when things change. When a project moves stages, the pipeline reflects it. When something new enters the vault, it goes on the board. Nothing disappears quietly.
@@ -221,7 +226,7 @@
             <h3>The Pipeline</h3>
             <a class="archive-link" href="/roadmap/"><span>Vault Pipeline</span></a>
             <a class="archive-link" href="/games/vaultfront/"><span>VaultFront</span></a>
-            <a class="archive-link" href="/games/dunescape/"><span>Dunescape</span></a>
+            <a class="archive-link" href="/games/solara/"><span>Solara</span></a>
             <a class="archive-link" href="/games/mindframe/"><span>MindFrame</span></a>
           </div>
           <div class="sidebar-block">
@@ -393,22 +398,7 @@
   else { loadReactions(); recordView(); }
 })();
 </script>
-<script>
-  const hamburger = document.getElementById('hamburger');
-  const navMenu = document.getElementById('nav-menu');
-  hamburger.addEventListener('click', () => {
-    const isOpen = navMenu.classList.toggle('open');
-    hamburger.setAttribute('aria-expanded', isOpen);
-    document.body.style.overflow = isOpen ? 'hidden' : '';
-  });
-  navMenu.querySelectorAll('a').forEach(link => {
-    link.addEventListener('click', () => {
-      navMenu.classList.remove('open');
-      hamburger.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    });
-  });
-</script>
+<script src="/assets/nav-toggle.js" defer></script>
 <script src="/assets/cookie-consent.js" defer></script>
 </body>
 </html>

@@ -59,7 +59,7 @@
         { id: 'gridiron',   emoji: '🏈', bg: 'rgba(31,162,255,0.16)',  label: 'Gridiron'     },
         { id: 'doodie',     emoji: '💩', bg: 'rgba(255,122,0,0.16)',   label: 'Doodie'       },
         { id: 'vaultfront', emoji: '⚔️', bg: 'rgba(201,206,214,0.12)', label: 'VaultFront'   },
-        { id: 'dunescape',  emoji: '🏜️', bg: 'rgba(251,191,36,0.14)',  label: 'Dunescape'    },
+        { id: 'solara',  emoji: '🏜️', bg: 'rgba(251,191,36,0.14)',  label: 'Solara'    },
         { id: 'mindframe',  emoji: '🧠', bg: 'rgba(139,92,246,0.16)',  label: 'MindFrame'    },
         { id: 'vault',      emoji: '🔒', bg: 'rgba(255,196,0,0.12)',   label: 'Vault Keeper' },
         { id: 'sparked',    emoji: '🌟', bg: 'rgba(255,196,0,0.22)',   label: 'The Sparked'  },

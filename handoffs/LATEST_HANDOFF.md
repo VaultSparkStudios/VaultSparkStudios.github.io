@@ -66,7 +66,7 @@ All games live in `games/index.html`. Filter by `data-status`: `live`, `beta`, `
 | Gridiron GM | live | `/gridiron-gm/game.html` | `/games/gridiron-gm/` |
 | VaultSpark Football GM | beta | `/vaultspark-football-gm/` (sep. repo) | `/games/vaultspark-football-gm/` |
 | VaultFront | dev | `/vaultfront/` | `/games/vaultfront/` |
-| Dunescape | dev | (not yet deployed) | `/games/dunescape/` |
+| Solara | dev | (not yet deployed) | `/games/solara/` |
 | MindFrame | concept | — | `/games/mindframe/` |
 | Project ??? | concept | — | `/games/project-unknown/` |
 
@@ -101,7 +101,7 @@ GitHub repo slugs per game:
 | Gridiron GM | `gridiron-gm` |
 | VaultSpark Football GM | `vaultspark-football-gm` |
 | VaultFront | `vaultfront` |
-| Dunescape | `dunescape` |
+| Solara | `solara` |
 
 ---
 
@@ -157,7 +157,7 @@ Landing pages needed:
 - `games/gridiron-gm/index.html` (migrate from `/gridiron-gm/`)
 - `games/vaultspark-football-gm/index.html` (new — do NOT touch `/vaultspark-football-gm/` dir)
 - `games/vaultfront/index.html`
-- `games/dunescape/index.html`
+- `games/solara/index.html`
 - `games/mindframe/index.html`
 - `games/project-unknown/index.html`
 

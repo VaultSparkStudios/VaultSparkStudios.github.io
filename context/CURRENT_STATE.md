@@ -16,7 +16,7 @@
   - Game Demo Embeds: demo section on call-of-doodie, gridiron-gm, vaultspark-football-gm; responsive iframe slot + "Demo Coming Soon" placeholder; replace placeholder with iframe src when build ready
   - Activity Feed (expanded): homepage vault-signal-section now shows joins + challenge completions + game sessions via Promise.allSettled; type-coded dots (gold=join, blue=challenge, green=game)
   - Accessibility: body.light-mode :focus-visible uses #1a2040 outline (passes WCAG AA); aria-live="polite" on toast + points display in portal
-  - Unreleased game content: Dunescape (MMORPG factions, economy, 6 feature items, stats grid, Late 2026 target), MindFrame (60 chambers, adaptive engine, competitive mode, Mid 2027 target), VaultFront (asymmetric RTS, convoy timing, 6 feature items, stats grid, Summer 2026 closed beta), Project Unknown (classified aesthetic maintained, Rift Scout rank required for brief)
+  - Unreleased game content: Solara (MMORPG factions, economy, 6 feature items, stats grid, Late 2026 target), MindFrame (60 chambers, adaptive engine, competitive mode, Mid 2027 target), VaultFront (asymmetric RTS, convoy timing, 6 feature items, stats grid, Summer 2026 closed beta), Project Unknown (classified aesthetic maintained, Rift Scout rank required for brief)
   - Supabase auth (email/password, Google OAuth, Discord OAuth)
   - Vault Member portal (`vault-member/index.html`) — single-file SPA
   - 9-tier rank system with distinct badge colors and Discord role sync
