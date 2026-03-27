@@ -27,6 +27,7 @@ export function getHubRuntimeConfig() {
     supabaseAnonKey: getParam("supabaseAnonKey", getStored("supabaseAnonKey", getMeta("hub-supabase-anon-key", ""))),
     youtubeApiKey:  getParam("youtubeApiKey",  getStored("youtubeApiKey",  getMeta("hub-youtube-api-key", ""))),
     gumroadToken:   getParam("gumroadToken",   getStored("gumroadToken",   getMeta("hub-gumroad-token",   ""))),
+    pagespeedApiKey: getParam("pagespeedApiKey", getStored("pagespeedApiKey", getMeta("hub-pagespeed-api-key", ""))),
     githubCacheTtlMs: 300000,
     socialCacheTtlMs: 600000,
   };

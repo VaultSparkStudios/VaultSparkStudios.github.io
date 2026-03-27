@@ -7,6 +7,7 @@ import { fmt, timeAgo, daysSince, ciStatus } from "../utils/helpers.js";
 import { forecastScores, getOverallForecastAccuracy, monteCarloForecast } from "../utils/scoreForecast.js";
 import { deltaBadge } from "./hub/hubHelpers.js";
 import { getScoreAnomalies } from "./hub/morningBrief.js";
+import { computeWebsiteHealthScore, SITE_PAGES, SITE_URL } from "../data/websiteAnalytics.js";
 
 // ── Color + Grade helpers ─────────────────────────────────────────────────────
 function scoreColor(v) {
@@ -1480,6 +1481,377 @@ function renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores
   `;
 }
 
+// ══════════════════════════════════════════════════════════════════════════════
+// WEBSITE ANALYTICS TAB
+// ══════════════════════════════════════════════════════════════════════════════
+
+function cwvGrade(metric, value) {
+  if (value == null) return { label: "—", color: "var(--muted)" };
+  const thresholds = {
+    lcp:  [2500, 4000],
+    fid:  [100, 300],
+    cls:  [0.1, 0.25],
+    inp:  [200, 500],
+    fcp:  [1800, 3000],
+    tbt:  [200, 600],
+    si:   [3400, 5800],
+    tti:  [3800, 7300],
+  };
+  const t = thresholds[metric];
+  if (!t) return { label: String(Math.round(value)), color: "var(--cyan)" };
+  if (value <= t[0]) return { label: "Good", color: "var(--green)" };
+  if (value <= t[1]) return { label: "Needs Work", color: "var(--yellow)" };
+  return { label: "Poor", color: "var(--red)" };
+}
+
+function fmtMs(ms) {
+  if (ms == null) return "—";
+  return ms >= 1000 ? (ms / 1000).toFixed(1) + "s" : Math.round(ms) + "ms";
+}
+
+function lighthouseGauge(label, score, size = 64) {
+  if (score == null) return "";
+  const color = score >= 90 ? "var(--green)" : score >= 50 ? "var(--yellow)" : "var(--red)";
+  const r = (size - 8) / 2;
+  const circ = 2 * Math.PI * r;
+  const dash = (score / 100) * circ;
+  return `
+    <div style="text-align:center;min-width:${size + 20}px;">
+      <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block;margin:0 auto;">
+        <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4"/>
+        <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="${color}" stroke-width="4"
+          stroke-dasharray="${dash} ${circ}" stroke-linecap="round"
+          transform="rotate(-90 ${size / 2} ${size / 2})" style="transition:stroke-dasharray 0.6s;"/>
+        <text x="${size / 2}" y="${size / 2 + 5}" text-anchor="middle" fill="${color}" font-size="16" font-weight="900">${score}</text>
+      </svg>
+      <div style="font-size:9px;color:var(--muted);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">${label}</div>
+    </div>`;
+}
+
+function seoCheckRow(label, passed) {
+  const icon = passed ? "pass" : "fail";
+  const color = passed ? "var(--green)" : "var(--red)";
+  const symbol = passed ? "\u2713" : "\u2717";
+  return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+    <span style="color:${color};font-weight:700;font-size:13px;width:16px;text-align:center;">${symbol}</span>
+    <span style="font-size:11px;color:var(--text);flex:1;">${label}</span>
+    <span style="font-size:9px;color:${color};font-weight:600;text-transform:uppercase;">${icon}</span>
+  </div>`;
+}
+
+function renderWebsiteAnalytics(psiData, probeData, loading, ghData) {
+  if (loading) {
+    return `
+      <div style="text-align:center;padding:60px 20px;">
+        <div style="font-size:32px;margin-bottom:16px;animation:pulse 1.5s infinite;">🌐</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;">Analyzing ${SITE_URL}</div>
+        <div style="font-size:11px;color:var(--muted);">Running PageSpeed Insights + SEO probe across ${SITE_PAGES.length} pages...</div>
+        <div style="margin-top:20px;width:200px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;">
+          <div style="width:60%;height:100%;background:var(--cyan);border-radius:2px;animation:loading-bar 2s ease-in-out infinite;"></div>
+        </div>
+      </div>
+      <style>@keyframes loading-bar{0%{transform:translateX(-100%)}50%{transform:translateX(60%)}100%{transform:translateX(200%)}}</style>`;
+  }
+
+  if (!psiData && !probeData) {
+    return `
+      <div style="text-align:center;padding:60px 20px;">
+        <div style="font-size:32px;margin-bottom:16px;">🌐</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;">Website Analytics</div>
+        <div style="font-size:11px;color:var(--muted);max-width:400px;margin:0 auto;">
+          Click this tab to start analyzing <strong>${SITE_URL}</strong>.<br>
+          Uses Google PageSpeed Insights API + direct page probing to deliver Lighthouse scores, Core Web Vitals, SEO audit, and security analysis.
+        </div>
+      </div>`;
+  }
+
+  // Compute overall health score
+  const health = computeWebsiteHealthScore(psiData, probeData);
+
+  // ── Website repo deployment data ──
+  const websiteRepo = "VaultSparkStudios/VaultSparkStudios.github.io";
+  const rd = ghData[websiteRepo] || {};
+  const deployments = rd.deployments || [];
+  const commits = rd.commits || [];
+  const ciRuns = rd.ciRuns || [];
+  const recentDeploys = deployments.filter((d) => Date.now() - new Date(d.createdAt).getTime() < 30 * 86400000).length;
+  const lastCommitDate = commits[0]?.date || null;
+  const lastDeployDate = deployments[0]?.createdAt || null;
+  const ciStatus = ciRuns[0]?.conclusion === "success" ? "Passing" : ciRuns[0]?.conclusion || "Unknown";
+  const ciColor = ciStatus === "Passing" ? "var(--green)" : ciStatus === "failure" ? "var(--red)" : "var(--muted)";
+
+  // ── Site-wide averages from PSI ──
+  const pagesWithScores = (psiData?.pages || []).filter((p) => p.scores);
+  const avg = (key) => {
+    const vals = pagesWithScores.map((p) => p.scores[key]).filter((v) => v != null);
+    return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null;
+  };
+  const avgPerf = avg("performance");
+  const avgA11y = avg("accessibility");
+  const avgSEO  = avg("seo");
+  const avgBP   = avg("bestPractices");
+
+  // ── Aggregated opportunities ──
+  const allOpps = [];
+  for (const page of (psiData?.pages || [])) {
+    for (const opp of (page.opportunities || [])) {
+      allOpps.push({ ...opp, page: page.page });
+    }
+  }
+  allOpps.sort((a, b) => (b.savings || 0) - (a.savings || 0));
+  const topOpps = allOpps.slice(0, 10);
+
+  // ── SEO checks from probe ──
+  const homePage = (probeData?.pages || []).find((p) => p.path === "/");
+
+  // ── Security headers ──
+  const secHeaders = probeData?.securityHeaders || {};
+  const secHeaderCount = Object.values(secHeaders).filter(Boolean).length;
+  const secHeaderTotal = Object.keys(secHeaders).length || 8;
+  const secScore = Math.round((secHeaderCount / secHeaderTotal) * 100);
+
+  return `
+    ${section("Website Health Score", "🌐", `
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          ${lighthouseGauge("HEALTH", health.score, 80)}
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Score Breakdown</div>
+          ${health.breakdown.performance != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span style="font-size:10px;color:var(--muted);width:90px;">Performance</span>
+            ${miniBar(health.breakdown.performance, 30, "var(--cyan)")}
+            <span style="font-size:10px;font-weight:600;color:var(--cyan);width:28px;text-align:right;">${health.breakdown.performance}/30</span>
+          </div>` : ""}
+          ${health.breakdown.seo != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span style="font-size:10px;color:var(--muted);width:90px;">SEO</span>
+            ${miniBar(health.breakdown.seo, 25, "var(--green)")}
+            <span style="font-size:10px;font-weight:600;color:var(--green);width:28px;text-align:right;">${health.breakdown.seo}/25</span>
+          </div>` : ""}
+          ${health.breakdown.accessibility != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span style="font-size:10px;color:var(--muted);width:90px;">Accessibility</span>
+            ${miniBar(health.breakdown.accessibility, 20, "var(--yellow)")}
+            <span style="font-size:10px;font-weight:600;color:var(--yellow);width:28px;text-align:right;">${health.breakdown.accessibility}/20</span>
+          </div>` : ""}
+          ${health.breakdown.bestPractices != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span style="font-size:10px;color:var(--muted);width:90px;">Best Practices</span>
+            ${miniBar(health.breakdown.bestPractices, 10, "#a78bfa")}
+            <span style="font-size:10px;font-weight:600;color:#a78bfa;width:28px;text-align:right;">${health.breakdown.bestPractices}/10</span>
+          </div>` : ""}
+          ${health.breakdown.infrastructure != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span style="font-size:10px;color:var(--muted);width:90px;">Infrastructure</span>
+            ${miniBar(health.breakdown.infrastructure, 15, "#fb923c")}
+            <span style="font-size:10px;font-weight:600;color:#fb923c;width:28px;text-align:right;">${health.breakdown.infrastructure}/15</span>
+          </div>` : ""}
+        </div>
+      </div>
+      <div style="margin-top:14px;font-size:10px;color:var(--muted);">
+        Analyzed ${pagesWithScores.length} page${pagesWithScores.length !== 1 ? "s" : ""} · Mobile strategy
+        ${psiData?.fetchedAt ? ` · Last run ${new Date(psiData.fetchedAt).toLocaleTimeString()}` : ""}
+      </div>
+    `)}
+
+    ${section("Lighthouse Scores (Site Average)", "💡", `
+      <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;padding:12px 0;">
+        ${lighthouseGauge("Performance", avgPerf)}
+        ${lighthouseGauge("Accessibility", avgA11y)}
+        ${lighthouseGauge("SEO", avgSEO)}
+        ${lighthouseGauge("Best Practices", avgBP)}
+      </div>
+    `)}
+
+    ${section("Core Web Vitals", "⚡", `
+      ${pagesWithScores.length > 0 ? pagesWithScores.map((p) => {
+        const c = p.cwv || {};
+        return `
+          <div style="margin-bottom:16px;">
+            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;">${p.page} <span style="color:var(--muted);font-weight:400;">${p.path}</span></div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              ${[
+                ["LCP", "lcp", c.lcp],
+                ["FCP", "fcp", c.fcp],
+                ["TBT", "tbt", c.tbt],
+                ["CLS", "cls", c.cls],
+                ["SI", "si", c.si],
+                ["TTI", "tti", c.tti],
+              ].map(([label, key, val]) => {
+                const g = cwvGrade(key, val);
+                const display = key === "cls" ? (val != null ? val.toFixed(3) : "—") : fmtMs(val);
+                return `<div style="flex:1;min-width:80px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:8px 10px;">
+                  <div style="font-size:9px;color:var(--muted);letter-spacing:0.06em;margin-bottom:2px;">${label}</div>
+                  <div style="font-size:18px;font-weight:900;color:${g.color};">${display}</div>
+                  <div style="font-size:9px;color:${g.color};font-weight:600;">${g.label}</div>
+                </div>`;
+              }).join("")}
+            </div>
+            ${p.fieldData?.overallCategory ? `<div style="margin-top:6px;font-size:10px;color:var(--muted);">CrUX field data: <span style="color:${p.fieldData.overallCategory === "FAST" ? "var(--green)" : p.fieldData.overallCategory === "AVERAGE" ? "var(--yellow)" : "var(--red)"};font-weight:600;">${p.fieldData.overallCategory}</span></div>` : ""}
+          </div>`;
+      }).join("") : '<div style="font-size:11px;color:var(--muted);">No PageSpeed data available</div>'}
+    `)}
+
+    ${section("Page-by-Page Lighthouse Breakdown", "📄", `
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:11px;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border);">
+              <th style="text-align:left;padding:8px 6px;color:var(--muted);font-size:10px;font-weight:600;">PAGE</th>
+              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">PERF</th>
+              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">A11Y</th>
+              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">SEO</th>
+              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">BP</th>
+              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">LCP</th>
+              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">CLS</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${(psiData?.pages || []).map((p) => {
+              if (p.error) return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:6px;">${p.page}</td>
+                <td colspan="6" style="padding:6px;color:var(--red);font-size:10px;">${p.error}</td>
+              </tr>`;
+              const s = p.scores || {};
+              const sc = (v) => `<span style="color:${scoreColor(v)};font-weight:700;">${v ?? "—"}</span>`;
+              const lcpG = cwvGrade("lcp", p.cwv?.lcp);
+              const clsG = cwvGrade("cls", p.cwv?.cls);
+              return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:6px;font-weight:600;color:var(--text);">${p.page}<br><span style="font-size:9px;color:var(--muted);font-weight:400;">${p.path}</span></td>
+                <td style="padding:6px;text-align:center;">${sc(s.performance)}</td>
+                <td style="padding:6px;text-align:center;">${sc(s.accessibility)}</td>
+                <td style="padding:6px;text-align:center;">${sc(s.seo)}</td>
+                <td style="padding:6px;text-align:center;">${sc(s.bestPractices)}</td>
+                <td style="padding:6px;text-align:center;color:${lcpG.color};font-weight:600;">${fmtMs(p.cwv?.lcp)}</td>
+                <td style="padding:6px;text-align:center;color:${clsG.color};font-weight:600;">${p.cwv?.cls != null ? p.cwv.cls.toFixed(3) : "—"}</td>
+              </tr>`;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>
+    `)}
+
+    ${section("SEO Audit", "🔍", `
+      ${homePage ? `
+        <div style="display:flex;gap:20px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:220px;">
+            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:10px;">On-Page SEO Checks</div>
+            ${seoCheckRow("Page title exists", !!homePage.title)}
+            ${seoCheckRow("Meta description", !!homePage.description)}
+            ${seoCheckRow("Open Graph title", !!homePage.og?.title)}
+            ${seoCheckRow("Open Graph image", !!homePage.og?.image)}
+            ${seoCheckRow("Open Graph description", !!homePage.og?.description)}
+            ${seoCheckRow("Twitter card meta", !!homePage.twitter?.card)}
+            ${seoCheckRow("Viewport meta tag", !!homePage.viewport)}
+            ${seoCheckRow("Canonical link", !!homePage.canonical)}
+            ${seoCheckRow("Structured data (JSON-LD)", !!homePage.hasStructuredData)}
+            ${seoCheckRow("Favicon declared", !!homePage.favicon)}
+            ${seoCheckRow("HTML lang attribute", !!homePage.hasLang)}
+            ${seoCheckRow("Charset declared", !!homePage.hasCharset)}
+          </div>
+          <div style="flex:1;min-width:220px;">
+            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:10px;">Site Infrastructure</div>
+            ${seoCheckRow("robots.txt exists", !!probeData?.robotsTxt?.exists)}
+            ${seoCheckRow("robots.txt has sitemap ref", !!probeData?.robotsTxt?.hasSitemap)}
+            ${seoCheckRow("sitemap.xml exists", !!probeData?.sitemap?.exists)}
+            ${probeData?.sitemap?.exists ? `<div style="font-size:10px;color:var(--muted);padding:4px 0 4px 24px;">${probeData.sitemap.urlCount} URLs · ${probeData.sitemap.hasLastmod ? "has lastmod" : "no lastmod"}</div>` : ""}
+            ${seoCheckRow("HTTPS enabled", !!probeData?.https)}
+            <div style="margin-top:12px;font-size:11px;font-weight:700;color:var(--text);margin-bottom:10px;">Content Structure (Homepage)</div>
+            ${kv("Title", homePage.title ? `"${homePage.title.slice(0, 50)}"` : "Missing")}
+            ${kv("H1 tags", String(homePage.headings?.h1 || 0), homePage.headings?.h1 === 1 ? "var(--green)" : "var(--yellow)")}
+            ${kv("H2 tags", String(homePage.headings?.h2 || 0))}
+            ${kv("Images", `${homePage.images?.total || 0} total, ${homePage.images?.withAlt || 0} with alt`)}
+            ${kv("Internal links", String(homePage.links?.internal || 0))}
+            ${kv("External links", String(homePage.links?.external || 0))}
+            ${kv("Page size", homePage.htmlSize ? (homePage.htmlSize / 1024).toFixed(0) + " KB" : "—")}
+          </div>
+        </div>
+      ` : '<div style="font-size:11px;color:var(--muted);">No probe data available</div>'}
+    `)}
+
+    ${probeData?.pages?.length > 1 ? section("Page Meta Tags Audit", "🏷", `
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:10px;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border);">
+              <th style="text-align:left;padding:6px;color:var(--muted);font-weight:600;">PAGE</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">TITLE</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">DESC</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">OG</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">JSON-LD</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">H1</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">ALT IMG</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${probeData.pages.filter((p) => !p.error).map((p) => {
+              const check = (v) => v ? '<span style="color:var(--green);">\u2713</span>' : '<span style="color:var(--red);">\u2717</span>';
+              const imgPct = p.images?.total > 0 ? Math.round((p.images.withAlt / p.images.total) * 100) + "%" : "—";
+              return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:6px;font-weight:600;">${p.label}<br><span style="color:var(--muted);font-weight:400;">${p.path}</span></td>
+                <td style="text-align:center;padding:6px;">${check(p.title)}</td>
+                <td style="text-align:center;padding:6px;">${check(p.description)}</td>
+                <td style="text-align:center;padding:6px;">${check(p.og?.title && p.og?.image)}</td>
+                <td style="text-align:center;padding:6px;">${check(p.hasStructuredData)}</td>
+                <td style="text-align:center;padding:6px;color:${p.headings?.h1 === 1 ? "var(--green)" : "var(--yellow)"};">${p.headings?.h1 ?? "—"}</td>
+                <td style="text-align:center;padding:6px;">${imgPct}</td>
+              </tr>`;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>
+    `) : ""}
+
+    ${section("Security Headers", "🛡", `
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;">
+        <div>
+          <span style="font-size:28px;font-weight:900;color:${secScore >= 75 ? "var(--green)" : secScore >= 50 ? "var(--yellow)" : "var(--red)"};">${secScore}</span>
+          <span style="font-size:11px;color:var(--muted);margin-left:4px;">/100</span>
+        </div>
+        <div style="flex:1;">
+          ${miniBar(secHeaderCount, secHeaderTotal, secScore >= 75 ? "var(--green)" : secScore >= 50 ? "var(--yellow)" : "var(--red)", 8)}
+          <div style="font-size:10px;color:var(--muted);margin-top:4px;">${secHeaderCount}/${secHeaderTotal} security headers present</div>
+        </div>
+      </div>
+      <div>
+        ${Object.entries(secHeaders).map(([h, v]) => `
+          <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+            <span style="color:${v ? "var(--green)" : "var(--red)"};font-weight:700;font-size:13px;width:16px;text-align:center;">${v ? "\u2713" : "\u2717"}</span>
+            <span style="font-size:11px;color:var(--text);flex:1;font-family:monospace;">${h}</span>
+            <span style="font-size:9px;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v ? v.slice(0, 60) : "missing"}</span>
+          </div>
+        `).join("")}
+      </div>
+    `)}
+
+    ${section("Deployment & CI", "🚀", `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        ${statCard("DEPLOYS (30d)", String(recentDeploys), "to GitHub Pages")}
+        ${statCard("LAST COMMIT", lastCommitDate ? new Date(lastCommitDate).toLocaleDateString() : "—", "")}
+        ${statCard("LAST DEPLOY", lastDeployDate ? new Date(lastDeployDate).toLocaleDateString() : "—", "")}
+        ${statCard("CI STATUS", ciStatus, `<span style="color:${ciColor};">${ciRuns[0]?.name || "deploy-pages"}</span>`)}
+      </div>
+      ${commits.length > 0 ? `
+        <div style="margin-top:14px;font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;">Recent Commits</div>
+        ${commits.slice(0, 5).map((c) => `
+          <div style="display:flex;gap:8px;align-items:baseline;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+            <span style="font-size:9px;color:var(--muted);min-width:70px;">${new Date(c.date).toLocaleDateString()}</span>
+            <span style="font-size:10px;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.message}</span>
+          </div>
+        `).join("")}
+      ` : ""}
+    `)}
+
+    ${topOpps.length > 0 ? section("Top Optimization Opportunities", "🎯", `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:10px;">Sorted by estimated time savings (from Lighthouse)</div>
+      ${topOpps.map((o) => `
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+          <span style="font-size:10px;color:var(--muted);min-width:70px;">${o.page}</span>
+          <span style="font-size:11px;color:var(--text);flex:1;">${o.title}</span>
+          ${o.savings ? `<span style="font-size:10px;font-weight:700;color:var(--yellow);">-${fmtMs(o.savings)}</span>` : ""}
+        </div>
+      `).join("")}
+    `) : ""}
+  `;
+}
+
 // ── Analytics tab bar helper ──────────────────────────────────────────────────
 function analyticsTabBar(activeTab) {
   const tabs = [
@@ -1488,6 +1860,7 @@ function analyticsTabBar(activeTab) {
     { id: "development",  label: "Development" },
     { id: "engagement",   label: "Engagement" },
     { id: "intelligence", label: "Intelligence" },
+    { id: "website",      label: "Website" },
     { id: "advanced",     label: "Advanced" },
   ];
   return `
@@ -1511,6 +1884,7 @@ export function renderAnalyticsView(state) {
     agentRequests = [], agentRunHistory = {}, portfolioFreshness = {},
     studioBrain = null, competitorData = null, syncMeta = null,
     analyticsTab = "overview",
+    websitePsi = null, websiteProbe = null, websiteLoading = false,
   } = state;
 
   // Compute all project scores (uses existing cache — fast)
@@ -1559,6 +1933,7 @@ export function renderAnalyticsView(state) {
       ${renderForecast(fcr, scoreHistory, ghData, scorePrev)}
       ${renderGovernance(socr, portfolioFreshness)}
       ${renderAgentOps(aas, beaconData, agentRequests, agentRunHistory, studioBrain)}`,
+    website: () => renderWebsiteAnalytics(websitePsi, websiteProbe, websiteLoading, ghData),
     advanced: () => renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores),
   };
 

@@ -28,6 +28,7 @@ import { generateStandup, generateWeeklyDigest } from "./utils/digestHelpers.js"
 import { loadScoreHistory, pushScoreHistory, storeSessionStartScores, scorePrevFromHistory } from "./utils/scoreHistory.js";
 import { pushToGist, pullFromGist } from "./engine/gistSync.js";
 import { createSyncEngine } from "./engine/syncEngine.js";
+import { fetchPageSpeedData, fetchSiteProbe } from "./data/websiteAnalytics.js";
 import { bindSettingsEvents }   from "./events/settingsEvents.js";
 import { bindProjectHubEvents } from "./events/projectHubEvents.js";
 import { bindHeatmapEvents }    from "./events/heatmapEvents.js";
@@ -152,6 +153,10 @@ const state = {
   competitorLoading:   false,
   competitorFetchedAt: null,
   competitorEditing:   false,
+
+  websitePsi:          null,
+  websiteProbe:        null,
+  websiteLoading:      false,
 };
 // Seed scorePrev from history on first load; store session-start scores for accurate delta badges
 storeSessionStartScores(state.scoreHistory);
@@ -854,7 +859,24 @@ function bindEvents() {
   document.querySelectorAll("[data-analytics-tab]").forEach((el) => {
     el.addEventListener("click", () => {
       const tab = el.getAttribute("data-analytics-tab");
-      if (tab && tab !== state.analyticsTab) { state.analyticsTab = tab; render(); }
+      if (tab && tab !== state.analyticsTab) {
+        state.analyticsTab = tab;
+        render();
+        // Lazy-load website analytics data on first visit
+        if (tab === "website" && !state.websitePsi && !state.websiteLoading) {
+          state.websiteLoading = true;
+          render();
+          Promise.all([
+            fetchPageSpeedData(config.pagespeedApiKey).catch(() => null),
+            fetchSiteProbe().catch(() => null),
+          ]).then(([psi, probe]) => {
+            state.websitePsi = psi;
+            state.websiteProbe = probe;
+            state.websiteLoading = false;
+            render();
+          });
+        }
+      }
     });
   });
   document.getElementById("focus-mode-btn")?.addEventListener("click", () => {
