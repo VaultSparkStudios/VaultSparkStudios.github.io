@@ -100,9 +100,9 @@ function scoreEngagement(project, sbData, socialData, repoData) {
     else if (subs >= 100) { score += 1; }
   }
 
-  // Non-game projects get a baseline for being live/deployed, plus repo signals
-  if (!project.supabaseGameSlug && project.deployedUrl) {
-    score += 5; signals.push("Deployed and live");
+  // Non-game projects: deployed URL baseline + repo signals + non-game-specific signals
+  if (!project.supabaseGameSlug) {
+    if (project.deployedUrl) { score += 5; signals.push("Deployed and live"); }
 
     const stars = repoData?.repo?.stars || 0;
     if (stars >= 100)     { score += 8; signals.push(`${stars} stars`); }
@@ -115,6 +115,29 @@ function scoreEngagement(project, sbData, socialData, repoData) {
     if (repoData?.latestRelease) {
       const releaseAgeMs = Date.now() - new Date(repoData.latestRelease.publishedAt).getTime();
       if (releaseAgeMs / 86400000 < 30) { score += 3; signals.push("Recent release"); }
+    }
+
+    // Non-game path: context file freshness (commits to context/ dir in last 30d)
+    const commits = repoData?.commits || [];
+    const contextRecent = commits.some((c) => {
+      const ageDays = (Date.now() - new Date(c.date).getTime()) / 86400000;
+      return ageDays < 30 && (c.message || "").toLowerCase().includes("context");
+    });
+    if (contextRecent) { score += 3; signals.push("Context files updated recently"); }
+
+    // Contributor count signal (uses commits as proxy — unique authors in last 30 commits)
+    const recentAuthors = new Set(commits.slice(0, 30).map((c) => c.author).filter(Boolean));
+    if (recentAuthors.size >= 3) { score += 5; signals.push(`${recentAuthors.size} contributors`); }
+    else if (recentAuthors.size >= 2) { score += 3; signals.push(`${recentAuthors.size} contributors`); }
+
+    // Recent deployment signal (last CI deployment run < 14d)
+    const deployments = repoData?.deployments || [];
+    if (deployments.length > 0) {
+      const latestDeploy = deployments[0];
+      const deployAgeDays = latestDeploy?.createdAt
+        ? (Date.now() - new Date(latestDeploy.createdAt).getTime()) / 86400000
+        : Infinity;
+      if (deployAgeDays < 14) { score += 5; signals.push("Deployed in last 14 days"); }
     }
   }
 

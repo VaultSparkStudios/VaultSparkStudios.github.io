@@ -199,21 +199,58 @@ export function renderAlerts(ghData, sbData, allScores, scoreHistory) {
     >${label}</button>
   `;
 
+  // Group alerts by project name prefix (e.g. "Call of Doodie: CI failing" → "Call of Doodie")
+  function groupByProject(items) {
+    const groups = new Map(); // projectKey → [alerts]
+    for (const a of items) {
+      const colonIdx = a.msg.indexOf(":");
+      const key = colonIdx > 0 ? a.msg.slice(0, colonIdx).trim() : "__other__";
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(a);
+    }
+    return groups;
+  }
+
+  function renderGroup(items) {
+    const groups = groupByProject(items);
+    return [...groups.entries()].map(([projectKey, groupAlerts]) => {
+      if (groupAlerts.length === 1) {
+        const a = groupAlerts[0];
+        return `
+          <div class="alert-item ${a.type}" style="display:flex; align-items:center; gap:8px; justify-content:space-between;">
+            <span style="flex:1; min-width:0;">${a.msg}</span>
+            <div style="display:flex; gap:3px; flex-shrink:0; align-items:center;">
+              ${snoozeBtn(a.msg, "24h", 86400000)}
+              ${snoozeBtn(a.msg, "7d", 604800000)}
+            </div>
+          </div>
+        `;
+      }
+      // Multiple alerts for same project — collapsible group
+      const groupId = `alert-group-${projectKey.replace(/\s+/g, "-").toLowerCase().slice(0, 20)}`;
+      const worstType = groupAlerts.some((a) => a.type === "error") ? "error" : groupAlerts.some((a) => a.type === "warning") ? "warning" : "info";
+      return `
+        <details class="alert-item ${worstType}" style="padding:0;">
+          <summary style="display:flex; align-items:center; gap:8px; justify-content:space-between; padding:6px 0; cursor:pointer; list-style:none;">
+            <span style="flex:1; min-width:0; font-weight:700;">${projectKey} <span style="font-weight:400; opacity:0.7;">— ${groupAlerts.length} alerts</span></span>
+            <span style="font-size:9px; color:var(--muted);">▾</span>
+          </summary>
+          ${groupAlerts.map((a) => `
+            <div style="display:flex; align-items:center; gap:8px; justify-content:space-between; padding:4px 0 4px 12px; border-top:1px solid rgba(255,255,255,0.05); font-size:11px;">
+              <span style="flex:1; min-width:0; color:var(--muted);">${a.msg.slice(a.msg.indexOf(":") + 1).trim()}</span>
+              <div style="display:flex; gap:3px; flex-shrink:0; align-items:center;">
+                ${snoozeBtn(a.msg, "24h", 86400000)}
+              </div>
+            </div>
+          `).join("")}
+        </details>
+      `;
+    }).join("");
+  }
+
   const errors   = visible.filter((a) => a.type === "error");
   const warnings = visible.filter((a) => a.type === "warning");
   const infos    = visible.filter((a) => a.type === "info");
-
-  function renderGroup(items) {
-    return items.map((a) => `
-      <div class="alert-item ${a.type}" style="display:flex; align-items:center; gap:8px; justify-content:space-between;">
-        <span style="flex:1; min-width:0;">${a.msg}</span>
-        <div style="display:flex; gap:3px; flex-shrink:0; align-items:center;">
-          ${snoozeBtn(a.msg, "24h", 86400000)}
-          ${snoozeBtn(a.msg, "7d", 604800000)}
-        </div>
-      </div>
-    `).join("");
-  }
 
   return `
     <div class="alerts-list">

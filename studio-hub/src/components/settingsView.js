@@ -410,6 +410,15 @@ export function renderSettingsView(state) {
               <button class="btn-primary" id="import-json-btn" style="background:rgba(122,231,199,0.06); border-color:rgba(122,231,199,0.2); color:var(--muted);" title="Import a previously exported hub-export.json to restore score history and settings">Import JSON</button>
             </div>
             <span id="export-status" style="font-size:11px; color:var(--muted);"></span>
+            <div style="border-top:1px solid var(--border); padding-top:12px; margin-top:4px;">
+              <div style="${hintStyle} margin-bottom:8px;">Full hub state backup — exports all localStorage keys (score history, settings, credentials, forecast log). Use to migrate between devices or recover from a reset.</div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn-primary" id="export-hub-state-btn" style="background:rgba(196,132,252,0.1); border-color:rgba(196,132,252,0.25); color:#c484fc;">Export Hub State</button>
+                <input type="file" id="import-hub-state-file" accept=".json" style="display:none;" />
+                <button class="btn-primary" id="import-hub-state-btn" style="background:rgba(196,132,252,0.06); border-color:rgba(196,132,252,0.2); color:var(--muted);" title="Restore full hub state from a hub-state-backup.json file">Import Hub State</button>
+              </div>
+              <span id="hub-state-status" style="font-size:11px; color:var(--muted); margin-top:6px; display:block;"></span>
+            </div>
           </div>
         </div>
 

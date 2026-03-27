@@ -1,6 +1,7 @@
 import { scoreProject } from "../utils/projectScoring.js";
 import { timeAgo, fmt, escapeHtml } from "../utils/helpers.js";
 import { scorePotential, scoreMomentumIndex, potentialLabel, momentumLabel } from "../utils/proprietaryScores.js";
+import { getForecastAccuracy } from "../utils/scoreForecast.js";
 
 const LOCAL_PATHS_KEY = "vshub_local_paths";
 function loadLocalPaths() { try { return JSON.parse(localStorage.getItem(LOCAL_PATHS_KEY) || "{}"); } catch { return {}; } }
@@ -1571,6 +1572,202 @@ function renderVornAgentPanel(project, sbData) {
   `;
 }
 
+// ── Score Changelog ────────────────────────────────────────────────────────────
+function renderScoreChangelog(project, scoreHistory) {
+  const points = scoreHistory
+    .map((h) => ({ ts: h.ts, score: h.scores?.[project.id] }))
+    .filter((p) => p.score != null);
+  if (points.length < 2) return "";
+
+  // Build changelog entries (newest first, max 12)
+  const entries = [];
+  for (let i = points.length - 1; i >= 1 && entries.length < 12; i--) {
+    const curr = points[i];
+    const prev = points[i - 1];
+    const delta = curr.score - prev.score;
+    entries.push({ ts: curr.ts, score: curr.score, delta });
+  }
+
+  const fmt = (d) => d > 0 ? `+${d}` : `${d}`;
+  const col = (d) => d > 0 ? "var(--green)" : d < 0 ? "var(--red)" : "var(--muted)";
+
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">SCORE CHANGELOG</span>
+        <span class="hub-section-badge" style="color:var(--muted);">Last ${entries.length} snapshots</span>
+      </div>
+      <div class="hub-section-body" style="padding:0;">
+        <div style="max-height:220px; overflow-y:auto;">
+          ${entries.map((e, i) => `
+            <div style="display:flex; align-items:center; gap:12px; padding:7px 16px;
+                        border-bottom:1px solid rgba(255,255,255,0.04); font-size:12px;
+                        ${i === 0 ? "background:rgba(122,231,199,0.03);" : ""}">
+              <span style="color:var(--muted); white-space:nowrap; font-size:10px; min-width:80px;">
+                ${new Date(e.ts).toLocaleDateString("en-US", { month:"short", day:"numeric" })}
+              </span>
+              <span style="font-weight:700; color:var(--text); min-width:28px;">${e.score}</span>
+              <span style="font-weight:700; font-size:11px; color:${col(e.delta)}; min-width:32px;">
+                ${e.delta === 0 ? "─" : fmt(e.delta)}
+              </span>
+              <div style="flex:1; height:4px; background:rgba(255,255,255,0.05); border-radius:2px; overflow:hidden;">
+                <div style="height:100%; width:${e.score}%; background:${col(e.delta)}; border-radius:2px; opacity:0.6; transition:width 0.3s;"></div>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── Issue Signal Correlation ──────────────────────────────────────────────────
+function renderIssueSignalCorrelation(project, repoData) {
+  const issues = repoData?.issues;
+  if (!issues || issues.length === 0) return "";
+
+  // Classify each issue into a score pillar based on label/title keywords
+  const pillars = {
+    Dev:        { keywords: ["bug", "fix", "error", "crash", "broken", "fail", "refactor", "perf", "security", "vuln", "test", "ci", "build", "deploy"], color: "var(--blue)", issues: [] },
+    Engagement: { keywords: ["ux", "ui", "design", "onboard", "feedback", "feature", "request", "social", "content", "doc", "readme", "tutorial"], color: "var(--cyan)", issues: [] },
+    Momentum:   { keywords: ["release", "launch", "milestone", "roadmap", "deadline", "sprint", "epic", "plan", "schedul"], color: "var(--gold)", issues: [] },
+    Risk:       { keywords: ["security", "auth", "cve", "vuln", "access", "secret", "leak", "compliance", "license", "legal"], color: "#f87171", issues: [] },
+  };
+
+  const unclassified = [];
+  for (const issue of issues) {
+    const text = `${issue.title} ${(issue.labels || []).join(" ")}`.toLowerCase();
+    let matched = false;
+    for (const [name, pillar] of Object.entries(pillars)) {
+      if (pillar.keywords.some((kw) => text.includes(kw))) {
+        pillar.issues.push(issue);
+        matched = true;
+        break;
+      }
+    }
+    if (!matched) unclassified.push(issue);
+  }
+
+  const total = issues.length;
+
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">ISSUE SIGNAL CORRELATION</span>
+        <span class="hub-section-badge" style="color:var(--muted);">${total} open issue${total !== 1 ? "s" : ""} mapped</span>
+      </div>
+      <div class="hub-section-body">
+        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:12px;">
+          ${Object.entries(pillars).map(([name, pillar]) => {
+            const count = pillar.issues.length;
+            const pct = total > 0 ? Math.round((count / total) * 100) : 0;
+            return `
+              <div style="padding:10px 12px; background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:8px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <span style="font-size:10px; font-weight:700; color:${pillar.color}; letter-spacing:0.06em;">${name.toUpperCase()}</span>
+                  <span style="font-size:13px; font-weight:800; color:${count > 0 ? pillar.color : "var(--muted)"};">${count}</span>
+                </div>
+                <div style="height:4px; background:rgba(255,255,255,0.05); border-radius:2px; overflow:hidden;">
+                  <div style="height:100%; width:${pct}%; background:${pillar.color}; border-radius:2px; opacity:0.7;"></div>
+                </div>
+                ${count > 0 ? `
+                  <div style="font-size:10px; color:var(--muted); margin-top:6px; line-height:1.6;">
+                    ${pillar.issues.slice(0, 2).map((i) => `<div title="#${i.number}">· ${i.title.length > 38 ? i.title.slice(0, 38) + "…" : i.title}</div>`).join("")}
+                    ${count > 2 ? `<div style="color:var(--muted);">+ ${count - 2} more</div>` : ""}
+                  </div>
+                ` : ""}
+              </div>
+            `;
+          }).join("")}
+        </div>
+        ${unclassified.length > 0 ? `
+          <div style="font-size:10px; color:var(--muted); padding-top:8px; border-top:1px solid var(--border);">
+            ${unclassified.length} issue${unclassified.length !== 1 ? "s" : ""} unclassified (no matching label/keyword)
+          </div>
+        ` : ""}
+      </div>
+    </div>
+  `;
+}
+
+function renderScorePillarChart(project, repoData, sbData, socialData) {
+  const scoring = scoreProject(project, repoData, sbData, socialData);
+  const pillars = [
+    { key: "development", label: "Dev",      max: 30,                       color: "#69b3ff" },
+    { key: "engagement",  label: "Engage",   max: 25,                       color: "#7ae7c7" },
+    { key: "momentum",    label: "Momentum", max: 25,                       color: "#ffc874" },
+    { key: "risk",        label: "Risk",     max: scoring.pillars.risk.max, color: "#6ae3b2" },
+  ];
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">SCORE PILLARS</span>
+        <span class="hub-section-badge" style="color:${scoring.gradeColor};">${scoring.total}/100 · ${scoring.grade}</span>
+      </div>
+      <div class="hub-section-body">
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          ${pillars.map(({ key, label, max, color }) => {
+            const p = scoring.pillars[key];
+            const pct = Math.round((p.score / max) * 100);
+            return `
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <span style="font-size:11px; font-weight:700; color:${color};">${label}</span>
+                  <span style="font-size:11px; color:${color};">${p.score}<span style="color:var(--muted);">/${max}</span>
+                    <span style="font-size:10px; color:var(--muted); margin-left:4px;">${pct}%</span>
+                  </span>
+                </div>
+                <div style="height:6px; background:rgba(255,255,255,0.07); border-radius:3px; overflow:hidden;">
+                  <div style="width:${pct}%; height:100%; background:${color}; border-radius:3px;"></div>
+                </div>
+                ${p.signals.length > 0 ? `
+                  <div style="font-size:10px; color:var(--muted); margin-top:3px; line-height:1.4;">
+                    ${p.signals.slice(0, 3).join(" · ")}${p.signals.length > 3 ? ` <span style="color:var(--muted);">+${p.signals.length - 3} more</span>` : ""}
+                  </div>
+                ` : ""}
+              </div>
+            `;
+          }).join("")}
+        </div>
+        <button data-score-explain="${escapeHtml(project.id)}"
+          style="margin-top:12px; font-size:11px; padding:6px 12px; background:rgba(255,255,255,0.04);
+                 border:1px solid var(--border); border-radius:8px; color:var(--muted); cursor:pointer; width:100%;">
+          View full score explanation →
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+function renderForecastAccuracy(project) {
+  const acc = getForecastAccuracy(project.id);
+  if (!acc) return ""; // need 3+ predictions
+  const color = acc.accuracy >= 70 ? "var(--green)" : acc.accuracy >= 50 ? "var(--gold)" : "var(--red)";
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">FORECAST ACCURACY</span>
+        <span class="hub-section-badge" style="color:${color};">${acc.accuracy}%</span>
+      </div>
+      <div class="hub-section-body">
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:8px;">
+          <div style="font-size:28px; font-weight:800; color:${color}; line-height:1;">${acc.accuracy}%</div>
+          <div>
+            <div style="font-size:12px; font-weight:700; color:var(--text);">Direction accuracy</div>
+            <div style="font-size:11px; color:var(--muted);">${acc.correct} correct of ${acc.total} score predictions</div>
+          </div>
+        </div>
+        <div style="height:5px; background:rgba(255,255,255,0.07); border-radius:3px; overflow:hidden;">
+          <div style="width:${acc.accuracy}%; height:100%; background:${color}; border-radius:3px;"></div>
+        </div>
+        <div style="font-size:10px; color:var(--muted); margin-top:5px; line-height:1.5;">
+          Tracks whether forecasted score direction (↑/↓) matched actual movement between snapshots.${acc.total < 10 ? ` Accuracy improves with more data (${acc.total}/10).` : ""}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 function renderProprietaryScoresSection(project, repoData, socialData, scoreHistory) {
   const pot = scorePotential(project, repoData, socialData, scoreHistory);
   const mom = scoreMomentumIndex(project, repoData, scoreHistory);
@@ -1637,6 +1834,8 @@ export function renderProjectHubView(project, state) {
       </div>
 
       <div class="hub-sections">
+        ${renderScorePillarChart(project, repoData, sbData, socialData)}
+        ${renderForecastAccuracy(project)}
         ${renderProprietaryScoresSection(project, repoData, socialData, scoreHistory)}
         ${renderHealthPrescription(project, repoData, sbData, socialData)}
         ${renderActionQueue(project)}
@@ -1647,8 +1846,10 @@ export function renderProjectHubView(project, state) {
         ${renderAnnotationSection(project)}
         ${renderTagsSection(project)}
         ${renderScoreHistoryLineChart(project, scoreHistory)}
+        ${renderScoreChangelog(project, scoreHistory)}
         ${renderScoreCalibration(project, repoData, sbData, socialData)}
         ${renderIssueTrendChart(project, scoreHistory)}
+        ${renderIssueSignalCorrelation(project, repoData)}
         ${renderLinkSection(project)}
         ${renderStudioOpsSection(project, isLoadingCtx ? {} : contextFiles, tickets, isLoadingCtx)}
         ${renderVornAgentPanel(project, sbData)}

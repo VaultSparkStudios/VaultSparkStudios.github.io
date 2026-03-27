@@ -5,6 +5,27 @@
 
 const CACHE_PREFIX = "vshub_social_";
 
+// Retry-with-backoff for social fetches (matches ghFetch pattern)
+async function socialFetch(url, options = {}, retries = 2) {
+  let lastErr;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      if (attempt > 0) await new Promise((r) => setTimeout(r, 500 * Math.pow(2, attempt - 1)));
+      const controller = new AbortController();
+      const tid = setTimeout(() => controller.abort(), 15000);
+      try {
+        const res = await fetch(url, { ...options, signal: controller.signal });
+        return res;
+      } finally {
+        clearTimeout(tid);
+      }
+    } catch (err) {
+      lastErr = err;
+    }
+  }
+  throw lastErr;
+}
+
 function readCache(key, ttlMs) {
   try {
     const raw = sessionStorage.getItem(`${CACHE_PREFIX}${key}`);
@@ -34,7 +55,7 @@ export async function fetchYouTubeStats(apiKey, ttlMs = 600000) {
 
   try {
     // First resolve channel ID from handle
-    const searchRes = await fetch(
+    const searchRes = await socialFetch(
       `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&forHandle=VaultSparkStudios&key=${apiKey}`
     );
     if (!searchRes.ok) return null;
@@ -45,7 +66,7 @@ export async function fetchYouTubeStats(apiKey, ttlMs = 600000) {
     const channelId = channel.id;
 
     // Fetch latest videos
-    const videosRes = await fetch(
+    const videosRes = await socialFetch(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&maxResults=5&order=date&type=video&key=${apiKey}`
     );
     const videosData = videosRes.ok ? await videosRes.json() : null;
@@ -84,10 +105,10 @@ export async function fetchRedditStats(ttlMs = 600000) {
 
   try {
     const [subRes, postsRes] = await Promise.all([
-      fetch("https://www.reddit.com/r/VaultSparkStudios/about.json", {
+      socialFetch("https://www.reddit.com/r/VaultSparkStudios/about.json", {
         headers: { "User-Agent": "VaultSparkStudioHub/1.0" },
       }),
-      fetch("https://www.reddit.com/r/VaultSparkStudios/new.json?limit=5", {
+      socialFetch("https://www.reddit.com/r/VaultSparkStudios/new.json?limit=5", {
         headers: { "User-Agent": "VaultSparkStudioHub/1.0" },
       }),
     ]);
@@ -125,13 +146,13 @@ export async function fetchBlueskyStats(ttlMs = 600000) {
 
   try {
     const handle = "vaultsparkstudios.bsky.social";
-    const profileRes = await fetch(
+    const profileRes = await socialFetch(
       `https://public.api.bsky.app/xrpc/app.bsky.actor.getProfile?actor=${handle}`
     );
     if (!profileRes.ok) return null;
     const profile = await profileRes.json();
 
-    const feedRes = await fetch(
+    const feedRes = await socialFetch(
       `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${handle}&limit=5`
     );
     const feedData = feedRes.ok ? await feedRes.json() : null;

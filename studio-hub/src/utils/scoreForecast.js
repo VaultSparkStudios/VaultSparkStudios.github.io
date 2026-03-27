@@ -64,3 +64,54 @@ export function isForecastHighVariance(history, projectId) {
   const variance = deltas.reduce((s, d) => s + Math.pow(d - mean, 2), 0) / deltas.length;
   return Math.sqrt(variance) > 8;
 }
+
+// ── Forecast accuracy tracking ────────────────────────────────────────────────
+const FORECAST_LOG_KEY = "vshub_forecast_log";
+const MAX_FORECAST_LOG = 200;
+
+// Call after a new snapshot lands. Records whether prior forecasts were correct.
+// prevForecasts: { projectId: predictedScore } from the previous session's forecastScores()
+export function recordForecastOutcomes(prevForecasts, newHistory) {
+  if (!prevForecasts || !newHistory || newHistory.length < 1) return;
+  const actual = newHistory[newHistory.length - 1].scores || {};
+  const prev   = newHistory.length >= 2 ? (newHistory[newHistory.length - 2].scores || {}) : {};
+  try {
+    const log = JSON.parse(localStorage.getItem(FORECAST_LOG_KEY) || "[]");
+    const ts = Date.now();
+    for (const [id, predicted] of Object.entries(prevForecasts)) {
+      const actualScore = actual[id];
+      const prevScore   = prev[id];
+      if (actualScore == null || prevScore == null) continue;
+      const predictedDir = predicted > prevScore ? 1 : predicted < prevScore ? -1 : 0;
+      const actualDir    = actualScore > prevScore ? 1 : actualScore < prevScore ? -1 : 0;
+      log.push({ ts, projectId: id, predicted, actual: actualScore, prevScore, correct: predictedDir === actualDir });
+    }
+    if (log.length > MAX_FORECAST_LOG) log.splice(0, log.length - MAX_FORECAST_LOG);
+    localStorage.setItem(FORECAST_LOG_KEY, JSON.stringify(log));
+  } catch {}
+}
+
+// Returns { accuracy: 0–100 (%), total: N, correct: N } for a project. null if insufficient data.
+export function getForecastAccuracy(projectId) {
+  try {
+    const log = JSON.parse(localStorage.getItem(FORECAST_LOG_KEY) || "[]");
+    const entries = log.filter((e) => e.projectId === projectId);
+    if (entries.length < 3) return null;
+    const correct = entries.filter((e) => e.correct).length;
+    return { accuracy: Math.round((correct / entries.length) * 100), total: entries.length, correct };
+  } catch {
+    return null;
+  }
+}
+
+// Returns overall forecast accuracy across all projects.
+export function getOverallForecastAccuracy() {
+  try {
+    const log = JSON.parse(localStorage.getItem(FORECAST_LOG_KEY) || "[]");
+    if (log.length < 5) return null;
+    const correct = log.filter((e) => e.correct).length;
+    return { accuracy: Math.round((correct / log.length) * 100), total: log.length, correct };
+  } catch {
+    return null;
+  }
+}

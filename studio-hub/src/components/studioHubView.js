@@ -1711,24 +1711,36 @@ function renderGoalsDashboard(ghData, sbData, socialData, scoreHistory) {
 // ── Studio Brain inline viewer ────────────────────────────────────────────────
 // ── Studio Score Ledger ────────────────────────────────────────────────────────
 const LEDGER_SNAPSHOT_KEY = "vshub_ledger_snapshot";
+const LEDGER_MAX_ENTRIES  = 7;
 
-function getLedgerSnapshot() {
+function getLedgerEntries() {
   try {
     const raw = localStorage.getItem(LEDGER_SNAPSHOT_KEY);
-    if (!raw) return null;
+    if (!raw) return [];
     const snap = JSON.parse(raw);
-    // Only use snapshots from >6h ago (avoid comparing to a snapshot taken this session)
-    if (!snap.ts || Date.now() - snap.ts < 6 * 3600000) return null;
-    return snap;
-  } catch { return null; }
+    // Support both old shape ({ ts, wfHealthy, ... }) and new shape ({ entries: [...] })
+    if (Array.isArray(snap.entries)) return snap.entries;
+    if (snap.ts) return [snap]; // migrate single entry
+    return [];
+  } catch { return []; }
+}
+
+function getLedgerSnapshot() {
+  // Return the oldest non-current entry for ↑/↓ delta (skip entries < 6h old)
+  const entries = getLedgerEntries();
+  const sixHoursAgo = Date.now() - 6 * 3600000;
+  return entries.filter((e) => e.ts && e.ts < sixHoursAgo)[0] || null;
 }
 
 function saveLedgerSnapshot(values) {
   try {
-    const existing = JSON.parse(localStorage.getItem(LEDGER_SNAPSHOT_KEY) || "null");
-    // Refresh snapshot once per day (if >23h old or missing)
-    if (!existing || Date.now() - (existing.ts || 0) > 23 * 3600000) {
-      localStorage.setItem(LEDGER_SNAPSHOT_KEY, JSON.stringify({ ts: Date.now(), ...values }));
+    const entries = getLedgerEntries();
+    const last = entries[entries.length - 1];
+    // Refresh once per day
+    if (!last || Date.now() - (last.ts || 0) > 23 * 3600000) {
+      entries.push({ ts: Date.now(), ...values });
+      if (entries.length > LEDGER_MAX_ENTRIES) entries.splice(0, entries.length - LEDGER_MAX_ENTRIES);
+      localStorage.setItem(LEDGER_SNAPSHOT_KEY, JSON.stringify({ entries }));
     }
   } catch {}
 }
@@ -1739,6 +1751,24 @@ function ledgerDelta(current, prev) {
   if (d === 0) return "";
   const color = d > 0 ? "var(--green)" : "var(--red)";
   return `<span style="font-size:9px; font-weight:700; color:${color}; margin-left:3px;">${d > 0 ? "↑" : "↓"}${Math.abs(d)}</span>`;
+}
+
+function ledgerSparkline(entries, key, color) {
+  if (!entries || entries.length < 2) return "";
+  const vals = entries.map((e) => e[key]).filter((v) => v != null);
+  if (vals.length < 2) return "";
+  const min = Math.min(...vals);
+  const max = Math.max(...vals);
+  const range = max - min || 1;
+  const W = 36, H = 12;
+  const pts = vals.map((v, i) => {
+    const x = (i / (vals.length - 1)) * W;
+    const y = H - ((v - min) / range) * H;
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+  return `<svg width="${W}" height="${H}" style="display:block; margin:2px auto 0; overflow:visible;">
+    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+  </svg>`;
 }
 
 function renderScoreLedger(studioScore, agentRunHistory, agentRequests, studioBrain) {
@@ -1765,10 +1795,20 @@ function renderScoreLedger(studioScore, agentRunHistory, agentRequests, studioBr
     }
   }
 
-  // Trend deltas vs previous daily snapshot
+  // Agent performance scorecard (5th KPI)
+  const automatedAgents = workflowEntries.filter(([, r]) => r?.history?.length > 0);
+  let agentCompliance = null;
+  if (automatedAgents.length > 0) {
+    const totalRuns = automatedAgents.reduce((s, [, r]) => s + (r.history?.length || 0), 0);
+    const successRuns = automatedAgents.reduce((s, [, r]) => s + (r.history || []).filter((h) => h.conclusion === "success").length, 0);
+    agentCompliance = totalRuns > 0 ? Math.round((successRuns / totalRuns) * 100) : null;
+  }
+
+  // Trend deltas vs previous daily snapshot (7-day rolling)
+  const allEntries = getLedgerEntries();
   const snap = getLedgerSnapshot();
   const avgScore = studioScore.average || null;
-  saveLedgerSnapshot({ wfHealthy, avgScore, openRequests, silFresh });
+  saveLedgerSnapshot({ wfHealthy, avgScore, openRequests, silFresh, agentCompliance });
 
   const metrics = [
     {
@@ -1776,37 +1816,129 @@ function renderScoreLedger(studioScore, agentRunHistory, agentRequests, studioBr
       sub: wfFailing > 0 ? `${wfFailing} failing` : "healthy",
       color: wfColor,
       delta: snap ? ledgerDelta(wfHealthy, snap.wfHealthy) : "",
+      sparkline: ledgerSparkline(allEntries, "wfHealthy", wfColor),
     },
     {
       label: "Avg Score", value: avgScore || "—",
       sub: `Grade ${studioScore.grade}`,
       color: studioScore.gradeColor || "var(--muted)",
       delta: snap && avgScore != null ? ledgerDelta(avgScore, snap.avgScore) : "",
+      sparkline: ledgerSparkline(allEntries, "avgScore", studioScore.gradeColor || "var(--cyan)"),
     },
     {
       label: "Agent Reqs", value: String(openRequests),
       sub: openRequests > 0 ? "pending" : "clear",
       color: reqColor,
       delta: snap ? ledgerDelta(openRequests, snap.openRequests) : "",
+      sparkline: ledgerSparkline(allEntries, "openRequests", reqColor),
     },
     {
       label: "SIL Active", value: silLabel,
       sub: "14-day window",
       color: silColor,
       delta: snap && silFresh != null ? ledgerDelta(silFresh, snap.silFresh) : "",
+      sparkline: ledgerSparkline(allEntries, "silFresh", silColor),
     },
+    ...(agentCompliance != null ? [{
+      label: "Agent Perf",
+      value: `${agentCompliance}%`,
+      sub: "run compliance",
+      color: agentCompliance >= 90 ? "var(--green)" : agentCompliance >= 70 ? "var(--gold)" : "var(--red)",
+      delta: snap?.agentCompliance != null ? ledgerDelta(agentCompliance, snap.agentCompliance) : "",
+      sparkline: ledgerSparkline(allEntries, "agentCompliance", agentCompliance >= 90 ? "var(--green)" : "var(--gold)"),
+    }] : []),
   ];
 
   return `
     <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
-      ${metrics.map(({ label, value, sub, color, delta }) => `
+      ${metrics.map(({ label, value, sub, color, delta, sparkline }) => `
         <div style="background:var(--panel); border:1px solid var(--border); border-radius:8px;
                     padding:8px 14px; min-width:90px; text-align:center; flex:1;">
           <div style="font-size:18px; font-weight:800; color:${color}; line-height:1.1;">${value}${delta}</div>
           <div style="font-size:10px; color:var(--muted); margin-top:1px; text-transform:uppercase; letter-spacing:0.04em;">${label}</div>
           <div style="font-size:10px; color:var(--muted); opacity:0.7;">${sub}</div>
+          ${sparkline}
         </div>
       `).join("")}
+    </div>
+  `;
+}
+
+// ── Studio Health Timeline ─────────────────────────────────────────────────────
+// 30-day composite chart: avg score / workflow compliance / SIL coverage / agent compliance
+// Uses the 7-entry rolling ledger from getLedgerEntries().
+function renderStudioHealthTimeline() {
+  const entries = getLedgerEntries();
+  if (entries.length < 2) return "";
+
+  const W = 500, H = 80;
+  const labeled = entries.map((e) => ({
+    ts: e.ts,
+    avgScore:       e.avgScore       ?? null,
+    wfHealthy:      typeof e.wfHealthy === "boolean" ? (e.wfHealthy ? 100 : 0) : (e.wfHealthy ?? null),
+    silFresh:       e.silFresh       != null ? Math.min(100, e.silFresh * 10) : null, // scale to 0–100
+    agentCompliance: e.agentCompliance ?? null,
+  }));
+
+  const series = [
+    { key: "avgScore",        label: "Avg Score",      color: "var(--cyan)",  dash: "" },
+    { key: "wfHealthy",       label: "WF Health",      color: "var(--green)", dash: "4,3" },
+    { key: "silFresh",        label: "SIL Coverage",   color: "#c084fc",      dash: "2,4" },
+    { key: "agentCompliance", label: "Agent Perf",     color: "var(--gold)",  dash: "6,2" },
+  ];
+
+  function makePath(key, color, dash) {
+    const pts = labeled.map((e, i) => {
+      const v = e[key];
+      if (v == null) return null;
+      const x = (i / (labeled.length - 1)) * W;
+      const y = H - (Math.max(0, Math.min(100, v)) / 100) * (H - 8) - 4;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).filter(Boolean);
+    if (pts.length < 2) return "";
+    return `<polyline points="${pts.join(" ")}" fill="none" stroke="${color}" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round" opacity="0.8"
+      ${dash ? `stroke-dasharray="${dash}"` : ""}/>`;
+  }
+
+  const latest = labeled[labeled.length - 1];
+
+  return `
+    <div class="panel" style="margin-bottom:24px;">
+      <div class="panel-header">
+        <span class="panel-title">STUDIO HEALTH TIMELINE</span>
+        <span style="font-size:11px; color:var(--muted);">${entries.length}-day rolling · daily snapshots</span>
+      </div>
+      <div class="panel-body">
+        <svg width="${W}" height="${H}" style="width:100%; display:block; overflow:visible; margin-bottom:8px;">
+          ${[75, 50, 25].map((y) => {
+            const cy = H - (y / 100) * (H - 8) - 4;
+            return `<line x1="0" y1="${cy.toFixed(1)}" x2="${W}" y2="${cy.toFixed(1)}"
+              stroke="rgba(255,255,255,0.05)" stroke-width="1" stroke-dasharray="4,4"/>
+            <text x="2" y="${(cy - 3).toFixed(1)}" font-size="9" fill="rgba(149,163,183,0.35)">${y}</text>`;
+          }).join("")}
+          ${series.map((s) => makePath(s.key, s.color, s.dash)).join("")}
+        </svg>
+        <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--muted); margin-bottom:10px;">
+          <span>${new Date(entries[0].ts).toLocaleDateString("en-US", { month:"short", day:"numeric" })}</span>
+          <span>${new Date(entries[entries.length - 1].ts).toLocaleDateString("en-US", { month:"short", day:"numeric" })}</span>
+        </div>
+        <div style="display:flex; gap:16px; flex-wrap:wrap;">
+          ${series.map((s) => {
+            const val = latest[s.key];
+            if (val == null) return "";
+            const display = s.key === "wfHealthy" ? (val >= 50 ? "Healthy" : "Failing") : `${Math.round(val)}`;
+            return `<div style="display:flex; align-items:center; gap:5px; font-size:11px;">
+              <svg width="20" height="8" style="flex-shrink:0; overflow:visible;">
+                <line x1="0" y1="4" x2="20" y2="4" stroke="${s.color}" stroke-width="2"
+                  ${s.dash ? `stroke-dasharray="${s.dash}"` : ""}/>
+              </svg>
+              <span style="color:var(--muted);">${s.label}</span>
+              <span style="font-weight:700; color:${s.color};">${display}${s.key !== "wfHealthy" ? (s.key === "avgScore" ? "" : "%") : ""}</span>
+            </div>`;
+          }).join("")}
+        </div>
+      </div>
     </div>
   `;
 }
@@ -2100,6 +2232,7 @@ export function renderStudioHubView(state) {
       ${renderPathToGradeA(ghData, sbData, socialData)}
       ${renderSprintPanel(allScores)}
       ${renderVelocityChart(ghData)}
+      ${renderStudioHealthTimeline()}
       ${renderScoreHistoryOverlay(scoreHistory)}
       ${renderHeatmapPanel(ghData, sbData, socialData, scoreHistory)}
       ${renderStaleIssues(ghData)}

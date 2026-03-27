@@ -24,6 +24,12 @@ import { mountCommandPalette, unmountCommandPalette, isPaletteOpen } from "./com
 import { validateRegistry } from "./data/studioRegistry.js";
 import { downloadJSON, downloadCSV } from "./utils/exportHelpers.js";
 import { generateStandup, generateWeeklyDigest } from "./utils/digestHelpers.js";
+import { forecastScores, recordForecastOutcomes } from "./utils/scoreForecast.js";
+import { bindSettingsEvents }   from "./events/settingsEvents.js";
+import { bindProjectHubEvents } from "./events/projectHubEvents.js";
+import { bindHeatmapEvents }    from "./events/heatmapEvents.js";
+import { bindCompareEvents }    from "./events/compareEvents.js";
+import { bindTicketingEvents }  from "./events/ticketingEvents.js";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const config = getHubRuntimeConfig();
@@ -37,7 +43,7 @@ validateRegistry();
 
 // ── Score history helpers ─────────────────────────────────────────────────────
 const SCORE_HISTORY_KEY = "vshub_score_history";
-const MAX_HISTORY       = 10;
+const MAX_HISTORY       = 52; // ~1yr of weekly snapshots
 
 function loadScoreHistory() {
   try {
@@ -65,8 +71,23 @@ function pushScoreHistory(ghData, sbData, socialData) {
   } catch { return []; }
 }
 
-// scorePrev = scores from the second-to-last history entry
+// scorePrev = scores at session start (stored in sessionStorage) for accurate session-delta badges
+const SESSION_START_KEY = "vshub_session_start_scores";
+function storeSessionStartScores(history) {
+  if (!history.length) return;
+  try {
+    if (!sessionStorage.getItem(SESSION_START_KEY)) {
+      const latest = history[history.length - 1].scores || {};
+      sessionStorage.setItem(SESSION_START_KEY, JSON.stringify(latest));
+    }
+  } catch {}
+}
 function scorePrevFromHistory(history) {
+  // Prefer session-start scores so delta badges reflect true session progress
+  try {
+    const stored = sessionStorage.getItem(SESSION_START_KEY);
+    if (stored) return JSON.parse(stored);
+  } catch {}
   if (history.length < 2) return {};
   return history[history.length - 2].scores || {};
 }
@@ -168,7 +189,8 @@ const state = {
   alertHistoryFilter: "",
   recentlyVisited: getRecentProjects(),
 };
-// Seed scorePrev from history on first load
+// Seed scorePrev from history on first load; store session-start scores for accurate delta badges
+storeSessionStartScores(state.scoreHistory);
 state.scorePrev = scorePrevFromHistory(state.scoreHistory);
 
 // ── Accent color ──────────────────────────────────────────────────────────────
@@ -183,7 +205,52 @@ applyAccent(appSettings.accent);
 function applyTheme(theme) {
   document.body.classList.toggle("theme-light", theme === "light");
 }
+// Auto-detect system theme on first visit (no stored preference)
+if (!appSettings.theme && typeof window.matchMedia === "function") {
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  state.theme = prefersDark ? "dark" : "light";
+}
 applyTheme(state.theme);
+
+// ── Session timeout ───────────────────────────────────────────────────────────
+const SESSION_TIMEOUT_MS = 8 * 60 * 60 * 1000; // 8 hours
+const LAST_ACTIVITY_KEY  = "vshub_last_activity";
+function touchActivity() {
+  try { sessionStorage.setItem(LAST_ACTIVITY_KEY, String(Date.now())); } catch {}
+}
+function checkSessionTimeout() {
+  if (!isUnlocked()) return;
+  const last = Number(sessionStorage.getItem(LAST_ACTIVITY_KEY) || Date.now());
+  if (Date.now() - last > SESSION_TIMEOUT_MS && !document.getElementById("session-timeout-overlay")) {
+    const el = document.createElement("div");
+    el.id = "session-timeout-overlay";
+    el.innerHTML = `
+      <div style="position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:500;
+                  display:flex; align-items:center; justify-content:center;">
+        <div style="background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+                    padding:28px 32px; text-align:center; max-width:360px; box-shadow:0 24px 80px rgba(0,0,0,0.5);">
+          <div style="font-size:14px; font-weight:700; color:var(--gold); margin-bottom:8px;">Still here?</div>
+          <div style="font-size:12px; color:var(--muted); margin-bottom:20px; line-height:1.6;">
+            The hub has been idle for 8+ hours. Your session is still active — click to continue.
+          </div>
+          <button id="session-timeout-continue" style="font-size:13px; padding:10px 24px;
+            background:rgba(122,231,199,0.1); border:1px solid rgba(122,231,199,0.25);
+            border-radius:8px; color:var(--cyan); cursor:pointer; font:inherit;">Continue →</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(el);
+    document.getElementById("session-timeout-continue")?.addEventListener("click", () => {
+      el.remove();
+      touchActivity();
+    });
+  }
+}
+setInterval(checkSessionTimeout, 60000); // check every minute
+["keydown", "mousedown", "pointerdown", "touchstart"].forEach((ev) =>
+  document.addEventListener(ev, touchActivity, { passive: true })
+);
+touchActivity(); // mark activity on page load
 
 // ── Sidebar ───────────────────────────────────────────────────────────────────
 function applySidebar(collapsed) {
@@ -740,6 +807,14 @@ function addRecentProject(projectId) {
   } catch {}
 }
 
+// ── Navigate helper ───────────────────────────────────────────────────────────
+function navigate(view) {
+  state.activeView = view;
+  _kbFocusIndex = -1;
+  try { history.pushState({ view }, "", "#" + encodeURIComponent(view)); } catch {}
+  render();
+}
+
 // ── Project Tags ──────────────────────────────────────────────────────────────
 const TAGS_KEY = "vshub_tags";
 function loadTags() { try { return JSON.parse(localStorage.getItem(TAGS_KEY) || "{}"); } catch { return {}; } }
@@ -752,22 +827,37 @@ function loadPresets() { try { return JSON.parse(localStorage.getItem(PRESETS_KE
 function savePresets(p) { try { localStorage.setItem(PRESETS_KEY, JSON.stringify(p)); } catch {} }
 
 // ── Event binding ─────────────────────────────────────────────────────────────
+function buildEventCtx() {
+  return {
+    state, render, config, syncAll, logActivity, navigate,
+    loadStoredCredentials, saveCredentials, saveSettings, loadSettings,
+    setHubPassword, clearHubPassword,
+    invalidateWeightsCache, clearSessionCache,
+    scoreProject, PROJECTS,
+    downloadJSON, downloadCSV,
+    generateWeeklyDigest, generateStandup,
+    loadScoreHistory, scorePrevFromHistory,
+    applyAccent, applyTheme, getHubRuntimeConfig,
+    loadTickets, submitProjectTicket,
+    commitVelocity, daysSince,
+  };
+}
+
 function bindEvents() {
-  // Navigation + data-view links
+  // ── Navigation ──────────────────────────────────────────────────────────────
   document.querySelectorAll("[data-view]").forEach((el) => {
     el.addEventListener("click", (e) => {
       e.stopPropagation();
       const view = el.getAttribute("data-view");
       if (view && view !== state.activeView) {
         state.activeView = view;
-        _kbFocusIndex = -1; // reset j/k focus on view change
+        _kbFocusIndex = -1;
         try { history.pushState({ view }, "", "#" + encodeURIComponent(view)); } catch {}
         if (view.startsWith("project:")) {
           logActivity("project_open", view.slice("project:".length));
           addRecentProject(view.slice("project:".length));
         }
         render();
-        // Lazy-load context files and extended data when entering a project hub
         if (view.startsWith("project:")) {
           const pid = view.slice("project:".length);
           loadContextForProject(pid);
@@ -778,22 +868,18 @@ function bindEvents() {
     });
   });
 
-  // Sidebar toggle
+  // ── Core controls ───────────────────────────────────────────────────────────
   document.getElementById("sidebar-toggle-btn")?.addEventListener("click", () => {
     state.sidebarCollapsed = !state.sidebarCollapsed;
     saveUiState({ ...loadUiState(), sidebarCollapsed: state.sidebarCollapsed });
     render();
   });
-
-  // Theme toggle (button in nav)
   document.getElementById("theme-toggle-btn")?.addEventListener("click", () => {
     state.theme = state.theme === "light" ? "dark" : "light";
     saveUiState({ ...loadUiState(), theme: state.theme });
     applyTheme(state.theme);
     render();
   });
-
-  // Mobile nav toggle
   document.getElementById("mobile-nav-btn")?.addEventListener("click", () => {
     state.mobileNavOpen = !state.mobileNavOpen;
     render();
@@ -802,36 +888,26 @@ function bindEvents() {
     state.mobileNavOpen = false;
     render();
   });
-
-  // Project type tabs
   document.querySelectorAll("[data-project-tab]").forEach((el) => {
     el.addEventListener("click", () => {
       const tab = el.getAttribute("data-project-tab");
       if (tab && tab !== state.projectTab) { state.projectTab = tab; render(); }
     });
   });
-
-  // Vault admin tabs
   document.querySelectorAll("[data-admin-tab]").forEach((el) => {
     el.addEventListener("click", () => {
       const tab = el.getAttribute("data-admin-tab");
       if (tab && tab !== state.adminTab) { state.adminTab = tab; render(); }
     });
   });
-
-  // Focus mode toggle
   document.getElementById("focus-mode-btn")?.addEventListener("click", () => {
     state.focusMode = !state.focusMode;
     render();
   });
-
-  // Compact cards toggle
   document.getElementById("toggle-compact-cards")?.addEventListener("click", () => {
     state.compactCards = !state.compactCards;
     render();
   });
-
-  // Pin toggle
   document.querySelectorAll("[data-pin-project]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -855,579 +931,27 @@ function bindEvents() {
     Object.keys(sessionStorage)
       .filter((k) => k.startsWith("vshub_") && k.includes(repoKey))
       .forEach((k) => sessionStorage.removeItem(k));
-    // Also clear the direct repo cache key
     sessionStorage.removeItem(`vshub_gh_${repoPath}`);
     syncAll();
   });
 
-  // Action queue — add
-  document.querySelectorAll("[id^='action-queue-add-']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.projectId;
-      const input = document.getElementById(`action-queue-input-${projectId}`);
-      const text = input?.value?.trim();
-      if (!text) return;
-      try {
-        const queue = JSON.parse(localStorage.getItem("vshub_action_queue") || "{}");
-        const existing = queue[projectId];
-        let items = Array.isArray(existing) ? existing : (typeof existing === "string" && existing ? [{ id: Date.now().toString(36), text: existing }] : []);
-        items.push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text });
-        queue[projectId] = items;
-        localStorage.setItem("vshub_action_queue", JSON.stringify(queue));
-        if (input) input.value = "";
-        render();
-      } catch {}
-    });
-  });
-  document.querySelectorAll("[id^='action-queue-input-']").forEach((input) => {
-    input.addEventListener("keydown", (e) => {
-      if (e.key !== "Enter") return;
-      const projectId = input.id.replace("action-queue-input-", "");
-      const text = input.value.trim();
-      if (!text) return;
-      try {
-        const queue = JSON.parse(localStorage.getItem("vshub_action_queue") || "{}");
-        const existing = queue[projectId];
-        let items = Array.isArray(existing) ? existing : (typeof existing === "string" && existing ? [{ id: Date.now().toString(36), text: existing }] : []);
-        items.push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text });
-        queue[projectId] = items;
-        localStorage.setItem("vshub_action_queue", JSON.stringify(queue));
-        input.value = "";
-        render();
-      } catch {}
-    });
-  });
-  // Action queue — delete item
-  document.querySelectorAll("[data-aq-delete]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const projectId = btn.dataset.aqDelete;
-      const itemId = btn.dataset.aqId;
-      try {
-        const queue = JSON.parse(localStorage.getItem("vshub_action_queue") || "{}");
-        if (Array.isArray(queue[projectId])) {
-          queue[projectId] = queue[projectId].filter((it) => it.id !== itemId);
-          localStorage.setItem("vshub_action_queue", JSON.stringify(queue));
-          render();
-        }
-      } catch {}
-    });
-  });
-
-  // Settings — save
-  document.getElementById("save-settings-btn")?.addEventListener("click", async () => {
-    const githubToken     = document.getElementById("setting-github-token")?.value?.trim() || "";
-    const youtubeApiKey   = document.getElementById("setting-youtube-key")?.value?.trim() || "";
-    const gumroadToken    = document.getElementById("setting-gumroad-token")?.value?.trim() || "";
-    const beaconGistId    = document.getElementById("setting-beacon-gist")?.value?.trim() || "";
-    const supabaseAnonKey = document.getElementById("setting-supabase-anon-key")?.value?.trim() || "";
-    const hubPassword   = document.getElementById("setting-hub-password")?.value?.trim() || "";
-    const accent        = document.getElementById("setting-accent")?.value || "#7ae7c7";
-    const theme         = document.getElementById("setting-theme")?.value || "dark";
-    const showScores    = document.getElementById("setting-show-scores")?.value !== "false";
-    const sort          = document.getElementById("setting-sort")?.value || "score";
-    const refreshMs     = Number(document.getElementById("setting-refresh")?.value ?? 300000);
-    const weights = {
-      dev:      Number(document.getElementById("setting-weight-dev")?.value      ?? 30),
-      engage:   Number(document.getElementById("setting-weight-engage")?.value   ?? 25),
-      momentum: Number(document.getElementById("setting-weight-momentum")?.value ?? 25),
-      risk:     Number(document.getElementById("setting-weight-risk")?.value     ?? 20),
-    };
-
-    const existing = loadStoredCredentials();
-    saveCredentials({ ...existing, githubToken, youtubeApiKey, gumroadToken, beaconGistId, ...(supabaseAnonKey ? { supabaseAnonKey } : {}) });
-    if (hubPassword) await setHubPassword(hubPassword);
-
-    const alertThresholds = {
-      issues:    Number(document.getElementById("setting-thresh-issues")?.value     ?? 20),
-      staleWarn: Number(document.getElementById("setting-thresh-stale-warn")?.value ?? 14),
-      staleErr:  Number(document.getElementById("setting-thresh-stale-err")?.value  ?? 30),
-      scoreCrit: Number(document.getElementById("setting-thresh-score-crit")?.value ?? 24),
-      scoreWarn: Number(document.getElementById("setting-thresh-score-warn")?.value ?? 35),
-      prAge:     Number(document.getElementById("setting-thresh-pr-age")?.value     ?? 3),
-    };
-
-    const newSettings = { accent, theme, showScores, sort, refreshMs, weights, alertThresholds };
-    saveSettings(newSettings);
-    invalidateWeightsCache();
-    Object.assign(state.settings, newSettings);
-    applyAccent(accent);
-    state.theme = theme;
-    applyTheme(theme);
-
-    clearSessionCache();
-    Object.assign(config, getHubRuntimeConfig());
-    state.supabaseAnonKey = config.supabaseAnonKey;
-
-    const statusEl = document.getElementById("settings-status");
-    if (statusEl) statusEl.textContent = "Saved — reloading data…";
-    logActivity("settings_save", "");
-    syncAll();
-  });
-
-  // Settings — remove password
-  document.getElementById("clear-password-btn")?.addEventListener("click", async () => {
-    await clearHubPassword();
-    render();
-  });
-
-  // Settings — clear all
-  document.getElementById("clear-all-btn")?.addEventListener("click", () => {
-    if (!confirm("Clear all credentials and settings?")) return;
-    localStorage.removeItem("vshub_credentials");
-    localStorage.removeItem("vshub_settings");
-    localStorage.removeItem("vshub_score_history");
-    localStorage.removeItem("vshub_action_queue");
-    localStorage.removeItem("vshub_pinned");
-    localStorage.removeItem("vshub_annotations");
-    localStorage.removeItem("vshub_tags");
-    localStorage.removeItem("vshub_filter_presets");
-    localStorage.removeItem("vshub_activity");
-    localStorage.removeItem("vshub_compare");
-    localStorage.removeItem("vshub_goals");
-    localStorage.removeItem("vshub_sprint");
-    localStorage.removeItem("vshub_alert_history");
-    localStorage.removeItem("vshub_alert_snooze");
-    localStorage.removeItem("vshub_notes");
-    localStorage.removeItem("vshub_hub_notes");
-    localStorage.removeItem("vshub_checklist");
-    localStorage.removeItem("vshub_roadmap");
-    clearSessionCache();
-    Object.assign(state.settings, {});
-    state.scoreHistory = [];
-    state.scorePrev    = {};
-    applyAccent("#7ae7c7");
-    render();
-  });
-
-  // Project grid filter (debounced)
+  // Project filter + alert history search
   document.getElementById("project-filter-input")?.addEventListener("input", debounce((e) => {
     state.projectFilter = e.target.value.toLowerCase().trim();
     render();
   }, 150));
-
-  // Alert history search
   document.getElementById("alert-history-search")?.addEventListener("input", (e) => {
     state.alertHistoryFilter = e.target.value;
     render();
   });
 
-  // VS Code local path save
-  document.querySelectorAll("[id^='local-path-save-']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.projectId;
-      const input = document.getElementById(`local-path-input-${projectId}`);
-      if (!input) return;
-      try {
-        const paths = JSON.parse(localStorage.getItem("vshub_local_paths") || "{}");
-        paths[projectId] = input.value.trim();
-        if (!paths[projectId]) delete paths[projectId];
-        localStorage.setItem("vshub_local_paths", JSON.stringify(paths));
-        btn.textContent = "Saved ✓";
-        setTimeout(() => { btn.textContent = "Save path"; render(); }, 1500);
-      } catch {}
-    });
-  });
-
-  // Annotation save
-  document.querySelectorAll("[id^='annotation-save-']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.projectId;
-      const input = document.getElementById(`annotation-input-${projectId}`);
-      if (!input) return;
-      try {
-        const annotations = JSON.parse(localStorage.getItem("vshub_annotations") || "{}");
-        annotations[projectId] = input.value.trim();
-        localStorage.setItem("vshub_annotations", JSON.stringify(annotations));
-        btn.textContent = "Saved ✓";
-        setTimeout(() => { btn.textContent = "Save"; }, 1500);
-      } catch {}
-    });
-  });
-
-  // Annotation clear
-  document.querySelectorAll("[id^='annotation-clear-']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.projectId;
-      try {
-        const annotations = JSON.parse(localStorage.getItem("vshub_annotations") || "{}");
-        delete annotations[projectId];
-        localStorage.setItem("vshub_annotations", JSON.stringify(annotations));
-        render();
-      } catch {}
-    });
-  });
-
-  // GitHub token test
-  document.getElementById("test-github-token-btn")?.addEventListener("click", async () => {
-    const btn = document.getElementById("test-github-token-btn");
-    const statusEl = document.getElementById("github-token-test-status");
-    const tokenInput = document.getElementById("setting-github-token");
-    const token = tokenInput?.value?.trim() || config.githubToken;
-    if (!token) { if (statusEl) statusEl.textContent = "No token to test."; return; }
-    if (btn) btn.disabled = true;
-    if (statusEl) { statusEl.textContent = "Testing…"; statusEl.style.color = "var(--muted)"; }
-    try {
-      const res = await fetch("https://api.github.com/rate_limit", {
-        headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" },
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const rem = data.rate?.remaining ?? "?";
-        const lim = data.rate?.limit ?? "?";
-        let loginStr = "";
-        try {
-          const userRes = await fetch("https://api.github.com/user", {
-            headers: { Authorization: `Bearer ${token}`, Accept: "application/vnd.github+json" },
-          });
-          if (userRes.ok) {
-            const ud = await userRes.json();
-            if (ud.login) loginStr = `as @${ud.login} · `;
-          }
-        } catch {}
-        if (statusEl) { statusEl.textContent = `✓ Authenticated ${loginStr}${Number(rem).toLocaleString()} / ${Number(lim).toLocaleString()} remaining`; statusEl.style.color = "var(--green)"; }
-      } else if (res.status === 401) {
-        if (statusEl) { statusEl.textContent = "✗ Invalid token (401 Unauthorized)"; statusEl.style.color = "var(--red)"; }
-      } else {
-        if (statusEl) { statusEl.textContent = `✗ Error ${res.status}`; statusEl.style.color = "var(--red)"; }
-      }
-    } catch {
-      if (statusEl) { statusEl.textContent = "✗ Network error"; statusEl.style.color = "var(--red)"; }
-    }
-    if (btn) btn.disabled = false;
-  });
-
-  // Studio Pulse publish stub
-  document.getElementById("publish-pulse-btn")?.addEventListener("click", async () => {
-    const text    = document.getElementById("pulse-text")?.value?.trim();
-    const btn     = document.getElementById("publish-pulse-btn");
-    const statusEl = document.getElementById("pulse-status");
-    if (!text || !btn) return;
-    btn.disabled = true;
-    if (statusEl) statusEl.textContent = "Publishing…";
-    await new Promise((r) => setTimeout(r, 400));
-    if (statusEl) statusEl.textContent = "API backend required to publish. Coming in VPS deployment.";
-    btn.disabled = false;
-  });
-
-  // Export — JSON (settings page)
-  document.getElementById("export-json-btn")?.addEventListener("click", () => {
-    downloadJSON(state);
-    const s = document.getElementById("export-status");
-    if (s) { s.textContent = "JSON downloaded."; setTimeout(() => { s.textContent = ""; }, 2500); }
-  });
-
-  // Export — CSV (settings page)
-  document.getElementById("export-csv-btn")?.addEventListener("click", () => {
-    downloadCSV(state);
-    const s = document.getElementById("export-status");
-    if (s) { s.textContent = "CSV downloaded."; setTimeout(() => { s.textContent = ""; }, 2500); }
-  });
-
-  // Import JSON
-  document.getElementById("import-json-btn")?.addEventListener("click", () => {
-    document.getElementById("import-json-file")?.click();
-  });
-  document.getElementById("import-json-file")?.addEventListener("change", (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      try {
-        const data = JSON.parse(ev.target.result);
-        // Restore score history if present
-        if (Array.isArray(data.scoreHistory) && data.scoreHistory.length) {
-          localStorage.setItem("vshub_score_history", JSON.stringify(data.scoreHistory));
-          state.scoreHistory = data.scoreHistory;
-          state.scorePrev = scorePrevFromHistory(data.scoreHistory);
-        }
-        const statusEl = document.getElementById("export-status");
-        if (statusEl) { statusEl.textContent = `✓ Imported ${data.scoreHistory?.length || 0} history snapshots`; statusEl.style.color = "var(--green)"; }
-        render();
-      } catch {
-        const statusEl = document.getElementById("export-status");
-        if (statusEl) { statusEl.textContent = "✗ Invalid JSON file"; statusEl.style.color = "var(--red)"; }
-      }
-    };
-    reader.readAsText(file);
-  });
-
-  // Export — JSON (hub header quick button)
-  document.getElementById("export-snapshot-btn")?.addEventListener("click", () => downloadJSON(state));
-
-  // Export score history JSON
-  document.getElementById("export-score-history-btn")?.addEventListener("click", () => {
-    try {
-      const raw = localStorage.getItem("vshub_score_history") || "[]";
-      const blob = new Blob([raw], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `score-history-${new Date().toISOString().slice(0,10)}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch {}
-  });
-
-  // Reset score weights
-  document.getElementById("reset-weights-btn")?.addEventListener("click", () => {
-    const defaults = { dev: 30, engage: 25, momentum: 25, risk: 20 };
-    for (const [key, val] of Object.entries(defaults)) {
-      const el = document.getElementById(`setting-weight-${key}`);
-      const disp = document.getElementById(`setting-weight-${key}-display`);
-      if (el) el.value = val;
-      if (disp) disp.textContent = val;
-    }
-    const totalEl = document.getElementById("weight-total-display");
-    if (totalEl) { totalEl.textContent = 100; totalEl.style.color = "var(--green)"; }
-  });
-
-  // Score weight live preview
-  function updateWeightPreview() {
-    const dev      = Number(document.getElementById("setting-weight-dev")?.value      ?? 30);
-    const engage   = Number(document.getElementById("setting-weight-engage")?.value   ?? 25);
-    const momentum = Number(document.getElementById("setting-weight-momentum")?.value ?? 25);
-    const risk     = Number(document.getElementById("setting-weight-risk")?.value     ?? 20);
-    const total = dev + engage + momentum + risk;
-    if (total === 0) return;
-    let sum = 0, count = 0;
-    for (const p of PROJECTS) {
-      const rd = state.ghData[p.githubRepo] || null;
-      const sc = scoreProject(p, rd, state.sbData, state.socialData);
-      // Re-scale: rawPillarScore / pillarMax * newWeight
-      const preview = Math.round(
-        (sc.pillars.development.score / 30) * dev +
-        (sc.pillars.engagement.score  / 25) * engage +
-        (sc.pillars.momentum.score    / 25) * momentum +
-        (sc.pillars.risk.score        / 20) * risk
-      );
-      const el = document.getElementById(`preview-score-${p.id}`);
-      if (el) {
-        const pct = total > 0 ? (preview / total) * 100 : 0;
-        const color = pct >= 80 ? "var(--green)" : pct >= 60 ? "var(--cyan)" : pct >= 40 ? "var(--gold)" : "var(--red)";
-        el.textContent = preview;
-        el.style.color = color;
-      }
-      sum += preview; count++;
-    }
-    const avgEl = document.getElementById("preview-avg-score");
-    if (avgEl && count > 0) avgEl.textContent = Math.round(sum / count);
-  }
-  ["setting-weight-dev","setting-weight-engage","setting-weight-momentum","setting-weight-risk"].forEach((id) => {
-    document.getElementById(id)?.addEventListener("input", updateWeightPreview);
-  });
-  // Run once on load if on settings page
-  if (state.activeView === "settings") updateWeightPreview();
-
-  // Score weight presets
-  document.querySelectorAll("[data-weight-preset]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      try {
-        const [dev, engage, momentum, risk] = JSON.parse(btn.dataset.weightPreset);
-        const keys = [["dev", dev], ["engage", engage], ["momentum", momentum], ["risk", risk]];
-        for (const [key, val] of keys) {
-          const el = document.getElementById(`setting-weight-${key}`);
-          const disp = document.getElementById(`setting-weight-${key}-display`);
-          if (el) el.value = val;
-          if (disp) disp.textContent = val;
-        }
-        const total = dev + engage + momentum + risk;
-        const totalEl = document.getElementById("weight-total-display");
-        if (totalEl) { totalEl.textContent = total; totalEl.style.color = total === 100 ? "var(--green)" : "var(--cyan)"; }
-      } catch {}
-    });
-  });
-
-  // Heatmap sort
-  document.querySelectorAll("[data-sort-col]").forEach((th) => {
-    th.addEventListener("click", () => {
-      const key = th.dataset.sortCol;
-      if (state.heatmapSortKey === key) {
-        if (!state.heatmapSortAsc) { state.heatmapSortKey = null; state.heatmapSortAsc = false; }
-        else state.heatmapSortAsc = false;
-      } else {
-        state.heatmapSortKey = key;
-        state.heatmapSortAsc = true;
-      }
-      render();
-    });
-  });
-
-  // Heatmap — Export CSV
-  document.getElementById("heatmap-export-csv")?.addEventListener("click", () => {
-    const headers = ["Project","Score","Grade","CI","Issues","PRs","CommitsWeek","LastPush","Sessions7d","Stars","Forks"];
-    const csvRows = PROJECTS.map((p) => {
-      const d = state.ghData[p.githubRepo] || null;
-      const scoring = scoreProject(p, d, state.sbData, state.socialData);
-      const ci = d?.ciRuns?.[0];
-      const ciVal = !ci ? "" : ci.conclusion === "success" ? "PASS" : ci.conclusion === "failure" ? "FAIL" : ci.conclusion || "";
-      const vel = d ? commitVelocity(d.commits).thisWeek : "";
-      const stale = daysSince(d?.commits?.[0]?.date);
-      const staleVal = stale === Infinity || stale == null ? "" : stale < 1 ? "today" : `${Math.floor(stale)}d`;
-      const sessions = state.sbData?.sessions?.[p.supabaseGameSlug]?.week ?? "";
-      return [
-        p.name,
-        scoring.total,
-        scoring.grade,
-        ciVal,
-        d?.repo?.openIssues ?? "",
-        d?.prs?.length ?? "",
-        vel,
-        staleVal,
-        sessions,
-        d?.repo?.stars ?? "",
-        d?.repo?.forks ?? "",
-      ].map((v) => JSON.stringify(v ?? "")).join(",");
-    });
-    const csv = [headers.join(","), ...csvRows].join("\n");
-    const blob = new Blob([csv], { type: "text/csv" });
-    const url = URL.createObjectURL(blob);
-    const a = Object.assign(document.createElement("a"), { href: url, download: `heatmap-${new Date().toISOString().slice(0,10)}.csv` });
-    a.click();
-    URL.revokeObjectURL(url);
-  });
-
-  // Heatmap — column visibility toggles
-  document.querySelectorAll("[data-toggle-col]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const key = btn.dataset.toggleCol;
-      if (state.heatmapHiddenCols.has(key)) {
-        state.heatmapHiddenCols.delete(key);
-      } else {
-        state.heatmapHiddenCols.add(key);
-      }
-      render();
-    });
-  });
-
-  // Compare swap button — rotates A→B→C→A
-  document.getElementById("compare-swap-btn")?.addEventListener("click", () => {
-    try {
-      const s = JSON.parse(localStorage.getItem("vshub_compare") || "{}");
-      localStorage.setItem("vshub_compare", JSON.stringify({ a: s.b || "", b: s.c || "", c: s.a || "" }));
-      render();
-    } catch {}
-  });
-
-  // Compare view selectors
-  document.getElementById("compare-select-a")?.addEventListener("change", (e) => {
-    try {
-      const s = JSON.parse(localStorage.getItem("vshub_compare") || "{}");
-      localStorage.setItem("vshub_compare", JSON.stringify({ ...s, a: e.target.value }));
-      render();
-    } catch {}
-  });
-  document.getElementById("compare-select-b")?.addEventListener("change", (e) => {
-    try {
-      const s = JSON.parse(localStorage.getItem("vshub_compare") || "{}");
-      localStorage.setItem("vshub_compare", JSON.stringify({ ...s, b: e.target.value }));
-      render();
-    } catch {}
-  });
-  document.getElementById("compare-select-c")?.addEventListener("change", (e) => {
-    try {
-      const s = JSON.parse(localStorage.getItem("vshub_compare") || "{}");
-      localStorage.setItem("vshub_compare", JSON.stringify({ ...s, c: e.target.value }));
-      render();
-    } catch {}
-  });
-
-  // Restore compare selects visually from localStorage on mount
-  (function restoreCompareSelects() {
-    try {
-      const saved = JSON.parse(localStorage.getItem("vshub_compare") || "{}");
-      const selA = document.getElementById("compare-select-a");
-      const selB = document.getElementById("compare-select-b");
-      const selC = document.getElementById("compare-select-c");
-      if (selA && saved.a) selA.value = saved.a;
-      if (selB && saved.b) selB.value = saved.b;
-      if (selC && saved.c) selC.value = saved.c;
-    } catch {}
-  })();
-
-  // Standup generator
-  document.getElementById("standup-btn")?.addEventListener("click", () => generateStandup(state, logActivity));
-
-  // ── Project Ticketing ──────────────────────────────────────────────────────
-  document.getElementById("tickets-refresh-btn")?.addEventListener("click", () => {
-    // Bust cache then reload
-    try { sessionStorage.removeItem("vshub_gh_project_tickets"); } catch {}
-    state.tickets = [];
-    loadTickets();
-  });
-
-  // Sync color picker ↔ hex input
-  const colorPicker = document.getElementById("ticket-color-picker");
-  const colorHex    = document.getElementById("ticket-color-hex");
-  if (colorPicker && colorHex) {
-    colorPicker.addEventListener("input", () => { colorHex.value = colorPicker.value; });
-    colorHex.addEventListener("input", () => {
-      if (/^#[0-9a-fA-F]{6}$/.test(colorHex.value)) colorPicker.value = colorHex.value;
-    });
-    colorHex.value = colorPicker.value;
-  }
-
-  document.getElementById("ticket-submit-form")?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const name          = document.getElementById("ticket-name")?.value.trim();
-    const githubRepo    = document.getElementById("ticket-repo")?.value.trim();
-    const type          = document.getElementById("ticket-type")?.value;
-    const status        = document.getElementById("ticket-status")?.value;
-    const description   = document.getElementById("ticket-description")?.value.trim();
-    const deployedUrl   = document.getElementById("ticket-deployed-url")?.value.trim();
-    const supabaseSlug  = document.getElementById("ticket-supabase-slug")?.value.trim();
-    const color         = document.getElementById("ticket-color-hex")?.value.trim()
-                       || document.getElementById("ticket-color-picker")?.value || "";
-
-    if (!name || !githubRepo || !type || !status || !description) {
-      state.ticketError = "Please fill in all required fields (name, repo, type, status, description).";
-      state.ticketSuccess = null;
-      render();
-      return;
-    }
-
-    state.ticketSubmitting = true;
-    state.ticketError = null;
-    state.ticketSuccess = null;
-    render();
-
-    const studioOsChecks = document.querySelectorAll(".studio-os-check");
-    const studioOsCompliant = studioOsChecks.length > 0 && [...studioOsChecks].every((cb) => cb.checked);
-
-    const credentials = loadStoredCredentials();
-    const token = config.githubToken || credentials.githubToken || "";
-    const result = await submitProjectTicket({ name, githubRepo, type, status, description, deployedUrl, supabaseSlug, color, studioOsCompliant }, token);
-
-    state.ticketSubmitting = false;
-    if (result.ok) {
-      state.ticketSuccess = { url: result.url, id: result.id };
-      state.ticketError = null;
-      // Reset form
-      document.getElementById("ticket-submit-form")?.reset();
-      if (colorHex) colorHex.value = "#7ae7c7";
-      if (colorPicker) colorPicker.value = "#7ae7c7";
-      // Refresh queue
-      loadTickets();
-    } else {
-      state.ticketError = result.error;
-    }
-    render();
-  });
-
-  // "Submit Ticket" / "View Ticket" quick-action from Studio Ops pipeline strip
-  document.querySelectorAll("[data-action='submit-ticket']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      navigate("ticketing");
-    });
-  });
-
-  // "Request Run →" one-click agent dispatch from Studio Agents tab
+  // ── Agent dispatch ──────────────────────────────────────────────────────────
   document.querySelectorAll("[data-action='dispatch-agent']").forEach((btn) => {
     btn.addEventListener("click", async () => {
-      const agentId     = btn.dataset.agentId;
-      const agentName   = btn.dataset.agentName;
-      const phrase      = btn.dataset.phrase;
-      const token       = config.githubToken;
+      const agentId   = btn.dataset.agentId;
+      const agentName = btn.dataset.agentName;
+      const phrase    = btn.dataset.phrase;
+      const token     = config.githubToken;
       if (!token) { alert("GitHub token not configured — go to Settings to add it."); return; }
       btn.disabled = true;
       btn.textContent = "Submitting…";
@@ -1435,7 +959,6 @@ function bindEvents() {
       if (result.ok) {
         btn.textContent = `✓ #${result.number} created`;
         btn.style.color = "var(--green)";
-        // Refresh agent-requests so the queue updates
         state.agentRequests = await fetchAgentRequests(token, 0).catch(() => state.agentRequests);
         render();
       } else {
@@ -1447,324 +970,11 @@ function bindEvents() {
     });
   });
 
-  // ── Goal tracking ─────────────────────────────────────────────────────────
-  document.querySelectorAll("[id^='goal-set-']").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const pid = btn.dataset.projectId;
-      const g   = btn.dataset.goal;
-      try {
-        const goals = JSON.parse(localStorage.getItem("vshub_goals") || "{}");
-        const existing = goals[pid];
-        const dl = typeof existing === "object" && existing ? (existing.deadline || "") : "";
-        goals[pid] = { grade: g, deadline: dl };
-        localStorage.setItem("vshub_goals", JSON.stringify(goals));
-        render();
-      } catch {}
-    });
-  });
-  document.querySelectorAll("[id^='goal-clear-']").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const pid = btn.id.replace("goal-clear-", "");
-      try {
-        const goals = JSON.parse(localStorage.getItem("vshub_goals") || "{}");
-        delete goals[pid];
-        localStorage.setItem("vshub_goals", JSON.stringify(goals));
-        render();
-      } catch {}
-    });
-  });
-  document.querySelectorAll("[id^='goal-deadline-']").forEach((inp) => {
-    inp.addEventListener("change", () => {
-      const pid = inp.id.replace("goal-deadline-", "");
-      try {
-        const goals = JSON.parse(localStorage.getItem("vshub_goals") || "{}");
-        const existing = goals[pid];
-        const grade = typeof existing === "string" ? existing : (typeof existing === "object" && existing ? (existing.grade || "") : "");
-        goals[pid] = { grade, deadline: inp.value };
-        localStorage.setItem("vshub_goals", JSON.stringify(goals));
-      } catch {}
-    });
-  });
-
-  // ── Sprint mode ────────────────────────────────────────────────────────────
-  document.getElementById("set-sprint-btn")?.addEventListener("click", () => {
-    const projectId = document.getElementById("sprint-project-select")?.value;
-    const goal      = document.getElementById("sprint-goal-input")?.value?.trim() || "";
-    if (!projectId) return;
-    try { localStorage.setItem("vshub_sprint", JSON.stringify({ projectId, goal })); } catch {}
-    logActivity("sprint_set", projectId);
-    render();
-  });
-  document.getElementById("clear-sprint-btn")?.addEventListener("click", () => {
-    try { localStorage.removeItem("vshub_sprint"); } catch {}
-    render();
-  });
-
-  // ── Action item tracker (checklist) ───────────────────────────────────────
-  document.querySelectorAll("[id^='checklist-add-']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.projectId;
-      const input = document.getElementById(`checklist-new-${projectId}`);
-      const text = input?.value?.trim();
-      if (!text) return;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_checklist") || "{}");
-        if (!all[projectId]) all[projectId] = [];
-        all[projectId].push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text, done: false });
-        localStorage.setItem("vshub_checklist", JSON.stringify(all));
-        if (input) input.value = "";
-        render();
-      } catch {}
-    });
-  });
-  document.querySelectorAll("[id^='checklist-new-']").forEach((input) => {
-    input.addEventListener("keydown", (e) => {
-      if (e.key !== "Enter") return;
-      const projectId = input.id.replace("checklist-new-", "");
-      const text = input.value.trim();
-      if (!text) return;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_checklist") || "{}");
-        if (!all[projectId]) all[projectId] = [];
-        all[projectId].push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text, done: false });
-        localStorage.setItem("vshub_checklist", JSON.stringify(all));
-        input.value = "";
-        render();
-      } catch {}
-    });
-  });
-  document.querySelectorAll("[data-checklist-toggle]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const projectId = btn.dataset.checklistToggle;
-      const itemId = btn.dataset.checklistId;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_checklist") || "{}");
-        const idx = (all[projectId] || []).findIndex((it) => it.id === itemId);
-        if (idx !== -1) {
-          all[projectId][idx].done = !all[projectId][idx].done;
-          localStorage.setItem("vshub_checklist", JSON.stringify(all));
-          render();
-        }
-      } catch {}
-    });
-  });
-  document.querySelectorAll("[data-checklist-delete]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const projectId = btn.dataset.checklistDelete;
-      const itemId = btn.dataset.checklistId;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_checklist") || "{}");
-        if (all[projectId]) {
-          all[projectId] = all[projectId].filter((it) => it.id !== itemId);
-          localStorage.setItem("vshub_checklist", JSON.stringify(all));
-          render();
-        }
-      } catch {}
-    });
-  });
-
-  // ── Roadmap board ──────────────────────────────────────────────────────────
-  function makeRoadmapId() {
-    return `rm_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 6)}`;
-  }
-  document.querySelectorAll("[id^='roadmap-add-']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.projectId;
-      const input = document.getElementById(`roadmap-new-${projectId}`);
-      const text = input?.value?.trim();
-      if (!text) return;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_roadmap") || "{}");
-        if (!all[projectId]) all[projectId] = { todo: [], doing: [], done: [] };
-        all[projectId].todo.push({ id: makeRoadmapId(), text });
-        localStorage.setItem("vshub_roadmap", JSON.stringify(all));
-        if (input) input.value = "";
-        render();
-      } catch {}
-    });
-  });
-  document.querySelectorAll("[id^='roadmap-new-']").forEach((input) => {
-    input.addEventListener("keydown", (e) => {
-      if (e.key !== "Enter") return;
-      const projectId = input.id.replace("roadmap-new-", "");
-      const text = input.value.trim();
-      if (!text) return;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_roadmap") || "{}");
-        if (!all[projectId]) all[projectId] = { todo: [], doing: [], done: [] };
-        all[projectId].todo.push({ id: makeRoadmapId(), text });
-        localStorage.setItem("vshub_roadmap", JSON.stringify(all));
-        input.value = "";
-        render();
-      } catch {}
-    });
-  });
-  document.querySelectorAll("[data-roadmap-move]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const projectId = btn.dataset.roadmapMove;
-      const from = btn.dataset.roadmapFrom;
-      const to   = btn.dataset.roadmapTo;
-      const itemId = btn.dataset.roadmapId;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_roadmap") || "{}");
-        const board = all[projectId];
-        if (!board) return;
-        const itemIdx = board[from].findIndex((it) => (typeof it === "object" ? it.id : null) === itemId);
-        if (itemIdx === -1) return;
-        const [rawItem] = board[from].splice(itemIdx, 1);
-        const text = typeof rawItem === "string" ? rawItem : (rawItem.text || "");
-        const existingId = typeof rawItem === "object" && rawItem.id ? rawItem.id : makeRoadmapId();
-        const item = to === "doing"
-          ? { id: existingId, text, movedAt: Date.now() }
-          : { id: existingId, text };
-        board[to].push(item);
-        localStorage.setItem("vshub_roadmap", JSON.stringify(all));
-        render();
-      } catch {}
-    });
-  });
-  document.querySelectorAll("[data-roadmap-delete]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const projectId = btn.dataset.roadmapDelete;
-      const col = btn.dataset.roadmapCol;
-      const itemId = btn.dataset.roadmapId;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_roadmap") || "{}");
-        if (all[projectId]?.[col]) {
-          all[projectId][col] = all[projectId][col].filter(
-            (it) => (typeof it === "object" ? it.id : null) !== itemId
-          );
-        }
-        localStorage.setItem("vshub_roadmap", JSON.stringify(all));
-        render();
-      } catch {}
-    });
-  });
-
-  // Export snapshot also on hub header
-  document.getElementById("export-snapshot-btn")?.addEventListener("click", () => downloadJSON(state));
-
-  // Tag save buttons (in project hub)
-  document.querySelectorAll("[id^='tag-save-']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.projectId;
-      const input = document.getElementById(`tag-input-${projectId}`);
-      if (!input) return;
-      const tags = input.value.split(",").map((t) => t.trim()).filter(Boolean);
-      const all = loadTags();
-      all[projectId] = tags;
-      saveTags(all);
-      btn.textContent = "Saved ✓";
-      setTimeout(() => { btn.textContent = "Save"; }, 1500);
-    });
-  });
-
-  // Save current filter as preset
-  document.getElementById("save-preset-btn")?.addEventListener("click", () => {
-    const name = prompt("Preset name:");
-    if (!name) return;
-    const presets = loadPresets();
-    presets.push({
-      name,
-      filter: state.projectFilter,
-      tab: state.projectTab,
-      focusMode: state.focusMode,
-    });
-    savePresets(presets);
-    render();
-  });
-
-  // Apply preset buttons
-  document.querySelectorAll("[data-apply-preset]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      try {
-        const preset = JSON.parse(btn.dataset.applyPreset);
-        state.projectFilter = preset.filter || "";
-        state.projectTab    = preset.tab || "games";
-        state.focusMode     = preset.focusMode || false;
-        render();
-      } catch {}
-    });
-  });
-
-  // Delete preset
-  document.querySelectorAll("[data-delete-preset]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const idx = Number(btn.dataset.deletePreset);
-      const presets = loadPresets();
-      presets.splice(idx, 1);
-      savePresets(presets);
-      render();
-    });
-  });
-
-  // TODO search load
-  document.getElementById("load-todos-btn")?.addEventListener("click", async () => {
-    const btn = document.getElementById("load-todos-btn");
-    const container = document.getElementById("todos-container");
-    if (!btn || !container) return;
-    btn.disabled = true;
-    btn.textContent = "Searching…";
-    try {
-      const { fetchTodoSearch } = await import("./data/githubAdapter.js");
-      const todos = await fetchTodoSearch("VaultSparkStudios", config.githubToken);
-      container.innerHTML = todos.length === 0
-        ? `<div class="empty-state">No TODO/FIXME found.</div>`
-        : todos.map((t) => `
-          <div style="display:flex; align-items:flex-start; gap:10px; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.05); font-size:12px;">
-            <span style="color:var(--gold); min-width:80px; flex-shrink:0; font-family:monospace;">${t.repo}</span>
-            <a href="${t.url}" target="_blank" rel="noopener" style="color:var(--blue); word-break:break-all;">${t.path}</a>
-          </div>
-        `).join("");
-    } catch {
-      container.innerHTML = `<div class="empty-state">Search failed. Check token rate limits.</div>`;
-    }
-    btn.disabled = false;
-    btn.textContent = "Refresh";
-  });
-
-  // Notification preferences save
-  document.getElementById("save-notif-prefs")?.addEventListener("click", () => {
-    const notif_ci_fail    = document.getElementById("notif_ci_fail")?.checked !== false
-    const notif_score_drop = document.getElementById("notif_score_drop")?.checked !== false
-    const notif_pr_stale   = document.getElementById("notif_pr_stale")?.checked !== false
-    const notif_dormant    = document.getElementById("notif_dormant")?.checked !== false
-    saveSettings({ ...loadSettings(), notif_ci_fail, notif_score_drop, notif_pr_stale, notif_dormant })
-    const btn = document.getElementById("save-notif-prefs")
-    if (btn) { btn.textContent = "Saved ✓"; setTimeout(() => { btn.textContent = "Save preferences"; }, 2000) }
-    logActivity("notif_prefs_save", "")
-  })
-
-  // Clear activity log
-  document.getElementById("clear-activity-btn")?.addEventListener("click", () => {
-    localStorage.removeItem(ACTIVITY_KEY);
-    render();
-  });
-
-  // Weekly digest button
-  document.getElementById("weekly-digest-btn")?.addEventListener("click", () => generateWeeklyDigest(state, logActivity));
-
-  // PWA install button
-  document.getElementById("pwa-install-btn")?.addEventListener("click", () => {
-    if (state.pwaInstallPrompt) {
-      state.pwaInstallPrompt.prompt();
-      state.pwaInstallPrompt.userChoice.then(() => { state.pwaInstallPrompt = null; render(); }).catch(() => {});
-    }
-  });
-
-  // Bulk unsnooze all
+  // ── Alert snooze / unsnooze ─────────────────────────────────────────────────
   document.getElementById("unsnooze-all-btn")?.addEventListener("click", () => {
     localStorage.removeItem("vshub_alert_snooze");
     render();
   });
-
-  // Alert unsnooze buttons (snooze management panel)
   document.querySelectorAll("[data-unsnooze]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -1777,8 +987,6 @@ function bindEvents() {
       } catch {}
     });
   });
-
-  // Alert snooze buttons
   document.querySelectorAll("[data-snooze-alert]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -1788,8 +996,6 @@ function bindEvents() {
       render();
     });
   });
-
-  // Snooze all alerts button
   document.getElementById("snooze-all-alerts-btn")?.addEventListener("click", () => {
     document.querySelectorAll("[data-snooze-alert]").forEach((btn) => {
       const msg = btn.dataset.snoozeAlert;
@@ -1799,45 +1005,25 @@ function bindEvents() {
     render();
   });
 
-  // Timeline type filter
+  // ── Timeline / floor / changelog filters ────────────────────────────────────
   document.querySelectorAll("[data-timeline-type]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      state.timelineTypeFilter = btn.dataset.timelineType;
-      render();
-    });
+    btn.addEventListener("click", () => { state.timelineTypeFilter = btn.dataset.timelineType; render(); });
   });
   document.getElementById("timeline-project-filter")?.addEventListener("change", (e) => {
-    state.timelineProjectFilter = e.target.value;
-    render();
+    state.timelineProjectFilter = e.target.value; render();
   });
-
   document.getElementById("activity-project-filter")?.addEventListener("change", (e) => {
-    state.activityProjectFilter = e.target.value;
-    render();
+    state.activityProjectFilter = e.target.value; render();
   });
-
   document.getElementById("changelog-filter")?.addEventListener("input", (e) => {
-    state.changelogFilter = e.target.value;
-    render();
+    state.changelogFilter = e.target.value; render();
   });
-
-  // Studio Floor search + sort
   const floorSearchEl = document.getElementById("floor-search-input");
-  if (floorSearchEl) {
-    floorSearchEl.addEventListener("input", (e) => {
-      state.floorSearch = e.target.value;
-      render();
-    });
-  }
+  if (floorSearchEl) floorSearchEl.addEventListener("input", (e) => { state.floorSearch = e.target.value; render(); });
   const floorSortEl = document.getElementById("floor-sort-select");
-  if (floorSortEl) {
-    floorSortEl.addEventListener("change", (e) => {
-      state.floorSort = e.target.value;
-      render();
-    });
-  }
+  if (floorSortEl) floorSortEl.addEventListener("change", (e) => { state.floorSort = e.target.value; render(); });
 
-  // Tag filter pills
+  // ── Tag filter pills + bulk tag ─────────────────────────────────────────────
   document.querySelectorAll("[data-tag-filter]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
@@ -1846,22 +1032,12 @@ function bindEvents() {
       render();
     });
   });
-
-  // Bulk tag mode toggle
   document.getElementById("bulk-tag-mode-btn")?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    state.bulkTagMode = !state.bulkTagMode;
-    render();
+    e.stopPropagation(); state.bulkTagMode = !state.bulkTagMode; render();
   });
-
-  // Bulk tag done
   document.getElementById("bulk-tag-done-btn")?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    state.bulkTagMode = false;
-    render();
+    e.stopPropagation(); state.bulkTagMode = false; render();
   });
-
-  // Bulk tag add
   document.getElementById("bulk-tag-add-btn")?.addEventListener("click", (e) => {
     e.stopPropagation();
     const input = document.getElementById("bulk-tag-input");
@@ -1879,8 +1055,6 @@ function bindEvents() {
     } catch {}
     render();
   });
-
-  // Bulk tag remove
   document.getElementById("bulk-tag-remove-btn")?.addEventListener("click", (e) => {
     e.stopPropagation();
     const input = document.getElementById("bulk-tag-input");
@@ -1898,168 +1072,23 @@ function bindEvents() {
     render();
   });
 
-  // Ambient fullscreen
+  // ── Misc ────────────────────────────────────────────────────────────────────
   document.getElementById("ambient-fullscreen-btn")?.addEventListener("click", () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-    } else {
-      document.exitFullscreen().catch(() => {});
-    }
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+    else document.exitFullscreen().catch(() => {});
   });
-
-  // Onboarding modal
   document.getElementById("onboarding-modal-btn")?.addEventListener("click", showOnboardingModal);
-
-  // Hub session notes save
-  document.getElementById("hub-notes-save-btn")?.addEventListener("click", () => {
-    const today = new Date().toISOString().slice(0, 10);
-    const textarea = document.getElementById("hub-session-notes-input");
-    if (!textarea) return;
-    try {
-      const notes = JSON.parse(localStorage.getItem("vshub_hub_notes") || "{}");
-      notes[today] = textarea.value;
-      localStorage.setItem("vshub_hub_notes", JSON.stringify(notes));
-      const status = document.getElementById("hub-notes-save-status");
-      if (status) { status.textContent = "Saved ✓"; setTimeout(() => { status.textContent = ""; }, 1500); }
-    } catch {}
-  });
-  document.getElementById("hub-session-notes-input")?.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
-      document.getElementById("hub-notes-save-btn")?.click();
-    }
-  });
-
-  // Notes save
-  document.querySelectorAll("[id^='notes-save-']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.projectId;
-      const textarea = document.getElementById(`notes-input-${projectId}`);
-      if (!textarea) return;
-      try {
-        const notes = JSON.parse(localStorage.getItem("vshub_notes") || "{}");
-        notes[projectId] = textarea.value;
-        localStorage.setItem("vshub_notes", JSON.stringify(notes));
-        btn.textContent = "Saved ✓";
-        setTimeout(() => { btn.textContent = "Save"; }, 1500);
-      } catch {}
-    });
-  });
-
-  // Notes clear
-  document.querySelectorAll("[id^='notes-clear-']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.projectId;
-      try {
-        const notes = JSON.parse(localStorage.getItem("vshub_notes") || "{}");
-        delete notes[projectId];
-        localStorage.setItem("vshub_notes", JSON.stringify(notes));
-        render();
-      } catch {}
-    });
-  });
-
-  // Best Action Today dismiss
-  document.getElementById("dismiss-best-action-btn")?.addEventListener("click", (e) => {
-    e.stopPropagation();
-    try { sessionStorage.setItem("vshub_best_action_dismissed", "1"); } catch {}
-    render();
-  });
-
-  // Score explanation modal
   document.querySelectorAll("[data-score-explain]").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      showScoreModal(btn.dataset.scoreExplain);
-    });
+    btn.addEventListener("click", (e) => { e.stopPropagation(); showScoreModal(btn.dataset.scoreExplain); });
   });
 
-  // Copy release notes
-  document.querySelectorAll("[id^='copy-release-notes-']").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.dataset.projectId;
-      const pre = document.getElementById(`release-notes-pre-${projectId}`);
-      if (pre) {
-        navigator.clipboard.writeText(pre.textContent).catch(() => {});
-        btn.textContent = "Copied ✓";
-        setTimeout(() => { btn.textContent = "Copy draft"; }, 2000);
-      }
-    });
-  });
-
-  // Commit search
-  document.querySelectorAll("[id^='commit-search-']").forEach((input) => {
-    const projectId = input.id.replace("commit-search-", "");
-    input.addEventListener("input", () => {
-      const query = input.value.trim().toLowerCase();
-      const project = PROJECTS.find((p) => p.id === projectId);
-      const repoData = project?.githubRepo ? (state.ghData[project.githubRepo] || null) : null;
-      const commits = repoData?.commits || [];
-      const filtered = query ? commits.filter((c) => (c.message || "").toLowerCase().includes(query)) : commits;
-      const container = document.getElementById(`commit-list-${projectId}`);
-      if (!container) return;
-      if (filtered.length === 0) {
-        container.innerHTML = `<div class="empty-state" style="padding:8px 0;">No commits match &ldquo;${input.value.replace(/</g, "&lt;").replace(/>/g, "&gt;")}&rdquo;.</div>`;
-      } else {
-        container.innerHTML = filtered.map((c) => `
-          <div class="commit-item" data-commit-date="${c.date}">
-            <div class="commit-message">${(c.message || "").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</div>
-            <div class="commit-meta">
-              <span class="commit-sha">${c.sha || ""}</span>
-              · ${(c.author || "").replace(/</g, "&lt;").replace(/>/g, "&gt;")}
-              · ${c.date ? new Date(c.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "—"}
-            </div>
-          </div>
-        `).join("");
-      }
-    });
-  });
-
-  // Commit heatmap day drill-down
-  document.querySelectorAll("[data-heatmap-day]").forEach((bar) => {
-    bar.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const daysAgo = Number(bar.dataset.heatmapDay);
-      const commitList = document.querySelector(".commit-list");
-      const label = document.getElementById("heatmap-filter-label");
-      if (!commitList) return;
-
-      const activeBar = document.querySelector("[data-heatmap-day].heatmap-active");
-      const isSameDay = activeBar && Number(activeBar.dataset.heatmapDay) === daysAgo;
-
-      // Clear all active states
-      document.querySelectorAll("[data-heatmap-day]").forEach((b) => {
-        b.classList.remove("heatmap-active");
-        b.style.outline = "";
-      });
-
-      if (isSameDay) {
-        // Toggle off — show all commits
-        commitList.querySelectorAll(".commit-item").forEach((el) => { el.style.display = ""; });
-        if (label) label.textContent = "";
-        return;
-      }
-
-      // Filter commits to this day
-      bar.classList.add("heatmap-active");
-      bar.style.outline = "2px solid var(--cyan)";
-      const now = Date.now();
-      const dayStart = now - (daysAgo + 1) * 86400000;
-      const dayEnd   = now - daysAgo * 86400000;
-      let shown = 0;
-      commitList.querySelectorAll(".commit-item").forEach((item) => {
-        const dateAttr = item.dataset.commitDate;
-        if (dateAttr) {
-          const ts = new Date(dateAttr).getTime();
-          const visible = ts >= dayStart && ts < dayEnd;
-          item.style.display = visible ? "" : "none";
-          if (visible) shown++;
-        } else {
-          item.style.display = "";
-        }
-      });
-      if (label) label.textContent = shown > 0 ? `Showing ${shown} commit${shown !== 1 ? "s" : ""} — click again to clear` : `No commits ${daysAgo === 0 ? "today" : `${daysAgo}d ago`}`;
-    });
-  });
+  // ── Delegate to view-specific modules ──────────────────────────────────────
+  const ctx = buildEventCtx();
+  bindSettingsEvents(ctx);
+  bindProjectHubEvents(ctx);
+  bindHeatmapEvents(ctx);
+  bindCompareEvents(ctx);
+  bindTicketingEvents(ctx);
 }
 
 // ── Data sync ─────────────────────────────────────────────────────────────────
@@ -2073,15 +1102,17 @@ function withTimeout(promise, ms) {
 }
 
 async function syncAll() {
-  // Rate limit pre-flight: warn if remaining < 30% of limit (and we have data from a prior check)
+  // Rate limit pre-flight: hard stop at < 10%; throttle auto-refresh at < 500 remaining
   if (state.rateLimitInfo && state.rateLimitInfo.remaining != null && state.rateLimitInfo.limit != null) {
-    const pct = (state.rateLimitInfo.remaining / state.rateLimitInfo.limit) * 100;
+    const rem = state.rateLimitInfo.remaining;
+    const pct = (rem / state.rateLimitInfo.limit) * 100;
     if (pct < 10) {
-      state.syncError = `GitHub rate limit low: ${state.rateLimitInfo.remaining}/${state.rateLimitInfo.limit} requests remaining. Sync skipped to preserve quota.`;
+      state.syncError = `GitHub rate limit low: ${rem.toLocaleString()}/${state.rateLimitInfo.limit.toLocaleString()} remaining. Sync skipped to preserve quota.`;
       state.syncStatus = "degraded";
       render();
       return;
     }
+    state.rateLimitLow = rem < 500; // flag for UI badge + throttled refresh
   }
 
   state.syncStatus = "syncing";
@@ -2190,7 +1221,10 @@ async function syncAll() {
   const lastEntry = state.scoreHistory[state.scoreHistory.length - 1];
   const hoursSinceLast = lastEntry ? (Date.now() - lastEntry.ts) / 3600000 : Infinity;
   if (hoursSinceLast >= 8) {
+    // Record forecast outcomes before pushing new snapshot (compare prev predictions to current actuals)
+    const prevForecasts = forecastScores(state.scoreHistory);
     state.scoreHistory = pushScoreHistory(ghRepos, sbData, socialData);
+    recordForecastOutcomes(prevForecasts, state.scoreHistory);
     logActivity("auto_snapshot", `${hoursSinceLast.toFixed(1)}h since last`);
   } else {
     // Still reload history in case it changed externally
@@ -2270,8 +1304,35 @@ async function syncAll() {
     loadExtendedDataForProject(p.id);
   }
 
-  // Schedule next refresh
-  const refreshMs = state.settings.refreshMs ?? 300000;
+  // Bidirectional trigger — auto-create agent-request if score dropped below grade boundary
+  if (config.githubToken) {
+    try {
+      const TRIGGER_THRESHOLD = 55; // grade B boundary
+      const prevScores = state.scorePrev || {};
+      const newHistory = state.scoreHistory;
+      const latestScores = newHistory[newHistory.length - 1]?.scores || {};
+      for (const p of PROJECTS) {
+        const prev = prevScores[p.id];
+        const curr = latestScores[p.id];
+        if (prev == null || curr == null) continue;
+        // Crossed below threshold this session
+        if (prev >= TRIGGER_THRESHOLD && curr < TRIGGER_THRESHOLD) {
+          const triggerKey = `vshub_triggered_${p.id}`;
+          const lastTriggered = Number(sessionStorage.getItem(triggerKey) || 0);
+          if (Date.now() - lastTriggered > 24 * 3600000) { // max once/day per project
+            sessionStorage.setItem(triggerKey, String(Date.now()));
+            submitAgentRequest(p.id, `Auto-trigger: ${p.name} score dropped to ${curr} (below B threshold). Review and improve score.`, config.githubToken)
+              .catch(() => {}); // fire-and-forget
+            logActivity("bidirectional_trigger", `${p.name} score ${prev}→${curr}`);
+          }
+        }
+      }
+    } catch {}
+  }
+
+  // Schedule next refresh — throttle to 30min when rate limit is low
+  const configuredRefreshMs = state.settings.refreshMs ?? 300000;
+  const refreshMs = state.rateLimitLow && configuredRefreshMs < 1800000 ? 1800000 : configuredRefreshMs;
   if (refreshTimer) clearTimeout(refreshTimer);
   if (refreshMs > 0) {
     refreshTimer = setTimeout(() => { clearSessionCache(); syncAll(); }, refreshMs);
