@@ -91,6 +91,117 @@
           <article class="cl-phase">
             <div class="cl-dot" aria-hidden="true"></div>
             <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 43</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Co-op Teams</div>
+            </div>
+            <ul class="cl-items">
+              <li>Co-op teams: create a team or join one with a 6-character invite code</li>
+              <li>Team points accumulate automatically as members earn XP</li>
+              <li>Team leaderboard tab on /leaderboards/ — ranked by total points with medal icons</li>
+              <li>Team panel in the vault: create, join, leave, or disband your team</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 40–42</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Fan Art System &amp; Community Badges</div>
+            </div>
+            <ul class="cl-items">
+              <li>Fan art submission: Vault Members can upload artwork (PNG/JPG/WebP) with title, description, and character tag</li>
+              <li>Fan art gallery on /community/ — browse approved submissions in a card grid</li>
+              <li>Fan art voting: heart/like buttons with live vote counts; Vault Members can toggle their vote</li>
+              <li>Fan art moderation queue in Vault Command for approved/rejected submissions</li>
+              <li>"Currently Playing" badge on public member profiles — shows active or last-played game</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 36–39</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Game Score API, Sessions &amp; Performance</div>
+            </div>
+            <ul class="cl-items">
+              <li>Game session recording: visiting a game page as a signed-in member logs a session (once per day)</li>
+              <li>Session milestone awards at 5, 10, and 25 sessions per game (25/50/100 pts)</li>
+              <li>Game Score API live: vault-score.js SDK lets game pages submit scores directly to the vault leaderboard</li>
+              <li>WebP image conversion: darth-spike hero images converted to WebP for faster page loads</li>
+              <li>Supabase query batching: portal startup now makes one round-trip instead of several (faster load)</li>
+              <li>Per-page OG images: 14 unique branded share images across the site (no more generic previews)</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 33–35</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">CI Quality Gates, Events &amp; Investor Tools</div>
+            </div>
+            <ul class="cl-items">
+              <li>Lighthouse CI score gate: every push is tested for performance and accessibility automatically</li>
+              <li>Axe-core accessibility CI: 7 public pages scanned for WCAG violations on every deploy</li>
+              <li>Community event RSVPs: RSVP buttons on all event cards with live count</li>
+              <li>Investor data room access log: every document open is recorded for the founder</li>
+              <li>Rate limiting on invite code claims: prevents registration spam (client-side 3 attempts / 10 min)</li>
+              <li>Vault Command: member CSV export and challenge analytics dashboard</li>
+              <li>Gift Points: member-to-member point gifting panel in the vault</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 29–32</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Dark Mode, Ratings &amp; Profile Themes</div>
+            </div>
+            <ul class="cl-items">
+              <li>Dark/light mode toggle: ☀/🌙 button on every public page, persists across sessions</li>
+              <li>Profile card themes: 5 rank-unlockable card backgrounds (Rift Blue, Void, Forge Fire, Sparked)</li>
+              <li>Game ratings: 5-star widget on all released game pages; star average in JSON-LD schema for search results</li>
+              <li>Journal view counts: each post now shows how many times it has been read</li>
+              <li>Auto-generated sitemap: sitemap.xml rebuilds on every push to main</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 25–28</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Game Hub, Offline Mode &amp; Member Tools</div>
+            </div>
+            <ul class="cl-items">
+              <li>Games hub: genre filter pills (Sports, Action, Strategy, MMORPG, Puzzle) alongside the existing status filter</li>
+              <li>Offline detection banner in the vault portal — shows when your connection drops</li>
+              <li>Member Spotlight panel: random top-20 member shown on each login</li>
+              <li>Rank Comparison panel: see your points gap to the next player above you on the leaderboard</li>
+              <li>Referral QR code: one click generates a QR code for your referral link</li>
+              <li>Login activity heatmap: 12-week GitHub-style grid in the Chronicle tab</li>
+              <li>Annual vault anniversary: awards 50 pts × years on your join date</li>
+              <li>Weekly XP recap banner: shows last week's total on Mondays (dismissible)</li>
+              <li>Vault Command: scheduled signal broadcasts — set a future date/time for studio updates</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 22–24</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">VaultSparked Page, Analytics &amp; Onboarding</div>
+            </div>
+            <ul class="cl-items">
+              <li>VaultSparked perks landing page: /vaultsparked/ with full pricing, perk grid, and comparison table</li>
+              <li>Custom 404 page: rank-themed with quick links and a CTA to join the vault</li>
+              <li>Investor portal: KPI sparklines with 30-day trend lines under each metric</li>
+              <li>Investor portal: "Ask a question" card — questions go directly to the founder</li>
+              <li>Lazy-load audit: loading="lazy" added to all non-critical images across 29 public pages</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
               <span class="cl-phase-num">Phase 20–21</span><span class="cl-phase-date">March 2026</span>
               <div class="cl-phase-title">Vault Command + Performance</div>
             </div>

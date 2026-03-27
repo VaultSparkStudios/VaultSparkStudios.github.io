@@ -116,10 +116,9 @@
 - Cloudflare proxy not yet enabled — requires DNS change on registrar
 - LLC not formed → Stripe production account not set up → VaultSparked subscription untestable
 - RESEND_API_KEY not set → newsletter Edge Function cannot send
-- VaultScore.submit() not hooked into actual game pages (SDK ready, calls missing)
 
 ## Next 3 moves
 
 1. Enable Cloudflare proxy (DNS change on registrar — unblocks HTTP security headers + CDN)
 2. Generate VAPID keys + set secrets (unblocks web push)
-3. Hook VaultScore.submit() into Call of Doodie and Football GM game pages
+3. Run pending Supabase SQL migrations (phases 40, 41, 43, 45)
