@@ -2,9 +2,9 @@
 
 ## Snapshot
 
-- Date: 2026-03-26
+- Date: 2026-03-27
 - Overall status: Live and active
-- Current phase: Phase 43 complete · full audit done (2026-03-26)
+- Current phase: Phase 43 complete · audit session 2 done (2026-03-27)
 
 ## What exists
 

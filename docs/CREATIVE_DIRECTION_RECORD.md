@@ -55,3 +55,15 @@ Agents MUST NOT modify or remove existing entries.
 - Previous state: No formal audit score. Studio Ops context files stale (CURRENT_STATE at Phase 11, PROJECT_STATUS with wrong stage/blockers)
 - New required direction: Audit-driven backlog. Top [SIL] picks: VaultScore.submit() in game pages + "Complete Your Vault" onboarding CTA. Innovation backlog of 25 items now scored and on record.
 - Why it matters: Establishes baseline SIL score (32/50), corrects all staleness, gives prioritized innovation roadmap
+
+---
+
+### 2026-03-27 — Re-audit + implement leverage items + simplify pass
+
+- Category: Assignment + Direction
+- Human input: "Audit project in its entirety and provide score/rating, areas of improvement, category scores, analysis/recommendations (short) and another innovative solutions brainstorm list with every single items have a short synopsis and score/rating attached to it for every item and how it would improve/impact the project's overall score, potential, momentum (etc.). Out of this list, recommend the items to implement by 'Highest leverage right now (low effort, real impact)' and 'Highest ceiling (high effort, transformative)' (project is website in this context)" → then "Continue 1-6" → then "CLOSEOUT"
+- Area affected: Game integration (VaultScore hookup × 3 pages), site quality (prefers-reduced-motion, SRI hashes, changelog), code quality (5 simplify fixes)
+- Previous state: VaultScore SDK existed but was not wired to any game page. CDN scripts had no integrity enforcement. Changelog stopped at Phase 21. prefers-reduced-motion not respected.
+- New required direction: Full re-audit at 82/100 (10 categories, 38-item brainstorm). Implement leverage items 1–6: game score submission panels, Discord CTAs, prefers-reduced-motion, SRI hashes, changelog update, canonical tag verification. Simplify pass on all new code.
+- Why it matters: Closes the biggest product gap since Phase 36 (games had no vault integration). SIL raised to 36/50. 38-item brainstorm establishes next two sessions' backlog.
+- Supersedes prior entry: —

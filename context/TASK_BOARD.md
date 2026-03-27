@@ -3,8 +3,8 @@
 ## Now
 
 - [SIL] "Complete Your Vault" persistent onboarding CTA — post-registration checklist (avatar, first challenge, refer a friend) with bonus points [7.5]
-- Terms of Service page [7.0]
-- Vault Dispatch weekly email digest (infra ready, needs template + cron) [8.5]
+- [SIL] Terms of Service page — legal requirement for user accounts + payment; investor red flag until done [7.0]
+- [SIL] Vault Dispatch weekly email digest — infra ready (Resend), needs template + monthly cron trigger [8.5]
 
 ## Next (Pending External Action)
 

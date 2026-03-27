@@ -4,6 +4,36 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-27 — Audit session 2: leverage items 1–6 + simplify pass
+
+- Goal: Full site re-audit, implement top leverage items, simplify/fix new code
+- What changed:
+  - `assets/style.css`: `@media (prefers-reduced-motion)` block added
+  - `vault-member/index.html`: SRI integrity hashes on supabase-js@2 + qrcode@1.5.3 CDN scripts
+  - `changelog/index.html`: phases 22–43 added (7 new article entries, 13 phases of shipped work)
+  - `games/call-of-doodie/index.html`: vault-score.js loaded; score submission panel; Discord CTA; script fixes
+  - `games/gridiron-gm/index.html`: same as above for Gridiron GM
+  - `games/vaultspark-football-gm/index.html`: same as above for VSFGM
+  - `assets/vault-score.js`: added `getMyScore(gameSlug)` method (single-row user score query)
+  - `context/CURRENT_STATE.md`: date + phase updated
+  - `context/TASK_BOARD.md`: VaultScore SIL item removed; 2 new SIL items added (T&S, Vault Dispatch)
+  - `context/LATEST_HANDOFF.md`: full session 2 update
+  - `logs/WORK_LOG.md`: this entry
+  - `context/SELF_IMPROVEMENT_LOOP.md`: rolling status + session 2 entry
+  - `docs/CREATIVE_DIRECTION_RECORD.md`: session 2 CDR entry
+  - `context/PROJECT_STATUS.json`: SIL fields updated
+  - `audits/2026-03-27.json`: session 2 audit JSON created
+- Commits: e80a7b8 (leverage items), 949f9d9 (simplify fixes) — pushed to origin/main
+- Risks created or removed:
+  - Removed: VaultScore hookup gap (games↔vault disconnect was the most visible product gap)
+  - Removed: CDN supply chain risk (SRI hashes now enforce script integrity)
+  - Removed: `vsSubmitScore` undefined reference bug on logged-out game pages
+  - Reduced: prefers-reduced-motion WCAG gap (accessibility)
+  - No new risks introduced
+- Recommended next move: Terms of Service page, "Complete Your Vault" onboarding CTA, Vault Dispatch email
+
+---
+
 ### 2026-03-25 — Studio OS migration + Admin Panel + 9-tier ranks + VaultSparked Discord role
 
 - Goal: Build Vault Command admin panel, expand ranks to 9 tiers, wire VaultSparked subscription to Discord role, apply Studio OS project system

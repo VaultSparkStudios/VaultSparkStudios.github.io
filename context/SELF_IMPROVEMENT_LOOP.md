@@ -41,10 +41,10 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▁▃
-3-session avg: Dev 7.0 | Align 8.0 | Momentum 7.0 | Engage 3.0 | Process 6.0
-Avg total: 32.0 / 50  |  Velocity trend: →  |  Debt: →
-Last session: 2026-03-26 | Session 1 | Total: 32/50 | Velocity: 6
+Sparkline (last 5 totals): ▁▄▅
+3-session avg: Dev 7.5 | Align 8.0 | Momentum 7.5 | Engage 3.0 | Process 7.0 [N=2 except Process N=3]
+Avg total: 34.0 / 50 [N=2]  |  Velocity trend: →  |  Debt: →
+Last session: 2026-03-27 | Session 2 | Total: 36/50 | Velocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -104,3 +104,32 @@ Rolling avg (last 3): Dev 7.0 | Align 8.0 | Momentum 7.0 | Engage 3.0 | Process 
 3. Vault Treasury / Points Marketplace — transforms points economy from earn-only to earn+spend, the missing endgame
 
 **Committed to TASK_BOARD:** [SIL] VaultScore.submit() hook into game pages · [SIL] "Complete Your Vault" persistent onboarding CTA
+
+---
+
+## 2026-03-27 — Session 2 | Total: 36/50 | Velocity: 0 | Debt: →
+Rolling avg (last 3): Dev 7.5 | Align 8.0 | Momentum 7.5 | Engage 3.0 | Process 7.0 [N=2 except Process N=3]
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 8 | ↑ | SRI hashes, prefers-reduced-motion, getMyScore() SDK, 5 code quality fixes (dedup, guard hoist, validation, catch, clear input); still no E2E tests, portal monolith |
+| Creative Alignment | 8 | → | Discord CTAs and score panel fit community-first gamification brand; changelog transparency aligns with SOUL |
+| Momentum | 8 | ↑ | Full re-audit with 38-item brainstorm + matrix; 6 leverage items shipped; VaultScore gap closed; both commits pushed |
+| Engagement | 3 | → | Pre-activation; all systems live but zero real member signals; game score submission now live but untested at scale |
+| Process Quality | 9 | ↑ | Full closeout protocol followed; all context files current; CDR updated; audit JSON created; memory updated |
+| **Total** | **36/50** | ↑ | |
+
+**Top win:** VaultScore submission is live on all 3 game pages with personal best display, XP feedback, and Discord CTAs — the biggest product gap since Phase 36 is now closed.
+**Top gap:** Velocity = 0 (both Now items were [SIL]-tagged per protocol); external blockers (LLC, VAPID, Cloudflare) still gate the highest-impact features.
+**Intent outcome:** Achieved — full re-audit at 82/100, 38-item brainstorm, leverage items 1–6 shipped, simplify pass completed.
+
+**IGNIS note:** Re-baselining the audit score from 91→82 by applying stricter criteria revealed the Code Quality gap (72/100) as the stealthiest drag on the project — worth prioritizing module splitting before portal.js becomes unmaintainable.
+
+**Brainstorm**
+1. Terms of Service page — legal gap blocking investor confidence; 2-hour content task; clears a red flag without any infra work
+2. Vault Dispatch weekly email — Resend infra is ready; a template + one cron trigger turns the newsletter system on; highest-ROI retention play at this stage
+3. "Complete Your Vault" onboarding CTA — already committed SIL; converts signups before they go cold; pairs naturally with the welcome email drip
+4. Per-game weekly high score leaderboard — natural follow-on to VaultScore hookup; adds competition loop that brings players back
+5. Portal.js module split (auth / challenges / chronicle / settings) — Dev Health ceiling item; portal is at 4,465 lines and will compound
+
+**Committed to TASK_BOARD:** [SIL] Terms of Service page · [SIL] Vault Dispatch weekly email digest
