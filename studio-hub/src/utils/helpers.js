@@ -1,5 +1,63 @@
 // Shared formatting and UI helpers — used across multiple view components.
 
+export const MS_PER_DAY = 86400000;
+
+// ── Safe localStorage wrappers ──────────────────────────────────────────────
+export function safeGetJSON(key, fallback = {}) {
+  try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
+  catch { return fallback; }
+}
+
+export function safeSetJSON(key, value) {
+  try { localStorage.setItem(key, JSON.stringify(value)); }
+  catch { /* quota exceeded — silently fail */ }
+}
+
+// ── Unified score → color / grade ───────────────────────────────────────────
+export function scoreColor(v) {
+  if (v == null) return "var(--muted)";
+  if (v >= 80) return "var(--green)";
+  if (v >= 60) return "var(--cyan)";
+  if (v >= 40) return "var(--yellow)";
+  return "var(--red)";
+}
+
+export function scoreGrade(v) {
+  if (v == null) return "\u2014";
+  if (v >= 90) return "A+";
+  if (v >= 80) return "A";
+  if (v >= 70) return "B+";
+  if (v >= 60) return "B";
+  if (v >= 50) return "C+";
+  if (v >= 40) return "C";
+  if (v >= 25) return "D";
+  return "F";
+}
+
+// ── Skeleton loader placeholders ────────────────────────────────────────────
+export function renderSkeleton(type = "generic") {
+  const line = '<div class="skeleton skeleton-line"></div>';
+  const block = '<div class="skeleton skeleton-block"></div>';
+  if (type === "dashboard") return `<div style="padding:20px;">${block.repeat(3)}${line.repeat(5)}</div>`;
+  if (type === "project")   return `<div style="padding:20px;"><div class="skeleton skeleton-block" style="height:120px;"></div>${line.repeat(8)}</div>`;
+  return `<div style="padding:20px;">${line.repeat(4)}</div>`;
+}
+
+// ── Rich empty state card ───────────────────────────────────────────────────
+export function renderEmptyState(icon, title, description, actionLabel = "", actionView = "") {
+  return `
+    <div class="empty-state" style="text-align:center; padding:32px 20px;">
+      <div style="font-size:40px; margin-bottom:12px; opacity:0.8;">${icon}</div>
+      <div style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:6px;">${title}</div>
+      <div style="font-size:12px; color:var(--muted); max-width:320px; margin:0 auto 12px;">${description}</div>
+      ${actionLabel && actionView ? `<button class="empty-state-action" data-navigate="${actionView}" style="
+        font-size:12px; padding:6px 14px; border-radius:6px; cursor:pointer;
+        background:rgba(122,231,199,0.12); color:var(--cyan); border:1px solid rgba(122,231,199,0.25);
+        transition:all 0.15s;
+      ">${actionLabel}</button>` : ""}
+    </div>`;
+}
+
 export function timeAgo(iso) {
   if (!iso) return "—";
   const diff = Date.now() - new Date(iso).getTime();

@@ -2,7 +2,7 @@ import { PROJECTS, SOCIAL_ACCOUNTS } from "../data/studioRegistry.js";
 import { scoreProject, scoreStudio } from "../utils/projectScoring.js";
 import { forecastScores, getDecayingProjects, isForecastHighVariance } from "../utils/scoreForecast.js";
 import { getFetchError } from "../data/githubAdapter.js";
-import { timeAgo, fmt, ciStatus, daysSince, commitVelocity } from "../utils/helpers.js";
+import { timeAgo, fmt, ciStatus, daysSince, commitVelocity, renderSkeleton, renderEmptyState } from "../utils/helpers.js";
 import { scorePotential, scoreMomentumIndex, potentialLabel, momentumLabel } from "../utils/proprietaryScores.js";
 import {
   renderAlerts,
@@ -25,6 +25,7 @@ import { renderStudioHealthTimeline } from "./hub/healthTimeline.js";
 import { renderStudioBrainPanel, renderBrainHistoryPanel } from "./hub/brainPanel.js";
 import { renderAgentIntelligencePanel } from "./hub/agentIntelligence.js";
 import { renderXPBar, renderAchievementToasts, renderTrophyShowcase, renderChallengePanel, renderVaultMembershipPanel, renderXPActivityFeed } from "./hub/gamificationPanel.js";
+import { showToast } from "./toastManager.js";
 import { evaluateAchievements, clearNotifications } from "../utils/achievements.js";
 import { grantDailyBonus, grantWeeklyBonus, syncAchievementXP, grantScoreImprovementXP } from "../utils/studioXP.js";
 import { getActiveChallenges, claimChallengeXP } from "../utils/challenges.js";
@@ -1018,7 +1019,9 @@ function renderProjectSection(ghData, sbData, socialData, settings, activeTab, s
       <div style="padding:18px;">
         ${tagFilter ? `<div style="font-size:11px; color:var(--cyan); margin-bottom:12px; padding:4px 8px; background:rgba(122,231,199,0.06); border-radius:6px; display:inline-block;">Filtered by tag: <strong>${tagFilter}</strong> · ${sorted.length} project${sorted.length !== 1 ? "s" : ""}</div>` : ""}
         ${pinnedRow}
-        ${focusMode && visibleCount === 0
+        ${syncStatus === "syncing" && Object.keys(ghData).length === 0
+          ? renderSkeleton("dashboard")
+          : focusMode && visibleCount === 0
           ? `<div class="empty-state">Focus mode: all ${current.projects.length} projects in this tab look healthy.</div>`
           : sorted.length === 0 ? `<div class="empty-state">No projects match tag "${tagFilter}".</div>`
           : `<div class="project-grid">${cards}</div>`
@@ -1062,7 +1065,7 @@ function renderChangelogFeed(ghData, changelogFilter = "") {
   const recent = filtered.filter((r) => daysSince(r.publishedAt) < 90).slice(0, 8);
 
   const feedHtml = !recent.length
-    ? `<div class="empty-state">No releases yet — will appear as GitHub releases are published.</div>`
+    ? renderEmptyState("\uD83D\uDCE6", "No Releases Yet", "Releases will appear here as they are published on GitHub. Tag a release to get started!")
     : `
     <div class="activity-feed">
       ${recent.map((r) => `
@@ -1255,7 +1258,7 @@ function renderActivityFeed(ghActivity, sbPulse, projectFilter = "") {
   }
   items.sort((a, b) => b.ts - a.ts);
   const shown = items.slice(0, 25);
-  if (!shown.length) return `<div class="empty-state">No activity yet — add a GitHub token to see live repo events.</div>`;
+  if (!shown.length) return renderEmptyState("\uD83D\uDCE1", "No Activity Yet", "Connect a GitHub token in Settings to see live repo events, commits, and CI status across your projects.", "Open Settings", "settings");
   return `
     <div class="activity-feed">
       ${shown.map((item) => `
@@ -1906,8 +1909,13 @@ export function renderStudioHubView(state) {
   // ── Gamification Engine ──────────────────────────────────────────────────
   // 1. Evaluate achievements
   const newAchievements = evaluateAchievements(allScores, ghData, sbData, socialData, scoreHistory, scorePrev, studioScore);
-  // 2. Sync XP from new achievements
-  if (newAchievements.length > 0) syncAchievementXP(newAchievements);
+  // 2. Sync XP from new achievements + show toasts
+  if (newAchievements.length > 0) {
+    syncAchievementXP(newAchievements);
+    for (const a of newAchievements) {
+      showToast(`\uD83C\uDFC6 ${a.name} \u2014 ${a.desc} (+${a.xp} XP)`, "success", 6000);
+    }
+  }
   // 3. Grant daily login bonus
   grantDailyBonus();
   // 4. Grant weekly consistency bonus
@@ -2001,7 +2009,7 @@ export function renderStudioHubView(state) {
       ${renderBrainHistoryPanel(studioBrain)}
       ${renderAgentIntelligencePanel(portfolioFiles, portfolioFreshness)}
       ${renderCriticalBanner(ghData)}
-      ${renderVitals(ghData, sbData, socialData, studioScore, beaconData, { portfolioFreshness, agentRequests, studioBrain })}
+      ${renderVitals(ghData, sbData, socialData, studioScore, beaconData, { portfolioFreshness, agentRequests, studioBrain }, state.lastSyncTimestamp)}
       ${renderXPBar()}
       ${renderPortfolioHealthGauge(allScores, ghData, { portfolioFreshness, agentRequests, studioBrain })}
       ${renderChallengePanel(activeChallenges)}
@@ -2054,7 +2062,13 @@ export function renderStudioHubView(state) {
       ${renderPathToGradeA(ghData, sbData, socialData)}
       ${renderSprintPanel(allScores)}
       ${renderVaultMembershipPanel(sbData)}
-      ${renderTrophyShowcase()}
+      ${renderTrophyShowcase({
+        allScores,
+        memberCount: sbData?.members?.total || 0,
+        totalSessions: sbData?.sessions ? Object.values(sbData.sessions).reduce((s, v) => s + (v.total || 0), 0) : 0,
+        ytSubs: socialData?.youtube?.subscribers || 0,
+        activeProjects: PROJECTS.filter(p => p.status !== "archived").length,
+      })}
       ${renderXPActivityFeed()}
       ${renderVelocityChart(ghData)}
       ${renderStudioHealthTimeline()}

@@ -3,17 +3,13 @@
 
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject } from "./projectScoring.js";
+import { safeGetJSON, safeSetJSON } from "./helpers.js";
 
 const SCORE_HISTORY_KEY  = "vshub_score_history";
 export const MAX_HISTORY = 52; // ~1yr of weekly snapshots
 export const SESSION_START_KEY = "vshub_session_start_scores";
 
-export function loadScoreHistory() {
-  try {
-    const raw = localStorage.getItem(SCORE_HISTORY_KEY);
-    return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
-}
+export function loadScoreHistory() { return safeGetJSON(SCORE_HISTORY_KEY, []); }
 
 export function pushScoreHistory(ghData, sbData, socialData) {
   try {
@@ -36,7 +32,7 @@ export function pushScoreHistory(ghData, sbData, socialData) {
     const history = loadScoreHistory();
     history.push({ ts: Date.now(), scores, ci, issues, pillars });
     if (history.length > MAX_HISTORY) history.splice(0, history.length - MAX_HISTORY);
-    localStorage.setItem(SCORE_HISTORY_KEY, JSON.stringify(history));
+    safeSetJSON(SCORE_HISTORY_KEY, history);
     return history;
   } catch { return []; }
 }

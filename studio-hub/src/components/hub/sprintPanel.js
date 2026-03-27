@@ -1,5 +1,6 @@
 import { PROJECTS } from "../../data/studioRegistry.js";
 import { loadSprint, loadGoals } from "./hubStorage.js";
+import { safeGetJSON } from "../../utils/helpers.js";
 
 export function renderSprintPanel(allScores = []) {
   const sprint = loadSprint();
@@ -21,7 +22,7 @@ export function renderSprintPanel(allScores = []) {
   }
 
   // Checklist progress
-  const checklist = (() => { try { return JSON.parse(localStorage.getItem("vshub_checklist") || "{}"); } catch { return {}; } })();
+  const checklist = safeGetJSON("vshub_checklist", {});
   const checklistItems = sprintProject ? (checklist[sprintProject.id] || []) : [];
   const doneCount = checklistItems.filter((i) => i.done).length;
 

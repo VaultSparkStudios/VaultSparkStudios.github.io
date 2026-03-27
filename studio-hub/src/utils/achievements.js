@@ -2,6 +2,8 @@
 // Evaluates studio and project state to unlock achievements.
 // Unlocked achievements persist in localStorage.
 
+import { safeGetJSON, safeSetJSON } from "./helpers.js";
+
 const STORAGE_KEY = "vshub_achievements";
 const NOTIF_KEY = "vshub_achievement_notifications";
 
@@ -66,13 +68,8 @@ export const TIER_STYLES = {
 };
 
 // ── Storage ──────────────────────────────────────────────────────────────────
-function loadUnlocked() {
-  try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); } catch { return {}; }
-}
-
-function saveUnlocked(data) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-}
+function loadUnlocked() { return safeGetJSON(STORAGE_KEY, {}); }
+function saveUnlocked(data) { safeSetJSON(STORAGE_KEY, data); }
 
 function loadNotifications() {
   try { return JSON.parse(sessionStorage.getItem(NOTIF_KEY) || "[]"); } catch { return []; }
@@ -251,6 +248,28 @@ export function unlockSprintComplete() {
 }
 
 // ── Stats ────────────────────────────────────────────────────────────────────
+// Returns { current, target } for achievements with measurable progress
+export function getAchievementProgress(id, context = {}) {
+  const { allScores = [], memberCount = 0, totalSessions = 0, ytSubs = 0, activeProjects = 0 } = context;
+  const totals = allScores.map(s => s.scoring?.total ?? 0);
+  const gradeACount = totals.filter(t => t >= 75).length;
+  const passingCount = totals.filter(t => t >= 45).length;
+  const map = {
+    all_a:          { current: gradeACount,      target: totals.length || 1 },
+    all_passing:    { current: passingCount,      target: totals.length || 1 },
+    portfolio_5:    { current: activeProjects,     target: 5 },
+    portfolio_10:   { current: activeProjects,     target: 10 },
+    vault_10:       { current: memberCount,        target: 10 },
+    vault_50:       { current: memberCount,        target: 50 },
+    vault_100:      { current: memberCount,        target: 100 },
+    vault_500:      { current: memberCount,        target: 500 },
+    sessions_100:   { current: totalSessions,      target: 100 },
+    sessions_1000:  { current: totalSessions,      target: 1000 },
+    yt_100:         { current: ytSubs,             target: 100 },
+  };
+  return map[id] || null;
+}
+
 export function getAchievementStats() {
   const unlocked = loadUnlocked();
   const unlockedCount = Object.keys(unlocked).length;

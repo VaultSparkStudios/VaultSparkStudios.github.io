@@ -1,4 +1,6 @@
 // Settings view event handlers — extracted from clientApp.js
+import { scoreColor } from "../utils/helpers.js";
+import { showToast } from "../components/toastManager.js";
 
 export function bindSettingsEvents(ctx) {
   const {
@@ -287,7 +289,7 @@ export function bindSettingsEvents(ctx) {
       const el = document.getElementById(`preview-score-${p.id}`);
       if (el) {
         const pct = total > 0 ? (preview / total) * 100 : 0;
-        const color = pct >= 80 ? "var(--green)" : pct >= 60 ? "var(--cyan)" : pct >= 40 ? "var(--gold)" : "var(--red)";
+        const color = scoreColor(pct);
         el.textContent = preview;
         el.style.color = color;
       }
@@ -587,6 +589,7 @@ export function bindSettingsEvents(ctx) {
     const s = document.getElementById("credentials-status");
     if (s) { s.textContent = "Saved — reloading data…"; s.style.color = "var(--green)"; }
     logActivity("credentials_save", "");
+    showToast("Credentials saved — reloading data.", "success", 3000);
     syncAll();
   });
 

@@ -2,7 +2,7 @@
 // Caches the app shell for offline / fast-reload access.
 // Static asset list is kept minimal — API data is never cached here.
 
-const CACHE_VERSION = "vshub-sw-v17";
+const CACHE_VERSION = "vshub-sw-v18";
 
 const PRECACHE_URLS = [
   "./",
@@ -59,6 +59,13 @@ const PRECACHE_URLS = [
   "./src/data/websiteAnalytics.js",
   "./src/data/competitorDiscovery.js",
   "./src/utils/digestHelpers.js",
+  "./src/components/toastManager.js",
+  "./src/events/settingsEvents.js",
+  "./src/events/projectHubEvents.js",
+  "./src/events/heatmapEvents.js",
+  "./src/events/compareEvents.js",
+  "./src/events/ticketingEvents.js",
+  "./src/utils/exportHelpers.js",
 ];
 
 // Install: pre-cache the app shell

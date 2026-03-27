@@ -1,5 +1,5 @@
 import { PROJECTS } from "../../data/studioRegistry.js";
-import { daysSince, commitVelocity } from "../../utils/helpers.js";
+import { daysSince, commitVelocity, safeGetJSON, safeSetJSON } from "../../utils/helpers.js";
 import { getDecayingProjects } from "../../utils/scoreForecast.js";
 
 // ── localStorage usage ────────────────────────────────────────────────────────
@@ -13,15 +13,13 @@ function getLocalStorageBytes() {
 
 // ── Alert snooze helpers ──────────────────────────────────────────────────────
 export function getSnoozedAlertCount() {
-  try {
-    const s = JSON.parse(localStorage.getItem("vshub_alert_snooze") || "{}");
-    const now = Date.now();
-    return Object.values(s).filter((exp) => exp > now).length;
-  } catch { return 0; }
+  const s = safeGetJSON("vshub_alert_snooze", {});
+  const now = Date.now();
+  return Object.values(s).filter((exp) => exp > now).length;
 }
 
 const SNOOZE_KEY = "vshub_alert_snooze";
-function loadSnoozed() { try { return JSON.parse(localStorage.getItem(SNOOZE_KEY) || "{}"); } catch { return {}; } }
+function loadSnoozed() { return safeGetJSON(SNOOZE_KEY, {}); }
 function isAlertSnoozed(msg) { const s = loadSnoozed(); return !!(s[msg] && s[msg] > Date.now()); }
 export function snoozeAlert(msg, durationMs) {
   try {
@@ -29,13 +27,13 @@ export function snoozeAlert(msg, durationMs) {
     s[msg] = Date.now() + durationMs;
     // Prune expired entries
     for (const [k, exp] of Object.entries(s)) { if (exp <= Date.now()) delete s[k]; }
-    localStorage.setItem(SNOOZE_KEY, JSON.stringify(s));
+    safeSetJSON(SNOOZE_KEY, s);
   } catch {}
 }
 
 // ── Alerts ────────────────────────────────────────────────────────────────────
 export function renderAlerts(ghData, sbData, allScores, scoreHistory) {
-  const settings = (() => { try { return JSON.parse(localStorage.getItem("vshub_settings") || "{}"); } catch { return {}; } })();
+  const settings = safeGetJSON("vshub_settings", {});
   const T = {
     issues:    settings.alertThresholds?.issues    ?? 20,
     staleWarn: settings.alertThresholds?.staleWarn ?? 14,
@@ -157,7 +155,7 @@ export function renderAlerts(ghData, sbData, allScores, scoreHistory) {
 
   // Milestone overdue — roadmap "doing" items stuck 7+ days
   try {
-    const roadmap = JSON.parse(localStorage.getItem("vshub_roadmap") || "{}");
+    const roadmap = safeGetJSON("vshub_roadmap", {});
     for (const p of PROJECTS) {
       const board = roadmap[p.id];
       if (!board?.doing?.length) continue;
@@ -313,9 +311,7 @@ export function renderAlerts(ghData, sbData, allScores, scoreHistory) {
 
 // ── Alert History helpers ─────────────────────────────────────────────────────
 export const ALERT_HISTORY_KEY = "vshub_alert_history";
-function loadAlertHistory() {
-  try { return JSON.parse(localStorage.getItem(ALERT_HISTORY_KEY) || "[]"); } catch { return []; }
-}
+function loadAlertHistory() { return safeGetJSON(ALERT_HISTORY_KEY, []); }
 export function pushAlertHistory(alerts) {
   try {
     const existing = loadAlertHistory();
@@ -374,17 +370,15 @@ export function renderAlertHistoryPanel(alertHistoryFilter = "") {
 // ── Snooze Management Panel ───────────────────────────────────────────────────
 export function renderSnoozePanel() {
   let snoozed = {};
-  try { snoozed = JSON.parse(localStorage.getItem("vshub_alert_snooze") || "{}"); } catch {}
+  snoozed = safeGetJSON("vshub_alert_snooze", {});
   const now = Date.now();
   const active = Object.entries(snoozed).filter(([, exp]) => exp > now);
   if (!active.length) return "";
 
   // Build type map from alert history
   let typeMap = {};
-  try {
-    const hist = JSON.parse(localStorage.getItem("vshub_alert_history") || "[]");
-    for (const e of hist) typeMap[e.msg] = e.type;
-  } catch {}
+  const hist = safeGetJSON("vshub_alert_history", []);
+  for (const e of hist) typeMap[e.msg] = e.type;
 
   return `
     <div class="panel" style="margin-bottom:24px;">

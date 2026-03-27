@@ -3,32 +3,11 @@
 
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject, getGrade } from "../utils/projectScoring.js";
-import { fmt, timeAgo, daysSince, ciStatus } from "../utils/helpers.js";
+import { fmt, timeAgo, daysSince, ciStatus, scoreColor, scoreGrade } from "../utils/helpers.js";
 import { forecastScores, getOverallForecastAccuracy, monteCarloForecast } from "../utils/scoreForecast.js";
 import { deltaBadge } from "./hub/hubHelpers.js";
 import { getScoreAnomalies } from "./hub/morningBrief.js";
 import { computeWebsiteHealthScore, SITE_PAGES, SITE_URL } from "../data/websiteAnalytics.js";
-
-// ── Color + Grade helpers ─────────────────────────────────────────────────────
-function scoreColor(v) {
-  if (v == null) return "var(--muted)";
-  if (v >= 80) return "var(--green)";
-  if (v >= 60) return "var(--cyan)";
-  if (v >= 40) return "var(--yellow)";
-  return "var(--red)";
-}
-
-function scoreGrade(v) {
-  if (v == null) return "—";
-  if (v >= 90) return "A+";
-  if (v >= 80) return "A";
-  if (v >= 70) return "B+";
-  if (v >= 60) return "B";
-  if (v >= 50) return "C+";
-  if (v >= 40) return "C";
-  if (v >= 25) return "D";
-  return "F";
-}
 
 // ── SVG helpers ───────────────────────────────────────────────────────────────
 function sparkline(values, { w = 200, h = 44, color = "var(--cyan)", fill = true } = {}) {

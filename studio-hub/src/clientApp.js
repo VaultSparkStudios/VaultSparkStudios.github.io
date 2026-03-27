@@ -1,7 +1,7 @@
 import { getHubRuntimeConfig } from "./config/runtimeConfig.js";
 import { PROJECTS, getProjectById, validateRegistry } from "./data/studioRegistry.js";
 import { scoreProject, getGrade, invalidateWeightsCache, clearScoringCache } from "./utils/projectScoring.js";
-import { fmt, daysSince, commitVelocity, debounce } from "./utils/helpers.js";
+import { fmt, daysSince, commitVelocity, debounce, safeGetJSON, safeSetJSON } from "./utils/helpers.js";
 import { fetchAllProjectContextFiles, fetchRepoLanguages, fetchRepoBranches, fetchRepoTodoCount, fetchProjectTickets, submitProjectTicket, fetchStudioOsCompliance, fetchAgentRequests, submitAgentRequest } from "./data/githubAdapter.js";
 import { fetchAllSupabaseData } from "./data/supabaseAdapter.js";
 import { fetchAllSocialFeeds } from "./data/socialFeedsAdapter.js";
@@ -39,6 +39,7 @@ import { bindCompareEvents }    from "./events/compareEvents.js";
 import { bindTicketingEvents }  from "./events/ticketingEvents.js";
 import { initGlobalSearch, openSearch, closeSearch } from "./components/globalSearch.js";
 import { showOnboardingModal, showScoreModal } from "./components/hub/hubModals.js";
+import { initToastContainer, showToast } from "./components/toastManager.js";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const config = getHubRuntimeConfig();
@@ -58,29 +59,21 @@ function clearSessionCache() {
 
 // ── UI state helpers ──────────────────────────────────────────────────────────
 const UI_KEY = "vshub_ui";
-function loadUiState() {
-  try { return JSON.parse(localStorage.getItem(UI_KEY) || "{}"); } catch { return {}; }
-}
-function saveUiState(ui) {
-  try { localStorage.setItem(UI_KEY, JSON.stringify(ui)); } catch {}
-}
+function loadUiState() { return safeGetJSON(UI_KEY, {}); }
+function saveUiState(ui) { safeSetJSON(UI_KEY, ui); }
 
 // ── Hub Activity Log ──────────────────────────────────────────────────────────
 const ACTIVITY_KEY = "vshub_activity";
 const MAX_ACTIVITY = 50;
 
 function logActivity(event, detail = "") {
-  try {
-    const log = JSON.parse(localStorage.getItem(ACTIVITY_KEY) || "[]");
-    log.push({ ts: Date.now(), event, detail });
-    if (log.length > MAX_ACTIVITY) log.splice(0, log.length - MAX_ACTIVITY);
-    localStorage.setItem(ACTIVITY_KEY, JSON.stringify(log));
-  } catch {}
+  const log = safeGetJSON(ACTIVITY_KEY, []);
+  log.push({ ts: Date.now(), event, detail });
+  if (log.length > MAX_ACTIVITY) log.splice(0, log.length - MAX_ACTIVITY);
+  safeSetJSON(ACTIVITY_KEY, log);
 }
 
-function loadActivity() {
-  try { return JSON.parse(localStorage.getItem(ACTIVITY_KEY) || "[]"); } catch { return []; }
-}
+function loadActivity() { return safeGetJSON(ACTIVITY_KEY, []); }
 
 // ── State ─────────────────────────────────────────────────────────────────────
 const appSettings = loadSettings();
@@ -164,6 +157,8 @@ const state = {
   websitePsi:          null,
   websiteProbe:        null,
   websiteLoading:      false,
+
+  lastSyncTimestamp:   null,
 };
 // Seed scorePrev from history on first load; store session-start scores for accurate delta badges
 storeSessionStartScores(state.scoreHistory);
@@ -176,6 +171,7 @@ function applyAccent(color) {
   }
 }
 applyAccent(appSettings.accent);
+initToastContainer();
 
 // ── Theme ─────────────────────────────────────────────────────────────────────
 const ALL_THEMES = ["theme-light", "theme-midnight", "theme-terminal", "theme-slate", "theme-dusk", "theme-steel", "theme-ember"];
@@ -291,6 +287,7 @@ function render() {
   `;
   // Inject mobile nav button as first child of main-panel (DOM insertion — no regex fragility)
   const mainPanel = app.querySelector(".main-panel");
+  if (mainPanel) mainPanel.classList.add("view-enter");
   if (mainPanel) {
     const mobileBtn = document.createElement("button");
     mobileBtn.id = "mobile-nav-btn";
@@ -837,6 +834,14 @@ function bindEvents() {
     });
   });
 
+  // ── Empty state action buttons ───────────────────────────────────────────────
+  document.querySelectorAll(".empty-state-action[data-navigate]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const view = btn.dataset.navigate;
+      if (view) { state.activeView = view; pushViewHash(view); render(); }
+    });
+  });
+
   // ── Core controls ───────────────────────────────────────────────────────────
   document.getElementById("sidebar-toggle-btn")?.addEventListener("click", () => {
     state.sidebarCollapsed = !state.sidebarCollapsed;
@@ -1020,7 +1025,11 @@ function bindEvents() {
       const id = btn.dataset.claimChallenge;
       const type = btn.dataset.challengeType;
       const xp = claimChallengeXP(id, type);
-      if (xp > 0) grantXP(xp, `Challenge: ${id}`);
+      if (xp > 0) {
+        grantXP(xp, `Challenge: ${id}`);
+        showToast(`Challenge completed! +${xp} XP`, "success", 4000);
+        btn.closest("[style]")?.classList.add("challenge-claimed");
+      }
       render();
     });
   });

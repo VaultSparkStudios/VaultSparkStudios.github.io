@@ -2,6 +2,8 @@
 // Tracks cumulative XP from achievements, actions, and daily engagement.
 // Persisted in localStorage.
 
+import { safeGetJSON, safeSetJSON, MS_PER_DAY } from "./helpers.js";
+
 const XP_KEY = "vshub_studio_xp";
 
 // ── Level Definitions ────────────────────────────────────────────────────────
@@ -23,23 +25,16 @@ export const LEVELS = [
 ];
 
 // ── Storage ──────────────────────────────────────────────────────────────────
+const DEFAULT_XP = { totalXP: 0, xpLog: [], dailyBonus: null, weeklyBonus: null };
+
 function loadXPData() {
-  try {
-    return JSON.parse(localStorage.getItem(XP_KEY) || "null") || {
-      totalXP: 0,
-      xpLog: [],          // { source, amount, ts }
-      dailyBonus: null,    // date string of last daily bonus
-      weeklyBonus: null,   // date string of last weekly bonus
-    };
-  } catch {
-    return { totalXP: 0, xpLog: [], dailyBonus: null, weeklyBonus: null };
-  }
+  const data = safeGetJSON(XP_KEY, null);
+  return data || { ...DEFAULT_XP };
 }
 
 function saveXPData(data) {
-  // Keep log trimmed to last 200 entries
   if (data.xpLog.length > 200) data.xpLog = data.xpLog.slice(-200);
-  localStorage.setItem(XP_KEY, JSON.stringify(data));
+  safeSetJSON(XP_KEY, data);
 }
 
 // ── XP Granting ──────────────────────────────────────────────────────────────
@@ -163,4 +158,25 @@ export function getXPState() {
 
 export function getXPLog() {
   return loadXPData().xpLog.slice(-50).reverse();
+}
+
+// Compute daily login streak from daily bonus entries in XP log
+export function getLoginStreak() {
+  const data = loadXPData();
+  const bonusDays = new Set();
+  for (const entry of data.xpLog) {
+    if (entry.source === "Daily login bonus") {
+      bonusDays.add(new Date(entry.ts).toISOString().slice(0, 10));
+    }
+  }
+  if (!bonusDays.size) return 0;
+  let streak = 0;
+  const now = new Date();
+  for (let i = 0; i < 200; i++) {
+    const d = new Date(now);
+    d.setDate(d.getDate() - i);
+    if (bonusDays.has(d.toISOString().slice(0, 10))) streak++;
+    else break;
+  }
+  return streak;
 }

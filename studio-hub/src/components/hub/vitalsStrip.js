@@ -2,7 +2,7 @@ import { PROJECTS } from "../../data/studioRegistry.js";
 import { fmt } from "../../utils/helpers.js";
 import { getXPState } from "../../utils/studioXP.js";
 
-export function renderVitals(ghData, sbData, socialData, studioScore, beaconData, studioOps = {}) {
+export function renderVitals(ghData, sbData, socialData, studioScore, beaconData, studioOps = {}, lastSyncTimestamp = null) {
   const totalIssues   = Object.values(ghData).reduce((s, d) => s + (d?.repo?.openIssues || 0), 0);
   const failingBuilds = Object.values(ghData).filter((d) => d?.ciRuns?.[0]?.conclusion === "failure").length;
   const reposWithCI   = Object.values(ghData).filter((d) => d?.ciRuns?.length > 0).length;
@@ -78,6 +78,14 @@ export function renderVitals(ghData, sbData, socialData, studioScore, beaconData
       cls:    "",
       style:  `color:${opsColor}`,
     });
+  }
+
+  // Data age indicator
+  if (lastSyncTimestamp) {
+    const ageMin = Math.round((Date.now() - lastSyncTimestamp) / 60000);
+    const ageLabel = ageMin < 1 ? "Just now" : ageMin < 60 ? `${ageMin}m ago` : `${Math.floor(ageMin / 60)}h ago`;
+    const ageCls = ageMin < 5 ? "green" : ageMin < 30 ? "gold" : "red";
+    vitals.push({ label: "Data Age", value: ageLabel, sub: "Last sync", cls: ageCls });
   }
 
   return `

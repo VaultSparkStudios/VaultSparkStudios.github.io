@@ -3,6 +3,8 @@
 // Challenges refresh daily (daily) and weekly (weekly).
 // Completed challenges award XP.
 
+import { safeGetJSON, safeSetJSON } from "./helpers.js";
+
 const CHALLENGE_KEY = "vshub_active_challenges";
 
 // ── Challenge Templates ──────────────────────────────────────────────────────
@@ -141,13 +143,8 @@ const WEEKLY_TEMPLATES = [
 ];
 
 // ── Storage ──────────────────────────────────────────────────────────────────
-function loadChallenges() {
-  try { return JSON.parse(localStorage.getItem(CHALLENGE_KEY) || "null"); } catch { return null; }
-}
-
-function saveChallenges(data) {
-  localStorage.setItem(CHALLENGE_KEY, JSON.stringify(data));
-}
+function loadChallenges() { return safeGetJSON(CHALLENGE_KEY, null); }
+function saveChallenges(data) { safeSetJSON(CHALLENGE_KEY, data); }
 
 // ── Challenge Generation ─────────────────────────────────────────────────────
 function todayStr() { return new Date().toISOString().slice(0, 10); }

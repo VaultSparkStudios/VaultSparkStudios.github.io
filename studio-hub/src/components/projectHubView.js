@@ -1,20 +1,20 @@
 import { scoreProject } from "../utils/projectScoring.js";
-import { timeAgo, fmt, escapeHtml } from "../utils/helpers.js";
+import { timeAgo, fmt, escapeHtml, renderSkeleton, renderEmptyState, safeGetJSON, safeSetJSON } from "../utils/helpers.js";
 import { scorePotential, scoreMomentumIndex, potentialLabel, momentumLabel } from "../utils/proprietaryScores.js";
 import { getForecastAccuracy } from "../utils/scoreForecast.js";
 import { getCachedPrescription, getCachedDevlogDraft } from "../utils/aiPrescriptions.js";
 
 const LOCAL_PATHS_KEY = "vshub_local_paths";
-function loadLocalPaths() { try { return JSON.parse(localStorage.getItem(LOCAL_PATHS_KEY) || "{}"); } catch { return {}; } }
+function loadLocalPaths() { return safeGetJSON(LOCAL_PATHS_KEY, {}); }
 
 const ACTION_QUEUE_KEY  = "vshub_action_queue";
 const CHECKLIST_KEY     = "vshub_checklist";
 const ROADMAP_KEY       = "vshub_roadmap";
 
-function loadChecklist() { try { return JSON.parse(localStorage.getItem(CHECKLIST_KEY) || "{}"); } catch { return {}; } }
+function loadChecklist() { return safeGetJSON(CHECKLIST_KEY, {}); }
 function loadRoadmap() {
   try {
-    const raw = JSON.parse(localStorage.getItem(ROADMAP_KEY) || "{}");
+    const raw = safeGetJSON(ROADMAP_KEY, {});
     // Migrate: convert string items (or objects missing id) to { id, text } objects
     for (const projectId of Object.keys(raw)) {
       const board = raw[projectId];
@@ -32,9 +32,7 @@ function loadRoadmap() {
   } catch { return {}; }
 }
 
-function loadActionQueue() {
-  try { return JSON.parse(localStorage.getItem(ACTION_QUEUE_KEY) || "{}"); } catch { return {}; }
-}
+function loadActionQueue() { return safeGetJSON(ACTION_QUEUE_KEY, {}); }
 
 function renderVsCodeSection(project) {
   const paths = loadLocalPaths();
@@ -81,16 +79,14 @@ function renderGitHubSection(project, repoData) {
           <span class="hub-section-title">GITHUB</span>
         </div>
         <div class="hub-section-body">
-          <div class="empty-state">
-            No GitHub data. ${project.githubRepo
-              ? "Configure a GitHub token to access this repo."
-              : "No GitHub repo linked for this project."}
-          </div>
+          ${project.githubRepo
+            ? renderEmptyState("\uD83D\uDD11", "No GitHub Data", "Configure a GitHub token in Settings to unlock repo insights, CI status, and score breakdowns.", "Open Settings", "settings")
+            : renderEmptyState("\uD83D\uDD17", "No Repo Linked", "This project has no GitHub repository configured.")}
           ${project.githubRepo ? `
             <div style="text-align:center; margin-top:8px;">
               <a href="https://github.com/${project.githubRepo}" target="_blank" rel="noopener"
                  style="color:var(--blue); font-size:12px;">
-                Open on GitHub ↗
+                Open on GitHub \u2197
               </a>
             </div>
           ` : ""}

@@ -1,10 +1,10 @@
 // Gamification Panel — renders XP bar, achievements, challenges, and vault membership
 // into the main Studio Hub dashboard.
 
-import { ACHIEVEMENTS, TIER_STYLES, getUnlockedAchievements, getAchievementStats, getNewNotifications } from "../../utils/achievements.js";
-import { getXPState, getXPLog } from "../../utils/studioXP.js";
+import { ACHIEVEMENTS, TIER_STYLES, getUnlockedAchievements, getAchievementStats, getNewNotifications, getAchievementProgress } from "../../utils/achievements.js";
+import { getXPState, getXPLog, getLoginStreak } from "../../utils/studioXP.js";
 import { getChallengeStats } from "../../utils/challenges.js";
-import { fmt } from "../../utils/helpers.js";
+import { fmt, renderEmptyState } from "../../utils/helpers.js";
 
 // ── XP & Level Bar ───────────────────────────────────────────────────────────
 export function renderXPBar() {
@@ -15,6 +15,7 @@ export function renderXPBar() {
   const barColor = xp.color || "var(--cyan)";
   const nextName = xp.nextLevel ? xp.nextLevel.name : "MAX";
   const xpNeeded = xp.nextLevel ? `${fmt(xp.xpForNext - xp.xpInLevel)} XP to next` : "Max level reached";
+  const streak = getLoginStreak();
 
   return `
     <div class="panel" style="margin-bottom:24px; overflow:hidden;">
@@ -44,6 +45,11 @@ export function renderXPBar() {
             <div style="font-size:18px; font-weight:800; color:var(--green);">${challenges.dailyDone + challenges.weeklyDone}/${challenges.dailyTotal + challenges.weeklyTotal}</div>
             <div style="font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em;">Challenges</div>
           </div>
+          ${streak > 0 ? `
+          <div style="text-align:center;">
+            <div style="font-size:18px; font-weight:800; color:${streak >= 7 ? "var(--red)" : streak >= 3 ? "var(--gold)" : "var(--muted)"};">\uD83D\uDD25 ${streak}</div>
+            <div style="font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em;">Streak</div>
+          </div>` : ""}
         </div>
       </div>
       ${!xp.isMaxLevel ? `
@@ -110,7 +116,7 @@ export function renderAchievementToasts() {
 }
 
 // ── Trophy Showcase ──────────────────────────────────────────────────────────
-export function renderTrophyShowcase() {
+export function renderTrophyShowcase(progressContext = {}) {
   const unlocked = getUnlockedAchievements();
   const stats = getAchievementStats();
 
@@ -171,6 +177,18 @@ export function renderTrophyShowcase() {
                 <div style="flex:1; min-width:0;">
                   <div style="font-size:12px; font-weight:700; color:${isUnlocked ? tier.color : "var(--muted)"}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${a.name}</div>
                   <div style="font-size:10px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${a.desc}</div>
+                  ${(() => {
+                    if (isUnlocked) return "";
+                    const prog = getAchievementProgress(a.id, progressContext);
+                    if (!prog) return "";
+                    const pct = Math.min(100, Math.round((prog.current / prog.target) * 100));
+                    return `<div style="margin-top:4px; display:flex; align-items:center; gap:6px;">
+                      <div style="flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden;">
+                        <div style="width:${pct}%; height:100%; background:${tier.color}; border-radius:2px; transition:width 0.4s;"></div>
+                      </div>
+                      <span style="font-size:9px; color:var(--muted); white-space:nowrap;">${prog.current}/${prog.target}</span>
+                    </div>`;
+                  })()}
                 </div>
                 <div style="text-align:right; flex-shrink:0;">
                   <div style="font-size:10px; font-weight:800; color:${isUnlocked ? "var(--gold)" : "var(--muted)"};">${a.xp} XP</div>
@@ -238,11 +256,7 @@ export function renderChallengePanel(activeChallenges) {
       <div class="panel-body" style="display:flex; flex-direction:column; gap:8px;">
         ${daily.map(ch => renderChallenge(ch, "daily")).join("")}
         ${weekly.map(ch => renderChallenge(ch, "weekly")).join("")}
-        ${daily.length === 0 && weekly.length === 0 ? `
-          <div style="font-size:12px; color:var(--muted); text-align:center; padding:16px;">
-            No active challenges — check back tomorrow!
-          </div>
-        ` : ""}
+        ${daily.length === 0 && weekly.length === 0 ? renderEmptyState("\uD83C\uDFAF", "No Active Challenges", "Challenges refresh daily and weekly — check back tomorrow for new goals and XP rewards!") : ""}
       </div>
     </div>
   `;

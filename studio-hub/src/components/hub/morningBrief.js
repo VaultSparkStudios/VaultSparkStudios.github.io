@@ -1,5 +1,5 @@
 import { PROJECTS } from "../../data/studioRegistry.js";
-import { daysSince } from "../../utils/helpers.js";
+import { daysSince, safeGetJSON, safeSetJSON } from "../../utils/helpers.js";
 import { getDecayingProjects } from "../../utils/scoreForecast.js";
 import { computeHotStreak } from "./hubHelpers.js";
 
@@ -96,15 +96,11 @@ export function getBurnoutRiskProjects(ghData) {
 
 // Keys resolved Brain flags by flag content hash to avoid re-surfacing acknowledged items.
 const BRAIN_RESOLVED_KEY = "vshub_brain_resolved";
-function loadResolvedFlags() {
-  try { return new Set(JSON.parse(localStorage.getItem(BRAIN_RESOLVED_KEY) || "[]")); } catch { return new Set(); }
-}
+function loadResolvedFlags() { return new Set(safeGetJSON(BRAIN_RESOLVED_KEY, [])); }
 function resolveFlag(key) {
   const s = loadResolvedFlags();
   s.add(key);
-  // Cap at 50 entries to avoid unbounded growth
-  const arr = [...s].slice(-50);
-  try { localStorage.setItem(BRAIN_RESOLVED_KEY, JSON.stringify(arr)); } catch {}
+  safeSetJSON(BRAIN_RESOLVED_KEY, [...s].slice(-50));
 }
 // Called by clientApp event delegation — exposed on window for inline onclick
 window._resolveBrainFlag = (key) => {

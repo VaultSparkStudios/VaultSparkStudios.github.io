@@ -1,25 +1,16 @@
 // src/components/competitiveView.js
 // #24 Competitive GitHub Tracker — star/fork tracking for competitor repos.
 
+import { safeGetJSON, safeSetJSON, renderEmptyState } from "../utils/helpers.js";
+
 const COMPETITORS_KEY = "vshub_competitors";
 const BASELINE_KEY    = "vshub_competitor_baseline";
 const DISMISSED_KEY   = "vshub_dismissed_competitors";
 
-export function loadDismissedCompetitors() {
-  try { return JSON.parse(localStorage.getItem(DISMISSED_KEY) || "[]"); } catch { return []; }
-}
-
-export function saveDismissedCompetitors(list) {
-  try { localStorage.setItem(DISMISSED_KEY, JSON.stringify(list)); } catch {}
-}
-
-export function loadCompetitorList() {
-  try { return JSON.parse(localStorage.getItem(COMPETITORS_KEY) || "[]"); } catch { return []; }
-}
-
-export function saveCompetitorList(repos) {
-  try { localStorage.setItem(COMPETITORS_KEY, JSON.stringify(repos)); } catch {}
-}
+export function loadDismissedCompetitors() { return safeGetJSON(DISMISSED_KEY, []); }
+export function saveDismissedCompetitors(list) { safeSetJSON(DISMISSED_KEY, list); }
+export function loadCompetitorList() { return safeGetJSON(COMPETITORS_KEY, []); }
+export function saveCompetitorList(repos) { safeSetJSON(COMPETITORS_KEY, repos); }
 
 function getBaseline() {
   try { return JSON.parse(sessionStorage.getItem(BASELINE_KEY) || "{}"); } catch { return {}; }
@@ -104,7 +95,7 @@ export function renderCompetitiveView(state) {
       <div style="padding:24px 28px; max-width:900px; margin:0 auto;">
         ${headerHtml}
         ${editorHtml}
-        <p style="color:var(--muted); font-size:13px;">No competitor repos configured yet. Click <strong>Discover</strong> to auto-find competitors based on your projects, or add repos manually above.</p>
+        ${renderEmptyState("\uD83D\uDD0D", "No Competitors Tracked", "Click Discover above to auto-find competitors from your project profiles, or add repos manually.")}
       </div>`;
   }
 

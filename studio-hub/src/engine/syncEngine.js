@@ -7,6 +7,7 @@
 
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject, clearScoringCache } from "../utils/projectScoring.js";
+import { showToast } from "../components/toastManager.js";
 import {
   fetchAllRepos, fetchOrgActivity, fetchBeaconGist, getRateLimitInfo,
   clearFetchErrors, countCachedRepos,
@@ -103,6 +104,7 @@ export function createSyncEngine(ctx) {
       if (pct < 10) {
         state.syncError = `GitHub rate limit low: ${rem.toLocaleString()}/${state.rateLimitInfo.limit.toLocaleString()} remaining. Sync skipped to preserve quota.`;
         state.syncStatus = "degraded";
+        showToast(`Rate limit low (${rem} remaining) — sync skipped.`, "warning", 8000);
         render();
         return;
       }
@@ -149,6 +151,7 @@ export function createSyncEngine(ctx) {
     } catch (err) {
       state.syncStatus = "error";
       state.syncError  = err?.message === "sync_timeout" ? "Sync timed out after 45s — check network or GitHub API status." : `Sync failed: ${err?.message || "unknown error"}`;
+      showToast(state.syncError, "error");
       render();
       return;
     }
@@ -158,6 +161,7 @@ export function createSyncEngine(ctx) {
     const anyRepoLoaded = Object.values(ghRepos || {}).some((v) => v !== null);
     if (hasToken && repoPaths.length > 0 && !anyRepoLoaded && !sourceErrors.github) {
       state.syncError = "GitHub data failed to load — token may be invalid or rate limited.";
+      showToast(state.syncError, "warning");
     }
     state.syncErrors = sourceErrors;
     const sourceErrorCount = Object.keys(sourceErrors).length;
@@ -212,6 +216,7 @@ export function createSyncEngine(ctx) {
       const failedSources = Object.keys(sourceErrors).join(", ");
       state.syncError = `Partial sync: ${failedSources} failed. Other sources loaded.`;
     }
+    state.lastSyncTimestamp = Date.now();
     state.syncMeta      = { gh: tGh, sb: tGh, social: tGh, cachedRepos: preSyncCache.cached, freshRepos: preSyncCache.fresh, totalRepos: repoPaths.length };
 
     // Push new snapshot and update score state (guarded: only auto-push if 8h+ since last)
