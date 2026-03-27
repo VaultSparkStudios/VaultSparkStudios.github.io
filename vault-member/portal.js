@@ -722,7 +722,15 @@
         }
 
         const { data, error } = await VSSupabase.auth.signInWithPassword({ email, password });
-        if (error) throw new Error(error.message);
+        if (error) {
+          if (error.message === 'Email not confirmed') {
+            throw new Error('Please confirm your email before signing in. Check your inbox for the confirmation link.');
+          }
+          if (error.message === 'Invalid login credentials') {
+            throw new Error('Incorrect email/handle or password.');
+          }
+          throw new Error(error.message);
+        }
 
         // Load vault_members row
         const { data: row, error: rowErr } = await VSSupabase
@@ -4511,8 +4519,22 @@
 
     // ── Init: restore session ────────────────────────────────────
     (async function init() {
-      // Password reset: Supabase redirects with #access_token=...&type=recovery
-      const hash = window.location.hash;
+      const hash      = window.location.hash;
+      const urlParams = new URLSearchParams(window.location.search);
+
+      // Password reset — PKCE flow (Supabase v2 default): ?code=...&type=recovery
+      if (urlParams.get('type') === 'recovery') {
+        const code = urlParams.get('code');
+        if (code) {
+          await VSSupabase.auth.exchangeCodeForSession(code);
+        }
+        history.replaceState(null, '', window.location.pathname);
+        showAuth();
+        switchTab('reset');
+        return;
+      }
+
+      // Password reset — legacy implicit flow: #access_token=...&type=recovery
       if (hash.includes('type=recovery')) {
         const params = new URLSearchParams(hash.slice(1));
         if (params.get('type') === 'recovery') {
@@ -4521,7 +4543,7 @@
           if (access_token && refresh_token) {
             await VSSupabase.auth.setSession({ access_token, refresh_token });
           }
-          history.replaceState(null, '', window.location.pathname + window.location.search);
+          history.replaceState(null, '', window.location.pathname);
           showAuth();
           switchTab('reset');
           return;
