@@ -2,7 +2,7 @@
 // Caches the app shell for offline / fast-reload access.
 // Static asset list is kept minimal — API data is never cached here.
 
-const CACHE_VERSION = "vshub-sw-v26";
+const CACHE_VERSION = "vshub-sw-v27";
 
 const PRECACHE_URLS = [
   "./",

@@ -998,21 +998,21 @@ function bindEvents() {
       state.websitePsi = null;
       state.websiteProbe = null;
       loadWebsiteAnalytics();
+      return;
     }
-  });
-  document.querySelectorAll("[data-analytics-tab]").forEach((el) => {
-    el.addEventListener("click", () => {
-      const tab = el.getAttribute("data-analytics-tab");
+    // Analytics tab switching (delegated — survives re-render)
+    const analyticsTab = e.target.closest("[data-analytics-tab]");
+    if (analyticsTab) {
+      const tab = analyticsTab.getAttribute("data-analytics-tab");
       if (tab && tab !== state.analyticsTab) {
         state.analyticsTab = tab;
-        // Lazy-load website analytics data on first visit — start before render so loading state shows immediately
         if (tab === "website" && !state.websitePsi && !state.websiteLoading) {
-          loadWebsiteAnalytics(); // sets websiteLoading=true and calls render()
+          loadWebsiteAnalytics();
         } else {
           render();
         }
       }
-    });
+    }
   });
   document.getElementById("focus-mode-btn")?.addEventListener("click", () => {
     state.focusMode = !state.focusMode;

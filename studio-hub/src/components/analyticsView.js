@@ -2142,11 +2142,11 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
 function analyticsTabBar(activeTab) {
   const tabs = [
     { id: "overview",     label: "Overview" },
+    { id: "website",      label: "Website" },
     { id: "portfolio",    label: "Portfolio" },
     { id: "development",  label: "Development" },
     { id: "engagement",   label: "Engagement" },
     { id: "intelligence", label: "Intelligence" },
-    { id: "website",      label: "Website" },
     { id: "advanced",     label: "Advanced" },
   ];
   return `
