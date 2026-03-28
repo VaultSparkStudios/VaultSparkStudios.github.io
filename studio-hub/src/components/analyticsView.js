@@ -451,15 +451,251 @@ function computeAAS(beaconData, agentRequests, agentRunHistory, portfolioFreshne
   };
 }
 
+// 11. Technical Debt Index (TDI 0–100) — code maintenance health
+function computeTDI(ghData, scoreHistory) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  let score = 100; // Start perfect, deduct for debt signals
+
+  let totalStale = 0, totalOpen = 0, totalStalePRs = 0, totalNoCI = 0;
+  const now = Date.now();
+  for (const p of active) {
+    const rd = ghData[p.githubRepo];
+    if (!rd) { totalNoCI++; continue; }
+    const lastCommit = rd.commits?.[0]?.date ? new Date(rd.commits[0].date).getTime() : 0;
+    if (now - lastCommit > 30 * 86400000) totalStale++;
+    totalOpen += rd.repo?.openIssues || 0;
+    totalStalePRs += (rd.prs || []).filter((pr) => (now - new Date(pr.createdAt).getTime()) > 14 * 86400000).length;
+    if (!rd.ciRuns?.length) totalNoCI++;
+    // Detect chore/deps freshness
+    const hasRecentDeps = (rd.commits || []).some((c) => /\b(deps?|chore|bump|upgrade)\b/i.test(c.message) && (now - new Date(c.date).getTime()) < 90 * 86400000);
+    if (!hasRecentDeps) score -= 3;
+  }
+
+  const n = Math.max(1, active.length);
+  score -= Math.min(25, (totalStale / n) * 40);         // stale repos penalty
+  score -= Math.min(20, (totalOpen / n) * 4);            // open issues penalty
+  score -= Math.min(15, totalStalePRs * 3);              // stale PRs penalty
+  score -= Math.min(15, (totalNoCI / n) * 30);           // no CI penalty
+
+  // Score stability bonus — if recent scores are improving, less debt
+  if (scoreHistory.length >= 3) {
+    const avgs = scoreHistory.slice(-3).map((snap) => {
+      const vals = Object.values(snap.scores || {}).filter((v) => v != null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    });
+    if (avgs[2] > avgs[1] && avgs[1] > avgs[0]) score += 10;
+  }
+
+  return {
+    tdi: Math.round(Math.min(100, Math.max(0, score))),
+    staleRepos: totalStale,
+    stalePRs: totalStalePRs,
+    avgIssuesPerRepo: (totalOpen / n).toFixed(1),
+    reposWithoutCI: totalNoCI,
+  };
+}
+
+// 12. Shipping Velocity Score (SVS 0–100) — how fast value reaches users
+function computeSVS(ghData) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  const now = Date.now();
+  let score = 0;
+  let avgLeadTimeDays = 0, countWithDeploys = 0;
+
+  for (const p of active) {
+    const rd = ghData[p.githubRepo];
+    if (!rd) continue;
+    const deploys = rd.deployments || [];
+    const rel = rd.latestRelease;
+    // Lead time: time from last commit to latest deploy
+    if (deploys.length > 0 && rd.commits?.length) {
+      const deployTime = new Date(deploys[0].createdAt).getTime();
+      const commitTime = new Date(rd.commits[0].date).getTime();
+      const leadMs = Math.abs(deployTime - commitTime);
+      avgLeadTimeDays += leadMs / 86400000;
+      countWithDeploys++;
+    }
+    // Release frequency bonus
+    if (rel?.publishedAt) {
+      const relAge = (now - new Date(rel.publishedAt).getTime()) / 86400000;
+      if (relAge < 7) score += 8;
+      else if (relAge < 14) score += 5;
+      else if (relAge < 30) score += 3;
+    }
+    // CI speed bonus
+    if (rd.ciRuns?.[0]?.conclusion === "success") score += 4;
+    // Active deployment pipeline
+    if (deploys.some((d) => (now - new Date(d.createdAt).getTime()) < 14 * 86400000)) score += 3;
+  }
+
+  const n = Math.max(1, active.length);
+  avgLeadTimeDays = countWithDeploys > 0 ? avgLeadTimeDays / countWithDeploys : null;
+
+  // Normalize score against project count
+  score = (score / n) * 10;
+  // Lead time bonus — fast lead time = high SVS
+  if (avgLeadTimeDays != null) {
+    if (avgLeadTimeDays < 1) score += 25;
+    else if (avgLeadTimeDays < 3) score += 18;
+    else if (avgLeadTimeDays < 7) score += 10;
+  }
+
+  return {
+    svs: Math.round(Math.min(100, Math.max(0, score))),
+    avgLeadTimeDays: avgLeadTimeDays != null ? avgLeadTimeDays.toFixed(1) : null,
+    projectsWithDeploys: countWithDeploys,
+    totalActive: active.length,
+  };
+}
+
+// 13. Innovation Pulse (IP 0–100) — new feature & experimentation signal
+function computeIP(ghData, scoreHistory) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  const now = Date.now();
+  const thirtyDaysAgo = now - 30 * 86400000;
+  let score = 0;
+  let featureCommits = 0, newBranches = 0, experimentSignals = 0;
+
+  for (const p of active) {
+    const rd = ghData[p.githubRepo];
+    if (!rd) continue;
+    // Feature commits (non-fix, non-chore)
+    const fc = (rd.commits || []).filter((c) => {
+      const msg = c.message?.toLowerCase() || "";
+      return new Date(c.date).getTime() > thirtyDaysAgo &&
+        !(/^(fix|chore|deps?|bump|merge|revert)\b/i.test(msg)) &&
+        (/\b(add|feat|new|implement|create|launch|introduce)\b/i.test(msg));
+    }).length;
+    featureCommits += fc;
+    // Non-draft PRs = feature work
+    const featurePRs = (rd.prs || []).filter((pr) => !pr.draft && /\b(feat|add|new|implement)\b/i.test(pr.title || "")).length;
+    experimentSignals += featurePRs;
+  }
+
+  const n = Math.max(1, active.length);
+  score += Math.min(40, (featureCommits / n) * 10);
+  score += Math.min(25, experimentSignals * 8);
+
+  // Project diversity — more different project types = higher innovation
+  const types = new Set(active.map((p) => p.type));
+  score += Math.min(15, types.size * 5);
+
+  // Score trajectory momentum — improving portfolio = innovating
+  if (scoreHistory.length >= 3) {
+    const recent = scoreHistory.slice(-3).map((snap) => {
+      const vals = Object.values(snap.scores || {}).filter((v) => v != null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    });
+    if (recent[2] > recent[0]) score += 20;
+    else if (recent[2] >= recent[0]) score += 10;
+  }
+
+  return {
+    ip: Math.round(Math.min(100, Math.max(0, score))),
+    featureCommits,
+    experimentSignals,
+    projectTypeDiversity: types.size,
+  };
+}
+
+// 14. Revenue Readiness Index (RRI 0–100) — monetization preparedness
+function computeRRI(ghData, socialData, sbData) {
+  let score = 0;
+  const active = PROJECTS.filter((p) => p.status !== "archived");
+
+  // Deployed projects (can generate value)
+  const deployed = active.filter((p) => p.deployedUrl);
+  score += Math.min(25, (deployed.length / Math.max(1, active.length)) * 35);
+
+  // Gumroad integration
+  const gm = socialData?.gumroad;
+  const gmSales = socialData?.gumroadSales || [];
+  if (gm?.hasToken) {
+    score += 10;
+    const activeProducts = (gm.products || []).filter((p) => p.published).length;
+    score += Math.min(10, activeProducts * 5);
+    if (gmSales.length > 0) score += Math.min(15, (gmSales.length / 10) * 15);
+  }
+
+  // Community size (audience = revenue potential)
+  const totalReach = (socialData?.youtube?.subscribers || 0) + (socialData?.reddit?.subscribers || 0) + (socialData?.bluesky?.followers || 0);
+  if (totalReach >= 10000) score += 20;
+  else if (totalReach >= 1000) score += 12;
+  else if (totalReach >= 100) score += 5;
+
+  // Member engagement (player base = potential customers)
+  const members = sbData?.members;
+  if (members?.total > 0) {
+    score += Math.min(10, (members.total / 100) * 10);
+  }
+
+  // Live projects with CI passing = production-ready
+  const liveWithCI = active.filter((p) =>
+    (p.status === "live" || p.status === "client-beta") &&
+    ghData[p.githubRepo]?.ciRuns?.[0]?.conclusion === "success"
+  );
+  score += Math.min(10, liveWithCI.length * 5);
+
+  return {
+    rri: Math.round(Math.min(100, Math.max(0, score))),
+    deployedCount: deployed.length,
+    totalProducts: gm?.products?.filter((p) => p.published)?.length || 0,
+    totalSales: gmSales.length,
+    totalReach,
+    liveWithCI: liveWithCI.length,
+  };
+}
+
+// 15. Resilience Score (RS 0–100) — how well the studio handles adversity
+function computeRS(ghData, scoreHistory, sbData) {
+  let score = 50; // Neutral baseline
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+
+  // Recovery signal: score bounced back after a dip
+  if (scoreHistory.length >= 4) {
+    const avgs = scoreHistory.slice(-4).map((snap) => {
+      const vals = Object.values(snap.scores || {}).filter((v) => v != null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    });
+    const dipped = avgs[1] < avgs[0] || avgs[2] < avgs[1];
+    const recovered = avgs[3] > avgs[2];
+    if (dipped && recovered) score += 25; // bounced back from adversity
+    else if (!dipped) score += 15; // stable, no adversity
+    else if (dipped && !recovered) score -= 10; // still declining
+  }
+
+  // CI recovery: projects that had failing CI but now pass
+  let ciRecovered = 0;
+  for (const p of active) {
+    const runs = ghData[p.githubRepo]?.ciRuns || [];
+    if (runs.length >= 2 && runs[0].conclusion === "success" && runs[1].conclusion === "failure") ciRecovered++;
+  }
+  score += Math.min(15, ciRecovered * 8);
+
+  // Diversification: more active projects = more resilient
+  const activeWithCommits = active.filter((p) => {
+    const rd = ghData[p.githubRepo];
+    return rd?.commits?.[0] && (Date.now() - new Date(rd.commits[0].date).getTime()) < 30 * 86400000;
+  });
+  score += Math.min(10, (activeWithCommits.length / Math.max(1, active.length)) * 15);
+
+  return {
+    rs: Math.round(Math.min(100, Math.max(0, score))),
+    ciRecovered,
+    activeProjects: activeWithCommits.length,
+    totalActive: active.length,
+  };
+}
+
 // ════════════════════════════════════════════════════════════════════════════
 // RENDER SECTIONS
 // ════════════════════════════════════════════════════════════════════════════
 
 function renderCockpit(computed) {
-  const { svi, pbs, rcr, crs, crs2, dti, socr, eci, fcr, aas } = computed;
+  const { svi, pbs, rcr, crs, crs2, dti, socr, eci, fcr, aas, tdi, svs, ip, rri, rs } = computed;
   return `
     <div style="margin-bottom:20px;">
-      <div style="font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:10px;font-weight:600;">ANALYTICS COCKPIT — 10 PROPRIETARY RATINGS</div>
+      <div style="font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:10px;font-weight:600;">ANALYTICS COCKPIT — 15 PROPRIETARY RATINGS</div>
       <div style="display:flex;flex-wrap:wrap;gap:10px;">
         ${scoreTile("Studio Vitality",   svi.svi,   { sub: `Trend ${svi.trend}`,                          note: "Overall operational health" })}
         ${scoreTile("Portfolio Balance", pbs.pbs,   { sub: pbs.pbs ? `CV ${pbs.cv}` : "insufficient data", note: "Score distribution evenness" })}
@@ -471,6 +707,11 @@ function renderCockpit(computed) {
         ${scoreTile("Engage Spread",     eci.eci,   { sub: eci.gamesWithSessions ? `${eci.gamesWithSessions} active games` : "no session data", note: "Player engagement distribution" })}
         ${scoreTile("Forecast Conf.",    fcr.fcr,   { sub: fcr.fcr != null ? `${fcr.correct}/${fcr.total} correct` : `${fcr.total}/5 needed`, note: "Prediction accuracy" })}
         ${scoreTile("Agent Activity",    aas.aas,   { sub: `${aas.activeSessions} live · ${aas.pendingRequests} queued`, note: "AI agent utilization" })}
+        ${scoreTile("Tech Debt",         tdi.tdi,   { sub: `${tdi.staleRepos} stale · ${tdi.stalePRs} stale PRs`, note: "Code maintenance health" })}
+        ${scoreTile("Ship Velocity",     svs.svs,   { sub: svs.avgLeadTimeDays ? `${svs.avgLeadTimeDays}d lead time` : "no deploy data", note: "Value delivery speed" })}
+        ${scoreTile("Innovation Pulse",  ip.ip,     { sub: `${ip.featureCommits} feature commits`,         note: "Experimentation & new features" })}
+        ${scoreTile("Revenue Ready",     rri.rri,   { sub: `${rri.totalProducts} products · ${rri.totalSales} sales`, note: "Monetization preparedness" })}
+        ${scoreTile("Resilience",        rs.rs,     { sub: `${rs.activeProjects}/${rs.totalActive} active`, note: "Adversity recovery strength" })}
       </div>
     </div>`;
 }
@@ -1254,7 +1495,7 @@ function renderAgentOps(aas, beaconData, agentRequests, agentRunHistory, studioB
 // ════════════════════════════════════════════════════════════════════════════
 
 // ── Advanced Stats section ─────────────────────────────────────────────────
-function renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores) {
+function renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores, newScores = {}) {
   const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
   const now = Date.now();
   const oneWeekAgo = now - 7 * 86400000;
@@ -1457,6 +1698,62 @@ function renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores
         ${statCard("OPEN ISSUES", fmt(totalOpen), `${active.length} repos tracked`)}
       </div>
     `)}
+
+    ${(() => {
+      const { tdi, svs, ip, rri, rs } = newScores;
+      if (!tdi) return "";
+      return `
+        ${section("Technical Debt Index", "🔧", `
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            ${scoreTile("Tech Debt Score", tdi.tdi, { sub: "Lower debt = higher score", note: "Code maintenance health" })}
+            ${statCard("STALE REPOS", String(tdi.staleRepos), "no commits in 30d")}
+            ${statCard("STALE PRs", String(tdi.stalePRs), "open > 14 days")}
+            ${statCard("AVG ISSUES/REPO", tdi.avgIssuesPerRepo, "open issues per project")}
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            ${statCard("NO CI COVERAGE", String(tdi.reposWithoutCI), "repos without CI runs")}
+          </div>
+        `)}
+
+        ${section("Shipping Velocity", "🚢", `
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            ${scoreTile("Ship Velocity Score", svs.svs, { sub: svs.avgLeadTimeDays ? svs.avgLeadTimeDays + "d avg lead time" : "no deploy data", note: "Commit-to-deploy speed" })}
+            ${statCard("LEAD TIME", svs.avgLeadTimeDays ? svs.avgLeadTimeDays + "d" : "—", "commit to deploy")}
+            ${statCard("DEPLOY CAPABLE", String(svs.projectsWithDeploys), `of ${svs.totalActive} projects`)}
+          </div>
+        `)}
+
+        ${section("Innovation Pulse", "💡", `
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            ${scoreTile("Innovation Score", ip.ip, { sub: ip.featureCommits + " feature commits (30d)", note: "New feature & experimentation signal" })}
+            ${statCard("FEATURE COMMITS", String(ip.featureCommits), "add/feat/new/implement in 30d")}
+            ${statCard("EXPERIMENT SIGNALS", String(ip.experimentSignals), "feature PRs detected")}
+            ${statCard("TYPE DIVERSITY", String(ip.projectTypeDiversity), "distinct project types")}
+          </div>
+        `)}
+
+        ${section("Revenue Readiness", "💰", `
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            ${scoreTile("Revenue Readiness", rri.rri, { sub: rri.totalSales + " total sales", note: "Monetization preparedness" })}
+            ${statCard("DEPLOYED", String(rri.deployedCount), "projects with live URLs")}
+            ${statCard("PRODUCTS", String(rri.totalProducts), "active Gumroad products")}
+            ${statCard("REACH", fmt(rri.totalReach), "cross-platform audience")}
+            ${statCard("PROD-READY", String(rri.liveWithCI), "live projects + CI passing")}
+          </div>
+        `)}
+
+        ${section("Studio Resilience", "🛡", `
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            ${scoreTile("Resilience Score", rs.rs, { sub: rs.ciRecovered + " CI recoveries", note: "Adversity recovery strength" })}
+            ${statCard("ACTIVE PROJECTS", String(rs.activeProjects), `of ${rs.totalActive} total`)}
+            ${statCard("CI RECOVERED", String(rs.ciRecovered), "fail → pass this cycle")}
+          </div>
+          <div style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5;">
+            Resilience measures the studio's ability to recover from setbacks: CI failures fixed, score dips recovered, and portfolio diversification. Higher scores indicate stronger bounce-back ability.
+          </div>
+        `)}
+      `;
+    })()}
   `;
 }
 
@@ -1877,7 +2174,7 @@ export function renderAnalyticsView(state) {
     }
   });
 
-  // Compute all 10 proprietary scores
+  // Compute all 15 proprietary scores
   const svi  = computeSVI(ghData, sbData, scoreHistory, alertCount);
   const pbs  = computePBS(allScores);
   const rcr  = computeRCR(ghData);
@@ -1888,13 +2185,18 @@ export function renderAnalyticsView(state) {
   const eci  = computeECI(sbData);
   const fcr  = computeFCR();
   const aas  = computeAAS(beaconData, agentRequests, agentRunHistory, portfolioFreshness);
+  const tdi  = computeTDI(ghData, scoreHistory);
+  const svs  = computeSVS(ghData);
+  const ip   = computeIP(ghData, scoreHistory);
+  const rri  = computeRRI(ghData, socialData, sbData);
+  const rs   = computeRS(ghData, scoreHistory, sbData);
 
   const lastSync = syncMeta?.gh ? `Last synced ${timeAgo(new Date(syncMeta.gh).toISOString())}` : "Not synced yet";
 
   // Tab-specific content
   const tabContent = {
     overview: () => `
-      ${renderCockpit({ svi, pbs, rcr, crs, crs2, dti, socr, eci, fcr, aas })}
+      ${renderCockpit({ svi, pbs, rcr, crs, crs2, dti, socr, eci, fcr, aas, tdi, svs, ip, rri, rs })}
       ${renderVitality(svi, scoreHistory)}
       ${renderLeaderboard(allScores, scorePrev, pbs)}`,
     portfolio: () => `
@@ -1913,7 +2215,7 @@ export function renderAnalyticsView(state) {
       ${renderGovernance(socr, portfolioFreshness)}
       ${renderAgentOps(aas, beaconData, agentRequests, agentRunHistory, studioBrain)}`,
     website: () => renderWebsiteAnalytics(websitePsi, websiteProbe, websiteLoading, ghData),
-    advanced: () => renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores),
+    advanced: () => renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores, { tdi, svs, ip, rri, rs }),
   };
 
   return `

@@ -344,11 +344,18 @@ function _renderInner(app) {
   _lastRenderedView = state.activeView;
 
   // Visual syncing state — dim main panel while sync runs
+  // Skip dimming on settings view to avoid locking the user out of the UI
   const currentPanel = app.querySelector(".main-panel");
-  if (state.syncStatus === "syncing" && currentPanel) {
-    currentPanel.style.opacity = "0.6";
-    currentPanel.style.pointerEvents = "none";
-    currentPanel.style.transition = "opacity 0.2s";
+  if (currentPanel) {
+    if (state.syncStatus === "syncing" && state.activeView !== "settings") {
+      currentPanel.style.opacity = "0.6";
+      currentPanel.style.pointerEvents = "none";
+      currentPanel.style.transition = "opacity 0.2s";
+    } else {
+      currentPanel.style.opacity = "1";
+      currentPanel.style.pointerEvents = "auto";
+      currentPanel.style.transition = "opacity 0.2s";
+    }
   }
   bindEvents();
   // Re-apply theme/density/sidebar classes (innerHTML wipes them on full render)

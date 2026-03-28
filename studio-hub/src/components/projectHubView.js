@@ -1791,6 +1791,81 @@ function renderProprietaryScoresSection(project, repoData, socialData, scoreHist
   const mom = scoreMomentumIndex(project, repoData, scoreHistory);
   const pl = potentialLabel(pot);
   const ml = momentumLabel(mom);
+
+  // ── Breakaway Index (0–100) — how close to separating from the pack ──
+  const scoring = scoreProject(project, repoData, null, socialData);
+  const scoreVals = (scoreHistory || []).map((h) => h.scores?.[project.id]).filter((v) => v != null);
+  let breakawayScore = 0;
+  if (scoreVals.length >= 2) {
+    const recentDelta = scoreVals[scoreVals.length - 1] - scoreVals[Math.max(0, scoreVals.length - 3)];
+    breakawayScore += Math.min(40, Math.max(0, recentDelta * 8));
+  }
+  if (scoring.total >= 80) breakawayScore += 30;
+  else if (scoring.total >= 60) breakawayScore += 15;
+  if (pot >= 70) breakawayScore += 15;
+  if (mom >= 60) breakawayScore += 15;
+  breakawayScore = Math.min(100, breakawayScore);
+  const bkColor = breakawayScore >= 75 ? "#7ae7c7" : breakawayScore >= 50 ? "#69b3ff" : breakawayScore >= 30 ? "#ffc874" : "#64748b";
+  const bkLabel = breakawayScore >= 75 ? "BREAKOUT" : breakawayScore >= 50 ? "RISING" : breakawayScore >= 30 ? "STEADY" : "DORMANT";
+
+  // ── Sustainability Rating (0–100) — long-term viability ──
+  let sustainability = 50;
+  const ciPassing = repoData?.ciRuns?.[0]?.conclusion === "success";
+  if (ciPassing) sustainability += 15;
+  const vel = (() => { const now = Date.now(), wk = 7 * 86400000; let tw = 0; for (const c of (repoData?.commits || [])) { if (now - new Date(c.date).getTime() < wk) tw++; } return tw; })();
+  if (vel >= 3) sustainability += 10;
+  else if (vel >= 1) sustainability += 5;
+  if (project.deployedUrl) sustainability += 10;
+  if (project.studioOsApplied) sustainability += 5;
+  const openIssues = repoData?.repo?.openIssues ?? 0;
+  if (openIssues === 0) sustainability += 10;
+  else if (openIssues < 5) sustainability += 5;
+  else sustainability -= 5;
+  sustainability = Math.min(100, Math.max(0, sustainability));
+  const susColor = sustainability >= 75 ? "#7ae7c7" : sustainability >= 50 ? "#69b3ff" : sustainability >= 30 ? "#ffc874" : "#64748b";
+  const susLabel = sustainability >= 75 ? "STRONG" : sustainability >= 50 ? "HEALTHY" : sustainability >= 30 ? "AT RISK" : "CRITICAL";
+
+  // ── Code Tempo (0–100) — rhythm and consistency of development ──
+  const commits = repoData?.commits || [];
+  const now = Date.now();
+  const dayBuckets = new Array(14).fill(0);
+  for (const c of commits) {
+    const dayIdx = Math.floor((now - new Date(c.date).getTime()) / 86400000);
+    if (dayIdx >= 0 && dayIdx < 14) dayBuckets[dayIdx]++;
+  }
+  const activeDays = dayBuckets.filter((d) => d > 0).length;
+  let codeTempo = Math.min(50, (activeDays / 14) * 70);
+  const consistency = activeDays >= 2 ? (1 - (Math.max(...dayBuckets) - Math.min(...dayBuckets.filter((d) => d > 0))) / Math.max(1, Math.max(...dayBuckets))) : 0;
+  codeTempo += consistency * 30;
+  codeTempo += Math.min(20, vel * 4);
+  codeTempo = Math.round(Math.min(100, Math.max(0, codeTempo)));
+  const ctColor = codeTempo >= 70 ? "#7ae7c7" : codeTempo >= 45 ? "#69b3ff" : codeTempo >= 20 ? "#ffc874" : "#64748b";
+  const ctLabel = codeTempo >= 70 ? "IN FLOW" : codeTempo >= 45 ? "ACTIVE" : codeTempo >= 20 ? "SPORADIC" : "SILENT";
+
+  // ── Risk Exposure (0–100, lower = better) — vulnerability surface ──
+  let riskExposure = 0;
+  if (openIssues > 10) riskExposure += 25;
+  else if (openIssues > 5) riskExposure += 12;
+  const stalePRs = (repoData?.prs || []).filter((pr) => (now - new Date(pr.createdAt).getTime()) > 14 * 86400000).length;
+  riskExposure += Math.min(20, stalePRs * 7);
+  if (!ciPassing) riskExposure += 20;
+  if (!repoData?.ciRuns?.length) riskExposure += 15;
+  const lastCommitAge = commits[0] ? (now - new Date(commits[0].date).getTime()) / 86400000 : Infinity;
+  if (lastCommitAge > 30) riskExposure += 20;
+  else if (lastCommitAge > 14) riskExposure += 10;
+  riskExposure = Math.min(100, riskExposure);
+  const reColor = riskExposure <= 20 ? "#7ae7c7" : riskExposure <= 45 ? "#69b3ff" : riskExposure <= 70 ? "#ffc874" : "#f87171";
+  const reLabel = riskExposure <= 20 ? "LOW" : riskExposure <= 45 ? "MODERATE" : riskExposure <= 70 ? "ELEVATED" : "HIGH";
+
+  function scoreCard(title, score, label, color, description) {
+    return `<div style="padding:12px; border-radius:10px; background:${color}0d; border:1px solid ${color}28;">
+      <div style="font-size:10px; font-weight:700; color:var(--muted); letter-spacing:0.07em; margin-bottom:6px;">${title}</div>
+      <div style="font-size:28px; font-weight:800; color:${color}; line-height:1;">${score}</div>
+      <div style="font-size:11px; font-weight:700; color:${color}; margin-top:2px;">${label}</div>
+      <div style="font-size:10px; color:var(--muted); margin-top:6px; line-height:1.4;">${description}</div>
+    </div>`;
+  }
+
   return `
     <div class="hub-section">
       <div class="hub-section-header">
@@ -1799,21 +1874,127 @@ function renderProprietaryScoresSection(project, repoData, socialData, scoreHist
       </div>
       <div class="hub-section-body">
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
-          <div style="padding:12px; border-radius:10px; background:${pl.color}0d; border:1px solid ${pl.color}28;">
-            <div style="font-size:10px; font-weight:700; color:var(--muted); letter-spacing:0.07em; margin-bottom:6px;">POTENTIAL</div>
-            <div style="font-size:28px; font-weight:800; color:${pl.color}; line-height:1;">${pot}</div>
-            <div style="font-size:11px; font-weight:700; color:${pl.color}; margin-top:2px;">${pl.label}</div>
-            <div style="font-size:10px; color:var(--muted); margin-top:6px; line-height:1.4;">
-              Upside trajectory: score trend, community traction, market readiness, dev acceleration
-            </div>
+          ${scoreCard("POTENTIAL", pot, pl.label, pl.color, "Upside trajectory: score trend, community traction, market readiness, dev acceleration")}
+          ${scoreCard("MOMENTUM INDEX", mom, ml.label, ml.color, "Current velocity: commit speed, CI streak, PR activity, release recency, issue resolution")}
+          ${scoreCard("BREAKAWAY INDEX", breakawayScore, bkLabel, bkColor, "Separation potential: score acceleration + absolute health + upside trajectory combined")}
+          ${scoreCard("SUSTAINABILITY", sustainability, susLabel, susColor, "Long-term viability: CI health, commit cadence, deployment status, issue hygiene")}
+          ${scoreCard("CODE TEMPO", codeTempo, ctLabel, ctColor, "Development rhythm: commit consistency over 14 days, daily spread, velocity trend")}
+          ${scoreCard("RISK EXPOSURE", riskExposure, reLabel, reColor, "Vulnerability surface: stale PRs, open issues, CI failures, development gaps (lower = better)")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ── Advanced Project Stats ─────────────────────────────────────────────────────
+function renderAdvancedProjectStats(project, repoData, scoreHistory) {
+  const commits = repoData?.commits || [];
+  const prs = repoData?.prs || [];
+  const issues = repoData?.repo?.openIssues ?? 0;
+  const ciRuns = repoData?.ciRuns || [];
+  const now = Date.now();
+
+  // ── Commit velocity trend (2-week view) ──
+  const weekMs = 7 * 86400000;
+  let thisWeek = 0, lastWeek = 0, twoWeeksAgo = 0;
+  for (const c of commits) {
+    const age = now - new Date(c.date).getTime();
+    if (age < weekMs) thisWeek++;
+    else if (age < 2 * weekMs) lastWeek++;
+    else if (age < 3 * weekMs) twoWeeksAgo++;
+  }
+  const velTrend = lastWeek > 0 ? Math.round(((thisWeek - lastWeek) / lastWeek) * 100) : (thisWeek > 0 ? 100 : 0);
+  const velLabel = velTrend > 10 ? "Accelerating" : velTrend < -10 ? "Decelerating" : "Stable";
+  const velColor = velTrend > 10 ? "var(--green)" : velTrend < -10 ? "var(--red)" : "var(--cyan)";
+
+  // ── CI success streak ──
+  let ciStreak = 0;
+  for (const r of ciRuns) {
+    if (r.conclusion === "success") ciStreak++;
+    else break;
+  }
+  const ciStreakLabel = ciStreak >= 10 ? "Excellent" : ciStreak >= 5 ? "Good" : ciStreak >= 1 ? "Building" : "None";
+
+  // ── PR turnaround ──
+  const prAges = prs.filter((pr) => !pr.draft).map((pr) => (now - new Date(pr.createdAt).getTime()) / 86400000);
+  const avgPRAge = prAges.length > 0 ? (prAges.reduce((a, b) => a + b, 0) / prAges.length).toFixed(1) : null;
+  const oldestPR = prAges.length > 0 ? Math.round(Math.max(...prAges)) : null;
+
+  // ── Score consistency (σ of last 10 snapshots) ──
+  const scoreVals = (scoreHistory || []).slice(-10).map((h) => h.scores?.[project.id]).filter((v) => v != null);
+  let scoreVolatility = null;
+  if (scoreVals.length >= 3) {
+    const mean = scoreVals.reduce((a, b) => a + b, 0) / scoreVals.length;
+    const variance = scoreVals.reduce((s, v) => s + (v - mean) ** 2, 0) / scoreVals.length;
+    scoreVolatility = Math.sqrt(variance).toFixed(1);
+  }
+
+  // ── Commit message quality signal ──
+  const conventionalCommits = commits.filter((c) => /^(feat|fix|chore|docs|style|refactor|test|ci|build)\b/i.test(c.message || "")).length;
+  const conventionalPct = commits.length > 0 ? Math.round((conventionalCommits / commits.length) * 100) : 0;
+
+  // ── Issue velocity ──
+  const fixCommits = commits.filter((c) => /\b(fix|close|resolve|closes|fixes)\b/i.test(c.message || "")).length;
+  const issueRatio = (issues + fixCommits) > 0 ? Math.round((fixCommits / (issues + fixCommits)) * 100) : 0;
+
+  // ── Release maturity ──
+  const rel = repoData?.latestRelease;
+  const relAge = rel?.publishedAt ? Math.round((now - new Date(rel.publishedAt).getTime()) / 86400000) : null;
+  const relFreshness = relAge != null ? (relAge <= 7 ? "Fresh" : relAge <= 30 ? "Recent" : relAge <= 90 ? "Aging" : "Stale") : "None";
+  const relColor = relAge != null ? (relAge <= 7 ? "var(--green)" : relAge <= 30 ? "var(--cyan)" : relAge <= 90 ? "var(--yellow)" : "var(--red)") : "var(--muted)";
+
+  function kvRow(k, v, color = "var(--cyan)") {
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+      <span style="font-size:11px;color:var(--muted);">${k}</span>
+      <span style="font-size:12px;font-weight:600;color:${color};">${v}</span>
+    </div>`;
+  }
+
+  function statBox(label, value, sub = "") {
+    return `<div style="flex:1;min-width:100px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:10px;">
+      <div style="font-size:9px;color:var(--muted);margin-bottom:3px;letter-spacing:0.07em;">${label}</div>
+      <div style="font-size:20px;font-weight:800;color:var(--cyan);">${value}</div>
+      ${sub ? `<div style="font-size:10px;color:var(--muted);">${sub}</div>` : ""}
+    </div>`;
+  }
+
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">ADVANCED STATS</span>
+        <span class="hub-section-badge" style="color:var(--muted); font-size:10px;">Deep Diagnostics</span>
+      </div>
+      <div class="hub-section-body">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;">
+          ${statBox("COMMITS/WK", thisWeek, `<span style="color:${velColor}">${velTrend > 0 ? "+" : ""}${velTrend}% ${velLabel}</span>`)}
+          ${statBox("CI STREAK", ciStreak + "x", ciStreakLabel)}
+          ${statBox("SCORE VOL.", scoreVolatility ?? "—", scoreVolatility ? "σ (lower = stable)" : "need 3+ snapshots")}
+          ${statBox("CONV. COMMITS", conventionalPct + "%", conventionalCommits + " of " + commits.length)}
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <div>
+            <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">VELOCITY & CADENCE</div>
+            ${kvRow("This Week", thisWeek + " commits", velColor)}
+            ${kvRow("Last Week", lastWeek + " commits")}
+            ${kvRow("2 Weeks Ago", twoWeeksAgo + " commits")}
+            ${kvRow("WoW Change", (velTrend > 0 ? "+" : "") + velTrend + "%", velColor)}
+            ${kvRow("Velocity Trend", velLabel, velColor)}
           </div>
-          <div style="padding:12px; border-radius:10px; background:${ml.color}0d; border:1px solid ${ml.color}28;">
-            <div style="font-size:10px; font-weight:700; color:var(--muted); letter-spacing:0.07em; margin-bottom:6px;">MOMENTUM INDEX</div>
-            <div style="font-size:28px; font-weight:800; color:${ml.color}; line-height:1;">${mom}</div>
-            <div style="font-size:11px; font-weight:700; color:${ml.color}; margin-top:2px;">${ml.label}</div>
-            <div style="font-size:10px; color:var(--muted); margin-top:6px; line-height:1.4;">
-              Current velocity: commit speed, CI streak, PR activity, release recency, issue resolution
-            </div>
+          <div>
+            <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">ISSUE & PR HEALTH</div>
+            ${kvRow("Open Issues", String(issues), issues > 10 ? "var(--red)" : issues > 5 ? "var(--yellow)" : "var(--green)")}
+            ${kvRow("Issue Resolution Signal", issueRatio + "%")}
+            ${kvRow("Fix Commits", String(fixCommits))}
+            ${kvRow("Avg PR Age", avgPRAge ? avgPRAge + "d" : "—", avgPRAge && avgPRAge > 7 ? "var(--yellow)" : "var(--cyan)")}
+            ${kvRow("Oldest PR", oldestPR ? oldestPR + "d" : "—", oldestPR && oldestPR > 14 ? "var(--red)" : "var(--cyan)")}
+          </div>
+        </div>
+        <div style="margin-top:14px;">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">RELEASE & DEPLOYMENT</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            ${statBox("RELEASE STATUS", relFreshness, rel ? `${rel.tag} · ${relAge}d ago` : "No releases")}
+            ${statBox("CI COVERAGE", ciRuns.length > 0 ? "Active" : "None", ciRuns.length + " runs tracked")}
+            ${statBox("DEPLOY URL", project.deployedUrl ? "Live" : "—", project.deployedUrl ? `<span style="font-size:9px;word-break:break-all;">${(project.deployedUrl || "").replace(/https?:\/\//, "")}</span>` : "Not deployed")}
           </div>
         </div>
       </div>
@@ -2138,6 +2319,7 @@ export function renderProjectHubView(project, state) {
         ${renderDevlogDraftPanel(project)}
         ${renderForecastAccuracy(project)}
         ${renderProprietaryScoresSection(project, repoData, socialData, scoreHistory)}
+        ${renderAdvancedProjectStats(project, repoData, scoreHistory)}
         ${renderHealthPrescription(project, repoData, sbData, socialData)}
         ${renderActionQueue(project)}
         ${renderGoalSection(project, scoreHistory)}
