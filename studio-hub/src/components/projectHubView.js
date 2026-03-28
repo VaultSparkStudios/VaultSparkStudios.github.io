@@ -3,6 +3,7 @@ import { timeAgo, fmt, escapeHtml, renderSkeleton, renderEmptyState, safeGetJSON
 import { scorePotential, scoreMomentumIndex, potentialLabel, momentumLabel } from "../utils/proprietaryScores.js";
 import { getForecastAccuracy } from "../utils/scoreForecast.js";
 import { getCachedPrescription, getCachedDevlogDraft } from "../utils/aiPrescriptions.js";
+import { explainScore, renderScoreExplainerPanel } from "../utils/scoreExplainer.js";
 
 const LOCAL_PATHS_KEY = "vshub_local_paths";
 function loadLocalPaths() { return safeGetJSON(LOCAL_PATHS_KEY, {}); }
@@ -2130,6 +2131,7 @@ export function renderProjectHubView(project, state) {
 
       <div class="hub-sections">
         ${renderScorePillarChart(project, repoData, sbData, socialData, scoreHistory)}
+        ${renderScoreExplainerPanel(explainScore(project, repoData, sbData, socialData))}
         ${renderLaunchReadiness(project, repoData, sbData, socialData)}
         ${renderProjectDoctor(project, repoData, sbData, socialData)}
         ${renderAiPrescription(project)}

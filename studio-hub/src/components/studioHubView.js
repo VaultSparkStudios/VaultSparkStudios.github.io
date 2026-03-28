@@ -29,6 +29,7 @@ import { showToast } from "./toastManager.js";
 import { evaluateAchievements, clearNotifications } from "../utils/achievements.js";
 import { grantDailyBonus, grantWeeklyBonus, syncAchievementXP, grantScoreImprovementXP } from "../utils/studioXP.js";
 import { getActiveChallenges, claimChallengeXP } from "../utils/challenges.js";
+import { getPredictiveAlerts, renderPredictiveAlerts } from "../utils/predictiveAlerts.js";
 
 // Re-export for backwards compatibility (clientApp.js imports these from here)
 export { _pushAlertHistory as pushAlertHistory, _snoozeAlert as snoozeAlert };
@@ -2023,7 +2024,7 @@ export function renderStudioHubView(state) {
               <button id="snooze-all-alerts-btn" style="font-size:10px; padding:2px 8px; border:1px solid var(--border); border-radius:5px; background:none; color:var(--muted); cursor:pointer;">Snooze all 24h</button>
             </div>
           </div>
-          <div class="panel-body">${renderAlerts(ghData, sbData, allScores, scoreHistory)}</div>
+          <div class="panel-body">${renderPredictiveAlerts(getPredictiveAlerts(scoreHistory, PROJECTS, ghData))}${renderAlerts(ghData, sbData, allScores, scoreHistory)}</div>
         </div>
         <div class="panel">
           <div class="panel-header" style="flex-wrap:wrap; gap:6px;">

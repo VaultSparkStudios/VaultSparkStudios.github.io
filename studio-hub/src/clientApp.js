@@ -40,6 +40,8 @@ import { bindTicketingEvents }  from "./events/ticketingEvents.js";
 import { initGlobalSearch, openSearch, closeSearch } from "./components/globalSearch.js";
 import { showOnboardingModal, showScoreModal } from "./components/hub/hubModals.js";
 import { initToastContainer, showToast } from "./components/toastManager.js";
+import { memoRender, clearMemoCache, cleanupEvents, patchDOM } from "./engine/renderEngine.js";
+import { initIDB, migrateFromLocalStorage } from "./engine/idb.js";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const config = getHubRuntimeConfig();
@@ -264,45 +266,73 @@ function mountGate() {
 }
 
 // ── Render ────────────────────────────────────────────────────────────────────
+let _lastRenderedView = null;
+
 function render() {
   const app = document.getElementById("app");
   if (!app) return;
 
+  // Clean up tracked event listeners from previous render cycle
+  cleanupEvents();
+
   // Ambient mode gets a full-screen overlay — no shell chrome
   if (state.activeView === "ambient") {
     app.innerHTML = renderAmbientView(state);
+    _lastRenderedView = "ambient";
     bindEvents();
     return;
   }
 
   const collapsedClass = state.sidebarCollapsed ? " sidebar-collapsed" : "";
   const mobileClass    = state.mobileNavOpen    ? " mobile-nav-open"   : "";
-  const activeViewHtml = renderActiveView();
-  app.innerHTML = `
-    <div class="shell${collapsedClass}${mobileClass}">
-      <div class="mobile-overlay" id="mobile-overlay"></div>
-      ${renderNavigation(state)}
-      ${activeViewHtml}
-    </div>
-  `;
-  // Inject mobile nav button as first child of main-panel (DOM insertion — no regex fragility)
+
+  // Use memoized render for the active view content
+  const activeViewHtml = memoRender(state.activeView, () => renderActiveView(), state);
+
+  // If only the view content changed (not the shell), try incremental patch
   const mainPanel = app.querySelector(".main-panel");
-  if (mainPanel) mainPanel.classList.add("view-enter");
-  if (mainPanel) {
-    const mobileBtn = document.createElement("button");
-    mobileBtn.id = "mobile-nav-btn";
-    mobileBtn.title = "Open navigation";
-    mobileBtn.textContent = "☰ Menu";
-    mainPanel.insertBefore(mobileBtn, mainPanel.firstChild);
+  if (_lastRenderedView === state.activeView && mainPanel && state.activeView !== "ambient") {
+    patchDOM(mainPanel, activeViewHtml);
+    // Inject mobile nav button if missing
+    if (!app.querySelector("#mobile-nav-btn") && mainPanel) {
+      const mobileBtn = document.createElement("button");
+      mobileBtn.id = "mobile-nav-btn";
+      mobileBtn.title = "Open navigation";
+      mobileBtn.textContent = "☰ Menu";
+      mainPanel.insertBefore(mobileBtn, mainPanel.firstChild);
+    }
+  } else {
+    // Full render needed (view switch or first render)
+    app.innerHTML = `
+      <div class="shell${collapsedClass}${mobileClass}">
+        <div class="mobile-overlay" id="mobile-overlay"></div>
+        ${renderNavigation(state)}
+        ${activeViewHtml}
+      </div>
+    `;
+    // Inject mobile nav button as first child of main-panel (DOM insertion — no regex fragility)
+    const newMainPanel = app.querySelector(".main-panel");
+    if (newMainPanel) newMainPanel.classList.add("view-enter");
+    if (newMainPanel) {
+      const mobileBtn = document.createElement("button");
+      mobileBtn.id = "mobile-nav-btn";
+      mobileBtn.title = "Open navigation";
+      mobileBtn.textContent = "☰ Menu";
+      newMainPanel.insertBefore(mobileBtn, newMainPanel.firstChild);
+    }
   }
+
+  _lastRenderedView = state.activeView;
+
   // Visual syncing state — dim main panel while sync runs
-  if (state.syncStatus === "syncing" && mainPanel) {
-    mainPanel.style.opacity = "0.6";
-    mainPanel.style.pointerEvents = "none";
-    mainPanel.style.transition = "opacity 0.2s";
+  const currentPanel = app.querySelector(".main-panel");
+  if (state.syncStatus === "syncing" && currentPanel) {
+    currentPanel.style.opacity = "0.6";
+    currentPanel.style.pointerEvents = "none";
+    currentPanel.style.transition = "opacity 0.2s";
   }
   bindEvents();
-  // Re-apply theme/density/sidebar classes (innerHTML wipes them)
+  // Re-apply theme/density/sidebar classes (innerHTML wipes them on full render)
   applyTheme(state.theme);
   applyDensity(state.settings.density);
   // Re-apply keyboard focus after DOM rebuild
@@ -774,6 +804,8 @@ function pushViewHash(view) {
 
 // ── Navigate helper ───────────────────────────────────────────────────────────
 function navigate(view) {
+  // Clear memo cache for previous view to free memory on view switch
+  if (state.activeView !== view) clearMemoCache(state.activeView);
   state.activeView = view;
   _kbFocusIndex = -1;
   pushViewHash(view);
@@ -1221,6 +1253,9 @@ if (_bootHash.q)    state.projectFilter = _bootHash.q;
 if (_bootHash.tag)  state.tagFilter     = _bootHash.tag;
 
 initGlobalSearch();
+
+// Initialize IndexedDB and migrate large datasets from localStorage
+initIDB().then(() => migrateFromLocalStorage()).catch(() => {});
 
 if (!isUnlocked()) {
   render();
