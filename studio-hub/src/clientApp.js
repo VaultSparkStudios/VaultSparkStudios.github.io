@@ -33,7 +33,7 @@ import { generateStandup, generateWeeklyDigest } from "./utils/digestHelpers.js"
 import { loadScoreHistory, pushScoreHistory, storeSessionStartScores, scorePrevFromHistory } from "./utils/scoreHistory.js";
 import { pushToGist, pullFromGist } from "./engine/gistSync.js";
 import { createSyncEngine } from "./engine/syncEngine.js";
-import { fetchPageSpeedData, fetchSiteProbe } from "./data/websiteAnalytics.js";
+import { fetchPageSpeedData, fetchSiteProbe, mergeProbeWithFallback } from "./data/websiteAnalytics.js";
 import { discoverCompetitors } from "./data/competitorDiscovery.js";
 import { bindSettingsEvents }   from "./events/settingsEvents.js";
 import { bindProjectHubEvents } from "./events/projectHubEvents.js";
@@ -932,6 +932,23 @@ function bindEvents() {
     if (emptyBtn) { e.preventDefault(); const view = emptyBtn.dataset.navigate; if (view) { state.activeView = view; pushViewHash(view); render(); } }
   });
 
+  // ── Website analytics loader (reusable for refresh) ─────────────────────────
+  function loadWebsiteAnalytics() {
+    state.websiteLoading = true;
+    state.websiteError = null;
+    render();
+    Promise.all([
+      fetchPageSpeedData(config.pagespeedApiKey).catch(() => null),
+      fetchSiteProbe().catch(() => null),
+    ]).then(([psi, probe]) => {
+      state.websitePsi = psi;
+      state.websiteProbe = mergeProbeWithFallback(probe, psi);
+      state.websiteLoading = false;
+      if (!psi && !probe) state.websiteError = "Both PageSpeed and site probe failed. Check network or API key.";
+      render();
+    });
+  }
+
   // ── Core controls ───────────────────────────────────────────────────────────
   document.getElementById("sidebar-toggle-btn")?.addEventListener("click", () => {
     state.sidebarCollapsed = !state.sidebarCollapsed;
@@ -972,27 +989,27 @@ function bindEvents() {
     const projTab = e.target.closest("[data-project-tab]");
     if (projTab) { const tab = projTab.getAttribute("data-project-tab"); if (tab && tab !== state.projectTab) { state.projectTab = tab; render(); } return; }
     const adminTab = e.target.closest("[data-admin-tab]");
-    if (adminTab) { const tab = adminTab.getAttribute("data-admin-tab"); if (tab && tab !== state.adminTab) { state.adminTab = tab; render(); } }
+    if (adminTab) { const tab = adminTab.getAttribute("data-admin-tab"); if (tab && tab !== state.adminTab) { state.adminTab = tab; render(); } return; }
+    // Website analytics refresh button
+    if (e.target.closest("#website-analytics-refresh")) {
+      e.preventDefault();
+      // Clear cache so we get fresh data
+      try { sessionStorage.removeItem("vshub_webanalytics_pagespeed_all"); sessionStorage.removeItem("vshub_webanalytics_site_probe"); } catch {}
+      state.websitePsi = null;
+      state.websiteProbe = null;
+      loadWebsiteAnalytics();
+    }
   });
   document.querySelectorAll("[data-analytics-tab]").forEach((el) => {
     el.addEventListener("click", () => {
       const tab = el.getAttribute("data-analytics-tab");
       if (tab && tab !== state.analyticsTab) {
         state.analyticsTab = tab;
-        render();
-        // Lazy-load website analytics data on first visit
+        // Lazy-load website analytics data on first visit — start before render so loading state shows immediately
         if (tab === "website" && !state.websitePsi && !state.websiteLoading) {
-          state.websiteLoading = true;
+          loadWebsiteAnalytics(); // sets websiteLoading=true and calls render()
+        } else {
           render();
-          Promise.all([
-            fetchPageSpeedData(config.pagespeedApiKey).catch(() => null),
-            fetchSiteProbe().catch(() => null),
-          ]).then(([psi, probe]) => {
-            state.websitePsi = psi;
-            state.websiteProbe = probe;
-            state.websiteLoading = false;
-            render();
-          });
         }
       }
     });

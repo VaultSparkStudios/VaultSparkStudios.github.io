@@ -1815,7 +1815,9 @@ function seoCheckRow(label, passed) {
   </div>`;
 }
 
-function renderWebsiteAnalytics(psiData, probeData, loading, ghData) {
+function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteError) {
+  const refreshBtn = `<button id="website-analytics-refresh" style="background:var(--cyan);color:#000;border:none;border-radius:6px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer;margin-top:12px;" title="Clear cache and re-fetch all data">Refresh Analytics</button>`;
+
   if (loading) {
     return `
       <div style="text-align:center;padding:60px 20px;">
@@ -1834,10 +1836,12 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData) {
       <div style="text-align:center;padding:60px 20px;">
         <div style="font-size:32px;margin-bottom:16px;">🌐</div>
         <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;">Website Analytics</div>
+        ${websiteError ? `<div style="font-size:11px;color:var(--red);max-width:400px;margin:0 auto 12px;">${websiteError}</div>` : ""}
         <div style="font-size:11px;color:var(--muted);max-width:400px;margin:0 auto;">
-          Click this tab to start analyzing <strong>${SITE_URL}</strong>.<br>
-          Uses Google PageSpeed Insights API + direct page probing to deliver Lighthouse scores, Core Web Vitals, SEO audit, and security analysis.
+          ${websiteError ? "Click Refresh to retry, or check your network connection." : `Click this tab to start analyzing <strong>${SITE_URL}</strong>.<br>
+          Uses Google PageSpeed Insights API + direct page probing to deliver Lighthouse scores, Core Web Vitals, SEO audit, and security analysis.`}
         </div>
+        ${websiteError ? refreshBtn : ""}
       </div>`;
   }
 
@@ -1921,9 +1925,13 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData) {
           </div>` : ""}
         </div>
       </div>
-      <div style="margin-top:14px;font-size:10px;color:var(--muted);">
-        Analyzed ${pagesWithScores.length} page${pagesWithScores.length !== 1 ? "s" : ""} · Mobile strategy
-        ${psiData?.fetchedAt ? ` · Last run ${new Date(psiData.fetchedAt).toLocaleTimeString()}` : ""}
+      <div style="margin-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div style="font-size:10px;color:var(--muted);">
+          Analyzed ${pagesWithScores.length} page${pagesWithScores.length !== 1 ? "s" : ""} · Mobile strategy
+          ${psiData?.fetchedAt ? ` · Last run ${new Date(psiData.fetchedAt).toLocaleTimeString()}` : ""}
+          ${probeData?.source === "psi-fallback" ? ' · <span style="color:var(--yellow);">Probe fell back to PSI data</span>' : ""}
+        </div>
+        ${refreshBtn}
       </div>
     `)}
 
@@ -1982,8 +1990,8 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData) {
           <tbody>
             ${(psiData?.pages || []).map((p) => {
               if (p.error) return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
-                <td style="padding:6px;">${p.page}</td>
-                <td colspan="6" style="padding:6px;color:var(--red);font-size:10px;">${p.error}</td>
+                <td style="padding:6px;">${p.page}<br><span style="font-size:9px;color:var(--muted);font-weight:400;">${p.path}</span></td>
+                <td colspan="6" style="padding:6px;color:var(--red);font-size:10px;">${p.error}${p.error.includes("403") ? " (Cloudflare blocked)" : p.error.includes("CORS") || p.error.includes("fetch") ? " (CORS/network)" : ""}</td>
               </tr>`;
               const s = p.scores || {};
               const sc = (v) => `<span style="color:${scoreColor(v)};font-weight:700;">${v ?? "—"}</span>`;
@@ -2039,7 +2047,8 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData) {
             ${kv("Page size", homePage.htmlSize ? (homePage.htmlSize / 1024).toFixed(0) + " KB" : "—")}
           </div>
         </div>
-      ` : '<div style="font-size:11px;color:var(--muted);">No probe data available</div>'}
+      ` : `<div style="font-size:11px;color:var(--muted);">No probe data available — site may be behind Cloudflare protection.</div>
+          ${refreshBtn}`}
     `)}
 
     ${probeData?.pages?.length > 1 ? section("Page Meta Tags Audit", "🏷", `
@@ -2058,15 +2067,16 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData) {
           </thead>
           <tbody>
             ${probeData.pages.filter((p) => !p.error).map((p) => {
-              const check = (v) => v ? '<span style="color:var(--green);">\u2713</span>' : '<span style="color:var(--red);">\u2717</span>';
+              const check = (v) => v ? '<span style="color:var(--green);">\u2713</span>' : v === null ? '<span style="color:var(--muted);">—</span>' : '<span style="color:var(--red);">\u2717</span>';
               const imgPct = p.images?.total > 0 ? Math.round((p.images.withAlt / p.images.total) * 100) + "%" : "—";
+              const srcTag = p.source === "psi" ? ' <span style="font-size:8px;color:var(--yellow);font-weight:400;" title="Data from PageSpeed Insights (probe was blocked)">[PSI]</span>' : "";
               return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
-                <td style="padding:6px;font-weight:600;">${p.label}<br><span style="color:var(--muted);font-weight:400;">${p.path}</span></td>
+                <td style="padding:6px;font-weight:600;">${p.label}${srcTag}<br><span style="color:var(--muted);font-weight:400;">${p.path}</span></td>
                 <td style="text-align:center;padding:6px;">${check(p.title)}</td>
                 <td style="text-align:center;padding:6px;">${check(p.description)}</td>
                 <td style="text-align:center;padding:6px;">${check(p.og?.title && p.og?.image)}</td>
                 <td style="text-align:center;padding:6px;">${check(p.hasStructuredData)}</td>
-                <td style="text-align:center;padding:6px;color:${p.headings?.h1 === 1 ? "var(--green)" : "var(--yellow)"};">${p.headings?.h1 ?? "—"}</td>
+                <td style="text-align:center;padding:6px;color:${p.headings?.h1 === 1 ? "var(--green)" : p.headings?.h1 == null ? "var(--muted)" : "var(--yellow)"};">${p.headings?.h1 ?? "—"}</td>
                 <td style="text-align:center;padding:6px;">${imgPct}</td>
               </tr>`;
             }).join("")}
@@ -2083,7 +2093,7 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData) {
         </div>
         <div style="flex:1;">
           ${miniBar(secHeaderCount, secHeaderTotal, secScore >= 75 ? "var(--green)" : secScore >= 50 ? "var(--yellow)" : "var(--red)", 8)}
-          <div style="font-size:10px;color:var(--muted);margin-top:4px;">${secHeaderCount}/${secHeaderTotal} security headers present</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:4px;">${secHeaderCount}/${secHeaderTotal} security headers present${secHeaderCount === 0 && probeData?.source === "psi-fallback" ? " (headers unavailable via PSI fallback)" : ""}</div>
         </div>
       </div>
       <div>
@@ -2160,7 +2170,7 @@ export function renderAnalyticsView(state) {
     agentRequests = [], agentRunHistory = {}, portfolioFreshness = {},
     studioBrain = null, competitorData = null, syncMeta = null,
     analyticsTab = "overview",
-    websitePsi = null, websiteProbe = null, websiteLoading = false,
+    websitePsi = null, websiteProbe = null, websiteLoading = false, websiteError = null,
   } = state;
 
   // Compute all project scores (uses existing cache — fast)
@@ -2214,7 +2224,7 @@ export function renderAnalyticsView(state) {
       ${renderForecast(fcr, scoreHistory, ghData, scorePrev)}
       ${renderGovernance(socr, portfolioFreshness)}
       ${renderAgentOps(aas, beaconData, agentRequests, agentRunHistory, studioBrain)}`,
-    website: () => renderWebsiteAnalytics(websitePsi, websiteProbe, websiteLoading, ghData),
+    website: () => renderWebsiteAnalytics(websitePsi, websiteProbe, websiteLoading, ghData, websiteError),
     advanced: () => renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores, { tdi, svs, ip, rri, rs }),
   };
 

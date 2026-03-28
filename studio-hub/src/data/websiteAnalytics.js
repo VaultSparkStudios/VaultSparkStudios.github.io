@@ -3,35 +3,74 @@
 
 const CACHE_PREFIX = "vshub_webanalytics_";
 const SITE_URL = "https://vaultsparkstudios.com";
+const CORS_PROXIES = [
+  (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  (url) => `https://corsproxy.io/?${encodeURIComponent(url)}`,
+];
 
-// Known site pages/subpaths to analyze
+// Known site pages/subpaths to analyze (sourced from sitemap.xml)
 const SITE_PAGES = [
   { path: "/", label: "Homepage" },
+  { path: "/games/", label: "Games" },
   { path: "/call-of-doodie/", label: "Call of Doodie" },
-  { path: "/vaultspark-football-gm/", label: "Football GM" },
-  { path: "/studio-hub/", label: "Studio Hub" },
+  { path: "/gridiron-gm/", label: "Gridiron GM" },
+  { path: "/community/", label: "Community" },
+  { path: "/roadmap/", label: "Roadmap" },
+  { path: "/status/", label: "Status" },
+  { path: "/journal/", label: "Journal" },
 ];
 
 // ── Fetch helpers ─────────────────────────────────────────────────────────────
+
+async function timedFetch(url, options = {}, timeoutMs = 20000) {
+  const controller = new AbortController();
+  const tid = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    return await fetch(url, { ...options, signal: controller.signal });
+  } finally {
+    clearTimeout(tid);
+  }
+}
 
 async function wsFetch(url, options = {}, retries = 2) {
   let lastErr;
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       if (attempt > 0) await new Promise((r) => setTimeout(r, 500 * Math.pow(2, attempt - 1)));
-      const controller = new AbortController();
-      const tid = setTimeout(() => controller.abort(), 20000);
-      try {
-        const res = await fetch(url, { ...options, signal: controller.signal });
-        return res;
-      } finally {
-        clearTimeout(tid);
-      }
+      const res = await timedFetch(url, options);
+      return res;
     } catch (err) {
       lastErr = err;
     }
   }
   throw lastErr;
+}
+
+/** Fetch via CORS proxy — tries each proxy in order, then falls back to direct. */
+async function proxyFetch(url, timeoutMs = 15000) {
+  const errors = [];
+  // Try each CORS proxy
+  for (const mkProxy of CORS_PROXIES) {
+    try {
+      const res = await timedFetch(mkProxy(url), {}, timeoutMs);
+      if (res.ok) return res;
+      // 403/5xx from proxy — try next
+      errors.push(`proxy ${res.status}`);
+    } catch (err) {
+      errors.push(err.message || "proxy timeout");
+    }
+  }
+  // Last resort: direct fetch (will fail on CORS but works if same-origin)
+  try {
+    const res = await timedFetch(url, {}, timeoutMs);
+    if (res.ok) return res;
+    errors.push(`direct ${res.status}`);
+  } catch (err) {
+    errors.push(err.message || "direct failed");
+  }
+  const combined = new Error(`All fetch attempts failed for ${url}: ${errors.join(", ")}`);
+  combined.attempts = errors;
+  throw combined;
 }
 
 function readCache(key, ttlMs) {
@@ -61,8 +100,7 @@ export async function fetchPageSpeedData(apiKey, ttlMs = 900000) {
   const cached = readCache(cacheKey, ttlMs);
   if (cached) return cached;
 
-  const results = [];
-  for (const page of SITE_PAGES) {
+  async function fetchOnePage(page) {
     try {
       const url = `${SITE_URL}${page.path}`;
       const params = new URLSearchParams({
@@ -70,7 +108,6 @@ export async function fetchPageSpeedData(apiKey, ttlMs = 900000) {
         category: "PERFORMANCE",
         strategy: "mobile",
       });
-      // Add extra categories
       params.append("category", "ACCESSIBILITY");
       params.append("category", "SEO");
       params.append("category", "BEST_PRACTICES");
@@ -78,8 +115,9 @@ export async function fetchPageSpeedData(apiKey, ttlMs = 900000) {
 
       const res = await wsFetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?${params}`);
       if (!res.ok) {
-        results.push({ page: page.label, path: page.path, error: `HTTP ${res.status}` });
-        continue;
+        const errBody = await res.text().catch(() => "");
+        const reason = res.status === 429 ? "Rate limited" : res.status === 400 ? "Invalid URL or page not found" : `HTTP ${res.status}`;
+        return { page: page.label, path: page.path, error: reason, detail: errBody.slice(0, 200) };
       }
       const json = await res.json();
       const lh = json.lighthouseResult;
@@ -146,7 +184,7 @@ export async function fetchPageSpeedData(apiKey, ttlMs = 900000) {
         }
       }
 
-      results.push({
+      return {
         page: page.label,
         path: page.path,
         url,
@@ -163,10 +201,18 @@ export async function fetchPageSpeedData(apiKey, ttlMs = 900000) {
         seoAudits,
         fetchStrategy: "mobile",
         fetchedAt: new Date().toISOString(),
-      });
+      };
     } catch (err) {
-      results.push({ page: page.label, path: page.path, error: err.message });
+      return { page: page.label, path: page.path, error: err.message };
     }
+  }
+
+  // Fetch pages in batches of 2 to balance speed vs rate limits
+  const results = [];
+  for (let i = 0; i < SITE_PAGES.length; i += 2) {
+    const batch = SITE_PAGES.slice(i, i + 2);
+    const batchResults = await Promise.all(batch.map(fetchOnePage));
+    results.push(...batchResults);
   }
 
   const data = { pages: results, fetchedAt: new Date().toISOString() };
@@ -191,53 +237,42 @@ export async function fetchSiteProbe(ttlMs = 900000) {
 
   // robots.txt
   try {
-    const res = await wsFetch(`${SITE_URL}/robots.txt`);
-    if (res.ok) {
-      const text = await res.text();
-      probe.robotsTxt = {
-        exists: true,
-        content: text.slice(0, 2000),
-        hasSitemap: /sitemap/i.test(text),
-        hasDisallow: /disallow/i.test(text),
-        lines: text.split("\n").filter((l) => l.trim()).length,
-      };
-    } else {
-      probe.robotsTxt = { exists: false };
-    }
-  } catch {
-    probe.robotsTxt = { exists: false, error: true };
+    const res = await proxyFetch(`${SITE_URL}/robots.txt`);
+    const text = await res.text();
+    probe.robotsTxt = {
+      exists: true,
+      content: text.slice(0, 2000),
+      hasSitemap: /sitemap/i.test(text),
+      hasDisallow: /disallow/i.test(text),
+      lines: text.split("\n").filter((l) => l.trim()).length,
+    };
+  } catch (err) {
+    probe.robotsTxt = { exists: false, error: err.message || true };
   }
 
   // sitemap.xml
   try {
-    const res = await wsFetch(`${SITE_URL}/sitemap.xml`);
-    if (res.ok) {
-      const text = await res.text();
-      const urlCount = (text.match(/<loc>/g) || []).length;
-      probe.sitemap = {
-        exists: true,
-        urlCount,
-        size: text.length,
-        hasLastmod: /<lastmod>/i.test(text),
-        hasChangefreq: /<changefreq>/i.test(text),
-      };
-    } else {
-      probe.sitemap = { exists: false };
-    }
-  } catch {
-    probe.sitemap = { exists: false, error: true };
+    const res = await proxyFetch(`${SITE_URL}/sitemap.xml`);
+    const text = await res.text();
+    const urlCount = (text.match(/<loc>/g) || []).length;
+    probe.sitemap = {
+      exists: true,
+      urlCount,
+      size: text.length,
+      hasLastmod: /<lastmod>/i.test(text),
+      hasChangefreq: /<changefreq>/i.test(text),
+    };
+  } catch (err) {
+    probe.sitemap = { exists: false, error: err.message || true };
   }
 
-  // Probe each page for meta tags, OG, structured data
-  for (const page of SITE_PAGES) {
+  // Probe each page for meta tags, OG, structured data — via CORS proxy
+  const pageProbes = SITE_PAGES.map(async (page) => {
     try {
-      const res = await wsFetch(`${SITE_URL}${page.path}`);
-      if (!res.ok) {
-        probe.pages.push({ path: page.path, label: page.label, error: `HTTP ${res.status}` });
-        continue;
-      }
+      const res = await proxyFetch(`${SITE_URL}${page.path}`);
+      const html = await res.text();
 
-      // Security headers from response
+      // Security headers (only reliable from proxy for some headers, best-effort)
       if (page.path === "/") {
         const hdrs = {};
         for (const h of ["content-security-policy", "x-content-type-options", "x-frame-options",
@@ -247,8 +282,6 @@ export async function fetchSiteProbe(ttlMs = 900000) {
         }
         probe.securityHeaders = hdrs;
       }
-
-      const html = await res.text();
 
       // Parse meta tags
       const getMetaContent = (name) => {
@@ -278,7 +311,7 @@ export async function fetchSiteProbe(ttlMs = 900000) {
       const h2Count = (html.match(/<h2[\s>]/g) || []).length;
       const htmlSize = html.length;
 
-      probe.pages.push({
+      return {
         path: page.path,
         label: page.label,
         title,
@@ -295,14 +328,95 @@ export async function fetchSiteProbe(ttlMs = 900000) {
         images: { total: imgTags, withAlt: imgWithAlt },
         headings: { h1: h1Count, h2: h2Count },
         htmlSize,
-      });
+      };
     } catch (err) {
-      probe.pages.push({ path: page.path, label: page.label, error: err.message });
+      return { path: page.path, label: page.label, error: err.message || "Fetch failed" };
     }
-  }
+  });
+  probe.pages = await Promise.all(pageProbes);
 
   probe.fetchedAt = new Date().toISOString();
   writeCache(cacheKey, probe);
+  return probe;
+}
+
+// ── PSI-based SEO fallback ────────────────────────────────────────────────────
+// When the probe fails (CORS/Cloudflare), extract SEO signals from PSI audits.
+
+export function buildProbeFallbackFromPSI(psiData) {
+  if (!psiData?.pages?.length) return null;
+  const fallback = { robotsTxt: null, sitemap: null, securityHeaders: {}, https: true, pages: [], source: "psi-fallback", fetchedAt: new Date().toISOString() };
+
+  for (const p of psiData.pages) {
+    if (p.error) {
+      fallback.pages.push({ path: p.path, label: p.page, error: p.error, source: "psi" });
+      continue;
+    }
+    const sa = p.seoAudits || {};
+    const page = {
+      path: p.path,
+      label: p.page,
+      source: "psi",
+      title: sa["document-title"]?.score === 1 ? "(present)" : null,
+      description: sa["meta-description"]?.score === 1 ? "(present)" : null,
+      og: { title: null, description: null, image: null, type: null },
+      twitter: { card: null },
+      viewport: sa["viewport"]?.score === 1 ? "(present)" : null,
+      canonical: sa["canonical"]?.score === 1 ? "(present)" : null,
+      hasStructuredData: sa["structured-data"]?.score === 1,
+      favicon: null,
+      hasCharset: null,
+      hasLang: null,
+      links: { internal: null, external: null },
+      images: { total: null, withAlt: null },
+      headings: { h1: null, h2: null },
+      htmlSize: null,
+    };
+    fallback.pages.push(page);
+  }
+
+  // robots.txt from PSI audit
+  const homeResult = psiData.pages.find((p) => p.path === "/");
+  if (homeResult?.seoAudits?.["robots-txt"]) {
+    fallback.robotsTxt = { exists: homeResult.seoAudits["robots-txt"].score === 1, source: "psi" };
+  }
+  if (homeResult?.seoAudits?.["is-crawlable"]) {
+    fallback.isCrawlable = homeResult.seoAudits["is-crawlable"].score === 1;
+  }
+
+  return fallback;
+}
+
+// ── Merge probe + PSI fallback ───────────────────────────────────────────────
+// If probe succeeded, return it. If probe is null/empty, use PSI fallback.
+// If probe partially succeeded, fill gaps from PSI fallback.
+
+export function mergeProbeWithFallback(probe, psiData) {
+  const fallback = buildProbeFallbackFromPSI(psiData);
+  if (!probe && !fallback) return null;
+  if (!probe) return fallback;
+  if (!fallback) return probe;
+
+  // Fill missing probe fields from fallback
+  if (!probe.robotsTxt || probe.robotsTxt.error) {
+    probe.robotsTxt = fallback.robotsTxt || probe.robotsTxt;
+  }
+
+  // Fill page-level gaps: if a probe page has an error, substitute PSI fallback
+  for (let i = 0; i < probe.pages.length; i++) {
+    const pp = probe.pages[i];
+    if (pp.error) {
+      const fb = fallback.pages.find((f) => f.path === pp.path);
+      if (fb && !fb.error) probe.pages[i] = fb;
+    }
+  }
+  // Add any PSI pages not in probe
+  for (const fb of fallback.pages) {
+    if (!probe.pages.find((p) => p.path === fb.path)) {
+      probe.pages.push(fb);
+    }
+  }
+
   return probe;
 }
 
