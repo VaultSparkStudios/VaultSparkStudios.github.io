@@ -87,6 +87,7 @@ begin
 end;
 $$;
 
+drop trigger if exists trg_accrue_team_points on public.point_events;
 create trigger trg_accrue_team_points
   after insert on public.point_events
   for each row execute function public.accrue_team_points();
