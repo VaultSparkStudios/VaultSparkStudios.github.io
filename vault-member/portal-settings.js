@@ -5,8 +5,10 @@
       try {
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) return;
+        const captchaToken = typeof VSTurnstile !== 'undefined' ? await VSTurnstile.getToken() : undefined;
         const { error } = await VSSupabase.auth.resetPasswordForEmail(session.user.email, {
           redirectTo: window.location.origin + '/vault-member/',
+          captchaToken,
         });
         if (!error) {
           if (msg) { msg.style.display = ''; }

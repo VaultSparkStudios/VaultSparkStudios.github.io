@@ -11,6 +11,7 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.min.js" integrity="sha384-YieCqqg9gQufX7+5HcFvCEg/n3KUEdl8/Jb+A6J0npf1mB740VayvwKjTrtCeUoy" crossorigin="anonymous"></script>
   <script src="../../assets/supabase-client.js"></script>
+  <script src="../../assets/turnstile.js"></script>
 
   <style>
     body.investor-portal {
@@ -510,7 +511,8 @@
 
         setLoading(true);
 
-        const { data, error } = await sb.auth.signInWithPassword({ email, password });
+        const captchaToken = typeof VSTurnstile !== 'undefined' ? await VSTurnstile.getToken() : undefined;
+        const { data, error } = await sb.auth.signInWithPassword({ email, password, options: { captchaToken } });
 
         if (error) {
           setLoading(false);
@@ -654,7 +656,8 @@
         const password = document.getElementById('signupPassword').value;
 
         // 1. Create auth account
-        const { error: authError } = await sb.auth.signUp({ email, password });
+        const captchaToken = typeof VSTurnstile !== 'undefined' ? await VSTurnstile.getToken() : undefined;
+        const { error: authError } = await sb.auth.signUp({ email, password, options: { captchaToken } });
         if (authError) {
           btn.disabled = false;
           btn.textContent = 'Submit Application';
@@ -694,8 +697,10 @@
         resetBtn.disabled = true;
         resetBtn.textContent = '…';
 
+        const captchaToken = typeof VSTurnstile !== 'undefined' ? await VSTurnstile.getToken() : undefined;
         const { error } = await sb.auth.resetPasswordForEmail(email, {
-          redirectTo: window.location.origin + '/investor-portal/login/'
+          redirectTo: window.location.origin + '/investor-portal/login/',
+          captchaToken
         });
 
         resetMsg.style.display = 'block';

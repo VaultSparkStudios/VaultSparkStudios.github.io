@@ -2,7 +2,8 @@
 
 ## Now
 
-- [ ] Run pending SQL migrations: phase40-50 [critical path — unlocks all coded features]
+- [x] Run pending SQL migrations: phase40-50 ✅ **ALL APPLIED** (2026-03-28 via db-migrate Action)
+- [ ] Fix vault-score.js getLeaderboard() — queries vault_members(rank_title) which doesn't exist; needs JS fix
 - [SIL] Authenticated axe-core portal tests — extend Playwright to log in and scan dashboard/onboarding/challenge modals
 
 ## Next (Pending External Action)
@@ -26,25 +27,25 @@
 
 ## S-Tier Backlog (Score 9–10)
 
-- [ ] Vault Treasury / Points Marketplace [9.5] ✅ CODED (session 5) — needs SQL migrations run + sitemap entry
+- [ ] Vault Treasury / Points Marketplace [9.5] ✅ CODED (session 5) — SQL applied, needs sitemap entry
 - [ ] Game Demo Embeds (Playable) [9.5] — infrastructure shipped (session 5); needs actual game builds from dev
 - [ ] Discord Bot with Vault Commands [9.1] — !rank, !score, !challenge from Discord; requires external hosting (Node.js bot)
-- [ ] Vault Seasons Cross-Game XP [9.0] ✅ CODED (session 5) — needs SQL migrations run
+- [ ] Vault Seasons Cross-Game XP [9.0] ✅ CODED (session 5) — SQL applied, live
 
 ## A-Tier Backlog (Score 7–8.9)
 
 - [x] Vault Dispatch weekly email digest ✅ — infra confirmed active (Resend + Edge Function); monthly cadence live
-- [x] Per-game weekly high score leaderboard with reset ✅ CODED (session 5) — needs SQL migration run
+- [x] Per-game weekly high score leaderboard with reset ✅ CODED (session 5) — SQL applied, live
 - [x] Expand Activity Feed ✅ SHIPPED (session 5) — rank-ups, challenges, game sessions now in feed
 - [x] Accessibility: focus ring + aria-live ✅ SHIPPED (session 5)
 - [x] Unreleased game pages content fill ✅ SHIPPED (session 5) — Solara, MindFrame, VaultFront, Project Unknown
-- [ ] Member Social Graph ✅ CODED (session 5) — follow/unfollow + Following Feed; needs SQL migration run
+- [ ] Member Social Graph ✅ CODED (session 5) — follow/unfollow + Following Feed; SQL applied, live
 - [ ] Web Push Notifications [8.2] — VAPID keys + subscription flow; blocked on key generation
 - [ ] Interactive Onboarding Tour [7.8] — guided first-visit walkthrough of portal features with step-by-step highlights
 - [ ] Annual VaultSparked pricing tier [7.8] — pending LLC + Stripe production
 - [ ] Gift subscriptions (Stripe) [6.8] — pending LLC + Stripe production
 - [x] VaultSparked Beta Waitlist for unreleased games ✅ SHIPPED (session 8) — Web3Forms on 4 game pages
-- [x] Vault Referral Milestone Rewards ✅ CODED (session 8) — 5 tiers, needs SQL migration run
+- [x] Vault Referral Milestone Rewards ✅ CODED (session 8) — 5 tiers, SQL applied, live
 - [x] Game Release Countdown Events [6.5] ✅ SHIPPED (session 10) — countdown.js on 4 unreleased game pages + classified glitch for Project Unknown
 - [x] Vault Score Public Leaderboard API [7.5] ✅ SHIPPED (session 10) — /api/leaderboard/ docs, static JSON endpoints, embeddable widget.js, daily GitHub Action
 - [x] Content Calendar + Auto Journal [7.5] ✅ SHIPPED (session 11) — context/CONTENT_CALENDAR.md, 52-week rotating schedule
@@ -143,7 +144,7 @@
 ## Completed — Phase 43 (2026-03-25)
 
 - ✅ Co-op teams — create/join/leave/disband; team leaderboard tab on /leaderboards/
-- **SQL needed:** supabase-phase43-teams.sql
+- **SQL applied:** supabase-phase43-teams.sql
 
 ## Completed — Phase 42 (2026-03-25)
 
@@ -152,12 +153,12 @@
 ## Completed — Phase 41 (2026-03-25)
 
 - ✅ Fan art voting — heart/like buttons; live vote count; optimistic UI
-- **SQL needed:** supabase-phase41-fan-art-votes.sql
+- **SQL applied:** supabase-phase41-fan-art-votes.sql
 
 ## Completed — Phase 40 (2026-03-25)
 
 - ✅ Fan art submission form + gallery + moderation in Vault Command
-- **SQL needed:** supabase-phase40-fan-art.sql
+- **SQL applied:** supabase-phase40-fan-art.sql
 
 ## Completed — Phase 39 (2026-03-25)
 
@@ -166,7 +167,7 @@
 ## Completed — Phase 38 (2026-03-25)
 
 - ✅ Supabase query batching — `get_member_bootstrap` RPC
-- **SQL needed:** supabase-phase38-bootstrap.sql
+- **SQL applied:** supabase-phase38-bootstrap.sql
 
 ## Completed — Phase 37 (2026-03-25)
 
@@ -175,7 +176,7 @@
 ## Completed — Phase 36 (2026-03-25)
 
 - ✅ Game session recording on all 3 game pages; session milestone awards
-- **SQL needed:** supabase-phase36-game-sessions.sql
+- **SQL applied:** supabase-phase36-game-sessions.sql
 
 ## Completed — Phase 35 (2026-03-25)
 

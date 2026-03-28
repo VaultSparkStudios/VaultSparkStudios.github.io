@@ -306,10 +306,11 @@
         }
 
         // 2. Create Supabase auth user
+        const captchaToken = typeof VSTurnstile !== 'undefined' ? await VSTurnstile.getToken() : undefined;
         const { data: authData, error: authErr } = await VSSupabase.auth.signUp({
           email,
           password,
-          options: { data: { username } },
+          options: { data: { username }, captchaToken },
         });
 
         if (authErr) throw new Error(authErr.message);
@@ -372,7 +373,8 @@
           email = lookedUp;
         }
 
-        const { data, error } = await VSSupabase.auth.signInWithPassword({ email, password });
+        const captchaToken = typeof VSTurnstile !== 'undefined' ? await VSTurnstile.getToken() : undefined;
+        const { data, error } = await VSSupabase.auth.signInWithPassword({ email, password, options: { captchaToken } });
         if (error) {
           if (error.message === 'Email not confirmed') {
             throw new Error('Please confirm your email before signing in. Check your inbox for the confirmation link.');
@@ -438,7 +440,8 @@
       btn.disabled    = true;
       try {
         const redirectTo = window.location.origin + '/vault-member/';
-        const { error } = await VSSupabase.auth.resetPasswordForEmail(email, { redirectTo });
+        const captchaToken = typeof VSTurnstile !== 'undefined' ? await VSTurnstile.getToken() : undefined;
+        const { error } = await VSSupabase.auth.resetPasswordForEmail(email, { redirectTo, captchaToken });
         if (error) throw new Error(error.message);
         successEl.textContent = 'Reset link sent! Check your inbox (and spam folder) for an email from VaultSpark Studios.';
         successEl.style.display = 'block';

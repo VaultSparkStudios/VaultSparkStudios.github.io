@@ -21,6 +21,7 @@ const STATIC_ASSETS = [
   '/assets/game-utils.js',
   '/assets/countdown.js',
   '/assets/nav-toggle.js',
+  '/assets/turnstile.js',
   '/vault-member/portal.css',
   '/offline.html',
   '/404.html',
