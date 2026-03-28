@@ -1417,3 +1417,21 @@ body.density-spacious .nav-item { padding: 10px 20px; }
   100% { transform: scale(1); box-shadow: none; }
 }
 .challenge-claimed { animation: celebratePulse 0.6s ease-out; }
+
+/* ── AI COPILOT ── */
+@keyframes copilotDot {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
+.copilot-quick-ask:hover {
+  background: var(--accent) !important;
+  color: #fff !important;
+  border-color: var(--accent) !important;
+}
+#copilot-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+#copilot-send-btn:hover:not(:disabled) {
+  filter: brightness(1.15);
+}

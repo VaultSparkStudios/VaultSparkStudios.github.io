@@ -148,9 +148,10 @@ export function renderNavigation(state) {
         ${navItem("ambient",        "Ambient Mode")}
       </div>
 
-      <!-- AGENTS -->
+      <!-- AI -->
       <div class="nav-section">
-        ${!sidebarCollapsed ? `<div class="nav-section-label" style="font-size:9px; letter-spacing:0.1em;">AGENTS</div>` : ""}
+        ${!sidebarCollapsed ? `<div class="nav-section-label" style="font-size:9px; letter-spacing:0.1em;">AI</div>` : ""}
+        ${navItem("ai-copilot",     "AI Copilot")}
         ${navItem("agent-commands", "Agent Commands")}
         ${navItem("agents",         "Studio Agents")}
       </div>

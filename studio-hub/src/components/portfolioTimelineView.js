@@ -1,9 +1,10 @@
 // Portfolio Timeline View
 // Feed: chronological event stream across all projects.
 // Gantt: 90-day activity bars per project with release markers.
+// Time Travel: browse historical score snapshots via slider.
 
 import { PROJECTS } from "../data/studioRegistry.js";
-import { scoreProject } from "../utils/projectScoring.js";
+import { scoreProject, getGrade } from "../utils/projectScoring.js";
 
 function timeAgo(iso) {
   if (!iso) return "—";
@@ -72,7 +73,7 @@ function renderGanttView(state) {
       <div style="display:flex; align-items:center; padding:7px 0; border-bottom:1px solid rgba(255,255,255,0.04);">
         <div style="width:130px; flex-shrink:0; padding-right:12px; overflow:hidden;">
           <div style="font-size:11px; font-weight:700; color:${p.color}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${p.name}">${p.name}</div>
-          <div style="font-size:10px; color:var(--muted);">${scoring.total}/100 · ${scoring.grade}</div>
+          <div style="font-size:10px; color:var(--muted);">${scoring.total}/130 · ${scoring.grade}</div>
         </div>
         <div style="flex:1; position:relative; height:18px; background:rgba(255,255,255,0.03); border-radius:3px;">
           ${bar ? `
@@ -114,6 +115,132 @@ function renderGanttView(state) {
         <span><span style="display:inline-block; width:8px; height:8px; background:var(--green); border-radius:2px; opacity:0.7; margin-right:4px; vertical-align:middle;"></span>≥80</span>
         <span><span style="display:inline-block; width:8px; height:8px; background:var(--gold); border-radius:2px; opacity:0.7; margin-right:4px; vertical-align:middle;"></span>60–79</span>
         <span><span style="display:inline-block; width:8px; height:8px; background:var(--red); border-radius:2px; opacity:0.7; margin-right:4px; vertical-align:middle;"></span>&lt;60</span>
+      </div>
+    </div>
+  `;
+}
+
+// ── Time Travel view ─────────────────────────────────────────────────────────
+function renderTimeTravelView(state) {
+  const { scoreHistory = [], timeTravelIndex } = state;
+  if (scoreHistory.length === 0) {
+    return `<div class="panel" style="padding:40px; text-align:center;">
+      <div style="font-size:14px; color:var(--muted); margin-bottom:8px;">No score history yet</div>
+      <div style="font-size:12px; color:var(--muted);">Snapshots are saved periodically. Check back after a sync cycle.</div>
+    </div>`;
+  }
+
+  const idx = timeTravelIndex != null ? Math.min(timeTravelIndex, scoreHistory.length - 1) : scoreHistory.length - 1;
+  const snap = scoreHistory[idx];
+  const prevSnap = idx > 0 ? scoreHistory[idx - 1] : null;
+  const snapDate = new Date(snap.ts);
+  const dateLabel = snapDate.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+  const timeLabel = snapDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
+
+  // Sort projects by score descending at this snapshot
+  const projectRows = PROJECTS
+    .filter((p) => snap.scores?.[p.id] != null)
+    .map((p) => {
+      const score = snap.scores[p.id];
+      const prevScore = prevSnap?.scores?.[p.id];
+      const delta = prevScore != null ? score - prevScore : null;
+      const { grade, color } = getGrade(score);
+      const pillars = snap.pillars?.[p.id];
+      const ci = snap.ci?.[p.id];
+      const issues = snap.issues?.[p.id];
+      return { project: p, score, grade, color, delta, pillars, ci, issues };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  // Studio average at this snapshot
+  const scores = Object.values(snap.scores || {}).filter((s) => s != null);
+  const avg = scores.length ? Math.round(scores.reduce((s, v) => s + v, 0) / scores.length) : 0;
+  const avgGrade = getGrade(avg);
+
+  // Compare to latest
+  const latest = scoreHistory[scoreHistory.length - 1];
+  const latestScores = Object.values(latest.scores || {}).filter((s) => s != null);
+  const latestAvg = latestScores.length ? Math.round(latestScores.reduce((s, v) => s + v, 0) / latestScores.length) : 0;
+  const avgDelta = idx < scoreHistory.length - 1 ? latestAvg - avg : null;
+
+  const pillarBar = (label, val, max, color) => {
+    const pct = max > 0 ? Math.round((val / max) * 100) : 0;
+    return `<div style="display:flex; align-items:center; gap:4px; font-size:10px;" title="${label}: ${val}/${max}">
+      <span style="width:28px; color:var(--muted); text-align:right;">${label}</span>
+      <div style="flex:1; height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden;">
+        <div style="width:${pct}%; height:100%; background:${color}; border-radius:2px;"></div>
+      </div>
+      <span style="width:20px; color:var(--muted);">${val}</span>
+    </div>`;
+  };
+
+  const rows = projectRows.map((r) => {
+    const deltaHtml = r.delta != null && r.delta !== 0
+      ? `<span style="font-size:10px; color:${r.delta > 0 ? "var(--green)" : "var(--red)"}; margin-left:4px;">${r.delta > 0 ? "+" : ""}${r.delta}</span>`
+      : "";
+    const ciDot = r.ci === "success" ? "var(--green)" : r.ci === "failure" ? "var(--red)" : null;
+    const pillarsHtml = r.pillars ? `
+      <div style="display:flex; flex-direction:column; gap:2px; margin-top:6px;">
+        ${pillarBar("Dev", r.pillars.dev, 30, "var(--cyan)")}
+        ${pillarBar("Eng", r.pillars.engage, 25, "var(--blue)")}
+        ${pillarBar("Mom", r.pillars.momentum, 25, "var(--green)")}
+        ${pillarBar("Risk", r.pillars.risk, 25, "var(--gold)")}
+        ${r.pillars.community != null ? pillarBar("Comm", r.pillars.community, 25, "#c084fc") : ""}
+      </div>` : "";
+
+    return `
+      <div class="panel" style="padding:12px 16px; cursor:pointer;" data-view="project:${r.project.id}">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="width:6px; height:6px; border-radius:50%; background:${r.project.color};"></div>
+            <span style="font-size:13px; font-weight:700;">${r.project.name}</span>
+            ${ciDot ? `<span style="width:5px; height:5px; border-radius:50%; background:${ciDot}; box-shadow:0 0 3px ${ciDot}60;" title="CI ${r.ci}"></span>` : ""}
+          </div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            <span style="font-size:18px; font-weight:800; color:${r.color};">${r.score}</span>
+            <span style="font-size:12px; font-weight:700; color:${r.color}; opacity:0.8;">${r.grade}</span>
+            ${deltaHtml}
+          </div>
+        </div>
+        ${r.issues != null ? `<div style="font-size:10px; color:var(--muted);">${r.issues} open issue${r.issues !== 1 ? "s" : ""}</div>` : ""}
+        ${pillarsHtml}
+      </div>`;
+  }).join("");
+
+  return `
+    <div style="margin-bottom:20px;">
+      <!-- Snapshot header -->
+      <div class="panel" style="padding:16px 20px; margin-bottom:16px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+          <div>
+            <div style="font-size:10px; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px;">Viewing Snapshot</div>
+            <div style="font-size:18px; font-weight:800;">${dateLabel} <span style="font-size:13px; font-weight:400; color:var(--muted);">${timeLabel}</span></div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:28px; font-weight:900; color:${avgGrade.color};">${avg} <span style="font-size:16px;">${avgGrade.grade}</span></div>
+            <div style="font-size:11px; color:var(--muted);">
+              Studio Avg${avgDelta != null ? ` <span style="color:${avgDelta >= 0 ? "var(--green)" : "var(--red)"};">(${avgDelta >= 0 ? "+" : ""}${avgDelta} vs now)</span>` : " (current)"}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Slider -->
+      <div class="panel" style="padding:14px 20px;">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <span style="font-size:10px; color:var(--muted); white-space:nowrap;">${new Date(scoreHistory[0].ts).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+          <input type="range" id="time-travel-slider" min="0" max="${scoreHistory.length - 1}" value="${idx}"
+            style="flex:1; accent-color:var(--accent); cursor:pointer;" />
+          <span style="font-size:10px; color:var(--muted); white-space:nowrap;">${new Date(scoreHistory[scoreHistory.length - 1].ts).toLocaleDateString("en-US", { month: "short", day: "numeric" })}</span>
+        </div>
+        <div style="text-align:center; font-size:10px; color:var(--muted); margin-top:4px;">
+          Snapshot ${idx + 1} of ${scoreHistory.length}
+        </div>
+      </div>
+
+      <!-- Project cards -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:12px; margin-top:16px;">
+        ${rows}
       </div>
     </div>
   `;
@@ -307,15 +434,16 @@ export function renderPortfolioTimelineView(state) {
       <div class="view-header">
         <div>
           <div class="view-title">Portfolio Timeline</div>
-          <div class="view-subtitle">${timelineMode === "gantt" ? "90-day activity bars with release markers" : "All events across all projects — commits, releases, CI, score changes, alerts"}</div>
+          <div class="view-subtitle">${timelineMode === "gantt" ? "90-day activity bars with release markers" : timelineMode === "timetravel" ? "Browse historical score snapshots — see the dashboard as it was" : "All events across all projects — commits, releases, CI, score changes, alerts"}</div>
         </div>
         <div style="display:flex; gap:4px;">
           ${modeBtn("feed", "Feed")}
           ${modeBtn("gantt", "Gantt")}
+          ${modeBtn("timetravel", "Time Travel")}
         </div>
       </div>
 
-      ${timelineMode === "gantt" ? renderGanttView(state) : `
+      ${timelineMode === "gantt" ? renderGanttView(state) : timelineMode === "timetravel" ? renderTimeTravelView(state) : `
         <div style="display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-bottom:16px;">
           <div style="display:flex; gap:4px; flex-wrap:wrap;">
             ${["all","commit","release","ci","snapshot","alert"].map((t) => `

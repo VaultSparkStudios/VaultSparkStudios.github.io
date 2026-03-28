@@ -1099,7 +1099,7 @@ function renderScoreCalibration(project, repoData, sbData, socialData) {
     <div class="hub-section">
       <div class="hub-section-header">
         <span class="hub-section-title">SCORE CALIBRATION</span>
-        <span class="hub-section-badge" style="color:${scoring.gradeColor};">${scoring.total}/100 · ${scoring.grade}</span>
+        <span class="hub-section-badge" style="color:${scoring.gradeColor};">${scoring.total}/130 · ${scoring.grade}</span>
       </div>
       <div class="hub-section-body">
         <div style="font-size:12px; color:var(--muted); margin-bottom:10px;">
@@ -1520,7 +1520,7 @@ function renderHealthPrescription(project, repoData, sbData, socialData) {
     <div class="hub-section">
       <div class="hub-section-header">
         <span class="hub-section-title">HEALTH PRESCRIPTION</span>
-        <span class="hub-section-badge" style="color:${scoring.gradeColor};">${scoring.total}/100 · ${scoring.grade}</span>
+        <span class="hub-section-badge" style="color:${scoring.gradeColor};">${scoring.total}/130 · ${scoring.grade}</span>
       </div>
       <div class="hub-section-body">
         <div style="font-size:12px; color:var(--muted); margin-bottom:10px;">
@@ -1630,6 +1630,7 @@ function renderIssueSignalCorrelation(project, repoData) {
     Engagement: { keywords: ["ux", "ui", "design", "onboard", "feedback", "feature", "request", "social", "content", "doc", "readme", "tutorial"], color: "var(--cyan)", issues: [] },
     Momentum:   { keywords: ["release", "launch", "milestone", "roadmap", "deadline", "sprint", "epic", "plan", "schedul"], color: "var(--gold)", issues: [] },
     Risk:       { keywords: ["security", "auth", "cve", "vuln", "access", "secret", "leak", "compliance", "license", "legal"], color: "#f87171", issues: [] },
+    Community:  { keywords: ["community", "social", "follower", "subscriber", "audience", "discord", "reddit", "youtube", "gumroad", "member"], color: "#c084fc", issues: [] },
   };
 
   const unclassified = [];
@@ -1710,16 +1711,17 @@ function renderScorePillarChart(project, repoData, sbData, socialData, scoreHist
   }
 
   const pillars = [
-    { key: "development", trendKey: "dev",      label: "Dev",      max: 30,                       color: "#69b3ff" },
-    { key: "engagement",  trendKey: "engage",    label: "Engage",   max: 25,                       color: "#7ae7c7" },
-    { key: "momentum",    trendKey: "momentum",  label: "Momentum", max: 25,                       color: "#ffc874" },
-    { key: "risk",        trendKey: "risk",      label: "Risk",     max: scoring.pillars.risk.max, color: "#6ae3b2" },
+    { key: "development", trendKey: "dev",       label: "Dev",       max: 30,                       color: "#69b3ff" },
+    { key: "engagement",  trendKey: "engage",    label: "Engage",    max: 25,                       color: "#7ae7c7" },
+    { key: "momentum",    trendKey: "momentum",  label: "Momentum",  max: 25,                       color: "#ffc874" },
+    { key: "risk",        trendKey: "risk",      label: "Risk",      max: scoring.pillars.risk.max, color: "#6ae3b2" },
+    { key: "community",   trendKey: "community", label: "Community", max: 25,                       color: "#c084fc" },
   ];
   return `
     <div class="hub-section">
       <div class="hub-section-header">
         <span class="hub-section-title">SCORE PILLARS</span>
-        <span class="hub-section-badge" style="color:${scoring.gradeColor};">${scoring.total}/100 · ${scoring.grade}</span>
+        <span class="hub-section-badge" style="color:${scoring.gradeColor};">${scoring.total}/130 · ${scoring.grade}</span>
       </div>
       <div class="hub-section-body">
         <div style="display:flex; flex-direction:column; gap:10px;">
@@ -2196,7 +2198,7 @@ function renderProjectDoctor(project, repoData, sbData, socialData) {
       </div>
       <div class="hub-section-body">
         <div style="font-size:11px; color:var(--muted); margin-bottom:12px;">
-          Ranked actions to close the gap to grade A (90+). Currently ${scoring.total}/100.
+          Ranked actions to close the gap to grade A (90+). Currently ${scoring.total}/130.
         </div>
         <div style="display:flex; flex-direction:column; gap:8px;">
           ${top5.map((a, i) => `

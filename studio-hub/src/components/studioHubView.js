@@ -1515,7 +1515,7 @@ function renderBestActionDirective(ghData, sbData, allScores, scoreHistory) {
           priority: 88,
           project,
           action: "Rescue critical project",
-          detail: `${project.name} is grade ${scoring.grade} (${scoring.total}/100)${rationale ? " — " + rationale : ""}`,
+          detail: `${project.name} is grade ${scoring.grade} (${scoring.total}/130)${rationale ? " — " + rationale : ""}`,
           color: "var(--red)",
           icon: "⚡",
           url: `https://github.com/${project.githubRepo}`,

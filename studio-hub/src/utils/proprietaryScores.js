@@ -1,5 +1,5 @@
 // VaultSpark Proprietary Scores
-// Two additional per-project scores that complement the 4-pillar health score.
+// Two additional per-project scores that complement the 5-pillar health score.
 //
 // Potential Score (0–100):  upside trajectory — "what this project could become"
 // Momentum Index  (0–100):  current velocity  — "how fast things are moving right now"

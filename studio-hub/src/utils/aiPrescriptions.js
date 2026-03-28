@@ -49,11 +49,12 @@ export async function fetchPrescription(project, scoring, repoData, claudeApiKey
   if (cached) return { ok: true, text: cached, cached: true };
 
   const signals = [
-    `Score: ${scoring.total}/100 (${scoring.grade})`,
+    `Score: ${scoring.total}/130 (${scoring.grade})`,
     `Dev Health: ${scoring.pillars.development.score}/30 — ${(scoring.pillars.development.signals || []).slice(0,2).join(", ")}`,
     `Engagement: ${scoring.pillars.engagement.score}/25 — ${(scoring.pillars.engagement.signals || []).slice(0,2).join(", ")}`,
     `Momentum: ${scoring.pillars.momentum.score}/25 — ${(scoring.pillars.momentum.signals || []).slice(0,2).join(", ")}`,
     `Risk: ${scoring.pillars.risk.score}/20 — ${(scoring.pillars.risk.signals || []).slice(0,2).join(", ")}`,
+    `Community: ${(scoring.pillars.community?.score || 0)}/25 — ${(scoring.pillars.community?.signals || []).slice(0,2).join(", ")}`,
     repoData?.repo?.openIssues != null ? `Open issues: ${repoData.repo.openIssues}` : null,
     repoData?.prs?.length ? `Open PRs: ${repoData.prs.length}` : null,
     repoData?.commits?.[0]?.date ? `Last commit: ${new Date(repoData.commits[0].date).toLocaleDateString()}` : null,

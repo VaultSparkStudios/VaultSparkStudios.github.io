@@ -155,7 +155,7 @@ export function generateWeeklyDigest(state, logActivity) {
   const activityNote = commitCount > 0
     ? `${commitCount} commits landed across ${activeRepos} project${activeRepos !== 1 ? "s" : ""}`
     : "a quiet week on the commit front";
-  lines.push(`> The studio is looking **${healthWord}** this week with a portfolio average of **${studioAvg}/100**. We saw ${activityNote}${newReleases.length > 0 ? `, along with ${newReleases.length} fresh release${newReleases.length !== 1 ? "s" : ""}` : ""}. Here's everything you need to know.`);
+  lines.push(`> The studio is looking **${healthWord}** this week with a portfolio average of **${studioAvg}/130**. We saw ${activityNote}${newReleases.length > 0 ? `, along with ${newReleases.length} fresh release${newReleases.length !== 1 ? "s" : ""}` : ""}. Here's everything you need to know.`);
   lines.push("");
 
   // Portfolio snapshot
@@ -164,7 +164,7 @@ export function generateWeeklyDigest(state, logActivity) {
   lines.push("");
   lines.push(`| Metric | Value |`);
   lines.push(`| --- | --- |`);
-  lines.push(`| Studio Average | **${studioAvg}/100** |`);
+  lines.push(`| Studio Average | **${studioAvg}/130** |`);
   lines.push(`| Top Performer | ${topProject ? `${topProject.name} (${topProject.score} · ${topProject.grade})` : "—"} |`);
   lines.push(`| Needs Love | ${bottomProject ? `${bottomProject.name} (${bottomProject.score} · ${bottomProject.grade})` : "—"} |`);
   lines.push(`| Active Projects | ${activeRepos} of ${PROJECTS.length} |`);

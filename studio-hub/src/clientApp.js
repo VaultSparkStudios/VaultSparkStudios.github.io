@@ -2,7 +2,7 @@ import { getHubRuntimeConfig } from "./config/runtimeConfig.js";
 import { PROJECTS, getProjectById, validateRegistry } from "./data/studioRegistry.js";
 import { scoreProject, getGrade, invalidateWeightsCache, clearScoringCache } from "./utils/projectScoring.js";
 import { fmt, daysSince, commitVelocity, debounce, safeGetJSON, safeSetJSON } from "./utils/helpers.js";
-import { fetchAllProjectContextFiles, fetchRepoLanguages, fetchRepoBranches, fetchRepoTodoCount, fetchProjectTickets, submitProjectTicket, fetchStudioOsCompliance, fetchAgentRequests, submitAgentRequest } from "./data/githubAdapter.js";
+import { fetchAllProjectContextFiles, fetchRepoLanguages, fetchRepoBranches, fetchRepoTodoCount, fetchDependencyAlerts, fetchProjectTickets, submitProjectTicket, fetchStudioOsCompliance, fetchAgentRequests, submitAgentRequest } from "./data/githubAdapter.js";
 import { fetchAllSupabaseData } from "./data/supabaseAdapter.js";
 import { fetchAllSocialFeeds } from "./data/socialFeedsAdapter.js";
 import { renderNavigation } from "./components/navigation.js";
@@ -24,6 +24,7 @@ import { renderAgentCommandsView } from "./components/agentCommandsView.js";
 import { renderAgentsView } from "./components/agentsView.js";
 import { renderCompetitiveView, loadCompetitorList, saveCompetitorList, loadDismissedCompetitors, saveDismissedCompetitors } from "./components/competitiveView.js";
 import { renderAnalyticsView } from "./components/analyticsView.js";
+import { renderAiCopilotView, sendCopilotMessage, clearCopilotHistory, getCopilotMessages } from "./components/aiCopilotView.js";
 import { mountCommandPalette, unmountCommandPalette, isPaletteOpen } from "./components/commandPalette.js";
 import { downloadJSON, downloadCSV, downloadScoreHistoryCSV } from "./utils/exportHelpers.js";
 import { generateStandup, generateWeeklyDigest } from "./utils/digestHelpers.js";
@@ -161,6 +162,7 @@ const state = {
   websiteLoading:      false,
 
   lastSyncTimestamp:   null,
+  timeTravelIndex:     null,
 };
 // Seed scorePrev from history on first load; store session-start scores for accurate delta badges
 storeSessionStartScores(state.scoreHistory);
@@ -383,6 +385,7 @@ function renderActiveView() {
   if (activeView === "agents")          return renderAgentsView(state.agentRequests, state.agentRunHistory);
   if (activeView === "competitive")     return renderCompetitiveView(state);
   if (activeView === "analytics")       return renderAnalyticsView(state);
+  if (activeView === "ai-copilot")      return renderAiCopilotView(state);
   if (activeView.startsWith("project:")) {
     const project = getProjectById(activeView.slice("project:".length));
     return project
@@ -680,15 +683,17 @@ async function loadExtendedDataForProject(projectId) {
   const repoPath = project.githubRepo;
 
   try {
-    const [languages, branches, todoCount] = await Promise.all([
+    const [languages, branches, todoCount, depAlerts] = await Promise.all([
       fetchRepoLanguages(repoPath, token),
       fetchRepoBranches(repoPath, token),
       fetchRepoTodoCount(repoPath, token),
+      fetchDependencyAlerts(repoPath, token),
     ]);
-    state.projectExtendedData[projectId] = { languages, branches, todoCount };
-    // Inject todoCount into ghData so scoreRisk() picks it up immediately
-    if (state.ghData[repoPath] && todoCount > 0) {
-      state.ghData[repoPath].todoCount = todoCount;
+    state.projectExtendedData[projectId] = { languages, branches, todoCount, depAlerts };
+    // Inject into ghData so scoring picks it up immediately
+    if (state.ghData[repoPath]) {
+      if (todoCount > 0) state.ghData[repoPath].todoCount = todoCount;
+      if (depAlerts) state.ghData[repoPath].depAlerts = depAlerts;
       clearScoringCache();
     }
   } catch {
@@ -1140,6 +1145,9 @@ function bindEvents() {
   document.getElementById("timeline-project-filter")?.addEventListener("change", (e) => {
     state.timelineProjectFilter = e.target.value; render();
   });
+  document.getElementById("time-travel-slider")?.addEventListener("input", (e) => {
+    state.timeTravelIndex = Number(e.target.value); render();
+  });
   document.getElementById("activity-project-filter")?.addEventListener("change", (e) => {
     state.activityProjectFilter = e.target.value; render();
   });
@@ -1266,6 +1274,49 @@ function bindEvents() {
         state.discoveredCompetitors = state.discoveredCompetitors.filter((r) => r.full_name !== repo);
       }
       render();
+    });
+  });
+
+  // ── AI Copilot ──────────────────────────────────────────────────────────────
+  document.getElementById("copilot-send-btn")?.addEventListener("click", async () => {
+    const input = document.getElementById("copilot-input");
+    const text = input?.value?.trim();
+    if (!text) return;
+    input.value = "";
+    render();
+    await sendCopilotMessage(text, state);
+    render();
+    const msgBox = document.getElementById("copilot-messages");
+    if (msgBox) msgBox.scrollTop = msgBox.scrollHeight;
+  });
+  document.getElementById("copilot-input")?.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      document.getElementById("copilot-send-btn")?.click();
+    }
+  });
+  document.getElementById("copilot-clear-btn")?.addEventListener("click", () => {
+    clearCopilotHistory();
+    render();
+  });
+  document.querySelectorAll("[data-copilot-quick]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const idx = Number(btn.dataset.copilotQuick);
+      const questions = [
+        "Which project needs the most attention right now?",
+        "What are the top 3 actions to raise our studio average?",
+        "Which projects are at risk of a grade drop?",
+        "Summarize the studio health in 3 bullet points",
+        "What should I ship this week for maximum impact?",
+        "Compare our game projects vs tool projects",
+      ];
+      const text = questions[idx];
+      if (!text) return;
+      render();
+      await sendCopilotMessage(text, state);
+      render();
+      const msgBox = document.getElementById("copilot-messages");
+      if (msgBox) msgBox.scrollTop = msgBox.scrollHeight;
     });
   });
 

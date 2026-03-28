@@ -800,7 +800,7 @@ function renderLeaderboard(allScores, scorePrev, pbs) {
       <div style="flex:1;min-width:150px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
         <div style="font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">PORTFOLIO AVERAGE</div>
         <div style="font-size:28px;font-weight:900;color:var(--cyan);">${pbs.mean ?? "—"}</div>
-        <div style="font-size:10px;color:var(--muted);">${allScores.length} projects · max 105</div>
+        <div style="font-size:10px;color:var(--muted);">${allScores.length} projects · max 130</div>
       </div>
     </div>
     <div style="overflow-x:auto;">

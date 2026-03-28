@@ -33,7 +33,7 @@ export function monteCarloForecast(history, simulations = 500) {
     const outcomes = [];
     for (let i = 0; i < simulations; i++) {
       const simulatedDelta = gaussianSample(mean, stdDev || 1);
-      outcomes.push(Math.max(0, Math.min(105, Math.round(current + simulatedDelta))));
+      outcomes.push(Math.max(0, Math.min(130, Math.round(current + simulatedDelta))));
     }
     outcomes.sort((a, b) => a - b);
     result[id] = {

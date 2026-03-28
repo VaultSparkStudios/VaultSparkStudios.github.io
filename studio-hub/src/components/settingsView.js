@@ -94,13 +94,14 @@ export function renderSettingsView(state) {
 
   // ── Weight sliders ────────────────────────────────────────────────────────
   const weightSliders = [
-    { id: "setting-weight-dev",      label: "Development",  key: "dev",      def: 30, color: "#69b3ff" },
-    { id: "setting-weight-engage",   label: "Engagement",   key: "engage",   def: 25, color: "#7ae7c7" },
-    { id: "setting-weight-momentum", label: "Momentum",     key: "momentum", def: 25, color: "#ffc874" },
-    { id: "setting-weight-risk",     label: "Risk",         key: "risk",     def: 20, color: "#6ae3b2" },
+    { id: "setting-weight-dev",       label: "Development",  key: "dev",       def: 30, color: "#69b3ff" },
+    { id: "setting-weight-engage",    label: "Engagement",   key: "engage",    def: 25, color: "#7ae7c7" },
+    { id: "setting-weight-momentum",  label: "Momentum",     key: "momentum",  def: 25, color: "#ffc874" },
+    { id: "setting-weight-risk",      label: "Risk",         key: "risk",      def: 20, color: "#6ae3b2" },
+    { id: "setting-weight-community", label: "Community",    key: "community", def: 25, color: "#c084fc" },
   ].map(({ id, label, key, def, color }) => {
     const val  = settings.weights?.[key] ?? def;
-    const wTotal = (settings.weights?.dev ?? 30) + (settings.weights?.engage ?? 25) + (settings.weights?.momentum ?? 25) + (settings.weights?.risk ?? 20);
+    const wTotal = (settings.weights?.dev ?? 30) + (settings.weights?.engage ?? 25) + (settings.weights?.momentum ?? 25) + (settings.weights?.risk ?? 20) + (settings.weights?.community ?? 25);
     const pct  = wTotal > 0 ? Math.round((val / wTotal) * 100) : 0;
     return `
       <div>
@@ -113,7 +114,7 @@ export function renderSettingsView(state) {
         </div>
         <input type="range" id="${id}" min="0" max="50" value="${val}"
           style="width:100%; accent-color:${color};"
-          oninput="document.getElementById('${id}-display').textContent=this.value; var t=+document.getElementById('setting-weight-dev').value + +document.getElementById('setting-weight-engage').value + +document.getElementById('setting-weight-momentum').value + +document.getElementById('setting-weight-risk').value; var el=document.getElementById('weight-total-display'); if(el){el.textContent=t; el.style.color=t===100?'var(--green)':t>0?'var(--cyan)':'var(--red)';} ['dev','engage','momentum','risk'].forEach(function(k){var v=+document.getElementById('setting-weight-'+k).value; var pe=document.getElementById('setting-weight-'+k+'-pct'); if(pe&&t>0)pe.textContent=Math.round(v/t*100)+'%';});" />
+          oninput="document.getElementById('${id}-display').textContent=this.value; var t=+document.getElementById('setting-weight-dev').value + +document.getElementById('setting-weight-engage').value + +document.getElementById('setting-weight-momentum').value + +document.getElementById('setting-weight-risk').value + +document.getElementById('setting-weight-community').value; var el=document.getElementById('weight-total-display'); if(el){el.textContent=t; el.style.color=t===125?'var(--green)':t>0?'var(--cyan)':'var(--red)';} ['dev','engage','momentum','risk','community'].forEach(function(k){var v=+document.getElementById('setting-weight-'+k).value; var pe=document.getElementById('setting-weight-'+k+'-pct'); if(pe&&t>0)pe.textContent=Math.round(v/t*100)+'%';});" />
       </div>
     `;
   }).join("");
@@ -398,14 +399,14 @@ export function renderSettingsView(state) {
             </div>
             <div class="panel-body" style="display:flex; flex-direction:column; gap:16px;">
               <div style="${hintStyle}">
-                Controls how each pillar contributes to the final 0–100 score. Defaults: Dev=30, Engage=25, Momentum=25, Risk=20.
+                Controls how each pillar contributes to the final score. Defaults: Dev=30, Engage=25, Momentum=25, Risk=20, Community=25.
               </div>
               ${weightSliders}
               <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 12px;
                           background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:7px;">
                 <span style="font-size:11px; color:var(--muted);">Total weight sum</span>
                 <span id="weight-total-display" style="font-size:12px; font-weight:700; color:var(--cyan);">
-                  ${(settings.weights?.dev ?? 30) + (settings.weights?.engage ?? 25) + (settings.weights?.momentum ?? 25) + (settings.weights?.risk ?? 20)}
+                  ${(settings.weights?.dev ?? 30) + (settings.weights?.engage ?? 25) + (settings.weights?.momentum ?? 25) + (settings.weights?.risk ?? 20) + (settings.weights?.community ?? 25)}
                 </span>
               </div>
               <!-- Live preview -->
@@ -433,11 +434,12 @@ export function renderSettingsView(state) {
                 <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">Quick presets</div>
                 <div style="display:flex; flex-wrap:wrap; gap:6px;">
                   ${[
-                    { label: "Balanced",    values: [30, 25, 25, 20] },
-                    { label: "Dev-heavy",   values: [50, 20, 20, 10] },
-                    { label: "Engagement",  values: [20, 40, 25, 15] },
-                    { label: "Momentum",    values: [20, 20, 45, 15] },
-                    { label: "Risk-aware",  values: [25, 20, 20, 35] },
+                    { label: "Balanced",    values: [30, 25, 25, 20, 25] },
+                    { label: "Dev-heavy",   values: [45, 15, 20, 10, 15] },
+                    { label: "Engagement",  values: [15, 35, 20, 10, 25] },
+                    { label: "Momentum",    values: [15, 15, 40, 10, 20] },
+                    { label: "Risk-aware",  values: [20, 15, 15, 30, 15] },
+                    { label: "Community",   values: [15, 20, 15, 10, 40] },
                   ].map(({ label, values }) => {
                     const encoded = JSON.stringify(values);
                     return `<button data-weight-preset="${encoded}"
@@ -445,7 +447,7 @@ export function renderSettingsView(state) {
                              background:none; color:var(--muted); cursor:pointer; transition:all 0.1s;"
                       onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)'"
                       onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'"
-                      title="Dev:${values[0]} Engage:${values[1]} Momentum:${values[2]} Risk:${values[3]}"
+                      title="Dev:${values[0]} Engage:${values[1]} Momentum:${values[2]} Risk:${values[3]} Community:${values[4]}"
                     >${label}</button>`;
                   }).join("")}
                 </div>

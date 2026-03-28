@@ -257,7 +257,7 @@ export function bindSettingsEvents(ctx) {
 
   // Reset score weights
   document.getElementById("reset-weights-btn")?.addEventListener("click", () => {
-    const defaults = { dev: 30, engage: 25, momentum: 25, risk: 20 };
+    const defaults = { dev: 30, engage: 25, momentum: 25, risk: 20, community: 25 };
     for (const [key, val] of Object.entries(defaults)) {
       const el = document.getElementById(`setting-weight-${key}`);
       const disp = document.getElementById(`setting-weight-${key}-display`);
@@ -265,16 +265,17 @@ export function bindSettingsEvents(ctx) {
       if (disp) disp.textContent = val;
     }
     const totalEl = document.getElementById("weight-total-display");
-    if (totalEl) { totalEl.textContent = 100; totalEl.style.color = "var(--green)"; }
+    if (totalEl) { totalEl.textContent = 125; totalEl.style.color = "var(--green)"; }
   });
 
   // Score weight live preview
   function updateWeightPreview() {
-    const dev      = Number(document.getElementById("setting-weight-dev")?.value      ?? 30);
-    const engage   = Number(document.getElementById("setting-weight-engage")?.value   ?? 25);
-    const momentum = Number(document.getElementById("setting-weight-momentum")?.value ?? 25);
-    const risk     = Number(document.getElementById("setting-weight-risk")?.value     ?? 20);
-    const total = dev + engage + momentum + risk;
+    const dev       = Number(document.getElementById("setting-weight-dev")?.value       ?? 30);
+    const engage    = Number(document.getElementById("setting-weight-engage")?.value    ?? 25);
+    const momentum  = Number(document.getElementById("setting-weight-momentum")?.value  ?? 25);
+    const risk      = Number(document.getElementById("setting-weight-risk")?.value      ?? 20);
+    const community = Number(document.getElementById("setting-weight-community")?.value ?? 25);
+    const total = dev + engage + momentum + risk + community;
     if (total === 0) return;
     let sum = 0, count = 0;
     for (const p of PROJECTS) {
@@ -284,7 +285,8 @@ export function bindSettingsEvents(ctx) {
         (sc.pillars.development.score / 30) * dev +
         (sc.pillars.engagement.score  / 25) * engage +
         (sc.pillars.momentum.score    / 25) * momentum +
-        (sc.pillars.risk.score        / 20) * risk
+        (sc.pillars.risk.score        / 20) * risk +
+        ((sc.pillars.community?.score || 0) / 25) * community
       );
       const el = document.getElementById(`preview-score-${p.id}`);
       if (el) {
@@ -298,7 +300,7 @@ export function bindSettingsEvents(ctx) {
     const avgEl = document.getElementById("preview-avg-score");
     if (avgEl && count > 0) avgEl.textContent = Math.round(sum / count);
   }
-  ["setting-weight-dev","setting-weight-engage","setting-weight-momentum","setting-weight-risk"].forEach((id) => {
+  ["setting-weight-dev","setting-weight-engage","setting-weight-momentum","setting-weight-risk","setting-weight-community"].forEach((id) => {
     document.getElementById(id)?.addEventListener("input", updateWeightPreview);
   });
   if (state.activeView === "settings") updateWeightPreview();
@@ -307,17 +309,17 @@ export function bindSettingsEvents(ctx) {
   document.querySelectorAll("[data-weight-preset]").forEach((btn) => {
     btn.addEventListener("click", () => {
       try {
-        const [dev, engage, momentum, risk] = JSON.parse(btn.dataset.weightPreset);
-        const keys = [["dev", dev], ["engage", engage], ["momentum", momentum], ["risk", risk]];
+        const [dev, engage, momentum, risk, community = 25] = JSON.parse(btn.dataset.weightPreset);
+        const keys = [["dev", dev], ["engage", engage], ["momentum", momentum], ["risk", risk], ["community", community]];
         for (const [key, val] of keys) {
           const el = document.getElementById(`setting-weight-${key}`);
           const disp = document.getElementById(`setting-weight-${key}-display`);
           if (el) el.value = val;
           if (disp) disp.textContent = val;
         }
-        const total = dev + engage + momentum + risk;
+        const total = dev + engage + momentum + risk + community;
         const totalEl = document.getElementById("weight-total-display");
-        if (totalEl) { totalEl.textContent = total; totalEl.style.color = total === 100 ? "var(--green)" : "var(--cyan)"; }
+        if (totalEl) { totalEl.textContent = total; totalEl.style.color = total === 125 ? "var(--green)" : "var(--cyan)"; }
       } catch {}
     });
   });
@@ -526,10 +528,11 @@ export function bindSettingsEvents(ctx) {
   // ── Save scoring weights (duplicate of main save for this tab) ────────────
   document.getElementById("save-settings-btn-scoring")?.addEventListener("click", async () => {
     const weights = {
-      dev:      Number(document.getElementById("setting-weight-dev")?.value      ?? 30),
-      engage:   Number(document.getElementById("setting-weight-engage")?.value   ?? 25),
-      momentum: Number(document.getElementById("setting-weight-momentum")?.value ?? 25),
-      risk:     Number(document.getElementById("setting-weight-risk")?.value     ?? 20),
+      dev:       Number(document.getElementById("setting-weight-dev")?.value       ?? 30),
+      engage:    Number(document.getElementById("setting-weight-engage")?.value    ?? 25),
+      momentum:  Number(document.getElementById("setting-weight-momentum")?.value  ?? 25),
+      risk:      Number(document.getElementById("setting-weight-risk")?.value      ?? 20),
+      community: Number(document.getElementById("setting-weight-community")?.value ?? 25),
     };
     saveSettings({ ...loadSettings(), weights });
     invalidateWeightsCache();
@@ -622,10 +625,11 @@ export function bindSettingsEvents(ctx) {
     const sort          = document.getElementById("setting-sort")?.value || "score";
     const refreshMs     = Number(document.getElementById("setting-refresh")?.value ?? 300000);
     const weights = {
-      dev:      Number(document.getElementById("setting-weight-dev")?.value      ?? 30),
-      engage:   Number(document.getElementById("setting-weight-engage")?.value   ?? 25),
-      momentum: Number(document.getElementById("setting-weight-momentum")?.value ?? 25),
-      risk:     Number(document.getElementById("setting-weight-risk")?.value     ?? 20),
+      dev:       Number(document.getElementById("setting-weight-dev")?.value       ?? 30),
+      engage:    Number(document.getElementById("setting-weight-engage")?.value    ?? 25),
+      momentum:  Number(document.getElementById("setting-weight-momentum")?.value  ?? 25),
+      risk:      Number(document.getElementById("setting-weight-risk")?.value      ?? 20),
+      community: Number(document.getElementById("setting-weight-community")?.value ?? 25),
     };
     const alertThresholds = {
       issues:    Number(document.getElementById("setting-thresh-issues")?.value     ?? 20),

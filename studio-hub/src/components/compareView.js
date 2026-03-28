@@ -38,7 +38,7 @@ function renderProjectColumn(project, ghData, sbData, socialData, colColor) {
   }
 
   const rows = [
-    { label: "Score",        value: `${scoring.total}/100`, color: scoring.gradeColor },
+    { label: "Score",        value: `${scoring.total}/130`, color: scoring.gradeColor },
     { label: "Grade",        value: scoring.grade, color: scoring.gradeColor },
     { label: "Status",       value: project.statusLabel },
     { label: "Type",         value: project.type },

@@ -454,6 +454,37 @@ export async function fetchRepoTodoCount(repoPath, token = "", ttlMs = 600000) {
   }
 }
 
+// ── Dependency freshness (Dependabot alerts summary) ─────────────────────────
+// Returns { total, critical, high, medium, low } counts of open Dependabot alerts.
+// Requires repo admin token for private repos; public repos need no extra scope.
+export async function fetchDependencyAlerts(repoPath, token = "", ttlMs = 600000) {
+  const key = `depalerts_${repoPath.replace("/", "_")}`;
+  const cached = readCache(key, ttlMs);
+  if (cached !== null) return cached;
+
+  const result = { total: 0, critical: 0, high: 0, medium: 0, low: 0 };
+  if (!token) { writeCache(key, result); return result; }
+
+  try {
+    const res = await ghFetch(`/repos/${repoPath}/dependabot/alerts?state=open&per_page=100`, token);
+    if (Array.isArray(res)) {
+      result.total = res.length;
+      for (const alert of res) {
+        const sev = alert.security_vulnerability?.severity || alert.security_advisory?.severity || "";
+        if (sev === "critical") result.critical++;
+        else if (sev === "high") result.high++;
+        else if (sev === "medium") result.medium++;
+        else result.low++;
+      }
+    }
+    writeCache(key, result);
+    return result;
+  } catch {
+    writeCache(key, result);
+    return result;
+  }
+}
+
 // ── Project Ticketing (GitHub Issues backend) ─────────────────────────────────
 // Hub repo where listing tickets are filed as issues.
 const HUB_REPO = "VaultSparkStudios/vaultspark-studio-hub";

@@ -22,10 +22,11 @@ export function pushScoreHistory(ghData, sbData, socialData) {
         ci[p.id]      = repoData?.ciRuns?.[0]?.conclusion || null;
         issues[p.id]  = repoData?.repo?.openIssues ?? null;
         pillars[p.id] = {
-          dev:      sc.pillars.development.score,
-          engage:   sc.pillars.engagement.score,
-          momentum: sc.pillars.momentum.score,
-          risk:     sc.pillars.risk.score,
+          dev:       sc.pillars.development.score,
+          engage:    sc.pillars.engagement.score,
+          momentum:  sc.pillars.momentum.score,
+          risk:      sc.pillars.risk.score,
+          community: sc.pillars.community.score,
         };
       }
     }

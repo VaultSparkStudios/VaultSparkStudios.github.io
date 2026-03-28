@@ -11,7 +11,7 @@ const AGENTS = [
     purpose: "Per-project session agent. Reads all context files, executes work, writes full closeout including SIL and CDR.",
     inputs: ["AGENTS.md", "context/* (all 8 files)", "SELF_IMPROVEMENT_LOOP.md"],
     outputs: ["CURRENT_STATE.md", "TASK_BOARD.md", "LATEST_HANDOFF.md", "WORK_LOG.md", "SELF_IMPROVEMENT_LOOP.md", "CREATIVE_DIRECTION_RECORD.md"],
-    scoreImpact: ["All 4 pillars", "Governance +5"],
+    scoreImpact: ["All 5 pillars", "Governance +5"],
     howToUse: 'Say "start" at the beginning of any project session. Say "closeout" when done.',
     automated: false,
   },

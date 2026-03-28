@@ -98,6 +98,37 @@ export function explainScore(project, repoData, sbData, socialData, compliance =
     if (signals.some((s) => /TODO/i.test(s))) {
       losses.push({ pillar: "Risk", points: Math.min(riskLost, 2), action: "Reduce TODO/FIXME count below 20", signal: signals.find((s) => /TODO/i.test(s)), priority: 5 });
     }
+    if (signals.some((s) => /critical issue/i.test(s))) {
+      losses.push({ pillar: "Risk", points: Math.min(riskLost, 2), action: "Resolve critical/urgent labeled issues", signal: "Critical issue open", priority: 1 });
+    }
+    if (signals.some((s) => /aging.*14/i.test(s))) {
+      losses.push({ pillar: "Risk", points: Math.min(riskLost, 1), action: "Address aging PRs (14-30 days old)", signal: signals.find((s) => /aging/i.test(s)), priority: 4 });
+    }
+    if (signals.some((s) => /dep vulnerabilit|dep alert/i.test(s))) {
+      losses.push({ pillar: "Risk", points: Math.min(riskLost, 3), action: "Resolve Dependabot vulnerability alerts", signal: signals.find((s) => /dep vulnerabilit|dep alert/i.test(s)), priority: 2 });
+    }
+  }
+
+  // ── Community pillar losses ─────────────────────────────────────────────
+  const comm = scoring.pillars.community;
+  const commLost = comm.max - comm.score;
+  if (commLost > 0) {
+    const signals = comm.signals || [];
+    if (!signals.some((s) => /social followers/i.test(s)) || signals.some((s) => /^(?:20|[12]?\d) total/i.test(s))) {
+      losses.push({ pillar: "Community", points: Math.min(commLost, 5), action: "Grow social following across platforms", signal: "Low social following", priority: 4 });
+    }
+    if (signals.some((s) => /no new members/i.test(s)) || !signals.some((s) => /members/i.test(s))) {
+      losses.push({ pillar: "Community", points: Math.min(commLost, 5), action: "Drive member signups to the Vault", signal: "No member growth", priority: 3 });
+    }
+    if (!signals.some((s) => /social post/i.test(s) || /active social posting/i.test(s))) {
+      losses.push({ pillar: "Community", points: Math.min(commLost, 4), action: "Post content on social channels (YouTube, Reddit, Bluesky)", signal: "No recent social posts", priority: 3 });
+    }
+    if (!signals.some((s) => /gumroad/i.test(s) || /product sales/i.test(s))) {
+      losses.push({ pillar: "Community", points: Math.min(commLost, 3), action: "List and sell products on Gumroad", signal: "No Gumroad sales", priority: 5 });
+    }
+    if (!signals.some((s) => /engagement/i.test(s))) {
+      losses.push({ pillar: "Community", points: Math.min(commLost, 4), action: "Boost social engagement (likes, comments, shares)", signal: "Low social engagement", priority: 4 });
+    }
   }
 
   // ── Deduplicate (CI failing appears in both Dev and Risk) ──────────────
@@ -121,7 +152,7 @@ export function explainScore(project, repoData, sbData, socialData, compliance =
   }));
 
   const totalRecoverable = uniqueLosses.reduce((s, l) => s + l.points, 0);
-  const potentialScore = Math.min(105, scoring.total + totalRecoverable);
+  const potentialScore = Math.min(130, scoring.total + totalRecoverable);
   const potentialGrade = getGrade(potentialScore);
 
   // ── Summary text ───────────────────────────────────────────────────────
@@ -146,6 +177,7 @@ export function explainScore(project, repoData, sbData, socialData, compliance =
       { name: "Engagement", score: eng.score, max: eng.max, lost: engLost, signals: eng.signals },
       { name: "Momentum", score: mom.score, max: mom.max, lost: momLost, signals: mom.signals },
       { name: "Risk", score: risk.score, max: risk.max || 20, lost: Math.max(0, riskLost), signals: risk.signals },
+      { name: "Community", score: comm.score, max: comm.max, lost: commLost, signals: comm.signals },
     ],
     losses: uniqueLosses,
     recoveryPlan,

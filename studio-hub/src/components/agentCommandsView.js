@@ -248,7 +248,7 @@ export function renderAgentCommandsView() {
       ${card("GOVERNANCE SCORING — RISK PILLAR BONUS", "var(--purple, #c084fc)", `
         <div style="margin-bottom:14px; font-size:12px; color:var(--muted); line-height:1.5;">
           Studio OS compliance adds up to <strong style="color:#c084fc;">+5 points</strong> to the Risk pillar,
-          pushing the project total max from <strong>100 → 105</strong> and unlocking <strong style="color:#c084fc;">S-tier</strong> grade.
+          pushing the project total max from <strong>125 → 130</strong> and unlocking <strong style="color:#c084fc;">S-tier</strong> grade.
           The hub reads SIL content and CDR content on every sync — not just file existence.
         </div>
         <table style="width:100%; border-collapse:collapse; margin-bottom:14px;">
@@ -283,12 +283,12 @@ export function renderAgentCommandsView() {
         </table>
         <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
           ${[
-            { grade: "S", label: "100–105", color: "#c084fc", note: "Full governance" },
-            { grade: "A+", label: "85–99", color: "#6ae3b2", note: "High compliance" },
-            { grade: "A", label: "75–84", color: "#6ae3b2", note: "" },
-            { grade: "B+", label: "65–74", color: "#69b3ff", note: "" },
-            { grade: "B", label: "55–64", color: "#69b3ff", note: "" },
-            { grade: "C+/C", label: "35–54", color: "#ffc874", note: "" },
+            { grade: "S", label: "124–130", color: "#c084fc", note: "Full governance" },
+            { grade: "A+", label: "105–123", color: "#6ae3b2", note: "High compliance" },
+            { grade: "A", label: "93–104", color: "#6ae3b2", note: "" },
+            { grade: "B+", label: "80–92", color: "#69b3ff", note: "" },
+            { grade: "B", label: "68–79", color: "#69b3ff", note: "" },
+            { grade: "C+/C", label: "43–67", color: "#ffc874", note: "" },
           ].map(g => `
             <div style="background:${g.color}12; border:1px solid ${g.color}30; border-radius:6px; padding:8px 10px; text-align:center;">
               <div style="font-size:18px; font-weight:900; color:${g.color};">${g.grade}</div>
