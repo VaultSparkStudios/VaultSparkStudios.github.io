@@ -20,47 +20,39 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Install psql
-        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client dnsutils
 
       - name: Determine migration files
         id: files
         run: |
           if [ -n "${{ inputs.files }}" ]; then
-            # User specified files
             echo "list=${{ inputs.files }}" >> "$GITHUB_OUTPUT"
           else
-            # All pending migrations in order
             echo "list=supabase/migrations/supabase-phase40-fan-art.sql,supabase/migrations/supabase-phase41-fan-art-votes.sql,supabase/migrations/supabase-phase43-teams.sql,supabase/migrations/supabase-phase44-gift-subs-social-graph.sql,supabase/migrations/supabase-phase45-game-scores.sql,supabase/migrations/supabase-phase45-newsletter.sql,supabase/migrations/supabase-phase45-seasons.sql,supabase/supabase-phase46-treasury.sql,supabase/supabase-phase47-weekly-leaderboard.sql,supabase/supabase-phase48-seasons-xp.sql,supabase/supabase-phase49-social-graph.sql,supabase/migrations/supabase-phase50-referral-milestones.sql" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Resolve Supabase host to IPv4
-        id: resolve
-        env:
-          DATABASE_URL: ${{ secrets.SUPABASE_DB_URL }}
-        run: |
-          # Extract hostname from postgres URL
-          HOST=$(echo "$DATABASE_URL" | sed -E 's|.*@([^:/]+).*|\1|')
-          echo "Original host: $HOST"
-          # Resolve to IPv4
-          IPV4=$(dig +short -4 A "$HOST" | head -1)
-          echo "Resolved IPv4: $IPV4"
-          if [ -z "$IPV4" ]; then
-            echo "::error::Could not resolve $HOST to IPv4"
-            exit 1
-          fi
-          # Replace hostname with IPv4 in the URL
-          DB_URL_IPV4=$(echo "$DATABASE_URL" | sed "s|$HOST|$IPV4|")
-          echo "db_url_ipv4=$DB_URL_IPV4" >> "$GITHUB_OUTPUT"
-
       - name: Run migrations
         env:
-          DATABASE_URL: ${{ steps.resolve.outputs.db_url_ipv4 }}
+          DATABASE_URL_RAW: ${{ secrets.SUPABASE_DB_URL }}
         run: |
+          # ── Force IPv4: GitHub Actions runners can't reach Supabase over IPv6 ──
+          HOST=$(echo "$DATABASE_URL_RAW" | sed -E 's|.*@([^:/]+).*|\1|')
+          echo "Resolving $HOST to IPv4..."
+          IPV4=$(dig +short -4 A "$HOST" | head -1)
+          if [ -z "$IPV4" ]; then
+            echo "::warning::Could not resolve to IPv4, trying original hostname"
+            DATABASE_URL="$DATABASE_URL_RAW"
+          else
+            echo "Resolved: $HOST → $IPV4"
+            DATABASE_URL=$(echo "$DATABASE_URL_RAW" | sed "s|$HOST|$IPV4|")
+          fi
+          export DATABASE_URL
+
           IFS=',' read -ra FILES <<< "${{ steps.files.outputs.list }}"
           FAILED=0
 
           for file in "${FILES[@]}"; do
-            file=$(echo "$file" | xargs)  # trim whitespace
+            file=$(echo "$file" | xargs)
             if [ ! -f "$file" ]; then
               echo "::error::File not found: $file"
               FAILED=1
@@ -81,7 +73,7 @@ jobs:
             if [ $? -ne 0 ]; then
               echo "::error::Migration failed: $file"
               FAILED=1
-              break  # stop on first failure to preserve order
+              break
             else
               echo "✓ $file — success"
             fi
