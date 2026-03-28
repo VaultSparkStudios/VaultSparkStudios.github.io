@@ -4,7 +4,7 @@
 
 - Date: 2026-03-27
 - Overall status: Live and active
-- Current phase: Session 5 sprint complete (2026-03-27) — 9 features shipped, SQL migrations pending user action
+- Current phase: Session 9 complete (2026-03-27) — analytics-driven CWV fixes, DreadSpike rename, SQL migrations still pending user action
 
 ## What exists
 
@@ -116,7 +116,7 @@
 
 ## In progress
 
-- None. All committed and pushed (session 5 complete).
+- None. All committed and pushed (session 9 complete).
 
 ## SQL Migrations Pending (user must run in Supabase dashboard)
 
@@ -124,6 +124,7 @@
 - supabase-phase47-weekly-leaderboard.sql — weekly_game_scores, get_weekly_leaderboard, submit_weekly_score RPCs
 - supabase-phase48-seasons-xp.sql — award_season_xp RPC, triggers on game_scores/challenge_submissions/game_sessions, season_xp column on vault_members
 - supabase-phase49-social-graph.sql — member_follows, get_follow_counts, get_following_feed RPCs
+- supabase-phase50 — referral_milestones, vault_member_milestones, get_referral_milestones + claim_referral_milestone RPCs
 
 ## Blockers
 

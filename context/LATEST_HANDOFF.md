@@ -2,16 +2,31 @@
 
 Last updated: 2026-03-27
 
-Session Intent (2026-03-27): Ship Terms of Service, "Complete Your Vault" onboarding, and Live Activity Feed; simplify fixes.
+Session Intent (2026-03-27 — Session 9): Analytics-driven Core Web Vitals fixes using Cloudflare Web Analytics data; rename darth-spike to DreadSpike.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
-## Where We Left Off (Session 4)
+## Where We Left Off (Session 9)
 
-- Shipped: 4 improvements across 3 groups — legal (Terms of Service + footer links on 47 pages), member activation ("Complete Your Vault" onboarding checklist in vault portal), homepage conversion (Live Activity Feed with esc() XSS safety + merged member count fetch)
-- Tests: N/A — no test suite
-- Deploy: deployed to main (commit 5f4436b pushed)
+- Shipped: Analytics-driven CWV fixes (LCP + INP), above-fold image optimization on 5 top pages, DreadSpike asset rename, Football GM INP improvements
+- Tests: 7 Playwright E2E spec files (from session 8)
+- Deploy: deployed to main (commit 3a4a463 pushed)
+
+---
+
+## What was completed (as of 2026-03-27 — Session 9)
+
+### Session 9 — Analytics-Driven CWV Fixes + DreadSpike Rename (2026-03-27)
+
+**Shipped:**
+- LCP fix: dreadspike-poster.webp was causing 9% poor LCP (6,540ms P75) — removed conflicting preload+lazy on homepage, changed to `loading="eager"` + `fetchpriority="high"` on above-fold pages (universe/, universe/dreadspike/), added width/height/decoding on all references
+- INP fix: Football GM setup page had 6,352ms INP on `body.setup-body` — debounced save search input (200ms), added double-rAF yield before createLeague(), added button disable + "Creating..." text for immediate visual feedback
+- Above-fold image audit: fixed `loading="lazy"` → `loading="eager"` on nav brand icons across 5 top pages (/, /vault-member/, /ranks/, /leaderboards/); added fetchpriority + dimensions to homepage hero cinematic logo
+- DreadSpike rename: 8 asset files renamed via `git mv` (darth-spike-* → dreadspike-*), all references updated across 6 HTML + 1 JS + 1 changelog + 1 task board
+- Housekeeping: removed Cloudflare analytics export; added `Analytics & logs *` to .gitignore
+
+**Commits:** 3a4a463 (analytics-driven CWV fixes + DreadSpike rename)
 
 ---
 
@@ -80,23 +95,23 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## What is mid-flight
 
-- Nothing. All pushed to main (5f4436b).
+- Nothing. All pushed to main (3a4a463).
 
 ---
 
 ## What to do next (in order)
 
-1. **[SIL] Vault Dispatch weekly email** — Resend infra ready; needs template + cron trigger [8.5]
-2. **[SIL] Per-game weekly high score leaderboard** — natural follow-on to VaultScore hookup [8.0]
-3. **[SIL] Expand Activity Feed** — add rank-ups, challenge completions, game sessions (currently joins only) [8.0]
-4. **[SIL] Portal.js module split** — escalated; 4,465+ lines is top Dev Health ceiling item [7.5]
-5. **Cloudflare proxy** — DNS change on registrar; unblocks HTTP security headers (HSTS, CSP, X-Content-Type-Options) [10]
-6. **VAPID keys** — generate + set secrets → activates web push end-to-end [9]
-7. **Run pending SQL migrations** — phases 40, 41, 43, 45 (fan art, teams, game scores, seasons, newsletter)
+1. **[SIL] Portal JS template literal inline style cleanup** — ~204 remaining in portal-dashboard.js + portal-features.js [6.0]
+2. **[SIL] Image compression optimization pass** — cinematic logo 223KB, could be reduced [6.0]
+3. **[SIL] axe-core accessibility CI integration** — add to Playwright suite [7.0]
+4. **Programmatic SEO for member profile pages** — long-tail search opportunity [7.0]
+5. **Vault Score Public Leaderboard API** — expose scores as embeddable endpoint [7.5]
+6. **Cloudflare proxy** — DNS change on registrar; unblocks HTTP security headers [10]
+7. **Run pending SQL migrations** — phases 40–50 (fan art, teams, game scores, seasons, newsletter, treasury, weekly leaderboard, seasons XP, social graph, referral milestones)
 
 ## Human Action Required
 
-- [ ] **Run Supabase SQL migrations** — phases 40, 41, 43, 45 (fan art votes, teams, game scores, seasons, newsletter tables). Run in Supabase Dashboard → SQL Editor. Files: `supabase-phase40-fan-art.sql`, `supabase-phase41-fan-art-votes.sql`, `supabase-phase43-teams.sql`, `supabase-phase45-game-scores.sql`, `supabase-phase45-seasons.sql`, `supabase-phase45-newsletter.sql`
+- [ ] **Run Supabase SQL migrations** — phases 40–50 (fan art, teams, game scores, seasons, newsletter, treasury, weekly leaderboard, seasons XP, social graph, referral milestones). Run in Supabase Dashboard → SQL Editor.
 - [ ] **Enable Cloudflare proxy** — DNS A record change on registrar (point to Cloudflare IPs). Unblocks HSTS, CSP, X-Content-Type-Options headers.
 - [ ] **Generate VAPID keys** — run `npx web-push generate-vapid-keys`, set `VAPID_PUBLIC_KEY` in vault-member portal and `VAPID_PUBLIC_KEY` + `VAPID_PRIVATE_KEY` as Supabase Function secrets. Unblocks web push delivery.
 - [ ] **Set Supabase Function secrets** — RESEND_API_KEY, NEWSLETTER_FROM, APP_URL, NEWSLETTER_SECRET (unblocks newsletter); STRIPE_GIFT_PRICE_ID (future)

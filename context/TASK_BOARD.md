@@ -2,10 +2,11 @@
 
 ## Now
 
-- [SIL] Portal.js module split (auth / challenges / chronicle / settings) — 4,465+ lines; escalated after 3-session skip [7.5]
-- [ ] Run pending SQL migrations: phase46-treasury, phase47-weekly-leaderboard, phase48-seasons-xp, phase49-social-graph [critical path — unlocks session 5 features]
-- [ ] Automated E2E Playwright tests — fill existing empty suite with 5–10 smoke tests; CI infra already wired [7.8]
-- [ ] Programmatic SEO for leaderboard pages — rank/game-specific static pages for long-tail search [7.0]
+- [SIL] Portal JS template literal inline style cleanup — ~204 remaining in portal-dashboard.js + portal-features.js [6.0]
+- [SIL] Image compression optimization pass — cinematic logo 223KB, can be reduced [6.0]
+- [ ] axe-core accessibility integration in Playwright CI [7.0]
+- [ ] Programmatic SEO for member profile pages — long-tail search [7.0]
+- [ ] Run pending SQL migrations: phase40-50 [critical path — unlocks all coded features]
 
 ## Next (Pending External Action)
 
@@ -43,8 +44,8 @@
 - [ ] Member Social Graph ✅ CODED (session 5) — follow/unfollow + Following Feed; needs SQL migration run
 - [ ] Annual VaultSparked pricing tier [8.5] — pending LLC + Stripe production
 - [ ] Gift subscriptions (Stripe) [6.8] — pending LLC + Stripe production
-- [ ] VaultSparked Beta Waitlist for unreleased games [7.0] — gate early beta access behind VaultSparked
-- [ ] Vault Referral Milestone Rewards [6.8] — refer 3/10/25 members → unlock badge/access/recognition
+- [x] VaultSparked Beta Waitlist for unreleased games ✅ SHIPPED (session 8) — Web3Forms on 4 game pages
+- [x] Vault Referral Milestone Rewards ✅ CODED (session 8) — 5 tiers, needs SQL migration run
 - [ ] Game Release Countdown Events [6.5] — live countdown timers to announced release windows on game pages
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
 - [ ] Vault Score Public Leaderboard API [7.5] — expose game scores as embeddable public endpoint
@@ -67,6 +68,33 @@
 - [ ] Community-created lore submissions [4.5]
 - [ ] "Currently playing" badge on member profile [4.5] (note: already exists as of Phase 42)
 - [ ] Vault social graph (member connections) [4.8] — now CODED as full follow system (session 5, phase 49)
+
+## Completed — Session 9 (2026-03-27)
+
+- ✅ LCP fix: dreadspike-poster.webp — removed conflicting preload+lazy, added eager/fetchpriority/dimensions on above-fold pages
+- ✅ INP fix: Football GM setup page — debounced save search (200ms), rAF yield before createLeague(), button loading state
+- ✅ Above-fold image audit — fixed loading/fetchpriority/decoding on nav icons across 5 top pages; hero cinematic logo priority
+- ✅ DreadSpike rename — 8 asset files renamed (darth-spike-* → dreadspike-*), all references updated across 6 HTML + 1 JS + 1 changelog + 1 task board
+- ✅ .gitignore — added Cloudflare analytics export exclusion
+
+## Completed — Session 8 (2026-03-27)
+
+- ✅ Portal CSS extraction — 1,592-line inline `<style>` → portal.css external stylesheet; HTML 3149→1559 lines
+- ✅ 63 inline style="" attributes replaced with `.p-` utility classes
+- ✅ 7 programmatic SEO leaderboard sub-pages (global, challenges, recruiters, football-gm, call-of-doodie, teams, weekly)
+- ✅ Beta waitlist Web3Forms email capture on 4 unreleased game pages
+- ✅ Referral milestone rewards — phase50 SQL migration, 5 tiers (1/3/5/10/25), portal dashboard panel
+- ✅ 6 new Playwright E2E spec files (games, leaderboards, pages, navigation, responsive, accessibility)
+
+## Completed — Session 7 (2026-03-27)
+
+- ✅ Security headers — 7 meta security tags on all 72 HTML pages + Cloudflare Worker created
+- ✅ Game rename: Dunescape → Solara: Sunfall
+- ✅ SRI hashes on external JS files; CSP updates
+
+## Completed — Session 6 (2026-03-27)
+
+- ✅ Portal.js module split — 4,618-line monolith → 6 files (portal-core, portal-auth, portal-dashboard, portal-features, portal-challenges, portal.js orchestrator)
 
 ## Completed — Session 5 Sprint (2026-03-27)
 
