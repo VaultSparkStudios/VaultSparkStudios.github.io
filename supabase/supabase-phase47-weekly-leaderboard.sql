@@ -15,7 +15,9 @@ CREATE TABLE IF NOT EXISTS weekly_game_scores (
 );
 
 ALTER TABLE weekly_game_scores ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "public read weekly scores" ON weekly_game_scores;
 CREATE POLICY "public read weekly scores"   ON weekly_game_scores FOR SELECT USING (true);
+DROP POLICY IF EXISTS "service write weekly scores" ON weekly_game_scores;
 CREATE POLICY "service write weekly scores" ON weekly_game_scores FOR ALL    USING (auth.role() = 'service_role');
 
 -- RPC: submit or update a weekly score (keeps best score per user/game/week)

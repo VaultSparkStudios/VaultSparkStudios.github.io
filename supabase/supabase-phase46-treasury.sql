@@ -16,7 +16,9 @@ CREATE TABLE IF NOT EXISTS treasury_items (
 );
 
 ALTER TABLE treasury_items ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "public read treasury items" ON treasury_items;
 CREATE POLICY "public read treasury items" ON treasury_items FOR SELECT USING (is_active = true);
+DROP POLICY IF EXISTS "admin manage treasury" ON treasury_items;
 CREATE POLICY "admin manage treasury" ON treasury_items FOR ALL USING (auth.role() = 'service_role');
 
 -- Purchases ledger
@@ -29,7 +31,9 @@ CREATE TABLE IF NOT EXISTS treasury_purchases (
 );
 
 ALTER TABLE treasury_purchases ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "members insert own purchases" ON treasury_purchases;
 CREATE POLICY "members insert own purchases" ON treasury_purchases FOR INSERT WITH CHECK (auth.uid() = user_id);
+DROP POLICY IF EXISTS "members read own purchases" ON treasury_purchases;
 CREATE POLICY "members read own purchases" ON treasury_purchases FOR SELECT USING (auth.uid() = user_id);
 
 -- RPC: spend points on a treasury item (atomic)

@@ -45,9 +45,13 @@ ALTER TABLE seasons          ENABLE ROW LEVEL SECURITY;
 ALTER TABLE battle_pass_tiers ENABLE ROW LEVEL SECURITY;
 ALTER TABLE season_xp        ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Anyone can read seasons" ON seasons;
 CREATE POLICY "Anyone can read seasons"      ON seasons          FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Anyone can read bp tiers" ON battle_pass_tiers;
 CREATE POLICY "Anyone can read bp tiers"     ON battle_pass_tiers FOR SELECT USING (true);
+DROP POLICY IF EXISTS "Users read own season xp" ON season_xp;
 CREATE POLICY "Users read own season xp"     ON season_xp        FOR SELECT USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS "Service manages season xp" ON season_xp;
 CREATE POLICY "Service manages season xp"    ON season_xp        FOR ALL    USING (auth.role() = 'service_role');
 
 -- ── get_season_pass RPC ───────────────────────────────────────────────────

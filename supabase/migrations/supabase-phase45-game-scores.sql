@@ -22,12 +22,15 @@ CREATE INDEX IF NOT EXISTS game_scores_slug_score_idx ON game_scores(game_slug, 
 -- ── RLS ───────────────────────────────────────────────────────────────────
 ALTER TABLE game_scores ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Anyone can read game scores" ON game_scores;
 CREATE POLICY "Anyone can read game scores"
   ON game_scores FOR SELECT USING (true);
 
+DROP POLICY IF EXISTS "Users insert own game scores" ON game_scores;
 CREATE POLICY "Users insert own game scores"
   ON game_scores FOR INSERT WITH CHECK (auth.uid() = user_id);
 
+DROP POLICY IF EXISTS "Users update own game scores" ON game_scores;
 CREATE POLICY "Users update own game scores"
   ON game_scores FOR UPDATE USING (auth.uid() = user_id);
 

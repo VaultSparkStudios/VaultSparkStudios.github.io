@@ -10,8 +10,11 @@ CREATE TABLE IF NOT EXISTS member_follows (
 );
 
 ALTER TABLE member_follows ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "members can follow" ON member_follows;
 CREATE POLICY "members can follow"   ON member_follows FOR INSERT WITH CHECK (auth.uid() = follower_id);
+DROP POLICY IF EXISTS "members can unfollow" ON member_follows;
 CREATE POLICY "members can unfollow" ON member_follows FOR DELETE  USING  (auth.uid() = follower_id);
+DROP POLICY IF EXISTS "public read follows" ON member_follows;
 CREATE POLICY "public read follows"  ON member_follows FOR SELECT  USING  (true);
 
 -- RPC: get follower + following counts for a profile

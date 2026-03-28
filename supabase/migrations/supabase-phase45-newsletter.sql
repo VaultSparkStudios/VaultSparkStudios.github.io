@@ -25,13 +25,17 @@ CREATE TABLE IF NOT EXISTS newsletter_preferences (
 ALTER TABLE member_newsletter_log  ENABLE ROW LEVEL SECURITY;
 ALTER TABLE newsletter_preferences ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "Users read own newsletter log" ON member_newsletter_log;
 CREATE POLICY "Users read own newsletter log"
   ON member_newsletter_log FOR SELECT USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS "Service manages newsletter log" ON member_newsletter_log;
 CREATE POLICY "Service manages newsletter log"
   ON member_newsletter_log FOR ALL USING (auth.role() = 'service_role');
 
+DROP POLICY IF EXISTS "Users manage own newsletter prefs" ON newsletter_preferences;
 CREATE POLICY "Users manage own newsletter prefs"
   ON newsletter_preferences FOR ALL USING (auth.uid() = user_id);
+DROP POLICY IF EXISTS "Service reads newsletter prefs" ON newsletter_preferences;
 CREATE POLICY "Service reads newsletter prefs"
   ON newsletter_preferences FOR SELECT USING (auth.role() = 'service_role');
 

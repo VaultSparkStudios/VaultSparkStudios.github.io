@@ -13,8 +13,10 @@ CREATE TABLE IF NOT EXISTS gift_subscriptions (
   created_at       timestamptz NOT NULL DEFAULT now()
 );
 ALTER TABLE gift_subscriptions ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "gifter reads own" ON gift_subscriptions;
 CREATE POLICY "gifter reads own" ON gift_subscriptions
   FOR SELECT USING (auth.uid() = gifter_id OR auth.uid() = recipient_id);
+DROP POLICY IF EXISTS "service insert" ON gift_subscriptions;
 CREATE POLICY "service insert" ON gift_subscriptions
   FOR INSERT WITH CHECK (true);
 
@@ -27,8 +29,11 @@ CREATE TABLE IF NOT EXISTS member_follows (
   CHECK (follower_id <> following_id)
 );
 ALTER TABLE member_follows ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "public read follows" ON member_follows;
 CREATE POLICY "public read follows"  ON member_follows FOR SELECT USING (true);
+DROP POLICY IF EXISTS "members follow" ON member_follows;
 CREATE POLICY "members follow"       ON member_follows FOR INSERT WITH CHECK (auth.uid() = follower_id);
+DROP POLICY IF EXISTS "members unfollow" ON member_follows;
 CREATE POLICY "members unfollow"     ON member_follows FOR DELETE USING (auth.uid() = follower_id);
 
 -- Helper: follower/following counts (used on public profiles)
@@ -75,5 +80,6 @@ CREATE TABLE IF NOT EXISTS investor_digest_log (
   error       text
 );
 ALTER TABLE investor_digest_log ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "admin read digest log" ON investor_digest_log;
 CREATE POLICY "admin read digest log" ON investor_digest_log
   FOR SELECT USING (false);          -- service role only
