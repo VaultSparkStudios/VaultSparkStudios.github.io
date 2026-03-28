@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-20260328-cb456a5';
+const CACHE_NAME = 'vaultspark-20260328-nav-fix';
 const MAX_PAGE_ENTRIES = 60;
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const STATIC_ASSETS = [
@@ -20,6 +20,7 @@ const STATIC_ASSETS = [
   '/vault-member/portal-settings.js',
   '/assets/game-utils.js',
   '/assets/countdown.js',
+  '/assets/nav-toggle.js',
   '/vault-member/portal.css',
   '/offline.html',
   '/404.html',

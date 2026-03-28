@@ -274,11 +274,13 @@ p { margin: 0; }
   pointer-events: none;
   transition: opacity 0.14s ease, visibility 0.14s ease;
 }
-.nav-item:hover .nav-dropdown,
-.nav-item:focus-within .nav-dropdown {
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
+@media (hover: hover) {
+  .nav-item:hover .nav-dropdown,
+  .nav-item:focus-within .nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
 }
 .nav-dropdown a {
   display: block;

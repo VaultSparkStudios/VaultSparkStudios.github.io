@@ -80,10 +80,10 @@
   - `/vaultsparked/` — VaultSparked perks page with pricing
   - `/universe/` + `/universe/dreadspike/` — IP lore pages
 
-- mobile responsiveness: FULLY AUDITED AND FIXED (2026-03-25)
+- mobile responsiveness: FULLY AUDITED AND FIXED (2026-03-27)
   - All pages pass 320px / 480px / 768px / 1024px breakpoints
   - Tables scroll horizontally on mobile
-  - Nav, modals, overlays, filter pills all work on phone
+  - Nav: hamburger opens full-screen overlay; dropdowns collapsed by default with tap-to-toggle accordion; caret arrows rotate; all 6 top-level items visible immediately
   - 44px tap targets on all interactive elements
   - Protocol: re-audit on every major update
 
@@ -126,7 +126,7 @@
 
 ## In progress
 
-- None. All committed and pushed (session 10 complete).
+- None. All committed and pushed (session 10 continued — mobile nav fix cb456a5).
 
 ## SQL Migrations Pending (user must run in Supabase dashboard)
 
