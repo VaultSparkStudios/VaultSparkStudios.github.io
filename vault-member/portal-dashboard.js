@@ -695,6 +695,94 @@
       }
     }
 
+    // ── Phase 50: Referral Milestones ─────────────────────────────
+    let _milestonesLoaded = false;
+
+    async function loadReferralMilestones() {
+      if (_milestonesLoaded) return;
+      _milestonesLoaded = true;
+
+      const panel = document.getElementById('referral-milestones-panel');
+      if (!panel) return;
+
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+
+        const { data, error } = await VSSupabase.rpc('get_referral_milestones', { p_user_id: session.user.id });
+        if (error || !data) return;
+
+        const count = data.referral_count || 0;
+        const milestones = data.milestones || [];
+        if (!milestones.length) return;
+
+        panel.style.display = '';
+
+        // Count badge
+        const badge = document.getElementById('referral-count-badge');
+        if (badge) badge.textContent = count + ' referral' + (count !== 1 ? 's' : '');
+
+        // Progress bar
+        const maxThreshold = milestones[milestones.length - 1].threshold;
+        const pct = Math.min(100, (count / maxThreshold) * 100);
+        const fill = document.getElementById('referral-progress-fill');
+        if (fill) fill.style.width = pct + '%';
+
+        // Milestone cards
+        const list = document.getElementById('referral-milestones-list');
+        if (!list) return;
+
+        list.innerHTML = milestones.map(function(m) {
+          const reached = count >= m.threshold;
+          const claimed = m.claimed;
+          const opacity = reached ? '1' : '0.45';
+          const border = reached && !claimed ? 'rgba(255,196,0,0.3)' : 'rgba(255,255,255,0.08)';
+          const bg = reached && !claimed ? 'rgba(255,196,0,0.04)' : 'rgba(255,255,255,0.02)';
+
+          let actionHtml = '';
+          if (claimed) {
+            actionHtml = '<span style="font-size:0.78rem;font-weight:700;color:#4ade80;">&#10003; Claimed</span>';
+          } else if (reached) {
+            actionHtml = '<button type="button" onclick="claimMilestone(' + m.id + ',this)" class="button button-sm" style="font-size:0.78rem;padding:0.3rem 0.85rem;">Claim Reward</button>';
+          } else {
+            actionHtml = '<span style="font-size:0.78rem;color:var(--dim);">' + m.threshold + ' referrals needed</span>';
+          }
+
+          return '<div style="display:flex;align-items:center;gap:1rem;padding:0.85rem 1rem;border-radius:14px;border:1px solid ' + border + ';background:' + bg + ';opacity:' + opacity + ';transition:opacity 0.2s;">' +
+            '<div style="font-size:1.5rem;flex-shrink:0;">' + (m.icon || '🏆') + '</div>' +
+            '<div style="flex:1;min-width:0;">' +
+              '<div style="font-weight:700;font-size:0.93rem;color:var(--text);margin-bottom:0.15rem;">' + m.label + '</div>' +
+              '<div style="font-size:0.82rem;color:var(--muted);line-height:1.45;">' + m.description + '</div>' +
+            '</div>' +
+            '<div style="flex-shrink:0;">' + actionHtml + '</div>' +
+          '</div>';
+        }).join('');
+
+      } catch (err) {
+        console.warn('[milestones]', err);
+      }
+    }
+
+    async function claimMilestone(milestoneId, btn) {
+      if (btn) { btn.disabled = true; btn.textContent = 'Claiming…'; }
+      try {
+        const { data, error } = await VSSupabase.rpc('claim_referral_milestone', { p_milestone_id: milestoneId });
+        if (error) throw error;
+        if (data && data.ok) {
+          if (btn) {
+            btn.outerHTML = '<span style="font-size:0.78rem;font-weight:700;color:#4ade80;">&#10003; Claimed!</span>';
+          }
+          if (typeof showToast === 'function') showToast('Milestone reward claimed!', { icon: '🏆' });
+        } else {
+          if (btn) { btn.disabled = false; btn.textContent = 'Claim Reward'; }
+          if (typeof showToast === 'function') showToast(data?.error || 'Could not claim', { icon: '⚠️' });
+        }
+      } catch (err) {
+        if (btn) { btn.disabled = false; btn.textContent = 'Claim Reward'; }
+        console.warn('[milestone-claim]', err);
+      }
+    }
+
     // ── Phase 6: Activity Chronicle ──────────────────────────────
     let _chronicleLoaded = false;
 
@@ -1058,6 +1146,7 @@
       }
     }
     window.startGiftSubCheckout = startGiftSubCheckout;
+    window.claimMilestone = claimMilestone;
 
     // ── Phase 25: Member Spotlight ────────────────────────────────
     async function loadMemberSpotlight() {

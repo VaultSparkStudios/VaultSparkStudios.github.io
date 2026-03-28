@@ -1,4 +1,4 @@
-name: E2E Smoke Tests
+name: E2E Test Suite
 
 on:
   push:
@@ -23,8 +23,8 @@ jobs:
           npm install -D @playwright/test
           npx playwright install --with-deps chromium
 
-      - name: Run E2E smoke tests
-        run: npx playwright test --reporter=list
+      - name: Run E2E tests
+        run: npx playwright test --reporter=list --project=chromium
         env:
           BASE_URL: https://vaultsparkstudios.com
 

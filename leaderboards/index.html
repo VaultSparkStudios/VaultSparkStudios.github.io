@@ -818,6 +818,15 @@
           }
         });
       });
+      // ── Hash-based tab selection (for SEO sub-page links) ─────
+      var hash = window.location.hash.replace('#','');
+      if (hash) {
+        var tabMap = {global:'global',challenges:'challenges',referrals:'referrals',football:'football',doodie:'doodie',teams:'teams',weekly:'weekly'};
+        if (tabMap[hash]) {
+          var tab = document.querySelector('.lb-game-tab[data-game="'+tabMap[hash]+'"]');
+          if (tab) tab.click();
+        }
+      }
     })();
   </script>
 <script src="/assets/vault-cta.js" defer></script>

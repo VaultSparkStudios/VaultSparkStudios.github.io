@@ -278,21 +278,34 @@
       </div>
     </section>
 
-    <!-- Wishlist / Notify Me -->
+    <!-- Beta Waitlist -->
     <section style="padding:2.5rem 0;border-top:1px solid rgba(255,255,255,0.06);">
       <div class="container">
-        <div style="background:linear-gradient(135deg,rgba(255,170,31,0.07),rgba(255,110,60,0.04));border:1px solid rgba(255,170,31,0.2);border-radius:18px;padding:1.75rem 2rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;">
-          <div>
-            <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#ffaa1f;margin-bottom:0.5rem;">Get Notified</div>
-            <div style="font-weight:700;font-size:1.05rem;color:var(--text);margin-bottom:0.35rem;">Wishlist Solara: Sunfall — Be First In.</div>
-            <div style="font-size:0.88rem;color:var(--muted);max-width:52ch;line-height:1.6;">Join the Vault to receive launch alerts, early access invitations, and exclusive Founding Member rewards when Solara opens.</div>
-          </div>
-          <div style="display:flex;gap:0.75rem;flex-wrap:wrap;flex-shrink:0;">
-            <a href="/vault-member/#register" class="button button-sm">Notify Me at Launch</a>
-          </div>
+        <div style="background:linear-gradient(135deg,rgba(255,170,31,0.07),rgba(255,110,60,0.04));border:1px solid rgba(255,170,31,0.2);border-radius:18px;padding:1.75rem 2rem;">
+          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#ffaa1f;margin-bottom:0.5rem;">🔔 Beta Waitlist</div>
+          <div style="font-weight:700;font-size:1.05rem;color:var(--text);margin-bottom:0.35rem;">Join the Solara: Sunfall Waitlist</div>
+          <div style="font-size:0.88rem;color:var(--muted);max-width:52ch;line-height:1.6;margin-bottom:1rem;">Be first in line for early access, beta invitations, and exclusive Founding Player rewards when Solara launches.</div>
+          <form id="waitlist-form" style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+            <input type="hidden" name="access_key" value="8f83d837-0348-43a4-8a0f-19c3a1d70d16" />
+            <input type="hidden" name="subject" value="Beta Waitlist: Solara" />
+            <input type="hidden" name="from_name" value="VaultSpark Waitlist" />
+            <input type="hidden" name="game" value="Solara" />
+            <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" style="flex:1;min-width:200px;height:42px;padding:0 1rem;border-radius:10px;border:1px solid rgba(255,170,31,0.3);background:rgba(255,255,255,0.05);color:var(--text);font-size:0.92rem;font-family:inherit;outline:none;" />
+            <button type="submit" class="button button-sm">Join Waitlist</button>
+          </form>
+          <div id="waitlist-success" style="display:none;margin-top:0.75rem;font-size:0.88rem;color:#4ade80;">&#10003; You're on the list! We'll notify you when Solara is ready.</div>
+          <div id="waitlist-error" style="display:none;margin-top:0.75rem;font-size:0.88rem;color:#f87171;">Something went wrong. Try again or <a href="/contact/" style="color:var(--gold);">contact us</a>.</div>
         </div>
       </div>
     </section>
+    <script>
+    document.getElementById('waitlist-form').addEventListener('submit',async function(e){
+      e.preventDefault();var f=e.target,b=f.querySelector('button[type="submit"]');b.disabled=true;b.textContent='Submitting\u2026';
+      try{var r=await fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.fromEntries(new FormData(f)))});
+      if(r.ok){f.style.display='none';document.getElementById('waitlist-success').style.display='block';}else{throw new Error();}}
+      catch(_){document.getElementById('waitlist-error').style.display='block';b.disabled=false;b.textContent='Join Waitlist';}
+    });
+    </script>
 
   </main>
 

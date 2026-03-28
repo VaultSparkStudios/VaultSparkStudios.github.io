@@ -25,1599 +25,9 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" integrity="sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb" crossorigin="anonymous" defer></script>
   <script src="../assets/supabase-client.js"></script>
 
-  <style>
-    /* ─── Page layout ─── */
-    .member-page {
-      min-height: 100vh;
-      padding: 2rem 0 4rem;
-    }
-    .member-page-hero {
-      text-align: center;
-      padding: 4.5rem 0 2.5rem;
-      position: relative;
-    }
-    .member-page-hero::before {
-      content: "";
-      position: absolute; inset: 0;
-      background:
-        radial-gradient(circle at 30% 50%, rgba(255,196,0,0.08), transparent 35%),
-        radial-gradient(circle at 70% 50%, rgba(31,162,255,0.08), transparent 35%);
-      pointer-events: none;
-    }
-    .member-page-hero .container { position: relative; z-index: 1; }
-    .member-page-hero h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.4rem, 5vw, 4rem);
-      letter-spacing: -0.044em;
-      margin: 0.7rem 0 0.9rem;
-      line-height: 1;
-    }
-    .member-page-hero p {
-      color: var(--muted);
-      font-size: 1.06rem;
-      max-width: 48ch;
-      margin: 0 auto 0;
-      line-height: 1.65;
-    }
+  <link rel="stylesheet" href="portal.css" />
 
-    /* ─── Auth card ─── */
-    .auth-wrap {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 1.5rem;
-      align-items: start;
-      margin-top: 2.5rem;
-    }
-
-    .auth-card {
-      padding: 2.2rem;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(14,18,30,0.95), rgba(8,10,17,0.98));
-      border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: var(--shadow-lg);
-    }
-
-    .auth-tabs {
-      display: flex;
-      gap: 0;
-      margin-bottom: 1.8rem;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.04);
-      padding: 4px;
-    }
-    .auth-tab {
-      flex: 1;
-      height: 40px;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 700;
-      font-family: inherit;
-      cursor: pointer;
-      border-radius: 9px;
-      transition: all 0.2s ease;
-    }
-    .auth-tab.active {
-      background: rgba(255,255,255,0.09);
-      color: var(--text);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-    }
-
-    .auth-panel { display: none; }
-    .auth-panel.active { display: block; }
-
-    /* ─── VaultSparked Badge ─── */
-    .vaultsparked-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.38rem;
-      padding: 0.28rem 0.75rem 0.28rem 0.6rem;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: linear-gradient(135deg, #0a0a14 0%, #12102a 100%);
-      border: 1px solid transparent;
-      background-clip: padding-box;
-      position: relative;
-      color: #e8d5ff;
-      cursor: default;
-      white-space: nowrap;
-    }
-    .vaultsparked-badge::before {
-      content: '';
-      position: absolute;
-      inset: -1px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #FFC400, #7B5FFF, #1FA2FF, #FFC400);
-      background-size: 300% 300%;
-      animation: vs-border-spin 4s linear infinite;
-      z-index: -1;
-    }
-    .vaultsparked-badge::after {
-      content: '';
-      position: absolute;
-      inset: -3px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, #FFC400, #7B5FFF, #1FA2FF);
-      opacity: 0.15;
-      filter: blur(6px);
-      animation: vs-border-spin 4s linear infinite reverse;
-      z-index: -2;
-    }
-    .vaultsparked-badge .vs-spark {
-      display: inline-block;
-      font-style: normal;
-      animation: vs-spark-pulse 2s ease-in-out infinite;
-      filter: drop-shadow(0 0 4px #FFC400);
-    }
-    .vaultsparked-badge .vs-text {
-      background: linear-gradient(90deg, #FFC400 0%, #c084fc 50%, #1FA2FF 100%);
-      background-size: 200% auto;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: vs-text-shine 3s linear infinite;
-    }
-    @keyframes vs-border-spin {
-      0%   { background-position: 0% 50%; }
-      100% { background-position: 300% 50%; }
-    }
-    @keyframes vs-spark-pulse {
-      0%, 100% { transform: scale(1);   filter: drop-shadow(0 0 3px #FFC400); }
-      50%       { transform: scale(1.3); filter: drop-shadow(0 0 8px #FFC400) drop-shadow(0 0 14px #7B5FFF); }
-    }
-    @keyframes vs-text-shine {
-      0%   { background-position: 0% center; }
-      100% { background-position: 200% center; }
-    }
-
-    /* Static (small) variant — for leaderboards, tool headers */
-    .vaultsparked-badge-sm {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      padding: 0.15rem 0.55rem;
-      border-radius: 999px;
-      font-size: 0.66rem;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: linear-gradient(135deg, #1a0f2e, #0d1527);
-      border: 1px solid rgba(123,95,255,0.5);
-      color: #c084fc;
-      box-shadow: 0 0 8px rgba(123,95,255,0.25), inset 0 0 8px rgba(123,95,255,0.05);
-      white-space: nowrap;
-    }
-
-    /* ─── VaultSparked upgrade CTA panel ─── */
-    .vaultsparked-cta {
-      background: linear-gradient(135deg, rgba(123,95,255,0.08), rgba(31,162,255,0.06), rgba(255,196,0,0.06));
-      border: 1px solid rgba(123,95,255,0.25);
-      border-radius: 20px;
-      padding: 2rem;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .vaultsparked-cta::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%;
-      width: 200%; height: 200%;
-      background: conic-gradient(from 0deg, transparent 0deg, rgba(123,95,255,0.04) 60deg, transparent 120deg);
-      animation: vs-cta-rotate 8s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes vs-cta-rotate {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-    .vaultsparked-cta h3 {
-      font-size: 1.3rem;
-      font-weight: 900;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(90deg, #FFC400, #c084fc, #1FA2FF);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .vaultsparked-cta .cta-price {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: var(--text);
-      line-height: 1;
-      margin: 0.75rem 0 0.25rem;
-    }
-    .vaultsparked-cta .cta-price span {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--muted);
-    }
-    .vaultsparked-cta .cta-perks {
-      list-style: none;
-      padding: 0;
-      margin: 1.2rem auto;
-      max-width: 340px;
-      text-align: left;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .vaultsparked-cta .cta-perks li {
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: 0.9rem;
-      color: var(--light);
-    }
-    .vaultsparked-cta .cta-perks li::before {
-      content: '⚡';
-      font-size: 0.8rem;
-      flex-shrink: 0;
-    }
-    .vaultsparked-cta .cta-btn {
-      display: inline-block;
-      padding: 0.85rem 2.2rem;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #7B5FFF, #1FA2FF);
-      color: #fff;
-      font-weight: 900;
-      font-size: 1rem;
-      font-family: inherit;
-      border: none;
-      cursor: pointer;
-      letter-spacing: 0.03em;
-      box-shadow: 0 4px 20px rgba(123,95,255,0.4);
-      transition: opacity 0.2s, transform 0.15s;
-      position: relative;
-      z-index: 1;
-    }
-    .vaultsparked-cta .cta-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-    .vaultsparked-cta .cta-note {
-      font-size: 0.78rem;
-      color: var(--dim);
-      margin-top: 0.75rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.1rem;
-    }
-    .form-group label {
-      display: block;
-      font-size: 0.82rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--muted);
-      margin-bottom: 0.42rem;
-    }
-    .form-group input {
-      width: 100%;
-      height: 48px;
-      padding: 0 1.1rem;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.05);
-      color: var(--text);
-      font-size: 0.96rem;
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.2s ease, background 0.2s ease;
-    }
-    .form-group input::placeholder { color: var(--dim); }
-    .form-group input:focus {
-      border-color: rgba(255,196,0,0.5);
-      background: rgba(255,255,255,0.08);
-    }
-    .form-group input.error-field {
-      border-color: rgba(239,68,68,0.6);
-    }
-
-    .form-check {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.65rem;
-      margin: 0.8rem 0 1.3rem;
-      cursor: pointer;
-    }
-    .form-check input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      flex-shrink: 0;
-      margin-top: 2px;
-      accent-color: var(--gold);
-      cursor: pointer;
-    }
-    .form-check span {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .form-check a { color: var(--gold); }
-
-    .form-error {
-      display: none;
-      padding: 0.75rem 1rem;
-      border-radius: 10px;
-      background: rgba(239,68,68,0.1);
-      border: 1px solid rgba(239,68,68,0.25);
-      color: #f87171;
-      font-size: 0.88rem;
-      margin-bottom: 1rem;
-    }
-    .form-error.show { display: block; }
-
-    .auth-submit {
-      width: 100%;
-      height: 52px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-    }
-
-    .auth-divider {
-      text-align: center;
-      color: var(--dim);
-      font-size: 0.84rem;
-      margin: 1rem 0;
-      position: relative;
-    }
-    .auth-divider::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: rgba(255,255,255,0.07);
-    }
-    .auth-divider span {
-      position: relative;
-      background: rgba(14,18,30,0.98);
-      padding: 0 0.75rem;
-    }
-
-    .auth-footnote {
-      margin-top: 1.2rem;
-      padding: 0.9rem 1rem;
-      border-radius: 12px;
-      background: rgba(255,196,0,0.04);
-      border: 1px solid rgba(255,196,0,0.1);
-      font-size: 0.82rem;
-      color: var(--dim);
-      line-height: 1.55;
-    }
-    .auth-footnote strong { color: var(--muted); }
-
-    /* ─── Rank preview sidebar ─── */
-    .rank-sidebar {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    .rank-panel {
-      padding: 1.4rem;
-      border-radius: 20px;
-      background: rgba(13,17,28,0.92);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .rank-panel h4 {
-      font-size: 0.75rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      margin-bottom: 1rem;
-    }
-    .rank-row {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      padding: 0.62rem 0.75rem;
-      border-radius: 10px;
-      margin-bottom: 0.35rem;
-      transition: background 0.16s ease;
-    }
-    .rank-row:hover { background: rgba(255,255,255,0.04); }
-    .rank-row:last-child { margin-bottom: 0; }
-    .rank-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .rank-row-name { flex: 1; font-weight: 600; font-size: 0.91rem; }
-    .rank-row-pts { color: var(--dim); font-size: 0.79rem; }
-
-    .benefit-list {
-      list-style: none;
-      padding: 0; margin: 0;
-      display: grid;
-      gap: 0.55rem;
-    }
-    .benefit-list li {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.55rem;
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.45;
-    }
-    .benefit-list li::before {
-      content: "✓";
-      color: #86efac;
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    /* ─── Dashboard ─── */
-    #dashboard-view {
-      display: none;
-    }
-
-    .dashboard-header {
-      padding: 2.5rem 0;
-      position: relative;
-    }
-    .dashboard-header::before {
-      content: "";
-      position: absolute; inset: 0;
-      background: radial-gradient(circle at 20% 50%, rgba(255,196,0,0.07), transparent 40%);
-      pointer-events: none;
-    }
-
-    .profile-card {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 2rem;
-      border-radius: var(--radius);
-      background: linear-gradient(135deg, rgba(255,196,0,0.05), rgba(13,17,28,0.96) 40%, rgba(31,162,255,0.05));
-      border: 1px solid rgba(255,196,0,0.12);
-      box-shadow: var(--shadow);
-      position: relative;
-      z-index: 1;
-    }
-    .profile-avatar {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(255,196,0,0.2), rgba(31,162,255,0.2));
-      border: 2px solid rgba(255,196,0,0.25);
-      display: grid;
-      place-items: center;
-      font-size: 1.8rem;
-      flex-shrink: 0;
-    }
-    .profile-info h2 {
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.25rem;
-    }
-    .profile-meta {
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-      flex-wrap: wrap;
-    }
-    .profile-meta .rank-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.3rem 0.7rem;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-    }
-    .profile-pts {
-      color: var(--muted);
-      font-size: 0.88rem;
-    }
-
-    .progress-bar-wrap {
-      margin-top: 0.85rem;
-    }
-    .progress-bar-label {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.78rem;
-      color: var(--dim);
-      margin-bottom: 0.3rem;
-    }
-    .progress-bar {
-      height: 6px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 999px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--gold), #fff6c0);
-      transition: width 0.8s ease;
-    }
-
-    .profile-actions {
-      margin-left: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      align-items: flex-end;
-      flex-shrink: 0;
-    }
-
-    /* Dashboard grid */
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.2rem;
-      margin-bottom: 1.2rem;
-    }
-    .dashboard-full { grid-column: 1 / -1; }
-
-    .dash-panel {
-      padding: 1.4rem;
-      border-radius: 20px;
-      background: rgba(13,17,28,0.9);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .dash-panel h3 {
-      font-size: 0.78rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 1rem;
-    }
-
-    .game-connection {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      padding: 0.85rem 1rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.07);
-      background: rgba(255,255,255,0.02);
-      margin-bottom: 0.55rem;
-      transition: border-color 0.2s ease;
-    }
-    .game-connection:last-child { margin-bottom: 0; }
-    .game-connection:hover { border-color: rgba(255,255,255,0.12); }
-    .game-connection .game-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
-    .game-connection .game-name { flex: 1; font-weight: 600; font-size: 0.93rem; }
-    .game-connection .game-status {
-      font-size: 0.77rem;
-      padding: 0.28rem 0.6rem;
-      border-radius: 999px;
-      font-weight: 700;
-    }
-    .game-status-linked { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
-    .game-status-pending { background: rgba(255,196,0,0.1); color: var(--gold); border: 1px solid rgba(255,196,0,0.18); }
-
-    .achievement-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.7rem;
-    }
-    .achievement {
-      padding: 1rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.025);
-      text-align: center;
-      transition: border-color 0.2s ease;
-    }
-    .achievement.locked { opacity: 0.35; filter: grayscale(0.6); }
-    .achievement:hover:not(.locked) { border-color: rgba(255,196,0,0.18); }
-    .achievement .ach-icon { font-size: 1.6rem; margin-bottom: 0.35rem; }
-    .achievement .ach-name { font-size: 0.8rem; font-weight: 700; color: #fff; margin-bottom: 0.18rem; }
-    .achievement .ach-desc { font-size: 0.72rem; color: var(--dim); line-height: 1.4; }
-
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.65rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-size: 0.91rem;
-    }
-    .stat-row:last-child { border-bottom: none; }
-    .stat-row .label { color: var(--muted); }
-    .stat-row .value { font-weight: 700; color: #fff; }
-
-    .newsletter-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 1rem;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.07);
-      background: rgba(255,255,255,0.02);
-      margin-bottom: 0.55rem;
-    }
-    .newsletter-toggle p { font-size: 0.88rem; color: var(--muted); margin-top: 0.2rem; }
-    .toggle-switch {
-      position: relative;
-      width: 44px; height: 24px;
-      flex-shrink: 0;
-    }
-    .toggle-switch input { opacity: 0; width: 0; height: 0; }
-    .toggle-switch .slider {
-      position: absolute;
-      inset: 0;
-      background: rgba(255,255,255,0.1);
-      border-radius: 999px;
-      cursor: pointer;
-      transition: background 0.2s ease;
-    }
-    .toggle-switch .slider::before {
-      content: "";
-      position: absolute;
-      left: 3px; top: 3px;
-      width: 18px; height: 18px;
-      background: white;
-      border-radius: 50%;
-      transition: transform 0.2s ease;
-    }
-    .toggle-switch input:checked + .slider { background: var(--gold); }
-    .toggle-switch input:checked + .slider::before { transform: translateX(20px); }
-
-    .signout-btn {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.1);
-      color: var(--muted);
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-size: 0.84rem;
-      cursor: pointer;
-      font-family: inherit;
-      transition: color 0.18s ease, border-color 0.18s ease;
-    }
-    .signout-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
-
-    .coming-soon-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.28rem 0.6rem;
-      border-radius: 999px;
-      font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: var(--dim);
-    }
-
-    /* ─── Profile bio ─── */
-    .profile-bio {
-      font-size: 0.88rem;
-      color: var(--muted);
-      line-height: 1.55;
-      margin-top: 0.6rem;
-      max-width: 52ch;
-    }
-
-    /* ─── Nav account dropdown ─── */
-    .nav-account-wrap {
-      position: relative;
-      display: none;
-    }
-    .nav-account-trigger {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.32rem 0.65rem 0.32rem 0.42rem;
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.1);
-      background: transparent;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.18s, border-color 0.18s;
-    }
-    .nav-account-trigger:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.18); }
-    .nav-account-avatar-sm {
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem;
-      flex-shrink: 0;
-    }
-    .nav-account-name {
-      font-size: 0.86rem;
-      font-weight: 700;
-      color: var(--gold);
-      max-width: 110px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-    .nav-account-caret {
-      font-size: 0.55rem;
-      color: var(--dim);
-      margin-left: 1px;
-    }
-    .nav-account-menu {
-      position: absolute;
-      right: 0;
-      top: calc(100% + 10px);
-      min-width: 190px;
-      background: rgba(10,13,22,0.98);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      padding: 6px;
-      box-shadow: var(--shadow-lg);
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-6px);
-      transition: opacity 0.18s, transform 0.18s;
-      z-index: 300;
-    }
-    .nav-account-wrap.open .nav-account-menu { opacity: 1; pointer-events: auto; transform: translateY(0); }
-    .nav-account-menu a,
-    .nav-account-menu button {
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 0.58rem 0.9rem;
-      border-radius: 10px;
-      font-size: 0.88rem;
-      color: var(--muted);
-      text-decoration: none;
-      border: none;
-      background: transparent;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.15s, color 0.15s;
-    }
-    .nav-account-menu a:hover,
-    .nav-account-menu button:hover { background: rgba(255,255,255,0.06); color: var(--text); }
-    .menu-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 5px 0; }
-    .menu-signout { color: #f87171 !important; }
-    .menu-signout:hover { background: rgba(248,113,113,0.08) !important; color: #f87171 !important; }
-
-    /* ─── Dashboard tabs ─── */
-    .dash-tabs {
-      display: flex;
-      gap: 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
-      margin-bottom: 1.8rem;
-    }
-    .dash-tab {
-      padding: 0.72rem 1.3rem;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.91rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      transition: color 0.18s, border-color 0.18s;
-    }
-    .dash-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
-    .dash-tab:hover:not(.active) { color: var(--text); }
-    .dash-pane { display: none; }
-    .dash-pane.active { display: block; }
-
-    /* ─── Settings panel ─── */
-    .settings-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 1.2rem;
-      align-items: start;
-    }
-    .settings-block {
-      padding: 1.6rem;
-      border-radius: 20px;
-      background: rgba(13,17,28,0.9);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .settings-block h3 {
-      font-size: 0.75rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--muted);
-      margin-bottom: 1.1rem;
-    }
-    .settings-full { grid-column: 1 / -1; }
-
-    /* ─── Avatar selector ─── */
-    .avatar-grid {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-    .avatar-opt {
-      aspect-ratio: 1;
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.45rem;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: border-color 0.16s, transform 0.16s, box-shadow 0.16s;
-      user-select: none;
-    }
-    .avatar-opt:hover { transform: scale(1.08); }
-    .avatar-opt.selected {
-      border-color: var(--gold);
-      box-shadow: 0 0 0 3px rgba(255,196,0,0.15);
-    }
-    .avatar-label {
-      font-size: 0.75rem;
-      color: var(--dim);
-      text-align: center;
-      margin-top: 0.3rem;
-      min-height: 1em;
-    }
-
-    /* ─── Accent color palette ─── */
-    .color-palette {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-      margin-bottom: 0.6rem;
-    }
-    .color-swatch {
-      width: 30px; height: 30px;
-      border-radius: 50%;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: transform 0.16s, border-color 0.16s, box-shadow 0.16s;
-    }
-    .color-swatch:hover { transform: scale(1.18); }
-    .color-swatch.selected {
-      border-color: white;
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.18);
-    }
-
-    /* ─── Bio textarea ─── */
-    .bio-input {
-      width: 100%;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      color: var(--text);
-      font-family: inherit;
-      font-size: 0.93rem;
-      padding: 0.85rem 1rem;
-      resize: vertical;
-      min-height: 82px;
-      line-height: 1.6;
-      transition: border-color 0.18s;
-      box-sizing: border-box;
-    }
-    .bio-input:focus { outline: none; border-color: rgba(255,196,0,0.4); }
-    .bio-count { font-size: 0.76rem; color: var(--dim); text-align: right; margin-top: 0.3rem; }
-
-    /* ─── Settings save ─── */
-    .settings-save-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-top: 1.4rem;
-    }
-    .settings-save-btn {
-      padding: 0.7rem 1.6rem;
-      border-radius: 10px;
-      background: var(--gold);
-      color: #000;
-      font-weight: 800;
-      font-size: 0.9rem;
-      border: none;
-      cursor: pointer;
-      font-family: inherit;
-      transition: opacity 0.18s;
-    }
-    .settings-save-btn:hover { opacity: 0.85; }
-    .settings-save-btn:disabled { opacity: 0.45; cursor: not-allowed; }
-    .settings-feedback {
-      font-size: 0.86rem;
-      color: #34d399;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .settings-feedback.show { opacity: 1; }
-
-    /* ─── Account info table ─── */
-    .account-info-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.62rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-size: 0.9rem;
-    }
-    .account-info-row:last-child { border-bottom: none; }
-    .account-info-row span:first-child { color: var(--muted); }
-    .account-info-row span:last-child { font-weight: 600; color: var(--text); word-break: break-all; text-align: right; }
-
-    /* ─── Member number + founding badge ─── */
-    .member-number {
-      font-size: 0.76rem; color: var(--dim); font-weight: 600; white-space: nowrap;
-    }
-    .founding-badge {
-      display: inline-flex; align-items: center; gap: 0.3rem;
-      padding: 0.24rem 0.65rem; border-radius: 999px;
-      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em;
-      background: linear-gradient(135deg, rgba(255,196,0,0.15), rgba(255,122,0,0.1));
-      border: 1px solid rgba(255,196,0,0.28); color: var(--gold);
-    }
-
-    /* ─── Avatar glow for elite ranks ─── */
-    .profile-avatar.rank-elite { animation: avatar-pulse 3s ease-in-out infinite; }
-    @keyframes avatar-pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(255,196,0,0.0); }
-      50%       { box-shadow: 0 0 22px 7px rgba(255,196,0,0.22); }
-    }
-
-    /* ─── Rank ceremony overlay ─── */
-    .ceremony-overlay {
-      position: fixed; inset: 0; z-index: 1000;
-      background: rgba(0,0,0,0.82);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.35s;
-      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    }
-    .ceremony-overlay.show { opacity: 1; pointer-events: auto; }
-    .ceremony-card {
-      position: relative; text-align: center;
-      padding: 3rem 3.5rem; border-radius: var(--radius);
-      background: linear-gradient(135deg, rgba(20,15,5,0.98), rgba(8,10,17,0.99));
-      border: 1px solid rgba(255,196,0,0.18);
-      box-shadow: 0 0 80px rgba(255,196,0,0.08), var(--shadow-lg);
-      max-width: 420px; width: 90%; overflow: hidden;
-      animation: ceremony-enter 0.55s cubic-bezier(0.34,1.56,0.64,1) both;
-    }
-    @keyframes ceremony-enter {
-      from { transform: scale(0.65) translateY(24px); opacity: 0; }
-      to   { transform: scale(1) translateY(0); opacity: 1; }
-    }
-    .ceremony-emoji {
-      font-size: 4.5rem; display: block; margin-bottom: 0.6rem;
-      animation: cer-spin 0.65s cubic-bezier(0.34,1.56,0.64,1) both;
-    }
-    @keyframes cer-spin {
-      from { transform: rotate(-20deg) scale(0.4); opacity: 0; }
-      to   { transform: rotate(0) scale(1); opacity: 1; }
-    }
-    .ceremony-label {
-      font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.16em; color: var(--muted); margin-bottom: 0.4rem;
-    }
-    .ceremony-rank-name {
-      font-family: Georgia, serif;
-      font-size: clamp(2rem, 5vw, 2.75rem);
-      letter-spacing: -0.04em; line-height: 1; margin-bottom: 0.65rem;
-    }
-    .ceremony-flavor {
-      color: var(--muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.6rem;
-    }
-    .ceremony-dismiss {
-      padding: 0.68rem 2rem; border-radius: 10px;
-      background: var(--gold); color: #000;
-      font-weight: 800; font-size: 0.9rem; border: none;
-      cursor: pointer; font-family: inherit; transition: opacity 0.18s;
-    }
-    .ceremony-dismiss:hover { opacity: 0.82; }
-    /* Particles */
-    .cer-particles { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-    .cer-particle {
-      position: absolute; width: 7px; height: 7px; border-radius: 50%;
-      left: 50%; top: 50%;
-      animation: cer-particle 1.1s ease-out forwards;
-    }
-    @keyframes cer-particle {
-      0%   { transform: translate(-50%,-50%) translate(0,0) scale(1); opacity: 1; }
-      100% { transform: translate(-50%,-50%) translate(var(--tx),var(--ty)) scale(0); opacity: 0; }
-    }
-
-    /* ─── Card theme selector ─── */
-    .card-theme-row {
-      display: flex;
-      gap: 0.45rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin: 0.8rem 0 0.5rem;
-    }
-    .card-theme-btn {
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      padding: 0.3rem 0.65rem;
-      background: rgba(255,255,255,0.04);
-      color: var(--muted);
-      transition: border-color 0.15s, color 0.15s, background 0.15s;
-      text-transform: uppercase;
-    }
-    .card-theme-btn.active { color: #000; }
-    .card-theme-btn.locked { opacity: 0.4; cursor: not-allowed; }
-    .card-theme-rank-req { font-size: 0.65rem; opacity: 0.6; display: block; }
-
-    /* ─── Member Card modal ─── */
-    .card-modal-overlay {
-      position: fixed; inset: 0; z-index: 900;
-      background: rgba(0,0,0,0.78);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.25s;
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-    }
-    .card-modal-overlay.show { opacity: 1; pointer-events: auto; }
-    .card-modal {
-      background: rgba(10,13,22,0.98);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: var(--radius); padding: 2rem;
-      max-width: 520px; width: 93%; text-align: center;
-    }
-    .card-modal h3 {
-      font-size: 0.74rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem;
-    }
-    #vault-card-canvas { width: 100%; border-radius: 14px; box-shadow: var(--shadow-lg); display: block; }
-    .card-modal-actions { display: flex; gap: 0.75rem; justify-content: center; margin-top: 1.2rem; flex-wrap: wrap; }
-
-    /* ─── QR Code modal ─── */
-    .qr-modal-overlay {
-      position: fixed; inset: 0; z-index: 901;
-      background: rgba(0,0,0,0.82);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.22s;
-      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
-    }
-    .qr-modal-overlay.show { opacity: 1; pointer-events: auto; }
-    .qr-modal {
-      background: rgba(10,13,22,0.98);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: var(--radius); padding: 1.75rem 1.5rem;
-      max-width: 320px; width: 90%; text-align: center;
-    }
-    .qr-modal h4 {
-      font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.6rem;
-    }
-    .qr-modal p { font-size:0.82rem; color:var(--muted); margin-bottom:1rem; line-height:1.5; }
-    #qr-canvas-wrap canvas { border-radius: 10px; background: #fff; padding: 10px; width: 200px !important; height: 200px !important; }
-    .qr-modal-close { margin-top:1rem; font-size:0.82rem; color:var(--dim); cursor:pointer; background:none; border:none; color:var(--muted); }
-    .qr-modal-close:hover { color: #fff; }
-
-    /* ─── Login heatmap ─── */
-    .login-heatmap-wrap {
-      margin-bottom: 1.5rem;
-      padding: 1.25rem;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 14px;
-    }
-    .heatmap-label {
-      font-size: 0.72rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.75rem;
-    }
-    .heatmap-grid {
-      display: flex; gap: 3px; align-items: flex-end;
-    }
-    .heatmap-col { display: flex; flex-direction: column; gap: 3px; }
-    .heatmap-cell {
-      width: 12px; height: 12px; border-radius: 2px;
-      background: rgba(255,255,255,0.06);
-      transition: background 0.15s;
-      cursor: default;
-    }
-    .heatmap-cell[title]:hover { background: rgba(255,196,0,0.5) !important; }
-    .heatmap-cell.heat-1 { background: rgba(31,162,255,0.25); }
-    .heatmap-cell.heat-2 { background: rgba(31,162,255,0.5); }
-    .heatmap-cell.heat-3 { background: rgba(255,196,0,0.5); }
-    .heatmap-cell.heat-4 { background: rgba(255,196,0,0.85); }
-    .heatmap-footer {
-      margin-top: 0.6rem;
-      font-size: 0.72rem; color: var(--dim);
-      display: flex; justify-content: space-between;
-    }
-
-    /* ─── Weekly recap banner ─── */
-    .weekly-recap-banner {
-      display: none;
-      margin-bottom: 1.25rem;
-      padding: 0.9rem 1.1rem;
-      background: rgba(16,185,129,0.07);
-      border: 1px solid rgba(16,185,129,0.2);
-      border-radius: 12px;
-      font-size: 0.87rem;
-      color: rgba(255,255,255,0.8);
-      line-height: 1.55;
-      position: relative;
-    }
-    .weekly-recap-banner.show { display: block; }
-    .weekly-recap-dismiss {
-      position: absolute; top: 0.6rem; right: 0.75rem;
-      background: none; border: none; color: var(--dim);
-      cursor: pointer; font-size: 0.95rem; padding: 0.1rem;
-    }
-    .weekly-recap-dismiss:hover { color: #fff; }
-
-    /* ─── XP chip (floating earned notification) ─── */
-    .xp-chip {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 100px;
-      background: linear-gradient(135deg, rgba(255,196,0,0.18), rgba(255,196,0,0.07));
-      border: 1px solid rgba(255,196,0,0.38);
-      border-radius: 999px;
-      padding: 0.55rem 1.4rem;
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--gold);
-      pointer-events: none;
-      z-index: 500;
-      opacity: 0;
-      white-space: nowrap;
-      box-shadow: 0 4px 24px rgba(255,196,0,0.12);
-      animation: xp-fly 2.4s ease-out forwards;
-    }
-    @keyframes xp-fly {
-      0%   { opacity: 0;   transform: translateX(-50%) translateY(0); }
-      12%  { opacity: 1; }
-      70%  { opacity: 1;   transform: translateX(-50%) translateY(-64px); }
-      100% { opacity: 0;   transform: translateX(-50%) translateY(-96px); }
-    }
-
-    /* ─── Activity feed ─── */
-    .activity-item {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-size: 0.88rem;
-    }
-    .activity-item:last-child { border-bottom: none; }
-    .activity-icon { font-size: 1rem; width: 22px; text-align: center; flex-shrink: 0; }
-    .activity-label { flex: 1; color: var(--muted); line-height: 1.4; }
-    .activity-pts { font-weight: 800; color: var(--gold); min-width: 50px; text-align: right; font-size: 0.85rem; flex-shrink: 0; }
-    .activity-time { font-size: 0.74rem; color: var(--dim); white-space: nowrap; margin-left: 0.25rem; flex-shrink: 0; }
-    .activity-empty { font-size: 0.86rem; color: var(--dim); padding: 0.6rem 0; }
-
-    /* ─── Invite code display ─── */
-    .invite-code-display {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      padding: 0.9rem 1rem;
-      border-radius: 12px;
-      background: rgba(255,196,0,0.05);
-      border: 1px solid rgba(255,196,0,0.2);
-      margin-top: 0.6rem;
-    }
-    .invite-code-value {
-      flex: 1;
-      font-family: 'Courier New', monospace;
-      font-size: 1rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: var(--gold);
-      word-break: break-all;
-    }
-    .invite-copy-btn {
-      padding: 0.44rem 0.95rem;
-      border-radius: 8px;
-      background: rgba(255,196,0,0.12);
-      border: 1px solid rgba(255,196,0,0.28);
-      color: var(--gold);
-      font-size: 0.82rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.18s;
-      white-space: nowrap;
-    }
-    .invite-copy-btn:hover { background: rgba(255,196,0,0.22); }
-
-    /* ─── Classified Archive ─── */
-    .archive-access-level {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      padding: 0.38rem 0.85rem; border-radius: 999px;
-      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em;
-    }
-    .file-card {
-      border-radius: var(--radius);
-      border: 1px solid rgba(255,196,0,0.11);
-      background: linear-gradient(180deg, rgba(16,12,4,0.97), rgba(8,10,18,0.99));
-      margin-bottom: 0.7rem; overflow: hidden;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .file-card:hover:not(.locked) { border-color: rgba(255,196,0,0.22); box-shadow: 0 4px 24px rgba(255,196,0,0.04); }
-    .file-card.locked {
-      border-color: rgba(255,255,255,0.06);
-      background: rgba(255,255,255,0.015);
-    }
-    .file-card-header {
-      display: flex; align-items: center; gap: 0.9rem;
-      padding: 1.05rem 1.25rem; cursor: pointer; user-select: none;
-    }
-    .file-card.locked .file-card-header { cursor: default; }
-    .classification-tag {
-      font-size: 0.6rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.13em; padding: 0.2rem 0.55rem; border-radius: 4px;
-      white-space: nowrap; flex-shrink: 0;
-    }
-    .ctag-eyes   { background: rgba(255,196,0,0.12); color: var(--gold); border: 1px solid rgba(255,196,0,0.2); }
-    .ctag-rest   { background: rgba(31,162,255,0.1);  color: #7dd3fc;   border: 1px solid rgba(31,162,255,0.2); }
-    .ctag-top    { background: rgba(255,122,0,0.1);   color: #fb923c;   border: 1px solid rgba(255,122,0,0.2); }
-    .ctag-vk     { background: rgba(255,196,0,0.07);  color: var(--gold); border: 1px solid rgba(255,196,0,0.15); }
-    .file-title { flex: 1; font-weight: 700; font-size: 0.94rem; color: var(--text); min-width: 0; }
-    .file-card.locked .file-title { color: var(--dim); }
-    .file-meta-tags { display: flex; align-items: center; gap: 0.55rem; flex-shrink: 0; }
-    .file-universe-tag { font-size: 0.72rem; color: var(--dim); white-space: nowrap; }
-    .file-rank-lock { display: flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; color: var(--dim); white-space: nowrap; }
-    .file-read-dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; flex-shrink: 0; }
-    .file-caret { font-size: 0.54rem; color: var(--dim); transition: transform 0.2s; flex-shrink: 0; }
-    .file-card.expanded .file-caret { transform: rotate(180deg); }
-    .file-content-body {
-      padding: 0 1.25rem 1.3rem; border-top: 1px solid rgba(255,196,0,0.07);
-      display: none;
-    }
-    .file-card.expanded .file-content-body { display: block; }
-    .file-content-body p {
-      color: var(--muted); font-size: 0.91rem; line-height: 1.78;
-      margin-bottom: 0.8rem;
-    }
-    .file-content-body p:first-child { margin-top: 1rem; }
-    .file-content-body p:last-child  { margin-bottom: 0; }
-    .file-pts-awarded {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      font-size: 0.78rem; font-weight: 700; color: var(--gold);
-      margin-top: 1rem; padding: 0.3rem 0.7rem;
-      background: rgba(255,196,0,0.07); border: 1px solid rgba(255,196,0,0.14);
-      border-radius: 999px;
-    }
-
-    /* ─── Vault Challenges ─── */
-    .challenges-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 0.8rem;
-    }
-    .challenge-card {
-      padding: 1.15rem; border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.025);
-      display: flex; flex-direction: column; gap: 0.55rem;
-      transition: border-color 0.2s;
-    }
-    .challenge-card.completed {
-      border-color: rgba(52,211,153,0.18);
-      background: rgba(52,211,153,0.03);
-    }
-    .challenge-card:not(.completed):hover { border-color: rgba(255,196,0,0.15); }
-    .challenge-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.65rem; }
-    .challenge-pts-badge {
-      font-size: 0.78rem; font-weight: 800; color: var(--gold);
-      background: rgba(255,196,0,0.1); border: 1px solid rgba(255,196,0,0.2);
-      border-radius: 999px; padding: 0.22rem 0.6rem; white-space: nowrap; flex-shrink: 0;
-    }
-    .challenge-type-chip {
-      font-size: 0.62rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.08em; padding: 0.18rem 0.5rem; border-radius: 4px; white-space: nowrap;
-    }
-    .ctype-weekly  { background: rgba(139,92,246,0.12); color: #a78bfa; border: 1px solid rgba(139,92,246,0.2); }
-    .ctype-monthly { background: rgba(31,162,255,0.1);  color: #7dd3fc; border: 1px solid rgba(31,162,255,0.2); }
-    .ctype-once    { background: rgba(255,255,255,0.05); color: var(--dim); border: 1px solid rgba(255,255,255,0.09); }
-    .challenge-title { font-weight: 700; font-size: 0.93rem; color: var(--text); line-height: 1.3; }
-    .challenge-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.55; flex: 1; }
-    .challenge-footer { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-top: 0.2rem; }
-    .challenge-done { display: flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; color: #34d399; font-weight: 700; }
-    .challenge-expires { font-size: 0.73rem; color: var(--dim); }
-
-    /* ─── Phase 9: Push Notifications (no new CSS — reuses toggle-switch) ─── */
-
-    /* ─── Phase 10: Studio Pulse ─── */
-    .pulse-live-dot {
-      display: inline-block;
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: #22c55e;
-      animation: pulse-blink 1.5s ease-in-out infinite;
-    }
-    @keyframes pulse-blink {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.35; transform: scale(0.8); }
-    }
-    .pulse-feed { display: flex; flex-direction: column; }
-    .pulse-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .pulse-item:last-child { border-bottom: none; }
-    .pulse-type-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-      margin-top: 5px;
-    }
-    .pulse-body { flex: 1; min-width: 0; }
-    .pulse-message { font-size: 0.875rem; color: var(--text); line-height: 1.45; }
-    .pulse-time    { font-size: 0.72rem; color: var(--dim); margin-top: 0.1rem; }
-
-    /* ─── Phase 7: Discord Connect ─── */
-    .discord-connect-btn {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.55rem 1.1rem;
-      background: rgba(88,101,242,0.14);
-      border: 1px solid rgba(88,101,242,0.35);
-      border-radius: 10px;
-      color: var(--light);
-      font-size: 0.87rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.2s;
-    }
-    .discord-connect-btn:hover { background: rgba(88,101,242,0.26); }
-    .discord-connected-badge {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      padding: 0.42rem 0.85rem;
-      background: rgba(52,211,153,0.1);
-      border: 1px solid rgba(52,211,153,0.22);
-      border-radius: 8px;
-      color: #34d399;
-      font-size: 0.82rem;
-      font-weight: 700;
-    }
-
-    /* ─── Phase 8: Beta Key Vault ─── */
-    .beta-keys-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1rem;
-    }
-    .beta-key-card {
-      padding: 1.4rem;
-      border-radius: 16px;
-      background: rgba(13,17,28,0.9);
-      border: 1px solid rgba(255,255,255,0.08);
-      display: flex;
-      flex-direction: column;
-      gap: 0.85rem;
-    }
-    .beta-key-game { display: flex; align-items: center; gap: 0.65rem; }
-    .beta-key-game-icon { font-size: 1.35rem; line-height: 1; }
-    .beta-key-game-name { font-size: 0.93rem; font-weight: 700; color: var(--text); }
-    .beta-key-code {
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 0.86rem;
-      padding: 0.5rem 0.8rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 8px;
-      letter-spacing: 0.04em;
-      color: var(--gold);
-      word-break: break-all;
-    }
-    .beta-key-actions { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
-    .beta-claim-btn {
-      padding: 0.48rem 1rem;
-      background: linear-gradient(135deg, var(--gold), #d97706);
-      border: none;
-      border-radius: 8px;
-      color: #000;
-      font-weight: 800;
-      font-size: 0.82rem;
-      cursor: pointer;
-      font-family: inherit;
-      transition: opacity 0.2s;
-    }
-    .beta-claim-btn:hover { opacity: 0.85; }
-    .beta-claim-btn:disabled { opacity: 0.38; cursor: not-allowed; }
-    .beta-copy-btn {
-      padding: 0.42rem 0.8rem;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      color: var(--muted);
-      font-size: 0.79rem;
-      cursor: pointer;
-      font-family: inherit;
-      transition: background 0.2s;
-    }
-    .beta-copy-btn:hover { background: rgba(255,255,255,0.1); }
-
-    /* ─── Phase 6: Activity Chronicle ─── */
-    .chronicle-timeline { display: flex; flex-direction: column; }
-    .chronicle-day-header {
-      font-size: 0.72rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.11em;
-      color: var(--dim);
-      padding: 1.25rem 0 0.5rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
-      margin-top: 0.25rem;
-    }
-    .chronicle-day-header:first-child { border-top: none; margin-top: 0; padding-top: 0; }
-    .chronicle-item {
-      display: flex;
-      align-items: center;
-      gap: 0.85rem;
-      padding: 0.6rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .chronicle-item:last-child { border-bottom: none; }
-    .chronicle-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.88rem;
-      flex-shrink: 0;
-    }
-    .chronicle-body { flex: 1; min-width: 0; }
-    .chronicle-label { font-size: 0.875rem; color: var(--text); line-height: 1.35; }
-    .chronicle-time  { font-size: 0.73rem; color: var(--dim); margin-top: 0.1rem; }
-    .chronicle-pts   { font-size: 0.82rem; font-weight: 700; color: var(--gold); white-space: nowrap; }
-
-    /* ─── Vault Command (Admin) panel ─── */
-    .admin-panels-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-    .admin-panel-full  { grid-column: 1 / -1; }
-    .admin-form-group  { margin-bottom: 1rem; }
-    .admin-form-group label {
-      display: block;
-      font-size: 0.77rem; font-weight: 800;
-      color: var(--muted);
-      text-transform: uppercase; letter-spacing: 0.06em;
-      margin-bottom: 0.35rem;
-    }
-    .admin-input, .admin-select, .admin-textarea {
-      width: 100%; box-sizing: border-box;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      color: var(--text); font-size: 0.9rem; font-family: inherit;
-      padding: 0.65rem 0.85rem;
-      outline: none; transition: border-color 0.18s;
-    }
-    .admin-input:focus, .admin-select:focus, .admin-textarea:focus {
-      border-color: rgba(255,196,0,0.4);
-    }
-    .admin-select option { background: #0d0f1a; }
-    .admin-textarea { resize: vertical; min-height: 5.5rem; }
-    .admin-textarea.admin-html { min-height: 9rem; font-family: monospace; font-size: 0.83rem; }
-    .admin-submit-btn {
-      height: 40px; padding: 0 1.4rem;
-      background: rgba(255,196,0,0.12);
-      border: 1px solid rgba(255,196,0,0.3);
-      border-radius: 10px;
-      color: var(--gold); font-size: 0.88rem; font-weight: 700;
-      cursor: pointer; transition: background 0.18s; white-space: nowrap;
-    }
-    .admin-submit-btn:hover { background: rgba(255,196,0,0.22); }
-    .admin-submit-btn:disabled { opacity: 0.5; cursor: default; }
-    .admin-feedback {
-      font-size: 0.82rem; margin-left: 0.8rem;
-      color: var(--dim); opacity: 0; transition: opacity 0.25s;
-    }
-    .admin-feedback.show { opacity: 1; }
-    .admin-feedback.ok   { color: #4ade80; }
-    .admin-feedback.err  { color: #f87171; }
-
-    @media (max-width: 860px) {
-      .auth-wrap { grid-template-columns: 1fr; }
-      .rank-sidebar { display: none; }
-      .dashboard-grid { grid-template-columns: 1fr; }
-      .achievement-grid { grid-template-columns: repeat(2, 1fr); }
-      .profile-card { flex-wrap: wrap; }
-      .profile-actions { width: 100%; flex-direction: row; align-items: center; margin-left: 0; }
-      .settings-grid { grid-template-columns: 1fr; }
-      .avatar-grid { grid-template-columns: repeat(6, 1fr); }
-    }
-    @media (max-width: 480px) {
-      /* ── Fix 1: Auth panel ── */
-      .auth-card { padding: 1.2rem; }
-      .auth-tab { min-height: 44px; }
-      .auth-panel { overflow-x: hidden; }
-
-      /* ── Fix 2: Dashboard stats strip ── */
-      .profile-meta {
-        flex-wrap: wrap;
-        row-gap: 0.4rem;
-      }
-      .profile-pts { font-size: 0.82rem; }
-      .profile-card { flex-direction: column; align-items: flex-start; }
-      .profile-actions { width: 100%; flex-direction: row; align-items: center; margin-left: 0; }
-
-      /* ── Fix 3: Challenges grid ── */
-      .challenges-grid { grid-template-columns: 1fr; }
-      .challenge-card { padding: 1rem; }
-      #challenge-filter-pills {
-        overflow-x: auto;
-        white-space: nowrap;
-        flex-wrap: nowrap;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 4px;
-      }
-
-      /* ── Fix 4: Achievements grid ── */
-      .achievement-grid { grid-template-columns: repeat(2, 1fr); }
-      .achievement.locked { overflow: hidden; }
-      .progress-bar-label { font-size: 0.75rem; }
-
-      /* ── Fix 5: Archive / file cards ── */
-      .file-card-header { flex-wrap: wrap; gap: 0.5rem; padding: 0.85rem 0.9rem; }
-      .file-title { font-size: 0.88rem; }
-      .file-meta-tags { flex-wrap: wrap; }
-
-      /* ── Fix 6: Settings tab ── */
-      .avatar-grid { grid-template-columns: repeat(4, 1fr); }
-      .avatar-opt { min-height: 44px; min-width: 44px; }
-      .color-swatch { width: 36px; height: 36px; }
-      .form-group input { width: 100%; box-sizing: border-box; }
-      .settings-save-btn { width: 100%; }
-      .settings-save-row { flex-direction: column; align-items: flex-start; }
-
-      /* ── Fix 8: Card modal ── */
-      .card-modal { width: 95%; padding: 1.2rem; }
-      .card-modal-actions { flex-direction: column; align-items: stretch; }
-      .card-modal-actions .settings-save-btn,
-      .card-modal-actions .signout-btn { width: 100%; text-align: center; }
-
-      /* ── Fix 9: Onboarding tour ── */
-      #onboarding-card {
-        max-width: 92vw !important;
-        padding: 1.4rem 1.5rem !important;
-        overflow-x: hidden;
-      }
-
-      /* ── Fix 10: Tab navigation bar ── */
-      .dash-tabs {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        flex-wrap: nowrap;
-      }
-      .dash-tab { min-height: 44px; white-space: nowrap; padding: 0.72rem 0.9rem; }
-
-      /* ── Fix 11: Admin panel ── */
-      .admin-panels-grid { grid-template-columns: 1fr; }
-      .admin-input,
-      .admin-select,
-      .admin-textarea { width: 100%; box-sizing: border-box; }
-      .admin-textarea { width: 100%; }
-      .admin-submit-btn { width: auto; }
-      #admin-pulse-btn,
-      #admin-key-btn,
-      #admin-file-btn { width: 100%; }
-
-      /* ── Fix 12: Inline fixed-width elements ── */
-      #studio-pipeline-grid { grid-template-columns: 1fr !important; }
-
-      /* ── General: ensure no horizontal overflow ── */
-      .dash-panel { overflow-x: hidden; }
-      .profile-bio { max-width: 100%; }
-    }
-  </style>
+  <!-- All portal styles moved to portal.css -->
 
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -1681,7 +91,7 @@
             <a role="menuitem" href="#" onclick="switchDashTab('polls');closeNavDropdown();return false;">🗳️ Community Polls</a>
             <a role="menuitem" href="#" onclick="switchDashTab('chronicle');closeNavDropdown();return false;">Activity Chronicle</a>
             <a role="menuitem" href="#" onclick="switchDashTab('settings');closeNavDropdown();return false;">Profile &amp; Settings</a>
-            <a role="menuitem" href="#" id="nav-admin-link" onclick="switchDashTab('admin');closeNavDropdown();return false;" style="display:none;">⚡ Vault Command</a>
+            <a role="menuitem" href="#" id="nav-admin-link" onclick="switchDashTab('admin');closeNavDropdown();return false;" class="p-hidden">⚡ Vault Command</a>
             <div class="menu-divider"></div>
             <button type="button" class="menu-signout" role="menuitem" onclick="VS.logout()">Sign Out</button>
           </div>
@@ -1936,13 +346,13 @@
               <h2 id="profile-username">VaultMember</h2>
               <div class="profile-meta">
                 <span class="rank-badge badge-gold" id="profile-rank-badge">Spark Initiate</span>
-                <span class="vaultsparked-badge" id="profile-sparked-badge" style="display:none;">
+                <span class="vaultsparked-badge p-hidden" id="profile-sparked-badge">
                   <i class="vs-spark">⚡</i><span class="vs-text">VaultSparked</span>
                 </span>
                 <span class="profile-pts" id="profile-pts" aria-live="polite" aria-atomic="true">10 pts</span>
                 <span class="profile-pts" id="profile-since"></span>
                 <span class="member-number" id="profile-member-number"></span>
-                <span class="founding-badge" id="profile-founding-badge" style="display:none;">✦ Founding Member</span>
+                <span class="founding-badge p-hidden" id="profile-founding-badge">✦ Founding Member</span>
               </div>
               <div class="progress-bar-wrap">
                 <div class="progress-bar-label">
@@ -1987,7 +397,7 @@
             <button type="button" class="dash-tab" id="tab-dash-treasury" onclick="switchDashTab('treasury')">🏦 Treasury</button>
             <button type="button" class="dash-tab" id="tab-dash-chronicle" onclick="switchDashTab('chronicle')">Chronicle</button>
             <button type="button" class="dash-tab" id="tab-dash-settings" onclick="switchDashTab('settings')">Profile &amp; Settings</button>
-            <button type="button" class="dash-tab" id="tab-dash-admin" onclick="switchDashTab('admin')" style="display:none;">⚡ Vault Command</button>
+            <button type="button" class="dash-tab p-hidden" id="tab-dash-admin" onclick="switchDashTab('admin')">⚡ Vault Command</button>
           </div>
 
           <!-- ── Tab: Dashboard ── -->
@@ -2230,7 +640,7 @@
                   <span class="pulse-live-dot"></span>LIVE
                 </span>
               </div>
-              <div id="pulse-feed"><div style="color:var(--dim);font-size:0.88rem;">Loading…</div></div>
+              <div id="pulse-feed"><div class="p-loading">Loading…</div></div>
             </div>
 
             <!-- Studio Pipeline -->
@@ -2372,19 +782,39 @@
               </div>
             </div>
 
+            <!-- Referral Milestones (Phase 50) -->
+            <div class="dash-panel dashboard-full" id="referral-milestones-panel" style="display:none;">
+              <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:0.75rem;margin-bottom:1rem;">
+                <div>
+                  <h3 style="margin:0;">Referral Milestones</h3>
+                  <p style="font-size:0.84rem;color:var(--muted);margin-top:0.25rem;line-height:1.5;">Invite friends and unlock rewards at each tier.</p>
+                </div>
+                <div id="referral-count-badge" style="font-size:0.88rem;font-weight:800;color:var(--gold);background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.2);border-radius:999px;padding:0.3rem 0.85rem;white-space:nowrap;"></div>
+              </div>
+              <!-- Progress bar -->
+              <div id="referral-progress" style="margin-bottom:1.25rem;">
+                <div style="position:relative;height:6px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;">
+                  <div id="referral-progress-fill" style="height:100%;border-radius:999px;background:linear-gradient(90deg,var(--gold),#fff6c0);transition:width 0.8s ease;width:0%;"></div>
+                </div>
+                <div id="referral-milestone-dots" style="position:relative;margin-top:-3px;height:12px;"></div>
+              </div>
+              <!-- Milestone cards -->
+              <div id="referral-milestones-list" style="display:grid;gap:0.6rem;"></div>
+            </div>
+
           </div>
           </div><!-- /dash-pane-dashboard -->
 
           <!-- ── Tab: Community Polls ── -->
           <div class="dash-pane" id="dash-pane-polls">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.2rem;flex-wrap:wrap;">
+            <div class="p-section-header-sm">
               <div>
-                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">🗳️ Community Polls</div>
-                <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Vote on game features, studio decisions, and community priorities. Your voice shapes the vault.</p>
+                <div class="p-label">🗳️ Community Polls</div>
+                <p class="p-desc">Vote on game features, studio decisions, and community priorities. Your voice shapes the vault.</p>
               </div>
             </div>
             <div id="portal-polls-list">
-              <div style="color:var(--dim);font-size:0.88rem;">Loading polls…</div>
+              <div class="p-loading">Loading polls…</div>
             </div>
           </div><!-- /dash-pane-polls -->
 
@@ -2392,8 +822,8 @@
           <div class="dash-pane" id="dash-pane-archive">
             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
               <div>
-                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">⚠ Vault Archive — Classified Intelligence</div>
-                <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Declassified to Vault Members only. Access is rank-gated — higher ranks unlock deeper intel. Reading a file for the first time awards <strong style="color:var(--gold);">+20 pts</strong>.</p>
+                <div class="p-label">⚠ Vault Archive — Classified Intelligence</div>
+                <p class="p-desc">Declassified to Vault Members only. Access is rank-gated — higher ranks unlock deeper intel. Reading a file for the first time awards <strong style="color:var(--gold);">+20 pts</strong>.</p>
               </div>
               <span id="archive-access-badge" class="archive-access-level" style="background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.18);color:var(--gold);">Loading…</span>
             </div>
@@ -2422,49 +852,49 @@
 
           <!-- ── Tab: Vault Challenges ── -->
           <div class="dash-pane" id="dash-pane-challenges">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.2rem;flex-wrap:wrap;">
+            <div class="p-section-header-sm">
               <div>
-                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">⚡ Vault Challenges</div>
-                <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Complete challenges to earn bonus Vault Points. Weekly challenges reset every Monday.</p>
+                <div class="p-label">⚡ Vault Challenges</div>
+                <p class="p-desc">Complete challenges to earn bonus Vault Points. Weekly challenges reset every Monday.</p>
               </div>
-              <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
+              <div class="p-flex-row p-gap-md p-flex-shrink-0">
                 <span id="challenge-streak-badge" style="display:none;font-size:0.78rem;font-weight:800;padding:0.22rem 0.6rem;background:rgba(251,146,60,0.12);border:1px solid rgba(251,146,60,0.3);border-radius:999px;color:#fb923c;white-space:nowrap;"></span>
                 <span id="challenges-summary" style="font-size:0.82rem;color:var(--dim);white-space:nowrap;padding-top:0.2rem;"></span>
               </div>
             </div>
             <!-- Feature 4: Category filter pills -->
-            <div id="challenge-filter-pills" style="display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.1rem;">
+            <div id="challenge-filter-pills" class="p-filter-pills">
               <!-- populated by loadChallenges() -->
             </div>
             <div class="challenges-grid" id="challenges-list">
               <div style="color:var(--dim);font-size:0.88rem;grid-column:1/-1;">Loading challenges…</div>
             </div>
             <!-- Completion history toggle -->
-            <div style="margin-top:1.5rem;border-top:1px solid rgba(255,255,255,0.06);padding-top:1.25rem;">
-              <button type="button" onclick="toggleChallengeHistory(this)" style="background:none;border:none;color:var(--gold);font-size:0.83rem;font-weight:700;cursor:pointer;font-family:inherit;padding:0;">▸ Show completion history</button>
+            <div class="p-mt-xl p-border-top p-pt-lg">
+              <button type="button" onclick="toggleChallengeHistory(this)" class="p-btn-link">▸ Show completion history</button>
               <div id="challenge-history-list" style="display:none;margin-top:1rem;"></div>
             </div>
           </div><!-- /dash-pane-challenges -->
 
           <!-- ── Tab: Early Access ── -->
           <div class="dash-pane" id="dash-pane-earlyaccess">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap;">
+            <div class="p-section-header">
               <div>
-                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">🔐 Early Access</div>
-                <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Claim beta keys for upcoming games. Keys are gated by Vault Rank — the higher your rank, the more access you unlock.</p>
+                <div class="p-label">🔐 Early Access</div>
+                <p class="p-desc">Claim beta keys for upcoming games. Keys are gated by Vault Rank — the higher your rank, the more access you unlock.</p>
               </div>
             </div>
             <div id="beta-keys-list">
-              <div style="color:var(--dim);">Loading…</div>
+              <div class="p-text-dim">Loading…</div>
             </div>
           </div><!-- /dash-pane-earlyaccess -->
 
           <!-- ── Tab: Chronicle ── -->
           <div class="dash-pane" id="dash-pane-chronicle">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap;">
+            <div class="p-section-header">
               <div>
-                <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.13em;color:var(--gold);margin-bottom:0.4rem;">📜 Activity Chronicle</div>
-                <p style="font-size:0.88rem;color:var(--muted);line-height:1.6;max-width:66ch;margin:0;">Your complete Vault history — every point earned, challenge completed, and file unlocked.</p>
+                <div class="p-label">📜 Activity Chronicle</div>
+                <p class="p-desc">Your complete Vault history — every point earned, challenge completed, and file unlocked.</p>
               </div>
             </div>
 
@@ -2487,46 +917,46 @@
             </div>
 
             <!-- Points summary row -->
-            <div id="points-summary-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;margin-bottom:1rem;">
-              <div style="padding:0.9rem 1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-align:center;">
-                <div id="pts-total-alltime" style="font-size:1.6rem;font-weight:800;color:var(--gold);">—</div>
-                <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);margin-top:0.25rem;">All-Time Points</div>
+            <div id="points-summary-row" class="p-grid-3 p-mb-lg">
+              <div class="p-stat-card">
+                <div id="pts-total-alltime" class="p-stat-value">—</div>
+                <div class="p-label-dim">All-Time Points</div>
               </div>
-              <div style="padding:0.9rem 1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-align:center;">
-                <div id="pts-total-30d" style="font-size:1.6rem;font-weight:800;color:var(--text);">—</div>
-                <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);margin-top:0.25rem;">Last 30 Days</div>
+              <div class="p-stat-card">
+                <div id="pts-total-30d" class="p-stat-value-text">—</div>
+                <div class="p-label-dim">Last 30 Days</div>
               </div>
-              <div style="padding:0.9rem 1rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;text-align:center;">
-                <div id="pts-active-days" style="font-size:1.6rem;font-weight:800;color:var(--text);">—</div>
-                <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);margin-top:0.25rem;">Active Days</div>
+              <div class="p-stat-card">
+                <div id="pts-active-days" class="p-stat-value-text">—</div>
+                <div class="p-label-dim">Active Days</div>
               </div>
             </div>
 
-            <div id="points-history-chart" style="margin-bottom:1rem;padding:1.25rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;">
+            <div id="points-history-chart" class="p-chart-card p-mb-lg">
               <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.75rem;">Points Earned — Last 30 Days</div>
               <div id="points-chart-svg" style="color:var(--dim);font-size:0.84rem;">Loading chart…</div>
             </div>
 
             <!-- Top earning activities -->
-            <div id="points-top-sources" style="margin-bottom:2rem;padding:1.25rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;display:none;">
+            <div id="points-top-sources" class="p-chart-card p-mb-2xl p-hidden">
               <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.9rem;">Top Earning Activities</div>
               <div id="points-sources-list"></div>
             </div>
             <div id="chronicle-timeline">
-              <div style="color:var(--dim);">Loading…</div>
+              <div class="p-text-dim">Loading…</div>
             </div>
           </div><!-- /dash-pane-chronicle -->
 
           <!-- ── Tab: Following (Phase 49) ── -->
           <div class="dash-pane" id="dash-pane-following">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;flex-wrap:wrap;gap:0.75rem;">
+            <div class="p-flex-row p-flex-between p-mb-xl p-flex-wrap p-gap-md">
               <h3 style="margin:0;font-size:1.15rem;">Following Feed</h3>
               <a href="/members/" class="button-secondary button-sm">Find Members to Follow</a>
             </div>
-            <div id="following-feed-list" style="display:grid;gap:0.75rem;">
+            <div id="following-feed-list" class="p-feed-grid">
               <p style="color:var(--muted);font-size:0.92rem;">Loading your following feed…</p>
             </div>
-            <div id="following-empty" style="display:none;padding:2rem;text-align:center;">
+            <div id="following-empty" class="p-hidden p-empty-state">
               <p style="color:var(--muted);font-size:0.95rem;margin-bottom:1rem;">You're not following anyone yet.</p>
               <a href="/members/" class="button">Browse Members</a>
             </div>
@@ -2537,7 +967,7 @@
             <div class="settings-grid">
 
               <!-- Left column: Avatar + Accent -->
-              <div style="display:flex;flex-direction:column;gap:1.2rem;">
+              <div class="p-flex-col p-gap-xl">
 
                 <div class="settings-block">
                   <h3>Your Avatar</h3>
@@ -2547,14 +977,14 @@
 
                 <div class="settings-block">
                   <h3>Vault Accent</h3>
-                  <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.75rem;line-height:1.55;">Your accent colour tints your profile card and progress bar.</p>
+                  <p class="p-desc-sm p-mb-md">Your accent colour tints your profile card and progress bar.</p>
                   <div class="color-palette" id="color-palette"><!-- populated by JS --></div>
                 </div>
 
               </div>
 
               <!-- Right column: Bio + Account Info -->
-              <div style="display:flex;flex-direction:column;gap:1.2rem;">
+              <div class="p-flex-col p-gap-xl">
 
                 <div class="settings-block">
                   <h3>Bio</h3>
@@ -2575,7 +1005,7 @@
 
                 <div class="settings-block" style="margin-top:1.2rem;">
                   <h3>Your Invite Code</h3>
-                  <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.3rem;line-height:1.55;">Share this code to invite someone to the Vault. You earn <strong style="color:var(--gold);">+100 pts</strong> when they join.</p>
+                  <p class="p-desc-sm p-mb-xs">Share this code to invite someone to the Vault. You earn <strong style="color:var(--gold);">+100 pts</strong> when they join.</p>
                   <div class="invite-code-display" id="invite-code-display">
                     <span class="invite-code-value" id="invite-code-value">Generating…</span>
                     <button type="button" class="invite-copy-btn" id="invite-copy-btn" onclick="copyInviteCode()">Copy</button>
@@ -2596,7 +1026,7 @@
               <div class="settings-full">
                 <div class="settings-block">
                   <h3>Push Notifications</h3>
-                  <div style="display:flex;align-items:center;gap:1rem;padding:0.9rem 1rem;background:rgba(255,196,0,0.06);border:1px solid rgba(255,196,0,0.15);border-radius:12px;margin-bottom:1rem;flex-wrap:wrap;">
+                  <div class="p-info-card p-info-card-gold p-mb-lg">
                     <div style="font-size:1.5rem;line-height:1;flex-shrink:0;">📡</div>
                     <div style="flex:1;min-width:180px;">
                       <div style="font-size:0.88rem;font-weight:800;color:var(--text);margin-bottom:0.2rem;">Vault Signals — Live Alerts</div>
@@ -2622,7 +1052,7 @@
                 <div class="settings-block" id="pwa-settings-block">
                   <h3>Install Vault App</h3>
                   <div id="pwa-settings-content">
-                    <p style="font-size:0.84rem;color:var(--muted);line-height:1.55;">Loading…</p>
+                    <p class="p-desc-sm">Loading…</p>
                   </div>
                 </div>
               </div>
@@ -2631,8 +1061,8 @@
               <div class="settings-full">
                 <div class="settings-block">
                   <h3>Monthly Newsletter</h3>
-                  <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.85rem;line-height:1.55;">Receive a monthly Vault Dispatch with your XP summary, top members, and studio updates.</p>
-                  <div style="display:flex;align-items:center;gap:0.75rem;">
+                  <p class="p-desc-sm p-mb-md">Receive a monthly Vault Dispatch with your XP summary, top members, and studio updates.</p>
+                  <div class="p-flex-row p-gap-md">
                     <label class="toggle-switch" style="flex-shrink:0;" aria-label="Monthly newsletter">
                       <input type="checkbox" id="toggle-newsletter" onchange="toggleNewsletter(this.checked)" />
                       <span class="slider"></span>
@@ -2646,7 +1076,7 @@
               <div class="settings-full">
                 <div class="settings-block">
                   <h3>Change Password</h3>
-                  <p style="font-size:0.84rem;color:var(--muted);margin-bottom:0.85rem;line-height:1.55;">Update your Vault Member password. A password reset email will be sent to your registered email address.</p>
+                  <p class="p-desc-sm p-mb-md">Update your Vault Member password. A password reset email will be sent to your registered email address.</p>
                   <button type="button" onclick="sendPasswordReset()" id="pw-reset-btn" class="button button-sm" style="background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);">Send Password Reset Email</button>
                   <span id="pw-reset-msg" style="display:none;font-size:0.82rem;color:#10B981;margin-left:0.75rem;">✓ Reset email sent — check your inbox.</span>
                 </div>
@@ -2656,8 +1086,8 @@
               <div class="settings-full">
                 <div class="settings-block">
                   <h3>Data &amp; Privacy</h3>
-                  <p style="font-size:0.84rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Your data rights under GDPR and applicable privacy laws. Export a copy of your data or request account deletion.</p>
-                  <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+                  <p class="p-desc-sm p-mb-lg">Your data rights under GDPR and applicable privacy laws. Export a copy of your data or request account deletion.</p>
+                  <div class="p-flex-row p-gap-md p-flex-wrap">
                     <button type="button" onclick="exportMyData()" id="export-data-btn" class="button button-sm" style="background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--text);">⬇ Export My Data</button>
                     <button type="button" onclick="requestDeleteAccount()" style="padding:0.55rem 1.1rem;background:transparent;border:1px solid rgba(248,113,113,0.3);color:#f87171;font-weight:700;font-size:0.88rem;border-radius:10px;cursor:pointer;font-family:inherit;transition:all 0.15s;" onmouseenter="this.style.background='rgba(248,113,113,0.08)'" onmouseleave="this.style.background='transparent'">🗑 Delete Account</button>
                   </div>
@@ -2685,7 +1115,7 @@
 
           <!-- ── Tab: Vault Command (Admin — member #1 only) ── -->
           <div class="dash-pane" id="dash-pane-admin">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.6rem;flex-wrap:wrap;">
+            <div class="p-section-header">
               <div>
                 <h2 style="font-size:1.1rem;font-weight:800;margin:0 0 0.3rem;letter-spacing:-0.02em;">⚡ Vault Command</h2>
                 <p style="font-size:0.84rem;color:var(--muted);margin:0;line-height:1.55;">Restricted access — Vault Member <strong style="color:var(--gold);">#1</strong>. Actions broadcast to all active Vault members.</p>
@@ -2696,7 +1126,7 @@
               <!-- Signal Broadcast: Studio Pulse -->
               <div class="settings-block">
                 <h3>Signal Broadcast</h3>
-                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Post a live message to the Studio Pulse stream. Logged-in members see it in real time.</p>
+                <p class="p-desc-admin">Post a live message to the Studio Pulse stream. Logged-in members see it in real time.</p>
                 <div class="admin-form-group">
                   <label for="admin-pulse-msg">Message</label>
                   <textarea class="admin-textarea" id="admin-pulse-msg" maxlength="300" placeholder="What's happening in the Vault right now?"></textarea>
@@ -2718,7 +1148,7 @@
                     <input type="datetime-local" class="admin-input" id="admin-pulse-schedule-time" style="width:100%;" />
                   </div>
                 </div>
-                <div style="display:flex;align-items:center;">
+                <div class="p-flex-row">
                   <button type="button" class="admin-submit-btn" id="admin-pulse-btn" onclick="adminPostPulse()">Broadcast Signal</button>
                   <span class="admin-feedback" id="admin-pulse-fb"></span>
                 </div>
@@ -2727,7 +1157,7 @@
               <!-- Key Vault Drop -->
               <div class="settings-block">
                 <h3>Key Vault Drop</h3>
-                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Deploy a new beta access key. Members meeting the rank threshold can claim it from the Early Access tab.</p>
+                <p class="p-desc-admin">Deploy a new beta access key. Members meeting the rank threshold can claim it from the Early Access tab.</p>
                 <div class="admin-form-group">
                   <label for="admin-key-slug">Game</label>
                   <select class="admin-select" id="admin-key-slug">
@@ -2754,7 +1184,7 @@
                     <option value="8">8 — The Sparked only</option>
                   </select>
                 </div>
-                <div style="display:flex;align-items:center;">
+                <div class="p-flex-row">
                   <button type="button" class="admin-submit-btn" id="admin-key-btn" onclick="adminPostBetaKey()">Deploy Key</button>
                   <span class="admin-feedback" id="admin-key-fb"></span>
                 </div>
@@ -2763,8 +1193,8 @@
               <!-- Classified File Uplink (full-width) -->
               <div class="settings-block admin-panel-full">
                 <h3>Classified File Uplink</h3>
-                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Publish a new classified file to the Archive. Triggers a push notification to all subscribed Vault members automatically.</p>
-                <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;">
+                <p class="p-desc-admin">Publish a new classified file to the Archive. Triggers a push notification to all subscribed Vault members automatically.</p>
+                <div class="p-grid-3-auto">
                   <div class="admin-form-group">
                     <label for="admin-file-title">Title</label>
                     <input class="admin-input" type="text" id="admin-file-title" placeholder="Operation Fault Echo" />
@@ -2800,7 +1230,7 @@
                   <label for="admin-file-html">Content HTML</label>
                   <textarea class="admin-textarea admin-html" id="admin-file-html" placeholder="<p>The fault layer extends further than any cartographer has mapped…</p>"></textarea>
                 </div>
-                <div style="display:flex;align-items:center;">
+                <div class="p-flex-row">
                   <button type="button" class="admin-submit-btn" id="admin-file-btn" onclick="adminPostFile()">Uplink to Archive</button>
                   <span class="admin-feedback" id="admin-file-fb"></span>
                 </div>
@@ -2809,7 +1239,7 @@
               <!-- Challenge Analytics (full-width) -->
               <div class="settings-block admin-panel-full">
                 <h3>Challenge Analytics</h3>
-                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Completion rates and engagement for all active challenges.</p>
+                <p class="p-desc-admin">Completion rates and engagement for all active challenges.</p>
                 <div id="admin-challenge-analytics">
                   <button type="button" class="admin-submit-btn" onclick="loadChallengeAnalytics()" style="margin-bottom:0.75rem;">Load Analytics</button>
                   <div id="admin-analytics-list" style="font-size:0.86rem;color:var(--muted);"></div>
@@ -2819,7 +1249,7 @@
               <!-- Member Export CSV (full-width) -->
               <div class="settings-block admin-panel-full">
                 <h3>Member Export</h3>
-                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">Download a CSV of all vault members — username, email placeholder, rank, points, joined date.</p>
+                <p class="p-desc-admin">Download a CSV of all vault members — username, email placeholder, rank, points, joined date.</p>
                 <button type="button" class="admin-submit-btn" onclick="exportMemberCSV()" id="admin-csv-btn">⬇ Download Members CSV</button>
                 <span class="admin-feedback" id="admin-csv-fb"></span>
               </div>
@@ -2830,7 +1260,7 @@
                 <h3>Fan Art Submissions
                   <span id="fan-art-pending-badge" style="display:none;margin-left:0.6rem;padding:0.15rem 0.55rem;border-radius:999px;font-size:0.72rem;font-weight:800;background:rgba(255,196,0,0.15);color:var(--gold);"></span>
                 </h3>
-                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">
+                <p class="p-desc-admin">
                   Review community fan art. Approved pieces appear in the <a href="/community/#fan-art" style="color:var(--gold);">/community</a> gallery.
                 </p>
                 <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;">
@@ -2845,7 +1275,7 @@
                 <h3>Investor Requests
                   <span id="inv-req-badge" style="display:none;margin-left:0.6rem;padding:0.15rem 0.55rem;border-radius:999px;font-size:0.72rem;font-weight:800;background:rgba(31,162,255,0.15);color:#1FA2FF;"></span>
                 </h3>
-                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">
+                <p class="p-desc-admin">
                   Applications submitted via <a href="/investor-portal/apply/" style="color:#1FA2FF;">/investor-portal/apply/</a>. Approve to grant portal access.
                 </p>
                 <div style="display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap;" id="inv-req-filters">
@@ -2861,7 +1291,7 @@
               <!-- ── Community Polls ── -->
               <div class="settings-block admin-panel-full">
                 <h3>Community Polls</h3>
-                <p style="font-size:0.82rem;color:var(--muted);margin-bottom:1rem;line-height:1.55;">
+                <p class="p-desc-admin">
                   Create polls visible to all Vault members on the Community page. Members can vote once per poll.
                 </p>
                 <form id="create-poll-form" onsubmit="adminCreatePoll(event)" autocomplete="off">

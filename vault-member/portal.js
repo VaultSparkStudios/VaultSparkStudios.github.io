@@ -509,6 +509,7 @@
       setTimeout(() => { initPointsEconomy(member); initGameSessionMilestones(member); loadCurrentlyPlaying(member); }, 1200);
       loadTeamPanel(member);
       loadInviteCode();
+      loadReferralMilestones();
 
       // Feature 1: daily login bonus + streak
       setTimeout(() => checkDailyLogin(member), 600);
