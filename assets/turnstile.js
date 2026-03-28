@@ -19,7 +19,7 @@
   'use strict';
 
   // Replace with your Turnstile site key from Cloudflare dashboard
-  var SITE_KEY = 'TURNSTILE_SITE_KEY_PLACEHOLDER';
+  var SITE_KEY = '0x4AAAAAACwZy-GkGqvHhc-u';
 
   var _widgetId = null;
   var _container = null;
