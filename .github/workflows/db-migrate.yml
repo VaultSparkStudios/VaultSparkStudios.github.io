@@ -22,11 +22,6 @@ jobs:
       - name: Install psql
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
-      - name: Force IPv4 for Supabase connection
-        run: |
-          # GitHub Actions runners sometimes fail on IPv6 — prefer IPv4
-          sudo sh -c 'echo "precedence ::ffff:0:0/96  100" >> /etc/gai.conf'
-
       - name: Determine migration files
         id: files
         run: |
@@ -38,9 +33,28 @@ jobs:
             echo "list=supabase/migrations/supabase-phase40-fan-art.sql,supabase/migrations/supabase-phase41-fan-art-votes.sql,supabase/migrations/supabase-phase43-teams.sql,supabase/migrations/supabase-phase44-gift-subs-social-graph.sql,supabase/migrations/supabase-phase45-game-scores.sql,supabase/migrations/supabase-phase45-newsletter.sql,supabase/migrations/supabase-phase45-seasons.sql,supabase/supabase-phase46-treasury.sql,supabase/supabase-phase47-weekly-leaderboard.sql,supabase/supabase-phase48-seasons-xp.sql,supabase/supabase-phase49-social-graph.sql,supabase/migrations/supabase-phase50-referral-milestones.sql" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Run migrations
+      - name: Resolve Supabase host to IPv4
+        id: resolve
         env:
           DATABASE_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          # Extract hostname from postgres URL
+          HOST=$(echo "$DATABASE_URL" | sed -E 's|.*@([^:/]+).*|\1|')
+          echo "Original host: $HOST"
+          # Resolve to IPv4
+          IPV4=$(dig +short -4 A "$HOST" | head -1)
+          echo "Resolved IPv4: $IPV4"
+          if [ -z "$IPV4" ]; then
+            echo "::error::Could not resolve $HOST to IPv4"
+            exit 1
+          fi
+          # Replace hostname with IPv4 in the URL
+          DB_URL_IPV4=$(echo "$DATABASE_URL" | sed "s|$HOST|$IPV4|")
+          echo "db_url_ipv4=$DB_URL_IPV4" >> "$GITHUB_OUTPUT"
+
+      - name: Run migrations
+        env:
+          DATABASE_URL: ${{ steps.resolve.outputs.db_url_ipv4 }}
         run: |
           IFS=',' read -ra FILES <<< "${{ steps.files.outputs.list }}"
           FAILED=0
