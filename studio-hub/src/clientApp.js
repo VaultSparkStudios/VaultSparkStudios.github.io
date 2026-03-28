@@ -1258,8 +1258,10 @@ initGlobalSearch();
 initIDB().then(() => migrateFromLocalStorage()).catch(() => {});
 
 if (!isUnlocked()) {
-  render();
+  // Mount the gate first — it's a full-screen overlay so it must show even
+  // if render() fails (e.g. a view component throws during first paint).
   mountGate();
+  try { render(); } catch (e) { console.error("[HUB] render() during gate boot:", e); }
 } else {
   render();
   syncAll();
