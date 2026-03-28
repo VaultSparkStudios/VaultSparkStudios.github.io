@@ -969,7 +969,11 @@ body.light-mode :focus-visible {
     top: var(--nav-height);
     left: 0;
     right: 0;
-    bottom: 0;
+    /* Explicit height — backdrop-filter on .site-header creates a
+       containing block that makes bottom:0 relative to the header,
+       not the viewport. Use 100dvh (fallback 100vh) instead. */
+    height: calc(100vh - var(--nav-height));
+    height: calc(100dvh - var(--nav-height));
     background: rgba(3,4,8,0.98);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
