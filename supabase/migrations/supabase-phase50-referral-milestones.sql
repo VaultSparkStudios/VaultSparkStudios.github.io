@@ -15,6 +15,7 @@ create table if not exists public.referral_milestones (
 );
 
 alter table public.referral_milestones enable row level security;
+drop policy if exists "Anyone can read milestone definitions" on public.referral_milestones;
 create policy "Anyone can read milestone definitions"
   on public.referral_milestones for select using (true);
 
@@ -38,10 +39,12 @@ create table if not exists public.vault_member_milestones (
 
 alter table public.vault_member_milestones enable row level security;
 
+drop policy if exists "Members can view own milestones" on public.vault_member_milestones;
 create policy "Members can view own milestones"
   on public.vault_member_milestones for select
   using (auth.uid() = member_id);
 
+drop policy if exists "Members can claim own milestones" on public.vault_member_milestones;
 create policy "Members can claim own milestones"
   on public.vault_member_milestones for insert
   with check (auth.uid() = member_id);

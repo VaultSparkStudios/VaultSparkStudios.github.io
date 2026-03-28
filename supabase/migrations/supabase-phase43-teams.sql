@@ -18,20 +18,24 @@ create index if not exists idx_teams_points on public.teams(total_points desc);
 alter table public.teams enable row level security;
 
 -- Anyone can read teams (leaderboard)
+drop policy if exists "teams_select_public" on public.teams;
 create policy "teams_select_public"
   on public.teams for select to anon, authenticated using (true);
 
 -- Authenticated can create a team
+drop policy if exists "teams_insert_own" on public.teams;
 create policy "teams_insert_own"
   on public.teams for insert to authenticated
   with check (auth.uid() = created_by);
 
 -- Only the creator can update team name
+drop policy if exists "teams_update_creator" on public.teams;
 create policy "teams_update_creator"
   on public.teams for update to authenticated
   using (auth.uid() = created_by);
 
 -- Only the creator can delete
+drop policy if exists "teams_delete_creator" on public.teams;
 create policy "teams_delete_creator"
   on public.teams for delete to authenticated
   using (auth.uid() = created_by);
@@ -53,15 +57,18 @@ create index if not exists idx_team_members_user on public.team_members(user_id)
 alter table public.team_members enable row level security;
 
 -- Anyone can read team membership (for roster display)
+drop policy if exists "team_members_select_public" on public.team_members;
 create policy "team_members_select_public"
   on public.team_members for select to anon, authenticated using (true);
 
--- Members can join a team (if they are not already in one — enforced by UNIQUE)
+-- Members can join a team (if they are not already in one -- enforced by UNIQUE)
+drop policy if exists "team_members_insert_own" on public.team_members;
 create policy "team_members_insert_own"
   on public.team_members for insert to authenticated
   with check (auth.uid() = user_id);
 
 -- Members can leave (delete their own row)
+drop policy if exists "team_members_delete_own" on public.team_members;
 create policy "team_members_delete_own"
   on public.team_members for delete to authenticated
   using (auth.uid() = user_id);

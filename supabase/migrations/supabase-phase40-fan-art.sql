@@ -29,30 +29,35 @@ create index if not exists idx_fan_art_member
 alter table public.fan_art_submissions enable row level security;
 
 -- Members can submit their own art
+drop policy if exists "fan_art_insert_own" on public.fan_art_submissions;
 create policy "fan_art_insert_own"
   on public.fan_art_submissions for insert
   to authenticated
   with check (auth.uid() = member_id);
 
 -- Members can read their own submissions (to see status)
+drop policy if exists "fan_art_select_own" on public.fan_art_submissions;
 create policy "fan_art_select_own"
   on public.fan_art_submissions for select
   to authenticated
   using (auth.uid() = member_id);
 
 -- Public can read approved submissions
+drop policy if exists "fan_art_select_approved" on public.fan_art_submissions;
 create policy "fan_art_select_approved"
   on public.fan_art_submissions for select
   to anon, authenticated
   using (status = 'approved');
 
 -- Admin can read all
+drop policy if exists "fan_art_admin_select" on public.fan_art_submissions;
 create policy "fan_art_admin_select"
   on public.fan_art_submissions for select
   to authenticated
   using (public.is_vault_admin());
 
 -- Admin can update (approve/reject)
+drop policy if exists "fan_art_admin_update" on public.fan_art_submissions;
 create policy "fan_art_admin_update"
   on public.fan_art_submissions for update
   to authenticated
@@ -63,6 +68,7 @@ create policy "fan_art_admin_update"
 -- Storage policies are RLS policies on storage.objects
 
 -- Allow authenticated users to upload to their own folder
+drop policy if exists "fan_art_upload_own" on storage.objects;
 create policy "fan_art_upload_own"
   on storage.objects for insert
   to authenticated
@@ -72,6 +78,7 @@ create policy "fan_art_upload_own"
   );
 
 -- Allow public read of all files in the fan-art bucket
+drop policy if exists "fan_art_read_public" on storage.objects;
 create policy "fan_art_read_public"
   on storage.objects for select
   to anon, authenticated

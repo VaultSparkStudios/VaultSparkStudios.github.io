@@ -20,18 +20,21 @@ create index if not exists idx_fan_art_votes_user
 alter table public.fan_art_votes enable row level security;
 
 -- Anyone can read vote counts
+drop policy if exists "fan_art_votes_select_public" on public.fan_art_votes;
 create policy "fan_art_votes_select_public"
   on public.fan_art_votes for select
   to anon, authenticated
   using (true);
 
 -- Authenticated members can vote
+drop policy if exists "fan_art_votes_insert_own" on public.fan_art_votes;
 create policy "fan_art_votes_insert_own"
   on public.fan_art_votes for insert
   to authenticated
   with check (auth.uid() = user_id);
 
 -- Members can remove their own vote
+drop policy if exists "fan_art_votes_delete_own" on public.fan_art_votes;
 create policy "fan_art_votes_delete_own"
   on public.fan_art_votes for delete
   to authenticated

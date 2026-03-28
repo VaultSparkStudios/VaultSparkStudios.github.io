@@ -52,7 +52,7 @@ jobs:
 
             if [ "${{ inputs.dry_run }}" = "true" ]; then
               echo "DRY RUN — wrapping in transaction + rollback"
-              (echo "BEGIN;" && cat "$file" && echo "ROLLBACK;") | psql "$DATABASE_URL" --set ON_ERROR_STOP=1 2>&1
+              (echo "BEGIN;" && cat "$file" && echo "ROLLBACK;") | psql "$DATABASE_URL" 2>&1
             else
               psql "$DATABASE_URL" --set ON_ERROR_STOP=1 -f "$file" 2>&1
             fi
