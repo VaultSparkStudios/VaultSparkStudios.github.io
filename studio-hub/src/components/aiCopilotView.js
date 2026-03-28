@@ -88,8 +88,8 @@ Style: concise, direct, data-driven. Use the score data provided. Reference spec
 
 Scoring system: 5 pillars (Development 0-30, Engagement 0-25, Momentum 0-25, Risk 0-20+5 governance, Community 0-25) = max 130. Grades: S>=124, A+>=105, A>=93, B+>=80, B>=68, C+>=56, C>=43, D>=31, F<31.`;
 
-// ── Send message to Claude API ───────────────────────────────────────────────
-export async function sendCopilotMessage(userText, state) {
+// ── Send message to Claude API (streaming) ──────────────────────────────────
+export async function sendCopilotMessage(userText, state, onChunk = null) {
   const creds = loadStoredCredentials();
   const claudeApiKey = creds.claudeApiKey || "";
   if (!claudeApiKey) {
@@ -103,11 +103,8 @@ export async function sendCopilotMessage(userText, state) {
 
   const studioContext = buildStudioContext(state);
 
-  // Build conversation for API — include system + context + recent messages
   const apiMessages = [];
-
-  // Inject studio context as first user message if first in conversation
-  const conversationMsgs = _messages.slice(-10); // last 10 for context window
+  const conversationMsgs = _messages.slice(-10);
   for (const msg of conversationMsgs) {
     apiMessages.push({ role: msg.role, content: msg.content });
   }
@@ -124,6 +121,7 @@ export async function sendCopilotMessage(userText, state) {
       body: JSON.stringify({
         model: MODEL,
         max_tokens: MAX_TOKENS,
+        stream: !!onChunk,
         system: SYSTEM_PROMPT + "\n\n" + studioContext,
         messages: apiMessages,
       }),
@@ -133,11 +131,51 @@ export async function sendCopilotMessage(userText, state) {
       const body = await res.json().catch(() => ({}));
       _error = body?.error?.message || `API error ${res.status}`;
       _loading = false;
-      // Remove the user message on failure
       _messages.pop();
       return { ok: false, error: _error };
     }
 
+    // Streaming path
+    if (onChunk && res.body) {
+      let fullText = "";
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const payload = line.slice(6).trim();
+          if (payload === "[DONE]") continue;
+          try {
+            const evt = JSON.parse(payload);
+            if (evt.type === "content_block_delta" && evt.delta?.text) {
+              fullText += evt.delta.text;
+              onChunk(fullText);
+            }
+          } catch { /* skip malformed SSE */ }
+        }
+      }
+
+      if (!fullText) {
+        _error = "Empty response from Claude";
+        _loading = false;
+        _messages.pop();
+        return { ok: false, error: _error };
+      }
+
+      _messages.push({ role: "assistant", content: fullText.trim(), ts: Date.now() });
+      _loading = false;
+      persistHistory();
+      return { ok: true, text: fullText.trim() };
+    }
+
+    // Non-streaming fallback
     const data = await res.json();
     const text = data.content?.[0]?.text?.trim();
     if (!text) {

@@ -1,5 +1,5 @@
 import { SOCIAL_ACCOUNTS } from "../data/studioRegistry.js";
-import { fmt, timeAgo, escapeHtml } from "../utils/helpers.js";
+import { fmt, timeAgo, escapeHtml, safeGetJSON } from "../utils/helpers.js";
 
 const PLATFORM_ERROR_MESSAGES = {
   no_key:   "No API key configured — add one in Settings to enable live data.",
@@ -183,8 +183,7 @@ function renderAccountPanel(account, socialData, prevSocial = null, fetchedAt = 
 export function renderSocialView(state) {
   const { socialData = null } = state;
   const platformErrors = socialData?._errors || {};
-  let prevSocial = null;
-  try { prevSocial = JSON.parse(localStorage.getItem("vshub_social_prev") || "null"); } catch {}
+  let prevSocial = safeGetJSON("vshub_social_prev", null);
   const socialFetchedAt = (() => { try { return parseInt(localStorage.getItem("vshub_social_fetched_at") || "0") || null; } catch { return null; } })();
 
   const fullAccounts = SOCIAL_ACCOUNTS.filter((a) => a.apiSupport === "full");

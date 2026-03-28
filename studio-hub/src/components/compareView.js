@@ -185,61 +185,111 @@ function renderRadarChart(projects, scorings) {
 
 function renderScoreTrajectory(projects, scorings, scoreHistory) {
   const active = projects.filter(Boolean);
-  if (active.length < 2 || scoreHistory.length < 2) return "";
+  if (active.length < 1 || scoreHistory.length < 2) return "";
+
+  // Build per-project series with timestamps
   const seriesData = projects.map((proj) => {
     if (!proj) return null;
-    return scoreHistory.map((h) => h.scores?.[proj.id]).filter((v) => v != null);
+    const points = [];
+    for (const h of scoreHistory) {
+      const val = h.scores?.[proj.id];
+      if (val != null) points.push({ value: val, ts: h.ts });
+    }
+    return points.length >= 1 ? points : null;
   });
-  if (seriesData.filter((s) => s && s.length >= 2).length < 2) return "";
-  const allPts = seriesData.flatMap((s) => s || []);
-  const W = 400, H = 80;
-  const minV = Math.min(...allPts, 0);
-  const maxV = Math.max(...allPts, 100);
-  const range = maxV - minV || 1;
-  function toXY(pts) {
-    return pts.map((v, i) => ({
-      x: (i / (pts.length - 1)) * W,
-      y: H - ((v - minV) / range) * H,
-    }));
+
+  // Need at least one project with 2+ data points
+  if (seriesData.filter((s) => s && s.length >= 2).length < 1) return "";
+
+  // Chart dimensions — padded for axis labels
+  const PAD_L = 36, PAD_R = 12, PAD_T = 8, PAD_B = 24;
+  const W = 600, H = 180;
+  const plotW = W - PAD_L - PAD_R;
+  const plotH = H - PAD_T - PAD_B;
+  const minY = 0, maxY = 130;
+
+  // Collect all timestamps across all series for a shared x-axis
+  const allTs = [];
+  for (const s of seriesData) {
+    if (!s) continue;
+    for (const pt of s) if (!allTs.includes(pt.ts)) allTs.push(pt.ts);
   }
-  function polyPts(pts) {
-    return toXY(pts).map((p) => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+  allTs.sort((a, b) => a - b);
+  const tsMin = allTs[0], tsMax = allTs[allTs.length - 1];
+  const tsRange = tsMax - tsMin || 1;
+
+  function xPos(ts) { return PAD_L + ((ts - tsMin) / tsRange) * plotW; }
+  function yPos(v)  { return PAD_T + plotH - ((v - minY) / (maxY - minY)) * plotH; }
+
+  function fmtDate(ts) {
+    const d = new Date(ts);
+    return `${d.getMonth() + 1}/${d.getDate()}`;
   }
-  function dotPts(pts, color) {
-    return toXY(pts).map((p, i) => `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3" fill="${i === pts.length - 1 ? "#fff" : color}" opacity="${i === pts.length - 1 ? 1 : 0.5}"/>`).join("");
+
+  // Grid lines (horizontal at every 26 pts: 0, 26, 52, 78, 104, 130)
+  const yTicks = [0, 26, 52, 78, 104, 130];
+  const gridLines = yTicks.map((v) => {
+    const y = yPos(v);
+    return `<line x1="${PAD_L}" y1="${y.toFixed(1)}" x2="${W - PAD_R}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+      <text x="${PAD_L - 6}" y="${(y + 3).toFixed(1)}" fill="rgba(255,255,255,0.25)" font-size="9" text-anchor="end" font-family="inherit">${v}</text>`;
+  }).join("");
+
+  // X-axis date labels (show up to 6 evenly spaced)
+  const labelCount = Math.min(allTs.length, 6);
+  const xLabels = [];
+  for (let i = 0; i < labelCount; i++) {
+    const idx = Math.round((i / (labelCount - 1)) * (allTs.length - 1));
+    const ts = allTs[idx];
+    const x = xPos(ts);
+    xLabels.push(`<text x="${x.toFixed(1)}" y="${(H - 2).toFixed(1)}" fill="rgba(255,255,255,0.25)" font-size="9" text-anchor="middle" font-family="inherit">${fmtDate(ts)}</text>`);
   }
+
+  // Render lines + dots per project
+  const linesSvg = projects.map((proj, ci) => {
+    const pts = seriesData[ci];
+    if (!pts || pts.length < 2) return "";
+    const color = proj.color || COL_COLORS[ci];
+    const polyPts = pts.map((pt) => `${xPos(pt.ts).toFixed(1)},${yPos(pt.value).toFixed(1)}`).join(" ");
+    const dots = pts.map((pt, i) => {
+      const cx = xPos(pt.ts).toFixed(1);
+      const cy = yPos(pt.value).toFixed(1);
+      const isLast = i === pts.length - 1;
+      const dateStr = new Date(pt.ts).toLocaleDateString();
+      return `<circle cx="${cx}" cy="${cy}" r="${isLast ? 4 : 3}" fill="${isLast ? "#fff" : color}" stroke="${isLast ? color : "none"}" stroke-width="${isLast ? 2 : 0}" opacity="${isLast ? 1 : 0.7}"><title>${proj.name}: ${pt.value}/130 — ${dateStr}</title></circle>`;
+    }).join("");
+    return `<g>
+      <polyline points="${polyPts}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
+      ${dots}
+    </g>`;
+  }).join("");
+
+  // Legend
+  const legend = projects.map((proj, ci) => {
+    const pts = seriesData[ci];
+    if (!proj || !pts || pts.length < 1) return "";
+    const color = proj.color || COL_COLORS[ci];
+    const latest = pts[pts.length - 1].value;
+    return `
+      <div style="display:flex; align-items:center; gap:6px; font-size:11px; color:var(--muted);">
+        <div style="width:20px; height:3px; background:${color}; border-radius:2px;"></div>
+        <span style="color:${color}; font-weight:600;">${proj.name}</span>
+        <span>— latest ${latest}/130</span>
+      </div>
+    `;
+  }).join("");
+
   return `
-    <div style="margin-top:20px; padding:16px 20px; background:rgba(0,0,0,0.2); border:1px solid var(--border); border-radius:10px;">
-      <div style="font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:12px;">Score History</div>
+    <div style="margin-top:16px; margin-bottom:4px; padding:16px 20px; background:rgba(0,0,0,0.2); border:1px solid var(--border); border-radius:10px;">
+      <div style="font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:12px;">Score History Trajectory</div>
       <div style="overflow-x:auto;">
-        <svg width="${W}" height="${H + 20}" style="display:block; overflow:visible; min-width:${W}px;">
-          ${[0, 25, 50, 75, 100].map((v) => {
-            const y = H - ((v - minV) / range) * H;
-            return `<line x1="0" y1="${y.toFixed(1)}" x2="${W}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
-              <text x="-4" y="${(y + 4).toFixed(1)}" fill="rgba(255,255,255,0.2)" font-size="9" text-anchor="end">${v}</text>`;
-          }).join("")}
-          ${seriesData.map((pts, ci) => {
-            if (!pts || pts.length < 2) return "";
-            return `
-              <g>
-                <polyline points="${polyPts(pts)}" fill="none" stroke="${COL_COLORS[ci]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/>
-                ${dotPts(pts, COL_COLORS[ci])}
-              </g>
-            `;
-          }).join("")}
+        <svg width="100%" height="${H}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" style="display:block; min-width:320px;">
+          ${gridLines}
+          ${xLabels.join("")}
+          ${linesSvg}
         </svg>
       </div>
-      <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:8px;">
-        ${projects.map((proj, ci) => {
-          const pts = seriesData[ci];
-          if (!proj || !pts || pts.length < 2) return "";
-          return `
-            <div style="display:flex; align-items:center; gap:6px; font-size:11px; color:var(--muted);">
-              <div style="width:20px; height:2px; background:${COL_COLORS[ci]}; border-radius:1px;"></div>
-              ${proj.name} — latest ${pts[pts.length - 1]}
-            </div>
-          `;
-        }).join("")}
+      <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:10px;">
+        ${legend}
       </div>
     </div>
   `;
@@ -325,6 +375,8 @@ export function renderCompareView(state) {
         ${projC || !idC ? renderProjectColumn(projC, ghData, sbData, socialData, COL_COLORS[2]) : ""}
       </div>
 
+      ${renderScoreTrajectory(projects, scorings, scoreHistory)}
+
       ${!hasEnough ? "" : `
         <div style="margin-top:20px; padding:16px 20px; background:rgba(122,231,199,0.04);
                     border:1px solid rgba(122,231,199,0.15); border-radius:10px;">
@@ -375,7 +427,6 @@ export function renderCompareView(state) {
         </div>
       `}
 
-      ${renderScoreTrajectory(projects, scorings, scoreHistory)}
     </div>
   `;
 }

@@ -3,6 +3,7 @@
 
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject } from "./projectScoring.js";
+import { escapeHtml } from "./helpers.js";
 
 // ── Shared modal shell ─────────────────────────────────────────────────────────
 function showCopyModal({ id, title, subtitle, text, copyLabel }) {
@@ -13,12 +14,12 @@ function showCopyModal({ id, title, subtitle, text, copyLabel }) {
   el.innerHTML = `
     <div style="position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:200;
                 display:flex; align-items:center; justify-content:center;" id="${id}-backdrop">
-      <div style="background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+      <div role="dialog" aria-modal="true" aria-label="${escapeHtml(title)}" style="background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
                   padding:24px; width:min(680px, 90vw); box-shadow:0 24px 80px rgba(0,0,0,0.5);">
         <div style="font-size:13px; font-weight:700; color:var(--silver); margin-bottom:14px;
                     letter-spacing:0.04em; display:flex; align-items:center; justify-content:space-between;">
-          <span>${title}</span>
-          ${subtitle ? `<span style="font-size:11px; color:var(--muted); font-weight:400;">${subtitle}</span>` : ""}
+          <span>${escapeHtml(title)}</span>
+          ${subtitle ? `<span style="font-size:11px; color:var(--muted); font-weight:400;">${escapeHtml(subtitle)}</span>` : ""}
         </div>
         <pre style="background:var(--panel-2); border:1px solid var(--border); border-radius:8px;
                     padding:14px; font-size:12px; color:var(--text); line-height:1.6;

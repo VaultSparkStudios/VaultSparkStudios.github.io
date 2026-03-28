@@ -1,5 +1,5 @@
 import { PROJECTS, SOCIAL_ACCOUNTS } from "../data/studioRegistry.js";
-import { scoreProject, scoreStudio } from "../utils/projectScoring.js";
+import { scoreProject, scoreStudio, getWeights } from "../utils/projectScoring.js";
 import { forecastScores, getDecayingProjects, isForecastHighVariance } from "../utils/scoreForecast.js";
 import { getFetchError } from "../data/githubAdapter.js";
 import { timeAgo, fmt, ciStatus, daysSince, commitVelocity, renderSkeleton, renderEmptyState } from "../utils/helpers.js";
@@ -61,13 +61,11 @@ function scoreBar(score, max, color, label = "", signal = "", tooltip = "") {
 // ── Score rationale ("why not A") ────────────────────────────────────────────
 function scoreRationale(scoring) {
   if (scoring.total >= 90) return null;
-  // Read weights to scale thresholds proportionally
-  let w = { dev: 30, engage: 25, momentum: 25, risk: 20 };
-  try { const s = JSON.parse(localStorage.getItem("vshub_settings") || "{}"); if (s.weights) w = { ...w, ...s.weights }; } catch {}
+  const w = getWeights();
   const needed = [];
 
   const devGap = 30 - scoring.pillars.development.score;
-  const devImpact = (devGap / 30) * w.dev; // weighted points lost
+  const devImpact = (devGap / 30) * w.dev;
   if (devImpact >= 8) {
     const sig = (scoring.pillars.development.signals || [])[0] || "";
     if (sig.toLowerCase().includes("fail")) needed.push("fix CI build");
@@ -86,6 +84,12 @@ function scoreRationale(scoring) {
   const engGap = 25 - scoring.pillars.engagement.score;
   const engImpact = (engGap / 25) * w.engage;
   if (engImpact >= 14 && needed.length === 0) needed.push("drive engagement");
+
+  if (scoring.pillars.community) {
+    const comGap = 25 - scoring.pillars.community.score;
+    const comImpact = (comGap / 25) * w.community;
+    if (comImpact >= 12 && needed.length < 2) needed.push("grow community");
+  }
 
   return needed.length ? `Needs: ${needed.slice(0, 2).join(", ")}` : null;
 }

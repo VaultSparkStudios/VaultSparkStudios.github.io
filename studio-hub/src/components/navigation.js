@@ -1,5 +1,6 @@
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject, getGrade } from "../utils/projectScoring.js";
+import { safeGetJSON } from "../utils/helpers.js";
 
 export function renderNavigation(state) {
   const {
@@ -30,8 +31,7 @@ export function renderNavigation(state) {
   }
 
   // Pinned projects
-  let pinnedIds = [];
-  try { pinnedIds = JSON.parse(localStorage.getItem("vshub_pinned") || "[]"); } catch {}
+  let pinnedIds = safeGetJSON("vshub_pinned", []);
 
   const games     = PROJECTS.filter((p) => p.type === "game");
   const tools     = PROJECTS.filter((p) => p.type === "tool");
@@ -138,6 +138,7 @@ export function renderNavigation(state) {
         ${navItem("studio-hub",     "Studio Hub", alertCount > 0 ? String(alertCount) : "")}
         ${navItem("virtual-office", "Studio Floor")}
         ${navItem("heatmap",        "Heatmap")}
+        ${navItem("pr-review",      "PR Review")}
         ${navItem("analytics",      "Analytics")}
         ${navItem("timeline",       "Timeline")}
         ${navItem("compare",        "Compare")}

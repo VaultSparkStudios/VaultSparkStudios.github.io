@@ -2,14 +2,15 @@
 
 import { fetchPrescription, invalidatePrescriptionFor, fetchDevlogDraft, invalidateDevlogDraft } from "../utils/aiPrescriptions.js";
 import { scoreProject } from "../utils/projectScoring.js";
+import { safeGetJSON, safeSetJSON } from "../utils/helpers.js";
 
 const TAGS_KEY    = "vshub_tags";
 const PRESETS_KEY = "vshub_filter_presets";
 
-function loadTags()     { try { return JSON.parse(localStorage.getItem(TAGS_KEY)    || "{}"); } catch { return {}; } }
-function saveTags(t)    { try { localStorage.setItem(TAGS_KEY, JSON.stringify(t));           } catch {} }
-function loadPresets()  { try { return JSON.parse(localStorage.getItem(PRESETS_KEY) || "[]"); } catch { return []; } }
-function savePresets(p) { try { localStorage.setItem(PRESETS_KEY, JSON.stringify(p));         } catch {} }
+function loadTags()     { return safeGetJSON(TAGS_KEY, {}); }
+function saveTags(t)    { safeSetJSON(TAGS_KEY, t); }
+function loadPresets()  { return safeGetJSON(PRESETS_KEY, []); }
+function savePresets(p) { safeSetJSON(PRESETS_KEY, p); }
 
 export function bindProjectHubEvents(ctx) {
   const { state, render, logActivity, PROJECTS } = ctx;
@@ -21,16 +22,14 @@ export function bindProjectHubEvents(ctx) {
       const input = document.getElementById(`action-queue-input-${projectId}`);
       const text = input?.value?.trim();
       if (!text) return;
-      try {
-        const queue = JSON.parse(localStorage.getItem("vshub_action_queue") || "{}");
-        const existing = queue[projectId];
-        let items = Array.isArray(existing) ? existing : (typeof existing === "string" && existing ? [{ id: Date.now().toString(36), text: existing }] : []);
-        items.push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text });
-        queue[projectId] = items;
-        localStorage.setItem("vshub_action_queue", JSON.stringify(queue));
-        if (input) input.value = "";
-        render();
-      } catch {}
+      const queue = safeGetJSON("vshub_action_queue", {});
+      const existing = queue[projectId];
+      let items = Array.isArray(existing) ? existing : (typeof existing === "string" && existing ? [{ id: Date.now().toString(36), text: existing }] : []);
+      items.push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text });
+      queue[projectId] = items;
+      safeSetJSON("vshub_action_queue", queue);
+      if (input) input.value = "";
+      render();
     });
   });
   document.querySelectorAll("[id^='action-queue-input-']").forEach((input) => {
@@ -39,16 +38,14 @@ export function bindProjectHubEvents(ctx) {
       const projectId = input.id.replace("action-queue-input-", "");
       const text = input.value.trim();
       if (!text) return;
-      try {
-        const queue = JSON.parse(localStorage.getItem("vshub_action_queue") || "{}");
-        const existing = queue[projectId];
-        let items = Array.isArray(existing) ? existing : (typeof existing === "string" && existing ? [{ id: Date.now().toString(36), text: existing }] : []);
-        items.push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text });
-        queue[projectId] = items;
-        localStorage.setItem("vshub_action_queue", JSON.stringify(queue));
-        input.value = "";
-        render();
-      } catch {}
+      const queue = safeGetJSON("vshub_action_queue", {});
+      const existing = queue[projectId];
+      let items = Array.isArray(existing) ? existing : (typeof existing === "string" && existing ? [{ id: Date.now().toString(36), text: existing }] : []);
+      items.push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text });
+      queue[projectId] = items;
+      safeSetJSON("vshub_action_queue", queue);
+      input.value = "";
+      render();
     });
   });
 
@@ -58,14 +55,12 @@ export function bindProjectHubEvents(ctx) {
       e.stopPropagation();
       const projectId = btn.dataset.aqDelete;
       const itemId = btn.dataset.aqId;
-      try {
-        const queue = JSON.parse(localStorage.getItem("vshub_action_queue") || "{}");
-        if (Array.isArray(queue[projectId])) {
-          queue[projectId] = queue[projectId].filter((it) => it.id !== itemId);
-          localStorage.setItem("vshub_action_queue", JSON.stringify(queue));
-          render();
-        }
-      } catch {}
+      const queue = safeGetJSON("vshub_action_queue", {});
+      if (Array.isArray(queue[projectId])) {
+        queue[projectId] = queue[projectId].filter((it) => it.id !== itemId);
+        safeSetJSON("vshub_action_queue", queue);
+        render();
+      }
     });
   });
 
@@ -75,14 +70,12 @@ export function bindProjectHubEvents(ctx) {
       const projectId = btn.dataset.projectId;
       const input = document.getElementById(`local-path-input-${projectId}`);
       if (!input) return;
-      try {
-        const paths = JSON.parse(localStorage.getItem("vshub_local_paths") || "{}");
-        paths[projectId] = input.value.trim();
-        if (!paths[projectId]) delete paths[projectId];
-        localStorage.setItem("vshub_local_paths", JSON.stringify(paths));
-        btn.textContent = "Saved ✓";
-        setTimeout(() => { btn.textContent = "Save path"; render(); }, 1500);
-      } catch {}
+      const paths = safeGetJSON("vshub_local_paths", {});
+      paths[projectId] = input.value.trim();
+      if (!paths[projectId]) delete paths[projectId];
+      safeSetJSON("vshub_local_paths", paths);
+      btn.textContent = "Saved ✓";
+      setTimeout(() => { btn.textContent = "Save path"; render(); }, 1500);
     });
   });
 
@@ -92,24 +85,20 @@ export function bindProjectHubEvents(ctx) {
       const projectId = btn.dataset.projectId;
       const input = document.getElementById(`annotation-input-${projectId}`);
       if (!input) return;
-      try {
-        const annotations = JSON.parse(localStorage.getItem("vshub_annotations") || "{}");
-        annotations[projectId] = input.value.trim();
-        localStorage.setItem("vshub_annotations", JSON.stringify(annotations));
-        btn.textContent = "Saved ✓";
-        setTimeout(() => { btn.textContent = "Save"; }, 1500);
-      } catch {}
+      const annotations = safeGetJSON("vshub_annotations", {});
+      annotations[projectId] = input.value.trim();
+      safeSetJSON("vshub_annotations", annotations);
+      btn.textContent = "Saved ✓";
+      setTimeout(() => { btn.textContent = "Save"; }, 1500);
     });
   });
   document.querySelectorAll("[id^='annotation-clear-']").forEach((btn) => {
     btn.addEventListener("click", () => {
       const projectId = btn.dataset.projectId;
-      try {
-        const annotations = JSON.parse(localStorage.getItem("vshub_annotations") || "{}");
-        delete annotations[projectId];
-        localStorage.setItem("vshub_annotations", JSON.stringify(annotations));
-        render();
-      } catch {}
+      const annotations = safeGetJSON("vshub_annotations", {});
+      delete annotations[projectId];
+      safeSetJSON("vshub_annotations", annotations);
+      render();
     });
   });
 
@@ -119,38 +108,32 @@ export function bindProjectHubEvents(ctx) {
       e.stopPropagation();
       const pid = btn.dataset.projectId;
       const g   = btn.dataset.goal;
-      try {
-        const goals = JSON.parse(localStorage.getItem("vshub_goals") || "{}");
-        const existing = goals[pid];
-        const dl = typeof existing === "object" && existing ? (existing.deadline || "") : "";
-        goals[pid] = { grade: g, deadline: dl };
-        localStorage.setItem("vshub_goals", JSON.stringify(goals));
-        render();
-      } catch {}
+      const goals = safeGetJSON("vshub_goals", {});
+      const existing = goals[pid];
+      const dl = typeof existing === "object" && existing ? (existing.deadline || "") : "";
+      goals[pid] = { grade: g, deadline: dl };
+      safeSetJSON("vshub_goals", goals);
+      render();
     });
   });
   document.querySelectorAll("[id^='goal-clear-']").forEach((btn) => {
     btn.addEventListener("click", (e) => {
       e.stopPropagation();
       const pid = btn.id.replace("goal-clear-", "");
-      try {
-        const goals = JSON.parse(localStorage.getItem("vshub_goals") || "{}");
-        delete goals[pid];
-        localStorage.setItem("vshub_goals", JSON.stringify(goals));
-        render();
-      } catch {}
+      const goals = safeGetJSON("vshub_goals", {});
+      delete goals[pid];
+      safeSetJSON("vshub_goals", goals);
+      render();
     });
   });
   document.querySelectorAll("[id^='goal-deadline-']").forEach((inp) => {
     inp.addEventListener("change", () => {
       const pid = inp.id.replace("goal-deadline-", "");
-      try {
-        const goals = JSON.parse(localStorage.getItem("vshub_goals") || "{}");
-        const existing = goals[pid];
-        const grade = typeof existing === "string" ? existing : (typeof existing === "object" && existing ? (existing.grade || "") : "");
-        goals[pid] = { grade, deadline: inp.value };
-        localStorage.setItem("vshub_goals", JSON.stringify(goals));
-      } catch {}
+      const goals = safeGetJSON("vshub_goals", {});
+      const existing = goals[pid];
+      const grade = typeof existing === "string" ? existing : (typeof existing === "object" && existing ? (existing.grade || "") : "");
+      goals[pid] = { grade, deadline: inp.value };
+      safeSetJSON("vshub_goals", goals);
     });
   });
 
@@ -159,7 +142,7 @@ export function bindProjectHubEvents(ctx) {
     const projectId = document.getElementById("sprint-project-select")?.value;
     const goal      = document.getElementById("sprint-goal-input")?.value?.trim() || "";
     if (!projectId) return;
-    try { localStorage.setItem("vshub_sprint", JSON.stringify({ projectId, goal })); } catch {}
+    safeSetJSON("vshub_sprint", { projectId, goal });
     logActivity("sprint_set", projectId);
     render();
   });
@@ -175,14 +158,12 @@ export function bindProjectHubEvents(ctx) {
       const input = document.getElementById(`checklist-new-${projectId}`);
       const text = input?.value?.trim();
       if (!text) return;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_checklist") || "{}");
-        if (!all[projectId]) all[projectId] = [];
-        all[projectId].push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text, done: false });
-        localStorage.setItem("vshub_checklist", JSON.stringify(all));
-        if (input) input.value = "";
-        render();
-      } catch {}
+      const all = safeGetJSON("vshub_checklist", {});
+      if (!all[projectId]) all[projectId] = [];
+      all[projectId].push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text, done: false });
+      safeSetJSON("vshub_checklist", all);
+      if (input) input.value = "";
+      render();
     });
   });
   document.querySelectorAll("[id^='checklist-new-']").forEach((input) => {
@@ -191,14 +172,12 @@ export function bindProjectHubEvents(ctx) {
       const projectId = input.id.replace("checklist-new-", "");
       const text = input.value.trim();
       if (!text) return;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_checklist") || "{}");
-        if (!all[projectId]) all[projectId] = [];
-        all[projectId].push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text, done: false });
-        localStorage.setItem("vshub_checklist", JSON.stringify(all));
-        input.value = "";
-        render();
-      } catch {}
+      const all = safeGetJSON("vshub_checklist", {});
+      if (!all[projectId]) all[projectId] = [];
+      all[projectId].push({ id: (Date.now() + Math.random()).toString(36).replace(".", ""), text, done: false });
+      safeSetJSON("vshub_checklist", all);
+      input.value = "";
+      render();
     });
   });
   document.querySelectorAll("[data-checklist-toggle]").forEach((btn) => {
@@ -206,15 +185,13 @@ export function bindProjectHubEvents(ctx) {
       e.stopPropagation();
       const projectId = btn.dataset.checklistToggle;
       const itemId = btn.dataset.checklistId;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_checklist") || "{}");
-        const idx = (all[projectId] || []).findIndex((it) => it.id === itemId);
-        if (idx !== -1) {
-          all[projectId][idx].done = !all[projectId][idx].done;
-          localStorage.setItem("vshub_checklist", JSON.stringify(all));
-          render();
-        }
-      } catch {}
+      const all = safeGetJSON("vshub_checklist", {});
+      const idx = (all[projectId] || []).findIndex((it) => it.id === itemId);
+      if (idx !== -1) {
+        all[projectId][idx].done = !all[projectId][idx].done;
+        safeSetJSON("vshub_checklist", all);
+        render();
+      }
     });
   });
   document.querySelectorAll("[data-checklist-delete]").forEach((btn) => {
@@ -222,14 +199,12 @@ export function bindProjectHubEvents(ctx) {
       e.stopPropagation();
       const projectId = btn.dataset.checklistDelete;
       const itemId = btn.dataset.checklistId;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_checklist") || "{}");
-        if (all[projectId]) {
-          all[projectId] = all[projectId].filter((it) => it.id !== itemId);
-          localStorage.setItem("vshub_checklist", JSON.stringify(all));
-          render();
-        }
-      } catch {}
+      const all = safeGetJSON("vshub_checklist", {});
+      if (all[projectId]) {
+        all[projectId] = all[projectId].filter((it) => it.id !== itemId);
+        safeSetJSON("vshub_checklist", all);
+        render();
+      }
     });
   });
 
@@ -243,14 +218,12 @@ export function bindProjectHubEvents(ctx) {
       const input = document.getElementById(`roadmap-new-${projectId}`);
       const text = input?.value?.trim();
       if (!text) return;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_roadmap") || "{}");
-        if (!all[projectId]) all[projectId] = { todo: [], doing: [], done: [] };
-        all[projectId].todo.push({ id: makeRoadmapId(), text });
-        localStorage.setItem("vshub_roadmap", JSON.stringify(all));
-        if (input) input.value = "";
-        render();
-      } catch {}
+      const all = safeGetJSON("vshub_roadmap", {});
+      if (!all[projectId]) all[projectId] = { todo: [], doing: [], done: [] };
+      all[projectId].todo.push({ id: makeRoadmapId(), text });
+      safeSetJSON("vshub_roadmap", all);
+      if (input) input.value = "";
+      render();
     });
   });
   document.querySelectorAll("[id^='roadmap-new-']").forEach((input) => {
@@ -259,14 +232,12 @@ export function bindProjectHubEvents(ctx) {
       const projectId = input.id.replace("roadmap-new-", "");
       const text = input.value.trim();
       if (!text) return;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_roadmap") || "{}");
-        if (!all[projectId]) all[projectId] = { todo: [], doing: [], done: [] };
-        all[projectId].todo.push({ id: makeRoadmapId(), text });
-        localStorage.setItem("vshub_roadmap", JSON.stringify(all));
-        input.value = "";
-        render();
-      } catch {}
+      const all = safeGetJSON("vshub_roadmap", {});
+      if (!all[projectId]) all[projectId] = { todo: [], doing: [], done: [] };
+      all[projectId].todo.push({ id: makeRoadmapId(), text });
+      safeSetJSON("vshub_roadmap", all);
+      input.value = "";
+      render();
     });
   });
   document.querySelectorAll("[data-roadmap-move]").forEach((btn) => {
@@ -276,22 +247,20 @@ export function bindProjectHubEvents(ctx) {
       const from = btn.dataset.roadmapFrom;
       const to   = btn.dataset.roadmapTo;
       const itemId = btn.dataset.roadmapId;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_roadmap") || "{}");
-        const board = all[projectId];
-        if (!board) return;
-        const itemIdx = board[from].findIndex((it) => (typeof it === "object" ? it.id : null) === itemId);
-        if (itemIdx === -1) return;
-        const [rawItem] = board[from].splice(itemIdx, 1);
-        const text = typeof rawItem === "string" ? rawItem : (rawItem.text || "");
-        const existingId = typeof rawItem === "object" && rawItem.id ? rawItem.id : makeRoadmapId();
-        const item = to === "doing"
-          ? { id: existingId, text, movedAt: Date.now() }
-          : { id: existingId, text };
-        board[to].push(item);
-        localStorage.setItem("vshub_roadmap", JSON.stringify(all));
-        render();
-      } catch {}
+      const all = safeGetJSON("vshub_roadmap", {});
+      const board = all[projectId];
+      if (!board) return;
+      const itemIdx = board[from].findIndex((it) => (typeof it === "object" ? it.id : null) === itemId);
+      if (itemIdx === -1) return;
+      const [rawItem] = board[from].splice(itemIdx, 1);
+      const text = typeof rawItem === "string" ? rawItem : (rawItem.text || "");
+      const existingId = typeof rawItem === "object" && rawItem.id ? rawItem.id : makeRoadmapId();
+      const item = to === "doing"
+        ? { id: existingId, text, movedAt: Date.now() }
+        : { id: existingId, text };
+      board[to].push(item);
+      safeSetJSON("vshub_roadmap", all);
+      render();
     });
   });
   document.querySelectorAll("[data-roadmap-delete]").forEach((btn) => {
@@ -300,16 +269,14 @@ export function bindProjectHubEvents(ctx) {
       const projectId = btn.dataset.roadmapDelete;
       const col = btn.dataset.roadmapCol;
       const itemId = btn.dataset.roadmapId;
-      try {
-        const all = JSON.parse(localStorage.getItem("vshub_roadmap") || "{}");
-        if (all[projectId]?.[col]) {
-          all[projectId][col] = all[projectId][col].filter(
-            (it) => (typeof it === "object" ? it.id : null) !== itemId
-          );
-        }
-        localStorage.setItem("vshub_roadmap", JSON.stringify(all));
-        render();
-      } catch {}
+      const all = safeGetJSON("vshub_roadmap", {});
+      if (all[projectId]?.[col]) {
+        all[projectId][col] = all[projectId][col].filter(
+          (it) => (typeof it === "object" ? it.id : null) !== itemId
+        );
+      }
+      safeSetJSON("vshub_roadmap", all);
+      render();
     });
   });
 
@@ -363,13 +330,11 @@ export function bindProjectHubEvents(ctx) {
     const today = new Date().toISOString().slice(0, 10);
     const textarea = document.getElementById("hub-session-notes-input");
     if (!textarea) return;
-    try {
-      const notes = JSON.parse(localStorage.getItem("vshub_hub_notes") || "{}");
-      notes[today] = textarea.value;
-      localStorage.setItem("vshub_hub_notes", JSON.stringify(notes));
-      const status = document.getElementById("hub-notes-save-status");
-      if (status) { status.textContent = "Saved ✓"; setTimeout(() => { status.textContent = ""; }, 1500); }
-    } catch {}
+    const notes = safeGetJSON("vshub_hub_notes", {});
+    notes[today] = textarea.value;
+    safeSetJSON("vshub_hub_notes", notes);
+    const status = document.getElementById("hub-notes-save-status");
+    if (status) { status.textContent = "Saved ✓"; setTimeout(() => { status.textContent = ""; }, 1500); }
   });
   document.getElementById("hub-session-notes-input")?.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
@@ -383,24 +348,20 @@ export function bindProjectHubEvents(ctx) {
       const projectId = btn.dataset.projectId;
       const textarea = document.getElementById(`notes-input-${projectId}`);
       if (!textarea) return;
-      try {
-        const notes = JSON.parse(localStorage.getItem("vshub_notes") || "{}");
-        notes[projectId] = textarea.value;
-        localStorage.setItem("vshub_notes", JSON.stringify(notes));
-        btn.textContent = "Saved ✓";
-        setTimeout(() => { btn.textContent = "Save"; }, 1500);
-      } catch {}
+      const notes = safeGetJSON("vshub_notes", {});
+      notes[projectId] = textarea.value;
+      safeSetJSON("vshub_notes", notes);
+      btn.textContent = "Saved ✓";
+      setTimeout(() => { btn.textContent = "Save"; }, 1500);
     });
   });
   document.querySelectorAll("[id^='notes-clear-']").forEach((btn) => {
     btn.addEventListener("click", () => {
       const projectId = btn.dataset.projectId;
-      try {
-        const notes = JSON.parse(localStorage.getItem("vshub_notes") || "{}");
-        delete notes[projectId];
-        localStorage.setItem("vshub_notes", JSON.stringify(notes));
-        render();
-      } catch {}
+      const notes = safeGetJSON("vshub_notes", {});
+      delete notes[projectId];
+      safeSetJSON("vshub_notes", notes);
+      render();
     });
   });
 

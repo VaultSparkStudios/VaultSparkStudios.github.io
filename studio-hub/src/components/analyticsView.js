@@ -3,7 +3,7 @@
 
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject, getGrade } from "../utils/projectScoring.js";
-import { fmt, timeAgo, daysSince, ciStatus, scoreColor, scoreGrade } from "../utils/helpers.js";
+import { fmt, timeAgo, daysSince, ciStatus, scoreColor, scoreGrade, safeGetJSON } from "../utils/helpers.js";
 import { forecastScores, getOverallForecastAccuracy, monteCarloForecast } from "../utils/scoreForecast.js";
 import { deltaBadge } from "./hub/hubHelpers.js";
 import { getScoreAnomalies } from "./hub/morningBrief.js";
@@ -1569,7 +1569,7 @@ function renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores
 
   // ── Social growth rates ──
   let socialGrowthCards = "";
-  const prevSocial = (() => { try { return JSON.parse(localStorage.getItem("vshub_social_prev") || "{}"); } catch { return {}; } })();
+  const prevSocial = safeGetJSON("vshub_social_prev", {});
   if (socialData?.youtube?.subscribers != null) {
     const delta = prevSocial.ytSubs ? socialData.youtube.subscribers - prevSocial.ytSubs : 0;
     const pct = prevSocial.ytSubs > 0 ? ((delta / prevSocial.ytSubs) * 100).toFixed(1) : "—";

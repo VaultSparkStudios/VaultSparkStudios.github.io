@@ -110,7 +110,7 @@ export function renderGate() {
   const remaining = getLockoutRemaining();
   const attemptsLeft = Math.max(0, MAX_FAILS - (fails.count || 0));
   return `
-    <div id="privacy-gate" style="
+    <div id="privacy-gate" role="dialog" aria-modal="true" aria-label="Hub login" style="
       position:fixed; inset:0; z-index:1000;
       background: linear-gradient(145deg, #04070d 0%, #07111d 45%, #03060a 100%);
       display:flex; align-items:center; justify-content:center;

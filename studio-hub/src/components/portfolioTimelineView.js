@@ -5,6 +5,7 @@
 
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject, getGrade } from "../utils/projectScoring.js";
+import { safeGetJSON } from "../utils/helpers.js";
 
 function timeAgo(iso) {
   if (!iso) return "—";
@@ -336,8 +337,7 @@ export function renderPortfolioTimelineView(state) {
   }
 
   // Alert history
-  let alertHistory = [];
-  try { alertHistory = JSON.parse(localStorage.getItem("vshub_alert_history") || "[]"); } catch {}
+  let alertHistory = safeGetJSON("vshub_alert_history", []);
   for (const a of alertHistory.slice(-40)) {
     const color = a.type === "error" ? "var(--red)" : a.type === "warning" ? "var(--gold)" : "var(--muted)";
     events.push({

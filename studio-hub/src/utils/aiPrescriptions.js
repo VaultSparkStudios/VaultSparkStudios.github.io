@@ -3,6 +3,8 @@
 // actionable recommendation. Key stored in localStorage credentials only.
 // Cache: 12h per project to avoid burning API budget.
 
+import { safeGetJSON } from "./helpers.js";
+
 const CACHE_KEY = "vshub_ai_prescriptions";
 const CACHE_TTL_MS = 12 * 3600000; // 12 hours
 const MODEL = "claude-haiku-4-5-20251001";
@@ -10,7 +12,7 @@ const ANTHROPIC_API = "https://api.anthropic.com/v1/messages";
 const MAX_TOKENS = 120;
 
 function loadCache() {
-  try { return JSON.parse(localStorage.getItem(CACHE_KEY) || "{}"); } catch { return {}; }
+  return safeGetJSON(CACHE_KEY, {});
 }
 function saveCache(cache) {
   try { localStorage.setItem(CACHE_KEY, JSON.stringify(cache)); } catch {}
@@ -106,7 +108,7 @@ const DEVLOG_CACHE_KEY = "vshub_devlog_drafts";
 const DEVLOG_CACHE_TTL_MS = 24 * 3600000; // 24h
 
 function loadDevlogCache() {
-  try { return JSON.parse(localStorage.getItem(DEVLOG_CACHE_KEY) || "{}"); } catch { return {}; }
+  return safeGetJSON(DEVLOG_CACHE_KEY, {});
 }
 function saveDevlogCache(cache) {
   try { localStorage.setItem(DEVLOG_CACHE_KEY, JSON.stringify(cache)); } catch {}

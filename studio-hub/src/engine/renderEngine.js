@@ -94,8 +94,8 @@ function stateFingerprint(viewKey, state) {
     };
   }
 
-  // Fallback: always re-render
-  return { ...base, _ts: Date.now() };
+  // Fallback: use base fields only (still cache-friendly)
+  return base;
 }
 
 /**

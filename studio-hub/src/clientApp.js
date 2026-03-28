@@ -25,8 +25,10 @@ import { renderAgentsView } from "./components/agentsView.js";
 import { renderCompetitiveView, loadCompetitorList, saveCompetitorList, loadDismissedCompetitors, saveDismissedCompetitors } from "./components/competitiveView.js";
 import { renderAnalyticsView } from "./components/analyticsView.js";
 import { renderAiCopilotView, sendCopilotMessage, clearCopilotHistory, getCopilotMessages } from "./components/aiCopilotView.js";
+import { renderPrReviewView } from "./components/prReviewView.js";
 import { mountCommandPalette, unmountCommandPalette, isPaletteOpen } from "./components/commandPalette.js";
 import { downloadJSON, downloadCSV, downloadScoreHistoryCSV } from "./utils/exportHelpers.js";
+import { generateScoreRSSFeed } from "./utils/rssFeed.js";
 import { generateStandup, generateWeeklyDigest } from "./utils/digestHelpers.js";
 import { loadScoreHistory, pushScoreHistory, storeSessionStartScores, scorePrevFromHistory } from "./utils/scoreHistory.js";
 import { pushToGist, pullFromGist } from "./engine/gistSync.js";
@@ -267,6 +269,23 @@ function mountGate() {
   input?.addEventListener("keydown", (e) => { if (e.key === "Enter") tryUnlock(); });
 }
 
+// ── Dynamic favicon — reflects studio average score color ────────────────────
+function updateFavicon() {
+  try {
+    const avg = state._studioAvg || 0;
+    const color = avg >= 105 ? "#7ae7c7" : avg >= 80 ? "#69b3ff" : avg >= 56 ? "#ffc874" : avg >= 31 ? "#ff9478" : "#f87171";
+    const canvas = document.createElement("canvas");
+    canvas.width = 32; canvas.height = 32;
+    const ctx = canvas.getContext("2d");
+    ctx.beginPath(); ctx.arc(16, 16, 14, 0, Math.PI * 2); ctx.fillStyle = color; ctx.fill();
+    ctx.fillStyle = "#060b12"; ctx.font = "bold 14px sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(avg > 0 ? String(avg) : "?", 16, 17);
+    let link = document.querySelector("link[rel='icon']");
+    if (!link) { link = document.createElement("link"); link.rel = "icon"; document.head.appendChild(link); }
+    link.href = canvas.toDataURL("image/png");
+  } catch { /* canvas not supported */ }
+}
+
 // ── Render ────────────────────────────────────────────────────────────────────
 let _lastRenderedView = null;
 
@@ -276,6 +295,10 @@ function render() {
 
   try {
     _renderInner(app);
+    // Compute studio avg for favicon
+    const _allScored = PROJECTS.map((p) => scoreProject(p, state.ghData[p.githubRepo] || null, state.sbData, state.socialData));
+    state._studioAvg = _allScored.length ? Math.round(_allScored.reduce((s, x) => s + x.total, 0) / _allScored.length) : 0;
+    updateFavicon();
   } catch (err) {
     console.error("[HUB] render crash:", err);
     // Show the error on screen so the user isn't stuck on a blank page
@@ -386,6 +409,7 @@ function renderActiveView() {
   if (activeView === "competitive")     return renderCompetitiveView(state);
   if (activeView === "analytics")       return renderAnalyticsView(state);
   if (activeView === "ai-copilot")      return renderAiCopilotView(state);
+  if (activeView === "pr-review")       return renderPrReviewView(state);
   if (activeView.startsWith("project:")) {
     const project = getProjectById(activeView.slice("project:".length));
     return project
@@ -863,7 +887,7 @@ function buildEventCtx() {
     setHubPassword, clearHubPassword,
     invalidateWeightsCache, clearSessionCache,
     scoreProject, PROJECTS,
-    downloadJSON, downloadCSV, downloadScoreHistoryCSV,
+    downloadJSON, downloadCSV, downloadScoreHistoryCSV, generateScoreRSSFeed,
     generateWeeklyDigest, generateStandup,
     loadScoreHistory, scorePrevFromHistory,
     applyAccent, applyTheme, applyDensity, getHubRuntimeConfig,
@@ -874,35 +898,38 @@ function buildEventCtx() {
 
 function bindEvents() {
   // ── Navigation ──────────────────────────────────────────────────────────────
-  document.querySelectorAll("[data-view]").forEach((el) => {
-    el.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const view = el.getAttribute("data-view");
-      if (view && view !== state.activeView) {
-        state.activeView = view;
-        _kbFocusIndex = -1;
-        pushViewHash(view);
-        if (view.startsWith("project:")) {
-          logActivity("project_open", view.slice("project:".length));
-          addRecentProject(view.slice("project:".length));
-        }
-        render();
-        if (view.startsWith("project:")) {
-          const pid = view.slice("project:".length);
-          loadContextForProject(pid);
-          loadExtendedDataForProject(pid);
-        }
-        if (view === "ticketing") loadTickets();
+  function handleNavClick(el) {
+    const view = el.getAttribute("data-view");
+    if (view && view !== state.activeView) {
+      state.activeView = view;
+      _kbFocusIndex = -1;
+      pushViewHash(view);
+      if (view.startsWith("project:")) {
+        logActivity("project_open", view.slice("project:".length));
+        addRecentProject(view.slice("project:".length));
       }
-    });
+      render();
+      if (view.startsWith("project:")) {
+        const pid = view.slice("project:".length);
+        loadContextForProject(pid);
+        loadExtendedDataForProject(pid);
+      }
+      if (view === "ticketing") loadTickets();
+    }
+  }
+  // Delegated: [data-view] and .empty-state-action[data-navigate] via app container
+  document.getElementById("app")?.addEventListener("click", (e) => {
+    const navEl = e.target.closest("[data-view]");
+    if (navEl) { e.stopPropagation(); handleNavClick(navEl); return; }
+    const emptyBtn = e.target.closest(".empty-state-action[data-navigate]");
+    if (emptyBtn) { const view = emptyBtn.dataset.navigate; if (view) { state.activeView = view; pushViewHash(view); render(); } }
   });
-
-  // ── Empty state action buttons ───────────────────────────────────────────────
-  document.querySelectorAll(".empty-state-action[data-navigate]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const view = btn.dataset.navigate;
-      if (view) { state.activeView = view; pushViewHash(view); render(); }
-    });
+  document.getElementById("app")?.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    const navEl = e.target.closest("[data-view]");
+    if (navEl) { e.preventDefault(); handleNavClick(navEl); return; }
+    const emptyBtn = e.target.closest(".empty-state-action[data-navigate]");
+    if (emptyBtn) { e.preventDefault(); const view = emptyBtn.dataset.navigate; if (view) { state.activeView = view; pushViewHash(view); render(); } }
   });
 
   // ── Core controls ───────────────────────────────────────────────────────────
@@ -940,17 +967,12 @@ function bindEvents() {
     state.mobileNavOpen = false;
     render();
   });
-  document.querySelectorAll("[data-project-tab]").forEach((el) => {
-    el.addEventListener("click", () => {
-      const tab = el.getAttribute("data-project-tab");
-      if (tab && tab !== state.projectTab) { state.projectTab = tab; render(); }
-    });
-  });
-  document.querySelectorAll("[data-admin-tab]").forEach((el) => {
-    el.addEventListener("click", () => {
-      const tab = el.getAttribute("data-admin-tab");
-      if (tab && tab !== state.adminTab) { state.adminTab = tab; render(); }
-    });
+  // Delegated tab handlers — project/admin tabs via main panel
+  document.querySelector(".main-panel")?.addEventListener("click", (e) => {
+    const projTab = e.target.closest("[data-project-tab]");
+    if (projTab) { const tab = projTab.getAttribute("data-project-tab"); if (tab && tab !== state.projectTab) { state.projectTab = tab; render(); } return; }
+    const adminTab = e.target.closest("[data-admin-tab]");
+    if (adminTab) { const tab = adminTab.getAttribute("data-admin-tab"); if (tab && tab !== state.adminTab) { state.adminTab = tab; render(); } }
   });
   document.querySelectorAll("[data-analytics-tab]").forEach((el) => {
     el.addEventListener("click", () => {
@@ -1278,16 +1300,37 @@ function bindEvents() {
   });
 
   // ── AI Copilot ──────────────────────────────────────────────────────────────
+  async function copilotSend(text) {
+    render();
+    // Stream callback: update a live assistant bubble as tokens arrive
+    let streamEl = null;
+    await sendCopilotMessage(text, state, (partial) => {
+      if (!streamEl) {
+        const msgBox = document.getElementById("copilot-messages");
+        if (!msgBox) return;
+        // Remove typing indicator and append stream bubble
+        msgBox.querySelectorAll(".copilot-typing").forEach((t) => t.closest(".copilot-msg")?.remove());
+        streamEl = document.createElement("div");
+        streamEl.className = "copilot-msg copilot-msg-assistant";
+        streamEl.style.cssText = "display:flex;flex-direction:column;align-items:flex-start;margin-bottom:16px;";
+        streamEl.innerHTML = `<div style="max-width:85%;padding:12px 16px;border-radius:12px;font-size:13px;line-height:1.6;background:var(--panel);color:var(--text);border:1px solid var(--border);white-space:pre-wrap;word-break:break-word;"></div>`;
+        msgBox.appendChild(streamEl);
+      }
+      const bubble = streamEl.querySelector("div");
+      if (bubble) bubble.textContent = partial;
+      const msgBox = document.getElementById("copilot-messages");
+      if (msgBox) msgBox.scrollTop = msgBox.scrollHeight;
+    });
+    render();
+    const msgBox = document.getElementById("copilot-messages");
+    if (msgBox) msgBox.scrollTop = msgBox.scrollHeight;
+  }
   document.getElementById("copilot-send-btn")?.addEventListener("click", async () => {
     const input = document.getElementById("copilot-input");
     const text = input?.value?.trim();
     if (!text) return;
     input.value = "";
-    render();
-    await sendCopilotMessage(text, state);
-    render();
-    const msgBox = document.getElementById("copilot-messages");
-    if (msgBox) msgBox.scrollTop = msgBox.scrollHeight;
+    await copilotSend(text);
   });
   document.getElementById("copilot-input")?.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -1312,11 +1355,7 @@ function bindEvents() {
       ];
       const text = questions[idx];
       if (!text) return;
-      render();
-      await sendCopilotMessage(text, state);
-      render();
-      const msgBox = document.getElementById("copilot-messages");
-      if (msgBox) msgBox.scrollTop = msgBox.scrollHeight;
+      await copilotSend(text);
     });
   });
 
@@ -1339,6 +1378,28 @@ const { syncAll } = createSyncEngine({
   loadContextForProject,
   loadExtendedDataForProject,
 });
+
+// ── Offline mode banner ──────────────────────────────────────────────────────
+state.isOffline = !navigator.onLine;
+function updateOfflineBanner() {
+  state.isOffline = !navigator.onLine;
+  let banner = document.getElementById("offline-banner");
+  if (state.isOffline) {
+    if (!banner) {
+      banner = document.createElement("div");
+      banner.id = "offline-banner";
+      banner.setAttribute("role", "alert");
+      banner.style.cssText = "position:fixed;top:0;left:0;right:0;z-index:9998;background:#f87171;color:#fff;text-align:center;padding:6px 12px;font-size:12px;font-weight:600;letter-spacing:0.03em;";
+      banner.textContent = "You are offline — showing cached data";
+      document.body.prepend(banner);
+    }
+  } else if (banner) {
+    banner.remove();
+  }
+}
+window.addEventListener("online", () => { updateOfflineBanner(); render(); });
+window.addEventListener("offline", updateOfflineBanner);
+updateOfflineBanner();
 
 // ── PWA install prompt ────────────────────────────────────────────────────────
 window.addEventListener("beforeinstallprompt", (e) => {

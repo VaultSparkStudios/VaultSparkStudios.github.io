@@ -10,7 +10,7 @@ export function showOnboardingModal(ctx) {
   el.innerHTML = `
     <div style="position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:200;
                 display:flex; align-items:center; justify-content:center;" id="onboarding-modal-backdrop">
-      <div style="background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+      <div role="dialog" aria-modal="true" aria-label="Setup guide" style="background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
                   padding:28px 32px; width:min(560px, 92vw); box-shadow:0 24px 80px rgba(0,0,0,0.5); max-height:80vh; overflow-y:auto;">
         <div style="font-size:15px; font-weight:800; color:var(--cyan); margin-bottom:6px; letter-spacing:0.03em;">Setup Guide</div>
         <div style="font-size:12px; color:var(--muted); margin-bottom:20px;">Get live data in 3 steps.</div>
@@ -89,7 +89,7 @@ export function showScoreModal(projectId, ctx) {
   el.innerHTML = `
     <div style="position:fixed; inset:0; background:rgba(0,0,0,0.65); z-index:200;
                 display:flex; align-items:center; justify-content:center;" id="score-modal-backdrop">
-      <div style="background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
+      <div role="dialog" aria-modal="true" aria-label="Score explanation" style="background:var(--panel); border:1px solid var(--border); border-radius:var(--radius);
                   padding:24px; width:min(480px, 92vw); box-shadow:0 24px 80px rgba(0,0,0,0.5);">
         <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
           <div>

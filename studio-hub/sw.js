@@ -2,7 +2,7 @@
 // Caches the app shell for offline / fast-reload access.
 // Static asset list is kept minimal — API data is never cached here.
 
-const CACHE_VERSION = "vshub-sw-v21";
+const CACHE_VERSION = "vshub-sw-v25";
 
 const PRECACHE_URLS = [
   "./",
@@ -46,6 +46,11 @@ const PRECACHE_URLS = [
   "./src/components/hub/sprintPanel.js",
   "./src/components/hub/vitalsStrip.js",
   "./src/components/hub/gamificationPanel.js",
+  "./src/components/project/projectScorePanel.js",
+  "./src/components/project/projectGoals.js",
+  "./src/components/project/projectRoadmap.js",
+  "./src/components/project/projectNotes.js",
+  "./src/components/project/projectActionQueue.js",
   "./src/utils/achievements.js",
   "./src/utils/studioXP.js",
   "./src/utils/challenges.js",
@@ -56,7 +61,10 @@ const PRECACHE_URLS = [
   "./src/engine/syncEngine.js",
   "./src/components/competitiveView.js",
   "./src/components/analyticsView.js",
+  "./src/components/agentsView.js",
+  "./src/components/agentCommandsView.js",
   "./src/components/aiCopilotView.js",
+  "./src/components/prReviewView.js",
   "./src/data/websiteAnalytics.js",
   "./src/data/competitorDiscovery.js",
   "./src/utils/digestHelpers.js",
@@ -67,6 +75,7 @@ const PRECACHE_URLS = [
   "./src/events/compareEvents.js",
   "./src/events/ticketingEvents.js",
   "./src/utils/exportHelpers.js",
+  "./src/utils/rssFeed.js",
   "./src/utils/scoreExplainer.js",
   "./src/utils/predictiveAlerts.js",
   "./src/engine/idb.js",

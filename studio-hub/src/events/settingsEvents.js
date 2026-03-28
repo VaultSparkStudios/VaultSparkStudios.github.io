@@ -9,7 +9,7 @@ export function bindSettingsEvents(ctx) {
     setHubPassword, clearHubPassword,
     invalidateWeightsCache, clearSessionCache,
     scoreProject, PROJECTS,
-    downloadJSON, downloadCSV, downloadScoreHistoryCSV,
+    downloadJSON, downloadCSV, downloadScoreHistoryCSV, generateScoreRSSFeed,
     generateWeeklyDigest, generateStandup,
     loadScoreHistory, scorePrevFromHistory,
     applyAccent, applyTheme, applyDensity, getHubRuntimeConfig,
@@ -81,6 +81,90 @@ export function bindSettingsEvents(ctx) {
     if (btn) btn.disabled = false;
   });
 
+  // YouTube API key test
+  document.getElementById("test-youtube-key-btn")?.addEventListener("click", async () => {
+    const btn = document.getElementById("test-youtube-key-btn");
+    const statusEl = document.getElementById("youtube-key-test-status");
+    const key = document.getElementById("setting-youtube-key")?.value?.trim();
+    if (!key) { if (statusEl) statusEl.textContent = "No key to test."; return; }
+    if (btn) btn.disabled = true;
+    if (statusEl) { statusEl.textContent = "Testing…"; statusEl.style.color = "var(--muted)"; }
+    try {
+      const res = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet&mine=false&id=UC_x5XG1OV2P6uZZ5FSM9Ttw&key=${encodeURIComponent(key)}`);
+      if (res.ok) {
+        if (statusEl) { statusEl.textContent = "✓ API key valid — YouTube Data API accessible"; statusEl.style.color = "var(--green)"; }
+      } else if (res.status === 400 || res.status === 403) {
+        const body = await res.json().catch(() => ({}));
+        const reason = body?.error?.errors?.[0]?.reason || "";
+        if (statusEl) { statusEl.textContent = `✗ ${reason || "Invalid key"} (${res.status})`; statusEl.style.color = "var(--red)"; }
+      } else {
+        if (statusEl) { statusEl.textContent = `✗ Error ${res.status}`; statusEl.style.color = "var(--red)"; }
+      }
+    } catch {
+      if (statusEl) { statusEl.textContent = "✗ Network error"; statusEl.style.color = "var(--red)"; }
+    }
+    if (btn) btn.disabled = false;
+  });
+
+  // Gumroad token test
+  document.getElementById("test-gumroad-token-btn")?.addEventListener("click", async () => {
+    const btn = document.getElementById("test-gumroad-token-btn");
+    const statusEl = document.getElementById("gumroad-token-test-status");
+    const token = document.getElementById("setting-gumroad-token")?.value?.trim();
+    if (!token) { if (statusEl) statusEl.textContent = "No token to test."; return; }
+    if (btn) btn.disabled = true;
+    if (statusEl) { statusEl.textContent = "Testing…"; statusEl.style.color = "var(--muted)"; }
+    try {
+      const res = await fetch(`https://api.gumroad.com/v2/user`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const name = data?.user?.name || data?.user?.email || "";
+        if (statusEl) { statusEl.textContent = `✓ Authenticated${name ? ` as ${name}` : ""}`; statusEl.style.color = "var(--green)"; }
+      } else if (res.status === 401) {
+        if (statusEl) { statusEl.textContent = "✗ Invalid token (401)"; statusEl.style.color = "var(--red)"; }
+      } else {
+        if (statusEl) { statusEl.textContent = `✗ Error ${res.status}`; statusEl.style.color = "var(--red)"; }
+      }
+    } catch {
+      if (statusEl) { statusEl.textContent = "✗ Network error"; statusEl.style.color = "var(--red)"; }
+    }
+    if (btn) btn.disabled = false;
+  });
+
+  // Claude API key test
+  document.getElementById("test-claude-key-btn")?.addEventListener("click", async () => {
+    const btn = document.getElementById("test-claude-key-btn");
+    const statusEl = document.getElementById("claude-key-test-status");
+    const key = document.getElementById("setting-claude-api-key")?.value?.trim();
+    if (!key) { if (statusEl) statusEl.textContent = "No key to test."; return; }
+    if (btn) btn.disabled = true;
+    if (statusEl) { statusEl.textContent = "Testing…"; statusEl.style.color = "var(--muted)"; }
+    try {
+      const res = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "x-api-key": key,
+          "anthropic-version": "2023-06-01",
+          "anthropic-dangerous-direct-browser-calls": "true",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ model: "claude-haiku-4-5-20251001", max_tokens: 1, messages: [{ role: "user", content: "Hi" }] }),
+      });
+      if (res.ok) {
+        if (statusEl) { statusEl.textContent = "✓ API key valid — Claude accessible"; statusEl.style.color = "var(--green)"; }
+      } else if (res.status === 401) {
+        if (statusEl) { statusEl.textContent = "✗ Invalid API key (401)"; statusEl.style.color = "var(--red)"; }
+      } else {
+        if (statusEl) { statusEl.textContent = `✗ Error ${res.status}`; statusEl.style.color = "var(--red)"; }
+      }
+    } catch {
+      if (statusEl) { statusEl.textContent = "✗ Network error"; statusEl.style.color = "var(--red)"; }
+    }
+    if (btn) btn.disabled = false;
+  });
+
   // Studio Pulse publish stub
   document.getElementById("publish-pulse-btn")?.addEventListener("click", async () => {
     const text     = document.getElementById("pulse-text")?.value?.trim();
@@ -110,6 +194,22 @@ export function bindSettingsEvents(ctx) {
     downloadScoreHistoryCSV(state);
     const s = document.getElementById("export-status");
     if (s) { s.textContent = "CSV downloaded."; setTimeout(() => { s.textContent = ""; }, 2500); }
+  });
+
+  // Export — RSS/Atom Feed
+  document.getElementById("export-rss-feed-btn")?.addEventListener("click", () => {
+    const history = loadScoreHistory();
+    const xml = generateScoreRSSFeed(history, PROJECTS);
+    const blob = new Blob([xml], { type: "application/atom+xml" });
+    const url = URL.createObjectURL(blob);
+    const a = Object.assign(document.createElement("a"), {
+      href: url,
+      download: `vshub-score-feed-${new Date().toISOString().slice(0, 10)}.xml`,
+    });
+    a.click();
+    URL.revokeObjectURL(url);
+    const s = document.getElementById("export-status");
+    if (s) { s.textContent = "RSS feed downloaded."; setTimeout(() => { s.textContent = ""; }, 2500); }
   });
 
   // Import JSON

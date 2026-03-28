@@ -1,5 +1,6 @@
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject } from "../utils/projectScoring.js";
+import { safeGetJSON } from "../utils/helpers.js";
 
 const LS_KEY = "vshub_credentials";
 const SETTINGS_KEY = "vshub_settings";
@@ -61,10 +62,8 @@ export function renderSettingsView(state) {
   const settings = loadSettings();
   const passwordSet = !!stored.hubPasswordHash;
 
-  let activityLog = [];
-  try { activityLog = JSON.parse(localStorage.getItem("vshub_activity") || "[]"); } catch {}
-  let presets = [];
-  try { presets = JSON.parse(localStorage.getItem("vshub_filter_presets") || "[]"); } catch {}
+  let activityLog = safeGetJSON("vshub_activity", []);
+  let presets = safeGetJSON("vshub_filter_presets", []);
 
   const currentTheme   = settings.theme   || "dark";
   const currentAccent  = settings.accent  || "#7ae7c7";
@@ -144,8 +143,7 @@ export function renderSettingsView(state) {
   }).join("");
 
   // ── Access log ────────────────────────────────────────────────────────────
-  let accessLog = [];
-  try { accessLog = JSON.parse(localStorage.getItem("vshub_access_log") || "[]"); } catch {}
+  let accessLog = safeGetJSON("vshub_access_log", []);
   const failCount = accessLog.filter((e) => e.type === "unlock_fail").length;
 
   return `
@@ -547,6 +545,7 @@ export function renderSettingsView(state) {
                 <button class="btn-primary" id="export-json-btn">Download JSON</button>
                 <button class="btn-primary" id="export-csv-btn" style="background:rgba(105,179,255,0.1); border-color:rgba(105,179,255,0.25); color:var(--blue);">Download CSV</button>
                 <button class="btn-primary" id="export-score-history-csv-btn" style="background:rgba(122,231,199,0.1); border-color:rgba(122,231,199,0.25); color:var(--green);">Score History CSV</button>
+                <button class="btn-primary" id="export-rss-feed-btn" style="background:rgba(255,165,0,0.1); border-color:rgba(255,165,0,0.25); color:var(--yellow);">Download RSS Feed</button>
                 <input type="file" id="import-json-file" accept=".json" style="display:none;" />
                 <button class="btn-primary" id="import-json-btn" style="background:rgba(122,231,199,0.06); border-color:rgba(122,231,199,0.2); color:var(--muted);">Import JSON</button>
               </div>
@@ -614,13 +613,21 @@ export function renderSettingsView(state) {
 
               <div>
                 <label style="${labelStyle}">YouTube Data API v3 Key</label>
-                <input type="password" id="setting-youtube-key" value="${stored.youtubeApiKey || ""}" placeholder="AIza..." autocomplete="off" style="${inputStyle}" />
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <input type="password" id="setting-youtube-key" value="${stored.youtubeApiKey || ""}" placeholder="AIza..." autocomplete="off" style="${inputStyle} flex:1;" />
+                  <button id="test-youtube-key-btn" style="font-size:12px; padding:10px 14px; background:rgba(105,179,255,0.1); border:1px solid rgba(105,179,255,0.25); border-radius:8px; color:var(--blue); cursor:pointer; white-space:nowrap; flex-shrink:0;">Test</button>
+                </div>
+                <div id="youtube-key-test-status" style="${hintStyle}"></div>
                 <div style="${hintStyle}">Free 10,000 units/day. Required for YouTube channel metrics.</div>
               </div>
 
               <div>
                 <label style="${labelStyle}">Gumroad Access Token</label>
-                <input type="password" id="setting-gumroad-token" value="${stored.gumroadToken || ""}" placeholder="Gumroad API token…" autocomplete="off" style="${inputStyle}" />
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <input type="password" id="setting-gumroad-token" value="${stored.gumroadToken || ""}" placeholder="Gumroad API token…" autocomplete="off" style="${inputStyle} flex:1;" />
+                  <button id="test-gumroad-token-btn" style="font-size:12px; padding:10px 14px; background:rgba(105,179,255,0.1); border:1px solid rgba(105,179,255,0.25); border-radius:8px; color:var(--blue); cursor:pointer; white-space:nowrap; flex-shrink:0;">Test</button>
+                </div>
+                <div id="gumroad-token-test-status" style="${hintStyle}"></div>
                 <div style="${hintStyle}">Optional. Required for full product + sales data.</div>
               </div>
 
@@ -632,7 +639,11 @@ export function renderSettingsView(state) {
 
               <div>
                 <label style="${labelStyle}">Claude API Key <span style="font-size:10px; color:var(--muted); font-weight:400;">(AI prescriptions)</span></label>
-                <input type="password" id="setting-claude-api-key" value="${stored.claudeApiKey || ""}" placeholder="sk-ant-…" autocomplete="off" style="${inputStyle}" />
+                <div style="display:flex; gap:8px; align-items:center;">
+                  <input type="password" id="setting-claude-api-key" value="${stored.claudeApiKey || ""}" placeholder="sk-ant-…" autocomplete="off" style="${inputStyle} flex:1;" />
+                  <button id="test-claude-key-btn" style="font-size:12px; padding:10px 14px; background:rgba(105,179,255,0.1); border:1px solid rgba(105,179,255,0.25); border-radius:8px; color:var(--blue); cursor:pointer; white-space:nowrap; flex-shrink:0;">Test</button>
+                </div>
+                <div id="claude-key-test-status" style="${hintStyle}"></div>
                 <div style="${hintStyle}">Optional. Enables AI-generated project prescriptions in each Project Hub. Key stored locally only.</div>
               </div>
 

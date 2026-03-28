@@ -56,7 +56,7 @@ export function mountCommandPalette(onAction, recentProjectIds = []) {
   `;
 
   overlay.innerHTML = `
-    <div style="
+    <div role="dialog" aria-modal="true" aria-label="Command palette" style="
       width:min(540px, 92vw); background:#0c131f;
       border:1px solid rgba(122,231,199,0.25); border-radius:14px;
       box-shadow:0 24px 64px rgba(0,0,0,0.7); overflow:hidden;

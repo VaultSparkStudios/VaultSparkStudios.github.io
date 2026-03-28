@@ -7,6 +7,7 @@
 
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject, clearScoringCache } from "../utils/projectScoring.js";
+import { safeGetJSON } from "../utils/helpers.js";
 import { showToast } from "../components/toastManager.js";
 import {
   fetchAllRepos, fetchOrgActivity, fetchBeaconGist, getRateLimitInfo,
@@ -281,8 +282,7 @@ export function createSyncEngine(ctx) {
       if (alertsForHistory.length) pushAlertHistory(alertsForHistory);
 
       // Compute active (non-snoozed) alert count for nav badge
-      let snoozed = {};
-      try { snoozed = JSON.parse(localStorage.getItem("vshub_alert_snooze") || "{}"); } catch {}
+      let snoozed = safeGetJSON("vshub_alert_snooze", {});
       const now = Date.now();
       state.alertCount = alertsForHistory.filter((a) => !snoozed[a.msg] || snoozed[a.msg] < now).length;
 

@@ -818,9 +818,16 @@ body.theme-light {
   --bg: #f0f4fb;
   --panel: rgba(255, 255, 255, 0.95);
   --panel-2: rgba(240, 245, 255, 0.9);
-  --border: rgba(30, 60, 120, 0.12);
+  --border: rgba(30, 60, 120, 0.18);
   --text: #0f1a2e;
-  --muted: #5a6a85;
+  --muted: #4a5568;
+  --cyan: #0e8a6d;
+  --blue: #2563eb;
+  --gold: #b45309;
+  --green: #047857;
+  --ember: #c2410c;
+  --red: #dc2626;
+  --purple: #7c3aed;
   --silver: #1a2a40;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.10);
 }
@@ -1351,6 +1358,13 @@ body.density-spacious .nav-item { padding: 10px 20px; }
 }
 
 /* ── TOAST NOTIFICATIONS ── */
+.skip-to-content {
+  position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+  background: var(--cyan); color: #060b12; padding: 8px 18px; border-radius: 0 0 8px 8px;
+  font-size: 13px; font-weight: 700; z-index: 10001; text-decoration: none;
+  transition: top 0.15s;
+}
+.skip-to-content:focus { top: 0; }
 .toast-container {
   position: fixed; bottom: 20px; right: 20px; z-index: 10000;
   display: flex; flex-direction: column-reverse; gap: 8px;

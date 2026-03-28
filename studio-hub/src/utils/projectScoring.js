@@ -11,7 +11,7 @@ let _wCacheRaw = "";
 let _scoreCache = new Map();
 export function clearScoringCache() { _scoreCache.clear(); }
 
-function getWeights() {
+export function getWeights() {
   try {
     const raw = localStorage.getItem("vshub_settings") || "{}";
     if (raw === _wCacheRaw && _wCache) return _wCache;
