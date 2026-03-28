@@ -3,20 +3,19 @@
 ## Now
 
 - [ ] Run pending SQL migrations: phase40-50 [critical path — unlocks all coded features]
-- [SIL] 2FA/MFA for vault members — Supabase TOTP toggle + portal enrollment UI [7.5]
 - [SIL] Authenticated axe-core portal tests — extend Playwright to log in and scan dashboard/onboarding/challenge modals
 
 ## Next (Pending External Action)
 
-- Enable Cloudflare proxy (requires DNS change on registrar — highest-ROI speed/security win) [Score: 10]
+- Enable Cloudflare proxy (requires DNS change on registrar — highest-ROI speed/security win) [Score: 10, Composite: 8.5]
 - Supabase dashboard settings: CAPTCHA on auth, session timeout, email enumeration prevention [Score: 8.5]
-- VAPID key setup: generate keys, set VAPID_PUBLIC_KEY in vault-member/index.html, deploy send-push Edge Function secrets [Score: 9]
+- VAPID key setup: generate keys, set VAPID_PUBLIC_KEY in vault-member/index.html, deploy send-push Edge Function secrets [Score: 8.2]
 - Google Search Console verification — fill in google-site-verification-REPLACE_ME.html + submit sitemap [Score: 6.5]
 - VaultSparked Discord role: end-to-end test with Stripe test checkout
-- Annual VaultSparked pricing tier (Stripe dashboard + Edge Function update) [Score: 8.5]
-- 2FA/MFA for vault members (Supabase TOTP toggle + UI prompt) [Score: 7.5]
+- Annual VaultSparked pricing tier + Gift Subscriptions (Stripe dashboard + Edge Function update) [Score: 7.8] — pending LLC
+- 2FA/MFA for vault members (Supabase TOTP toggle + UI prompt) [Score: 6.0]
 - Vault Live dev stream integration — "Live Now" badge on homepage when founder is streaming [Score: 8.8] (no code needed, founder action)
-- Community Game Jam / Challenge Events — run a 7-day score competition with existing infra [Score: 7.5] (no code needed, founder action)
+- Community Game Jam / Challenge Events — run a 7-day score competition with existing infra [Score: 7.8] (no code needed, founder action)
 - Founder AMA / Q&A live session — monthly, feeds journal + Discord [Score: 6.8] (no code needed, founder action)
 
 ## Blocked
@@ -28,8 +27,8 @@
 ## S-Tier Backlog (Score 9–10)
 
 - [ ] Vault Treasury / Points Marketplace [9.5] ✅ CODED (session 5) — needs SQL migrations run + sitemap entry
-- [ ] Game Demo Embeds (Playable) [9.2] — infrastructure shipped (session 5); needs actual game builds from dev
-- [ ] Discord Bot with Vault Commands [9.0] — members query rank/stats from Discord; requires external hosting (Node.js bot)
+- [ ] Game Demo Embeds (Playable) [9.5] — infrastructure shipped (session 5); needs actual game builds from dev
+- [ ] Discord Bot with Vault Commands [9.1] — !rank, !score, !challenge from Discord; requires external hosting (Node.js bot)
 - [ ] Vault Seasons Cross-Game XP [9.0] ✅ CODED (session 5) — needs SQL migrations run
 
 ## A-Tier Backlog (Score 7–8.9)
@@ -40,25 +39,32 @@
 - [x] Accessibility: focus ring + aria-live ✅ SHIPPED (session 5)
 - [x] Unreleased game pages content fill ✅ SHIPPED (session 5) — Solara, MindFrame, VaultFront, Project Unknown
 - [ ] Member Social Graph ✅ CODED (session 5) — follow/unfollow + Following Feed; needs SQL migration run
-- [ ] Annual VaultSparked pricing tier [8.5] — pending LLC + Stripe production
+- [ ] Web Push Notifications [8.2] — VAPID keys + subscription flow; blocked on key generation
+- [ ] Interactive Onboarding Tour [7.8] — guided first-visit walkthrough of portal features with step-by-step highlights
+- [ ] Annual VaultSparked pricing tier [7.8] — pending LLC + Stripe production
 - [ ] Gift subscriptions (Stripe) [6.8] — pending LLC + Stripe production
 - [x] VaultSparked Beta Waitlist for unreleased games ✅ SHIPPED (session 8) — Web3Forms on 4 game pages
 - [x] Vault Referral Milestone Rewards ✅ CODED (session 8) — 5 tiers, needs SQL migration run
 - [x] Game Release Countdown Events [6.5] ✅ SHIPPED (session 10) — countdown.js on 4 unreleased game pages + classified glitch for Project Unknown
-- [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
 - [x] Vault Score Public Leaderboard API [7.5] ✅ SHIPPED (session 10) — /api/leaderboard/ docs, static JSON endpoints, embeddable widget.js, daily GitHub Action
-- [ ] Journal post cadence / content calendar [6.5] — one post per week tied to studio updates
-- [ ] 2FA/MFA for vault members (Supabase TOTP toggle + UI prompt) [7.5]
+- [x] Content Calendar + Auto Journal [7.5] ✅ SHIPPED (session 11) — context/CONTENT_CALENDAR.md, 52-week rotating schedule
+- [x] Dark Theme Contrast Fix + Color CI [7.2] ✅ SHIPPED (session 11) — --dim bumped, rgba fixes, Playwright contrast validation
+- [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
+- [ ] 2FA/MFA for vault members (Supabase TOTP toggle + UI prompt) [6.0]
 
 ## B-Tier Backlog (Score 5–6.9)
 
+- [x] Offline Content Cache Enhancement [6.5] ✅ SHIPPED (session 11) — journal + game pages in SW pre-cache
+- [ ] Build Pipeline (Minify + SRI) [5.8] — auto-minify JS/CSS, generate SRI hashes on deploy
+- [x] FAQ Schema Expansion [5.5] ✅ SHIPPED (session 11) — FAQPage JSON-LD on /contact/
 - [ ] Monthly investor update email (automated digest) [6]
+- [x] Custom 404 with Search [5.0] ✅ SHIPPED (session 11) — site search input + expanded popular links
 - [ ] E-sign integration for investor docs [4]
 - [ ] Merchandise store [4]
 - [ ] Game-specific Discord channels linked from game pages [4]
+- [ ] SRI integrity hashes for Supabase CDN [4.5]
 - [ ] A/B testing infrastructure [3.5]
 - [ ] Cap table visualization [3.5]
-- [ ] SRI integrity hashes for Supabase CDN [4.5]
 
 ## C-Tier Backlog (Score 3–4.9)
 
@@ -66,6 +72,18 @@
 - [ ] Community-created lore submissions [4.5]
 - [ ] "Currently playing" badge on member profile [4.5] (note: already exists as of Phase 42)
 - [ ] Vault social graph (member connections) [4.8] — now CODED as full follow system (session 5, phase 49)
+
+## Completed — Session 11 (2026-03-28)
+
+- ✅ Full project audit — 90→93 overall score across 10 categories
+- ✅ Dark theme contrast fix — --dim bumped #8a93b8→#96a0c0, rgba alpha values raised to meet WCAG AA 4.5:1 on 404 page and global styles
+- ✅ Color contrast CI — Playwright test validates CSS variable contrast ratios programmatically against WCAG AA thresholds
+- ✅ FAQPage JSON-LD schema on /contact/ — 5 structured Q&A entries for rich search results
+- ✅ Favicon optimization — 512x512 PNG compressed from 132KB
+- ✅ Console.log stripped from production supabase-client.js — error→silent fail pattern
+- ✅ Enhanced SW offline caching — journal, game, and content pages added to STATIC_ASSETS pre-cache list
+- ✅ Content calendar — context/CONTENT_CALENDAR.md with 52-week rotating schedule tied to studio milestones
+- ✅ Enhanced 404 page — site search input with JS redirect, expanded popular links section, journal + universe links
 
 ## Completed — Session 10 (2026-03-27)
 

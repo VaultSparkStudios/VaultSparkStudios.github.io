@@ -120,8 +120,8 @@
       gap: 0.45rem;
       padding: 0.85rem 1.6rem;
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      color: rgba(255,255,255,0.65);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.75);
       font-weight: 600;
       font-size: 0.94rem;
       border-radius: 999px;
@@ -129,7 +129,7 @@
       transition: border-color 0.18s, background 0.18s, color 0.18s;
     }
     .err-btn-ghost:hover {
-      border-color: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.25);
       background: rgba(255,255,255,0.08);
       color: #fff;
     }
@@ -151,17 +151,49 @@
       gap: 0.35rem;
       padding: 0.3rem 0.8rem;
       background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.09);
       border-radius: 999px;
       font-size: 0.82rem;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.72);
       text-decoration: none;
       transition: border-color 0.15s, color 0.15s;
     }
     .err-link:hover {
-      border-color: rgba(255,255,255,0.15);
-      color: rgba(255,255,255,0.85);
+      border-color: rgba(255,255,255,0.2);
+      color: #fff;
     }
+    .err-search {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      max-width: 360px;
+      margin: 0 auto 2rem;
+    }
+    .err-search-input {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      color: var(--text);
+      font-size: 0.88rem;
+      outline: none;
+      transition: border-color 0.18s;
+    }
+    .err-search-input::placeholder { color: rgba(255,255,255,0.35); }
+    .err-search-input:focus { border-color: var(--gold); }
+    .err-search-btn {
+      padding: 0.65rem 1.1rem;
+      background: rgba(255,196,0,0.12);
+      border: 1px solid rgba(255,196,0,0.2);
+      border-radius: 999px;
+      color: var(--gold);
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .err-search-btn:hover { background: rgba(255,196,0,0.2); }
 
     @media (max-width: 480px) {
       .err-actions { flex-direction: column; align-items: stretch; }
@@ -203,13 +235,21 @@
         <a href="/" class="err-btn-primary">Back to Home</a>
         <a href="/vault-member/" class="err-btn-ghost">Open the Vault</a>
       </div>
+      <form class="err-search" id="err-search" role="search" aria-label="Site search">
+        <input type="search" class="err-search-input" id="err-q" placeholder="Search the vault..." aria-label="Search VaultSpark Studios" autocomplete="off" />
+        <button type="submit" class="err-search-btn">Search</button>
+      </form>
       <p class="err-links-label">Or go somewhere useful:</p>
       <div class="err-links">
-        <a href="/games/" class="err-link">🎮 Games</a>
+        <a href="/games/" class="err-link">Games</a>
         <a href="/community/" class="err-link">Community</a>
         <a href="/leaderboards/" class="err-link">Leaderboard</a>
+        <a href="/journal/" class="err-link">Signal Log</a>
+        <a href="/universe/" class="err-link">Universe</a>
+        <a href="/ranks/" class="err-link">Ranks</a>
         <a href="/changelog/" class="err-link">Changelog</a>
-        <a href="/vaultsparked/" class="err-link">⚡ VaultSparked</a>
+        <a href="/vaultsparked/" class="err-link">VaultSparked</a>
+        <a href="/roadmap/" class="err-link">Vault Pipeline</a>
         <a href="/contact/" class="err-link">Contact</a>
       </div>
     </div>
@@ -231,5 +271,12 @@
   </footer>
 
 </div>
+<script>
+document.getElementById('err-search').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var q = document.getElementById('err-q').value.trim();
+  if (q) window.location.href = '/search/?q=' + encodeURIComponent(q);
+});
+</script>
 </body>
 </html>

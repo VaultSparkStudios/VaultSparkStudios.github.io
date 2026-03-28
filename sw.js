@@ -30,6 +30,14 @@ const STATIC_ASSETS = [
   '/community/',
   '/ranks/',
   '/journal/',
+  '/games/call-of-doodie/',
+  '/games/gridiron-gm/',
+  '/games/vaultspark-football-gm/',
+  '/journal/001-the-vault-is-sparked/',
+  '/universe/',
+  '/roadmap/',
+  '/contact/',
+  '/studio/',
 ];
 
 // ── Install: cache static assets ──────────────────────────────────────────

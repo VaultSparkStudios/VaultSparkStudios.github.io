@@ -1,0 +1,84 @@
+name: Run Supabase Migrations
+
+on:
+  workflow_dispatch:
+    inputs:
+      files:
+        description: 'Comma-separated migration files to run (leave blank for all pending)'
+        required: false
+        type: string
+      dry_run:
+        description: 'Dry run — validate SQL without executing'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install psql
+        run: sudo apt-get update && sudo apt-get install -y postgresql-client
+
+      - name: Determine migration files
+        id: files
+        run: |
+          if [ -n "${{ inputs.files }}" ]; then
+            # User specified files
+            echo "list=${{ inputs.files }}" >> "$GITHUB_OUTPUT"
+          else
+            # All pending migrations in order
+            echo "list=supabase/migrations/supabase-phase40-fan-art.sql,supabase/migrations/supabase-phase41-fan-art-votes.sql,supabase/migrations/supabase-phase43-teams.sql,supabase/migrations/supabase-phase44-gift-subs-social-graph.sql,supabase/migrations/supabase-phase45-game-scores.sql,supabase/migrations/supabase-phase45-newsletter.sql,supabase/migrations/supabase-phase45-seasons.sql,supabase/supabase-phase46-treasury.sql,supabase/supabase-phase47-weekly-leaderboard.sql,supabase/supabase-phase48-seasons-xp.sql,supabase/supabase-phase49-social-graph.sql,supabase/migrations/supabase-phase50-referral-milestones.sql" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run migrations
+        env:
+          DATABASE_URL: ${{ secrets.SUPABASE_DB_URL }}
+        run: |
+          IFS=',' read -ra FILES <<< "${{ steps.files.outputs.list }}"
+          FAILED=0
+
+          for file in "${FILES[@]}"; do
+            file=$(echo "$file" | xargs)  # trim whitespace
+            if [ ! -f "$file" ]; then
+              echo "::error::File not found: $file"
+              FAILED=1
+              continue
+            fi
+
+            echo "──────────────────────────────────────"
+            echo "Running: $file"
+            echo "──────────────────────────────────────"
+
+            if [ "${{ inputs.dry_run }}" = "true" ]; then
+              echo "DRY RUN — wrapping in transaction + rollback"
+              (echo "BEGIN;" && cat "$file" && echo "ROLLBACK;") | psql "$DATABASE_URL" --set ON_ERROR_STOP=1 2>&1
+            else
+              psql "$DATABASE_URL" --set ON_ERROR_STOP=1 -f "$file" 2>&1
+            fi
+
+            if [ $? -ne 0 ]; then
+              echo "::error::Migration failed: $file"
+              FAILED=1
+              break  # stop on first failure to preserve order
+            else
+              echo "✓ $file — success"
+            fi
+          done
+
+          if [ $FAILED -ne 0 ]; then
+            echo "::error::Migration run had failures. Check logs above."
+            exit 1
+          fi
+
+          echo "✓ All migrations completed successfully"
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## Migration Results" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Dry run:** ${{ inputs.dry_run }}" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Files:** ${{ steps.files.outputs.list }}" >> "$GITHUB_STEP_SUMMARY"

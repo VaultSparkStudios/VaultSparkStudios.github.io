@@ -102,6 +102,42 @@ test.describe('Accessibility — manual checks', () => {
     await expect(page.locator('.lb-table[aria-label]')).toBeVisible();
   });
 
+  test('CSS color variables meet WCAG AA contrast ratio (4.5:1)', async ({ page }) => {
+    await page.goto('/');
+    const results = await page.evaluate(() => {
+      // sRGB channel to linear
+      function sRGBtoLin(c) { return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+      function luminance(hex) {
+        const r = parseInt(hex.slice(1,3), 16) / 255;
+        const g = parseInt(hex.slice(3,5), 16) / 255;
+        const b = parseInt(hex.slice(5,7), 16) / 255;
+        return 0.2126 * sRGBtoLin(r) + 0.7152 * sRGBtoLin(g) + 0.0722 * sRGBtoLin(b);
+      }
+      function contrastRatio(hex1, hex2) {
+        const l1 = luminance(hex1), l2 = luminance(hex2);
+        const lighter = Math.max(l1, l2), darker = Math.min(l1, l2);
+        return (lighter + 0.05) / (darker + 0.05);
+      }
+      const style = getComputedStyle(document.documentElement);
+      const bg = style.getPropertyValue('--bg').trim();
+      const pairs = [
+        { name: '--text on --bg', fg: style.getPropertyValue('--text').trim(), bg },
+        { name: '--muted on --bg', fg: style.getPropertyValue('--muted').trim(), bg },
+        { name: '--dim on --bg', fg: style.getPropertyValue('--dim').trim(), bg },
+        { name: '--gold on --bg', fg: style.getPropertyValue('--gold').trim(), bg },
+        { name: '--blue on --bg', fg: style.getPropertyValue('--blue').trim(), bg },
+      ];
+      return pairs.map(p => ({
+        name: p.name,
+        ratio: Math.round(contrastRatio(p.fg, p.bg) * 100) / 100,
+        passes: contrastRatio(p.fg, p.bg) >= 4.5,
+      }));
+    });
+    for (const r of results) {
+      expect(r.passes, `${r.name}: ratio ${r.ratio} < 4.5:1`).toBe(true);
+    }
+  });
+
   test('Form inputs have associated labels on contact page', async ({ page }) => {
     await page.goto('/contact/');
     const inputs = await page.locator('input:visible:not([type="hidden"])').all();
