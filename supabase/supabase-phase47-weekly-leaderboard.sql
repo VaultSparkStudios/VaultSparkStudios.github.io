@@ -26,12 +26,25 @@ RETURNS jsonb
 LANGUAGE plpgsql SECURITY DEFINER AS $$
 DECLARE
   v_username   text;
+  v_points     integer;
   v_rank_title text;
   v_week_start date;
 BEGIN
-  SELECT username, rank_title INTO v_username, v_rank_title
+  SELECT username, points INTO v_username, v_points
   FROM vault_members WHERE id = p_user_id;
   IF NOT FOUND THEN RETURN jsonb_build_object('ok', false, 'error', 'member_not_found'); END IF;
+
+  v_rank_title := CASE
+    WHEN v_points >= 100000 THEN 'The Sparked'
+    WHEN v_points >= 60000  THEN 'Forge Master'
+    WHEN v_points >= 30000  THEN 'Vault Keeper'
+    WHEN v_points >= 15000  THEN 'Void Operative'
+    WHEN v_points >= 7500   THEN 'Vault Breacher'
+    WHEN v_points >= 3000   THEN 'Vault Guard'
+    WHEN v_points >= 1000   THEN 'Rift Scout'
+    WHEN v_points >= 250    THEN 'Vault Runner'
+    ELSE 'Spark Initiate'
+  END;
 
   v_week_start := date_trunc('week', now())::date;
 

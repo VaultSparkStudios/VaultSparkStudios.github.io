@@ -37,7 +37,17 @@ LANGUAGE sql SECURITY DEFINER AS $$
   SELECT
     'points'       AS event_type,
     vm.username,
-    vm.rank_title,
+    CASE
+      WHEN vm.points >= 100000 THEN 'The Sparked'
+      WHEN vm.points >= 60000  THEN 'Forge Master'
+      WHEN vm.points >= 30000  THEN 'Vault Keeper'
+      WHEN vm.points >= 15000  THEN 'Void Operative'
+      WHEN vm.points >= 7500   THEN 'Vault Breacher'
+      WHEN vm.points >= 3000   THEN 'Vault Guard'
+      WHEN vm.points >= 1000   THEN 'Rift Scout'
+      WHEN vm.points >= 250    THEN 'Vault Runner'
+      ELSE 'Spark Initiate'
+    END AS rank_title,
     pe.label,
     pe.created_at
   FROM point_events pe
