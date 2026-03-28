@@ -272,6 +272,25 @@ function render() {
   const app = document.getElementById("app");
   if (!app) return;
 
+  try {
+    _renderInner(app);
+  } catch (err) {
+    console.error("[HUB] render crash:", err);
+    // Show the error on screen so the user isn't stuck on a blank page
+    app.innerHTML = `
+      <div style="padding:40px; font-family:monospace; color:#f87171; max-width:720px; margin:0 auto;">
+        <h2 style="color:#f2f6fb;">Studio Hub — Render Error</h2>
+        <pre style="white-space:pre-wrap; background:rgba(255,255,255,0.05); padding:16px; border-radius:8px; font-size:13px;">${
+          (err?.stack || err?.message || String(err)).replace(/</g, "&lt;")
+        }</pre>
+        <p style="color:#95a3b7; font-size:13px; margin-top:16px;">Check the browser console (F12) for full details.</p>
+        <button onclick="location.reload()" style="margin-top:12px; padding:8px 20px; background:rgba(122,231,199,0.15);
+          border:1px solid rgba(122,231,199,0.3); border-radius:8px; color:#7ae7c7; cursor:pointer; font-size:13px;">Reload</button>
+      </div>`;
+  }
+}
+
+function _renderInner(app) {
   // Clean up tracked event listeners from previous render cycle
   cleanupEvents();
 

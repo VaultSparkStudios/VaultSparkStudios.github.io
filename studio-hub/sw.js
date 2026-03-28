@@ -2,7 +2,7 @@
 // Caches the app shell for offline / fast-reload access.
 // Static asset list is kept minimal — API data is never cached here.
 
-const CACHE_VERSION = "vshub-sw-v19";
+const CACHE_VERSION = "vshub-sw-v20";
 
 const PRECACHE_URLS = [
   "./",
@@ -70,6 +70,8 @@ const PRECACHE_URLS = [
   "./src/utils/predictiveAlerts.js",
   "./src/engine/idb.js",
   "./src/engine/renderEngine.js",
+  "./src/boot-error-handler.js",
+  "./src/sw-register.js",
 ];
 
 // Install: pre-cache the app shell
