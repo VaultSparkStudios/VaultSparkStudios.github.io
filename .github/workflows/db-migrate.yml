@@ -22,6 +22,11 @@ jobs:
       - name: Install psql
         run: sudo apt-get update && sudo apt-get install -y postgresql-client
 
+      - name: Force IPv4 for Supabase connection
+        run: |
+          # GitHub Actions runners sometimes fail on IPv6 — prefer IPv4
+          sudo sh -c 'echo "precedence ::ffff:0:0/96  100" >> /etc/gai.conf'
+
       - name: Determine migration files
         id: files
         run: |
