@@ -27,7 +27,7 @@ import { renderAgentIntelligencePanel } from "./hub/agentIntelligence.js";
 import { renderXPBar, renderAchievementToasts, renderTrophyShowcase, renderChallengePanel, renderVaultMembershipPanel, renderXPActivityFeed } from "./hub/gamificationPanel.js";
 import { showToast } from "./toastManager.js";
 import { evaluateAchievements, clearNotifications } from "../utils/achievements.js";
-import { grantDailyBonus, grantWeeklyBonus, syncAchievementXP, grantScoreImprovementXP } from "../utils/studioXP.js";
+import { grantWeeklyBonus, syncAchievementXP, grantScoreImprovementXP } from "../utils/studioXP.js";
 import { getActiveChallenges, claimChallengeXP } from "../utils/challenges.js";
 import { getPredictiveAlerts, renderPredictiveAlerts } from "../utils/predictiveAlerts.js";
 
@@ -1917,8 +1917,8 @@ export function renderStudioHubView(state) {
       showToast(`\uD83C\uDFC6 ${a.name} \u2014 ${a.desc} (+${a.xp} XP)`, "success", 6000);
     }
   }
-  // 3. Grant daily login bonus
-  grantDailyBonus();
+  // 3. Daily login bonus — now claimed via button in XP bar (gamificationPanel.js)
+  // grantDailyBonus() removed from auto-grant to make it interactive
   // 4. Grant weekly consistency bonus
   grantWeeklyBonus(scoreHistory);
   // 5. Grant score improvement XP

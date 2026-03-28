@@ -2,9 +2,116 @@
 // into the main Studio Hub dashboard.
 
 import { ACHIEVEMENTS, TIER_STYLES, getUnlockedAchievements, getAchievementStats, getNewNotifications, getAchievementProgress } from "../../utils/achievements.js";
-import { getXPState, getXPLog, getLoginStreak } from "../../utils/studioXP.js";
+import { getXPState, getXPLog, getLoginStreak, isDailyBonusAvailable } from "../../utils/studioXP.js";
 import { getChallengeStats } from "../../utils/challenges.js";
 import { fmt, renderEmptyState } from "../../utils/helpers.js";
+
+// ── Daily Bonus Card ────────────────────────────────────────────────────────
+function renderDailyBonusCard(streak) {
+  const available = isDailyBonusAvailable();
+  if (!available) {
+    return `
+      <div style="padding:0 20px 14px;">
+        <div style="display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:10px;
+                    background:rgba(106,227,178,0.06); border:1px solid rgba(106,227,178,0.15);">
+          <span style="font-size:18px;">☀️</span>
+          <div style="flex:1;">
+            <div style="font-size:12px; font-weight:700; color:var(--green);">Daily Bonus Claimed</div>
+            <div style="font-size:10px; color:var(--muted);">+15 XP · Come back tomorrow for another${streak > 1 ? ` · ${streak}-day streak!` : ""}</div>
+          </div>
+          <span style="font-size:10px; color:var(--green); font-weight:700;">✓</span>
+        </div>
+      </div>`;
+  }
+  return `
+    <div style="padding:0 20px 14px;">
+      <div style="display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:10px;
+                  background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.25);
+                  animation:pulse 2s ease-in-out infinite;">
+        <span style="font-size:18px;">☀️</span>
+        <div style="flex:1;">
+          <div style="font-size:12px; font-weight:700; color:var(--gold);">Daily Login Bonus</div>
+          <div style="font-size:10px; color:var(--muted);">Claim your +15 XP for checking in today${streak > 0 ? ` · ${streak + 1}-day streak!` : ""}</div>
+        </div>
+        <button id="claim-daily-bonus-btn"
+          style="font-size:11px; font-weight:800; padding:6px 14px; border-radius:8px;
+                 background:rgba(255,215,0,0.2); border:1px solid rgba(255,215,0,0.4);
+                 color:var(--gold); cursor:pointer; white-space:nowrap;
+                 transition:all 0.15s;">
+          Claim +15 XP
+        </button>
+      </div>
+    </div>`;
+}
+
+// ── Next Trophy Teaser ──────────────────────────────────────────────────────
+function renderNextTrophyTeaser() {
+  const unlocked = getUnlockedAchievements();
+  const locked = ACHIEVEMENTS.filter(a => !unlocked[a.id]);
+  if (!locked.length) {
+    return `
+      <div style="padding:0 20px 14px;">
+        <div style="display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:8px;
+                    background:rgba(185,242,255,0.06); border:1px solid rgba(185,242,255,0.15);">
+          <span style="font-size:14px;">🏆</span>
+          <span style="font-size:11px; color:var(--cyan); font-weight:600;">All ${ACHIEVEMENTS.length} trophies unlocked — legendary status!</span>
+        </div>
+      </div>`;
+  }
+  // Pick the closest to unlocking (by tier: bronze first, then silver, etc.)
+  const tierOrder = ["bronze", "silver", "gold", "diamond"];
+  locked.sort((a, b) => tierOrder.indexOf(a.tier) - tierOrder.indexOf(b.tier));
+  const next = locked[0];
+  const tier = TIER_STYLES[next.tier];
+  return `
+    <div style="padding:0 20px 14px;">
+      <div style="display:flex; align-items:center; gap:10px; padding:8px 14px; border-radius:8px;
+                  background:${tier.bg}; border:1px solid ${tier.border};">
+        <span style="font-size:16px; filter:grayscale(0.5) brightness(0.7);">${next.icon}</span>
+        <div style="flex:1; min-width:0;">
+          <div style="font-size:10px; color:var(--muted); letter-spacing:0.06em;">NEXT TROPHY</div>
+          <div style="font-size:12px; font-weight:700; color:${tier.color}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${next.name}</div>
+        </div>
+        <div style="text-align:right; flex-shrink:0;">
+          <div style="font-size:10px; font-weight:800; color:var(--gold);">${next.xp} XP</div>
+          <div style="font-size:9px; color:${tier.color};">${tier.label}</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+// ── Streak Milestones ───────────────────────────────────────────────────────
+function renderStreakMilestones(streak) {
+  if (streak < 2) return "";
+  const milestones = [
+    { days: 7,   xp: 50,  label: "Week Warrior",     icon: "🔥" },
+    { days: 14,  xp: 100, label: "Two-Week Titan",    icon: "⚡" },
+    { days: 30,  xp: 200, label: "Monthly Machine",   icon: "🏆" },
+    { days: 60,  xp: 400, label: "Iron Discipline",   icon: "💎" },
+    { days: 100, xp: 750, label: "Centurion",         icon: "👑" },
+  ];
+  // Find the next milestone
+  const next = milestones.find(m => streak < m.days);
+  if (!next) return `
+    <div style="padding:0 20px 14px;">
+      <div style="padding:8px 14px; border-radius:8px; background:rgba(185,242,255,0.06); border:1px solid rgba(185,242,255,0.15);">
+        <div style="font-size:11px; color:var(--cyan); font-weight:700;">👑 ${streak}-day streak! All milestones reached!</div>
+      </div>
+    </div>`;
+  const progress = Math.round((streak / next.days) * 100);
+  return `
+    <div style="padding:0 20px 14px;">
+      <div style="padding:10px 14px; border-radius:8px; background:rgba(255,200,116,0.05); border:1px solid rgba(255,200,116,0.12);">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:6px;">
+          <span style="font-size:11px; color:var(--gold); font-weight:700;">${next.icon} Streak: ${streak}/${next.days} days to ${next.label}</span>
+          <span style="font-size:10px; color:var(--gold); font-weight:600;">+${next.xp} XP</span>
+        </div>
+        <div style="height:5px; background:rgba(255,255,255,0.07); border-radius:3px; overflow:hidden;">
+          <div style="width:${progress}%; height:100%; background:var(--gold); border-radius:3px; transition:width 0.4s;"></div>
+        </div>
+      </div>
+    </div>`;
+}
 
 // ── XP & Level Bar ───────────────────────────────────────────────────────────
 export function renderXPBar() {
@@ -71,6 +178,9 @@ export function renderXPBar() {
           <div style="height:8px; background:linear-gradient(90deg, #c084fc, #b9f2ff, #ffd700); border-radius:4px; opacity:0.8;"></div>
         </div>
       `}
+      ${renderDailyBonusCard(streak)}
+      ${renderNextTrophyTeaser()}
+      ${renderStreakMilestones(streak)}
     </div>
   `;
 }

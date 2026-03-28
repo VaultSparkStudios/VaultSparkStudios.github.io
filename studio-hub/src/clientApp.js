@@ -7,7 +7,7 @@ import { fetchAllSupabaseData } from "./data/supabaseAdapter.js";
 import { fetchAllSocialFeeds } from "./data/socialFeedsAdapter.js";
 import { renderNavigation } from "./components/navigation.js";
 import { renderStudioHubView, pushAlertHistory, snoozeAlert, claimChallengeXP, clearNotifications } from "./components/studioHubView.js";
-import { grantXP } from "./utils/studioXP.js";
+import { grantXP, grantDailyBonus as claimDailyBonus, grantStreakMilestone, getLoginStreak } from "./utils/studioXP.js";
 import { dismissNotification } from "./utils/achievements.js";
 import { renderPortfolioTimelineView } from "./components/portfolioTimelineView.js";
 import { renderProjectHubView } from "./components/projectHubView.js";
@@ -1079,6 +1079,7 @@ function bindEvents() {
   // ── Gamification events ──────────────────────────────────────────────────────
   document.querySelectorAll("[data-claim-challenge]").forEach((btn) => {
     btn.addEventListener("click", (e) => {
+      e.preventDefault();
       e.stopPropagation();
       const id = btn.dataset.claimChallenge;
       const type = btn.dataset.challengeType;
@@ -1086,11 +1087,41 @@ function bindEvents() {
       if (xp > 0) {
         grantXP(xp, `Challenge: ${id}`);
         showToast(`Challenge completed! +${xp} XP`, "success", 4000);
-        btn.closest("[style]")?.classList.add("challenge-claimed");
       }
+      // Preserve scroll position across re-render
+      const panel = document.querySelector(".main-panel");
+      const scrollY = panel ? panel.scrollTop : window.scrollY;
       render();
+      const panelAfter = document.querySelector(".main-panel");
+      if (panelAfter) panelAfter.scrollTop = scrollY;
+      else window.scrollTo(0, scrollY);
     });
   });
+  // ── Daily bonus claim ──
+  const dailyBonusBtn = document.getElementById("claim-daily-bonus-btn");
+  if (dailyBonusBtn) {
+    dailyBonusBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const xp = claimDailyBonus();
+      if (xp > 0) {
+        showToast(`Daily bonus claimed! +${xp} XP`, "success", 3000);
+        // Check for streak milestone
+        const streak = getLoginStreak();
+        const milestoneXP = grantStreakMilestone(streak);
+        if (milestoneXP > 0) {
+          setTimeout(() => showToast(`Streak milestone! ${streak}-day streak — +${milestoneXP} XP bonus!`, "success", 5000), 1500);
+        }
+      }
+      const panel = document.querySelector(".main-panel");
+      const scrollY = panel ? panel.scrollTop : window.scrollY;
+      render();
+      const panelAfter = document.querySelector(".main-panel");
+      if (panelAfter) panelAfter.scrollTop = scrollY;
+      else window.scrollTo(0, scrollY);
+    });
+  }
+
   document.querySelectorAll("[data-achievement-dismiss]").forEach((el) => {
     el.addEventListener("click", (e) => {
       e.stopPropagation();

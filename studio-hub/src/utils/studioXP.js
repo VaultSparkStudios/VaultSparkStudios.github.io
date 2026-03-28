@@ -59,6 +59,31 @@ export function grantDailyBonus() {
   return bonus;
 }
 
+// Check if daily bonus is available but not yet claimed
+export function isDailyBonusAvailable() {
+  const data = loadXPData();
+  const today = new Date().toISOString().slice(0, 10);
+  return data.dailyBonus !== today;
+}
+
+// Grant streak milestone bonus (called when streak reaches milestones)
+export function grantStreakMilestone(streak) {
+  const data = loadXPData();
+  const milestoneKey = `streak_${streak}`;
+  if (data.xpLog.some(e => e.source === milestoneKey)) return 0;
+  let bonus = 0;
+  if (streak === 7)  bonus = 50;
+  else if (streak === 14) bonus = 100;
+  else if (streak === 30) bonus = 200;
+  else if (streak === 60) bonus = 400;
+  else if (streak === 100) bonus = 750;
+  if (bonus === 0) return 0;
+  data.totalXP += bonus;
+  data.xpLog.push({ source: milestoneKey, amount: bonus, ts: Date.now() });
+  saveXPData(data);
+  return bonus;
+}
+
 // Grant weekly bonus for consistent engagement (once per week)
 export function grantWeeklyBonus(scoreHistory) {
   const data = loadXPData();
