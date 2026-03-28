@@ -44,7 +44,7 @@ Rate 0–10 per category at each closeout:
 Sparkline (last 5 totals): ▅▅▅▅▆
 3-session avg: Dev 9.3 | Align 8.0 | Momentum 9.0 | Engage 3.0 | Process 10.0
 Avg total: 40.0 / 50  |  Velocity trend: ↑  |  Debt: ↓
-Last session: 2026-03-27 | Session 10 | Total: 41/50 | Velocity: 6
+Last session: 2026-03-27 | Session 10 (cont.) | Total: 41/50 | Velocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -317,22 +317,22 @@ Rolling avg (last 3): Dev 9.0 | Align 8.0 | Momentum 8.7 | Engage 3.0 | Process 
 
 ---
 
-## 2026-03-27 — Session 10 | Total: 41/50 | Velocity: 6 | Debt: ↓
+## 2026-03-27 — Session 10 (continued) | Total: 41/50 | Velocity: 7 | Debt: ↓
 Rolling avg (last 3): Dev 9.3 | Align 8.0 | Momentum 9.0 | Engage 3.0 | Process 10.0
 
 | Category | Score | vs Last | Notes |
 |---|---|---|---|
-| Dev Health | 10 | ↑ | 195 inline styles → CSS classes; 871KB image compression; axe-core CI; root package.json; 3 new GitHub Actions; countdown.js widget |
+| Dev Health | 10 | ↑ | 195 inline styles → CSS classes; 871KB image compression; axe-core CI; root package.json; 3 new GitHub Actions; countdown.js widget; mobile nav tap-to-toggle; @media (hover:hover) guard |
 | Creative Alignment | 8 | → | Countdown timers + classified glitch effect align with game anticipation strategy; leaderboard API extends community reach |
-| Momentum | 9 | → | 6 deliverables shipped — biggest breadth session; all 6 task board items completed |
+| Momentum | 9 | → | 7 deliverables shipped (6 task board items + mobile nav renovation); broadest session to date |
 | Engagement | 3 | → | Pre-activation; public leaderboard API + member SEO pages create new discovery surfaces once members exist |
-| Process Quality | 10 | → | Full closeout; all context files, memory, handoff, SIL updated; clean commit + push |
+| Process Quality | 10 | → | Full closeout; all context files, memory, handoff, SIL updated; SW cache issue diagnosed and resolved |
 | **Total** | **41/50** | ↑ | New high — first time above 40 |
 
-**Top win:** All 6 planned task board items completed in a single session — portal cleanup, compression, accessibility CI, SEO, public API, and UX countdowns. Broadest scope session to date.
-**Top gap:** Engagement still at 3 (pre-activation). Public leaderboard API and member SEO pages are the first features specifically designed to generate inbound traffic, but they need real member data to populate.
+**Top win:** All 6 planned task board items completed + critical mobile nav renovation. Mobile menu was broken (auto-expanded dropdowns pushed items off-screen); fixed with collapsed-by-default accordion + SW cache bust.
+**Top gap:** Engagement still at 3 (pre-activation). SW caching masked the mobile nav fix — nav-toggle.js was missing from pre-cache list, requiring explicit cache bust to deliver the fix.
 
-**IGNIS note:** Session 10 marks the transition from "build more features" to "polish what exists" — code quality (inline styles), performance (compression), accessibility (axe-core), and discoverability (SEO + API) are all infrastructure-level improvements. The feature backlog is now mostly blocked on user actions (SQL, Cloudflare, LLC) or content (journal calendar). Next high-impact code session should focus on 2FA/MFA or authenticated axe-core coverage.
+**IGNIS note:** Session 10 exposed a service worker blind spot: critical navigation JS (nav-toggle.js) wasn't in STATIC_ASSETS, so stale-while-revalidate served the broken version indefinitely. Rule: any JS that affects core navigation MUST be in the SW pre-cache list. Also, desktop `:hover` on `.nav-item` triggers sticky-hover on touch devices — wrapping hover-only dropdowns in `@media (hover: hover)` is now the standard pattern.
 
 **Brainstorm**
 1. 2FA/MFA for vault members — Supabase TOTP enrollment + portal UI; high trust signal for investor portal too

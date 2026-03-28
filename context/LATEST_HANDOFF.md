@@ -12,7 +12,8 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 - Shipped: 6 features — portal CSS cleanup (195 inline styles), image compression (871KB), axe-core CI, member SEO pages, leaderboard API, countdown timers
 - Mobile nav renovation: fixed critical bug where only "Projects" showed on mobile — dropdowns were auto-expanding all 13+ sub-links, pushing top-level items off-screen. Fix: collapsed dropdowns by default with tap-to-toggle accordion in nav-toggle.js + CSS `.dropdown-open` class. All 6 top-level items now visible.
 - Tests: axe-core Playwright integration added (11 pages WCAG 2.0/2.1 AA), existing 7 E2E specs preserved
-- Deploy: deployed to main (latest: cb456a5 pushed)
+- SW cache fix: nav-toggle.js was missing from SW pre-cache list, and desktop `:hover` dropdowns triggered on touch. Bumped cache, added pre-cache, added `@media (hover: hover)` guard.
+- Deploy: deployed to main (latest: cdbe6a9 pushed)
 
 ---
 
@@ -31,7 +32,7 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 **Also:** SW cache bump, .gitignore updated (root node_modules + package-lock.json), context files updated.
 - **Mobile nav renovation:** Fixed critical bug where mobile hamburger menu only showed "Projects" — auto-expanded dropdowns (13+ sub-links) pushed top-level items off-screen. Collapsed dropdowns by default with tap-to-toggle accordion behavior (nav-toggle.js + CSS `.dropdown-open` class). Caret arrows rotate on expand. All 6 top-level nav items now visible immediately.
 
-**Commits:** 72d6351 (session 10 — all 6 features), bf4f2fa (mobile nav z-index fix), cb456a5 (mobile nav dropdown collapse + tap-to-toggle)
+**Commits:** 72d6351 (session 10 — all 6 features), bf4f2fa (mobile nav z-index fix), cb456a5 (mobile nav dropdown collapse + tap-to-toggle), cdbe6a9 (SW cache bump + nav-toggle pre-cache + hover guard)
 
 ---
 
@@ -115,7 +116,7 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## What is mid-flight
 
-- Nothing. All pushed to main (cb456a5).
+- Nothing. All pushed to main (cdbe6a9).
 
 ---
 

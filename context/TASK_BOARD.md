@@ -75,7 +75,7 @@
 - ✅ Programmatic SEO member profiles — scripts/generate-member-seo.mjs generates static /member/{slug}/index.html with JSON-LD Person schema, SEO meta, redirect; .github/workflows/member-seo.yml weekly cron; member-sitemap.xml
 - ✅ Vault Score Public Leaderboard API — /api/leaderboard/ docs page, static JSON endpoints (v1/all.json, per-game), embeddable widget.js, .github/workflows/leaderboard-api.yml daily cron
 - ✅ Game Release Countdown Events — assets/countdown.js on 4 unreleased game pages (VaultFront Jul 2026, Solara Nov 2026, MindFrame Jun 2027, Project Unknown classified glitch); CSS in style.css with reduced-motion support
-- ✅ Mobile nav renovation — fixed critical bug where only "Projects" showed on mobile; dropdowns collapsed by default with tap-to-toggle accordion (nav-toggle.js + CSS `.dropdown-open`); caret arrows rotate on expand; all 6 top-level nav items visible immediately
+- ✅ Mobile nav renovation — fixed critical bug where only "Projects" showed on mobile; dropdowns collapsed by default with tap-to-toggle accordion (nav-toggle.js + CSS `.dropdown-open`); caret arrows rotate on expand; all 6 top-level nav items visible immediately; SW cache bumped + nav-toggle.js added to pre-cache; `@media (hover: hover)` guard on desktop dropdown hover
 
 ## Completed — Session 9 (2026-03-27)
 

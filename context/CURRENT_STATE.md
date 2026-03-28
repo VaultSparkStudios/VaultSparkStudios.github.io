@@ -126,7 +126,7 @@
 
 ## In progress
 
-- None. All committed and pushed (session 10 continued — mobile nav fix cb456a5).
+- None. All committed and pushed (session 10 continued — mobile nav fix cdbe6a9).
 
 ## SQL Migrations Pending (user must run in Supabase dashboard)
 
