@@ -16,7 +16,7 @@
         if (error) throw new Error(error.message);
 
         if (!data || !data.season) {
-          el.innerHTML = '<p style="font-size:0.9rem;color:var(--muted);padding:1rem 0;">No active season right now. Check back soon.</p>';
+          el.innerHTML = '<p class="season-no-data">No active season right now. Check back soon.</p>';
           return;
         }
 
@@ -29,38 +29,38 @@
 
         const tiersHtml = (tiers || []).map(tier => {
           const unlocked = xp >= tier.xp_required;
-          return `<div style="display:flex;align-items:center;gap:0.75rem;padding:0.7rem 0.9rem;border-radius:10px;background:${unlocked ? 'rgba(255,196,0,0.06)' : 'rgba(255,255,255,0.02)'};border:1px solid ${unlocked ? 'rgba(255,196,0,0.2)' : 'rgba(255,255,255,0.06)'};margin-bottom:0.4rem;">
-            <span style="font-size:1.2rem;flex-shrink:0;">${unlocked ? '🔓' : '🔒'}</span>
-            <div style="flex:1;min-width:0;">
-              <div style="font-size:0.88rem;font-weight:700;color:${unlocked ? '#fff' : 'var(--muted)'};">Tier ${tier.tier} — ${tier.reward_label}</div>
-              <div style="font-size:0.75rem;color:var(--dim);margin-top:0.1rem;">${tier.xp_required.toLocaleString()} XP required</div>
+          return `<div class="season-tier" style="background:${unlocked ? 'rgba(255,196,0,0.06)' : 'rgba(255,255,255,0.02)'};border:1px solid ${unlocked ? 'rgba(255,196,0,0.2)' : 'rgba(255,255,255,0.06)'};">
+            <span class="season-tier-icon">${unlocked ? '🔓' : '🔒'}</span>
+            <div class="season-tier-info">
+              <div class="season-tier-name" style="color:${unlocked ? '#fff' : 'var(--muted)'};">Tier ${tier.tier} — ${tier.reward_label}</div>
+              <div class="season-tier-xp">${tier.xp_required.toLocaleString()} XP required</div>
             </div>
-            ${unlocked ? '<span style="font-size:0.75rem;font-weight:700;color:var(--gold);flex-shrink:0;">Unlocked</span>' : ''}
+            ${unlocked ? '<span class="season-tier-unlocked">Unlocked</span>' : ''}
           </div>`;
         }).join('');
 
         el.innerHTML = `
-          <div style="background:rgba(255,196,0,0.05);border:1px solid rgba(255,196,0,0.2);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:1.25rem;">
-            <div style="font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.35rem;">Active Season</div>
-            <div style="font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:0.2rem;">${escHtml(season.name)}</div>
-            ${season.banner_text ? `<div style="font-size:0.83rem;color:var(--muted);margin-bottom:0.75rem;">${escHtml(season.banner_text)}</div>` : ''}
-            ${endDate ? `<div style="font-size:0.78rem;color:var(--dim);">Ends ${endDate}</div>` : ''}
+          <div class="season-header">
+            <div class="season-label">Active Season</div>
+            <div class="season-name">${escHtml(season.name)}</div>
+            ${season.banner_text ? `<div class="season-banner">${escHtml(season.banner_text)}</div>` : ''}
+            ${endDate ? `<div class="season-end">Ends ${endDate}</div>` : ''}
           </div>
 
-          <div style="margin-bottom:1.25rem;">
-            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.5rem;">
-              <span style="font-size:0.82rem;font-weight:700;color:var(--muted);">Season XP</span>
-              <span style="font-size:0.88rem;font-weight:800;color:var(--gold);">${xp.toLocaleString()} / ${maxXp.toLocaleString()}</span>
+          <div class="season-xp-wrap">
+            <div class="season-xp-row">
+              <span class="season-xp-label">Season XP</span>
+              <span class="season-xp-value">${xp.toLocaleString()} / ${maxXp.toLocaleString()}</span>
             </div>
-            <div style="width:100%;height:8px;background:rgba(255,255,255,0.07);border-radius:4px;overflow:hidden;">
-              <div style="height:8px;border-radius:4px;background:var(--gold);width:${barPct}%;transition:width 0.6s ease;"></div>
+            <div class="season-xp-track">
+              <div class="season-xp-fill" style="width:${barPct}%;"></div>
             </div>
           </div>
 
-          <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);margin-bottom:0.65rem;">Battle Pass Tiers</div>
+          <div class="season-tier-label">Battle Pass Tiers</div>
           ${tiersHtml}`;
       } catch (err) {
-        if (el) el.innerHTML = `<p style="font-size:0.84rem;color:var(--dim);padding:1rem 0;">Could not load season pass. Try again later.</p>`;
+        if (el) el.innerHTML = `<p class="season-error">Could not load season pass. Try again later.</p>`;
       }
     }
 
@@ -90,7 +90,7 @@
         const ownedIds = new Set((ownedRes.data || []).map(r => r.item_id));
 
         if (items.length === 0) {
-          gridEl.innerHTML = '<p style="color:var(--muted);font-size:0.9rem;grid-column:1/-1;">No items available right now.</p>';
+          gridEl.innerHTML = '<p class="treasury-empty">No items available right now.</p>';
           return;
         }
 
@@ -111,28 +111,29 @@
           const btnLabel    = owned ? 'Owned' : (affordable ? 'Redeem' : 'Not enough points');
           const btnDisabled = owned || !affordable;
 
-          return `<div style="background:rgba(255,255,255,0.03);border:1px solid ${owned ? 'rgba(255,196,0,0.25)' : 'rgba(255,255,255,0.08)'};border-radius:14px;padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:0.65rem;">
-            <div style="display:flex;align-items:flex-start;gap:0.75rem;">
-              <span style="font-size:1.6rem;flex-shrink:0;line-height:1;">${escHtml(item.icon || '🏆')}</span>
-              <div style="flex:1;min-width:0;">
-                <div style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:${catColor};margin-bottom:0.2rem;">${escHtml(cat)}</div>
-                <div style="font-size:0.95rem;font-weight:800;color:#fff;line-height:1.3;">${escHtml(item.name)}</div>
+          return `<div class="treasury-card" style="border:1px solid ${owned ? 'rgba(255,196,0,0.25)' : 'rgba(255,255,255,0.08)'};">
+            <div class="treasury-top">
+              <span class="treasury-icon-wrap">${escHtml(item.icon || '🏆')}</span>
+              <div class="treasury-info">
+                <div class="treasury-category" style="color:${catColor};">${escHtml(cat)}</div>
+                <div class="treasury-name">${escHtml(item.name)}</div>
               </div>
-              ${owned ? '<span style="font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);flex-shrink:0;margin-top:0.15rem;">✓ Owned</span>' : ''}
+              ${owned ? '<span class="treasury-owned-tag">✓ Owned</span>' : ''}
             </div>
-            <div style="font-size:0.8rem;color:var(--muted);line-height:1.5;">${escHtml(item.description)}</div>
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem;margin-top:auto;">
-              <span style="font-size:1rem;font-weight:800;color:var(--gold);">${item.cost.toLocaleString()} pts</span>
+            <div class="treasury-desc">${escHtml(item.description)}</div>
+            <div class="treasury-footer">
+              <span class="treasury-cost">${item.cost.toLocaleString()} pts</span>
               <button type="button"
                 onclick="buyTreasuryItem('${escHtml(item.id)}','${escHtml(item.name)}',${item.cost})"
                 ${btnDisabled ? 'disabled' : ''}
-                style="height:34px;padding:0 1rem;border-radius:8px;font-size:0.8rem;font-weight:700;font-family:inherit;cursor:${btnDisabled ? 'not-allowed' : 'pointer'};border:1px solid ${owned ? 'rgba(255,196,0,0.3)' : (affordable ? 'rgba(31,162,255,0.4)' : 'rgba(255,255,255,0.1)')};background:${owned ? 'rgba(255,196,0,0.08)' : (affordable ? 'rgba(31,162,255,0.12)' : 'rgba(255,255,255,0.04)')};color:${owned ? 'var(--gold)' : (affordable ? '#1FA2FF' : 'var(--dim)')};transition:background 0.18s,border-color 0.18s;"
+                class="treasury-btn"
+                style="cursor:${btnDisabled ? 'not-allowed' : 'pointer'};border:1px solid ${owned ? 'rgba(255,196,0,0.3)' : (affordable ? 'rgba(31,162,255,0.4)' : 'rgba(255,255,255,0.1)')};background:${owned ? 'rgba(255,196,0,0.08)' : (affordable ? 'rgba(31,162,255,0.12)' : 'rgba(255,255,255,0.04)')};color:${owned ? 'var(--gold)' : (affordable ? '#1FA2FF' : 'var(--dim)')};"
               >${escHtml(btnLabel)}</button>
             </div>
           </div>`;
         }).join('');
       } catch (err) {
-        gridEl.innerHTML = '<p style="color:var(--dim);font-size:0.84rem;grid-column:1/-1;">Could not load treasury. Try again later.</p>';
+        gridEl.innerHTML = '<p class="treasury-error">Could not load treasury. Try again later.</p>';
       }
     }
 
@@ -201,29 +202,29 @@
       const state = typeof window.vsPwaState === 'function' ? window.vsPwaState() : 'unavailable';
 
       if (state === 'installed') {
-        el.innerHTML = `<div style="display:flex;align-items:center;gap:0.6rem;padding:0.85rem 1rem;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:12px;">
-          <span style="font-size:1.3rem;">✓</span>
+        el.innerHTML = `<div class="pwa-installed">
+          <span class="pwa-installed-icon">✓</span>
           <div>
-            <div style="font-size:0.88rem;font-weight:700;color:#10B981;">App installed</div>
-            <div style="font-size:0.8rem;color:var(--dim);margin-top:0.15rem;">VaultSpark is running as an installed app on this device.</div>
+            <div class="pwa-installed-title">App installed</div>
+            <div class="pwa-installed-desc">VaultSpark is running as an installed app on this device.</div>
           </div>
         </div>`;
         return;
       }
 
       if (state === 'ios') {
-        el.innerHTML = `<p style="font-size:0.84rem;color:var(--muted);line-height:1.6;margin-bottom:0.75rem;">Add VaultSpark to your home screen for instant access:</p>
-          <ol style="font-size:0.84rem;color:var(--muted);line-height:1.9;padding-left:1.25rem;margin:0;">
-            <li>Tap the <strong style="color:var(--text);">Share</strong> button in Safari</li>
-            <li>Scroll down and tap <strong style="color:var(--text);">Add to Home Screen</strong></li>
-            <li>Tap <strong style="color:var(--text);">Add</strong></li>
+        el.innerHTML = `<p class="pwa-ios-text">Add VaultSpark to your home screen for instant access:</p>
+          <ol class="pwa-ios-steps">
+            <li>Tap the <strong>Share</strong> button in Safari</li>
+            <li>Scroll down and tap <strong>Add to Home Screen</strong></li>
+            <li>Tap <strong>Add</strong></li>
           </ol>`;
         return;
       }
 
       if (state === 'ready') {
-        el.innerHTML = `<p style="font-size:0.84rem;color:var(--muted);line-height:1.55;margin-bottom:0.9rem;">Install the Vault app for instant access, offline support, and a full-screen experience — no browser chrome.</p>
-          <button type="button" id="pwa-settings-install-btn" style="padding:0.6rem 1.4rem;background:var(--gold);color:#000;font-weight:800;font-size:0.88rem;border:none;border-radius:10px;cursor:pointer;font-family:inherit;">Install App</button>`;
+        el.innerHTML = `<p class="pwa-ready-text">Install the Vault app for instant access, offline support, and a full-screen experience — no browser chrome.</p>
+          <button type="button" id="pwa-settings-install-btn" class="pwa-install-btn">Install App</button>`;
         document.getElementById('pwa-settings-install-btn')?.addEventListener('click', function () {
           const ok = window.vsPwaInstall && window.vsPwaInstall();
           if (!ok) this.textContent = 'Prompt unavailable — try refreshing';
@@ -233,7 +234,7 @@
       }
 
       // unavailable
-      el.innerHTML = `<p style="font-size:0.84rem;color:var(--dim);line-height:1.55;">To install, open this site in Chrome or Edge on your device, then use the browser menu to <strong style="color:var(--muted);">Add to Home Screen</strong> or <strong style="color:var(--muted);">Install App</strong>.</p>`;
+      el.innerHTML = `<p class="pwa-unavailable">To install, open this site in Chrome or Edge on your device, then use the browser menu to <strong>Add to Home Screen</strong> or <strong>Install App</strong>.</p>`;
     }
 
     async function registerServiceWorker() {
@@ -357,7 +358,7 @@
           .limit(10);
 
         if (!items || items.length === 0) {
-          el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">No transmissions yet. Stand by.</div>';
+          el.innerHTML = '<div class="pulse-empty">No transmissions yet. Stand by.</div>';
         } else {
           el.innerHTML = '<div class="pulse-feed">' + items.map(renderPulseItem).join('') + '</div>';
         }
@@ -380,7 +381,7 @@
           })
           .subscribe();
       } catch (_) {
-        if (el) el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load studio pulse.</div>';
+        if (el) el.innerHTML = '<div class="pulse-empty">Could not load studio pulse.</div>';
       }
     }
 
@@ -410,7 +411,7 @@
       if (error) {
         localStorage.removeItem('vs_link_discord');
         const area = document.getElementById('discord-status-area');
-        if (area) area.innerHTML += `<span style="font-size:0.8rem;color:#f87171;margin-left:0.5rem;">${error.message}</span>`;
+        if (area) area.innerHTML += `<span class="discord-error">${error.message}</span>`;
       }
     }
 
@@ -426,13 +427,13 @@
     async function loadBetaKeys() {
       const el = document.getElementById('beta-keys-list');
       if (!el) return;
-      el.innerHTML = '<div style="color:var(--dim);">Loading…</div>';
+      el.innerHTML = '<div class="beta-loading">Loading…</div>';
       try {
         const { data: keys, error } = await VSSupabase.from('beta_keys').select('*');
         if (error) throw error;
 
         if (!keys || keys.length === 0) {
-          el.innerHTML = '<p style="color:var(--dim);font-size:0.88rem;line-height:1.6;">No beta keys are available for your rank yet. Earn more Vault Points to unlock early access.</p>';
+          el.innerHTML = '<p class="beta-empty">No beta keys are available for your rank yet. Earn more Vault Points to unlock early access.</p>';
           return;
         }
 
@@ -451,7 +452,7 @@
 
         el.innerHTML = `<div class="beta-keys-grid">${cards}</div>`;
       } catch (_) {
-        if (el) el.innerHTML = '<p style="color:var(--dim);font-size:0.88rem;">Could not load early access keys.</p>';
+        if (el) el.innerHTML = '<p class="beta-error">Could not load early access keys.</p>';
       }
     }
 
@@ -462,16 +463,16 @@
           <div class="beta-key-code" id="key-code-${slug}">${info.claimed.key_code}</div>
           <div class="beta-key-actions">
             <button class="beta-copy-btn" onclick="copyKeyCode('${slug}')">Copy Key</button>
-            <span style="font-size:0.75rem;color:#34d399;font-weight:700;">✓ Claimed</span>
+            <span class="beta-claimed-tag">✓ Claimed</span>
           </div>`;
       } else if (info.available.length > 0) {
         actionHtml = `
-          <p style="font-size:0.82rem;color:var(--muted);line-height:1.5;margin:0;">A beta key is available for your Vault Rank.</p>
+          <p class="beta-available-desc">A beta key is available for your Vault Rank.</p>
           <div class="beta-key-actions">
             <button class="beta-claim-btn" id="claim-btn-${slug}" onclick="claimKey('${slug}')">Claim Key →</button>
           </div>`;
       } else {
-        actionHtml = '<p style="font-size:0.82rem;color:var(--dim);margin:0;">No keys available right now.</p>';
+        actionHtml = '<p class="beta-no-keys">No keys available right now.</p>';
       }
       return `<div class="beta-key-card">
         <div class="beta-key-game">
@@ -495,7 +496,7 @@
         } else {
           if (btn) { btn.disabled = false; btn.textContent = 'Claim Key →'; }
           const msg = data?.error === 'no_keys_available' ? 'No keys available right now.' : 'Could not claim key. Try again.';
-          if (btn) btn.insertAdjacentHTML('afterend', `<span style="font-size:0.78rem;color:#f87171;"> ${msg}</span>`);
+          if (btn) btn.insertAdjacentHTML('afterend', `<span class="beta-claim-error"> ${msg}</span>`);
         }
       } catch (_) {
         if (btn) { btn.disabled = false; btn.textContent = 'Claim Key →'; }
@@ -537,14 +538,14 @@
         btn.style.borderColor = active ? 'rgba(31,162,255,0.3)' : 'rgba(255,255,255,0.1)';
       });
 
-      list.innerHTML = '<span style="color:var(--dim);">Loading…</span>';
+      list.innerHTML = '<span class="inv-loading">Loading…</span>';
 
       const { data, error } = await VSSupabase.rpc('admin_get_investor_requests', {
         p_status: status || null
       });
 
       if (error || data?.error) {
-        list.innerHTML = `<span style="color:#ef4444;">Error: ${data?.error || error?.message}</span>`;
+        list.innerHTML = `<span class="inv-error">Error: ${data?.error || error?.message}</span>`;
         return;
       }
 
@@ -561,47 +562,47 @@
       }
 
       if (requests.length === 0) {
-        list.innerHTML = '<span style="color:var(--dim);">No requests in this category.</span>';
+        list.innerHTML = '<span class="inv-loading">No requests in this category.</span>';
         return;
       }
 
       list.innerHTML = requests.map(r => `
-        <div style="border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:0.75rem;background:rgba(255,255,255,0.02);">
-          <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.6rem;flex-wrap:wrap;">
-            <strong style="color:var(--text);">${escHtml(r.full_name)}</strong>
-            <a href="mailto:${escHtml(r.email)}" style="color:#1FA2FF;font-size:0.85rem;">${escHtml(r.email)}</a>
-            <span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;padding:0.15rem 0.5rem;border-radius:4px;background:rgba(31,162,255,0.08);color:${INV_STATUS_COLORS[r.status] || '#8a9bbf'};">${r.status}</span>
-            ${r.organization ? `<span style="font-size:0.82rem;color:var(--muted);">${escHtml(r.organization)}</span>` : ''}
-            <span style="font-size:0.78rem;color:var(--dim);margin-left:auto;">${INV_RANGE_LABELS[r.investment_range] || '—'} · ${new Date(r.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span>
+        <div class="inv-card">
+          <div class="inv-header">
+            <strong class="inv-name">${escHtml(r.full_name)}</strong>
+            <a href="mailto:${escHtml(r.email)}" class="inv-email">${escHtml(r.email)}</a>
+            <span class="inv-status-badge" style="color:${INV_STATUS_COLORS[r.status] || '#8a9bbf'};">${r.status}</span>
+            ${r.organization ? `<span class="inv-org">${escHtml(r.organization)}</span>` : ''}
+            <span class="inv-meta">${INV_RANGE_LABELS[r.investment_range] || '—'} · ${new Date(r.created_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}</span>
           </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
+          <div class="inv-detail-grid">
             <div>
-              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Why approve?</div>
-              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.why_approve)}</div>
+              <div class="inv-detail-label">Why approve?</div>
+              <div class="inv-detail-text">${escHtml(r.why_approve)}</div>
             </div>
             <div>
-              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Interest in VaultSpark</div>
-              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.why_vaultspark)}</div>
+              <div class="inv-detail-label">Interest in VaultSpark</div>
+              <div class="inv-detail-text">${escHtml(r.why_vaultspark)}</div>
             </div>
             ${r.investing_history ? `
             <div>
-              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Investing history</div>
-              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.investing_history)}</div>
+              <div class="inv-detail-label">Investing history</div>
+              <div class="inv-detail-text">${escHtml(r.investing_history)}</div>
             </div>` : ''}
             ${r.value_beyond_capital ? `
             <div>
-              <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;color:var(--dim);margin-bottom:0.3rem;">Value beyond capital</div>
-              <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">${escHtml(r.value_beyond_capital)}</div>
+              <div class="inv-detail-label">Value beyond capital</div>
+              <div class="inv-detail-text">${escHtml(r.value_beyond_capital)}</div>
             </div>` : ''}
           </div>
-          <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
-            <button onclick="updateInvRequest('${r.id}','contacted')" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.25);color:#FFC400;">Mark Contacted</button>
-            <button onclick="updateInvRequest('${r.id}','approved')" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#10B981;">Approve</button>
-            <button onclick="updateInvRequest('${r.id}','rejected')" class="admin-submit-btn" style="padding:0.3rem 0.85rem;font-size:0.8rem;background:rgba(214,40,40,0.08);border:1px solid rgba(214,40,40,0.2);color:#ef4444;">Reject</button>
-            ${r.prior_gaming ? '<span style="font-size:0.78rem;color:var(--dim);">· Prior gaming investor</span>' : ''}
-            ${r.how_heard ? `<span style="font-size:0.78rem;color:var(--dim);">· Found us via: ${escHtml(r.how_heard)}</span>` : ''}
+          <div class="inv-actions">
+            <button onclick="updateInvRequest('${r.id}','contacted')" class="admin-submit-btn inv-btn-contacted">Mark Contacted</button>
+            <button onclick="updateInvRequest('${r.id}','approved')" class="admin-submit-btn inv-btn-approve">Approve</button>
+            <button onclick="updateInvRequest('${r.id}','rejected')" class="admin-submit-btn inv-btn-reject">Reject</button>
+            ${r.prior_gaming ? '<span class="inv-note-inline">· Prior gaming investor</span>' : ''}
+            ${r.how_heard ? `<span class="inv-note-inline">· Found us via: ${escHtml(r.how_heard)}</span>` : ''}
           </div>
-          ${r.admin_notes ? `<div style="margin-top:0.6rem;font-size:0.82rem;color:var(--dim);font-style:italic;">Note: ${escHtml(r.admin_notes)}</div>` : ''}
+          ${r.admin_notes ? `<div class="inv-admin-note">Note: ${escHtml(r.admin_notes)}</div>` : ''}
         </div>`).join('');
     }
 
@@ -630,13 +631,13 @@
     async function loadFanArtQueue(status = 'pending') {
       const el = document.getElementById('fan-art-queue');
       if (!el) return;
-      el.innerHTML = '<span style="color:var(--dim);">Loading…</span>';
+      el.innerHTML = '<span class="fanart-loading">Loading…</span>';
 
       const SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
       let url = `${SB_URL}/rest/v1/fan_art_submissions?status=eq.${encodeURIComponent(status)}&select=id,username,title,description,character_tag,file_path,submitted_at,admin_notes&order=submitted_at.asc&limit=20`;
 
       const { data: { session } } = await VSSupabase.auth.getSession();
-      if (!session) { el.innerHTML = '<span style="color:var(--dim);">Not authenticated.</span>'; return; }
+      if (!session) { el.innerHTML = '<span class="fanart-empty">Not authenticated.</span>'; return; }
 
       try {
         const res  = await fetch(url, {
@@ -651,26 +652,26 @@
           badge.style.display = rows.length > 0 ? 'inline' : 'none';
         }
 
-        if (!rows.length) { el.innerHTML = '<span style="color:var(--dim);">None in this category.</span>'; return; }
+        if (!rows.length) { el.innerHTML = '<span class="fanart-empty">None in this category.</span>'; return; }
 
         el.innerHTML = rows.map(r => {
           const imgUrl = `${SB_URL}/storage/v1/object/public/fan-art/${r.file_path}`;
-          return `<div style="display:flex;gap:1rem;border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1rem;margin-bottom:0.75rem;background:rgba(255,255,255,0.02);flex-wrap:wrap;">
-            <img src="${imgUrl}" alt="${escHtml(r.title)}" loading="lazy" style="width:96px;height:96px;object-fit:cover;border-radius:8px;flex-shrink:0;" onerror="this.style.display='none'" />
-            <div style="flex:1;min-width:200px;">
-              <div style="font-weight:700;color:var(--text);margin-bottom:0.2rem;">${escHtml(r.title)} <span style="font-size:0.75rem;color:var(--dim);font-weight:400;">by @${escHtml(r.username)}</span></div>
-              <div style="font-size:0.78rem;color:var(--muted);margin-bottom:0.1rem;">${escHtml(r.character_tag)} · ${new Date(r.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
-              ${r.description ? `<div style="font-size:0.82rem;color:var(--muted);line-height:1.5;margin-bottom:0.6rem;">${escHtml(r.description)}</div>` : ''}
-              <div style="display:flex;gap:0.4rem;flex-wrap:wrap;">
-                <button onclick="moderateFanArt('${r.id}','approved')" style="padding:0.25rem 0.75rem;font-size:0.78rem;font-weight:700;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);color:#10B981;border-radius:6px;cursor:pointer;font-family:inherit;">✓ Approve</button>
-                <button onclick="moderateFanArt('${r.id}','rejected')" style="padding:0.25rem 0.75rem;font-size:0.78rem;font-weight:700;background:rgba(214,40,40,0.08);border:1px solid rgba(214,40,40,0.2);color:#ef4444;border-radius:6px;cursor:pointer;font-family:inherit;">✕ Reject</button>
-                <a href="${imgUrl}" target="_blank" rel="noreferrer" style="padding:0.25rem 0.75rem;font-size:0.78rem;color:var(--dim);text-decoration:none;border:1px solid rgba(255,255,255,0.1);border-radius:6px;">View full →</a>
+          return `<div class="fanart-card">
+            <img src="${imgUrl}" alt="${escHtml(r.title)}" loading="lazy" class="fanart-thumb" onerror="this.style.display='none'" />
+            <div class="fanart-body">
+              <div class="fanart-title">${escHtml(r.title)} <span class="fanart-title-author">by @${escHtml(r.username)}</span></div>
+              <div class="fanart-meta">${escHtml(r.character_tag)} · ${new Date(r.submitted_at).toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
+              ${r.description ? `<div class="fanart-desc">${escHtml(r.description)}</div>` : ''}
+              <div class="fanart-actions">
+                <button onclick="moderateFanArt('${r.id}','approved')" class="fanart-btn-approve">✓ Approve</button>
+                <button onclick="moderateFanArt('${r.id}','rejected')" class="fanart-btn-reject">✕ Reject</button>
+                <a href="${imgUrl}" target="_blank" rel="noreferrer" class="fanart-btn-view">View full →</a>
               </div>
             </div>
           </div>`;
         }).join('');
       } catch(err) {
-        el.innerHTML = `<span style="color:#ef4444;">Error: ${escHtml(err.message)}</span>`;
+        el.innerHTML = `<span class="fanart-error">Error: ${escHtml(err.message)}</span>`;
       }
     }
 
@@ -709,18 +710,18 @@
           ...c,
           completions: countMap[c.id] || 0,
         })).sort((a, b) => b.completions - a.completions);
-        listEl.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:0.82rem;">' +
-          '<thead><tr style="border-bottom:1px solid rgba(255,255,255,0.08);">' +
-          '<th style="text-align:left;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Challenge</th>' +
-          '<th style="text-align:left;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Type</th>' +
-          '<th style="text-align:right;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Completions</th>' +
-          '<th style="text-align:right;padding:0.5rem 0.75rem;color:var(--dim);font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;">Pts</th>' +
+        listEl.innerHTML = '<table class="analytics-table">' +
+          '<thead><tr class="analytics-thead">' +
+          '<th class="analytics-th">Challenge</th>' +
+          '<th class="analytics-th">Type</th>' +
+          '<th class="analytics-th-right">Completions</th>' +
+          '<th class="analytics-th-right">Pts</th>' +
           '</tr></thead><tbody>' +
-          rows.map(r => '<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">' +
-            '<td style="padding:0.5rem 0.75rem;color:var(--text);">' + escHtml(r.title) + '</td>' +
-            '<td style="padding:0.5rem 0.75rem;color:var(--muted);">' + escHtml(r.challenge_type) + '</td>' +
-            '<td style="padding:0.5rem 0.75rem;color:var(--gold);text-align:right;">' + r.completions + '</td>' +
-            '<td style="padding:0.5rem 0.75rem;color:var(--dim);text-align:right;">+' + r.points + '</td>' +
+          rows.map(r => '<tr class="analytics-tr">' +
+            '<td class="analytics-td">' + escHtml(r.title) + '</td>' +
+            '<td class="analytics-td-muted">' + escHtml(r.challenge_type) + '</td>' +
+            '<td class="analytics-td-gold">' + r.completions + '</td>' +
+            '<td class="analytics-td-dim">+' + r.points + '</td>' +
           '</tr>').join('') +
           '</tbody></table>';
       } catch (_) { listEl.textContent = 'Error loading analytics.'; }

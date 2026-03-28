@@ -60,7 +60,7 @@
     async function loadNotifications() {
       const list = document.getElementById('notif-list');
       if (!list) return;
-      list.innerHTML = '<div style="padding:1rem 1.2rem;font-size:0.86rem;color:var(--dim);">Loading…</div>';
+      list.innerHTML = '<div class="notif-loading">Loading…</div>';
 
       try {
         // Fetch Studio Pulse (last 10)
@@ -78,7 +78,7 @@
         updateNotifBadge(countUnread(combined));
 
         if (combined.length === 0) {
-          list.innerHTML = '<div style="padding:1.2rem 1.2rem;font-size:0.86rem;color:var(--dim);line-height:1.55;">No notifications yet. Studio Pulse broadcasts will appear here.</div>';
+          list.innerHTML = '<div class="notif-empty">No notifications yet. Studio Pulse broadcasts will appear here.</div>';
           return;
         }
 
@@ -89,18 +89,18 @@
           const time     = formatTimeAgo(new Date(n.created_at));
           const click    = n._kind === 'rankup' ? 'onclick="switchDashTab(\'dashboard\');closeNotifPanel();"' : '';
           const cursor   = n._kind === 'rankup' ? 'cursor:pointer;' : '';
-          return `<div ${click} style="${cursor}display:flex;align-items:flex-start;gap:0.75rem;padding:0.75rem 1.2rem;border-bottom:1px solid rgba(255,255,255,0.05);${isUnread ? 'background:rgba(255,196,0,0.03);' : ''}transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.04)'" onmouseout="this.style.background='${isUnread ? 'rgba(255,196,0,0.03)' : 'transparent'}'">
-            <span style="font-size:1rem;flex-shrink:0;margin-top:2px;">${icon}</span>
-            <div style="flex:1;min-width:0;">
-              <div style="font-size:0.855rem;color:var(--text);line-height:1.4;">${escHtml(n.message)}</div>
-              <div style="font-size:0.72rem;color:var(--dim);margin-top:0.2rem;">${time}</div>
+          return `<div ${click} class="notif-item${n._kind === 'rankup' ? ' notif-item-clickable' : ''}${isUnread ? ' notif-unread' : ''}">
+            <span class="notif-icon">${icon}</span>
+            <div class="notif-body">
+              <div class="notif-msg">${escHtml(n.message)}</div>
+              <div class="notif-time">${time}</div>
             </div>
-            ${isUnread ? '<span style="width:7px;height:7px;border-radius:50%;background:#ef4444;flex-shrink:0;margin-top:6px;"></span>' : ''}
+            ${isUnread ? '<span class="notif-unread-dot"></span>' : ''}
           </div>`;
         }).join('');
 
       } catch (_) {
-        list.innerHTML = '<div style="padding:1rem 1.2rem;font-size:0.86rem;color:var(--dim);">Could not load notifications.</div>';
+        list.innerHTML = '<div class="notif-loading">Could not load notifications.</div>';
       }
     }
 
@@ -450,38 +450,36 @@
         } else {
           renderTeam(el, data, member);
         }
-      } catch (_) { el.innerHTML = '<span style="color:var(--dim);">Unable to load team.</span>'; }
+      } catch (_) { el.innerHTML = '<span class="team-error">Unable to load team.</span>'; }
     }
 
     function renderNoTeam(el, member) {
       el.innerHTML = `
-        <div style="margin-bottom:1rem;color:var(--muted);font-size:0.82rem;line-height:1.5;">
+        <div class="team-no-team">
           You're not on a team yet. Create one or join with an invite code.
         </div>
-        <div style="display:flex;flex-direction:column;gap:0.6rem;">
+        <div class="team-form-wrap">
           <div>
-            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:0.4rem;">Create a Team</div>
-            <div style="display:flex;gap:0.5rem;">
+            <div class="team-label">Create a Team</div>
+            <div class="team-input-row">
               <input id="team-create-name" type="text" maxlength="30" placeholder="Team name" autocomplete="off"
-                style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.5rem 0.75rem;color:var(--text);font-family:inherit;font-size:0.85rem;" />
-              <button onclick="createTeam('${member._id}')"
-                style="background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.25);color:var(--gold);padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
+                class="team-input" />
+              <button onclick="createTeam('${member._id}')" class="team-btn-create">
                 Create
               </button>
             </div>
           </div>
           <div>
-            <div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:0.4rem;">Join a Team</div>
-            <div style="display:flex;gap:0.5rem;">
+            <div class="team-label">Join a Team</div>
+            <div class="team-input-row">
               <input id="team-join-code" type="text" maxlength="6" placeholder="6-char invite code" autocomplete="off"
-                style="flex:1;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.5rem 0.75rem;color:var(--text);font-family:inherit;font-size:0.85rem;text-transform:uppercase;letter-spacing:0.1em;" />
-              <button onclick="joinTeam('${member._id}')"
-                style="background:rgba(31,162,255,0.1);border:1px solid rgba(31,162,255,0.25);color:#1FA2FF;padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
+                class="team-input-code" />
+              <button onclick="joinTeam('${member._id}')" class="team-btn-join">
                 Join
               </button>
             </div>
           </div>
-          <div id="team-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;"></div>
+          <div id="team-feedback" class="team-feedback"></div>
         </div>`;
     }
 
@@ -490,37 +488,37 @@
       const roster = Array.isArray(data.roster) ? data.roster : [];
       const isLeader = roster.some(r => r.user_id === member._id && r.role === 'leader');
       const rosterHtml = roster.map(r =>
-        `<div style="display:flex;align-items:center;gap:0.5rem;padding:0.35rem 0;border-bottom:1px solid rgba(255,255,255,0.04);">
-          <span style="font-size:1rem;">${r.role === 'leader' ? '👑' : '🏃'}</span>
-          <span style="flex:1;font-size:0.85rem;color:var(--text);font-weight:${r.user_id === member._id ? '700' : '400'};">${escHtml(r.username)}${r.user_id === member._id ? ' <span style="font-size:0.7rem;color:var(--dim);">(you)</span>' : ''}</span>
-          <span style="font-size:0.72rem;color:var(--dim);">${r.role}</span>
+        `<div class="team-roster-item">
+          <span class="team-roster-icon">${r.role === 'leader' ? '👑' : '🏃'}</span>
+          <span class="team-roster-name" style="font-weight:${r.user_id === member._id ? '700' : '400'};">${escHtml(r.username)}${r.user_id === member._id ? ' <span class="team-roster-you">(you)</span>' : ''}</span>
+          <span class="team-roster-role">${r.role}</span>
         </div>`
       ).join('');
       el.innerHTML = `
-        <div style="background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.12);border-radius:12px;padding:1rem;margin-bottom:0.75rem;">
-          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem;margin-bottom:0.5rem;">
+        <div class="team-card">
+          <div class="team-card-header">
             <div>
-              <div style="font-weight:700;font-size:1rem;color:var(--text);">${escHtml(t.name)}</div>
-              <div style="font-size:0.72rem;color:var(--dim);margin-top:0.2rem;">
-                Invite code: <code style="background:rgba(255,255,255,0.07);padding:0.1rem 0.4rem;border-radius:4px;letter-spacing:0.1em;">${t.invite_code}</code>
+              <div class="team-name">${escHtml(t.name)}</div>
+              <div class="team-invite-code">
+                Invite code: <code>${t.invite_code}</code>
                 <button onclick="navigator.clipboard.writeText('${t.invite_code}');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',2000)"
-                  style="background:transparent;border:none;color:#1FA2FF;font-size:0.7rem;cursor:pointer;padding:0 0.3rem;font-family:inherit;">Copy</button>
+                  class="team-copy-btn">Copy</button>
               </div>
             </div>
-            <div style="text-align:right;flex-shrink:0;">
-              <div style="font-size:1.1rem;font-weight:800;color:var(--gold);">${(t.total_points||0).toLocaleString()}</div>
-              <div style="font-size:0.7rem;color:var(--dim);">team pts</div>
+            <div class="team-pts-wrap">
+              <div class="team-pts-value">${(t.total_points||0).toLocaleString()}</div>
+              <div class="team-pts-label">team pts</div>
             </div>
           </div>
-          <div style="font-size:0.72rem;color:var(--dim);margin-bottom:0.6rem;">${roster.length} member${roster.length!==1?'s':''}</div>
+          <div class="team-member-count">${roster.length} member${roster.length!==1?'s':''}</div>
           ${rosterHtml}
         </div>
-        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-          ${isLeader ? `<button onclick="disbandTeam('${t.id}','${member._id}')" style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.2);color:#f87171;padding:0.45rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;">Disband Team</button>` : ''}
-          <button onclick="leaveTeam('${member._id}')" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:var(--muted);padding:0.45rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;font-family:inherit;">Leave Team</button>
-          <a href="/leaderboards/" style="background:rgba(31,162,255,0.07);border:1px solid rgba(31,162,255,0.18);color:#1FA2FF;padding:0.45rem 0.9rem;border-radius:8px;font-size:0.8rem;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;">Team Rankings →</a>
+        <div class="team-actions">
+          ${isLeader ? `<button onclick="disbandTeam('${t.id}','${member._id}')" class="team-btn-disband">Disband Team</button>` : ''}
+          <button onclick="leaveTeam('${member._id}')" class="team-btn-leave">Leave Team</button>
+          <a href="/leaderboards/" class="team-btn-rankings">Team Rankings →</a>
         </div>
-        <div id="team-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;margin-top:0.5rem;"></div>`;
+        <div id="team-feedback" class="team-feedback-bottom"></div>`;
     }
 
     function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -741,20 +739,20 @@
 
           let actionHtml = '';
           if (claimed) {
-            actionHtml = '<span style="font-size:0.78rem;font-weight:700;color:#4ade80;">&#10003; Claimed</span>';
+            actionHtml = '<span class="milestone-claimed">&#10003; Claimed</span>';
           } else if (reached) {
             actionHtml = '<button type="button" onclick="claimMilestone(' + m.id + ',this)" class="button button-sm" style="font-size:0.78rem;padding:0.3rem 0.85rem;">Claim Reward</button>';
           } else {
-            actionHtml = '<span style="font-size:0.78rem;color:var(--dim);">' + m.threshold + ' referrals needed</span>';
+            actionHtml = '<span class="milestone-needed">' + m.threshold + ' referrals needed</span>';
           }
 
-          return '<div style="display:flex;align-items:center;gap:1rem;padding:0.85rem 1rem;border-radius:14px;border:1px solid ' + border + ';background:' + bg + ';opacity:' + opacity + ';transition:opacity 0.2s;">' +
-            '<div style="font-size:1.5rem;flex-shrink:0;">' + (m.icon || '🏆') + '</div>' +
-            '<div style="flex:1;min-width:0;">' +
-              '<div style="font-weight:700;font-size:0.93rem;color:var(--text);margin-bottom:0.15rem;">' + m.label + '</div>' +
-              '<div style="font-size:0.82rem;color:var(--muted);line-height:1.45;">' + m.description + '</div>' +
+          return '<div class="milestone-card" style="border:1px solid ' + border + ';background:' + bg + ';opacity:' + opacity + ';">' +
+            '<div class="milestone-icon">' + (m.icon || '🏆') + '</div>' +
+            '<div class="milestone-info">' +
+              '<div class="milestone-label">' + m.label + '</div>' +
+              '<div class="milestone-desc">' + m.description + '</div>' +
             '</div>' +
-            '<div style="flex-shrink:0;">' + actionHtml + '</div>' +
+            '<div class="milestone-action">' + actionHtml + '</div>' +
           '</div>';
         }).join('');
 
@@ -770,7 +768,7 @@
         if (error) throw error;
         if (data && data.ok) {
           if (btn) {
-            btn.outerHTML = '<span style="font-size:0.78rem;font-weight:700;color:#4ade80;">&#10003; Claimed!</span>';
+            btn.outerHTML = '<span class="milestone-claimed">&#10003; Claimed!</span>';
           }
           if (typeof showToast === 'function') showToast('Milestone reward claimed!', { icon: '🏆' });
         } else {
@@ -800,7 +798,7 @@
     async function loadChronicle() {
       const el = document.getElementById('chronicle-timeline');
       if (!el) return;
-      el.innerHTML = '<div style="color:var(--dim);">Loading…</div>';
+      el.innerHTML = '<div class="pulse-empty">Loading…</div>';
       loadLoginHeatmap(); // non-blocking
       try {
         const { data: { session } } = await VSSupabase.auth.getSession();
@@ -819,7 +817,7 @@
         }
 
         if (items.length === 0) {
-          el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">No activity yet — start earning points to build your Chronicle.</div>';
+          el.innerHTML = '<div class="pulse-empty">No activity yet — start earning points to build your Chronicle.</div>';
           return;
         }
 
@@ -859,7 +857,7 @@
         html += '</div>';
         el.innerHTML = html;
       } catch (_) {
-        if (el) el.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;">Could not load activity chronicle.</div>';
+        if (el) el.innerHTML = '<div class="pulse-empty">Could not load activity chronicle.</div>';
       }
     }
 
@@ -884,7 +882,7 @@
         }, () => {});
       } else {
         // Fallback: show link in text if library not loaded
-        wrap.innerHTML = '<p style="font-size:0.75rem;color:var(--muted);word-break:break-all;">' + link + '</p>';
+        wrap.innerHTML = '<p class="qr-fallback">' + link + '</p>';
       }
     }
 
@@ -948,7 +946,7 @@
         }
         el.innerHTML = html;
       } catch (_) {
-        if (el) el.innerHTML = '<span style="font-size:0.78rem;color:var(--dim);">Heatmap unavailable.</span>';
+        if (el) el.innerHTML = '<span class="heatmap-fallback">Heatmap unavailable.</span>';
       }
     }
 
@@ -1172,16 +1170,13 @@
         const accent = featured.accent || '#FFC400';
 
         el.innerHTML = `
-          <a href="/member/?u=${encodeURIComponent(featured.username)}"
-             style="display:flex;align-items:center;gap:0.75rem;text-decoration:none;color:inherit;">
-            <div style="width:40px;height:40px;border-radius:50%;background:${av.bg};
-                        border:2px solid ${accent}44;display:flex;align-items:center;
-                        justify-content:center;font-size:1.3rem;flex-shrink:0;">${av.emoji}</div>
+          <a href="/member/?u=${encodeURIComponent(featured.username)}" class="spotlight-link">
+            <div class="spotlight-avatar" style="background:${av.bg};border:2px solid ${accent}44;">${av.emoji}</div>
             <div>
-              <div style="font-size:0.9rem;font-weight:700;color:#fff;">${escHtml(featured.username)}</div>
-              <div style="font-size:0.75rem;color:var(--muted);">${rank.name} &nbsp;·&nbsp; ${featured.points.toLocaleString()} pts</div>
+              <div class="spotlight-name">${escHtml(featured.username)}</div>
+              <div class="spotlight-meta">${rank.name} &nbsp;·&nbsp; ${featured.points.toLocaleString()} pts</div>
             </div>
-            <div style="margin-left:auto;font-size:0.72rem;color:var(--dim);">View →</div>
+            <div class="spotlight-arrow">View →</div>
           </a>`;
       } catch (_) {
         if (el) el.textContent = 'Spotlight unavailable.';
@@ -1201,25 +1196,24 @@
           .limit(1);
 
         if (!above || above.length === 0) {
-          el.innerHTML = '<span style="color:#FFC400;font-weight:700;">You\'re at the top of the leaderboard!</span>';
+          el.innerHTML = '<span class="rank-compare-top">You\'re at the top of the leaderboard!</span>';
           return;
         }
 
         const rival = above[0];
         const diff  = rival.points - member.points;
         el.innerHTML = `
-          <div style="font-size:0.88rem;color:rgba(255,255,255,0.85);line-height:1.55;">
-            You are <strong style="color:#FFC400;">${diff.toLocaleString()} pts</strong> behind
+          <div class="rank-compare-text">
+            You are <strong class="rank-compare-pts">${diff.toLocaleString()} pts</strong> behind
             <a href="/member/?u=${encodeURIComponent(rival.username)}"
-               style="color:#1FA2FF;font-weight:700;text-decoration:none;">${escHtml(rival.username)}</a>
+               class="rank-compare-user">${escHtml(rival.username)}</a>
             on the leaderboard.
           </div>
-          <div style="margin-top:0.5rem;">
-            <div style="height:4px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;">
-              <div style="height:100%;width:${Math.round((member.points / rival.points) * 100)}%;
-                           background:linear-gradient(90deg,#1FA2FF,#FFC400);border-radius:999px;"></div>
+          <div class="rank-compare-bar-wrap">
+            <div class="rank-compare-track">
+              <div class="rank-compare-fill" style="width:${Math.round((member.points / rival.points) * 100)}%;"></div>
             </div>
-            <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--dim);margin-top:0.25rem;">
+            <div class="rank-compare-legend">
               <span>You · ${member.points.toLocaleString()} pts</span>
               <span>${escHtml(rival.username)} · ${rival.points.toLocaleString()} pts</span>
             </div>
@@ -1249,23 +1243,23 @@
       if (document.getElementById('whats-new-modal')) return;
       const modal = document.createElement('div');
       modal.id = 'whats-new-modal';
-      modal.style.cssText = 'position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);';
+      modal.className = 'whats-new-overlay';
       const typeEmoji = { info:'ℹ️', update:'🔔', lore:'📁', alert:'⚡', milestone:'🏆' };
       const safeTs = latestTs.replace(/'/g, '');
       const itemsHtml = items.slice(0, 4).map(p =>
-        '<div style="display:flex;gap:0.65rem;padding:0.7rem 0;border-bottom:1px solid rgba(255,255,255,0.06);">'
-        + '<span style="font-size:1rem;flex-shrink:0;margin-top:0.1rem;">' + (typeEmoji[p.type] || '⚡') + '</span>'
-        + '<div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">' + p.message + '</div>'
+        '<div class="whats-new-item">'
+        + '<span class="whats-new-item-icon">' + (typeEmoji[p.type] || '⚡') + '</span>'
+        + '<div class="whats-new-item-text">' + p.message + '</div>'
         + '</div>'
       ).join('');
-      modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="whats-new-title" style="background:rgba(13,17,28,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:1.75rem;max-width:400px;width:100%;max-height:80vh;overflow-y:auto;">'
-        + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem;">'
-        + '<h3 id="whats-new-title" style="font-size:1.05rem;font-weight:800;margin:0;">What\'s New in the Vault</h3>'
-        + '<span style="font-size:0.75rem;font-weight:700;padding:0.2rem 0.55rem;background:rgba(255,196,0,0.15);border:1px solid rgba(255,196,0,0.3);border-radius:999px;color:var(--gold);">'
+      modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="whats-new-title" class="whats-new-dialog">'
+        + '<div class="whats-new-header">'
+        + '<h3 id="whats-new-title" class="whats-new-title">What\'s New in the Vault</h3>'
+        + '<span class="whats-new-badge">'
         + items.length + ' update' + (items.length > 1 ? 's' : '') + '</span>'
         + '</div>'
-        + '<div style="margin-bottom:1.25rem;">' + itemsHtml + '</div>'
-        + '<button id="whats-new-close-btn" style="width:100%;padding:0.6rem;background:var(--gold);color:#000;font-weight:800;font-size:0.88rem;border:none;border-radius:10px;cursor:pointer;font-family:inherit;">Got it — I\'m up to speed</button>'
+        + '<div class="whats-new-body">' + itemsHtml + '</div>'
+        + '<button id="whats-new-close-btn" class="whats-new-close-btn">Got it — I\'m up to speed</button>'
         + '</div>';
       document.body.appendChild(modal);
       const _wnPrev = document.activeElement;
@@ -1299,24 +1293,24 @@
         const total = sorted.reduce((s, c) => s + c[1], 0);
         const rows = sorted.map(([cat, pts]) => {
           const pct = total > 0 ? Math.round(pts / total * 100) : 0;
-          return '<div style="margin-bottom:0.7rem;">'
-            + '<div style="display:flex;justify-content:space-between;font-size:0.84rem;margin-bottom:0.25rem;">'
-            + '<span style="color:var(--muted);text-transform:capitalize;">' + cat + '</span>'
-            + '<span style="font-weight:700;color:var(--text);">' + pts + ' pts</span>'
+          return '<div class="pts-breakdown-row">'
+            + '<div class="pts-breakdown-labels">'
+            + '<span class="pts-breakdown-cat">' + cat + '</span>'
+            + '<span class="pts-breakdown-val">' + pts + ' pts</span>'
             + '</div>'
-            + '<div style="height:5px;background:rgba(255,255,255,0.08);border-radius:999px;">'
-            + '<div style="height:5px;background:var(--gold);border-radius:999px;width:' + pct + '%;"></div>'
+            + '<div class="pts-bar-track">'
+            + '<div class="pts-bar-fill" style="width:' + pct + '%;"></div>'
             + '</div></div>';
         }).join('');
         const modal = document.createElement('div');
         modal.id = 'pts-breakdown-modal';
-        modal.style.cssText = 'position:fixed;inset:0;z-index:1200;display:flex;align-items:center;justify-content:center;padding:1rem;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);';
-        modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="pts-breakdown-title" style="background:rgba(13,17,28,0.97);border:1px solid rgba(255,255,255,0.1);border-radius:18px;padding:1.5rem;max-width:340px;width:100%;">'
-          + '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.1rem;">'
-          + '<h3 id="pts-breakdown-title" style="font-size:0.95rem;font-weight:800;margin:0;">Points Breakdown</h3>'
-          + '<button id="pts-breakdown-close" style="background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer;line-height:1;padding:0;" aria-label="Close">&times;</button>'
+        modal.className = 'pts-breakdown-overlay';
+        modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="pts-breakdown-title" class="pts-breakdown-dialog">'
+          + '<div class="pts-breakdown-header">'
+          + '<h3 id="pts-breakdown-title" class="pts-breakdown-title">Points Breakdown</h3>'
+          + '<button id="pts-breakdown-close" class="pts-breakdown-close" aria-label="Close">&times;</button>'
           + '</div>'
-          + '<div style="margin-bottom:0.5rem;font-size:0.8rem;color:var(--dim);">Total earned: ' + total + ' pts</div>'
+          + '<div class="pts-breakdown-total">Total earned: ' + total + ' pts</div>'
           + rows + '</div>';
         document.body.appendChild(modal);
         const _pbPrev = document.activeElement;
@@ -1338,26 +1332,26 @@
       const nextRank = VS.getNextRank(newPts);
       const prog = VS.getRankProgress(newPts);
       const progressHtml = nextRank
-        ? '<div style="margin-top:0.85rem;">'
-          + '<div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--dim);margin-bottom:0.3rem;">'
+        ? '<div class="challenge-modal-prog">'
+          + '<div class="challenge-modal-prog-labels">'
           + '<span>' + rank.name + '</span><span>' + (nextRank.min - newPts) + ' pts to ' + nextRank.name + '</span>'
           + '</div>'
-          + '<div style="height:5px;background:rgba(255,255,255,0.08);border-radius:999px;">'
-          + '<div style="height:5px;background:var(--gold);border-radius:999px;width:' + prog + '%;transition:width 0.6s ease;"></div>'
+          + '<div class="pts-bar-track">'
+          + '<div class="pts-bar-fill" style="width:' + prog + '%;transition:width 0.6s ease;"></div>'
           + '</div></div>'
         : '';
       const modal = document.createElement('div');
       modal.id = 'challenge-complete-modal';
-      modal.style.cssText = 'position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:1300;max-width:360px;width:calc(100% - 2rem);background:rgba(13,17,28,0.97);border:1px solid rgba(255,196,0,0.4);border-radius:20px;padding:1.4rem;box-shadow:0 8px 40px rgba(0,0,0,0.6);animation:vs-slide-up 0.3s ease;';
-      modal.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.75rem;">'
+      modal.className = 'challenge-modal';
+      modal.innerHTML = '<div class="challenge-modal-top">'
         + '<div>'
-        + '<div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.2rem;">Challenge Complete ⚡</div>'
-        + '<div style="font-size:0.95rem;font-weight:800;color:var(--text);">' + title + '</div>'
+        + '<div class="challenge-modal-label">Challenge Complete ⚡</div>'
+        + '<div class="challenge-modal-name">' + title + '</div>'
         + '</div>'
-        + '<button onclick="document.getElementById(\'challenge-complete-modal\').remove()" style="background:none;border:none;color:var(--dim);font-size:1.3rem;cursor:pointer;line-height:1;padding:0 0 0 0.5rem;" aria-label="Close">&times;</button>'
+        + '<button onclick="document.getElementById(\'challenge-complete-modal\').remove()" class="challenge-modal-close" aria-label="Close">&times;</button>'
         + '</div>'
-        + '<div style="font-size:1.8rem;font-weight:900;color:var(--gold);letter-spacing:-0.02em;">+' + pts + ' pts</div>'
-        + '<div style="font-size:0.82rem;color:var(--muted);margin-top:0.2rem;">Total: ' + newPts + ' pts · ' + rank.name + '</div>'
+        + '<div class="challenge-modal-pts">+' + pts + ' pts</div>'
+        + '<div class="challenge-modal-total">Total: ' + newPts + ' pts · ' + rank.name + '</div>'
         + progressHtml;
       document.body.appendChild(modal);
       setTimeout(() => { const m = document.getElementById('challenge-complete-modal'); if (m) m.remove(); }, 6000);
@@ -1412,13 +1406,13 @@
 
       listEl.innerHTML = top.map(([label, pts]) => {
         const pct = Math.max(4, Math.round(pts / maxPts * 100));
-        return `<div style="margin-bottom:0.65rem;">
-          <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.3rem;">
-            <span style="font-size:0.84rem;color:var(--muted);">${escHtml(label)}</span>
-            <span style="font-size:0.8rem;font-weight:700;color:var(--gold);">${pts.toLocaleString()} pts</span>
+        return `<div class="pts-source-row">
+          <div class="pts-source-labels">
+            <span class="pts-source-name">${escHtml(label)}</span>
+            <span class="pts-source-val">${pts.toLocaleString()} pts</span>
           </div>
-          <div style="height:4px;border-radius:2px;background:rgba(255,255,255,0.06);">
-            <div style="height:4px;border-radius:2px;background:var(--gold);width:${pct}%;transition:width 0.4s ease;"></div>
+          <div class="pts-source-track">
+            <div class="pts-source-fill" style="width:${pct}%;"></div>
           </div>
         </div>`;
       }).join('');

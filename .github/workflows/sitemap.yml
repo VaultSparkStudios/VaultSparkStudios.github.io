@@ -20,7 +20,9 @@ jobs:
           OUT="sitemap.xml"
 
           # Pages to exclude from sitemap
-          EXCLUDE="vault-member|investor-portal|\.claude|node_modules|404"
+          # Exclude private/internal pages and generated member SEO pages
+          # (member profiles live in member-sitemap.xml instead)
+          EXCLUDE="vault-member|investor-portal|\.claude|node_modules|404|member/[^/]+/index"
 
           echo '<?xml version="1.0" encoding="UTF-8"?>' > "$OUT"
           echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' >> "$OUT"
@@ -79,7 +81,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml feed.xml
+          git add sitemap.xml feed.xml member-sitemap.xml
           if ! git diff --cached --quiet; then
             git commit -m "chore: auto-update sitemap + feed [skip ci]"
             git push

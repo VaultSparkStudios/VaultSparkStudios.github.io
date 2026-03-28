@@ -1,0 +1,39 @@
+{
+  "api": "VaultSpark Leaderboard API",
+  "version": "v1",
+  "base_url": "https://vaultsparkstudios.com/api/leaderboard/v1/",
+  "updated_at": "2026-03-28T02:02:49.686Z",
+  "games": [
+    {
+      "slug": "call-of-doodie",
+      "name": "Call of Doodie"
+    },
+    {
+      "slug": "gridiron-gm",
+      "name": "Gridiron GM"
+    },
+    {
+      "slug": "vaultspark-football-gm",
+      "name": "VaultSpark Football GM"
+    }
+  ],
+  "endpoints": [
+    {
+      "path": "/api/leaderboard/v1/all.json",
+      "description": "Top 100 scores across all games"
+    },
+    {
+      "path": "/api/leaderboard/v1/call-of-doodie.json",
+      "description": "Top 50 scores for Call of Doodie"
+    },
+    {
+      "path": "/api/leaderboard/v1/gridiron-gm.json",
+      "description": "Top 50 scores for Gridiron GM"
+    },
+    {
+      "path": "/api/leaderboard/v1/vaultspark-football-gm.json",
+      "description": "Top 50 scores for VaultSpark Football GM"
+    }
+  ],
+  "docs": "https://vaultsparkstudios.com/api/leaderboard/"
+}

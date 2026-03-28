@@ -1,0 +1,33 @@
+name: Generate Member SEO Pages
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'   # Every Monday at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  member-seo:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate member profile pages
+        run: node scripts/generate-member-seo.mjs
+
+      - name: Commit generated pages if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add member/*/index.html member-sitemap.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: regenerate member SEO pages [skip ci]"
+            git push
+          else
+            echo "No changes, skipping commit"
+          fi

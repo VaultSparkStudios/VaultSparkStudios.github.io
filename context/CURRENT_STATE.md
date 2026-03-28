@@ -4,7 +4,7 @@
 
 - Date: 2026-03-27
 - Overall status: Live and active
-- Current phase: Session 9 complete (2026-03-27) — analytics-driven CWV fixes, DreadSpike rename, SQL migrations still pending user action
+- Current phase: Session 10 complete (2026-03-27) — code quality + compression + accessibility + SEO + public API + countdown timers
 
 ## What exists
 
@@ -14,6 +14,10 @@
   - Vault Seasons Cross-Game XP: award_season_xp() RPC; triggers on game_scores (score/100 XP capped 500), challenge_submissions (50 XP), game_sessions (25 XP); season progress widget in portal dashboard (supabase-phase48-seasons-xp.sql — PENDING RUN)
   - Member Social Graph: member_follows table; follow/unfollow button on /member/ profiles; Following Feed tab in vault portal; follower/following counts display; get_following_feed RPC (supabase-phase49-social-graph.sql — PENDING RUN)
   - Game Demo Embeds: demo section on call-of-doodie, gridiron-gm, vaultspark-football-gm; responsive iframe slot + "Demo Coming Soon" placeholder; replace placeholder with iframe src when build ready
+  - Game Release Countdowns: live countdown timers on 4 unreleased game pages (VaultFront, Solara, MindFrame, Project Unknown classified); assets/countdown.js widget with prefers-reduced-motion support
+  - Vault Score Public Leaderboard API: /api/leaderboard/ docs page + static JSON endpoints (v1/all.json, per-game) + embeddable widget.js; daily GitHub Action refresh
+  - Programmatic SEO Member Profiles: scripts/generate-member-seo.mjs generates static /member/{slug}/index.html with JSON-LD Person schema; weekly GitHub Action; member-sitemap.xml
+  - axe-core Playwright CI: @axe-core/playwright scans 11 pages for WCAG 2.0/2.1 AA violations; parallel CI job in accessibility.yml
   - Activity Feed (expanded): homepage vault-signal-section now shows joins + challenge completions + game sessions via Promise.allSettled; type-coded dots (gold=join, blue=challenge, green=game)
   - Accessibility: body.light-mode :focus-visible uses #1a2040 outline (passes WCAG AA); aria-live="polite" on toast + points display in portal
   - Unreleased game content: Solara (MMORPG factions, economy, 6 feature items, stats grid, Late 2026 target), MindFrame (60 chambers, adaptive engine, competitive mode, Mid 2027 target), VaultFront (asymmetric RTS, convoy timing, 6 feature items, stats grid, Summer 2026 closed beta), Project Unknown (classified aesthetic maintained, Rift Scout rank required for brief)
@@ -94,6 +98,7 @@
   - `assets/pwa-install.js` — beforeinstallprompt handler
   - `assets/vault-cta.js` — sticky "Join the Vault" bar
   - `assets/vault-score.js` — game score submission SDK
+  - `assets/countdown.js` — release countdown timer widget (data-countdown-target)
   - `assets/rank-icons/` — 9 SVG icons
   - `sw.js` v3 — extended pre-cache + stale-while-revalidate for Supabase API
   - `.github/workflows/lighthouse.yml` — Lighthouse CI
@@ -102,6 +107,11 @@
   - `.github/workflows/sitemap.yml` — auto-generated sitemap on push
   - `.github/workflows/og-images.yml` — OG image generation via sharp
   - `.github/workflows/send-member-newsletter.yml` — monthly newsletter cron
+  - `.github/workflows/member-seo.yml` — weekly member profile SEO page generation
+  - `.github/workflows/leaderboard-api.yml` — daily leaderboard JSON API generation
+  - `scripts/generate-member-seo.mjs` — member profile static page generator
+  - `scripts/generate-leaderboard-api.mjs` — leaderboard API JSON generator
+  - `api/leaderboard/v1/widget.js` — embeddable leaderboard widget
 
 - SQL migrations (run status):
   - All Phases 1–35 migrations: ✅ (consolidated in supabase-phase35-migrations.sql)
@@ -116,7 +126,7 @@
 
 ## In progress
 
-- None. All committed and pushed (session 9 complete).
+- None. All committed and pushed (session 10 complete).
 
 ## SQL Migrations Pending (user must run in Supabase dashboard)
 

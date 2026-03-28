@@ -2,10 +2,6 @@
 
 ## Now
 
-- [SIL] Portal JS template literal inline style cleanup — ~204 remaining in portal-dashboard.js + portal-features.js [6.0]
-- [SIL] Image compression optimization pass — cinematic logo 223KB, can be reduced [6.0]
-- [ ] axe-core accessibility integration in Playwright CI [7.0]
-- [ ] Programmatic SEO for member profile pages — long-tail search [7.0]
 - [ ] Run pending SQL migrations: phase40-50 [critical path — unlocks all coded features]
 
 ## Next (Pending External Action)
@@ -46,9 +42,9 @@
 - [ ] Gift subscriptions (Stripe) [6.8] — pending LLC + Stripe production
 - [x] VaultSparked Beta Waitlist for unreleased games ✅ SHIPPED (session 8) — Web3Forms on 4 game pages
 - [x] Vault Referral Milestone Rewards ✅ CODED (session 8) — 5 tiers, needs SQL migration run
-- [ ] Game Release Countdown Events [6.5] — live countdown timers to announced release windows on game pages
+- [x] Game Release Countdown Events [6.5] ✅ SHIPPED (session 10) — countdown.js on 4 unreleased game pages + classified glitch for Project Unknown
 - [ ] Google Search Console + Bing Webmaster verification + sitemap submission [6.5]
-- [ ] Vault Score Public Leaderboard API [7.5] — expose game scores as embeddable public endpoint
+- [x] Vault Score Public Leaderboard API [7.5] ✅ SHIPPED (session 10) — /api/leaderboard/ docs, static JSON endpoints, embeddable widget.js, daily GitHub Action
 - [ ] Journal post cadence / content calendar [6.5] — one post per week tied to studio updates
 - [ ] 2FA/MFA for vault members (Supabase TOTP toggle + UI prompt) [7.5]
 
@@ -68,6 +64,15 @@
 - [ ] Community-created lore submissions [4.5]
 - [ ] "Currently playing" badge on member profile [4.5] (note: already exists as of Phase 42)
 - [ ] Vault social graph (member connections) [4.8] — now CODED as full follow system (session 5, phase 49)
+
+## Completed — Session 10 (2026-03-27)
+
+- ✅ Portal JS template literal inline style cleanup — 195/214 inline styles → CSS classes in portal.css (19 dynamic ones kept); 253 lines of new CSS
+- ✅ Image compression — favicon.png & icon-512.png 419KB→130KB (69%), icon-256.png 123KB→41KB (67%), cinematic-logo.webp & logo.webp 219KB→139KB (37%), icon.webp 120KB→76KB (37%) — 871KB total savings
+- ✅ axe-core Playwright integration — @axe-core/playwright in tests/accessibility.spec.js scanning 11 pages for WCAG 2.0/2.1 AA violations; root package.json; CI workflow updated with parallel playwright-axe job
+- ✅ Programmatic SEO member profiles — scripts/generate-member-seo.mjs generates static /member/{slug}/index.html with JSON-LD Person schema, SEO meta, redirect; .github/workflows/member-seo.yml weekly cron; member-sitemap.xml
+- ✅ Vault Score Public Leaderboard API — /api/leaderboard/ docs page, static JSON endpoints (v1/all.json, per-game), embeddable widget.js, .github/workflows/leaderboard-api.yml daily cron
+- ✅ Game Release Countdown Events — assets/countdown.js on 4 unreleased game pages (VaultFront Jul 2026, Solara Nov 2026, MindFrame Jun 2027, Project Unknown classified glitch); CSS in style.css with reduced-motion support
 
 ## Completed — Session 9 (2026-03-27)
 
