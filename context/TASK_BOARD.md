@@ -3,6 +3,8 @@
 ## Now
 
 - [ ] Run pending SQL migrations: phase40-50 [critical path — unlocks all coded features]
+- [SIL] 2FA/MFA for vault members — Supabase TOTP toggle + portal enrollment UI [7.5]
+- [SIL] Authenticated axe-core portal tests — extend Playwright to log in and scan dashboard/onboarding/challenge modals
 
 ## Next (Pending External Action)
 

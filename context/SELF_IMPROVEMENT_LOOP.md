@@ -41,10 +41,10 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▅▅▅▅▅
-3-session avg: Dev 9.0 | Align 8.0 | Momentum 8.7 | Engage 3.0 | Process 9.7
-Avg total: 39.3 / 50  |  Velocity trend: →  |  Debt: ↓
-Last session: 2026-03-27 | Session 9 | Total: 39/50 | Velocity: 4
+Sparkline (last 5 totals): ▅▅▅▅▆
+3-session avg: Dev 9.3 | Align 8.0 | Momentum 9.0 | Engage 3.0 | Process 10.0
+Avg total: 40.0 / 50  |  Velocity trend: ↑  |  Debt: ↓
+Last session: 2026-03-27 | Session 10 | Total: 41/50 | Velocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -314,3 +314,31 @@ Rolling avg (last 3): Dev 9.0 | Align 8.0 | Momentum 8.7 | Engage 3.0 | Process 
 5. Cloudflare RUM dashboard review after CWV fixes land
 
 **Committed to TASK_BOARD:** [SIL] Portal JS template literal inline style cleanup · [SIL] Image compression optimization pass
+
+---
+
+## 2026-03-27 — Session 10 | Total: 41/50 | Velocity: 6 | Debt: ↓
+Rolling avg (last 3): Dev 9.3 | Align 8.0 | Momentum 9.0 | Engage 3.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 10 | ↑ | 195 inline styles → CSS classes; 871KB image compression; axe-core CI; root package.json; 3 new GitHub Actions; countdown.js widget |
+| Creative Alignment | 8 | → | Countdown timers + classified glitch effect align with game anticipation strategy; leaderboard API extends community reach |
+| Momentum | 9 | → | 6 deliverables shipped — biggest breadth session; all 6 task board items completed |
+| Engagement | 3 | → | Pre-activation; public leaderboard API + member SEO pages create new discovery surfaces once members exist |
+| Process Quality | 10 | → | Full closeout; all context files, memory, handoff, SIL updated; clean commit + push |
+| **Total** | **41/50** | ↑ | New high — first time above 40 |
+
+**Top win:** All 6 planned task board items completed in a single session — portal cleanup, compression, accessibility CI, SEO, public API, and UX countdowns. Broadest scope session to date.
+**Top gap:** Engagement still at 3 (pre-activation). Public leaderboard API and member SEO pages are the first features specifically designed to generate inbound traffic, but they need real member data to populate.
+
+**IGNIS note:** Session 10 marks the transition from "build more features" to "polish what exists" — code quality (inline styles), performance (compression), accessibility (axe-core), and discoverability (SEO + API) are all infrastructure-level improvements. The feature backlog is now mostly blocked on user actions (SQL, Cloudflare, LLC) or content (journal calendar). Next high-impact code session should focus on 2FA/MFA or authenticated axe-core coverage.
+
+**Brainstorm**
+1. 2FA/MFA for vault members — Supabase TOTP enrollment + portal UI; high trust signal for investor portal too
+2. Authenticated axe-core tests — extend Playwright to log in and scan portal dashboard, onboarding, challenge modals
+3. Member onboarding email drip — 3-email sequence (welcome + 3-day nudge + 7-day recap) using Resend; highest-ROI activation play
+4. API rate limiting documentation — add fair-use policy to /api/leaderboard/ docs; embed widget analytics (track embeds via referrer)
+5. Vault Live streaming badge — "Live Now" indicator on homepage when founder streams; no backend needed if using Twitch/YouTube embed check
+
+**Committed to TASK_BOARD:** [SIL] 2FA/MFA for vault members · [SIL] Authenticated axe-core portal tests

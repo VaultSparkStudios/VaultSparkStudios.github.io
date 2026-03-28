@@ -2,16 +2,34 @@
 
 Last updated: 2026-03-27
 
-Session Intent (2026-03-27 — Session 9): Analytics-driven Core Web Vitals fixes using Cloudflare Web Analytics data; rename darth-spike to DreadSpike.
+Session Intent (2026-03-27 — Session 10): Complete 6 task board items — portal inline style cleanup, image compression, axe-core Playwright CI, programmatic member SEO, public leaderboard API, game release countdowns.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
-## Where We Left Off (Session 9)
+## Where We Left Off (Session 10)
 
-- Shipped: Analytics-driven CWV fixes (LCP + INP), above-fold image optimization on 5 top pages, DreadSpike asset rename, Football GM INP improvements
-- Tests: 7 Playwright E2E spec files (from session 8)
-- Deploy: deployed to main (commit 3a4a463 pushed)
+- Shipped: 6 features — portal CSS cleanup (195 inline styles), image compression (871KB), axe-core CI, member SEO pages, leaderboard API, countdown timers
+- Tests: axe-core Playwright integration added (11 pages WCAG 2.0/2.1 AA), existing 7 E2E specs preserved
+- Deploy: deployed to main (commit 72d6351 pushed)
+
+---
+
+## What was completed (as of 2026-03-27 — Session 10)
+
+### Session 10 — Code Quality + Infrastructure Sprint (2026-03-27)
+
+**Shipped:**
+- Portal JS inline style cleanup: 195/214 template literal inline styles converted to CSS classes in portal.css (253 lines new CSS). 19 dynamic styles kept inline (use JS variables). Semantic class naming: .notif-*, .team-*, .milestone-*, .treasury-*, .season-*, .pts-*, .modal-*, etc.
+- Image compression: 871KB total savings — favicon.png & icon-512.png 419→130KB (69%), icon-256.png 123→41KB (67%), cinematic-logo.webp & logo.webp 219→139KB (37%), icon.webp 120→76KB (37%). Used sharp for all compression.
+- axe-core Playwright CI: Added @axe-core/playwright to tests/accessibility.spec.js scanning 11 public pages for WCAG 2.0/2.1 AA critical/serious violations. Root package.json created. CI workflow updated with parallel playwright-axe job.
+- Programmatic SEO member profiles: scripts/generate-member-seo.mjs fetches vault_members from Supabase, generates static /member/{slug}/index.html with JSON-LD Person schema, SEO meta, smart redirect to interactive profile. .github/workflows/member-seo.yml runs weekly. member-sitemap.xml generated.
+- Vault Score Public Leaderboard API: /api/leaderboard/index.html docs page with endpoint reference + embed code. Static JSON endpoints (v1/all.json, per-game). Embeddable widget.js (~2KB, self-contained, dark theme). .github/workflows/leaderboard-api.yml runs daily. Public API pill-badge added to /leaderboards/.
+- Game release countdown timers: assets/countdown.js widget on 4 unreleased game pages — VaultFront (Jul 2026), Solara (Nov 2026), MindFrame (Jun 2027), Project Unknown (classified glitch effect). CSS in style.css with reduced-motion support. "AVAILABLE NOW" state when countdown reaches zero.
+
+**Also:** SW cache bump, .gitignore updated (root node_modules + package-lock.json), context files updated.
+
+**Commits:** 72d6351 (session 10 — all 6 features)
 
 ---
 
@@ -95,19 +113,19 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## What is mid-flight
 
-- Nothing. All pushed to main (3a4a463).
+- Nothing. All pushed to main (72d6351).
 
 ---
 
 ## What to do next (in order)
 
-1. **[SIL] Portal JS template literal inline style cleanup** — ~204 remaining in portal-dashboard.js + portal-features.js [6.0]
-2. **[SIL] Image compression optimization pass** — cinematic logo 223KB, could be reduced [6.0]
-3. **[SIL] axe-core accessibility CI integration** — add to Playwright suite [7.0]
-4. **Programmatic SEO for member profile pages** — long-tail search opportunity [7.0]
-5. **Vault Score Public Leaderboard API** — expose scores as embeddable endpoint [7.5]
-6. **Cloudflare proxy** — DNS change on registrar; unblocks HTTP security headers [10]
-7. **Run pending SQL migrations** — phases 40–50 (fan art, teams, game scores, seasons, newsletter, treasury, weekly leaderboard, seasons XP, social graph, referral milestones)
+1. **Run pending SQL migrations** — phases 40–50 (fan art, teams, game scores, seasons, newsletter, treasury, weekly leaderboard, seasons XP, social graph, referral milestones) [critical path]
+2. **Cloudflare proxy** — DNS change on registrar; unblocks HTTP security headers [10]
+3. **VAPID key generation** — unblocks web push [9]
+4. **2FA/MFA for vault members** — Supabase TOTP toggle + UI prompt [7.5]
+5. **Google Search Console + Bing Webmaster verification** — submit sitemap + member-sitemap [6.5]
+6. **Journal post cadence / content calendar** — one post per week [6.5]
+7. **Annual VaultSparked pricing tier** — pending LLC + Stripe [8.5]
 
 ## Human Action Required
 
