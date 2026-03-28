@@ -10,6 +10,11 @@ const state = {
 
 const api = createApiClient();
 
+function debounce(fn, ms) {
+  let id;
+  return (...args) => { clearTimeout(id); id = setTimeout(() => fn(...args), ms); };
+}
+
 const MODE_HELP = {
   drive: "Drive resolves games possession-by-possession. It is faster for long sims and keeps weekly progression moving.",
   play: "Play resolves more individual play outcomes. It is slower, but gives more granular stat swings and box-score detail."
@@ -218,6 +223,8 @@ async function loadSetup() {
 
 async function createLeague() {
   setStatus("Creating league...");
+  // Yield to browser so status text + button state paint before heavy work
+  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
   await api("/api/new-league", {
     method: "POST",
     body: {
@@ -309,10 +316,15 @@ function bindEvents() {
   document.getElementById("presetLegacyBtn").addEventListener("click", () => applyPreset("legacy"));
 
   document.getElementById("createLeagueBtn").addEventListener("click", async () => {
+    const btn = document.getElementById("createLeagueBtn");
+    btn.disabled = true;
+    btn.textContent = "Creating…";
     try {
       await createLeague();
     } catch (error) {
       setStatus(`Error: ${error.message}`);
+      btn.disabled = false;
+      btn.textContent = "Create League";
     }
   });
 
@@ -405,9 +417,10 @@ function bindEvents() {
     }
   });
 
+  const debouncedSearch = debounce(() => renderSaves(), 200);
   document.getElementById("saveSearchInput").addEventListener("input", (event) => {
     state.saveSearch = event.target.value || "";
-    renderSaves();
+    debouncedSearch();
   });
 }
 

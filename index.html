@@ -37,9 +37,9 @@
   <link rel="apple-touch-icon" href="assets/icon-256.png" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="assets/style.css" />
-  <link rel="preload" href="assets/vaultspark-cinematic-logo.webp" as="image" type="image/webp" />
+  <link rel="preload" href="assets/vaultspark-cinematic-logo.webp" as="image" type="image/webp" fetchpriority="high" />
   <link rel="preload" href="assets/vaultspark-icon.webp" as="image" type="image/webp" />
-  <link rel="preload" href="assets/darth-spike-poster.webp" as="image" type="image/webp" />
+  <!-- dreadspike-poster is below the fold; no preload needed -->
   <link rel="prefetch" href="/vault-member/" />
   <link rel="prefetch" href="/games/" />
 
@@ -574,7 +574,7 @@
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="VaultSpark Studios — home">
-        <img loading="lazy" src="assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <img src="assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" loading="eager" decoding="async" />
         <span>
           VaultSpark Studios
           <small>The vault is sparked</small>
@@ -657,7 +657,7 @@
               <span class="chip">AI Storytelling</span>
             </div>
             <div class="logo-wrap">
-              <img loading="lazy" src="assets/vaultspark-cinematic-logo.webp" alt="VaultSpark Studios cinematic logo" fetchpriority="high" />
+              <img src="assets/vaultspark-cinematic-logo.webp" alt="VaultSpark Studios cinematic logo" width="600" height="200" loading="eager" fetchpriority="high" decoding="async" />
             </div>
             <div class="hero-caption">
               <div></div>
@@ -1069,7 +1069,7 @@
           <div class="media-grid">
             <div class="video-card">
               <div class="video-frame">
-                <img src="assets/darth-spike-poster.webp" alt="DreadSpike cinematic — VaultSpark Studios original character" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" loading="lazy" />
+                <img src="assets/dreadspike-poster.webp" alt="DreadSpike cinematic — VaultSpark Studios original character" width="1280" height="720" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" loading="lazy" decoding="async" />
               </div>
             </div>
 
@@ -1096,9 +1096,9 @@
           </div>
 
           <div class="still-grid" aria-label="DreadSpike still frames">
-            <div class="still"><picture><source srcset="assets/darth-spike-still-1.webp" type="image/webp"><img src="assets/darth-spike-still-1.jpg" alt="DreadSpike in the void — cinematic still frame 1" loading="lazy" /></picture></div>
-            <div class="still"><picture><source srcset="assets/darth-spike-still-2.webp" type="image/webp"><img src="assets/darth-spike-still-2.jpg" alt="DreadSpike with crimson light — cinematic still frame 2" loading="lazy" /></picture></div>
-            <div class="still"><picture><source srcset="assets/darth-spike-still-3.webp" type="image/webp"><img src="assets/darth-spike-still-3.jpg" alt="DreadSpike surrounded by fiery ash — cinematic still frame 3" loading="lazy" /></picture></div>
+            <div class="still"><picture><source srcset="assets/dreadspike-still-1.webp" type="image/webp"><img src="assets/dreadspike-still-1.jpg" alt="DreadSpike in the void — cinematic still frame 1" loading="lazy" /></picture></div>
+            <div class="still"><picture><source srcset="assets/dreadspike-still-2.webp" type="image/webp"><img src="assets/dreadspike-still-2.jpg" alt="DreadSpike with crimson light — cinematic still frame 2" loading="lazy" /></picture></div>
+            <div class="still"><picture><source srcset="assets/dreadspike-still-3.webp" type="image/webp"><img src="assets/dreadspike-still-3.jpg" alt="DreadSpike surrounded by fiery ash — cinematic still frame 3" loading="lazy" /></picture></div>
           </div>
         </div>
       </div>

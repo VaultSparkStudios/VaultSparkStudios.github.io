@@ -107,7 +107,7 @@
 
 ## Completed — Phase 39 (2026-03-25)
 
-- ✅ WebP conversion — darth-spike images; `<picture>` elements updated
+- ✅ WebP conversion — DreadSpike images; `<picture>` elements updated
 
 ## Completed — Phase 38 (2026-03-25)
 

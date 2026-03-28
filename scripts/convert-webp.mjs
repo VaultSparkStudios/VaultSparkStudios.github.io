@@ -6,10 +6,10 @@ const __dir = dirname(fileURLToPath(import.meta.url));
 const ASSETS = join(__dir, '..', 'assets');
 
 const FILES = [
-  'darth-spike-poster.jpg',
-  'darth-spike-still-1.jpg',
-  'darth-spike-still-2.jpg',
-  'darth-spike-still-3.jpg',
+  'dreadspike-poster.jpg',
+  'dreadspike-still-1.jpg',
+  'dreadspike-still-2.jpg',
+  'dreadspike-still-3.jpg',
 ];
 
 for (const f of FILES) {
