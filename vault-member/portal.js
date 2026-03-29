@@ -2609,6 +2609,10 @@
       if (balance < cost) return;
       if (!confirm(`Spend ${cost.toLocaleString()} pts to redeem "${itemName}"?`)) return;
 
+      // Immediate button feedback
+      var btn = document.querySelector('[onclick*="' + itemId + '"]');
+      if (btn) { btn.disabled = true; btn.textContent = 'Redeeming…'; }
+
       try {
         const { data, error } = await VSSupabase.rpc('purchase_treasury_item', { p_user_id: userId, p_item_id: itemId });
         if (error) throw error;
@@ -2619,10 +2623,13 @@
         const balEl = document.getElementById('treasury-balance');
         if (balEl) balEl.textContent = (_currentMember.points || 0).toLocaleString() + ' pts';
 
-        // Reload treasury to reflect owned state
-        _treasuryLoaded = false;
-        loadTreasury();
+        // Show confirmation before reload
+        if (btn) { btn.textContent = '✓ Redeemed!'; btn.style.background = 'rgba(16,185,129,0.2)'; btn.style.color = '#34d399'; }
+
+        // Reload treasury to reflect owned state after brief delay
+        setTimeout(function () { _treasuryLoaded = false; loadTreasury(); }, 1200);
       } catch (err) {
+        if (btn) { btn.disabled = false; btn.textContent = 'Redeem'; }
         const msg = err.message === 'already_owned' ? 'You already own this item.'
                   : err.message === 'insufficient_points' ? 'Not enough points.'
                   : 'Purchase failed. Please try again.';
