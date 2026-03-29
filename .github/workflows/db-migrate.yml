@@ -28,7 +28,7 @@ jobs:
           if [ -n "${{ inputs.files }}" ]; then
             echo "list=${{ inputs.files }}" >> "$GITHUB_OUTPUT"
           else
-            echo "list=supabase/migrations/supabase-phase40-fan-art.sql,supabase/migrations/supabase-phase41-fan-art-votes.sql,supabase/migrations/supabase-phase43-teams.sql,supabase/migrations/supabase-phase44-gift-subs-social-graph.sql,supabase/migrations/supabase-phase45-game-scores.sql,supabase/migrations/supabase-phase45-newsletter.sql,supabase/migrations/supabase-phase45-seasons.sql,supabase/supabase-phase46-treasury.sql,supabase/supabase-phase47-weekly-leaderboard.sql,supabase/supabase-phase48-seasons-xp.sql,supabase/supabase-phase49-social-graph.sql,supabase/migrations/supabase-phase50-referral-milestones.sql" >> "$GITHUB_OUTPUT"
+            echo "list=supabase/migrations/supabase-phase40-fan-art.sql,supabase/migrations/supabase-phase41-fan-art-votes.sql,supabase/migrations/supabase-phase43-teams.sql,supabase/migrations/supabase-phase44-gift-subs-social-graph.sql,supabase/migrations/supabase-phase45-game-scores.sql,supabase/migrations/supabase-phase45-newsletter.sql,supabase/migrations/supabase-phase45-seasons.sql,supabase/supabase-phase46-treasury.sql,supabase/supabase-phase47-weekly-leaderboard.sql,supabase/supabase-phase48-seasons-xp.sql,supabase/supabase-phase49-social-graph.sql,supabase/migrations/supabase-phase50-referral-milestones.sql,supabase/migrations/supabase-phase51-treasury-expansion.sql" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Run migrations

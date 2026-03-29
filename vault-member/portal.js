@@ -2566,37 +2566,68 @@
           bannerEl.textContent = `You own ${ownedIds.size} item${ownedIds.size === 1 ? '' : 's'} from the Treasury.`;
         }
 
-        const CATEGORY_COLORS = { cosmetic: '#1FA2FF', access: '#7C3AED', lore: '#F59E0B', boost: '#10B981' };
+        const CATEGORY_META = {
+          cosmetic: { color: '#1FA2FF', label: 'Profile Cosmetics', icon: '🎨' },
+          social:   { color: '#EC4899', label: 'Social Flair',      icon: '💬' },
+          lore:     { color: '#F59E0B', label: 'Lore Unlocks',      icon: '📜' },
+          access:   { color: '#7C3AED', label: 'Exclusive Access',  icon: '🔑' },
+          boost:    { color: '#10B981', label: 'Boost Items',       icon: '⚡' }
+        };
+        const CATEGORY_ORDER = ['cosmetic','social','lore','access','boost'];
         const balance = _currentMember ? (_currentMember.points || 0) : 0;
 
-        gridEl.innerHTML = items.map(item => {
-          const owned       = ownedIds.has(item.id);
-          const affordable  = balance >= item.cost;
-          const cat         = item.category || 'cosmetic';
-          const catColor    = CATEGORY_COLORS[cat] || '#888';
-          const btnLabel    = owned ? 'Owned' : (affordable ? 'Redeem' : 'Not enough points');
-          const btnDisabled = owned || !affordable;
+        // Group items by category
+        var grouped = {};
+        items.forEach(function (item) {
+          var cat = item.category || 'cosmetic';
+          if (!grouped[cat]) grouped[cat] = [];
+          grouped[cat].push(item);
+        });
 
-          return `<div style="background:rgba(255,255,255,0.03);border:1px solid ${owned ? 'rgba(255,196,0,0.25)' : 'rgba(255,255,255,0.08)'};border-radius:14px;padding:1.1rem 1.2rem;display:flex;flex-direction:column;gap:0.65rem;">
-            <div style="display:flex;align-items:flex-start;gap:0.75rem;">
-              <span style="font-size:1.6rem;flex-shrink:0;line-height:1;">${escHtml(item.icon || '🏆')}</span>
-              <div style="flex:1;min-width:0;">
-                <div style="font-size:0.6rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:${catColor};margin-bottom:0.2rem;">${escHtml(cat)}</div>
-                <div style="font-size:0.95rem;font-weight:800;color:#fff;line-height:1.3;">${escHtml(item.name)}</div>
-              </div>
-              ${owned ? '<span style="font-size:0.65rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--gold);flex-shrink:0;margin-top:0.15rem;">✓ Owned</span>' : ''}
-            </div>
-            <div style="font-size:0.8rem;color:var(--muted);line-height:1.5;">${escHtml(item.description)}</div>
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:0.5rem;margin-top:auto;">
-              <span style="font-size:1rem;font-weight:800;color:var(--gold);">${item.cost.toLocaleString()} pts</span>
-              <button type="button"
-                onclick="buyTreasuryItem('${escHtml(item.id)}','${escHtml(item.name)}',${item.cost})"
-                ${btnDisabled ? 'disabled' : ''}
-                style="height:34px;padding:0 1rem;border-radius:8px;font-size:0.8rem;font-weight:700;font-family:inherit;cursor:${btnDisabled ? 'not-allowed' : 'pointer'};border:1px solid ${owned ? 'rgba(255,196,0,0.3)' : (affordable ? 'rgba(31,162,255,0.4)' : 'rgba(255,255,255,0.1)')};background:${owned ? 'rgba(255,196,0,0.08)' : (affordable ? 'rgba(31,162,255,0.12)' : 'rgba(255,255,255,0.04)')};color:${owned ? 'var(--gold)' : (affordable ? '#1FA2FF' : 'var(--dim)')};transition:background 0.18s,border-color 0.18s;"
-              >${escHtml(btnLabel)}</button>
-            </div>
-          </div>`;
-        }).join('');
+        var html = '';
+        CATEGORY_ORDER.forEach(function (cat) {
+          var catItems = grouped[cat];
+          if (!catItems || catItems.length === 0) return;
+          var meta = CATEGORY_META[cat] || { color: '#888', label: cat, icon: '🏆' };
+
+          html += '<div class="treasury-section">';
+          html += '<h3 class="treasury-section-title" style="color:' + meta.color + ';">' + meta.icon + ' ' + meta.label + '</h3>';
+          html += '<div class="treasury-section-grid">';
+
+          catItems.forEach(function (item) {
+            var owned       = ownedIds.has(item.id);
+            var affordable  = balance >= item.cost;
+            var catColor    = meta.color;
+            var btnLabel    = owned ? 'Owned' : (affordable ? 'Redeem' : 'Not enough points');
+            var btnDisabled = owned || !affordable;
+
+            html += '<div class="treasury-card" style="border:1px solid ' + (owned ? 'rgba(255,196,0,0.25)' : 'rgba(255,255,255,0.08)') + ';">'
+              + '<div class="treasury-top">'
+              +   '<span class="treasury-icon-wrap">' + escHtml(item.icon || '🏆') + '</span>'
+              +   '<div class="treasury-info">'
+              +     '<div class="treasury-category" style="color:' + catColor + ';">' + escHtml(meta.label) + '</div>'
+              +     '<div class="treasury-name">' + escHtml(item.name) + '</div>'
+              +   '</div>'
+              +   (owned ? '<span class="treasury-owned-tag">✓ Owned</span>' : '')
+              + '</div>'
+              + '<div class="treasury-desc">' + escHtml(item.description) + '</div>'
+              + (item.min_rank_pts > 0 ? '<div style="color:' + catColor + ';opacity:0.7;font-size:0.75rem;margin-top:4px;">Requires ' + item.min_rank_pts.toLocaleString() + '+ rank pts</div>' : '')
+              + '<div class="treasury-footer">'
+              +   '<span class="treasury-cost">' + item.cost.toLocaleString() + ' pts</span>'
+              +   '<button type="button"'
+              +     ' onclick="buyTreasuryItem(\'' + escHtml(item.id) + '\',\'' + escHtml(item.name) + '\',' + item.cost + ')"'
+              +     (btnDisabled ? ' disabled' : '')
+              +     ' class="treasury-btn"'
+              +     ' style="cursor:' + (btnDisabled ? 'not-allowed' : 'pointer') + ';border:1px solid ' + (owned ? 'rgba(255,196,0,0.3)' : (affordable ? 'rgba(31,162,255,0.4)' : 'rgba(255,255,255,0.1)')) + ';background:' + (owned ? 'rgba(255,196,0,0.08)' : (affordable ? 'rgba(31,162,255,0.12)' : 'rgba(255,255,255,0.04)')) + ';color:' + (owned ? 'var(--gold)' : (affordable ? '#1FA2FF' : 'var(--dim)')) + ';"'
+              +   '>' + escHtml(btnLabel) + '</button>'
+              + '</div>'
+              + '</div>';
+          });
+
+          html += '</div></div>';
+        });
+
+        gridEl.innerHTML = html;
       } catch (err) {
         gridEl.innerHTML = '<p style="color:var(--dim);font-size:0.84rem;grid-column:1/-1;">Could not load treasury. Try again later.</p>';
       }
