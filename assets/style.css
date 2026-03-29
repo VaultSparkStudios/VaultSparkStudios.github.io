@@ -1278,3 +1278,42 @@ body.light-mode :focus-visible {
     animation: none;
   }
 }
+
+/* ── PWA Desktop Nav Bar (standalone mode only) ──────────────── */
+@media (display-mode: standalone) {
+  .pwa-nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10000;
+    display: flex;
+    gap: 2px;
+    padding: 4px 8px;
+    background: var(--bg-soft, #0b0d12);
+    border-bottom: 1px solid var(--line, rgba(255,255,255,0.08));
+    -webkit-app-region: drag;
+  }
+  .pwa-nav-btn {
+    -webkit-app-region: no-drag;
+    background: none;
+    border: none;
+    color: var(--dim, #96a0c0);
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    transition: background 0.15s, color 0.15s;
+  }
+  .pwa-nav-btn:hover {
+    background: rgba(255,255,255,0.07);
+    color: var(--text, #eef2ff);
+  }
+  .pwa-nav-btn:active {
+    background: rgba(255,255,255,0.12);
+  }
+  body {
+    padding-top: 38px;
+  }
+}

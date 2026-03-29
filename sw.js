@@ -22,6 +22,7 @@ const STATIC_ASSETS = [
   '/assets/countdown.js',
   '/assets/nav-toggle.js',
   '/assets/turnstile.js',
+  '/assets/pwa-nav.js',
   '/vault-member/portal.css',
   '/offline.html',
   '/404.html',
