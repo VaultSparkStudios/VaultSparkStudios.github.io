@@ -1,17 +1,32 @@
 # Latest Handoff
 
-Last updated: 2026-03-30
+Last updated: 2026-03-31
 
-Session Intent (2026-03-30 — Session 13): Fix the broken light mode and expand the shared theme system with curated alternates while keeping dark as the default.
+Session Intent (2026-03-31 — Session 14): Fix stale client delivery by busting the site service-worker cache and harden the public repo boundary by stripping operationally sensitive docs and generated local metadata.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
-## Where We Left Off (Session 13)
+## Where We Left Off (Session 14)
 
-- Shipped: 3 theme-system improvements — cascade fix, shared theme tokens, curated 7-preset picker
-- Tests: 1 passing syntax check (`node --check assets/theme-toggle.js`) · local served-preview browser verification passed for dark/light/cool/lava + persistence
-- Deploy: pending
+- Shipped: 4 repo/delivery hardening improvements — SW cache bust, public-safe stub replacement, generated metadata cleanup, handoff-path clarification
+- Tests: no new runtime tests; diagnosis was confirmed by the unchanged service-worker cache bucket and fixed directly in `sw.js`
+- Deploy: pushed to `main` (`a2eccde`)
+
+---
+
+## What was completed (as of 2026-03-31 — Session 14)
+
+### Session 14 — Delivery Fix + Public Repo Boundary Cleanup (2026-03-31)
+
+**Shipped:**
+- `sw.js`: cache name bumped and `assets/theme-toggle.js` added to `STATIC_ASSETS`, fixing stale client delivery of the previous shell/theme code
+- `LATEST_HANDOFF.md`: replaced legacy internal handoff content with a public-safe compatibility pointer to `context/LATEST_HANDOFF.md`
+- `IOS_SHORTCUT_STUDIO_PULSE.md`: replaced privileged shortcut setup steps with a public-safe note pointing operators to private studio docs
+- `supabase/.temp/*`: generated local metadata removed from version control; `.gitignore` now ignores `supabase/.temp/`
+- `CLAUDE.md`: clarified that `context/LATEST_HANDOFF.md` is the authoritative handoff file
+
+**Also:** local-only `.claude/settings.local.json` and `DebugLog1.txt` were preserved and kept out of commits.
 
 ---
 

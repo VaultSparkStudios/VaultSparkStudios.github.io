@@ -28,5 +28,5 @@ Do NOT ask "what would you like to work on" — execute the prompt.
 ## Key rules
 
 - Never edit prior entries in DECISIONS.md, SELF_IMPROVEMENT_LOOP.md, or CREATIVE_DIRECTION_RECORD.md — append only
-- LATEST_HANDOFF.md is the authoritative handoff source
+- `context/LATEST_HANDOFF.md` is the authoritative handoff source
 - context/PROJECT_STATUS.json must stay current — Studio Hub reads it via GitHub API

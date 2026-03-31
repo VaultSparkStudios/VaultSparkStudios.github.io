@@ -4,6 +4,28 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-31 — Session 14: SW cache bust + public-repo boundary cleanup
+
+- Goal: Fix stale client delivery after the theme deploy and remove operationally sensitive or generated local-only material from the public repo surface
+- What changed:
+  - `sw.js`: cache bucket bumped and `assets/theme-toggle.js` added to the precache list so clients pick up the latest shell/theme assets
+  - `LATEST_HANDOFF.md`: replaced with a public-safe compatibility pointer to `context/LATEST_HANDOFF.md`
+  - `IOS_SHORTCUT_STUDIO_PULSE.md`: replaced privileged iPhone shortcut instructions with a public-safe stub that points operators to private studio docs
+  - `supabase/.temp/`: tracked generated metadata removed from version control; `.gitignore` updated to ignore the directory going forward
+  - `CLAUDE.md`: clarified the authoritative handoff path
+  - Studio OS write-back: CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, DECISIONS, SELF_IMPROVEMENT_LOOP, PROJECT_STATUS, and CREATIVE_DIRECTION_RECORD updated
+- Verification:
+  - manual diagnosis of stale-service-worker cause via unchanged `CACHE_NAME` in `sw.js`
+  - public repo scan for secret-adjacent/internal docs and generated metadata
+- Risks created or removed:
+  - Removed: public repo no longer exposes the old internal handoff content or privileged shortcut setup workflow
+  - Removed: generated Supabase local metadata no longer ships in version control
+  - Remaining: other internal docs may still warrant a boundary review over time
+- Session intent outcome: Achieved — stale shell delivery was addressed and the public repo boundary is materially cleaner
+- Recommended next move: run a broader public/private boundary sweep on remaining legacy root docs and secret-adjacent operational notes
+
+---
+
 ### 2026-03-30 — Session 13: light-mode fix + shared theme expansion
 
 - Goal: Repair the broken light mode and expand the shared site shell into a curated multi-theme system while keeping dark as the default

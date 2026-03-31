@@ -67,3 +67,14 @@ Append new entries. Do not erase historical reasoning unless it is wrong.
 - Alternatives considered: Only patch light mode and keep the binary toggle, add many page-local theme overrides, or expose an uncurated larger theme list
 - Why this was chosen: Fixes the regression at the root, keeps theme logic centralized, and gives the user requested variety without diluting the site’s dark-first identity.
 - Follow-up: Add browser-level persistence coverage and move remaining page-specific dark inline surfaces onto shared theme tokens where appropriate.
+
+---
+
+### 2026-03-31 — Public website repo should keep only public-safe operational docs
+
+- Status: Active
+- Context: A public scan surfaced legacy root-level docs and generated local Supabase metadata that were not live secrets, but still exposed internal operating detail or environment-specific local state.
+- Decision: Keep compatibility filenames where needed, but reduce them to public-safe stubs/pointers and remove generated local metadata (`supabase/.temp/`) from version control.
+- Alternatives considered: Leave the files as-is, delete them outright, or move the entire operational history into a private repo in one large pass
+- Why this was chosen: It improves public repo hygiene immediately without breaking references or requiring a large repo restructure in one session.
+- Follow-up: Continue a public/private boundary audit on remaining legacy root docs and secret-adjacent operator notes.

@@ -8,6 +8,7 @@
 
 ## Next (Pending External Action)
 
+- [SIL] Public/private boundary audit — sweep remaining root docs and generated metadata for public-safety, then move or sanitize anything operationally sensitive [Score: 7.7]
 - [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Score: 7.9]
 - [SIL] Theme surface parity audit — move remaining page-specific dark surfaces onto shared theme tokens across homepage + portal [Score: 7.3]
 - Execute `docs/ACTIVATION_RUNBOOK.md` — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification [Score: 9.6]
@@ -86,6 +87,13 @@
 - [ ] Community-created lore submissions [4.5]
 - [ ] "Currently playing" badge on member profile [4.5] (note: already exists as of Phase 42)
 - [ ] Vault social graph (member connections) [4.8] — now CODED as full follow system (session 5, phase 49)
+
+## Completed — Session 14 (2026-03-31)
+
+- ✅ Service worker cache bust — `sw.js` cache name advanced and `assets/theme-toggle.js` added to precache so the latest site shell/theme picker actually ships to clients
+- ✅ Public-repo boundary cleanup — root `LATEST_HANDOFF.md` and `IOS_SHORTCUT_STUDIO_PULSE.md` replaced with public-safe stubs instead of internal operational detail
+- ✅ Generated metadata cleanup — tracked `supabase/.temp/` files removed from version control and ignored going forward
+- ✅ CLAUDE handoff clarification — root instructions now point explicitly to `context/LATEST_HANDOFF.md` as the authoritative handoff source
 
 ## Completed — Session 13 (2026-03-30)
 

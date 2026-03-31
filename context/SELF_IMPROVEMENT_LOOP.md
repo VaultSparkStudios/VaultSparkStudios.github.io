@@ -41,15 +41,43 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▇▆▇
-Avgs — 3: 40.7 | 5: 40.4 | 10: 38.8 | 25: 38.0 [N=12] | all: 38.0
-  └ 3-session: Dev 9.7 | Align 8.3 | Momentum 9.0 | Engage 3.3 | Process 10.0
+Sparkline (last 5 totals): ▆▇▆▇▇
+Avgs — 3: 41.0 | 5: 40.6 | 10: 39.2 | 25: 38.2 [N=13] | all: 38.2
+  └ 3-session: Dev 9.0 | Align 8.7 | Momentum 9.0 | Engage 4.0 | Process 10.0
 Velocity trend: →  |  Protocol velocity: ↑  |  Debt: →
-Last session: 2026-03-30 | Session 13 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7
+Last session: 2026-03-31 | Session 14 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-03-31 — Session 14 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7 | Debt: →
+Avgs — 3: 41.0 | 5: 40.6 | 10: 39.2 | 25: 38.2 [N=13] | all: 38.2
+  └ 3-session: Dev 9.0 | Align 8.7 | Momentum 9.0 | Engage 4.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 8 | ↓ | No new product code depth landed, but stale client delivery was fixed and generated repo noise was removed |
+| Creative Alignment | 9 | → | Cleanup preserved the dark-first visual identity while making the public repo more intentional |
+| Momentum | 9 | → | Fast follow-through: diagnosis, fix, push, and boundary cleanup all completed in one session |
+| Engagement | 4 | → | No direct feature lift, but clients should now actually receive the newest site shell |
+| Process Quality | 10 | → | Strong repo hygiene improvement plus full write-back and CDR coverage |
+| **Total** | **41/50** | → | Holds the current peak with cleaner operational boundaries |
+
+**Top win:** The stale-service-worker issue was resolved at the root, and the public repo no longer carries the old internal handoff or privileged shortcut setup detail.
+**Top gap:** A broader public/private boundary sweep is still worthwhile because other legacy root docs may expose more operational detail than the public website repo needs.
+**Intent outcome:** Achieved — deployment delivery was fixed and the public repo boundary is materially safer.
+
+**IGNIS note:** Public-repo safety problems are often about unnecessary operator detail, not just leaked keys; stubbing and relocating privileged workflows can be the correct fix even when no secret string is present.
+
+**Brainstorm**
+1. Public/private boundary audit — inventory remaining root docs and operator notes, classify each as public-safe vs private-only, and migrate the private-only set; start with `HANDOFF_PHASE6.md` and similar legacy operational files; Execution probability: High
+2. Secret-adjacent docs lint rule — add a repo check for files mentioning `service_role`, `STRIPE_SECRET_KEY`, or similar patterns outside approved paths; start with a lightweight grep-based CI guard; Execution probability: Medium
+3. Service worker release note indicator — show a lightweight “site updated” prompt when a new SW takes control so users know to refresh; start by listening for `controllerchange`; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Public/private boundary audit
+
+---
 
 ## 2026-03-30 — Session 13 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7 | Debt: →
 Avgs — 3: 40.7 | 5: 40.4 | 10: 38.8 | 25: 38.0 [N=12] | all: 38.0

@@ -2,13 +2,15 @@
 
 ## Snapshot
 
-- Date: 2026-03-30
+- Date: 2026-03-31
 - Overall status: Live and active
-- Current phase: Session 13 complete (2026-03-30) — light-mode fix + shared multi-theme system expansion
+- Current phase: Session 14 complete (2026-03-31) — service-worker cache bust + public-repo boundary cleanup
 
 ## What exists
 
 - systems:
+  - Public repo hygiene: root `LATEST_HANDOFF.md` and `IOS_SHORTCUT_STUDIO_PULSE.md` are now public-safe compatibility stubs; operationally sensitive setup detail was removed from the public repo
+  - Generated local metadata cleanup: `supabase/.temp/` removed from version control and ignored going forward
   - Studio OS portfolio metadata: `context/PORTFOLIO_CARD.md` added for Studio Hub / founder-readable status at a glance
   - Activation runbook: `docs/ACTIVATION_RUNBOOK.md` now defines the exact external sequence for Cloudflare proxy, auth hardening, VAPID, newsletter secrets, and search verification
   - Authenticated Playwright portal coverage: env-gated Supabase session seeding for dashboard, challenges pane, and onboarding modal scans

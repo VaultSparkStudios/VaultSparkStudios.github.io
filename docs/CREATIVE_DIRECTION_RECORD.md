@@ -91,3 +91,15 @@ Agents MUST NOT modify or remove existing entries.
 - New required direction: Keep dark as the preferred default theme, fix light mode, and expand the picker to include ambient, warm, cool, lava, and high-contrast options
 - Why it matters: Preserves the project’s darker core identity while adding curated alternates that feel intentional rather than generic
 - Supersedes prior entry: —
+
+---
+
+### 2026-03-31 — Public repo boundary cleanup
+
+- Category: Assignment + Approval
+- Human input: "do what is best"
+- Area affected: Public repository safety, operational documentation exposure
+- Previous state: Public repo still contained a legacy root handoff file with internal setup/process detail and a privileged shortcut workflow document; generated `supabase/.temp/` metadata was tracked
+- New required direction: Sanitize public-facing internal docs into safe stubs/pointers and remove generated local metadata from version control
+- Why it matters: Keeps the website repo publicly shareable without carrying unnecessary operator-facing detail
+- Supersedes prior entry: —
