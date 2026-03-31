@@ -121,14 +121,17 @@
       async savePrefs() {
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) return;
-        const prefs = {
+        const prefs = Object.assign({}, (_currentMember && _currentMember.prefs) || {}, {
           updates: document.getElementById('toggle-updates')?.checked ?? true,
           lore:    document.getElementById('toggle-lore')?.checked    ?? true,
           access:  document.getElementById('toggle-access')?.checked  ?? true,
-        };
+        });
         await VSSupabase.from('vault_members')
           .update({ prefs, subscribed: prefs.updates })
           .eq('id', session.user.id);
+        if (_currentMember) {
+          _currentMember.prefs = prefs;
+        }
         if (session.user.email && typeof VaultKit !== 'undefined') {
           VaultKit.syncPreferences(session.user.email, {
             'studio-updates':     prefs.updates,

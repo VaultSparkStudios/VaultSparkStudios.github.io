@@ -35,7 +35,7 @@
       font-size: 1.45rem;
       letter-spacing: -0.03em;
       margin: 2.4rem 0 0.7rem;
-      color: #fff;
+      color: var(--text);
     }
     .policy-body h3 {
       font-size: 1rem;
@@ -150,9 +150,9 @@
       <div class="container">
         <div class="policy-body">
 
-          <span class="policy-updated">Last updated: March 2026</span>
+          <span class="policy-updated">Last updated: March 31, 2026</span>
 
-          <p>This page covers how VaultSpark Studios collects, uses, and protects information when you visit <strong>vaultsparkstudios.com</strong> or interact with any VaultSpark service. It also contains our trademark and copyright notices.</p>
+          <p>This page covers how VaultSpark Studios collects, uses, stores, and protects information when you visit <strong>vaultsparkstudios.com</strong> or interact with a VaultSpark service. It also explains our copyright, trademark, fan-content, and reporting notices so there is no implied license to reuse VaultSpark material without permission.</p>
 
           <!-- ── Privacy Policy ── -->
           <h2>Privacy Policy</h2>
@@ -163,14 +163,20 @@
           <h3>Information We Collect</h3>
           <p>We collect information in the following ways:</p>
           <ul>
-            <li><strong>Email address</strong> — when you voluntarily subscribe to Vault Dispatch, register a Vault Member account, or submit a contact form. This is always opt-in.</li>
-            <li><strong>Account data</strong> — if you create a Vault Member account, your username and preferences are stored locally in your browser's <code>localStorage</code>. This data does not leave your device to any VaultSpark server at this time.</li>
-            <li><strong>Usage data</strong> — anonymous analytics data (page views, session duration, browser type, approximate location) collected by Google Analytics. This data is aggregated and does not personally identify you.</li>
-            <li><strong>Contact messages</strong> — if you use the contact form, your name, email, subject, and message are transmitted directly to our email via your email client. We store and use this solely to respond to your inquiry.</li>
+            <li><strong>Email address and contact details</strong> — when you subscribe to Vault Dispatch, register a Vault Member account, request support, or contact the studio.</li>
+            <li><strong>Vault Member account data</strong> — username, member number, profile details, newsletter preferences, rank/points-related activity, and account settings stored in our managed backend.</li>
+            <li><strong>Device-stored preferences</strong> — UI settings such as your chosen site theme, card theme, consent state, and session helpers stored in browser storage so the site remembers your setup on that device.</li>
+            <li><strong>Usage and diagnostic data</strong> — page views, session flow, browser/device information, approximate location, referrer data, and basic operational diagnostics collected through analytics and platform logs.</li>
+            <li><strong>Security and anti-abuse signals</strong> — login/session metadata, rate-limit or abuse-prevention events, and challenge/verification status used to protect accounts and site integrity.</li>
+            <li><strong>Contact messages</strong> — if you use the contact flow, your message contents and reply details are used solely to respond and maintain the conversation record.</li>
           </ul>
 
-          <h3>Newsletter &amp; Email (Kit / ConvertKit)</h3>
-          <p>Vault Dispatch is powered by Kit (formerly ConvertKit). When you subscribe, your email address is stored with Kit under VaultSpark Studios' account. Kit's privacy policy is available at <a href="https://kit.com/privacy" target="_blank" rel="noreferrer">kit.com/privacy</a>.</p>
+          <h3>Vault Member Accounts &amp; Preferences</h3>
+          <p>Vault Member accounts are handled through our authentication and database stack. When you sign up, sign in, or use account features, your account record is stored in our backend and certain convenience data is also stored locally in your browser to keep you signed in and preserve personal settings.</p>
+          <p>If you choose a site theme while signed into a Vault Member account, that preference may be stored both on the device you are using and in your account preferences so it can follow you to other devices when appropriate.</p>
+
+          <h3>Newsletter &amp; Email Providers</h3>
+          <p>Vault Dispatch and member email flows may be processed through third-party email service providers used by VaultSpark Studios, including Kit and operational delivery vendors such as Resend. Those providers act only as delivery infrastructure for studio communications.</p>
           <p>We use your email to send:</p>
           <ul>
             <li>Studio updates, game launches, and announcements</li>
@@ -193,21 +199,30 @@
           <p>VaultSpark Studios uses the following cookies:</p>
           <ul>
             <li><strong>Google Analytics cookies</strong> (e.g., <code>_ga</code>, <code>_ga_*</code>) — used for analytics as described above. These are first-party cookies set by Google Analytics scripts on our domain.</li>
-            <li><strong>localStorage</strong> — your browser's <code>localStorage</code> (not a traditional cookie) is used to store your Vault Member account session and any Vault Dispatch subscription preferences set on the site. This data stays in your browser and is never transmitted to our servers.</li>
+            <li><strong>Browser storage</strong> — <code>localStorage</code> and related browser storage are used for session continuity, theme preferences such as <code>vs_theme</code>, consent state, and other UX settings. Some of those settings may also be synced to your account if you are signed in.</li>
+            <li><strong>Security or verification tokens</strong> — challenge and session-related storage may be used to help prevent abuse, spam, or unauthorized access.</li>
           </ul>
           <p>We do not use advertising cookies, tracking pixels from third-party ad networks, or behavioural targeting technology.</p>
 
           <h3>How We Use Your Information</h3>
           <ul>
             <li>To send newsletters and updates you opted into</li>
+            <li>To create and operate Vault Member accounts, rankings, and profile settings</li>
+            <li>To remember your chosen experience, including theme and account preferences</li>
             <li>To respond to contact form submissions and inquiries</li>
-            <li>To improve the site through aggregate, anonymous analytics</li>
-            <li>To provide the Vault Member account experience stored in your browser</li>
+            <li>To improve the site through aggregate analytics, testing, and product decisions</li>
+            <li>To detect abuse, protect accounts, and maintain platform reliability</li>
           </ul>
           <p>We do not sell, rent, or share your personal information with third parties for marketing purposes.</p>
 
+          <h3>Service Providers</h3>
+          <p>We rely on third-party infrastructure providers to run parts of the Service, including hosting, analytics, authentication/database services, email delivery, and payment or anti-abuse tooling where relevant. These providers may process data on our behalf only to deliver the services we use.</p>
+
           <h3>Data Retention</h3>
-          <p>Email subscriber data is retained in Kit as long as you remain subscribed. Contact form messages are retained in our email inbox for as long as necessary to respond and maintain correspondence records. Google Analytics data is retained for 26 months per Google's default settings.</p>
+          <p>Email subscriber data is retained while you remain subscribed or until deletion is requested. Vault Member account data is retained for as long as your account remains active and for a reasonable period afterward for security, backup, legal, or abuse-prevention needs. Browser-stored preferences remain on your device until you clear them or they are overwritten. Contact messages are retained as long as needed to respond and maintain correspondence records. Analytics data is retained according to the settings of the tools we use.</p>
+
+          <h3>Security</h3>
+          <p>We take reasonable technical and organizational measures to protect the information we process, but no internet service can guarantee absolute security. You are responsible for maintaining the security of your own devices, browser, and account credentials.</p>
 
           <h3>Your Rights</h3>
           <p>Depending on your location, you may have rights including:</p>
@@ -226,6 +241,9 @@
           <h3>Third-Party Links</h3>
           <p>The VaultSpark Studios website contains links to external platforms (GitHub, YouTube, Discord, etc.). We are not responsible for the privacy practices of those platforms. Please review their respective privacy policies.</p>
 
+          <h3>International Use</h3>
+          <p>VaultSpark Studios operates from the United States. If you access the Service from another region, you understand that your information may be processed in jurisdictions that may not provide the same privacy protections as your home jurisdiction.</p>
+
           <h3>Changes to This Policy</h3>
           <p>We may update this privacy policy from time to time. The "Last updated" date at the top of this page reflects the most recent revision. Continued use of the site after changes constitutes acceptance of the updated policy.</p>
 
@@ -236,7 +254,7 @@
 
           <h3>Copyright Notice</h3>
           <p>© 2026 VaultSpark Studios. All rights reserved.</p>
-          <p>All content on this website — including but not limited to text, images, graphics, videos, game concepts, characters, logos, UI design, brand assets, and written copy — is the original creative work of VaultSpark Studios and is protected by applicable copyright law. Reproduction, redistribution, or use of any content without prior written consent from VaultSpark Studios is prohibited.</p>
+          <p>All content on this website — including but not limited to text, images, graphics, videos, game concepts, characters, logos, UI design, brand assets, code excerpts, audio, and written copy — is the original creative work of VaultSpark Studios or is used under permission and is protected by applicable copyright law. Reproduction, redistribution, adaptation, training use, scraping for republication, or commercial exploitation without prior written consent from VaultSpark Studios is prohibited.</p>
 
           <h3>Trademark Notice</h3>
           <p>The following are trademarks or service marks of VaultSpark Studios:</p>
@@ -252,10 +270,10 @@
             <li><strong>VaultFront™</strong> — game title and brand</li>
             <li><strong>Solara™</strong> — game title and brand</li>
           </ul>
-          <p>Unauthorized use of these marks in connection with any product or service in a manner likely to cause confusion, or in any manner that disparages VaultSpark Studios, is prohibited.</p>
+          <p>Unauthorized use of these marks in connection with any product or service in a manner likely to cause confusion, imply endorsement, or disparage VaultSpark Studios is prohibited. Nothing on this website grants you a license to use VaultSpark names, logos, taglines, lore, or character identities except as expressly allowed in writing.</p>
 
           <h3>Fan Content</h3>
-          <p>VaultSpark Studios welcomes fan art, fan communities, and fan-created content made out of genuine love for the brand. Fan content is permitted for personal, non-commercial use provided it is clearly identified as fan-made and does not misrepresent official studio positions. Commercial use of VaultSpark intellectual property requires written permission.</p>
+          <p>VaultSpark Studios welcomes fan art, fan communities, and fan-created content made out of genuine love for the brand. Fan content is permitted for personal, non-commercial use provided it is clearly identified as fan-made, does not copy paid or gated assets wholesale, and does not misrepresent official studio positions. Commercial use of VaultSpark intellectual property requires written permission.</p>
 
           <h3>DMCA</h3>
           <p>If you believe content on this site infringes your copyright, please send a notice to <a href="mailto:founder@vaultsparkstudios.com">founder@vaultsparkstudios.com</a> with the subject line "DMCA Notice" including: a description of the copyrighted work, a link to where the infringing content appears on our site, your contact information, and a statement of good faith belief that the use is not authorized.</p>

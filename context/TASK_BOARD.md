@@ -10,7 +10,9 @@
 
 - [SIL] Public/private boundary audit — sweep remaining root docs and generated metadata for public-safety, then move or sanitize anything operationally sensitive [Score: 7.7]
 - [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Score: 7.9]
+- [SIL] Account-backed theme sync verification — verify local-vs-account precedence, portal sign-in restore, and cross-device hydration for `prefs.site_theme` [Score: 8.1]
 - [SIL] Theme surface parity audit — continue moving remaining page-specific dark surfaces onto shared theme tokens across portal and secondary pages [Score: 7.3]
+- [SIL] Legal copy consistency audit — align footer/legal/press language around IP, fan-content, and data-handling claims after the privacy-policy expansion [Score: 6.8]
 - Execute `docs/ACTIVATION_RUNBOOK.md` — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification [Score: 9.6]
 - [SIL] Activation verification pass after external setup — rerun auth, push, headers, sitemap, and newsletter checks once the runbook is complete [Score: 8.9]
 - [SIL] Shared rank-threshold source audit — reduce future drift across UI, scripts, functions, and migrations [Score: 7.4]
@@ -87,6 +89,13 @@
 - [ ] Community-created lore submissions [4.5]
 - [ ] "Currently playing" badge on member profile [4.5] (note: already exists as of Phase 42)
 - [ ] Vault social graph (member connections) [4.8] — now CODED as full follow system (session 5, phase 49)
+
+## Completed — Session 16 (2026-03-31)
+
+- ✅ Account-backed theme persistence — `assets/theme-toggle.js` now saves `vs_theme` locally, hydrates from `vault_members.prefs.site_theme`, and syncs signed-in changes back to the member record
+- ✅ Vault Member prefs preservation — portal preference saves now merge existing `prefs` data instead of overwriting account-backed theme settings
+- ✅ Signal Log layout/UI fix — `/journal/` filter row now spans the grid correctly, entries stay in the main column, and cards/sidebar/share controls now follow shared theme tokens
+- ✅ Privacy / rights notice expansion — `/privacy/` and `/terms/` now describe real account storage, browser-stored preferences, IP/fan-content boundaries, and use theme-aware legal-page headers
 
 ## Completed — Session 14 (2026-03-31)
 

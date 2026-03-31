@@ -4,6 +4,31 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-31 — Session 16: theme/account sync + Signal Log repair + legal expansion
+
+- Goal: Persist theme choice per device and per Vault Member account, repair the Signal Log layout/theme issues, and strengthen public-facing privacy/IP notices
+- What changed:
+  - `assets/theme-toggle.js`: local `vs_theme` persistence now syncs to `vault_members.prefs.site_theme` for signed-in members; theme-color meta now updates with the active preset
+  - `vault-member/index.html`: shared theme picker script now loads in the member portal
+  - `vault-member/portal-core.js` + `vault-member/portal.js`: settings/newsletter saves now merge `prefs` instead of overwriting them, preserving stored site-theme data
+  - `journal/index.html`: fixed the misplaced filter row/grid behavior; moved cards/sidebar/share controls onto theme-aware surfaces; added reusable share-chip copy handling
+  - `privacy/index.html` + `terms/index.html`: privacy copy expanded to reflect real account/browser storage and stronger rights/fan-content language; legal headers now follow theme text colors
+- Verification:
+  - `node --check assets/theme-toggle.js`
+  - `node --check vault-member/portal-core.js`
+  - `node --check vault-member/portal.js`
+  - static sweeps confirmed the old inline Signal Log share/copy pattern was removed
+  - browser render helper referenced in prior tooling was not present in this checkout, so no automated browser render run was available
+- Risks created or removed:
+  - Removed: signed-in theme choices are no longer device-only
+  - Removed: portal preference saves no longer risk wiping account-backed theme data
+  - Removed: `/journal/` no longer misplaces entries into the wrong grid column in desktop layout
+  - Remaining: authenticated/browser-level verification for account-backed theme sync should still be added
+- Session intent outcome: Achieved — theme persistence, Signal Log repair, and legal/privacy expansion all landed
+- Recommended next move: add browser-level tests for theme/account precedence and continue secondary-page theme parity passes
+
+---
+
 ### 2026-03-31 — Session 15: homepage theme surface parity
 
 - Goal: Fix the remaining homepage cards that were still hardcoded dark so the visible hero/feature surfaces follow the active theme

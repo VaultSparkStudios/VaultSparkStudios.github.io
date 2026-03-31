@@ -69,19 +69,29 @@
 
     .journal-layout {
       display: grid;
-      grid-template-columns: 1fr 300px;
+      grid-template-columns: minmax(0, 1fr) 300px;
       gap: 2.5rem;
       align-items: start;
       padding-bottom: 5rem;
     }
-    .journal-entries { display: flex; flex-direction: column; gap: 1.5rem; }
+    .journal-entries { display: flex; flex-direction: column; gap: 1.5rem; min-width: 0; }
 
     .entry {
+      position: relative;
+      overflow: hidden;
       padding: 2rem 2.2rem;
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
-      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--panel-strong);
+      border: 1px solid var(--line);
       box-shadow: var(--shadow);
+    }
+    .entry::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(255,196,0,0.45), rgba(31,162,255,0.25), transparent 78%);
+      pointer-events: none;
     }
     .entry-meta {
       display: flex;
@@ -105,7 +115,7 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
       background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid var(--line);
       color: var(--muted);
     }
     .entry h2 {
@@ -115,18 +125,36 @@
       margin-bottom: 1rem;
       line-height: 1.15;
     }
+    .entry-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.18s ease;
+    }
+    .entry-link:hover { color: var(--gold); }
     .entry-body { color: var(--muted); font-size: 0.97rem; line-height: 1.8; }
     .entry-body p { margin-bottom: 1rem; }
     .entry-body p:last-child { margin-bottom: 0; }
     .entry-body strong { color: var(--text); }
-    .entry-divider { height: 1px; background: rgba(255,255,255,0.06); margin: 1.2rem 0; }
+    .entry-divider { height: 1px; background: var(--line); margin: 1.2rem 0; }
+    .entry-readtime,
+    .entry-note {
+      color: var(--dim);
+      font-size: 0.87rem;
+    }
 
-    .journal-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+    .journal-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      position: sticky;
+      top: 6.25rem;
+    }
     .sidebar-block {
       padding: 1.4rem;
       border-radius: 20px;
-      background: rgba(13,17,28,0.9);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
     }
     .sidebar-block h3 {
       font-size: 0.75rem;
@@ -141,17 +169,50 @@
       align-items: center;
       gap: 0.6rem;
       padding: 0.55rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid var(--line);
       font-size: 0.88rem;
       color: var(--muted);
-      transition: color 0.18s;
+      transition: color 0.18s, transform 0.18s;
     }
     .archive-link:last-child { border-bottom: none; }
-    .archive-link:hover { color: var(--text); }
+    .archive-link:hover { color: var(--text); transform: translateX(2px); }
     .archive-link span { flex: 1; }
     .archive-link small { font-size: 0.75rem; color: var(--dim); }
+    .sidebar-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 0.9rem;
+    }
+    .sidebar-tag-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+    .sidebar-tag-cloud span {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .upcoming-title {
+      font-size: 0.84rem;
+      color: var(--text);
+      font-weight: 600;
+      line-height: 1.3;
+    }
 
-    @media (max-width: 900px) { .journal-layout { grid-template-columns: 1fr; } }
+    @media (max-width: 900px) {
+      .journal-layout { grid-template-columns: 1fr; }
+      .journal-sidebar { position: static; }
+    }
     @media (max-width: 640px) {
       .entry { padding: 1.4rem; }
       .entry-meta { flex-wrap: wrap; gap: 0.5rem; }
@@ -171,8 +232,19 @@
     .pin-badge { display:inline-flex; align-items:center; gap:0.3rem; padding:0.22rem 0.55rem; border-radius:999px; font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; background:rgba(255,196,0,0.12); border:1px solid rgba(255,196,0,0.3); color:var(--gold); }
 
     /* Tag filter pills */
-    .tag-filter-row { display:flex; gap:0.45rem; flex-wrap:wrap; margin-bottom:1.5rem; }
-    .tag-filter-btn { padding:0.3rem 0.75rem; border-radius:999px; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); color:var(--muted); cursor:pointer; font-family:inherit; transition:all 0.15s; }
+    .tag-filter-row {
+      grid-column: 1 / -1;
+      display:flex;
+      gap:0.45rem;
+      flex-wrap:wrap;
+      margin-bottom:0.25rem;
+      padding:0.85rem;
+      border-radius:20px;
+      background:var(--panel);
+      border:1px solid var(--line);
+      box-shadow:var(--shadow);
+    }
+    .tag-filter-btn { padding:0.3rem 0.75rem; border-radius:999px; font-size:0.75rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; background:transparent; border:1px solid var(--line); color:var(--muted); cursor:pointer; font-family:inherit; transition:all 0.15s; }
     .tag-filter-btn:hover { border-color:rgba(255,196,0,0.35); color:var(--text); }
     .tag-filter-btn.active { background:rgba(255,196,0,0.12); border-color:rgba(255,196,0,0.4); color:var(--gold); }
 
@@ -180,14 +252,37 @@
     .entry.hidden { display:none; }
 
     /* Reaction row */
-    .reaction-row { display:flex; align-items:center; gap:0.5rem; flex-wrap:wrap; margin-top:1.25rem; padding-top:1rem; border-top:1px solid rgba(255,255,255,0.06); }
-    .reaction-btn { display:inline-flex; align-items:center; gap:0.35rem; padding:0.35rem 0.85rem; border-radius:999px; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.04); color:var(--muted); font-family:inherit; font-size:0.82rem; font-weight:600; cursor:pointer; transition:all 0.15s; user-select:none; }
+    .share-row { display:flex; gap:0.75rem; flex-wrap:wrap; margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--line); }
+    .share-label { font-size:0.8rem; color:var(--dim); align-self:center; }
+    .share-chip {
+      display:inline-flex;
+      align-items:center;
+      gap:0.4rem;
+      padding:0.4rem 0.9rem;
+      border-radius:999px;
+      background:rgba(255,255,255,0.04);
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-family:inherit;
+      font-size:0.8rem;
+      text-decoration:none;
+      cursor:pointer;
+      transition:transform 0.15s, border-color 0.15s, color 0.15s, background 0.15s;
+    }
+    .share-chip:hover {
+      transform: translateY(-1px);
+      border-color: rgba(255,196,0,0.35);
+      background: rgba(255,196,0,0.06);
+      color: var(--text);
+    }
+    .reaction-row { display:flex; align-items:center; gap:0.65rem; flex-wrap:wrap; margin-top:1.25rem; padding-top:1rem; border-top:1px solid var(--line); }
+    .reaction-btn { display:inline-flex; align-items:center; gap:0.35rem; padding:0.35rem 0.85rem; border-radius:999px; border:1px solid var(--line); background:rgba(255,255,255,0.04); color:var(--muted); font-family:inherit; font-size:0.82rem; font-weight:600; cursor:pointer; transition:all 0.15s; user-select:none; }
     .reaction-btn:hover { border-color:rgba(255,196,0,0.4); background:rgba(255,196,0,0.07); color:var(--text); }
     .reaction-btn.reacted { border-color:rgba(255,196,0,0.5); background:rgba(255,196,0,0.12); color:var(--gold,#FFC400); }
     .reaction-btn .reaction-emoji { font-size:1rem; line-height:1; }
     .reaction-btn .reaction-count { min-width:1ch; }
     /* Journal toast */
-    .jrn-toast { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%) translateY(8px); background:rgba(30,35,55,0.97); border:1px solid rgba(255,255,255,0.15); color:var(--muted); font-size:0.85rem; font-weight:600; padding:0.55rem 1.3rem; border-radius:999px; opacity:0; transition:opacity 0.2s, transform 0.2s; pointer-events:none; z-index:9999; }
+    .jrn-toast { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%) translateY(8px); background:var(--panel-strong); border:1px solid var(--line); color:var(--text); font-size:0.85rem; font-weight:600; padding:0.55rem 1.3rem; border-radius:999px; opacity:0; transition:opacity 0.2s, transform 0.2s; pointer-events:none; z-index:9999; box-shadow:var(--shadow); }
     .jrn-toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
   </style>
 
@@ -271,11 +366,11 @@
               <div class="entry-meta">
                 <span class="pin-badge">📌 Pinned</span>
                 <span class="entry-date">March 2026</span>
-                <span style="font-size:0.78rem;color:var(--dim);">· 3 min read</span>
+                <span class="entry-readtime">· 3 min read</span>
                 <span class="entry-tag">Studio OS</span>
                 <span class="entry-tag">Site</span>
               </div>
-              <h2><a href="/journal/studio-os-public/" style="color:inherit;text-decoration:none;">We Made The System Visible</a></h2>
+              <h2><a class="entry-link" href="/journal/studio-os-public/">We Made The System Visible</a></h2>
               <div class="entry-body">
                 <p>
                   Most studios hide how they operate. We decided to show it.
@@ -299,17 +394,17 @@
                   the Signal Log (this page), a press kit, and a DreadSpike dedicated page. The site went from
                   a studio presence to a full operating web layer in a single session.
                 </p>
-                <p style="color:var(--dim);font-size:0.87rem;">
+                <p class="entry-note">
                   The backend — real cross-game accounts, live leaderboards, actual game data in the dashboard — is next.
                   The Studio OS already has the architecture planned. It's a matter of when, not whether.
                 </p>
               </div>
-              <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-size:0.8rem;color:var(--dim);align-self:center;">Share:</span>
-                <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/studio-os-public/&text=We+Made+The+System+Visible+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/studio-os-public/&text=We+Made+The+System+Visible+—+VaultSpark+Studios" target="_blank" rel="noopener">
                   𝕏 Share
                 </a>
-                <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/studio-os-public/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/studio-os-public/" onclick="copyJournalLink(this)">
                   Copy link
                 </button>
               </div>
@@ -325,18 +420,18 @@
             <article class="entry" id="nine-ranks-of-the-vault" data-tags="Studio,Community">
               <div class="entry-meta">
                 <span class="entry-date">March 2026</span>
-                <span style="font-size:0.78rem;color:var(--dim);">· 3 min read</span>
+                <span class="entry-readtime">· 3 min read</span>
                 <span class="entry-tag">Studio</span>
                 <span class="entry-tag">Community</span>
               </div>
-              <h2><a href="/journal/nine-ranks-of-the-vault/" style="color:inherit;text-decoration:none;">The Nine Ranks of the Vault</a></h2>
+              <h2><a class="entry-link" href="/journal/nine-ranks-of-the-vault/">The Nine Ranks of the Vault</a></h2>
               <div class="entry-body">
                 <p>From Spark to Archon — a dispatch on the nine-tier rank system inside VaultSpark's membership portal, how XP works, and what rising through the vault actually means.</p>
               </div>
-              <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-size:0.8rem;color:var(--dim);align-self:center;">Share:</span>
-                <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/nine-ranks-of-the-vault/&text=The+Nine+Ranks+of+the+Vault+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">𝕏 Share</a>
-                <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/nine-ranks-of-the-vault/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">Copy link</button>
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/nine-ranks-of-the-vault/&text=The+Nine+Ranks+of+the+Vault+—+VaultSpark+Studios" target="_blank" rel="noopener">𝕏 Share</a>
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/nine-ranks-of-the-vault/" onclick="copyJournalLink(this)">Copy link</button>
               </div>
               <div class="reaction-row" id="reactions-nine-ranks-of-the-vault" data-slug="nine-ranks-of-the-vault">
                 <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
@@ -350,18 +445,18 @@
             <article class="entry" id="roadmap-goes-public" data-tags="Studio,Site">
               <div class="entry-meta">
                 <span class="entry-date">March 2026</span>
-                <span style="font-size:0.78rem;color:var(--dim);">· 3 min read</span>
+                <span class="entry-readtime">· 3 min read</span>
                 <span class="entry-tag">Studio</span>
                 <span class="entry-tag">Site</span>
               </div>
-              <h2><a href="/journal/roadmap-goes-public/" style="color:inherit;text-decoration:none;">The Roadmap Is Public. Here's Why.</a></h2>
+              <h2><a class="entry-link" href="/journal/roadmap-goes-public/">The Roadmap Is Public. Here's Why.</a></h2>
               <div class="entry-body">
                 <p>Every project, every stage, every unreleased game — all visible on the Vault Pipeline. Why VaultSpark chose radical transparency over the traditional closed roadmap.</p>
               </div>
-              <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-size:0.8rem;color:var(--dim);align-self:center;">Share:</span>
-                <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/roadmap-goes-public/&text=The+Roadmap+Is+Public.+Here%27s+Why.+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">𝕏 Share</a>
-                <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/roadmap-goes-public/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">Copy link</button>
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/roadmap-goes-public/&text=The+Roadmap+Is+Public.+Here%27s+Why.+—+VaultSpark+Studios" target="_blank" rel="noopener">𝕏 Share</a>
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/roadmap-goes-public/" onclick="copyJournalLink(this)">Copy link</button>
               </div>
               <div class="reaction-row" id="reactions-roadmap-goes-public" data-slug="roadmap-goes-public">
                 <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
@@ -375,18 +470,18 @@
             <article class="entry" id="q1-2026-dispatch" data-tags="Studio,Launch">
               <div class="entry-meta">
                 <span class="entry-date">March 2026</span>
-                <span style="font-size:0.78rem;color:var(--dim);">· 4 min read</span>
+                <span class="entry-readtime">· 4 min read</span>
                 <span class="entry-tag">Studio</span>
                 <span class="entry-tag">Launch</span>
               </div>
-              <h2><a href="/journal/q1-2026-dispatch/" style="color:inherit;text-decoration:none;">Q1 2026: The Vault Accelerates</a></h2>
+              <h2><a class="entry-link" href="/journal/q1-2026-dispatch/">Q1 2026: The Vault Accelerates</a></h2>
               <div class="entry-body">
                 <p>The forge was busy. A full quarter recap — games, membership, community, Signal Log, investor portal. Everything VaultSpark shipped in Q1 2026 and where the studio is pointed heading into Q2.</p>
               </div>
-              <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-size:0.8rem;color:var(--dim);align-self:center;">Share:</span>
-                <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/q1-2026-dispatch/&text=Q1+2026%3A+The+Vault+Accelerates+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">𝕏 Share</a>
-                <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/q1-2026-dispatch/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">Copy link</button>
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/q1-2026-dispatch/&text=Q1+2026%3A+The+Vault+Accelerates+—+VaultSpark+Studios" target="_blank" rel="noopener">𝕏 Share</a>
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/q1-2026-dispatch/" onclick="copyJournalLink(this)">Copy link</button>
               </div>
               <div class="reaction-row" id="reactions-q1-2026-dispatch" data-slug="q1-2026-dispatch">
                 <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
@@ -400,18 +495,18 @@
             <article class="entry" id="community-enters-the-vault" data-tags="Community,Studio">
               <div class="entry-meta">
                 <span class="entry-date">March 2026</span>
-                <span style="font-size:0.78rem;color:var(--dim);">· 3 min read</span>
+                <span class="entry-readtime">· 3 min read</span>
                 <span class="entry-tag">Community</span>
                 <span class="entry-tag">Studio</span>
               </div>
-              <h2><a href="/journal/community-enters-the-vault/" style="color:inherit;text-decoration:none;">Community Enters The Vault</a></h2>
+              <h2><a class="entry-link" href="/journal/community-enters-the-vault/">Community Enters The Vault</a></h2>
               <div class="entry-body">
                 <p>Vault members can now vote in community polls, follow each other, and shape what the studio builds next. A dispatch on what community means for a solo indie studio building in public.</p>
               </div>
-              <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-size:0.8rem;color:var(--dim);align-self:center;">Share:</span>
-                <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/community-enters-the-vault/&text=Community+Enters+The+Vault+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">𝕏 Share</a>
-                <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/community-enters-the-vault/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">Copy link</button>
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/community-enters-the-vault/&text=Community+Enters+The+Vault+—+VaultSpark+Studios" target="_blank" rel="noopener">𝕏 Share</a>
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/community-enters-the-vault/" onclick="copyJournalLink(this)">Copy link</button>
               </div>
               <div class="reaction-row" id="reactions-community-enters-the-vault" data-slug="community-enters-the-vault">
                 <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
@@ -425,17 +520,17 @@
             <article class="entry" id="dreadspike-origins" data-tags="Lore">
               <div class="entry-meta">
                 <span class="entry-date">March 2026</span>
-                <span style="font-size:0.78rem;color:var(--dim);">· 3 min read</span>
+                <span class="entry-readtime">· 3 min read</span>
                 <span class="entry-tag">Lore</span>
               </div>
-              <h2><a href="/journal/dreadspike-origins/" style="color:inherit;text-decoration:none;">DreadSpike: The Character Who Arrived First</a></h2>
+              <h2><a class="entry-link" href="/journal/dreadspike-origins/">DreadSpike: The Character Who Arrived First</a></h2>
               <div class="entry-body">
                 <p>DreadSpike wasn't built for a game. He arrived through a Sora-generated cinematic — and something larger began to take shape around him. A brief on the character before the game exists.</p>
               </div>
-              <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-size:0.8rem;color:var(--dim);align-self:center;">Share:</span>
-                <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/dreadspike-origins/&text=DreadSpike%3A+The+Character+Who+Arrived+First+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">𝕏 Share</a>
-                <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/dreadspike-origins/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">Copy link</button>
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/dreadspike-origins/&text=DreadSpike%3A+The+Character+Who+Arrived+First+—+VaultSpark+Studios" target="_blank" rel="noopener">𝕏 Share</a>
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/dreadspike-origins/" onclick="copyJournalLink(this)">Copy link</button>
               </div>
               <div class="reaction-row" id="reactions-dreadspike-origins" data-slug="dreadspike-origins">
                 <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
@@ -449,18 +544,18 @@
             <article class="entry" id="building-vault-membership" data-tags="Studio,Site">
               <div class="entry-meta">
                 <span class="entry-date">March 2026</span>
-                <span style="font-size:0.78rem;color:var(--dim);">· 3 min read</span>
+                <span class="entry-readtime">· 3 min read</span>
                 <span class="entry-tag">Studio</span>
                 <span class="entry-tag">Site</span>
               </div>
-              <h2><a href="/journal/building-vault-membership/" style="color:inherit;text-decoration:none;">Building The Vault Membership Portal</a></h2>
+              <h2><a class="entry-link" href="/journal/building-vault-membership/">Building The Vault Membership Portal</a></h2>
               <div class="entry-body">
                 <p>Real accounts, live XP, cross-game leaderboards, a dashboard that actually works. A behind-the-scenes dispatch on how the Vault Member portal was built from scratch with Supabase.</p>
               </div>
-              <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-size:0.8rem;color:var(--dim);align-self:center;">Share:</span>
-                <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/building-vault-membership/&text=Building+The+Vault+Membership+Portal+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">𝕏 Share</a>
-                <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/building-vault-membership/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">Copy link</button>
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/building-vault-membership/&text=Building+The+Vault+Membership+Portal+—+VaultSpark+Studios" target="_blank" rel="noopener">𝕏 Share</a>
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/building-vault-membership/" onclick="copyJournalLink(this)">Copy link</button>
               </div>
               <div class="reaction-row" id="reactions-building-vault-membership" data-slug="building-vault-membership">
                 <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
@@ -474,18 +569,18 @@
             <article class="entry" id="signal-log-launches" data-tags="Studio,Community">
               <div class="entry-meta">
                 <span class="entry-date">March 2026</span>
-                <span style="font-size:0.78rem;color:var(--dim);">· 2 min read</span>
+                <span class="entry-readtime">· 2 min read</span>
                 <span class="entry-tag">Studio</span>
                 <span class="entry-tag">Community</span>
               </div>
-              <h2><a href="/journal/signal-log-launches/" style="color:inherit;text-decoration:none;">The Signal Log Is Live</a></h2>
+              <h2><a class="entry-link" href="/journal/signal-log-launches/">The Signal Log Is Live</a></h2>
               <div class="entry-body">
                 <p>Most studios go quiet between announcements. VaultSpark is doing the opposite. What the Signal Log is, why we publish openly, and what dispatches from the forge actually look like.</p>
               </div>
-              <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-size:0.8rem;color:var(--dim);align-self:center;">Share:</span>
-                <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/signal-log-launches/&text=The+Signal+Log+Is+Live+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">𝕏 Share</a>
-                <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/signal-log-launches/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">Copy link</button>
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/signal-log-launches/&text=The+Signal+Log+Is+Live+—+VaultSpark+Studios" target="_blank" rel="noopener">𝕏 Share</a>
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/signal-log-launches/" onclick="copyJournalLink(this)">Copy link</button>
               </div>
               <div class="reaction-row" id="reactions-signal-log-launches" data-slug="signal-log-launches">
                 <button type="button" class="reaction-btn" data-emoji="fire" onclick="jrnReact(this)"><span class="reaction-emoji">🔥</span><span class="reaction-count">0</span></button>
@@ -499,11 +594,11 @@
             <article class="entry" id="first-sparks" data-tags="Games,Launch">
               <div class="entry-meta">
                 <span class="entry-date">2026</span>
-                <span style="font-size:0.78rem;color:var(--dim);">· 2 min read</span>
+                <span class="entry-readtime">· 2 min read</span>
                 <span class="entry-tag">Games</span>
                 <span class="entry-tag">Launch</span>
               </div>
-              <h2><a href="/journal/first-sparks/" style="color:inherit;text-decoration:none;">Three Worlds Leave The Vault</a></h2>
+              <h2><a class="entry-link" href="/journal/first-sparks/">Three Worlds Leave The Vault</a></h2>
               <div class="entry-body">
                 <p>
                   The year the vault started unsealing things.
@@ -532,12 +627,12 @@
                   That's how the VaultSpark universe works.
                 </p>
               </div>
-              <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-size:0.8rem;color:var(--dim);align-self:center;">Share:</span>
-                <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/first-sparks/&text=Three+Worlds+Leave+The+Vault+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/first-sparks/&text=Three+Worlds+Leave+The+Vault+—+VaultSpark+Studios" target="_blank" rel="noopener">
                   𝕏 Share
                 </a>
-                <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/first-sparks/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/first-sparks/" onclick="copyJournalLink(this)">
                   Copy link
                 </button>
               </div>
@@ -553,11 +648,11 @@
             <article class="entry" id="vault-opened" data-tags="Origin,Studio">
               <div class="entry-meta">
                 <span class="entry-date">2026</span>
-                <span style="font-size:0.78rem;color:var(--dim);">· 3 min read</span>
+                <span class="entry-readtime">· 3 min read</span>
                 <span class="entry-tag">Origin</span>
                 <span class="entry-tag">Studio</span>
               </div>
-              <h2><a href="/journal/vault-opened/" style="color:inherit;text-decoration:none;">The Vault Was Opened</a></h2>
+              <h2><a class="entry-link" href="/journal/vault-opened/">The Vault Was Opened</a></h2>
               <div class="entry-body">
                 <p>
                   VaultSpark Studios was founded on a single idea: that one person with the right system
@@ -582,16 +677,16 @@
                   It's the system that makes the vault run. Without it, VaultSpark would be a collection of interesting
                   projects. With it, it's a studio.
                 </p>
-                <p style="color:var(--dim);font-size:0.87rem;">
+                <p class="entry-note">
                   The spark was real. The vault is open. The rest is being forged.
                 </p>
               </div>
-              <div class="share-row" style="display:flex;gap:0.75rem;margin-top:1.5rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,0.06);">
-                <span style="font-size:0.8rem;color:var(--dim);align-self:center;">Share:</span>
-                <a href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/vault-opened/&text=The+Vault+Was+Opened+—+VaultSpark+Studios" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);text-decoration:none;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+              <div class="share-row">
+                <span class="share-label">Share:</span>
+                <a class="share-chip" href="https://twitter.com/intent/tweet?url=https://vaultsparkstudios.com/journal/vault-opened/&text=The+Vault+Was+Opened+—+VaultSpark+Studios" target="_blank" rel="noopener">
                   𝕏 Share
                 </a>
-                <button type="button" onclick="navigator.clipboard.writeText('https://vaultsparkstudios.com/journal/vault-opened/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy link',2000)" style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.35rem 0.85rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;font-size:0.8rem;color:var(--muted);cursor:pointer;font-family:inherit;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='rgba(255,255,255,0.05)'">
+                <button type="button" class="share-chip" data-copy-url="https://vaultsparkstudios.com/journal/vault-opened/" onclick="copyJournalLink(this)">
                   Copy link
                 </button>
               </div>
@@ -632,7 +727,7 @@
 
             <div class="sidebar-block">
               <h3>Tags</h3>
-              <div class="meta" style="gap:0.4rem;">
+              <div class="sidebar-tag-cloud">
                 <span>Studio</span>
                 <span>Games</span>
                 <span>Community</span>
@@ -644,7 +739,7 @@
 
             <div class="sidebar-block">
               <h3>Get Dispatches</h3>
-              <p style="font-size:0.85rem;color:var(--muted);line-height:1.6;margin-bottom:0.9rem;">
+              <p class="sidebar-note">
                 Studio updates and lore signals delivered direct. Subscribe to Vault Dispatch.
               </p>
               <a class="button" href="/#vault-dispatch" style="width:100%;justify-content:center;display:flex;">Subscribe Free</a>
@@ -665,22 +760,22 @@
 
             <div class="sidebar-block">
               <h3>Coming From The Forge</h3>
-              <p style="font-size:0.8rem;color:var(--dim);line-height:1.5;margin-bottom:0.85rem;">Planned dispatches — drops every ~2 weeks.</p>
+              <p class="sidebar-note" style="font-size:0.8rem;">Planned dispatches — drops every ~2 weeks.</p>
               <div>
                 <div class="archive-link archive-upcoming">
-                  <span style="font-size:0.84rem;color:var(--text);font-weight:600;line-height:1.3;">Vault Treasury: How the Points Economy Works</span>
+                  <span class="upcoming-title">Vault Treasury: How the Points Economy Works</span>
                   <small>Apr 2026 · Feature</small>
                 </div>
                 <div class="archive-link archive-upcoming">
-                  <span style="font-size:0.84rem;color:var(--text);font-weight:600;line-height:1.3;">Season 1: First Players, First Champions</span>
+                  <span class="upcoming-title">Season 1: First Players, First Champions</span>
                   <small>Apr 2026 · Community</small>
                 </div>
                 <div class="archive-link archive-upcoming">
-                  <span style="font-size:0.84rem;color:var(--text);font-weight:600;line-height:1.3;">The Social Graph: Building the Vault Network</span>
+                  <span class="upcoming-title">The Social Graph: Building the Vault Network</span>
                   <small>May 2026 · Feature</small>
                 </div>
                 <div class="archive-link archive-upcoming" style="border-bottom:none;">
-                  <span style="font-size:0.84rem;color:var(--text);font-weight:600;line-height:1.3;">DreadSpike: Designing a Character Before the Game</span>
+                  <span class="upcoming-title">DreadSpike: Designing a Character Before the Game</span>
                   <small>May 2026 · Lore</small>
                 </div>
               </div>
@@ -908,6 +1003,18 @@
   })();
   </script>
   <script>
+    function copyJournalLink(btn) {
+      const url = btn.dataset.copyUrl;
+      if (!url) return;
+      navigator.clipboard.writeText(url).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy link'; }, 2000);
+      }).catch(() => {
+        btn.textContent = 'Copy failed';
+        setTimeout(() => { btn.textContent = 'Copy link'; }, 2000);
+      });
+    }
+
     function filterJournal(btn) {
       const filter = btn.dataset.filter;
       document.querySelectorAll('.tag-filter-btn').forEach(b => b.classList.remove('active'));

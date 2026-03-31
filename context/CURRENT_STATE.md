@@ -4,11 +4,15 @@
 
 - Date: 2026-03-31
 - Overall status: Live and active
-- Current phase: Session 15 complete (2026-03-31) — homepage surface parity fix for shared themes
+- Current phase: Session 16 complete (2026-03-31) — account-backed theme persistence, Signal Log repair, and legal/privacy expansion
 
 ## What exists
 
 - systems:
+  - Account-backed theme persistence: `assets/theme-toggle.js` now saves `vs_theme` locally and mirrors signed-in choices to `vault_members.prefs.site_theme`; device preference wins locally, account preference hydrates new devices when no local override exists
+  - Vault Member theme parity: `vault-member/index.html` now loads the shared theme picker, and newsletter preference saves preserve extra `prefs` keys instead of wiping stored site-theme data
+  - Signal Log repair: `/journal/` tag filter row now spans the layout correctly, entries no longer drift to the far right, sidebar blocks are sticky on desktop, and share/reaction controls now honor shared theme tokens
+  - Legal/IP notice expansion: privacy and terms pages now use theme-aware headers, accurately describe account + browser-stored data, and more clearly state trademark, copyright, fan-content, and no-implied-license boundaries
   - Homepage theme parity: hero card, milestone cards, signal-log teaser, and Vault Live offline panel now use shared surface tokens instead of fixed dark card backgrounds
   - Public repo hygiene: root `LATEST_HANDOFF.md` and `IOS_SHORTCUT_STUDIO_PULSE.md` are now public-safe compatibility stubs; operationally sensitive setup detail was removed from the public repo
   - Generated local metadata cleanup: `supabase/.temp/` removed from version control and ignored going forward
@@ -101,7 +105,7 @@
   - `assets/supabase-public.js` — 1 KB lightweight REST helper (anonymous read-only public pages)
   - `assets/web-vitals.js` — LCP, CLS, FCP, TTFB → GA4
   - `assets/cookie-consent.js` — GDPR banner
-  - `assets/theme-toggle.js` — multi-theme selector (dark default + 6 alternates)
+  - `assets/theme-toggle.js` — multi-theme selector with local persistence, account sync for signed-in members, and theme-color meta updates
   - `assets/pwa-install.js` — beforeinstallprompt handler
   - `assets/vault-cta.js` — sticky "Join the Vault" bar
   - `assets/vault-score.js` — game score submission SDK
@@ -128,7 +132,8 @@
 
 ## In progress
 
-- Session 12 changes are local in the working tree and pending final verification / commit.
+- Activation runbook execution remains the primary external blocker track: Cloudflare proxy, auth hardening, newsletter secrets, VAPID, and search verification
+- Theme/browser verification still needs an authenticated E2E pass for account-backed theme sync once stable vault test credentials are available
 
 ## Blockers
 
@@ -140,5 +145,5 @@
 ## Next 3 moves
 
 1. Execute `docs/ACTIVATION_RUNBOOK.md` in order — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification
-2. End-to-end test VaultSparked Discord role with Stripe test checkout once billing prerequisites are ready
-3. Re-run authenticated Playwright coverage after activation steps land to verify no regressions in live auth flows
+2. Add browser-level coverage for account-backed theme sync and journal layout/theme regression protection
+3. End-to-end test VaultSparked Discord role with Stripe test checkout once billing prerequisites are ready

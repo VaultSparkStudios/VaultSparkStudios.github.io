@@ -41,15 +41,45 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▆▇▇▇
-Avgs — 3: 41.0 | 5: 40.8 | 10: 39.5 | 25: 38.4 [N=14] | all: 38.4
-  └ 3-session: Dev 8.7 | Align 9.0 | Momentum 9.0 | Engage 4.0 | Process 10.0
-Velocity trend: →  |  Protocol velocity: ↑  |  Debt: →
-Last session: 2026-03-31 | Session 15 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7
+Sparkline (last 5 totals): ▆▆▆▆▆
+Avgs — 3: 41.3 | 5: 41.0 | 10: 40.3 | 25: 38.7 [N=15] | all: 38.7
+  └ 3-session: Dev 8.7 | Align 9.0 | Momentum 9.0 | Engage 4.3 | Process 10.0
+Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~0.0 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-03-31 | Session 16 | Total: 42/50 | Velocity: 0 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-03-31 — Session 16 | Total: 42/50 | Velocity: 0 | protocolVelocity: 7 | Debt: →
+Avgs — 3: 41.3 | 5: 41.0 | 10: 40.3 | 25: 38.7 [N=15] | all: 38.7
+  └ 3-session: Dev 8.7 | Align 9.0 | Momentum 9.0 | Engage 4.3 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | → | Theme persistence now has a real account-backed path and portal prefs no longer wipe unrelated settings |
+| Creative Alignment | 9 | → | Dark-first identity held while the Signal Log and legal pages stopped breaking in alternate themes |
+| Momentum | 9 | → | One session closed product polish, account behavior, and legal copy truth without stalling on any single lane |
+| Engagement | 5 | ↑ | Theme choice now follows signed-in members and the journal experience is cleaner and easier to use |
+| Process Quality | 10 | → | Full write-back, CDR, truth audit refresh, and SIL follow-through all completed |
+| **Total** | **42/50** | ↑ | New local peak driven by better member personalization and cleaner public-facing trust surfaces |
+
+**Top win:** Theme preference is no longer trapped on one device; signed-in members now have a credible cross-device restore path, and the broken Signal Log layout was repaired in the same pass.
+**Top gap:** Account-backed theme sync still needs browser-level authenticated verification so the new legal/privacy statement and actual runtime behavior stay provably aligned.
+**Intent outcome:** Achieved — the requested theme persistence, Signal Log repair, and privacy/IP improvements all landed.
+
+**IGNIS note:** Personalization work only counts when the setting survives the real user journey; persisting to both device and account closes the gap between a cosmetic toggle and a product-level preference system.
+
+**Brainstorm**
+1. Account theme sync E2E — add an authenticated browser test that changes theme, reloads, signs back in, and verifies `prefs.site_theme` hydration; Execution probability: High
+2. Journal article parity pass — apply the new shared share-chip/sidebar/surface treatment to `/journal/archive/` and individual entry pages for full dispatch coherence; Execution probability: High
+3. Theme status row in member settings — show whether the active theme is stored locally, synced to account, or both; Execution probability: Medium
+4. Legal reference consistency sweep — align the footer, press kit, and any investor/public statements with the updated IP/privacy language; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Account-backed theme sync verification · [SIL] Legal copy consistency audit
+
+---
 
 ## 2026-03-31 — Session 15 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7 | Debt: →
 Avgs — 3: 41.0 | 5: 40.8 | 10: 39.5 | 25: 38.4 [N=14] | all: 38.4

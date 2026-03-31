@@ -89,3 +89,25 @@ Append new entries. Do not erase historical reasoning unless it is wrong.
 - Alternatives considered: Keep patching only light mode with overrides, or leave the homepage cards intentionally dark as contrast accents
 - Why this was chosen: It resolves the visible mismatch directly, keeps the theme system coherent, and creates reusable page-level surface patterns for later parity passes.
 - Follow-up: Continue the parity audit on portal and secondary-page cards that may still be using dark-only surfaces.
+
+---
+
+### 2026-03-31 — Theme persistence should be dual-layer: local first, account-backed when signed in
+
+- Status: Active
+- Context: The new theme system already persisted locally, but the user explicitly wanted theme choice to survive on the current device and also follow a Vault Member account across devices before public launch.
+- Decision: Store the selected site theme in both `localStorage` (`vs_theme`) and, when authenticated, `vault_members.prefs.site_theme`. Current-device local preference wins immediately; account theme hydrates devices that do not already have a local override.
+- Alternatives considered: Local-only persistence, account-only persistence, or forcing the account value to override every device on sign-in
+- Why this was chosen: It preserves fast device-specific UX, supports cross-device restore for members, and avoids surprising people by overwriting an existing local preference every time they sign in.
+- Follow-up: Add browser-level verification for local/account precedence and new-device hydration.
+
+---
+
+### 2026-03-31 — Rights and privacy notices should live in legal surfaces, not sprayed across product pages
+
+- Status: Active
+- Context: The site already had a basic footer notice, and the user asked about stronger copyright/trademark protection notes plus a more complete privacy policy.
+- Decision: Keep the lightweight footer notice, but expand the legal pages with clearer copyright, trademark, fan-content, data-storage, and no-implied-license language instead of adding heavy warning copy throughout the site UI.
+- Alternatives considered: Add warning banners across the site, leave the minimal footer notice only, or bury all IP language solely in Terms of Service
+- Why this was chosen: It strengthens public notice and legal clarity without cluttering the product experience or making the site feel hostile.
+- Follow-up: Run a legal copy consistency pass across press-kit and other public-facing legal references.

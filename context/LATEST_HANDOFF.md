@@ -2,16 +2,33 @@
 
 Last updated: 2026-03-31
 
-Session Intent (2026-03-31 — Session 15): Fix the remaining homepage dark-card surfaces so the hero and key feature cards follow the active theme instead of staying dark in light mode.
+Session Intent (2026-03-31 — Session 16): Persist the chosen theme locally and to Vault Member accounts, fix the Signal Log layout/theme regressions, and strengthen public copyright/trademark/privacy notices.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
-## Where We Left Off (Session 15)
+## Where We Left Off (Session 16)
 
-- Shipped: 3 homepage theme-parity improvements — shared surface classes, inline dark-card cleanup, and served-preview browser verification
-- Tests: local served-preview browser verification confirmed hero card, milestone cards, signal teaser, and Vault Live offline panel render light surfaces in light mode
+- Shipped: 4 improvements across 3 groups — theme persistence/account sync, Signal Log UX parity, and legal/rights copy
+- Tests: `node --check` passed for `assets/theme-toggle.js`, `vault-member/portal-core.js`, and `vault-member/portal.js`; static sweeps confirmed the old inline Signal Log share controls were removed; browser render helper was unavailable in this checkout
 - Deploy: pending
+
+---
+
+## What was completed (as of 2026-03-31 — Session 16)
+
+### Session 16 — Theme Sync + Signal Log Repair + Legal Expansion (2026-03-31)
+
+**Shipped:**
+- `assets/theme-toggle.js`: theme selection now persists locally and, for signed-in members, syncs to `vault_members.prefs.site_theme`; theme-color meta is also updated per preset
+- `vault-member/index.html`: shared theme picker now loads inside the member portal
+- `vault-member/portal-core.js` + `vault-member/portal.js`: newsletter/settings saves now merge existing `prefs` keys so site theme data is not lost
+- `journal/index.html`: fixed the grid-placement bug that pushed entries rightward; share chips, sidebar blocks, and reaction controls now use theme-aware shared surfaces
+- `privacy/index.html` + `terms/index.html`: legal pages now honor light mode better and describe real account/browser storage plus clearer IP/fan-content/no-license boundaries
+
+**Verification:** `node --check assets/theme-toggle.js`, `node --check vault-member/portal-core.js`, `node --check vault-member/portal.js`, plus static sweeps on `/journal/` for removal of the old inline share/copy patterns.
+
+**Intent outcome:** Achieved — the requested theme/account persistence, Signal Log fix, and legal/privacy expansion all landed in repo state.
 
 ---
 
@@ -186,7 +203,7 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## What is mid-flight
 
-- Session 12 changes are local in the working tree and not committed yet. Verify the updated contract paths and context write-back before the next commit/deploy.
+- Session 16 changes are local in the working tree and not committed yet. Browser-level verification for account-backed theme sync is still worth adding before or alongside the next deploy.
 
 ---
 
@@ -195,10 +212,10 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 1. **Execute activation runbook** — `docs/ACTIVATION_RUNBOOK.md` in order [critical path]
 2. **Cloudflare proxy** — DNS change on registrar; unblocks HTTP security headers [10]
 3. **VAPID key generation** — unblocks web push [9]
-4. **2FA/MFA for vault members** — Supabase TOTP toggle + UI prompt [7.5]
-5. **Google Search Console + Bing Webmaster verification** — submit sitemap + member-sitemap [6.5]
-6. **Journal post cadence / content calendar** — one post per week [6.5]
-7. **Annual VaultSparked pricing tier** — pending LLC + Stripe [8.5]
+4. **Theme/account sync verification** — add browser-level checks for local-vs-account precedence and new-device hydration [8.1]
+5. **2FA/MFA for vault members** — Supabase TOTP toggle + UI prompt [7.5]
+6. **Google Search Console + Bing Webmaster verification** — submit sitemap + member-sitemap [6.5]
+7. **Journal post cadence / content calendar** — one post per week [6.5]
 
 ## Human Action Required
 

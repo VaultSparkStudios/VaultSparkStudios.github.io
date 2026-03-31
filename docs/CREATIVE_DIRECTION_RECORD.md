@@ -115,3 +115,15 @@ Agents MUST NOT modify or remove existing entries.
 - New required direction: Move the prominent homepage cards onto theme-aware shared surfaces so they no longer stay dark in light mode
 - Why it matters: Removes the most visible remaining mismatch in the multi-theme system
 - Supersedes prior entry: —
+
+---
+
+### 2026-03-31 — Theme sync + Signal Log + legal notice direction
+
+- Category: Assignment + Direction
+- Human input: "Make sure the chosen theme is saved on that device for that individual and saved on their vault account too across devices if they have one (not yet launched to public). Fix the signal log page as the entries are on the far right side (vaultsparkstudios.com/journal) - make other UI/UX improvements" → "are there any copyright protection/trademark protection notes we can put anywhere on the website? Further build out the privacy policy too"
+- Area affected: Theme persistence model, Vault Member account prefs, Signal Log UX/layout, legal/privacy/IP messaging
+- Previous state: Theme choice was local-only, the journal filter row/layout pushed entries into the wrong grid column, and the legal pages underspecified account storage while IP notice was mostly limited to the footer
+- New required direction: Keep per-device theme persistence, add account-backed restore for signed-in members, repair the Signal Log layout and shared-surface styling, and expand privacy/rights language without cluttering core product pages
+- Why it matters: Improves cross-device polish, fixes a visible public-page regression, and makes ownership/data-handling boundaries clearer before broader public rollout
+- Supersedes prior entry: —
