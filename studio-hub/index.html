@@ -3,23 +3,25 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' https://api.github.com https://gist.github.com https://*.supabase.co https://www.googleapis.com https://www.reddit.com https://public.api.bsky.app https://api.gumroad.com https://api.githubstatus.com https://api.anthropic.com https://api.allorigins.win https://corsproxy.io; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src * data:; font-src 'self' data: https://fonts.gstatic.com;" />
     <title>VaultSpark Studio Hub</title>
 
+    <!-- Runtime integration config — override with query params for local dev -->
+    <!-- e.g. ?githubToken=ghp_... -->
     <meta name="hub-github-token" content="" />
     <meta name="hub-supabase-url" content="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
     <meta name="hub-supabase-anon-key" content="sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij" />
     <meta name="hub-youtube-api-key" content="" />
 
+    <link rel="manifest" href="manifest.json" />
+    <meta name="theme-color" content="#040810" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Studio Hub" />
     <link rel="stylesheet" href="src/styles/hub.css" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
-    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
-    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
-    <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
-    <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
-    <meta name="referrer" content="strict-origin-when-cross-origin" />
   </head>
   <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
     <div id="app">
       <div class="shell">
         <div class="sidebar">
@@ -28,11 +30,13 @@
             <div class="logo-sub">Studio Hub — Loading…</div>
           </div>
         </div>
-        <div class="main-panel">
+        <div class="main-panel" id="main-content">
           <div class="loading-state">Initializing Studio Hub…</div>
         </div>
       </div>
     </div>
+    <script src="src/boot-error-handler.js"></script>
     <script type="module" src="src/clientApp.js"></script>
+    <script src="src/sw-register.js"></script>
   </body>
 </html>
