@@ -17,6 +17,13 @@ test.describe('Vault portal authenticated flows', () => {
     await expect(page.locator('#dash-pane-challenges')).toHaveClass(/active/);
   });
 
+  test('dashboard exposes claim center and vault status surfaces', async ({ page, request }) => {
+    await loginVaultMember(page, request);
+    await expect(page.locator('#claim-center-panel')).toBeVisible();
+    await page.locator('#tab-dash-settings').click();
+    await expect(page.locator('#vault-status-panel')).toBeVisible();
+  });
+
   test('onboarding overlay markup is present and can be shown', async ({ page, request }) => {
     await loginVaultMember(page, request);
     await page.evaluate(() => {

@@ -127,3 +127,15 @@ Agents MUST NOT modify or remove existing entries.
 - New required direction: Keep per-device theme persistence, add account-backed restore for signed-in members, repair the Signal Log layout and shared-surface styling, and expand privacy/rights language without cluttering core product pages
 - Why it matters: Improves cross-device polish, fixes a visible public-page regression, and makes ownership/data-handling boundaries clearer before broader public rollout
 - Supersedes prior entry: —
+
+---
+
+### 2026-03-31 — Security/UX implementation push + VaultSparked price clarification
+
+- Category: Assignment + Canon Clarification
+- Human input: "Analyze website for improvements and refinements and security updates needed - propose any additional features or additionals to Vault Membership or anything on site" → "Complete all fixes and implement all ideas for this project in one pass" → "FYI the price is 24.99"
+- Area affected: Security hardening, pricing truth surfaces, Vault Membership UX, activation readiness
+- Previous state: The site had several identified security/truth gaps, no dedicated Claim Center or Vault Status surfaces in the member portal, and the public VaultSparked metadata still reflected outdated pricing copy
+- New required direction: Ship the highest-value security fixes immediately, add the proposed membership-ready UX additions inside the existing portal, and treat `$24.99/month` as the canonical public VaultSparked price
+- Why it matters: Tightens pre-activation trust surfaces, improves membership clarity without waiting for new backend systems, and removes avoidable pricing drift before launch-sensitive billing work
+- Supersedes prior entry: —

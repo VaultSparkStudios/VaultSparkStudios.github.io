@@ -5,17 +5,20 @@
 - [x] Run pending SQL migrations: phase40-50 ✅ **ALL APPLIED** (2026-03-28 via db-migrate Action)
 - [x] Fix vault-score.js getLeaderboard() — rank titles now derive from points instead of querying a missing `vault_members(rank_title)` field
 - [x] [SIL] Authenticated axe-core portal tests — env-gated Playwright scans now cover dashboard, challenges, and onboarding modal
+- [ ] [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Escalated 2026-03-31 after 2+ skipped sessions]
+- [ ] [SIL] Theme surface parity audit — continue moving remaining page-specific dark surfaces onto shared theme tokens across portal and secondary pages [Escalated 2026-03-31 after 2+ skipped sessions]
+- [ ] [SIL] Public/private boundary audit — sweep remaining root docs and generated metadata for public-safety, then move or sanitize anything operationally sensitive [Escalated 2026-03-31 after 2+ skipped sessions]
+- [ ] [SIL] Shared rank-threshold source audit — reduce future drift across UI, scripts, functions, and migrations [Escalated 2026-03-31 after 2+ skipped sessions]
 
 ## Next (Pending External Action)
 
-- [SIL] Public/private boundary audit — sweep remaining root docs and generated metadata for public-safety, then move or sanitize anything operationally sensitive [Score: 7.7]
 - [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Score: 7.9]
 - [SIL] Account-backed theme sync verification — verify local-vs-account precedence, portal sign-in restore, and cross-device hydration for `prefs.site_theme` [Score: 8.1]
-- [SIL] Theme surface parity audit — continue moving remaining page-specific dark surfaces onto shared theme tokens across portal and secondary pages [Score: 7.3]
+- [SIL] Live response-header verification — once Cloudflare proxy is enabled, verify worker CSP/HSTS/Turnstile behavior against the real production responses [Score: 8.4]
 - [SIL] Legal copy consistency audit — align footer/legal/press language around IP, fan-content, and data-handling claims after the privacy-policy expansion [Score: 6.8]
 - Execute `docs/ACTIVATION_RUNBOOK.md` — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification [Score: 9.6]
 - [SIL] Activation verification pass after external setup — rerun auth, push, headers, sitemap, and newsletter checks once the runbook is complete [Score: 8.9]
-- [SIL] Shared rank-threshold source audit — reduce future drift across UI, scripts, functions, and migrations [Score: 7.4]
+- [SIL] Secret-adjacent docs lint rule — add a lightweight CI guard for risky secret/operator strings outside approved paths [Score: 7.2]
 - Enable Cloudflare proxy (requires DNS change on registrar — highest-ROI speed/security win) [Score: 10, Composite: 8.5]
 - Supabase dashboard settings: CAPTCHA on auth, session timeout, email enumeration prevention [Score: 8.5]
 - VAPID key setup: generate keys, set VAPID_PUBLIC_KEY in vault-member/index.html, deploy send-push Edge Function secrets [Score: 8.2]
@@ -96,6 +99,16 @@
 - ✅ Vault Member prefs preservation — portal preference saves now merge existing `prefs` data instead of overwriting account-backed theme settings
 - ✅ Signal Log layout/UI fix — `/journal/` filter row now spans the grid correctly, entries stay in the main column, and cards/sidebar/share controls now follow shared theme tokens
 - ✅ Privacy / rights notice expansion — `/privacy/` and `/terms/` now describe real account storage, browser-stored preferences, IP/fan-content boundaries, and use theme-aware legal-page headers
+
+## Completed — Session 17 (2026-03-31)
+
+- ✅ Service worker auth-cache hardening — `sw.js` now caches only anonymous Supabase REST reads instead of all `GET` traffic to `supabase.co`
+- ✅ Checkout function origin hardening — `create-checkout` and `create-gift-checkout` now return origin-scoped CORS headers instead of permissive `*`
+- ✅ Cloudflare worker CSP parity fix — header worker now includes Turnstile allowances plus stronger response directives for the eventual proxy rollout
+- ✅ VaultSparked truth sync — `/vaultsparked/` metadata now reflects the founder-confirmed `$24.99/month` price
+- ✅ Portal XSS sink cleanup — Discord OAuth error rendering now uses DOM text nodes instead of `innerHTML`
+- ✅ Vault Membership UX upgrade — portal now includes a `Claim Center` dashboard panel and a `Vault Status` settings block
+- ✅ Authenticated QA extension — portal smoke tests now cover the new Claim Center and Vault Status surfaces
 
 ## Completed — Session 14 (2026-03-31)
 

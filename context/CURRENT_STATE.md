@@ -4,11 +4,18 @@
 
 - Date: 2026-03-31
 - Overall status: Live and active
-- Current phase: Session 16 complete (2026-03-31) — account-backed theme persistence, Signal Log repair, and legal/privacy expansion
+- Current phase: Session 17 complete (2026-03-31) — security/truth hardening, Vault Membership status UX, and claim-center rollout
 
 ## What exists
 
 - systems:
+  - Vault Membership readiness surfaces: `vault-member/index.html` now includes a `Claim Center` dashboard panel for next unlocks/rewards and a `Vault Status` settings block for theme sync, membership tier, Discord linkage, and account-control status
+  - VaultSparked pricing truth sync: `/vaultsparked/` metadata now matches the founder-confirmed $24.99/month tier, keeping the public surface aligned with checkout intent
+  - Checkout origin hardening: `create-checkout` and `create-gift-checkout` now return origin-scoped CORS headers instead of permissive `*`
+  - Anonymous-only Supabase service-worker caching: `sw.js` now caches only unauthenticated `/rest/v1/` reads and skips authenticated/auth/storage traffic
+  - Cloudflare header-worker parity upgrade: `cloudflare/security-headers-worker.js` now includes Turnstile allowances and stronger response directives (`frame-src`, `object-src 'none'`, `upgrade-insecure-requests`, CORP, OAC)
+  - Portal XSS sink cleanup: Discord OAuth failure UI now appends a text node instead of concatenating `error.message` through `innerHTML`
+  - Authenticated portal coverage expansion: Playwright authenticated smoke tests now assert the new Claim Center and Vault Status surfaces
   - Account-backed theme persistence: `assets/theme-toggle.js` now saves `vs_theme` locally and mirrors signed-in choices to `vault_members.prefs.site_theme`; device preference wins locally, account preference hydrates new devices when no local override exists
   - Vault Member theme parity: `vault-member/index.html` now loads the shared theme picker, and newsletter preference saves preserve extra `prefs` keys instead of wiping stored site-theme data
   - Signal Log repair: `/journal/` tag filter row now spans the layout correctly, entries no longer drift to the far right, sidebar blocks are sticky on desktop, and share/reaction controls now honor shared theme tokens
@@ -133,7 +140,8 @@
 ## In progress
 
 - Activation runbook execution remains the primary external blocker track: Cloudflare proxy, auth hardening, newsletter secrets, VAPID, and search verification
-- Theme/browser verification still needs an authenticated E2E pass for account-backed theme sync once stable vault test credentials are available
+- Theme/browser verification still needs an authenticated E2E pass for account-backed theme sync and the new Claim Center / Vault Status surfaces once stable vault test credentials are available
+- Cloudflare response-header verification is still pending until the production proxy step in the activation runbook is complete
 
 ## Blockers
 
@@ -145,5 +153,5 @@
 ## Next 3 moves
 
 1. Execute `docs/ACTIVATION_RUNBOOK.md` in order — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification
-2. Add browser-level coverage for account-backed theme sync and journal layout/theme regression protection
+2. Add browser-level coverage for account-backed theme sync, Claim Center / Vault Status rendering, and journal/layout theme regression protection
 3. End-to-end test VaultSparked Discord role with Stripe test checkout once billing prerequisites are ready

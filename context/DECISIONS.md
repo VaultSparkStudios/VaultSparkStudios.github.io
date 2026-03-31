@@ -111,3 +111,25 @@ Append new entries. Do not erase historical reasoning unless it is wrong.
 - Alternatives considered: Add warning banners across the site, leave the minimal footer notice only, or bury all IP language solely in Terms of Service
 - Why this was chosen: It strengthens public notice and legal clarity without cluttering the product experience or making the site feel hostile.
 - Follow-up: Run a legal copy consistency pass across press-kit and other public-facing legal references.
+
+---
+
+### 2026-03-31 — VaultSparked public pricing canon is $24.99/month until explicitly changed
+
+- Status: Active
+- Context: The public VaultSparked landing surface and checkout-related docs drifted, and the founder clarified during Session 17 that the intended tier price is `$24.99`.
+- Decision: Treat `$24.99/month` as the public-facing canonical VaultSparked price across website copy and operator-facing checkout references until the founder explicitly changes it again.
+- Alternatives considered: Preserve the older `$4.99` landing-page language, hide price copy from the public page, or defer the correction until Stripe production setup
+- Why this was chosen: Public pricing is a founder-controlled promise surface. Leaving drift here would create avoidable trust and launch confusion.
+- Follow-up: Verify the eventual Stripe product/price IDs match this canon before production billing is enabled.
+
+---
+
+### 2026-03-31 — Service worker should cache only anonymous Supabase REST reads
+
+- Status: Active
+- Context: The service worker had been caching all `GET` requests to `supabase.co`, which risked serving stale or user-specific API responses too broadly.
+- Decision: Limit service-worker caching to unauthenticated Supabase `/rest/v1/` GET requests only, and skip authenticated/auth/storage traffic.
+- Alternatives considered: Keep caching all Supabase GETs, disable Supabase caching entirely, or rely solely on short TTL without request scoping
+- Why this was chosen: It preserves the useful public-read performance win while removing the highest-risk cross-user/auth-state caching behavior.
+- Follow-up: Browser-verify anonymous leaderboard/member-directory reads and authenticated portal flows after the next deploy.

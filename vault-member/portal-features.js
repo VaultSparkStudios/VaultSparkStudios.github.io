@@ -448,7 +448,14 @@
       if (error) {
         localStorage.removeItem('vs_link_discord');
         const area = document.getElementById('discord-status-area');
-        if (area) area.innerHTML += `<span class="discord-error">${error.message}</span>`;
+        if (area) {
+          const existing = area.querySelector('.discord-error');
+          if (existing) existing.remove();
+          const message = document.createElement('span');
+          message.className = 'discord-error';
+          message.textContent = error.message || 'Discord connection failed.';
+          area.appendChild(message);
+        }
       }
     }
 

@@ -714,6 +714,16 @@
         const milestones = data.milestones || [];
         if (!milestones.length) return;
 
+        const nextLocked = milestones.find(function(m) { return count < m.threshold; });
+        _claimCenterState.referralCount = count;
+        _claimCenterState.referralClaimable = milestones.some(function(m) { return count >= m.threshold && !m.claimed; });
+        _claimCenterState.nextReferralText = _claimCenterState.referralClaimable
+          ? count + ' referrals · reward ready to claim'
+          : nextLocked
+            ? count + ' referrals · next reward at ' + nextLocked.threshold
+            : count + ' referrals · all milestones reached';
+        if (_currentMember) updateClaimCenter(_currentMember, { isSparked: !!_currentMember.is_sparked });
+
         panel.style.display = '';
 
         // Count badge

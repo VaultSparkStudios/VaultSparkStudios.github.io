@@ -187,6 +187,26 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-31 — Session 17 — Security hardening + claim center + vault status
+
+- Goal: Audit the site for improvements, then ship the highest-value security fixes, pricing truth alignment, and Vault Membership UX additions in one pass
+- What changed:
+  - `sw.js`: Supabase caching narrowed to anonymous `/rest/v1/` reads only
+  - `supabase/functions/create-checkout/index.ts` + `supabase/functions/create-gift-checkout/index.ts`: origin-scoped CORS headers replaced permissive wildcard behavior
+  - `cloudflare/security-headers-worker.js`: Turnstile-compatible CSP allowances and stronger response directives added for the eventual proxy rollout
+  - `vaultsparked/index.html`: public metadata aligned to the founder-confirmed `$24.99/month` VaultSparked price
+  - `vault-member/index.html` + portal modules: added Claim Center and Vault Status surfaces driven from existing member/referral state
+  - `vault-member/portal-features.js`: Discord OAuth error rendering switched from `innerHTML` to DOM text insertion
+  - `tests/authenticated.spec.js`: authenticated smoke coverage now asserts Claim Center and Vault Status visibility
+- Files or systems touched: service worker, 2 checkout edge functions, Cloudflare worker, VaultSparked landing page, 4 portal JS modules, portal HTML, authenticated Playwright spec
+- Risks created or removed:
+  - Removed: broad authenticated Supabase GET caching risk in the service worker
+  - Removed: permissive checkout CORS behavior and one direct `innerHTML` error sink
+  - Remaining: live header verification still depends on the external Cloudflare proxy step
+- Recommended next move: Execute the activation runbook, then run browser verification for live headers, theme/account sync, Claim Center, and Vault Status
+
+---
+
 ### 2026-03-25 — Studio OS migration + Admin Panel + 9-tier ranks + VaultSparked Discord role
 
 - Goal: Build Vault Command admin panel, expand ranks to 9 tiers, wire VaultSparked subscription to Discord role, apply Studio OS project system

@@ -29,17 +29,23 @@ const SUCCESS_URLS: Record<string, string> = {
   pro:           `${APP_URL}/promogrind/?checkout=success`,
 };
 
-const CORS = {
-  'Access-Control-Allow-Origin':  '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+function buildCorsHeaders(origin: string | null) {
+  const allowedOrigin = origin && origin === APP_URL ? origin : APP_URL;
+  return {
+    'Access-Control-Allow-Origin': allowedOrigin,
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Methods': 'POST, OPTIONS',
+    'Vary': 'Origin',
+  };
+}
 
 serve(async (req: Request) => {
-  if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS });
+  const cors = buildCorsHeaders(req.headers.get('Origin'));
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: cors });
 
   try {
     const authHeader = req.headers.get('Authorization');
-    if (!authHeader) return json({ error: 'Unauthorized' }, 401);
+    if (!authHeader) return json({ error: 'Unauthorized' }, cors, 401);
 
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
@@ -49,7 +55,7 @@ serve(async (req: Request) => {
     const { data: { user }, error } = await supabase.auth.getUser(
       authHeader.replace('Bearer ', '')
     );
-    if (error || !user) return json({ error: 'Invalid token' }, 401);
+    if (error || !user) return json({ error: 'Invalid token' }, cors, 401);
 
     // Determine plan from request body (default: vault_sparked)
     let plan = 'vault_sparked';
@@ -59,7 +65,7 @@ serve(async (req: Request) => {
     } catch { /* no body or invalid JSON — use default */ }
 
     const priceId = PRICE_IDS[plan];
-    if (!priceId) return json({ error: `No price configured for plan: ${plan}` }, 400);
+    if (!priceId) return json({ error: `No price configured for plan: ${plan}` }, cors, 400);
 
     // Look up or create Stripe customer
     let customerId: string | undefined;
@@ -92,16 +98,16 @@ serve(async (req: Request) => {
       subscription_data:    { metadata: { vault_user_id: user.id, plan } },
     });
 
-    return json({ url: session.url });
+    return json({ url: session.url }, cors);
 
   } catch (err) {
-    return json({ error: String(err) }, 500);
+    return json({ error: String(err) }, cors, 500);
   }
 });
 
-function json(body: unknown, status = 200): Response {
+function json(body: unknown, cors: Record<string, string>, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { ...CORS, 'Content-Type': 'application/json' },
+    headers: { ...cors, 'Content-Type': 'application/json' },
   });
 }

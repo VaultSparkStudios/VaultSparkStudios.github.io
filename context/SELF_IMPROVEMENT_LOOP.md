@@ -41,16 +41,43 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▆
-Avgs — 3: 41.3 | 5: 41.0 | 10: 40.3 | 25: 38.7 [N=15] | all: 38.7
-  └ 3-session: Dev 8.7 | Align 9.0 | Momentum 9.0 | Engage 4.3 | Process 10.0
-Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~0.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-03-31 | Session 16 | Total: 42/50 | Velocity: 0 | protocolVelocity: 7
+Sparkline (last 5 totals): ▆▆▆▇█
+Avgs — 3: 42.3 | 5: 41.8 | 10: 38.8 | 25: 39.1 [N=16] | all: 39.1
+  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 9.3 | Engage 5.0 | Process 10.0
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-03-31 | Session 17 | Total: 44/50 | Velocity: 5 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-03-31 — Session 17 | Total: 44/50 | Velocity: 5 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 42.3 | 5: 41.8 | 10: 38.8 | 25: 39.1 [N=16] | all: 39.1
+  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 9.3 | Engage 5.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | → | Service-worker cache scope, checkout CORS, worker CSP parity, and a direct portal `innerHTML` sink were all tightened in one session |
+| Creative Alignment | 9 | → | The new Claim Center and Vault Status surfaces make membership feel more intentional and operationally real without flattening the Vault’s identity |
+| Momentum | 10 | ↑ | One pass closed multiple concrete audit items across security, truth, and member UX instead of stalling in analysis |
+| Engagement | 6 | ↑ | Members now get clearer reward direction and account-readiness visibility, which should improve retention once real traffic ramps |
+| Process Quality | 10 | → | Full Studio OS write-back completed, pricing canon was recorded, and the handoff/status surfaces now reflect the actual shipped state |
+| **Total** | **44/50** | ↑ | New peak — strongest blend yet of user-facing UX gain and pre-activation hardening |
+
+**Top win:** The repo is materially safer and clearer than it was at session start: Supabase caching is scoped, checkout origins are bounded, pricing drift was corrected, and the member portal now has explicit status/reward surfaces.
+**Top gap:** The most important remaining security verification is still external — until Cloudflare proxy is enabled, the stronger worker headers cannot be validated against real production responses.
+**Intent outcome:** Achieved — the highest-value security/truth fixes shipped and the proposed membership UX additions landed in the existing portal architecture.
+
+**IGNIS note:** Security improvements have more leverage when they also reduce user ambiguity. This session improved both system trust and member clarity, which is a better pre-activation trade than adding another isolated feature.
+
+**Brainstorm**
+1. Live header verification harness — add a browser or curl-based check that validates production CSP/HSTS/Turnstile behavior after the Cloudflare proxy step; Execution probability: High
+2. Secret-adjacent docs lint rule — lightweight CI guard for `service_role`, `STRIPE_SECRET_KEY`, and similar strings outside approved paths; Execution probability: High
+3. Claim Center progression expansion — add challenge, season, and beta-key readiness cards so the panel becomes the true member command surface; Execution probability: Medium
+4. Vault Status diagnostics — expose whether theme sync is local-only, account-backed, or both with explicit account value vs device override; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Live response-header verification · [SIL] Secret-adjacent docs lint rule
 
 ## 2026-03-31 — Session 16 | Total: 42/50 | Velocity: 0 | protocolVelocity: 7 | Debt: →
 Avgs — 3: 41.3 | 5: 41.0 | 10: 40.3 | 25: 38.7 [N=15] | all: 38.7

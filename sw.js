@@ -66,9 +66,16 @@ self.addEventListener('fetch', (e) => {
   const { request } = e;
   const url = new URL(request.url);
 
-  // Stale-while-revalidate for Supabase API reads (cross-origin)
-  // Cache capped at 60 entries; stale entries expire after 5 minutes
-  if (url.hostname.includes('supabase.co') && request.method === 'GET') {
+  // Stale-while-revalidate only for anonymous public Supabase REST reads.
+  // Do not cache authenticated requests, auth endpoints, RPC calls, or storage fetches.
+  // Cache capped at 60 entries; stale entries expire after 5 minutes.
+  const isSupabaseRead =
+    url.hostname.includes('supabase.co') &&
+    request.method === 'GET' &&
+    url.pathname.includes('/rest/v1/') &&
+    !request.headers.get('authorization');
+
+  if (isSupabaseRead) {
     const API_CACHE = CACHE_NAME + '-api';
     const MAX_API_ENTRIES = 60;
     const API_TTL_MS = 5 * 60 * 1000; // 5 minutes

@@ -2,16 +2,35 @@
 
 Last updated: 2026-03-31
 
-Session Intent (2026-03-31 — Session 16): Persist the chosen theme locally and to Vault Member accounts, fix the Signal Log layout/theme regressions, and strengthen public copyright/trademark/privacy notices.
+Session Intent (2026-03-31 — Session 17): Analyze the website for improvements, then ship the highest-value security fixes, pricing truth alignment, and Vault Membership UX additions in one pass.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
-## Where We Left Off (Session 16)
+## Where We Left Off (Session 17)
 
-- Shipped: 4 improvements across 3 groups — theme persistence/account sync, Signal Log UX parity, and legal/rights copy
-- Tests: `node --check` passed for `assets/theme-toggle.js`, `vault-member/portal-core.js`, and `vault-member/portal.js`; static sweeps confirmed the old inline Signal Log share controls were removed; browser render helper was unavailable in this checkout
+- Shipped: 7 improvements across 4 groups — security hardening, pricing truth sync, Vault Membership UX, and authenticated QA
+- Tests: `node --check` passed for `vault-member/portal-core.js`, `vault-member/portal-auth.js`, `vault-member/portal-dashboard.js`, and `vault-member/portal-features.js`; authenticated Playwright coverage expanded in-spec for Claim Center + Vault Status but not executed in this checkout
 - Deploy: pending
+
+---
+
+## What was completed (as of 2026-03-31 — Session 17)
+
+### Session 17 — Security Hardening + Claim Center + Vault Status (2026-03-31)
+
+**Shipped:**
+- `sw.js`: Supabase caching now scopes to anonymous `/rest/v1/` reads only, avoiding broad caching of authenticated cross-origin GET traffic
+- `supabase/functions/create-checkout/index.ts` + `supabase/functions/create-gift-checkout/index.ts`: checkout endpoints now return origin-scoped CORS headers instead of `Access-Control-Allow-Origin: *`
+- `cloudflare/security-headers-worker.js`: worker CSP now includes Turnstile allowances and stronger response directives for the eventual Cloudflare proxy rollout
+- `vaultsparked/index.html`: public VaultSparked metadata now reflects the founder-confirmed `$24.99/month` price
+- `vault-member/portal-features.js`: Discord OAuth failure UI no longer appends raw error strings via `innerHTML`
+- `vault-member/index.html` + `vault-member/portal-core.js` + `vault-member/portal-auth.js` + `vault-member/portal-dashboard.js`: new `Claim Center` dashboard panel and `Vault Status` settings surface added, driven from existing member state and referral milestone data
+- `tests/authenticated.spec.js`: authenticated smoke coverage now asserts the new Claim Center and Vault Status surfaces
+
+**Verification:** `node --check vault-member/portal-core.js`, `node --check vault-member/portal-auth.js`, `node --check vault-member/portal-dashboard.js`, `node --check vault-member/portal-features.js`.
+
+**Intent outcome:** Achieved — the repo now carries the highest-value security/truth fixes from the audit plus new Vault Membership readiness surfaces.
 
 ---
 
@@ -203,16 +222,16 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## What is mid-flight
 
-- Session 16 changes are local in the working tree and not committed yet. Browser-level verification for account-backed theme sync is still worth adding before or alongside the next deploy.
+- Session 17 changes are local in the working tree and not committed yet. Browser-level verification for account-backed theme sync plus the new Claim Center / Vault Status surfaces is still worth adding before or alongside the next deploy.
 
 ---
 
 ## What to do next (in order)
 
 1. **Execute activation runbook** — `docs/ACTIVATION_RUNBOOK.md` in order [critical path]
-2. **Cloudflare proxy** — DNS change on registrar; unblocks HTTP security headers [10]
+2. **Cloudflare proxy + live header verification** — DNS/proxy step, then verify worker CSP/Turnstile/HSTS on production responses [10]
 3. **VAPID key generation** — unblocks web push [9]
-4. **Theme/account sync verification** — add browser-level checks for local-vs-account precedence and new-device hydration [8.1]
+4. **Theme/account sync + membership UX verification** — add browser-level checks for local-vs-account precedence, new-device hydration, Claim Center, and Vault Status [8.4]
 5. **2FA/MFA for vault members** — Supabase TOTP toggle + UI prompt [7.5]
 6. **Google Search Console + Bing Webmaster verification** — submit sitemap + member-sitemap [6.5]
 7. **Journal post cadence / content calendar** — one post per week [6.5]

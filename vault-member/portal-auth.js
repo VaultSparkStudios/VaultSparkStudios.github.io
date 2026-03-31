@@ -103,9 +103,15 @@
           const isSparked = sub && sub.status === 'active' && (sub.plan === 'vault_sparked' || sub.plan === 'pro');
           if (sparkedBadge) sparkedBadge.style.display = isSparked ? '' : 'none';
           if (ctaPanel)     ctaPanel.style.display     = isSparked ? 'none' : '';
+          member.is_sparked = !!isSparked;
+          updateVaultStatusPanel(member, { isSparked: isSparked });
+          updateClaimCenter(member, { isSparked: isSparked });
         }).catch(() => {
           if (sparkedBadge) sparkedBadge.style.display = 'none';
           if (ctaPanel)     ctaPanel.style.display     = '';
+          member.is_sparked = false;
+          updateVaultStatusPanel(member, { isSparked: false });
+          updateClaimCenter(member, { isSparked: false });
         });
 
       // Extended stats (PromoGrind / Ledger)
@@ -151,6 +157,8 @@
       setInfo('info-since',         createdDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }));
       setInfo('info-days',          daysInVault === 0 ? 'Joined today' : daysInVault + (daysInVault === 1 ? ' day' : ' days'));
       setInfo('info-member-number', member.member_number ? '#' + member.member_number + (member.member_number <= 100 ? ' — Founding Member ✦' : '') : '—');
+      updateVaultStatusPanel(member, { isSparked: member.is_sparked });
+      updateClaimCenter(member, { isSparked: member.is_sparked });
 
       // Check for rank-up (delayed so dashboard renders first)
       setTimeout(() => checkRankUp(member), 800);
@@ -160,6 +168,7 @@
       setTimeout(() => { initPointsEconomy(member); initGameSessionMilestones(member); loadCurrentlyPlaying(member); }, 1200);
       loadTeamPanel(member);
       loadInviteCode();
+      loadReferralMilestones();
 
       // Feature 1: daily login bonus + streak
       setTimeout(() => checkDailyLogin(member), 600);
@@ -254,6 +263,7 @@
         accent:          row.accent          || '#FFC400',
         member_number:   row.member_number   || null,
         discord_id:      row.discord_id      || null,
+        is_sparked:      !!row.is_sparked,
         streak_count:         row.streak_count         || 0,
         last_login_date:      row.last_login_date      || null,
         onboarding_completed: row.onboarding_completed || false,

@@ -3,7 +3,7 @@
 
 Last reviewed: 2026-03-31
 Overall status: green
-Next action: Add browser-level verification for the new account-backed theme persistence so the legal/privacy statement and shipped behavior stay aligned.
+Next action: Verify live Cloudflare response headers after proxy enablement and add browser-level verification for account-backed theme persistence plus the new membership status surfaces.
 
 ---
 
@@ -20,12 +20,12 @@ Next action: Add browser-level verification for the new account-backed theme per
 
 | Dimension | Score | Notes |
 |---|---|---|
-| Schema alignment | 5 | Privacy copy now matches the real account + browser storage model, including theme sync to `prefs.site_theme` |
+| Schema alignment | 5 | Pricing canon, theme sync behavior, and the new membership status surfaces now align with the shipped data model |
 | Prompt/template alignment | 4 | Closeout/start prompts are locally modified in the worktree, but project truth files are now current |
-| Derived-view freshness | 5 | `PROJECT_STATUS`, `CURRENT_STATE`, and `LATEST_HANDOFF` are refreshed for Session 16 |
-| Handoff continuity | 5 | Current handoff now reflects the shipped theme/journal/legal work and the next verification step |
-| Contradiction density | 4 | No active red contradictions found; remaining gap is unverified browser-level account theme behavior rather than known truth drift |
-| **Total** | **23 / 25** | Strong truth alignment after the legal/privacy correction |
+| Derived-view freshness | 5 | `PROJECT_STATUS`, `CURRENT_STATE`, `LATEST_HANDOFF`, and SIL are refreshed for Session 17 |
+| Handoff continuity | 5 | Current handoff now reflects the shipped security/pricing/membership work and the next activation-verification step |
+| Contradiction density | 4 | No active red contradictions found; remaining gap is live verification of Cloudflare headers and browser-level account theme behavior |
+| **Total** | **23 / 25** | Strong truth alignment with remaining validation concentrated in external/live checks |
 
 ---
 
@@ -34,10 +34,10 @@ Next action: Add browser-level verification for the new account-backed theme per
 | Area | Canonical source | Derived surfaces | Status | Last checked | Action |
 |---|---|---|---|---|---|
 | Project identity | `context/PROJECT_STATUS.json` | `context/PORTFOLIO_CARD.md` | green | 2026-03-31 | Keep Portfolio Card synced at next milestone change |
-| Session continuity | `context/LATEST_HANDOFF.md` | startup brief | green | 2026-03-31 | Session 16 handoff rewritten with current work + next move |
-| Live state | `context/CURRENT_STATE.md` | founder summaries | green | 2026-03-31 | Theme sync, journal repair, and legal changes reflected |
+| Session continuity | `context/LATEST_HANDOFF.md` | startup brief | green | 2026-03-31 | Session 17 handoff rewritten with security, pricing, and membership UX changes |
+| Live state | `context/CURRENT_STATE.md` | founder summaries | green | 2026-03-31 | Security hardening, Claim Center, and Vault Status reflected |
 | Protocol assets | `prompts/` | `docs/templates/project-system/` | yellow | 2026-03-31 | Local prompt files are modified; re-sync from studio-ops when intentionally updating protocol |
-| Legal/public statements | `privacy/index.html`, `terms/index.html` | footer notice, founder summaries | green | 2026-03-31 | Published privacy/IP language now matches actual account/browser storage behavior |
+| Legal/public statements | `privacy/index.html`, `terms/index.html`, `vaultsparked/index.html` | footer notice, founder summaries | green | 2026-03-31 | Published privacy/IP language and VaultSparked pricing now match current canon |
 
 ---
 
@@ -58,6 +58,6 @@ Next action: Add browser-level verification for the new account-backed theme per
 
 ## Recommended Actions
 
-1. Add a browser-level verification pass for account-backed theme sync and record the result.
-2. Refresh prompts/templates only if the local prompt edits are intentional and meant to become canon.
-3. Re-run this audit after activation-runbook work changes any published legal/security promises.
+1. Add a browser-level verification pass for account-backed theme sync, Claim Center, and Vault Status and record the result.
+2. Verify real production response headers after Cloudflare proxy enablement and record the result.
+3. Refresh prompts/templates only if the local prompt edits are intentional and meant to become canon.

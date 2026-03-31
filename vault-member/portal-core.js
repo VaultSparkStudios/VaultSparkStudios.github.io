@@ -242,6 +242,69 @@
       if (fill) fill.style.background = 'linear-gradient(90deg,' + accent + ',#fff9e0)';
     }
 
+    let _claimCenterState = {
+      referralCount: null,
+      referralClaimable: false,
+      nextReferralText: '',
+    };
+
+    function formatThemeLabel(themeId) {
+      if (!themeId) return 'Dark';
+      return String(themeId).split('-').map(function(part) {
+        return part.charAt(0).toUpperCase() + part.slice(1);
+      }).join(' ');
+    }
+
+    function setPanelText(id, value) {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    function updateVaultStatusPanel(member, opts) {
+      if (!member) return;
+      opts = opts || {};
+      const localTheme = localStorage.getItem('vs_theme');
+      const accountTheme = member.prefs && member.prefs.site_theme;
+      let themeStatus = formatThemeLabel(localTheme || accountTheme || 'dark');
+      if (localTheme && accountTheme) {
+        themeStatus += localTheme === accountTheme ? ' · local + account' : ' · local override, account backup';
+      } else if (localTheme) {
+        themeStatus += ' · this device';
+      } else if (accountTheme) {
+        themeStatus += ' · account restore ready';
+      } else {
+        themeStatus += ' · default';
+      }
+
+      const dispatchEnabled = member.subscribed || (member.prefs && member.prefs.updates !== false);
+      const isSparked = !!opts.isSparked;
+
+      setPanelText('vault-status-theme', themeStatus);
+      setPanelText('vault-status-membership', isSparked ? 'VaultSparked active · $24.99/mo tier' : 'Free Vault Member');
+      setPanelText('vault-status-discord', member.discord_id ? 'Connected and ready for role sync' : 'Not connected');
+      setPanelText('vault-status-dispatch', dispatchEnabled ? 'Studio updates enabled' : 'Dispatch muted');
+      setPanelText('vault-status-security', 'Password reset + export/delete tools live');
+    }
+
+    function updateClaimCenter(member, opts) {
+      if (!member) return;
+      opts = opts || {};
+      const isSparked = !!opts.isSparked;
+      const nextRank = VS.getNextRank(member.points);
+      const pointsToNext = nextRank ? Math.max(0, nextRank.min - member.points) : 0;
+      const referralStatus = _claimCenterState.referralCount == null
+        ? 'Loading milestone status…'
+        : _claimCenterState.referralClaimable
+          ? _claimCenterState.referralCount + ' referrals · reward ready to claim'
+          : _claimCenterState.nextReferralText || (_claimCenterState.referralCount + ' referrals tracked');
+
+      setPanelText('claim-center-focus', isSparked ? 'Perks active' : 'Best next unlock');
+      setPanelText('claim-center-treasury', member.points.toLocaleString() + ' pts available now');
+      setPanelText('claim-center-referrals', referralStatus);
+      setPanelText('claim-center-rank', nextRank ? pointsToNext.toLocaleString() + ' pts to ' + nextRank.name : 'Maximum rank already achieved');
+      setPanelText('claim-center-identity', isSparked ? 'Sparked perks active · member card ready' : (member.discord_id ? 'Discord linked · member card ready' : 'Link Discord + share your member card'));
+    }
+
     // ── Dashboard tab switcher ───────────────────────────────────
     function switchDashTab(which) {
       localStorage.setItem('vs_active_tab', which);
@@ -260,6 +323,7 @@
       }
       if (which === 'challenges') loadChallenges();
       if (which === 'polls') loadPolls();
+      if (which === 'dashboard') loadReferralMilestones();
       if (which === 'earlyaccess' && !_betaKeysLoaded) {
         _betaKeysLoaded = true;
         loadBetaKeys();
