@@ -41,16 +41,44 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇█▆▇
-Avgs — 3: 42.0 | 5: 41.8 | 10: 39.1 | 25: 39.4 [N=18] | all: 39.4
-  └ 3-session: Dev 8.7 | Align 9.3 | Momentum 9.0 | Engage 5.3 | Process 10.0
+Sparkline (last 5 totals): ▇█▆▇▆
+Avgs — 3: 40.7 | 5: 41.4 | 10: 39.3 | 25: 39.4 [N=19] | all: 39.4
+  └ 3-session: Dev 8.0 | Align 9.0 | Momentum 8.7 | Engage 5.0 | Process 10.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-03-31 | Session 19 | Total: 42/50 | Velocity: 3 | protocolVelocity: 7
+Last session: 2026-03-31 | Session 20 | Total: 40/50 | Velocity: 1 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-03-31 — Session 20 | Total: 40/50 | Velocity: 1 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 40.7 | 5: 41.4 | 10: 39.3 | 25: 39.4 [N=19] | all: 39.4
+  └ 3-session: Dev 8.0 | Align 9.0 | Momentum 8.7 | Engage 5.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 7 | ↓ | No product code changed, but prompt-template drift was removed and truth files were tightened |
+| Creative Alignment | 9 | ↓ | No new visual/product direction landed, but the repo now better reflects the project’s actual public behavior |
+| Momentum | 8 | ↓ | Small protocol-sync session rather than a feature build |
+| Engagement | 5 | → | No user-facing feature shipped, though the login truth cleanup supports cleaner future UX work |
+| Process Quality | 10 | → | Prompt templates are synced to the latest Studio OS source, and closeout/truth files were fully refreshed |
+| **Total** | **40/50** | ↓ | Healthy maintenance closeout that reduced protocol drift without broad product changes |
+
+**Top win:** This repo is now back on the latest Studio OS prompt templates, and the sign-in route is documented consistently across project truth files.
+**Top gap:** The next quality step should be browser verification of the new defaults, not more prompt/protocol churn.
+**Intent outcome:** Achieved — latest Studio OS prompt versions are in place and project truth drift is reduced.
+
+**IGNIS note:** Protocol updates matter most when they remove ambiguity that would otherwise cause future sessions to make the wrong changes.
+
+**Brainstorm**
+1. Access-state copy audit — unify invite-only/open/live wording across homepage, studio, roadmap, journal, and archived pages; Execution probability: High
+2. Default-theme browser parity pass — verify the new `Dark - High Contrast` default across homepage, vault portal, journal, and mobile nav in a served browser session; Execution probability: High
+3. Prompt-sync guardrail — add a lightweight note or check that flags when local prompt template headers lag the current Studio OS source version; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Access-state copy audit · [SIL] Default-theme browser parity pass
+
+---
 
 ## 2026-03-31 — Session 19 | Total: 42/50 | Velocity: 3 | protocolVelocity: 7 | Debt: ↓
 Avgs — 3: 42.0 | 5: 41.8 | 10: 39.1 | 25: 39.4 [N=18] | all: 39.4

@@ -121,9 +121,14 @@
 
 ## Completed — Session 19 (2026-03-31)
 
-- ✅ Sitewide sign-in deep-link fix — public `Sign In` surfaces now route to `/vault-member/` so the auth page opens on the actual login tab
+- ✅ Sitewide sign-in deep-link fix — public `Sign In` surfaces now route to `/vault-member/#login` so the auth page opens on the actual login tab
 - ✅ Default theme change — `High Contrast` is now the default palette for new visitors and is renamed `Dark - High Contrast`, while the old dark palette remains available as `Dark`
 - ✅ Launch-date refinement — homepage hero now shows `Days since launch`, and homepage/studio/roadmap stage labels now use repo-derived March 2026 week windows where historical timing is known
+
+## Completed — Session 20 (2026-03-31)
+
+- ✅ Studio OS prompt sync — `prompts/start.md` and `prompts/closeout.md` now match the latest Session 21 templates from `vaultspark-studio-ops`
+- ✅ Truth correction — project context now reflects the actual `/vault-member/#login` sign-in route instead of the older root auth URL wording
 
 ## Completed — Session 14 (2026-03-31)
 
