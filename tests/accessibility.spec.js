@@ -1,5 +1,6 @@
 const { test, expect } = require('@playwright/test');
 const AxeBuilder = require('@axe-core/playwright').default;
+const { hasVaultCreds, loginVaultMember } = require('./helpers/vaultAuth');
 
 /* ───────────────────────────────────────────────────────────
    axe-core tags: WCAG 2.0 A/AA + WCAG 2.1 A/AA
@@ -147,5 +148,34 @@ test.describe('Accessibility — manual checks', () => {
       const placeholder = await input.getAttribute('placeholder');
       expect(id || ariaLabel || placeholder).toBeTruthy();
     }
+  });
+});
+
+test.describe('Accessibility — authenticated portal scans', () => {
+  test.skip(!hasVaultCreds(), 'Vault test credentials not configured');
+
+  test('Vault dashboard has no critical a11y violations', async ({ page, request }) => {
+    await loginVaultMember(page, request);
+    const violations = await auditPage(page);
+    expect(violations).toEqual([]);
+  });
+
+  test('Vault challenges pane has no critical a11y violations', async ({ page, request }) => {
+    await loginVaultMember(page, request);
+    await page.locator('#tab-dash-challenges').click();
+    await expect(page.locator('#dash-pane-challenges')).toHaveClass(/active/);
+    const violations = await auditPage(page);
+    expect(violations).toEqual([]);
+  });
+
+  test('Onboarding modal has no critical a11y violations', async ({ page, request }) => {
+    await loginVaultMember(page, request);
+    await page.evaluate(() => {
+      const overlay = document.getElementById('onboarding-overlay');
+      if (overlay) overlay.style.display = 'block';
+    });
+    await expect(page.locator('#onboarding-card')).toBeVisible();
+    const violations = await auditPage(page);
+    expect(violations).toEqual([]);
   });
 });

@@ -1,11 +1,52 @@
 # Latest Handoff
 
-Last updated: 2026-03-27
+Last updated: 2026-03-30
 
-Session Intent (2026-03-27 — Session 10): Complete 6 task board items — portal inline style cleanup, image compression, axe-core Playwright CI, programmatic member SEO, public leaderboard API, game release countdowns.
+Session Intent (2026-03-30 — Session 13): Fix the broken light mode and expand the shared theme system with curated alternates while keeping dark as the default.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
+
+## Where We Left Off (Session 13)
+
+- Shipped: 3 theme-system improvements — cascade fix, shared theme tokens, curated 7-preset picker
+- Tests: 1 passing syntax check (`node --check assets/theme-toggle.js`) · local served-preview browser verification passed for dark/light/cool/lava + persistence
+- Deploy: pending
+
+---
+
+## What was completed (as of 2026-03-30 — Session 13)
+
+### Session 13 — Light-Mode Repair + Theme Expansion (2026-03-30)
+
+**Shipped:**
+- `assets/style.css`: fixed the light-mode cascade bug by moving shell rendering to shared theme variables instead of dark-only hardcoded surfaces
+- `assets/style.css`: added curated presets for `light`, `ambient`, `warm`, `cool`, `lava`, and `high-contrast`, while preserving dark as the default visual mode
+- `assets/style.css`: mobile nav, dropdowns, header chrome, hover states, and focus outlines now follow the active theme instead of staying partially dark
+- `assets/theme-toggle.js`: binary toggle replaced with a persistent theme picker that stores `vs_theme` and restores it on load
+
+**Also:** creative direction for theme expansion was recorded in `docs/CREATIVE_DIRECTION_RECORD.md`, and Studio OS state files were refreshed to reflect the new shell behavior.
+
+---
+
+## What was completed (as of 2026-03-30 — Session 12)
+
+### Session 12 — Contract Cleanup + Auth Coverage + Activation Runbook (2026-03-30)
+
+**Shipped:**
+- `context/PORTFOLIO_CARD.md` created from Studio OS template — repo is now compliant with the Hub’s required portfolio metadata
+- `assets/vault-score.js`: `getLeaderboard()` now joins `vault_members(username,points)` and derives rank titles from points
+- `scripts/generate-leaderboard-api.mjs`: public JSON generation now derives rank title from points instead of querying a missing field
+- `supabase/functions/send-member-newsletter/index.ts`: recipient emails now come from `auth.users` via admin API; rank titles derive from points
+- `supabase/migrations/supabase-phase49-social-graph.sql`: feed migration no longer assumes `vault_members.rank_title`
+- `tests/helpers/vaultAuth.js` + `tests/authenticated.spec.js`: env-gated authenticated session seeding and portal coverage added
+- `tests/accessibility.spec.js`: authenticated axe scans for dashboard, challenges pane, and onboarding modal added
+- `.github/workflows/e2e.yml` + `.github/workflows/accessibility.yml`: optional `VAULT_TEST_EMAIL` / `VAULT_TEST_PASSWORD` secrets are now passed through
+- `docs/ACTIVATION_RUNBOOK.md`: concrete execution order for Cloudflare proxy, auth hardening, newsletter secrets, VAPID, and search verification
+
+**Also:** `CLAUDE.md` corrected to reflect the real test suite; status files now treat SQL phases 40–50 as applied.
+
+---
 
 ## Where We Left Off (Session 10 — continued)
 
@@ -116,13 +157,13 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## What is mid-flight
 
-- Nothing. All pushed to main (cdbe6a9).
+- Session 12 changes are local in the working tree and not committed yet. Verify the updated contract paths and context write-back before the next commit/deploy.
 
 ---
 
 ## What to do next (in order)
 
-1. **Run pending SQL migrations** — phases 40–50 (fan art, teams, game scores, seasons, newsletter, treasury, weekly leaderboard, seasons XP, social graph, referral milestones) [critical path]
+1. **Execute activation runbook** — `docs/ACTIVATION_RUNBOOK.md` in order [critical path]
 2. **Cloudflare proxy** — DNS change on registrar; unblocks HTTP security headers [10]
 3. **VAPID key generation** — unblocks web push [9]
 4. **2FA/MFA for vault members** — Supabase TOTP toggle + UI prompt [7.5]
@@ -132,12 +173,11 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## Human Action Required
 
-- [ ] **Run Supabase SQL migrations** — phases 40–50 (fan art, teams, game scores, seasons, newsletter, treasury, weekly leaderboard, seasons XP, social graph, referral milestones). Run in Supabase Dashboard → SQL Editor.
-- [ ] **Enable Cloudflare proxy** — DNS A record change on registrar (point to Cloudflare IPs). Unblocks HSTS, CSP, X-Content-Type-Options headers.
-- [ ] **Generate VAPID keys** — run `npx web-push generate-vapid-keys`, set `VAPID_PUBLIC_KEY` in vault-member portal and `VAPID_PUBLIC_KEY` + `VAPID_PRIVATE_KEY` as Supabase Function secrets. Unblocks web push delivery.
-- [ ] **Set Supabase Function secrets** — RESEND_API_KEY, NEWSLETTER_FROM, APP_URL, NEWSLETTER_SECRET (unblocks newsletter); STRIPE_GIFT_PRICE_ID (future)
-- [ ] **Set GitHub repo secrets** — DIGEST_SECRET, SUPABASE_FUNCTION_BASE_URL, NEWSLETTER_SECRET
-- [ ] **Supabase dashboard hardening** — CAPTCHA on auth, session timeout, email enumeration prevention (3 toggles in Auth settings)
+- [ ] **Enable Cloudflare proxy** — update production DNS/proxy settings so real edge security headers and CDN behavior can go live; follow `docs/ACTIVATION_RUNBOOK.md`
+- [ ] **Apply Supabase auth hardening** — enable CAPTCHA, session timeout, and email enumeration prevention in Supabase Auth settings to close the current trust/security gap
+- [ ] **Set newsletter secrets** — configure `RESEND_API_KEY`, `NEWSLETTER_FROM`, `APP_URL`, and `NEWSLETTER_SECRET` so `send-member-newsletter` can actually deliver
+- [ ] **Generate and wire VAPID keys** — create keys, set portal/public key values, and deploy function secrets to activate web push
+- [ ] **Verify search ownership** — replace the placeholder Google verification file/token and submit `sitemap.xml` plus `member-sitemap.xml`
 - [ ] **LLC formation** — unblocks Stripe production account → VaultSparked subscription + gift checkout
 
 ---

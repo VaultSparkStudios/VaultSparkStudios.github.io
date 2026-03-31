@@ -2,24 +2,28 @@
 
 ## Snapshot
 
-- Date: 2026-03-27
+- Date: 2026-03-30
 - Overall status: Live and active
-- Current phase: Session 10 complete (2026-03-27) — code quality + compression + accessibility + SEO + public API + countdown timers
+- Current phase: Session 13 complete (2026-03-30) — light-mode fix + shared multi-theme system expansion
 
 ## What exists
 
 - systems:
-  - Vault Treasury / Points Marketplace: /vault-treasury/ public page + portal panel; 8 seeded items (cosmetic/lore/access/boost); purchase_treasury_item RPC with point deduction + negative point_events logging (supabase-phase46-treasury.sql — PENDING RUN)
-  - Per-Game Weekly High Score Leaderboard: Weekly tab on /leaderboards/ with game selector, reset countdown, medals; submit_weekly_score + get_weekly_leaderboard RPCs (supabase-phase47-weekly-leaderboard.sql — PENDING RUN)
-  - Vault Seasons Cross-Game XP: award_season_xp() RPC; triggers on game_scores (score/100 XP capped 500), challenge_submissions (50 XP), game_sessions (25 XP); season progress widget in portal dashboard (supabase-phase48-seasons-xp.sql — PENDING RUN)
-  - Member Social Graph: member_follows table; follow/unfollow button on /member/ profiles; Following Feed tab in vault portal; follower/following counts display; get_following_feed RPC (supabase-phase49-social-graph.sql — PENDING RUN)
+  - Studio OS portfolio metadata: `context/PORTFOLIO_CARD.md` added for Studio Hub / founder-readable status at a glance
+  - Activation runbook: `docs/ACTIVATION_RUNBOOK.md` now defines the exact external sequence for Cloudflare proxy, auth hardening, VAPID, newsletter secrets, and search verification
+  - Authenticated Playwright portal coverage: env-gated Supabase session seeding for dashboard, challenges pane, and onboarding modal scans
+  - Rank-title contract cleanup: leaderboard SDK, leaderboard API generator, newsletter function, and social-graph migration now derive rank title from points instead of assuming a `vault_members.rank_title` column
+  - Vault Treasury / Points Marketplace: /vault-treasury/ public page + portal panel; 8 seeded items (cosmetic/lore/access/boost); purchase_treasury_item RPC with point deduction + negative point_events logging (phase46 applied)
+  - Per-Game Weekly High Score Leaderboard: Weekly tab on /leaderboards/ with game selector, reset countdown, medals; submit_weekly_score + get_weekly_leaderboard RPCs (phase47 applied)
+  - Vault Seasons Cross-Game XP: award_season_xp() RPC; triggers on game_scores (score/100 XP capped 500), challenge_submissions (50 XP), game_sessions (25 XP); season progress widget in portal dashboard (phase48 applied)
+  - Member Social Graph: member_follows table; follow/unfollow button on /member/ profiles; Following Feed tab in vault portal; follower/following counts display; get_following_feed RPC (phase49 applied)
   - Game Demo Embeds: demo section on call-of-doodie, gridiron-gm, vaultspark-football-gm; responsive iframe slot + "Demo Coming Soon" placeholder; replace placeholder with iframe src when build ready
   - Game Release Countdowns: live countdown timers on 4 unreleased game pages (VaultFront, Solara, MindFrame, Project Unknown classified); assets/countdown.js widget with prefers-reduced-motion support
   - Vault Score Public Leaderboard API: /api/leaderboard/ docs page + static JSON endpoints (v1/all.json, per-game) + embeddable widget.js; daily GitHub Action refresh
   - Programmatic SEO Member Profiles: scripts/generate-member-seo.mjs generates static /member/{slug}/index.html with JSON-LD Person schema; weekly GitHub Action; member-sitemap.xml
   - axe-core Playwright CI: @axe-core/playwright scans 11 pages for WCAG 2.0/2.1 AA violations; parallel CI job in accessibility.yml
   - Activity Feed (expanded): homepage vault-signal-section now shows joins + challenge completions + game sessions via Promise.allSettled; type-coded dots (gold=join, blue=challenge, green=game)
-  - Accessibility: body.light-mode :focus-visible uses #1a2040 outline (passes WCAG AA); aria-live="polite" on toast + points display in portal
+  - Accessibility: theme-aware focus outline now follows `--focus-outline` across dark, light, ambient, warm, cool, lava, and high-contrast presets; aria-live="polite" on toast + points display in portal
   - Unreleased game content: Solara (MMORPG factions, economy, 6 feature items, stats grid, Late 2026 target), MindFrame (60 chambers, adaptive engine, competitive mode, Mid 2027 target), VaultFront (asymmetric RTS, convoy timing, 6 feature items, stats grid, Summer 2026 closed beta), Project Unknown (classified aesthetic maintained, Rift Scout rank required for brief)
   - Supabase auth (email/password, Google OAuth, Discord OAuth)
   - Vault Member portal (`vault-member/index.html`) — single-file SPA
@@ -58,7 +62,7 @@
   - Login heatmap: 12-week GitHub-style grid in Chronicle tab
   - Annual anniversary award + weekly XP recap banner
   - Profile themes: 5 rank-unlockable card backgrounds
-  - Dark/light mode toggle (assets/theme-toggle.js, persists in localStorage)
+  - Shared theme system: nav theme picker with 7 presets (dark default + light, ambient, warm, cool, lava, high contrast), persisted in `localStorage`; global shell surfaces now read shared theme variables
   - Rank Comparison panel + Member Spotlight panel
   - PWA install prompt (assets/pwa-install.js)
   - Investor KPI sparklines + "Ask a question" feature + data room access log
@@ -88,13 +92,13 @@
   - Protocol: re-audit on every major update
 
 - assets:
-  - `assets/style.css` — all badge classes, 4-tier responsive breakpoints (1100/980/768/640px)
+  - `assets/style.css` — all badge classes, 4-tier responsive breakpoints (1100/980/768/640px), shared theme tokens for page chrome + mobile nav
   - `assets/investor-theme.css` — investor portal responsive styles
   - `assets/supabase-client.js` — anon key + client init (auth/write flows)
   - `assets/supabase-public.js` — 1 KB lightweight REST helper (anonymous read-only public pages)
   - `assets/web-vitals.js` — LCP, CLS, FCP, TTFB → GA4
   - `assets/cookie-consent.js` — GDPR banner
-  - `assets/theme-toggle.js` — dark/light mode
+  - `assets/theme-toggle.js` — multi-theme selector (dark default + 6 alternates)
   - `assets/pwa-install.js` — beforeinstallprompt handler
   - `assets/vault-cta.js` — sticky "Join the Vault" bar
   - `assets/vault-score.js` — game score submission SDK
@@ -117,24 +121,11 @@
   - All Phases 1–35 migrations: ✅ (consolidated in supabase-phase35-migrations.sql)
   - supabase-phase36-game-sessions.sql: ✅ needed / status unknown
   - supabase-phase38-bootstrap.sql: ✅ needed
-  - supabase-phase40-fan-art.sql: ⚠️ PENDING USER ACTION
-  - supabase-phase41-fan-art-votes.sql: ⚠️ PENDING USER ACTION
-  - supabase-phase43-teams.sql: ⚠️ PENDING USER ACTION
-  - supabase-phase45-game-scores.sql: ⚠️ PENDING USER ACTION
-  - supabase-phase45-seasons.sql: ⚠️ PENDING USER ACTION
-  - supabase-phase45-newsletter.sql: ⚠️ PENDING USER ACTION
+  - Phases 40–50: ✅ applied via db-migrate Action on 2026-03-28
 
 ## In progress
 
-- None. All committed and pushed (session 10 continued — mobile nav fix cdbe6a9).
-
-## SQL Migrations Pending (user must run in Supabase dashboard)
-
-- supabase-phase46-treasury.sql — treasury_items, treasury_purchases, purchase_treasury_item RPC
-- supabase-phase47-weekly-leaderboard.sql — weekly_game_scores, get_weekly_leaderboard, submit_weekly_score RPCs
-- supabase-phase48-seasons-xp.sql — award_season_xp RPC, triggers on game_scores/challenge_submissions/game_sessions, season_xp column on vault_members
-- supabase-phase49-social-graph.sql — member_follows, get_follow_counts, get_following_feed RPCs
-- supabase-phase50 — referral_milestones, vault_member_milestones, get_referral_milestones + claim_referral_milestone RPCs
+- Session 12 changes are local in the working tree and pending final verification / commit.
 
 ## Blockers
 
@@ -145,6 +136,6 @@
 
 ## Next 3 moves
 
-1. Run pending SQL migrations (phases 40, 41, 43, 45, 46, 47, 48, 49) — activates all coded features
-2. Enable Cloudflare proxy (DNS change on registrar — unblocks HTTP security headers + CDN)
-3. Generate VAPID keys + set secrets (unblocks web push)
+1. Execute `docs/ACTIVATION_RUNBOOK.md` in order — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification
+2. End-to-end test VaultSparked Discord role with Stripe test checkout once billing prerequisites are ready
+3. Re-run authenticated Playwright coverage after activation steps land to verify no regressions in live auth flows

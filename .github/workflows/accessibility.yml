@@ -26,6 +26,9 @@ jobs:
 
       - name: Run axe accessibility tests via Playwright
         run: npx playwright test tests/accessibility.spec.js --project=chromium
+        env:
+          VAULT_TEST_EMAIL: ${{ secrets.VAULT_TEST_EMAIL }}
+          VAULT_TEST_PASSWORD: ${{ secrets.VAULT_TEST_PASSWORD }}
 
       - name: Upload Playwright report
         if: always()

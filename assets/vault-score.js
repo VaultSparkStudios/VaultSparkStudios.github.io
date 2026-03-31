@@ -15,6 +15,25 @@
 (function () {
   var SB  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
   var KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
+  var RANKS = [
+    { min: 100000, name: 'The Sparked' },
+    { min: 60000,  name: 'Forge Master' },
+    { min: 30000,  name: 'Vault Keeper' },
+    { min: 15000,  name: 'Void Operative' },
+    { min: 7500,   name: 'Vault Breacher' },
+    { min: 3000,   name: 'Vault Guard' },
+    { min: 1000,   name: 'Rift Scout' },
+    { min: 250,    name: 'Vault Runner' },
+    { min: 0,      name: 'Spark Initiate' },
+  ];
+
+  function getRankTitle(points) {
+    var pts = Number(points) || 0;
+    for (var i = 0; i < RANKS.length; i++) {
+      if (pts >= RANKS[i].min) return RANKS[i].name;
+    }
+    return 'Spark Initiate';
+  }
 
   function getSession() {
     try {
@@ -66,12 +85,26 @@
     getLeaderboard: function (gameSlug, limit) {
       var n = limit || 25;
       return fetch(
-        SB + '/rest/v1/game_scores?select=user_id,score,vault_members(username,rank_title)' +
+        SB + '/rest/v1/game_scores?select=user_id,score,vault_members(username,points)' +
         '&game_slug=eq.' + encodeURIComponent(gameSlug) +
         '&order=score.desc&limit=' + n,
         { headers: { apikey: KEY, Accept: 'application/json' } }
       )
         .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (rows) {
+          return Array.isArray(rows) ? rows.map(function (row) {
+            var member = row.vault_members || {};
+            return {
+              user_id: row.user_id,
+              score: row.score,
+              vault_members: {
+                username: member.username || 'Anonymous',
+                points: member.points || 0,
+                rank_title: getRankTitle(member.points),
+              },
+            };
+          }) : [];
+        })
         .catch(function () { return []; });
     },
 

@@ -67,3 +67,27 @@ Agents MUST NOT modify or remove existing entries.
 - New required direction: Full re-audit at 82/100 (10 categories, 38-item brainstorm). Implement leverage items 1–6: game score submission panels, Discord CTAs, prefers-reduced-motion, SRI hashes, changelog update, canonical tag verification. Simplify pass on all new code.
 - Why it matters: Closes the biggest product gap since Phase 36 (games had no vault integration). SIL raised to 36/50. 38-item brainstorm establishes next two sessions' backlog.
 - Supersedes prior entry: —
+
+---
+
+### 2026-03-30 — Audit follow-through: implement highest-impact items
+
+- Category: Assignment + Approval
+- Human input: "Audit project in its entirety and provide score/rating... Recommend the top items to implement by highest impact/potential." → then "Yes let us complete these steps. But first, explain what is the portfolio card" → then "yes do that"
+- Area affected: Studio OS compliance, public data integrity, authenticated QA coverage, activation readiness
+- Previous state: Portfolio Card missing, leaderboard/newsletter code assumed non-authoritative schema fields, authenticated portal testing existed only as backlog, activation blockers were scattered across multiple docs
+- New required direction: Add the Portfolio Card, fix the rank/data contract drift, add authenticated portal test coverage, and consolidate activation blockers into a concrete runbook
+- Why it matters: Raises process reliability, removes silent contract bugs, and converts the highest-impact audit recommendations into shippable repo work
+- Supersedes prior entry: —
+
+---
+
+### 2026-03-30 — Theme expansion direction
+
+- Category: Guidance + Approval
+- Human input: "I wouldnt mind adding an ambient and warm color options too. I like dark mode easily the best though" → "Cool, lava and high contrst should be added too"
+- Area affected: Shared site shell, theme system, visual customization
+- Previous state: Broken light mode and a binary dark/light toggle only
+- New required direction: Keep dark as the preferred default theme, fix light mode, and expand the picker to include ambient, warm, cool, lava, and high-contrast options
+- Why it matters: Preserves the project’s darker core identity while adding curated alternates that feel intentional rather than generic
+- Supersedes prior entry: —

@@ -18,11 +18,45 @@ const RESEND_API_KEY    = Deno.env.get('RESEND_API_KEY')       ?? '';
 const FROM_EMAIL        = Deno.env.get('NEWSLETTER_FROM')      ?? 'studio@vaultsparkstudios.com';
 const APP_URL           = Deno.env.get('APP_URL')              ?? 'https://vaultsparkstudios.com';
 const NEWSLETTER_SECRET = Deno.env.get('NEWSLETTER_SECRET')    ?? '';
+const RANKS = [
+  { min: 100000, name: 'The Sparked' },
+  { min: 60000,  name: 'Forge Master' },
+  { min: 30000,  name: 'Vault Keeper' },
+  { min: 15000,  name: 'Void Operative' },
+  { min: 7500,   name: 'Vault Breacher' },
+  { min: 3000,   name: 'Vault Guard' },
+  { min: 1000,   name: 'Rift Scout' },
+  { min: 250,    name: 'Vault Runner' },
+  { min: 0,      name: 'Spark Initiate' },
+] as const;
 
 const CORS = {
   'Access-Control-Allow-Origin':  '*',
   'Access-Control-Allow-Headers': 'authorization, content-type',
 };
+
+function getRankTitle(points: number): string {
+  return RANKS.find((rank) => points >= rank.min)?.name ?? 'Spark Initiate';
+}
+
+async function loadAuthEmailMap(supabase: ReturnType<typeof createClient>) {
+  const emails = new Map<string, string>();
+  let page = 1;
+
+  while (true) {
+    const { data, error } = await supabase.auth.admin.listUsers({ page, perPage: 1000 });
+    if (error) throw error;
+
+    const users = data?.users ?? [];
+    for (const user of users) {
+      if (user.id && user.email) emails.set(user.id, user.email);
+    }
+    if (users.length < 1000) break;
+    page += 1;
+  }
+
+  return emails;
+}
 
 serve(async (req: Request) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: CORS });
@@ -45,7 +79,7 @@ serve(async (req: Request) => {
   // ── Get all opted-in members ─────────────────────────────────────────────
   const { data: members } = await supabase
     .from('vault_members')
-    .select('id, username, email, points, rank_title, created_at, newsletter_preferences(opted_out, unsubscribe_token)')
+    .select('id, username, points, created_at, newsletter_preferences(opted_out, unsubscribe_token)')
     .order('points', { ascending: false });
 
   if (!members || members.length === 0) {
@@ -54,6 +88,8 @@ serve(async (req: Request) => {
     });
   }
 
+  const authEmailMap = await loadAuthEmailMap(supabase);
+
   // ── Studio stats for everyone ─────────────────────────────────────────────
   const [totalMembersRes, activeMembersRes, topMembersRes] = await Promise.all([
     supabase.from('vault_members').select('id', { count: 'exact', head: true }),
@@ -61,7 +97,7 @@ serve(async (req: Request) => {
       .select('user_id', { count: 'exact', head: true })
       .gte('created_at', thirtyDaysAgo),
     supabase.from('vault_members')
-      .select('username, points, rank_title')
+      .select('username, points')
       .order('points', { ascending: false })
       .limit(3),
   ]);
@@ -79,7 +115,9 @@ serve(async (req: Request) => {
       ? member.newsletter_preferences[0]
       : member.newsletter_preferences;
     if (prefs?.opted_out) continue;
-    if (!member.email) continue;
+
+    const email = authEmailMap.get(member.id);
+    if (!email) continue;
 
     // Skip if already sent this period
     const { data: alreadySent } = await supabase
@@ -127,7 +165,7 @@ serve(async (req: Request) => {
           <div style="background:#0d1220;border:1px solid rgba(255,196,0,0.2);border-radius:12px;padding:20px;">
             <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#FFC400;margin-bottom:8px;">Your Activity This Month</div>
             <div style="font-size:22px;font-weight:800;color:#ffffff;margin-bottom:4px;">${recentXp.toLocaleString()} XP</div>
-            <div style="font-size:13px;color:#8b9bb4;">Current rank: <strong style="color:#e2e8f0;">${member.rank_title || 'Spark'}</strong></div>
+            <div style="font-size:13px;color:#8b9bb4;">Current rank: <strong style="color:#e2e8f0;">${getRankTitle(member.points || 0)}</strong></div>
             ${gamesPlayed.size > 0 ? `<div style="font-size:13px;color:#8b9bb4;margin-top:4px;">Games played: ${Array.from(gamesPlayed).join(', ')}</div>` : ''}
           </div>
         </td></tr>`
@@ -137,12 +175,12 @@ serve(async (req: Request) => {
     const topMembersHtml = topMembers.length > 0 ? `
       <tr><td style="padding:0 0 28px;">
         <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#8b9bb4;margin-bottom:12px;">Top Members This Month</div>
-        ${topMembers.map((m: { username: string; points: number; rank_title: string }, i: number) => `
+        ${topMembers.map((m: { username: string; points: number }, i: number) => `
         <div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.06);">
           <span style="font-size:15px;font-weight:800;color:#FFC400;width:20px;">#${i + 1}</span>
           <div>
             <div style="font-size:14px;font-weight:700;color:#e2e8f0;">${m.username}</div>
-            <div style="font-size:12px;color:#8b9bb4;">${m.rank_title || 'Spark'} · ${(m.points || 0).toLocaleString()} pts</div>
+            <div style="font-size:12px;color:#8b9bb4;">${getRankTitle(m.points || 0)} · ${(m.points || 0).toLocaleString()} pts</div>
           </div>
         </div>`).join('')}
       </td></tr>` : '';
@@ -233,7 +271,7 @@ serve(async (req: Request) => {
       headers: { Authorization: `Bearer ${RESEND_API_KEY}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         from:    FROM_EMAIL,
-        to:      member.email,
+        to:      email,
         subject: `VaultSpark Studios — ${monthStr} Dispatch`,
         html,
       }),

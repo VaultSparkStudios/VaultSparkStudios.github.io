@@ -4,6 +4,57 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-30 — Session 13: light-mode fix + shared theme expansion
+
+- Goal: Repair the broken light mode and expand the shared site shell into a curated multi-theme system while keeping dark as the default
+- What changed:
+  - `assets/style.css`: moved shared shell rendering onto theme variables for page background, header chrome, dropdowns, hover states, mobile nav overlay, and focus outlines
+  - `assets/style.css`: added `ambient`, `warm`, `cool`, `lava`, and `high-contrast` presets alongside repaired `light` and dark default
+  - `assets/theme-toggle.js`: replaced the binary dark/light toggle with a persistent nav theme picker backed by `localStorage`
+  - Studio OS write-back: CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, DECISIONS, SELF_IMPROVEMENT_LOOP, and CREATIVE_DIRECTION_RECORD updated
+- Verification:
+  - `node --check assets/theme-toggle.js`
+  - selector sanity check via `rg` on new theme classes and picker references
+  - local served-preview Playwright verification: dark, light, cool, and lava all switched correctly; `vs_theme` persisted after reload; picker exposed 7 options
+- Risks created or removed:
+  - Removed: global light mode no longer loses its body/header/mobile shell to dark-only CSS ordering
+  - Remaining: some page-specific inline card surfaces are still intentionally dark and should be moved to shared theme tokens for full parity
+- Session intent outcome: Achieved — light mode was repaired and the requested theme presets were added without changing the default dark-first posture
+- Recommended next move: Add theme persistence E2E coverage and audit remaining inline dark surfaces for theme parity
+
+---
+
+### 2026-03-30 — Session 12: contract cleanup + auth coverage + activation runbook
+
+- Goal: Complete the highest-impact audit follow-through by fixing schema-contract drift, adding authenticated portal coverage, creating the missing Portfolio Card, and syncing Studio OS truth files
+- What changed:
+  - `context/PORTFOLIO_CARD.md`: created from Studio OS template
+  - `docs/ACTIVATION_RUNBOOK.md`: created — concrete external sequence for Cloudflare proxy, auth hardening, newsletter secrets, VAPID, and search verification
+  - `assets/vault-score.js`: leaderboard join changed from `vault_members(username,rank_title)` to `vault_members(username,points)`; rank title now derived client-side from points
+  - `scripts/generate-leaderboard-api.mjs`: public leaderboard JSON generator now derives rank title from points
+  - `supabase/functions/send-member-newsletter/index.ts`: recipient emails now load from `auth.users`; rank title now derives from points
+  - `supabase/migrations/supabase-phase49-social-graph.sql`: `rank_title` now derived from points in the feed RPC
+  - `tests/helpers/vaultAuth.js` + `tests/authenticated.spec.js`: env-driven Supabase session seeding + authenticated dashboard/challenges/onboarding coverage
+  - `tests/accessibility.spec.js`: authenticated axe scans added
+  - `.github/workflows/e2e.yml` + `.github/workflows/accessibility.yml`: optional vault test secrets passed into Playwright runs
+  - `CLAUDE.md`: corrected stale “no test suite” statement
+  - Context files: CURRENT_STATE, TASK_BOARD, PROJECT_STATUS, LATEST_HANDOFF, DECISIONS updated for truth sync
+- Verification:
+  - `node --check assets/vault-score.js`
+  - `node --check scripts/generate-leaderboard-api.mjs`
+  - `node --check tests/helpers/vaultAuth.js`
+  - `node --check tests/authenticated.spec.js`
+  - `node --check tests/accessibility.spec.js`
+  - `npx playwright test --list` (80 logical Playwright cases discovered; authenticated cases present but not executed without secrets)
+- Risks created or removed:
+  - Removed: leaderboard/newsletter reliance on non-authoritative `vault_members.rank_title`
+  - Removed: newsletter reliance on non-existent `vault_members.email`
+  - Reduced: authenticated portal regressions now have a CI-ready Playwright lane when secrets are present
+- Session intent outcome: Achieved — the declared audit follow-through items were completed in repo state and write-back
+- Recommended next move: Execute `docs/ACTIVATION_RUNBOOK.md` in order, then run authenticated Playwright coverage against the live production path
+
+---
+
 ### 2026-03-27 — Session 4: Terms / Onboarding / Activity Feed + Simplify
 
 - Goal: Ship Terms of Service page, "Complete Your Vault" onboarding CTA, Live Activity Feed; apply simplify fixes

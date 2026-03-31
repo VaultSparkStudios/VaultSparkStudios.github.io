@@ -3,11 +3,16 @@
 ## Now
 
 - [x] Run pending SQL migrations: phase40-50 ✅ **ALL APPLIED** (2026-03-28 via db-migrate Action)
-- [ ] Fix vault-score.js getLeaderboard() — queries vault_members(rank_title) which doesn't exist; needs JS fix
-- [SIL] Authenticated axe-core portal tests — extend Playwright to log in and scan dashboard/onboarding/challenge modals
+- [x] Fix vault-score.js getLeaderboard() — rank titles now derive from points instead of querying a missing `vault_members(rank_title)` field
+- [x] [SIL] Authenticated axe-core portal tests — env-gated Playwright scans now cover dashboard, challenges, and onboarding modal
 
 ## Next (Pending External Action)
 
+- [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Score: 7.9]
+- [SIL] Theme surface parity audit — move remaining page-specific dark surfaces onto shared theme tokens across homepage + portal [Score: 7.3]
+- Execute `docs/ACTIVATION_RUNBOOK.md` — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification [Score: 9.6]
+- [SIL] Activation verification pass after external setup — rerun auth, push, headers, sitemap, and newsletter checks once the runbook is complete [Score: 8.9]
+- [SIL] Shared rank-threshold source audit — reduce future drift across UI, scripts, functions, and migrations [Score: 7.4]
 - Enable Cloudflare proxy (requires DNS change on registrar — highest-ROI speed/security win) [Score: 10, Composite: 8.5]
 - Supabase dashboard settings: CAPTCHA on auth, session timeout, email enumeration prevention [Score: 8.5]
 - VAPID key setup: generate keys, set VAPID_PUBLIC_KEY in vault-member/index.html, deploy send-push Edge Function secrets [Score: 8.2]
@@ -18,6 +23,14 @@
 - Vault Live dev stream integration — "Live Now" badge on homepage when founder is streaming [Score: 8.8] (no code needed, founder action)
 - Community Game Jam / Challenge Events — run a 7-day score competition with existing infra [Score: 7.8] (no code needed, founder action)
 - Founder AMA / Q&A live session — monthly, feeds journal + Discord [Score: 6.8] (no code needed, founder action)
+
+## Human Action Required
+
+- [ ] Enable Cloudflare proxy — complete the DNS/proxy step from `docs/ACTIVATION_RUNBOOK.md` so edge headers and CDN behavior can go live
+- [ ] Apply Supabase auth hardening — CAPTCHA, session timeout, and email enumeration prevention must be enabled in Supabase Auth settings
+- [ ] Set newsletter secrets — configure `RESEND_API_KEY`, `NEWSLETTER_FROM`, `APP_URL`, and `NEWSLETTER_SECRET` before newsletter delivery can work
+- [ ] Generate and wire VAPID keys — create keys and set both portal/config and function secrets to activate web push
+- [ ] Verify search ownership — replace the placeholder Google verification token/file and submit both production sitemaps
 
 ## Blocked
 
@@ -73,6 +86,22 @@
 - [ ] Community-created lore submissions [4.5]
 - [ ] "Currently playing" badge on member profile [4.5] (note: already exists as of Phase 42)
 - [ ] Vault social graph (member connections) [4.8] — now CODED as full follow system (session 5, phase 49)
+
+## Completed — Session 13 (2026-03-30)
+
+- ✅ Light-mode regression fix — shared page background, header chrome, dropdowns, and mobile nav now honor the active theme instead of falling back to dark-only surfaces
+- ✅ Theme system expansion — binary dark/light toggle replaced with a persistent nav picker supporting dark, light, ambient, warm, cool, lava, and high contrast
+- ✅ Shared theme tokens — `assets/style.css` now drives shell backgrounds, header chrome, nav hover states, dropdowns, mobile overlay, and focus outlines from theme variables
+
+## Completed — Session 12 (2026-03-30)
+
+- ✅ `context/PORTFOLIO_CARD.md` added — founder/hub-readable project snapshot now exists and matches Studio Hub onboarding requirements
+- ✅ Leaderboard contract cleanup — `assets/vault-score.js` and `scripts/generate-leaderboard-api.mjs` now derive `rank_title` from `points` instead of querying a missing column
+- ✅ Newsletter contract cleanup — `send-member-newsletter` now pulls recipient emails from `auth.users` and derives rank title from points
+- ✅ Social graph migration cleanup — phase49 migration now derives `rank_title` from points instead of assuming `vault_members.rank_title`
+- ✅ Authenticated portal Playwright lane — session-seeded auth helper + dashboard/challenges/onboarding coverage, wired to CI via optional secrets
+- ✅ Activation runbook — `docs/ACTIVATION_RUNBOOK.md` consolidates the remaining external blockers into a concrete execution order
+- ✅ Studio OS truth sync — `CLAUDE.md`, `CURRENT_STATE.md`, `PROJECT_STATUS.json`, and handoff files updated to remove stale SQL-pending language
 
 ## Completed — Session 11 (2026-03-28)
 

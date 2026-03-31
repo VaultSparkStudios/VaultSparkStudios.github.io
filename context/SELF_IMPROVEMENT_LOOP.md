@@ -41,14 +41,72 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▅▅▅▅▆
-3-session avg: Dev 9.3 | Align 8.0 | Momentum 9.0 | Engage 3.0 | Process 10.0
-Avg total: 40.0 / 50  |  Velocity trend: ↑  |  Debt: ↓
-Last session: 2026-03-27 | Session 10 (cont.) | Total: 41/50 | Velocity: 7
+Sparkline (last 5 totals): ▆▆▇▆▇
+Avgs — 3: 40.7 | 5: 40.4 | 10: 38.8 | 25: 38.0 [N=12] | all: 38.0
+  └ 3-session: Dev 9.7 | Align 8.3 | Momentum 9.0 | Engage 3.3 | Process 10.0
+Velocity trend: →  |  Protocol velocity: ↑  |  Debt: →
+Last session: 2026-03-30 | Session 13 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-03-30 — Session 13 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7 | Debt: →
+Avgs — 3: 40.7 | 5: 40.4 | 10: 38.8 | 25: 38.0 [N=12] | all: 38.0
+  └ 3-session: Dev 9.7 | Align 8.3 | Momentum 9.0 | Engage 3.3 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | ↓ | Shared shell theme logic is now centralized and the light-mode regression is fixed, but browser-level verification is still thin |
+| Creative Alignment | 9 | ↑ | Dark remains the default identity while the new alternates feel curated instead of generic |
+| Momentum | 9 | → | One focused UI repair delivered both a regression fix and a meaningful feature expansion in the same pass |
+| Engagement | 4 | ↑ | Theme personalization is a small but real UX lift for public visitors and members |
+| Process Quality | 10 | → | Full Studio OS write-back completed, including CDR, decisions, task board, and SIL follow-through |
+| **Total** | **41/50** | ↑ | Returns to the prior peak with better visual-system coherence |
+
+**Top win:** The theme system is no longer a brittle one-off toggle; the site shell now has a real, reusable palette layer with dark-first defaults and six curated alternates.
+**Top gap:** Some page-level inline surfaces still hardcode dark treatments, so full theme parity is not yet guaranteed beyond the shared shell.
+**Intent outcome:** Achieved — the broken light mode was fixed and the requested ambient, warm, cool, lava, and high-contrast options were added.
+
+**IGNIS note:** Visual regressions tied to hardcoded shell colors are better solved by centralizing surface tokens than by stacking more per-theme exception rules.
+
+**Brainstorm**
+1. Theme persistence E2E coverage — add a Playwright check that changes the theme, reloads, and verifies the stored preset plus mobile nav rendering; start by asserting `localStorage.vs_theme` and the body class; Execution probability: High
+2. Theme surface parity audit — inventory remaining page-local dark cards/inline styles and migrate the highest-visibility ones to shared theme tokens; start with the homepage hero and milestone cards; Execution probability: High
+3. Auto theme mode — add a user-facing `Auto` option that respects `prefers-color-scheme` while still allowing manual override; start by defining precedence between stored and system theme; Execution probability: Medium
+4. Theme-aware browser chrome — update `<meta name=\"theme-color\">` dynamically for mobile/PWA polish across presets; start with dark, light, and high-contrast before expanding to all themes; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Theme persistence E2E coverage · [SIL] Theme surface parity audit
+
+---
+
+## 2026-03-30 — Session 12 | Total: 40/50 | Velocity: 1 | protocolVelocity: 7 | Debt: →
+Avgs — 3: 40.3 | 5: 40.0 | 10: 38.3 | 25: 37.7 [N=11] | all: 37.7
+  └ 3-session: Dev 9.7 | Align 8.0 | Momentum 9.0 | Engage 3.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 10 | → | Fixed rank/data-contract drift in leaderboard and newsletter paths; added authenticated Playwright coverage with session seeding |
+| Creative Alignment | 8 | → | Work stayed infrastructural and preserved the project’s existing tone and product shape |
+| Momentum | 9 | → | Portfolio card, activation runbook, contract cleanup, CI auth lane, and truth-sync all landed in one session |
+| Engagement | 3 | → | Activation still blocked by external actions, so user-facing engagement remains pre-lift |
+| Process Quality | 10 | → | Missing `PORTFOLIO_CARD.md` closed; stale SQL/test-suite language corrected across repo context |
+| **Total** | **40/50** | ↓ | Slightly below Session 10 peak but structurally healthier |
+
+**Top win:** Contract cleanup fixed a whole class of silent drift bugs at once: rank title is now treated as derived state, not a phantom column, and the newsletter path no longer assumes `vault_members.email`.
+**Top gap:** Real activation still depends on external execution — Cloudflare proxy, VAPID, auth hardening, newsletter secrets, and search verification.
+**Intent outcome:** Achieved — the session matched the declared follow-through intent and closed the targeted audit items.
+
+**IGNIS note:** The highest-leverage follow-through on a feature-rich repo was not more features but eliminating schema drift and making external blockers executable.
+
+**Brainstorm**
+1. Activation verification pass — after the runbook is executed, run one production validation sweep (auth, push, headers, sitemap, newsletter) and log the exact before/after state; start by scripting the verification checklist in one repo-local command doc; Execution probability: High
+2. Shared rank-threshold source — centralize the mirrored rank thresholds into one canonical machine-readable file for JS/scripts/functions; start by inventorying every rank mirror and choosing one source file; Execution probability: Medium
+3. Stripe test harness — automate one end-to-end test account path for VaultSparked + Discord role sync once billing preconditions are ready; start by documenting the exact webhook/role assertions needed once billing is available; Execution probability: Low
+
+**Committed to TASK_BOARD:** [SIL] Activation verification pass after external setup · [SIL] Shared rank-threshold source audit
+
+---
 
 ### 2026-03-26 — Studio OS onboarding
 

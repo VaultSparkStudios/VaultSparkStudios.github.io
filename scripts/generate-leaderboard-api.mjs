@@ -23,6 +23,17 @@ const GAME_LABELS = {
   'gridiron-gm': 'Gridiron GM',
   'vaultspark-football-gm': 'VaultSpark Football GM',
 };
+const RANKS = [
+  { min: 100000, name: 'The Sparked' },
+  { min: 60000,  name: 'Forge Master' },
+  { min: 30000,  name: 'Vault Keeper' },
+  { min: 15000,  name: 'Void Operative' },
+  { min: 7500,   name: 'Vault Breacher' },
+  { min: 3000,   name: 'Vault Guard' },
+  { min: 1000,   name: 'Rift Scout' },
+  { min: 250,    name: 'Vault Runner' },
+  { min: 0,      name: 'Spark Initiate' },
+];
 
 mkdirSync(OUT_DIR, { recursive: true });
 
@@ -43,14 +54,19 @@ function mapEntries(rows) {
     rank: i + 1,
     username: row.vault_members?.username || 'Anonymous',
     score: row.score,
-    rank_title: row.vault_members?.rank_title || 'Spark Initiate',
+    rank_title: getRankTitle(row.vault_members?.points),
   }));
+}
+
+function getRankTitle(points) {
+  const pts = Number(points) || 0;
+  return RANKS.find((rank) => pts >= rank.min)?.name || 'Spark Initiate';
 }
 
 async function generateGameFile(slug) {
   console.log(`  Fetching ${slug}...`);
   const rows = await sbFetch(
-    `game_scores?select=user_id,score,vault_members(username,rank_title)` +
+    `game_scores?select=user_id,score,vault_members(username,points)` +
     `&game_slug=eq.${encodeURIComponent(slug)}` +
     `&order=score.desc&limit=50`
   );

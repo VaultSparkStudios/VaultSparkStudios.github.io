@@ -27,6 +27,8 @@ jobs:
         run: npx playwright test --reporter=list --project=chromium
         env:
           BASE_URL: https://vaultsparkstudios.com
+          VAULT_TEST_EMAIL: ${{ secrets.VAULT_TEST_EMAIL }}
+          VAULT_TEST_PASSWORD: ${{ secrets.VAULT_TEST_PASSWORD }}
 
       - name: Upload test results
         if: always()

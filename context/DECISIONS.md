@@ -45,3 +45,25 @@ Append new entries. Do not erase historical reasoning unless it is wrong.
 - Alternatives considered: Full repo reorganization to match studio-ops folder layout
 - Why this was chosen: Non-breaking. All existing HANDOFF_PHASE6.md, VAULT_BUILD_ORDER.md, AGENTS.md content preserved. New context/ files give future sessions a fast, structured read path.
 - Follow-up: Update AGENTS.md in studio-ops template to include discovery pointer in all future projects
+
+---
+
+### 2026-03-30 — Rank titles derive from points, not a stored `vault_members.rank_title` field
+
+- Status: Active
+- Context: Public leaderboard code, newsletter delivery, and one migration file were querying `rank_title` as if it were a stable column on `vault_members`, while the project’s base schema and portal logic treat rank as derived from points.
+- Decision: Derive rank title from points anywhere the repo needs it unless a specific RPC/table explicitly materializes `rank_title` for that surface.
+- Alternatives considered: Add a persistent `rank_title` column to `vault_members`, keep patching each broken query ad hoc
+- Why this was chosen: Keeps rank logic aligned with the existing points-first model, avoids unnecessary schema expansion, and fixes a whole class of drift bugs in one rule.
+- Follow-up: If rank logic changes again, update the shared thresholds everywhere they are mirrored (`vault-member` UI, Discord role sync, newsletters, public APIs, migrations).
+
+---
+
+### 2026-03-30 — Theme system upgraded from binary toggle to curated picker
+
+- Status: Active
+- Context: Light mode was broken because the shared shell still contained dark-only cascade assumptions, and the user explicitly wanted multiple curated theme options while keeping dark as the favorite/default posture.
+- Decision: Replace the binary dark/light toggle with a persistent theme picker and drive the site shell from shared theme variables that support `dark`, `light`, `ambient`, `warm`, `cool`, `lava`, and `high-contrast`.
+- Alternatives considered: Only patch light mode and keep the binary toggle, add many page-local theme overrides, or expose an uncurated larger theme list
+- Why this was chosen: Fixes the regression at the root, keeps theme logic centralized, and gives the user requested variety without diluting the site’s dark-first identity.
+- Follow-up: Add browser-level persistence coverage and move remaining page-specific dark inline surfaces onto shared theme tokens where appropriate.
