@@ -4,11 +4,14 @@
 
 - Date: 2026-03-31
 - Overall status: Live and active
-- Current phase: Session 18 complete (2026-03-31) — invite-only Vault status messaging corrected on `/join/`, and misleading public membership social-proof was removed from the homepage
+- Current phase: Session 19 complete (2026-03-31) — sign-in deep links now open the real login tab, the default site theme is now `Dark - High Contrast`, and the homepage/studio timeline surfaces now use launch-derived timing labels
 
 ## What exists
 
 - systems:
+  - Sign-in deep-link alignment: public `Sign In` surfaces now route to `/vault-member/`, so login actions land on the actual sign-in tab instead of the register-first auth view
+  - Default theme upgrade: the old `High Contrast` theme is now the default palette for new visitors and is renamed `Dark - High Contrast`; the previous default dark palette remains available as an explicit `Dark` choice
+  - Launch-age + timeline dating refinement: homepage hero now shows `Days since launch`, and homepage/studio/roadmap stage labels now use repo-derived March 2026 week windows instead of generic `2026` markers where historical data exists
   - Invite-only Vault status messaging: `/join/` now shows `Vault Status · Invite codes only` with a yellow status indicator instead of a green “live member count” treatment, and the homepage no longer shows a public `Join {count} vault members` bar
   - Vault Membership readiness surfaces: `vault-member/index.html` now includes a `Claim Center` dashboard panel for next unlocks/rewards and a `Vault Status` settings block for theme sync, membership tier, Discord linkage, and account-control status
   - Local Playwright auth bootstrap: `playwright.config.js` now loads `.env.playwright.local` when present, `.env.playwright.local.example` documents the expected keys, and authenticated tests can seed both auth state and a device theme locally without committing secrets
@@ -84,7 +87,7 @@
   - Investor KPI sparklines + "Ask a question" feature + data room access log
 
 - public pages:
-  - `/` homepage with live member count, latest journal teaser, JSON-LD, Twitter Cards
+- `/` homepage with `Days since launch`, dated studio milestones, latest journal teaser, JSON-LD, Twitter Cards
   - `/games/` + 7 game detail pages with VideoGame + FAQPage + BreadcrumbList JSON-LD, game ratings
   - `/leaderboards/` — Global + Football GM + Call of Doodie + Challenge + Referral + Team tabs
   - `/community/` — events, Discord CTA, fan art gallery, polls preview, recently joined, new members ticker
@@ -157,3 +160,4 @@
 1. Execute `docs/ACTIVATION_RUNBOOK.md` in order — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification
 2. Add browser-level coverage for account-backed theme sync, Claim Center / Vault Status rendering, and journal/layout theme regression protection
 3. End-to-end test VaultSparked Discord role with Stripe test checkout once billing prerequisites are ready
+

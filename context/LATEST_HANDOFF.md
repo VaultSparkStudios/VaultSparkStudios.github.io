@@ -2,10 +2,34 @@
 
 Last updated: 2026-03-31
 
-Session Intent (2026-03-31 — Session 18): Replace misleading public membership social-proof with a real invite-only Vault status treatment and remove that surface from the homepage.
+Session Intent (2026-03-31 — Session 19): Tighten public UX flow and truth surfaces by routing Sign In to the real login tab, making high-contrast the default theme, and dating launch/timeline signals more precisely.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
+
+## Where We Left Off (Session 19)
+
+- Shipped: 3 improvements across 3 groups — auth deep-linking, default-theme posture, and launch/timeline truth refinement
+- Tests: static verification only; no automated suite run
+- Deploy: pending
+
+---
+
+## What was completed (as of 2026-03-31 — Session 19)
+
+### Session 19 — Sign-In Routing + Default Theme + Launch Dating (2026-03-31)
+
+**Shipped:**
+- public site surfaces now route `Sign In` to `/vault-member/`, so sign-in actions land on the real login panel instead of the register-first default
+- `assets/theme-toggle.js` + `assets/style.css`: `High Contrast` is now the default site theme for new visitors and is labeled `Dark - High Contrast`; the previous dark palette remains available as `Dark`
+- `index.html`: homepage hero now includes `Days since launch`
+- `index.html`, `studio/index.html`, and `roadmap/index.html`: key studio-stage labels now use repo-derived March 2026 week windows where historical timing is known
+
+**Verification:** static diff review only; no automated tests run for this pass.
+
+**Intent outcome:** Achieved — the sign-in path is clearer, the default visual posture is sharper, and timeline surfaces now communicate more precise launch timing.
+
+---
 
 ## Where We Left Off (Session 18)
 
@@ -246,7 +270,7 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## What is mid-flight
 
-- Session 17-18 changes are local in the working tree and not committed yet. Browser-level verification for account-backed theme sync plus the new Claim Center / Vault Status surfaces is still worth adding before or alongside the next deploy.
+- Session 17-19 changes are local in the working tree and not committed yet. Browser-level verification for account-backed theme sync, the new default theme posture, and the Claim Center / Vault Status surfaces is still worth adding before or alongside the next deploy.
 
 ---
 
@@ -291,3 +315,4 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 2. `context/TASK_BOARD.md`
 3. `context/LATEST_HANDOFF.md` (this file)
 4. `context/SELF_IMPROVEMENT_LOOP.md`
+

@@ -6,7 +6,7 @@
 (function () {
   var STORAGE_KEY = 'vs_theme';
   var ACCOUNT_PREF_KEY = 'site_theme';
-  var DEFAULT_THEME = 'dark';
+  var DEFAULT_THEME = 'high-contrast';
   var SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
   var SUPABASE_ANON_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
   var SUPABASE_SESSION_KEYS = [
@@ -20,9 +20,10 @@
     { value: 'warm', label: 'Warm' },
     { value: 'cool', label: 'Cool' },
     { value: 'lava', label: 'Lava' },
-    { value: 'high-contrast', label: 'High Contrast' }
+    { value: 'high-contrast', label: 'Dark - High Contrast' }
   ];
   var THEME_CLASSES = {
+    dark: 'dark-mode',
     light: 'light-mode',
     ambient: 'ambient-mode',
     warm: 'warm-mode',

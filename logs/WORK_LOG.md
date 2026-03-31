@@ -4,6 +4,23 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-31 — Sign-in routing + default-theme + launch-dating refinement
+
+- Goal: Make sign-in flows land on the correct auth tab, move the site onto a sharper high-contrast default, and replace vague year-only stage markers with more truthful launch timing
+- What changed:
+  - Sitewide public `Sign In` links now point to `/vault-member/`
+  - `assets/theme-toggle.js` + `assets/style.css`: `Dark - High Contrast` is now the default theme for new visitors, with the former default preserved as explicit `Dark`
+  - `index.html`: added `Days since launch` in the hero
+  - `index.html`, `studio/index.html`, `roadmap/index.html`: updated stage labels to March 2026 week windows derived from repo history where possible
+  - Studio OS write-back completed in `context/CURRENT_STATE.md`, `context/TASK_BOARD.md`, `context/LATEST_HANDOFF.md`, `context/PROJECT_STATUS.json`, `context/TRUTH_AUDIT.md`, `context/SELF_IMPROVEMENT_LOOP.md`, and `docs/CREATIVE_DIRECTION_RECORD.md`
+- Risks created or removed:
+  - Removed: public sign-in actions no longer dump users on the register-first state
+  - Removed: new visitors now load into the user-requested high-contrast default instead of the softer prior dark palette
+  - Created: timeline week labels are inferred from repo history, so future canonical corrections should keep them in sync if a better public launch date is defined
+- Recommended next move: browser-verify the new default theme and run a broader access-state copy audit across public pages
+
+---
+
 ### 2026-03-31 — Invite-only Vault status correction
 
 - Goal: Replace misleading public member-count/social-proof cues with a status treatment that reflects the current invite-code-only Vault access model
@@ -320,3 +337,4 @@ Append chronological entries. Do not erase past entries.
 - Files or systems touched: 6 docs in vaultspark-studio-ops, portfolio registry
 - Risks created or removed: None
 - Recommended next move: Start Studio Dashboard session to build Portfolio Status view reading PROJECT_STATUS.json
+

@@ -13,6 +13,8 @@
 
 ## Next (Pending External Action)
 
+- [SIL] Access-state copy audit — align invite-only / open / live / membership wording across homepage, studio, roadmap, journal, and archived public copy [Score: 8.0]
+- [SIL] Default-theme browser parity pass — verify the new `Dark - High Contrast` default across homepage, portal, and mobile nav in a real browser [Score: 8.1]
 - [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Score: 7.9]
 - [SIL] Account-backed theme sync verification — verify local-vs-account precedence, portal sign-in restore, and cross-device hydration for `prefs.site_theme` [Score: 8.1]
 - [FLAG] Add a second dedicated VaultSparked test account for premium-state browser verification once billing/test-state setup is ready [Score: 7.6]
@@ -116,6 +118,12 @@
 
 - ✅ Invite-only Vault status correction — `/join/` member pill now reads `Vault Status · Invite codes only` with a yellow status indicator instead of a misleading green live-count cue
 - ✅ Homepage social-proof removal — removed the public `Join {count} vault members` hero bar and its unused count updater so the homepage no longer implies open/live membership
+
+## Completed — Session 19 (2026-03-31)
+
+- ✅ Sitewide sign-in deep-link fix — public `Sign In` surfaces now route to `/vault-member/` so the auth page opens on the actual login tab
+- ✅ Default theme change — `High Contrast` is now the default palette for new visitors and is renamed `Dark - High Contrast`, while the old dark palette remains available as `Dark`
+- ✅ Launch-date refinement — homepage hero now shows `Days since launch`, and homepage/studio/roadmap stage labels now use repo-derived March 2026 week windows where historical timing is known
 
 ## Completed — Session 14 (2026-03-31)
 
@@ -293,3 +301,4 @@
 ## Completed — Phase 10–21 (2026-03-25)
 
 - ✅ Full portal, investor portal, community, journal, leaderboards, SEO, PWA, service worker, dark mode, game ratings, achievements, challenges, Discord role sync, Stripe, web push UI, and all core systems
+

@@ -171,13 +171,13 @@ function buildPage(member) {
         <a href="/members/">Members</a>
         <a href="/community/">Community</a>
         <div class="mobile-nav-footer">
-          <a class="mobile-nav-signin" href="/vault-member/">Sign In</a>
+          <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
           <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
           <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </nav>
       <div class="nav-right">
-        <a class="nav-signin" href="/vault-member/">Sign In</a>
+        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
         <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
@@ -303,3 +303,6 @@ main().catch(err => {
   console.error('Fatal:', err);
   process.exit(1);
 });
+
+
+

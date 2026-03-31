@@ -42,6 +42,18 @@ Agents MUST NOT modify or remove existing entries.
 - Why it matters: Public messaging should match the actual access model and avoid implying open/live membership before launch
 - Supersedes prior entry: 2026-03-31 — Join-page member-count wording
 
+---
+
+### 2026-03-31 — Launch-age stat + sign-in flow + default-theme direction
+
+- Category: Direction + Assignment
+- Human input: "Days Since Launch could be a good stat" → "When you click Sign In - it should direct to the actual Sign-In tab on that page I woul think" → "Make High Contrast the new Default theme/mode for everyone and rename it to Dark - High Contrast"
+- Area affected: homepage hero stats, public sign-in flow, theme system defaults/labels
+- Previous state: homepage lacked a launch-age stat, `Sign In` links often landed on the register-first auth view, and the default site theme remained the softer dark palette
+- New required direction: add a `Days Since Launch` signal, route sign-in actions to the real login tab, and make the former high-contrast palette the new default under the label `Dark - High Contrast`
+- Why it matters: Improves first-click UX, strengthens the studio’s public signal, and makes the default visual identity more intentional
+- Supersedes prior entry: —
+
 ## Entry categories
 
 | Category | Use when |

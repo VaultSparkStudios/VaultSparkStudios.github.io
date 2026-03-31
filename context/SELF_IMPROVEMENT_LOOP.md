@@ -41,16 +41,44 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇▇█▆
-Avgs — 3: 42.0 | 5: 41.6 | 10: 38.9 | 25: 39.2 [N=17] | all: 39.2
-  └ 3-session: Dev 8.7 | Align 9.0 | Momentum 9.0 | Engage 5.0 | Process 10.0
+Sparkline (last 5 totals): ▇▇█▆▇
+Avgs — 3: 42.0 | 5: 41.8 | 10: 39.1 | 25: 39.4 [N=18] | all: 39.4
+  └ 3-session: Dev 8.7 | Align 9.3 | Momentum 9.0 | Engage 5.3 | Process 10.0
 Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-03-31 | Session 18 | Total: 40/50 | Velocity: 1 | protocolVelocity: 7
+Last session: 2026-03-31 | Session 19 | Total: 42/50 | Velocity: 3 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-03-31 — Session 19 | Total: 42/50 | Velocity: 3 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 42.0 | 5: 41.8 | 10: 39.1 | 25: 39.4 [N=18] | all: 39.4
+  └ 3-session: Dev 8.7 | Align 9.3 | Momentum 9.0 | Engage 5.3 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 8 | → | No backend depth changed, but sign-in routing is clearer and the theme system now has an explicit class-backed old-dark fallback |
+| Creative Alignment | 10 | ↑ | The new default visual posture is sharper and more intentional, and the timeline surfaces now feel less generic |
+| Momentum | 9 | ↑ | This session improved navigation flow, default look, and public narrative clarity in one pass |
+| Engagement | 5 | → | The sign-in path is more direct and the launch-age stat adds a stronger studio signal, but activation remains externally gated |
+| Process Quality | 10 | → | Full closeout write-back completed, including truth-audit refresh and additive CDR logging |
+| **Total** | **42/50** | ↑ | Focused public-surface refinement session with clear truth and UX gains |
+
+**Top win:** The public site is now more coherent at first contact: sign-in links land where users expect, the default theme is bolder, and launch/timeline signals carry more weight.
+**Top gap:** Public copy still needs a broader invite-only/open/live consistency audit across archived journal and legacy public surfaces.
+**Intent outcome:** Achieved — login routing, default theme posture, and timeline precision all improved without expanding product scope.
+
+**IGNIS note:** A site with strong identity benefits more from tightening its defaults and first-click flows than from adding another isolated feature.
+
+**Brainstorm**
+1. Access-state copy audit — unify invite-only/open/live wording across homepage, studio, roadmap, journal, and archived pages; Execution probability: High
+2. Default-theme browser parity pass — verify the new `Dark - High Contrast` default across homepage, vault portal, journal, and mobile nav in a served browser session; Execution probability: High
+3. Launch chronology module — add a small studio-history strip that ties `Days since launch` to the dated milestone cards for a clearer public narrative arc; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Access-state copy audit · [SIL] Default-theme browser parity pass
+
+---
 
 ## 2026-03-31 — Session 18 | Total: 40/50 | Velocity: 1 | protocolVelocity: 7 | Debt: ↓
 Avgs — 3: 42.0 | 5: 41.6 | 10: 38.9 | 25: 39.2 [N=17] | all: 39.2
