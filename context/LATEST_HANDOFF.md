@@ -10,7 +10,7 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 ## Where We Left Off (Session 17)
 
 - Shipped: 7 improvements across 4 groups — security hardening, pricing truth sync, Vault Membership UX, and authenticated QA
-- Tests: `node --check` passed for `vault-member/portal-core.js`, `vault-member/portal-auth.js`, `vault-member/portal-dashboard.js`, and `vault-member/portal-features.js`; authenticated Playwright coverage expanded in-spec for Claim Center + Vault Status but not executed in this checkout
+- Tests: `node --check` passed for `vault-member/portal-core.js`, `vault-member/portal-auth.js`, `vault-member/portal-dashboard.js`, `vault-member/portal-features.js`, `tests/helpers/vaultAuth.js`, `tests/authenticated.spec.js`, and `playwright.config.js`; authenticated Playwright coverage now includes theme/device-state checks plus Claim Center + Vault Status assertions, but still needs a dedicated test account configured locally
 - Deploy: pending
 
 ---
@@ -27,8 +27,9 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 - `vault-member/portal-features.js`: Discord OAuth failure UI no longer appends raw error strings via `innerHTML`
 - `vault-member/index.html` + `vault-member/portal-core.js` + `vault-member/portal-auth.js` + `vault-member/portal-dashboard.js`: new `Claim Center` dashboard panel and `Vault Status` settings surface added, driven from existing member state and referral milestone data
 - `tests/authenticated.spec.js`: authenticated smoke coverage now asserts the new Claim Center and Vault Status surfaces
+- `playwright.config.js` + `.env.playwright.local.example` + `tests/helpers/vaultAuth.js`: local-only Playwright env loading and seeded-theme auth helpers now exist so authenticated runs can use non-committed test credentials
 
-**Verification:** `node --check vault-member/portal-core.js`, `node --check vault-member/portal-auth.js`, `node --check vault-member/portal-dashboard.js`, `node --check vault-member/portal-features.js`.
+**Verification:** `node --check vault-member/portal-core.js`, `node --check vault-member/portal-auth.js`, `node --check vault-member/portal-dashboard.js`, `node --check vault-member/portal-features.js`, `node --check tests/helpers/vaultAuth.js`, `node --check tests/authenticated.spec.js`, `node --check playwright.config.js`.
 
 **Intent outcome:** Achieved — the repo now carries the highest-value security/truth fixes from the audit plus new Vault Membership readiness surfaces.
 
@@ -231,10 +232,11 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 1. **Execute activation runbook** — `docs/ACTIVATION_RUNBOOK.md` in order [critical path]
 2. **Cloudflare proxy + live header verification** — DNS/proxy step, then verify worker CSP/Turnstile/HSTS on production responses [10]
 3. **VAPID key generation** — unblocks web push [9]
-4. **Theme/account sync + membership UX verification** — add browser-level checks for local-vs-account precedence, new-device hydration, Claim Center, and Vault Status [8.4]
-5. **2FA/MFA for vault members** — Supabase TOTP toggle + UI prompt [7.5]
-6. **Google Search Console + Bing Webmaster verification** — submit sitemap + member-sitemap [6.5]
-7. **Journal post cadence / content calendar** — one post per week [6.5]
+4. **Provision dedicated Vault test accounts** — create a normal member test account now, then a VaultSparked-state test account once billing/test-state setup is ready [8.6]
+5. **Theme/account sync + membership UX verification** — run the browser-level checks for local-vs-account precedence, new-device hydration, Claim Center, and Vault Status using `.env.playwright.local` [8.4]
+6. **2FA/MFA for vault members** — Supabase TOTP toggle + UI prompt [7.5]
+7. **Google Search Console + Bing Webmaster verification** — submit sitemap + member-sitemap [6.5]
+8. **Journal post cadence / content calendar** — one post per week [6.5]
 
 ## Human Action Required
 

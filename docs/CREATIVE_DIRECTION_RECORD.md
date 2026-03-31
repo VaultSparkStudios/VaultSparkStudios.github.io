@@ -139,3 +139,15 @@ Agents MUST NOT modify or remove existing entries.
 - New required direction: Ship the highest-value security fixes immediately, add the proposed membership-ready UX additions inside the existing portal, and treat `$24.99/month` as the canonical public VaultSparked price
 - Why it matters: Tightens pre-activation trust surfaces, improves membership clarity without waiting for new backend systems, and removes avoidable pricing drift before launch-sensitive billing work
 - Supersedes prior entry: —
+
+---
+
+### 2026-03-31 — Next-session flagging for authenticated test accounts
+
+- Category: Assignment
+- Human input: "add all of this to context/tasks for next session and flag it - push commit any updates"
+- Area affected: Next-session testing workflow, project continuity, authenticated browser QA
+- Previous state: Local Playwright auth setup existed in code, but the required dedicated Vault test-account work was not explicitly flagged in project context for follow-up
+- New required direction: Record the dedicated Vault test-account setup as a flagged next-session prerequisite in context and push the supporting local Playwright env-loader updates
+- Why it matters: Prevents the new authenticated browser coverage from stalling next session due to missing credentials/setup context
+- Supersedes prior entry: —

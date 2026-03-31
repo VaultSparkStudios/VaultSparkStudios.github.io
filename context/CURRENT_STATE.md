@@ -10,6 +10,7 @@
 
 - systems:
   - Vault Membership readiness surfaces: `vault-member/index.html` now includes a `Claim Center` dashboard panel for next unlocks/rewards and a `Vault Status` settings block for theme sync, membership tier, Discord linkage, and account-control status
+  - Local Playwright auth bootstrap: `playwright.config.js` now loads `.env.playwright.local` when present, `.env.playwright.local.example` documents the expected keys, and authenticated tests can seed both auth state and a device theme locally without committing secrets
   - VaultSparked pricing truth sync: `/vaultsparked/` metadata now matches the founder-confirmed $24.99/month tier, keeping the public surface aligned with checkout intent
   - Checkout origin hardening: `create-checkout` and `create-gift-checkout` now return origin-scoped CORS headers instead of permissive `*`
   - Anonymous-only Supabase service-worker caching: `sw.js` now caches only unauthenticated `/rest/v1/` reads and skips authenticated/auth/storage traffic
@@ -140,7 +141,7 @@
 ## In progress
 
 - Activation runbook execution remains the primary external blocker track: Cloudflare proxy, auth hardening, newsletter secrets, VAPID, and search verification
-- Theme/browser verification still needs an authenticated E2E pass for account-backed theme sync and the new Claim Center / Vault Status surfaces once stable vault test credentials are available
+- Theme/browser verification still needs an authenticated E2E pass for account-backed theme sync and the new Claim Center / Vault Status surfaces once a dedicated Vault test account is configured in `.env.playwright.local`
 - Cloudflare response-header verification is still pending until the production proxy step in the activation runbook is complete
 
 ## Blockers

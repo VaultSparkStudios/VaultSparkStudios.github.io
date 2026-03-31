@@ -207,6 +207,27 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-31 — Session 17 follow-up — local Playwright auth setup + next-session flags
+
+- Goal: Make authenticated local browser runs easier to configure and record the required dedicated test-account setup for next session
+- What changed:
+  - `playwright.config.js`: now loads `.env.playwright.local` automatically when present
+  - `.gitignore`: now ignores `.env.playwright.local`
+  - `.env.playwright.local.example`: documents `VAULT_TEST_EMAIL`, `VAULT_TEST_PASSWORD`, and `BASE_URL`
+  - `tests/helpers/vaultAuth.js`: added a helper for seeding both auth state and a device theme before portal load
+  - `tests/authenticated.spec.js`: added checks for device-theme override messaging plus populated Claim Center / Vault Status content
+  - `context/TASK_BOARD.md` + `context/LATEST_HANDOFF.md`: flagged creation of dedicated Vault test accounts as the immediate next-session prerequisite
+- Verification:
+  - `node --check playwright.config.js`
+  - `node --check tests/helpers/vaultAuth.js`
+  - `node --check tests/authenticated.spec.js`
+- Risks created or removed:
+  - Removed: no longer need to export test credentials manually for every local Playwright run
+  - Remaining: authenticated browser tests still cannot execute until a real dedicated Vault test account is configured in `.env.playwright.local`
+- Recommended next move: create the dedicated free-member test account, populate `.env.playwright.local`, and run `npx playwright test tests/authenticated.spec.js`
+
+---
+
 ### 2026-03-25 — Studio OS migration + Admin Panel + 9-tier ranks + VaultSparked Discord role
 
 - Goal: Build Vault Command admin panel, expand ranks to 9 tiers, wire VaultSparked subscription to Discord role, apply Studio OS project system

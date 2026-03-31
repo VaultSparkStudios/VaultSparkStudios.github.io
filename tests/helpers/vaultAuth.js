@@ -56,9 +56,34 @@ async function loginVaultMember(page, request) {
   return page;
 }
 
+async function loginVaultMemberWithTheme(page, request, theme) {
+  const session = await createVaultSession(request);
+  await page.addInitScript(
+    ({ authKey, sessionData, themeKey, themeValue }) => {
+      window.localStorage.setItem(authKey, JSON.stringify(sessionData));
+      window.localStorage.setItem(themeKey, themeValue);
+    },
+    {
+      authKey: AUTH_STORAGE_KEY,
+      sessionData: {
+        currentSession: session,
+        expiresAt: session.expires_at,
+        user: session.user,
+      },
+      themeKey: 'vs_theme',
+      themeValue: theme,
+    }
+  );
+  await page.goto('/vault-member/', { waitUntil: 'domcontentloaded' });
+  await page.waitForLoadState('networkidle');
+  await page.waitForSelector('#dashboard-view', { state: 'visible', timeout: 15000 });
+  return page;
+}
+
 module.exports = {
   AUTH_STORAGE_KEY,
   hasVaultCreds,
   loginVaultMember,
+  loginVaultMemberWithTheme,
   seedVaultSession,
 };

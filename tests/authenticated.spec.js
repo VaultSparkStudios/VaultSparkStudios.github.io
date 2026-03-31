@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { hasVaultCreds, loginVaultMember } = require('./helpers/vaultAuth');
+const { hasVaultCreds, loginVaultMember, loginVaultMemberWithTheme } = require('./helpers/vaultAuth');
 
 test.describe('Vault portal authenticated flows', () => {
   test.skip(!hasVaultCreds(), 'Vault test credentials not configured');
@@ -22,6 +22,24 @@ test.describe('Vault portal authenticated flows', () => {
     await expect(page.locator('#claim-center-panel')).toBeVisible();
     await page.locator('#tab-dash-settings').click();
     await expect(page.locator('#vault-status-panel')).toBeVisible();
+  });
+
+  test('device theme override persists into vault status messaging', async ({ page, request }) => {
+    await loginVaultMemberWithTheme(page, request, 'lava');
+    await page.locator('#tab-dash-settings').click();
+    await expect(page.locator('#vault-status-panel')).toBeVisible();
+    await expect(page.locator('#vault-status-theme')).toContainText('Lava');
+    await expect(page.locator('#vault-status-theme')).toContainText('this device');
+    await expect(page.locator('#theme-select')).toHaveValue('lava');
+  });
+
+  test('claim center and vault status reflect membership/account state', async ({ page, request }) => {
+    await loginVaultMember(page, request);
+    await expect(page.locator('#claim-center-focus')).not.toHaveText('Loading…');
+    await expect(page.locator('#claim-center-treasury')).toContainText('pts');
+    await page.locator('#tab-dash-settings').click();
+    await expect(page.locator('#vault-status-membership')).toContainText(/VaultSparked|Free Vault Member/);
+    await expect(page.locator('#vault-status-dispatch')).toContainText(/enabled|muted/);
   });
 
   test('onboarding overlay markup is present and can be shown', async ({ page, request }) => {

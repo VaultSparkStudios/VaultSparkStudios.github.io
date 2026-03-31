@@ -5,6 +5,7 @@
 - [x] Run pending SQL migrations: phase40-50 ✅ **ALL APPLIED** (2026-03-28 via db-migrate Action)
 - [x] Fix vault-score.js getLeaderboard() — rank titles now derive from points instead of querying a missing `vault_members(rank_title)` field
 - [x] [SIL] Authenticated axe-core portal tests — env-gated Playwright scans now cover dashboard, challenges, and onboarding modal
+- [ ] [FLAG] Create a dedicated Vault Member test account and wire `VAULT_TEST_EMAIL` / `VAULT_TEST_PASSWORD` through `.env.playwright.local` for local authenticated runs
 - [ ] [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Escalated 2026-03-31 after 2+ skipped sessions]
 - [ ] [SIL] Theme surface parity audit — continue moving remaining page-specific dark surfaces onto shared theme tokens across portal and secondary pages [Escalated 2026-03-31 after 2+ skipped sessions]
 - [ ] [SIL] Public/private boundary audit — sweep remaining root docs and generated metadata for public-safety, then move or sanitize anything operationally sensitive [Escalated 2026-03-31 after 2+ skipped sessions]
@@ -14,6 +15,7 @@
 
 - [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Score: 7.9]
 - [SIL] Account-backed theme sync verification — verify local-vs-account precedence, portal sign-in restore, and cross-device hydration for `prefs.site_theme` [Score: 8.1]
+- [FLAG] Add a second dedicated VaultSparked test account for premium-state browser verification once billing/test-state setup is ready [Score: 7.6]
 - [SIL] Live response-header verification — once Cloudflare proxy is enabled, verify worker CSP/HSTS/Turnstile behavior against the real production responses [Score: 8.4]
 - [SIL] Legal copy consistency audit — align footer/legal/press language around IP, fan-content, and data-handling claims after the privacy-policy expansion [Score: 6.8]
 - Execute `docs/ACTIVATION_RUNBOOK.md` — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification [Score: 9.6]
