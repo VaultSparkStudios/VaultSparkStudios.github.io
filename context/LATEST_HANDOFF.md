@@ -2,16 +2,30 @@
 
 Last updated: 2026-03-31
 
-Session Intent (2026-03-31 — Session 14): Fix stale client delivery by busting the site service-worker cache and harden the public repo boundary by stripping operationally sensitive docs and generated local metadata.
+Session Intent (2026-03-31 — Session 15): Fix the remaining homepage dark-card surfaces so the hero and key feature cards follow the active theme instead of staying dark in light mode.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
-## Where We Left Off (Session 14)
+## Where We Left Off (Session 15)
 
-- Shipped: 4 repo/delivery hardening improvements — SW cache bust, public-safe stub replacement, generated metadata cleanup, handoff-path clarification
-- Tests: no new runtime tests; diagnosis was confirmed by the unchanged service-worker cache bucket and fixed directly in `sw.js`
-- Deploy: pushed to `main` (`a2eccde`)
+- Shipped: 3 homepage theme-parity improvements — shared surface classes, inline dark-card cleanup, and served-preview browser verification
+- Tests: local served-preview browser verification confirmed hero card, milestone cards, signal teaser, and Vault Live offline panel render light surfaces in light mode
+- Deploy: pending
+
+---
+
+## What was completed (as of 2026-03-31 — Session 15)
+
+### Session 15 — Homepage Theme Surface Parity (2026-03-31)
+
+**Shipped:**
+- `index.html`: hero card and hero visual now read from shared surface tokens instead of fixed dark backgrounds
+- `index.html`: Studio Milestones cards now use reusable `surface-card` styling tied to the active theme
+- `index.html`: Latest Signal teaser and Vault Live offline panel now use theme-aware strong surface styles instead of fixed dark gradients
+- `index.html`: homepage surface helper classes added so key cards can inherit `--panel`, `--panel-strong`, and `--line`
+
+**Verification:** local served-preview browser check confirmed light-mode surfaces for `.hero-card`, `.milestone-card`, `.signal-teaser`, and `#vault-live-offline`.
 
 ---
 

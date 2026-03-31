@@ -78,3 +78,14 @@ Append new entries. Do not erase historical reasoning unless it is wrong.
 - Alternatives considered: Leave the files as-is, delete them outright, or move the entire operational history into a private repo in one large pass
 - Why this was chosen: It improves public repo hygiene immediately without breaking references or requiring a large repo restructure in one session.
 - Follow-up: Continue a public/private boundary audit on remaining legacy root docs and secret-adjacent operator notes.
+
+---
+
+### 2026-03-31 — Homepage cards should derive surfaces from shared theme tokens
+
+- Status: Active
+- Context: After the shell-level theme fix, the homepage still had several prominent cards hardcoded to dark gradients and dark panel colors, especially in light mode.
+- Decision: Move homepage card surfaces onto reusable classes backed by `--panel`, `--panel-strong`, and `--line` instead of page-local dark colors.
+- Alternatives considered: Keep patching only light mode with overrides, or leave the homepage cards intentionally dark as contrast accents
+- Why this was chosen: It resolves the visible mismatch directly, keeps the theme system coherent, and creates reusable page-level surface patterns for later parity passes.
+- Follow-up: Continue the parity audit on portal and secondary-page cards that may still be using dark-only surfaces.

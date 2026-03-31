@@ -41,15 +41,43 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▆▇▇
-Avgs — 3: 41.0 | 5: 40.6 | 10: 39.2 | 25: 38.2 [N=13] | all: 38.2
-  └ 3-session: Dev 9.0 | Align 8.7 | Momentum 9.0 | Engage 4.0 | Process 10.0
+Sparkline (last 5 totals): ▇▆▇▇▇
+Avgs — 3: 41.0 | 5: 40.8 | 10: 39.5 | 25: 38.4 [N=14] | all: 38.4
+  └ 3-session: Dev 8.7 | Align 9.0 | Momentum 9.0 | Engage 4.0 | Process 10.0
 Velocity trend: →  |  Protocol velocity: ↑  |  Debt: →
-Last session: 2026-03-31 | Session 14 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7
+Last session: 2026-03-31 | Session 15 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-03-31 — Session 15 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7 | Debt: →
+Avgs — 3: 41.0 | 5: 40.8 | 10: 39.5 | 25: 38.4 [N=14] | all: 38.4
+  └ 3-session: Dev 8.7 | Align 9.0 | Momentum 9.0 | Engage 4.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | ↑ | Homepage theme surfaces now use reusable shared classes and were browser-verified in light mode |
+| Creative Alignment | 9 | → | The site keeps its intentional visual language while finally honoring the selected theme on the biggest homepage cards |
+| Momentum | 9 | → | This was a tight follow-up that closed a visible regression without dragging into a larger refactor |
+| Engagement | 4 | → | Visitors now get a cleaner first impression in non-dark themes |
+| Process Quality | 10 | → | Full write-back completed and the earlier SIL theme-parity item was actively advanced |
+| **Total** | **41/50** | → | Stable high score with improved visual coherence |
+
+**Top win:** The most visible homepage cards now align with the shared theme system, so light mode no longer feels like a dark-shell patch with mismatched panels.
+**Top gap:** Theme parity work still needs to continue beyond the homepage, especially across portal and secondary-page card treatments.
+**Intent outcome:** Achieved — the darker-card issue on the homepage was fixed and verified in a served preview.
+
+**IGNIS note:** A theme system is only credible when the hero surfaces obey it; fixing the shell without fixing flagship cards leaves the UI feeling half-migrated.
+
+**Brainstorm**
+1. Portal surface parity pass — migrate the highest-visibility portal cards/modals onto the same shared surface primitives; start with dashboard panels and modal shells; Execution probability: High
+2. Theme regression test — add a Playwright snapshot/assertion covering homepage and one portal surface in light mode; start with background color assertions on the hero and dashboard panels; Execution probability: High
+3. Theme-aware meta color sync — update browser chrome/theme-color dynamically when the user changes themes; start with dark and light, then extend to the curated alternates; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Theme persistence E2E coverage · [SIL] Theme surface parity audit
+
+---
 
 ## 2026-03-31 — Session 14 | Total: 41/50 | Velocity: 1 | protocolVelocity: 7 | Debt: →
 Avgs — 3: 41.0 | 5: 40.6 | 10: 39.2 | 25: 38.2 [N=13] | all: 38.2

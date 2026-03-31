@@ -155,21 +155,21 @@
       border-radius: 18px;
       background:
         linear-gradient(90deg, rgba(31,162,255,0.09), rgba(255,122,0,0.09)),
-        rgba(255,255,255,0.025);
-      border: 1px solid rgba(255,255,255,0.08);
+        var(--panel);
+      border: 1px solid var(--line);
       color: var(--steel);
       font-size: 0.95rem;
       line-height: 1.6;
     }
-    .hero-story strong { color: #fff; }
+    .hero-story strong { color: var(--text); }
 
     /* ─── Hero visual card ─── */
     .hero-card {
       position: relative;
       padding: 1.15rem;
       border-radius: 28px;
-      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.96));
-      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, var(--panel-strong), var(--panel));
+      border: 1px solid var(--line);
       box-shadow: var(--shadow-lg);
       overflow: hidden;
     }
@@ -198,9 +198,9 @@
       border-radius: 22px;
       padding: 1rem;
       background:
-        linear-gradient(180deg, rgba(7,9,14,0.45), rgba(7,9,14,0.92)),
-        linear-gradient(135deg, #000000, #0a0d14 48%, #000000 100%);
-      border: 1px solid rgba(255,255,255,0.06);
+        linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.24)),
+        linear-gradient(135deg, var(--bg) 0%, var(--bg-soft) 48%, var(--bg) 100%);
+      border: 1px solid var(--line);
       overflow: hidden;
       isolation: isolate;
     }
@@ -251,6 +251,97 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.06em;
+    }
+
+    .surface-section {
+      padding: 3.5rem 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .surface-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .surface-card-strong {
+      background: linear-gradient(180deg, var(--panel-strong), var(--panel));
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .milestones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .milestone-card {
+      padding: 1.5rem;
+      border-radius: 16px;
+    }
+
+    .signal-teaser {
+      display: block;
+      padding: 2rem 2.2rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .signal-teaser:hover {
+      border-color: rgba(255,196,0,0.25);
+      transform: translateY(-2px);
+    }
+
+    .signal-teaser-tag {
+      padding: 0.24rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    body.light-mode .signal-teaser-tag,
+    body.ambient-mode .signal-teaser-tag,
+    body.warm-mode .signal-teaser-tag,
+    body.cool-mode .signal-teaser-tag,
+    body.lava-mode .signal-teaser-tag,
+    body.high-contrast-mode .signal-teaser-tag {
+      background: color-mix(in srgb, var(--panel) 78%, transparent);
+    }
+
+    .vault-live-offline {
+      padding: 2.2rem 2.4rem;
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .vault-live-offline-badge {
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255,196,0,0.06);
+      border: 1px solid rgba(255,196,0,0.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vault-live-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: color-mix(in srgb, var(--muted) 28%, transparent);
+      display: inline-block;
     }
 
     /* ─── Email dispatch strip ─── */
@@ -679,31 +770,31 @@
     </section>
 
     <!-- ── Studio Milestones ─────────────────────────────── -->
-    <section style="padding:4rem 0;border-top:1px solid rgba(255,255,255,0.06);">
+    <section class="surface-section" style="padding-top:4rem;">
       <div class="container">
         <div class="eyebrow" style="margin-bottom:2rem;">Studio Milestones</div>
-        <div class="milestones-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.5rem;">
-          <div class="milestone-card" style="padding:1.5rem;background:rgba(10,13,22,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
+        <div class="milestones-grid">
+          <div class="milestone-card surface-card">
             <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#1FA2FF;margin-bottom:0.5rem;">2026</div>
             <div style="font-weight:600;color:var(--text);margin-bottom:0.3rem;">Studio Founded</div>
             <div style="font-size:0.82rem;color:var(--muted);">VaultSpark Studios opens its doors</div>
           </div>
-          <div class="milestone-card" style="padding:1.5rem;background:rgba(10,13,22,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
+          <div class="milestone-card surface-card">
             <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#FF7A00;margin-bottom:0.5rem;">2026</div>
             <div style="font-weight:600;color:var(--text);margin-bottom:0.3rem;">First Game Launched</div>
             <div style="font-size:0.82rem;color:var(--muted);">Call of Doodie goes live</div>
           </div>
-          <div class="milestone-card" style="padding:1.5rem;background:rgba(10,13,22,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
+          <div class="milestone-card surface-card">
             <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#FFC400;margin-bottom:0.5rem;">2026</div>
             <div style="font-weight:600;color:var(--text);margin-bottom:0.3rem;">Vault Launched</div>
             <div style="font-size:0.82rem;color:var(--muted);">Members-only community opens</div>
           </div>
-          <div class="milestone-card" style="padding:1.5rem;background:rgba(10,13,22,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
+          <div class="milestone-card surface-card">
             <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#10B981;margin-bottom:0.5rem;">2026</div>
             <div style="font-weight:600;color:var(--text);margin-bottom:0.3rem;">5 Games Live</div>
             <div style="font-size:0.82rem;color:var(--muted);">Full catalog of titles shipping</div>
           </div>
-          <div class="milestone-card" style="padding:1.5rem;background:rgba(10,13,22,0.8);border:1px solid rgba(255,255,255,0.07);border-radius:16px;">
+          <div class="milestone-card surface-card">
             <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:#8B5CF6;margin-bottom:0.5rem;">2026</div>
             <div style="font-weight:600;color:var(--text);margin-bottom:0.3rem;">Investor Portal</div>
             <div style="font-size:0.82rem;color:var(--muted);">Formal investment program launches</div>
@@ -1156,17 +1247,17 @@
     </section>
 
     <!-- ── Latest Signal Log teaser ─────────────────────── -->
-    <section style="padding:3.5rem 0;border-top:1px solid rgba(255,255,255,0.06);">
+    <section class="surface-section">
       <div class="container">
         <div class="section-head" style="margin-bottom:1.5rem;">
           <p class="eyebrow">Signal Log</p>
           <h2>Latest From The Forge</h2>
         </div>
-        <a href="/journal/studio-os-public/" style="display:block;padding:2rem 2.2rem;border-radius:var(--radius);background:linear-gradient(180deg,rgba(13,17,28,0.90),rgba(8,10,17,0.97));border:1px solid rgba(255,255,255,0.08);box-shadow:var(--shadow);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,196,0,0.25)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+        <a href="/journal/studio-os-public/" class="signal-teaser surface-card-strong">
           <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.9rem;flex-wrap:wrap;">
             <span style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);">March 2026</span>
             <span style="font-size:0.78rem;color:var(--dim);">· 3 min read</span>
-            <span style="padding:0.24rem 0.55rem;border-radius:999px;font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);color:var(--muted);">Studio OS</span>
+            <span class="signal-teaser-tag">Studio OS</span>
           </div>
           <h3 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.3rem,3vw,1.75rem);letter-spacing:-0.025em;margin-bottom:0.75rem;color:var(--text);">We Made The System Visible</h3>
           <p style="color:var(--muted);font-size:0.94rem;line-height:1.7;margin-bottom:1rem;max-width:70ch;">Most studios hide how they operate. We decided to show it — the full Studio OS, project memory, handoff documents, and the system that lets a lean team ship at a pace most studios can't match.</p>
@@ -1179,7 +1270,7 @@
     </section>
 
     <!-- ── Vault Live ───────────────────────────────────────── -->
-    <section id="vault-live" aria-labelledby="vault-live-heading" style="padding:3.5rem 0;border-top:1px solid rgba(255,255,255,0.06);">
+    <section id="vault-live" aria-labelledby="vault-live-heading" class="surface-section">
       <div class="container">
         <div class="section-head" style="margin-bottom:1.75rem;">
           <p class="eyebrow">Vault Live</p>
@@ -1193,13 +1284,13 @@
         </div>
 
         <!-- Offline state — shown when no stream is active -->
-        <div id="vault-live-offline" style="padding:2.2rem 2.4rem;border-radius:var(--radius);background:linear-gradient(180deg,rgba(13,17,28,0.90),rgba(8,10,17,0.97));border:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:2rem;flex-wrap:wrap;">
-          <div style="flex-shrink:0;width:60px;height:60px;border-radius:50%;background:rgba(255,196,0,0.06);border:1px solid rgba(255,196,0,0.18);display:flex;align-items:center;justify-content:center;" aria-hidden="true">
+        <div id="vault-live-offline" class="vault-live-offline surface-card-strong">
+          <div class="vault-live-offline-badge" aria-hidden="true">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,196,0,0.6)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15.6 11.6L22 7v10l-6.4-4.5v-0.9z"/><rect x="2" y="7" width="15" height="10" rx="2" ry="2"/></svg>
           </div>
           <div style="flex:1;min-width:180px;">
             <div style="display:flex;align-items:center;gap:0.55rem;margin-bottom:0.45rem;">
-              <span style="width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.18);display:inline-block;" aria-hidden="true"></span>
+              <span class="vault-live-status-dot" aria-hidden="true"></span>
               <span style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);">Offline</span>
             </div>
             <p style="font-size:0.97rem;font-weight:600;color:var(--text);margin-bottom:0.35rem;line-height:1.3;">Next dev stream — date TBD</p>

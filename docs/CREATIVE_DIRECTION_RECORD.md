@@ -103,3 +103,15 @@ Agents MUST NOT modify or remove existing entries.
 - New required direction: Sanitize public-facing internal docs into safe stubs/pointers and remove generated local metadata from version control
 - Why it matters: Keeps the website repo publicly shareable without carrying unnecessary operator-facing detail
 - Supersedes prior entry: —
+
+---
+
+### 2026-03-31 — Fix remaining dark card surfaces
+
+- Category: Assignment
+- Human input: "yes do fix the darker card issue you mentioned unless you already did that"
+- Area affected: Homepage theme parity, light-mode presentation
+- Previous state: Shared shell was theme-aware, but several homepage cards still used fixed dark panel backgrounds
+- New required direction: Move the prominent homepage cards onto theme-aware shared surfaces so they no longer stay dark in light mode
+- Why it matters: Removes the most visible remaining mismatch in the multi-theme system
+- Supersedes prior entry: —

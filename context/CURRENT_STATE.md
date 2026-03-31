@@ -4,11 +4,12 @@
 
 - Date: 2026-03-31
 - Overall status: Live and active
-- Current phase: Session 14 complete (2026-03-31) — service-worker cache bust + public-repo boundary cleanup
+- Current phase: Session 15 complete (2026-03-31) — homepage surface parity fix for shared themes
 
 ## What exists
 
 - systems:
+  - Homepage theme parity: hero card, milestone cards, signal-log teaser, and Vault Live offline panel now use shared surface tokens instead of fixed dark card backgrounds
   - Public repo hygiene: root `LATEST_HANDOFF.md` and `IOS_SHORTCUT_STUDIO_PULSE.md` are now public-safe compatibility stubs; operationally sensitive setup detail was removed from the public repo
   - Generated local metadata cleanup: `supabase/.temp/` removed from version control and ignored going forward
   - Studio OS portfolio metadata: `context/PORTFOLIO_CARD.md` added for Studio Hub / founder-readable status at a glance

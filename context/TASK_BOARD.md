@@ -10,7 +10,7 @@
 
 - [SIL] Public/private boundary audit — sweep remaining root docs and generated metadata for public-safety, then move or sanitize anything operationally sensitive [Score: 7.7]
 - [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Score: 7.9]
-- [SIL] Theme surface parity audit — move remaining page-specific dark surfaces onto shared theme tokens across homepage + portal [Score: 7.3]
+- [SIL] Theme surface parity audit — continue moving remaining page-specific dark surfaces onto shared theme tokens across portal and secondary pages [Score: 7.3]
 - Execute `docs/ACTIVATION_RUNBOOK.md` — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification [Score: 9.6]
 - [SIL] Activation verification pass after external setup — rerun auth, push, headers, sitemap, and newsletter checks once the runbook is complete [Score: 8.9]
 - [SIL] Shared rank-threshold source audit — reduce future drift across UI, scripts, functions, and migrations [Score: 7.4]
@@ -94,6 +94,12 @@
 - ✅ Public-repo boundary cleanup — root `LATEST_HANDOFF.md` and `IOS_SHORTCUT_STUDIO_PULSE.md` replaced with public-safe stubs instead of internal operational detail
 - ✅ Generated metadata cleanup — tracked `supabase/.temp/` files removed from version control and ignored going forward
 - ✅ CLAUDE handoff clarification — root instructions now point explicitly to `context/LATEST_HANDOFF.md` as the authoritative handoff source
+
+## Completed — Session 15 (2026-03-31)
+
+- ✅ Homepage dark-card parity fix — hero card, milestone cards, latest signal teaser, and Vault Live offline panel now inherit the active theme instead of staying dark in light mode
+- ✅ Shared homepage surface classes — `index.html` now uses reusable surface classes tied to `--panel`, `--panel-strong`, and `--line`
+- ✅ Local served-preview verification — light-mode browser check confirmed the affected cards now render with light surfaces
 
 ## Completed — Session 13 (2026-03-30)
 

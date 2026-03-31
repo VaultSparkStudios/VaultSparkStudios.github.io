@@ -4,6 +4,24 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-31 — Session 15: homepage theme surface parity
+
+- Goal: Fix the remaining homepage cards that were still hardcoded dark so the visible hero/feature surfaces follow the active theme
+- What changed:
+  - `index.html`: hero card, hero visual, and hero story moved off fixed dark surfaces onto shared theme variables
+  - `index.html`: Studio Milestones cards switched to reusable theme-aware surface styling
+  - `index.html`: Latest Signal teaser and Vault Live offline panel switched from fixed dark gradients to theme-aware strong panel surfaces
+  - `index.html`: reusable homepage surface classes added for cards, sections, teaser tags, and live-status elements
+- Verification:
+  - local served-preview Playwright verification in light mode confirmed `.hero-card`, `.milestone-card`, `.signal-teaser`, and `#vault-live-offline` now render with light surface backgrounds
+- Risks created or removed:
+  - Removed: homepage no longer shows the most obvious dark-card mismatch when light mode is active
+  - Remaining: secondary pages and some portal surfaces may still need parity passes
+- Session intent outcome: Achieved — the homepage cards mentioned in the prior note now follow the active theme
+- Recommended next move: continue the remaining theme surface parity audit on portal and secondary page cards
+
+---
+
 ### 2026-03-31 — Session 14: SW cache bust + public-repo boundary cleanup
 
 - Goal: Fix stale client delivery after the theme deploy and remove operationally sensitive or generated local-only material from the public repo surface
