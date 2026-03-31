@@ -4,11 +4,12 @@
 
 - Date: 2026-03-31
 - Overall status: Live and active
-- Current phase: Session 17 complete (2026-03-31) — security/truth hardening, Vault Membership status UX, and claim-center rollout
+- Current phase: Session 18 complete (2026-03-31) — invite-only Vault status messaging corrected on `/join/`, and misleading public membership social-proof was removed from the homepage
 
 ## What exists
 
 - systems:
+  - Invite-only Vault status messaging: `/join/` now shows `Vault Status · Invite codes only` with a yellow status indicator instead of a green “live member count” treatment, and the homepage no longer shows a public `Join {count} vault members` bar
   - Vault Membership readiness surfaces: `vault-member/index.html` now includes a `Claim Center` dashboard panel for next unlocks/rewards and a `Vault Status` settings block for theme sync, membership tier, Discord linkage, and account-control status
   - Local Playwright auth bootstrap: `playwright.config.js` now loads `.env.playwright.local` when present, `.env.playwright.local.example` documents the expected keys, and authenticated tests can seed both auth state and a device theme locally without committing secrets
   - VaultSparked pricing truth sync: `/vaultsparked/` metadata now matches the founder-confirmed $24.99/month tier, keeping the public surface aligned with checkout intent

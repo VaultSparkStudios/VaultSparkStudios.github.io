@@ -112,6 +112,11 @@
 - ✅ Vault Membership UX upgrade — portal now includes a `Claim Center` dashboard panel and a `Vault Status` settings block
 - ✅ Authenticated QA extension — portal smoke tests now cover the new Claim Center and Vault Status surfaces
 
+## Completed — Session 18 (2026-03-31)
+
+- ✅ Invite-only Vault status correction — `/join/` member pill now reads `Vault Status · Invite codes only` with a yellow status indicator instead of a misleading green live-count cue
+- ✅ Homepage social-proof removal — removed the public `Join {count} vault members` hero bar and its unused count updater so the homepage no longer implies open/live membership
+
 ## Completed — Session 14 (2026-03-31)
 
 - ✅ Service worker cache bust — `sw.js` cache name advanced and `assets/theme-toggle.js` added to precache so the latest site shell/theme picker actually ships to clients

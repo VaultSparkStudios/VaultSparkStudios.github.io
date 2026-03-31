@@ -4,6 +4,21 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-31 — Invite-only Vault status correction
+
+- Goal: Replace misleading public member-count/social-proof cues with a status treatment that reflects the current invite-code-only Vault access model
+- What changed:
+  - `join/index.html`: replaced the live-count pill with `Vault Status · Invite codes only` and changed the indicator from green to yellow
+  - `index.html`: removed the homepage `Join {count} vault members` bar
+  - `index.html`: removed the unused homepage `.hero-member-count` updater
+  - Studio OS write-back completed in `context/CURRENT_STATE.md`, `context/TASK_BOARD.md`, `context/LATEST_HANDOFF.md`, `context/SELF_IMPROVEMENT_LOOP.md`, and `docs/CREATIVE_DIRECTION_RECORD.md`
+- Risks created or removed:
+  - Removed: the site no longer implies that Vault membership is publicly open/live when access is currently invite-code only
+  - Created: none
+- Recommended next move: continue with the queued browser verification work for theme/account sync and the new Vault Membership readiness surfaces
+
+---
+
 ### 2026-03-31 — Session 16: theme/account sync + Signal Log repair + legal expansion
 
 - Goal: Persist theme choice per device and per Vault Member account, repair the Signal Log layout/theme issues, and strengthen public-facing privacy/IP notices

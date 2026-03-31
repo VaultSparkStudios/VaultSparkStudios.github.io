@@ -41,16 +41,44 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▇█
-Avgs — 3: 42.3 | 5: 41.8 | 10: 38.8 | 25: 39.1 [N=16] | all: 39.1
-  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 9.3 | Engage 5.0 | Process 10.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Sparkline (last 5 totals): ▇▇▇█▆
+Avgs — 3: 42.0 | 5: 41.6 | 10: 38.9 | 25: 39.2 [N=17] | all: 39.2
+  └ 3-session: Dev 8.7 | Align 9.0 | Momentum 9.0 | Engage 5.0 | Process 10.0
+Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-03-31 | Session 17 | Total: 44/50 | Velocity: 5 | protocolVelocity: 7
+Last session: 2026-03-31 | Session 18 | Total: 40/50 | Velocity: 1 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-03-31 — Session 18 | Total: 40/50 | Velocity: 1 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 42.0 | 5: 41.6 | 10: 38.9 | 25: 39.2 [N=17] | all: 39.2
+  └ 3-session: Dev 8.7 | Align 9.0 | Momentum 9.0 | Engage 5.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 8 | ↓ | Small HTML cleanup removed a misleading homepage updater and kept the access-state messaging simple |
+| Creative Alignment | 9 | → | Replacing fake “live/open” cues with an honest invite-only status better matches the project’s current reality and tone |
+| Momentum | 8 | ↓ | Small, direct refinement session rather than a larger implementation pass |
+| Engagement | 5 | ↓ | Clearer access-state messaging should reduce confusion, but no new activation system shipped |
+| Process Quality | 10 | → | Required Studio OS write-back and additive CDR logging were completed for a small but real shipped change |
+| **Total** | **40/50** | ↓ | Healthy maintenance session that improved clarity without scope drift |
+
+**Top win:** The public site now reflects the actual Vault access state: invite-code only, with no fake “live membership” signal on the homepage.
+**Top gap:** The higher-value verification work is still the same as last session: browser-check account-backed theme sync and the new Vault Membership status surfaces.
+**Intent outcome:** Achieved — the misleading count/dot treatment was replaced with honest status messaging and removed from the homepage.
+
+**IGNIS note:** Small copy changes are most valuable when they improve the perceived action on a high-traffic surface without forcing a design or logic rewrite.
+
+**Brainstorm**
+1. Join-page status/copy pass — tighten the hero/subtext/button trio so invite-only messaging reads intentionally instead of like a fallback state; Execution probability: High
+2. Vault access-mode source centralization — define one canonical access-state config so homepage, `/join/`, and `/vault-member/` do not drift on public/open/invite-only messaging; Execution probability: Medium
+3. Join-page A/B-ready copy slots — centralize the hero/status/CTA strings so future conversion copy tests do not require hand-editing the page shell; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Join-page status/copy pass
+
+---
 
 ## 2026-03-31 — Session 17 | Total: 44/50 | Velocity: 5 | protocolVelocity: 7 | Debt: ↓
 Avgs — 3: 42.3 | 5: 41.8 | 10: 38.8 | 25: 39.1 [N=16] | all: 39.1

@@ -2,10 +2,33 @@
 
 Last updated: 2026-03-31
 
-Session Intent (2026-03-31 — Session 17): Analyze the website for improvements, then ship the highest-value security fixes, pricing truth alignment, and Vault Membership UX additions in one pass.
+Session Intent (2026-03-31 — Session 18): Replace misleading public membership social-proof with a real invite-only Vault status treatment and remove that surface from the homepage.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
+
+## Where We Left Off (Session 18)
+
+- Shipped: 1 improvement across 1 group — join-page social-proof copy refinement
+- Tests: not run (copy-only HTML change)
+- Deploy: pending
+
+---
+
+## What was completed (as of 2026-03-31 — Session 18)
+
+### Session 18 — Invite-Only Vault Status Correction (2026-03-31)
+
+**Shipped:**
+- `join/index.html`: replaced the green live-count pill with `Vault Status · Invite codes only` and changed the indicator to yellow so the page reflects the current invite-only access model
+- `index.html`: removed the public homepage hero bar that said `Join {count} vault members`
+- `index.html`: removed the now-unused homepage member-count updater tied to `.hero-member-count`
+
+**Verification:** static HTML review only; no automated tests run because the change is copy-only.
+
+**Intent outcome:** Achieved — the website now communicates the actual invite-only status instead of implying open/live membership on public surfaces.
+
+---
 
 ## Where We Left Off (Session 17)
 
@@ -223,7 +246,7 @@ For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
 
 ## What is mid-flight
 
-- Session 17 changes are local in the working tree and not committed yet. Browser-level verification for account-backed theme sync plus the new Claim Center / Vault Status surfaces is still worth adding before or alongside the next deploy.
+- Session 17-18 changes are local in the working tree and not committed yet. Browser-level verification for account-backed theme sync plus the new Claim Center / Vault Status surfaces is still worth adding before or alongside the next deploy.
 
 ---
 

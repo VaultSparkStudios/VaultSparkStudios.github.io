@@ -20,6 +20,28 @@ Agents MUST NOT modify or remove existing entries.
 
 ---
 
+### 2026-03-31 — Join-page member-count wording
+
+- Category: Assignment + Direction
+- Human input: "Join … vault members" → "on website with a green dot"
+- Area affected: `/join/` hero social-proof pill
+- Previous state: The pill showed `{count} members already in the Vault` with a green-dot live indicator
+- New required direction: Keep the green-dot treatment, but reword the line so the website presents it as a `Join … vault members` prompt
+- Why it matters: Makes the social-proof surface read more like an active invitation than a passive status line
+- Supersedes prior entry: —
+
+---
+
+### 2026-03-31 — Invite-only status clarification
+
+- Category: Direction + Correction
+- Human input: "Whats confusing is the ... - it should read as Vault Status or something - and the vault membership is not yet live so a greent dot maybe should be yellow and should reflect current status (which only allows invite codes)" → "Also it shouldn't be on the home page"
+- Area affected: `/join/` hero status pill, homepage hero social-proof bar
+- Previous state: Public pages implied a live/open member count with green-dot activity styling
+- New required direction: Treat the surface as Vault status instead of member-count social proof, use a yellow indicator for invite-code-only access, and remove the homepage version entirely
+- Why it matters: Public messaging should match the actual access model and avoid implying open/live membership before launch
+- Supersedes prior entry: 2026-03-31 — Join-page member-count wording
+
 ## Entry categories
 
 | Category | Use when |

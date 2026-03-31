@@ -730,14 +730,6 @@
             <a class="button-secondary" href="/vault-member/#register">Enter The Vault &nbsp;→</a>
           </div>
 
-          <div class="hero-live-bar" style="display:flex;align-items:center;gap:0.6rem;margin-top:1.25rem;font-size:0.88rem;color:var(--muted);flex-wrap:wrap;">
-            <span style="position:relative;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;width:10px;height:10px;">
-              <span style="position:absolute;inset:0;border-radius:50%;background:#10B981;opacity:0.35;animation:pulse-ring 2s ease-out infinite;"></span>
-              <span style="display:block;width:7px;height:7px;border-radius:50%;background:#10B981;flex-shrink:0;"></span>
-            </span>
-            <span>Join <strong class="hero-member-count" style="color:#fff;font-size:0.97rem;">…</strong> vault members</span>
-          </div>
-
           <div class="hero-story">
             <strong>The Vault-Forge:</strong> Every VaultSpark project begins the same way —
             fire meets steel, a single spark splits the forge, and a new cinematic world
@@ -1527,11 +1519,6 @@
         // Joins — also read member count
         if (results[0].status === 'fulfilled') {
           var res = results[0].value;
-          if (res.count > 0) {
-            document.querySelectorAll('.hero-member-count').forEach(function (el) {
-              el.textContent = res.count.toLocaleString('en-US');
-            });
-          }
           (res.data || []).forEach(function (m) {
             events.push({ type: 'join', username: m.username, rank: m.rank_title || 'Spark Initiate', ts: m.created_at });
           });
