@@ -1768,3 +1768,22 @@ body.light-mode .genre-btn:hover { color: var(--text); }
 /* ── Fan art / Discord button text stays white on coloured bg ── */
 body.light-mode .discord-btn { color: #fff; }
 body.light-mode .fan-art-vote { color: var(--text); }
+
+/* ── Email CTA forms — mobile responsive ─────────────────── */
+@media (max-width: 640px) {
+  #vault-request-form,
+  #sparked-notify-form {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  #vault-request-form input[type="email"],
+  #sparked-notify-form input[type="email"] {
+    min-width: 0 !important;
+    width: 100%;
+  }
+  #vault-request-btn,
+  #sparked-notify-btn {
+    width: 100% !important;
+    text-align: center;
+  }
+}

@@ -27,10 +27,14 @@ Done when:
 
 ## 3. Web push / VAPID
 
-- Generate keys: `npx web-push generate-vapid-keys`
-- Set `VAPID_PUBLIC_KEY` in `vault-member/index.html`
-- Set `VAPID_PUBLIC_KEY` and `VAPID_PRIVATE_KEY` as Supabase Function secrets
-- Redeploy the push function after secrets are set
+- Keys generated (2026-04-01). Public key is already set in `vault-member/portal-features.js` and `vault-member/portal.js`.
+- VAPID public key: `BDf9L_0jn0FsM8oNEhSUcypsRfnA6gIXK0Xqkpxbd3DdztD5ftO8JpExGYdFQveiBhlcRrZ6U-wdUsOwwXJAhPo`
+- **Human action required:** Set the following as Supabase Edge Function secrets (Dashboard → Edge Functions → send-push → Secrets):
+  - `VAPID_PUBLIC_KEY` — the public key above
+  - `VAPID_PRIVATE_KEY` — see secure notes (generated 2026-04-01, do not commit)
+  - `VAPID_SUBJECT` — `mailto:hello@vaultsparkstudios.com`
+- After secrets are set: `supabase functions deploy send-push`
+- Also wire the Database Webhook: Dashboard → Database → Webhooks → classified_files INSERT → send-push URL
 
 Done when:
 - A signed-in member can subscribe and receive a test notification.

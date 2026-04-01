@@ -1,5 +1,5 @@
     // ── Phase 9: Web Push Notifications ──────────────────────────
-    const VAPID_PUBLIC_KEY = 'BO_lCzoROyH94wskfOH2SQudZpJJHZ5x9-oKOPC4W34A6YC90N9P1ZCgLLG2wppfYMwJdcAy3wqG8F1jtXKFofI';
+    const VAPID_PUBLIC_KEY = 'BDf9L_0jn0FsM8oNEhSUcypsRfnA6gIXK0Xqkpxbd3DdztD5ftO8JpExGYdFQveiBhlcRrZ6U-wdUsOwwXJAhPo';
 
     let _swRegistration = null;
 
