@@ -16,6 +16,8 @@
 
 ## Next (Pending External Action)
 
+- [SIL] Per-form Web3Forms keys — register separate access_key values for Vault Access Request, VaultSparked Waitlist, and each game-waitlist form to enable per-form tracking/segmentation [Score: 8.5]
+- [SIL] Mobile audit pass on new CTAs — audit /join/ Request Vault Access and /vaultsparked/ Waitlist sections at 320/480/768px for tap targets and layout correctness [Score: 8.3]
 - [SIL] Entitlement matrix audit — review every public page/app against `config/membership-entitlements.json` and remove any remaining promise drift [Score: 8.8]
 - [SIL] Browser entitlement spec lane — add Playwright coverage for free vs VaultSparked vs PromoGrind Pro states on archive, beta keys, and premium tool gating [Score: 8.7]
 - [SIL] Service-role-backed auth rerun lane — restore the local verification shell secret path so authenticated Playwright can use magic-link sessions reliably under CAPTCHA hardening [Score: 8.9]
@@ -102,6 +104,16 @@
 - [ ] Community-created lore submissions [4.5]
 - [ ] "Currently playing" badge on member profile [4.5] (note: already exists as of Phase 42)
 - [ ] Vault social graph (member connections) [4.8] — now CODED as full follow system (session 5, phase 49)
+
+## Completed — Session 27 (2026-04-01)
+
+- ✅ Discord invite link updated — `discord.gg/bgR3mSB2` → `discord.gg/MnnBRbYDk` across 51 files sitewide
+- ✅ Light mode surface fix — comprehensive `body.light-mode` overrides added to `assets/style.css` covering ~70 card/panel/tag class names with dark rgba backgrounds, invisible white borders, and forced white text; all pages now render correct surfaces in light mode without touching individual HTML files
+- ✅ CSP connect-src fix — `https://api.convertkit.com` and `https://api.web3forms.com` added to all 67 public pages; email-capture fetch() calls were previously CSP-blocked silently
+- ✅ Request Vault Access CTA — Web3Forms email form added to `/join/` for users without an invite code
+- ✅ VaultSparked Waitlist CTA — Web3Forms email form with founder-discount messaging added to `/vaultsparked/`
+- ✅ Universe Discord CTA — Discord section added to `/universe/`; hardcoded `strong { color:#fff }` fixed to `var(--text)`
+- ✅ SW cache bump — `sw.js` cache version advanced to `v3` to deliver updated assets to existing clients
 
 ## Completed — Session 16 (2026-03-31)
 

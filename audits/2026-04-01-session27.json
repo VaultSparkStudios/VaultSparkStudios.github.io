@@ -1,0 +1,30 @@
+{
+  "session": 27,
+  "date": "2026-04-01",
+  "commit": "48f44d6",
+  "filesChanged": 75,
+  "insertions": 437,
+  "deletions": 132,
+  "silScore": 47,
+  "silVelocity": 7,
+  "intent": "Update Discord invite link sitewide; analyze and ship website improvements; fix light mode; verify/repair email capture; add Request Vault Membership CTA",
+  "intentOutcome": "Achieved",
+  "shipped": [
+    "Discord invite updated: discord.gg/bgR3mSB2 → discord.gg/MnnBRbYDk (51 files)",
+    "Light mode surface overrides: body.light-mode block in style.css (~70 selectors, 193 lines)",
+    "CSP connect-src fix: api.convertkit.com + api.web3forms.com on all 67 public pages",
+    "Request Vault Access form: /join/ Web3Forms email form with subject 'Vault Access Request'",
+    "VaultSparked Waitlist form: /vaultsparked/ Web3Forms email form with founder-discount messaging",
+    "Universe Discord CTA: new section on /universe/ + strong color var(--text) fix",
+    "SW cache bump: vaultspark-20260401-v3"
+  ],
+  "keyInsights": [
+    "fetch() calls governed by connect-src, not form-action — CSP had been silently blocking all email capture since the feature was built",
+    "body.light-mode specificity (0,2,1) beats page-inline (0,1,0) — one stylesheet block fixes all pages without touching HTML",
+    "Shared Web3Forms access_key across all forms is a tracking gap — separate keys per form recommended"
+  ],
+  "technicalDebt": [
+    "Single Web3Forms access_key shared across all email forms (game waitlists + vault request + vaultsparked waitlist)"
+  ],
+  "nextPriority": "Confirm Web3Forms routes to correct inbox; run mobile audit on new CTAs; execute activation runbook"
+}

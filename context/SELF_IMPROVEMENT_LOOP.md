@@ -41,16 +41,44 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇██▇
-Avgs — 3: 46.3 | 5: 45.6 | 10: 43.6 | 25: 40.7 [N=24] | all: 40.7
-  └ 3-session: Dev 9.3 | Align 9.0 | Momentum 10.0 | Engage 8.0 | Process 10.0
+Sparkline (last 5 totals): ▇██▇█
+Avgs — 3: 46.3 | 5: 45.8 | 10: 43.8 | 25: 41.0 [N=25] | all: 41.0
+  └ 3-session: Dev 9.3 | Align 9.3 | Momentum 10.0 | Engage 8.3 | Process 10.0
 Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
 Momentum runway: ~3.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-03-31 | Session 26 | Total: 46/50 | Velocity: 4 | protocolVelocity: 7
+Last session: 2026-04-01 | Session 27 | Total: 47/50 | Velocity: 7 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-04-01 — Session 27 | Total: 47/50 | Velocity: 7 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 46.3 | 5: 45.8 | 10: 43.8 | 25: 41.0 [N=25] | all: 41.0
+  └ 3-session: Dev 9.3 | Align 9.3 | Momentum 10.0 | Engage 8.3 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | → | CSS specificity technique cleanly fixed the light mode issue without touching 30+ HTML files; CSP root-cause diagnosis was precise; one shared Web3Forms key across all forms is a mild tracking gap |
+| Creative Alignment | 10 | ↑ | Light mode surfaces now actually match the intended multi-theme vision; Discord CTA on Universe page adds lore-community connection the SOUL calls for |
+| Momentum | 10 | → | 75 files, 437 insertions — Discord link, light mode, CSP, two new CTAs, and SW bump all shipped and pushed in one session |
+| Engagement | 9 | ↑ | Two new email CTAs added direct conversion paths on the two highest-intent pages; email capture was previously broken sitewide |
+| Process Quality | 9 | ↓ | Cherry-pick conflict resolution added a loop; rebase --skip was used (dropped commit) requiring a recovery step — slight process friction, but cleanly resolved |
+| **Total** | **47/50** | ↑ | High-velocity session: four original goals plus bonus Universe CTA all shipped; email capture was a silent system-wide failure that's now unblocked |
+
+**Top win:** The CSP `connect-src` fix unblocked email capture across the entire site — the dispatch form and all game-waitlist fetch() calls were silently failing on every public page since the feature was built.
+**Top gap:** A single Web3Forms access_key is shared across all forms (game waitlists, vault access request, vaultsparked waitlist) — no per-form tracking or segmentation is possible until separate keys are configured.
+**Intent outcome:** Achieved — all four original goals shipped (Discord link, light mode fix, email capture, CTAs) plus the Universe Discord CTA bonus item.
+
+**IGNIS note:** Silent CSP failures are a category of breakage worth including in the regular site health check — connect-src is easily forgotten when new fetch-based integrations are added.
+
+**Brainstorm**
+1. Per-form Web3Forms keys — register separate access keys for Vault Access Request, VaultSparked Waitlist, and each game waitlist so form submissions can be tracked, labelled, and redirected separately; Execution probability: High
+2. Mobile audit pass on new CTAs — audit /join/ Request Vault Access section and /vaultsparked/ Waitlist section at 320/480/768px breakpoints to confirm tap-target sizes and layout; Execution probability: High
+3. Email capture analytics — connect Web3Forms or ConvertKit webhook to a lightweight internal log (could be a Supabase table) so form submission counts are visible in Studio Hub/Vault Command; Execution probability: Medium
+4. Light mode audit phase 2 — the body.light-mode override in style.css covers public pages; portal (vault-member/) uses inline dark surfaces that aren't covered yet — a portal light-mode pass would complete the theme story; Execution probability: Medium
+5. CSP lint rule — add a lightweight CI grep that flags any new fetch() call domain not in connect-src so the "silent failure" pattern can't recur; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Per-form Web3Forms keys audit · [SIL] Mobile audit pass on new CTAs (request + waitlist)
 
 ## 2026-03-31 — Session 26 | Total: 46/50 | Velocity: 4 | protocolVelocity: 7 | Debt: ↓
 Avgs — 3: 46.3 | 5: 45.6 | 10: 43.6 | 25: 40.7 [N=24] | all: 40.7

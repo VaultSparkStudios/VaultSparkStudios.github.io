@@ -54,6 +54,44 @@ Agents MUST NOT modify or remove existing entries.
 - Why it matters: Improves first-click UX, strengthens the studio’s public signal, and makes the default visual identity more intentional
 - Supersedes prior entry: —
 
+---
+
+### 2026-04-01 — Discord invite link replacement
+
+- Category: Direction
+- Human input: "update discord link across website to https://discord.gg/MnnBRbYDk"
+- Area affected: All public HTML, JS files referencing the Discord invite
+- Previous state: `discord.gg/bgR3mSB2` across 51 files
+- New required direction: Replace every occurrence of the old Discord invite with `https://discord.gg/MnnBRbYDk` sitewide
+- Why it matters: Old invite link was dead/deprecated — the new one is the active VaultSpark community server
+- Supersedes prior entry: —
+
+---
+
+### 2026-04-01 — Light mode surface fix
+
+- Category: Direction + Bug Fix
+- Human input: "fix light mode so that the panels/cards aren't dark when the theme is supposed to be light mode"
+- Area affected: `assets/style.css` — light mode rendering across all public pages
+- Previous state: Panels, cards, tags, badges, CTA sections, and feature blocks retained dark `rgba(255,255,255,0.03–0.08)` backgrounds and invisible white borders in light mode because page-specific inline `<style>` blocks overrode the shared theme variables
+- New required direction: Fix light mode so that panels and cards render with light surfaces when light mode is active — do this globally, not page by page
+- Why it matters: Light mode was effectively broken from the user's perspective — selecting the light theme resulted in a dark-surfaced site with barely-visible UI elements
+- Supersedes prior entry: —
+
+---
+
+### 2026-04-01 — Email capture verification + Request Vault Membership CTA
+
+- Category: Assignment + Feature Direction
+- Human input: "Make sure the email capture is working across the website and perhaps add a Request a Vault Membership CTA with an email form"
+- Area affected: All 67 public HTML pages (CSP), `/join/index.html`, `/vaultsparked/index.html`
+- Previous state: Email capture fetch() calls (ConvertKit dispatch strip, Web3Forms game waitlists) were silently CSP-blocked because `connect-src` was missing both `https://api.convertkit.com` and `https://api.web3forms.com` on every public page; no Request Vault Access form existed on /join/
+- New required direction: (1) Fix email capture so it actually works — unblock the CSP; (2) Add a "Request a Vault Membership" CTA with an email form on the join page; (3) Add a similar form to VaultSparked page
+- Why it matters: Email capture was the primary conversion mechanism but was broken at the infrastructure level; adding request forms creates a pipeline for pre-launch membership interest
+- Supersedes prior entry: —
+
+---
+
 ## Entry categories
 
 | Category | Use when |
@@ -245,3 +283,4 @@ Agents MUST NOT modify or remove existing entries.
 - New required direction: Use the real operator credentials to provision the accounts, wire the local env file, and keep pushing until the authenticated browser lane produces real signal
 - Why it matters: This was the point where the repo-level workflow had to become a real working verification path instead of just documentation
 - Supersedes prior entry: —
+

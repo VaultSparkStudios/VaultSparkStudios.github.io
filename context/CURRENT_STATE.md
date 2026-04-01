@@ -4,7 +4,7 @@
 
 - Date: 2026-04-01
 - Overall status: Live and active
-- Current phase: Session 26 complete (2026-03-31) — the repo now carries Chromium-verified theme persistence coverage, a tighter canonical rank-source path across portal + Discord sync code, broader portal theme-surface parity, and public-safe root handoff stubs, while the authenticated entitlement rerun remains blocked in the current shell until the service-role-backed magic-link helper can be used again
+- Current phase: Session 27 complete (2026-04-01) — Discord invite link updated sitewide, comprehensive light-mode surface overrides shipped in style.css, CSP connect-src fixed for all email-capture fetch() calls, Request Vault Access form added to /join/, VaultSparked Waitlist form added to /vaultsparked/, Universe Discord CTA section added
   - Authenticated browser verification lane: dedicated free-member and VaultSparked test accounts now exist, local Playwright provisioning is scriptable, and the browser helper can authenticate through admin-generated magic-link sessions to bypass CAPTCHA-protected password grants
   - PromoGrind Pro verification prep: the provisioning workflow and local Playwright env shape now support an optional dedicated `promogrind_pro` test account in addition to the free and VaultSparked accounts
   - Bootstrap RPC repair: `get_member_bootstrap()` no longer writes the stale `last_seen` column, fixing a real production bug that pushed valid members back to auth/complete-profile flows
@@ -139,7 +139,13 @@
   - `assets/vault-score.js` — game score submission SDK
   - `assets/countdown.js` — release countdown timer widget (data-countdown-target)
   - `assets/rank-icons/` — 9 SVG icons
-  - `sw.js` v3 — extended pre-cache + stale-while-revalidate for Supabase API
+  - `sw.js` v3 — extended pre-cache + stale-while-revalidate for Supabase API (cache bumped session 27 → v3)
+  - Discord invite link: `https://discord.gg/MnnBRbYDk` (updated session 27 across all 51 files)
+  - Light mode surface overrides: `body.light-mode` block in style.css covers ~70 card/panel/tag classes; eliminates dark rgba backgrounds, invisible white borders, and forced white text in light mode (session 27)
+  - CSP connect-src fix: all 67 public pages now include `https://api.convertkit.com` and `https://api.web3forms.com` so email-capture fetch() calls are not CSP-blocked (session 27)
+  - Request Vault Access: `/join/` now has a Web3Forms email form for users without an invite code (session 27)
+  - VaultSparked Waitlist: `/vaultsparked/` now has a Web3Forms email form with founder-discount messaging (session 27)
+  - Universe Discord CTA: `/universe/` now has a themed Discord CTA section; hardcoded `strong { color:#fff }` fixed to `var(--text)` (session 27)
   - `.github/workflows/lighthouse.yml` — Lighthouse CI
   - `.github/workflows/minify.yml` — file-size reporter
   - `.github/workflows/accessibility.yml` — axe-core CI

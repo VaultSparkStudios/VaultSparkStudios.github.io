@@ -4,6 +4,30 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-04-01 — Session 27: Discord link update, light mode surfaces, email capture fix, new CTAs
+
+- Goal: Update Discord link sitewide; analyze and ship website improvements; fix light mode dark surfaces; verify and repair email capture; add Request Vault Membership CTA
+- What changed:
+  - Discord invite: `discord.gg/bgR3mSB2` → `discord.gg/MnnBRbYDk` across 51 files
+  - `assets/style.css`: 193-line `body.light-mode` override block for ~70 card/panel/tag selectors
+  - All 67 public pages: CSP `connect-src` patched to add ConvertKit and Web3Forms API domains
+  - `join/index.html`: Request Vault Access section with Web3Forms email form
+  - `vaultsparked/index.html`: VaultSparked Waitlist section with Web3Forms email form
+  - `universe/index.html`: Discord CTA section; inline strong color:#fff → var(--text)
+  - `sw.js`: cache version bumped to v3
+- Verification:
+  - 75 files changed, 437 insertions in commit 48f44d6 (after cherry-pick + conflict resolution vs. remote sw-bump commit)
+  - CSP fix confirmed correct by understanding fetch() calls governed by connect-src, not form-action
+  - Light mode technique confirmed: body.light-mode specificity (0,2,1) beats page-inline (0,1,0) without !important
+- Risks created or removed:
+  - Removed: email capture (ConvertKit dispatch + Web3Forms waitlists) was silently blocked by CSP on all public pages
+  - Removed: light mode displayed dark panel backgrounds and invisible borders across all pages
+  - Introduced: Web3Forms access_key is shared across all forms — consider separate keys per form for tracking
+- Session intent outcome: Achieved — all four goals shipped and pushed
+- Recommended next move: Confirm Web3Forms access_key routes to correct inbox; run mobile audit on new CTAs; execute activation runbook
+
+---
+
 ### 2026-03-31 — Session 25: final VaultSparked gift pricing copy fix
 
 - Goal: Remove the last visible `$4.99` VaultSparked gift-pricing drift found during authenticated browser verification
