@@ -27,19 +27,54 @@
       });
     }
 
-    // ── Rank / Achievement definitions (display only — source of truth) ──────
+    // ── Rank / Achievement definitions (browser mirror of canonical config) ───
+    const RANK_VISUALS = {
+      spark_initiate: { color: '#94a3b8', badgeClass: 'badge-ghost' },
+      vault_runner: { color: '#1FA2FF', badgeClass: 'badge-blue' },
+      rift_scout: { color: '#10B981', badgeClass: 'badge-green' },
+      vault_guard: { color: '#06B6D4', badgeClass: 'badge-cyan' },
+      vault_breacher: { color: '#8B5CF6', badgeClass: 'badge-purple' },
+      void_operative: { color: '#2D2D2D', badgeClass: 'badge-void' },
+      vault_keeper: { color: '#C85000', badgeClass: 'badge-amber' },
+      forge_master: { color: '#D62828', badgeClass: 'badge-red' },
+      the_sparked: { color: '#FFC400', badgeClass: 'badge-sparked' },
+    };
+
+    function buildRanksFromMembershipConfig() {
+      const membershipConfig = globalThis.VSMembership && VSMembership.config;
+      const labels = membershipConfig && Array.isArray(membershipConfig.ranks) ? membershipConfig.ranks : null;
+      const thresholds = membershipConfig && Array.isArray(membershipConfig.rankThresholds)
+        ? membershipConfig.rankThresholds
+        : null;
+
+      if (!labels || !thresholds || labels.length !== thresholds.length) {
+        return [
+          { name: 'Spark Initiate', min: 0,      max: 249,      color: '#94a3b8', badgeClass: 'badge-ghost'   },
+          { name: 'Vault Runner',   min: 250,    max: 999,      color: '#1FA2FF', badgeClass: 'badge-blue'    },
+          { name: 'Rift Scout',     min: 1000,   max: 2999,     color: '#10B981', badgeClass: 'badge-green'   },
+          { name: 'Vault Guard',    min: 3000,   max: 7499,     color: '#06B6D4', badgeClass: 'badge-cyan'    },
+          { name: 'Vault Breacher', min: 7500,   max: 14999,    color: '#8B5CF6', badgeClass: 'badge-purple'  },
+          { name: 'Void Operative', min: 15000,  max: 29999,    color: '#2D2D2D', badgeClass: 'badge-void'    },
+          { name: 'Vault Keeper',   min: 30000,  max: 59999,    color: '#C85000', badgeClass: 'badge-amber'   },
+          { name: 'Forge Master',   min: 60000,  max: 99999,    color: '#D62828', badgeClass: 'badge-red'     },
+          { name: 'The Sparked',    min: 100000, max: Infinity, color: '#FFC400', badgeClass: 'badge-sparked' },
+        ];
+      }
+
+      return labels.map(function (rank, index) {
+        const visuals = RANK_VISUALS[rank.key] || {};
+        return {
+          name: rank.label,
+          min: thresholds[index],
+          max: index < thresholds.length - 1 ? thresholds[index + 1] - 1 : Infinity,
+          color: visuals.color || '#94a3b8',
+          badgeClass: visuals.badgeClass || 'badge-ghost',
+        };
+      });
+    }
+
     const VS = {
-      RANKS: [
-        { name: 'Spark Initiate', min: 0,      max: 249,      color: '#94a3b8', badgeClass: 'badge-ghost'   },
-        { name: 'Vault Runner',   min: 250,    max: 999,      color: '#1FA2FF', badgeClass: 'badge-blue'    },
-        { name: 'Rift Scout',     min: 1000,   max: 2999,     color: '#10B981', badgeClass: 'badge-green'   },
-        { name: 'Vault Guard',    min: 3000,   max: 7499,     color: '#06B6D4', badgeClass: 'badge-cyan'    },
-        { name: 'Vault Breacher', min: 7500,   max: 14999,    color: '#8B5CF6', badgeClass: 'badge-purple'  },
-        { name: 'Void Operative', min: 15000,  max: 29999,    color: '#2D2D2D', badgeClass: 'badge-void'    },
-        { name: 'Vault Keeper',   min: 30000,  max: 59999,    color: '#C85000', badgeClass: 'badge-amber'   },
-        { name: 'Forge Master',   min: 60000,  max: 99999,    color: '#D62828', badgeClass: 'badge-red'     },
-        { name: 'The Sparked',    min: 100000, max: Infinity, color: '#FFC400', badgeClass: 'badge-sparked' },
-      ],
+      RANKS: buildRanksFromMembershipConfig(),
 
       ACHIEVEMENT_DEFS: [
         { id: 'joined',     icon: '🔓', name: 'Vault Opened',    desc: 'Created your Studio Member account'         },
@@ -85,6 +120,9 @@
       getNextRank(pts) {
         const idx = this.RANKS.findIndex(r => pts >= r.min && pts <= r.max);
         return this.RANKS[idx + 1] || null;
+      },
+      getRankNameByIndex(rankIndex) {
+        return (this.RANKS[rankIndex] && this.RANKS[rankIndex].name) || this.RANKS[0].name;
       },
       getRankProgress(pts) {
         const rank = this.getRank(pts);

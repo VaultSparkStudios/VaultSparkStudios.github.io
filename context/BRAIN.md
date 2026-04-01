@@ -14,8 +14,8 @@
 - heuristic: admin identity is checked by `username.toLowerCase() === 'vaultspark'` not by member_number
 - when it applies: all admin gate logic in vault-member/index.html
 
-- heuristic: rank thresholds and names are defined once in `VS.RANKS` in vault-member/index.html and mirrored in `RANK_THRESHOLDS` in the assign-discord-role Edge Function — keep them in sync
-- when it applies: any rank system change
+- heuristic: rank thresholds and labels are canonical in `config/membership-entitlements.json` and should flow through the generated membership helpers before any browser or edge mirror is introduced
+- when it applies: any rank system change, export logic, or Discord role-sync work
 
 ## Current strategic beliefs
 

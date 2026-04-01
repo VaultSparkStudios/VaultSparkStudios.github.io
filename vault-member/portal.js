@@ -27,19 +27,54 @@
       });
     }
 
-    // ── Rank / Achievement definitions (display only — source of truth) ──────
+    // ── Rank / Achievement definitions (browser mirror of canonical config) ───
+    const RANK_VISUALS = {
+      spark_initiate: { color: '#94a3b8', badgeClass: 'badge-ghost' },
+      vault_runner: { color: '#1FA2FF', badgeClass: 'badge-blue' },
+      rift_scout: { color: '#10B981', badgeClass: 'badge-green' },
+      vault_guard: { color: '#06B6D4', badgeClass: 'badge-cyan' },
+      vault_breacher: { color: '#8B5CF6', badgeClass: 'badge-purple' },
+      void_operative: { color: '#2D2D2D', badgeClass: 'badge-void' },
+      vault_keeper: { color: '#C85000', badgeClass: 'badge-amber' },
+      forge_master: { color: '#D62828', badgeClass: 'badge-red' },
+      the_sparked: { color: '#FFC400', badgeClass: 'badge-sparked' },
+    };
+
+    function buildRanksFromMembershipConfig() {
+      const membershipConfig = globalThis.VSMembership && VSMembership.config;
+      const labels = membershipConfig && Array.isArray(membershipConfig.ranks) ? membershipConfig.ranks : null;
+      const thresholds = membershipConfig && Array.isArray(membershipConfig.rankThresholds)
+        ? membershipConfig.rankThresholds
+        : null;
+
+      if (!labels || !thresholds || labels.length !== thresholds.length) {
+        return [
+          { name: 'Spark Initiate', min: 0,      max: 249,      color: '#94a3b8', badgeClass: 'badge-ghost'   },
+          { name: 'Vault Runner',   min: 250,    max: 999,      color: '#1FA2FF', badgeClass: 'badge-blue'    },
+          { name: 'Rift Scout',     min: 1000,   max: 2999,     color: '#10B981', badgeClass: 'badge-green'   },
+          { name: 'Vault Guard',    min: 3000,   max: 7499,     color: '#06B6D4', badgeClass: 'badge-cyan'    },
+          { name: 'Vault Breacher', min: 7500,   max: 14999,    color: '#8B5CF6', badgeClass: 'badge-purple'  },
+          { name: 'Void Operative', min: 15000,  max: 29999,    color: '#2D2D2D', badgeClass: 'badge-void'    },
+          { name: 'Vault Keeper',   min: 30000,  max: 59999,    color: '#C85000', badgeClass: 'badge-amber'   },
+          { name: 'Forge Master',   min: 60000,  max: 99999,    color: '#D62828', badgeClass: 'badge-red'     },
+          { name: 'The Sparked',    min: 100000, max: Infinity, color: '#FFC400', badgeClass: 'badge-sparked' },
+        ];
+      }
+
+      return labels.map(function (rank, index) {
+        const visuals = RANK_VISUALS[rank.key] || {};
+        return {
+          name: rank.label,
+          min: thresholds[index],
+          max: index < thresholds.length - 1 ? thresholds[index + 1] - 1 : Infinity,
+          color: visuals.color || '#94a3b8',
+          badgeClass: visuals.badgeClass || 'badge-ghost',
+        };
+      });
+    }
+
     const VS = {
-      RANKS: [
-        { name: 'Spark Initiate', min: 0,      max: 249,      color: '#94a3b8', badgeClass: 'badge-ghost'   },
-        { name: 'Vault Runner',   min: 250,    max: 999,      color: '#1FA2FF', badgeClass: 'badge-blue'    },
-        { name: 'Rift Scout',     min: 1000,   max: 2999,     color: '#10B981', badgeClass: 'badge-green'   },
-        { name: 'Vault Guard',    min: 3000,   max: 7499,     color: '#06B6D4', badgeClass: 'badge-cyan'    },
-        { name: 'Vault Breacher', min: 7500,   max: 14999,    color: '#8B5CF6', badgeClass: 'badge-purple'  },
-        { name: 'Void Operative', min: 15000,  max: 29999,    color: '#2D2D2D', badgeClass: 'badge-void'    },
-        { name: 'Vault Keeper',   min: 30000,  max: 59999,    color: '#C85000', badgeClass: 'badge-amber'   },
-        { name: 'Forge Master',   min: 60000,  max: 99999,    color: '#D62828', badgeClass: 'badge-red'     },
-        { name: 'The Sparked',    min: 100000, max: Infinity, color: '#FFC400', badgeClass: 'badge-sparked' },
-      ],
+      RANKS: buildRanksFromMembershipConfig(),
 
       ACHIEVEMENT_DEFS: [
         { id: 'joined',     icon: '🔓', name: 'Vault Opened',    desc: 'Created your Studio Member account'         },
@@ -85,6 +120,9 @@
       getNextRank(pts) {
         const idx = this.RANKS.findIndex(r => pts >= r.min && pts <= r.max);
         return this.RANKS[idx + 1] || null;
+      },
+      getRankNameByIndex(rankIndex) {
+        return (this.RANKS[rankIndex] && this.RANKS[rankIndex].name) || this.RANKS[0].name;
       },
       getRankProgress(pts) {
         const rank = this.getRank(pts);
@@ -3245,20 +3283,9 @@
           .select('username,points,created_at,member_number,subscribed')
           .order('points', { ascending: false });
         if (!members || !members.length) { showAdminFeedback(fb, 'No members found.', false); return; }
-        function getCSVRank(pts) {
-          if (pts >= 100000) return 'The Sparked';
-          if (pts >= 60000)  return 'Forge Master';
-          if (pts >= 30000)  return 'Vault Keeper';
-          if (pts >= 15000)  return 'Void Operative';
-          if (pts >= 7500)   return 'Vault Breacher';
-          if (pts >= 3000)   return 'Vault Guard';
-          if (pts >= 1000)   return 'Rift Scout';
-          if (pts >= 250)    return 'Vault Runner';
-          return 'Spark Initiate';
-        }
         const header = 'rank,username,points,vault_rank,member_number,subscribed,joined_date';
         const rows = members.map((m, i) =>
-          [i+1, m.username, m.points, getCSVRank(m.points), m.member_number || '', m.subscribed ? 'yes' : 'no',
+          [i+1, m.username, m.points, VS.getRank(m.points).name, m.member_number || '', m.subscribed ? 'yes' : 'no',
            m.created_at ? m.created_at.slice(0, 10) : ''].join(',')
         );
         const csv = [header, ...rows].join('\n');
@@ -3366,8 +3393,6 @@
     // ── Phase 4: Classified Archive ──────────────────────────────
     let _archiveLoaded = false;
 
-    const RANK_NAMES = ['Spark Initiate', 'Vault Runner', 'Rift Scout', 'Vault Guard', 'Vault Breacher', 'Void Operative', 'Vault Keeper', 'Forge Master', 'The Sparked'];
-
     async function loadClassifiedArchive() {
       const list = document.getElementById('archive-file-list');
       const badge = document.getElementById('archive-access-badge');
@@ -3384,7 +3409,7 @@
         const maxUnlocked = files.filter(f => !f.locked).reduce((m, f) => Math.max(m, f.rank_required), 0);
         const hasSparkedOnly = files.some(f => f.required_plan === 'vault_sparked');
         if (badge) {
-          const rankLabel = RANK_NAMES[maxUnlocked] || 'Spark Initiate';
+          const rankLabel = VS.getRankNameByIndex(maxUnlocked);
           badge.textContent = '🔓 Access: ' + rankLabel + '+' + (hasSparkedOnly ? ' · Sparked files live' : '');
         }
 
@@ -3525,7 +3550,7 @@
 
     function buildFileCard(f, isRead) {
       const tagClass = { 'EYES ONLY': 'ctag-eyes', 'RESTRICTED': 'ctag-rest', 'TOP SECRET': 'ctag-top', 'VAULT KEEPER EYES ONLY': 'ctag-vk' }[f.classification] || 'ctag-eyes';
-      const rankLabel = RANK_NAMES[f.rank_required] || 'Vault Runner';
+      const rankLabel = VS.getRankNameByIndex(f.rank_required);
       const uTag = f.universe_tag ? f.universe_tag.charAt(0).toUpperCase() + f.universe_tag.slice(1) : '';
 
       if (f.locked) {

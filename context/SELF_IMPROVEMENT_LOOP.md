@@ -41,16 +41,45 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆████
-Avgs — 3: 45.3 | 5: 43.8 | 10: 42.9 | 25: 40.5 [N=23] | all: 40.5
-  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 9.3 | Engage 7.3 | Process 10.0
+Sparkline (last 5 totals): ▇▇██▇
+Avgs — 3: 46.3 | 5: 45.6 | 10: 43.6 | 25: 40.7 [N=24] | all: 40.7
+  └ 3-session: Dev 9.3 | Align 9.0 | Momentum 10.0 | Engage 8.0 | Process 10.0
 Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~3.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-03-31 | Session 24 | Total: 47/50 | Velocity: 4 | protocolVelocity: 7
+Momentum runway: ~3.5 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-03-31 | Session 26 | Total: 46/50 | Velocity: 4 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-03-31 — Session 26 | Total: 46/50 | Velocity: 4 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 46.3 | 5: 45.6 | 10: 43.6 | 25: 40.7 [N=24] | all: 40.7
+  └ 3-session: Dev 9.3 | Align 9.0 | Momentum 10.0 | Engage 8.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | ↓ | The repo gained real browser coverage for theme persistence plus a cleaner rank-source path, but the authenticated entitlement rerun still depends on the local service-role-backed magic-link path |
+| Creative Alignment | 9 | → | The portal polish work strengthened the intended premium, deliberate feel without flattening the product’s identity |
+| Momentum | 10 | → | One pass landed tests, runtime cleanup, public-boundary hardening, and truth write-back across the repo |
+| Engagement | 8 | → | Member-facing polish and entitlement clarity improved, even though no new public growth system shipped |
+| Process Quality | 10 | → | Full Studio OS write-back completed again, and the next blocker is now explicit instead of hidden in partial browser failures |
+| **Total** | **46/50** | ↓ | Strong follow-through session: the repo closed multiple high-value drift items, but authenticated entitlement proof still needs the local service-role lane restored |
+
+**Top win:** Theme persistence is now browser-verified in Chromium, and the rank/public-boundary cleanup removed two durable sources of future drift from the repo.
+**Top gap:** The authenticated entitlement lane still cannot produce live free-vs-Sparked-vs-Pro proof until the local shell can supply `SUPABASE_SERVICE_ROLE_KEY` for the magic-link helper.
+**Intent outcome:** Mostly achieved — the repo-side high-value items landed, but the highest-trust authenticated rerun is still environment-blocked.
+
+**IGNIS note:** Verification quality rises sharply when the repo can express both the feature rules and the exact authenticated proof path needed to validate them.
+
+**Brainstorm**
+1. Local auth secret-source adapter — teach the Playwright helper/provisioning path to read the service-role key from an approved local secret store or profile instead of requiring an ephemeral shell export; Execution probability: High
+2. Authenticated verification artifact log — write a compact free / VaultSparked / PromoGrind Pro summary into `logs/` after each targeted entitlement run; Execution probability: High
+3. Residual portal surface parity sweep — finish the remaining admin/settings dark-only inline surfaces so light-mode portal coverage is less patchy; Execution probability: Medium
+4. Entitlement diagnostics probe — add a lightweight internal check that reports active plan, derived entitlements, and archive/beta posture for the current member before browser assertions run; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Service-role-backed auth rerun lane · [SIL] Authenticated verification artifact log
+
+---
 
 ## 2026-03-31 — Session 24 | Total: 47/50 | Velocity: 4 | protocolVelocity: 7 | Debt: ↓
 Avgs — 3: 45.3 | 5: 43.8 | 10: 42.9 | 25: 40.5 [N=23] | all: 40.5

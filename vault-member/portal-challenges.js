@@ -1,8 +1,6 @@
     // ── Phase 4: Classified Archive ──────────────────────────────
     let _archiveLoaded = false;
 
-    const RANK_NAMES = ['Spark Initiate', 'Vault Runner', 'Rift Scout', 'Vault Guard', 'Vault Breacher', 'Void Operative', 'Vault Keeper', 'Forge Master', 'The Sparked'];
-
     async function loadClassifiedArchive() {
       const list = document.getElementById('archive-file-list');
       const badge = document.getElementById('archive-access-badge');
@@ -19,7 +17,7 @@
         const maxUnlocked = files.filter(f => !f.locked).reduce((m, f) => Math.max(m, f.rank_required), 0);
         const hasSparkedOnly = files.some(f => f.required_plan === 'vault_sparked');
         if (badge) {
-          const rankLabel = RANK_NAMES[maxUnlocked] || 'Spark Initiate';
+          const rankLabel = VS.getRankNameByIndex(maxUnlocked);
           badge.textContent = '🔓 Access: ' + rankLabel + '+' + (hasSparkedOnly ? ' · Sparked files live' : '');
         }
 
@@ -160,7 +158,7 @@
 
     function buildFileCard(f, isRead) {
       const tagClass = { 'EYES ONLY': 'ctag-eyes', 'RESTRICTED': 'ctag-rest', 'TOP SECRET': 'ctag-top', 'VAULT KEEPER EYES ONLY': 'ctag-vk' }[f.classification] || 'ctag-eyes';
-      const rankLabel = RANK_NAMES[f.rank_required] || 'Vault Runner';
+      const rankLabel = VS.getRankNameByIndex(f.rank_required);
       const uTag = f.universe_tag ? f.universe_tag.charAt(0).toUpperCase() + f.universe_tag.slice(1) : '';
 
       if (f.locked) {

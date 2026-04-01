@@ -35,6 +35,20 @@ const config = {
       isSparked: true,
       points: 100,
     },
+    {
+      kind: 'promogrind',
+      email:
+        process.env.VAULT_PROMOGRIND_TEST_EMAIL ||
+        derivePromoGrindEmail(
+          process.env.VAULT_FREE_TEST_EMAIL || process.env.VAULT_SPARKED_TEST_EMAIL || ''
+        ),
+      password: process.env.VAULT_PROMOGRIND_TEST_PASSWORD || generatePassword(),
+      username: process.env.VAULT_PROMOGRIND_TEST_USERNAME || 'vaultproqa',
+      plan: 'promogrind_pro',
+      status: 'active',
+      isSparked: false,
+      points: 100,
+    },
   ],
 };
 
@@ -81,6 +95,13 @@ async function main() {
 
 function generatePassword() {
   return `Vault!${crypto.randomBytes(9).toString('base64url')}`;
+}
+
+function derivePromoGrindEmail(sourceEmail) {
+  if (!sourceEmail || !sourceEmail.includes('@')) return '';
+  const [local, domain] = sourceEmail.split('@');
+  if (!local || !domain) return '';
+  return `${local}+promogrind@${domain}`;
 }
 
 function buildHeaders(extra = {}) {
@@ -237,13 +258,14 @@ async function ensureVaultMember(authUser, account) {
 }
 
 async function ensureSubscription(userId, account) {
+  const needsActiveSubscription = account.plan !== 'free' && account.status === 'active';
   const payload = {
     user_id: userId,
-    stripe_customer_id: account.kind === 'sparked' ? `test_customer_${userId}` : null,
-    stripe_subscription_id: account.kind === 'sparked' ? `test_subscription_${userId}` : null,
+    stripe_customer_id: needsActiveSubscription ? `test_customer_${account.kind}_${userId}` : null,
+    stripe_subscription_id: needsActiveSubscription ? `test_subscription_${account.kind}_${userId}` : null,
     plan: account.plan,
     status: account.status,
-    current_period_end: account.kind === 'sparked' ? plus30DaysIso : null,
+    current_period_end: needsActiveSubscription ? plus30DaysIso : null,
     updated_at: nowIso,
   };
 
@@ -290,6 +312,8 @@ async function updatePlaywrightEnv(results) {
     VAULT_FREE_TEST_PASSWORD: existing.VAULT_FREE_TEST_PASSWORD || '',
     VAULT_SPARKED_TEST_EMAIL: existing.VAULT_SPARKED_TEST_EMAIL || '',
     VAULT_SPARKED_TEST_PASSWORD: existing.VAULT_SPARKED_TEST_PASSWORD || '',
+    VAULT_PROMOGRIND_TEST_EMAIL: existing.VAULT_PROMOGRIND_TEST_EMAIL || '',
+    VAULT_PROMOGRIND_TEST_PASSWORD: existing.VAULT_PROMOGRIND_TEST_PASSWORD || '',
   };
 
   for (const result of results) {
@@ -302,6 +326,10 @@ async function updatePlaywrightEnv(results) {
     if (result.account.kind === 'sparked') {
       merged.VAULT_SPARKED_TEST_EMAIL = result.account.email;
       merged.VAULT_SPARKED_TEST_PASSWORD = result.account.password;
+    }
+    if (result.account.kind === 'promogrind') {
+      merged.VAULT_PROMOGRIND_TEST_EMAIL = result.account.email;
+      merged.VAULT_PROMOGRIND_TEST_PASSWORD = result.account.password;
     }
   }
 
@@ -316,6 +344,9 @@ async function updatePlaywrightEnv(results) {
     '',
     `VAULT_SPARKED_TEST_EMAIL=${merged.VAULT_SPARKED_TEST_EMAIL}`,
     `VAULT_SPARKED_TEST_PASSWORD=${merged.VAULT_SPARKED_TEST_PASSWORD}`,
+    '',
+    `VAULT_PROMOGRIND_TEST_EMAIL=${merged.VAULT_PROMOGRIND_TEST_EMAIL}`,
+    `VAULT_PROMOGRIND_TEST_PASSWORD=${merged.VAULT_PROMOGRIND_TEST_PASSWORD}`,
     '',
   ].join('\n');
 

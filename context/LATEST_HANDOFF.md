@@ -1,11 +1,36 @@
 # Latest Handoff
 
-Last updated: 2026-03-31
+Last updated: 2026-04-01
 
-Session Intent (2026-03-31 — Session 25): Close the last visible VaultSparked pricing drift found during authenticated browser verification.
+Session Intent (2026-03-31 — Session 26): Complete the highest-value open task-board items across browser verification, theme parity, rank-source drift, and public-repo boundary safety.
 
 This is the authoritative active handoff file for the project.
-For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
+`HANDOFF_PHASE6.md` now remains only as a public-safe compatibility stub; use the current Studio OS context files for active project history.
+
+## Where We Left Off (Session 25)
+
+- Shipped: final VaultSparked gift-pricing truth fix
+- Tests: repo-wide price sweep only
+- Deploy: no deploy required
+
+---
+
+## What was completed (as of 2026-03-31 — Session 26)
+
+### Session 26 — High-Value Verification + Drift Cleanup Pass (2026-03-31)
+
+**Shipped:**
+- `tests/theme-persistence.spec.js`: new Chromium browser coverage now verifies homepage theme restore and mobile-nav theme persistence against the live site
+- `vault-member/portal-core.js`, `vault-member/portal-challenges.js`, `vault-member/portal-features.js`, `vault-member/portal.js`, and `supabase/functions/assign-discord-role/index.ts`: rank thresholds now flow from the canonical generated membership config instead of separate hardcoded ladders
+- `vault-member/index.html` + `vault-member/portal.css`: notification popover, onboarding overlay, social auth buttons, referral/gift surfaces, and poll inputs now derive from shared theme-token-backed classes instead of dark-only inline styling
+- `tests/helpers/vaultAuth.js`, `.env.playwright.local.example`, `scripts/provision-vault-test-accounts.mjs`, and `docs/TEST_ACCOUNT_PROVISIONING.md`: the local verification lane now supports an optional dedicated PromoGrind Pro Playwright account in addition to free + VaultSparked
+- `CODEX_HANDOFF_2026-03-10.md`, `CODEX_HANDOFF_2026-03-12.md`, and `HANDOFF_PHASE6.md`: historical root handoff docs are now public-safe compatibility stubs
+
+**Verification:** `node --check` passed for the patched JS files and provisioning script; `npx playwright test --project=chromium --workers=1 tests/theme-persistence.spec.js` passed (2/2). The new authenticated entitlement checks are in repo state, but the live rerun is still blocked in this shell because `SUPABASE_SERVICE_ROLE_KEY` is not available locally and the production password grant remains CAPTCHA-blocked.
+
+**Intent outcome:** Partially achieved — the repo-side high-value items landed and the public/theme lanes are verified, but the authenticated entitlement rerun still needs the service-role-backed magic-link path available in the local shell.
+
+---
 
 ## Where We Left Off (Session 24)
 

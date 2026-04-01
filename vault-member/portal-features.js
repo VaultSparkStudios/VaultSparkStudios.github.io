@@ -782,20 +782,9 @@
           .select('username,points,created_at,member_number,subscribed')
           .order('points', { ascending: false });
         if (!members || !members.length) { showAdminFeedback(fb, 'No members found.', false); return; }
-        function getCSVRank(pts) {
-          if (pts >= 100000) return 'The Sparked';
-          if (pts >= 60000)  return 'Forge Master';
-          if (pts >= 30000)  return 'Vault Keeper';
-          if (pts >= 15000)  return 'Void Operative';
-          if (pts >= 7500)   return 'Vault Breacher';
-          if (pts >= 3000)   return 'Vault Guard';
-          if (pts >= 1000)   return 'Rift Scout';
-          if (pts >= 250)    return 'Vault Runner';
-          return 'Spark Initiate';
-        }
         const header = 'rank,username,points,vault_rank,member_number,subscribed,joined_date';
         const rows = members.map((m, i) =>
-          [i+1, m.username, m.points, getCSVRank(m.points), m.member_number || '', m.subscribed ? 'yes' : 'no',
+          [i+1, m.username, m.points, VS.getRank(m.points).name, m.member_number || '', m.subscribed ? 'yes' : 'no',
            m.created_at ? m.created_at.slice(0, 10) : ''].join(',')
         );
         const csv = [header, ...rows].join('\n');

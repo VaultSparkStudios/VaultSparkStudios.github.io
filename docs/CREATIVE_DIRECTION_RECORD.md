@@ -176,6 +176,18 @@ Agents MUST NOT modify or remove existing entries.
 
 ---
 
+### 2026-03-31 — Complete the highest-value open task-board items
+
+- Category: Assignment
+- Human input: "Complete all high value items"
+- Area affected: Browser verification, portal theme parity, rank-source drift, public-repo boundary cleanup
+- Previous state: Several escalated `Now` items were still open across theme persistence verification, portal surface parity, rank-threshold drift, public root handoff hygiene, and authenticated entitlement browser proof
+- New required direction: Execute the highest-value open items directly instead of leaving them as audit-only recommendations, with real implementation and verification where possible
+- Why it matters: These items sit on the trust/momentum boundary; leaving them open would keep the repo in a partial-verification state even though the architecture already exists
+- Supersedes prior entry: —
+
+---
+
 ### 2026-03-31 — Next-session flagging for authenticated test accounts
 
 - Category: Assignment

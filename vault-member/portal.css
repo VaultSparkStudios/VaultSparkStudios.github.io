@@ -79,6 +79,205 @@
 .auth-panel { display: none; }
 .auth-panel.active { display: block; }
 
+.social-auth-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.social-auth-btn--discord {
+  background: color-mix(in srgb, #5865F2 14%, var(--panel));
+  border-color: color-mix(in srgb, #5865F2 36%, var(--line));
+}
+
+.portal-surface-card {
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-top: 0.25rem;
+}
+
+.portal-surface-card--gold {
+  border-color: rgba(255,196,0,0.18);
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--panel-strong) 92%, #FFC400 8%), var(--panel-strong));
+}
+
+.portal-popover {
+  position: absolute;
+  right: -0.5rem;
+  top: calc(100% + 10px);
+  width: min(340px, calc(100vw - 1rem));
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 0;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+  z-index: 400;
+  overflow: hidden;
+}
+
+.portal-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.2rem 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.portal-popover-loading {
+  padding: 1rem 1.2rem;
+  font-size: 0.86rem;
+  color: var(--dim);
+}
+
+.portal-popover-action {
+  font-size: 0.76rem;
+  color: var(--gold);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 0;
+}
+
+.poll-text-input,
+.poll-datetime-input {
+  width: 100%;
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.poll-option-input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 0.88rem;
+}
+
+.onboarding-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  pointer-events: none;
+}
+
+.onboarding-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: auto;
+}
+
+.onboarding-spotlight {
+  position: absolute;
+  border-radius: 12px;
+  box-shadow: 0 0 0 9999px rgba(0,0,0,0.72);
+  pointer-events: none;
+  transition: all 0.3s ease;
+  z-index: 1101;
+}
+
+.onboarding-card {
+  position: absolute;
+  background: var(--panel-strong);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 1.8rem 2rem;
+  max-width: 360px;
+  width: 92%;
+  z-index: 1102;
+  pointer-events: auto;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+}
+
+.onboarding-step-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+
+.onboarding-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  margin: 0 0 0.55rem;
+  letter-spacing: -0.02em;
+}
+
+.onboarding-desc {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin: 0 0 1.4rem;
+}
+
+.onboarding-actions {
+  display: flex;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.onboarding-next-btn {
+  flex: 1;
+  height: 42px;
+  border-radius: 10px;
+  background: var(--gold);
+  color: #000;
+  font-weight: 800;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  transition: opacity 0.18s;
+}
+
+.onboarding-skip-btn {
+  height: 42px;
+  padding: 0 1rem;
+  border-radius: 10px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--dim);
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.18s, color 0.18s;
+}
+
+.onboarding-skip-btn:hover {
+  background: var(--panel);
+  color: var(--muted);
+}
+
+.onboarding-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 /* ─── VaultSparked Badge ─── */
 .vaultsparked-badge {
   display: inline-flex;

@@ -8,6 +8,7 @@ Provision:
 
 - one free Vault member account
 - one VaultSparked account with an active `vault_sparked` subscription row
+- one PromoGrind Pro account with an active `promogrind_pro` subscription row
 
 and write the resulting credentials into `.env.playwright.local`.
 
@@ -26,8 +27,9 @@ and write the resulting credentials into `.env.playwright.local`.
 3. set/update their passwords
 4. ensure `vault_members` rows exist
 5. ensure the Sparked account has an active `subscriptions` row with `plan = 'vault_sparked'`
-6. set `vault_members.is_sparked` to match the intended account type
-7. write the credentials into `.env.playwright.local`
+6. ensure the PromoGrind Pro account has an active `subscriptions` row with `plan = 'promogrind_pro'`
+7. set `vault_members.is_sparked` to match the intended account type
+8. write the credentials into `.env.playwright.local`
 
 ## Required environment variables
 
@@ -35,6 +37,7 @@ and write the resulting credentials into `.env.playwright.local`.
 SUPABASE_SERVICE_ROLE_KEY=replace-me
 VAULT_FREE_TEST_EMAIL=free-test@example.com
 VAULT_SPARKED_TEST_EMAIL=sparked-test@example.com
+VAULT_PROMOGRIND_TEST_EMAIL=promogrind-test@example.com
 ```
 
 Optional:
@@ -45,6 +48,8 @@ VAULT_FREE_TEST_PASSWORD=custom-password
 VAULT_SPARKED_TEST_PASSWORD=custom-password
 VAULT_FREE_TEST_USERNAME=vaultfreeqa
 VAULT_SPARKED_TEST_USERNAME=vaultsparkedqa
+VAULT_PROMOGRIND_TEST_PASSWORD=custom-password
+VAULT_PROMOGRIND_TEST_USERNAME=vaultproqa
 PLAYWRIGHT_ENV_PATH=.env.playwright.local
 WRITE_PLAYWRIGHT_ENV=1
 ```
@@ -57,6 +62,7 @@ If passwords are not provided, the script generates them.
 $env:SUPABASE_SERVICE_ROLE_KEY="..."
 $env:VAULT_FREE_TEST_EMAIL="free-test@example.com"
 $env:VAULT_SPARKED_TEST_EMAIL="sparked-test@example.com"
+$env:VAULT_PROMOGRIND_TEST_EMAIL="promogrind-test@example.com"
 npm run provision:test-accounts
 ```
 
@@ -70,6 +76,8 @@ VAULT_FREE_TEST_EMAIL=...
 VAULT_FREE_TEST_PASSWORD=...
 VAULT_SPARKED_TEST_EMAIL=...
 VAULT_SPARKED_TEST_PASSWORD=...
+VAULT_PROMOGRIND_TEST_EMAIL=...
+VAULT_PROMOGRIND_TEST_PASSWORD=...
 ```
 
 ## After provisioning

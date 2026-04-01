@@ -20,6 +20,13 @@ function getVaultCreds(accountType = 'default') {
     };
   }
 
+  if (accountType === 'promogrind') {
+    return {
+      email: process.env.VAULT_PROMOGRIND_TEST_EMAIL,
+      password: process.env.VAULT_PROMOGRIND_TEST_PASSWORD,
+    };
+  }
+
   return {
     email: process.env.VAULT_TEST_EMAIL || process.env.VAULT_FREE_TEST_EMAIL,
     password: process.env.VAULT_TEST_PASSWORD || process.env.VAULT_FREE_TEST_PASSWORD,

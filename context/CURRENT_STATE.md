@@ -2,10 +2,11 @@
 
 ## Snapshot
 
-- Date: 2026-03-31
+- Date: 2026-04-01
 - Overall status: Live and active
-- Current phase: Session 22 complete (2026-03-31) — the canonical membership entitlement system is now live in production after the phase52 SQL apply and updated edge-function deploy, with VaultSparked vs legacy PromoGrind Pro separated cleanly and public pricing / early-access copy aligned to the intended model
+- Current phase: Session 26 complete (2026-03-31) — the repo now carries Chromium-verified theme persistence coverage, a tighter canonical rank-source path across portal + Discord sync code, broader portal theme-surface parity, and public-safe root handoff stubs, while the authenticated entitlement rerun remains blocked in the current shell until the service-role-backed magic-link helper can be used again
   - Authenticated browser verification lane: dedicated free-member and VaultSparked test accounts now exist, local Playwright provisioning is scriptable, and the browser helper can authenticate through admin-generated magic-link sessions to bypass CAPTCHA-protected password grants
+  - PromoGrind Pro verification prep: the provisioning workflow and local Playwright env shape now support an optional dedicated `promogrind_pro` test account in addition to the free and VaultSparked accounts
   - Bootstrap RPC repair: `get_member_bootstrap()` no longer writes the stale `last_seen` column, fixing a real production bug that pushed valid members back to auth/complete-profile flows
   - Operator test-account provisioning: `scripts/provision-vault-test-accounts.mjs` plus `docs/TEST_ACCOUNT_PROVISIONING.md` now provide a repo-native service-role workflow for creating dedicated free + VaultSparked Playwright accounts and wiring `.env.playwright.local`
 
@@ -26,6 +27,10 @@
   - Invite-only Vault status messaging: `/join/` now shows `Vault Status · Invite codes only` with a yellow status indicator instead of a green “live member count” treatment, and the homepage no longer shows a public `Join {count} vault members` bar
   - Vault Membership readiness surfaces: `vault-member/index.html` now includes a `Claim Center` dashboard panel for next unlocks/rewards and a `Vault Status` settings block for theme sync, membership tier, Discord linkage, and account-control status
   - Local Playwright auth bootstrap: `playwright.config.js` now loads `.env.playwright.local` when present, `.env.playwright.local.example` documents the expected keys, and authenticated tests can seed both auth state and a device theme locally without committing secrets
+  - Chromium theme persistence coverage: `tests/theme-persistence.spec.js` now verifies homepage theme restore and mobile-nav theme persistence in Chromium against the live site
+  - Canonical rank-source sync: portal rank displays/export helpers and the Discord role-sync function now read the generated membership config instead of keeping separate hardcoded threshold ladders
+  - Portal theme-surface parity follow-through: the notification popover, social auth buttons, referral/gift surfaces, poll inputs, and onboarding overlay now derive their surfaces from shared theme tokens instead of dark-only inline styling
+  - Public-safe legacy handoffs: root historical handoff files now remain as compatibility stubs that point back to Studio OS context instead of exposing detailed operator history in the public repo
   - VaultSparked pricing truth sync: `/vaultsparked/`, portal CTAs, gift flows, and portal status text now consistently use the founder-confirmed `$24.99/month` tier across visible pricing surfaces
   - Checkout origin hardening: `create-checkout` and `create-gift-checkout` now return origin-scoped CORS headers instead of permissive `*`
   - Anonymous-only Supabase service-worker caching: `sw.js` now caches only unauthenticated `/rest/v1/` reads and skips authenticated/auth/storage traffic
@@ -156,7 +161,7 @@
 ## In progress
 
 - Activation runbook execution remains the primary external blocker track: Cloudflare proxy, auth hardening, newsletter secrets, VAPID, and search verification
-- Theme/browser verification still needs an authenticated E2E pass for account-backed theme sync plus the new entitlement-aware archive/beta/gift/status surfaces once dedicated free + VaultSparked test accounts are configured in `.env.playwright.local`
+- The remaining authenticated browser verification pass still needs a local shell with `SUPABASE_SERVICE_ROLE_KEY` so the magic-link helper can verify account-backed theme restore plus the entitlement-aware archive/beta/gift/status surfaces without hitting the production CAPTCHA-blocked password grant path
 - A clean full-suite authenticated Chromium pass is still worth running again when time budget allows, but the key free-member browser path and the previously flaky membership-state assertion have both passed with the new provisioning/helper flow
 - Cloudflare response-header verification is still pending until the production proxy step in the activation runbook is complete
 
@@ -169,7 +174,7 @@
 
 ## Next 3 moves
 
-1. Extend the authenticated Playwright lane to compare free-member vs VaultSparked states explicitly across archive access, beta-key availability, and premium-tool messaging
-2. Run a longer-budget full authenticated Chromium pass with the new magic-session helper to capture a clean all-green artifact after the helper/runtime fixes
+1. Restore the service-role-backed local verification shell, provision the optional PromoGrind Pro test account, and rerun the authenticated Chromium entitlement lane for free vs VaultSparked vs PromoGrind Pro
+2. Run a longer-budget full authenticated Chromium pass with the magic-session helper once the local service-role key is available again
 3. Execute `docs/ACTIVATION_RUNBOOK.md` in order — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification
 

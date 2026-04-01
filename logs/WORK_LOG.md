@@ -372,6 +372,34 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-31 — High-value verification + drift cleanup pass
+
+- Goal: Complete the highest-value open task-board items across browser verification, theme parity, rank-source drift, and public-repo boundary safety
+- What changed:
+  - `tests/theme-persistence.spec.js`: added live Chromium coverage for homepage theme restore and mobile-nav theme persistence
+  - `vault-member/portal-core.js`, `vault-member/portal-challenges.js`, `vault-member/portal-features.js`, `vault-member/portal.js`, and `supabase/functions/assign-discord-role/index.ts`: rank thresholds now flow from the canonical generated membership config instead of additional hardcoded ladders
+  - `vault-member/index.html` + `vault-member/portal.css`: notification popover, onboarding overlay, social auth buttons, referral/gift panels, and poll inputs now use shared theme-token-backed classes instead of dark-only inline surfaces
+  - `tests/helpers/vaultAuth.js`, `.env.playwright.local.example`, `scripts/provision-vault-test-accounts.mjs`, and `docs/TEST_ACCOUNT_PROVISIONING.md`: added optional PromoGrind Pro Playwright account support in repo state
+  - `CODEX_HANDOFF_2026-03-10.md`, `CODEX_HANDOFF_2026-03-12.md`, and `HANDOFF_PHASE6.md`: historical root handoff docs reduced to public-safe compatibility stubs
+  - Studio OS context refreshed: `CURRENT_STATE`, `TASK_BOARD`, `LATEST_HANDOFF`, `DECISIONS`, `PROJECT_STATUS`, `SELF_IMPROVEMENT_LOOP`, and this log
+- Verification:
+  - `node --check tests/authenticated.spec.js`
+  - `node --check tests/theme-persistence.spec.js`
+  - `node --check tests/helpers/vaultAuth.js`
+  - `node --check scripts/provision-vault-test-accounts.mjs`
+  - `node --check vault-member/portal-core.js`
+  - `node --check vault-member/portal-features.js`
+  - `node --check vault-member/portal-challenges.js`
+  - `node --check vault-member/portal.js`
+  - `npx playwright test --project=chromium --workers=1 tests/theme-persistence.spec.js` ✅ (2 passed)
+  - `npx playwright test --project=chromium --workers=1 tests/authenticated.spec.js -g "account-backed theme sync restores|free and VaultSparked members diverge|PromoGrind Pro keeps"` ❌ blocked because this shell does not have `SUPABASE_SERVICE_ROLE_KEY`, so the helper falls back to the production CAPTCHA-blocked password grant path
+- Risks created or removed:
+  - Removed: rank-threshold drift between portal and Discord sync, several remaining high-visibility portal dark-only surfaces, and detailed historical operator notes in the public repo root
+  - Remaining: authenticated entitlement browser proof still depends on restoring the service-role-backed magic-link path locally
+- Recommended next move: restore `SUPABASE_SERVICE_ROLE_KEY` to the local verification shell, provision the optional PromoGrind Pro account, and rerun the targeted authenticated Chromium entitlement checks
+
+---
+
 ### 2026-03-25 — Studio OS migration + Admin Panel + 9-tier ranks + VaultSparked Discord role
 
 - Goal: Build Vault Command admin panel, expand ranks to 9 tiers, wire VaultSparked subscription to Discord role, apply Studio OS project system

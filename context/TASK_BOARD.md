@@ -7,19 +7,20 @@
 - [x] [SIL] Authenticated axe-core portal tests — env-gated Playwright scans now cover dashboard, challenges, and onboarding modal
 - [x] [SIL] Access-state copy audit — entitlement and early-access copy now aligns to the canonical free-pool / VaultSparked-priority model across core public membership surfaces
 - [x] [FLAG] Apply `supabase-phase52-membership-entitlements.sql` and deploy the updated entitlement-aware edge functions so plan-aware archive/beta gating is live
-- [ ] [FLAG] Verify free vs VaultSparked vs PromoGrind Pro behavior in a browser — portal status, archive access, beta keys, PromoGrind live tools, and gift checkout copy
+- [ ] [FLAG] Verify free vs VaultSparked vs PromoGrind Pro behavior in a browser — portal status, archive access, beta keys, PromoGrind live tools, and gift checkout copy; repo-side tests landed, but the live rerun still needs `SUPABASE_SERVICE_ROLE_KEY` in the local shell so the magic-link helper can bypass production CAPTCHA
 - [x] [FLAG] Run `npm run provision:test-accounts` with service-role credentials and dedicated free/Sparked emails to create the Playwright verification accounts and populate `.env.playwright.local`
-- [ ] [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Escalated 2026-03-31 after 2+ skipped sessions]
-- [ ] [SIL] Theme surface parity audit — continue moving remaining page-specific dark surfaces onto shared theme tokens across portal and secondary pages [Escalated 2026-03-31 after 2+ skipped sessions]
-- [ ] [SIL] Public/private boundary audit — sweep remaining root docs and generated metadata for public-safety, then move or sanitize anything operationally sensitive [Escalated 2026-03-31 after 2+ skipped sessions]
-- [ ] [SIL] Shared rank-threshold source audit — reduce future drift across UI, scripts, functions, and migrations [Escalated 2026-03-31 after 2+ skipped sessions]
+- [x] [SIL] Theme persistence E2E coverage — homepage restore and mobile-nav persistence now pass in Chromium against the live site
+- [x] [SIL] Theme surface parity audit — high-visibility portal dark-only surfaces now use shared theme-token-backed classes for overlays, auth buttons, referral/gift panels, and poll inputs
+- [x] [SIL] Public/private boundary audit — historical root handoff docs are now public-safe compatibility stubs instead of detailed operator records
+- [x] [SIL] Shared rank-threshold source audit — portal rank helpers and Discord role sync now derive thresholds from the canonical membership-entitlement config
 
 ## Next (Pending External Action)
 
 - [SIL] Entitlement matrix audit — review every public page/app against `config/membership-entitlements.json` and remove any remaining promise drift [Score: 8.8]
 - [SIL] Browser entitlement spec lane — add Playwright coverage for free vs VaultSparked vs PromoGrind Pro states on archive, beta keys, and premium tool gating [Score: 8.7]
+- [SIL] Service-role-backed auth rerun lane — restore the local verification shell secret path so authenticated Playwright can use magic-link sessions reliably under CAPTCHA hardening [Score: 8.9]
+- [SIL] Authenticated verification artifact log — write a compact post-run summary of free / VaultSparked / PromoGrind Pro entitlement results into `logs/` after each targeted browser pass [Score: 7.8]
 - [SIL] Default-theme browser parity pass — verify the new `Dark - High Contrast` default across homepage, portal, and mobile nav in a real browser [Score: 8.1]
-- [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Score: 7.9]
 - [SIL] Account-backed theme sync verification — verify local-vs-account precedence, portal sign-in restore, and cross-device hydration for `prefs.site_theme` [Score: 8.1]
 - [FLAG] Add a second dedicated VaultSparked test account for premium-state browser verification once billing/test-state setup is ready [Score: 7.6]
 - [SIL] Supabase migration-history normalization — reconcile local migration naming/history with the remote timestamp-based Supabase history so future production schema changes can use the standard migration path safely [Score: 8.3]
@@ -163,6 +164,14 @@
 ## Completed — Session 25 (2026-03-31)
 
 - ✅ Final VaultSparked gift pricing drift removed — the lingering `$4.99` gift-copy line in `vault-member/index.html` now matches the canonical `$24.99` pricing used everywhere else
+
+## Completed — Session 26 (2026-03-31)
+
+- ✅ Chromium theme persistence verification — homepage restore and mobile-nav theme persistence now pass in `tests/theme-persistence.spec.js`
+- ✅ Portal theme-surface parity follow-through — notification popover, onboarding overlay, social auth buttons, referral/gift panels, and poll inputs now read from shared theme-token-backed classes
+- ✅ Rank-source drift reduction — portal rank helpers and `assign-discord-role` now derive thresholds from the canonical generated membership config
+- ✅ Public root boundary cleanup — `CODEX_HANDOFF_2026-03-10.md`, `CODEX_HANDOFF_2026-03-12.md`, and `HANDOFF_PHASE6.md` are now public-safe compatibility stubs
+- ✅ PromoGrind Pro verification support in repo state — provisioning docs/script, env shape, and auth helper now support an optional dedicated `promogrind_pro` Playwright account
 
 ## Completed — Session 14 (2026-03-31)
 

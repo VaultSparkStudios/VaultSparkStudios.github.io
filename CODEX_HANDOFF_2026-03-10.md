@@ -1,20 +1,11 @@
-# Codex Handoff - 2026-03-10
+# Historical Handoff Stub
 
-## Repo
-- Name: `VaultSparkStudios.github.io`
-- Remote: `https://github.com/VaultSparkStudios/VaultSparkStudios.github.io.git`
+This public repo keeps historical Codex handoff filenames only as compatibility stubs.
 
-## Deployment/docs status
-- Added `docs/` and `docs/templates/` copies so `AGENTS.md` points at real in-repo paths.
-- Fetched `origin/main` and verified the upstream homepage before editing the local landing-page file.
-- Updated the homepage card for `VaultSpark Football GM` from a launch stub to a client-beta playable state.
-- Replaced the existing `vaultspark-football-gm/` launch stub with the current built static bundle from `VaultSpark-Football-GM/static/`.
+Authoritative project continuity lives in:
 
-## Existing VaultSpark Football GM studio integration
-- Home card already exists in `index.html`.
-- Published path exists at `/vaultspark-football-gm/`.
-- The local studio checkout now contains the generated Pages bundle for the game.
+- `context/LATEST_HANDOFF.md`
+- `context/CURRENT_STATE.md`
+- `context/TASK_BOARD.md`
 
-## Next required studio-side actions
-- Before any future homepage/card edit: fetch latest remote and verify live/upstream `index.html` again.
-- Configure/push the Studio repo changes to GitHub when ready.
+Detailed operator history and private studio workflow notes should live in VaultSpark Studio OS, not in the public website repo.

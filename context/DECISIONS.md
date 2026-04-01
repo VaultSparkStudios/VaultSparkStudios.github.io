@@ -199,3 +199,14 @@ Append new entries. Do not erase historical reasoning unless it is wrong.
 - Alternatives considered: Add `last_seen` back to the table, ignore the bug and work around it only in tests, or patch the portal to bypass bootstrap failures silently
 - Why this was chosen: The bug was real production breakage for valid sessions. The correct fix is to remove the stale schema assumption from the RPC.
 - Follow-up: Keep auth/bootstrap contract audits in scope when future schema cleanup removes or renames portal-facing columns.
+
+---
+
+### 2026-03-31 — Browser and edge rank thresholds should derive from the generated membership config
+
+- Status: Active
+- Context: Rank thresholds were already canonical in `config/membership-entitlements.json`, but the portal UI, export helpers, and Discord role-sync path still kept their own threshold mirrors.
+- Decision: Treat the generated membership helpers as the runtime source for rank thresholds and labels anywhere practical, instead of maintaining additional hardcoded threshold ladders in browser and edge code.
+- Alternatives considered: Keep patching mirrored rank arrays by hand, or add yet another standalone shared rank-constants file.
+- Why this was chosen: The canonical config already existed. Reading from the generated helper reduces future drift without adding a second source of truth.
+- Follow-up: Continue collapsing any remaining rank-name-only mirrors when those files are touched for product work.

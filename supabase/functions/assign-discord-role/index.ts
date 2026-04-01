@@ -15,22 +15,12 @@
  */
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
+import { getRankIndex } from '../_shared/membershipAccess.ts'
 
 const DISCORD_BOT_TOKEN       = Deno.env.get('DISCORD_BOT_TOKEN')            ?? ''
 const DISCORD_GUILD_ID        = Deno.env.get('DISCORD_GUILD_ID')             ?? ''
 const ROLE_IDS: Record<string, string> = JSON.parse(Deno.env.get('DISCORD_ROLE_IDS') ?? '{}')
 const VAULTSPARKED_ROLE_ID    = Deno.env.get('DISCORD_VAULTSPARKED_ROLE_ID') ?? ''
-
-// Mirrors VS.RANKS thresholds (9-tier system)
-const RANK_THRESHOLDS = [0, 250, 1000, 3000, 7500, 15000, 30000, 60000, 100000]
-
-function getRankIndex(points: number): number {
-  let rank = 0
-  for (let i = 0; i < RANK_THRESHOLDS.length; i++) {
-    if (points >= RANK_THRESHOLDS[i]) rank = i
-  }
-  return rank
-}
 
 async function syncDiscordRoles(
   discordId: string,
