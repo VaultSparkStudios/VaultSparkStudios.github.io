@@ -17,9 +17,10 @@
 
         // Determine user's rank index from unlocked files
         const maxUnlocked = files.filter(f => !f.locked).reduce((m, f) => Math.max(m, f.rank_required), 0);
+        const hasSparkedOnly = files.some(f => f.required_plan === 'vault_sparked');
         if (badge) {
           const rankLabel = RANK_NAMES[maxUnlocked] || 'Spark Initiate';
-          badge.textContent = '🔓 Access: ' + rankLabel + '+';
+          badge.textContent = '🔓 Access: ' + rankLabel + '+' + (hasSparkedOnly ? ' · Sparked files live' : '');
         }
 
         // Build list of already-read slugs from point_events

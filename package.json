@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "test": "npx playwright test",
-    "test:a11y": "npx playwright test tests/accessibility.spec.js"
+    "test:a11y": "npx playwright test tests/accessibility.spec.js",
+    "provision:test-accounts": "node scripts/provision-vault-test-accounts.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",

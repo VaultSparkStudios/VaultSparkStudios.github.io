@@ -1,8 +1,5 @@
--- ═══════════════════════════════════════════════════════════════════════════
--- VaultSpark Studios — Phase 38: get_member_bootstrap RPC
--- Combines vault_members row + recent point_events into one DB round-trip.
--- Run in Supabase SQL editor.
--- ═══════════════════════════════════════════════════════════════════════════
+-- Phase 53 — bootstrap RPC fix
+-- Removes a stale last_seen update from get_member_bootstrap().
 
 create or replace function public.get_member_bootstrap()
 returns jsonb
@@ -19,7 +16,6 @@ begin
     return jsonb_build_object('error', 'not_authenticated');
   end if;
 
-  -- Member row
   select to_jsonb(m) into v_member
   from public.vault_members m
   where m.id = v_uid;
@@ -28,7 +24,6 @@ begin
     return jsonb_build_object('error', 'no_member');
   end if;
 
-  -- Recent activity (last 8 point events)
   select jsonb_agg(e order by e.created_at desc) into v_events
   from (
     select label, points, created_at

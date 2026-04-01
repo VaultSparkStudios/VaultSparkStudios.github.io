@@ -39,7 +39,7 @@ create table public.subscriptions (
   user_id                 uuid        references auth.users(id) on delete cascade unique not null,
   stripe_customer_id      text,
   stripe_subscription_id  text,
-  plan                    text        default 'free',      -- 'free' | 'pro'
+  plan                    text        default 'free',      -- 'free' | 'promogrind_pro' | 'vault_sparked'
   status                  text        default 'inactive',  -- 'active' | 'inactive' | 'canceled' | 'past_due'
   current_period_end      timestamptz,
   created_at              timestamptz default now(),

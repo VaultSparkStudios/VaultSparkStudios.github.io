@@ -448,11 +448,12 @@
       const sparkedBadge = document.getElementById('profile-sparked-badge');
       const ctaPanel     = document.getElementById('vaultsparked-cta-panel');
       VSSupabase.from('subscriptions')
-        .select('status, plan')
+        .select('status, plan, current_period_end')
         .eq('user_id', member._id)
         .maybeSingle()
         .then(({ data: sub }) => {
-          const isSparked = sub && sub.status === 'active' && (sub.plan === 'vault_sparked' || sub.plan === 'pro');
+          const planKey = VSMembership.getActivePlanKey(sub);
+          const isSparked = VSMembership.isVaultSparkedPlan(planKey);
           if (sparkedBadge) sparkedBadge.style.display = isSparked ? '' : 'none';
           if (ctaPanel)     ctaPanel.style.display     = isSparked ? 'none' : '';
         }).catch(() => {
@@ -2132,13 +2133,13 @@
         if (error || !data?.url) {
           const msg = data?.error || error?.message || 'Gift checkout unavailable.';
           fb.style.color = '#f87171'; fb.textContent = msg;
-          if (btn) { btn.textContent = 'Gift VaultSparked — $4.99 →'; btn.disabled = false; }
+          if (btn) { btn.textContent = 'Gift VaultSparked — $24.99 →'; btn.disabled = false; }
           return;
         }
         window.location.href = data.url;
       } catch (err) {
         fb.style.color = '#f87171'; fb.textContent = 'Error: ' + (err.message || 'Could not start gift.');
-        if (btn) { btn.textContent = 'Gift VaultSparked — $4.99 →'; btn.disabled = false; }
+        if (btn) { btn.textContent = 'Gift VaultSparked — $24.99 →'; btn.disabled = false; }
         if (window.Sentry) Sentry.captureException(err);
       }
     }
@@ -2939,7 +2940,7 @@
         if (error) throw error;
 
         if (!keys || keys.length === 0) {
-          el.innerHTML = '<p style="color:var(--dim);font-size:0.88rem;line-height:1.6;">No beta keys are available for your rank yet. Earn more Vault Points to unlock early access.</p>';
+          el.innerHTML = '<p style="color:var(--dim);font-size:0.88rem;line-height:1.6;">No beta keys are available for your current membership plan or Vault Rank yet.</p>';
           return;
         }
 
@@ -2972,8 +2973,10 @@
             <span style="font-size:0.75rem;color:#34d399;font-weight:700;">✓ Claimed</span>
           </div>`;
       } else if (info.available.length > 0) {
+        const requiredPlan = info.available[0].required_plan || 'free';
+        const planLabel = VSMembership.getPlan(requiredPlan).label;
         actionHtml = `
-          <p style="font-size:0.82rem;color:var(--muted);line-height:1.5;margin:0;">A beta key is available for your Vault Rank.</p>
+          <p style="font-size:0.82rem;color:var(--muted);line-height:1.5;margin:0;">A beta key is available for your current ${planLabel} access tier and Vault Rank.</p>
           <div class="beta-key-actions">
             <button class="beta-claim-btn" id="claim-btn-${slug}" onclick="claimKey('${slug}')">Claim Key →</button>
           </div>`;
@@ -3309,6 +3312,7 @@
       const slug           = document.getElementById('admin-file-slug').value.trim();
       const classification = document.getElementById('admin-file-classification').value.trim();
       const rank_required  = parseInt(document.getElementById('admin-file-rank').value, 10);
+      const required_plan  = document.getElementById('admin-file-plan').value;
       const universe_tag   = document.getElementById('admin-file-universe').value.trim();
       const content_html   = document.getElementById('admin-file-html').value.trim();
       const fb  = document.getElementById('admin-file-fb');
@@ -3319,13 +3323,14 @@
       btn.disabled = true; fb.className = 'admin-feedback show'; fb.textContent = 'Uploading…';
       try {
         const { error } = await VSSupabase.from('classified_files').insert({
-          title, slug, classification, rank_required, universe_tag, content_html,
+          title, slug, classification, rank_required, required_plan, universe_tag, content_html,
           published_at: new Date().toISOString()
         });
         if (error) throw error;
         ['admin-file-title','admin-file-slug','admin-file-classification','admin-file-universe','admin-file-html']
           .forEach(id => { document.getElementById(id).value = ''; });
         document.getElementById('admin-file-rank').value = '0';
+        document.getElementById('admin-file-plan').value = 'free';
         _archiveLoaded = false; // force reload next time Archive tab is opened
         showAdminFeedback(fb, 'File uplinked to Archive ✓', true);
       } catch (err) {
@@ -3339,14 +3344,16 @@
       const game_slug = document.getElementById('admin-key-slug').value;
       const key_code  = document.getElementById('admin-key-code').value.trim();
       const min_rank  = parseInt(document.getElementById('admin-key-rank').value, 10);
+      const required_plan = document.getElementById('admin-key-plan').value;
       const fb  = document.getElementById('admin-key-fb');
       const btn = document.getElementById('admin-key-btn');
       if (!key_code) { showAdminFeedback(fb, 'Key code required', false); return; }
       btn.disabled = true; fb.className = 'admin-feedback show'; fb.textContent = 'Deploying…';
       try {
-        const { error } = await VSSupabase.from('beta_keys').insert({ game_slug, key_code, min_rank });
+        const { error } = await VSSupabase.from('beta_keys').insert({ game_slug, key_code, min_rank, required_plan });
         if (error) throw error;
         document.getElementById('admin-key-code').value = '';
+        document.getElementById('admin-key-plan').value = 'free';
         _betaKeysLoaded = false; // force reload next time Early Access tab is opened
         showAdminFeedback(fb, 'Key deployed to Vault ✓', true);
       } catch (err) {
@@ -3375,9 +3382,10 @@
 
         // Determine user's rank index from unlocked files
         const maxUnlocked = files.filter(f => !f.locked).reduce((m, f) => Math.max(m, f.rank_required), 0);
+        const hasSparkedOnly = files.some(f => f.required_plan === 'vault_sparked');
         if (badge) {
           const rankLabel = RANK_NAMES[maxUnlocked] || 'Spark Initiate';
-          badge.textContent = '🔓 Access: ' + rankLabel + '+';
+          badge.textContent = '🔓 Access: ' + rankLabel + '+' + (hasSparkedOnly ? ' · Sparked files live' : '');
         }
 
         // Build list of already-read slugs from point_events

@@ -26,7 +26,8 @@ test.describe('Leaderboards main page', () => {
 
   test('period tabs exist on global panel', async ({ page }) => {
     await page.goto(BASE + '/leaderboards/');
-    await expect(page.locator('.lb-period-tab')).toHaveCount(3);
+    await expect(page.locator('#lb-panel-global .lb-period-tab')).toHaveCount(3);
+    await expect(page.locator('#lb-panel-weekly .lb-period-tab')).toHaveCount(3);
   });
 
   test('sort filter buttons exist', async ({ page }) => {
@@ -56,7 +57,7 @@ test.describe('Leaderboard SEO sub-pages', () => {
       await page.goto(BASE + '/leaderboards/' + pg.slug + '/');
       await expect(page).toHaveTitle(pg.title);
       await expect(page.locator('h1')).toBeVisible();
-      await expect(page.locator('a.button')).toBeVisible(); // "View Full Leaderboard" link
+      await expect(page.getByRole('link', { name: 'View Full Leaderboard' })).toBeVisible();
     });
   }
 });

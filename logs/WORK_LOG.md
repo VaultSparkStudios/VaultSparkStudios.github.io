@@ -4,6 +4,91 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-03-31 — Session 25: final VaultSparked gift pricing copy fix
+
+- Goal: Remove the last visible `$4.99` VaultSparked gift-pricing drift found during authenticated browser verification
+- What changed:
+  - `vault-member/index.html`: updated the `Gift VaultSparked` descriptive line from `$4.99` to `$24.99`
+- Verification:
+  - repo-wide `rg` sweep across membership/VaultSparked surfaces confirms no remaining stale `$4.99` copy; remaining `4.99` matches are the numeric substring inside canonical `$24.99`
+- Risks created or removed:
+  - Removed: portal gift copy no longer contradicts the canonical VaultSparked price while the adjacent button and other pages say `$24.99`
+  - Remaining: repo state is correct; static-site deployment still needs the usual publish path before the public site reflects this exact copy
+- Session intent outcome: Achieved — the final visible gift-pricing drift is fixed in repo state
+- Recommended next move: extend authenticated tests to compare free vs VaultSparked entitlement differences directly
+
+---
+
+### 2026-03-31 — Session 24: real test accounts + CAPTCHA-safe auth helper + bootstrap fix
+
+- Goal: Get the authenticated entitlement/browser lane working end to end with real test accounts under the current Supabase auth hardening
+- What changed:
+  - Real free-member and VaultSparked test accounts were provisioned with `npm run provision:test-accounts` and written into `.env.playwright.local`
+  - `tests/helpers/vaultAuth.js`: switched authenticated Playwright login from raw password grant to admin-generated magic-link sessions plus in-page `VSSupabase.auth.setSession(...)`
+  - `tests/authenticated.spec.js`: increased timeout budget, removed the stale `#nav-account-wrap` assumption, and added `whats-new-modal` dismissal for settings-tab assertions
+  - `supabase/migrations/supabase-phase53-bootstrap-fix.sql`: created and applied live to remove the stale `last_seen` write from `get_member_bootstrap()`
+- Verification:
+  - provision script succeeded for both dedicated accounts
+  - direct auth probe showed `captcha verification process failed` on password grant
+  - direct RPC probe showed `get_member_bootstrap()` failing on missing `last_seen`
+  - single authenticated Chromium dashboard test passed
+  - previously flaky membership-state authenticated Chromium test passed after modal handling was added
+- Risks created or removed:
+  - Removed: authenticated browser verification is no longer blocked by missing accounts or CAPTCHA-protected password login
+  - Removed: valid members no longer get pushed back into auth/complete-profile because `get_member_bootstrap()` referenced a non-existent column
+  - Remaining: a long-budget full authenticated Chromium pass should still be rerun for a single clean green artifact
+- Session intent outcome: Achieved — the authenticated browser lane is now materially real instead of mostly theoretical
+- Recommended next move: extend the authenticated spec to compare free vs VaultSparked entitlement differences explicitly
+
+---
+
+### 2026-03-31 — Session 23: leaderboard test repair + operator account provisioning workflow
+
+- Goal: Repair the live browser verification lane and add a repo-native way to provision dedicated free-member and VaultSparked test accounts for authenticated entitlement checks
+- What changed:
+  - `tests/leaderboards.spec.js`: fixed brittle selectors so the live leaderboard pages no longer false-fail on duplicate `.button` matches or mixed `.lb-period-tab` counts across panels
+  - `tests/helpers/vaultAuth.js` + `.env.playwright.local.example`: added explicit support for `VAULT_FREE_*` and `VAULT_SPARKED_*` credentials
+  - `scripts/provision-vault-test-accounts.mjs`: new service-role provisioning script creates/updates auth users, ensures `vault_members`, seeds free vs Sparked subscription state, and writes `.env.playwright.local`
+  - `docs/TEST_ACCOUNT_PROVISIONING.md` + `package.json`: documented the workflow and added `npm run provision:test-accounts`
+- Verification:
+  - `node --check tests/leaderboards.spec.js`
+  - `node --check tests/helpers/vaultAuth.js`
+  - `node --check scripts/provision-vault-test-accounts.mjs`
+  - `npx playwright test --project=chromium --workers=1 tests/leaderboards.spec.js`
+- Risks created or removed:
+  - Removed: leaderboard browser checks no longer fail for selector drift rather than real page issues
+  - Reduced: the project now has a repeatable path for creating the dedicated auth accounts needed for entitlement/browser verification
+  - Remaining: the provisioning script still requires a real `SUPABASE_SERVICE_ROLE_KEY` and dedicated test email addresses to be run
+- Session intent outcome: Achieved — the verification lane is materially healthier, and the missing operator workflow now exists in repo state
+- Recommended next move: run `npm run provision:test-accounts` with dedicated free/Sparked emails, then execute the authenticated Chromium entitlement suite
+
+---
+
+### 2026-03-31 — Session 22: phase52 production apply + entitlement function deploy
+
+- Goal: Complete the live production rollout for the canonical membership entitlement model by applying the phase52 SQL changes and redeploying the affected Supabase functions
+- What changed:
+  - `supabase/migrations/supabase-phase52-membership-entitlements.sql`: updated to drop the old `get_classified_files()` signature before recreating the new plan-aware RPC return shape
+  - Supabase CLI: relinked the repo to project `fjnpzjjyhnpmunfoycrp`
+  - Production database: applied `supabase-phase52-membership-entitlements.sql` via `supabase db query --linked -f ...` after `db push` was blocked by legacy migration-history filename drift
+  - Production functions: redeployed `create-checkout`, `create-gift-checkout`, `stripe-webhook`, and `odds`
+  - Studio OS write-back: CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, PROJECT_STATUS, DECISIONS, SELF_IMPROVEMENT_LOOP, WORK_LOG, and CREATIVE_DIRECTION_RECORD updated
+- Verification:
+  - `supabase link --project-ref fjnpzjjyhnpmunfoycrp --yes`
+  - `supabase db query --linked -f supabase/migrations/supabase-phase52-membership-entitlements.sql`
+  - `supabase functions deploy create-checkout --project-ref fjnpzjjyhnpmunfoycrp --use-api`
+  - `supabase functions deploy create-gift-checkout --project-ref fjnpzjjyhnpmunfoycrp --use-api`
+  - `supabase functions deploy stripe-webhook --project-ref fjnpzjjyhnpmunfoycrp --use-api`
+  - `supabase functions deploy odds --project-ref fjnpzjjyhnpmunfoycrp --use-api`
+- Risks created or removed:
+  - Removed: plan-aware archive/beta gating is no longer repo-only; the production database now enforces it
+  - Removed: checkout/webhook/odds production behavior now matches the canonical entitlement model
+  - Remaining: the repo still has legacy non-timestamp migration filenames, so future remote schema work should continue carefully until migration-history strategy is normalized
+- Session intent outcome: Achieved — production now reflects the membership architecture shipped in Session 21
+- Recommended next move: run browser-level entitlement verification with dedicated free-member and VaultSparked test accounts
+
+---
+
 ### 2026-03-31 — Sign-in routing + default-theme + launch-dating refinement
 
 - Goal: Make sign-in flows land on the correct auth tab, move the site onto a sharper high-contrast default, and replace vague year-only stage markers with more truthful launch timing
@@ -257,6 +342,33 @@ Append chronological entries. Do not erase past entries.
   - Removed: no longer need to export test credentials manually for every local Playwright run
   - Remaining: authenticated browser tests still cannot execute until a real dedicated Vault test account is configured in `.env.playwright.local`
 - Recommended next move: create the dedicated free-member test account, populate `.env.playwright.local`, and run `npx playwright test tests/authenticated.spec.js`
+
+---
+
+### 2026-03-31 — Canonical membership entitlements + public promise alignment
+
+- Goal: Replace scattered membership logic with one configurable entitlement model, separate VaultSparked from legacy PromoGrind Pro, enforce plan-aware gating, and align public pricing/access copy to what the code actually supports
+- What changed:
+  - `config/membership-entitlements.json` added as canonical plan/rank/feature/project entitlement config
+  - `scripts/generate-membership-access.mjs` added; generated `assets/membership-access.js` and `supabase/functions/_shared/membershipAccess.ts`
+  - `supabase/functions/create-checkout/index.ts`, `supabase/functions/stripe-webhook/index.ts`, and `supabase/functions/odds/index.ts` now normalize plans and check entitlements through the shared model
+  - `supabase/migrations/supabase-phase52-membership-entitlements.sql` added: plan-aware gating for `classified_files` and `beta_keys`, plus Sparked-only archive seed update
+  - `vault-member/index.html`, `vault-member/portal-auth.js`, `vault-member/portal-core.js`, `vault-member/portal-features.js`, `vault-member/portal-challenges.js`, and `vault-member/portal-dashboard.js` updated for plan-aware admin controls, pricing truth, and portal messaging
+  - `vaultsparked/index.html`, `games/index.html`, `games/call-of-doodie/index.html`, `games/gridiron-gm/index.html`, `games/solara/index.html`, `games/vaultfront/index.html`, `games/mindframe/index.html`, `games/project-unknown/index.html`, `projects/promogrind/index.html`, and `projects/index.html` updated so public early-access and premium copy matches the new entitlement model
+- Files or systems touched: membership config/generator, portal UI, Supabase edge functions, Supabase migration layer, VaultSparked page, games pages, project pages, Studio OS context
+- Verification:
+  - `node --check scripts/generate-membership-access.mjs`
+  - `node --check assets/membership-access.js`
+  - `node --check vault-member/portal-auth.js`
+  - `node --check vault-member/portal-core.js`
+  - `node --check vault-member/portal-features.js`
+  - `node --check vault-member/portal-challenges.js`
+  - `node --check vault-member/portal-dashboard.js`
+  - `deno` was not installed locally, so edge-function syntax was not checked with Deno tooling
+- Risks created or removed:
+  - Removed: plan drift between VaultSparked, legacy Pro, portal copy, and public pricing surfaces
+  - Created: the new entitlement model is not live until `supabase-phase52-membership-entitlements.sql` is applied and updated edge functions are deployed
+- Recommended next move: apply phase52 in Supabase, deploy the updated functions, and browser-verify free vs VaultSparked vs PromoGrind Pro behavior with dedicated test accounts
 
 ---
 

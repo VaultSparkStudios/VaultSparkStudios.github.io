@@ -278,9 +278,10 @@
 
       const dispatchEnabled = member.subscribed || (member.prefs && member.prefs.updates !== false);
       const isSparked = !!opts.isSparked;
+      const sparkedPrice = (globalThis.VSMembership && VSMembership.getPriceDisplay('vault_sparked')) || '$24.99/mo';
 
       setPanelText('vault-status-theme', themeStatus);
-      setPanelText('vault-status-membership', isSparked ? 'VaultSparked active · $24.99/mo tier' : 'Free Vault Member');
+      setPanelText('vault-status-membership', isSparked ? `VaultSparked active · ${sparkedPrice} tier` : 'Free Vault Member');
       setPanelText('vault-status-discord', member.discord_id ? 'Connected and ready for role sync' : 'Not connected');
       setPanelText('vault-status-dispatch', dispatchEnabled ? 'Studio updates enabled' : 'Dispatch muted');
       setPanelText('vault-status-security', 'Password reset + export/delete tools live');

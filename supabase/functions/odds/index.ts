@@ -1,5 +1,6 @@
 // VaultSpark Studios — Odds API Proxy Edge Function
-// Keeps the Odds API key server-side. Only active Pro subscribers can call this.
+// Keeps the Odds API key server-side. Only members with the PromoGrind live-tools
+// entitlement can call this (PromoGrind Pro legacy plan or VaultSparked).
 //
 // Deploy: supabase functions deploy odds
 // Set secret: supabase secrets set ODDS_API_KEY=your_key_here
@@ -11,6 +12,7 @@
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+import { getActivePlanKey, hasEntitlement } from '../_shared/membershipAccess.ts';
 
 const ODDS_API_KEY = Deno.env.get('ODDS_API_KEY') ?? '';
 const ODDS_BASE    = 'https://api.the-odds-api.com/v4';
@@ -48,15 +50,18 @@ serve(async (req: Request) => {
     // ── Subscription check ────────────────────────────────────────
     const { data: sub } = await supabase
       .from('subscriptions')
-      .select('status, current_period_end')
+      .select('status, current_period_end, plan')
       .eq('user_id', user.id)
       .single();
 
-    const isActive = sub?.status === 'active' &&
-      (!sub.current_period_end || new Date(sub.current_period_end) > new Date());
+    const planKey = getActivePlanKey(sub ?? null);
+    const canUseOdds = hasEntitlement('promoGrind_live_tools', {
+      hasAccount: true,
+      planKey,
+    });
 
-    if (!isActive) {
-      return json({ error: 'Pro subscription required', code: 'SUBSCRIPTION_REQUIRED' }, 403);
+    if (!canUseOdds) {
+      return json({ error: 'Eligible paid plan required', code: 'SUBSCRIPTION_REQUIRED' }, 403);
     }
 
     // ── Proxy to The Odds API ─────────────────────────────────────

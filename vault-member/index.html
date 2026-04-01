@@ -24,6 +24,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js" integrity="sha384-tuevtT+97g9yLeuT/m52ejUJbc0hzsN6MPLiQEccySreiGjrcgk2tMBJR7/l6HGM" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js" integrity="sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb" crossorigin="anonymous" defer></script>
   <script src="../assets/supabase-client.js"></script>
+  <script src="/assets/membership-access.js"></script>
   <script src="/assets/theme-toggle.js"></script>
   <script src="../assets/turnstile.js"></script>
 
@@ -573,10 +574,10 @@
             <div class="dash-panel" id="gift-sub-panel">
               <h3>🎁 Gift VaultSparked</h3>
               <div style="background:rgba(10,13,22,0.7);border:1px solid rgba(255,196,0,0.12);border-radius:12px;padding:1.25rem;margin-top:0.25rem;">
-                <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem;">Give a friend 30 days of VaultSparked for $4.99 — exclusive badge, perks, and Discord role.</div>
+                <div style="font-size:0.82rem;color:var(--muted);margin-bottom:0.75rem;">Give a friend 30 days of VaultSparked for $24.99 — exclusive badge, perks, and Discord role.</div>
                 <div style="display:flex;flex-direction:column;gap:0.5rem;">
                   <input type="text" id="gift-sub-username" placeholder="Recipient username" autocomplete="off" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:0.55rem 0.75rem;color:var(--text);font-family:inherit;font-size:0.88rem;width:100%;box-sizing:border-box;" />
-                  <button type="button" onclick="startGiftSubCheckout()" id="gift-sub-btn" style="background:rgba(255,196,0,0.12);border:1px solid rgba(255,196,0,0.3);color:var(--gold);padding:0.6rem 1.2rem;border-radius:8px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:inherit;">Gift VaultSparked — $4.99 →</button>
+                  <button type="button" onclick="startGiftSubCheckout()" id="gift-sub-btn" style="background:rgba(255,196,0,0.12);border:1px solid rgba(255,196,0,0.3);color:var(--gold);padding:0.6rem 1.2rem;border-radius:8px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:inherit;">Gift VaultSparked — $24.99 →</button>
                   <div id="gift-sub-feedback" style="font-size:0.78rem;color:var(--dim);min-height:1rem;"></div>
                 </div>
               </div>
@@ -623,16 +624,16 @@
                     <i class="vs-spark">⚡</i><span class="vs-text">VaultSparked</span>
                   </span>
                 </div>
-                <h3>Unlock Everything. Forever.</h3>
-                <p style="color:var(--muted);font-size:0.92rem;max-width:44ch;margin:0 auto;">One membership. Every VaultSpark tool, every game perk, every early drop — and everything we add next.</p>
+                <h3>Unlock The Studio-Wide Premium Layer.</h3>
+                <p style="color:var(--muted);font-size:0.92rem;max-width:44ch;margin:0 auto;">One plan. Consistent premium entitlements across VaultSpark tools, release waves, and member-only drops as the studio expands.</p>
                 <div class="cta-price">$24.99<span>/month</span></div>
                 <ul class="cta-perks">
-                  <li>PromoGrind Live Arb + EV Scanner (real-time odds)</li>
-                  <li>Exclusive VaultSparked badge across all games + tools</li>
-                  <li>2× Vault point multiplier on every action</li>
-                  <li>Early access to every new release</li>
-                  <li>Exclusive cosmetics in Call of Doodie + future games</li>
-                  <li>Every new feature and tool added automatically</li>
+                  <li>PromoGrind live odds tools included</li>
+                  <li>VaultSparked badge and profile theme across the studio</li>
+                  <li>Priority first-wave access when new builds and beta drops go live</li>
+                  <li>Sparked-only archive entries and premium perks</li>
+                  <li>Studio-wide premium entitlements added automatically</li>
+                  <li>One plan, applied consistently across VaultSpark projects</li>
                 </ul>
                 <button type="button" class="cta-btn" id="vaultsparked-upgrade-btn" onclick="VS.startVaultSparkedCheckout()">
                   Get VaultSparked →
@@ -868,7 +869,7 @@
             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1rem;flex-wrap:wrap;">
               <div>
                 <div class="p-label">⚠ Vault Archive — Classified Intelligence</div>
-                <p class="p-desc">Declassified to Vault Members only. Access is rank-gated — higher ranks unlock deeper intel. Reading a file for the first time awards <strong style="color:var(--gold);">+20 pts</strong>.</p>
+                <p class="p-desc">Declassified to Vault Members only. Access is entitlement-aware: rank gates the deeper intel, and select files can also require VaultSparked. Reading a file for the first time awards <strong style="color:var(--gold);">+20 pts</strong>.</p>
               </div>
               <span id="archive-access-badge" class="archive-access-level" style="background:rgba(255,196,0,0.08);border:1px solid rgba(255,196,0,0.18);color:var(--gold);">Loading…</span>
             </div>
@@ -1212,7 +1213,7 @@
               <!-- Key Vault Drop -->
               <div class="settings-block">
                 <h3>Key Vault Drop</h3>
-                <p class="p-desc-admin">Deploy a new beta access key. Members meeting the rank threshold can claim it from the Early Access tab.</p>
+                <p class="p-desc-admin">Deploy a new beta access key. Members meeting the plan and rank requirements can claim it from the Early Access tab.</p>
                 <div class="admin-form-group">
                   <label for="admin-key-slug">Game</label>
                   <select class="admin-select" id="admin-key-slug">
@@ -1237,6 +1238,14 @@
                     <option value="6">6 — Vault Keeper+</option>
                     <option value="7">7 — Forge Master+</option>
                     <option value="8">8 — The Sparked only</option>
+                  </select>
+                </div>
+                <div class="admin-form-group">
+                  <label for="admin-key-plan">Membership Plan Required</label>
+                  <select class="admin-select" id="admin-key-plan">
+                    <option value="free">Free Vault Member+</option>
+                    <option value="vault_sparked">VaultSparked only</option>
+                    <option value="promogrind_pro">PromoGrind Pro or VaultSparked</option>
                   </select>
                 </div>
                 <div class="p-flex-row">
@@ -1274,6 +1283,14 @@
                       <option value="6">6 — Vault Keeper+</option>
                       <option value="7">7 — Forge Master+</option>
                       <option value="8">8 — The Sparked only</option>
+                    </select>
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="admin-file-plan">Membership Plan Required</label>
+                    <select class="admin-select" id="admin-file-plan">
+                      <option value="free">Free Vault Member+</option>
+                      <option value="vault_sparked">VaultSparked only</option>
+                      <option value="promogrind_pro">PromoGrind Pro or VaultSparked</option>
                     </select>
                   </div>
                   <div class="admin-form-group">

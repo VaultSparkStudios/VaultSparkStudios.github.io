@@ -41,16 +41,128 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇█▆▇▆
-Avgs — 3: 40.7 | 5: 41.4 | 10: 39.3 | 25: 39.4 [N=19] | all: 39.4
-  └ 3-session: Dev 8.0 | Align 9.0 | Momentum 8.7 | Engage 5.0 | Process 10.0
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~2.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-03-31 | Session 20 | Total: 40/50 | Velocity: 1 | protocolVelocity: 7
+Sparkline (last 5 totals): ▆████
+Avgs — 3: 45.3 | 5: 43.8 | 10: 42.9 | 25: 40.5 [N=23] | all: 40.5
+  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 9.3 | Engage 7.3 | Process 10.0
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~3.0 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-03-31 | Session 24 | Total: 47/50 | Velocity: 4 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-03-31 — Session 24 | Total: 47/50 | Velocity: 4 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 45.3 | 5: 43.8 | 10: 42.9 | 25: 40.5 [N=23] | all: 40.5
+  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 9.3 | Engage 7.3 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 10 | ↑ | The repo gained real authenticated browser coverage infrastructure, and a live production auth/bootstrap bug was found and fixed instead of papered over |
+| Creative Alignment | 9 | → | This was execution-heavy rather than product-direction-heavy, but it directly supports the project’s trust and membership quality promises |
+| Momentum | 10 | → | Provisioning workflow, live account creation, browser helper repair, and a production RPC fix all landed in one pass |
+| Engagement | 8 | → | The site is materially closer to trustworthy premium-access verification because the member-state browser lane now produces real signal |
+| Process Quality | 10 | → | Full write-back completed again, and the route from operator secret to authenticated verification is now encoded in repo state instead of institutional memory |
+| **Total** | **47/50** | ↑ | Strongest operational session so far: the project moved from “can probably verify later” to a real browser-verifiable membership system with a real production bug fixed along the way |
+
+**Top win:** The authenticated membership verification lane is now real: dedicated accounts exist, the browser helper works under CAPTCHA, and the portal bootstrap bug that blocked valid sessions is fixed in production.
+**Top gap:** The tests still need explicit free-vs-Sparked differential assertions so entitlement verification proves the product model, not just generic signed-in state.
+**Intent outcome:** Achieved — provisioning, authenticated login, and the bootstrap bug fix all landed.
+
+**IGNIS note:** A trust surface only becomes durable when the team can verify it under production-like conditions without lowering the production guardrails.
+
+**Brainstorm**
+1. Free-vs-Sparked diff assertions — add paired authenticated Playwright tests that compare archive locks, beta-key messaging, and premium CTA state across the two dedicated test accounts; Execution probability: High
+2. Auth bootstrap smoke probe — add a lightweight script that verifies `get_member_bootstrap()` for both dedicated accounts before browser tests start; Execution probability: High
+3. Verification artifact capture — save a compact authenticated verification summary (free account, Sparked account, key entitlement surfaces) into `logs/` after each local run; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Browser entitlement spec lane · [SIL] Supabase migration-history normalization
+
+---
+
+## 2026-03-31 — Session 23 | Total: 46/50 | Velocity: 3 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 44.7 | 5: 43.0 | 10: 42.4 | 25: 40.3 [N=22] | all: 40.3
+  └ 3-session: Dev 8.7 | Align 9.0 | Momentum 9.3 | Engage 7.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | → | The browser suite is more trustworthy now that leaderboard false failures are removed, and the repo gained a repeatable provisioning script instead of relying on ad hoc operator edits |
+| Creative Alignment | 9 | → | This session supported the same membership-quality goal by making the promised verification path real and repeatable |
+| Momentum | 10 | → | The repo moved from “blocked on missing test accounts” to “one operator command away from running the full entitlement lane” in the same day as the production rollout |
+| Engagement | 8 | ↑ | Once the script is run, member-state browser verification becomes much easier to repeat, reducing future trust drift around entitlement behavior |
+| Process Quality | 10 | → | Full write-back completed again, with the new operator workflow documented and tasked instead of being left as tribal knowledge |
+| **Total** | **46/50** | ↑ | Highest-quality follow-through so far: production is live, browser tests are cleaned up, and the missing provisioning path now exists in repo state |
+
+**Top win:** The project now has a real operator-side workflow for provisioning the exact test-account states that the entitlement browser lane needs.
+**Top gap:** The script still needs to be run with a valid service-role key and dedicated test emails before authenticated free-vs-Sparked verification can actually execute.
+**Intent outcome:** Achieved — the verification lane is repaired and the provisioning workflow exists.
+
+**IGNIS note:** Verification gets exponentially more valuable once the environment needed to run it is encoded in the repo rather than held in one operator’s memory.
+
+**Brainstorm**
+1. Entitlement-diff Playwright assertions — add tests that compare the free and Sparked dashboards directly for archive locks, beta-key availability, and premium CTA state; Execution probability: High
+2. Test-account freshness command — add a small follow-up script that resets Sparked expiration and clears claimable beta/archive state for repeated QA passes; Execution probability: Medium
+3. Operator secret-source adapter — teach provisioning scripts to read service-role secrets from a local secure store or approved profile instead of raw shell env; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Browser entitlement spec lane · [SIL] Supabase migration-history normalization
+
+---
+
+## 2026-03-31 — Session 22 | Total: 45/50 | Velocity: 2 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 43.0 | 5: 42.2 | 10: 42.0 | 25: 40.0 [N=21] | all: 40.0
+  └ 3-session: Dev 8.3 | Align 9.0 | Momentum 9.0 | Engage 6.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | → | Production now uses the entitlement model, and the migration itself was hardened to handle the legacy function signature correctly |
+| Creative Alignment | 9 | → | The site’s membership promise is no longer just narrative; the live archive/beta and paid-flow behavior now matches the intended model |
+| Momentum | 10 | ↑ | This session closed the biggest remaining gap from Session 21 by moving the new membership architecture from repo state into production |
+| Engagement | 7 | ↑ | Live access behavior is now less likely to confuse members on pricing or premium boundaries, even before the dedicated browser QA pass lands |
+| Process Quality | 10 | → | Full write-back completed again, including the operational decision about applying SQL directly because of migration-history drift |
+| **Total** | **45/50** | ↑ | Strongest session so far: the highest-risk architecture gap is now closed in production rather than deferred | 
+
+**Top win:** The canonical entitlement system is no longer theoretical; production now enforces it for archive/beta gating and the affected checkout/webhook/odds flows.
+**Top gap:** Browser verification still needs dedicated free-member and VaultSparked test accounts, and Supabase migration-history drift remains a maintenance risk for future remote schema changes.
+**Intent outcome:** Achieved — the production rollout for phase52 and the updated functions is complete.
+
+**IGNIS note:** Trust systems harden when the live system behaves exactly like the public promise, especially around who gets access and why.
+
+**Brainstorm**
+1. Supabase migration-history normalization — reconcile local non-timestamp migrations with remote history so future applies can use the normal path safely; Execution probability: High
+2. Browser entitlement verification lane — add high-confidence Playwright checks for free vs VaultSparked vs PromoGrind Pro live behavior across archive, beta keys, and PromoGrind tools; Execution probability: High
+3. Production entitlement smoke page — add a private/internal diagnostics surface that shows active plan, derived entitlements, and project access posture for the signed-in member; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Supabase migration-history normalization · [SIL] Browser entitlement spec lane
+
+---
+
+## 2026-03-31 — Session 21 | Total: 44/50 | Velocity: 4 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 42.0 | 5: 42.0 | 10: 41.5 | 25: 39.7 [N=20] | all: 39.7
+  └ 3-session: Dev 8.0 | Align 9.3 | Momentum 8.7 | Engage 5.7 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | ↑ | Centralized entitlement rules removed a high-risk class of pricing/plan drift across browser and edge code, and targeted syntax checks passed on the updated portal/runtime files |
+| Creative Alignment | 9 | → | Membership now feels more intentional and credible because the site promises the actual model instead of a vague premium claim |
+| Momentum | 9 | ↑ | This was a broad implementation session across config, portal, edge functions, SQL, and public surfaces rather than another small truth-only pass |
+| Engagement | 6 | ↑ | The improved pricing and access language should reduce confusion and make the value of free vs Sparked membership clearer, though production verification is still pending |
+| Process Quality | 10 | → | Full Studio OS write-back completed, including CDR, decisions, task updates, and a handoff that explicitly calls out the remaining migration/deploy gap |
+| **Total** | **44/50** | ↑ | Strong structural session: the membership model is now coherent in repo state and ready to be made live with deployment work |
+
+**Top win:** The repo now has one canonical membership entitlement model, and the public-facing promises finally match that model instead of drifting across pages and functions.
+**Top gap:** The new rules are not live until phase52 is applied in Supabase and the updated edge functions are deployed and browser-verified.
+**Intent outcome:** Achieved in repo state — canonical entitlements, clean plan separation, plan-aware gating infrastructure, and aligned public copy are all in place.
+
+**IGNIS note:** Access systems create trust only when pricing, identity, and actual gating all point to the same source of truth; this session moved those layers into alignment.
+
+**Brainstorm**
+1. Entitlement coverage dashboard — add an internal founder/admin view that lists every project, feature, and required plan/rank from `config/membership-entitlements.json`; Execution probability: High
+2. Browser entitlement spec lane — add Playwright coverage for free vs VaultSparked vs PromoGrind Pro states on archive, beta keys, and premium tool gating; Execution probability: High
+3. Entitlement-driven page snippets — replace remaining hardcoded membership blurbs with shared partials/data-driven snippets sourced from the canonical entitlement config; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Entitlement matrix audit · [SIL] Browser entitlement spec lane
+
+---
 
 ## 2026-03-31 — Session 20 | Total: 40/50 | Velocity: 1 | protocolVelocity: 7 | Debt: ↓
 Avgs — 3: 40.7 | 5: 41.4 | 10: 39.3 | 25: 39.4 [N=19] | all: 39.4

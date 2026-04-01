@@ -1,8 +1,8 @@
 // VaultSpark Studios — Stripe Checkout Session Creator
 // Creates a hosted Stripe Checkout session.
 // Supports two plans:
-//   vault_sparked — $24.99/month studio-wide membership (STRIPE_VAULT_SPARKED_PRICE_ID)
-//   pro           — legacy PromoGrind-only Pro plan    (STRIPE_PRICE_ID)
+//   vault_sparked  — $24.99/month studio-wide membership (STRIPE_VAULT_SPARKED_PRICE_ID)
+//   promogrind_pro — legacy PromoGrind-only Pro plan    (STRIPE_PRICE_ID)
 //
 // Deploy: supabase functions deploy create-checkout
 // Set secrets:
@@ -14,6 +14,7 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'https://esm.sh/stripe@14?target=deno';
+import { normalizePlanKey } from '../_shared/membershipAccess.ts';
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
   apiVersion: '2023-10-16',
@@ -21,12 +22,12 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
 });
 const PRICE_IDS: Record<string, string> = {
   vault_sparked: Deno.env.get('STRIPE_VAULT_SPARKED_PRICE_ID') ?? '',
-  pro:           Deno.env.get('STRIPE_PRICE_ID') ?? '',
+  promogrind_pro: Deno.env.get('STRIPE_PRICE_ID') ?? '',
 };
 const APP_URL = Deno.env.get('APP_URL') ?? 'https://vaultsparkstudios.com';
 const SUCCESS_URLS: Record<string, string> = {
   vault_sparked: `${APP_URL}/vault-member/?checkout=success`,
-  pro:           `${APP_URL}/promogrind/?checkout=success`,
+  promogrind_pro: `${APP_URL}/promogrind/?checkout=success`,
 };
 
 function buildCorsHeaders(origin: string | null) {
@@ -58,11 +59,12 @@ serve(async (req: Request) => {
     if (error || !user) return json({ error: 'Invalid token' }, cors, 401);
 
     // Determine plan from request body (default: vault_sparked)
-    let plan = 'vault_sparked';
+    let requestedPlan = 'vault_sparked';
     try {
       const body = await req.json();
-      if (body?.plan && PRICE_IDS[body.plan]) plan = body.plan;
+      if (body?.plan) requestedPlan = String(body.plan);
     } catch { /* no body or invalid JSON — use default */ }
+    const plan = normalizePlanKey(requestedPlan);
 
     const priceId = PRICE_IDS[plan];
     if (!priceId) return json({ error: `No price configured for plan: ${plan}` }, cors, 400);

@@ -2,10 +2,127 @@
 
 Last updated: 2026-03-31
 
-Session Intent (2026-03-31 — Session 19): Tighten public UX flow and truth surfaces by routing Sign In to the real login tab, making high-contrast the default theme, and dating launch/timeline signals more precisely.
+Session Intent (2026-03-31 — Session 25): Close the last visible VaultSparked pricing drift found during authenticated browser verification.
 
 This is the authoritative active handoff file for the project.
 For full phase history (Phases 0–10), read `HANDOFF_PHASE6.md`.
+
+## Where We Left Off (Session 24)
+
+- Shipped: real test-account provisioning, CAPTCHA-safe authenticated Playwright login, and a live bootstrap RPC fix
+- Tests: key authenticated Chromium cases passed after helper/runtime fixes
+- Deploy: no additional backend deploy required
+
+---
+
+## What was completed (as of 2026-03-31 — Session 25)
+
+### Session 25 — Final Gift Pricing Copy Fix (2026-03-31)
+
+**Shipped:**
+- `vault-member/index.html`: updated the lingering `Gift VaultSparked` description from `$4.99` to `$24.99`, bringing the last visible gift-pricing copy into line with the canonical VaultSparked price
+
+**Verification:** repo-wide price sweep confirmed no remaining stale `$4.99` copy on the membership and VaultSparked surfaces; remaining matches are all the `4.99` substring inside `$24.99`.
+
+**Intent outcome:** Achieved — the last visible VaultSparked price drift found during authenticated verification is gone in repo state.
+
+---
+
+## Where We Left Off (Session 23)
+
+- Shipped: leaderboard test repair and operator test-account provisioning workflow in repo state
+- Tests: public Chromium routes passed; authenticated entitlement lane still blocked by real account provisioning and CAPTCHA-safe login
+- Deploy: no deploy required yet, but browser verification was still incomplete
+
+---
+
+## What was completed (as of 2026-03-31 — Session 24)
+
+### Session 24 — Real Test Accounts + CAPTCHA-Safe Auth Helper + Bootstrap Fix (2026-03-31)
+
+**Shipped:**
+- Dedicated free-member and VaultSparked test accounts were provisioned and written into `.env.playwright.local`
+- `tests/helpers/vaultAuth.js`: authenticated browser login now supports admin-generated magic-link sessions plus client-side `setSession(...)`, so Playwright no longer depends on the CAPTCHA-blocked password grant
+- `supabase/migrations/supabase-phase53-bootstrap-fix.sql`: new migration removes the stale `last_seen` write from `get_member_bootstrap()`, and the RPC fix has been applied directly to production
+- `tests/authenticated.spec.js`: timeout budget and modal handling were tightened so the authenticated Chromium lane no longer fails on stale nav assumptions or the `whats-new-modal` overlay
+
+**Verification:** provision script succeeded for both dedicated accounts; direct auth probe confirmed CAPTCHA was blocking password grant; direct RPC probe confirmed the stale `last_seen` bug; after the fix, authenticated Chromium checks passed for the dashboard path and the previously flaky membership-state assertion.
+
+**Intent outcome:** Achieved — the project now has real authenticated test accounts, a browser helper that works under current auth hardening, and the production bootstrap bug blocking valid member sessions has been fixed.
+
+---
+
+## Where We Left Off (Session 22)
+
+- Shipped: phase52 production apply, entitlement-aware function redeploy, and truth-sync closeout
+- Tests: public Chromium browser checks passed; authenticated entitlement lane still blocked by missing dedicated test credentials
+- Deploy: no further production deploy required for this session
+
+---
+
+## What was completed (as of 2026-03-31 — Session 23)
+
+### Session 23 — Browser-Test Repair + Operator Provisioning Workflow (2026-03-31)
+
+**Shipped:**
+- `tests/leaderboards.spec.js`: fixed the brittle live-site assertions by scoping `.lb-period-tab` counts to the correct panels and targeting `View Full Leaderboard` explicitly instead of a generic `a.button` selector
+- `tests/helpers/vaultAuth.js` + `.env.playwright.local.example`: auth helpers now support explicit free-member and VaultSparked credentials (`VAULT_FREE_*`, `VAULT_SPARKED_*`) instead of only one generic test login
+- `scripts/provision-vault-test-accounts.mjs`: new operator-only script can create or update dedicated auth users, ensure `vault_members` rows, seed free vs Sparked subscription state, and write `.env.playwright.local`
+- `docs/TEST_ACCOUNT_PROVISIONING.md` + `package.json`: added the repo-native provisioning runbook and `npm run provision:test-accounts` entrypoint
+
+**Verification:** `node --check tests/leaderboards.spec.js`, `node --check tests/helpers/vaultAuth.js`, `node --check scripts/provision-vault-test-accounts.mjs`, and `npx playwright test --project=chromium --workers=1 tests/leaderboards.spec.js` (14 passed).
+
+**Intent outcome:** Achieved in repo state — the public browser lane is clean, and the missing test-account provisioning path now exists. The actual free/Sparked accounts still need to be created by running the new script with a service-role key.
+
+---
+
+## Where We Left Off (Session 21)
+
+- Shipped: canonical entitlement model, clean plan separation, plan-aware gating infrastructure, and public promise alignment in repo state
+- Tests: targeted `node --check` verification only
+- Deploy: pending production SQL apply + edge-function redeploy
+
+---
+
+## What was completed (as of 2026-03-31 — Session 22)
+
+### Session 22 — Phase52 Production Apply + Entitlement Function Deploy (2026-03-31)
+
+**Shipped:**
+- `supabase/migrations/supabase-phase52-membership-entitlements.sql`: updated to drop the legacy `get_classified_files()` function before recreating the new plan-aware return shape, then applied directly to the linked production database
+- Supabase project `fjnpzjjyhnpmunfoycrp`: `create-checkout`, `create-gift-checkout`, `stripe-webhook`, and `odds` redeployed with the canonical entitlement helper included where needed
+- Studio OS truth surfaces: `CURRENT_STATE`, `TASK_BOARD`, `LATEST_HANDOFF`, `PROJECT_STATUS`, `DECISIONS`, `SELF_IMPROVEMENT_LOOP`, `WORK_LOG`, and CDR updated so the production rollout is no longer listed as pending
+
+**Verification:** successful linked `supabase db query` apply for phase52 after the migration fix; successful function deploys for `create-checkout`, `create-gift-checkout`, `stripe-webhook`, and `odds`.
+
+**Intent outcome:** Achieved — the canonical entitlement model is now live in production for archive/beta gating and for the affected checkout/webhook/odds flows.
+
+---
+
+## Where We Left Off (Session 20)
+
+- Shipped: 2 improvements across 2 groups — Studio OS prompt sync and sign-in truth correction
+- Tests: not run
+- Deploy: pending
+
+---
+
+## What was completed (as of 2026-03-31 — Session 21)
+
+### Session 21 — Canonical Membership Entitlements + Public Promise Alignment (2026-03-31)
+
+**Shipped:**
+- `config/membership-entitlements.json` + `scripts/generate-membership-access.mjs` + generated browser/edge helpers: canonical plan aliases, pricing, feature entitlements, and per-project access posture now live in one repo source of truth
+- `supabase/functions/create-checkout/index.ts`, `supabase/functions/stripe-webhook/index.ts`, and `supabase/functions/odds/index.ts`: plan checks now normalize through the entitlement model; VaultSparked and legacy PromoGrind Pro are no longer treated as the same premium identity
+- `supabase/migrations/supabase-phase52-membership-entitlements.sql`: plan-aware gating added for `classified_files` and `beta_keys`, including `required_plan` fields, updated RPC/policy logic, and a seeded Sparked-only archive file
+- `vault-member/index.html` + split portal modules: portal pricing/gift/status copy now reflects `$24.99`, Vault Command can assign plan requirements on beta keys / classified files, and archive/beta messaging now reflects plan + rank gating
+- `vaultsparked/index.html`, `games/index.html`, unreleased game pages, released game membership blurbs, `projects/promogrind/index.html`, and `projects/index.html`: public pricing and early-access copy now align to the free-member pool / VaultSparked first-wave priority / product-specific paid-access model
+
+**Verification:** `node --check scripts/generate-membership-access.mjs`, `node --check assets/membership-access.js`, `node --check vault-member/portal-auth.js`, `node --check vault-member/portal-core.js`, `node --check vault-member/portal-features.js`, `node --check vault-member/portal-challenges.js`, `node --check vault-member/portal-dashboard.js`.
+
+**Intent outcome:** Achieved in repo state — the entitlement model is now centralized and the site copy aligns to it; production rollout was completed in Session 22.
+
+---
 
 ## Where We Left Off (Session 19)
 

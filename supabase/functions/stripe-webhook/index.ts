@@ -14,6 +14,7 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'https://esm.sh/stripe@14?target=deno';
+import { isVaultSparkedPlan, normalizePlanKey } from '../_shared/membershipAccess.ts';
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
   apiVersion: '2023-10-16',
@@ -99,8 +100,8 @@ serve(async (req: Request) => {
           break;
         }
 
-        const sub  = await stripe.subscriptions.retrieve(subscriptionId);
-        const plan = (session.metadata?.plan ?? sub.metadata?.plan ?? 'vault_sparked') as string;
+        const sub = await stripe.subscriptions.retrieve(subscriptionId);
+        const plan = normalizePlanKey((session.metadata?.plan ?? sub.metadata?.plan ?? 'vault_sparked') as string);
 
         await supabase.from('subscriptions').upsert({
           user_id:                userId,
@@ -113,7 +114,7 @@ serve(async (req: Request) => {
         }, { onConflict: 'user_id' });
 
         // Sync is_sparked flag → triggers assign-discord-role webhook
-        if (sub.status === 'active') {
+        if (sub.status === 'active' && isVaultSparkedPlan(plan)) {
           await supabase.from('vault_members').update({ is_sparked: true }).eq('id', userId);
         }
 
@@ -124,9 +125,11 @@ serve(async (req: Request) => {
       case 'customer.subscription.updated': {
         const sub    = event.data.object as Stripe.Subscription;
         const active = sub.status === 'active';
+        const plan = normalizePlanKey((sub.metadata?.plan ?? 'vault_sparked') as string);
 
         await supabase.from('subscriptions')
           .update({
+            plan,
             status:             active ? 'active' : sub.status,
             current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
             updated_at:         new Date().toISOString(),
@@ -137,7 +140,7 @@ serve(async (req: Request) => {
         const { data: subRow } = await supabase
           .from('subscriptions').select('user_id').eq('stripe_subscription_id', sub.id).single();
         if (subRow?.user_id) {
-          await supabase.from('vault_members').update({ is_sparked: active }).eq('id', subRow.user_id);
+          await supabase.from('vault_members').update({ is_sparked: active && isVaultSparkedPlan(plan) }).eq('id', subRow.user_id);
         }
 
         break;
@@ -146,15 +149,16 @@ serve(async (req: Request) => {
       // ── Subscription deleted / canceled ─────────────────────────
       case 'customer.subscription.deleted': {
         const sub = event.data.object as Stripe.Subscription;
+        const plan = normalizePlanKey((sub.metadata?.plan ?? 'vault_sparked') as string);
 
         await supabase.from('subscriptions')
-          .update({ status: 'canceled', updated_at: new Date().toISOString() })
+          .update({ plan, status: 'canceled', updated_at: new Date().toISOString() })
           .eq('stripe_subscription_id', sub.id);
 
         // Remove is_sparked flag → triggers assign-discord-role webhook
         const { data: subRow } = await supabase
           .from('subscriptions').select('user_id').eq('stripe_subscription_id', sub.id).single();
-        if (subRow?.user_id) {
+        if (subRow?.user_id && isVaultSparkedPlan(plan)) {
           await supabase.from('vault_members').update({ is_sparked: false }).eq('id', subRow.user_id);
         }
 
@@ -165,15 +169,17 @@ serve(async (req: Request) => {
       case 'invoice.payment_failed': {
         const invoice = event.data.object as Stripe.Invoice;
         const subId   = invoice.subscription as string;
+        const subRes = await stripe.subscriptions.retrieve(subId);
+        const plan = normalizePlanKey((subRes.metadata?.plan ?? 'vault_sparked') as string);
 
         await supabase.from('subscriptions')
-          .update({ status: 'past_due', updated_at: new Date().toISOString() })
+          .update({ plan, status: 'past_due', updated_at: new Date().toISOString() })
           .eq('stripe_subscription_id', subId);
 
         // Remove is_sparked on failed payment
         const { data: subRow } = await supabase
           .from('subscriptions').select('user_id').eq('stripe_subscription_id', subId).single();
-        if (subRow?.user_id) {
+        if (subRow?.user_id && isVaultSparkedPlan(plan)) {
           await supabase.from('vault_members').update({ is_sparked: false }).eq('id', subRow.user_id);
         }
 

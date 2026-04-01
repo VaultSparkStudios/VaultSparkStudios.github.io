@@ -133,3 +133,69 @@ Append new entries. Do not erase historical reasoning unless it is wrong.
 - Alternatives considered: Keep caching all Supabase GETs, disable Supabase caching entirely, or rely solely on short TTL without request scoping
 - Why this was chosen: It preserves the useful public-read performance win while removing the highest-risk cross-user/auth-state caching behavior.
 - Follow-up: Browser-verify anonymous leaderboard/member-directory reads and authenticated portal flows after the next deploy.
+
+---
+
+### 2026-03-31 — Membership entitlements flow from one canonical repo config
+
+- Status: Active
+- Context: Membership promises, pricing, and plan checks had drifted across public copy, portal UI, and edge functions. VaultSparked and legacy PromoGrind Pro were being treated interchangeably in some code paths.
+- Decision: Make `config/membership-entitlements.json` the repo source of truth for plan aliases, pricing, rank thresholds, feature entitlements, and per-project access posture, then generate browser + edge helpers from it.
+- Alternatives considered: Keep patching plan logic ad hoc in each file, move all entitlements directly into SQL first, or collapse all paid access under a single generic subscription check
+- Why this was chosen: It gives the repo a single configurable entitlement model immediately, reduces drift across browser and edge code, and keeps the access rules editable without scattering hardcoded strings and plan aliases everywhere.
+- Follow-up: Apply the new phase52 SQL migration and keep future gated surfaces reading from the generated helpers instead of introducing new local plan checks.
+
+---
+
+### 2026-03-31 — VaultSparked and PromoGrind Pro are separate plans with explicit overlap
+
+- Status: Active
+- Context: The prior implementation let legacy `pro` behave like VaultSparked in portal identity checks, which blurred studio-wide premium perks with PromoGrind-only paid access.
+- Decision: Treat `vault_sparked` as the only Sparked identity plan; treat `promogrind_pro` as a product-specific paid plan; allow VaultSparked to satisfy PromoGrind live-tools entitlements, but never let PromoGrind Pro grant Sparked badge/role/theme identity.
+- Alternatives considered: Keep `pro` as a synonym for VaultSparked, rename VaultSparked to the single paid plan, or split all products into unrelated subscriptions with no shared premium overlap
+- Why this was chosen: It preserves a clean studio-wide premium identity while still honoring the existing product-specific paid path and making the overlap explicit rather than accidental.
+- Follow-up: Browser-verify free vs VaultSparked vs PromoGrind Pro behavior once the new SQL and edge-function deploy are live.
+
+---
+
+### 2026-03-31 — Apply phase52 via direct linked SQL instead of repairing legacy migration history during live rollout
+
+- Status: Active
+- Context: The production database was reachable, but `supabase db push --include-all` refused to run because the repo still uses older non-timestamp migration filenames while the remote Supabase migration history is timestamp-based.
+- Decision: For the live rollout, apply `supabase-phase52-membership-entitlements.sql` directly with `supabase db query --linked -f ...` after fixing the migration to drop the legacy `get_classified_files()` signature before recreating it.
+- Alternatives considered: Repair remote migration history in place, rename/fetch/rebuild the full local migration tree before deployment, or leave production on the old entitlement behavior
+- Why this was chosen: It safely landed the required production schema change without taking on a risky migration-history repair in the same live change window.
+- Follow-up: Normalize the repo’s Supabase migration-history strategy before the next substantial remote schema push so future production applies can use the standard migration path again.
+
+---
+
+### 2026-03-31 — Dedicated Playwright entitlement accounts should be provisioned through an operator script, not the invite-only public flow
+
+- Status: Active
+- Context: The authenticated entitlement test lane needed one free member and one VaultSparked member, but the existing public registration path depends on invite codes and email confirmation, while Sparked state normally arrives through Stripe webhooks.
+- Decision: Add a service-role operator script that directly provisions dedicated test auth users, ensures `vault_members` rows, seeds free vs Sparked subscription state, and writes `.env.playwright.local` for Playwright.
+- Alternatives considered: Keep using manual signup + invite-code flow, hand-edit the database each time, or wait for a future Stripe test harness before creating any dedicated browser accounts
+- Why this was chosen: It gives the repo a repeatable, auditable, local-first path to create the exact browser-test state needed without abusing the public invite flow or relying on ad hoc production edits every session.
+- Follow-up: Run the script with dedicated test emails and a service-role key, then extend the authenticated Playwright spec to assert free vs Sparked entitlement differences explicitly.
+
+---
+
+### 2026-03-31 — Authenticated browser tests should use admin-generated magic-link sessions under CAPTCHA hardening
+
+- Status: Active
+- Context: Supabase auth hardening is now active, and the previous Playwright helper depended on the password-grant endpoint, which fails with `captcha verification process failed` in production.
+- Decision: For local authenticated browser verification, use the service-role key to generate a magic-link session, verify it through the Auth API, and then apply that session via the browser client instead of attempting password-grant login.
+- Alternatives considered: Disable CAPTCHA for tests, solve Turnstile in browser automation, or keep using password grant and accept skipped/broken authenticated checks
+- Why this was chosen: It preserves the production security posture while still allowing reliable local authenticated verification using operator-controlled test accounts.
+- Follow-up: Keep the helper local/operator-only, and extend the authenticated spec to compare free vs Sparked states explicitly.
+
+---
+
+### 2026-03-31 — Remove stale last_seen write from get_member_bootstrap()
+
+- Status: Active
+- Context: Valid authenticated members were being pushed back into auth/complete-profile UI because `get_member_bootstrap()` updated `vault_members.last_seen`, but the deployed table no longer has that column.
+- Decision: Remove the `last_seen` update from `get_member_bootstrap()`, capture the fix in `supabase-phase53-bootstrap-fix.sql`, and apply it directly to production.
+- Alternatives considered: Add `last_seen` back to the table, ignore the bug and work around it only in tests, or patch the portal to bypass bootstrap failures silently
+- Why this was chosen: The bug was real production breakage for valid sessions. The correct fix is to remove the stale schema assumption from the RPC.
+- Follow-up: Keep auth/bootstrap contract audits in scope when future schema cleanup removes or renames portal-facing columns.

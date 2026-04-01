@@ -96,20 +96,23 @@
       const sparkedBadge = document.getElementById('profile-sparked-badge');
       const ctaPanel     = document.getElementById('vaultsparked-cta-panel');
       VSSupabase.from('subscriptions')
-        .select('status, plan')
+        .select('status, plan, current_period_end')
         .eq('user_id', member._id)
         .maybeSingle()
         .then(({ data: sub }) => {
-          const isSparked = sub && sub.status === 'active' && (sub.plan === 'vault_sparked' || sub.plan === 'pro');
+          const planKey = VSMembership.getActivePlanKey(sub);
+          const isSparked = VSMembership.isVaultSparkedPlan(planKey);
           if (sparkedBadge) sparkedBadge.style.display = isSparked ? '' : 'none';
           if (ctaPanel)     ctaPanel.style.display     = isSparked ? 'none' : '';
           member.is_sparked = !!isSparked;
+          member.plan_key = planKey;
           updateVaultStatusPanel(member, { isSparked: isSparked });
           updateClaimCenter(member, { isSparked: isSparked });
         }).catch(() => {
           if (sparkedBadge) sparkedBadge.style.display = 'none';
           if (ctaPanel)     ctaPanel.style.display     = '';
           member.is_sparked = false;
+          member.plan_key = 'free';
           updateVaultStatusPanel(member, { isSparked: false });
           updateClaimCenter(member, { isSparked: false });
         });

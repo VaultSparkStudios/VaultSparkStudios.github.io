@@ -4,18 +4,29 @@
 
 - Date: 2026-03-31
 - Overall status: Live and active
-- Current phase: Session 19 complete (2026-03-31) — sign-in deep links now open the real login tab, the default site theme is now `Dark - High Contrast`, and the homepage/studio timeline surfaces now use launch-derived timing labels
+- Current phase: Session 22 complete (2026-03-31) — the canonical membership entitlement system is now live in production after the phase52 SQL apply and updated edge-function deploy, with VaultSparked vs legacy PromoGrind Pro separated cleanly and public pricing / early-access copy aligned to the intended model
+  - Authenticated browser verification lane: dedicated free-member and VaultSparked test accounts now exist, local Playwright provisioning is scriptable, and the browser helper can authenticate through admin-generated magic-link sessions to bypass CAPTCHA-protected password grants
+  - Bootstrap RPC repair: `get_member_bootstrap()` no longer writes the stale `last_seen` column, fixing a real production bug that pushed valid members back to auth/complete-profile flows
+  - Operator test-account provisioning: `scripts/provision-vault-test-accounts.mjs` plus `docs/TEST_ACCOUNT_PROVISIONING.md` now provide a repo-native service-role workflow for creating dedicated free + VaultSparked Playwright accounts and wiring `.env.playwright.local`
 
 ## What exists
 
 - systems:
+  - Canonical membership entitlements: `config/membership-entitlements.json` is now the repo source of truth for plan aliases, plan labels/pricing, rank thresholds, feature entitlements, and per-project access posture; `scripts/generate-membership-access.mjs` generates browser + Supabase edge helpers from it
+  - Shared entitlement helpers: `assets/membership-access.js` now gives the browser a normalized plan/entitlement API, and `supabase/functions/_shared/membershipAccess.ts` gives edge functions the same rules without hardcoded plan drift
+  - Clean paid-plan separation: VaultSparked and legacy PromoGrind Pro are now distinct plan identities; VaultSparked grants studio-wide premium perks, while PromoGrind Pro grants PromoGrind live-tools entitlement without granting Sparked identity perks
+  - Plan-aware entitlement enforcement: `create-checkout`, `stripe-webhook`, and `odds` now normalize plans through the shared entitlement model; PromoGrind live odds now require the correct paid entitlement instead of any generic active subscription
+  - Entitlement-aware content gating: `supabase-phase52-membership-entitlements.sql` is now applied in production; `classified_files` and `beta_keys` enforce plan + rank together, and `sparked-initiative-memo` is seeded as a VaultSparked-only archive item
+  - Vault Command entitlement controls: admin beta-key and classified-file uplinks now include a membership-plan selector in addition to rank so access rules can be assigned intentionally instead of only by point threshold
+  - Public promise alignment: `/vaultsparked/`, `/vault-member/`, `/games/`, unreleased game pages, PromoGrind project copy, and released-game membership blurbs now consistently describe the actual model: free member access pool + VaultSparked first-wave priority + product-specific premium entitlements
+  - Production entitlement rollout: Supabase is linked again, phase52 was applied directly against the linked database, and the live `create-checkout`, `create-gift-checkout`, `stripe-webhook`, and `odds` functions have been redeployed with the new entitlement logic
   - Sign-in deep-link alignment: public `Sign In` surfaces now route to `/vault-member/`, so login actions land on the actual sign-in tab instead of the register-first auth view
   - Default theme upgrade: the old `High Contrast` theme is now the default palette for new visitors and is renamed `Dark - High Contrast`; the previous default dark palette remains available as an explicit `Dark` choice
   - Launch-age + timeline dating refinement: homepage hero now shows `Days since launch`, and homepage/studio/roadmap stage labels now use repo-derived March 2026 week windows instead of generic `2026` markers where historical data exists
   - Invite-only Vault status messaging: `/join/` now shows `Vault Status · Invite codes only` with a yellow status indicator instead of a green “live member count” treatment, and the homepage no longer shows a public `Join {count} vault members` bar
   - Vault Membership readiness surfaces: `vault-member/index.html` now includes a `Claim Center` dashboard panel for next unlocks/rewards and a `Vault Status` settings block for theme sync, membership tier, Discord linkage, and account-control status
   - Local Playwright auth bootstrap: `playwright.config.js` now loads `.env.playwright.local` when present, `.env.playwright.local.example` documents the expected keys, and authenticated tests can seed both auth state and a device theme locally without committing secrets
-  - VaultSparked pricing truth sync: `/vaultsparked/` metadata now matches the founder-confirmed $24.99/month tier, keeping the public surface aligned with checkout intent
+  - VaultSparked pricing truth sync: `/vaultsparked/`, portal CTAs, gift flows, and portal status text now consistently use the founder-confirmed `$24.99/month` tier across visible pricing surfaces
   - Checkout origin hardening: `create-checkout` and `create-gift-checkout` now return origin-scoped CORS headers instead of permissive `*`
   - Anonymous-only Supabase service-worker caching: `sw.js` now caches only unauthenticated `/rest/v1/` reads and skips authenticated/auth/storage traffic
   - Cloudflare header-worker parity upgrade: `cloudflare/security-headers-worker.js` now includes Turnstile allowances and stronger response directives (`frame-src`, `object-src 'none'`, `upgrade-insecure-requests`, CORP, OAC)
@@ -145,7 +156,8 @@
 ## In progress
 
 - Activation runbook execution remains the primary external blocker track: Cloudflare proxy, auth hardening, newsletter secrets, VAPID, and search verification
-- Theme/browser verification still needs an authenticated E2E pass for account-backed theme sync and the new Claim Center / Vault Status surfaces once a dedicated Vault test account is configured in `.env.playwright.local`
+- Theme/browser verification still needs an authenticated E2E pass for account-backed theme sync plus the new entitlement-aware archive/beta/gift/status surfaces once dedicated free + VaultSparked test accounts are configured in `.env.playwright.local`
+- A clean full-suite authenticated Chromium pass is still worth running again when time budget allows, but the key free-member browser path and the previously flaky membership-state assertion have both passed with the new provisioning/helper flow
 - Cloudflare response-header verification is still pending until the production proxy step in the activation runbook is complete
 
 ## Blockers
@@ -157,7 +169,7 @@
 
 ## Next 3 moves
 
-1. Execute `docs/ACTIVATION_RUNBOOK.md` in order — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification
-2. Add browser-level coverage for account-backed theme sync, Claim Center / Vault Status rendering, and journal/layout theme regression protection
-3. End-to-end test VaultSparked Discord role with Stripe test checkout once billing prerequisites are ready
+1. Extend the authenticated Playwright lane to compare free-member vs VaultSparked states explicitly across archive access, beta-key availability, and premium-tool messaging
+2. Run a longer-budget full authenticated Chromium pass with the new magic-session helper to capture a clean all-green artifact after the helper/runtime fixes
+3. Execute `docs/ACTIVATION_RUNBOOK.md` in order — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification
 

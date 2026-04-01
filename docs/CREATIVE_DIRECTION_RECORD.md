@@ -185,3 +185,51 @@ Agents MUST NOT modify or remove existing entries.
 - New required direction: Record the dedicated Vault test-account setup as a flagged next-session prerequisite in context and push the supporting local Playwright env-loader updates
 - Why it matters: Prevents the new authenticated browser coverage from stalling next session due to missing credentials/setup context
 - Supersedes prior entry: —
+
+---
+
+### 2026-03-31 — Canonical membership entitlements across all projects and tiers
+
+- Category: Assignment + Product Direction
+- Human input: "I want to ensure the Vault Membership is going to work across all projects and games (I choose which membership tier gets access to what)." → "Yes do that and implement the full plan below, and make it as high-quality as possible. A single configurable membership entitlement system across all projects/games/tools/apps. Per-tier access rules you can centrally choose and apply everywhere. Consistent enforcement of early access across public-facing promised surfaces. Clean plan separation between VaultSparked and legacy pro. Consistent public pricing copy."
+- Area affected: Membership architecture, pricing canon surfaces, plan separation, project/game/tool access control, public-facing promise copy
+- Previous state: Membership and pricing promises drifted across portal UI, public pages, and edge functions; VaultSparked and legacy `pro` logic overlapped; early-access copy was broader than the enforceable model
+- New required direction: Build one canonical entitlement system for the repo, make plan/rank access configurable centrally, separate VaultSparked identity from PromoGrind Pro product access, enforce the new model in browser + edge logic, and align public copy to the real free-pool / Sparked-priority structure
+- Why it matters: Membership is a studio-wide promise surface. If pricing, entitlement checks, and public copy drift here, trust breaks across every project that depends on the Vault identity layer.
+- Supersedes prior entry: —
+
+---
+
+### 2026-03-31 — Production rollout of the entitlement model
+
+- Category: Assignment
+- Human input: "complete 1 and 2 for me"
+- Area affected: Supabase production schema state, live edge-function deployment
+- Previous state: The canonical entitlement system existed in repo state, but phase52 and the affected functions were still pending in production
+- New required direction: Finish the live rollout by applying the phase52 membership-entitlement SQL and redeploying the updated entitlement-aware Supabase functions
+- Why it matters: The architecture only matters if production enforces it; otherwise the public promises and live access behavior would still drift
+- Supersedes prior entry: —
+
+---
+
+### 2026-03-31 — Build the account-provisioning path instead of only documenting manual setup
+
+- Category: Assignment
+- Human input: "cant you create these accounts and create the file?" → "1"
+- Area affected: Playwright test-account setup, operator workflow, authenticated entitlement verification
+- Previous state: The repo had an authenticated browser lane and env-file shape, but no repo-native way to provision the required free-member and VaultSparked accounts
+- New required direction: Build the operator-side provisioning path in the repo so dedicated test accounts can be created repeatably instead of relying on one-off manual setup
+- Why it matters: The entitlement browser lane cannot be treated as real verification if test-account creation itself is undocumented or ad hoc
+- Supersedes prior entry: —
+
+---
+
+### 2026-03-31 — Run the provisioning path and get the authenticated lane actually working
+
+- Category: Assignment
+- Human input: provided the service-role secret and dedicated test emails, then asked the agent to proceed
+- Area affected: Supabase test-account state, local Playwright auth environment, authenticated browser verification
+- Previous state: The operator workflow existed in repo state, but no real dedicated test accounts had been provisioned and the authenticated lane was still blocked
+- New required direction: Use the real operator credentials to provision the accounts, wire the local env file, and keep pushing until the authenticated browser lane produces real signal
+- Why it matters: This was the point where the repo-level workflow had to become a real working verification path instead of just documentation
+- Supersedes prior entry: —

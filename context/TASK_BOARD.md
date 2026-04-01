@@ -5,7 +5,10 @@
 - [x] Run pending SQL migrations: phase40-50 ✅ **ALL APPLIED** (2026-03-28 via db-migrate Action)
 - [x] Fix vault-score.js getLeaderboard() — rank titles now derive from points instead of querying a missing `vault_members(rank_title)` field
 - [x] [SIL] Authenticated axe-core portal tests — env-gated Playwright scans now cover dashboard, challenges, and onboarding modal
-- [ ] [FLAG] Create a dedicated Vault Member test account and wire `VAULT_TEST_EMAIL` / `VAULT_TEST_PASSWORD` through `.env.playwright.local` for local authenticated runs
+- [x] [SIL] Access-state copy audit — entitlement and early-access copy now aligns to the canonical free-pool / VaultSparked-priority model across core public membership surfaces
+- [x] [FLAG] Apply `supabase-phase52-membership-entitlements.sql` and deploy the updated entitlement-aware edge functions so plan-aware archive/beta gating is live
+- [ ] [FLAG] Verify free vs VaultSparked vs PromoGrind Pro behavior in a browser — portal status, archive access, beta keys, PromoGrind live tools, and gift checkout copy
+- [x] [FLAG] Run `npm run provision:test-accounts` with service-role credentials and dedicated free/Sparked emails to create the Playwright verification accounts and populate `.env.playwright.local`
 - [ ] [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Escalated 2026-03-31 after 2+ skipped sessions]
 - [ ] [SIL] Theme surface parity audit — continue moving remaining page-specific dark surfaces onto shared theme tokens across portal and secondary pages [Escalated 2026-03-31 after 2+ skipped sessions]
 - [ ] [SIL] Public/private boundary audit — sweep remaining root docs and generated metadata for public-safety, then move or sanitize anything operationally sensitive [Escalated 2026-03-31 after 2+ skipped sessions]
@@ -13,11 +16,13 @@
 
 ## Next (Pending External Action)
 
-- [SIL] Access-state copy audit — align invite-only / open / live / membership wording across homepage, studio, roadmap, journal, and archived public copy [Score: 8.0]
+- [SIL] Entitlement matrix audit — review every public page/app against `config/membership-entitlements.json` and remove any remaining promise drift [Score: 8.8]
+- [SIL] Browser entitlement spec lane — add Playwright coverage for free vs VaultSparked vs PromoGrind Pro states on archive, beta keys, and premium tool gating [Score: 8.7]
 - [SIL] Default-theme browser parity pass — verify the new `Dark - High Contrast` default across homepage, portal, and mobile nav in a real browser [Score: 8.1]
 - [SIL] Theme persistence E2E coverage — verify theme selection + localStorage restore on homepage and mobile nav [Score: 7.9]
 - [SIL] Account-backed theme sync verification — verify local-vs-account precedence, portal sign-in restore, and cross-device hydration for `prefs.site_theme` [Score: 8.1]
 - [FLAG] Add a second dedicated VaultSparked test account for premium-state browser verification once billing/test-state setup is ready [Score: 7.6]
+- [SIL] Supabase migration-history normalization — reconcile local migration naming/history with the remote timestamp-based Supabase history so future production schema changes can use the standard migration path safely [Score: 8.3]
 - [SIL] Live response-header verification — once Cloudflare proxy is enabled, verify worker CSP/HSTS/Turnstile behavior against the real production responses [Score: 8.4]
 - [SIL] Legal copy consistency audit — align footer/legal/press language around IP, fan-content, and data-handling claims after the privacy-policy expansion [Score: 6.8]
 - Execute `docs/ACTIVATION_RUNBOOK.md` — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification [Score: 9.6]
@@ -129,6 +134,35 @@
 
 - ✅ Studio OS prompt sync — `prompts/start.md` and `prompts/closeout.md` now match the latest Session 21 templates from `vaultspark-studio-ops`
 - ✅ Truth correction — project context now reflects the actual `/vault-member/#login` sign-in route instead of the older root auth URL wording
+
+## Completed — Session 21 (2026-03-31)
+
+- ✅ Canonical membership entitlements — `config/membership-entitlements.json` + generated browser/edge helpers now define shared plan/rank/access rules for the repo
+- ✅ Plan separation cleanup — VaultSparked and PromoGrind Pro now evaluate through a shared entitlement model instead of being treated as the same premium state
+- ✅ Plan-aware gating infrastructure — phase52 SQL migration now exists for `classified_files` + `beta_keys`, and Vault Command can assign plan requirements as well as rank requirements
+- ✅ Public promise alignment — VaultSparked pricing, portal pricing/gift copy, games/project early-access copy, and PromoGrind premium wording now reflect the actual entitlement model
+
+## Completed — Session 22 (2026-03-31)
+
+- ✅ Phase52 production apply — `supabase-phase52-membership-entitlements.sql` applied against the linked Supabase database, with the migration updated to drop the legacy `get_classified_files()` signature before recreating the plan-aware RPC
+- ✅ Live entitlement deploy — `create-checkout`, `create-gift-checkout`, `stripe-webhook`, and `odds` redeployed to project `fjnpzjjyhnpmunfoycrp`
+- ✅ Production truth sync — context/status files now reflect that plan-aware archive/beta gating and entitlement-aware checkout/webhook/odds behavior are live
+
+## Completed — Session 23 (2026-03-31)
+
+- ✅ Leaderboard browser-test repair — Playwright selectors now match the live leaderboard DOM, eliminating false failures from duplicate buttons and mixed panel period-tab counts
+- ✅ Operator test-account provisioning workflow — `scripts/provision-vault-test-accounts.mjs` and `docs/TEST_ACCOUNT_PROVISIONING.md` now provide a repo-native path to create dedicated free + VaultSparked Playwright accounts and populate `.env.playwright.local`
+
+## Completed — Session 24 (2026-03-31)
+
+- ✅ Real test accounts provisioned — dedicated free-member and VaultSparked auth users were created and wired into `.env.playwright.local`
+- ✅ CAPTCHA-safe auth helper — authenticated Playwright login now uses admin-generated magic-link sessions instead of the blocked password-grant path
+- ✅ Bootstrap production fix — `get_member_bootstrap()` no longer errors on the stale `last_seen` column; the fix is captured in `supabase-phase53-bootstrap-fix.sql` and applied live
+- ✅ Authenticated browser lane stabilized — the previously blocked dashboard/member-state checks now pass in Chromium with the new helper + modal handling
+
+## Completed — Session 25 (2026-03-31)
+
+- ✅ Final VaultSparked gift pricing drift removed — the lingering `$4.99` gift-copy line in `vault-member/index.html` now matches the canonical `$24.99` pricing used everywhere else
 
 ## Completed — Session 14 (2026-03-31)
 

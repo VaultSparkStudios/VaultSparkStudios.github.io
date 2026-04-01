@@ -4,7 +4,7 @@
 // Deploy: supabase functions deploy create-gift-checkout
 // Secrets needed:
 //   STRIPE_SECRET_KEY
-//   STRIPE_GIFT_PRICE_ID   (one-time price for $4.99 gift — create in Stripe dashboard)
+//   STRIPE_GIFT_PRICE_ID   (one-time price for a $24.99 VaultSparked gift — create in Stripe dashboard)
 //   APP_URL
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';

@@ -1143,13 +1143,13 @@
         if (error || !data?.url) {
           const msg = data?.error || error?.message || 'Gift checkout unavailable.';
           fb.style.color = '#f87171'; fb.textContent = msg;
-          if (btn) { btn.textContent = 'Gift VaultSparked — $4.99 →'; btn.disabled = false; }
+          if (btn) { btn.textContent = 'Gift VaultSparked — $24.99 →'; btn.disabled = false; }
           return;
         }
         window.location.href = data.url;
       } catch (err) {
         fb.style.color = '#f87171'; fb.textContent = 'Error: ' + (err.message || 'Could not start gift.');
-        if (btn) { btn.textContent = 'Gift VaultSparked — $4.99 →'; btn.disabled = false; }
+        if (btn) { btn.textContent = 'Gift VaultSparked — $24.99 →'; btn.disabled = false; }
         if (window.Sentry) Sentry.captureException(err);
       }
     }
