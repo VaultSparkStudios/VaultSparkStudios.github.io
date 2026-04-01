@@ -1575,3 +1575,196 @@ section { padding: 1.6rem 0 4.2rem; }
     padding-top: 38px;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   Light Mode Surface Overrides
+   Fixes hardcoded dark rgba(255,255,255,0.0x) card/panel
+   backgrounds and invisible white rgba(255,255,255,0.0x) borders
+   that only work on dark backgrounds.
+
+   body.light-mode .class specificity = (0,2,1)
+   beats page-specific .class rule at (0,1,0) — no !important needed.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Core card / panel backgrounds + borders ── */
+body.light-mode .myth-card,
+body.light-mode .char-stat,
+body.light-mode .sealed-char,
+body.light-mode .faq-item,
+body.light-mode .pillar,
+body.light-mode .process-step,
+body.light-mode .perk-card,
+body.light-mode .pricing-card,
+body.light-mode .asset-item,
+body.light-mode .os-block,
+body.light-mode .arc-entry,
+body.light-mode .profile-stat,
+body.light-mode .pinned-ach-item,
+body.light-mode .lookup-form,
+body.light-mode .referrer-card,
+body.light-mode .stream-item,
+body.light-mode .classified-card,
+body.light-mode .compare-table,
+body.light-mode .pipeline-card-meta,
+body.light-mode .storyline,
+body.light-mode .member-feature,
+body.light-mode .rank-tier,
+body.light-mode .author-bio,
+body.light-mode .lb-table,
+body.light-mode .lb-preview-table,
+body.light-mode .still {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.10);
+}
+
+/* ── Card hover states ── */
+body.light-mode .myth-card:hover { background: rgba(0,0,0,0.07); border-color: rgba(255,196,0,0.25); }
+body.light-mode .faq-item:hover,
+body.light-mode .perk-card:hover { background: rgba(0,0,0,0.07); }
+
+/* ── Border-only fixes (transparent backgrounds that only look right on dark) ── */
+body.light-mode .feature-block,
+body.light-mode .info-block,
+body.light-mode .demo-embed-wrap,
+body.light-mode .contact-form-panel,
+body.light-mode .contact-info-block,
+body.light-mode .lore-block,
+body.light-mode .still-row,
+body.light-mode .pipeline-card,
+body.light-mode .press-block,
+body.light-mode .game-card,
+body.light-mode .game-card-featured,
+body.light-mode .project-card,
+body.light-mode .project-card-featured,
+body.light-mode .join-panel,
+body.light-mode .generic-badge,
+body.light-mode .referrer-avatar,
+body.light-mode .video-card,
+body.light-mode .video-frame,
+body.light-mode .dispatch-inner,
+body.light-mode .arc-list,
+body.light-mode .arc-subscribe,
+body.light-mode .sidebar-block,
+body.light-mode .status-card,
+body.light-mode .incident-empty {
+  border-color: rgba(0,0,0,0.10);
+}
+
+/* ── Tag / pill / chip elements ── */
+body.light-mode .entry-tag,
+body.light-mode .ae-tag,
+body.light-mode .tag-btn,
+body.light-mode .signal-teaser-tag,
+body.light-mode .share-chip,
+body.light-mode .reaction-btn,
+body.light-mode .sidebar-tag-cloud,
+body.light-mode .search-popular-tag,
+body.light-mode .rank-filter-btn,
+body.light-mode .lb-period-tab,
+body.light-mode .cl-phase,
+body.light-mode .games-section-label,
+body.light-mode .projects-section-label {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.10);
+  color: var(--text);
+}
+body.light-mode .tag-btn:hover,
+body.light-mode .rank-filter-btn:hover,
+body.light-mode .lb-period-tab:hover { background: rgba(0,0,0,0.09); }
+
+/* ── Button-style elements ── */
+body.light-mode .filter-btn,
+body.light-mode .genre-btn,
+body.light-mode .pricing-btn-free,
+body.light-mode .sparked-cta-secondary,
+body.light-mode .share-profile-btn,
+body.light-mode .err-btn-ghost,
+body.light-mode .err-link {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.12);
+  color: var(--text);
+}
+body.light-mode .filter-btn:hover,
+body.light-mode .genre-btn:hover { background: rgba(0,0,0,0.09); }
+
+/* ── Form inputs / upload areas ── */
+body.light-mode .dispatch-form,
+body.light-mode .fa-input,
+body.light-mode .fa-upload-label,
+body.light-mode .err-search-input,
+body.light-mode .arc-search,
+body.light-mode .arc-subscribe-form {
+  background: rgba(255,255,255,0.7);
+  border-color: rgba(0,0,0,0.12);
+  color: var(--text);
+}
+
+/* ── Leaderboard / skeleton loaders ── */
+body.light-mode .lb-game-tab { background: rgba(0,0,0,0.04); }
+body.light-mode .lb-skeleton,
+body.light-mode .lbp-skeleton,
+body.light-mode .mc-skeleton { background: rgba(0,0,0,0.08); }
+body.light-mode .lb-filter { border-color: rgba(0,0,0,0.12); }
+body.light-mode .podium-bar { background: rgba(0,0,0,0.05); }
+body.light-mode .poll-bar-bg {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.08);
+}
+
+/* ── Journal elements ── */
+body.light-mode .entry-divider { background: rgba(0,0,0,0.07); }
+body.light-mode .jrn-toast {
+  background: rgba(255,255,255,0.92);
+  border-color: rgba(0,0,0,0.12);
+}
+
+/* ── Miscellaneous ── */
+body.light-mode .hero-stat-divider { background: rgba(0,0,0,0.10); }
+body.light-mode .policy-divider { background: rgba(0,0,0,0.07); }
+body.light-mode .search-result-card { border-color: rgba(0,0,0,0.10); }
+
+/* ── Hardcoded white text → theme-aware ── */
+body.light-mode .hero-stat-val,
+body.light-mode .char-stat .stat-value,
+body.light-mode .myth-card h3,
+body.light-mode .faq-q,
+body.light-mode .faq-item h3,
+body.light-mode .perk-title,
+body.light-mode .filter-btn,
+body.light-mode .genre-btn,
+body.light-mode .manifesto blockquote,
+body.light-mode .process-step h3,
+body.light-mode .pillar h3,
+body.light-mode .char-lore strong,
+body.light-mode .member-feature strong,
+body.light-mode .storyline strong,
+body.light-mode .referrer-name,
+body.light-mode .benefit-text strong,
+body.light-mode .member-count-pill strong { color: var(--text); }
+
+/* ── Hover / active states for dark-hover buttons ── */
+body.light-mode .filter-btn:hover,
+body.light-mode .genre-btn:hover {
+  background: rgba(0,0,0,0.09);
+  border-color: rgba(0,0,0,0.20);
+  color: var(--text);
+}
+body.light-mode .filter-btn.active {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+body.light-mode .err-btn-ghost:hover {
+  background: rgba(0,0,0,0.09);
+  border-color: rgba(0,0,0,0.22);
+  color: var(--text);
+}
+body.light-mode .err-link:hover {
+  border-color: rgba(0,0,0,0.25);
+  color: var(--text);
+}
+body.light-mode .genre-btn:hover { color: var(--text); }
+
+/* ── Fan art / Discord button text stays white on coloured bg ── */
+body.light-mode .discord-btn { color: #fff; }
+body.light-mode .fan-art-vote { color: var(--text); }

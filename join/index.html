@@ -368,7 +368,7 @@
       .join-panel { padding: 1.6rem; }
     }
   </style>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
   <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
@@ -539,6 +539,27 @@
         </div>
       </div>
     </section>
+
+    <!-- Request Vault Access -->
+    <section id="request-access" aria-labelledby="request-heading" style="padding:4rem 0;border-top:1px solid var(--line);">
+      <div class="container">
+        <div style="max-width:600px;margin:0 auto;text-align:center;">
+          <span style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);display:block;margin-bottom:0.75rem;">No Invite Code?</span>
+          <h2 id="request-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.9rem,3.5vw,2.8rem);letter-spacing:-0.04em;margin-bottom:0.75rem;line-height:1.1;">Request Vault Access</h2>
+          <p style="color:var(--muted);font-size:1rem;line-height:1.68;margin-bottom:2rem;max-width:46ch;margin-left:auto;margin-right:auto;">The vault is invite-only. Drop your email and we'll reach out when a spot opens — or when an invite cycle begins.</p>
+          <form id="vault-request-form" style="display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;align-items:center;max-width:480px;margin:0 auto 1rem;">
+            <input type="hidden" name="access_key" value="8f83d837-0348-43a4-8a0f-19c3a1d70d16" />
+            <input type="hidden" name="subject" value="Vault Access Request" />
+            <input type="hidden" name="from_name" value="VaultSpark Vault Request" />
+            <input type="email" name="email" required placeholder="your@email.com" autocomplete="email" style="flex:1;min-width:200px;height:46px;padding:0 1rem;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;font-family:inherit;outline:none;" aria-label="Email address" />
+            <button type="submit" class="button" id="vault-request-btn" style="height:46px;padding:0 1.4rem;white-space:nowrap;">Request Access →</button>
+          </form>
+          <div id="vault-request-success" style="display:none;padding:1rem;color:var(--green);font-size:0.92rem;font-weight:600;">&#10003; Request received — we'll be in touch when a spot opens.</div>
+          <div id="vault-request-error" style="display:none;padding:0.5rem;color:#f87171;font-size:0.88rem;">Something went wrong. <a href="/contact/" style="color:var(--gold);">Contact us instead →</a></div>
+          <p style="font-size:0.8rem;color:var(--dim);margin-top:0.75rem;">No spam. One email when your invite is ready.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <!-- ═══ FOOTER ════════════════════════════════════════════ -->
@@ -571,7 +592,7 @@
           <h4>Connect</h4>
           <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
           <a href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer">Instagram</a>
-          <a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://discord.gg/MnnBRbYDk" target="_blank" rel="noreferrer">Discord</a>
           <a href="https://www.tiktok.com/@vaultsparkstudios" target="_blank" rel="noreferrer">TikTok</a>
         </div>
       </div>
@@ -677,6 +698,31 @@
   </script>
 
   <script src="/assets/sentry-init.js" defer></script>
+  <script>
+    (function() {
+      var f = document.getElementById('vault-request-form');
+      if (!f) return;
+      f.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var btn = document.getElementById('vault-request-btn');
+        btn.disabled = true; btn.textContent = 'Sending…';
+        try {
+          var r = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(Object.fromEntries(new FormData(f)))
+          });
+          if (r.ok) {
+            f.style.display = 'none';
+            document.getElementById('vault-request-success').style.display = 'block';
+          } else { throw new Error(); }
+        } catch(_) {
+          document.getElementById('vault-request-error').style.display = 'block';
+          btn.disabled = false; btn.textContent = 'Request Access →';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
 

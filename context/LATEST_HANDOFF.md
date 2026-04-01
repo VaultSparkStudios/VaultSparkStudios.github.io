@@ -2,6 +2,8 @@
 
 Last updated: 2026-04-01
 
+Session Intent (2026-04-01 — Session 27): Update Discord invite link across the full website to https://discord.gg/MnnBRbYDk and analyze website improvements or updates needed.
+
 Session Intent (2026-03-31 — Session 26): Complete the highest-value open task-board items across browser verification, theme parity, rank-source drift, and public-repo boundary safety.
 
 This is the authoritative active handoff file for the project.

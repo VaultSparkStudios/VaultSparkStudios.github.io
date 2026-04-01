@@ -472,7 +472,7 @@
       .sparked-cta-secondary { text-align: center; justify-content: center; }
     }
   </style>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
   <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
@@ -744,6 +744,27 @@
       </div>
     </section>
 
+    <!-- Notify Me When VaultSparked Is Ready -->
+    <section id="sparked-notify" aria-labelledby="sparked-notify-heading" style="padding:4rem 0;border-top:1px solid var(--line);">
+      <div class="container">
+        <div style="max-width:580px;margin:0 auto;text-align:center;">
+          <span style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);display:block;margin-bottom:0.75rem;">⚡ VaultSparked Waitlist</span>
+          <h2 id="sparked-notify-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);letter-spacing:-0.04em;margin-bottom:0.7rem;line-height:1.1;">Get notified when<br/>VaultSparked opens.</h2>
+          <p style="color:var(--muted);font-size:0.97rem;line-height:1.68;margin-bottom:1.8rem;max-width:44ch;margin-left:auto;margin-right:auto;">Billing is still being set up. Leave your email and you'll be the first to know when subscriptions go live — with a founder discount.</p>
+          <form id="sparked-notify-form" style="display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;align-items:center;max-width:460px;margin:0 auto 1rem;">
+            <input type="hidden" name="access_key" value="8f83d837-0348-43a4-8a0f-19c3a1d70d16" />
+            <input type="hidden" name="subject" value="VaultSparked Waitlist" />
+            <input type="hidden" name="from_name" value="VaultSpark Sparked Waitlist" />
+            <input type="email" name="email" required placeholder="your@email.com" autocomplete="email" style="flex:1;min-width:200px;height:46px;padding:0 1rem;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;font-family:inherit;outline:none;" aria-label="Email address" />
+            <button type="submit" class="sparked-cta-primary" id="sparked-notify-btn" style="height:46px;padding:0 1.4rem;border:none;cursor:pointer;white-space:nowrap;font-family:inherit;">⚡ Notify Me</button>
+          </form>
+          <div id="sparked-notify-success" style="display:none;padding:1rem;color:var(--green);font-size:0.92rem;font-weight:600;">&#10003; You're on the list — we'll send you a founder notification when VaultSparked goes live.</div>
+          <div id="sparked-notify-error" style="display:none;padding:0.5rem;color:#f87171;font-size:0.88rem;">Something went wrong. <a href="/contact/" style="color:var(--gold);">Contact us →</a></div>
+          <p style="font-size:0.8rem;color:var(--dim);margin-top:0.75rem;">One email. No spam.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- BOTTOM CTA -->
     <section class="sparked-bottom-cta">
       <div class="container">
@@ -777,6 +798,31 @@
 
 </div>
 <script src="/assets/vault-cta.js" defer></script>
+  <script>
+    (function() {
+      var f = document.getElementById('sparked-notify-form');
+      if (!f) return;
+      f.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        var btn = document.getElementById('sparked-notify-btn');
+        btn.disabled = true; btn.textContent = 'Sending…';
+        try {
+          var r = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(Object.fromEntries(new FormData(f)))
+          });
+          if (r.ok) {
+            f.style.display = 'none';
+            document.getElementById('sparked-notify-success').style.display = 'block';
+          } else { throw new Error(); }
+        } catch(_) {
+          document.getElementById('sparked-notify-error').style.display = 'block';
+          btn.disabled = false; btn.textContent = '⚡ Notify Me';
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
 

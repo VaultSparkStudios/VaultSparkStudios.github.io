@@ -364,7 +364,7 @@ export const SOCIAL_ACCOUNTS = [
     id: "discord",
     platform: "Discord",
     handle: "VaultSpark Community",
-    url: "https://discord.gg/bgR3mSB2",
+    url: "https://discord.gg/MnnBRbYDk",
     apiSupport: "limited",
     icon: "dc",
     color: "#5865f2",
