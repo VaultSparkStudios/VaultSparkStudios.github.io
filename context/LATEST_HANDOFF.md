@@ -4,11 +4,31 @@ Last updated: 2026-04-01
 
 Session Intent (2026-04-01 — Session 27): Update Discord invite link across the full website to https://discord.gg/MnnBRbYDk and analyze website improvements or updates needed.
 
-## Where We Left Off (Session 27)
+## Where We Left Off (Session 27 + follow-up, 2026-04-01)
 
-- Shipped: Discord link update sitewide, comprehensive light-mode surface fix in CSS, CSP connect-src fix for all email forms, Request Vault Access form on /join/, VaultSparked Waitlist form on /vaultsparked/, Universe Discord CTA section
-- Deploy: pushed to main (commit 48f44d6) — live on GitHub Pages
-- SIL score: 47/50
+- Shipped: Discord link update, light-mode surface fix, CSP email-capture fix, Request Vault Access + VaultSparked Waitlist forms, Universe Discord CTA, Web3Forms botcheck spam guard, mobile-responsive form CSS (full-width stacking at ≤640px), VAPID public key embedded in portal code
+- Deploy: pushed to main (commit 3db090a) — live on GitHub Pages
+- SIL score: 45/50 (follow-up); 47/50 (S27 main)
+- **One human action required to activate web push:** Set `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` (`FQXFuqobkBAT_XPPE4sIEProBfMu_0qED5Nf2uFy7E8`), and `VAPID_SUBJECT` as Supabase Edge Function secrets → deploy `send-push`
+- **One human action required to confirm email capture:** Test-submit from /join/ and /vaultsparked/ and verify delivery to your Web3Forms inbox
+
+---
+
+## What was completed (as of 2026-04-01 — Session 27 follow-up)
+
+### Session 27 follow-up — Web3Forms, Mobile Audit, VAPID (2026-04-01)
+
+**Shipped (commit 3db090a):**
+- `join/index.html` + `vaultsparked/index.html`: `botcheck` honeypot field added to both email forms — blocks spam bots per Web3Forms best practice; both forms already carried distinct `subject` and `from_name` hidden fields for inbox differentiation
+- `assets/style.css`: `@media (max-width:640px)` block added for `#vault-request-form` and `#sparked-notify-form` — `flex-direction:column; align-items:stretch` makes both email input and submit button full-width at 320/480px; all four breakpoints (320/480/768/1024px) pass
+- `vault-member/portal-features.js` + `vault-member/portal.js`: `VAPID_PUBLIC_KEY` updated to freshly generated pair (`BDf9L_0jn0FsM8oNEhSUcypsRfnA6gIXK0Xqkpxbd3DdztD5ftO8JpExGYdFQveiBhlcRrZ6U-wdUsOwwXJAhPo`)
+- `docs/ACTIVATION_RUNBOOK.md`: VAPID section updated with generated public key and exact Supabase secret setup steps
+- `sw.js`: cache bumped to `v4` to deliver updated `style.css` and `portal-features.js` to existing clients
+
+**Remaining human actions to activate web push:**
+1. Supabase dashboard → Edge Functions → send-push → Secrets → set `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, `VAPID_SUBJECT`
+2. `supabase functions deploy send-push`
+3. Dashboard → Database → Webhooks → classified_files INSERT → send-push URL
 
 ---
 

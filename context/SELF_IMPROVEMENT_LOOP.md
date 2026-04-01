@@ -41,16 +41,43 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇██▇█
-Avgs — 3: 46.3 | 5: 45.8 | 10: 43.8 | 25: 41.0 [N=25] | all: 41.0
-  └ 3-session: Dev 9.3 | Align 9.3 | Momentum 10.0 | Engage 8.3 | Process 10.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~3.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-01 | Session 27 | Total: 47/50 | Velocity: 7 | protocolVelocity: 7
+Sparkline (last 5 totals): █▇█▇▇
+Avgs — 3: 46.0 | 5: 45.6 | 10: 43.9 | 25: 41.2 [N=26] | all: 41.2
+  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 9.3 | Engage 8.7 | Process 10.0
+Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~3 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-01 | Session 27f | Total: 45/50 | Velocity: 3 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-04-01 — Session 27f (follow-up) | Total: 45/50 | Velocity: 3 | protocolVelocity: 7 | Debt: ↓
+Avgs — 3: 46.0 | 5: 45.6 | 10: 43.9 | 25: 41.2 [N=26] | all: 41.2
+  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 9.3 | Engage 8.7 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | → | Clean targeted changes: botcheck honeypot, mobile CSS, VAPID key embedded; SW bumped; no regressions |
+| Creative Alignment | 9 | → | Mobile form stacking matches quality bar; push notifications are now one deploy away from active |
+| Momentum | 8 | ↓ | Smaller follow-up pass; 3 focused tasks vs 7 in main session — appropriate scope, but lower raw velocity |
+| Engagement | 9 | → | Spam protection live, better mobile UX on two highest-intent pages, VAPID unlocks push |
+| Process Quality | 10 | → | Full Studio OS write-back, protocol followed cleanly |
+| **Total** | **45/50** | ↓ | Solid focused follow-up; activation runbook is visibly closer — VAPID only needs secrets, not code |
+
+**Top win:** VAPID key pair is now generated and embedded — web push is code-complete and one Supabase secret set away from active.
+**Top gap:** Activation runbook's highest-ROI step (Cloudflare proxy) still blocked on the DNS change; every session that ships without it delays live HTTP security headers.
+**Intent outcome:** Achieved — all 3 tasks completed cleanly within the session.
+
+**IGNIS note:** The gap between "code-ready" and "actually active" shrinks with each session for VAPID/Cloudflare/newsletter. The remaining blockers are all single founder actions, not code work.
+
+**Brainstorm**
+1. Cloudflare proxy prep — document exactly which DNS records to change (A/CNAME for apex + www) and test with `curl -I` so the founder can do the DNS step in under 5 minutes; Execution probability: High
+2. Push notification test harness — add a small admin panel button in Vault Command to send a test push to the signed-in admin account, so VAPID activation can be verified immediately after secrets are set; Execution probability: Medium
+3. Form analytics ping — on successful Web3Forms submit, fire a lightweight GA4 event (`form_submit`, form_type: vault_request|sparked_waitlist) so form conversion is visible in analytics without per-form keys; Execution probability: High
+4. Email capture list segmentation — add a tag or list field to the Web3Forms payload (e.g. `list: "vault-access"` vs `list: "sparked-waitlist"`) so when a real email service is connected the lists are already separated; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] GA4 event on form submit · [SIL] Cloudflare DNS change prep doc
 
 ## 2026-04-01 — Session 27 | Total: 47/50 | Velocity: 7 | protocolVelocity: 7 | Debt: ↓
 Avgs — 3: 46.3 | 5: 45.8 | 10: 43.8 | 25: 41.0 [N=25] | all: 41.0

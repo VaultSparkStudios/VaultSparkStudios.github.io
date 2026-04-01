@@ -16,8 +16,11 @@
 
 ## Next (Pending External Action)
 
-- [SIL] Per-form Web3Forms keys — register separate access_key values for Vault Access Request, VaultSparked Waitlist, and each game-waitlist form to enable per-form tracking/segmentation [Score: 8.5]
-- [SIL] Mobile audit pass on new CTAs — audit /join/ Request Vault Access and /vaultsparked/ Waitlist sections at 320/480/768px for tap targets and layout correctness [Score: 8.3]
+- [x] [SIL] Mobile audit pass on new CTAs — /join/ + /vaultsparked/ new form sections now pass 320/480/768/1024px; full-width stacking CSS added ✅
+- [x] [SIL] Web3Forms spam guard — botcheck honeypot added to both forms; subject + from_name differentiation already in place ✅ (separate access_keys still optional for advanced tracking)
+- [SIL] GA4 event on form submit — fire a lightweight `form_submit` GA4 event on successful Web3Forms submission so conversion is visible in analytics without separate access_keys [Score: 8.2]
+- [SIL] Cloudflare DNS change prep doc — document the exact A/CNAME records to change + a `curl -I` verification step so the proxy can be enabled in under 5 minutes [Score: 9.0]
+- [ ] [SIL] Per-form Web3Forms keys — register separate access_key values per form for distinct delivery routing and tracking (optional upgrade; current setup already differentiates by subject) [Score: 6.5]
 - [SIL] Entitlement matrix audit — review every public page/app against `config/membership-entitlements.json` and remove any remaining promise drift [Score: 8.8]
 - [SIL] Browser entitlement spec lane — add Playwright coverage for free vs VaultSparked vs PromoGrind Pro states on archive, beta keys, and premium tool gating [Score: 8.7]
 - [SIL] Service-role-backed auth rerun lane — restore the local verification shell secret path so authenticated Playwright can use magic-link sessions reliably under CAPTCHA hardening [Score: 8.9]
@@ -104,6 +107,12 @@
 - [ ] Community-created lore submissions [4.5]
 - [ ] "Currently playing" badge on member profile [4.5] (note: already exists as of Phase 42)
 - [ ] Vault social graph (member connections) [4.8] — now CODED as full follow system (session 5, phase 49)
+
+## Completed — Session 27 follow-up (2026-04-01)
+
+- ✅ Web3Forms botcheck — honeypot spam guard added to both Vault Access Request and VaultSparked Waitlist forms
+- ✅ Mobile CTA audit — full-width stacking CSS (`@media ≤640px`) added to style.css for both new form sections; all breakpoints pass
+- ✅ VAPID key generation — fresh pair generated; public key embedded in `portal-features.js` and `portal.js`; `ACTIVATION_RUNBOOK.md` updated with exact secret setup steps; SW cache bumped to v4
 
 ## Completed — Session 27 (2026-04-01)
 

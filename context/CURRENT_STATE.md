@@ -139,12 +139,13 @@
   - `assets/vault-score.js` — game score submission SDK
   - `assets/countdown.js` — release countdown timer widget (data-countdown-target)
   - `assets/rank-icons/` — 9 SVG icons
-  - `sw.js` v3 — extended pre-cache + stale-while-revalidate for Supabase API (cache bumped session 27 → v3)
+  - `sw.js` v4 — extended pre-cache + stale-while-revalidate for Supabase API (bumped to v4 in session 27 follow-up)
   - Discord invite link: `https://discord.gg/MnnBRbYDk` (updated session 27 across all 51 files)
   - Light mode surface overrides: `body.light-mode` block in style.css covers ~70 card/panel/tag classes; eliminates dark rgba backgrounds, invisible white borders, and forced white text in light mode (session 27)
-  - CSP connect-src fix: all 67 public pages now include `https://api.convertkit.com` and `https://api.web3forms.com` so email-capture fetch() calls are not CSP-blocked (session 27)
-  - Request Vault Access: `/join/` now has a Web3Forms email form for users without an invite code (session 27)
-  - VaultSparked Waitlist: `/vaultsparked/` now has a Web3Forms email form with founder-discount messaging (session 27)
+  - CSP connect-src fix: all 67 public pages include `https://api.convertkit.com` and `https://api.web3forms.com`; email-capture fetch() calls unblocked (session 27)
+  - VAPID public key: embedded in `vault-member/portal-features.js` + `portal.js` (`BDf9L_0jn0FsM8oNEhSUcypsRfnA6gIXK0Xqkpxbd3DdztD5ftO8JpExGYdFQveiBhlcRrZ6U-wdUsOwwXJAhPo`); private key must be set as Supabase function secret to activate push (session 27 follow-up)
+  - Request Vault Access: `/join/` — Web3Forms email form with botcheck spam guard; full-width stacking at ≤640px (session 27 + follow-up)
+  - VaultSparked Waitlist: `/vaultsparked/` — Web3Forms email form with botcheck spam guard; full-width stacking at ≤640px (session 27 + follow-up)
   - Universe Discord CTA: `/universe/` now has a themed Discord CTA section; hardcoded `strong { color:#fff }` fixed to `var(--text)` (session 27)
   - `.github/workflows/lighthouse.yml` — Lighthouse CI
   - `.github/workflows/minify.yml` — file-size reporter

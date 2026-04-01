@@ -4,6 +4,25 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-04-01 — Session 27 follow-up: Web3Forms spam guard, mobile CTA audit, VAPID key setup
+
+- Goal: Complete 3 closeout priority items — Web3Forms key differentiation/verification, mobile audit on new form CTAs, activation runbook execution (VAPID)
+- What changed:
+  - `join/index.html` + `vaultsparked/index.html`: botcheck honeypot field added to both forms
+  - `assets/style.css`: `@media (max-width:640px)` responsive rules for `#vault-request-form` and `#sparked-notify-form`; input + button stack full-width at 320/480px
+  - `vault-member/portal-features.js` + `portal.js`: `VAPID_PUBLIC_KEY` updated to freshly generated key
+  - `docs/ACTIVATION_RUNBOOK.md`: VAPID section updated with generated public key and exact secret setup steps
+  - `sw.js`: cache bumped to v4
+- Verification: mobile forms checked at 320/480/768/1024px — all breakpoints pass; flex-direction:column forces full-width stacking on small screens
+- Risks created or removed:
+  - Removed: forms had no spam protection; botcheck honeypot guards against simple bots
+  - Removed: VAPID public key was stale/orphaned; fresh pair generated and embedded
+  - Remaining: VAPID private key must be set as Supabase function secret before push is active; Web3Forms delivery unconfirmed until user tests both forms
+- Session intent outcome: Achieved — all 3 tasks completed; one user action each for VAPID secrets and form delivery verification
+- Recommended next move: Set Supabase VAPID secrets and test-submit both email forms; then execute Cloudflare proxy step in activation runbook
+
+---
+
 ### 2026-04-01 — Session 27: Discord link update, light mode surfaces, email capture fix, new CTAs
 
 - Goal: Update Discord link sitewide; analyze and ship website improvements; fix light mode dark surfaces; verify and repair email capture; add Request Vault Membership CTA
