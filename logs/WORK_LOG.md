@@ -4,6 +4,24 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-04-02 — Session 29: Push test button, newsletter doc, response-header tests, legal fix, migration normalization
+
+- Goal: Complete all code-actionable items to restore momentum runway (was 0.25 sessions ⛔)
+- What changed:
+  - `vault-member/index.html` + `vault-member/portal-features.js`: "Send Test Push" admin button in Vault Command — auto-subscribes, invokes send-push with synthetic payload for VAPID verification
+  - `docs/NEWSLETTER_SETUP.md`: complete Resend activation guide (6 steps, troubleshooting table)
+  - `tests/response-headers.spec.js`: 6 Playwright tests verifying CSP, HSTS, COOP, CORP, Permissions-Policy, stripped headers — all passing against production
+  - 10 journal article footers: upgraded from `© 2026 VaultSpark Studios. All rights reserved.` to include `VaultSpark™ is a trademark of VaultSpark Studios.`
+  - 4 stray SQL files moved from `supabase/` to `supabase/migrations/`
+  - `docs/MIGRATION_NORMALIZATION.md`: baseline + timestamp-forward normalization strategy
+  - `sw.js`: cache bumped to `vaultspark-20260402-v1`
+  - `.gitignore`: added `test-results/`
+- Commit: d2e5944 pushed to main
+- Intent outcome: Achieved — all 5 planned items completed
+- SIL: 46/50
+
+---
+
 ### 2026-04-01 — Session 28: VAPID rotation, Cloudflare Worker, secret lint, activation pass
 
 - Goal: Complete next moves — browser entitlement verification, Cloudflare DNS prep, GA4 form events, and high-value task board items

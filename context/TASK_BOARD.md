@@ -10,8 +10,10 @@
 - [ ] [FLAG] Verify free vs VaultSparked vs PromoGrind Pro behavior in a browser — portal status, archive access, beta keys, PromoGrind live tools, and gift checkout copy; repo-side tests landed, but the live rerun still needs `SUPABASE_SERVICE_ROLE_KEY` in the local shell so the magic-link helper can bypass production CAPTCHA
 - [ ] Apply Supabase auth hardening — Dashboard → Auth → Settings: enable CAPTCHA, set session timeout, enable email enumeration prevention (moves from Human Action Required; do this session)
 - [ ] Set newsletter secrets — configure `RESEND_API_KEY`, `NEWSLETTER_FROM`, `APP_URL`, `NEWSLETTER_SECRET` in Supabase Edge Function secrets; then trigger newsletter manually to verify (moves from Human Action Required; do this session)
-- [SIL] Push notification test button in Vault Command — admin button in Vault Command to send a test push to the signed-in admin, so VAPID can be verified without uploading a classified file [Score: 8.5]
-- [SIL] Newsletter activation one-pager — `docs/NEWSLETTER_SETUP.md` with exact Resend + secret config steps [Score: 9.0]
+- [x] [SIL] Push notification test button in Vault Command — admin button added; auto-subscribes if needed, invokes send-push with synthetic payload ✅ (session 29)
+- [x] [SIL] Newsletter activation one-pager — `docs/NEWSLETTER_SETUP.md` written with complete Resend + secret config steps ✅ (session 29)
+- [SIL] Secret lint enhancement — expand CI guard to cover common API key prefixes (`sk-`, `rk_live_`, `whsec_`, `xoxb-`) beyond VAPID/service-role patterns [Score: 7.5]
+- [SIL] Investor portal footer legal links — add Privacy Policy + Terms of Service links to the 14 investor portal pages [Score: 6.5]
 - [x] [FLAG] Run `npm run provision:test-accounts` with service-role credentials and dedicated free/Sparked emails to create the Playwright verification accounts and populate `.env.playwright.local`
 - [x] [SIL] Theme persistence E2E coverage — homepage restore and mobile-nav persistence now pass in Chromium against the live site
 - [x] [SIL] Theme surface parity audit — high-visibility portal dark-only surfaces now use shared theme-token-backed classes for overlays, auth buttons, referral/gift panels, and poll inputs
@@ -32,9 +34,9 @@
 - [SIL] Default-theme browser parity pass — verify the new `Dark - High Contrast` default across homepage, portal, and mobile nav in a real browser [Score: 8.1]
 - [SIL] Account-backed theme sync verification — verify local-vs-account precedence, portal sign-in restore, and cross-device hydration for `prefs.site_theme` [Score: 8.1]
 - [FLAG] Add a second dedicated VaultSparked test account for premium-state browser verification once billing/test-state setup is ready [Score: 7.6]
-- [SIL] Supabase migration-history normalization — reconcile local migration naming/history with the remote timestamp-based Supabase history so future production schema changes can use the standard migration path safely [Score: 8.3]
-- [SIL] Live response-header verification — once Cloudflare proxy is enabled, verify worker CSP/HSTS/Turnstile behavior against the real production responses [Score: 8.4]
-- [SIL] Legal copy consistency audit — align footer/legal/press language around IP, fan-content, and data-handling claims after the privacy-policy expansion [Score: 6.8]
+- [x] [SIL] Supabase migration-history normalization — 4 stray SQL files moved into migrations/, docs/MIGRATION_NORMALIZATION.md written with baseline strategy ✅ (session 29)
+- [x] [SIL] Live response-header verification — tests/response-headers.spec.js with 6 Playwright tests, all passing against production ✅ (session 29)
+- [x] [SIL] Legal copy consistency audit — 10 journal footers upgraded to full trademark language; no other drift found ✅ (session 29)
 - Execute `docs/ACTIVATION_RUNBOOK.md` — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification [Score: 9.6]
 - [SIL] Activation verification pass after external setup — rerun auth, push, headers, sitemap, and newsletter checks once the runbook is complete [Score: 8.9]
 - [x] [SIL] Secret-adjacent docs lint rule — `.github/workflows/secret-lint.yml` added; catches PRIVATE_KEY/SERVICE_ROLE/STRIPE_SECRET values and Supabase JWTs outside approved paths; also redacted VAPID private key value that was accidentally left in LATEST_HANDOFF.md ✅ (session 28)
@@ -110,6 +112,14 @@
 - [ ] Community-created lore submissions [4.5]
 - [ ] "Currently playing" badge on member profile [4.5] (note: already exists as of Phase 42)
 - [ ] Vault social graph (member connections) [4.8] — now CODED as full follow system (session 5, phase 49)
+
+## Completed — Session 29 (2026-04-02)
+
+- ✅ Push notification test button — Vault Command admin panel button + `adminTestPush()` in portal-features.js; subscribes if needed, invokes send-push with synthetic payload
+- ✅ Newsletter activation one-pager — `docs/NEWSLETTER_SETUP.md` with complete Resend + Supabase secrets + GitHub Actions setup guide
+- ✅ Response-header verification — `tests/response-headers.spec.js` with 6 Playwright tests verifying CSP, HSTS, COOP, CORP, Permissions-Policy, stripped headers (6/6 passing)
+- ✅ Legal copy consistency fix — 10 journal article footers upgraded from short-form to full trademark language
+- ✅ Migration normalization — 4 stray SQL files moved into `supabase/migrations/`, `docs/MIGRATION_NORMALIZATION.md` written with baseline + timestamp-forward strategy
 
 ## Completed — Session 28 (2026-04-01)
 

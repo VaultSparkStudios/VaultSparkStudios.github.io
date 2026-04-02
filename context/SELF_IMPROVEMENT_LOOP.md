@@ -41,16 +41,43 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇▇▇█
-Avgs — 3: 46.7 | 5: 46.6 | 10: 44.2 | 25: 41.9 [N=27] | all: 41.5
-  └ 3-session: Dev 9.3 | Align 9.3 | Momentum 9.3 | Engage 9.0 | Process 9.7
-Velocity trend: ↓  |  Protocol velocity: ↓  |  Debt: →
-Momentum runway: ~0.25 sessions ⛔ PRELOAD NOW  |  Intent rate: 60% (last 5) ⚠ below 70%
-Last session: 2026-04-01 | Session 28 | Total: 48/50 | Velocity: 2 | protocolVelocity: 4
+Sparkline (last 5 totals): ▇▇▇█▇
+Avgs — 3: 46.3 | 5: 46.4 | 10: 44.6 | 25: 42.1 [N=29] | all: 41.7
+  └ 3-session: Dev 9.3 | Align 9.0 | Momentum 9.0 | Engage 9.0 | Process 10.0
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~0.9 sessions ⚠  |  Intent rate: 60% (last 5) ⚠ below 70%
+Last session: 2026-04-02 | Session 29 | Total: 46/50 | Velocity: 5 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-04-02 — Session 29 | Total: 46/50 | Velocity: 5 | protocolVelocity: 0 | Debt: →
+Avgs — 3: 46.3 | 5: 46.4 | 10: 44.6 | 25: 42.1 [N=29] | all: 41.7
+  └ 3-session: Dev 9.3 | Align 9.0 | Momentum 9.0 | Engage 9.0 | Process 10.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 9 | ↓ | 6 new Playwright response-header tests passing; push test button with clean syntax; migration normalization; SW cache bump |
+| Creative Alignment | 9 | → | All work serves activation/launch vision; newsletter doc and push button unblock founder actions |
+| Momentum | 9 | ↓ | 5 SIL items completed in one session; runway improved from 0.25 to 0.9; velocity reversed ↓→↑ |
+| Engagement | 9 | → | Push test button enables admin VAPID verification; newsletter doc enables activation; response headers verified live |
+| Process Quality | 10 | → | Full legal audit, migration cleanup, all docs complete, clean commit, Studio OS compliance |
+| **Total** | **46/50** | ↓ | Solid preload session; runway improved but still below 2.0 — more Now-bucket items needed |
+
+**Top win:** Completed 5 [SIL] items in a single session, reversing the velocity downtrend and improving momentum runway from critical 0.25 to 0.9 sessions.
+**Top gap:** Momentum runway is still below 2.0 — the remaining Now items are human-action-blocked (Supabase auth hardening, newsletter secrets). Code-actionable Now items are depleted again.
+**Intent outcome:** Achieved — all 5 planned code-actionable items completed and deployed.
+
+**IGNIS note:** When runway hits critical, the highest-value move is completing existing [SIL] commitments rather than adding new features — this session cleared 5 items and reversed velocity decline in one focused pass.
+
+**Brainstorm**
+1. Secret lint enhancement — expand CI guard to cover `sk-`, `rk_live_`, `whsec_`, `xoxb-` prefixes for broader secret coverage; Implementation: add patterns to `.github/workflows/secret-lint.yml`; Execution probability: High
+2. Investor portal footer legal links — add Privacy Policy + Terms footer links to the 14 investor portal pages for legal consistency; Implementation: add footer HTML to each investor page; Execution probability: High
+3. GA4 measurement ID setup guide — write a concise doc for adding the gtag script to all pages once a measurement ID exists, since form events are already wired; Implementation: create `docs/GA4_SETUP.md`; Execution probability: High
+4. Authenticated entitlement test matrix — create a structured test plan document mapping free/VaultSparked/PromoGrind Pro against each gated surface for systematic browser verification; Implementation: write `docs/ENTITLEMENT_TEST_MATRIX.md`; Execution probability: Medium
+
+**Committed to TASK_BOARD:** [SIL] Secret lint enhancement · [SIL] Investor portal footer legal links
 
 ## 2026-04-01 — Session 28 | Total: 48/50 | Velocity: 2 | protocolVelocity: 4 | Debt: →
 Avgs — 3: 46.7 | 5: 46.6 | 10: 44.2 | 25: 41.9 [N=27] | all: 41.5

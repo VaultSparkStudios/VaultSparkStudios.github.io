@@ -1,19 +1,26 @@
 # Latest Handoff
 
-Last updated: 2026-04-01
+Last updated: 2026-04-02
+
+Session Intent (2026-04-02 — Session 29): Complete all code-actionable items to restore momentum runway — push test button, newsletter setup doc, response-header verification, legal copy audit, migration normalization.
 
 Session Intent (2026-04-01 — Session 28): Complete next moves — browser entitlement verification lane, Cloudflare DNS prep doc, GA4 form submit events, and any other high-value actionable items from the task board.
 
-Session Intent (2026-04-01 — Session 27): Update Discord invite link across the full website to https://discord.gg/MnnBRbYDk and analyze website improvements or updates needed.
+## Where We Left Off (Session 29, 2026-04-02)
 
-## Where We Left Off (Session 28, 2026-04-01)
+- Shipped: 5 improvements across 4 groups — admin tooling (push test button), docs (newsletter setup, migration normalization), testing (response-header Playwright spec 6/6), legal (10 journal footer trademark fixes)
+- Tests: 88 passing (82 prior + 6 new response-header tests) · delta: +6
+- Deploy: pushed to main (commit d2e5944) — live on GitHub Pages
+- SIL score: 46/50
+- **Momentum runway: ~0.9 sessions ⚠ — improved from 0.25 but still below 2.0**
+- **Next immediate actions:** Supabase auth hardening (Auth → Settings: CAPTCHA + session timeout + email enumeration) + set RESEND_API_KEY + other newsletter secrets in Supabase Edge Function secrets (both are human actions)
+- **Intent rate: 60% (last 5) ⚠ — below 70% threshold**
 
-- Shipped: GA4 form_submit events on /join/ + /vaultsparked/, docs/CLOUDFLARE_DNS_PREP.md, secret lint CI (.github/workflows/secret-lint.yml), VAPID private key rotated (was accidentally committed — now redacted), new VAPID keys generated, Supabase secrets set, send-push deployed + DB webhook wired, Cloudflare security headers Worker deployed + all 9 headers verified live
-- Deploy: pushed to main (commits a06f885, f01d010, 1aa8355) — live on GitHub Pages
-- SIL score: 48/50 ⬆ highest score yet
-- **Momentum runway: ~0.25 sessions ⛔ — pre-load Now bucket at next session start**
-- **Next immediate actions:** Supabase auth hardening (Auth → Settings: CAPTCHA + session timeout + email enumeration) + set RESEND_API_KEY + other newsletter secrets in Supabase Edge Function secrets
-- **Intent rate: 60% (last 5) ⚠ — below 70% threshold; partially due to recurring service-role-key blocker**
+## Human Action Required
+
+- [ ] **Apply Supabase auth hardening** — Dashboard → Auth → Settings: enable CAPTCHA, set session timeout, enable email enumeration prevention
+- [ ] **Set newsletter secrets** — Dashboard → Edge Functions → send-member-newsletter → Secrets: set `RESEND_API_KEY`, `NEWSLETTER_FROM`, `APP_URL`, `NEWSLETTER_SECRET` (see `docs/NEWSLETTER_SETUP.md` for full guide)
+- [ ] **Verify search ownership** — replace `google-site-verification-REPLACE_ME.html` with real token, submit sitemaps
 
 ---
 

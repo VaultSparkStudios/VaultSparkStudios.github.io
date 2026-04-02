@@ -1,9 +1,9 @@
 <!-- truth-audit-version: 1.0 -->
 # Truth Audit
 
-Last reviewed: 2026-04-01
+Last reviewed: 2026-04-02
 Overall status: green
-Next action: Supabase auth hardening (CAPTCHA + session timeout + email enumeration prevention) + newsletter secrets setup. Then restore local service-role path and rerun authenticated entitlement browser lane.
+Next action: Supabase auth hardening (CAPTCHA + session timeout + email enumeration prevention) + newsletter secrets setup (see docs/NEWSLETTER_SETUP.md). Then restore local service-role path and rerun authenticated entitlement browser lane.
 
 ---
 
@@ -22,10 +22,10 @@ Next action: Supabase auth hardening (CAPTCHA + session timeout + email enumerat
 |---|---|---|
 | Schema alignment | 5 | Rank thresholds, plan labels, and membership surfaces now align more tightly around the generated entitlement config |
 | Prompt/template alignment | 4 | Closeout/start prompts are locally modified in the worktree, but project truth files are now current |
-| Derived-view freshness | 5 | `PROJECT_STATUS`, `CURRENT_STATE`, `LATEST_HANDOFF`, and SIL are refreshed through Session 26 |
-| Handoff continuity | 5 | Current handoff now reflects the verification/drift-cleanup session and the remaining authenticated blocker explicitly |
-| Contradiction density | 4 | No active red contradictions found; remaining gap is the service-role-dependent authenticated entitlement rerun plus live Cloudflare header checks |
-| **Total** | **23 / 25** | Strong truth alignment with the remaining risk concentrated in authenticated verification and external/live setup |
+| Derived-view freshness | 5 | `PROJECT_STATUS`, `CURRENT_STATE`, `LATEST_HANDOFF`, and SIL are refreshed through Session 29 |
+| Handoff continuity | 5 | Current handoff reflects the preload session and remaining human-action blockers |
+| Contradiction density | 4 | No active red contradictions; CURRENT_STATE VAPID key reference stale (BDf9 vs actual BPqk), minor |
+| **Total** | **23 / 25** | Strong truth alignment; remaining risk is authenticated verification and human-action external setup |
 
 ---
 

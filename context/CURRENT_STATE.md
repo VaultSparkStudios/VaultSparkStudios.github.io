@@ -2,9 +2,9 @@
 
 ## Snapshot
 
-- Date: 2026-04-01
+- Date: 2026-04-02
 - Overall status: Live and active
-- Current phase: Session 28 complete (2026-04-01) — VAPID private key rotated (was in public repo; new pair generated, secrets set in Supabase, send-push deployed, DB webhook wired); Cloudflare security headers Worker deployed and verified (all 9 headers live including CSP, Permissions-Policy, COOP, CORP); GA4 form_submit events wired on /join/ + /vaultsparked/; secret lint CI added; Cloudflare DNS prep doc written; entitlement matrix audit passed clean
+- Current phase: Session 29 complete (2026-04-02) — Push notification test button added to Vault Command (admin VAPID verification without classified file upload); docs/NEWSLETTER_SETUP.md written (complete Resend activation guide); tests/response-headers.spec.js added (6 Playwright tests verifying all Cloudflare security headers, all passing); legal copy consistency audit + fix (10 journal footers upgraded to full trademark language); Supabase migration normalization (4 stray SQL files moved into migrations/, docs/MIGRATION_NORMALIZATION.md with baseline strategy); SW cache bumped; test-results/ added to .gitignore
   - Authenticated browser verification lane: dedicated free-member and VaultSparked test accounts now exist, local Playwright provisioning is scriptable, and the browser helper can authenticate through admin-generated magic-link sessions to bypass CAPTCHA-protected password grants
   - PromoGrind Pro verification prep: the provisioning workflow and local Playwright env shape now support an optional dedicated `promogrind_pro` test account in addition to the free and VaultSparked accounts
   - Bootstrap RPC repair: `get_member_bootstrap()` no longer writes the stale `last_seen` column, fixing a real production bug that pushed valid members back to auth/complete-profile flows
