@@ -816,6 +816,7 @@
           if (r.ok) {
             f.style.display = 'none';
             document.getElementById('sparked-notify-success').style.display = 'block';
+            if (typeof gtag === 'function') { gtag('event', 'form_submit', { form_name: 'vaultsparked_waitlist', form_location: '/vaultsparked/' }); }
           } else { throw new Error(); }
         } catch(_) {
           document.getElementById('sparked-notify-error').style.display = 'block';

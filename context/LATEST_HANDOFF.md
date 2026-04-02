@@ -2,6 +2,8 @@
 
 Last updated: 2026-04-01
 
+Session Intent (2026-04-01 — Session 28): Complete next moves — browser entitlement verification lane, Cloudflare DNS prep doc, GA4 form submit events, and any other high-value actionable items from the task board.
+
 Session Intent (2026-04-01 — Session 27): Update Discord invite link across the full website to https://discord.gg/MnnBRbYDk and analyze website improvements or updates needed.
 
 ## Where We Left Off (Session 27 + follow-up, 2026-04-01)
@@ -9,7 +11,7 @@ Session Intent (2026-04-01 — Session 27): Update Discord invite link across th
 - Shipped: Discord link update, light-mode surface fix, CSP email-capture fix, Request Vault Access + VaultSparked Waitlist forms, Universe Discord CTA, Web3Forms botcheck spam guard, mobile-responsive form CSS (full-width stacking at ≤640px), VAPID public key embedded in portal code
 - Deploy: pushed to main (commit 3db090a) — live on GitHub Pages
 - SIL score: 45/50 (follow-up); 47/50 (S27 main)
-- **One human action required to activate web push:** Set `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` (`FQXFuqobkBAT_XPPE4sIEProBfMu_0qED5Nf2uFy7E8`), and `VAPID_SUBJECT` as Supabase Edge Function secrets → deploy `send-push`
+- **One human action required to activate web push:** Set `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` (store in secure notes — do not commit), and `VAPID_SUBJECT` as Supabase Edge Function secrets → deploy `send-push`
 - **One human action required to confirm email capture:** Test-submit from /join/ and /vaultsparked/ and verify delivery to your Web3Forms inbox
 
 ---

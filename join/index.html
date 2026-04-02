@@ -716,6 +716,7 @@
           if (r.ok) {
             f.style.display = 'none';
             document.getElementById('vault-request-success').style.display = 'block';
+            if (typeof gtag === 'function') { gtag('event', 'form_submit', { form_name: 'vault_access_request', form_location: '/join/' }); }
           } else { throw new Error(); }
         } catch(_) {
           document.getElementById('vault-request-error').style.display = 'block';

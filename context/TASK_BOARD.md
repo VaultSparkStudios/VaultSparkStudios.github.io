@@ -18,10 +18,10 @@
 
 - [x] [SIL] Mobile audit pass on new CTAs — /join/ + /vaultsparked/ new form sections now pass 320/480/768/1024px; full-width stacking CSS added ✅
 - [x] [SIL] Web3Forms spam guard — botcheck honeypot added to both forms; subject + from_name differentiation already in place ✅ (separate access_keys still optional for advanced tracking)
-- [SIL] GA4 event on form submit — fire a lightweight `form_submit` GA4 event on successful Web3Forms submission so conversion is visible in analytics without separate access_keys [Score: 8.2]
-- [SIL] Cloudflare DNS change prep doc — document the exact A/CNAME records to change + a `curl -I` verification step so the proxy can be enabled in under 5 minutes [Score: 9.0]
+- [x] [SIL] GA4 event on form submit — guarded `gtag('event','form_submit',...)` added to /join/ and /vaultsparked/ success branches; no-ops until GA4 measurement ID is configured ✅ (session 28)
+- [x] [SIL] Cloudflare DNS change prep doc — `docs/CLOUDFLARE_DNS_PREP.md` written with exact A/CNAME records, toggle steps, `curl -I` verification, Worker route setup, and rollback ✅ (session 28)
 - [ ] [SIL] Per-form Web3Forms keys — register separate access_key values per form for distinct delivery routing and tracking (optional upgrade; current setup already differentiates by subject) [Score: 6.5]
-- [SIL] Entitlement matrix audit — review every public page/app against `config/membership-entitlements.json` and remove any remaining promise drift [Score: 8.8]
+- [x] [SIL] Entitlement matrix audit — all public pages audited against `config/membership-entitlements.json`; pricing, rank thresholds, plan descriptions, Project Unknown requirement all clean; no drift found ✅ (session 28)
 - [SIL] Browser entitlement spec lane — add Playwright coverage for free vs VaultSparked vs PromoGrind Pro states on archive, beta keys, and premium tool gating [Score: 8.7]
 - [SIL] Service-role-backed auth rerun lane — restore the local verification shell secret path so authenticated Playwright can use magic-link sessions reliably under CAPTCHA hardening [Score: 8.9]
 - [SIL] Authenticated verification artifact log — write a compact post-run summary of free / VaultSparked / PromoGrind Pro entitlement results into `logs/` after each targeted browser pass [Score: 7.8]
@@ -33,7 +33,7 @@
 - [SIL] Legal copy consistency audit — align footer/legal/press language around IP, fan-content, and data-handling claims after the privacy-policy expansion [Score: 6.8]
 - Execute `docs/ACTIVATION_RUNBOOK.md` — Cloudflare proxy, Supabase auth hardening, newsletter secrets, VAPID, and search verification [Score: 9.6]
 - [SIL] Activation verification pass after external setup — rerun auth, push, headers, sitemap, and newsletter checks once the runbook is complete [Score: 8.9]
-- [SIL] Secret-adjacent docs lint rule — add a lightweight CI guard for risky secret/operator strings outside approved paths [Score: 7.2]
+- [x] [SIL] Secret-adjacent docs lint rule — `.github/workflows/secret-lint.yml` added; catches PRIVATE_KEY/SERVICE_ROLE/STRIPE_SECRET values and Supabase JWTs outside approved paths; also redacted VAPID private key value that was accidentally left in LATEST_HANDOFF.md ✅ (session 28)
 - Enable Cloudflare proxy (requires DNS change on registrar — highest-ROI speed/security win) [Score: 10, Composite: 8.5]
 - Supabase dashboard settings: CAPTCHA on auth, session timeout, email enumeration prevention [Score: 8.5]
 - VAPID key setup: generate keys, set VAPID_PUBLIC_KEY in vault-member/index.html, deploy send-push Edge Function secrets [Score: 8.2]
@@ -107,6 +107,14 @@
 - [ ] Community-created lore submissions [4.5]
 - [ ] "Currently playing" badge on member profile [4.5] (note: already exists as of Phase 42)
 - [ ] Vault social graph (member connections) [4.8] — now CODED as full follow system (session 5, phase 49)
+
+## Completed — Session 28 (2026-04-01)
+
+- ✅ GA4 form_submit event — guarded `gtag()` call added to /join/ and /vaultsparked/ success branches; fires automatically when GA4 is configured
+- ✅ Cloudflare DNS prep doc — `docs/CLOUDFLARE_DNS_PREP.md` with exact record values, toggle steps, `curl -I` verification, Worker route, and rollback instructions
+- ✅ Entitlement matrix audit — all public pages clean vs `config/membership-entitlements.json`; no promise drift found
+- ✅ Secret lint CI — `.github/workflows/secret-lint.yml` guards against committed key values and Supabase JWTs
+- ✅ VAPID private key redacted from LATEST_HANDOFF.md — was accidentally committed; key must be regenerated before activating web push
 
 ## Completed — Session 27 follow-up (2026-04-01)
 
