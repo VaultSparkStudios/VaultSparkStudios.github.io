@@ -1,30 +1,41 @@
--- Phase 49: Member Social Graph — follow system
--- Adds get_following_feed RPC for activity feed tab
--- Note: member_follows table + base RPCs already exist from phase44
+-- Phase 49: Member Social Graph — Follow System
+-- Run in Supabase SQL editor: https://supabase.com/dashboard/project/fjnpzjjyhnpmunfoycrp/sql
 
--- RPC: Get follower/following counts for a member (by username)
--- Overrides phase44 version which accepted uuid; this version accepts username text
+CREATE TABLE IF NOT EXISTS member_follows (
+  follower_id  uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  following_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  created_at   timestamptz NOT NULL DEFAULT now(),
+  PRIMARY KEY (follower_id, following_id),
+  CHECK (follower_id != following_id)
+);
+
+ALTER TABLE member_follows ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "members can follow" ON member_follows;
+CREATE POLICY "members can follow"   ON member_follows FOR INSERT WITH CHECK (auth.uid() = follower_id);
+DROP POLICY IF EXISTS "members can unfollow" ON member_follows;
+CREATE POLICY "members can unfollow" ON member_follows FOR DELETE  USING  (auth.uid() = follower_id);
+DROP POLICY IF EXISTS "public read follows" ON member_follows;
+CREATE POLICY "public read follows"  ON member_follows FOR SELECT  USING  (true);
+
+-- RPC: get follower + following counts for a profile
 CREATE OR REPLACE FUNCTION get_follow_counts(p_username text)
 RETURNS TABLE(followers bigint, following bigint)
 LANGUAGE sql SECURITY DEFINER AS $$
   SELECT
-    (SELECT COUNT(*) FROM member_follows mf JOIN vault_members vm ON mf.following_id = vm.id WHERE vm.username = p_username) as followers,
-    (SELECT COUNT(*) FROM member_follows mf JOIN vault_members vm ON mf.follower_id = vm.id WHERE vm.username = p_username) as following;
+    (SELECT COUNT(*) FROM member_follows mf
+      JOIN vault_members vm ON mf.following_id = vm.id
+      WHERE vm.username = p_username) AS followers,
+    (SELECT COUNT(*) FROM member_follows mf
+      JOIN vault_members vm ON mf.follower_id = vm.id
+      WHERE vm.username = p_username) AS following;
 $$;
 
--- RPC: Get activity feed for followed members
+-- RPC: get activity feed for followed members (last 7 days)
 CREATE OR REPLACE FUNCTION get_following_feed(p_user_id uuid, p_limit integer DEFAULT 20)
-RETURNS TABLE(
-  event_type text,
-  username text,
-  rank_title text,
-  label text,
-  created_at timestamptz
-)
+RETURNS TABLE(event_type text, username text, rank_title text, label text, created_at timestamptz)
 LANGUAGE sql SECURITY DEFINER AS $$
-  -- Point events from followed members
   SELECT
-    'points' as event_type,
+    'points'       AS event_type,
     vm.username,
     CASE
       WHEN vm.points >= 100000 THEN 'The Sparked'
@@ -36,7 +47,7 @@ LANGUAGE sql SECURITY DEFINER AS $$
       WHEN vm.points >= 1000   THEN 'Rift Scout'
       WHEN vm.points >= 250    THEN 'Vault Runner'
       ELSE 'Spark Initiate'
-    END as rank_title,
+    END AS rank_title,
     pe.label,
     pe.created_at
   FROM point_events pe

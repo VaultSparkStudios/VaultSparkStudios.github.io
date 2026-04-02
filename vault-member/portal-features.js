@@ -888,3 +888,40 @@
         btn.disabled = false;
       }
     }
+
+    async function adminTestPush() {
+      const btn = document.getElementById('admin-push-test-btn');
+      const fb  = document.getElementById('admin-push-test-fb');
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+
+      try {
+        // Ensure push is subscribed first
+        const reg = _swRegistration || await navigator.serviceWorker.getRegistration('/sw.js');
+        if (!reg) throw new Error('Service worker not registered.');
+        let sub = await reg.pushManager.getSubscription();
+        if (!sub) {
+          const permission = await Notification.requestPermission();
+          if (permission !== 'granted') throw new Error('Notification permission denied.');
+          sub = await reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY),
+          });
+          const json = sub.toJSON();
+          await VSSupabase.rpc('upsert_push_subscription', { p_endpoint: json.endpoint, p_keys: json.keys });
+        }
+
+        // Invoke send-push with a synthetic test payload
+        const { data, error } = await VSSupabase.functions.invoke('send-push', {
+          body: {
+            type: 'INSERT',
+            record: { title: 'VAPID Test — ' + new Date().toLocaleTimeString() },
+          },
+        });
+        if (error) throw error;
+        showAdminFeedback(fb, 'Test push sent ✓ — check your notifications', true);
+      } catch (err) {
+        showAdminFeedback(fb, 'Push test failed: ' + (err.message || 'unknown'), false);
+      } finally {
+        if (btn) { btn.disabled = false; btn.textContent = 'Send Test Push'; }
+      }
+    }
