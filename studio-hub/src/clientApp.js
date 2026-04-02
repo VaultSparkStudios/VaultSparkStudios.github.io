@@ -2,7 +2,7 @@ import { getHubRuntimeConfig } from "./config/runtimeConfig.js";
 import { PROJECTS, getProjectById, validateRegistry } from "./data/studioRegistry.js";
 import { scoreProject, getGrade, invalidateWeightsCache, clearScoringCache } from "./utils/projectScoring.js";
 import { fmt, daysSince, commitVelocity, debounce, safeGetJSON, safeSetJSON } from "./utils/helpers.js";
-import { fetchAllProjectContextFiles, fetchRepoLanguages, fetchRepoBranches, fetchRepoTodoCount, fetchDependencyAlerts, fetchProjectTickets, submitProjectTicket, submitRenameTicket, submitInitiateTicket, fetchStudioOsCompliance, fetchAgentRequests, submitAgentRequest, fetchRepoTraffic } from "./data/githubAdapter.js";
+import { fetchAllProjectContextFiles, fetchRepoLanguages, fetchRepoBranches, fetchRepoTodoCount, fetchDependencyAlerts, fetchProjectTickets, submitProjectTicket, submitRenameTicket, submitInitiateTicket, submitSparkTicket, fetchStudioOsCompliance, fetchAgentRequests, submitAgentRequest, fetchRepoTraffic } from "./data/githubAdapter.js";
 import { fetchAllSupabaseData } from "./data/supabaseAdapter.js";
 import { fetchAllSocialFeeds } from "./data/socialFeedsAdapter.js";
 import { renderNavigation } from "./components/navigation.js";
@@ -913,7 +913,7 @@ function buildEventCtx() {
     generateWeeklyDigest, generateStandup,
     loadScoreHistory, scorePrevFromHistory,
     applyAccent, applyTheme, applyDensity, getHubRuntimeConfig,
-    loadTickets, submitProjectTicket, submitRenameTicket, submitInitiateTicket,
+    loadTickets, submitProjectTicket, submitRenameTicket, submitInitiateTicket, submitSparkTicket,
     commitVelocity, daysSince,
   };
 }

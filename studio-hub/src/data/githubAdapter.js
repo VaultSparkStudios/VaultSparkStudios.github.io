@@ -872,6 +872,98 @@ export async function submitInitiateTicket(fields, token = "") {
   }
 }
 
+const SPARK_LABEL = "vault-status-change";
+
+export async function submitSparkTicket(fields, token = "") {
+  if (!token) return { ok: false, error: "No GitHub token configured. Add one in Settings." };
+
+  const yamlBlock = [
+    "<!-- agent-spark-ticket",
+    `project_id: ${JSON.stringify(fields.projectId || "")}`,
+    `project_name: ${JSON.stringify(fields.projectName || "")}`,
+    `branding_compliant: ${JSON.stringify(fields.brandingCompliant ? "true" : "false")}`,
+    `staging_confirmed: ${JSON.stringify(fields.stagingConfirmed ? "true" : "false")}`,
+    `ci_green: ${JSON.stringify(fields.ciGreen ? "true" : "false")}`,
+    `context: ${JSON.stringify(fields.context || "")}`,
+    `submitted_by: "human"`,
+    `submitted_at: ${JSON.stringify(new Date().toISOString())}`,
+    "-->",
+  ].join("\n");
+
+  const preflight = [
+    `- [${fields.brandingCompliant ? "x" : " "}] Branding implemented (CANON-006)`,
+    `- [${fields.stagingConfirmed ? "x" : " "}] Staging environment configured (CANON-007)`,
+    `- [${fields.ciGreen ? "x" : " "}] CI workflows green`,
+  ].join("\n");
+
+  const body = [
+    yamlBlock,
+    "",
+    "## SPARKED Transition Request",
+    "",
+    `**Project:** ${fields.projectName || fields.projectId || "—"} (\`${fields.projectId || "—"}\`)`,
+    `**Requested transition:** FORGE → SPARKED`,
+    "",
+    "### Context / Reason",
+    fields.context || "—",
+    "",
+    "### Pre-flight Checklist",
+    preflight,
+    "",
+    "---",
+    "",
+    "### Agent Execution Checklist",
+    "Execute in order once Studio Owner approves this issue.",
+    "",
+    "- [ ] Update `vaultStatus` → `\"sparked\"` in `portfolio/PROJECT_REGISTRY.json`",
+    "- [ ] Update `vaultStatus` → `\"sparked\"` in Hub `src/data/studioRegistry.js`",
+    "- [ ] Confirm `brandingCompliant: true` in PROJECT_REGISTRY.json (CANON-006)",
+    "- [ ] Confirm `stagingUrl` + `stagingType` set in PROJECT_REGISTRY.json (CANON-007)",
+    "- [ ] Confirm staging environment is live and accessible",
+    "- [ ] Run `node scripts/render-project-registry.mjs` to regenerate registry MD",
+    "- [ ] Run `node scripts/render-studio-brain.mjs` to refresh STUDIO_BRAIN.md",
+    "- [ ] Log decision in `context/DECISIONS.md` — SPARKED transition",
+    "- [ ] Update `context/LATEST_HANDOFF.md` with transition record",
+    "- [ ] Close this issue with confirmation comment",
+    "",
+    "---",
+    "*Submitted via VaultSpark Studio Hub · Ticketing → Spark This Project*",
+  ].filter((l) => l !== "").join("\n");
+
+  const issuePayload = {
+    title: `[Spark] ${fields.projectName || fields.projectId} — FORGE → SPARKED`,
+    body,
+    labels: [SPARK_LABEL],
+  };
+
+  const postIssue = async (payload) => fetch(`https://api.github.com/repos/${STUDIO_OPS_REPO}/issues`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/vnd.github+json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  try {
+    let res = await postIssue(issuePayload);
+    // If label doesn't exist yet, retry without it
+    if (res.status === 422) {
+      const { labels: _l, ...payloadNoLabel } = issuePayload;
+      res = await postIssue(payloadNoLabel);
+    }
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      return { ok: false, error: err.message || `GitHub error ${res.status}` };
+    }
+    const data = await res.json();
+    return { ok: true, url: data.html_url, id: data.number };
+  } catch (e) {
+    return { ok: false, error: e?.message || "Network error" };
+  }
+}
+
 // Fetches decoded content for key portfolio files from studio-ops.
 // Returns { [filePath]: { content: string, truncated: boolean } }.
 const PORTFOLIO_CONTENT_FILES = [

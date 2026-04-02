@@ -294,6 +294,7 @@ export function renderTicketingView(state) {
     ticketingTab = "listing",
     renameSubmitting = false, renameSuccess = null, renameError = null,
     initiateSubmitting = false, initiateSuccess = null, initiateError = null,
+    sparkSubmitting = false, sparkSuccess = null, sparkError = null,
   } = state;
 
   const openTickets   = tickets.filter((t) => t.state === "open");
@@ -328,6 +329,7 @@ export function renderTicketingView(state) {
       <div style="display:flex; gap:4px; margin-bottom:24px; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:0;">
         ${[
           { id: "listing",  label: "Project Listing" },
+          { id: "spark",    label: "Spark This Project" },
           { id: "rename",   label: "Rename / Rebrand" },
           { id: "initiate", label: "Initiate Project" },
         ].map(({ id, label }) => {
@@ -534,6 +536,160 @@ export function renderTicketingView(state) {
         </div>
       </div>
     </div>
+
+      <!-- Spark This Project tab -->
+      ${ticketingTab === "spark" ? (() => {
+        const sStyle = `width:100%; background:rgba(12,19,31,0.8); border:1px solid var(--border); border-radius:8px;
+          color:var(--text); font:inherit; font-size:12px; padding:8px 12px; outline:none; box-sizing:border-box; transition:border-color 0.15s;`;
+        const lStyle = `display:block; font-size:10px; font-weight:700; letter-spacing:0.07em;
+          text-transform:uppercase; color:var(--muted); margin-bottom:5px;`;
+        const fStyle = `margin-bottom:14px;`;
+
+        const forgeProjects = PROJECTS.filter((p) => (p.vaultStatus || "forge").toLowerCase() === "forge");
+
+        return `
+        <div style="display:grid; grid-template-columns:minmax(280px,400px) 1fr; gap:24px; align-items:start;">
+
+          <!-- ── Spark Form ── -->
+          <div>
+            <div class="panel">
+              <div class="panel-header">
+                <span class="panel-title">SPARK THIS PROJECT</span>
+                <span style="font-size:10px; color:var(--cyan); font-weight:700; padding:2px 8px;
+                  border-radius:10px; background:rgba(122,231,199,0.08); border:1px solid rgba(122,231,199,0.2);">
+                  FORGE → SPARKED
+                </span>
+              </div>
+              <div class="panel-body">
+                ${sparkSuccess ? `
+                  <div style="padding:12px; background:rgba(122,231,199,0.08); border:1px solid rgba(122,231,199,0.2);
+                               border-radius:8px; margin-bottom:16px;">
+                    <div style="font-size:12px; font-weight:700; color:var(--cyan); margin-bottom:4px;">
+                      Issue #${sparkSuccess.id} created ✓
+                    </div>
+                    <div style="font-size:11px; color:var(--muted);">
+                      Studio Owner approval required before agent executes.
+                      <a href="${sparkSuccess.url}" target="_blank"
+                         style="color:var(--cyan); text-decoration:none;">View issue →</a>
+                    </div>
+                  </div>
+                ` : ""}
+                ${sparkError ? `
+                  <div style="padding:10px 12px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25);
+                               border-radius:8px; margin-bottom:14px; font-size:11px; color:#f87171;">${sparkError}</div>
+                ` : ""}
+                <form id="spark-submit-form">
+                  <div style="${fStyle}">
+                    <label style="${lStyle}">Project (FORGE only) *</label>
+                    ${forgeProjects.length === 0
+                      ? `<div style="font-size:11px; color:var(--muted); padding:8px 0;">No FORGE projects found in Hub registry.</div>`
+                      : `<select id="spark-project-select" style="${sStyle}" required>
+                          <option value="">— Select a project —</option>
+                          ${forgeProjects.map((p) => `<option value="${p.id}" data-name="${p.name}">${p.name}</option>`).join("")}
+                        </select>`
+                    }
+                  </div>
+
+                  <div style="${fStyle}">
+                    <label style="${lStyle}">Context / Why now?</label>
+                    <textarea id="spark-context" rows="3" placeholder="Why is this project ready to go live? Any launch notes or dependencies…"
+                      style="${sStyle} resize:vertical; min-height:72px;"></textarea>
+                  </div>
+
+                  <div style="margin-bottom:16px;">
+                    <label style="${lStyle}">Pre-flight Checklist</label>
+                    <div style="display:flex; flex-direction:column; gap:10px; padding:12px;
+                                background:rgba(255,255,255,0.02); border-radius:8px; border:1px solid var(--border);">
+                      ${[
+                        ["spark-branding", "Branding implemented", "VaultSpark Studios credit visible (CANON-006)"],
+                        ["spark-staging",  "Staging environment live", "Subdomain or preview URL confirmed (CANON-007)"],
+                        ["spark-ci",       "CI workflows green", "All required checks passing"],
+                      ].map(([id, label, hint]) => `
+                        <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;">
+                          <input type="checkbox" id="${id}"
+                            style="margin-top:2px; accent-color:var(--cyan); flex-shrink:0;">
+                          <div>
+                            <div style="font-size:11px; font-weight:600; color:var(--text);">${label}</div>
+                            <div style="font-size:10px; color:var(--muted); margin-top:1px;">${hint}</div>
+                          </div>
+                        </label>
+                      `).join("")}
+                    </div>
+                  </div>
+
+                  <button type="submit" ${sparkSubmitting ? "disabled" : ""}
+                    style="width:100%; padding:10px; border-radius:8px; border:none; cursor:pointer;
+                           font-size:12px; font-weight:700; letter-spacing:0.05em;
+                           background:${sparkSubmitting ? "rgba(122,231,199,0.1)" : "rgba(122,231,199,0.12)"};
+                           color:${sparkSubmitting ? "var(--muted)" : "var(--cyan)"};
+                           border:1px solid rgba(122,231,199,0.25); transition:all 0.15s;">
+                    ${sparkSubmitting ? "Submitting…" : "Request SPARKED Transition →"}
+                  </button>
+                  <div style="margin-top:8px; font-size:10px; color:var(--muted); text-align:center; line-height:1.5;">
+                    Creates a GitHub issue in <code style="font-size:9px;">vaultspark-studio-ops</code> requiring Studio Owner approval.
+                    Pre-flight items are advisory — agent will verify before executing.
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── How it Works ── -->
+          <div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header"><span class="panel-title">WHAT IS SPARKED?</span></div>
+              <div class="panel-body" style="font-size:12px; color:var(--muted); line-height:1.7;">
+                <div style="margin-bottom:12px;">
+                  <span style="color:var(--cyan); font-weight:700;">SPARKED</span> is the VaultSpark brand status for a project
+                  that is <strong style="color:var(--text);">live in the world</strong> — deployed, in use, or generating traction.
+                  This transition triggers CANON-006 (branding) and CANON-007 (staging) requirements.
+                </div>
+                <div style="display:flex; gap:16px; margin-bottom:12px;">
+                  ${[
+                    ["FORGE", "#fb923c", "In development"],
+                    ["SPARKED", "#7ae7c7", "Live + active"],
+                    ["VAULTED", "#64748b", "Paused"],
+                  ].map(([label, color, desc]) => `
+                    <div style="flex:1; text-align:center; padding:8px; border-radius:8px;
+                                background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);">
+                      <div style="font-size:10px; font-weight:800; letter-spacing:0.08em; color:${color}; margin-bottom:2px;">${label}</div>
+                      <div style="font-size:10px; color:var(--muted);">${desc}</div>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header"><span class="panel-title">HOW IT WORKS</span></div>
+              <div class="panel-body" style="font-size:12px; color:var(--muted); line-height:1.7;">
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  ${[
+                    ["1","Submit",  "Form creates issue with project + pre-flight state"],
+                    ["2","Review",  "Studio Owner reviews and approves in GitHub"],
+                    ["3","Execute", "Agent updates both registries + verifies CANON compliance"],
+                    ["4","Verify",  "Surfaces regenerated, staging confirmed live"],
+                    ["5","Close",   "Issue closed; project shows SPARKED in Hub"],
+                  ].map(([n, lbl, desc]) => `
+                    <div style="display:flex; gap:10px; align-items:flex-start;">
+                      <div style="width:18px; height:18px; border-radius:50%;
+                                  background:rgba(122,231,199,0.12); border:1px solid rgba(122,231,199,0.25);
+                                  color:var(--cyan); font-size:10px; font-weight:800;
+                                  display:flex; align-items:center; justify-content:center; flex-shrink:0;">${n}</div>
+                      <div>
+                        <div style="font-size:11px; font-weight:700; color:var(--text); margin-bottom:1px;">${lbl}</div>
+                        <div style="font-size:11px; color:var(--muted);">${desc}</div>
+                      </div>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        `;
+      })() : ""}
 
       <!-- Initiate Project tab -->
       ${ticketingTab === "initiate" ? (() => {

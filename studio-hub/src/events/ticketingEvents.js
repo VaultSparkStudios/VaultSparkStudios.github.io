@@ -1,7 +1,7 @@
 // Ticketing view event handlers — extracted from clientApp.js
 
 export function bindTicketingEvents(ctx) {
-  const { state, render, config, loadStoredCredentials, submitProjectTicket, submitRenameTicket, submitInitiateTicket, loadTickets, navigate } = ctx;
+  const { state, render, config, loadStoredCredentials, submitProjectTicket, submitRenameTicket, submitInitiateTicket, submitSparkTicket, loadTickets, navigate } = ctx;
 
   // Refresh
   document.getElementById("tickets-refresh-btn")?.addEventListener("click", () => {
@@ -144,6 +144,46 @@ export function bindTicketingEvents(ctx) {
       document.getElementById("initiate-submit-form")?.reset();
     } else {
       state.initiateError = result.error;
+    }
+    render();
+  });
+
+  // Spark This Project form
+  document.getElementById("spark-submit-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const projectId   = document.getElementById("spark-project-select")?.value.trim();
+    const projectName = document.getElementById("spark-project-select")?.selectedOptions[0]?.dataset.name || projectId;
+    const branding    = document.getElementById("spark-branding")?.checked || false;
+    const staging     = document.getElementById("spark-staging")?.checked || false;
+    const ci          = document.getElementById("spark-ci")?.checked || false;
+    const context     = document.getElementById("spark-context")?.value.trim();
+
+    if (!projectId) {
+      state.sparkError = "Please select a project.";
+      state.sparkSuccess = null;
+      render();
+      return;
+    }
+
+    state.sparkSubmitting = true;
+    state.sparkError = null;
+    state.sparkSuccess = null;
+    render();
+
+    const credentials = loadStoredCredentials();
+    const token = config.githubToken || credentials.githubToken || "";
+    const result = await submitSparkTicket(
+      { projectId, projectName, brandingCompliant: branding, stagingConfirmed: staging, ciGreen: ci, context },
+      token
+    );
+
+    state.sparkSubmitting = false;
+    if (result.ok) {
+      state.sparkSuccess = { url: result.url, id: result.id };
+      state.sparkError = null;
+      document.getElementById("spark-submit-form")?.reset();
+    } else {
+      state.sparkError = result.error;
     }
     render();
   });
