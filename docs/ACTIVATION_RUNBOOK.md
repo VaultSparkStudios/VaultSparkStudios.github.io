@@ -28,9 +28,9 @@ Done when:
 ## 3. Web push / VAPID
 
 - Keys generated (2026-04-01). Public key is already set in `vault-member/portal-features.js` and `vault-member/portal.js`.
-- VAPID public key: `BDf9L_0jn0FsM8oNEhSUcypsRfnA6gIXK0Xqkpxbd3DdztD5ftO8JpExGYdFQveiBhlcRrZ6U-wdUsOwwXJAhPo`
+- VAPID public key: `BPqkVkO6mM4exqxJFYm6g-4DF883H1fNh9de7Pkc_s3V53EQ5isS6Hz85ZRjIG5FU1zjbXmdEJEHmJUiL6d8-bA`
 - **Human action required:** Set the following as Supabase Edge Function secrets (Dashboard → Edge Functions → send-push → Secrets):
-  - `VAPID_PUBLIC_KEY` — the public key above
+  - `VAPID_PUBLIC_KEY` — `BPqkVkO6mM4exqxJFYm6g-4DF883H1fNh9de7Pkc_s3V53EQ5isS6Hz85ZRjIG5FU1zjbXmdEJEHmJUiL6d8-bA`
   - `VAPID_PRIVATE_KEY` — see secure notes (generated 2026-04-01, do not commit)
   - `VAPID_SUBJECT` — `mailto:hello@vaultsparkstudios.com`
 - After secrets are set: `supabase functions deploy send-push`
