@@ -41,16 +41,42 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇▇█▇
-Avgs — 3: 46.3 | 5: 46.4 | 10: 44.6 | 25: 42.1 [N=29] | all: 41.7
-  └ 3-session: Dev 9.3 | Align 9.0 | Momentum 9.0 | Engage 9.0 | Process 10.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~0.9 sessions ⚠  |  Intent rate: 60% (last 5) ⚠ below 70%
-Last session: 2026-04-02 | Session 29 | Total: 46/50 | Velocity: 5 | protocolVelocity: 0
+Sparkline (last 5 totals): ▇▇█▇▆
+Avgs — 3: 45.0 | 5: 45.0 | 10: 44.4 | 25: 42.1 [N=30] | all: 41.6
+  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 7.7 | Engage 8.3 | Process 9.3
+Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~0.67 sessions ⚠  |  Intent rate: 60% (last 5) ⚠ below 70%
+Last session: 2026-04-02 | Session 30 | Total: 41/50 | Velocity: 2 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-04-02 — Session 30 | Total: 41/50 | Velocity: 2 | Debt: →
+Avgs — 3: 45.0 | 5: 45.0 | 10: 44.4 | 25: 42.1 [N=30] | all: 41.6
+  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 7.7 | Engage 8.3 | Process 9.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 8 | ↓ | Filter script rewritten as robust IIFE with null checks + DOMContentLoaded; type="button" best practice; Gridiron GM vaulted cleanly across 4 pages; no regressions |
+| Creative Alignment | 9 | → | Game catalog now accurately reflects actual game states; no misleading "Play Now" for an unavailable title; hero stats corrected |
+| Momentum | 7 | ↓ | Short ad-hoc session; 2 tasks; runway remains at 0.67 ⚠; no backlog items cleared |
+| Engagement | 8 | ↓ | Fixes visible UX friction (unresponsive-looking filter buttons, misleading Gridiron GM status) on the games catalog — direct user-facing quality improvement |
+| Process Quality | 9 | ↓ | Clean commit, full closeout; ad-hoc session with no formal intent but both reported issues resolved |
+| **Total** | **41/50** | ↓ | |
+
+**Top win:** Games catalog filter is now robust (IIFE, DOMContentLoaded guard, null checks, type="button", Vaulted filter tab) and Gridiron GM status is consistently "Vaulted" across all 4 key pages.
+**Top gap:** Momentum runway is critically low at ~0.67 sessions — agent-actionable Now items are minimal; human-action blockers (Supabase auth hardening, newsletter secrets) continue to gate the next wave.
+**Intent outcome:** Achieved — both user-reported issues (filter buttons, Gridiron GM status) resolved and deployed.
+
+**IGNIS note:** Ad-hoc content accuracy sessions have outsized UX trust impact — fixing misleading "Play Now" for a vaulted game and unresponsive filter buttons removed visible confusion for every visitor to the games catalog in under an hour.
+
+**Brainstorm**
+1. Filter button :focus-visible accessibility — add `:focus-visible` outline to `.filter-btn`/`.genre-btn` so keyboard users can navigate the games catalog; Implementation: 3-line CSS addition in games/index.html; Execution: High
+2. Vaulted section label in games catalog — add visual `<div class="games-section-label" data-section="vaulted">` between the grid sections to group vaulted games distinctly from live and in-development; Implementation: HTML + CSS tweak in games/index.html; Execution: High
+3. Game status sync script — when a game status changes, a script propagates the change (badge, CTA, section label, meta) across all pages so agents don't need to hunt 4+ files manually; Implementation: `context/GAME_STATUS.json` + `scripts/sync-game-status.mjs`; Execution: Medium
+
+**Committed to TASK_BOARD:** [SIL] Filter button :focus-visible accessibility · [SIL] Add vaulted section label in games catalog
 
 ## 2026-04-02 — Session 29 | Total: 46/50 | Velocity: 5 | protocolVelocity: 0 | Debt: →
 Avgs — 3: 46.3 | 5: 46.4 | 10: 44.6 | 25: 42.1 [N=29] | all: 41.7

@@ -2,6 +2,11 @@
 
 ## Now
 
+- [x] Fix games catalog filter buttons (type="button", DOMContentLoaded guard, null checks, IIFE) ✅ (session 30)
+- [x] Set Gridiron GM as Vaulted/Not Available on home page and all pages ✅ (session 30)
+- [SIL] Filter button :focus-visible accessibility — add `:focus-visible` outline to `.filter-btn` and `.genre-btn` in games/index.html for keyboard navigation compliance
+- [SIL] Add vaulted section label in games catalog — add visual `<div class="games-section-label" data-section="vaulted">` between beta and dev sections so vaulted games are clearly grouped
+
 - [x] Run pending SQL migrations: phase40-50 ✅ **ALL APPLIED** (2026-03-28 via db-migrate Action)
 - [x] Fix vault-score.js getLeaderboard() — rank titles now derive from points instead of querying a missing `vault_members(rank_title)` field
 - [x] [SIL] Authenticated axe-core portal tests — env-gated Playwright scans now cover dashboard, challenges, and onboarding modal

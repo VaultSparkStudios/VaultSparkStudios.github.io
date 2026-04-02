@@ -4,6 +4,17 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-04-02 — Session 30: Gridiron GM vaulted sitewide + games filter robustness
+
+- Goal: Fix games catalog filter buttons (unresponsive); set Gridiron GM as Vaulted/Not Available across all pages
+- What changed:
+  - `games/index.html`: filter script rewritten as IIFE with DOMContentLoaded guard, null checks, var-based; `type="button"` added to all filter/genre buttons; Vaulted filter tab added; hero stats corrected (1 Live / 1 Beta / 1 Vaulted / 4 In Development)
+  - `index.html`: Gridiron GM card → `status-stub` "Vaulted", "Currently vaulted — returning soon" copy, "Coming Back" meta tag, "Learn More" + "Get Early Access" buttons
+  - `gridiron-gm/index.html`: status-live → status-stub "Vaulted"; Play Now buttons → "Get Early Access"; info row status → "Vaulted — Returning Soon"; OG meta description updated
+  - `roadmap/index.html`: Gridiron GM stage-live "Live" → stage-concept "Vaulted"; Play Now → Learn More → /games/gridiron-gm/
+- Commit: 0bec70d pushed to main
+- Intent outcome: Achieved — both reported issues resolved
+
 ### 2026-04-02 — Session 29: Push test button, newsletter doc, response-header tests, legal fix, migration normalization
 
 - Goal: Complete all code-actionable items to restore momentum runway (was 0.25 sessions ⛔)

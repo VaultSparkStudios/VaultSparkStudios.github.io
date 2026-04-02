@@ -2,18 +2,18 @@
 
 Last updated: 2026-04-02
 
+Session Intent (2026-04-02 — Session 30): Fix games catalog filter buttons and set Gridiron GM as Vaulted/Not Available across all pages (ad-hoc, user-reported bugs).
+
 Session Intent (2026-04-02 — Session 29): Complete all code-actionable items to restore momentum runway — push test button, newsletter setup doc, response-header verification, legal copy audit, migration normalization.
 
-Session Intent (2026-04-01 — Session 28): Complete next moves — browser entitlement verification lane, Cloudflare DNS prep doc, GA4 form submit events, and any other high-value actionable items from the task board.
+## Where We Left Off (Session 30, 2026-04-02)
 
-## Where We Left Off (Session 29, 2026-04-02)
-
-- Shipped: 5 improvements across 4 groups — admin tooling (push test button), docs (newsletter setup, migration normalization), testing (response-header Playwright spec 6/6), legal (10 journal footer trademark fixes)
-- Tests: 88 passing (82 prior + 6 new response-header tests) · delta: +6
-- Deploy: pushed to main (commit d2e5944) — live on GitHub Pages
-- SIL score: 46/50
-- **Momentum runway: ~0.9 sessions ⚠ — improved from 0.25 but still below 2.0**
-- **Next immediate actions:** Supabase auth hardening (Auth → Settings: CAPTCHA + session timeout + email enumeration) + set RESEND_API_KEY + other newsletter secrets in Supabase Edge Function secrets (both are human actions)
+- Shipped: 2 improvements across 2 groups — UX fixes (games filter robustness, Gridiron GM vaulted status consistency sitewide)
+- Tests: 88 passing (unchanged) · delta: 0
+- Deploy: pushed to main (commit 0bec70d) — live on GitHub Pages
+- SIL score: 41/50
+- **Momentum runway: ~0.67 sessions ⚠ — still below 2.0; agent-actionable Now items = [SIL] filter focus styles + [SIL] vaulted section label**
+- **Next immediate actions (human):** Supabase auth hardening (CAPTCHA + session timeout + email enumeration) + set RESEND_API_KEY + newsletter secrets
 - **Intent rate: 60% (last 5) ⚠ — below 70% threshold**
 
 ## Human Action Required

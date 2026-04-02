@@ -284,3 +284,27 @@ Agents MUST NOT modify or remove existing entries.
 - Why it matters: This was the point where the repo-level workflow had to become a real working verification path instead of just documentation
 - Supersedes prior entry: —
 
+
+---
+
+### 2026-04-02 — Gridiron GM must show as Vaulted/Not Available everywhere
+
+- Category: Assignment + Direction
+- Human input: "ensure Gridiron-GM is set on the home page and all pages as currently Vaulted/Not Available"
+- Area affected: index.html, gridiron-gm/index.html, roadmap/index.html, games/index.html
+- Previous state: Gridiron GM was showing as "Playable" with "Play Now" button on the home page; "Live" with "Play Now →" on the roadmap; "Playable Now" / "Play Now — Free" / "Live & Playable" on the old redirect page; only the canonical games/gridiron-gm/ page was already correct
+- New required direction: All pages must show Gridiron GM as "Vaulted" (not "Playable"), with CTAs pointing to early access or learn more — never "Play Now" for an unavailable game
+- Why it matters: Showing a vaulted game as "Playable" with a "Play Now" button is misleading and damages trust; status accuracy is a brand integrity requirement
+- Supersedes prior entry: —
+
+---
+
+### 2026-04-02 — Games catalog filter buttons must be clickable and functional
+
+- Category: Assignment + Bug Fix Direction
+- Human input: "the game catalog filter buttons dont work (i cant click them)"
+- Area affected: games/index.html filter script and button markup
+- Previous state: Filter buttons lacked type="button" and the JS was a bare inline script without DOMContentLoaded guard or null checks; no Vaulted filter option existed for Gridiron GM's data-status="vaulted"
+- New required direction: Filter buttons must respond to clicks reliably; a Vaulted filter tab should exist so the Gridiron GM card is discoverable; filter logic should handle null featuredCard gracefully
+- Why it matters: Broken or unresponsive filter buttons are a high-friction UX failure on the games catalog page — if users can't filter, the catalog is just a wall of cards
+- Supersedes prior entry: —
