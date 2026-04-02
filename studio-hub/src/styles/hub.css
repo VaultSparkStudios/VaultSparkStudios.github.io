@@ -367,6 +367,83 @@ a { color: inherit; text-decoration: none; }
 .ci-badge.running { background: rgba(105, 179, 255, 0.15); color: var(--blue); }
 .ci-badge.unknown { background: rgba(149, 163, 183, 0.1); color: var(--muted); }
 
+/* ── Phase badges ──────────────────────────────────────────────────────────── */
+.phase-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 20px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+/* Pre-build */
+.phase-badge.concept         { background: rgba(148,163,184,0.12); color: #94a3b8; border: 1px solid rgba(148,163,184,0.2); }
+.phase-badge.design          { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.2); }
+.phase-badge.writing         { background: rgba(192,132,252,0.12); color: #c084fc; border: 1px solid rgba(192,132,252,0.2); }
+/* Development */
+.phase-badge.pre-dev         { background: rgba(105,179,255,0.10); color: #69b3ff; border: 1px solid rgba(105,179,255,0.18); }
+.phase-badge.backend-dev     { background: rgba(96,165,250,0.12);  color: #60a5fa; border: 1px solid rgba(96,165,250,0.2); }
+.phase-badge.frontend-dev    { background: rgba(56,189,248,0.12);  color: #38bdf8; border: 1px solid rgba(56,189,248,0.2); }
+.phase-badge.full-stack-dev  { background: rgba(34,211,238,0.12);  color: #22d3ee; border: 1px solid rgba(34,211,238,0.2); }
+.phase-badge.integration     { background: rgba(74,222,128,0.10);  color: #4ade80; border: 1px solid rgba(74,222,128,0.18); }
+/* QA */
+.phase-badge.alpha           { background: rgba(251,191,36,0.12);  color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+.phase-badge.testing         { background: rgba(255,200,116,0.12); color: #ffc874; border: 1px solid rgba(255,200,116,0.2); }
+/* Launch */
+.phase-badge.pre-launch      { background: rgba(232,121,249,0.12); color: #e879f9; border: 1px solid rgba(232,121,249,0.2); }
+.phase-badge.pre-publication { background: rgba(217,70,239,0.12);  color: #d946ef; border: 1px solid rgba(217,70,239,0.2); }
+/* Live */
+.phase-badge.live-internal   { background: rgba(106,227,178,0.10); color: #6ae3b2; border: 1px solid rgba(106,227,178,0.18); }
+.phase-badge.live-beta       { background: rgba(52,211,153,0.12);  color: #34d399; border: 1px solid rgba(52,211,153,0.2); }
+.phase-badge.live-production { background: rgba(16,185,129,0.15);  color: #10b981; border: 1px solid rgba(16,185,129,0.25); }
+.phase-badge.maintenance     { background: rgba(122,231,199,0.10); color: #7ae7c7; border: 1px solid rgba(122,231,199,0.18); }
+/* Inactive */
+.phase-badge.paused          { background: rgba(100,116,139,0.10); color: #64748b; border: 1px solid rgba(100,116,139,0.15); }
+.phase-badge.archived        { background: rgba(71,85,105,0.08);   color: #475569; border: 1px solid rgba(71,85,105,0.12); }
+
+/* Phase Tracker page chips */
+.phase-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px 6px 0;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+  min-width: 120px;
+  max-width: 200px;
+  user-select: none;
+}
+.phase-chip:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,255,255,0.12);
+}
+.phase-chip:focus {
+  outline: 1px solid var(--cyan);
+  outline-offset: 1px;
+}
+
+/* ── Vault Status badges (FORGE / SPARKED / VAULTED) ───────────────────────── */
+.vault-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 6px;
+  font-size: 9px;
+  font-weight: 800;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.vault-status-badge.forge   { background: rgba(251,146,60,0.12); color: #fb923c; border: 1px solid rgba(251,146,60,0.25); }
+.vault-status-badge.sparked { background: rgba(122,231,199,0.12); color: #7ae7c7; border: 1px solid rgba(122,231,199,0.25); }
+.vault-status-badge.vaulted { background: rgba(100,116,139,0.10); color: #64748b; border: 1px solid rgba(100,116,139,0.18); }
+
 .project-card-footer {
   margin-top: 14px;
   padding-top: 12px;

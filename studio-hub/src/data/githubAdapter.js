@@ -693,6 +693,185 @@ export async function submitProjectTicket(fields, token = "") {
   }
 }
 
+const RENAME_LABEL = "rename-rebrand";
+const INITIATE_LABEL = "project-initiation";
+
+// Submit a rename / rebrand request as a GitHub issue in studio-ops.
+// Returns { ok: true, url, id } on success or { ok: false, error } on failure.
+export async function submitRenameTicket(fields, token = "") {
+  if (!token) return { ok: false, error: "No GitHub token configured. Add one in Settings." };
+
+  const yamlBlock = [
+    "<!-- agent-rename-ticket",
+    `project_current_name: ${JSON.stringify(fields.currentName || "")}`,
+    `project_current_slug: ${JSON.stringify(fields.currentSlug || "")}`,
+    `project_proposed_name: ${JSON.stringify(fields.proposedName || "")}`,
+    `project_proposed_slug: ${JSON.stringify(fields.proposedSlug || "")}`,
+    `change_type: ${JSON.stringify(fields.changeType || "")}`,
+    `repo_changing: ${JSON.stringify(fields.repoChanging || "no")}`,
+    `new_repo: ${JSON.stringify(fields.newRepo || "")}`,
+    `reason: ${JSON.stringify(fields.reason || "")}`,
+    `submitted_by: ${JSON.stringify(fields.agentSubmitted ? "agent" : "human")}`,
+    `submitted_at: ${JSON.stringify(new Date().toISOString())}`,
+    "-->",
+  ].join("\n");
+
+  const changeTypeLabel = {
+    rename:  "Rename only",
+    rebrand: "Rebrand only",
+    both:    "Full rename + rebrand",
+    repo:    "Repo URL change only",
+  }[fields.changeType] || fields.changeType;
+
+  const body = [
+    yamlBlock,
+    "",
+    "## Rename / Rebrand Request",
+    "",
+    `**Current Name:** ${fields.currentName || "—"}`,
+    `**Current Slug:** \`${fields.currentSlug || "—"}\``,
+    `**Proposed Name:** ${fields.proposedName || "—"}`,
+    `**Proposed Slug:** \`${fields.proposedSlug || fields.proposedName?.toLowerCase().replace(/\s+/g, "-") || "—"}\``,
+    `**Change Type:** ${changeTypeLabel}`,
+    `**Repo URL Changing:** ${fields.repoChanging === "yes" ? `Yes → \`${fields.newRepo || "TBD"}\`` : "No"}`,
+    "",
+    "### Reason",
+    fields.reason || "—",
+    "",
+    "---",
+    "",
+    "### Execution Checklist",
+    "See `docs/RENAME_PROTOCOL.md` for full instructions.",
+    "",
+    "- [ ] `portfolio/PROJECT_REGISTRY.json` — name, slug, formerName",
+    "- [ ] `src/data/studioRegistry.js` — Hub registry",
+    "- [ ] `context/PROJECT_STATUS.json` — project status file",
+    "- [ ] `context/PROJECT_BRIEF.md` — project brief",
+    "- [ ] `context/PORTFOLIO_CARD.md` — portfolio card",
+    "- [ ] `context/LATEST_HANDOFF.md` — add rename note",
+    "- [ ] `AGENTS.md` / `CLAUDE.md` — name/path refs",
+    "- [ ] Generated portfolio surfaces — run `node scripts/render-all-surfaces.mjs`",
+    "- [ ] `context/DECISIONS.md` — append rename entry",
+    "- [ ] `docs/CREATIVE_DIRECTION_RECORD.md` — append CDR entry",
+    fields.repoChanging === "yes" ? "- [ ] GitHub repo rename + CI verification" : "",
+    "- [ ] Close this issue with summary comment",
+    "",
+    "---",
+    fields.agentSubmitted
+      ? "*Submitted via project agent · VaultSpark Agent-to-Agent Pipeline*"
+      : "*Submitted via VaultSpark Studio Hub · Ticketing → Rename / Rebrand*",
+  ].filter((l) => l !== "").join("\n");
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${STUDIO_OPS_REPO}/issues`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: `[Rename / Rebrand] ${fields.currentName || "Unknown"} → ${fields.proposedName || "Unknown"}`,
+        body,
+        labels: [RENAME_LABEL],
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      return { ok: false, error: err.message || `GitHub error ${res.status}` };
+    }
+    const data = await res.json();
+    return { ok: true, url: data.html_url, id: data.number };
+  } catch (e) {
+    return { ok: false, error: e?.message || "Network error" };
+  }
+}
+
+// Submit a new project initiation request as a PRIVATE GitHub issue in studio-ops.
+// All new projects begin private — no public visibility until Studio Owner approves.
+// Returns { ok: true, url, id } on success or { ok: false, error } on failure.
+export async function submitInitiateTicket(fields, token = "") {
+  if (!token) return { ok: false, error: "No GitHub token configured. Add one in Settings." };
+
+  const yamlBlock = [
+    "<!-- agent-initiate-ticket",
+    `codename: ${JSON.stringify(fields.codename || "")}`,
+    `type: ${JSON.stringify(fields.type || "")}`,
+    `vault_status: ${JSON.stringify(fields.vaultStatus || "forge")}`,
+    `brief: ${JSON.stringify(fields.brief || "")}`,
+    `soul: ${JSON.stringify(fields.soul || "")}`,
+    `priority: ${JSON.stringify(fields.priority || "medium")}`,
+    `visibility: "private"`,
+    `submitted_by: ${JSON.stringify(fields.agentSubmitted ? "agent" : "human")}`,
+    `submitted_at: ${JSON.stringify(new Date().toISOString())}`,
+    "-->",
+  ].join("\n");
+
+  const body = [
+    yamlBlock,
+    "",
+    "> **PRIVATE** — Do not share project details outside Studio Ops until Studio Owner explicitly approves public visibility.",
+    "",
+    "## New Project Initiation",
+    "",
+    `**Codename / Working Title:** ${fields.codename || "—"}`,
+    `**Type:** ${fields.type || "—"}`,
+    `**Vault Status:** ${(fields.vaultStatus || "forge").toUpperCase()}`,
+    `**Priority:** ${fields.priority || "Medium"}`,
+    "",
+    "### Brief",
+    fields.brief || "—",
+    "",
+    "### Soul / Vision",
+    fields.soul || "—",
+    "",
+    "---",
+    "",
+    "### Studio OS Initiation Checklist",
+    "Execute in order once Studio Owner approves this issue.",
+    "",
+    "- [ ] Create private GitHub repo under VaultSparkStudios",
+    "- [ ] Apply Studio OS template files (AGENTS.md, context/, prompts/)",
+    "- [ ] Add to `portfolio/PROJECT_REGISTRY.json` (private flag set)",
+    "- [ ] Add to `src/data/studioRegistry.js` in Hub registry",
+    "- [ ] Create `context/PROJECT_BRIEF.md` with confirmed brief",
+    "- [ ] Create `context/SOUL.md` with soul / vision",
+    "- [ ] Add to `context/DECISIONS.md` — initiation entry",
+    "- [ ] Run first `start` session in new project repo",
+    "- [ ] Set `brandingRequired` and `brandingCompliant` in registry when applicable",
+    "- [ ] Close this issue when project is registered and first session complete",
+    "",
+    "---",
+    fields.agentSubmitted
+      ? "*Submitted via project agent · VaultSpark Agent-to-Agent Pipeline*"
+      : "*Submitted via VaultSpark Studio Hub · Ticketing → Initiate Project*",
+  ].filter((l) => l !== "").join("\n");
+
+  try {
+    const res = await fetch(`https://api.github.com/repos/${STUDIO_OPS_REPO}/issues`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github+json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: `[Initiate] ${fields.codename || "New Project"} — ${(fields.type || "unknown").toUpperCase()}`,
+        body,
+        labels: [INITIATE_LABEL],
+      }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      return { ok: false, error: err.message || `GitHub error ${res.status}` };
+    }
+    const data = await res.json();
+    return { ok: true, url: data.html_url, id: data.number };
+  } catch (e) {
+    return { ok: false, error: e?.message || "Network error" };
+  }
+}
+
 // Fetches decoded content for key portfolio files from studio-ops.
 // Returns { [filePath]: { content: string, truncated: boolean } }.
 const PORTFOLIO_CONTENT_FILES = [

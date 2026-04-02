@@ -1,7 +1,7 @@
 // Ticketing view event handlers — extracted from clientApp.js
 
 export function bindTicketingEvents(ctx) {
-  const { state, render, config, loadStoredCredentials, submitProjectTicket, loadTickets, navigate } = ctx;
+  const { state, render, config, loadStoredCredentials, submitProjectTicket, submitRenameTicket, submitInitiateTicket, loadTickets, navigate } = ctx;
 
   // Refresh
   document.getElementById("tickets-refresh-btn")?.addEventListener("click", () => {
@@ -65,6 +65,85 @@ export function bindTicketingEvents(ctx) {
       loadTickets();
     } else {
       state.ticketError = result.error;
+    }
+    render();
+  });
+
+  // Rename / Rebrand form
+  document.getElementById("rename-submit-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const currentName  = document.getElementById("rename-current-name")?.value.trim();
+    const currentSlug  = document.getElementById("rename-current-slug")?.value.trim();
+    const proposedName = document.getElementById("rename-proposed-name")?.value.trim();
+    const proposedSlug = document.getElementById("rename-proposed-slug")?.value.trim();
+    const changeType   = document.getElementById("rename-change-type")?.value;
+    const repoChanging = document.getElementById("rename-repo-changing")?.value;
+    const newRepo      = document.getElementById("rename-new-repo")?.value.trim();
+    const reason       = document.getElementById("rename-reason")?.value.trim();
+
+    if (!currentName || !proposedName || !changeType || !reason) {
+      state.renameError = "Please fill in all required fields.";
+      state.renameSuccess = null;
+      render();
+      return;
+    }
+
+    state.renameSubmitting = true;
+    state.renameError = null;
+    state.renameSuccess = null;
+    render();
+
+    const credentials = loadStoredCredentials();
+    const token = config.githubToken || credentials.githubToken || "";
+    const result = await submitRenameTicket(
+      { currentName, currentSlug, proposedName, proposedSlug, changeType, repoChanging, newRepo, reason },
+      token
+    );
+
+    state.renameSubmitting = false;
+    if (result.ok) {
+      state.renameSuccess = { url: result.url, id: result.id };
+      state.renameError = null;
+      document.getElementById("rename-submit-form")?.reset();
+    } else {
+      state.renameError = result.error;
+    }
+    render();
+  });
+
+  // Initiate Project form
+  document.getElementById("initiate-submit-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const codename    = document.getElementById("initiate-codename")?.value.trim();
+    const type        = document.getElementById("initiate-type")?.value;
+    const vaultStatus = document.getElementById("initiate-vault-status")?.value || "forge";
+    const priority    = document.getElementById("initiate-priority")?.value || "medium";
+    const brief       = document.getElementById("initiate-brief")?.value.trim();
+    const soul        = document.getElementById("initiate-soul")?.value.trim();
+
+    if (!codename || !type || !brief) {
+      state.initiateError = "Please fill in all required fields (codename, type, brief).";
+      state.initiateSuccess = null;
+      render();
+      return;
+    }
+
+    state.initiateSubmitting = true;
+    state.initiateError = null;
+    state.initiateSuccess = null;
+    render();
+
+    const credentials = loadStoredCredentials();
+    const token = config.githubToken || credentials.githubToken || "";
+    const result = await submitInitiateTicket({ codename, type, vaultStatus, priority, brief, soul }, token);
+
+    state.initiateSubmitting = false;
+    if (result.ok) {
+      state.initiateSuccess = { url: result.url, id: result.id };
+      state.initiateError = null;
+      document.getElementById("initiate-submit-form")?.reset();
+    } else {
+      state.initiateError = result.error;
     }
     render();
   });

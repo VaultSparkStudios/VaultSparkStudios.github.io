@@ -1,6 +1,13 @@
 import { PROJECTS } from "../data/studioRegistry.js";
 import { timeAgo, escapeHtml } from "../utils/helpers.js";
 
+const CHANGE_TYPES = [
+  { value: "rename",  label: "Rename only — name/slug changes, same identity" },
+  { value: "rebrand", label: "Rebrand only — new identity, same slug" },
+  { value: "both",    label: "Full rename + rebrand — new name, slug, and identity" },
+  { value: "repo",    label: "Repo URL change only — no brand change" },
+];
+
 const STATUSES = [
   { value: "in-development",      label: "In Development" },
   { value: "playable-prototype",  label: "Playable Prototype" },
@@ -282,7 +289,12 @@ function renderTicketCard(ticket) {
 }
 
 export function renderTicketingView(state) {
-  const { tickets = [], ticketsLoading = false, ticketSubmitting = false, ticketSuccess = null, ticketError = null } = state;
+  const {
+    tickets = [], ticketsLoading = false, ticketSubmitting = false, ticketSuccess = null, ticketError = null,
+    ticketingTab = "listing",
+    renameSubmitting = false, renameSuccess = null, renameError = null,
+    initiateSubmitting = false, initiateSuccess = null, initiateError = null,
+  } = state;
 
   const openTickets   = tickets.filter((t) => t.state === "open");
   const closedTickets = tickets.filter((t) => t.state === "closed");
@@ -312,7 +324,25 @@ export function renderTicketingView(state) {
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns:minmax(280px,380px) 1fr; gap:24px; align-items:start;
+      <!-- Tab bar -->
+      <div style="display:flex; gap:4px; margin-bottom:24px; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:0;">
+        ${[
+          { id: "listing",  label: "Project Listing" },
+          { id: "rename",   label: "Rename / Rebrand" },
+          { id: "initiate", label: "Initiate Project" },
+        ].map(({ id, label }) => {
+          const active = ticketingTab === id;
+          return `<button data-ticketing-tab="${id}" style="
+            padding:8px 16px; font-size:12px; font-weight:${active ? "700" : "500"};
+            color:${active ? "var(--cyan)" : "var(--muted)"};
+            background:none; border:none; border-bottom:2px solid ${active ? "var(--cyan)" : "transparent"};
+            cursor:pointer; transition:all 0.12s; margin-bottom:-1px; white-space:nowrap;
+          ">${label}</button>`;
+        }).join("")}
+      </div>
+
+      <!-- Listing tab -->
+      <div style="display:${ticketingTab === "listing" ? "grid" : "none"}; grid-template-columns:minmax(280px,380px) 1fr; gap:24px; align-items:start;
                   @media(max-width:700px){grid-template-columns:1fr;}">
 
         <!-- ── Submission Form ── -->
@@ -504,5 +534,366 @@ export function renderTicketingView(state) {
         </div>
       </div>
     </div>
+
+      <!-- Initiate Project tab -->
+      ${ticketingTab === "initiate" ? (() => {
+        const iStyle = `width:100%; background:rgba(12,19,31,0.8); border:1px solid var(--border); border-radius:8px;
+          color:var(--text); font:inherit; font-size:12px; padding:8px 12px; outline:none; box-sizing:border-box; transition:border-color 0.15s;`;
+        const lStyle = `display:block; font-size:10px; font-weight:700; letter-spacing:0.07em;
+          text-transform:uppercase; color:var(--muted); margin-bottom:5px;`;
+        const fStyle = `margin-bottom:14px;`;
+
+        return `
+        <div style="display:grid; grid-template-columns:minmax(280px,400px) 1fr; gap:24px; align-items:start;">
+
+          <!-- Form -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">INITIATE NEW PROJECT</span>
+              <span style="font-size:9px; font-weight:700; padding:1px 6px; border-radius:8px;
+                background:rgba(248,113,113,0.12); color:var(--red); border:1px solid rgba(248,113,113,0.25);
+                letter-spacing:0.06em;">PRIVATE</span>
+            </div>
+            <div class="panel-body">
+              <div style="font-size:11px; color:var(--muted); margin-bottom:16px; line-height:1.5;
+                           background:rgba(248,113,113,0.06); border:1px solid rgba(248,113,113,0.15);
+                           border-radius:6px; padding:10px 12px;">
+                All new projects start <strong style="color:var(--text);">private</strong>.
+                No public info is shared until the Studio Owner explicitly approves visibility.
+                This creates a tracked issue in <code style="font-size:10px;">vaultspark-studio-ops</code> only.
+              </div>
+
+              ${initiateSuccess ? `
+                <div style="background:rgba(110,231,183,0.1); border:1px solid rgba(110,231,183,0.3);
+                            border-radius:8px; padding:14px 16px; margin-bottom:16px;">
+                  <div style="font-size:13px; font-weight:700; color:var(--green); margin-bottom:4px;">Initiation request submitted!</div>
+                  <div style="font-size:12px; color:var(--muted); margin-bottom:10px;">
+                    Issue #${initiateSuccess.id} created in <code style="font-size:11px;">vaultspark-studio-ops</code>.
+                    Project stays private until Studio Owner approves.
+                  </div>
+                  <a href="${initiateSuccess.url}" target="_blank" rel="noopener"
+                     style="font-size:12px; color:var(--cyan); text-decoration:none;">View on GitHub →</a>
+                </div>
+              ` : ""}
+              ${initiateError ? `
+                <div style="background:rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.3);
+                            border-radius:8px; padding:12px 14px; margin-bottom:16px;">
+                  <div style="font-size:12px; color:var(--red);">${escapeHtml(initiateError)}</div>
+                </div>
+              ` : ""}
+
+              <form id="initiate-submit-form" onsubmit="return false;">
+                <div style="${fStyle}">
+                  <label style="${lStyle}">Codename / Working Title *</label>
+                  <input id="initiate-codename" type="text" required placeholder="e.g. Project Nova"
+                    style="${iStyle}" />
+                  <div style="font-size:10px; color:var(--muted); margin-top:3px;">Internal name only — not public until approved</div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+                  <div>
+                    <label style="${lStyle}">Project Type *</label>
+                    <select id="initiate-type" style="${iStyle} cursor:pointer;">
+                      <option value="">— Select type —</option>
+                      ${[
+                        { value: "game",           label: "Game" },
+                        { value: "tool",           label: "Tool" },
+                        { value: "platform",       label: "Platform / App" },
+                        { value: "infrastructure", label: "Infrastructure" },
+                      ].map((t) => `<option value="${t.value}">${t.label}</option>`).join("")}
+                    </select>
+                  </div>
+                  <div>
+                    <label style="${lStyle}">Priority</label>
+                    <select id="initiate-priority" style="${iStyle} cursor:pointer;">
+                      <option value="low">Low</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="high">High</option>
+                      <option value="critical">Critical</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div style="${fStyle}">
+                  <label style="${lStyle}">Vault Status</label>
+                  <select id="initiate-vault-status" style="${iStyle} cursor:pointer;">
+                    <option value="forge" selected>FORGE — in development</option>
+                    <option value="sparked">SPARKED — live / active</option>
+                    <option value="vaulted">VAULTED — paused / shelved</option>
+                  </select>
+                </div>
+
+                <div style="${fStyle}">
+                  <label style="${lStyle}">Brief *</label>
+                  <textarea id="initiate-brief" rows="3" required
+                    placeholder="What is this project? What problem does it solve?"
+                    style="${iStyle} resize:vertical; min-height:72px;"></textarea>
+                </div>
+
+                <div style="${fStyle}">
+                  <label style="${lStyle}">Soul / Vision</label>
+                  <textarea id="initiate-soul" rows="4"
+                    placeholder="What is the core feeling, identity, or long-term vision? (optional — can be defined in first session)"
+                    style="${iStyle} resize:vertical; min-height:88px;"></textarea>
+                </div>
+
+                <button id="initiate-submit-btn" type="submit"
+                  style="width:100%; padding:10px; font-size:13px; font-weight:700;
+                         background:rgba(251,146,60,0.1); border:1px solid rgba(251,146,60,0.3);
+                         border-radius:8px; color:#fb923c; cursor:pointer; transition:all 0.15s;
+                         ${initiateSubmitting ? "opacity:0.6; pointer-events:none;" : ""}"
+                  ${initiateSubmitting ? "disabled" : ""}>
+                  ${initiateSubmitting ? "Initiating…" : "Initiate Project →"}
+                </button>
+
+                <div style="font-size:10px; color:var(--muted); margin-top:10px; line-height:1.5;">
+                  Creates a <strong>private</strong> GitHub issue in <code style="font-size:9px;">vaultspark-studio-ops</code>
+                  with label <code style="font-size:9px;">project-initiation</code>.
+                  Requires a token with <code style="font-size:9px;">repo</code> scope.
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Protocol overview -->
+          <div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header"><span class="panel-title">HOW IT WORKS</span></div>
+              <div class="panel-body" style="font-size:12px; color:var(--muted); line-height:1.7;">
+                <div style="margin-bottom:12px;">
+                  All new projects begin in the <strong style="color:#fb923c;">FORGE</strong> — private, tracked,
+                  and under Studio OS protocol from day one.
+                  No public presence until the Studio Owner flips the switch.
+                </div>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  ${[
+                    ["1", "Submit",    "Form creates private issue in studio-ops with brief + soul"],
+                    ["2", "Approve",   "Studio Owner reviews and labels as approved in GitHub"],
+                    ["3", "Bootstrap", "Agent creates private repo + applies Studio OS template files"],
+                    ["4", "Register",  "Added to PROJECT_REGISTRY.json and studioRegistry.js"],
+                    ["5", "First Run", "Run start in new repo — project enters the protocol"],
+                    ["6", "Go Live",   "Studio Owner approves public visibility when ready"],
+                  ].map(([n, lbl, desc]) => `
+                    <div style="display:flex; gap:10px; align-items:flex-start;">
+                      <div style="width:18px; height:18px; border-radius:50%;
+                                  background:rgba(251,146,60,0.15); border:1px solid rgba(251,146,60,0.3);
+                                  color:#fb923c; font-size:10px; font-weight:800;
+                                  display:flex; align-items:center; justify-content:center; flex-shrink:0;">${n}</div>
+                      <div>
+                        <div style="font-size:11px; font-weight:700; color:var(--text); margin-bottom:1px;">${lbl}</div>
+                        <div style="font-size:11px; color:var(--muted);">${desc}</div>
+                      </div>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header"><span class="panel-title">PRIVACY PROTOCOL</span></div>
+              <div class="panel-body" style="font-size:11px; color:var(--muted); line-height:1.7;">
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                  ${[
+                    "GitHub repo created as <strong style='color:var(--text);'>private</strong>",
+                    "Issue created in studio-ops only (not public hub)",
+                    "Not added to public studioRegistry until approved",
+                    "No deployedUrl, no branding, no external links",
+                    "Studio Owner controls visibility flag in PROJECT_REGISTRY.json",
+                    "Branding protocol (CANON-006) applies only after public approval",
+                  ].map((item) => `
+                    <div style="display:flex; align-items:flex-start; gap:8px;">
+                      <span style="color:#fb923c; font-weight:800; flex-shrink:0;">·</span>
+                      <span>${item}</span>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        `;
+      })() : ""}
+
+      <!-- Rename / Rebrand tab -->
+      ${ticketingTab === "rename" ? (() => {
+        const iStyle = `width:100%; background:rgba(12,19,31,0.8); border:1px solid var(--border); border-radius:8px;
+          color:var(--text); font:inherit; font-size:12px; padding:8px 12px; outline:none; box-sizing:border-box; transition:border-color 0.15s;`;
+        const lStyle = `display:block; font-size:10px; font-weight:700; letter-spacing:0.07em;
+          text-transform:uppercase; color:var(--muted); margin-bottom:5px;`;
+        const fStyle = `margin-bottom:14px;`;
+
+        return `
+        <div style="display:grid; grid-template-columns:minmax(280px,400px) 1fr; gap:24px; align-items:start;">
+
+          <!-- Form -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">RENAME / REBRAND REQUEST</span>
+            </div>
+            <div class="panel-body">
+              ${renameSuccess ? `
+                <div style="background:rgba(110,231,183,0.1); border:1px solid rgba(110,231,183,0.3);
+                            border-radius:8px; padding:14px 16px; margin-bottom:16px;">
+                  <div style="font-size:13px; font-weight:700; color:var(--green); margin-bottom:4px;">Request submitted!</div>
+                  <div style="font-size:12px; color:var(--muted); margin-bottom:10px;">
+                    Issue #${renameSuccess.id} created in <code style="font-size:11px;">vaultspark-studio-ops</code>.
+                    The Studio Owner will review and approve before execution begins.
+                  </div>
+                  <a href="${renameSuccess.url}" target="_blank" rel="noopener"
+                     style="font-size:12px; color:var(--cyan); text-decoration:none;">View on GitHub →</a>
+                </div>
+              ` : ""}
+              ${renameError ? `
+                <div style="background:rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.3);
+                            border-radius:8px; padding:12px 14px; margin-bottom:16px;">
+                  <div style="font-size:12px; color:var(--red);">${escapeHtml(renameError)}</div>
+                </div>
+              ` : ""}
+
+              <form id="rename-submit-form" onsubmit="return false;">
+                <div style="${fStyle}">
+                  <label style="${lStyle}">Change Type *</label>
+                  <select id="rename-change-type" style="${iStyle} cursor:pointer;">
+                    <option value="">— Select change type —</option>
+                    ${CHANGE_TYPES.map((t) => `<option value="${t.value}">${t.label}</option>`).join("")}
+                  </select>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+                  <div>
+                    <label style="${lStyle}">Current Name *</label>
+                    <input id="rename-current-name" type="text" required placeholder="e.g. StatsForge"
+                      style="${iStyle}" />
+                  </div>
+                  <div>
+                    <label style="${lStyle}">Current Slug</label>
+                    <input id="rename-current-slug" type="text" placeholder="e.g. statsforge"
+                      style="${iStyle}" />
+                  </div>
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:14px;">
+                  <div>
+                    <label style="${lStyle}">Proposed New Name *</label>
+                    <input id="rename-proposed-name" type="text" required placeholder="e.g. StatVault"
+                      style="${iStyle}" />
+                  </div>
+                  <div>
+                    <label style="${lStyle}">New Slug (optional)</label>
+                    <input id="rename-proposed-slug" type="text" placeholder="e.g. statvault"
+                      style="${iStyle}" />
+                    <div style="font-size:10px; color:var(--muted); margin-top:3px;">Auto-derived if blank</div>
+                  </div>
+                </div>
+
+                <div style="${fStyle}">
+                  <label style="${lStyle}">GitHub Repo URL Changing?</label>
+                  <select id="rename-repo-changing" style="${iStyle} cursor:pointer;">
+                    <option value="no">No — same repo URL</option>
+                    <option value="yes">Yes — repo will be renamed on GitHub</option>
+                  </select>
+                </div>
+
+                <div style="${fStyle}">
+                  <label style="${lStyle}">New Repo URL (if changing)</label>
+                  <input id="rename-new-repo" type="text" placeholder="VaultSparkStudios/new-repo-name"
+                    style="${iStyle}" />
+                  <div style="font-size:10px; color:var(--muted); margin-top:3px;">Format: org/repo — leave blank if not changing</div>
+                </div>
+
+                <div style="${fStyle}">
+                  <label style="${lStyle}">Reason *</label>
+                  <textarea id="rename-reason" rows="4" required
+                    placeholder="Why is this rename or rebrand happening? This goes into DECISIONS.md…"
+                    style="${iStyle} resize:vertical; min-height:88px;"></textarea>
+                </div>
+
+                <button id="rename-submit-btn" type="submit"
+                  style="width:100%; padding:10px; font-size:13px; font-weight:700;
+                         background:rgba(167,139,250,0.1); border:1px solid rgba(167,139,250,0.3);
+                         border-radius:8px; color:#a78bfa; cursor:pointer; transition:all 0.15s;
+                         ${renameSubmitting ? "opacity:0.6; pointer-events:none;" : ""}"
+                  ${renameSubmitting ? "disabled" : ""}>
+                  ${renameSubmitting ? "Submitting…" : "Submit Rename Request →"}
+                </button>
+
+                <div style="font-size:10px; color:var(--muted); margin-top:10px; line-height:1.5;">
+                  Creates a GitHub issue in <code style="font-size:9px;">vaultspark-studio-ops</code>
+                  with label <code style="font-size:9px;">rename-rebrand</code>.
+                  Requires a token with <code style="font-size:9px;">repo</code> scope.
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Protocol overview -->
+          <div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header"><span class="panel-title">HOW IT WORKS</span></div>
+              <div class="panel-body" style="font-size:12px; color:var(--muted); line-height:1.7;">
+                <div style="margin-bottom:12px;">
+                  Submitting this form creates a <strong style="color:var(--text);">tracked GitHub issue</strong>
+                  in <code style="font-size:11px;">vaultspark-studio-ops</code> with a full execution checklist.
+                  No changes are made until the Studio Owner approves.
+                </div>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  ${[
+                    ["1","Submit",  "Form creates issue with rename details + checklist"],
+                    ["2","Review",  "Studio Owner reviews and approves in GitHub"],
+                    ["3","Execute", "Agent runs through all 12 checklist items in order"],
+                    ["4","Verify",  "Generated surfaces regenerated, CI confirmed green"],
+                    ["5","Close",   "Issue closed with summary comment + commit SHAs"],
+                  ].map(([n, lbl, desc]) => `
+                    <div style="display:flex; gap:10px; align-items:flex-start;">
+                      <div style="width:18px; height:18px; border-radius:50%;
+                                  background:rgba(167,139,250,0.15); border:1px solid rgba(167,139,250,0.3);
+                                  color:#a78bfa; font-size:10px; font-weight:800;
+                                  display:flex; align-items:center; justify-content:center; flex-shrink:0;">${n}</div>
+                      <div>
+                        <div style="font-size:11px; font-weight:700; color:var(--text); margin-bottom:1px;">${lbl}</div>
+                        <div style="font-size:11px; color:var(--muted);">${desc}</div>
+                      </div>
+                    </div>
+                  `).join("")}
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header"><span class="panel-title">12-SURFACE CHECKLIST</span></div>
+              <div class="panel-body" style="padding:8px 0 4px;">
+                ${[
+                  "portfolio/PROJECT_REGISTRY.json",
+                  "src/data/studioRegistry.js (Hub)",
+                  "context/PROJECT_STATUS.json",
+                  "context/PROJECT_BRIEF.md",
+                  "context/PORTFOLIO_CARD.md",
+                  "context/LATEST_HANDOFF.md",
+                  "AGENTS.md + CLAUDE.md",
+                  "Generated portfolio surfaces",
+                  "context/DECISIONS.md",
+                  "docs/CREATIVE_DIRECTION_RECORD.md",
+                  "GitHub repo rename (if applicable)",
+                  "CI verification",
+                ].map((item, i) => `
+                  <div style="display:flex; align-items:center; gap:10px; padding:7px 16px;
+                              border-bottom:1px solid rgba(255,255,255,0.03); font-size:11px;">
+                    <span style="font-size:10px; font-weight:700; color:rgba(167,139,250,0.5); min-width:16px; text-align:right;">${i + 1}</span>
+                    <code style="color:var(--muted); font-size:11px;">${item}</code>
+                  </div>
+                `).join("")}
+                <div style="padding:10px 16px; font-size:10px; color:var(--muted);">
+                  Full protocol: <code style="font-size:10px;">docs/RENAME_PROTOCOL.md</code>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        `;
+      })() : ""}
+
+  </div>
   `;
 }

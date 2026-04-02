@@ -15,6 +15,8 @@ export const PROJECTS = [
     type: "game",
     status: "playable-prototype",
     statusLabel: "Playable Prototype",
+    developmentPhase: "pre-launch",
+    vaultStatus: "forge",
     description: "Multiplayer shooter parody game.",
     githubRepo: "VaultSparkStudios/call-of-doodie",
     supabaseGameSlug: "call-of-doodie",
@@ -29,7 +31,9 @@ export const PROJECTS = [
     type: "game",
     status: "in-development",
     statusLabel: "In Development",
-    description: "Football general manager simulation game.",
+    developmentPhase: "paused",
+    vaultStatus: "vaulted",
+    description: "Football general manager simulation game. Vaulted due to unresolved bugs.",
     githubRepo: "VaultSparkStudios/Gridiron-GM",
     supabaseGameSlug: "gridiron-gm",
     deployedUrl: null,
@@ -43,6 +47,8 @@ export const PROJECTS = [
     type: "game",
     status: "client-beta",
     statusLabel: "Client Beta",
+    developmentPhase: "live-beta",
+    vaultStatus: "sparked",
     description: "Deep football GM simulation with advanced analytics.",
     githubRepo: "VaultSparkStudios/vaultspark-football-gm",
     supabaseGameSlug: "football-gm",
@@ -57,6 +63,8 @@ export const PROJECTS = [
     type: "game",
     status: "in-development",
     statusLabel: "In Development",
+    developmentPhase: "full-stack-dev",
+    vaultStatus: "forge",
     description: "Open-world survival game set in a desert environment.",
     githubRepo: "VaultSparkStudios/solara",
     supabaseGameSlug: "solara",
@@ -71,6 +79,8 @@ export const PROJECTS = [
     type: "game",
     status: "in-development",
     statusLabel: "In Development",
+    developmentPhase: "design",
+    vaultStatus: "forge",
     description: "Strategy game forked from OpenFrontIO.",
     // NOTE: This is the VaultSparkStudios fork repo, NOT upstream OpenFrontIO.
     githubRepo: "VaultSparkStudios/VaultFront",
@@ -86,6 +96,8 @@ export const PROJECTS = [
     type: "game",
     status: "in-development",
     statusLabel: "In Development",
+    developmentPhase: "concept",
+    vaultStatus: "forge",
     description: "Crafting and building game in the VaultSpark universe.",
     githubRepo: "VaultSparkStudios/VaultSpark-Forge",
     supabaseGameSlug: "vaultspark-forge",
@@ -100,6 +112,8 @@ export const PROJECTS = [
     type: "game",
     status: "in-development",
     statusLabel: "In Development",
+    developmentPhase: "design",
+    vaultStatus: "forge",
     description: "Narrative survival game about escaping a dying world.",
     githubRepo: "VaultSparkStudios/The-Exodus",
     supabaseGameSlug: "the-exodus",
@@ -114,7 +128,9 @@ export const PROJECTS = [
     type: "game",
     status: "in-development",
     statusLabel: "In Development",
-    description: "Dark sci-fi action game set in deep space.",
+    developmentPhase: "writing",
+    vaultStatus: "forge",
+    description: "Nine-book sci-fi/cosmic-horror novel franchise. Book 1 at A+ LOCK.",
     githubRepo: "VaultSparkStudios/Voidfall",
     supabaseGameSlug: "voidfall",
     deployedUrl: null,
@@ -130,6 +146,8 @@ export const PROJECTS = [
     type: "tool",
     status: "live",
     statusLabel: "Live",
+    developmentPhase: "pre-launch",
+    vaultStatus: "forge",
     description: "Vault-gated promotional and marketing tool.",
     githubRepo: "VaultSparkStudios/promogrind",
     supabaseGameSlug: null,
@@ -144,7 +162,9 @@ export const PROJECTS = [
     type: "tool",
     status: "in-development",
     statusLabel: "In Development",
-    description: "AI-powered productivity and creative framework tool.",
+    developmentPhase: "pre-launch",
+    vaultStatus: "forge",
+    description: "Premium metacognition training platform. Live on Railway + Vercel.",
     githubRepo: "VaultSparkStudios/mindframe",
     supabaseGameSlug: null,
     deployedUrl: null,
@@ -158,7 +178,9 @@ export const PROJECTS = [
     type: "tool",
     status: "in-development",
     statusLabel: "In Development",
-    description: "Crypto analytics and portfolio management tool.",
+    developmentPhase: "pre-launch",
+    vaultStatus: "forge",
+    description: "Live crypto market intelligence dashboard. v1.7 production-stable.",
     githubRepo: "VaultSparkStudios/velaxis",
     supabaseGameSlug: null,
     deployedUrl: null,
@@ -170,15 +192,17 @@ export const PROJECTS = [
   // ── PLATFORMS ──────────────────────────────
   {
     id: "statsforge",
-    name: "StatsForge",
+    name: "StatVault",
     type: "platform",
     status: "in-development",
     statusLabel: "In Development",
+    developmentPhase: "backend-dev",
+    vaultStatus: "forge",
     description: "Sports analytics platform. ForgeRating · ForgeAI · 500K+ programmatic SEO pages.",
     githubRepo: "VaultSparkStudios/statsforge",
     supabaseGameSlug: null,
     deployedUrl: null,
-    localFolder: "statsforge",
+    localFolder: "StatVault",
     color: "#f97316",
     studioOsApplied: false,
   },
@@ -188,6 +212,8 @@ export const PROJECTS = [
     type: "platform",
     status: "in-development",
     statusLabel: "In Development",
+    developmentPhase: "design",
+    vaultStatus: "forge",
     description: "Social-first, agent-native platform for AI app building and community. Give your agent a home.",
     githubRepo: "VaultSparkStudios/vorn",
     supabaseGameSlug: null,
@@ -204,6 +230,8 @@ export const PROJECTS = [
     type: "infrastructure",
     status: "live",
     statusLabel: "Live",
+    developmentPhase: "live-internal",
+    vaultStatus: "sparked",
     description: "VaultSpark Studios internal operations, planning, and context files.",
     githubRepo: "VaultSparkStudios/vaultspark-studio-ops",
     supabaseGameSlug: null,
@@ -218,6 +246,8 @@ export const PROJECTS = [
     type: "infrastructure",
     status: "live",
     statusLabel: "Live",
+    developmentPhase: "integration",
+    vaultStatus: "forge",
     description: "Internal VaultSpark Studios social operations dashboard.",
     githubRepo: "VaultSparkStudios/vaultspark-social-dashboard",
     supabaseGameSlug: null,
@@ -232,6 +262,8 @@ export const PROJECTS = [
     type: "infrastructure",
     status: "live",
     statusLabel: "Live",
+    developmentPhase: "live-production",
+    vaultStatus: "sparked",
     description: "Public VaultSpark Studios website and Vault Member portal.",
     githubRepo: "VaultSparkStudios/VaultSparkStudios.github.io",
     supabaseGameSlug: null,
@@ -411,8 +443,15 @@ export function getProjectsByType(type) {
 }
 
 // ── Registry validation ───────────────────────────────────────────────────────
-const VALID_TYPES   = new Set(["game", "tool", "infrastructure", "platform", "app"]);
+const VALID_TYPES    = new Set(["game", "tool", "infrastructure", "platform", "app"]);
 const VALID_STATUSES = new Set(["live", "client-beta", "playable-prototype", "in-development", "archived"]);
+const VALID_PHASES   = new Set([
+  "concept", "design", "writing", "pre-dev",
+  "backend-dev", "frontend-dev", "full-stack-dev", "integration",
+  "alpha", "testing", "pre-launch", "pre-publication",
+  "live-internal", "live-beta", "live-production", "maintenance",
+  "paused", "archived",
+]);
 
 export function validateRegistry() {
   const ids = new Set();
@@ -422,6 +461,8 @@ export function validateRegistry() {
     if (!VALID_TYPES.has(p.type))     console.warn(`[Registry] Project "${p.id}" has invalid type: "${p.type}"`);
     if (!VALID_STATUSES.has(p.status)) console.warn(`[Registry] Project "${p.id}" has invalid status: "${p.status}"`);
     if (!p.githubRepo) console.warn(`[Registry] Project "${p.id}" has no githubRepo — GitHub data will not load`);
+    if (p.developmentPhase && !VALID_PHASES.has(p.developmentPhase)) console.warn(`[Registry] Project "${p.id}" has unknown developmentPhase: "${p.developmentPhase}"`);
+    if (!p.developmentPhase) console.warn(`[Registry] Project "${p.id}" missing developmentPhase — Phase Tracker will not show this project`);
     if (ids.has(p.id)) console.warn(`[Registry] Duplicate project id: "${p.id}"`);
     ids.add(p.id);
   }

@@ -2,7 +2,7 @@ import { getHubRuntimeConfig } from "./config/runtimeConfig.js";
 import { PROJECTS, getProjectById, validateRegistry } from "./data/studioRegistry.js";
 import { scoreProject, getGrade, invalidateWeightsCache, clearScoringCache } from "./utils/projectScoring.js";
 import { fmt, daysSince, commitVelocity, debounce, safeGetJSON, safeSetJSON } from "./utils/helpers.js";
-import { fetchAllProjectContextFiles, fetchRepoLanguages, fetchRepoBranches, fetchRepoTodoCount, fetchDependencyAlerts, fetchProjectTickets, submitProjectTicket, fetchStudioOsCompliance, fetchAgentRequests, submitAgentRequest, fetchRepoTraffic } from "./data/githubAdapter.js";
+import { fetchAllProjectContextFiles, fetchRepoLanguages, fetchRepoBranches, fetchRepoTodoCount, fetchDependencyAlerts, fetchProjectTickets, submitProjectTicket, submitRenameTicket, submitInitiateTicket, fetchStudioOsCompliance, fetchAgentRequests, submitAgentRequest, fetchRepoTraffic } from "./data/githubAdapter.js";
 import { fetchAllSupabaseData } from "./data/supabaseAdapter.js";
 import { fetchAllSocialFeeds } from "./data/socialFeedsAdapter.js";
 import { renderNavigation } from "./components/navigation.js";
@@ -26,6 +26,7 @@ import { renderCompetitiveView, loadCompetitorList, saveCompetitorList, loadDism
 import { renderAnalyticsView } from "./components/analyticsView.js";
 import { renderAiCopilotView, sendCopilotMessage, clearCopilotHistory, getCopilotMessages } from "./components/aiCopilotView.js";
 import { renderPrReviewView } from "./components/prReviewView.js";
+import { renderPhaseTrackerView } from "./components/phaseTrackerView.js";
 import { mountCommandPalette, unmountCommandPalette, isPaletteOpen } from "./components/commandPalette.js";
 import { downloadJSON, downloadCSV, downloadScoreHistoryCSV } from "./utils/exportHelpers.js";
 import { generateScoreRSSFeed } from "./utils/rssFeed.js";
@@ -104,6 +105,14 @@ const state = {
   settings:           appSettings,
   focusMode:          false,
   projectFilter:      "",
+  phaseTrackerFilter: "all",
+  ticketingTab:         "listing",
+  renameSubmitting:     false,
+  renameSuccess:        null,
+  renameError:          null,
+  initiateSubmitting:   false,
+  initiateSuccess:      null,
+  initiateError:        null,
   sidebarCollapsed:   uiState.sidebarCollapsed || false,
   theme:              uiState.theme || "dark",
   mobileNavOpen:      false,
@@ -420,6 +429,7 @@ function renderActiveView() {
   if (activeView === "analytics")       return renderAnalyticsView(state);
   if (activeView === "ai-copilot")      return renderAiCopilotView(state);
   if (activeView === "pr-review")       return renderPrReviewView(state);
+  if (activeView === "phase-tracker")   return renderPhaseTrackerView(state);
   if (activeView.startsWith("project:")) {
     const project = getProjectById(activeView.slice("project:".length));
     return project
@@ -903,7 +913,7 @@ function buildEventCtx() {
     generateWeeklyDigest, generateStandup,
     loadScoreHistory, scorePrevFromHistory,
     applyAccent, applyTheme, applyDensity, getHubRuntimeConfig,
-    loadTickets, submitProjectTicket,
+    loadTickets, submitProjectTicket, submitRenameTicket, submitInitiateTicket,
     commitVelocity, daysSince,
   };
 }
@@ -936,6 +946,10 @@ function bindEvents() {
     if (navEl) { e.stopPropagation(); handleNavClick(navEl); return; }
     const emptyBtn = e.target.closest(".empty-state-action[data-navigate]");
     if (emptyBtn) { const view = emptyBtn.dataset.navigate; if (view) { state.activeView = view; pushViewHash(view); render(); } }
+    const phaseFilterBtn = e.target.closest("[data-phase-filter]");
+    if (phaseFilterBtn) { state.phaseTrackerFilter = phaseFilterBtn.dataset.phaseFilter || "all"; render(); return; }
+    const ticketingTabBtn = e.target.closest("[data-ticketing-tab]");
+    if (ticketingTabBtn) { state.ticketingTab = ticketingTabBtn.dataset.ticketingTab || "listing"; state.renameSuccess = null; state.renameError = null; state.initiateSuccess = null; state.initiateError = null; render(); return; }
   });
   document.getElementById("app")?.addEventListener("keydown", (e) => {
     if (e.key !== "Enter" && e.key !== " ") return;

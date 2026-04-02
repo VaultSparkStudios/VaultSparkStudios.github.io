@@ -689,7 +689,12 @@ function renderProjectCard(project, ghData, sbData, socialData, settings, scoreP
           <div style="display:flex; align-items:center; gap:6px; margin-top:4px; flex-wrap:wrap;">
             <span class="project-status-pill ${project.status}" style="margin:0;">${project.statusLabel}</span>
             <span class="project-card-type ${project.type}">${project.type}</span>
-            ${externalPhase ? `<span style="font-size:9px; padding:2px 5px; border-radius:4px; background:rgba(122,231,199,0.08); color:var(--cyan); font-weight:700; letter-spacing:0.04em; border:1px solid rgba(122,231,199,0.2);" title="Phase from PROJECT_STATUS.json">${externalPhase.toUpperCase()}</span>` : ""}
+            ${project.vaultStatus ? `<span class="vault-status-badge ${project.vaultStatus}" title="Vault status: ${project.vaultStatus.toUpperCase()}">${project.vaultStatus.toUpperCase()}</span>` : ""}
+            ${(() => {
+              const phase = project.developmentPhase || externalPhase || null;
+              if (!phase) return '';
+              return `<span class="phase-badge ${phase}" title="Development phase: ${phase.replace(/-/g,' ')}">${phase.replace(/-/g,' ')}</span>`;
+            })()}
             ${isDecay ? `<span style="font-size:9px; color:var(--red); font-weight:700; letter-spacing:0.05em;">↓ DECLINING</span>` : ""}
             ${isDormant ? `<span style="font-size:9px; color:var(--muted); font-weight:700; letter-spacing:0.05em; padding:1px 4px; background:rgba(255,255,255,0.05); border-radius:3px;">DORMANT</span>` : ""}
             ${hotStreak >= 3 ? `<span style="font-size:9px; color:var(--gold); font-weight:700; letter-spacing:0.04em;" title="${hotStreak} consecutive days with commits">🔥${hotStreak}d</span>` : ""}
