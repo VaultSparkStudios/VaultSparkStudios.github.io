@@ -8,6 +8,7 @@ import { forecastScores, getOverallForecastAccuracy, monteCarloForecast } from "
 import { deltaBadge } from "./hub/hubHelpers.js";
 import { getScoreAnomalies } from "./hub/morningBrief.js";
 import { computeWebsiteHealthScore, SITE_PAGES, SITE_URL } from "../data/websiteAnalytics.js";
+import { getTelemetrySummary } from "../utils/sessionTelemetry.js";
 
 // ── SVG helpers ───────────────────────────────────────────────────────────────
 function sparkline(values, { w = 200, h = 44, color = "var(--cyan)", fill = true } = {}) {
@@ -1815,7 +1816,20 @@ function seoCheckRow(label, passed) {
   </div>`;
 }
 
-function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteError) {
+function renderTrafficSparkline(daily, key = "count") {
+  const vals = (daily || []).map((d) => d[key] || 0);
+  if (vals.length < 2) return "";
+  const max = Math.max(...vals, 1);
+  return `<div style="display:flex;align-items:flex-end;gap:2px;height:32px;margin-top:6px;">
+    ${vals.map((v, i) => {
+      const h = Math.max(2, Math.round((v / max) * 30));
+      const isLast = i === vals.length - 1;
+      return `<div style="flex:1;height:${h}px;background:${isLast ? "var(--cyan)" : "rgba(122,231,199,0.3)"};border-radius:2px 2px 0 0;" title="${v}"></div>`;
+    }).join("")}
+  </div>`;
+}
+
+function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteError, socialData, sbData, trafficData) {
   const refreshBtn = `<button id="website-analytics-refresh" style="background:var(--cyan);color:#000;border:none;border-radius:6px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer;margin-top:12px;" title="Clear cache and re-fetch all data">Refresh Analytics</button>`;
 
   if (loading) {
@@ -1823,7 +1837,7 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
       <div style="text-align:center;padding:60px 20px;">
         <div style="font-size:32px;margin-bottom:16px;animation:pulse 1.5s infinite;">🌐</div>
         <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;">Analyzing ${SITE_URL}</div>
-        <div style="font-size:11px;color:var(--muted);">Running PageSpeed Insights + SEO probe across ${SITE_PAGES.length} pages...</div>
+        <div style="font-size:11px;color:var(--muted);">Running PageSpeed Insights + SEO probe + Traffic data across ${SITE_PAGES.length} pages...</div>
         <div style="margin-top:20px;width:200px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;">
           <div style="width:60%;height:100%;background:var(--cyan);border-radius:2px;animation:loading-bar 2s ease-in-out infinite;"></div>
         </div>
@@ -1837,9 +1851,9 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
         <div style="font-size:32px;margin-bottom:16px;">🌐</div>
         <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;">Website Analytics</div>
         ${websiteError ? `<div style="font-size:11px;color:var(--red);max-width:400px;margin:0 auto 12px;">${websiteError}</div>` : ""}
-        <div style="font-size:11px;color:var(--muted);max-width:400px;margin:0 auto;">
-          ${websiteError ? "Click Refresh to retry, or check your network connection." : `Click this tab to start analyzing <strong>${SITE_URL}</strong>.<br>
-          Uses Google PageSpeed Insights API + direct page probing to deliver Lighthouse scores, Core Web Vitals, SEO audit, and security analysis.`}
+        <div style="font-size:11px;color:var(--muted);max-width:460px;margin:0 auto;">
+          ${websiteError ? "Click Refresh to retry, or check your network connection." : `Click this tab to analyze <strong>${SITE_URL}</strong>.<br>
+          Runs PageSpeed Insights · Core Web Vitals · Real user data (CrUX) · SEO audit · Security headers · GitHub Pages traffic.`}
         </div>
         ${websiteError ? refreshBtn : ""}
       </div>`;
@@ -1857,8 +1871,8 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
   const recentDeploys = deployments.filter((d) => Date.now() - new Date(d.createdAt).getTime() < 30 * 86400000).length;
   const lastCommitDate = commits[0]?.date || null;
   const lastDeployDate = deployments[0]?.createdAt || null;
-  const ciStatus = ciRuns[0]?.conclusion === "success" ? "Passing" : ciRuns[0]?.conclusion || "Unknown";
-  const ciColor = ciStatus === "Passing" ? "var(--green)" : ciStatus === "failure" ? "var(--red)" : "var(--muted)";
+  const ciStatusLabel = ciRuns[0]?.conclusion === "success" ? "Passing" : ciRuns[0]?.conclusion || "Unknown";
+  const ciColor = ciStatusLabel === "Passing" ? "var(--green)" : ciStatusLabel === "failure" ? "var(--red)" : "var(--muted)";
 
   // ── Site-wide averages from PSI ──
   const pagesWithScores = (psiData?.pages || []).filter((p) => p.scores);
@@ -1870,6 +1884,24 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
   const avgA11y = avg("accessibility");
   const avgSEO  = avg("seo");
   const avgBP   = avg("bestPractices");
+
+  // ── CrUX real-user data ──
+  const pagesWithCrux = pagesWithScores.filter((p) => p.fieldData?.overallCategory);
+  const cruxFast = pagesWithCrux.filter((p) => p.fieldData.overallCategory === "FAST").length;
+  const cruxAvg  = pagesWithCrux.filter((p) => p.fieldData.overallCategory === "AVERAGE").length;
+  const cruxSlow = pagesWithCrux.filter((p) => p.fieldData.overallCategory === "SLOW").length;
+  const cruxTotal = pagesWithCrux.length;
+
+  // ── Audience reach ──
+  const ytSubs   = socialData?.youtube?.subscribers || 0;
+  const rdMembers = socialData?.reddit?.subscribers || 0;
+  const bkFollowers = socialData?.bluesky?.followers || 0;
+  const vaultMembers = sbData?.members?.total || 0;
+  let totalGhStars = 0;
+  for (const key of Object.keys(ghData)) {
+    totalGhStars += ghData[key]?.repo?.stars || 0;
+  }
+  const totalReach = ytSubs + rdMembers + bkFollowers + vaultMembers;
 
   // ── Aggregated opportunities ──
   const allOpps = [];
@@ -1890,67 +1922,257 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
   const secHeaderTotal = Object.keys(secHeaders).length || 8;
   const secScore = Math.round((secHeaderCount / secHeaderTotal) * 100);
 
+  // ── CWV best values across all pages ──
+  const bestLcp = pagesWithScores.reduce((best, p) => {
+    const v = p.cwv?.lcp; return (v != null && (best == null || v < best)) ? v : best;
+  }, null);
+  const bestCls = pagesWithScores.reduce((best, p) => {
+    const v = p.cwv?.cls; return (v != null && (best == null || v < best)) ? v : best;
+  }, null);
+
   return `
     ${section("Website Health Score", "🌐", `
       <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
-        <div style="text-align:center;">
-          ${lighthouseGauge("HEALTH", health.score, 80)}
+        <div style="text-align:center;flex-shrink:0;">
+          ${lighthouseGauge("HEALTH", health.score, 90)}
         </div>
         <div style="flex:1;min-width:200px;">
-          <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">Score Breakdown</div>
-          ${health.breakdown.performance != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-            <span style="font-size:10px;color:var(--muted);width:90px;">Performance</span>
-            ${miniBar(health.breakdown.performance, 30, "var(--cyan)")}
-            <span style="font-size:10px;font-weight:600;color:var(--cyan);width:28px;text-align:right;">${health.breakdown.performance}/30</span>
+          <div style="font-size:10px;color:var(--muted);margin-bottom:10px;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;">Score Breakdown</div>
+          ${health.breakdown.performance != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:10px;color:var(--muted);width:100px;">Performance</span>
+            ${miniBar(health.breakdown.performance, 30, "var(--cyan)", 6)}
+            <span style="font-size:11px;font-weight:700;color:var(--cyan);width:36px;text-align:right;">${health.breakdown.performance}/30</span>
           </div>` : ""}
-          ${health.breakdown.seo != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-            <span style="font-size:10px;color:var(--muted);width:90px;">SEO</span>
-            ${miniBar(health.breakdown.seo, 25, "var(--green)")}
-            <span style="font-size:10px;font-weight:600;color:var(--green);width:28px;text-align:right;">${health.breakdown.seo}/25</span>
+          ${health.breakdown.seo != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:10px;color:var(--muted);width:100px;">SEO</span>
+            ${miniBar(health.breakdown.seo, 25, "var(--green)", 6)}
+            <span style="font-size:11px;font-weight:700;color:var(--green);width:36px;text-align:right;">${health.breakdown.seo}/25</span>
           </div>` : ""}
-          ${health.breakdown.accessibility != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-            <span style="font-size:10px;color:var(--muted);width:90px;">Accessibility</span>
-            ${miniBar(health.breakdown.accessibility, 20, "var(--yellow)")}
-            <span style="font-size:10px;font-weight:600;color:var(--yellow);width:28px;text-align:right;">${health.breakdown.accessibility}/20</span>
+          ${health.breakdown.accessibility != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:10px;color:var(--muted);width:100px;">Accessibility</span>
+            ${miniBar(health.breakdown.accessibility, 20, "var(--yellow)", 6)}
+            <span style="font-size:11px;font-weight:700;color:var(--yellow);width:36px;text-align:right;">${health.breakdown.accessibility}/20</span>
           </div>` : ""}
-          ${health.breakdown.bestPractices != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-            <span style="font-size:10px;color:var(--muted);width:90px;">Best Practices</span>
-            ${miniBar(health.breakdown.bestPractices, 10, "#a78bfa")}
-            <span style="font-size:10px;font-weight:600;color:#a78bfa;width:28px;text-align:right;">${health.breakdown.bestPractices}/10</span>
+          ${health.breakdown.bestPractices != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:10px;color:var(--muted);width:100px;">Best Practices</span>
+            ${miniBar(health.breakdown.bestPractices, 10, "#a78bfa", 6)}
+            <span style="font-size:11px;font-weight:700;color:#a78bfa;width:36px;text-align:right;">${health.breakdown.bestPractices}/10</span>
           </div>` : ""}
-          ${health.breakdown.infrastructure != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-            <span style="font-size:10px;color:var(--muted);width:90px;">Infrastructure</span>
-            ${miniBar(health.breakdown.infrastructure, 15, "#fb923c")}
-            <span style="font-size:10px;font-weight:600;color:#fb923c;width:28px;text-align:right;">${health.breakdown.infrastructure}/15</span>
+          ${health.breakdown.infrastructure != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:10px;color:var(--muted);width:100px;">Infrastructure</span>
+            ${miniBar(health.breakdown.infrastructure, 15, "#fb923c", 6)}
+            <span style="font-size:11px;font-weight:700;color:#fb923c;width:36px;text-align:right;">${health.breakdown.infrastructure}/15</span>
           </div>` : ""}
+        </div>
+        <div style="flex-shrink:0;display:flex;gap:16px;flex-direction:column;min-width:120px;">
+          <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+            <div style="font-size:9px;color:var(--muted);letter-spacing:0.08em;margin-bottom:3px;">PAGES ANALYZED</div>
+            <div style="font-size:22px;font-weight:900;color:var(--cyan);">${pagesWithScores.length}<span style="font-size:12px;color:var(--muted);font-weight:400;">/${(psiData?.pages || []).length}</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+            <div style="font-size:9px;color:var(--muted);letter-spacing:0.08em;margin-bottom:3px;">BEST LCP</div>
+            <div style="font-size:18px;font-weight:900;color:${cwvGrade("lcp", bestLcp).color};">${fmtMs(bestLcp)}</div>
+          </div>
         </div>
       </div>
       <div style="margin-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
         <div style="font-size:10px;color:var(--muted);">
-          Analyzed ${pagesWithScores.length} page${pagesWithScores.length !== 1 ? "s" : ""} · Mobile strategy
-          ${psiData?.fetchedAt ? ` · Last run ${new Date(psiData.fetchedAt).toLocaleTimeString()}` : ""}
+          Mobile strategy · ${psiData?.fetchedAt ? `Last run ${new Date(psiData.fetchedAt).toLocaleTimeString()}` : "Not yet run"}
           ${probeData?.source === "psi-fallback" ? ' · <span style="color:var(--yellow);">Probe fell back to PSI data</span>' : ""}
         </div>
         ${refreshBtn}
       </div>
     `)}
 
-    ${section("Lighthouse Scores (Site Average)", "💡", `
-      <div style="display:flex;gap:20px;flex-wrap:wrap;justify-content:center;padding:12px 0;">
-        ${lighthouseGauge("Performance", avgPerf)}
-        ${lighthouseGauge("Accessibility", avgA11y)}
-        ${lighthouseGauge("SEO", avgSEO)}
-        ${lighthouseGauge("Best Practices", avgBP)}
+    ${section("Lighthouse Scores — Site Average", "💡", `
+      <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:space-around;padding:8px 0 16px;">
+        ${lighthouseGauge("Performance", avgPerf, 80)}
+        ${lighthouseGauge("Accessibility", avgA11y, 80)}
+        ${lighthouseGauge("SEO", avgSEO, 80)}
+        ${lighthouseGauge("Best Practices", avgBP, 80)}
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">
+        ${statCard("BEST PERF PAGE", (() => { const b = pagesWithScores.reduce((m, p) => (p.scores.performance ?? 0) > (m?.scores?.performance ?? 0) ? p : m, null); return b ? `${b.scores.performance}` : "—"; })(), (() => { const b = pagesWithScores.reduce((m, p) => (p.scores.performance ?? 0) > (m?.scores?.performance ?? 0) ? p : m, null); return b?.page || ""; })())}
+        ${statCard("WORST PERF PAGE", (() => { const b = pagesWithScores.reduce((m, p) => (p.scores.performance ?? 100) < (m?.scores?.performance ?? 100) ? p : m, null); return b ? `${b.scores.performance}` : "—"; })(), (() => { const b = pagesWithScores.reduce((m, p) => (p.scores.performance ?? 100) < (m?.scores?.performance ?? 100) ? p : m, null); return b?.page || ""; })())}
+        ${statCard("AVG SEO", avgSEO != null ? String(avgSEO) : "—", "across " + pagesWithScores.length + " pages")}
+        ${statCard("AVG A11Y", avgA11y != null ? String(avgA11y) : "—", "accessibility")}
       </div>
     `)}
 
+    ${cruxTotal > 0 ? section("Real User Experience (CrUX)", "👥", `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:14px;">
+        Based on real Chrome users visiting your site · Chrome User Experience Report (CrUX) · past 28 days
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;">
+        ${statCard("FAST PAGES", String(cruxFast), `${cruxTotal > 0 ? Math.round((cruxFast/cruxTotal)*100) : 0}% of pages`)}
+        ${statCard("AVG PAGES", String(cruxAvg), `${cruxTotal > 0 ? Math.round((cruxAvg/cruxTotal)*100) : 0}% of pages`)}
+        ${statCard("SLOW PAGES", String(cruxSlow), `${cruxTotal > 0 ? Math.round((cruxSlow/cruxTotal)*100) : 0}% of pages`)}
+        ${statCard("PAGES W/ DATA", String(cruxTotal), `${(psiData?.pages||[]).length - cruxTotal} no CrUX data`)}
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:6px;font-weight:600;">Experience Distribution</div>
+        <div style="display:flex;height:20px;border-radius:6px;overflow:hidden;gap:1px;">
+          ${cruxFast > 0 ? `<div style="flex:${cruxFast};background:var(--green);display:flex;align-items:center;justify-content:center;" title="${cruxFast} fast pages">
+            <span style="font-size:9px;color:#000;font-weight:700;">${Math.round((cruxFast/cruxTotal)*100)}%</span>
+          </div>` : ""}
+          ${cruxAvg > 0 ? `<div style="flex:${cruxAvg};background:var(--yellow);display:flex;align-items:center;justify-content:center;" title="${cruxAvg} average pages">
+            <span style="font-size:9px;color:#000;font-weight:700;">${Math.round((cruxAvg/cruxTotal)*100)}%</span>
+          </div>` : ""}
+          ${cruxSlow > 0 ? `<div style="flex:${cruxSlow};background:var(--red);display:flex;align-items:center;justify-content:center;" title="${cruxSlow} slow pages">
+            <span style="font-size:9px;color:#fff;font-weight:700;">${Math.round((cruxSlow/cruxTotal)*100)}%</span>
+          </div>` : ""}
+        </div>
+        <div style="display:flex;gap:16px;margin-top:6px;font-size:9px;color:var(--muted);">
+          <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--green);"></span>Fast</span>
+          <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--yellow);"></span>Average</span>
+          <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--red);"></span>Slow</span>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;">Per-Page Real User Experience</div>
+        ${pagesWithCrux.map((p) => {
+          const cat = p.fieldData.overallCategory;
+          const catColor = cat === "FAST" ? "var(--green)" : cat === "AVERAGE" ? "var(--yellow)" : "var(--red)";
+          const lcpCat = p.fieldData.lcpCategory;
+          const clsCat = p.fieldData.clsCategory;
+          const inpCat = p.fieldData.inpCategory;
+          return `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+            <span style="font-size:11px;color:var(--text);min-width:130px;flex-shrink:0;">${p.page}</span>
+            <span style="font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;background:${catColor}20;border:1px solid ${catColor}60;color:${catColor};min-width:54px;text-align:center;">${cat}</span>
+            ${lcpCat ? `<span style="font-size:9px;color:${lcpCat==="FAST"?"var(--green)":lcpCat==="AVERAGE"?"var(--yellow)":"var(--red)"};background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:2px 6px;">LCP: ${p.fieldData.lcpMs ? fmtMs(p.fieldData.lcpMs) : lcpCat}</span>` : ""}
+            ${clsCat ? `<span style="font-size:9px;color:${clsCat==="FAST"?"var(--green)":clsCat==="AVERAGE"?"var(--yellow)":"var(--red)"};background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:2px 6px;">CLS: ${clsCat}</span>` : ""}
+            ${inpCat ? `<span style="font-size:9px;color:${inpCat==="FAST"?"var(--green)":inpCat==="AVERAGE"?"var(--yellow)":"var(--red)"};background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:2px 6px;">INP: ${p.fieldData.inpMs ? fmtMs(p.fieldData.inpMs) : inpCat}</span>` : ""}
+          </div>`;
+        }).join("")}
+      </div>
+    `) : ""}
+
+    ${section("Page Performance Grid", "📊", `
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;">
+        ${(psiData?.pages || []).map((p) => {
+          if (p.error) return `<div style="background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.25);border-radius:10px;padding:14px;">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;">${p.page}</div>
+            <div style="font-size:9px;color:var(--muted);margin-bottom:8px;">${p.path}</div>
+            <div style="font-size:10px;color:var(--red);">${p.error.includes("403") ? "Cloudflare blocked" : p.error.includes("CORS") ? "CORS blocked" : p.error.slice(0, 60)}</div>
+          </div>`;
+          const s = p.scores || {};
+          const catColor = p.fieldData?.overallCategory === "FAST" ? "var(--green)" : p.fieldData?.overallCategory === "AVERAGE" ? "var(--yellow)" : p.fieldData?.overallCategory === "SLOW" ? "var(--red)" : null;
+          return `<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;position:relative;overflow:hidden;">
+            ${catColor ? `<div style="position:absolute;top:0;left:0;right:0;height:2px;background:${catColor};"></div>` : ""}
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--text);">${p.page}</div>
+                <div style="font-size:9px;color:var(--muted);">${p.path}</div>
+              </div>
+              ${catColor ? `<span style="font-size:8px;padding:2px 6px;border-radius:8px;font-weight:700;background:${catColor}20;color:${catColor};border:1px solid ${catColor}40;">${p.fieldData.overallCategory}</span>` : ""}
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+              ${[["PERF", s.performance], ["A11Y", s.accessibility], ["SEO", s.seo], ["BP", s.bestPractices]].map(([lbl, val]) => `
+                <div style="background:rgba(255,255,255,0.03);border-radius:6px;padding:6px 8px;">
+                  <div style="font-size:8px;color:var(--muted);letter-spacing:0.06em;">${lbl}</div>
+                  <div style="font-size:18px;font-weight:900;color:${scoreColor(val)};line-height:1.2;">${val ?? "—"}</div>
+                </div>`).join("")}
+            </div>
+            <div style="display:flex;gap:8px;font-size:9px;">
+              ${p.cwv?.lcp != null ? `<span style="color:${cwvGrade("lcp",p.cwv.lcp).color};">LCP ${fmtMs(p.cwv.lcp)}</span>` : ""}
+              ${p.cwv?.cls != null ? `<span style="color:${cwvGrade("cls",p.cwv.cls).color};">CLS ${p.cwv.cls.toFixed(3)}</span>` : ""}
+              ${p.cwv?.tbt != null ? `<span style="color:${cwvGrade("tbt",p.cwv.tbt).color};">TBT ${fmtMs(p.cwv.tbt)}</span>` : ""}
+            </div>
+          </div>`;
+        }).join("")}
+      </div>
+    `)}
+
+    ${totalReach > 0 ? section("Audience & Reach", "📡", `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:14px;">Combined audience across all channels — potential traffic sources</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+        ${ytSubs   > 0 ? statCard("YOUTUBE", fmt(ytSubs),    "subscribers") : ""}
+        ${rdMembers > 0 ? statCard("REDDIT",  fmt(rdMembers), "community members") : ""}
+        ${bkFollowers > 0 ? statCard("BLUESKY", fmt(bkFollowers), "followers") : ""}
+        ${vaultMembers > 0 ? statCard("VAULT MEMBERS", fmt(vaultMembers), `+${sbData?.members?.newThisWeek || 0} this week`) : ""}
+        ${totalGhStars > 0 ? statCard("GITHUB STARS", fmt(totalGhStars), "across all repos") : ""}
+      </div>
+      <div style="background:rgba(122,231,199,0.06);border:1px solid rgba(122,231,199,0.2);border-radius:8px;padding:12px 16px;">
+        <div style="font-size:9px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">Total Addressable Audience</div>
+        <div style="font-size:32px;font-weight:900;color:var(--cyan);">${fmt(totalReach)}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;">people across all tracked channels</div>
+      </div>
+      ${totalReach > 0 ? `
+      <div style="margin-top:14px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;">Channel Breakdown</div>
+        ${[
+          { label: "YouTube", val: ytSubs, color: "#ff4444" },
+          { label: "Reddit", val: rdMembers, color: "#ff6314" },
+          { label: "Bluesky", val: bkFollowers, color: "#0085ff" },
+          { label: "Vault Members", val: vaultMembers, color: "var(--cyan)" },
+          { label: "GitHub Stars", val: totalGhStars, color: "#ffd700" },
+        ].filter((c) => c.val > 0).map((c) => `
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:7px;">
+            <span style="font-size:10px;color:var(--muted);min-width:110px;">${c.label}</span>
+            <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+              <div style="height:100%;width:${Math.round((c.val/totalReach)*100)}%;background:${c.color};border-radius:3px;"></div>
+            </div>
+            <span style="font-size:10px;font-weight:700;color:${c.color};min-width:60px;text-align:right;">${fmt(c.val)}</span>
+          </div>`).join("")}
+      </div>` : ""}
+    `) : ""}
+
+    ${trafficData ? section("GitHub Pages Traffic (14-day)", "📈", `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:14px;">Real traffic data from GitHub Pages repository · requires repo-scope token</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+        ${trafficData.views ? statCard("PAGE VIEWS (14d)", fmt(trafficData.views.count), `${fmt(trafficData.views.uniques)} unique visitors`) : ""}
+        ${trafficData.clones ? statCard("REPO CLONES (14d)", fmt(trafficData.clones.count), `${fmt(trafficData.clones.uniques)} unique cloners`) : ""}
+        ${trafficData.views ? statCard("AVG DAILY VIEWS", trafficData.views.daily.length > 0 ? fmt(Math.round(trafficData.views.count / trafficData.views.daily.length)) : "—", "per day") : ""}
+        ${trafficData.views ? statCard("UNIQUE RATIO", trafficData.views.count > 0 ? Math.round((trafficData.views.uniques / trafficData.views.count) * 100) + "%" : "—", "unique vs total") : ""}
+      </div>
+      ${trafficData.views?.daily?.length > 0 ? `
+        <div style="margin-bottom:16px;">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:6px;font-weight:600;">Daily Views — Last 14 Days</div>
+          ${renderTrafficSparkline(trafficData.views.daily, "count")}
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:4px;">
+            <span>${trafficData.views.daily[0] ? new Date(trafficData.views.daily[0].timestamp).toLocaleDateString() : ""}</span>
+            <span>Today</span>
+          </div>
+        </div>
+      ` : ""}
+      ${trafficData.referrers?.length > 0 ? `
+        <div style="margin-bottom:12px;">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;">Top Referrers</div>
+          ${trafficData.referrers.slice(0, 8).map((r) => `
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+              <span style="font-size:11px;color:var(--text);flex:1;">${r.referrer || "Direct"}</span>
+              <span style="font-size:10px;font-weight:600;color:var(--cyan);">${fmt(r.count)}</span>
+              <span style="font-size:9px;color:var(--muted);">${fmt(r.uniques)} unique</span>
+            </div>`).join("")}
+        </div>
+      ` : ""}
+      ${trafficData.paths?.length > 0 ? `
+        <div>
+          <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;">Popular Paths</div>
+          ${trafficData.paths.slice(0, 8).map((p) => `
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+              <span style="font-size:10px;font-family:monospace;color:var(--cyan);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.path}</span>
+              <span style="font-size:10px;font-weight:600;color:var(--text);">${fmt(p.count)}</span>
+              <span style="font-size:9px;color:var(--muted);">${fmt(p.uniques)} unique</span>
+            </div>`).join("")}
+        </div>
+      ` : ""}
+    `) : ""}
+
     ${section("Core Web Vitals", "⚡", `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:12px;">Lab data from Lighthouse (mobile strategy) — click page tabs above for real user CrUX data</div>
       ${pagesWithScores.length > 0 ? pagesWithScores.map((p) => {
         const c = p.cwv || {};
         return `
-          <div style="margin-bottom:16px;">
-            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;">${p.page} <span style="color:var(--muted);font-weight:400;">${p.path}</span></div>
-            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.06);">
+            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;">
+              ${p.page} <span style="color:var(--muted);font-weight:400;font-size:10px;">${p.path}</span>
+              ${p.fieldData?.overallCategory ? `<span style="font-size:9px;padding:2px 7px;border-radius:8px;font-weight:700;margin-left:8px;
+                background:${p.fieldData.overallCategory==="FAST"?"rgba(110,227,178,0.15)":p.fieldData.overallCategory==="AVERAGE"?"rgba(255,200,116,0.15)":"rgba(248,113,113,0.15)"};
+                color:${p.fieldData.overallCategory==="FAST"?"var(--green)":p.fieldData.overallCategory==="AVERAGE"?"var(--yellow)":"var(--red)"};">
+                ${p.fieldData.overallCategory} (real users)</span>` : ""}
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
               ${[
                 ["LCP", "lcp", c.lcp],
                 ["FCP", "fcp", c.fcp],
@@ -1961,55 +2183,16 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
               ].map(([label, key, val]) => {
                 const g = cwvGrade(key, val);
                 const display = key === "cls" ? (val != null ? val.toFixed(3) : "—") : fmtMs(val);
-                return `<div style="flex:1;min-width:80px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:8px 10px;">
+                return `<div style="flex:1;min-width:76px;background:rgba(255,255,255,0.03);border:1px solid ${g.color}30;border-radius:8px;padding:8px 10px;position:relative;overflow:hidden;">
+                  <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:${g.color};opacity:0.5;"></div>
                   <div style="font-size:9px;color:var(--muted);letter-spacing:0.06em;margin-bottom:2px;">${label}</div>
-                  <div style="font-size:18px;font-weight:900;color:${g.color};">${display}</div>
-                  <div style="font-size:9px;color:${g.color};font-weight:600;">${g.label}</div>
+                  <div style="font-size:17px;font-weight:900;color:${g.color};">${display}</div>
+                  <div style="font-size:8px;color:${g.color};font-weight:600;opacity:0.8;">${g.label}</div>
                 </div>`;
               }).join("")}
             </div>
-            ${p.fieldData?.overallCategory ? `<div style="margin-top:6px;font-size:10px;color:var(--muted);">CrUX field data: <span style="color:${p.fieldData.overallCategory === "FAST" ? "var(--green)" : p.fieldData.overallCategory === "AVERAGE" ? "var(--yellow)" : "var(--red)"};font-weight:600;">${p.fieldData.overallCategory}</span></div>` : ""}
           </div>`;
       }).join("") : '<div style="font-size:11px;color:var(--muted);">No PageSpeed data available</div>'}
-    `)}
-
-    ${section("Page-by-Page Lighthouse Breakdown", "📄", `
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:11px;">
-          <thead>
-            <tr style="border-bottom:1px solid var(--border);">
-              <th style="text-align:left;padding:8px 6px;color:var(--muted);font-size:10px;font-weight:600;">PAGE</th>
-              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">PERF</th>
-              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">A11Y</th>
-              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">SEO</th>
-              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">BP</th>
-              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">LCP</th>
-              <th style="text-align:center;padding:8px 6px;color:var(--muted);font-size:10px;">CLS</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${(psiData?.pages || []).map((p) => {
-              if (p.error) return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
-                <td style="padding:6px;">${p.page}<br><span style="font-size:9px;color:var(--muted);font-weight:400;">${p.path}</span></td>
-                <td colspan="6" style="padding:6px;color:var(--red);font-size:10px;">${p.error}${p.error.includes("403") ? " (Cloudflare blocked)" : p.error.includes("CORS") || p.error.includes("fetch") ? " (CORS/network)" : ""}</td>
-              </tr>`;
-              const s = p.scores || {};
-              const sc = (v) => `<span style="color:${scoreColor(v)};font-weight:700;">${v ?? "—"}</span>`;
-              const lcpG = cwvGrade("lcp", p.cwv?.lcp);
-              const clsG = cwvGrade("cls", p.cwv?.cls);
-              return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
-                <td style="padding:6px;font-weight:600;color:var(--text);">${p.page}<br><span style="font-size:9px;color:var(--muted);font-weight:400;">${p.path}</span></td>
-                <td style="padding:6px;text-align:center;">${sc(s.performance)}</td>
-                <td style="padding:6px;text-align:center;">${sc(s.accessibility)}</td>
-                <td style="padding:6px;text-align:center;">${sc(s.seo)}</td>
-                <td style="padding:6px;text-align:center;">${sc(s.bestPractices)}</td>
-                <td style="padding:6px;text-align:center;color:${lcpG.color};font-weight:600;">${fmtMs(p.cwv?.lcp)}</td>
-                <td style="padding:6px;text-align:center;color:${clsG.color};font-weight:600;">${p.cwv?.cls != null ? p.cwv.cls.toFixed(3) : "—"}</td>
-              </tr>`;
-            }).join("")}
-          </tbody>
-        </table>
-      </div>
     `)}
 
     ${section("SEO Audit", "🔍", `
@@ -2047,8 +2230,7 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
             ${kv("Page size", homePage.htmlSize ? (homePage.htmlSize / 1024).toFixed(0) + " KB" : "—")}
           </div>
         </div>
-      ` : `<div style="font-size:11px;color:var(--muted);">No probe data available — site may be behind Cloudflare protection.</div>
-          ${refreshBtn}`}
+      ` : `<div style="font-size:11px;color:var(--muted);">No probe data available — site may be behind Cloudflare protection.</div>${refreshBtn}`}
     `)}
 
     ${probeData?.pages?.length > 1 ? section("Page Meta Tags Audit", "🏷", `
@@ -2087,13 +2269,13 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
 
     ${section("Security Headers", "🛡", `
       <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;">
-        <div>
-          <span style="font-size:28px;font-weight:900;color:${secScore >= 75 ? "var(--green)" : secScore >= 50 ? "var(--yellow)" : "var(--red)"};">${secScore}</span>
-          <span style="font-size:11px;color:var(--muted);margin-left:4px;">/100</span>
+        <div style="text-align:center;flex-shrink:0;">
+          ${lighthouseGauge("SECURITY", secScore, 70)}
         </div>
         <div style="flex:1;">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">${secHeaderCount}/${secHeaderTotal} security headers present</div>
           ${miniBar(secHeaderCount, secHeaderTotal, secScore >= 75 ? "var(--green)" : secScore >= 50 ? "var(--yellow)" : "var(--red)", 8)}
-          <div style="font-size:10px;color:var(--muted);margin-top:4px;">${secHeaderCount}/${secHeaderTotal} security headers present${secHeaderCount === 0 && probeData?.source === "psi-fallback" ? " (headers unavailable via PSI fallback)" : ""}</div>
+          ${secHeaderCount === 0 && probeData?.source === "psi-fallback" ? `<div style="font-size:10px;color:var(--yellow);margin-top:6px;">Headers unavailable via PSI fallback — direct probe was blocked</div>` : ""}
         </div>
       </div>
       <div>
@@ -2112,7 +2294,7 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
         ${statCard("DEPLOYS (30d)", String(recentDeploys), "to GitHub Pages")}
         ${statCard("LAST COMMIT", lastCommitDate ? new Date(lastCommitDate).toLocaleDateString() : "—", "")}
         ${statCard("LAST DEPLOY", lastDeployDate ? new Date(lastDeployDate).toLocaleDateString() : "—", "")}
-        ${statCard("CI STATUS", ciStatus, `<span style="color:${ciColor};">${ciRuns[0]?.name || "deploy-pages"}</span>`)}
+        ${statCard("CI STATUS", ciStatusLabel, `<span style="color:${ciColor};">${ciRuns[0]?.name || "deploy-pages"}</span>`)}
       </div>
       ${commits.length > 0 ? `
         <div style="margin-top:14px;font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;">Recent Commits</div>
@@ -2138,6 +2320,56 @@ function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteErro
   `;
 }
 
+// ── Telemetry tab ────────────────────────────────────────────────────────────
+// Renders async telemetry data. Uses a placeholder that auto-fills via IDB read.
+let _telemetryCache = null;
+let _telemetryLoading = false;
+
+function renderTelemetryTab(state) {
+  // Kick off async load — re-render will fill data on next paint
+  if (!_telemetryCache && !_telemetryLoading) {
+    _telemetryLoading = true;
+    getTelemetrySummary().then((summary) => {
+      _telemetryCache = summary;
+      _telemetryLoading = false;
+      // Patch the placeholder if it exists
+      const el = document.getElementById("telemetry-content");
+      if (el) el.innerHTML = renderTelemetryContent(summary);
+    }).catch(() => { _telemetryLoading = false; });
+  }
+
+  if (_telemetryCache) {
+    return `<div id="telemetry-content">${renderTelemetryContent(_telemetryCache)}</div>`;
+  }
+  return `<div id="telemetry-content"><div style="color:var(--muted);font-size:12px;padding:20px;">Loading telemetry data…</div></div>`;
+}
+
+function renderTelemetryContent(t) {
+  const fmtDuration = (s) => s >= 3600 ? `${Math.floor(s / 3600)}h ${Math.round((s % 3600) / 60)}m` : s >= 60 ? `${Math.round(s / 60)}m` : `${s}s`;
+
+  const viewRows = (t.topViews || []).map((v) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+      <span style="font-size:11px;color:var(--text);">${v.name}</span>
+      <span style="font-size:11px;font-weight:600;color:var(--cyan);">${v.count}</span>
+    </div>`).join("") || '<div style="font-size:11px;color:var(--muted);">No view data yet</div>';
+
+  const featureRows = (t.topFeatures || []).map((f) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+      <span style="font-size:11px;color:var(--text);">${f.name}</span>
+      <span style="font-size:11px;font-weight:600;color:var(--cyan);">${f.count}</span>
+    </div>`).join("") || '<div style="font-size:11px;color:var(--muted);">No feature data yet</div>';
+
+  return `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      ${statCard("Total Sessions", t.totalSessions, `${t.recentSessions} this week`)}
+      ${statCard("Avg Duration", fmtDuration(t.avgDurationSeconds))}
+      ${statCard("Events Tracked", t.totalEvents, `${t.recentEvents} this week`)}
+    </div>
+    ${section("Top Views", "📊", viewRows)}
+    ${section("Top Features", "⚡", featureRows)}
+  `;
+}
+
 // ── Analytics tab bar helper ──────────────────────────────────────────────────
 function analyticsTabBar(activeTab) {
   const tabs = [
@@ -2148,6 +2380,7 @@ function analyticsTabBar(activeTab) {
     { id: "engagement",   label: "Engagement" },
     { id: "intelligence", label: "Intelligence" },
     { id: "advanced",     label: "Advanced" },
+    { id: "telemetry",    label: "Telemetry" },
   ];
   return `
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:12px;">
@@ -2171,6 +2404,7 @@ export function renderAnalyticsView(state) {
     studioBrain = null, competitorData = null, syncMeta = null,
     analyticsTab = "overview",
     websitePsi = null, websiteProbe = null, websiteLoading = false, websiteError = null,
+    websiteTraffic = null,
   } = state;
 
   // Compute all project scores (uses existing cache — fast)
@@ -2224,8 +2458,9 @@ export function renderAnalyticsView(state) {
       ${renderForecast(fcr, scoreHistory, ghData, scorePrev)}
       ${renderGovernance(socr, portfolioFreshness)}
       ${renderAgentOps(aas, beaconData, agentRequests, agentRunHistory, studioBrain)}`,
-    website: () => renderWebsiteAnalytics(websitePsi, websiteProbe, websiteLoading, ghData, websiteError),
+    website: () => renderWebsiteAnalytics(websitePsi, websiteProbe, websiteLoading, ghData, websiteError, socialData, sbData, websiteTraffic),
     advanced: () => renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores, { tdi, svs, ip, rri, rs }),
+    telemetry: () => renderTelemetryTab(state),
   };
 
   return `

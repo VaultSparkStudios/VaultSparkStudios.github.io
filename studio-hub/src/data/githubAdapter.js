@@ -120,8 +120,8 @@ export async function fetchContextFile(repoPath, filePath, token = "", ttlMs = 6
   }
 }
 
-// Fetch PROJECT_STATUS.json and CURRENT_STATE.md for all projects in parallel.
-// Returns { [projectId]: { statusJson: object|null, currentState: string|null } }
+// Fetch Studio OS context files for all projects in parallel.
+// Returns { [projectId]: { statusJson, currentState, latestHandoff, ... } }
 export async function fetchAllProjectContextFiles(projects, token = "", ttlMs = 600000) {
   const results = await Promise.all(
     projects
@@ -136,17 +136,19 @@ export async function fetchAllProjectContextFiles(projects, token = "", ttlMs = 
           return [p.id, ctxBundle.data];
         }
 
-        const [statusRaw, currentState, decisions, brain, soul, taskBoard] = await Promise.all([
+        const [statusRaw, currentState, decisions, brain, soul, taskBoard, latestHandoff, truthAudit] = await Promise.all([
           fetchContextFile(p.githubRepo, "context/PROJECT_STATUS.json", token, ttlMs),
           fetchContextFile(p.githubRepo, "context/CURRENT_STATE.md",   token, ttlMs),
           fetchContextFile(p.githubRepo, "context/DECISIONS.md",       token, ttlMs),
           fetchContextFile(p.githubRepo, "context/BRAIN.md",           token, ttlMs),
           fetchContextFile(p.githubRepo, "context/SOUL.md",            token, ttlMs),
           fetchContextFile(p.githubRepo, "context/TASK_BOARD.md",      token, ttlMs),
+          fetchContextFile(p.githubRepo, "context/LATEST_HANDOFF.md",  token, ttlMs),
+          fetchContextFile(p.githubRepo, "context/TRUTH_AUDIT.md",     token, ttlMs),
         ]);
         let statusJson = null;
         if (statusRaw) { try { statusJson = JSON.parse(statusRaw); } catch { /* ignore */ } }
-        const result = { statusJson, currentState, decisions, brain, soul, taskBoard, fetchedAt: Date.now() };
+        const result = { statusJson, currentState, decisions, brain, soul, taskBoard, latestHandoff, truthAudit, fetchedAt: Date.now() };
         // Cache the bundle keyed by the repo's updatedAt so future calls can skip re-fetching
         if (repoUpdatedAt) {
           writeCache(ctxCacheKey, { repoUpdatedAt, data: result });
@@ -495,15 +497,19 @@ const TICKET_LABEL = "project-listing";
 // Returns { score, total, present: [...], missing: [...] }
 // Uses the GitHub git/trees API (one call) to avoid per-file 404 churn.
 export const STUDIO_OS_REQUIRED_FILES = [
+  "CLAUDE.md",
   "AGENTS.md",
   "context/PROJECT_BRIEF.md",
   "context/SOUL.md",
   "context/BRAIN.md",
   "context/CURRENT_STATE.md",
+  "context/TRUTH_AUDIT.md",
   "context/TASK_BOARD.md",
   "context/LATEST_HANDOFF.md",
   "context/DECISIONS.md",
   "context/SELF_IMPROVEMENT_LOOP.md",
+  "context/PORTFOLIO_CARD.md",
+  "context/PROJECT_STATUS.json",
   "docs/CREATIVE_DIRECTION_RECORD.md",
   "prompts/start.md",
   "prompts/closeout.md",
@@ -896,6 +902,7 @@ export async function fetchAgentRequests(token = "", ttlMs = 120000) {
 // Fetches last-commit dates for key portfolio files in studio-ops.
 // Returns { [filename]: { lastCommit: ISOString, daysOld: number } }.
 const PORTFOLIO_FILES_TO_TRACK = [
+  "portfolio/IGNIS_CORE.md",
   "portfolio/WEEKLY_DIGEST.md",
   "portfolio/DEBT_REPORT.md",
   "portfolio/REVENUE_SIGNALS.md",
@@ -935,5 +942,89 @@ export async function fetchPortfolioFreshness(token = "", ttlMs = 3600000) {
     return result;
   } catch {
     return {};
+  }
+}
+
+export async function fetchIgnisCore(token = "", ttlMs = 3600000) {
+  const key = "ignis_core";
+  const cached = readCache(key, ttlMs);
+  if (cached !== null) return cached;
+  try {
+    const headers = { Accept: "application/vnd.github+json" };
+    if (token) headers.Authorization = `Bearer ${token}`;
+    const res = await fetch(`${BASE}/repos/${STUDIO_OPS_REPO}/contents/portfolio/IGNIS_CORE.md`, { headers });
+    if (!res.ok) { writeCache(key, null); return null; }
+    const json = await res.json();
+    const raw = atob(json.content.replace(/\n/g, ""));
+    const phaseMatch = raw.match(/IGNIS Phase:\s*([^\n]+)/i);
+    const tableMatch = raw.match(/## Project IGNIS Scores[\s\S]*?\n((?:\|.*\n)+)/i);
+    const rows = [];
+    if (tableMatch) {
+      const lines = tableMatch[1]
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line.startsWith("|") && !/^\|---/.test(line));
+      for (const line of lines.slice(1)) {
+        const cells = line.split("|").map((cell) => cell.trim()).filter(Boolean);
+        if (cells.length < 5) continue;
+        const rawScore = cells[1].replace(/\*\*/g, "").trim();
+        const ignisScore = /^\d+$/.test(rawScore) ? Number(rawScore) : null;
+        rows.push({
+          project: cells[0].replace(/\*\*/g, "").trim(),
+          ignisScore,
+          grade: cells[2].replace(/\*\*/g, "").trim(),
+          delta: cells[3].replace(/\*\*/g, "").trim(),
+          note: cells[4].replace(/\*\*/g, "").trim(),
+        });
+      }
+    }
+    const result = {
+      phase: phaseMatch?.[1]?.trim() || null,
+      raw,
+      projectScores: rows,
+      trackedCount: rows.filter((row) => Number.isFinite(row.ignisScore)).length,
+      untrackedCount: rows.filter((row) => !Number.isFinite(row.ignisScore)).length,
+    };
+    writeCache(key, result);
+    return result;
+  } catch {
+    return null;
+  }
+}
+
+// ── GitHub Traffic API ────────────────────────────────────────────────────────
+// Requires token with repo scope + collaborator/admin access.
+// Returns null gracefully on auth failure so UI can hide the section.
+export async function fetchRepoTraffic(repoPath, token = "", ttlMs = 300000) {
+  if (!token) return null;
+  const key = `traffic_${repoPath.replace(/\//g, "_")}`;
+  const cached = readCache(key, ttlMs);
+  if (cached) return cached;
+
+  try {
+    const [views, clones, referrers, paths] = await Promise.all([
+      ghFetch(`/repos/${repoPath}/traffic/views`, token),
+      ghFetch(`/repos/${repoPath}/traffic/clones`, token),
+      ghFetch(`/repos/${repoPath}/traffic/popular/referrers`, token),
+      ghFetch(`/repos/${repoPath}/traffic/popular/paths`, token),
+    ]);
+
+    // 403/401 = token lacks repo scope or user isn't a collaborator
+    if (isError(views) && (views.__status === 403 || views.__status === 401)) return null;
+
+    const data = {
+      views: !isError(views) && views
+        ? { count: views.count || 0, uniques: views.uniques || 0, daily: views.views || [] }
+        : null,
+      clones: !isError(clones) && clones
+        ? { count: clones.count || 0, uniques: clones.uniques || 0, daily: clones.clones || [] }
+        : null,
+      referrers: Array.isArray(referrers) ? referrers.slice(0, 10) : [],
+      paths: Array.isArray(paths) ? paths.slice(0, 10) : [],
+    };
+    writeCache(key, data);
+    return data;
+  } catch {
+    return null;
   }
 }

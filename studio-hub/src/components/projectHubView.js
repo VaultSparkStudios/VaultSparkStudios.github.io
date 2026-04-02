@@ -1,5 +1,8 @@
 import { timeAgo, fmt, escapeHtml, renderEmptyState, safeGetJSON } from "../utils/helpers.js";
 import { explainScore, renderScoreExplainerPanel } from "../utils/scoreExplainer.js";
+import { auditProjectTruth, getTruthAuditTone, computeProtocolGenome } from "../utils/truthAudit.js";
+import { getCachedPrescription, getCachedDevlogDraft } from "../utils/aiPrescriptions.js";
+import { loadStoredCredentials } from "./settingsView.js";
 
 // ── Extracted sub-components ─────────────────────────────────────────────────
 import { renderScorePillarChart, renderForecastAccuracy, renderScoreCalibration, renderScoreHistoryLineChart, renderScoreChangelog, renderProprietaryScoresSection, renderAdvancedProjectStats, renderHealthPrescription, renderLaunchReadiness, renderProjectDoctor, renderIssueTrendChart, renderIssueSignalCorrelation, renderRevenueAttribution } from "./project/projectScorePanel.js";
@@ -10,6 +13,104 @@ import { renderActionQueue } from "./project/projectActionQueue.js";
 
 const LOCAL_PATHS_KEY = "vshub_local_paths";
 function loadLocalPaths() { return safeGetJSON(LOCAL_PATHS_KEY, {}); }
+
+function renderAiPrescription(project) {
+  const { claudeApiKey } = loadStoredCredentials();
+  const prescription = getCachedPrescription(project.id);
+
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">AI PRESCRIPTION</span>
+        <span class="hub-section-badge">${prescription ? "Claude Haiku" : "12h cache"}</span>
+      </div>
+      <div class="hub-section-body">
+        ${prescription
+          ? `
+            <div style="font-size:12px; color:var(--text); line-height:1.65; margin-bottom:12px;">
+              ${escapeHtml(prescription)}
+            </div>
+          `
+          : `
+            <div class="empty-state" style="padding:12px 0; text-align:left;">
+              ${claudeApiKey
+                ? "No cached prescription yet. Refresh to generate a targeted action from the current project signals."
+                : "Add a Claude API key in Settings to generate AI prescriptions for this project."
+              }
+            </div>
+          `
+        }
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button id="refresh-ai-prescription-${project.id}" data-project-id="${project.id}"
+            style="font-size:12px; padding:8px 14px; background:rgba(122,231,199,0.08); border:1px solid rgba(122,231,199,0.22);
+                   border-radius:8px; color:var(--cyan); cursor:pointer;">
+            ${prescription ? "↺ Refresh" : "Generate"}
+          </button>
+          ${!claudeApiKey ? `
+            <button data-nav="settings"
+              style="font-size:12px; padding:8px 14px; background:rgba(255,255,255,0.04); border:1px solid var(--border);
+                     border-radius:8px; color:var(--muted); cursor:pointer;">
+              Open Settings
+            </button>
+          ` : ""}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderDevlogDraftPanel(project) {
+  const { claudeApiKey } = loadStoredCredentials();
+  const draft = getCachedDevlogDraft(project.id);
+
+  return `
+    <div class="hub-section">
+      <div class="hub-section-header">
+        <span class="hub-section-title">DEVLOG DRAFT</span>
+        <span class="hub-section-badge">${draft ? "24h cache" : "Claude Haiku"}</span>
+      </div>
+      <div class="hub-section-body">
+        ${draft
+          ? `
+            <div id="devlog-draft-text-${project.id}"
+              style="font-size:12px; color:var(--text); line-height:1.65; white-space:pre-wrap; margin-bottom:12px;">
+              ${escapeHtml(draft)}
+            </div>
+          `
+          : `
+            <div class="empty-state" style="padding:12px 0; text-align:left;">
+              ${claudeApiKey
+                ? "No cached devlog draft yet. Generate one from recent commit history."
+                : "Add a Claude API key in Settings to generate devlog drafts for this project."
+              }
+            </div>
+          `
+        }
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button id="${draft ? `refresh-devlog-btn-${project.id}` : `generate-devlog-btn-${project.id}`}" data-project-id="${project.id}"
+            style="font-size:12px; padding:8px 14px; background:rgba(105,179,255,0.08); border:1px solid rgba(105,179,255,0.22);
+                   border-radius:8px; color:var(--blue); cursor:pointer;">
+            ${draft ? "↺ Regenerate" : "✎ Generate Devlog Draft"}
+          </button>
+          ${draft ? `
+            <button id="copy-devlog-btn-${project.id}" data-project-id="${project.id}"
+              style="font-size:12px; padding:8px 14px; background:rgba(255,255,255,0.04); border:1px solid var(--border);
+                     border-radius:8px; color:var(--muted); cursor:pointer;">
+              ⎘ Copy
+            </button>
+          ` : ""}
+          ${!claudeApiKey ? `
+            <button data-nav="settings"
+              style="font-size:12px; padding:8px 14px; background:rgba(255,255,255,0.04); border:1px solid var(--border);
+                     border-radius:8px; color:var(--muted); cursor:pointer;">
+              Open Settings
+            </button>
+          ` : ""}
+        </div>
+      </div>
+    </div>
+  `;
+}
 
 
 
@@ -737,15 +838,19 @@ function renderHubListingPipeline(project, tickets = []) {
 
 // ── Studio OS required files for compliance panel ─────────────────────────────
 const STUDIO_OS_FILES = [
+  { key: "CLAUDE.md",                           label: "CLAUDE" },
   { key: "AGENTS.md",                           label: "AGENTS" },
   { key: "context/PROJECT_BRIEF.md",            label: "BRIEF" },
   { key: "context/SOUL.md",                    label: "SOUL" },
   { key: "context/BRAIN.md",                   label: "BRAIN" },
   { key: "context/CURRENT_STATE.md",           label: "STATE" },
+  { key: "context/TRUTH_AUDIT.md",             label: "TRUTH" },
   { key: "context/TASK_BOARD.md",              label: "TASKS" },
   { key: "context/LATEST_HANDOFF.md",          label: "HANDOFF" },
   { key: "context/DECISIONS.md",               label: "DECISIONS" },
   { key: "context/SELF_IMPROVEMENT_LOOP.md",   label: "SIL" },
+  { key: "context/PORTFOLIO_CARD.md",          label: "CARD" },
+  { key: "context/PROJECT_STATUS.json",        label: "STATUS" },
   { key: "docs/CREATIVE_DIRECTION_RECORD.md",  label: "CDR" },
   { key: "prompts/start.md",                   label: "start" },
   { key: "prompts/closeout.md",                label: "closeout" },
@@ -756,6 +861,8 @@ const STUDIO_OS_FILES = [
 function renderStudioOpsSection(project, contextFiles, tickets = [], isLoadingCtx = false) {
   const ctx = contextFiles?.[project.id];
   const { statusJson, currentState } = ctx || {};
+  const truthAudit = ctx ? auditProjectTruth(project, ctx) : null;
+  const truthTone = truthAudit ? getTruthAuditTone(truthAudit.score) : null;
 
   // Context files fetched by the hub (SOUL, BRAIN, etc.)
   const ctxFiles = [
@@ -763,6 +870,7 @@ function renderStudioOpsSection(project, contextFiles, tickets = [], isLoadingCt
     { key: "currentState", label: "CURRENT_STATE" },
     { key: "decisions",    label: "DECISIONS" },
     { key: "taskBoard",    label: "TASK_BOARD" },
+    { key: "truthAudit",   label: "TRUTH_AUDIT" },
     { key: "brain",        label: "BRAIN" },
     { key: "soul",         label: "SOUL" },
   ];
@@ -894,6 +1002,9 @@ function renderStudioOpsSection(project, contextFiles, tickets = [], isLoadingCt
             ${statusJson.phase     ? `<div class="data-row"><span class="label">Phase</span><span class="value">${statusJson.phase}</span></div>` : ""}
             ${statusJson.lastUpdated ? `<div class="data-row"><span class="label">Updated</span><span class="value">${statusJson.lastUpdated}</span></div>` : ""}
             ${statusJson.health    ? `<div class="data-row"><span class="label">Health</span><span class="value">${statusJson.health}</span></div>` : ""}
+            ${statusJson.silScore != null ? `<div class="data-row"><span class="label">SIL</span><span class="value">${statusJson.silScore}/50${statusJson.silAvg3 != null ? ` · avg3 ${statusJson.silAvg3}` : ""}</span></div>` : ""}
+            ${statusJson.truthAuditStatus ? `<div class="data-row"><span class="label">Truth</span><span class="value">${statusJson.truthAuditStatus}${statusJson.truthAuditLastRun ? ` · ${statusJson.truthAuditLastRun}` : ""}</span></div>` : ""}
+            ${truthAudit?.stats?.contradictionCount ? `<div class="data-row"><span class="label">Contradictions</span><span class="value" style="color:var(--gold);">${truthAudit.stats.contradictionCount}</span></div>` : ""}
             ${Array.isArray(statusJson.blockers) && statusJson.blockers.length > 0 ? `
               <div class="data-row" style="align-items:flex-start;">
                 <span class="label">Blockers</span>
@@ -903,6 +1014,56 @@ function renderStudioOpsSection(project, contextFiles, tickets = [], isLoadingCt
             ${statusJson.notes ? `
               <div style="margin-top:8px; font-size:12px; color:var(--muted); font-style:italic;">${statusJson.notes}</div>
             ` : ""}
+          </div>
+        ` : ""}
+        ${truthAudit ? `
+          <div style="margin-bottom:${currentState ? "16px" : "0"}; padding:10px 12px; border-radius:8px;
+                      background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.08);">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:${truthAudit.findings.length ? "8px" : "0"};">
+              <div style="font-size:11px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted);">Truth Audit</div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:12px; font-weight:800; color:${truthTone.color};">${truthAudit.score}/100</span>
+                <span style="font-size:10px; font-weight:700; color:${truthTone.color}; border:1px solid ${truthTone.color}40; border-radius:999px; padding:1px 6px;">${truthTone.label}</span>
+              </div>
+            </div>
+            ${truthAudit.findings.length ? `
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                ${truthAudit.findings.slice(0, 4).map((finding) => {
+                  const color = finding.severity === "high" ? "var(--red)" : finding.severity === "medium" ? "var(--gold)" : "var(--muted)";
+                  return `
+                    <div style="font-size:11px; color:${color}; line-height:1.45;">
+                      <span style="font-weight:700; text-transform:uppercase; letter-spacing:0.05em;">${finding.severity}</span>
+                      <span style="color:var(--text); margin-left:6px;">${escapeHtml(finding.message)}</span>
+                    </div>
+                  `;
+                }).join("")}
+              </div>
+            ` : `<div style="font-size:11px; color:var(--green);">Project status, task board, and handoff look aligned.</div>`}
+            ${truthAudit.stats?.contradictions?.length ? `
+              <div style="margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08); display:flex; flex-direction:column; gap:5px;">
+                ${truthAudit.stats.contradictions.slice(0, 3).map((entry) => `
+                  <div style="font-size:11px; color:var(--muted); line-height:1.45;">• ${escapeHtml(entry)}</div>
+                `).join("")}
+              </div>
+            ` : ""}
+            ${(() => {
+              const genome = computeProtocolGenome(ctx || {}, ctx?.statusJson || null);
+              const genomeColor = genome.total >= 20 ? "var(--green)" : genome.total >= 12 ? "var(--gold)" : "var(--red)";
+              return `
+                <div style="margin-top:8px; padding-top:8px; border-top:1px solid rgba(255,255,255,0.08);">
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                    <span style="font-size:10px; font-weight:700; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted);">Protocol Genome</span>
+                    <span style="font-size:11px; font-weight:800; color:${genomeColor};">${genome.total}/${genome.max}</span>
+                  </div>
+                  <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                    ${genome.dimensions.map((d) => {
+                      const c = d.score >= 4 ? "var(--green)" : d.score >= 2 ? "var(--gold)" : "var(--red)";
+                      return `<span title="${d.name}: ${d.score}/${d.max}" style="font-size:9px; padding:1px 6px; border-radius:4px; border:1px solid ${c}40; color:${c}; font-weight:600;">${d.name.split(" ")[0]} ${d.score}</span>`;
+                    }).join("")}
+                  </div>
+                </div>
+              `;
+            })()}
           </div>
         ` : ""}
         ${currentState ? `

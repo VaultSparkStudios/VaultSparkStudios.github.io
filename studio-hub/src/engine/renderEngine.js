@@ -52,11 +52,24 @@ function stateFingerprint(viewKey, state) {
       tagFilter: state.tagFilter,
       compactCards: state.compactCards,
       lastSyncTimestamp: state.lastSyncTimestamp,
+      projectTab: state.projectTab,
     };
   }
 
+  if (viewKey === "vault-admin") {
+    return { ...base, adminTab: state.adminTab, sbData: state.sbData };
+  }
+
   if (viewKey === "analytics") {
-    return { ...base, ghData: state.ghData, sbData: state.sbData, socialData: state.socialData, analyticsTab: state.analyticsTab };
+    return {
+      ...base,
+      ghData: state.ghData, sbData: state.sbData, socialData: state.socialData,
+      analyticsTab: state.analyticsTab,
+      websiteLoading: state.websiteLoading,
+      websitePsi: !!state.websitePsi,
+      websiteError: state.websiteError,
+      websiteTraffic: !!state.websiteTraffic,
+    };
   }
 
   if (viewKey === "settings") {

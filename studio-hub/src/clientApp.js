@@ -2,7 +2,7 @@ import { getHubRuntimeConfig } from "./config/runtimeConfig.js";
 import { PROJECTS, getProjectById, validateRegistry } from "./data/studioRegistry.js";
 import { scoreProject, getGrade, invalidateWeightsCache, clearScoringCache } from "./utils/projectScoring.js";
 import { fmt, daysSince, commitVelocity, debounce, safeGetJSON, safeSetJSON } from "./utils/helpers.js";
-import { fetchAllProjectContextFiles, fetchRepoLanguages, fetchRepoBranches, fetchRepoTodoCount, fetchDependencyAlerts, fetchProjectTickets, submitProjectTicket, fetchStudioOsCompliance, fetchAgentRequests, submitAgentRequest } from "./data/githubAdapter.js";
+import { fetchAllProjectContextFiles, fetchRepoLanguages, fetchRepoBranches, fetchRepoTodoCount, fetchDependencyAlerts, fetchProjectTickets, submitProjectTicket, fetchStudioOsCompliance, fetchAgentRequests, submitAgentRequest, fetchRepoTraffic } from "./data/githubAdapter.js";
 import { fetchAllSupabaseData } from "./data/supabaseAdapter.js";
 import { fetchAllSocialFeeds } from "./data/socialFeedsAdapter.js";
 import { renderNavigation } from "./components/navigation.js";
@@ -45,9 +45,15 @@ import { showOnboardingModal, showScoreModal } from "./components/hub/hubModals.
 import { initToastContainer, showToast } from "./components/toastManager.js";
 import { memoRender, clearMemoCache, cleanupEvents, patchDOM } from "./engine/renderEngine.js";
 import { initIDB, migrateFromLocalStorage } from "./engine/idb.js";
+import { startSession, endSession, trackView, trackFeature } from "./utils/sessionTelemetry.js";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const config = getHubRuntimeConfig();
+
+// Global handler for error-fallback reload button (inline onclick blocked by CSP)
+document.addEventListener("click", (e) => {
+  if (e.target.closest("[data-hub-reload]")) location.reload();
+}, true);
 
 // ── Debug mode ────────────────────────────────────────────────────────────────
 const DEBUG = typeof window !== "undefined" && new URLSearchParams(window.location.search).has("debug");
@@ -140,6 +146,7 @@ const state = {
   floorSort:          "score",
 
   studioBrain:           null,
+  ignisCore:             null,
   agentRequests:         [],
   portfolioFreshness:    {},
   portfolioFiles:        {},
@@ -162,6 +169,7 @@ const state = {
   websitePsi:          null,
   websiteProbe:        null,
   websiteLoading:      false,
+  websiteTraffic:      null,
 
   lastSyncTimestamp:   null,
   timeTravelIndex:     null,
@@ -295,6 +303,8 @@ function render() {
 
   try {
     _renderInner(app);
+    // Track view changes for session telemetry
+    if (state.activeView !== _lastRenderedView) trackView(state.activeView);
     // Compute studio avg for favicon
     const _allScored = PROJECTS.map((p) => scoreProject(p, state.ghData[p.githubRepo] || null, state.sbData, state.socialData));
     state._studioAvg = _allScored.length ? Math.round(_allScored.reduce((s, x) => s + x.total, 0) / _allScored.length) : 0;
@@ -309,7 +319,7 @@ function render() {
           (err?.stack || err?.message || String(err)).replace(/</g, "&lt;")
         }</pre>
         <p style="color:#95a3b7; font-size:13px; margin-top:16px;">Check the browser console (F12) for full details.</p>
-        <button onclick="location.reload()" style="margin-top:12px; padding:8px 20px; background:rgba(122,231,199,0.15);
+        <button data-hub-reload style="margin-top:12px; padding:8px 20px; background:rgba(122,231,199,0.15);
           border:1px solid rgba(122,231,199,0.3); border-radius:8px; color:#7ae7c7; cursor:pointer; font-size:13px;">Reload</button>
       </div>`;
   }
@@ -435,10 +445,12 @@ function handlePaletteAction(actionId) {
     state.scoreHistory = loadScoreHistory();
     state.scorePrev    = scorePrevFromHistory(state.scoreHistory);
     logActivity("manual_snapshot", "");
+    trackFeature("manual-snapshot");
     render();
   } else if (actionId === "action:clear-cache") {
     clearSessionCache();
     logActivity("clear_cache", "");
+    trackFeature("clear-cache");
     syncAll();
   } else if (actionId === "action:digest") {
     generateWeeklyDigest(state, logActivity);
@@ -906,6 +918,7 @@ function bindEvents() {
       pushViewHash(view);
       if (view.startsWith("project:")) {
         logActivity("project_open", view.slice("project:".length));
+        trackFeature("project-open");
         addRecentProject(view.slice("project:".length));
       }
       render();
@@ -940,9 +953,11 @@ function bindEvents() {
     Promise.all([
       fetchPageSpeedData(config.pagespeedApiKey).catch(() => null),
       fetchSiteProbe().catch(() => null),
-    ]).then(([psi, probe]) => {
+      fetchRepoTraffic("VaultSparkStudios/VaultSparkStudios.github.io", config.githubToken).catch(() => null),
+    ]).then(([psi, probe, traffic]) => {
       state.websitePsi = psi;
       state.websiteProbe = mergeProbeWithFallback(probe, psi);
+      state.websiteTraffic = traffic;
       state.websiteLoading = false;
       if (!psi && !probe) state.websiteError = "Both PageSpeed and site probe failed. Check network or API key.";
       render();
@@ -997,6 +1012,7 @@ function bindEvents() {
       try { sessionStorage.removeItem("vshub_webanalytics_pagespeed_all"); sessionStorage.removeItem("vshub_webanalytics_site_probe"); } catch {}
       state.websitePsi = null;
       state.websiteProbe = null;
+      state.websiteTraffic = null;
       loadWebsiteAnalytics();
       return;
     }
@@ -1441,7 +1457,10 @@ if (_bootHash.tag)  state.tagFilter     = _bootHash.tag;
 initGlobalSearch();
 
 // Initialize IndexedDB and migrate large datasets from localStorage
-initIDB().then(() => migrateFromLocalStorage()).catch(() => {});
+initIDB().then(() => { migrateFromLocalStorage(); startSession(); }).catch(() => {});
+
+// End session telemetry on page unload
+window.addEventListener("pagehide", () => endSession());
 
 if (!isUnlocked()) {
   // Mount the gate first — it's a full-screen overlay so it must show even

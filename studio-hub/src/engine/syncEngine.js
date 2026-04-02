@@ -13,7 +13,7 @@ import {
   fetchAllRepos, fetchOrgActivity, fetchBeaconGist, getRateLimitInfo,
   clearFetchErrors, countCachedRepos,
   fetchStudioBrain, fetchAgentRequests, fetchPortfolioFreshness,
-  fetchPortfolioFileContents, fetchAgentRunHistory, submitAgentRequest,
+  fetchPortfolioFileContents, fetchAgentRunHistory, fetchIgnisCore, submitAgentRequest,
 } from "../data/githubAdapter.js";
 import { fetchAllSupabaseData } from "../data/supabaseAdapter.js";
 import { fetchAllSocialFeeds } from "../data/socialFeedsAdapter.js";
@@ -248,12 +248,14 @@ export function createSyncEngine(ctx) {
         fetchPortfolioFreshness(config.githubToken, 300000),
         fetchPortfolioFileContents(config.githubToken, 600000),
         fetchAgentRunHistory(config.githubToken, 300000),
-      ]).then(([brain, requests, freshness, files, runHistory]) => {
+        fetchIgnisCore(config.githubToken, 600000),
+      ]).then(([brain, requests, freshness, files, runHistory, ignis]) => {
         if (brain.status === "fulfilled")      state.studioBrain      = brain.value;
         if (requests.status === "fulfilled")   state.agentRequests    = requests.value || [];
         if (freshness.status === "fulfilled")  state.portfolioFreshness = freshness.value || {};
         if (files.status === "fulfilled")      state.portfolioFiles   = files.value || {};
         if (runHistory.status === "fulfilled") state.agentRunHistory  = runHistory.value || {};
+        if (ignis.status === "fulfilled")      state.ignisCore        = ignis.value || null;
         render();
       });
     }

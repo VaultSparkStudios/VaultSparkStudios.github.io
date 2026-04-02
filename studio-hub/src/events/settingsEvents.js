@@ -1,6 +1,7 @@
 // Settings view event handlers — extracted from clientApp.js
 import { scoreColor } from "../utils/helpers.js";
 import { showToast } from "../components/toastManager.js";
+import { verifyDeploy, extractRepoMeta, renderDeployVerifyResult } from "../utils/deployVerify.js";
 
 export function bindSettingsEvents(ctx) {
   const {
@@ -757,5 +758,25 @@ export function bindSettingsEvents(ctx) {
     if (statusEl) { statusEl.textContent = "Saved — reloading data…"; statusEl.style.color = "var(--green)"; }
     logActivity("settings_save", "");
     syncAll();
+  });
+
+  // ── Deploy Verification ─────────────────────────────────────────────────────
+  document.getElementById("deploy-verify-btn")?.addEventListener("click", async () => {
+    const statusEl = document.getElementById("deploy-verify-status");
+    const resultEl = document.getElementById("deploy-verify-result");
+    if (statusEl) { statusEl.textContent = "Checking live site…"; statusEl.style.color = "var(--muted)"; }
+    if (resultEl) resultEl.innerHTML = "";
+    try {
+      const repoMeta = extractRepoMeta();
+      const result = await verifyDeploy(repoMeta);
+      if (statusEl) {
+        statusEl.textContent = result.status === "aligned" ? "✓ Aligned" : "⚠ Drift detected";
+        statusEl.style.color = result.status === "aligned" ? "var(--green)" : "var(--gold)";
+      }
+      if (resultEl) resultEl.innerHTML = renderDeployVerifyResult(result);
+      logActivity("deploy_verify", result.status);
+    } catch (err) {
+      if (statusEl) { statusEl.textContent = `✗ ${err.message}`; statusEl.style.color = "var(--red)"; }
+    }
   });
 }

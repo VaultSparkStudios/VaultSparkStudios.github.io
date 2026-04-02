@@ -99,15 +99,16 @@ export function dismissNotification(achievementId) {
 // ── Evaluation Engine ────────────────────────────────────────────────────────
 // Called each render to check for newly unlocked achievements.
 // Returns array of newly unlocked achievement IDs.
-export function evaluateAchievements(allScores, ghData, sbData, socialData, scoreHistory, scorePrev, studioScore) {
+export function evaluateAchievements(allScores, ghData, sbData, socialData, scoreHistory, scorePrev, studioScore, options = {}) {
   const unlocked = loadUnlocked();
   const newlyUnlocked = [];
+  const nowTs = Number.isFinite(options.now) ? options.now : Date.now();
 
   function unlock(id) {
     if (unlocked[id]) return;
     const def = ACHIEVEMENTS.find(a => a.id === id);
     if (!def) return;
-    unlocked[id] = { ts: Date.now(), xp: def.xp };
+    unlocked[id] = { ts: nowTs, xp: def.xp };
     newlyUnlocked.push(def);
   }
 
@@ -148,7 +149,7 @@ export function evaluateAchievements(allScores, ghData, sbData, socialData, scor
   // Streak achievements
   for (const d of Object.values(ghData)) {
     if (!d?.commits?.length) continue;
-    const todayDay = Math.floor(Date.now() / 86400000);
+    const todayDay = Math.floor(nowTs / 86400000);
     const commitDays = new Set(d.commits.map(c => Math.floor(new Date(c.date).getTime() / 86400000)));
     let streak = 0;
     for (let day = todayDay; day >= todayDay - 90; day--) {
@@ -205,8 +206,8 @@ export function evaluateAchievements(allScores, ghData, sbData, socialData, scor
     if (d?.repo && d.repo.openIssues === 0) unlock("zero_issues");
   }
 
-  // Night owl
-  const hour = new Date().getHours();
+  // Night owl — use UTC hours so behaviour is consistent in CI and production
+  const hour = new Date(nowTs).getUTCHours();
   if (hour >= 0 && hour < 5) unlock("night_owl");
 
   // Sprint complete — checked externally via unlockSprintComplete()
@@ -227,7 +228,7 @@ export function evaluateAchievements(allScores, ghData, sbData, socialData, scor
     saveUnlocked(unlocked);
     const notifs = loadNotifications();
     for (const a of newlyUnlocked) {
-      notifs.push({ id: a.id, name: a.name, icon: a.icon, tier: a.tier, xp: a.xp, ts: Date.now() });
+      notifs.push({ id: a.id, name: a.name, icon: a.icon, tier: a.tier, xp: a.xp, ts: nowTs });
     }
     saveNotifications(notifs);
   }

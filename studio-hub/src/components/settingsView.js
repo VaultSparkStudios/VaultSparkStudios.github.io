@@ -586,6 +586,18 @@ export function renderSettingsView(state) {
             </div>
           </div>
 
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">DEPLOY VERIFICATION</span></div>
+            <div class="panel-body">
+              <div style="${hintStyle} margin-bottom:10px;">Compare the live site against this repo's source to detect CSP/meta/script drift.</div>
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <button class="btn-primary" id="deploy-verify-btn" style="background:rgba(255,201,116,0.1); border-color:rgba(255,201,116,0.25); color:var(--gold);">Verify Deploy</button>
+                <span id="deploy-verify-status" style="font-size:11px; color:var(--muted);"></span>
+              </div>
+              <div id="deploy-verify-result" style="margin-top:12px;"></div>
+            </div>
+          </div>
+
           <div style="display:flex; align-items:center; gap:12px;">
             <button class="btn-primary" id="save-data-btn">Save Sync Settings</button>
             <span id="data-status" style="font-size:12px; color:var(--muted);"></span>

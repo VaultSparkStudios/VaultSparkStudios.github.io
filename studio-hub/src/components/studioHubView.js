@@ -24,12 +24,14 @@ import { renderScoreLedger, getLedgerEntries } from "./hub/scoreLedger.js";
 import { renderStudioHealthTimeline } from "./hub/healthTimeline.js";
 import { renderStudioBrainPanel, renderBrainHistoryPanel } from "./hub/brainPanel.js";
 import { renderAgentIntelligencePanel } from "./hub/agentIntelligence.js";
+import { renderIgnisPanel } from "./hub/ignisPanel.js";
 import { renderXPBar, renderAchievementToasts, renderTrophyShowcase, renderChallengePanel, renderVaultMembershipPanel, renderXPActivityFeed } from "./hub/gamificationPanel.js";
 import { showToast } from "./toastManager.js";
 import { evaluateAchievements, clearNotifications } from "../utils/achievements.js";
 import { grantWeeklyBonus, syncAchievementXP, grantScoreImprovementXP } from "../utils/studioXP.js";
 import { getActiveChallenges, claimChallengeXP } from "../utils/challenges.js";
 import { getPredictiveAlerts, renderPredictiveAlerts } from "../utils/predictiveAlerts.js";
+import { auditProjectTruth, getTruthAuditTone } from "../utils/truthAudit.js";
 
 // Re-export for backwards compatibility (clientApp.js imports these from here)
 export { _pushAlertHistory as pushAlertHistory, _snoozeAlert as snoozeAlert };
@@ -261,6 +263,70 @@ function renderPortfolioHealthGauge(allScores, ghData, studioOps = {}) {
             </div>
           `).join("")}
           ${agentRequests.length > 0 ? `<div style="font-size:10px; color:var(--gold); margin-top:4px;">${agentRequests.length} pending agent request${agentRequests.length > 1 ? "s" : ""}</div>` : ""}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function renderTruthDebtPanel(contextFiles = {}) {
+  const rows = PROJECTS
+    .map((project) => {
+      const ctx = contextFiles?.[project.id];
+      if (!ctx) return null;
+      const audit = auditProjectTruth(project, ctx);
+      const tone = getTruthAuditTone(audit.score);
+      return {
+        project,
+        audit,
+        tone,
+      };
+    })
+    .filter(Boolean)
+    .sort((a, b) =>
+      (b.audit.stats.contradictionCount || 0) - (a.audit.stats.contradictionCount || 0) ||
+      a.audit.score - b.audit.score
+    );
+
+  if (!rows.length) return "";
+
+  const debt = rows.reduce((sum, row) => sum + (row.audit.stats.contradictionCount || 0), 0);
+  const flagged = rows.filter((row) => row.audit.findings.length > 0).length;
+
+  return `
+    <div class="panel" style="margin-bottom:24px; border-color:rgba(255,201,116,0.18);">
+      <div class="panel-header">
+        <span class="panel-title">TRUTH DEBT</span>
+        <span style="font-size:11px; color:var(--muted);">${debt} contradictions · ${flagged} projects with findings</span>
+      </div>
+      <div class="panel-body" style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:14px;">
+        <div style="display:flex; flex-direction:column; gap:6px;">
+          ${rows.slice(0, 6).map((row) => `
+            <div style="padding:8px 10px; border-radius:7px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:3px;">
+                <span style="font-size:12px; font-weight:600; color:var(--text);">${row.project.name}</span>
+                <span style="font-size:10px; font-weight:700; color:${row.tone.color}; border:1px solid ${row.tone.color}40; border-radius:999px; padding:1px 6px;">${row.audit.score}/100</span>
+              </div>
+              <div style="font-size:10px; color:var(--muted); line-height:1.45;">
+                ${row.audit.stats.truthStatus || "unknown"} · contradictions ${row.audit.stats.contradictionCount || 0}${row.audit.stats.truthAuditLastRun ? ` · audited ${row.audit.stats.truthAuditLastRun}` : ""}
+              </div>
+              <div style="font-size:11px; color:var(--muted); margin-top:4px; line-height:1.45;">
+                ${row.audit.stats.contradictions?.[0] || row.audit.findings?.[0]?.message || "No contradiction text recorded."}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06);">
+            <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:4px;">Founder risk</div>
+            <div style="font-size:12px; color:var(--text); line-height:1.5;">The hub now treats contradiction debt separately from score health, so stale summaries and truth mismatches stay visible even when project code health looks fine.</div>
+          </div>
+          <div style="padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06);">
+            <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:4px;">Most common issues</div>
+            <div style="font-size:11px; color:var(--muted); line-height:1.55;">
+              ${rows.flatMap((row) => row.audit.findings.slice(0, 1)).slice(0, 4).map((finding) => `• ${finding.message}`).join("<br>") || "No findings recorded."}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1903,6 +1969,7 @@ export function renderStudioHubView(state) {
     studioBrain = null, portfolioFreshness = {},
     portfolioFiles = {}, agentRequests = [],
     agentRunHistory = {},
+    ignisCore = null,
     githubStatusAlert = null,
     competitorData = null,
   } = state;
@@ -2012,6 +2079,8 @@ export function renderStudioHubView(state) {
       })()}
       ${renderStudioBrainPanel(studioBrain)}
       ${renderBrainHistoryPanel(studioBrain)}
+      ${renderTruthDebtPanel(contextFiles)}
+      ${renderIgnisPanel(ignisCore, portfolioFreshness)}
       ${renderAgentIntelligencePanel(portfolioFiles, portfolioFreshness)}
       ${renderCriticalBanner(ghData)}
       ${renderVitals(ghData, sbData, socialData, studioScore, beaconData, { portfolioFreshness, agentRequests, studioBrain }, state.lastSyncTimestamp)}

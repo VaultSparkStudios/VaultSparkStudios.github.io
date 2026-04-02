@@ -2,6 +2,7 @@ import { PROJECTS } from "../../data/studioRegistry.js";
 import { daysSince, safeGetJSON, safeSetJSON } from "../../utils/helpers.js";
 import { getDecayingProjects } from "../../utils/scoreForecast.js";
 import { computeHotStreak } from "./hubHelpers.js";
+import { analyzeRunway } from "../../utils/runwayLoader.js";
 
 // ── Snapshot diff: "What changed since last visit" ────────────────────────────
 // Returns an array of { project, prev, curr, delta } for projects whose scores
@@ -361,6 +362,23 @@ export function renderMorningBrief(ghData, sbData, allScores, scoreHistory, beac
   for (const { repo, delta } of competitorAlerts) {
     lines.push({ priority: 2, icon: "📈", color: "var(--gold)",
       text: `Competitor surge: ${repo} +${delta} stars this session` });
+  }
+
+  // Runway auto-loader: check per-project task boards for thin Now queues
+  for (const p of PROJECTS) {
+    const taskBoard = ghData?.[p.githubRepo]?.contextFiles?.taskBoard || "";
+    if (!taskBoard) continue;
+    const runway = analyzeRunway(taskBoard);
+    if (!runway.runwayOk) {
+      const silCount = runway.suggestions.filter((s) => /\[SIL\]/i.test(s.task)).length;
+      const detail = silCount > 0 ? ` (${silCount} [SIL] items ready to promote)` : "";
+      lines.push({
+        priority: 1,
+        icon: "⛔",
+        color: "var(--gold)",
+        text: `${p.name}: low runway — Now queue has ${runway.nowCount} task${runway.nowCount !== 1 ? "s" : ""}${detail}`,
+      });
+    }
   }
 
   if (!lines.length) {
