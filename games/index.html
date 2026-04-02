@@ -545,12 +545,22 @@
         </p>
         <div class="hero-stats" aria-label="Game library stats">
           <div class="hero-stat">
-            <span class="hero-stat-val">3</span>
+            <span class="hero-stat-val">1</span>
             <span class="hero-stat-label">Live Now</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
           <div class="hero-stat">
-            <span class="hero-stat-val">2</span>
+            <span class="hero-stat-val">1</span>
+            <span class="hero-stat-label">Beta</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-val">1</span>
+            <span class="hero-stat-label">Vaulted</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-val">4</span>
             <span class="hero-stat-label">In Development</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
@@ -574,20 +584,21 @@
 
         <!-- Filter bar: Status -->
         <div class="filter-bar" role="group" aria-label="Filter games by status">
-          <button class="filter-btn active" data-filter="all">All Games</button>
-          <button class="filter-btn" data-filter="live">Live Now</button>
-          <button class="filter-btn" data-filter="beta">Beta</button>
-          <button class="filter-btn" data-filter="dev">In Development</button>
-          <button class="filter-btn" data-filter="concept">Concept</button>
+          <button type="button" class="filter-btn active" data-filter="all">All Games</button>
+          <button type="button" class="filter-btn" data-filter="live">Live Now</button>
+          <button type="button" class="filter-btn" data-filter="beta">Beta</button>
+          <button type="button" class="filter-btn" data-filter="vaulted">Vaulted</button>
+          <button type="button" class="filter-btn" data-filter="dev">In Development</button>
+          <button type="button" class="filter-btn" data-filter="concept">Concept</button>
         </div>
         <!-- Filter bar: Genre -->
         <div class="filter-bar" role="group" aria-label="Filter games by genre" style="margin-top:0.5rem;">
-          <button class="genre-btn active" data-genre="all">All Genres</button>
-          <button class="genre-btn" data-genre="sports">Sports</button>
-          <button class="genre-btn" data-genre="action">Action</button>
-          <button class="genre-btn" data-genre="strategy">Strategy</button>
-          <button class="genre-btn" data-genre="mmorpg">MMORPG</button>
-          <button class="genre-btn" data-genre="puzzle">Puzzle</button>
+          <button type="button" class="genre-btn active" data-genre="all">All Genres</button>
+          <button type="button" class="genre-btn" data-genre="sports">Sports</button>
+          <button type="button" class="genre-btn" data-genre="action">Action</button>
+          <button type="button" class="genre-btn" data-genre="strategy">Strategy</button>
+          <button type="button" class="genre-btn" data-genre="mmorpg">MMORPG</button>
+          <button type="button" class="genre-btn" data-genre="puzzle">Puzzle</button>
         </div>
 
         <!-- Live & Playable -->
@@ -868,74 +879,89 @@
   <script src="/assets/nav-toggle.js" defer></script>
   <script>
     // Game filter — status + genre
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const genreBtns  = document.querySelectorAll('.genre-btn');
-    const cards = document.querySelectorAll('#games-grid .game-card');
-    const featuredCard = document.querySelector('.game-card-featured');
-    const sectionLabels = document.querySelectorAll('.games-section-label');
-    const emptyState = document.getElementById('games-empty');
+    (function () {
+      function initFilters() {
+        var filterBtns   = document.querySelectorAll('.filter-btn');
+        var genreBtns    = document.querySelectorAll('.genre-btn');
+        var cards        = document.querySelectorAll('#games-grid .game-card');
+        var featuredCard = document.querySelector('.game-card-featured');
+        var sectionLabels = document.querySelectorAll('.games-section-label');
+        var emptyState   = document.getElementById('games-empty');
 
-    let activeStatus = 'all';
-    let activeGenre  = 'all';
+        if (!filterBtns.length || !genreBtns.length) return;
 
-    function applyFilters() {
-      function cardVisible(card) {
-        const statusOk = activeStatus === 'all' || card.dataset.status === activeStatus;
-        const genreOk  = activeGenre  === 'all' || card.dataset.genre  === activeGenre;
-        return statusOk && genreOk;
+        var activeStatus = 'all';
+        var activeGenre  = 'all';
+
+        function cardVisible(card) {
+          var statusOk = activeStatus === 'all' || card.dataset.status === activeStatus;
+          var genreOk  = activeGenre  === 'all' || card.dataset.genre  === activeGenre;
+          return statusOk && genreOk;
+        }
+
+        function applyFilters() {
+          var visibleCount = 0;
+
+          // Featured card
+          if (featuredCard) {
+            var featuredOk = cardVisible(featuredCard);
+            if (featuredOk) { featuredCard.removeAttribute('data-hidden'); visibleCount++; }
+            else              featuredCard.setAttribute('data-hidden', '');
+          }
+
+          // Grid cards
+          cards.forEach(function (card) {
+            if (cardVisible(card)) {
+              card.removeAttribute('data-hidden');
+              visibleCount++;
+            } else {
+              card.setAttribute('data-hidden', '');
+            }
+          });
+
+          // Section labels
+          sectionLabels.forEach(function (label) {
+            var section = label.dataset.section;
+            if (activeStatus === 'all' && activeGenre === 'all') {
+              label.style.display = '';
+            } else {
+              var hasMatch = activeStatus === 'all'
+                ? true
+                : (activeStatus === section ||
+                   (section === 'live' && (activeStatus === 'live' || activeStatus === 'beta' || activeStatus === 'vaulted')) ||
+                   (section === 'dev'  && (activeStatus === 'dev'  || activeStatus === 'concept')));
+              label.style.display = hasMatch ? '' : 'none';
+            }
+          });
+
+          if (emptyState) emptyState.classList.toggle('visible', visibleCount === 0);
+        }
+
+        filterBtns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            filterBtns.forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            activeStatus = btn.dataset.filter;
+            applyFilters();
+          });
+        });
+
+        genreBtns.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            genreBtns.forEach(function (b) { b.classList.remove('active'); });
+            btn.classList.add('active');
+            activeGenre = btn.dataset.genre;
+            applyFilters();
+          });
+        });
       }
 
-      // Featured card
-      const featuredOk = cardVisible(featuredCard);
-      if (featuredOk) featuredCard.removeAttribute('data-hidden');
-      else            featuredCard.setAttribute('data-hidden', '');
-
-      // Grid cards
-      let visibleCount = featuredOk ? 1 : 0;
-      cards.forEach(card => {
-        if (cardVisible(card)) {
-          card.removeAttribute('data-hidden');
-          visibleCount++;
-        } else {
-          card.setAttribute('data-hidden', '');
-        }
-      });
-
-      // Section labels
-      sectionLabels.forEach(label => {
-        const section = label.dataset.section;
-        if (activeStatus === 'all' && activeGenre === 'all') {
-          label.style.display = '';
-        } else {
-          const hasMatch = activeStatus === 'all'
-            ? true
-            : (activeStatus === section ||
-               (section === 'live' && (activeStatus === 'live' || activeStatus === 'beta')) ||
-               (section === 'dev'  && (activeStatus === 'dev'  || activeStatus === 'concept')));
-          label.style.display = hasMatch ? '' : 'none';
-        }
-      });
-
-      emptyState.classList.toggle('visible', visibleCount === 0);
-    }
-
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeStatus = btn.dataset.filter;
-        applyFilters();
-      });
-    });
-
-    genreBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        genreBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeGenre = btn.dataset.genre;
-        applyFilters();
-      });
-    });
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFilters);
+      } else {
+        initFilters();
+      }
+    })();
   </script>
 
   <script>
