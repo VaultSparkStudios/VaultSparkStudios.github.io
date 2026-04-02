@@ -4,6 +4,30 @@ Append chronological entries. Do not erase past entries.
 
 ---
 
+### 2026-04-01 — Session 28: VAPID rotation, Cloudflare Worker, secret lint, activation pass
+
+- Goal: Complete next moves — browser entitlement verification, Cloudflare DNS prep, GA4 form events, and high-value task board items
+- What changed:
+  - `join/index.html` + `vaultsparked/index.html`: guarded `gtag('event','form_submit',...)` added to both Web3Forms success branches
+  - `docs/CLOUDFLARE_DNS_PREP.md`: new file — exact A/CNAME records, orange-cloud toggle steps, `curl -I` verification, Worker route, rollback
+  - `.github/workflows/secret-lint.yml`: new CI guard catches committed PRIVATE_KEY/SERVICE_ROLE/STRIPE_SECRET values and Supabase JWTs
+  - `context/LATEST_HANDOFF.md`: VAPID private key value redacted (was accidentally committed in S27f)
+  - `vault-member/portal-features.js` + `vault-member/portal.js`: VAPID_PUBLIC_KEY rotated to new pair
+  - `docs/ACTIVATION_RUNBOOK.md`: new public key reference updated
+  - `supabase functions secrets set`: VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT set via CLI
+  - `send-push` Edge Function deployed via `--use-api`
+  - Cloudflare: confirmed already proxied; security headers Worker deployed via dashboard; DB webhook wired (classified_files INSERT → send-push)
+  - `sw.js`: cache bumped to vapid2
+- Verification: `curl -sI https://vaultsparkstudios.com` confirms all 9 security headers live including CSP, Permissions-Policy, COOP, CORP
+- Risks created or removed:
+  - Removed: VAPID private key was committed to public repo — rotated and secret lint CI now prevents recurrence
+  - Removed: Cloudflare proxy was active but Worker not deployed — CSP/Permissions-Policy now live at edge
+  - Removed: web push was code-complete but not wired — send-push deployed, DB webhook active
+- Session intent outcome: Partial — browser verification blocked by missing SUPABASE_SERVICE_ROLE_KEY; all other work shipped plus significant security catch
+- Recommended next move: Supabase auth hardening (Dashboard → Auth → Settings: CAPTCHA + session timeout + email enumeration) + set RESEND_API_KEY + newsletter secrets to activate newsletter
+
+---
+
 ### 2026-04-01 — Session 27 follow-up: Web3Forms spam guard, mobile CTA audit, VAPID key setup
 
 - Goal: Complete 3 closeout priority items — Web3Forms key differentiation/verification, mobile audit on new form CTAs, activation runbook execution (VAPID)

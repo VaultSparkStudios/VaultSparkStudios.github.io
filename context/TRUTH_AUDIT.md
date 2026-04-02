@@ -3,7 +3,7 @@
 
 Last reviewed: 2026-04-01
 Overall status: green
-Next action: Restore the local service-role-backed auth path, rerun the authenticated entitlement browser lane, then verify live Cloudflare response headers after proxy enablement.
+Next action: Supabase auth hardening (CAPTCHA + session timeout + email enumeration prevention) + newsletter secrets setup. Then restore local service-role path and rerun authenticated entitlement browser lane.
 
 ---
 

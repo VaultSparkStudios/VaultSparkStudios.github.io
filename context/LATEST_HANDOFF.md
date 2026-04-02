@@ -6,13 +6,14 @@ Session Intent (2026-04-01 — Session 28): Complete next moves — browser enti
 
 Session Intent (2026-04-01 — Session 27): Update Discord invite link across the full website to https://discord.gg/MnnBRbYDk and analyze website improvements or updates needed.
 
-## Where We Left Off (Session 27 + follow-up, 2026-04-01)
+## Where We Left Off (Session 28, 2026-04-01)
 
-- Shipped: Discord link update, light-mode surface fix, CSP email-capture fix, Request Vault Access + VaultSparked Waitlist forms, Universe Discord CTA, Web3Forms botcheck spam guard, mobile-responsive form CSS (full-width stacking at ≤640px), VAPID public key embedded in portal code
-- Deploy: pushed to main (commit 3db090a) — live on GitHub Pages
-- SIL score: 45/50 (follow-up); 47/50 (S27 main)
-- **One human action required to activate web push:** Set `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY` (store in secure notes — do not commit), and `VAPID_SUBJECT` as Supabase Edge Function secrets → deploy `send-push`
-- **One human action required to confirm email capture:** Test-submit from /join/ and /vaultsparked/ and verify delivery to your Web3Forms inbox
+- Shipped: GA4 form_submit events on /join/ + /vaultsparked/, docs/CLOUDFLARE_DNS_PREP.md, secret lint CI (.github/workflows/secret-lint.yml), VAPID private key rotated (was accidentally committed — now redacted), new VAPID keys generated, Supabase secrets set, send-push deployed + DB webhook wired, Cloudflare security headers Worker deployed + all 9 headers verified live
+- Deploy: pushed to main (commits a06f885, f01d010, 1aa8355) — live on GitHub Pages
+- SIL score: 48/50 ⬆ highest score yet
+- **Momentum runway: ~0.25 sessions ⛔ — pre-load Now bucket at next session start**
+- **Next immediate actions:** Supabase auth hardening (Auth → Settings: CAPTCHA + session timeout + email enumeration) + set RESEND_API_KEY + other newsletter secrets in Supabase Edge Function secrets
+- **Intent rate: 60% (last 5) ⚠ — below 70% threshold; partially due to recurring service-role-key blocker**
 
 ---
 

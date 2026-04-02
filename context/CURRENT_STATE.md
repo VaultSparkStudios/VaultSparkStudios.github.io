@@ -4,7 +4,7 @@
 
 - Date: 2026-04-01
 - Overall status: Live and active
-- Current phase: Session 27 complete (2026-04-01) — Discord invite link updated sitewide, comprehensive light-mode surface overrides shipped in style.css, CSP connect-src fixed for all email-capture fetch() calls, Request Vault Access form added to /join/, VaultSparked Waitlist form added to /vaultsparked/, Universe Discord CTA section added
+- Current phase: Session 28 complete (2026-04-01) — VAPID private key rotated (was in public repo; new pair generated, secrets set in Supabase, send-push deployed, DB webhook wired); Cloudflare security headers Worker deployed and verified (all 9 headers live including CSP, Permissions-Policy, COOP, CORP); GA4 form_submit events wired on /join/ + /vaultsparked/; secret lint CI added; Cloudflare DNS prep doc written; entitlement matrix audit passed clean
   - Authenticated browser verification lane: dedicated free-member and VaultSparked test accounts now exist, local Playwright provisioning is scriptable, and the browser helper can authenticate through admin-generated magic-link sessions to bypass CAPTCHA-protected password grants
   - PromoGrind Pro verification prep: the provisioning workflow and local Playwright env shape now support an optional dedicated `promogrind_pro` test account in addition to the free and VaultSparked accounts
   - Bootstrap RPC repair: `get_member_bootstrap()` no longer writes the stale `last_seen` column, fixing a real production bug that pushed valid members back to auth/complete-profile flows

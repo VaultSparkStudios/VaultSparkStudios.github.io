@@ -8,6 +8,10 @@
 - [x] [SIL] Access-state copy audit — entitlement and early-access copy now aligns to the canonical free-pool / VaultSparked-priority model across core public membership surfaces
 - [x] [FLAG] Apply `supabase-phase52-membership-entitlements.sql` and deploy the updated entitlement-aware edge functions so plan-aware archive/beta gating is live
 - [ ] [FLAG] Verify free vs VaultSparked vs PromoGrind Pro behavior in a browser — portal status, archive access, beta keys, PromoGrind live tools, and gift checkout copy; repo-side tests landed, but the live rerun still needs `SUPABASE_SERVICE_ROLE_KEY` in the local shell so the magic-link helper can bypass production CAPTCHA
+- [ ] Apply Supabase auth hardening — Dashboard → Auth → Settings: enable CAPTCHA, set session timeout, enable email enumeration prevention (moves from Human Action Required; do this session)
+- [ ] Set newsletter secrets — configure `RESEND_API_KEY`, `NEWSLETTER_FROM`, `APP_URL`, `NEWSLETTER_SECRET` in Supabase Edge Function secrets; then trigger newsletter manually to verify (moves from Human Action Required; do this session)
+- [SIL] Push notification test button in Vault Command — admin button in Vault Command to send a test push to the signed-in admin, so VAPID can be verified without uploading a classified file [Score: 8.5]
+- [SIL] Newsletter activation one-pager — `docs/NEWSLETTER_SETUP.md` with exact Resend + secret config steps [Score: 9.0]
 - [x] [FLAG] Run `npm run provision:test-accounts` with service-role credentials and dedicated free/Sparked emails to create the Playwright verification accounts and populate `.env.playwright.local`
 - [x] [SIL] Theme persistence E2E coverage — homepage restore and mobile-nav persistence now pass in Chromium against the live site
 - [x] [SIL] Theme surface parity audit — high-visibility portal dark-only surfaces now use shared theme-token-backed classes for overlays, auth buttons, referral/gift panels, and poll inputs
@@ -47,17 +51,16 @@
 
 ## Human Action Required
 
-- [ ] Enable Cloudflare proxy — complete the DNS/proxy step from `docs/ACTIVATION_RUNBOOK.md` so edge headers and CDN behavior can go live
-- [ ] Apply Supabase auth hardening — CAPTCHA, session timeout, and email enumeration prevention must be enabled in Supabase Auth settings
-- [ ] Set newsletter secrets — configure `RESEND_API_KEY`, `NEWSLETTER_FROM`, `APP_URL`, and `NEWSLETTER_SECRET` before newsletter delivery can work
-- [ ] Generate and wire VAPID keys — create keys and set both portal/config and function secrets to activate web push
+- [x] Enable Cloudflare proxy — Cloudflare was already proxied; security headers Worker deployed and verified live ✅ (session 28)
+- [x] Generate and wire VAPID keys — regenerated (prior private key was committed), secrets set in Supabase, send-push deployed, DB webhook wired ✅ (session 28)
+- [ ] Apply Supabase auth hardening — CAPTCHA, session timeout, and email enumeration prevention must be enabled in Supabase Auth settings (moved to Now)
+- [ ] Set newsletter secrets — configure `RESEND_API_KEY`, `NEWSLETTER_FROM`, `APP_URL`, and `NEWSLETTER_SECRET` before newsletter delivery can work (moved to Now)
 - [ ] Verify search ownership — replace the placeholder Google verification token/file and submit both production sitemaps
 
 ## Blocked
 
-- Web push delivery: blocked on VAPID key generation
-- True HTTP security headers (CSP, HSTS, X-Content-Type-Options): blocked on Cloudflare or custom server
 - VaultSparked subscription production: blocked on LLC formation → Stripe production account
+- Newsletter: blocked on `RESEND_API_KEY` (in Now — awaiting human action this session)
 
 ## S-Tier Backlog (Score 9–10)
 

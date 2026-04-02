@@ -41,16 +41,44 @@ Rate 0–10 per category at each closeout:
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █▇█▇▇
-Avgs — 3: 46.0 | 5: 45.6 | 10: 43.9 | 25: 41.2 [N=26] | all: 41.2
-  └ 3-session: Dev 9.0 | Align 9.0 | Momentum 9.3 | Engage 8.7 | Process 10.0
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~3 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-01 | Session 27f | Total: 45/50 | Velocity: 3 | protocolVelocity: 7
+Sparkline (last 5 totals): ▇▇▇▇█
+Avgs — 3: 46.7 | 5: 46.6 | 10: 44.2 | 25: 41.9 [N=27] | all: 41.5
+  └ 3-session: Dev 9.3 | Align 9.3 | Momentum 9.3 | Engage 9.0 | Process 9.7
+Velocity trend: ↓  |  Protocol velocity: ↓  |  Debt: →
+Momentum runway: ~0.25 sessions ⛔ PRELOAD NOW  |  Intent rate: 60% (last 5) ⚠ below 70%
+Last session: 2026-04-01 | Session 28 | Total: 48/50 | Velocity: 2 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ## Entries
+
+## 2026-04-01 — Session 28 | Total: 48/50 | Velocity: 2 | protocolVelocity: 4 | Debt: →
+Avgs — 3: 46.7 | 5: 46.6 | 10: 44.2 | 25: 41.9 [N=27] | all: 41.5
+  └ 3-session: Dev 9.3 | Align 9.3 | Momentum 9.3 | Engage 9.0 | Process 9.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 10 | ↑ | VAPID private key caught and rotated; secret lint CI added; Cloudflare Worker deployed; send-push live with DB webhook — strongest security-infra day so far |
+| Creative Alignment | 9 | → | All work directly serves the membership launch vision; nothing shipped that contradicts SOUL |
+| Momentum | 10 | ↑ | Cloudflare Worker live, VAPID fully active, web push wired end-to-end, 4 SIL items + 2 Human Action items completed; major activation blockers cleared |
+| Engagement | 9 | → | Web push now live (members can subscribe and receive notifications), security headers protect all visitors, GA4 events wired for form conversions |
+| Process Quality | 10 | → | Security incident caught mid-session and fixed; secret lint CI ensures future sessions can't repeat it; full Studio OS write-back |
+| **Total** | **48/50** | ↑ | Highest score yet; session cleared the majority of the activation runbook in one pass |
+
+**Top win:** Discovered and rotated a committed VAPID private key in the public repo mid-session, then fully activated web push (secrets set, send-push deployed, DB webhook wired) and Cloudflare security headers in the same session.
+**Top gap:** Browser entitlement verification (free vs VaultSparked vs PromoGrind Pro) still needs `SUPABASE_SERVICE_ROLE_KEY` in the local shell; momentum runway is critically low (0.25 sessions) — Now bucket must be pre-loaded before next session.
+**Intent outcome:** Partial — browser verification was blocked by missing env var, but Cloudflare Worker, VAPID activation, GA4 events, DNS prep doc, secret lint, and entitlement audit all shipped.
+
+**IGNIS note:** Discovering and fixing a committed private key in a public repo mid-session was a high-value security catch; adding the secret lint CI guard means future agents will catch similar patterns automatically before they reach git history.
+
+**Brainstorm**
+1. Push notification test button in Vault Command — add a small admin button that sends a test push to the signed-in admin, so VAPID activation can be verified immediately without uploading a classified file; Execution probability: High
+2. GA4 measurement ID setup guide — write a 10-line setup doc for adding the gtag script to all pages once a measurement ID exists, since form events are already wired; Execution probability: High
+3. Newsletter activation one-pager — concise `docs/NEWSLETTER_SETUP.md` with exact Resend + secret config so it can be done in one 15-minute sitting; Execution probability: High
+4. Secret lint enhancement — expand the CI guard to cover common API key prefixes (`sk-`, `rk_live_`, `whsec_`, `xoxb-`) so coverage grows beyond VAPID/service-role patterns; Execution probability: Medium
+5. Supabase auth hardening runbook entry — add a specific checklist block to `docs/ACTIVATION_RUNBOOK.md` for CAPTCHA + session timeout + email enumeration prevention with exact dashboard paths; Execution probability: High
+
+**Committed to TASK_BOARD:** [SIL] Push notification test button in Vault Command · [SIL] Newsletter activation one-pager
 
 ## 2026-04-01 — Session 27f (follow-up) | Total: 45/50 | Velocity: 3 | protocolVelocity: 7 | Debt: ↓
 Avgs — 3: 46.0 | 5: 45.6 | 10: 43.9 | 25: 41.2 [N=26] | all: 41.2
