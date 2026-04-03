@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Open Source &amp; Licenses | VaultSpark Studios</title>
+  <meta name="description" content="VaultSpark Studios open-source projects, licenses, and third-party attributions." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/open-source/" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Open Source & Licenses | VaultSpark Studios" />
+  <meta property="og:description" content="VaultSpark Studios open-source projects, licenses, and third-party attributions." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/open-source/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSparkStudios" />
+  <meta name="twitter:title" content="Open Source & Licenses | VaultSpark Studios" />
+  <meta name="twitter:description" content="VaultSpark Studios open-source projects, licenses, and third-party attributions." />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <link rel="icon" type="image/png" href="../assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <style>
+    .policy-hero { padding: 4rem 0 2.5rem; }
+    .policy-body {
+      max-width: 760px;
+      padding-bottom: 5rem;
+    }
+    .policy-body h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.45rem;
+      letter-spacing: -0.03em;
+      margin: 2.4rem 0 0.7rem;
+      color: var(--text);
+    }
+    .policy-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 1.4rem 0 0.45rem;
+      color: var(--text);
+    }
+    .policy-body p {
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.72;
+      margin-bottom: 0.9rem;
+    }
+    .policy-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 0.9rem;
+    }
+    .policy-body ul li {
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.72;
+      padding: 0.28rem 0 0.28rem 1.4rem;
+      position: relative;
+    }
+    .policy-body ul li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .policy-body a { color: var(--gold); }
+    .policy-body a:hover { color: #ffe066; }
+    .policy-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin: 2rem 0;
+    }
+    .policy-updated {
+      display: inline-block;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255,196,0,0.06);
+      border: 1px solid rgba(255,196,0,0.15);
+      color: var(--gold);
+      font-size: 0.79rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .oss-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    .oss-card:hover {
+      border-color: rgba(255,196,0,0.2);
+    }
+    .oss-card h3 {
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .oss-license {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(255,196,0,0.08);
+      border: 1px solid rgba(255,196,0,0.15);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .oss-private {
+      background: rgba(148,163,184,0.08);
+      border-color: rgba(148,163,184,0.15);
+      color: #94a3b8;
+    }
+  </style>
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+<script src="/assets/theme-toggle.js"></script>
+<script src="/assets/analytics.js" defer></script>
+<script src="/assets/pwa-nav.js" defer></script>
+<script defer src="/assets/pwa-install.js"></script>
+<script src="/assets/cookie-consent.js" defer></script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img loading="lazy" src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">Canon</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/journal/">Signal Log</a>
+        <a href="/contact/">Contact</a>
+
+        <div class="mobile-nav-footer">
+          <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
+          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="policy-hero">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Open Source</span>
+        <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,4.5vw,3.2rem);letter-spacing:-0.04em;line-height:1.1;margin:0.75rem 0 0;">Open Source &amp; Licenses</h1>
+      </div>
+    </section>
+
+    <section style="padding:0 0 1rem;">
+      <div class="container">
+        <div class="policy-body">
+
+          <p>VaultSpark Studios builds in the open where we can. Below is a list of our public repositories, the licenses they ship under, and attributions for third-party software we use across the studio.</p>
+
+          <h2>Our Public Repositories</h2>
+
+          <div class="oss-card">
+            <h3>VaultSparkStudios.github.io <span class="oss-license">MIT</span></h3>
+            <p>The VaultSpark Studios website — the site you are on right now. Static HTML/CSS/JS, hosted on GitHub Pages.</p>
+            <p><a href="https://github.com/VaultSparkStudios/VaultSparkStudios.github.io" target="_blank" rel="noreferrer">View on GitHub</a></p>
+          </div>
+
+          <div class="oss-card">
+            <h3>call-of-doodie <span class="oss-license">MIT</span></h3>
+            <p>Browser-based arcade game — play as a golden poop emoji dodging obstacles. Pure JavaScript, zero dependencies.</p>
+            <p><a href="https://github.com/VaultSparkStudios/call-of-doodie" target="_blank" rel="noreferrer">View on GitHub</a></p>
+          </div>
+
+          <div class="oss-card">
+            <h3>vaultspark-football-gm <span class="oss-license">MIT</span></h3>
+            <p>Football management simulation — draft, trade, and manage your franchise through full seasons. Browser-first, no install required.</p>
+            <p><a href="https://github.com/VaultSparkStudios/vaultspark-football-gm" target="_blank" rel="noreferrer">View on GitHub</a></p>
+          </div>
+
+          <div class="oss-card">
+            <h3>promogrind <span class="oss-license">MIT</span></h3>
+            <p>Promotional code aggregator and discovery platform. React + TypeScript frontend.</p>
+            <p><a href="https://github.com/VaultSparkStudios/promogrind" target="_blank" rel="noreferrer">View on GitHub</a></p>
+          </div>
+
+          <h2>Private Repositories</h2>
+          <p>The following projects are developed in private repositories. Source code is not publicly available, but we acknowledge the technologies and open-source libraries they depend on.</p>
+
+          <div class="oss-card">
+            <h3>Velaxis <span class="oss-license oss-private">Private</span></h3>
+            <p>Crypto dashboard and portfolio tracker. Built with React 18, TypeScript, and Vite.</p>
+          </div>
+
+          <div class="oss-card">
+            <h3>Vorn <span class="oss-license oss-private">Private</span></h3>
+            <p>Social agent platform. Node.js backend with React frontend.</p>
+          </div>
+
+          <div class="oss-card">
+            <h3>StatVault <span class="oss-license oss-private">Private</span></h3>
+            <p>Sports analytics and statistics platform.</p>
+          </div>
+
+          <div class="policy-divider"></div>
+
+          <h2>Third-Party Attributions</h2>
+          <p>VaultSpark Studios projects use the following open-source software and services. We are grateful to these communities.</p>
+
+          <h3>Website &amp; Frontend</h3>
+          <ul>
+            <li><strong>Google Analytics (GA4)</strong> — analytics and usage measurement</li>
+            <li><strong>Supabase</strong> — authentication, database, and real-time services (MIT / Apache 2.0)</li>
+            <li><strong>Sentry</strong> — error tracking and performance monitoring</li>
+            <li><strong>Web3Forms</strong> — contact form submission API</li>
+          </ul>
+
+          <h3>Build &amp; Development</h3>
+          <ul>
+            <li><strong>Node.js</strong> — JavaScript runtime (MIT)</li>
+            <li><strong>Playwright</strong> — end-to-end testing framework (Apache 2.0)</li>
+            <li><strong>Vite</strong> — frontend build tool (MIT)</li>
+            <li><strong>React</strong> — UI library (MIT)</li>
+            <li><strong>TypeScript</strong> — typed JavaScript (Apache 2.0)</li>
+          </ul>
+
+          <h3>Infrastructure</h3>
+          <ul>
+            <li><strong>GitHub Pages</strong> — static site hosting</li>
+            <li><strong>GitHub Actions</strong> — CI/CD workflows</li>
+            <li><strong>Cloudflare</strong> — DNS and CDN services</li>
+          </ul>
+
+          <div class="policy-divider"></div>
+
+          <h2>Licensing</h2>
+          <p>Unless otherwise noted, public VaultSpark Studios repositories are released under the <strong>MIT License</strong>. This means you are free to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, subject to the terms of the license.</p>
+          <p>All VaultSpark Studios <strong>brand assets</strong> (logos, icons, character art, names, taglines) are <strong>not</strong> covered by open-source licenses and remain the intellectual property of VaultSpark Studios. See our <a href="/privacy/#trademark">Trademark &amp; Copyright</a> section for details.</p>
+
+          <p style="font-size:0.85rem;">Questions about licensing? Contact <a href="mailto:founder@vaultsparkstudios.com">founder@vaultsparkstudios.com</a>.</p>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Where worlds are built. Where stories ignite. The vault is sparked. ⚡</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/universe/">Universe</a>
+          <a href="/studio/">About</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/leaderboards/">Leaderboard</a>
+          <a href="/community/">Community Hub</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer">Reddit</a>
+          <a href="https://discord.com/users/vaultsparkstudios" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="/faq/">FAQ</a>
+          <a href="/careers/">Careers</a>
+          <a href="/open-source/">Open Source</a>
+          <a href="/accessibility/">Accessibility</a>
+          <a href="/security/">Security</a>
+          <a href="/sitemap-page/">Sitemap</a>
+        </div>
+      </div>
+      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
+        <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 VaultSpark Studios. All rights reserved. VaultSpark&trade; is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/nav-toggle.js" defer></script>
+</body>
+</html>

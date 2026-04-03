@@ -367,7 +367,27 @@ body.high-contrast-mode .hamburger span { background: var(--text); }
 .skip-link:focus { top: 0; }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+/* ─── Custom scrollbar ─────────────────────── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.25); }
+@supports (scrollbar-color: auto) {
+  html { scrollbar-color: rgba(255,255,255,0.15) transparent; scrollbar-width: thin; }
+}
+
+/* ─── Selection highlight ──────────────────── */
+::selection { background: rgba(255, 196, 0, 0.3); color: #fff; }
+::-moz-selection { background: rgba(255, 196, 0, 0.3); color: #fff; }
+
 body {
   margin: 0;
   color: var(--text);
@@ -375,6 +395,9 @@ body {
   background: var(--page-bg);
   line-height: 1.55;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body::before,
@@ -1855,4 +1878,49 @@ body.light-mode .fan-art-vote { color: var(--text); }
     width: 100% !important;
     text-align: center;
   }
+}
+
+/* ─── Performance: content-visibility for below-fold sections ── */
+.site-footer {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
+}
+
+/* ─── Performance: GPU-composited animations ──────────────── */
+.card,
+.card-hero,
+.nav-dropdown {
+  will-change: auto;
+}
+.card:hover {
+  will-change: transform;
+}
+
+/* ─── Touch target: minimum 44x44 for all interactive ──── */
+@media (pointer: coarse) {
+  .nav-center a,
+  .nav-dropdown a,
+  .footer-col a {
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ─── Print styles ���────────────────────────────────────── */
+@media print {
+  .site-header,
+  .site-footer,
+  .hamburger,
+  .nav-right,
+  .vault-status-legend,
+  #vs-cta-bar {
+    display: none !important;
+  }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  a { color: #000 !important; text-decoration: underline; }
+  a::after { content: " (" attr(href) ")"; font-size: 0.8em; }
 }

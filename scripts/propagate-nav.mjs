@@ -16,7 +16,7 @@ const DRY_RUN = process.argv.includes('--dry-run');
 const SKIP_DIRS = new Set([
   'node_modules', 'playwright-report', 'test-results',
   'investor', 'investor-portal', 'studio-hub', 'vaultsparked',
-  '.git', 'scripts'
+  '.git', '.well-known', 'scripts'
 ]);
 
 // Standalone game runtimes (no standard nav)
@@ -133,6 +133,15 @@ function buildFooter() {
           <a href="https://discord.com/users/vaultsparkstudios" target="_blank" rel="noreferrer">Discord</a>
           <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
         </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="/faq/">FAQ</a>
+          <a href="/careers/">Careers</a>
+          <a href="/open-source/">Open Source</a>
+          <a href="/accessibility/">Accessibility</a>
+          <a href="/security/">Security</a>
+          <a href="/sitemap-page/">Sitemap</a>
+        </div>
       </div>
       <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
         <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
@@ -141,7 +150,7 @@ function buildFooter() {
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 VaultSpark Studios. All rights reserved. VaultSpark&trade; is a trademark of VaultSpark Studios.</span>
-        <span><a href="/privacy/">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms of Service</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a> &nbsp;&middot;&nbsp; <a href="/vault-member/">Vault Members</a></span>
+        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a></span>
       </div>
     </div>
   </footer>`;
@@ -194,6 +203,15 @@ for (const { full, rel } of files) {
   const footerRegex = /<footer class="site-footer"[^>]*>[\s\S]*?<\/footer>/;
   if (footerRegex.test(html)) {
     html = html.replace(footerRegex, footer);
+  }
+
+  // ─── Inject resource hints if missing ──────────────────
+  if (!html.includes('preconnect')) {
+    const hints = [
+      '<link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />',
+      '<link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />',
+    ].join('\n  ');
+    html = html.replace('<meta charset="UTF-8" />', '<meta charset="UTF-8" />\n  ' + hints);
   }
 
   if (DRY_RUN) {

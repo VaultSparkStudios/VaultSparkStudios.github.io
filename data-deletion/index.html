@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Deletion Request | VaultSpark Studios</title>
+  <meta name="description" content="Request deletion of your personal data or VaultSpark Studios account." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/data-deletion/" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Data Deletion Request | VaultSpark Studios" />
+  <meta property="og:description" content="Request deletion of your personal data or VaultSpark Studios account." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/data-deletion/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSparkStudios" />
+  <meta name="twitter:title" content="Data Deletion Request | VaultSpark Studios" />
+  <meta name="twitter:description" content="Request deletion of your personal data or VaultSpark Studios account." />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <link rel="icon" type="image/png" href="../assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <style>
+    .policy-hero { padding: 4rem 0 2.5rem; }
+    .policy-body {
+      max-width: 760px;
+      padding-bottom: 5rem;
+    }
+    .policy-body h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.45rem;
+      letter-spacing: -0.03em;
+      margin: 2.4rem 0 0.7rem;
+      color: var(--text);
+    }
+    .policy-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 1.4rem 0 0.45rem;
+      color: var(--text);
+    }
+    .policy-body p {
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.72;
+      margin-bottom: 0.9rem;
+    }
+    .policy-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 0.9rem;
+    }
+    .policy-body ul li {
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.72;
+      padding: 0.28rem 0 0.28rem 1.4rem;
+      position: relative;
+    }
+    .policy-body ul li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .policy-body a { color: var(--gold); }
+    .policy-body a:hover { color: #ffe066; }
+    .policy-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin: 2rem 0;
+    }
+    .deletion-form {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+    }
+    .deletion-form label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+    .deletion-form input,
+    .deletion-form select,
+    .deletion-form textarea {
+      width: 100%;
+      padding: 0.7rem 1rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px;
+      background: rgba(0,0,0,0.3);
+      color: var(--text);
+      font-size: 0.92rem;
+      font-family: inherit;
+      margin-bottom: 1.2rem;
+      transition: border-color 0.2s;
+    }
+    .deletion-form input:focus,
+    .deletion-form select:focus,
+    .deletion-form textarea:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+    .deletion-form textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .deletion-form button {
+      display: inline-block;
+      padding: 0.7rem 1.8rem;
+      background: #dc2626;
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.92rem;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .deletion-form button:hover {
+      background: #b91c1c;
+    }
+    .form-note {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: -0.8rem;
+      margin-bottom: 1.2rem;
+    }
+    #deletion-success {
+      display: none;
+      background: rgba(34,197,94,0.08);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      color: #22c55e;
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin: 1.5rem 0;
+    }
+  </style>
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+<script src="/assets/theme-toggle.js"></script>
+<script src="/assets/analytics.js" defer></script>
+<script src="/assets/pwa-nav.js" defer></script>
+<script defer src="/assets/pwa-install.js"></script>
+<script src="/assets/cookie-consent.js" defer></script>
+</head>
+<body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img loading="lazy" src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">Canon</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/journal/">Signal Log</a>
+        <a href="/contact/">Contact</a>
+
+        <div class="mobile-nav-footer">
+          <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
+          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="policy-hero">
+      <div class="container">
+        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Your Data</span>
+        <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,4.5vw,3.2rem);letter-spacing:-0.04em;line-height:1.1;margin:0.75rem 0 0;">Data Deletion Request</h1>
+      </div>
+    </section>
+
+    <section style="padding:0 0 1rem;">
+      <div class="container">
+        <div class="policy-body">
+
+          <p>Under applicable privacy laws (including GDPR, CCPA, and others), you have the right to request deletion of your personal data. Use the form below or email us directly.</p>
+
+          <h2>What Gets Deleted</h2>
+          <p>When we process a deletion request, we remove:</p>
+          <ul>
+            <li><strong>Account data</strong> — your Vault Member profile, username, email, preferences, and settings</li>
+            <li><strong>Points &amp; rank history</strong> — all Vault Points, rank progression, and leaderboard entries</li>
+            <li><strong>Newsletter subscription</strong> — your email is removed from Vault Dispatch and all mailing lists</li>
+            <li><strong>Contact messages</strong> — any messages sent through our contact form</li>
+          </ul>
+
+          <h3>What We May Retain</h3>
+          <p>We may retain limited data where required by law, for fraud prevention, or to enforce our Terms of Service:</p>
+          <ul>
+            <li>Records needed for legal compliance or active disputes</li>
+            <li>Anonymized, aggregated analytics data (not linked to your identity)</li>
+            <li>Backup copies that are automatically purged within 90 days</li>
+          </ul>
+
+          <div class="policy-divider"></div>
+
+          <h2>Submit a Request</h2>
+
+          <div id="deletion-success">Your deletion request has been submitted. We will process it within 30 days and confirm via email.</div>
+
+          <form class="deletion-form" id="deletion-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY" />
+            <input type="hidden" name="subject" value="Data Deletion Request — VaultSpark Studios" />
+            <input type="hidden" name="from_name" value="VaultSpark Data Deletion" />
+
+            <label for="del-email">Email address associated with your account</label>
+            <input type="email" id="del-email" name="email" required placeholder="your@email.com" />
+
+            <label for="del-type">Request type</label>
+            <select id="del-type" name="request_type" required>
+              <option value="" disabled selected>Select one</option>
+              <option value="full-deletion">Full account &amp; data deletion</option>
+              <option value="data-export">Data export (copy of my data)</option>
+              <option value="newsletter-only">Unsubscribe from newsletter only</option>
+              <option value="specific-data">Delete specific data (describe below)</option>
+            </select>
+
+            <label for="del-details">Additional details (optional)</label>
+            <textarea id="del-details" name="details" placeholder="Any specific information about your request..."></textarea>
+
+            <p class="form-note">We will send a verification email before processing your request.</p>
+
+            <button type="submit">Submit Deletion Request</button>
+          </form>
+
+          <div class="policy-divider"></div>
+
+          <h2>Alternative Methods</h2>
+          <p>You can also submit a deletion request by:</p>
+          <ul>
+            <li><strong>Email:</strong> Send to <a href="mailto:founder@vaultsparkstudios.com">founder@vaultsparkstudios.com</a> with subject "Data Deletion Request"</li>
+            <li><strong>Contact form:</strong> Use our <a href="/contact/">contact page</a> and select "Data Request" as the topic</li>
+          </ul>
+
+          <h2>Timeline</h2>
+          <p>We process all data deletion requests within <strong>30 days</strong> of verification. You will receive email confirmation when your data has been deleted. If we need additional information to verify your identity, the timeline begins after verification is complete.</p>
+
+          <p style="font-size:0.85rem;">For questions about data rights, see our <a href="/privacy/">Privacy Policy</a> or contact <a href="mailto:founder@vaultsparkstudios.com">founder@vaultsparkstudios.com</a>.</p>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Where worlds are built. Where stories ignite. The vault is sparked. ⚡</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/universe/">Universe</a>
+          <a href="/studio/">About</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/leaderboards/">Leaderboard</a>
+          <a href="/community/">Community Hub</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer">Reddit</a>
+          <a href="https://discord.com/users/vaultsparkstudios" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="/faq/">FAQ</a>
+          <a href="/careers/">Careers</a>
+          <a href="/open-source/">Open Source</a>
+          <a href="/accessibility/">Accessibility</a>
+          <a href="/security/">Security</a>
+          <a href="/sitemap-page/">Sitemap</a>
+        </div>
+      </div>
+      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
+        <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 VaultSpark Studios. All rights reserved. VaultSpark&trade; is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/nav-toggle.js" defer></script>
+  <script>
+    document.getElementById('deletion-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var form = this;
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form)
+      }).then(function(r) {
+        if (r.ok) {
+          form.style.display = 'none';
+          document.getElementById('deletion-success').style.display = 'block';
+        }
+      });
+    });
+  </script>
+</body>
+</html>
