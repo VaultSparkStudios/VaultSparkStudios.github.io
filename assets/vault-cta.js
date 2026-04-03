@@ -44,10 +44,15 @@
       '<div style="display:flex;align-items:center;gap:0.6rem;flex-shrink:0;">' +
         '<a href="/vault-member/#register" style="display:inline-block;padding:0.45rem 1.1rem;background:#FFC400;color:#000;font-weight:800;font-size:0.84rem;border-radius:9px;text-decoration:none;white-space:nowrap;">Join The Vault</a>' +
         '<a href="/vault-member/#login" style="font-size:0.8rem;color:rgba(255,255,255,0.4);text-decoration:none;white-space:nowrap;">Sign in</a>' +
-        '<button aria-label="Dismiss" onclick="(function(){localStorage.setItem(\'vs_cta_dismissed\',Date.now());document.getElementById(\'vs-cta-bar\').remove();})()" style="padding:0.3rem 0.55rem;background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.35);font-size:0.78rem;border-radius:7px;cursor:pointer;font-family:inherit;">✕</button>' +
+        '<button id="vs-cta-close" aria-label="Dismiss" style="padding:0.3rem 0.55rem;background:transparent;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.35);font-size:0.78rem;border-radius:7px;cursor:pointer;font-family:inherit;">✕</button>' +
       '</div>';
 
     document.body.appendChild(bar);
+
+    document.getElementById('vs-cta-close').addEventListener('click', function () {
+      localStorage.setItem(DISMISS_KEY, String(Date.now()));
+      bar.remove();
+    });
   }
 
   // Check if user is already logged in via Supabase session cookie
