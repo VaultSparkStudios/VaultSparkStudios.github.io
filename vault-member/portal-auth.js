@@ -92,27 +92,59 @@
       document.getElementById('stat-achievements').textContent =
         achEarned.length + ' / ' + VS.ACHIEVEMENT_DEFS.length;
 
-      // VaultSparked badge + CTA visibility (async subscription check)
-      const sparkedBadge = document.getElementById('profile-sparked-badge');
-      const ctaPanel     = document.getElementById('vaultsparked-cta-panel');
+      // VaultSparked badge + CTA visibility
+      const sparkedBadge  = document.getElementById('profile-sparked-badge');
+      const ctaPanel      = document.getElementById('vaultsparked-cta-panel');
+      const proCtaPanel   = document.getElementById('vaultsparked-pro-cta-panel');
+      const profileAvEl2  = document.getElementById('profile-avatar');
+
+      // Apply plan state from row data immediately (if plan_key present)
+      const rowPlanKey = member.plan_key || 'free';
+      const rowIsSparked = typeof VSMembership !== 'undefined'
+        ? VSMembership.isVaultSparkedPlan(rowPlanKey)
+        : (rowPlanKey === 'vault_sparked' || rowPlanKey === 'vault_sparked_pro');
+      const rowIsPro = rowPlanKey === 'vault_sparked_pro';
+
+      if (sparkedBadge) sparkedBadge.style.display = rowIsSparked ? '' : 'none';
+      if (ctaPanel)     ctaPanel.style.display     = rowIsSparked ? 'none' : '';
+      if (proCtaPanel)  proCtaPanel.style.display  = (rowIsSparked && !rowIsPro) ? '' : 'none';
+      if (profileAvEl2) {
+        profileAvEl2.classList.toggle('sparked-theme', rowIsSparked && !rowIsPro);
+        profileAvEl2.classList.toggle('pro-theme', rowIsPro);
+      }
+
+      // Async subscription check as authoritative fallback (catches members where plan_key column may be missing)
       VSSupabase.from('subscriptions')
         .select('status, plan, current_period_end')
         .eq('user_id', member._id)
         .maybeSingle()
         .then(({ data: sub }) => {
-          const planKey = VSMembership.getActivePlanKey(sub);
+          const planKey   = VSMembership.getActivePlanKey(sub);
           const isSparked = VSMembership.isVaultSparkedPlan(planKey);
+          const isPro     = VSMembership.isVaultSparkedProPlan
+            ? VSMembership.isVaultSparkedProPlan(planKey)
+            : planKey === 'vault_sparked_pro';
+
           if (sparkedBadge) sparkedBadge.style.display = isSparked ? '' : 'none';
           if (ctaPanel)     ctaPanel.style.display     = isSparked ? 'none' : '';
+          if (proCtaPanel)  proCtaPanel.style.display  = (isSparked && !isPro) ? '' : 'none';
+          if (profileAvEl2) {
+            profileAvEl2.classList.toggle('sparked-theme', isSparked && !isPro);
+            profileAvEl2.classList.toggle('pro-theme', isPro);
+          }
+
           member.is_sparked = !!isSparked;
-          member.plan_key = planKey;
+          member.plan_key   = planKey;
+          member.is_pro     = isPro;
           updateVaultStatusPanel(member, { isSparked: isSparked });
           updateClaimCenter(member, { isSparked: isSparked });
         }).catch(() => {
           if (sparkedBadge) sparkedBadge.style.display = 'none';
           if (ctaPanel)     ctaPanel.style.display     = '';
+          if (proCtaPanel)  proCtaPanel.style.display  = 'none';
           member.is_sparked = false;
-          member.plan_key = 'free';
+          member.plan_key   = 'free';
+          member.is_pro     = false;
           updateVaultStatusPanel(member, { isSparked: false });
           updateClaimCenter(member, { isSparked: false });
         });
@@ -267,6 +299,8 @@
         member_number:   row.member_number   || null,
         discord_id:      row.discord_id      || null,
         is_sparked:      !!row.is_sparked,
+        plan_key:        row.plan_key        || 'free',
+        is_pro:          row.plan_key === 'vault_sparked_pro',
         streak_count:         row.streak_count         || 0,
         last_login_date:      row.last_login_date      || null,
         onboarding_completed: row.onboarding_completed || false,

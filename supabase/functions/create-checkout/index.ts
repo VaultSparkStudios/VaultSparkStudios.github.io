@@ -1,14 +1,10 @@
 // VaultSpark Studios — Stripe Checkout Session Creator
-// Creates a hosted Stripe Checkout session.
-// Supports two plans:
-//   vault_sparked  — $24.99/month studio-wide membership (STRIPE_VAULT_SPARKED_PRICE_ID)
-//   promogrind_pro — legacy PromoGrind-only Pro plan    (STRIPE_PRICE_ID)
+// Three-tier membership: vault_sparked, vault_sparked_pro, promogrind_pro (legacy)
+// Phase-aware pricing via reserve_phase_slot RPC.
 //
 // Deploy: supabase functions deploy create-checkout
 // Set secrets:
 //   supabase secrets set STRIPE_SECRET_KEY=sk_live_...
-//   supabase secrets set STRIPE_VAULT_SPARKED_PRICE_ID=price_...  (VaultSparked $24.99/mo)
-//   supabase secrets set STRIPE_PRICE_ID=price_...                (legacy PromoGrind Pro, optional)
 //   supabase secrets set APP_URL=https://vaultsparkstudios.com
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
@@ -20,14 +16,13 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
   apiVersion: '2023-10-16',
   httpClient: Stripe.createFetchHttpClient(),
 });
-const PRICE_IDS: Record<string, string> = {
-  vault_sparked: Deno.env.get('STRIPE_VAULT_SPARKED_PRICE_ID') ?? '',
-  promogrind_pro: Deno.env.get('STRIPE_PRICE_ID') ?? '',
-};
+
 const APP_URL = Deno.env.get('APP_URL') ?? 'https://vaultsparkstudios.com';
+
 const SUCCESS_URLS: Record<string, string> = {
-  vault_sparked: `${APP_URL}/vault-member/?checkout=success`,
-  promogrind_pro: `${APP_URL}/promogrind/?checkout=success`,
+  vault_sparked:     `${APP_URL}/vault-member/?checkout=success&plan=sparked`,
+  vault_sparked_pro: `${APP_URL}/vault-member/?checkout=success&plan=pro`,
+  promogrind_pro:    `${APP_URL}/promogrind/?checkout=success`,
 };
 
 function buildCorsHeaders(origin: string | null) {
@@ -58,16 +53,42 @@ serve(async (req: Request) => {
     );
     if (error || !user) return json({ error: 'Invalid token' }, cors, 401);
 
-    // Determine plan from request body (default: vault_sparked)
+    // Parse request body
     let requestedPlan = 'vault_sparked';
+    let promoCode: string | null = null;
     try {
       const body = await req.json();
       if (body?.plan) requestedPlan = String(body.plan);
-    } catch { /* no body or invalid JSON — use default */ }
+      if (body?.promo_code) promoCode = String(body.promo_code).trim() || null;
+    } catch { /* no body or invalid JSON — use defaults */ }
     const plan = normalizePlanKey(requestedPlan);
 
-    const priceId = PRICE_IDS[plan];
-    if (!priceId) return json({ error: `No price configured for plan: ${plan}` }, cors, 400);
+    // For phase-based plans, reserve a slot to get the correct price ID
+    let priceId: string;
+    let enrolledPhase = 1;
+
+    if (plan === 'vault_sparked' || plan === 'vault_sparked_pro') {
+      const { data: slotData, error: slotError } = await supabase
+        .rpc('reserve_phase_slot', { p_plan_key: plan });
+
+      if (slotError || !slotData?.ok) {
+        console.error('reserve_phase_slot error:', slotError, slotData);
+        return json({ error: 'Plan unavailable' }, cors, 400);
+      }
+
+      priceId = slotData.stripe_price_id as string;
+      enrolledPhase = (slotData.phase as number) ?? 1;
+
+      if (!priceId) {
+        return json({ error: 'No price ID configured for this phase' }, cors, 400);
+      }
+    } else if (plan === 'promogrind_pro') {
+      // Legacy plan — still use env var
+      priceId = Deno.env.get('STRIPE_PRICE_ID') ?? '';
+      if (!priceId) return json({ error: `No price configured for plan: ${plan}` }, cors, 400);
+    } else {
+      return json({ error: `Unknown plan: ${plan}` }, cors, 400);
+    }
 
     // Look up or create Stripe customer
     let customerId: string | undefined;
@@ -89,16 +110,44 @@ serve(async (req: Request) => {
 
     const successUrl = SUCCESS_URLS[plan] ?? `${APP_URL}/vault-member/?checkout=success`;
 
-    const session = await stripe.checkout.sessions.create({
+    // Build session params
+    const sessionParams: Stripe.Checkout.SessionCreateParams = {
       customer:             customerId,
       mode:                 'subscription',
       payment_method_types: ['card'],
       line_items:           [{ price: priceId, quantity: 1 }],
       success_url:          successUrl,
       cancel_url:           `${APP_URL}/vault-member/?checkout=canceled`,
-      metadata:             { vault_user_id: user.id, plan },
-      subscription_data:    { metadata: { vault_user_id: user.id, plan } },
-    });
+      metadata: {
+        vault_user_id:  user.id,
+        plan,
+        stripe_price_id: priceId,
+        enrolled_phase:  String(enrolledPhase),
+      },
+      subscription_data: {
+        metadata: {
+          vault_user_id:  user.id,
+          plan,
+          stripe_price_id: priceId,
+          enrolled_phase:  String(enrolledPhase),
+        },
+      },
+    };
+
+    // Promo code support
+    if (promoCode) {
+      const promoCodes = await stripe.promotionCodes.list({
+        code:   promoCode,
+        active: true,
+        limit:  1,
+      });
+      if (promoCodes.data.length === 0) {
+        return json({ error: 'invalid_promo_code' }, cors, 400);
+      }
+      sessionParams.discounts = [{ promotion_code: promoCodes.data[0].id }];
+    }
+
+    const session = await stripe.checkout.sessions.create(sessionParams);
 
     return json({ url: session.url }, cors);
 

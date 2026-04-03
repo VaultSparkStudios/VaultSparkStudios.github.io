@@ -2135,3 +2135,26 @@
   .fanart-card { flex-direction: column; }
   .fanart-thumb { width: 100%; height: auto; max-height: 200px; }
 }
+
+/* ── VaultSparked cosmetics ─────────────────────────────────── */
+#profile-avatar.sparked-theme {
+  border: 2px solid #FFC400;
+  box-shadow: 0 0 18px rgba(255,196,0,0.4), 0 0 36px rgba(255,196,0,0.15);
+  animation: sparked-pulse 2.5s ease-in-out infinite;
+  position: relative;
+}
+@keyframes sparked-pulse {
+  0%,100% { box-shadow: 0 0 18px rgba(255,196,0,.4), 0 0 36px rgba(255,196,0,.15); }
+  50%     { box-shadow: 0 0 28px rgba(255,196,0,.65), 0 0 56px rgba(255,196,0,.25); }
+}
+#profile-avatar.pro-theme {
+  border: 2px solid #a855f7;
+  box-shadow: 0 0 18px rgba(168,85,247,0.45), 0 0 36px rgba(168,85,247,0.2);
+  animation: pro-pulse 2.5s ease-in-out infinite;
+}
+@keyframes pro-pulse {
+  0%,100% { box-shadow: 0 0 18px rgba(168,85,247,.45), 0 0 36px rgba(168,85,247,.2); }
+  50%     { box-shadow: 0 0 28px rgba(168,85,247,.7),  0 0 56px rgba(168,85,247,.3); }
+}
+.sparked-badge-inline { display:inline-flex; align-items:center; gap:0.3rem; padding:0.25rem 0.7rem; border-radius:999px; background:rgba(255,196,0,0.12); border:1px solid rgba(255,196,0,0.3); color:#FFC400; font-size:0.78rem; font-weight:700; }
+.pro-badge-inline { display:inline-flex; align-items:center; gap:0.3rem; padding:0.25rem 0.7rem; border-radius:999px; background:rgba(168,85,247,0.12); border:1px solid rgba(168,85,247,0.3); color:#a855f7; font-size:0.78rem; font-weight:700; }

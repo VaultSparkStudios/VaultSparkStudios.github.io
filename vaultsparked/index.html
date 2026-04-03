@@ -6,22 +6,22 @@
   <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VaultSparked — Premium Vault Membership | VaultSpark Studios</title>
-  <meta name="description" content="Go VaultSparked. Unlock the Discord Sparked role, bonus monthly XP drops, exclusive achievements, and priority access across every new VaultSpark release. Billed $24.99/month." />
+  <title>Choose Your Vault — Membership Tiers | VaultSpark Studios</title>
+  <meta name="description" content="Three membership tiers. Free forever, VaultSparked from $4.99/mo, VaultSparked Pro from $29.99/mo. Grandfather pricing locked in for early members." />
   <link rel="canonical" href="https://vaultsparkstudios.com/vaultsparked/" />
   <meta name="theme-color" content="#000000" />
   <meta name="robots" content="index, follow" />
 
-  <meta property="og:title" content="VaultSparked — Premium Vault Membership" />
-  <meta property="og:description" content="Unlock the Sparked Discord role, bonus XP drops, exclusive achievements, and first-wave access across new VaultSpark releases. $24.99/month." />
+  <meta property="og:title" content="Choose Your Vault — VaultSpark Studios Membership" />
+  <meta property="og:description" content="Three tiers. Free forever, VaultSparked from $4.99/mo (Phase 1 locked), VaultSparked Pro from $29.99/mo. Grandfather pricing for early members." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://vaultsparkstudios.com/vaultsparked/" />
   <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-vaultsparked.png" />
   <meta property="og:site_name" content="VaultSpark Studios" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@VaultSparkStudios" />
-  <meta name="twitter:title" content="VaultSparked — Premium Vault Membership" />
-  <meta name="twitter:description" content="Unlock the Sparked Discord role, bonus XP, exclusive achievements, and first-wave release access. $24.99/month." />
+  <meta name="twitter:title" content="Choose Your Vault — VaultSpark Studios Membership" />
+  <meta name="twitter:description" content="Three tiers. Free forever, VaultSparked from $4.99/mo, VaultSparked Pro from $29.99/mo. Grandfather pricing locked forever." />
   <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-vaultsparked.png" />
 
   <link rel="icon" type="image/png" href="../assets/icon-32.png" />
@@ -35,7 +35,7 @@
     "@type": "BreadcrumbList",
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaultsparkstudios.com/" },
-      { "@type": "ListItem", "position": 2, "name": "VaultSparked", "item": "https://vaultsparkstudios.com/vaultsparked/" }
+      { "@type": "ListItem", "position": 2, "name": "Membership", "item": "https://vaultsparkstudios.com/vaultsparked/" }
     ]
   }
   </script>
@@ -55,9 +55,10 @@
       content: "";
       position: absolute; inset: 0;
       background:
-        radial-gradient(circle at 50% 0%, rgba(255,196,0,0.13), transparent 55%),
-        radial-gradient(circle at 20% 80%, rgba(255,122,0,0.07), transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(31,162,255,0.06), transparent 40%);
+        radial-gradient(circle at 30% 0%, rgba(255,196,0,0.10), transparent 45%),
+        radial-gradient(circle at 70% 0%, rgba(168,85,247,0.08), transparent 45%),
+        radial-gradient(circle at 20% 80%, rgba(255,122,0,0.06), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(31,162,255,0.05), transparent 40%);
       pointer-events: none;
     }
     .sparked-hero::after {
@@ -99,7 +100,7 @@
     }
     .sparked-headline em {
       font-style: normal;
-      background: linear-gradient(135deg, #FFC400 0%, #FF7A00 100%);
+      background: linear-gradient(135deg, #FFC400 0%, #FF7A00 60%, #a855f7 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -108,7 +109,7 @@
       font-size: 1.15rem;
       color: var(--muted);
       line-height: 1.65;
-      max-width: 50ch;
+      max-width: 52ch;
       margin: 0 auto 2.5rem;
     }
     .sparked-cta-row {
@@ -156,17 +157,8 @@
       border-color: rgba(255,255,255,0.2);
       background: rgba(255,255,255,0.08);
     }
-    .sparked-price-note {
-      margin-top: 1.1rem;
-      font-size: 0.84rem;
-      color: var(--dim);
-    }
 
-    /* ─── Perks grid ─── */
-    .sparked-perks {
-      padding: 5rem 0;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
+    /* ─── Section scaffolding ─── */
     .sparked-section-label {
       font-size: 0.72rem;
       font-weight: 800;
@@ -187,106 +179,21 @@
       font-size: 1rem;
       color: var(--muted);
       text-align: center;
-      max-width: 50ch;
+      max-width: 52ch;
       margin: 0 auto 3rem;
       line-height: 1.6;
     }
-    .perks-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.2rem;
-    }
-    .perk-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 14px;
-      padding: 1.5rem 1.4rem;
-      transition: border-color 0.2s ease, background 0.2s ease;
-    }
-    .perk-card:hover {
-      border-color: rgba(255,196,0,0.18);
-      background: rgba(255,196,0,0.03);
-    }
-    .perk-icon {
-      font-size: 1.6rem;
-      margin-bottom: 0.8rem;
-      display: block;
-    }
-    .perk-title {
-      font-size: 0.97rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.35rem;
-    }
-    .perk-desc {
-      font-size: 0.84rem;
-      color: var(--muted);
-      line-height: 1.55;
-    }
-    .perk-badge {
-      display: inline-block;
-      margin-top: 0.65rem;
-      padding: 0.18rem 0.55rem;
-      background: rgba(255,196,0,0.12);
-      border: 1px solid rgba(255,196,0,0.25);
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #FFC400;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
 
-    /* ─── Comparison table ─── */
-    .sparked-compare {
-      padding: 5rem 0;
-      border-top: 1px solid rgba(255,255,255,0.05);
-    }
-    .compare-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 2.5rem;
-    }
-    .compare-table th {
-      padding: 1rem 1.25rem;
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-align: left;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      color: var(--muted);
-    }
-    .compare-table th.col-sparked {
-      color: #FFC400;
-      font-size: 0.9rem;
-    }
-    .compare-table th.col-head {
-      width: 50%;
-    }
-    .compare-table td {
-      padding: 0.85rem 1.25rem;
-      font-size: 0.92rem;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      vertical-align: middle;
-    }
-    .compare-table tr:last-child td { border-bottom: none; }
-    .compare-table td.feature-name { color: rgba(255,255,255,0.8); }
-    .compare-table td.col-free,
-    .compare-table td.col-sparked { text-align: center; }
-    .check { color: #10B981; font-size: 1.1rem; }
-    .cross { color: rgba(255,255,255,0.2); font-size: 1rem; }
-    .partial { color: #FFC400; font-size: 0.85rem; font-weight: 600; }
-    .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
-
-    /* ─── Pricing card ─── */
+    /* ─── Pricing cards ─── */
     .sparked-pricing {
       padding: 5rem 0;
       border-top: 1px solid rgba(255,255,255,0.05);
     }
     .pricing-cards {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      max-width: 780px;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.25rem;
+      max-width: 1060px;
       margin: 2.5rem auto 0;
     }
     .pricing-card {
@@ -294,11 +201,19 @@
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 20px;
       padding: 2rem 1.75rem;
+      display: flex;
+      flex-direction: column;
     }
     .pricing-card.featured {
-      background: rgba(255,196,0,0.06);
-      border-color: rgba(255,196,0,0.3);
-      box-shadow: 0 0 40px rgba(255,196,0,0.08);
+      background: rgba(255,196,0,0.05);
+      border-color: rgba(255,196,0,0.28);
+      box-shadow: 0 0 40px rgba(255,196,0,0.07);
+      position: relative;
+    }
+    .pricing-card.pro-card {
+      background: rgba(168,85,247,0.05);
+      border-color: rgba(168,85,247,0.28);
+      box-shadow: 0 0 40px rgba(168,85,247,0.07);
       position: relative;
     }
     .pricing-featured-badge {
@@ -314,6 +229,22 @@
       letter-spacing: 0.08em;
       padding: 0.28rem 0.9rem;
       border-radius: 0 0 8px 8px;
+      white-space: nowrap;
+    }
+    .pricing-pro-badge {
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #a855f7, #7c3aed);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.28rem 0.9rem;
+      border-radius: 0 0 8px 8px;
+      white-space: nowrap;
     }
     .pricing-tier {
       font-size: 0.78rem;
@@ -323,45 +254,112 @@
       color: var(--muted);
       margin-bottom: 0.8rem;
     }
-    .pricing-card.featured .pricing-tier { color: #FFC400; }
+    .pricing-card.featured  .pricing-tier { color: #FFC400; }
+    .pricing-card.pro-card  .pricing-tier { color: #a855f7; }
     .pricing-amount {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 3rem;
+      font-size: 2.8rem;
       letter-spacing: -0.04em;
       line-height: 1;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.2rem;
     }
     .pricing-amount sub {
       font-family: inherit;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       vertical-align: baseline;
-      margin-right: 0.15rem;
+      margin-right: 0.1rem;
     }
     .pricing-period {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       color: var(--dim);
-      margin-bottom: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .pricing-phase-badge {
+      display: inline-block;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.55rem;
+    }
+    .pricing-phase-badge.gold {
+      background: rgba(255,196,0,0.12);
+      border: 1px solid rgba(255,196,0,0.25);
+      color: #FFC400;
+    }
+    .pricing-phase-badge.purple {
+      background: rgba(168,85,247,0.12);
+      border: 1px solid rgba(168,85,247,0.25);
+      color: #a855f7;
+    }
+    .pricing-spots {
+      font-size: 0.78rem;
+      color: var(--dim);
+      margin-bottom: 1.2rem;
+      min-height: 1.1em;
     }
     .pricing-divider {
       border: none;
       border-top: 1px solid rgba(255,255,255,0.07);
-      margin: 1.25rem 0;
+      margin: 1.1rem 0;
     }
     .pricing-features {
       list-style: none;
       padding: 0; margin: 0;
+      flex: 1;
     }
     .pricing-features li {
       display: flex;
       align-items: flex-start;
-      gap: 0.55rem;
-      font-size: 0.88rem;
+      gap: 0.5rem;
+      font-size: 0.86rem;
       color: rgba(255,255,255,0.75);
-      padding: 0.3rem 0;
+      padding: 0.28rem 0;
       line-height: 1.4;
     }
     .pricing-features li span.pf-check { color: #10B981; flex-shrink: 0; }
-    .pricing-features li span.pf-plus { color: #FFC400; flex-shrink: 0; font-weight: 700; }
+    .pricing-features li span.pf-plus  { color: #FFC400; flex-shrink: 0; font-weight: 700; }
+    .pricing-features li span.pf-pro   { color: #a855f7; flex-shrink: 0; font-weight: 700; }
+
+    .pricing-promo {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.4rem;
+    }
+    .pricing-promo input {
+      flex: 1;
+      min-width: 0;
+      height: 38px;
+      padding: 0 0.8rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+      font-size: 0.82rem;
+      font-family: inherit;
+      outline: none;
+    }
+    .pricing-promo input:focus {
+      border-color: rgba(255,196,0,0.35);
+    }
+    .pricing-promo input.pro-input:focus {
+      border-color: rgba(168,85,247,0.4);
+    }
+    .pricing-promo button {
+      height: 38px;
+      padding: 0 0.8rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      white-space: nowrap;
+    }
     .pricing-btn {
       display: block;
       width: 100%;
@@ -371,8 +369,11 @@
       font-weight: 700;
       font-size: 0.95rem;
       text-decoration: none;
-      margin-top: 1.5rem;
+      margin-top: 1.25rem;
       transition: transform 0.18s ease, box-shadow 0.18s ease;
+      cursor: pointer;
+      border: none;
+      font-family: inherit;
     }
     .pricing-btn-free {
       background: rgba(255,255,255,0.05);
@@ -386,18 +387,138 @@
     .pricing-btn-sparked {
       background: linear-gradient(135deg, #FFC400 0%, #FF7A00 100%);
       color: #000;
-      box-shadow: 0 4px 20px rgba(255,196,0,0.3);
+      box-shadow: 0 4px 20px rgba(255,196,0,0.28);
     }
     .pricing-btn-sparked:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(255,196,0,0.45);
+      box-shadow: 0 8px 32px rgba(255,196,0,0.42);
+    }
+    .pricing-btn-pro {
+      background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(168,85,247,0.28);
+    }
+    .pricing-btn-pro:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(168,85,247,0.42);
+    }
+    .pricing-btn:disabled {
+      opacity: 0.7;
+      cursor: wait;
+      transform: none !important;
     }
     .pricing-note {
       text-align: center;
       font-size: 0.82rem;
       color: var(--dim);
-      margin-top: 1.25rem;
+      margin-top: 1.5rem;
     }
+
+    /* ─── Grandfather notice ─── */
+    .grandfather-notice {
+      margin-top: 2rem;
+      padding: 1.1rem 1.4rem;
+      background: rgba(255,196,0,0.05);
+      border: 1px solid rgba(255,196,0,0.18);
+      border-radius: 12px;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    .grandfather-notice p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.65);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .grandfather-notice strong { color: #FFC400; }
+
+    /* ─── Perks grid ─── */
+    .sparked-perks {
+      padding: 5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .perks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.1rem;
+    }
+    .perk-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px;
+      padding: 1.4rem 1.3rem;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .perk-card:hover {
+      border-color: rgba(255,196,0,0.18);
+      background: rgba(255,196,0,0.03);
+    }
+    .perk-card.pro-perk:hover {
+      border-color: rgba(168,85,247,0.2);
+      background: rgba(168,85,247,0.03);
+    }
+    .perk-icon { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
+    .perk-title { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 0.3rem; }
+    .perk-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
+    .perk-badge {
+      display: inline-block;
+      margin-top: 0.6rem;
+      padding: 0.16rem 0.5rem;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .perk-badge.gold {
+      background: rgba(255,196,0,0.12);
+      border: 1px solid rgba(255,196,0,0.25);
+      color: #FFC400;
+    }
+    .perk-badge.purple {
+      background: rgba(168,85,247,0.12);
+      border: 1px solid rgba(168,85,247,0.25);
+      color: #a855f7;
+    }
+
+    /* ─── Comparison table ─── */
+    .sparked-compare {
+      padding: 5rem 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 2.5rem;
+    }
+    .compare-table th {
+      padding: 1rem 1.1rem;
+      font-size: 0.83rem;
+      font-weight: 700;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+    }
+    .compare-table th.col-sparked { color: #FFC400; font-size: 0.87rem; }
+    .compare-table th.col-pro     { color: #a855f7; font-size: 0.87rem; }
+    .compare-table th.col-head    { width: 44%; }
+    .compare-table td {
+      padding: 0.82rem 1.1rem;
+      font-size: 0.90rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .compare-table td.feature-name { color: rgba(255,255,255,0.8); }
+    .compare-table td.col-free,
+    .compare-table td.col-sparked,
+    .compare-table td.col-pro { text-align: center; }
+    .check   { color: #10B981; font-size: 1.05rem; }
+    .cross   { color: rgba(255,255,255,0.2); font-size: 1rem; }
+    .partial { color: #FFC400; font-size: 0.84rem; font-weight: 600; }
+    .compare-table tr:hover td { background: rgba(255,255,255,0.02); }
 
     /* ─── FAQ ─── */
     .sparked-faq {
@@ -414,19 +535,10 @@
       background: rgba(255,255,255,0.025);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 12px;
-      padding: 1.35rem 1.4rem;
+      padding: 1.3rem 1.35rem;
     }
-    .faq-q {
-      font-size: 0.93rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.55rem;
-    }
-    .faq-a {
-      font-size: 0.86rem;
-      color: var(--muted);
-      line-height: 1.6;
-    }
+    .faq-q { font-size: 0.92rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+    .faq-a { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
     .faq-a a { color: #FFC400; text-decoration: none; }
     .faq-a a:hover { text-decoration: underline; }
 
@@ -441,7 +553,7 @@
     .sparked-bottom-cta::before {
       content: "";
       position: absolute; inset: 0;
-      background: radial-gradient(circle at 50% 100%, rgba(255,196,0,0.07), transparent 60%);
+      background: radial-gradient(circle at 50% 100%, rgba(255,196,0,0.06), transparent 60%);
       pointer-events: none;
     }
     .sparked-bottom-cta h2 {
@@ -458,12 +570,38 @@
       position: relative;
     }
 
+    /* ─── Toast ─── */
+    #vs-toast {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(60px);
+      background: rgba(20,22,32,0.97);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 0.75rem 1.25rem;
+      font-size: 0.88rem;
+      color: #fff;
+      z-index: 9999;
+      opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      max-width: 360px;
+      text-align: center;
+      pointer-events: none;
+    }
+    #vs-toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
     /* ─── Responsive ─── */
+    @media (max-width: 900px) {
+      .pricing-cards { grid-template-columns: 1fr; max-width: 480px; }
+    }
     @media (max-width: 700px) {
-      .pricing-cards { grid-template-columns: 1fr; }
       .faq-grid { grid-template-columns: 1fr; }
       .compare-table th,
-      .compare-table td { padding: 0.65rem 0.75rem; font-size: 0.83rem; }
+      .compare-table td { padding: 0.65rem 0.7rem; font-size: 0.82rem; }
     }
     @media (max-width: 480px) {
       .sparked-hero { padding: 4rem 0 3.5rem; }
@@ -472,6 +610,7 @@
       .sparked-cta-secondary { text-align: center; justify-content: center; }
     }
   </style>
+
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
@@ -479,11 +618,11 @@
   <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-<script src="/assets/theme-toggle.js"></script>
-<script src="/assets/analytics.js" defer></script>
-<script src="/assets/pwa-nav.js" defer></script>
-<script defer src="/assets/pwa-install.js"></script>
-<script src="/assets/cookie-consent.js" defer></script>
+  <script src="/assets/theme-toggle.js"></script>
+  <script src="/assets/analytics.js" defer></script>
+  <script src="/assets/pwa-nav.js" defer></script>
+  <script defer src="/assets/pwa-install.js"></script>
+  <script src="/assets/cookie-consent.js" defer></script>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -503,28 +642,114 @@
     </div>
   </nav>
 
-  <main>
+  <main id="main-content">
 
     <!-- HERO -->
     <section class="sparked-hero">
       <div class="container sparked-hero-inner">
-        <div class="sparked-badge"><span>⚡</span> VaultSparked</div>
+        <div class="sparked-badge"><span>⚡</span> VaultSpark Membership</div>
         <h1 class="sparked-headline">
-          Unlock the full<br /><em>Vault experience.</em>
+          Choose your<br /><em>Vault.</em>
         </h1>
         <p class="sparked-sub">
-          VaultSparked is the premium tier of the Vault. More points, exclusive achievements,
-          the Sparked Discord role, and first-wave priority when new VaultSpark releases go live.
+          Three tiers built for every level of dedication. Start free, go Sparked when the vault
+          earns it, or go Pro and get priority access to everything VaultSpark is building.
         </p>
         <div class="sparked-cta-row">
-          <a href="/vault-member/#vaultsparked" class="sparked-cta-primary">
-            ⚡ Go VaultSparked — $24.99/mo
-          </a>
-          <a href="/vault-member/#register" class="sparked-cta-secondary">
-            Join Free First
-          </a>
+          <a href="#pricing" class="sparked-cta-primary">⚡ See Pricing</a>
+          <a href="/vault-member/#register" class="sparked-cta-secondary">Join Free First</a>
         </div>
-        <p class="sparked-price-note">Cancel anytime. No commitment.</p>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section id="pricing" class="sparked-pricing">
+      <div class="container">
+        <p class="sparked-section-label">Pricing</p>
+        <h2 class="sparked-section-title">Three tiers. One Vault.</h2>
+        <p class="sparked-section-sub">
+          Phase 1 pricing is locked forever for early members. Prices only increase for <em>new</em> subscribers.
+        </p>
+
+        <div class="pricing-cards">
+
+          <!-- FREE -->
+          <div class="pricing-card">
+            <div class="pricing-tier">Vault Member</div>
+            <div class="pricing-amount"><sub>$</sub>0</div>
+            <div class="pricing-period">forever free</div>
+            <div class="pricing-spots">&nbsp;</div>
+            <hr class="pricing-divider" />
+            <ul class="pricing-features">
+              <li><span class="pf-check">✓</span> Vault Rank + points</li>
+              <li><span class="pf-check">✓</span> Full challenge library</li>
+              <li><span class="pf-check">✓</span> Daily login streak</li>
+              <li><span class="pf-check">✓</span> Leaderboard access</li>
+              <li><span class="pf-check">✓</span> Community + polls</li>
+              <li><span class="pf-check">✓</span> Vault Member Discord role</li>
+              <li><span class="pf-check">✓</span> Classified Archive (limited)</li>
+              <li><span class="pf-check">✓</span> Beta early-access pool</li>
+            </ul>
+            <a href="/vault-member/#register" class="pricing-btn pricing-btn-free">Join the Vault Free</a>
+          </div>
+
+          <!-- VAULTSPARKED -->
+          <div class="pricing-card featured">
+            <div class="pricing-featured-badge">Most Popular</div>
+            <div class="pricing-tier">VaultSparked</div>
+            <div class="pricing-amount" id="sparked-price-display"><sub>$</sub>4.99</div>
+            <div class="pricing-period" id="sparked-period">per month</div>
+            <div class="pricing-spots" id="sparked-spots-label">Loading phase data…</div>
+            <hr class="pricing-divider" />
+            <ul class="pricing-features">
+              <li><span class="pf-check">✓</span> Everything in Free</li>
+              <li><span class="pf-plus">+</span> 500 bonus XP every month</li>
+              <li><span class="pf-plus">+</span> Sparked Discord role</li>
+              <li><span class="pf-plus">+</span> Exclusive Sparked achievements</li>
+              <li><span class="pf-plus">+</span> 2× streak bonus multiplier</li>
+              <li><span class="pf-plus">+</span> Full Classified Archive</li>
+              <li><span class="pf-plus">+</span> First-wave release priority</li>
+              <li><span class="pf-plus">+</span> Sparked gold profile theme</li>
+              <li><span class="pf-plus">+</span> VaultSparked profile badge</li>
+            </ul>
+            <div class="pricing-promo">
+              <input type="text" id="sparked-promo-input" placeholder="Promo code (optional)" autocomplete="off" aria-label="Promo code for VaultSparked" />
+            </div>
+            <button id="vaultsparked-upgrade-btn" class="pricing-btn pricing-btn-sparked">⚡ Go VaultSparked</button>
+          </div>
+
+          <!-- VAULTSPARKED PRO -->
+          <div class="pricing-card pro-card">
+            <div class="pricing-pro-badge">Studio Tier</div>
+            <div class="pricing-tier">VaultSparked Pro</div>
+            <div class="pricing-amount" id="pro-price-display"><sub>$</sub>29.99</div>
+            <div class="pricing-period" id="pro-period">per month</div>
+            <div class="pricing-spots" id="pro-spots-label">Loading phase data…</div>
+            <hr class="pricing-divider" />
+            <ul class="pricing-features">
+              <li><span class="pf-check">✓</span> Everything in VaultSparked</li>
+              <li><span class="pf-pro">◆</span> 1,000 bonus XP every month</li>
+              <li><span class="pf-pro">◆</span> VaultSparked Pro Discord role</li>
+              <li><span class="pf-pro">◆</span> Cross-product Pro access</li>
+              <li><span class="pf-pro">◆</span> Pro beta builds &amp; early drops</li>
+              <li><span class="pf-pro">◆</span> Founder video studio updates</li>
+              <li><span class="pf-pro">◆</span> Studio credits listing</li>
+              <li><span class="pf-pro">◆</span> Purple Pro profile theme</li>
+              <li><span class="pf-pro">◆</span> Named in studio release notes</li>
+            </ul>
+            <div class="pricing-promo">
+              <input type="text" id="pro-promo-input" placeholder="Promo code (optional)" autocomplete="off" class="pro-input" aria-label="Promo code for VaultSparked Pro" />
+            </div>
+            <button id="vaultsparked-pro-upgrade-btn" class="pricing-btn pricing-btn-pro">◆ Go VaultSparked Pro</button>
+          </div>
+
+        </div><!-- /pricing-cards -->
+
+        <p class="pricing-note">Cancel anytime from your portal settings. No annual lock-in.</p>
+
+        <div class="grandfather-notice">
+          <p><strong>Grandfather pricing guarantee:</strong> Your Phase 1 price is locked forever. When Phase 2 opens at a higher price, you keep paying your original rate — always. This is a permanent commitment.</p>
+        </div>
       </div>
     </section>
 
@@ -532,65 +757,82 @@
     <section class="sparked-perks">
       <div class="container">
         <p class="sparked-section-label">What you unlock</p>
-        <h2 class="sparked-section-title">Perks of the Sparked</h2>
+        <h2 class="sparked-section-title">Perks across all tiers</h2>
         <p class="sparked-section-sub">
-          Every perk is designed to reward dedication — not just membership.
-          The Vault gets more interesting the deeper you go.
+          VaultSparked perks apply to every VaultSpark project. VaultSparked Pro adds studio-level access on top.
         </p>
         <div class="perks-grid">
           <div class="perk-card">
             <span class="perk-icon">⚡</span>
             <div class="perk-title">Sparked Discord Role</div>
             <div class="perk-desc">Instantly receive the exclusive VaultSparked role in the official Discord — visible to every member.</div>
-            <span class="perk-badge">Instant</span>
+            <span class="perk-badge gold">VaultSparked</span>
           </div>
           <div class="perk-card">
             <span class="perk-icon">✨</span>
             <div class="perk-title">Monthly Bonus XP Drop</div>
-            <div class="perk-desc">500 bonus Vault Points credited to your account at the start of every month you're Sparked.</div>
-            <span class="perk-badge">Monthly</span>
+            <div class="perk-desc">500 bonus Vault Points (Sparked) or 1,000 (Pro) credited automatically every renewal cycle.</div>
+            <span class="perk-badge gold">Monthly</span>
           </div>
           <div class="perk-card">
             <span class="perk-icon">🏆</span>
             <div class="perk-title">Exclusive Achievements</div>
-            <div class="perk-desc">Sparked-only achievements that non-subscribers can never earn. Permanent record in your vault history.</div>
-            <span class="perk-badge">Exclusive</span>
+            <div class="perk-desc">Sparked-only achievements that free members can never earn. Permanently recorded in your vault history.</div>
+            <span class="perk-badge gold">VaultSparked</span>
           </div>
           <div class="perk-card">
             <span class="perk-icon">🎮</span>
             <div class="perk-title">First-Wave Release Priority</div>
-            <div class="perk-desc">When a new VaultSpark build, beta, or tool drop goes live, Sparked members are placed in the first access wave ahead of the free member pool.</div>
-            <span class="perk-badge">Priority</span>
+            <div class="perk-desc">When a new VaultSpark build, beta, or tool drop goes live, Sparked members get first access ahead of the free pool.</div>
+            <span class="perk-badge gold">Priority</span>
           </div>
           <div class="perk-card">
             <span class="perk-icon">📂</span>
             <div class="perk-title">Full Classified Archive</div>
-            <div class="perk-desc">Unrestricted access to all classified lore files, including vault-locked entries only Sparked can read.</div>
-            <span class="perk-badge">Expanded</span>
+            <div class="perk-desc">Unrestricted access to all classified lore files, including vault-locked entries only Sparked members can read.</div>
+            <span class="perk-badge gold">VaultSparked</span>
           </div>
           <div class="perk-card">
             <span class="perk-icon">🔥</span>
             <div class="perk-title">2× Streak Bonus</div>
-            <div class="perk-desc">Daily login streaks and challenge streaks earn double milestone bonus points while you're Sparked.</div>
-            <span class="perk-badge">Multiplier</span>
+            <div class="perk-desc">Daily login and challenge streaks earn double milestone bonus points while you're Sparked.</div>
+            <span class="perk-badge gold">Multiplier</span>
           </div>
           <div class="perk-card">
             <span class="perk-icon">🎨</span>
-            <div class="perk-title">Sparks Profile Theme</div>
-            <div class="perk-desc">Your member profile gets the exclusive gold Sparked border, background, and animated spark particle effect.</div>
-            <span class="perk-badge">Visual</span>
+            <div class="perk-title">Sparked Profile Theme</div>
+            <div class="perk-desc">Gold animated avatar ring, exclusive profile background, and the permanent Sparked badge on your profile.</div>
+            <span class="perk-badge gold">VaultSparked</span>
           </div>
-          <div class="perk-card">
-            <span class="perk-icon">📡</span>
-            <div class="perk-title">Founder Priority Updates</div>
-            <div class="perk-desc">Sparked members get Studio Pulse updates — studio announcements, game dev progress, and launch countdowns — first.</div>
-            <span class="perk-badge">Intel</span>
+          <div class="perk-card pro-perk">
+            <span class="perk-icon">◆</span>
+            <div class="perk-title">Cross-Product Pro Access</div>
+            <div class="perk-desc">Pro-tier access applies across every VaultSpark product simultaneously — one subscription, full studio coverage.</div>
+            <span class="perk-badge purple">Pro Only</span>
           </div>
-          <div class="perk-card">
-            <span class="perk-icon">🏅</span>
-            <div class="perk-title">VaultSparked Profile Badge</div>
-            <div class="perk-desc">A permanent gold ⚡ badge on your public member profile. Stays visible even when you hold streaks or rank milestones.</div>
-            <span class="perk-badge">Permanent</span>
+          <div class="perk-card pro-perk">
+            <span class="perk-icon">🧪</span>
+            <div class="perk-title">Pro Beta Builds</div>
+            <div class="perk-desc">Access to internal development builds, test branches, and experimental features before anyone else.</div>
+            <span class="perk-badge purple">Pro Only</span>
+          </div>
+          <div class="perk-card pro-perk">
+            <span class="perk-icon">🎬</span>
+            <div class="perk-title">Founder Video Updates</div>
+            <div class="perk-desc">Exclusive video studio updates direct from the founder — behind-the-scenes dev progress, direction, and decision logs.</div>
+            <span class="perk-badge purple">Pro Only</span>
+          </div>
+          <div class="perk-card pro-perk">
+            <span class="perk-icon">📋</span>
+            <div class="perk-title">Studio Credits</div>
+            <div class="perk-desc">Your name appears in official VaultSpark release credits as a Studio Supporter while you hold a Pro subscription.</div>
+            <span class="perk-badge purple">Pro Only</span>
+          </div>
+          <div class="perk-card pro-perk">
+            <span class="perk-icon">🔮</span>
+            <div class="perk-title">Pro Discord Role</div>
+            <div class="perk-desc">The exclusive VaultSparked Pro purple role in Discord — distinct from the standard Sparked role and immediately visible.</div>
+            <span class="perk-badge purple">Pro Only</span>
           </div>
         </div>
       </div>
@@ -600,13 +842,14 @@
     <section class="sparked-compare">
       <div class="container">
         <p class="sparked-section-label">Side by side</p>
-        <h2 class="sparked-section-title">Free vs. VaultSparked</h2>
-        <table class="compare-table" aria-label="Feature comparison between Free and VaultSparked tiers">
+        <h2 class="sparked-section-title">Full feature comparison</h2>
+        <table class="compare-table" aria-label="Feature comparison across Free, VaultSparked, and VaultSparked Pro tiers">
           <thead>
             <tr>
               <th class="col-head">Feature</th>
               <th class="col-free">Free</th>
               <th class="col-sparked">⚡ Sparked</th>
+              <th class="col-pro">◆ Pro</th>
             </tr>
           </thead>
           <tbody>
@@ -614,99 +857,82 @@
               <td class="feature-name">Vault Rank + leaderboard</td>
               <td class="col-free"><span class="check">✓</span></td>
               <td class="col-sparked"><span class="check">✓</span></td>
+              <td class="col-pro"><span class="check">✓</span></td>
             </tr>
             <tr>
               <td class="feature-name">Challenges + daily login bonus</td>
               <td class="col-free"><span class="check">✓</span></td>
               <td class="col-sparked"><span class="check">✓</span></td>
+              <td class="col-pro"><span class="check">✓</span></td>
             </tr>
             <tr>
               <td class="feature-name">Classified Archive access</td>
               <td class="col-free"><span class="partial">Limited</span></td>
               <td class="col-sparked"><span class="check">✓ Full</span></td>
+              <td class="col-pro"><span class="check">✓ Full</span></td>
             </tr>
             <tr>
               <td class="feature-name">Discord role</td>
               <td class="col-free"><span class="partial">Vault Member</span></td>
               <td class="col-sparked"><span class="check">✓ Sparked</span></td>
+              <td class="col-pro"><span class="check">✓ Pro</span></td>
             </tr>
             <tr>
-              <td class="feature-name">Monthly bonus XP (500 pts)</td>
+              <td class="feature-name">Monthly bonus XP</td>
+              <td class="col-free"><span class="cross">—</span></td>
+              <td class="col-sparked"><span class="check">500 pts</span></td>
+              <td class="col-pro"><span class="check">1,000 pts</span></td>
+            </tr>
+            <tr>
+              <td class="feature-name">Exclusive achievements</td>
               <td class="col-free"><span class="cross">—</span></td>
               <td class="col-sparked"><span class="check">✓</span></td>
+              <td class="col-pro"><span class="check">✓</span></td>
             </tr>
             <tr>
-              <td class="feature-name">Exclusive Sparked achievements</td>
+              <td class="feature-name">2× streak multiplier</td>
               <td class="col-free"><span class="cross">—</span></td>
               <td class="col-sparked"><span class="check">✓</span></td>
+              <td class="col-pro"><span class="check">✓</span></td>
             </tr>
             <tr>
-              <td class="feature-name">2× streak bonus multiplier</td>
-              <td class="col-free"><span class="cross">—</span></td>
-              <td class="col-sparked"><span class="check">✓</span></td>
-            </tr>
-            <tr>
-              <td class="feature-name">Development release access</td>
+              <td class="feature-name">Beta release access</td>
               <td class="col-free"><span class="partial">Pool</span></td>
-              <td class="col-sparked"><span class="check">✓ First wave</span></td>
+              <td class="col-sparked"><span class="check">First wave</span></td>
+              <td class="col-pro"><span class="check">Pro builds</span></td>
             </tr>
             <tr>
-              <td class="feature-name">Sparked profile theme + badge</td>
+              <td class="feature-name">Profile theme + badge</td>
               <td class="col-free"><span class="cross">—</span></td>
-              <td class="col-sparked"><span class="check">✓</span></td>
+              <td class="col-sparked"><span class="check">✓ Gold</span></td>
+              <td class="col-pro"><span class="check">✓ Purple</span></td>
             </tr>
             <tr>
-              <td class="feature-name">Priority Studio Pulse updates</td>
+              <td class="feature-name">Grandfather pricing lock</td>
+              <td class="col-free"><span class="partial">N/A</span></td>
+              <td class="col-sparked"><span class="check">✓ Forever</span></td>
+              <td class="col-pro"><span class="check">✓ Forever</span></td>
+            </tr>
+            <tr>
+              <td class="feature-name">Cross-product Pro access</td>
               <td class="col-free"><span class="cross">—</span></td>
-              <td class="col-sparked"><span class="check">✓</span></td>
+              <td class="col-sparked"><span class="cross">—</span></td>
+              <td class="col-pro"><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td class="feature-name">Founder video updates</td>
+              <td class="col-free"><span class="cross">—</span></td>
+              <td class="col-sparked"><span class="cross">—</span></td>
+              <td class="col-pro"><span class="check">✓</span></td>
+            </tr>
+            <tr>
+              <td class="feature-name">Studio credits</td>
+              <td class="col-free"><span class="cross">—</span></td>
+              <td class="col-sparked"><span class="cross">—</span></td>
+              <td class="col-pro"><span class="check">✓</span></td>
             </tr>
           </tbody>
         </table>
-      </div>
-    </section>
-
-    <!-- PRICING -->
-    <section class="sparked-pricing">
-      <div class="container">
-        <p class="sparked-section-label">Pricing</p>
-        <h2 class="sparked-section-title">Simple, honest pricing</h2>
-        <p class="sparked-section-sub">Start free. Upgrade when the vault earns it.</p>
-        <div class="pricing-cards">
-          <div class="pricing-card">
-            <div class="pricing-tier">Free</div>
-            <div class="pricing-amount"><sub>$</sub>0</div>
-            <div class="pricing-period">forever</div>
-            <hr class="pricing-divider" />
-            <ul class="pricing-features">
-              <li><span class="pf-check">✓</span> Vault Rank + points</li>
-              <li><span class="pf-check">✓</span> Full challenge library</li>
-              <li><span class="pf-check">✓</span> Daily login streak</li>
-              <li><span class="pf-check">✓</span> Leaderboard access</li>
-              <li><span class="pf-check">✓</span> Community + polls</li>
-              <li><span class="pf-check">✓</span> Vault Member Discord role</li>
-            </ul>
-            <a href="/vault-member/#register" class="pricing-btn pricing-btn-free">Join the Vault Free</a>
-          </div>
-          <div class="pricing-card featured">
-            <div class="pricing-featured-badge">Most Popular</div>
-            <div class="pricing-tier">VaultSparked</div>
-            <div class="pricing-amount"><sub>$</sub>24.99</div>
-            <div class="pricing-period">per month</div>
-            <hr class="pricing-divider" />
-            <ul class="pricing-features">
-              <li><span class="pf-check">✓</span> Everything in Free</li>
-              <li><span class="pf-plus">+</span> 500 bonus XP monthly</li>
-              <li><span class="pf-plus">+</span> Sparked Discord role</li>
-              <li><span class="pf-plus">+</span> Exclusive achievements</li>
-              <li><span class="pf-plus">+</span> 2× streak multiplier</li>
-              <li><span class="pf-plus">+</span> Full Classified Archive</li>
-              <li><span class="pf-plus">+</span> First-wave release priority</li>
-              <li><span class="pf-plus">+</span> Sparked profile theme</li>
-            </ul>
-            <a href="/vault-member/#vaultsparked" class="pricing-btn pricing-btn-sparked">⚡ Go VaultSparked</a>
-          </div>
-        </div>
-        <p class="pricing-note">Cancel anytime from your portal settings. No annual lock-in.</p>
       </div>
     </section>
 
@@ -717,51 +943,37 @@
         <h2 class="sparked-section-title">Frequently asked</h2>
         <div class="faq-grid">
           <div class="faq-item">
-            <div class="faq-q">Do I need to be a Vault member first?</div>
-            <div class="faq-a">Yes. VaultSparked upgrades your existing free account. <a href="/vault-member/#register">Create your free account</a> first, then upgrade from the portal settings.</div>
+            <div class="faq-q">What is grandfather pricing?</div>
+            <div class="faq-a">When you subscribe during Phase 1, your price is <strong style="color:#FFC400;">locked permanently</strong>. When Phase 2 opens at a higher price, only new subscribers pay more. You pay $4.99/mo (Sparked) or $29.99/mo (Pro) forever, as long as you keep your subscription active.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">What happens if I cancel and resubscribe?</div>
+            <div class="faq-a">If you cancel and resubscribe later, you'll be placed in the current active phase at the current price. Your grandfather rate only holds while the subscription remains continuously active.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Do I need a free account first?</div>
+            <div class="faq-a">Yes. VaultSparked and Pro upgrade your existing free Vault account. <a href="/vault-member/#register">Create your free account</a> first, then upgrade from your portal settings.</div>
           </div>
           <div class="faq-item">
             <div class="faq-q">What happens when I cancel?</div>
-            <div class="faq-a">You drop back to the free tier. Your rank, points, and earned achievements stay — you just lose the Sparked perks going forward.</div>
+            <div class="faq-a">You drop back to the free tier at the end of your billing period. Your rank, points, and earned achievements stay permanently — you just lose the Sparked/Pro perks going forward.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">How many Phase 1 spots are there?</div>
+            <div class="faq-a">Phase 1 VaultSparked is capped at 500 subscribers. Phase 1 VaultSparked Pro is capped at 100. When a cap is hit, Phase 2 opens at the higher price. Existing members keep their rate.</div>
           </div>
           <div class="faq-item">
             <div class="faq-q">When does the monthly bonus XP drop?</div>
-            <div class="faq-a">On the first day of each calendar month, 500 points are credited to your vault balance automatically. No action required.</div>
+            <div class="faq-a">Points are credited automatically on each subscription renewal cycle — 500 pts for Sparked, 1,000 pts for Pro. No action required.</div>
           </div>
           <div class="faq-item">
-            <div class="faq-q">Do Sparked achievements stay on my profile if I cancel?</div>
-            <div class="faq-a">Yes — any achievement you earned during an active Sparked subscription is permanently on your profile. Achievements are never removed.</div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q">Is there a free trial?</div>
-            <div class="faq-a">There's no formal trial period, but the free tier is genuinely full-featured. Try the Vault free and upgrade when you're ready.</div>
+            <div class="faq-q">Does VaultSparked Pro include everything in VaultSparked?</div>
+            <div class="faq-a">Yes — Pro is a superset. You get all Sparked perks plus the Pro-exclusive features (cross-product access, Pro beta builds, founder videos, studio credits, and the Pro Discord role).</div>
           </div>
           <div class="faq-item">
             <div class="faq-q">Is billing secure?</div>
-            <div class="faq-a">Payments are processed by Stripe. VaultSpark Studios never stores your card details. Cancel or update billing any time from your portal.</div>
+            <div class="faq-a">Payments are processed by Stripe. VaultSpark Studios never stores your card details. Cancel or update billing any time from your portal settings.</div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Notify Me When VaultSparked Is Ready -->
-    <section id="sparked-notify" aria-labelledby="sparked-notify-heading" style="padding:4rem 0;border-top:1px solid var(--line);">
-      <div class="container">
-        <div style="max-width:580px;margin:0 auto;text-align:center;">
-          <span style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);display:block;margin-bottom:0.75rem;">⚡ VaultSparked Waitlist</span>
-          <h2 id="sparked-notify-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.8rem,3.5vw,2.6rem);letter-spacing:-0.04em;margin-bottom:0.7rem;line-height:1.1;">Get notified when<br/>VaultSparked opens.</h2>
-          <p style="color:var(--muted);font-size:0.97rem;line-height:1.68;margin-bottom:1.8rem;max-width:44ch;margin-left:auto;margin-right:auto;">Billing is still being set up. Leave your email and you'll be the first to know when subscriptions go live — with a founder discount.</p>
-          <form id="sparked-notify-form" style="display:flex;gap:0.6rem;flex-wrap:wrap;justify-content:center;align-items:center;max-width:460px;margin:0 auto 1rem;">
-            <input type="hidden" name="access_key" value="8f83d837-0348-43a4-8a0f-19c3a1d70d16" />
-            <input type="hidden" name="subject" value="VaultSparked Waitlist" />
-            <input type="hidden" name="from_name" value="VaultSpark Sparked Waitlist" />
-            <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
-            <input type="email" name="email" required placeholder="your@email.com" autocomplete="email" style="flex:1;min-width:200px;height:46px;padding:0 1rem;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.95rem;font-family:inherit;outline:none;" aria-label="Email address" />
-            <button type="submit" class="sparked-cta-primary" id="sparked-notify-btn" style="height:46px;padding:0 1.4rem;border:none;cursor:pointer;white-space:nowrap;font-family:inherit;">⚡ Notify Me</button>
-          </form>
-          <div id="sparked-notify-success" style="display:none;padding:1rem;color:var(--green);font-size:0.92rem;font-weight:600;">&#10003; You're on the list — we'll send you a founder notification when VaultSparked goes live.</div>
-          <div id="sparked-notify-error" style="display:none;padding:0.5rem;color:#f87171;font-size:0.88rem;">Something went wrong. <a href="/contact/" style="color:var(--gold);">Contact us →</a></div>
-          <p style="font-size:0.8rem;color:var(--dim);margin-top:0.75rem;">One email. No spam.</p>
         </div>
       </div>
     </section>
@@ -770,9 +982,9 @@
     <section class="sparked-bottom-cta">
       <div class="container">
         <h2>The vault's open.<br />The spark's yours.</h2>
-        <p>Join thousands of vault members — or go Sparked and unlock the full experience.</p>
+        <p>Join the Vault free, or lock in Phase 1 pricing before it's gone.</p>
         <div class="sparked-cta-row">
-          <a href="/vault-member/#vaultsparked" class="sparked-cta-primary">⚡ Go VaultSparked — $24.99/mo</a>
+          <a href="#pricing" class="sparked-cta-primary">⚡ See Pricing</a>
           <a href="/vault-member/#register" class="sparked-cta-secondary">Join Free</a>
         </div>
       </div>
@@ -797,36 +1009,185 @@
     </div>
   </footer>
 
-</div>
+</div><!-- /vs-page -->
+
+<!-- Toast -->
+<div id="vs-toast" role="status" aria-live="polite"></div>
+
+<!-- Supabase client (for anon phase reads) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/assets/membership-access.js"></script>
 <script src="/assets/vault-cta.js" defer></script>
-  <script>
-    (function() {
-      var f = document.getElementById('sparked-notify-form');
-      if (!f) return;
-      f.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        var btn = document.getElementById('sparked-notify-btn');
-        btn.disabled = true; btn.textContent = 'Sending…';
-        try {
-          var r = await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(Object.fromEntries(new FormData(f)))
-          });
-          if (r.ok) {
-            f.style.display = 'none';
-            document.getElementById('sparked-notify-success').style.display = 'block';
-            if (typeof gtag === 'function') { gtag('event', 'form_submit', { form_name: 'vaultsparked_waitlist', form_location: '/vaultsparked/' }); }
-          } else { throw new Error(); }
-        } catch(_) {
-          document.getElementById('sparked-notify-error').style.display = 'block';
-          btn.disabled = false; btn.textContent = '⚡ Notify Me';
+
+<script>
+(function () {
+  'use strict';
+
+  // ── Public Supabase client (anon, no auth needed for phase reads) ──
+  var VSPublic = supabase.createClient(
+    'https://fjnpzjjyhnpmunfoycrp.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqbnB6amp5aG5wbXVuZm95Y3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI5MDYxOTcsImV4cCI6MjA1ODQ4MjE5N30.kCTCm73J0AeN0-hTlZ98ZEL7kdZ7YbKSnJVt35lGCeQ'
+  );
+
+  // ── Toast helper ────────────────────────────────────────────────────
+  var _toastTimer = null;
+  function showToast(msg) {
+    var el = document.getElementById('vs-toast');
+    if (!el) return;
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(_toastTimer);
+    _toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
+  }
+
+  // ── Load phase data from membership_phases ─────────────────────────
+  async function loadPhaseData() {
+    try {
+      var result = await VSPublic
+        .from('membership_phases')
+        .select('plan_key, phase, price_label, subscriber_cap, subscriber_count, is_current')
+        .eq('is_current', true);
+
+      if (result.error || !result.data) return;
+
+      result.data.forEach(function (row) {
+        var spotsLeft = row.subscriber_cap != null
+          ? Math.max(0, row.subscriber_cap - row.subscriber_count)
+          : null;
+
+        if (row.plan_key === 'vault_sparked') {
+          // Price display
+          var priceMatch = row.price_label.match(/\$([\d.]+)/);
+          if (priceMatch) {
+            document.getElementById('sparked-price-display').innerHTML =
+              '<sub>$</sub>' + priceMatch[1];
+          }
+          // Spots label
+          var spotsEl = document.getElementById('sparked-spots-label');
+          if (spotsEl) {
+            if (spotsLeft !== null) {
+              spotsEl.innerHTML = '<span style="color:#FFC400;font-weight:700;">Phase ' + row.phase + '</span>'
+                + ' — ' + spotsLeft + ' spot' + (spotsLeft === 1 ? '' : 's') + ' left at this price';
+            } else {
+              spotsEl.innerHTML = '<span style="color:#FFC400;font-weight:700;">Phase ' + row.phase + '</span> — unlimited';
+            }
+          }
+        }
+
+        if (row.plan_key === 'vault_sparked_pro') {
+          var priceMatch2 = row.price_label.match(/\$([\d.]+)/);
+          if (priceMatch2) {
+            document.getElementById('pro-price-display').innerHTML =
+              '<sub>$</sub>' + priceMatch2[1];
+          }
+          var proSpotsEl = document.getElementById('pro-spots-label');
+          if (proSpotsEl) {
+            if (spotsLeft !== null) {
+              proSpotsEl.innerHTML = '<span style="color:#a855f7;font-weight:700;">Phase ' + row.phase + '</span>'
+                + ' — ' + spotsLeft + ' spot' + (spotsLeft === 1 ? '' : 's') + ' left at this price';
+            } else {
+              proSpotsEl.innerHTML = '<span style="color:#a855f7;font-weight:700;">Phase ' + row.phase + '</span> — unlimited';
+            }
+          }
         }
       });
-    })();
-  </script>
+    } catch (err) {
+      // Silently degrade — static fallback prices already in HTML
+      console.warn('[VaultSparked] phase data load failed:', err);
+      var sparkedSpotsEl = document.getElementById('sparked-spots-label');
+      var proSpotsEl2 = document.getElementById('pro-spots-label');
+      if (sparkedSpotsEl) sparkedSpotsEl.textContent = 'Phase 1 — Limited spots';
+      if (proSpotsEl2) proSpotsEl2.textContent = 'Phase 1 — Limited spots';
+    }
+  }
+
+  // ── Checkout helpers ────────────────────────────────────────────────
+  // We need a real authenticated Supabase client for checkout invocations.
+  // Use the portal's VSSupabase if available, otherwise fall back to anon
+  // (the Edge Function validates the auth token, so anon calls will 401).
+  function getAuthClient() {
+    if (typeof VSSupabase !== 'undefined') return VSSupabase;
+    return VSPublic;
+  }
+
+  async function startCheckout(plan, promoCode) {
+    var btnId = plan === 'vault_sparked_pro' ? 'vaultsparked-pro-upgrade-btn' : 'vaultsparked-upgrade-btn';
+    var btn = document.getElementById(btnId);
+    var defaultLabel = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Redirecting…'; }
+
+    try {
+      var client = getAuthClient();
+      var sessionRes = await client.auth.getSession();
+      var session = sessionRes && sessionRes.data && sessionRes.data.session;
+
+      if (!session) {
+        // Not logged in — redirect to portal login, then back here
+        window.location.href = '/vault-member/?next=' + encodeURIComponent(window.location.href);
+        return;
+      }
+
+      var body = { plan: plan };
+      if (promoCode) body.promo_code = promoCode;
+
+      var res = await client.functions.invoke('create-checkout', {
+        headers: { 'Authorization': 'Bearer ' + session.access_token },
+        body: body,
+      });
+
+      var data = res.data;
+      var error = res.error;
+
+      if (error || !data || !data.url) {
+        if (data && data.error === 'invalid_promo_code') {
+          throw new Error('Promo code not found or expired.');
+        }
+        throw new Error((error && error.message) || 'Checkout unavailable. Please try again.');
+      }
+
+      window.location.href = data.url;
+
+    } catch (err) {
+      if (btn) { btn.disabled = false; btn.textContent = defaultLabel; }
+      showToast(err.message || 'Something went wrong. Please try again.');
+    }
+  }
+
+  // ── Wire up buttons ─────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', function () {
+    loadPhaseData();
+
+    // VaultSparked checkout button
+    var sparkedBtn = document.getElementById('vaultsparked-upgrade-btn');
+    if (sparkedBtn) {
+      sparkedBtn.addEventListener('click', function () {
+        var promoCode = (document.getElementById('sparked-promo-input') || {}).value || '';
+        startCheckout('vault_sparked', promoCode.trim() || null);
+      });
+    }
+
+    // VaultSparked Pro checkout button
+    var proBtn = document.getElementById('vaultsparked-pro-upgrade-btn');
+    if (proBtn) {
+      proBtn.addEventListener('click', function () {
+        var promoCode = (document.getElementById('pro-promo-input') || {}).value || '';
+        startCheckout('vault_sparked_pro', promoCode.trim() || null);
+      });
+    }
+
+    // Smooth scroll for #pricing anchor
+    document.querySelectorAll('a[href="#pricing"]').forEach(function (link) {
+      link.addEventListener('click', function (e) {
+        var target = document.getElementById('pricing');
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  });
+
+})();
+</script>
 </body>
 </html>
-
-
-

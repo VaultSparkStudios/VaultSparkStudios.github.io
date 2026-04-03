@@ -1,5 +1,6 @@
 // VaultSpark Studios — Stripe Webhook Edge Function
 // Handles subscription lifecycle events from Stripe.
+// Three-tier: vault_sparked, vault_sparked_pro, promogrind_pro (legacy)
 //
 // Deploy: supabase functions deploy stripe-webhook
 // Set secrets:
@@ -9,12 +10,12 @@
 // In Stripe dashboard → Webhooks → Add endpoint:
 //   URL: https://<project-ref>.supabase.co/functions/v1/stripe-webhook
 //   Events: checkout.session.completed, customer.subscription.updated,
-//           customer.subscription.deleted, invoice.payment_failed
+//           customer.subscription.deleted, invoice.payment_failed, invoice.paid
 
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import Stripe from 'https://esm.sh/stripe@14?target=deno';
-import { isVaultSparkedPlan, normalizePlanKey } from '../_shared/membershipAccess.ts';
+import { isVaultSparkedPlan, isVaultSparkedProPlan, normalizePlanKey } from '../_shared/membershipAccess.ts';
 
 const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
   apiVersion: '2023-10-16',
@@ -74,7 +75,7 @@ serve(async (req: Request) => {
           });
 
           await supabase.from('vault_members')
-            .update({ is_sparked: true })
+            .update({ is_sparked: true, plan_key: 'vault_sparked' })
             .eq('id', recipientId);
 
           // Award gifter 50 bonus points
@@ -102,6 +103,8 @@ serve(async (req: Request) => {
 
         const sub = await stripe.subscriptions.retrieve(subscriptionId);
         const plan = normalizePlanKey((session.metadata?.plan ?? sub.metadata?.plan ?? 'vault_sparked') as string);
+        const stripePriceId = session.metadata?.stripe_price_id ?? null;
+        const enrolledPhase = parseInt(session.metadata?.enrolled_phase ?? '1', 10);
 
         await supabase.from('subscriptions').upsert({
           user_id:                userId,
@@ -110,12 +113,16 @@ serve(async (req: Request) => {
           plan,
           status:                 sub.status === 'active' ? 'active' : 'inactive',
           current_period_end:     new Date(sub.current_period_end * 1000).toISOString(),
+          stripe_price_id:        stripePriceId,
+          enrolled_phase:         enrolledPhase,
           updated_at:             new Date().toISOString(),
         }, { onConflict: 'user_id' });
 
-        // Sync is_sparked flag → triggers assign-discord-role webhook
+        // Sync is_sparked flag and plan_key
         if (sub.status === 'active' && isVaultSparkedPlan(plan)) {
-          await supabase.from('vault_members').update({ is_sparked: true }).eq('id', userId);
+          await supabase.from('vault_members')
+            .update({ is_sparked: true, plan_key: plan })
+            .eq('id', userId);
         }
 
         break;
@@ -136,11 +143,15 @@ serve(async (req: Request) => {
           })
           .eq('stripe_subscription_id', sub.id);
 
-        // Sync is_sparked flag → triggers assign-discord-role webhook
+        // Sync is_sparked flag and plan_key
         const { data: subRow } = await supabase
           .from('subscriptions').select('user_id').eq('stripe_subscription_id', sub.id).single();
         if (subRow?.user_id) {
-          await supabase.from('vault_members').update({ is_sparked: active && isVaultSparkedPlan(plan) }).eq('id', subRow.user_id);
+          const isSparked = active && isVaultSparkedPlan(plan);
+          const newPlanKey = isSparked ? plan : 'free';
+          await supabase.from('vault_members')
+            .update({ is_sparked: isSparked, plan_key: newPlanKey })
+            .eq('id', subRow.user_id);
         }
 
         break;
@@ -155,11 +166,13 @@ serve(async (req: Request) => {
           .update({ plan, status: 'canceled', updated_at: new Date().toISOString() })
           .eq('stripe_subscription_id', sub.id);
 
-        // Remove is_sparked flag → triggers assign-discord-role webhook
+        // Remove is_sparked flag and reset plan_key
         const { data: subRow } = await supabase
           .from('subscriptions').select('user_id').eq('stripe_subscription_id', sub.id).single();
         if (subRow?.user_id && isVaultSparkedPlan(plan)) {
-          await supabase.from('vault_members').update({ is_sparked: false }).eq('id', subRow.user_id);
+          await supabase.from('vault_members')
+            .update({ is_sparked: false, plan_key: 'free' })
+            .eq('id', subRow.user_id);
         }
 
         break;
@@ -176,11 +189,70 @@ serve(async (req: Request) => {
           .update({ plan, status: 'past_due', updated_at: new Date().toISOString() })
           .eq('stripe_subscription_id', subId);
 
-        // Remove is_sparked on failed payment
+        // Remove is_sparked and reset plan_key on failed payment
         const { data: subRow } = await supabase
           .from('subscriptions').select('user_id').eq('stripe_subscription_id', subId).single();
         if (subRow?.user_id && isVaultSparkedPlan(plan)) {
-          await supabase.from('vault_members').update({ is_sparked: false }).eq('id', subRow.user_id);
+          await supabase.from('vault_members')
+            .update({ is_sparked: false, plan_key: 'free' })
+            .eq('id', subRow.user_id);
+        }
+
+        break;
+      }
+
+      // ── Invoice paid → award monthly XP ─────────────────────────
+      case 'invoice.paid': {
+        const invoice = event.data.object as Stripe.Invoice;
+
+        // Only handle subscription cycle renewals
+        if (invoice.billing_reason !== 'subscription_cycle') break;
+
+        const subId = invoice.subscription as string;
+        if (!subId) break;
+
+        // Look up local subscription record
+        const { data: subRow } = await supabase
+          .from('subscriptions')
+          .select('user_id, plan, last_monthly_xp_at')
+          .eq('stripe_subscription_id', subId)
+          .maybeSingle();
+
+        if (!subRow?.user_id) break;
+
+        const plan = normalizePlanKey(subRow.plan ?? 'vault_sparked');
+
+        // Only award XP for Sparked plans
+        if (!isVaultSparkedPlan(plan)) break;
+
+        const now = new Date();
+        const lastXpAt = subRow.last_monthly_xp_at ? new Date(subRow.last_monthly_xp_at) : null;
+        const daysSinceLastXp = lastXpAt
+          ? (now.getTime() - lastXpAt.getTime()) / (1000 * 60 * 60 * 24)
+          : Infinity;
+
+        // Award if never awarded or last award was > 28 days ago
+        if (daysSinceLastXp > 28) {
+          const monthKey = `${now.getFullYear()}_${String(now.getMonth() + 1).padStart(2, '0')}`;
+          const isPro    = isVaultSparkedProPlan(plan);
+          const points   = isPro ? 1000 : 500;
+          const reason   = isPro
+            ? `monthly_xp_pro_${monthKey}`
+            : `monthly_xp_sparked_${monthKey}`;
+
+          await supabase.rpc('award_points_for_user', {
+            p_user_id:  subRow.user_id,
+            p_reason:   reason,
+            p_points:   points,
+            p_label:    isPro ? 'Monthly Pro XP Drop' : 'Monthly Sparked XP Drop',
+            p_once_per: 'month',
+            p_source:   'subscription_renewal',
+          }).catch((err: Error) => console.error('award_points_for_user error:', err));
+
+          // Update last_monthly_xp_at
+          await supabase.from('subscriptions')
+            .update({ last_monthly_xp_at: now.toISOString() })
+            .eq('stripe_subscription_id', subId);
         }
 
         break;

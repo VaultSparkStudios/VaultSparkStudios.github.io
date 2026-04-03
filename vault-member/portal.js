@@ -138,21 +138,53 @@
         showAuth();
       },
 
-      async startVaultSparkedCheckout() {
-        const btn = document.getElementById('vaultsparked-upgrade-btn');
+      async startVaultSparkedCheckout(plan, promoCode) {
+        plan = plan || 'vault_sparked';
+        promoCode = promoCode || null;
+        const btnId = plan === 'vault_sparked_pro' ? 'vaultsparked-pro-upgrade-btn' : 'vaultsparked-upgrade-btn';
+        const btn = document.getElementById(btnId);
+        const defaultLabel = plan === 'vault_sparked_pro' ? 'Get VaultSparked Pro →' : 'Get VaultSparked →';
         if (btn) { btn.textContent = 'Redirecting…'; btn.disabled = true; }
         try {
           const { data: { session } } = await VSSupabase.auth.getSession();
           if (!session) { showAuth(); return; }
+          const body = { plan };
+          if (promoCode) body.promo_code = promoCode;
           const { data, error } = await VSSupabase.functions.invoke('create-checkout', {
             headers: { Authorization: `Bearer ${session.access_token}` },
-            body: { plan: 'vault_sparked' },
+            body,
           });
-          if (error || !data?.url) throw new Error(error?.message || 'Checkout unavailable');
+          if (error || !data?.url) {
+            if (data?.error === 'invalid_promo_code') throw new Error('Promo code not found or expired.');
+            throw new Error(error?.message || 'Checkout unavailable');
+          }
           window.location.href = data.url;
         } catch (err) {
-          if (btn) { btn.textContent = 'Get VaultSparked →'; btn.disabled = false; }
+          if (btn) { btn.textContent = defaultLabel; btn.disabled = false; }
           if (window.Sentry) Sentry.captureException(err);
+          if (err && err.message) showToast(err.message, { icon: '⚠️' });
+        }
+      },
+
+      async startVaultSparkedProCheckout(promoCode) {
+        return this.startVaultSparkedCheckout('vault_sparked_pro', promoCode || null);
+      },
+
+      async openCustomerPortal() {
+        const btn = document.getElementById('open-customer-portal-btn');
+        if (btn) { btn.textContent = 'Opening…'; btn.disabled = true; }
+        try {
+          const { data: { session } } = await VSSupabase.auth.getSession();
+          if (!session) { showAuth(); return; }
+          const { data, error } = await VSSupabase.functions.invoke('customer-portal-session', {
+            headers: { Authorization: `Bearer ${session.access_token}` },
+          });
+          if (error || !data?.url) throw new Error(error?.message || 'Portal unavailable');
+          window.location.href = data.url;
+        } catch (err) {
+          if (btn) { btn.textContent = 'Manage Billing'; btn.disabled = false; }
+          if (window.Sentry) Sentry.captureException(err);
+          if (err && err.message) showToast(err.message, { icon: '⚠️' });
         }
       },
 

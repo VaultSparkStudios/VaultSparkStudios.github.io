@@ -1,7 +1,8 @@
-// Generated file. Do not edit manually.
+// VaultSpark Studios — Membership Access Config
+// Version: 2026-04-03
 
 const CONFIG = {
-  "version": "2026-03-31",
+  "version": "2026-04-03",
   "defaultPlan": "free",
   "planAliases": {
     "pro": "promogrind_pro"
@@ -78,9 +79,20 @@ const CONFIG = {
       "kind": "studio",
       "isPaid": true,
       "isSparked": true,
-      "monthlyPriceUsd": 24.99,
-      "priceDisplay": "$24.99/mo",
+      "isPro": false,
+      "monthlyPriceUsd": null,
+      "priceDisplay": "From $4.99/mo",
       "portalLabel": "VaultSparked"
+    },
+    "vault_sparked_pro": {
+      "label": "VaultSparked Pro",
+      "kind": "studio",
+      "isPaid": true,
+      "isSparked": true,
+      "isPro": true,
+      "monthlyPriceUsd": null,
+      "priceDisplay": "From $29.99/mo",
+      "portalLabel": "VaultSparked Pro"
     },
     "promogrind_pro": {
       "label": "PromoGrind Pro",
@@ -111,7 +123,8 @@ const CONFIG = {
       "rule": {
         "requiresAccount": true,
         "allowedPlans": [
-          "vault_sparked"
+          "vault_sparked",
+          "vault_sparked_pro"
         ]
       }
     },
@@ -127,7 +140,8 @@ const CONFIG = {
       "rule": {
         "requiresAccount": true,
         "allowedPlans": [
-          "vault_sparked"
+          "vault_sparked",
+          "vault_sparked_pro"
         ]
       }
     },
@@ -144,7 +158,8 @@ const CONFIG = {
         "requiresAccount": true,
         "allowedPlans": [
           "promogrind_pro",
-          "vault_sparked"
+          "vault_sparked",
+          "vault_sparked_pro"
         ]
       }
     },
@@ -153,7 +168,8 @@ const CONFIG = {
       "rule": {
         "requiresAccount": true,
         "allowedPlans": [
-          "vault_sparked"
+          "vault_sparked",
+          "vault_sparked_pro"
         ]
       }
     },
@@ -162,7 +178,8 @@ const CONFIG = {
       "rule": {
         "requiresAccount": true,
         "allowedPlans": [
-          "vault_sparked"
+          "vault_sparked",
+          "vault_sparked_pro"
         ]
       }
     },
@@ -171,7 +188,8 @@ const CONFIG = {
       "rule": {
         "requiresAccount": true,
         "allowedPlans": [
-          "vault_sparked"
+          "vault_sparked",
+          "vault_sparked_pro"
         ]
       }
     },
@@ -181,6 +199,51 @@ const CONFIG = {
         "requiresAccount": true,
         "minPlan": "free",
         "minRankIndex": 2
+      }
+    },
+    "pro_cross_product": {
+      "label": "Cross-product Pro access",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      }
+    },
+    "pro_beta_builds": {
+      "label": "Pro-tier beta build access",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      }
+    },
+    "pro_discord_role": {
+      "label": "VaultSparked Pro Discord role",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      }
+    },
+    "pro_founder_video": {
+      "label": "Founder video updates",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
+      }
+    },
+    "pro_studio_credits": {
+      "label": "Studio credits",
+      "rule": {
+        "requiresAccount": true,
+        "allowedPlans": [
+          "vault_sparked_pro"
+        ]
       }
     }
   },
@@ -195,7 +258,9 @@ const CONFIG = {
       ],
       "paidFeatures": [
         "beta_priority",
-        "sparked_badge"
+        "sparked_badge",
+        "pro_cross_product",
+        "pro_beta_builds"
       ]
     },
     "gridiron_gm": {
@@ -208,7 +273,9 @@ const CONFIG = {
       ],
       "paidFeatures": [
         "beta_priority",
-        "sparked_badge"
+        "sparked_badge",
+        "pro_cross_product",
+        "pro_beta_builds"
       ]
     },
     "vaultspark_football_gm": {
@@ -221,7 +288,9 @@ const CONFIG = {
       ],
       "paidFeatures": [
         "beta_priority",
-        "sparked_badge"
+        "sparked_badge",
+        "pro_cross_product",
+        "pro_beta_builds"
       ]
     },
     "vaultfront": {
@@ -232,7 +301,9 @@ const CONFIG = {
         "beta_pool"
       ],
       "paidFeatures": [
-        "beta_priority"
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
       ]
     },
     "solara": {
@@ -243,7 +314,9 @@ const CONFIG = {
         "beta_pool"
       ],
       "paidFeatures": [
-        "beta_priority"
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
       ]
     },
     "mindframe": {
@@ -254,7 +327,9 @@ const CONFIG = {
         "beta_pool"
       ],
       "paidFeatures": [
-        "beta_priority"
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
       ]
     },
     "project_unknown": {
@@ -266,7 +341,9 @@ const CONFIG = {
         "project_unknown_brief"
       ],
       "paidFeatures": [
-        "beta_priority"
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
       ]
     },
     "promogrind": {
@@ -277,7 +354,9 @@ const CONFIG = {
         "promoGrind_core"
       ],
       "paidFeatures": [
-        "promoGrind_live_tools"
+        "promoGrind_live_tools",
+        "pro_cross_product",
+        "pro_beta_builds"
       ]
     }
   }
@@ -287,30 +366,36 @@ const PLAN_ORDER = {
   free: 0,
   promogrind_pro: 1,
   vault_sparked: 2,
+  vault_sparked_pro: 3,
 };
 
 const PLAN_ALIASES = CONFIG.planAliases || {};
 
-function normalizePlanKey(planKey) {
+function normalizePlanKey(planKey: string): string {
   const raw = typeof planKey === 'string' ? planKey.trim() : '';
   if (!raw) return CONFIG.defaultPlan;
   return PLAN_ALIASES[raw] || raw;
 }
 
-function getPlan(planKey) {
+function getPlan(planKey: string) {
   const key = normalizePlanKey(planKey);
   return CONFIG.plans[key] || CONFIG.plans[CONFIG.defaultPlan];
 }
 
-function isPaidPlan(planKey) {
+function isPaidPlan(planKey: string): boolean {
   return !!getPlan(planKey).isPaid;
 }
 
-function isVaultSparkedPlan(planKey) {
-  return normalizePlanKey(planKey) === 'vault_sparked';
+function isVaultSparkedPlan(planKey: string): boolean {
+  const key = normalizePlanKey(planKey);
+  return key === 'vault_sparked' || key === 'vault_sparked_pro';
 }
 
-function getRankIndex(points) {
+function isVaultSparkedProPlan(planKey: string): boolean {
+  return normalizePlanKey(planKey) === 'vault_sparked_pro';
+}
+
+function getRankIndex(points: number): number {
   const value = Number.isFinite(points) ? points : Number(points || 0);
   let rankIndex = 0;
   for (let i = 0; i < CONFIG.rankThresholds.length; i += 1) {
@@ -319,19 +404,19 @@ function getRankIndex(points) {
   return rankIndex;
 }
 
-function isSubscriptionActive(subscription) {
+function isSubscriptionActive(subscription: any): boolean {
   if (!subscription) return false;
   if (subscription.status !== 'active') return false;
   if (!subscription.current_period_end) return true;
   return new Date(subscription.current_period_end).getTime() > Date.now();
 }
 
-function getActivePlanKey(subscription) {
+function getActivePlanKey(subscription: any): string {
   if (!isSubscriptionActive(subscription)) return CONFIG.defaultPlan;
   return normalizePlanKey(subscription.plan);
 }
 
-function buildContext(input = {}) {
+function buildContext(input: any = {}) {
   const rankIndex = Number.isInteger(input.rankIndex) ? input.rankIndex : getRankIndex(input.points || 0);
   const hasAccount = input.hasAccount !== false;
   const planKey = normalizePlanKey(input.planKey);
@@ -343,13 +428,13 @@ function buildContext(input = {}) {
   };
 }
 
-function comparePlanOrder(currentPlan, minimumPlan) {
+function comparePlanOrder(currentPlan: string, minimumPlan: string): boolean {
   const current = PLAN_ORDER[normalizePlanKey(currentPlan)] ?? PLAN_ORDER[CONFIG.defaultPlan];
   const required = PLAN_ORDER[normalizePlanKey(minimumPlan)] ?? PLAN_ORDER[CONFIG.defaultPlan];
   return current >= required;
 }
 
-function matchesRule(rule = {}, contextInput = {}) {
+function matchesRule(rule: any = {}, contextInput: any = {}): boolean {
   const context = buildContext(contextInput);
   if (rule.public) return true;
   if (rule.requiresAccount && !context.hasAccount) return false;
@@ -359,21 +444,21 @@ function matchesRule(rule = {}, contextInput = {}) {
   return true;
 }
 
-function getFeature(featureKey) {
+function getFeature(featureKey: string) {
   return CONFIG.features[featureKey] || null;
 }
 
-function hasEntitlement(featureKey, contextInput = {}) {
+function hasEntitlement(featureKey: string, contextInput: any = {}): boolean {
   const feature = getFeature(featureKey);
   if (!feature) return false;
   return matchesRule(feature.rule, contextInput);
 }
 
-function getProject(projectKey) {
+function getProject(projectKey: string) {
   return CONFIG.projects[projectKey] || null;
 }
 
-function getPriceDisplay(planKey) {
+function getPriceDisplay(planKey: string): string {
   return getPlan(planKey).priceDisplay || '';
 }
 
@@ -384,6 +469,7 @@ export {
   getPlan,
   isPaidPlan,
   isVaultSparkedPlan,
+  isVaultSparkedProPlan,
   getRankIndex,
   isSubscriptionActive,
   getActivePlanKey,
