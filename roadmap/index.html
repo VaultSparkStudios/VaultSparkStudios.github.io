@@ -97,10 +97,9 @@
       white-space: nowrap;
       flex-shrink: 0;
     }
-    .stage-live    { background: rgba(74,222,128,0.1);  color: #86efac; border: 1px solid rgba(74,222,128,0.25); }
-    .stage-beta    { background: rgba(255,196,0,0.1);   color: var(--gold); border: 1px solid rgba(255,196,0,0.22); }
-    .stage-dev     { background: rgba(31,162,255,0.1);  color: #7dd3fc; border: 1px solid rgba(31,162,255,0.22); }
-    .stage-concept { background: rgba(148,163,184,0.08);color: #94a3b8; border: 1px solid rgba(148,163,184,0.16); }
+    .stage-sparked { background: rgba(249,115,22,0.1);  color: #fbbf24; border: 1px solid rgba(249,115,22,0.25); }
+    .stage-forge   { background: rgba(245,158,11,0.1);  color: #f59e0b; border: 1px solid rgba(245,158,11,0.22); }
+    .stage-vaulted { background: rgba(148,163,184,0.08);color: #94a3b8; border: 1px solid rgba(148,163,184,0.16); }
 
     .pipeline-card p {
       color: var(--muted);
@@ -215,11 +214,11 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">CANON</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
         <a href="/universe/">Universe</a>
-        <a href="/studio/" class="active">Studio</a>
-
+        <a href="/studio/">Studio</a>
+        <a href="/journal/">Signal Log</a>
         <a href="/contact/">Contact</a>
 
         <div class="mobile-nav-footer">
@@ -251,10 +250,9 @@
           This is the live state of VaultSpark Studios — and the system that keeps it all moving.
         </p>
         <div class="stage-legend">
-          <div class="legend-item"><div class="legend-dot" style="background:#86efac;"></div> Live</div>
-          <div class="legend-item"><div class="legend-dot" style="background:var(--gold);"></div> Beta</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#7dd3fc;"></div> In Development</div>
-          <div class="legend-item"><div class="legend-dot" style="background:#94a3b8;"></div> Concept Stage</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#fbbf24;"></div> 🔥 Sparked</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#f59e0b;"></div> ⚒️ In The Forge</div>
+          <div class="legend-item"><div class="legend-dot" style="background:#94a3b8;"></div> 🔒 Vaulted</div>
         </div>
       </div>
     </section>
@@ -274,7 +272,7 @@
           <div class="pipeline-card">
             <div class="pipeline-card-top">
               <h3>Call Of Doodie</h3>
-              <span class="stage-badge stage-live">Live</span>
+              <span class="stage-badge stage-sparked">🔥 Sparked</span>
             </div>
             <p>Action comedy browser shooter. The first world unsealed from the vault — free to play, actively updated.</p>
             <div class="pipeline-card-meta">
@@ -286,7 +284,7 @@
           <div class="pipeline-card">
             <div class="pipeline-card-top">
               <h3>Gridiron GM</h3>
-              <span class="stage-badge stage-concept">Vaulted</span>
+              <span class="stage-badge stage-vaulted">🔒 Vaulted</span>
             </div>
             <p>Football franchise management simulation. Currently vaulted while we build the next version — returning soon.</p>
             <div class="pipeline-card-meta">
@@ -298,9 +296,9 @@
           <div class="pipeline-card">
             <div class="pipeline-card-top">
               <h3>VaultSpark Football GM</h3>
-              <span class="stage-badge stage-beta">Beta</span>
+              <span class="stage-badge stage-sparked">🔥 Sparked</span>
             </div>
-            <p>Deep NFL front-office simulation focused on league realism, career arcs, and franchise storytelling. In client beta.</p>
+            <p>Deep NFL front-office simulation focused on league realism, career arcs, and franchise storytelling.</p>
             <div class="pipeline-card-meta">
               <span>Sports Sim</span><span>NFL</span><span>Front Office</span>
             </div>
@@ -310,7 +308,7 @@
           <div class="pipeline-card">
             <div class="pipeline-card-top">
               <h3>VaultFront</h3>
-              <span class="stage-badge stage-dev">In Dev</span>
+              <span class="stage-badge stage-forge">⚒️ Forge</span>
             </div>
             <p>Strategic warfront — tactical territory control and resource management. Backend in the forge. Launch sequence in progress.</p>
             <div class="pipeline-card-meta">
@@ -322,7 +320,7 @@
           <div class="pipeline-card">
             <div class="pipeline-card-top">
               <h3>Solara</h3>
-              <span class="stage-badge stage-dev">In Dev</span>
+              <span class="stage-badge stage-forge">⚒️ Forge</span>
             </div>
             <p>Fantasy MMORPG set in a realm of shadowed horizons and strange beauty. World-building is active — the myth is deepening.</p>
             <div class="pipeline-card-meta">
@@ -334,7 +332,7 @@
           <div class="pipeline-card">
             <div class="pipeline-card-top">
               <h3>MindFrame</h3>
-              <span class="stage-badge stage-concept">Concept Stage</span>
+              <span class="stage-badge stage-forge">⚒️ Forge</span>
             </div>
             <p>A cognitive puzzle experience built around the mechanics of perception. Classification in progress — Vault Members will hear first.</p>
             <div class="pipeline-card-meta">
@@ -473,45 +471,43 @@
       <div class="footer-inner">
         <div class="footer-brand">
           <strong>VaultSpark Studios</strong>
-          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.</p>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments.</p>
         </div>
         <div class="footer-col">
           <h4>Games</h4>
           <a href="/games/">All Games</a>
           <a href="/games/call-of-doodie/">Call Of Doodie</a>
           <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
         </div>
         <div class="footer-col">
           <h4>Studio</h4>
           <a href="/">Home</a>
           <a href="/universe/">Universe</a>
-          <a href="/studio/">About VaultSpark</a>
+          <a href="/studio/">About</a>
           <a href="/roadmap/">Vault Pipeline</a>
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
           <a href="/vault-member/">Vault Membership</a>
-          <a href="/contact/">Contact</a>
-          <a href="/investor-portal/login/">Investor Portal</a>
           <a href="/leaderboards/">Leaderboard</a>
           <a href="/community/">Community Hub</a>
-          <a href="/journal/archive/">Signal Archive</a>
         </div>
         <div class="footer-col">
-          <h4>Follow</h4>
+          <h4>Connect</h4>
           <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
-          <a href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer">Instagram</a>
+          <a href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer">Reddit</a>
+          <a href="https://discord.com/users/vaultsparkstudios" target="_blank" rel="noreferrer">Discord</a>
           <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
-          <a href="https://discord.gg/MnnBRbYDk" target="_blank" rel="noreferrer">Discord</a>
         </div>
       </div>
+      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
+        <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+      </div>
       <div class="footer-bottom">
-        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
-        <span>
-          <a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp;
-          <a href="/terms/">Terms of Service</a> &nbsp;·&nbsp;
-          <a href="/contact/">Contact</a> &nbsp;·&nbsp;
-          <a href="/vault-member/">Vault Members</a>
-        </span>
+        <span>&copy; 2026 VaultSpark Studios. All rights reserved. VaultSpark&trade; is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms of Service</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a> &nbsp;&middot;&nbsp; <a href="/vault-member/">Vault Members</a></span>
       </div>
     </div>
   </footer>

@@ -767,9 +767,62 @@ section { padding: 1.6rem 0 4.2rem; }
   background: rgba(255, 255, 255, 0.08);
 }
 
-.status-live  { border-color: rgba(74,222,128,0.4);  color: #86efac; }
-.status-dev   { border-color: rgba(251,146,60,0.4);  color: #fdba74; }
-.status-stub  { border-color: rgba(148,163,184,0.2); color: #94a3b8; }
+/* ── Vault Status Badges ────────────────────── */
+
+/* SPARKED 🔥 — Live, burning bright in the world */
+.status-sparked {
+  border-color: rgba(249,115,22,0.5);
+  color: #fbbf24;
+  background: linear-gradient(135deg, rgba(239,68,68,0.18), rgba(249,115,22,0.14));
+  box-shadow: 0 0 12px rgba(249,115,22,0.25), inset 0 0 8px rgba(251,191,36,0.08);
+  animation: sparkPulse 2.4s ease-in-out infinite;
+}
+
+/* FORGE ⚒️ — In the furnace, being built */
+.status-forge {
+  border-color: rgba(245,158,11,0.45);
+  color: #fbbf24;
+  background: linear-gradient(135deg, rgba(217,119,6,0.16), rgba(245,158,11,0.10));
+  box-shadow: 0 0 10px rgba(245,158,11,0.18);
+}
+
+/* VAULTED 🔒 — Sealed, preserved, paused */
+.status-vaulted {
+  border-color: rgba(100,116,139,0.3);
+  color: #94a3b8;
+  background: rgba(30,41,59,0.5);
+  box-shadow: none;
+  opacity: 0.85;
+}
+
+@keyframes sparkPulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(249,115,22,0.25), inset 0 0 8px rgba(251,191,36,0.08); }
+  50% { box-shadow: 0 0 22px rgba(239,68,68,0.35), 0 0 40px rgba(249,115,22,0.15), inset 0 0 12px rgba(251,191,36,0.12); }
+}
+
+/* ── Vault Status Card Hover Accents ─────────── */
+.card:has(.status-sparked):hover { border-color: rgba(249,115,22,0.3); box-shadow: 0 28px 72px rgba(0,0,0,0.55), 0 0 30px rgba(249,115,22,0.08); }
+.card:has(.status-forge):hover   { border-color: rgba(245,158,11,0.25); box-shadow: 0 28px 72px rgba(0,0,0,0.55), 0 0 30px rgba(245,158,11,0.06); }
+.card:has(.status-vaulted):hover { border-color: rgba(100,116,139,0.2); }
+
+/* ── Scroll Reveal Animation ─────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Vault Status Section Accents ────────────── */
+.tier-label-sparked h3 { color: #fbbf24; }
+.tier-label-sparked .tier-line { background: linear-gradient(90deg, rgba(249,115,22,0.4), transparent); }
+.tier-label-forge h3 { color: #f59e0b; }
+.tier-label-forge .tier-line { background: linear-gradient(90deg, rgba(245,158,11,0.35), transparent); }
+.tier-label-vaulted h3 { color: #94a3b8; }
+.tier-label-vaulted .tier-line { background: linear-gradient(90deg, rgba(100,116,139,0.3), transparent); }
 
 .card-stub { border-style: dashed; opacity: 0.65; }
 
@@ -883,6 +936,22 @@ section { padding: 1.6rem 0 4.2rem; }
 .promogrind::before { background: radial-gradient(circle at 22% 24%, rgba(16,185,129,0.32), transparent 24%), radial-gradient(circle at 80% 30%, rgba(31,162,255,0.18), transparent 18%); }
 .mindframe   { background: linear-gradient(140deg, #0e0b1a, #150f2a 50%, #05070d); }
 .mindframe::before { background: radial-gradient(circle at 22% 24%, rgba(139,92,246,0.28), transparent 24%), radial-gradient(circle at 80% 30%, rgba(31,162,255,0.20), transparent 18%); }
+
+/* New project art themes */
+.vorn         { background: linear-gradient(140deg, #1a0808, #1c0f18 50%, #05070d); }
+.vorn::before { background: radial-gradient(circle at 22% 24%, rgba(220,38,38,0.30), transparent 24%), radial-gradient(circle at 80% 30%, rgba(249,115,22,0.18), transparent 18%); }
+.velaxis      { background: linear-gradient(140deg, #041418, #0c1a24 50%, #05070d); }
+.velaxis::before { background: radial-gradient(circle at 22% 24%, rgba(6,182,212,0.32), transparent 24%), radial-gradient(circle at 80% 30%, rgba(16,185,129,0.18), transparent 18%); }
+.statvault    { background: linear-gradient(140deg, #060d1a, #0d1428 50%, #05070d); }
+.statvault::before { background: radial-gradient(circle at 22% 24%, rgba(59,130,246,0.30), transparent 24%), radial-gradient(circle at 80% 30%, rgba(139,92,246,0.16), transparent 18%); }
+.the-exodus   { background: linear-gradient(140deg, #1a1008, #1c1510 50%, #05070d); }
+.the-exodus::before { background: radial-gradient(circle at 22% 24%, rgba(217,119,6,0.34), transparent 24%), radial-gradient(circle at 80% 30%, rgba(239,68,68,0.18), transparent 18%); }
+.canon        { background: linear-gradient(140deg, #120818, #18102a 50%, #05070d); }
+.canon::before { background: radial-gradient(circle at 22% 24%, rgba(168,85,247,0.28), transparent 24%), radial-gradient(circle at 80% 30%, rgba(236,72,153,0.16), transparent 18%); }
+.living-protocol { background: linear-gradient(140deg, #041a0a, #0c1a14 50%, #05070d); }
+.living-protocol::before { background: radial-gradient(circle at 22% 24%, rgba(34,197,94,0.28), transparent 24%), radial-gradient(circle at 80% 30%, rgba(16,185,129,0.20), transparent 18%); }
+.ideaforge    { background: linear-gradient(140deg, #1a1206, #1c1810 50%, #05070d); }
+.ideaforge::before { background: radial-gradient(circle at 22% 24%, rgba(245,158,11,0.32), transparent 24%), radial-gradient(circle at 80% 30%, rgba(251,191,36,0.18), transparent 18%); }
 
 /* ─── Panels ─────────────────────────────── */
 

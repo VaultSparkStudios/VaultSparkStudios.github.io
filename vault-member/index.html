@@ -49,16 +49,16 @@
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="VaultSpark Studios — home">
-        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" loading="eager" decoding="async" />
+        <img loading="lazy" src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
         <span>VaultSpark Studios<small>The vault is sparked</small></span>
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">CANON</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
         <a href="/universe/">Universe</a>
         <a href="/studio/">Studio</a>
-
+        <a href="/journal/">Signal Log</a>
         <a href="/contact/">Contact</a>
 
         <div class="mobile-nav-footer">
@@ -68,47 +68,9 @@
         </div>
       </nav>
       <div class="nav-right">
-        <!-- Feature 3: Notification bell (shown when logged in) -->
-        <div id="notif-bell-wrap" style="display:none;position:relative;">
-          <button type="button" id="notif-bell-btn" onclick="toggleNotifPanel()" aria-label="Notifications" style="position:relative;display:flex;align-items:center;justify-content:center;width:36px;height:36px;background:transparent;border:none;cursor:pointer;border-radius:8px;color:var(--muted);transition:background 0.18s,color 0.18s;" onmouseover="this.style.background='rgba(255,255,255,0.07)';this.style.color='var(--text)'" onmouseout="this.style.background='transparent';this.style.color='var(--muted)'">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <span id="notif-badge" style="display:none;position:absolute;top:5px;right:5px;min-width:16px;height:16px;background:#ef4444;border-radius:999px;font-size:0.6rem;font-weight:800;color:#fff;display:flex;align-items:center;justify-content:center;padding:0 3px;line-height:1;border:2px solid #000;"></span>
-          </button>
-          <!-- Notification dropdown panel -->
-          <div id="notif-panel" class="portal-popover" style="display:none;">
-            <div class="portal-popover-header">
-              <span style="font-size:0.75rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);">Notifications</span>
-              <button type="button" onclick="markNotifsRead()" class="portal-popover-action">Mark all read</button>
-            </div>
-            <div id="notif-list" style="max-height:360px;overflow-y:auto;padding:0.4rem 0;">
-              <div class="portal-popover-loading">Loading…</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Account dropdown (shown when logged in) -->
-        <div class="nav-account-wrap" id="nav-account-wrap">
-          <button type="button" class="nav-account-trigger" id="nav-account-trigger" aria-haspopup="true" aria-expanded="false">
-            <span class="nav-account-avatar-sm" id="nav-account-avatar-sm">⚡</span>
-            <span class="nav-account-name" id="nav-account-name">Member</span>
-            <span class="nav-account-caret">▼</span>
-          </button>
-          <div class="nav-account-menu" role="menu">
-            <a role="menuitem" href="#" onclick="switchDashTab('dashboard');closeNavDropdown();return false;">Vault Dashboard</a>
-            <a role="menuitem" href="#" onclick="switchDashTab('archive');closeNavDropdown();return false;">Classified Archive</a>
-            <a role="menuitem" href="#" onclick="switchDashTab('challenges');closeNavDropdown();return false;">Vault Challenges</a>
-            <a role="menuitem" href="#" onclick="switchDashTab('earlyaccess');closeNavDropdown();return false;">Early Access</a>
-            <a role="menuitem" href="#" onclick="switchDashTab('polls');closeNavDropdown();return false;">🗳️ Community Polls</a>
-            <a role="menuitem" href="#" onclick="switchDashTab('chronicle');closeNavDropdown();return false;">Activity Chronicle</a>
-            <a role="menuitem" href="#" onclick="switchDashTab('settings');closeNavDropdown();return false;">Profile &amp; Settings</a>
-            <a role="menuitem" href="#" id="nav-admin-link" onclick="switchDashTab('admin');closeNavDropdown();return false;" class="p-hidden">⚡ Vault Command</a>
-            <div class="menu-divider"></div>
-            <button type="button" class="menu-signout" role="menuitem" onclick="VS.logout()">Sign Out</button>
-          </div>
-        </div>
-        <!-- Logged-out state -->
-        <a class="nav-signin" href="/vault-member/#login" id="nav-signin-link">Sign In</a>
-        <a class="button button-sm" href="/vault-member/#register" id="nav-join-btn">Join The Vault</a>
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -1508,37 +1470,43 @@
       <div class="footer-inner">
         <div class="footer-brand">
           <strong>VaultSpark Studios</strong>
-          <p>One account. Every world we build. The vault is sparked.</p>
+          <p>Independent game studio forging cinematic worlds, sports simulations, and playable experiments.</p>
         </div>
         <div class="footer-col">
           <h4>Games</h4>
           <a href="/games/">All Games</a>
           <a href="/games/call-of-doodie/">Call Of Doodie</a>
           <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
         </div>
         <div class="footer-col">
           <h4>Studio</h4>
           <a href="/">Home</a>
           <a href="/universe/">Universe</a>
-          <a href="/studio/">About VaultSpark</a>
+          <a href="/studio/">About</a>
           <a href="/roadmap/">Vault Pipeline</a>
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
-          <a href="/investor-portal/login/">Investor Portal</a>
+          <a href="/vault-member/">Vault Membership</a>
           <a href="/leaderboards/">Leaderboard</a>
           <a href="/community/">Community Hub</a>
-          <a href="/journal/archive/">Signal Archive</a>
         </div>
         <div class="footer-col">
-          <h4>Follow</h4>
+          <h4>Connect</h4>
           <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
           <a href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer">Reddit</a>
           <a href="https://discord.com/users/vaultsparkstudios" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
         </div>
       </div>
+      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
+        <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+      </div>
       <div class="footer-bottom">
-        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
-        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/terms/">Terms of Service</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+        <span>&copy; 2026 VaultSpark Studios. All rights reserved. VaultSpark&trade; is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms of Service</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a> &nbsp;&middot;&nbsp; <a href="/vault-member/">Vault Members</a></span>
       </div>
     </div>
   </footer>

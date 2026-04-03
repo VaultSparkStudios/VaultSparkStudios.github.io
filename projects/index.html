@@ -373,10 +373,11 @@
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/" class="active">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/" class="active">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">CANON</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
         <a href="/universe/">Universe</a>
         <a href="/studio/">Studio</a>
+        <a href="/journal/">Signal Log</a>
         <a href="/contact/">Contact</a>
 
         <div class="mobile-nav-footer">
@@ -409,13 +410,13 @@
         </p>
         <div class="hero-stats" aria-label="Project library stats">
           <div class="hero-stat">
-            <span class="hero-stat-val">2</span>
-            <span class="hero-stat-label">Live Tools</span>
+            <span class="hero-stat-val" style="color:#fbbf24;">1</span>
+            <span class="hero-stat-label">🔥 Sparked</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
           <div class="hero-stat">
-            <span class="hero-stat-val">2</span>
-            <span class="hero-stat-label">In Development</span>
+            <span class="hero-stat-val" style="color:#f59e0b;">6</span>
+            <span class="hero-stat-label">⚒️ In The Forge</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
           <div class="hero-stat">
@@ -437,23 +438,22 @@
         <h2 id="catalog-heading" class="visually-hidden">Project Catalog</h2>
 
         <!-- Filter bar -->
-        <div class="filter-bar" role="group" aria-label="Filter projects by category">
+        <div class="filter-bar" role="group" aria-label="Filter projects by status">
           <button class="filter-btn active" data-filter="all">All Projects</button>
-          <button class="filter-btn" data-filter="tools">Tools</button>
-          <button class="filter-btn" data-filter="dev">In Development</button>
-          <button class="filter-btn" data-filter="studio">Studio</button>
+          <button class="filter-btn" data-filter="sparked" style="--btn-accent:#fbbf24;">🔥 Sparked</button>
+          <button class="filter-btn" data-filter="forge" style="--btn-accent:#f59e0b;">⚒️ In The Forge</button>
         </div>
 
-        <!-- Live Tools -->
-        <div class="projects-section-label" data-section="tools" aria-hidden="true">
-          <span>Live Tools</span>
+        <!-- Sparked -->
+        <div class="projects-section-label" data-section="sparked" aria-hidden="true">
+          <span style="color:#fbbf24;">🔥 Sparked — Live</span>
         </div>
 
         <!-- PromoGrind — featured -->
-        <div class="project-card-featured" data-status="tools" aria-label="PromoGrind — Live Tool">
+        <div class="project-card-featured" data-status="sparked" aria-label="PromoGrind — Sparked">
           <div class="project-card-featured-inner">
             <div class="project-card-hero promogrind">
-              <span class="status status-live">Live</span>
+              <span class="status status-sparked">🔥 Sparked</span>
               <h2>PromoGrind</h2>
             </div>
             <div class="project-card-body">
@@ -480,93 +480,134 @@
           </div>
         </div>
 
+        <!-- In The Forge -->
+        <div class="projects-section-label" data-section="forge" aria-hidden="true">
+          <span style="color:#f59e0b;">⚒️ In The Forge — Building</span>
+        </div>
+
         <!-- Standard grid -->
         <div class="projects-grid" id="projects-grid">
 
-          <!-- Vault Pipeline -->
-          <article class="project-card" data-status="studio" aria-label="Vault Pipeline — Studio">
-            <div class="card-hero pipeline">
-              <span class="status status-live card-badge">Live</span>
-              <h3>Vault Pipeline</h3>
+          <!-- Velaxis -->
+          <article class="project-card" data-status="forge" aria-label="Velaxis — In The Forge">
+            <div class="card-hero velaxis">
+              <span class="status status-forge card-badge">⚒️ Forge</span>
+              <h3>Velaxis</h3>
             </div>
             <div class="card-content">
               <p>
-                The public-facing studio roadmap. Track what's shipping, what's in the forge, and
-                what's queued for the next cycle. Transparent development — every milestone, every
-                spark, visible to the community.
+                Real-time crypto intelligence dashboard. Eight tabs of market data, portfolio tracking,
+                whale alerts, and AI-powered analysis — all in one browser-based command center.
+                No accounts, no install, no cost.
               </p>
               <div class="meta">
-                <span>Studio</span><span>Roadmap</span><span>Public</span>
+                <span>Dashboard</span><span>Crypto</span><span>Analytics</span><span>Free</span>
               </div>
               <div class="project-card-actions">
-                <a class="button" href="/roadmap/">View Roadmap</a>
-                <a class="button-secondary" href="/projects/vault-pipeline/">More Info</a>
+                <a class="button" href="/projects/velaxis/">Open Dashboard</a>
               </div>
             </div>
           </article>
 
-          <!-- Signal Log -->
-          <article class="project-card" data-status="studio" aria-label="Signal Log — Studio">
-            <div class="card-hero signallog">
-              <span class="status status-live card-badge">Live</span>
-              <h3>Signal Log</h3>
+          <!-- Vorn -->
+          <article class="project-card" data-status="forge" aria-label="Vorn — In The Forge">
+            <div class="card-hero vorn">
+              <span class="status status-forge card-badge">⚒️ Forge</span>
+              <h3>Vorn</h3>
             </div>
             <div class="card-content">
               <p>
-                The VaultSpark dev journal — build notes, update logs, and dispatches from inside
-                the forge. Behind-the-scenes writing on how games and tools get built at VaultSpark.
-                Signal over noise.
+                Social agent platform for building and deploying autonomous digital personas.
+                Create agents with memory, personality, and cross-platform presence — user-ready
+                early build available now.
               </p>
               <div class="meta">
-                <span>Studio</span><span>Journal</span><span>Dev Log</span>
+                <span>Platform</span><span>AI Agents</span><span>Social</span>
               </div>
               <div class="project-card-actions">
-                <a class="button" href="/journal/">Read Signal Log</a>
-                <a class="button-secondary" href="/projects/signal-log/">More Info</a>
+                <a class="button" href="/projects/vorn/">Try Early Build</a>
               </div>
             </div>
           </article>
 
-          <!-- VaultFront (project side) -->
-          <article class="project-card" data-status="dev" aria-label="VaultFront — In Development">
-            <div class="card-hero vaultfront-proj">
-              <span class="status status-dev card-badge">In Development</span>
-              <h3>VaultFront</h3>
+          <!-- StatVault -->
+          <article class="project-card" data-status="forge" aria-label="StatVault — In The Forge">
+            <div class="card-hero statvault">
+              <span class="status status-forge card-badge">⚒️ Forge</span>
+              <h3>StatVault</h3>
             </div>
             <div class="card-content">
               <p>
-                Real-time strategy warfront built around vault capture and convoy mechanics.
-                VaultFront is both a game and a live web platform — the dedicated backend runtime
-                is being brought online as part of studio infrastructure.
+                Sports analytics platform built for depth. Advanced stat models, historical comparisons,
+                and data visualization tools for the serious sports mind. The analytical backbone
+                behind VaultSpark's sports simulations.
               </p>
               <div class="meta">
-                <span>Game Platform</span><span>Real-Time</span><span>Backend</span>
+                <span>Analytics</span><span>Sports</span><span>Data</span>
               </div>
               <div class="project-card-actions">
-                <a class="button" href="/vaultfront/">View Project</a>
-                <a class="button-secondary" href="/projects/vaultfront/">More Info</a>
+                <a class="button-secondary" href="/projects/statvault/">More Info</a>
               </div>
             </div>
           </article>
 
-          <!-- Vault Member Portal -->
-          <article class="project-card" data-status="dev" aria-label="Vault Member Portal — In Development">
-            <div class="card-hero vault-member-proj">
-              <span class="status status-dev card-badge">In Development</span>
-              <h3>Vault Member Portal</h3>
+          <!-- CANON -->
+          <article class="project-card" data-status="forge" aria-label="CANON — In The Forge">
+            <div class="card-hero canon">
+              <span class="status status-forge card-badge">⚒️ Forge</span>
+              <h3>CANON</h3>
             </div>
             <div class="card-content">
               <p>
-                The account and identity layer for VaultSpark Studios. Cross-game progress tracking,
-                Vault achievements, entitlement-aware access gating, and community tiers — all managed through
-                a single member portal. Backend in active development.
+                Taste identity platform. CANON maps your cultural fingerprint — music, film, games,
+                books — into a living profile that evolves with you. Early-stage. Details sealed.
               </p>
               <div class="meta">
-                <span>Platform</span><span>Accounts</span><span>Cross-Game</span>
+                <span>Platform</span><span>Identity</span><span>Culture</span>
               </div>
               <div class="project-card-actions">
-                <a class="button" href="/vault-member/">View Portal</a>
-                <a class="button-secondary" href="/projects/vault-member/">More Info</a>
+                <a class="button-secondary" href="/projects/canon/">More Info</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- The Living Protocol -->
+          <article class="project-card" data-status="forge" aria-label="The Living Protocol — In The Forge">
+            <div class="card-hero living-protocol">
+              <span class="status status-forge card-badge">⚒️ Forge</span>
+              <h3>The Living Protocol</h3>
+            </div>
+            <div class="card-content">
+              <p>
+                Generational wellness operating system. A long-term health intelligence layer that
+                tracks, adapts, and compounds across decades — not days. Early-stage. Details sealed.
+              </p>
+              <div class="meta">
+                <span>Platform</span><span>Wellness</span><span>Long-Term</span>
+              </div>
+              <div class="project-card-actions">
+                <a class="button-secondary" href="/projects/the-living-protocol/">More Info</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- IdeaForge -->
+          <article class="project-card" data-status="forge" aria-label="IdeaForge — In The Forge">
+            <div class="card-hero ideaforge">
+              <span class="status status-forge card-badge">⚒️ Forge</span>
+              <h3>IdeaForge</h3>
+            </div>
+            <div class="card-content">
+              <p>
+                AI-powered idea evaluation platform. Submit concepts, get structured viability analysis,
+                market fit scoring, and competitive intelligence — all in one forge-grade tool
+                for founders and builders.
+              </p>
+              <div class="meta">
+                <span>Tool</span><span>AI</span><span>Evaluation</span>
+              </div>
+              <div class="project-card-actions">
+                <a class="button-secondary" href="/projects/ideaforge/">More Info</a>
               </div>
             </div>
           </article>
@@ -619,10 +660,8 @@
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
           <a href="/vault-member/">Vault Membership</a>
-          <a href="/investor-portal/login/">Investor Portal</a>
           <a href="/leaderboards/">Leaderboard</a>
           <a href="/community/">Community Hub</a>
-          <a href="/journal/archive/">Signal Archive</a>
         </div>
         <div class="footer-col">
           <h4>Connect</h4>
@@ -632,9 +671,14 @@
           <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
         </div>
       </div>
+      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
+        <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+      </div>
       <div class="footer-bottom">
-        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
-        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/terms/">Terms of Service</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+        <span>&copy; 2026 VaultSpark Studios. All rights reserved. VaultSpark&trade; is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms of Service</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a> &nbsp;&middot;&nbsp; <a href="/vault-member/">Vault Members</a></span>
       </div>
     </div>
   </footer>
@@ -652,7 +696,6 @@
       btn.addEventListener('click', () => {
         const filter = btn.dataset.filter;
 
-        // Update active button
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
@@ -674,7 +717,7 @@
           }
         });
 
-        // Show/hide section labels
+        // Show/hide section labels based on filter
         sectionLabels.forEach(label => {
           const section = label.dataset.section;
           if (filter === 'all') {
@@ -684,7 +727,6 @@
           }
         });
 
-        // Empty state
         emptyState.classList.toggle('visible', visibleCount === 0);
       });
     });

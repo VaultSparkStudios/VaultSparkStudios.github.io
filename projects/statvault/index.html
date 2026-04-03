@@ -4,19 +4,19 @@
   <meta charset="UTF-8" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vault Pipeline — Project | VaultSpark Studios</title>
-  <meta name="description" content="The VaultSpark Studios public development roadmap. Track what's shipping, what's in the forge, and what's queued for the next cycle. Transparent development — every milestone visible." />
-  <link rel="canonical" href="https://vaultsparkstudios.com/projects/vault-pipeline/" />
+  <title>StatVault — Sports Analytics Platform | VaultSpark Studios</title>
+  <meta name="description" content="StatVault is an advanced sports analytics platform built for historical comparisons, deep stat models, and data visualization. The analytical backbone behind VaultSpark sports simulations." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/projects/statvault/" />
   <meta name="theme-color" content="#000000" />
-  <meta property="og:title" content="Vault Pipeline | VaultSpark Studio Roadmap" />
-  <meta property="og:description" content="Everything shipping. Everything transparent. The VaultSpark Studios public development roadmap." />
+  <meta property="og:title" content="StatVault — Sports Analytics Platform | VaultSpark Studios" />
+  <meta property="og:description" content="Advanced sports analytics, historical comparisons, and data visualization for serious sports minds. Built by VaultSpark Studios." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://vaultsparkstudios.com/projects/vault-pipeline/" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/projects/statvault/" />
   <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@VaultSparkStudios" />
-  <meta name="twitter:title" content="Vault Pipeline — Project | VaultSpark Studios" />
-  <meta name="twitter:description" content="VaultSpark Studios' public development roadmap — every project, milestone, and shipping target in one transparent view." />
+  <meta name="twitter:title" content="StatVault — Sports Analytics Platform | VaultSpark Studios" />
+  <meta name="twitter:description" content="Advanced sports analytics, historical comparisons, and data visualization for serious sports minds. Built by VaultSpark Studios." />
   <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
   <link rel="icon" type="image/png" href="../../assets/icon-32.png" />
   <link rel="apple-touch-icon" href="../../assets/icon-256.png" />
@@ -24,19 +24,61 @@
   <link rel="stylesheet" href="../../assets/style.css" />
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Vault Pipeline",
-    "url": "https://vaultsparkstudios.com/projects/vault-pipeline/"
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "StatVault",
+  "url": "https://vaultsparkstudios.com/projects/statvault/",
+  "applicationCategory": "Sports Analytics",
+  "operatingSystem": "Web",
+  "offers": {
+    "@type": "Offer",
+    "price": 0,
+    "priceCurrency": "USD"
   }
-  </script>
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Projects","item":"https://vaultsparkstudios.com/projects/"},{"@type":"ListItem","position":3,"name":"Vault Pipeline","item":"https://vaultsparkstudios.com/projects/vault-pipeline/"}]}</script>
+}
+</script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vaultsparkstudios.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://vaultsparkstudios.com/projects/" },
+    { "@type": "ListItem", "position": 3, "name": "StatVault", "item": "https://vaultsparkstudios.com/projects/statvault/" }
+  ]
+}
+</script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is StatVault?",
+      "acceptedAnswer": { "@type": "Answer", "text": "StatVault is a sports analytics platform built for deep historical comparisons, advanced stat models, and data visualization. It serves as the analytical backbone behind VaultSpark Studios sports simulations." }
+    },
+    {
+      "@type": "Question",
+      "name": "When will StatVault be available?",
+      "acceptedAnswer": { "@type": "Answer", "text": "StatVault is currently in the Forge — early-stage development. Free Vault Members will be first to know when early builds go live." }
+    }
+  ]
+}
+</script>
 
   <style>
     .proj-hero { padding: 5rem 0 0; position: relative; }
     .proj-hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; }
     .proj-hero .container { position: relative; z-index: 1; }
+    .proj-hero::before {
+      background:
+        radial-gradient(circle at 15% 40%, rgba(59,130,246,0.18), transparent 32%),
+        radial-gradient(circle at 85% 40%, rgba(139,92,246,0.12), transparent 32%);
+    }
     .hero-art { min-height: 360px; border-radius: var(--radius); position: relative; display: flex; flex-direction: column; justify-content: flex-end; padding: 2rem; overflow: hidden; margin-top: 2rem; }
     .hero-art::before { content: ""; position: absolute; inset: -20%; filter: blur(32px); opacity: 0.95; }
     .hero-art::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.65)); }
@@ -49,6 +91,7 @@
     .feature-block > p { color: var(--muted); font-size: 1rem; line-height: 1.7; margin-bottom: 1.5rem; }
     .feature-list { list-style: none; padding: 0; margin: 0 0 1.5rem; display: grid; gap: 0.5rem; }
     .feature-list li { display: flex; align-items: flex-start; gap: 0.65rem; color: var(--muted); font-size: 0.95rem; line-height: 1.55; }
+    .feature-list li::before { content: "\2726"; color: #3b82f6; font-size: 0.7rem; margin-top: 0.25rem; flex-shrink: 0; }
     .side-panel { display: flex; flex-direction: column; gap: 1rem; }
     .info-block { padding: 1.5rem; border-radius: var(--radius); background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97)); border: 1px solid rgba(255,255,255,0.08); }
     .info-block h3 { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 1rem; }
@@ -57,31 +100,11 @@
     .info-row span:first-child { color: var(--muted); }
     .info-row span:last-child { font-weight: 600; color: var(--text); }
     .stat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; }
-    .stat-block { padding: 1.15rem; border-radius: 18px; text-align: center; }
-    .stat-block strong { display: block; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; }
+    .stat-block { padding: 1.15rem; border-radius: 18px; text-align: center; background: rgba(59,130,246,0.05); border: 1px solid rgba(59,130,246,0.14); }
+    .stat-block strong { display: block; font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; color: #3b82f6; }
     .stat-block span { display: block; color: var(--muted); font-size: 0.82rem; margin-top: 0.2rem; }
-    .updates-section { padding: 0 0 5rem; }
-    .updates-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; flex-wrap:wrap; gap:0.75rem; }
-    .updates-header h2 { font-family:Georgia,"Times New Roman",serif; font-size:1.5rem; letter-spacing:-0.03em; margin:0; }
-    .updates-header a { font-size:0.85rem; color:var(--muted); text-decoration:none; }
-    .updates-header a:hover { color:var(--text); }
-    #github-stream { display:grid; gap:0.6rem; }
-    .stream-item { display:flex; justify-content:space-between; align-items:flex-start; gap:1rem; padding:0.75rem 1rem; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:10px; }
-    .stream-msg { color:var(--text); font-size:0.88rem; line-height:1.5; flex:1; }
-    .stream-date { color:var(--muted); font-size:0.8rem; white-space:nowrap; flex-shrink:0; }
-    .stream-fallback { color:var(--muted); font-size:0.9rem; text-decoration:none; }
-    .stream-fallback:hover { color:var(--text); }
     @media (max-width: 900px) { .proj-body { grid-template-columns: 1fr; } .hero-art { min-height: 260px; } }
     @media (max-width: 640px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
-
-    .proj-hero::before {
-      background:
-        radial-gradient(circle at 15% 40%, rgba(31,162,255,0.14), transparent 32%),
-        radial-gradient(circle at 85% 40%, rgba(255,196,0,0.12), transparent 32%);
-    }
-    .pipeline { background: linear-gradient(140deg, #07121d, #0a2540 50%, #05070d); }
-    .pipeline::before { background: radial-gradient(circle at 22% 24%, rgba(31,162,255,0.28), transparent 24%), radial-gradient(circle at 80% 30%, rgba(255,196,0,0.14), transparent 18%); }
-    .feature-list li::before { content: "✦"; color: var(--blue); font-size: 0.7rem; margin-top: 0.25rem; flex-shrink: 0; }
   </style>
 
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
@@ -131,18 +154,18 @@
     </div>
   </header>
 
-  <main>
+  <main id="main-content">
     <section class="proj-hero">
       <div class="container">
-        <p class="eyebrow">VaultSpark Studio &nbsp;·&nbsp; Public Roadmap</p>
-        <div class="hero-art pipeline">
+        <p class="eyebrow">VaultSpark Projects &nbsp;&middot;&nbsp; Sports Analytics</p>
+        <div class="hero-art statvault">
           <div class="hero-art-content">
             <div>
-              <span class="status status-sparked">🔥 Sparked</span>
-              <h1>Vault Pipeline</h1>
+              <span class="status status-forge">⚒️ Forge</span>
+              <h1>StatVault</h1>
             </div>
             <div class="hero-art-actions">
-              <a class="button" href="/roadmap/">View Roadmap</a>
+              <a class="button" href="/vault-member/#register">Get Early Signal</a>
               <a class="button-secondary" href="/projects/">All Projects</a>
             </div>
           </div>
@@ -153,74 +176,87 @@
     <section class="proj-body">
       <div class="container" style="display:contents;">
         <div class="feature-block">
-          <h2>Everything Shipping. Everything Transparent.</h2>
-          <p>Vault Pipeline is VaultSpark Studios' public development roadmap. Every project across the studio is tracked here — live games, titles in development, conceptual work, and studio infrastructure. No hidden queues. No mystery shipping. The forge is visible.</p>
+          <h2>Data Runs Deep.</h2>
+          <p>StatVault is the analytical backbone behind VaultSpark sports simulations. Advanced stat models, historical comparisons spanning decades, and data visualization designed for serious sports minds. Every number tells a story — StatVault surfaces the ones that matter.</p>
           <ul class="feature-list">
-            <li>Full project pipeline with all studio titles and their current stages</li>
-            <li>Studio OS explanation — the 4-pillar operating system behind VaultSpark's build cadence</li>
-            <li>Per-project vault status badges: Sparked, Forge, Vaulted</li>
-            <li>Full studio timeline split into completed milestones and future targets</li>
-            <li>Updated continuously as the vault builds</li>
+            <li>Advanced statistical models for player and team evaluation</li>
+            <li>Historical comparisons spanning decades of sports data</li>
+            <li>Interactive data visualization and chart rendering</li>
+            <li>Cross-sport analytics engine powering VaultSpark simulations</li>
+            <li>Era-adjusted metrics for fair cross-generation comparison</li>
+            <li>API-ready data layer for integration with studio projects</li>
           </ul>
           <div class="meta-tags" style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.5rem;">
-            <span class="tag">Studio</span>
-            <span class="tag">Roadmap</span>
-            <span class="tag">Public</span>
-            <span class="tag">Transparency</span>
+            <span class="tag">Analytics</span>
+            <span class="tag">Sports</span>
+            <span class="tag">Data Viz</span>
+            <span class="tag">Forge</span>
           </div>
           <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
-            <a class="button" href="/roadmap/">View the Pipeline</a>
+            <a class="button" href="/vault-member/#register">Get Early Signal</a>
             <a class="button-secondary" href="/projects/">All Projects</a>
           </div>
         </div>
 
         <div class="side-panel">
           <div class="stat-grid">
-            <div class="stat-block" style="background:rgba(31,162,255,0.08);border:1px solid rgba(31,162,255,0.15);">
-              <strong style="color:var(--blue);">6</strong>
-              <span>Active projects</span>
+            <div class="stat-block">
+              <strong>Analytics</strong>
+              <span>Deep models</span>
             </div>
-            <div class="stat-block" style="background:rgba(31,162,255,0.08);border:1px solid rgba(31,162,255,0.15);">
-              <strong style="color:var(--blue);">Live</strong>
-              <span>Updated continuously</span>
+            <div class="stat-block">
+              <strong>Sports</strong>
+              <span>Multi-league</span>
             </div>
-            <div class="stat-block" style="background:rgba(31,162,255,0.08);border:1px solid rgba(31,162,255,0.15);">
-              <strong style="color:var(--blue);">Public</strong>
-              <span>Full transparency</span>
+            <div class="stat-block">
+              <strong>Data</strong>
+              <span>Decades deep</span>
             </div>
-            <div class="stat-block" style="background:rgba(31,162,255,0.08);border:1px solid rgba(31,162,255,0.15);">
-              <strong style="color:var(--blue);">Studio</strong>
-              <span>Operating system</span>
+            <div class="stat-block">
+              <strong>Forge</strong>
+              <span>In development</span>
             </div>
           </div>
 
           <div class="info-block">
             <h3>Project Info</h3>
-            <div class="info-row"><span>Type</span><span>Studio Roadmap</span></div>
-            <div class="info-row"><span>Platform</span><span>Web Browser</span></div>
-            <div class="info-row"><span>Access</span><span>Public</span></div>
-            <div class="info-row"><span>Status</span><span style="color:#86efac;">Live</span></div>
+            <div class="info-row"><span>Type</span><span>Analytics Platform</span></div>
+            <div class="info-row"><span>Focus</span><span>Sports Data</span></div>
+            <div class="info-row"><span>Price</span><span>Free</span></div>
+            <div class="info-row"><span>Status</span><span style="color:#f59e0b;">In The Forge</span></div>
             <div class="info-row"><span>Developer</span><span>VaultSpark Studios</span></div>
           </div>
 
-          <div class="info-block" style="background:rgba(31,162,255,0.04);border-color:rgba(31,162,255,0.1);">
-            <h3>Vault Member</h3>
-            <p style="color:var(--muted);font-size:0.9rem;line-height:1.6;margin-bottom:1rem;">Vault Members get early signals on upcoming pipeline changes and project milestones before public announcements.</p>
-            <a class="button-ghost" href="/vault-member/#register" style="width:100%;display:flex;justify-content:center;border-color:rgba(31,162,255,0.3);color:var(--blue);">Join The Vault — Free</a>
+          <div class="info-block" style="background:rgba(59,130,246,0.04);border-color:rgba(59,130,246,0.1);">
+            <h3>Early Signal</h3>
+            <p style="color:var(--muted);font-size:0.9rem;line-height:1.6;margin-bottom:1rem;">StatVault is being forged. Join as a free Vault Member to get first access when analytics tools go live.</p>
+            <a class="button-ghost" href="/vault-member/#register" style="width:100%;display:flex;justify-content:center;border-color:rgba(59,130,246,0.3);color:#3b82f6;">Join The Vault — Free</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="updates-section">
+    <!-- FAQ Section -->
+    <section style="padding:3rem 0;border-top:1px solid rgba(255,255,255,0.06);">
       <div class="container">
-        <div class="updates-header">
-          <h2>Recent Updates</h2>
-          <a href="https://github.com/VaultSparkStudios/VaultSparkStudios.github.io" target="_blank" rel="noreferrer">View on GitHub →</a>
+        <h2 style="font-family:Georgia,serif;font-size:1.6rem;font-weight:400;margin-bottom:1.5rem;">Frequently Asked Questions</h2>
+        <div class="faq-list" style="max-width:700px;">
+          <div style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1rem 0;">
+            <button type="button" onclick="const b=this.nextElementSibling;const open=b.style.display!=='none';b.style.display=open?'none':'block';this.querySelector('span').textContent=open?'+':'&minus;';" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
+              What is StatVault? <span style="color:var(--dim);font-size:1.1rem;flex-shrink:0;">+</span>
+            </button>
+            <div style="display:none;padding-top:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.65;">StatVault is a sports analytics platform built for deep historical comparisons, advanced stat models, and data visualization. It serves as the analytical backbone behind VaultSpark Studios sports simulations.</div>
+          </div>
+          <div style="border-bottom:1px solid rgba(255,255,255,0.07);padding:1rem 0;">
+            <button type="button" onclick="const b=this.nextElementSibling;const open=b.style.display!=='none';b.style.display=open?'none':'block';this.querySelector('span').textContent=open?'+':'&minus;';" style="width:100%;text-align:left;background:transparent;border:none;color:var(--text);font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit;display:flex;justify-content:space-between;align-items:center;padding:0;gap:1rem;">
+              When will StatVault be available? <span style="color:var(--dim);font-size:1.1rem;flex-shrink:0;">+</span>
+            </button>
+            <div style="display:none;padding-top:0.75rem;color:var(--muted);font-size:0.9rem;line-height:1.65;">StatVault is currently in the Forge — early-stage development. Free Vault Members will be first to know when early builds go live.</div>
+          </div>
         </div>
-        <div id="github-stream"></div>
       </div>
     </section>
+
   </main>
 
   <footer class="site-footer" aria-label="Site footer">
@@ -270,30 +306,5 @@
   </footer>
 
   <script src="/assets/nav-toggle.js" defer></script>
-
-  <script>
-    (function() {
-      var el = document.getElementById('github-stream');
-      if (!el) return;
-      fetch('https://api.github.com/repos/VaultSparkStudios/VaultSparkStudios.github.io/commits?per_page=5')
-        .then(function(r) { if (!r.ok) throw new Error(); return r.json(); })
-        .then(function(commits) {
-          if (!Array.isArray(commits) || !commits.length) throw new Error();
-          var now = Date.now();
-          el.innerHTML = commits.map(function(c) {
-            var msg = (c.commit.message.split('\n')[0] || '').slice(0, 80);
-            var diff = Math.floor((now - new Date(c.commit.author.date)) / 86400000);
-            var rel = diff === 0 ? 'today' : diff === 1 ? 'yesterday' : diff + ' days ago';
-            return '<div class="stream-item"><span class="stream-msg">' + msg + '</span><span class="stream-date">' + rel + '</span></div>';
-          }).join('');
-        })
-        .catch(function() {
-          el.innerHTML = '<a class="stream-fallback" href="https://github.com/VaultSparkStudios/VaultSparkStudios.github.io" target="_blank" rel="noreferrer">View on GitHub →</a>';
-        });
-    }());
-  </script>
 </body>
 </html>
-
-
-

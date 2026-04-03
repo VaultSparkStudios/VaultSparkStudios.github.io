@@ -505,15 +505,16 @@
   <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="VaultSpark Studios — home">
-        <img src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" loading="eager" fetchpriority="high" />
+        <img loading="lazy" src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
         <span>VaultSpark Studios<small>The vault is sparked</small></span>
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         <a href="/">Home</a>
-        <div class="nav-item has-dropdown"><a href="/games/" class="active">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label">In Development</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/vaultfront/">VaultFront</a><a href="/roadmap/">Vault Pipeline</a><a href="/journal/">Signal Log</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/" class="active">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">CANON</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
         <a href="/universe/">Universe</a>
         <a href="/studio/">Studio</a>
+        <a href="/journal/">Signal Log</a>
         <a href="/contact/">Contact</a>
 
         <div class="mobile-nav-footer">
@@ -545,23 +546,18 @@
         </p>
         <div class="hero-stats" aria-label="Game library stats">
           <div class="hero-stat">
-            <span class="hero-stat-val">1</span>
-            <span class="hero-stat-label">Live Now</span>
+            <span class="hero-stat-val">2</span>
+            <span class="hero-stat-label" style="color:#fbbf24;">🔥 Sparked</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-val">5</span>
+            <span class="hero-stat-label" style="color:#f59e0b;">⚒️ In The Forge</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
           <div class="hero-stat">
             <span class="hero-stat-val">1</span>
-            <span class="hero-stat-label">Beta</span>
-          </div>
-          <div class="hero-stat-divider" aria-hidden="true"></div>
-          <div class="hero-stat">
-            <span class="hero-stat-val">1</span>
-            <span class="hero-stat-label">Vaulted</span>
-          </div>
-          <div class="hero-stat-divider" aria-hidden="true"></div>
-          <div class="hero-stat">
-            <span class="hero-stat-val">4</span>
-            <span class="hero-stat-label">In Development</span>
+            <span class="hero-stat-label" style="color:#94a3b8;">🔒 Vaulted</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
           <div class="hero-stat">
@@ -583,13 +579,11 @@
         <h2 id="catalog-heading" class="visually-hidden">Game Catalog</h2>
 
         <!-- Filter bar: Status -->
-        <div class="filter-bar" role="group" aria-label="Filter games by status">
+        <div class="filter-bar" role="group" aria-label="Filter games by vault status">
           <button type="button" class="filter-btn active" data-filter="all">All Games</button>
-          <button type="button" class="filter-btn" data-filter="live">Live Now</button>
-          <button type="button" class="filter-btn" data-filter="beta">Beta</button>
-          <button type="button" class="filter-btn" data-filter="vaulted">Vaulted</button>
-          <button type="button" class="filter-btn" data-filter="dev">In Development</button>
-          <button type="button" class="filter-btn" data-filter="concept">Concept</button>
+          <button type="button" class="filter-btn" data-filter="sparked" style="--accent:#fbbf24;">🔥 Sparked</button>
+          <button type="button" class="filter-btn" data-filter="forge" style="--accent:#f59e0b;">⚒️ In The Forge</button>
+          <button type="button" class="filter-btn" data-filter="vaulted" style="--accent:#94a3b8;">🔒 Vaulted</button>
         </div>
         <!-- Filter bar: Genre -->
         <div class="filter-bar" role="group" aria-label="Filter games by genre" style="margin-top:0.5rem;">
@@ -601,16 +595,16 @@
           <button type="button" class="genre-btn" data-genre="puzzle">Puzzle</button>
         </div>
 
-        <!-- Live & Playable -->
-        <div class="games-section-label" data-section="live" aria-hidden="true">
-          <span>Live &amp; Playable</span>
+        <!-- SPARKED 🔥 — Live & Playable -->
+        <div class="games-section-label" data-section="sparked" aria-hidden="true">
+          <span style="color:#fbbf24;">🔥 Sparked — Live &amp; Playable</span>
         </div>
 
         <!-- Call of Doodie — featured -->
-        <div class="game-card-featured" data-status="live" data-game="call-of-doodie" data-genre="action" aria-label="Call of Doodie — Live">
+        <div class="game-card-featured" data-status="sparked" data-game="call-of-doodie" data-genre="action" aria-label="Call of Doodie — Sparked">
           <div class="game-card-featured-inner">
             <div class="game-card-hero doodie">
-              <span class="status status-live">Playable Now</span>
+              <span class="status status-sparked">🔥 Sparked</span>
               <h2>Call Of Doodie</h2>
             </div>
             <div class="game-card-body">
@@ -644,7 +638,7 @@
           <!-- Gridiron GM -->
           <article class="game-card" data-status="vaulted" data-game="gridiron-gm" data-genre="sports" aria-label="Gridiron GM — Vaulted">
             <div class="card-hero gridiron">
-              <span class="status status-stub card-badge">Vaulted</span>
+              <span class="status status-vaulted card-badge">🔒 Vaulted</span>
               <h3>Gridiron GM</h3>
             </div>
             <div class="card-content">
@@ -662,9 +656,9 @@
           </article>
 
           <!-- VaultSpark Football GM -->
-          <article class="game-card" data-status="beta" data-game="vaultspark-football-gm" data-genre="sports" aria-label="VaultSpark Football GM — Beta">
+          <article class="game-card" data-status="sparked" data-game="vaultspark-football-gm" data-genre="sports" aria-label="VaultSpark Football GM — Sparked">
             <div class="card-hero footballgm">
-              <span class="status status-dev card-badge">Client Beta</span>
+              <span class="status status-sparked card-badge">🔥 Sparked</span>
               <h3>VaultSpark Football GM</h3>
             </div>
             <div class="card-content">
@@ -685,9 +679,9 @@
           </article>
 
           <!-- VaultFront -->
-          <article class="game-card" data-status="dev" data-genre="strategy" aria-label="VaultFront — In Development">
+          <article class="game-card" data-status="forge" data-genre="strategy" aria-label="VaultFront — In The Forge">
             <div class="card-hero vaultfront">
-              <span class="status status-dev card-badge">In Development</span>
+              <span class="status status-forge card-badge">⚒️ Forge</span>
               <h3>VaultFront</h3>
             </div>
             <div class="card-content">
@@ -707,9 +701,9 @@
           </article>
 
           <!-- Solara -->
-          <article class="game-card" data-status="dev" data-genre="roguelite" aria-label="Solara: Sunfall — In Development">
+          <article class="game-card" data-status="forge" data-genre="roguelite" aria-label="Solara: Sunfall — In The Forge">
             <div class="card-hero solara">
-              <span class="status status-dev card-badge">In Development</span>
+              <span class="status status-forge card-badge">⚒️ Forge</span>
               <h3>Solara</h3>
             </div>
             <div class="card-content">
@@ -729,9 +723,9 @@
           </article>
 
           <!-- MindFrame -->
-          <article class="game-card" data-status="concept" data-genre="puzzle" aria-label="MindFrame — Concept Stage">
+          <article class="game-card" data-status="forge" data-genre="puzzle" aria-label="MindFrame — In The Forge">
             <div class="card-hero mindframe">
-              <span class="status status-stub card-badge">Concept Stage</span>
+              <span class="status status-forge card-badge">⚒️ Forge</span>
               <h3>MindFrame</h3>
             </div>
             <div class="card-content">
@@ -750,10 +744,32 @@
             </div>
           </article>
 
+          <!-- The Exodus -->
+          <article class="game-card" data-status="forge" data-genre="survival" aria-label="The Exodus — In The Forge">
+            <div class="card-hero the-exodus">
+              <span class="status status-forge card-badge">⚒️ Forge</span>
+              <h3>The Exodus</h3>
+            </div>
+            <div class="card-content">
+              <p>
+                A narrative survival game set in a world that already ended. Every decision
+                carries weight. Every resource tells a story. Survival is not the goal —
+                meaning is.
+              </p>
+              <div class="meta">
+                <span>Survival</span><span>Narrative</span><span>Browser</span>
+              </div>
+              <div class="game-card-actions">
+                <a class="button" href="/vault-member/#register">Get Early Signal</a>
+                <a class="button-secondary" href="/games/the-exodus/">About The Exodus</a>
+              </div>
+            </div>
+          </article>
+
           <!-- Project ??? -->
-          <article class="game-card" data-status="concept" aria-label="Project ??? — Concept Stage">
+          <article class="game-card" data-status="vaulted" aria-label="Project ??? — Vaulted">
             <div class="card-hero vault-sealed">
-              <span class="status status-stub card-badge">Concept Stage</span>
+              <span class="status status-vaulted card-badge">🔒 Vaulted</span>
               <h3>Project ???</h3>
             </div>
             <div class="card-content">
@@ -856,10 +872,8 @@
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
           <a href="/vault-member/">Vault Membership</a>
-          <a href="/investor-portal/login/">Investor Portal</a>
           <a href="/leaderboards/">Leaderboard</a>
           <a href="/community/">Community Hub</a>
-          <a href="/journal/archive/">Signal Archive</a>
         </div>
         <div class="footer-col">
           <h4>Connect</h4>
@@ -869,9 +883,14 @@
           <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
         </div>
       </div>
+      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
+        <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+      </div>
       <div class="footer-bottom">
-        <span>© 2026 VaultSpark Studios. All rights reserved. VaultSpark™ is a trademark of VaultSpark Studios.</span>
-        <span><a href="/privacy/">Privacy Policy</a> &nbsp;·&nbsp; <a href="/terms/">Terms of Service</a> &nbsp;·&nbsp; <a href="/contact/">Contact</a> &nbsp;·&nbsp; <a href="/vault-member/">Vault Members</a></span>
+        <span>&copy; 2026 VaultSpark Studios. All rights reserved. VaultSpark&trade; is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy Policy</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms of Service</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a> &nbsp;&middot;&nbsp; <a href="/vault-member/">Vault Members</a></span>
       </div>
     </div>
   </footer>
@@ -925,11 +944,7 @@
             if (activeStatus === 'all' && activeGenre === 'all') {
               label.style.display = '';
             } else {
-              var hasMatch = activeStatus === 'all'
-                ? true
-                : (activeStatus === section ||
-                   (section === 'live' && (activeStatus === 'live' || activeStatus === 'beta' || activeStatus === 'vaulted')) ||
-                   (section === 'dev'  && (activeStatus === 'dev'  || activeStatus === 'concept')));
+              var hasMatch = activeStatus === 'all' ? true : (activeStatus === section);
               label.style.display = hasMatch ? '' : 'none';
             }
           });
