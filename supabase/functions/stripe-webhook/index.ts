@@ -244,7 +244,7 @@ serve(async (req: Request) => {
             p_user_id:  subRow.user_id,
             p_reason:   reason,
             p_points:   points,
-            p_label:    isPro ? 'Monthly Pro XP Drop' : 'Monthly Sparked XP Drop',
+            p_label:    isPro ? 'Monthly Eternal XP Drop' : 'Monthly Sparked XP Drop',
             p_once_per: 'month',
             p_source:   'subscription_renewal',
           }).catch((err: Error) => console.error('award_points_for_user error:', err));

@@ -307,7 +307,7 @@
         } else if (action === 'replace') {
           // Replace with upgrade prompt
           var planNeeded = FEATURE_GATES[required] || required;
-          var label = planNeeded === 'vault_sparked_pro' ? 'VaultSparked Pro' : 'VaultSparked';
+          var label = planNeeded === 'vault_sparked_pro' ? 'VaultSparked Eternal' : 'VaultSparked';
           var upgradeEl = document.createElement('div');
           upgradeEl.className = 'vault-sdk-upgrade-prompt';
           upgradeEl.style.cssText = 'text-align:center;padding:1.5rem;border:1px solid rgba(255,196,0,0.2);border-radius:12px;background:rgba(255,196,0,0.04);';

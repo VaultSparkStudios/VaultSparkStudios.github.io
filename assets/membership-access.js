@@ -87,14 +87,14 @@ const CONFIG = {
       "portalLabel": "VaultSparked"
     },
     "vault_sparked_pro": {
-      "label": "VaultSparked Pro",
+      "label": "VaultSparked Eternal",
       "kind": "studio",
       "isPaid": true,
       "isSparked": true,
       "isPro": true,
       "monthlyPriceUsd": null,
       "priceDisplay": "From $29.99/mo",
-      "portalLabel": "VaultSparked Pro"
+      "portalLabel": "VaultSparked Eternal"
     },
     "promogrind_pro": {
       "label": "PromoGrind Pro",
@@ -222,7 +222,7 @@ const CONFIG = {
       }
     },
     "pro_discord_role": {
-      "label": "VaultSparked Pro Discord role",
+      "label": "VaultSparked Eternal Discord role",
       "rule": {
         "requiresAccount": true,
         "allowedPlans": [

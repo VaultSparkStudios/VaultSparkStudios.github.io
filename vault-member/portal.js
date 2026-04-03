@@ -143,7 +143,7 @@
         promoCode = promoCode || null;
         const btnId = plan === 'vault_sparked_pro' ? 'vaultsparked-pro-upgrade-btn' : 'vaultsparked-upgrade-btn';
         const btn = document.getElementById(btnId);
-        const defaultLabel = plan === 'vault_sparked_pro' ? 'Get VaultSparked Pro →' : 'Get VaultSparked →';
+        const defaultLabel = plan === 'vault_sparked_pro' ? 'Get VaultSparked Eternal →' : 'Get VaultSparked →';
         if (btn) { btn.textContent = 'Redirecting…'; btn.disabled = true; }
         try {
           const { data: { session } } = await VSSupabase.auth.getSession();

@@ -2,7 +2,7 @@
  * assign-discord-role — Supabase Edge Function (Deno)
  *
  * Triggered by a Supabase Database Webhook on vault_members UPDATE.
- * Syncs the member's rank role, VaultSparked role, and VaultSparked Pro role
+ * Syncs the member's rank role, VaultSparked role, and VaultSparked Eternal role
  * to Discord whenever points, is_sparked, plan_key, or rank changes.
  *
  * ─── Secrets required ─────────────────────────────────────────────────────────
@@ -11,7 +11,7 @@
  *   DISCORD_ROLE_IDS              — JSON map of rank index → role ID
  *                                   {"0":"...","1":"...","2":"...","3":"...","4":"...","5":"...","6":"...","7":"...","8":"..."}
  *   DISCORD_VAULTSPARKED_ROLE_ID  — role ID for the VaultSparked subscriber role
- *   DISCORD_SPARKED_PRO_ROLE_ID   — role ID for the VaultSparked Pro role (optional)
+ *   DISCORD_SPARKED_PRO_ROLE_ID   — role ID for the VaultSparked Eternal role (optional)
  * ──────────────────────────────────────────────────────────────────────────────
  */
 
@@ -72,16 +72,16 @@ async function syncDiscordRoles(
     }
   }
 
-  // ── VaultSparked Pro role ───────────────────────────────────────
+  // ── VaultSparked Eternal role ────────────────────────────────────
   if (SPARKED_PRO_ROLE_ID) {
     if (isProPlan) {
       const res = await fetch(`${base}/${SPARKED_PRO_ROLE_ID}`, { method: 'PUT', headers, body: '{}' })
       if (!res.ok && res.status !== 204) {
         const text = await res.text()
-        throw new Error(`Discord VaultSparked Pro role error ${res.status}: ${text}`)
+        throw new Error(`Discord VaultSparked Eternal role error ${res.status}: ${text}`)
       }
     } else {
-      // Remove Pro role if no longer Pro
+      // Remove Eternal role if no longer Eternal
       await fetch(`${base}/${SPARKED_PRO_ROLE_ID}`, { method: 'DELETE', headers })
     }
   }
