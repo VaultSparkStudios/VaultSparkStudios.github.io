@@ -5,7 +5,17 @@ const { defineConfig } = require('@playwright/test');
 loadLocalPlaywrightEnv();
 
 function loadLocalPlaywrightEnv() {
-  const envPath = path.join(__dirname, '.env.playwright.local');
+  const envFiles = [
+    '.env.playwright.local.private',
+    '.env.playwright.local',
+  ];
+
+  for (const relativePath of envFiles) {
+    loadEnvFile(path.join(__dirname, relativePath));
+  }
+}
+
+function loadEnvFile(envPath) {
   if (!fs.existsSync(envPath)) return;
 
   const lines = fs.readFileSync(envPath, 'utf8').split(/\r?\n/);
@@ -26,6 +36,7 @@ function loadLocalPlaywrightEnv() {
     ) {
       value = value.slice(1, -1);
     }
+
     process.env[key] = value;
   }
 }
