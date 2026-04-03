@@ -9,3 +9,4 @@ Public-safe note:
 2026-04-03:
 - this file was sanitized as part of the public-repo boundary pass
 - pre-sanitization records were preserved in a local private backup outside the repo
+- public-safe follow-through completed for local credential handling and cross-repo sanitization cleanup

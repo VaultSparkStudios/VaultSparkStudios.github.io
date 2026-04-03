@@ -13,3 +13,9 @@ Public-safe decisions retained in this repo:
 - Decision: tracked Studio OS context, log, audit, handoff, and local-tooling files in this repo were reduced to public-safe summaries or pointers
 - Why: the website can stay deployable without exposing internal execution history, operator workflows, or sensitive planning detail
 - Preservation: a local private backup of the pre-sanitization material was created outside the repo before the tracked copies were sanitized
+
+### 2026-04-03 — Local Playwright credentials moved behind a private ignored file
+
+- Status: active
+- Decision: `.env.playwright.local.private` is now the preferred local credential source for Playwright, while `.env.playwright.local` stays safe as a template-style local file
+- Why: local tests still need credentials, but the repo-facing local file should not hold real values
