@@ -1,4 +1,5 @@
 import { timeAgo, fmt, escapeHtml, renderEmptyState, safeGetJSON } from "../utils/helpers.js";
+import { loadSilHistory, renderSilTrendBadge } from "../utils/silTrend.js";
 import { explainScore, renderScoreExplainerPanel } from "../utils/scoreExplainer.js";
 import { auditProjectTruth, getTruthAuditTone, computeProtocolGenome } from "../utils/truthAudit.js";
 import { getCachedPrescription, getCachedDevlogDraft } from "../utils/aiPrescriptions.js";
@@ -1002,7 +1003,7 @@ function renderStudioOpsSection(project, contextFiles, tickets = [], isLoadingCt
             ${statusJson.phase     ? `<div class="data-row"><span class="label">Phase</span><span class="value">${statusJson.phase}</span></div>` : ""}
             ${statusJson.lastUpdated ? `<div class="data-row"><span class="label">Updated</span><span class="value">${statusJson.lastUpdated}</span></div>` : ""}
             ${statusJson.health    ? `<div class="data-row"><span class="label">Health</span><span class="value">${statusJson.health}</span></div>` : ""}
-            ${statusJson.silScore != null ? `<div class="data-row"><span class="label">SIL</span><span class="value">${statusJson.silScore}/50${statusJson.silAvg3 != null ? ` · avg3 ${statusJson.silAvg3}` : ""}</span></div>` : ""}
+            ${statusJson.silScore != null ? `<div class="data-row"><span class="label">SIL</span><span class="value">${statusJson.silScore}/500${statusJson.silAvg3 != null ? ` · avg3 ${statusJson.silAvg3}` : ""}${renderSilTrendBadge(loadSilHistory(), project.id)}</span></div>` : ""}
             ${statusJson.truthAuditStatus ? `<div class="data-row"><span class="label">Truth</span><span class="value">${statusJson.truthAuditStatus}${statusJson.truthAuditLastRun ? ` · ${statusJson.truthAuditLastRun}` : ""}</span></div>` : ""}
             ${truthAudit?.stats?.contradictionCount ? `<div class="data-row"><span class="label">Contradictions</span><span class="value" style="color:var(--gold);">${truthAudit.stats.contradictionCount}</span></div>` : ""}
             ${Array.isArray(statusJson.blockers) && statusJson.blockers.length > 0 ? `
