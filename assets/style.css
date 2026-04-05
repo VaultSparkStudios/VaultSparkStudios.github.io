@@ -1896,6 +1896,39 @@ body.light-mode .fan-art-vote { color: var(--text); }
   will-change: transform;
 }
 
+/* ─── Game detail page — stat-block / info-block hover polish ── */
+/* Light hover lift + glow for all game detail page cards.        */
+/* Each page keeps its own accent colour; these add the animation. */
+.stat-block,
+.info-block {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.stat-block:hover {
+  transform: translateY(-2px) scale(1.015);
+}
+
+.info-block:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,255,255,0.12);
+}
+
+/* Vault-status hero glow — applied via data-status on .game-hero   */
+.game-hero[data-status="sparked"]::before {
+  background: radial-gradient(circle at 15% 40%, rgba(239,68,68,0.18), transparent 32%),
+              radial-gradient(circle at 85% 40%, rgba(249,115,22,0.12), transparent 32%);
+}
+.game-hero[data-status="forge"]::before {
+  background: radial-gradient(circle at 15% 40%, rgba(217,119,6,0.16), transparent 32%),
+              radial-gradient(circle at 85% 40%, rgba(245,158,11,0.10), transparent 32%);
+}
+.game-hero[data-status="vaulted"]::before {
+  background: radial-gradient(circle at 50% 40%, rgba(100,116,139,0.12), transparent 40%);
+}
+
+/* Stat-block light-mode override */
+body.light-mode .stat-block:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+
 /* ─── Touch target: minimum 44x44 for all interactive ──── */
 @media (pointer: coarse) {
   .nav-center a,
