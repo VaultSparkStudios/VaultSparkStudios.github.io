@@ -32,6 +32,7 @@ import { grantWeeklyBonus, syncAchievementXP, grantScoreImprovementXP } from "..
 import { getActiveChallenges, claimChallengeXP } from "../utils/challenges.js";
 import { getPredictiveAlerts, renderPredictiveAlerts } from "../utils/predictiveAlerts.js";
 import { auditProjectTruth, getTruthAuditTone } from "../utils/truthAudit.js";
+import { pushTruthDebtSnapshot, loadTruthDebtHistory, renderTruthDebtSparkline } from "../utils/truthDebtHistory.js";
 
 // Re-export for backwards compatibility (clientApp.js imports these from here)
 export { _pushAlertHistory as pushAlertHistory, _snoozeAlert as snoozeAlert };
@@ -293,6 +294,15 @@ function renderTruthDebtPanel(contextFiles = {}) {
   const debt = rows.reduce((sum, row) => sum + (row.audit.stats.contradictionCount || 0), 0);
   const flagged = rows.filter((row) => row.audit.findings.length > 0).length;
 
+  // Record snapshot for trendline
+  const perProject = Object.fromEntries(rows.map((row) => [
+    row.project.id || row.project.name,
+    row.audit.stats.contradictionCount || 0,
+  ]));
+  pushTruthDebtSnapshot(debt, perProject);
+  const debtHistory = loadTruthDebtHistory();
+  const debtSparkline = renderTruthDebtSparkline(debtHistory);
+
   return `
     <div class="panel" style="margin-bottom:24px; border-color:rgba(255,201,116,0.18);">
       <div class="panel-header">
@@ -317,9 +327,13 @@ function renderTruthDebtPanel(contextFiles = {}) {
           `).join("")}
         </div>
         <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,201,116,0.14);">
+            <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:8px;">Debt trendline</div>
+            ${debtSparkline}
+          </div>
           <div style="padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06);">
             <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:4px;">Founder risk</div>
-            <div style="font-size:12px; color:var(--text); line-height:1.5;">The hub now treats contradiction debt separately from score health, so stale summaries and truth mismatches stay visible even when project code health looks fine.</div>
+            <div style="font-size:12px; color:var(--text); line-height:1.5;">The hub treats contradiction debt separately from score health, so stale summaries and truth mismatches stay visible even when project code health looks fine.</div>
           </div>
           <div style="padding:10px 12px; border-radius:8px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.06);">
             <div style="font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); margin-bottom:4px;">Most common issues</div>
