@@ -202,7 +202,7 @@
         <a href="/">Home</a>
         <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
         <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">Canon</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
-        <a href="/universe/" class="active">Universe</a>
+        <div class="nav-item has-dropdown"><a href="/universe/" class="active">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Overview</a><div class="dropdown-divider"></div><a href="/universe/dreadspike/">DreadSpike</a><a href="/universe/voidfall/" style="color:#f87171;">⚡ Voidfall <span style="font-size:0.65rem;font-weight:800;letter-spacing:0.06em;color:#f87171;background:rgba(214,40,40,0.15);padding:0.1rem 0.4rem;border-radius:4px;margin-left:2px;">COMING</span></a></div></div>
         <a href="/studio/">Studio</a>
         <a href="/journal/">Signal Log</a>
         <a href="/contact/">Contact</a>
@@ -286,10 +286,10 @@
               <h3>Classification File</h3>
               <div class="char-stat-row"><span class="s-label">Designation</span><span class="s-value">DreadSpike</span></div>
               <div class="char-stat-row"><span class="s-label">Origin</span><span class="s-value">Wrong Transmission</span></div>
-              <div class="char-stat-row"><span class="s-label">Classification</span><span class="s-value">Dimensional Anomaly</span></div>
-              <div class="char-stat-row"><span class="s-label">First Appearance</span><span class="s-value">Sora Cinematic, 2026</span></div>
-              <div class="char-stat-row"><span class="s-label">Status</span><span class="s-value" style="color:#f87171;">Active — In Our Realm</span></div>
-              <div class="char-stat-row"><span class="s-label">Containment</span><span class="s-value" style="color:var(--gold);">Ongoing</span></div>
+              <div class="char-stat-row"><span class="s-label">Classification</span><span class="s-value" style="color:var(--dim);font-family:monospace;letter-spacing:0.04em;font-size:0.82rem;">[VOIDFALL CLEARANCE REQ.]</span></div>
+              <div class="char-stat-row"><span class="s-label">First Signal</span><span class="s-value">Vault Cinematic, 2026</span></div>
+              <div class="char-stat-row"><span class="s-label">Status</span><span class="s-value" style="color:var(--dim);font-family:monospace;letter-spacing:0.04em;font-size:0.82rem;">[REDACTED]</span></div>
+              <div class="char-stat-row"><span class="s-label">Full Record</span><span class="s-value" style="color:#f87171;">Voidfall — Novel Saga</span></div>
             </div>
 
             <div style="padding:1.3rem;border-radius:18px;background:rgba(214,40,40,0.04);border:1px solid rgba(214,40,40,0.1);">
@@ -299,6 +299,16 @@
               <a class="button-secondary" href="/vault-member/#register" style="width:100%;display:flex;justify-content:center;font-size:0.88rem;">Access Classified Intel →</a>
             </div>
           </div>
+        </div>
+
+        <!-- Voidfall teaser -->
+        <div style="margin:2rem 0;padding:1.5rem 1.75rem;border-radius:20px;background:linear-gradient(135deg,rgba(214,40,40,0.06),rgba(139,92,246,0.06));border:1px solid rgba(214,40,40,0.2);display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.16em;color:rgba(214,40,40,0.8);margin-bottom:0.4rem;">Incoming — Novel Saga</div>
+            <div style="font-family:Georgia,'Times New Roman',serif;font-size:1.35rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:0.4rem;">Voidfall</div>
+            <p style="font-size:0.88rem;color:var(--muted);margin:0;line-height:1.6;">The full story of the signal, the threshold, and what arrived. DreadSpike is at the center of it.</p>
+          </div>
+          <a href="/universe/voidfall/" class="button" style="white-space:nowrap;flex-shrink:0;">Get First Signal →</a>
         </div>
 
         <!-- Stills -->
@@ -375,7 +385,7 @@
         <div class="footer-col">
           <h4>Studio</h4>
           <a href="/">Home</a>
-          <a href="/universe/">Universe</a>
+          <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Overview</a><div class="dropdown-divider"></div><a href="/universe/dreadspike/">DreadSpike</a><a href="/universe/voidfall/" style="color:#f87171;">⚡ Voidfall <span style="font-size:0.65rem;font-weight:800;letter-spacing:0.06em;color:#f87171;background:rgba(214,40,40,0.15);padding:0.1rem 0.4rem;border-radius:4px;margin-left:2px;">COMING</span></a></div></div>
           <a href="/studio/">About</a>
           <a href="/roadmap/">Vault Pipeline</a>
           <a href="/journal/">Signal Log</a>
@@ -388,7 +398,7 @@
           <h4>Connect</h4>
           <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
           <a href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer">Reddit</a>
-          <a href="https://discord.com/users/vaultsparkstudios" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://discord.gg/MnnBRbYDk" target="_blank" rel="noreferrer">Discord</a>
           <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
         </div>
         <div class="footer-col">

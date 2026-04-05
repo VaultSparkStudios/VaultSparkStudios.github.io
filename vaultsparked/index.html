@@ -300,6 +300,101 @@
       margin-bottom: 1.2rem;
       min-height: 1.1em;
     }
+    /* ─── Phase progress bar ─── */
+    .phase-progress-wrap {
+      margin-bottom: 1.2rem;
+    }
+    .phase-progress-track {
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      overflow: hidden;
+      margin-top: 5px;
+    }
+    .phase-progress-fill {
+      height: 100%;
+      border-radius: 999px;
+      width: 0%;
+      transition: width 0.6s ease;
+    }
+    .pricing-card.featured .phase-progress-fill { background: linear-gradient(90deg,#FFC400,#ff9d00); }
+    .pricing-card.pro-card  .phase-progress-fill { background: linear-gradient(90deg,#a855f7,#7c3aed); }
+    .phase-progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--dim);
+      margin-top: 4px;
+    }
+
+    /* ─── Gift checkout modal ─── */
+    .gift-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      backdrop-filter: blur(6px);
+      z-index: 9800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .gift-modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .gift-modal {
+      background: var(--panel-strong, #0d111c);
+      border: 1px solid rgba(255,196,0,0.2);
+      border-radius: 24px;
+      padding: 2rem 2rem 1.75rem;
+      max-width: 420px;
+      width: 100%;
+      position: relative;
+      transform: translateY(12px);
+      transition: transform 0.2s;
+    }
+    .gift-modal-overlay.open .gift-modal { transform: translateY(0); }
+    .gift-modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: none;
+      border: none;
+      color: var(--dim);
+      font-size: 1.2rem;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0.25rem;
+    }
+    .gift-modal-close:hover { color: var(--text); }
+    .gift-modal h3 {
+      font-family: Georgia, serif;
+      font-size: 1.4rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.35rem;
+    }
+    .gift-modal p { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.25rem; }
+    .gift-modal input[type="email"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0.75rem 1rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.92rem;
+      outline: none;
+      margin-bottom: 0.75rem;
+      transition: border-color 0.15s;
+    }
+    .gift-modal input[type="email"]:focus { border-color: rgba(255,196,0,0.45); }
+    .gift-modal input[type="email"]::placeholder { color: var(--dim); }
+    .gift-modal-note { font-size: 0.75rem !important; color: var(--dim) !important; margin-top: 0.5rem !important; }
+
     .pricing-divider {
       border: none;
       border-top: 1px solid rgba(255,255,255,0.07);
@@ -608,6 +703,10 @@
       .sparked-cta-row { flex-direction: column; align-items: stretch; }
       .sparked-cta-primary,
       .sparked-cta-secondary { text-align: center; justify-content: center; }
+      /* Gift modal — full-width on small screens */
+      .gift-modal { padding: 1.5rem 1.25rem; border-radius: 18px; }
+      /* Phase progress label — stack on tiny screens */
+      .phase-progress-label { flex-direction: column; gap: 2px; }
     }
   </style>
 
@@ -700,6 +799,10 @@
             <div class="pricing-amount" id="sparked-price-display"><sub>$</sub>4.99</div>
             <div class="pricing-period" id="sparked-period">per month</div>
             <div class="pricing-spots" id="sparked-spots-label">Loading phase data…</div>
+            <div class="phase-progress-wrap" id="sparked-progress-wrap" style="display:none;">
+              <div class="phase-progress-track"><div class="phase-progress-fill" id="sparked-progress-fill"></div></div>
+              <div class="phase-progress-label"><span id="sparked-progress-text"></span><span id="sparked-progress-cap"></span></div>
+            </div>
             <hr class="pricing-divider" />
             <ul class="pricing-features">
               <li><span class="pf-check">✓</span> Everything in Free</li>
@@ -725,6 +828,10 @@
             <div class="pricing-amount" id="pro-price-display"><sub>$</sub>29.99</div>
             <div class="pricing-period" id="pro-period">per month</div>
             <div class="pricing-spots" id="pro-spots-label">Loading phase data…</div>
+            <div class="phase-progress-wrap" id="pro-progress-wrap" style="display:none;">
+              <div class="phase-progress-track"><div class="phase-progress-fill" id="pro-progress-fill"></div></div>
+              <div class="phase-progress-label"><span id="pro-progress-text"></span><span id="pro-progress-cap"></span></div>
+            </div>
             <hr class="pricing-divider" />
             <ul class="pricing-features">
               <li><span class="pf-check">✓</span> Everything in VaultSparked</li>
@@ -746,6 +853,12 @@
         </div><!-- /pricing-cards -->
 
         <p class="pricing-note">Cancel anytime from your portal settings. No annual lock-in.</p>
+
+        <div style="text-align:center;margin-top:1.25rem;">
+          <button type="button" id="gift-open-btn" style="background:none;border:1px solid rgba(255,196,0,0.25);color:var(--muted);border-radius:999px;padding:0.45rem 1.1rem;font-size:0.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor='rgba(255,196,0,0.55)';this.style.color='var(--text)'" onmouseout="this.style.borderColor='rgba(255,196,0,0.25)';this.style.color='var(--muted)'">
+            🎁 Gift VaultSparked to someone
+          </button>
+        </div>
 
         <div class="grandfather-notice">
           <p><strong>Grandfather pricing guarantee:</strong> Your Phase 1 price is locked forever. When Phase 2 opens at a higher price, you keep paying your original rate — always. This is a permanent commitment.</p>
@@ -1072,6 +1185,20 @@
               spotsEl.innerHTML = '<span style="color:#FFC400;font-weight:700;">Phase ' + row.phase + '</span> — unlimited';
             }
           }
+          // Progress bar
+          if (row.subscriber_cap != null && row.subscriber_count != null) {
+            var pct = Math.min(100, Math.round((row.subscriber_count / row.subscriber_cap) * 100));
+            var wrap = document.getElementById('sparked-progress-wrap');
+            var fill = document.getElementById('sparked-progress-fill');
+            var txt  = document.getElementById('sparked-progress-text');
+            var cap  = document.getElementById('sparked-progress-cap');
+            if (wrap && fill) {
+              wrap.style.display = '';
+              setTimeout(function() { fill.style.width = pct + '%'; }, 80);
+              if (txt) txt.textContent = row.subscriber_count + ' of ' + row.subscriber_cap + ' spots filled';
+              if (cap) cap.textContent = pct + '%';
+            }
+          }
         }
 
         if (row.plan_key === 'vault_sparked_pro') {
@@ -1087,6 +1214,20 @@
                 + ' — ' + spotsLeft + ' spot' + (spotsLeft === 1 ? '' : 's') + ' left at this price';
             } else {
               proSpotsEl.innerHTML = '<span style="color:#a855f7;font-weight:700;">Phase ' + row.phase + '</span> — unlimited';
+            }
+          }
+          // Progress bar
+          if (row.subscriber_cap != null && row.subscriber_count != null) {
+            var pct2 = Math.min(100, Math.round((row.subscriber_count / row.subscriber_cap) * 100));
+            var wrap2 = document.getElementById('pro-progress-wrap');
+            var fill2 = document.getElementById('pro-progress-fill');
+            var txt2  = document.getElementById('pro-progress-text');
+            var cap2  = document.getElementById('pro-progress-cap');
+            if (wrap2 && fill2) {
+              wrap2.style.display = '';
+              setTimeout(function() { fill2.style.width = pct2 + '%'; }, 80);
+              if (txt2) txt2.textContent = row.subscriber_count + ' of ' + row.subscriber_cap + ' spots filled';
+              if (cap2) cap2.textContent = pct2 + '%';
             }
           }
         }
@@ -1175,6 +1316,67 @@
       });
     }
 
+    // Gift checkout modal
+    var giftOpenBtn = document.getElementById('gift-open-btn');
+    var giftOverlay = document.getElementById('gift-modal-overlay');
+    var giftCloseBtn = document.getElementById('gift-modal-close');
+    var giftSubmitBtn = document.getElementById('gift-submit-btn');
+    var giftEmailInput = document.getElementById('gift-email-input');
+    var giftError = document.getElementById('gift-modal-error');
+
+    function openGiftModal() {
+      if (giftOverlay) giftOverlay.classList.add('open');
+      if (giftEmailInput) giftEmailInput.focus();
+    }
+    function closeGiftModal() {
+      if (giftOverlay) giftOverlay.classList.remove('open');
+      if (giftEmailInput) giftEmailInput.value = '';
+      if (giftError) giftError.style.display = 'none';
+      if (giftSubmitBtn) { giftSubmitBtn.disabled = false; giftSubmitBtn.textContent = 'Send Gift →'; }
+    }
+
+    if (giftOpenBtn) giftOpenBtn.addEventListener('click', openGiftModal);
+    if (giftCloseBtn) giftCloseBtn.addEventListener('click', closeGiftModal);
+    if (giftOverlay) giftOverlay.addEventListener('click', function(e) { if (e.target === giftOverlay) closeGiftModal(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeGiftModal(); });
+
+    if (giftSubmitBtn) {
+      giftSubmitBtn.addEventListener('click', async function () {
+        var email = giftEmailInput ? giftEmailInput.value.trim() : '';
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          if (giftEmailInput) giftEmailInput.focus();
+          return;
+        }
+        giftSubmitBtn.disabled = true;
+        giftSubmitBtn.textContent = 'Processing…';
+        if (giftError) giftError.style.display = 'none';
+
+        try {
+          var client = getAuthClient();
+          var sessionRes = await client.auth.getSession();
+          var session = sessionRes && sessionRes.data && sessionRes.data.session;
+          if (!session) {
+            window.location.href = '/vault-member/?next=' + encodeURIComponent(window.location.href);
+            return;
+          }
+          var res = await client.functions.invoke('create-gift-checkout', {
+            headers: { 'Authorization': 'Bearer ' + session.access_token },
+            body: { recipient_email: email },
+          });
+          var data = res.data;
+          var error = res.error;
+          if (error || !data || !data.url) {
+            throw new Error((data && data.error) || (error && error.message) || 'Gift checkout unavailable. Please try again.');
+          }
+          window.location.href = data.url;
+        } catch (err) {
+          giftSubmitBtn.disabled = false;
+          giftSubmitBtn.textContent = 'Send Gift →';
+          if (giftError) { giftError.textContent = err.message || 'Something went wrong.'; giftError.style.display = 'block'; }
+        }
+      });
+    }
+
     // Smooth scroll for #pricing anchor
     document.querySelectorAll('a[href="#pricing"]').forEach(function (link) {
       link.addEventListener('click', function (e) {
@@ -1189,5 +1391,18 @@
 
 })();
 </script>
+
+<!-- Gift checkout modal -->
+<div class="gift-modal-overlay" id="gift-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="gift-modal-title">
+  <div class="gift-modal">
+    <button class="gift-modal-close" id="gift-modal-close" aria-label="Close gift modal">✕</button>
+    <h3 id="gift-modal-title">🎁 Gift VaultSparked</h3>
+    <p>Enter the recipient's email. They'll receive a Stripe checkout link to claim their gifted VaultSparked membership ($24.99 one-time).</p>
+    <input type="email" id="gift-email-input" placeholder="recipient@email.com" autocomplete="email" aria-label="Recipient email address" />
+    <div id="gift-modal-error" style="display:none;font-size:0.82rem;color:#f87171;margin-bottom:0.75rem;"></div>
+    <button type="button" id="gift-submit-btn" class="button" style="width:100%;justify-content:center;display:flex;">Send Gift →</button>
+    <p class="gift-modal-note">Requires sign-in. The recipient activates the membership — not tied to your account.</p>
+  </div>
+</div>
 </body>
 </html>

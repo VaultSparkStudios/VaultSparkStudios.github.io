@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-20260405-90e72fc';
+const CACHE_NAME = 'vaultspark-20260405-d1a76ac';
 const MAX_PAGE_ENTRIES = 60;
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const STATIC_ASSETS = [
@@ -38,6 +38,8 @@ const STATIC_ASSETS = [
   '/games/vaultspark-football-gm/',
   '/journal/001-the-vault-is-sparked/',
   '/universe/',
+  '/universe/voidfall/',
+  '/universe/dreadspike/',
   '/roadmap/',
   '/contact/',
   '/studio/',

@@ -9,17 +9,19 @@
   banner.id = 'cookieConsent';
   banner.setAttribute('role', 'region');
   banner.setAttribute('aria-label', 'Cookie consent');
+
+  // All styling lives in style.css (.vs-cookie-banner, .vs-cookie-inner, etc.)
   banner.innerHTML =
-    '<div style="position:fixed;bottom:0;left:0;right:0;z-index:9000;padding:1rem 1.25rem;background:rgba(2,4,8,0.97);border-top:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);">' +
-      '<div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;">' +
-        '<p style="margin:0;font-size:0.85rem;color:#b5bfd8;line-height:1.55;flex:1;min-width:200px;">' +
+    '<div class="vs-cookie-banner">' +
+      '<div class="vs-cookie-inner">' +
+        '<p class="vs-cookie-text">' +
           'We use analytics cookies to understand how visitors use this site. Essential cookies required for auth and session are always active. ' +
-          '<a href="/cookies/" style="color:rgba(31,162,255,0.8);text-decoration:underline;">Cookie Policy</a> · ' +
-          '<a href="/privacy/" style="color:rgba(31,162,255,0.6);text-decoration:underline;">Privacy Policy</a>' +
+          '<a href="/cookies/">Cookie Policy</a> · ' +
+          '<a href="/privacy/">Privacy Policy</a>' +
         '</p>' +
-        '<div style="display:flex;gap:0.75rem;flex-shrink:0;">' +
-          '<button id="cookieDecline" style="background:transparent;border:1px solid rgba(255,255,255,0.15);color:#8a93b8;padding:0.5rem 1rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;" aria-label="Decline analytics cookies">Decline Analytics</button>' +
-          '<button id="cookieAccept" style="background:#1FA2FF;border:none;color:#000;padding:0.5rem 1.25rem;border-radius:8px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;" aria-label="Accept analytics cookies">Accept Analytics</button>' +
+        '<div class="vs-cookie-actions">' +
+          '<button id="cookieDecline" class="vs-cookie-decline" aria-label="Decline analytics cookies">Decline Analytics</button>' +
+          '<button id="cookieAccept" class="vs-cookie-accept" aria-label="Accept analytics cookies">Accept Analytics</button>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -29,7 +31,6 @@
   document.getElementById('cookieAccept').addEventListener('click', function() {
     localStorage.setItem(CONSENT_KEY, 'accepted');
     banner.remove();
-    // Dispatch event so any deferred analytics scripts can initialize
     try { window.dispatchEvent(new CustomEvent('vs:consent', { detail: { analytics: true } })); } catch (e) {}
   });
 

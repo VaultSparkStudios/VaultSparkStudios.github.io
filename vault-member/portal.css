@@ -2124,11 +2124,33 @@
 /* Discord error */
 .discord-error         { font-size: 0.8rem; color: #f87171; margin-left: 0.5rem; }
 
-/* Generic layout helpers for session 10 */
+/* Generic layout helpers */
 .label-upper           { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--dim); margin-bottom: 0.4rem; }
 .text-dim              { color: var(--dim); }
 .text-muted            { color: var(--muted); }
 .text-gold             { color: var(--gold); }
+
+/* ── Rank dot color classes (replaces inline style= on rank sidebar) ── */
+.rank-dot--initiate  { background: #94a3b8; }
+.rank-dot--runner    { background: #1FA2FF; }
+.rank-dot--scout     { background: #10B981; }
+.rank-dot--guard     { background: #06B6D4; }
+.rank-dot--breacher  { background: #8B5CF6; }
+.rank-dot--operative { background: #2D2D2D; border: 1px solid rgba(255,255,255,0.12); }
+.rank-dot--keeper    { background: #C85000; }
+.rank-dot--master    { background: #D62828; }
+.rank-dot--sparked   { background: #FFC400; box-shadow: 0 0 8px rgba(255,196,0,0.7); }
+
+/* ── Auth form helpers (replaces inline style= on auth panels) ── */
+.auth-social-group   { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.auth-link-center    { text-align: center; margin-top: 10px; }
+.auth-link-bottom    { text-align: center; margin-top: 12px; }
+.form-sub-link       { font-size: 0.82rem; color: var(--dim); text-decoration: underline; }
+.form-sub-link:hover { color: var(--muted); }
+.form-sub-text       { text-align: center; font-size: 0.88rem; color: var(--dim); }
+.form-hint-text      { font-size: 0.9rem; color: var(--dim); margin-bottom: 16px; line-height: 1.6; }
+.form-success-green  { display: none; padding: 12px 14px; background: rgba(74,222,128,0.1); border: 1px solid rgba(74,222,128,0.3); border-radius: 8px; font-size: 0.9rem; color: #4ade80; margin-bottom: 16px; }
+.input-invite        { text-transform: uppercase; letter-spacing: 0.08em; }
 
 @media (max-width: 480px) {
   .inv-detail-grid { grid-template-columns: 1fr; }
@@ -2158,3 +2180,160 @@
 }
 .sparked-badge-inline { display:inline-flex; align-items:center; gap:0.3rem; padding:0.25rem 0.7rem; border-radius:999px; background:rgba(255,196,0,0.12); border:1px solid rgba(255,196,0,0.3); color:#FFC400; font-size:0.78rem; font-weight:700; }
 .pro-badge-inline { display:inline-flex; align-items:center; gap:0.3rem; padding:0.25rem 0.7rem; border-radius:999px; background:rgba(168,85,247,0.12); border:1px solid rgba(168,85,247,0.3); color:#a855f7; font-size:0.78rem; font-weight:700; }
+
+/* ── Onboarding tour ─────────────────────────────────────────── */
+.vs-tour-overlay {
+  position: fixed; inset: 0; z-index: 9900;
+  background: rgba(0,0,0,0.72);
+  backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+.vs-tour-overlay.open { opacity: 1; pointer-events: all; }
+.vs-tour-card {
+  background: linear-gradient(180deg, rgba(14,18,30,0.98), rgba(8,10,18,0.99));
+  border: 1px solid rgba(255,196,0,0.18);
+  border-radius: 24px;
+  padding: 2rem 2rem 1.75rem;
+  max-width: 420px; width: 100%;
+  position: relative;
+  transform: translateY(16px);
+  transition: transform 0.25s;
+}
+.vs-tour-overlay.open .vs-tour-card { transform: translateY(0); }
+.vs-tour-step-indicator {
+  display: flex; gap: 6px; margin-bottom: 1.5rem;
+}
+.vs-tour-pip {
+  height: 3px; border-radius: 999px;
+  background: rgba(255,255,255,0.12);
+  flex: 1;
+  transition: background 0.2s;
+}
+.vs-tour-pip.active { background: var(--gold, #FFC400); }
+.vs-tour-icon {
+  font-size: 2rem; line-height: 1;
+  margin-bottom: 0.75rem;
+}
+.vs-tour-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.4rem; letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+.vs-tour-body {
+  font-size: 0.9rem; color: var(--muted);
+  line-height: 1.7; margin-bottom: 1.5rem;
+}
+.vs-tour-body strong { color: var(--text); }
+.vs-tour-actions { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.vs-tour-skip {
+  font-size: 0.8rem; color: var(--dim);
+  background: none; border: none;
+  cursor: pointer; font-family: inherit;
+  padding: 0;
+}
+.vs-tour-skip:hover { color: var(--muted); }
+.vs-tour-next {
+  padding: 0.6rem 1.4rem;
+  background: var(--gold, #FFC400);
+  border: none; border-radius: 10px;
+  color: #000; font-family: inherit;
+  font-size: 0.88rem; font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.vs-tour-next:hover { background: #ffd340; }
+@media (max-width: 480px) {
+  .vs-tour-card { padding: 1.5rem 1.25rem; }
+}
+
+/* ── Portal light-mode overrides ────────────────────────────── */
+body.light-mode .auth-card {
+  background: rgba(225,232,252,0.97);
+  border-color: rgba(0,0,0,0.08);
+}
+body.light-mode .auth-tabs {
+  background: rgba(0,0,0,0.05);
+}
+body.light-mode .auth-tab {
+  color: var(--muted);
+}
+body.light-mode .auth-tab.active {
+  background: var(--panel-strong);
+  color: var(--text);
+}
+body.light-mode .form-group input,
+body.light-mode .form-group textarea,
+body.light-mode .form-group select {
+  background: rgba(255,255,255,0.8);
+  border-color: rgba(0,0,0,0.12);
+  color: var(--text);
+}
+body.light-mode .form-group input::placeholder,
+body.light-mode .form-group textarea::placeholder {
+  color: var(--dim);
+}
+body.light-mode .auth-footnote {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.07);
+  color: var(--muted);
+}
+body.light-mode .portal-tab {
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.07);
+  color: var(--muted);
+}
+body.light-mode .portal-tab.active,
+body.light-mode .portal-tab:hover {
+  background: rgba(255,255,255,0.75);
+  color: var(--text);
+}
+body.light-mode .portal-card,
+body.light-mode .stat-box,
+body.light-mode .rank-panel,
+body.light-mode .ach-card,
+body.light-mode .challenge-card,
+body.light-mode .leaderboard-row,
+body.light-mode .member-card-inner,
+body.light-mode .feature-block,
+body.light-mode .journal-entry,
+body.light-mode .poll-option {
+  background: rgba(225,232,252,0.75);
+  border-color: rgba(0,0,0,0.07);
+}
+body.light-mode .portal-card:hover,
+body.light-mode .challenge-card:hover,
+body.light-mode .ach-card:hover {
+  background: rgba(215,224,248,0.9);
+}
+body.light-mode .rank-row:hover {
+  background: rgba(0,0,0,0.04);
+}
+body.light-mode .nav-account-trigger {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.1);
+}
+body.light-mode .nav-account-menu {
+  background: rgba(225,232,252,0.99);
+  border-color: rgba(0,0,0,0.1);
+}
+body.light-mode .menu-divider {
+  background: rgba(0,0,0,0.08);
+}
+body.light-mode .nav-account-menu button:hover {
+  background: rgba(0,0,0,0.05);
+}
+body.light-mode .pts-bar-track,
+body.light-mode .pts-source-track {
+  background: rgba(0,0,0,0.08);
+}
+body.light-mode .ctype-once {
+  background: rgba(0,0,0,0.05);
+  border-color: rgba(0,0,0,0.09);
+  color: var(--muted);
+}
+body.light-mode .rank-dot--operative {
+  border-color: rgba(0,0,0,0.2);
+}
