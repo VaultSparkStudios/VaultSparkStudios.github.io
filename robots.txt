@@ -1,11 +1,100 @@
+# VaultSpark Studios — robots.txt
+
+# Standard crawlers — welcome
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# ---------------------------------------------------------------
+# AI training crawlers — disallowed
+# Content on this site is proprietary to VaultSpark Studios LLC.
+# Scraping for AI training is not permitted.
+# ---------------------------------------------------------------
+
+# OpenAI
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+# Anthropic
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+# Google AI (Gemini / Bard training)
+User-agent: Google-Extended
+Disallow: /
+
+# Meta
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+# ByteDance / TikTok
+User-agent: Bytespider
+Disallow: /
+
+# Cohere
+User-agent: cohere-ai
+Disallow: /
+
+# Perplexity
+User-agent: PerplexityBot
+Disallow: /
+
+# Common Crawl (feeds many AI training pipelines)
+User-agent: CCBot
+Disallow: /
+
+# Apple AI
+User-agent: Applebot-Extended
+Disallow: /
+
+# Amazon Alexa / Diffbot
+User-agent: Diffbot
+Disallow: /
+
+User-agent: omgili
+Disallow: /
+
+User-agent: omgilibot
+Disallow: /
+
+# DataForSEO (scraper-as-a-service)
+User-agent: DataForSeoBot
+Disallow: /
+
+# ---------------------------------------------------------------
+# All other crawlers — public pages allowed, private areas blocked
+# ---------------------------------------------------------------
+
 User-agent: *
 Allow: /
 
-# Private areas — no indexing
+# Auth + private portals — no indexing
+Disallow: /vault-member/
 Disallow: /investor-portal/
 Disallow: /investor/
 Disallow: /studio-hub/
 Disallow: /.claude/
+Disallow: /.well-known/
 
 # Sitemap
 Sitemap: https://vaultsparkstudios.com/sitemap.xml

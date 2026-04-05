@@ -14,7 +14,7 @@ const SECURITY_HEADERS = {
     "script-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com; " +
     "style-src 'self' 'unsafe-inline'; " +
     "img-src 'self' https: data:; " +
-    "connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://challenges.cloudflare.com; " +
+    "connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://challenges.cloudflare.com https://api.convertkit.com https://api.web3forms.com; " +
     "frame-src 'self' https://challenges.cloudflare.com; " +
     "font-src 'self'; " +
     "frame-ancestors 'self'; " +
@@ -31,6 +31,8 @@ const SECURITY_HEADERS = {
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'same-origin',
   'Origin-Agent-Cluster': '?1',
+  // Opt out of AI training scraping (respected by compliant crawlers)
+  'X-Robots-Tag': 'noai, noimageai',
 };
 
 /** Headers to strip from upstream responses */
