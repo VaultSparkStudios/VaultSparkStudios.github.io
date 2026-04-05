@@ -421,6 +421,16 @@
       const hash      = window.location.hash;
       const urlParams = new URLSearchParams(window.location.search);
 
+      // Supabase v2 (detectSessionInUrl:true) may auto-process the recovery URL
+      // before our URL checks run. Listening for PASSWORD_RECOVERY ensures we
+      // always show the reset form regardless of which path processes the token.
+      VSSupabase.auth.onAuthStateChange(function(event) {
+        if (event === 'PASSWORD_RECOVERY') {
+          showAuth();
+          switchTab('reset');
+        }
+      });
+
       // Password reset — PKCE flow (Supabase v2 default): ?code=...&type=recovery
       if (urlParams.get('type') === 'recovery') {
         const code = urlParams.get('code');
@@ -448,6 +458,18 @@
           return;
         }
       }
+
+      // Switch to the correct auth tab immediately (before the async session
+      // check) so visiting /vault-member/#login never flashes Create Account first.
+      if (hash === '#login') switchTab('login');
+
+      // Handle nav Sign In / Join clicks when the user is already on this page
+      // (same-page hash changes don't re-run init).
+      window.addEventListener('hashchange', function() {
+        const h = window.location.hash;
+        if (h === '#login') switchTab('login');
+        else if (h === '#register') switchTab('register');
+      });
 
       const { data: { session } } = await VSSupabase.auth.getSession();
 

@@ -360,6 +360,95 @@ const CONFIG = {
         "pro_cross_product",
         "pro_beta_builds"
       ]
+    },
+    "the_exodus": {
+      "label": "The Exodus",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "velaxis": {
+      "label": "Velaxis",
+      "model": "open",
+      "publicAccess": "free",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority"
+      ]
+    },
+    "vorn": {
+      "label": "Vorn",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "statvault": {
+      "label": "StatVault",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "canon": {
+      "label": "Canon",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "the_living_protocol": {
+      "label": "The Living Protocol",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
+    },
+    "ideaforge": {
+      "label": "IdeaForge",
+      "model": "freemium",
+      "publicAccess": "waitlist",
+      "memberFeatures": [
+        "beta_pool"
+      ],
+      "paidFeatures": [
+        "beta_priority",
+        "pro_cross_product",
+        "pro_beta_builds"
+      ]
     }
   }
 };
