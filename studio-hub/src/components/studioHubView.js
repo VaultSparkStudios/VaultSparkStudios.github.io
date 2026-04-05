@@ -33,6 +33,7 @@ import { getActiveChallenges, claimChallengeXP } from "../utils/challenges.js";
 import { getPredictiveAlerts, renderPredictiveAlerts } from "../utils/predictiveAlerts.js";
 import { auditProjectTruth, getTruthAuditTone } from "../utils/truthAudit.js";
 import { pushTruthDebtSnapshot, loadTruthDebtHistory, renderTruthDebtSparkline } from "../utils/truthDebtHistory.js";
+import { pushSilSnapshot, getSilTrendAlerts, renderSilAlertBanner, renderSilTrendBadge } from "../utils/silTrend.js";
 
 // Re-export for backwards compatibility (clientApp.js imports these from here)
 export { _pushAlertHistory as pushAlertHistory, _snoozeAlert as snoozeAlert };
@@ -2016,6 +2017,22 @@ export function renderStudioHubView(state) {
   // 6. Get active challenges
   const activeChallenges = getActiveChallenges(ghData, sbData, socialData, scorePrev, studioScore);
 
+  // ── SIL Trend Snapshot + Alerts ──────────────────────────────────────────────
+  // Build per-project SIL data from contextFiles (PROJECT_STATUS.json silScore + silAvg3).
+  const silPerProject = (() => {
+    const out = {};
+    for (const [id, ctx] of Object.entries(contextFiles || {})) {
+      if (!ctx) continue;
+      const status = ctx.statusJson ?? ctx;
+      if (status?.silScore != null || status?.silAvg3 != null) {
+        out[id] = { silScore: status.silScore ?? null, silAvg3: status.silAvg3 ?? null };
+      }
+    }
+    return out;
+  })();
+  const silHistory  = pushSilSnapshot(silPerProject);
+  const silAlerts   = getSilTrendAlerts(silHistory);
+
   // Portfolio week-over-week trend
   const prevStudioAvg = (() => {
     if (scoreHistory.length < 2) return null;
@@ -2116,7 +2133,7 @@ export function renderStudioHubView(state) {
               <button id="snooze-all-alerts-btn" style="font-size:10px; padding:2px 8px; border:1px solid var(--border); border-radius:5px; background:none; color:var(--muted); cursor:pointer;">Snooze all 24h</button>
             </div>
           </div>
-          <div class="panel-body">${renderPredictiveAlerts(getPredictiveAlerts(scoreHistory, PROJECTS, ghData))}${renderAlerts(ghData, sbData, allScores, scoreHistory)}</div>
+          <div class="panel-body">${renderSilAlertBanner(silAlerts)}${renderPredictiveAlerts(getPredictiveAlerts(scoreHistory, PROJECTS, ghData))}${renderAlerts(ghData, sbData, allScores, scoreHistory)}</div>
         </div>
         <div class="panel">
           <div class="panel-header" style="flex-wrap:wrap; gap:6px;">
