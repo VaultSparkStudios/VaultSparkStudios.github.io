@@ -13,9 +13,13 @@
     path.startsWith('/offline')
   ) return;
 
-  // Respect DoNotTrack and explicit cookie consent decline
+  // Respect DoNotTrack
   if (navigator.doNotTrack === '1' || window.doNotTrack === '1') return;
-  try { if (localStorage.getItem('vs_cookie_consent') === 'declined') return; } catch (e) {}
+
+  // Respect cookie consent — never track on decline; defer on first visit
+  var consentVal;
+  try { consentVal = localStorage.getItem('vs_cookie_consent'); } catch (e) {}
+  if (consentVal === 'declined') return;
 
   var SB_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
   var SB_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
@@ -77,10 +81,23 @@
     }).catch(function () {}); // silently fail — never break the page
   }
 
-  // Fire after DOM ready so title is set
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', track);
-  } else {
-    track();
+  function fireWhenReady() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', track);
+    } else {
+      track();
+    }
   }
+
+  // First visit (no consent recorded yet) — wait for the vs:consent event
+  if (!consentVal) {
+    window.addEventListener('vs:consent', function handler(e) {
+      window.removeEventListener('vs:consent', handler);
+      if (e.detail && e.detail.analytics) fireWhenReady();
+    });
+    return;
+  }
+
+  // Returning visitor who previously accepted
+  fireWhenReady();
 })();
