@@ -8,8 +8,42 @@ on:
   workflow_dispatch:
 
 jobs:
+  # ── Compliance gate (no auth required — must always pass) ─────────────────────
+  # Runs compliance-pages.spec.js + games.spec.js against the live site.
+  # These tests require no secrets and must never be skipped.
+  compliance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Playwright
+        run: |
+          npm init -y
+          npm install -D @playwright/test
+          npx playwright install --with-deps chromium
+
+      - name: Run compliance tests
+        run: npx playwright test tests/compliance-pages.spec.js tests/games.spec.js --reporter=list --project=chromium
+        env:
+          BASE_URL: https://vaultsparkstudios.com
+
+      - name: Upload compliance results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compliance-results
+          path: playwright-report/
+          retention-days: 7
+
+  # ── Full E2E suite (requires auth secrets — skips gracefully if absent) ────────
   e2e:
     runs-on: ubuntu-latest
+    # Only run when auth secrets are available (skips gracefully on forks/dependabot)
+    if: ${{ vars.E2E_ENABLED != 'false' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -29,6 +63,9 @@ jobs:
           BASE_URL: https://vaultsparkstudios.com
           VAULT_TEST_EMAIL: ${{ secrets.VAULT_TEST_EMAIL }}
           VAULT_TEST_PASSWORD: ${{ secrets.VAULT_TEST_PASSWORD }}
+        # If auth secrets aren't configured, authenticated tests will skip via
+        # test.skip() guards in the spec files — non-auth tests still run.
+        continue-on-error: ${{ secrets.VAULT_TEST_EMAIL == '' }}
 
       - name: Upload test results
         if: always()

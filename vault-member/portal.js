@@ -526,6 +526,20 @@
           const isSparked = VSMembership.isVaultSparkedPlan(planKey);
           if (sparkedBadge) sparkedBadge.style.display = isSparked ? '' : 'none';
           if (ctaPanel)     ctaPanel.style.display     = isSparked ? 'none' : '';
+          const billingBlock = document.getElementById('billing-settings-block');
+          if (billingBlock) {
+            billingBlock.style.display = isSparked ? '' : 'none';
+            if (isSparked) {
+              const planLabel = document.getElementById('billing-plan-label');
+              if (planLabel) planLabel.textContent = planKey === 'vault_sparked_pro' ? 'VaultSparked Eternal' : 'VaultSparked';
+              if (sub && sub.current_period_end) {
+                const renewRow = document.getElementById('billing-renewal-row');
+                const renewDate = document.getElementById('billing-renewal-date');
+                if (renewRow) renewRow.style.display = '';
+                if (renewDate) renewDate.textContent = new Date(sub.current_period_end * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+              }
+            }
+          }
         }).catch(() => {
           if (sparkedBadge) sparkedBadge.style.display = 'none';
           if (ctaPanel)     ctaPanel.style.display     = '';
@@ -4691,9 +4705,14 @@
           }
           showDashboard(buildMember(session.user, row));
 
-          // Phase 44: gift checkout success toast
+          // Checkout success toasts
           const qp = new URLSearchParams(window.location.search);
-          if (qp.get('gift') === 'success') {
+          if (qp.get('checkout') === 'success') {
+            const plan = qp.get('plan');
+            const label = plan === 'pro' ? 'VaultSparked Eternal' : 'VaultSparked';
+            setTimeout(() => showToast('⚡ Welcome to ' + label + '! Your membership is now active.', { emoji: '' }), 600);
+            history.replaceState(null, '', window.location.pathname);
+          } else if (qp.get('gift') === 'success') {
             const toName = qp.get('to') ? ' to ' + escHtml(qp.get('to')) : '';
             setTimeout(() => showToast('🎁 Gift sent' + toName + '! +50 XP', { emoji: '' }), 600);
             history.replaceState(null, '', window.location.pathname);
