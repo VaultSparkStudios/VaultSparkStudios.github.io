@@ -6,7 +6,7 @@
 - Restored white readable copy on dark Studio Members feature tiles, homepage rank preview, DreadSpike storyline/media copy, project/game dark hero bands, Vault Member rank sidebar, and public `/ranks/` cards
 - Fixed the homepage Vault-Forge paragraph so it stays dark on the light surface
 - Updated shared CSS in `assets/style.css` plus page-specific overrides in `index.html`, `ranks/index.html`, and `vault-member/portal.css`
-- Pushed: pending commit SHA
+- Pushed: `f9109fe`
 - SIL: 412/500 · Velocity: 1 · Debt: →
 
 ## 2026-04-06 — Session 41

@@ -10,7 +10,7 @@ Fix the remaining dark-section contrast failures in light mode and catch all rep
 
 - Shipped: 1 contrast hardening pass — shared dark-panel text fix in `assets/style.css`, homepage/ranks inline cleanup in `index.html` and `ranks/index.html`, portal rank sidebar fix in `vault-member/portal.css`
 - Tests: N/A — no additional automated verification run in this follow-up session
-- Deploy: pushed to `main` (pending commit SHA) · GitHub Pages auto
+- Deploy: pushed to `main` (`f9109fe`) · GitHub Pages auto
 
 ---
 
