@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): — (fresh baseline)
-Avgs — 3: — | 5: — | all: —
-  └ 3-session: Dev — | Align — | Momentum — | Engage — | Process —
-Velocity trend: —  |  Debt: —
-Momentum runway: unknown  |  Intent rate: —
-Last session: 2026-04-05 | Session 33 | Total: — | Velocity: — | protocolVelocity: —
+Sparkline (last 5 totals): ▅ (1 entry — fresh baseline)
+Avgs — 3: — [N=1] | 5: — [N=1] | all: 391.0
+  └ 3-session: Dev 79 | Align 82 | Momentum 78 | Engage 70 | Process 82
+Velocity trend: →  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~4 sessions  |  Intent rate: 100% (last 1)
+Last session: 2026-04-06 | Session 34 | Total: 391/500 | Velocity: 1 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -35,23 +35,26 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 
 ## Entries (append-only below this line)
 
-### Session 34 — 2026-04-06 — Protocol Restore + S33 Action Check
+## 2026-04-06 — Session 34 | Total: 391/500 | Velocity: 1 | Debt: →
+Avgs — 3: — [N=1] | 5: — [N=1] | all: 391.0
+  └ 3-session: Dev 79 | Align 82 | Momentum 78 | Engage 70 | Process 82
 
-**Context:** Studio OS protocol fully applied to this repo for the first time since sanitization (2026-04-03).
-- CLAUDE.md: session aliases added (start/closeout → prompts/)
-- AGENTS.md: full Studio OS agent guide restored
-- prompts/start.md: synced to v2.4 (Bash session lock + Active Session Beacon)
-- context/SELF_IMPROVEMENT_LOOP.md: Rolling Status header restored
-- context/LATEST_HANDOFF.md: functional handoff content restored
-- context/TASK_BOARD.md: real task tracking restored
-- context/BRAIN.md, SOUL.md, PROJECT_BRIEF.md: expanded with functional content
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 79 | — | CI exists but no test run; protocol files clean |
+| Creative Alignment | 82 | — | SOUL/BRAIN/PROJECT_BRIEF restored with real content |
+| Momentum | 78 | — | 1 Now task done (GA4); protocol restore complete |
+| Engagement | 70 | — | Product rubric; no external signals this session |
+| Process Quality | 82 | — | All context files updated; IGNIS still UNTRACKED |
+| **Total** | **391/500** | — | Fresh baseline |
 
-**S33 pending user actions status checked:** See LATEST_HANDOFF.md for full status.
+**Top win:** Studio OS protocol fully restored — `start` now triggers full structured brief
+**Top gap:** IGNIS score UNTRACKED; per-form Web3Forms keys and GSC still pending
+**Intent outcome:** Achieved — protocol wired, S33 actions verified, GA4 wired in same session
 
-**Score:** baseline — no prior comparison available  
-Dev: — | Align: — | Momentum: — | Engage: — | Process: —  
-Velocity: protocol restore session | Runway: establish baseline next session
+**Brainstorm**
+1. **CSP propagation script** — meta CSP tags duplicated across 97 pages; a `scripts/propagate-csp.mjs` generates from a single source and propagates. First step: extract current CSP to a JSON config. High probability.
+2. **Staging smoke test script** — `scripts/smoke-test.sh` that pings website.staging before any push; 5-10 URL checks, exits non-zero on failure. First step: list key URLs to check. High probability.
+3. **IGNIS scoring** — run `npx tsx cli.ts score .` from vaultspark-ignis against this repo; add score to PROJECT_STATUS.json. First step: open vaultspark-ignis and run the CLI. Medium probability (requires ignis session).
 
-**[SIL] Committed to TASK_BOARD:**
-- Wire IGNIS score for this project (currently UNTRACKED in studio-ops)
-- Add `beacon.env` to this repo once `node scripts/configure-beacon.mjs` is run in studio-ops
+**Committed to TASK_BOARD:** [SIL] CSP propagation script · [SIL] Staging smoke test script

@@ -8,6 +8,22 @@ Boundary:
 
 ## Entries
 
+### 2026-04-06 — Studio OS protocol utilization directive
+
+- Category: Direction + Assignment
+- Human input: "go to documents/development/studio-ops and follow all protocol information and update this file folder to start utilizing it"
+- Area affected: CLAUDE.md, AGENTS.md, prompts/, all context/ files
+- Required direction: fully adopt studio-ops Studio OS protocols in this repo — session aliases, start/closeout prompts, SIL tracking, context files with real content
+- Why it matters: `start` was not triggering the full startup brief because CLAUDE.md had no session alias rule; the entire Studio OS integration was missing after the sanitization pass
+
+### 2026-04-06 — GA4 measurement ID provided
+
+- Category: Feature assignment
+- Human input: provided measurement ID `G-RSGLPP4KDZ`
+- Area affected: all 97 HTML pages
+- Required direction: wire GA4 gtag snippet across all pages
+- Why it matters: GA4 was wired in CSP but no script loaded; analytics were completely inactive
+
 ### 2026-04-03 — Public repo sanitization directive
 
 - Category: Direction + Assignment
