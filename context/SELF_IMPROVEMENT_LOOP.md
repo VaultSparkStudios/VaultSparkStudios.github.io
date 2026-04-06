@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▅▆▆▅▆ (5 entries)
-Avgs — 3: 405.7 | 5: 401.8 | all: 401.8
-  └ 3-session: Dev 88.7 | Align 81.3 | Momentum 82.0 | Engage 74.0 | Process 79.7
+Sparkline (last 5 totals): ▆▆▅▆▅ (6 entries)
+Avgs — 3: 400.0 | 5: 403.6 | all: 401.5
+  └ 3-session: Dev 86.7 | Align 81.0 | Momentum 78.3 | Engage 74.7 | Process 79.3
 Velocity trend: ↓  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~1.3 sessions ⚠  |  Intent rate: 100% (last 3)
-Last session: 2026-04-06 | Session 38 | Total: 401/500 | Velocity: 1 | protocolVelocity: 1
+Momentum runway: ~0.0 sessions ⛔ — Now bucket empty; pre-load from Next before next session
+Last session: 2026-04-06 | Session 39 | Total: 400/500 | Velocity: 0 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -154,3 +154,27 @@ Avgs — 3: 405.7 | 5: 401.8 | all: 401.8
 3. **Per-form Web3Forms keys** — separate keys for /join/, /contact/, /data-deletion/ for proper lead source tracking; currently all share one key. First step: create 3 keys in Web3Forms dashboard. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Mobile nav entrance animation (already in Now) · [SIL] CSS guard for .status badge (already in Now)
+
+## 2026-04-06 — Session 39 | Total: 400/500 | Velocity: 0 | Debt: →
+Avgs — 3: 400.0 | 5: 403.6 | all: 401.5
+  └ 3-session: Dev 86.7 | Align 81.0 | Momentum 78.3 | Engage 74.7 | Process 79.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 85 | ↓ | Clean targeted CSS + YAML changes; SW bumped; no CI run this session |
+| Creative Alignment | 84 | ↑ | Nav animation adds brand polish; all 3 tasks aligned with SOUL quality bar |
+| Momentum | 71 | ↓ | Velocity 0 (all SIL excluded); 3 tasks completed; Now bucket cleared |
+| Engagement | 76 | ↑ | User direction clear; all SIL items actioned same session as requested |
+| Process Quality | 84 | ↓ | Full closeout; IGNIS run; all files updated; Now empty = runway note |
+| **Total** | **400/500** | ↓ | |
+
+**Top win:** Cleared the entire SIL Now backlog in one lean session — animation, guard, CI timing — no regressions, no debt
+**Top gap:** Now bucket empty at session end; momentum runway = 0 ⛔ — pre-load Now from Next is mandatory before next session
+**Intent outcome:** Achieved — all 3 SIL Now items shipped and pushed
+
+**Brainstorm**
+1. **prefers-reduced-motion guard** — `@media (prefers-reduced-motion: reduce)` override to disable nav-enter animation added this session; accessibility requirement. First step: add 3-line rule in style.css below @keyframes nav-enter. High probability.
+2. **robots.txt Cloudflare edge comment** — 3-line comment in robots.txt noting CDN injection to prevent future confusion. First step: open robots.txt, add comment block. High probability.
+3. **IGNIS delta field** — add `ignisScoreDelta` to PROJECT_STATUS.json computed at each closeout; makes trajectory trend visible at a glance without digging into audit files. First step: add field to JSON schema. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] prefers-reduced-motion guard · [SIL] closeout.md sync (moved robots.txt note to Now)

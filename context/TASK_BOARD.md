@@ -1,20 +1,19 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 38)
+Last updated: 2026-04-06 (Session 39)
 
 ---
 
 ## Now
 
-- [ ] **[SIL] Mobile nav entrance animation** — add subtle translateY + opacity fade-in when opening mobile menu (blur fully fixed S38); first step: add transition to `.nav-center` in mobile media query
-- [ ] **[SIL] CSS guard for .status badge nesting** — add `.hero-art > .status` high-specificity rule to style.css; prevents regression of S36 badge-overlap bug; first step: add explicit rule after .status block
-- [ ] **[SIL] Lighthouse deployment timing** — add `wait-on` or delay step so Lighthouse runs after GitHub Pages confirms live; prevents testing stale site
+- [ ] **[SIL] robots.txt Cloudflare note** — add comment in `robots.txt` explaining Cloudflare AI Labyrinth injects additional directives at CDN edge; prevents future confusion when live robots.txt differs from repo
+- [ ] **[SIL] prefers-reduced-motion guard** — add `@media (prefers-reduced-motion: reduce)` override to disable nav-enter animation added S39; accessibility requirement; first step: add 3-line rule in style.css after `@keyframes nav-enter`
+- [ ] **[SIL] closeout.md sync** — update `prompts/closeout.md` to current v2.4 template from studio-ops (same sync done for start.md in S34)
 
 ---
 
 ## Next
 
-- [ ] **[SIL] robots.txt Cloudflare note** — add comment in `robots.txt` explaining Cloudflare AI Labyrinth injects additional directives at CDN edge; prevents future confusion when live robots.txt differs from repo
 - [ ] **[SIL] CSP propagation script** — meta CSP tags duplicated across 97 pages; `scripts/propagate-csp.mjs` generates from single source + propagates; eliminates manual per-file CSP edits
 - [ ] **[SIL] Staging smoke test script** — `scripts/smoke-test.sh` pings website.staging before any push; 5-10 key URLs, exits non-zero on failure; enforces CANON-007 in practice
 
@@ -24,7 +23,6 @@ Last updated: 2026-04-06 (Session 38)
 - [ ] **Cloudflare WAF rule (CN/RU/HK)** — JS Challenge firewall rule; requires API token with Zone / Firewall Services / Edit + Zone / Zone / Read; or Studio Owner can create in dashboard [human action / provide token]
 - [ ] **Web3Forms browser test** — manually submit /join/ and /contact/ to confirm email delivery to inbox [human action]
 - [ ] **[SIL] Add `beacon.env`** — once Studio Owner runs `node scripts/configure-beacon.mjs` in studio-ops, copy resulting `.claude/beacon.env` to this repo (gitignored); enables active session indicator in Studio Hub
-- [ ] **`closeout.md` sync** — update `prompts/closeout.md` to current v2.4 template from studio-ops (same sync done for start.md this session)
 
 ---
 
@@ -45,6 +43,7 @@ Last updated: 2026-04-06 (Session 38)
 
 ## Done (recent)
 
+- [x] **SIL Now items — polish + CI reliability (S39)** — mobile nav entrance animation (@keyframes nav-enter); .hero-art > .status CSS guard; Lighthouse wait-on deployment timing
 - [x] **Mobile nav iOS blur — root fix (S38)** — disabled .site-header::before backdrop-filter at ≤980px; S36 fix removed overlay blur but header's ::before still promoted GPU layer containing fixed nav on iOS Safari
 - [x] **IGNIS scored + staging confirmed (S37)** — 47,091/100,000 · FORGE tier (rescored S38); staging HTTP 200 confirmed
 - [x] **STRIPE_GIFT_PRICE_ID + GSC (S37)** — gift product + $24.99 price created via Stripe API; secret set; GSC sitemap submitted + verified

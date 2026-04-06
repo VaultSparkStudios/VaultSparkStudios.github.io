@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-06 (Session 38)
+- Date: 2026-04-06 (Session 39)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S37 cleared all infra blockers (STRIPE, GSC, IGNIS, staging); S38 fixed persistent iOS mobile nav blur (root cause: header ::before backdrop-filter disabled on mobile)
+- Repo posture: S39 actioned all 3 SIL Now items — mobile nav entrance animation, .status badge CSS guard, Lighthouse CI deployment timing fix
 
 ## What exists
 
@@ -22,8 +22,10 @@
 
 ### Infrastructure
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler.
-- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260406-mnavblur`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
-- **Mobile nav** (`assets/style.css`) — S36 removed backdrop-filter from .nav-center.open; S38 disabled .site-header::before backdrop-filter at ≤980px (root iOS GPU compositing fix)
+- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260406-silpol`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
+- **Mobile nav** (`assets/style.css`) — S36 removed backdrop-filter from .nav-center.open; S38 disabled .site-header::before backdrop-filter at ≤980px (root iOS GPU compositing fix); S39 added @keyframes nav-enter (translateY -6px→0, opacity) for entrance animation
+- **CSS guard** (`assets/style.css`) — S39: `.hero-art > .status` rule locks badge to `position:absolute; top/left:1rem; z-index:2` — prevents S36 badge-overlap regression
+- **Lighthouse CI** (`.github/workflows/lighthouse.yml`) — S39: wait-on step added (120s timeout, 5s interval) to poll live site before Lighthouse runs
 - **Supabase** — 16 edge functions ACTIVE; cloud-hosted at fjnpzjjyhnpmunfoycrp.supabase.co
 - **Sentry** — error tracking active
 - **Web push** — VAPID keys set; fully active
@@ -50,4 +52,4 @@
 - Per-form Web3Forms keys (all forms share single key)
 - Cloudflare WAF rule (CN/RU/HK JS Challenge) — status unknown
 - beacon.env not configured (Active Session Beacon inactive)
-- IGNIS score: 47,091/100,000 · Tier: FORGE · 80.6% through tier (scored S38)
+- IGNIS score: 46,855/100,000 · Tier: FORGE · 79.0% through tier (scored S39; -236 from S38 time decay)

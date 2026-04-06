@@ -4,6 +4,31 @@ Last updated: 2026-04-06 (Session 39)
 
 ## Session Intent: Session 39
 Complete all SIL Now items.
+**Outcome: Achieved** — all 3 SIL Now items shipped in one clean pass.
+
+## Where We Left Off (Session 39 — 2026-04-06)
+
+- Shipped: 3 improvements — nav entrance animation, CSS badge guard, Lighthouse deployment timing
+- Tests: N/A
+- Deploy: committed + pushed (`0cb8e52`) · GitHub Pages auto
+
+---
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
+- [ ] **[WEB3FORMS]** Manually submit /join/ and /contact/ forms to confirm email delivery
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **prefers-reduced-motion guard** — add accessibility override for nav-enter animation ([SIL] Now)
+2. **robots.txt Cloudflare note** — 3-line comment fix ([SIL] Now)
+3. **closeout.md sync** — update prompts/closeout.md to v2.4 template ([SIL] Now)
 
 ---
 
@@ -77,24 +102,6 @@ Restore Studio OS protocol integration; verify S33 pending user actions.
 | Web3Forms browser test (/join/ + /contact/) | ❓ Unknown | Manual user action — not verifiable from repo |
 | GA4 measurement ID + gtag loader | ✓ DONE (S34) | G-RSGLPP4KDZ wired to all 97 HTML pages |
 | Per-form Web3Forms keys (3 separate keys) | ✗ NOT done | Both join/ and contact/ still use same single key `8f83d837-...` |
-
----
-
-## Open Blockers
-
-*(none)*
-
-## Human Action Required
-
-- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token so I can create it)
-- [ ] **[WEB3FORMS]** Manually submit /join/ and /contact/ forms to confirm email delivery
-- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
-
-## Recommended First Action Next Session
-
-1. **Mobile nav entrance animation** — blur fully fixed; add translateY+opacity fade-in for polish ([SIL] Now item)
-2. **CSS guard for .status badge nesting** — prevent regression ([SIL] Now item)
-3. **Lighthouse deployment timing** — persistent CI reliability gap ([SIL] Now item)
 
 ---
 

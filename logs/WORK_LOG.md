@@ -1,5 +1,16 @@
 # Work Log
 
+## 2026-04-06 — Session 39
+
+- Actioned all 3 SIL Now items in one pass
+- Mobile nav entrance animation: @keyframes nav-enter (translateY -6px → 0, opacity 0 → 1, 0.18s ease) applied to .nav-center.open in ≤980px media block
+- CSS guard: `.hero-art > .status { position: absolute; top: 1rem; left: 1rem; z-index: 2 }` — regression prevention for S36 badge-overlap bug
+- Lighthouse CI: wait-on step added (120s timeout, 5s interval) polling live site before Lighthouse runs
+- SW: CACHE_NAME bumped to `vaultspark-20260406-silpol` (style.css changed)
+- IGNIS scored: 46,855/100,000 · FORGE · 79.0% (delta: -236 from time decay)
+- Pushed: `0cb8e52`
+- SIL: 400/500 · Velocity: 0 (all SIL) · Debt: →
+
 ## 2026-04-06 — Session 38
 
 - Fixed persistent iOS mobile nav blur: root cause was .site-header::before backdrop-filter (not the overlay itself) — disabled at ≤980px in media query; GPU compositing layer from header was containing the position:fixed nav overlay on iOS Safari
