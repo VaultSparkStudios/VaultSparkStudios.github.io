@@ -1308,6 +1308,13 @@ section { padding: 1.6rem 0 4.2rem; }
   .nav-center { display: none; }
   .hamburger { display: flex; }
 
+  /* Disable header backdrop-filter on mobile — the GPU compositing layer it
+     creates causes iOS Safari to blur the fixed nav overlay (same DOM parent). */
+  .site-header::before {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   /* Hide desktop-only nav-right items on tablet */
   .nav-right .nav-signin { display: none; }
   .nav-right .button.button-sm { display: none; }
