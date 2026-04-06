@@ -1,5 +1,12 @@
 # Work Log
 
+## 2026-04-06 — Session 36
+
+- Fixed mobile nav blur: removed backdrop-filter from .nav-center.open (background 0.98 opacity — blur was invisible but created GPU compositing artifact making menu text blurry on mobile)
+- Fixed FORGE/SPARKED/VAULTED status badge overlap on 8 project pages: badge was inside .hero-art-content (position:relative) so `position:absolute;top:1rem;left:1rem` positioned relative to the content div at the bottom, landing the badge directly on the h1; moved badge to direct child of .hero-art matching game page pattern
+- Pushed: `9535d01`
+- SIL: 417/500 · Velocity: 2 · Debt: →
+
 ## 2026-04-06 — Session 35
 
 - Diagnosed Lighthouse SEO + axe-cli failures from session 34 push

@@ -2,8 +2,15 @@
 
 Last updated: 2026-04-06 (Session 36)
 
+## Where We Left Off (Session 36 — 2026-04-06)
+
+- Shipped: 2 UI fixes — mobile nav blur removed (backdrop-filter on .nav-center.open caused GPU compositing artifact making menu text blurry); status badge DOM position fixed on 8 project pages (badge was inside position:relative .hero-art-content, landing it on top of h1)
+- Tests: N/A — bug fix session
+- Deploy: Committed + pushed (`9535d01`) · GitHub Pages auto
+
 ## Session Intent: Session 36
 Fix blurry mobile menu + FORGE/SPARKED/VAULTED badge overlap on project/game pages.
+**Outcome: Achieved** — both fixes done, committed, pushed.
 
 ## Where We Left Off (Session 35 — 2026-04-06)
 

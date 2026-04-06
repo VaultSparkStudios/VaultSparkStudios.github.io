@@ -8,6 +8,14 @@ Boundary:
 
 ## Entries
 
+### 2026-04-06 — Status badge and mobile menu UX standards (S36)
+
+- Category: UX / Visual Quality
+- Human input: "the mobile menu brings up a blurry menu now that I can't see" + "make sure the FORGE/SPARKED/VAULTED tags on each project/game/tool page is not conflicting with the project/game header name"
+- Area affected: `assets/style.css`, all `projects/*/index.html`
+- Required direction: mobile nav must be fully readable (no blur artifacts); status badges must be visually separated from project/game titles — never overlapping
+- Why it matters: two user-visible bugs discovered in same session; both are ongoing quality standards — any future badge or nav change must respect these constraints
+
 ### 2026-04-06 — Studio OS protocol utilization directive
 
 - Category: Direction + Assignment

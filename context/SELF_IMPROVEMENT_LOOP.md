@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▅▅ (2 entries)
-Avgs — 3: — [N=2] | 5: — [N=2] | all: 396.0
-  └ 3-session: Dev 83.5 | Align 80.0 | Momentum 81.5 | Engage 69.0 | Process 82.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~1.5 sessions ⚠  |  Intent rate: 100% (last 2)
-Last session: 2026-04-06 | Session 35 | Total: 401/500 | Velocity: 3 | protocolVelocity: 0
+Sparkline (last 5 totals): ▅▆▆ (3 entries)
+Avgs — 3: 403.0 [N=3] | 5: — [N=3] | all: 403.0
+  └ 3-session: Dev 86.0 | Align 81.7 | Momentum 81.7 | Engage 70.7 | Process 83.3
+Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~2.0 sessions ⚠  |  Intent rate: 100% (last 3)
+Last session: 2026-04-06 | Session 36 | Total: 417/500 | Velocity: 2 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -82,3 +82,27 @@ Avgs — 3: — [N=2] | 5: — [N=2] | all: 396.0
 3. **CI status badge in CURRENT_STATE.md** — track CI green/red state per workflow in CURRENT_STATE; makes startup brief more useful. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] robots.txt Cloudflare note · [SIL] Lighthouse deployment timing fix
+
+## 2026-04-06 — Session 36 | Total: 417/500 | Velocity: 2 | Debt: →
+Avgs — 3: 403.0 [N=3] | 5: — [N=3] | all: 403.0
+  └ 3-session: Dev 86.0 | Align 81.7 | Momentum 81.7 | Engage 70.7 | Process 83.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 91 | ↑ | Clean fixes; pushed green; no debt added |
+| Creative Alignment | 85 | ↑ | User-reported UX direction captured in CDR; fixes aligned with brand polish |
+| Momentum | 82 | ↓ | 2 velocity (S35 was 3); both intents achieved |
+| Engagement | 74 | ↑ | Both bugs reported and fixed same session — excellent feedback loop |
+| Process Quality | 85 | ↑ | Full closeout; CDR entry; context files updated |
+| **Total** | **417/500** | ↑ | |
+
+**Top win:** Root-caused blurry mobile menu (GPU compositing from invisible backdrop-filter) and DOM-nesting badge overlap in one session, fixed both cleanly
+**Top gap:** IGNIS score still UNTRACKED — now 3+ sessions escalated; runway at 2.0 ⚠
+**Intent outcome:** Achieved — both user-reported bugs fixed and pushed
+
+**Brainstorm**
+1. **Mobile nav entrance animation** — now that blur is removed, add translateY + opacity fade-in for polished open/close UX; no rendering cost. First step: add transition to `.nav-center` in mobile media query. High probability.
+2. **CSS guard for .status badge** — `.hero-art > .status` explicit rule in style.css prevents future badge-nesting regressions that caused this session's overlap bug. First step: add rule after existing .status block. High probability.
+3. **IGNIS scoring sprint** — this is now escalated 3+ sessions; block 30 min to run `npx tsx cli.ts score .` and wire the result. First step: run CLI in studio-ops. Medium probability (requires separate ignis session).
+
+**Committed to TASK_BOARD:** [SIL] Mobile nav entrance animation · [SIL] CSS guard for .status badge nesting

@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-06 (Session 34)
+- Date: 2026-04-06 (Session 36)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: Studio OS protocol fully restored; GA4 wired; public-safe boundary maintained
+- Repo posture: Studio OS protocol fully restored; GA4 wired; UI bugs fixed (mobile menu, status badges)
 
 ## What exists
 
@@ -16,12 +16,14 @@
 - **Universe** — DreadSpike (pivoted to Novel Saga), Voidfall teaser (`/universe/voidfall/`)
 - **Studio Hub** (`studio-hub/`) — synced from vaultspark-studio-hub repo
 - **10 journal posts** — fireView() consent-gated
-- **8 game pages** — FORGE/SPARKED/VAULTED radial glow, data-status attrs
+- **8 game pages** — FORGE/SPARKED/VAULTED radial glow, data-status attrs; status badges correctly positioned (direct child of .hero-art)
+- **12 project pages** — status badges fixed (S36): moved outside .hero-art-content to prevent absolute-positioning overlap with h1
 - **Compliance pages** — /cookies/, /accessibility/, /open-source/, /faq/, /careers/, /data-deletion/, /security/, sitemap
 
 ### Infrastructure
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler.
 - **Service worker** (`service-worker.js`) — CACHE_NAME: `vaultspark-20260405-d1a76ac`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
+- **Mobile nav** (`assets/style.css`) — blur removed from .nav-center.open (S36); background 0.98 opaque, no compositing artifact
 - **Supabase** — 16 edge functions ACTIVE; cloud-hosted at fjnpzjjyhnpmunfoycrp.supabase.co
 - **Sentry** — error tracking active
 - **Web push** — VAPID keys set; fully active

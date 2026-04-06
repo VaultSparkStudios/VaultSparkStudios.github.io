@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 34)
+Last updated: 2026-04-06 (Session 36)
 
 ---
 
@@ -9,7 +9,7 @@ Last updated: 2026-04-06 (Session 34)
 - [x] **GA4 wiring** — G-RSGLPP4KDZ wired to all 97 HTML pages (S34)
 - [ ] **`STRIPE_GIFT_PRICE_ID`** — Studio Owner: create $24.99 one-time price in Stripe → `supabase secrets set STRIPE_GIFT_PRICE_ID=price_...`; gift checkout 503s until done [human action]
 - [ ] **Google Search Console verification** — Studio Owner: create GSC property → replace `google-site-verification-REPLACE_ME.html` with real token → submit sitemap [human action]
-- [ ] **[SIL] Wire IGNIS score** — project is UNTRACKED in studio-ops IGNIS; run `npx tsx cli.ts score .` from studio-ops to generate score; add `ignisScore`/`ignisGrade` to `context/PROJECT_STATUS.json`
+- [ ] **[SIL] Wire IGNIS score** ⚠ ESCALATED — project is UNTRACKED in studio-ops IGNIS; run `npx tsx cli.ts score .` from studio-ops to generate score; add `ignisScore`/`ignisGrade` to `context/PROJECT_STATUS.json` [skipped 3+ sessions]
 - [ ] **Confirm staging** — verify `website.staging.vaultsparkstudios.com` is live (DNS added in studio-ops S49; setup script may still need to run)
 
 ---
@@ -20,6 +20,8 @@ Last updated: 2026-04-06 (Session 34)
 - [ ] **[SIL] robots.txt Cloudflare note** — add comment in `robots.txt` explaining Cloudflare AI Labyrinth injects additional directives at CDN edge; prevents future confusion when live robots.txt differs from repo
 - [ ] **[SIL] CSP propagation script** — meta CSP tags duplicated across 97 pages; `scripts/propagate-csp.mjs` generates from single source + propagates; eliminates manual per-file CSP edits
 - [ ] **[SIL] Staging smoke test script** — `scripts/smoke-test.sh` pings website.staging before any push; 5-10 key URLs, exits non-zero on failure; enforces CANON-007 in practice
+- [ ] **[SIL] Mobile nav entrance animation** — add subtle translateY + opacity fade-in when opening mobile menu (blur removed S36; transition will polish UX without rendering cost); first step: add transition to `.nav-center` in mobile media query
+- [ ] **[SIL] CSS guard for .status badge nesting** — add `.hero-art > .status` high-specificity rule to style.css to prevent future regressions where badge nests inside a positioned ancestor; first step: add explicit rule after .status block
 
 ## Next (prior)
 
@@ -49,6 +51,7 @@ Last updated: 2026-04-06 (Session 34)
 
 ## Done (recent)
 
+- [x] **UI bug fixes (S36)** — mobile nav blur removed (backdrop-filter GPU artifact); status badge DOM position fixed on 8 project pages (badge was overlapping h1 due to nested positioned ancestor)
 - [x] **CI fixes (S35)** — Lighthouse SEO (robots-txt off, vault-member removed, link-text aria-label), axe ChromeDriver mismatch fixed
 - [x] **Protocol restore (S34)** — CLAUDE.md session aliases, AGENTS.md, prompts/start.md v2.4, context files restored
 - [x] **Cloudflare security hardening (S33)** — .nojekyll, security.txt, robots.txt (14 AI crawlers), CSP patch, X-Robots-Tag, Worker redeployed
