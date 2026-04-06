@@ -905,6 +905,15 @@ section { padding: 1.6rem 0 4.2rem; }
   letter-spacing: 0.07em;
   backdrop-filter: blur(10px);
 }
+/* Guard: badge as direct child of .hero-art must always be top-left absolute.
+   Prevents regression of S36 bug where nesting inside .hero-art-content
+   caused z-index/position conflicts that overlapped the h1. */
+.hero-art > .status {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2;
+}
 .card-art h3 {
   font-size: 1.68rem;
   letter-spacing: -0.04em;
@@ -1321,6 +1330,10 @@ section { padding: 1.6rem 0 4.2rem; }
   .nav-right .nav-icon-link { display: none; }
 
   /* ── Mobile menu overlay ── */
+  @keyframes nav-enter {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
   .nav-center.open {
     display: flex;
     flex-direction: column;
@@ -1337,6 +1350,7 @@ section { padding: 1.6rem 0 4.2rem; }
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     border-top: 1px solid var(--mobile-nav-border);
+    animation: nav-enter 0.18s ease forwards;
   }
   .nav-center.open a {
     padding: 0.85rem 1rem;
