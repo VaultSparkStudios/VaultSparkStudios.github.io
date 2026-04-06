@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▇▇▇ (9 entries)
-Avgs — 3: 411.7 | 5: 407.2 | all: 404.9
-  └ 3-session: Dev 83.0 | Align 88.0 | Momentum 79.0 | Engage 78.3 | Process 83.3
+Sparkline (last 5 totals): ▆▇▇▇▇ (10 entries)
+Avgs — 3: 414.0 | 5: 411.2 | all: 406.5
+  └ 3-session: Dev 84.0 | Align 89.3 | Momentum 80.0 | Engage 80.3 | Process 80.3
 Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
 Momentum runway: ~3.0 sessions — SIL Now bucket restored
-Last session: 2026-04-06 | Session 42 | Total: 412/500 | Velocity: 1 | protocolVelocity: 1
+Last session: 2026-04-06 | Session 43 | Total: 421/500 | Velocity: 1 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -200,6 +200,30 @@ Avgs — 3: 405.0 | 5: 406.2 | all: 403.0
 1. **Theme persistence test contract** — align Playwright with the real source of truth for the active theme or restore a deterministic `body[data-theme]` signal during hydration. First step: inspect `tests/theme-persistence.spec.js` against `assets/theme-toggle.js`. High probability.
 2. **Light-mode screenshot smoke** — add a Chromium-only screenshot smoke for `/`, `/contact/`, and `/journal/` in light mode before deploys; catches contrast regressions that simple DOM assertions miss. First step: reuse the existing Playwright setup with forced localStorage theme. Medium probability.
 3. **Portal/investor theme parity audit** — compare `vault-member/portal.css` and `assets/investor-theme.css` against the refreshed public-site light palette to avoid visible theme drift between product areas. First step: grep for light-mode token overrides in both files. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Theme persistence test contract
+
+## 2026-04-06 — Session 43 | Total: 421/500 | Velocity: 1 | Debt: →
+Avgs — 3: 414.0 | 5: 411.2 | all: 406.5
+  └ 3-session: Dev 84.0 | Align 89.3 | Momentum 80.0 | Engage 80.3 | Process 80.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 86 | ↑ | Removed a real public contradiction in site/legal messaging and aligned the shared footer propagation source plus compliance test expectation |
+| Creative Alignment | 92 | ↑ | Proprietary posture now matches the studio identity and avoids undercutting the value of VaultSpark worlds, systems, and brands |
+| Momentum | 82 | ↑ | High-leverage fix completed in one session despite touching many pages through shared propagation |
+| Engagement | 83 | ↑ | Directly addressed a sharp user correction about IP posture instead of papering over it |
+| Process Quality | 78 | ↓ | Full closeout completed, but no automated run was executed after the broad propagation pass |
+| **Total** | **421/500** | ↑ | |
+
+**Top win:** Eliminated the highest-risk messaging contradiction on the public site by removing the false MIT/open-source claim and replacing it with a clear proprietary rights stance
+**Top gap:** The site still lacks a lightweight automated check for proprietary/legal language regressions after shared nav/footer propagation
+**Intent outcome:** Achieved — public rights messaging now matches the actual proprietary studio posture
+
+**Brainstorm**
+1. **Rights-page regression check** — add a simple test asserting `/open-source/` title and at least one “proprietary” / “all rights reserved” phrase so the old MIT posture cannot silently return. First step: extend `tests/compliance-pages.spec.js`. High probability.
+2. **Footer label constant audit** — centralize other shared legal/resource labels the way nav/footer are centralized so wording shifts do not drift across raw HTML pages. First step: audit `scripts/propagate-nav.mjs` for remaining hardcoded resource copy. High probability.
+3. **Theme persistence test contract** — align Playwright with the real active-theme signal or restore a deterministic `data-theme` attribute after hydration. First step: compare `tests/theme-persistence.spec.js` with `assets/theme-toggle.js`. High probability.
 
 **Committed to TASK_BOARD:** [SIL] Theme persistence test contract
 

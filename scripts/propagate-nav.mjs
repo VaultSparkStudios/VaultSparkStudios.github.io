@@ -137,7 +137,7 @@ function buildFooter() {
           <h4>Resources</h4>
           <a href="/faq/">FAQ</a>
           <a href="/careers/">Careers</a>
-          <a href="/open-source/">Open Source</a>
+          <a href="/open-source/">Technology &amp; Rights</a>
           <a href="/accessibility/">Accessibility</a>
           <a href="/security/">Security</a>
           <a href="/sitemap-page/">Sitemap</a>

@@ -1,6 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 42)
+Last updated: 2026-04-06 (Session 43)
+
+## Session Intent: Session 43
+Remove the false public claim that VaultSpark projects are open-source/MIT and replace it with the correct proprietary rights posture.
+**Outcome: Achieved** — `/open-source/` now states the proprietary IP position clearly, site-wide footer/resource labels no longer advertise “Open Source,” and the sitemap/compliance-test surfaces were updated to match the corrected public language.
+
+## Where We Left Off (Session 43 — 2026-04-06)
+
+- Shipped: 1 rights-posture correction pass — proprietary IP notice rewrite for `/open-source/`, shared footer/resource label propagation to 72 HTML pages, sitemap/homepage copy updates, compliance test title update
+- Tests: N/A — no automated test run in this session; the compliance test expectation was updated locally
+- Deploy: pushed to `main` (pending commit SHA) · GitHub Pages auto
+
+---
 
 ## Session Intent: Session 42
 Fix the remaining dark-section contrast failures in light mode and catch all repeated instances of white/gray text logic applied to the wrong surfaces.

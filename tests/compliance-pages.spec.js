@@ -1,6 +1,6 @@
 // compliance-pages.spec.js
 // Covers the 8 compliance/utility pages added in Session 38b:
-// Cookie Policy, Accessibility, Open Source, FAQ, Careers, Data Deletion, Security, HTML Sitemap
+// Cookie Policy, Accessibility, Technology & Rights, FAQ, Careers, Data Deletion, Security, HTML Sitemap
 // Also covers cookie consent banner behaviour.
 
 const { test, expect } = require('@playwright/test');
@@ -9,7 +9,7 @@ const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 const COMPLIANCE_PAGES = [
   { path: '/cookies/',       title: /Cookie/i,      h1: true },
   { path: '/accessibility/', title: /Accessibility/i, h1: true },
-  { path: '/open-source/',   title: /Open Source/i, h1: true },
+  { path: '/open-source/',   title: /Technology|Rights|Attributions/i, h1: true },
   { path: '/faq/',           title: /FAQ|Frequently/i, h1: true },
   { path: '/careers/',       title: /Careers/i,     h1: true },
   { path: '/data-deletion/', title: /Data Deletion/i, h1: true },

@@ -1,5 +1,14 @@
 # Work Log
 
+## 2026-04-06 — Session 43
+
+- Replaced the false public MIT/open-source posture with a proprietary rights + third-party attributions posture
+- Rewrote `open-source/index.html` into a technology attributions and IP notice page
+- Updated the shared footer/resource label from `Open Source` to `Technology & Rights` and propagated it across 72 HTML pages via `scripts/propagate-nav.mjs`
+- Updated sitemap labels, homepage GitHub subtitle, and `tests/compliance-pages.spec.js` title expectations to match the new rights posture
+- Pushed: pending commit SHA
+- SIL: 421/500 · Velocity: 1 · Debt: →
+
 ## 2026-04-06 — Session 42
 
 - Hardened the remaining light-mode contrast failures across intentionally dark sections
