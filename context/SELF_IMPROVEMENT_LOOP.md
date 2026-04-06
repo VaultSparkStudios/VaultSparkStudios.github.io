@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▅▆▆ (3 entries)
-Avgs — 3: 403.0 [N=3] | 5: — [N=3] | all: 403.0
-  └ 3-session: Dev 86.0 | Align 81.7 | Momentum 81.7 | Engage 70.7 | Process 83.3
-Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~2.0 sessions ⚠  |  Intent rate: 100% (last 3)
-Last session: 2026-04-06 | Session 36 | Total: 417/500 | Velocity: 2 | protocolVelocity: 0
+Sparkline (last 5 totals): ▅▆▆▅▆ (5 entries)
+Avgs — 3: 405.7 | 5: 401.8 | all: 401.8
+  └ 3-session: Dev 88.7 | Align 81.3 | Momentum 82.0 | Engage 74.0 | Process 79.7
+Velocity trend: ↓  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~1.3 sessions ⚠  |  Intent rate: 100% (last 3)
+Last session: 2026-04-06 | Session 38 | Total: 401/500 | Velocity: 1 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -106,3 +106,51 @@ Avgs — 3: 403.0 [N=3] | 5: — [N=3] | all: 403.0
 3. **IGNIS scoring sprint** — this is now escalated 3+ sessions; block 30 min to run `npx tsx cli.ts score .` and wire the result. First step: run CLI in studio-ops. Medium probability (requires separate ignis session).
 
 **Committed to TASK_BOARD:** [SIL] Mobile nav entrance animation · [SIL] CSS guard for .status badge nesting
+
+## 2026-04-06 — Session 37 | Total: 399/500 | Velocity: 4 | Debt: →
+Avgs — 3: 403.0 [N=4] | 5: — [N=4] | all: 402.5
+  └ 3-session: Dev 89.3 | Align 82.3 | Momentum 86.0 | Engage 72.0 | Process 78.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 87 | ↓ | IGNIS scored + STRIPE/GSC/staging wired; no CI run |
+| Creative Alignment | 80 | ↓ | Infra/ops session; no creative direction |
+| Momentum | 91 | ↑ | Velocity 4; all 4 Now tasks completed in one session |
+| Engagement | 73 | → | User-directed infra tasks; all completed successfully |
+| Process Quality | 68 | ↓ | CRITICAL: SIL not written, LATEST_HANDOFF not updated, context changes uncommitted — partial closeout |
+| **Total** | **399/500** | ↓ | |
+
+**Top win:** Cleared 4 high-value infra blockers in one session — STRIPE gift checkout live, GSC verified, IGNIS baseline established
+**Top gap:** Closeout was not completed — SIL, LATEST_HANDOFF, and audit JSON all deferred; recovered in S38
+**Intent outcome:** Achieved — all 4 Now tasks done; process gap was incomplete closeout
+
+**Brainstorm**
+1. **Closeout checklist automation** — a pre-commit hook or CLI prompt that verifies SIL was appended before allowing context file commits; prevents incomplete closeouts. First step: add check in .claude/settings.json PostToolUse hook. High probability.
+2. **IGNIS delta tracking** — log IGNIS score delta (not just absolute) at each closeout so trajectory trend is visible at a glance. First step: add `ignisScoreDelta` field to PROJECT_STATUS.json. Medium probability.
+3. **Stripe gift checkout smoke test** — one Playwright test that loads /vaultsparked/ and confirms the gift modal renders and the checkout button is not disabled; guards against STRIPE_GIFT_PRICE_ID regressions. First step: add test to e2e suite. Medium probability.
+
+**Committed to TASK_BOARD:** (no new SIL items — runway pre-loaded in S38 closeout)
+
+## 2026-04-06 — Session 38 | Total: 401/500 | Velocity: 1 | Debt: →
+Avgs — 3: 405.7 | 5: 401.8 | all: 401.8
+  └ 3-session: Dev 88.7 | Align 81.3 | Momentum 82.0 | Engage 74.0 | Process 79.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 88 | ↑ | Root-caused iOS GPU compositing bug; targeted CSS fix; IGNIS rescored 47,091 |
+| Creative Alignment | 79 | → | UX quality fix; brand polish; no new creative direction |
+| Momentum | 73 | ↓ | Velocity 1; fixed persistent bug that survived 2 prior attempts |
+| Engagement | 75 | ↑ | User reported bug same session; diagnosed and fixed with clear root-cause explanation |
+| Process Quality | 86 | ↑ | Full closeout; retroactive S37 SIL written; IGNIS run; all files updated |
+| **Total** | **401/500** | ↑ | |
+
+**Top win:** Found the real iOS Safari blur root cause (header `::before` backdrop-filter creating GPU compositing layer containing the fixed overlay) — two prior fix attempts missed this
+**Top gap:** Momentum runway at 1.3 sessions ⚠ — pre-loaded Now with 3 SIL items; S37 incomplete closeout was a process regression
+**Intent outcome:** Achieved — blur fixed at root cause and pushed
+
+**Brainstorm**
+1. **iOS compositing audit pass** — scan style.css for all backdrop-filter/will-change/transform-3d usages that could create GPU compositing layers near position:fixed children; document or eliminate each. First step: grep for backdrop-filter + will-change in style.css. High probability.
+2. **Mobile nav entrance animation** — translateY(-8px) + opacity fade-in on .nav-center.open; clean UX upgrade now that blur is truly gone. First step: add transition + @keyframes in the ≤980px block. High probability.
+3. **Per-form Web3Forms keys** — separate keys for /join/, /contact/, /data-deletion/ for proper lead source tracking; currently all share one key. First step: create 3 keys in Web3Forms dashboard. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Mobile nav entrance animation (already in Now) · [SIL] CSS guard for .status badge (already in Now)

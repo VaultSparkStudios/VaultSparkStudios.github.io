@@ -248,6 +248,19 @@ Avgs — 3: XXX.X | 5: XXX.X | 10: XXX.X | 25: — | all: XXX.X
 
 ---
 
+### Step 7.5 · Run IGNIS Score  *(mandatory — every closeout)*
+
+```bash
+cd "C:/Users/p4cka/documents/development/vaultspark-studio-ops/ignis/src" && \
+  npx tsx cli.ts score "C:/Users/p4cka/documents/development/vaultsparkstudios.github.io"
+```
+
+Capture: `ignisScore` (integer), tier name → `ignisGrade`, date → `ignisLastComputed`.
+Update `context/PROJECT_STATUS.json` with all three fields.
+Copy the one-line IGNIS personality quote into `ignisNote` in Step 8.
+
+---
+
 ### Step 8 · Write Audit JSON
 
 Create `audits/YYYY-MM-DD.json`. Multiple sessions same day: suffix `-2`, `-3`, etc.

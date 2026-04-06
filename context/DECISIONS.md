@@ -14,6 +14,12 @@ Public-safe decisions retained in this repo:
 - Why: the website can stay deployable without exposing internal execution history, operator workflows, or sensitive planning detail
 - Preservation: a local private backup of the pre-sanitization material was created outside the repo before the tracked copies were sanitized
 
+### 2026-04-06 — IGNIS scoring wired to closeout protocol
+
+- Status: active
+- Decision: run `npx tsx cli.ts score` from `vaultspark-studio-ops/ignis/src/` at every closeout; update `ignisScore`/`ignisGrade`/`ignisLastComputed` in `context/PROJECT_STATUS.json`
+- Why: Meta-Reasoning Self-Score Awareness was 20.7/100 due to only 3 sessions of history; compounding score history each closeout is the primary lever to push COGNITION and FORESIGHT pillars from D → C
+
 ### 2026-04-03 — Local Playwright credentials moved behind a private ignored file
 
 - Status: active

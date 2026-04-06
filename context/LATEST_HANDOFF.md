@@ -1,6 +1,30 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 36)
+Last updated: 2026-04-06 (Session 38)
+
+## Where We Left Off (Session 38 — 2026-04-06)
+
+- Shipped: 1 fix — mobile nav iOS blur root cause resolved (disabled .site-header::before backdrop-filter at ≤980px; GPU compositing layer from header was containing fixed overlay on iOS Safari)
+- Tests: N/A
+- Deploy: committed + pushed (`bdbd378`) · GitHub Pages auto
+
+## Session Intent: Session 38
+Fix persistent mobile menu blur that survived S36 fix.
+**Outcome: Achieved** — root cause identified (header ::before backdrop-filter on mobile = GPU layer that blurred the fixed child overlay on iOS Safari), targeted CSS fix, pushed.
+
+---
+
+## Where We Left Off (Session 37 — 2026-04-06)
+
+- Shipped: 4 infra tasks — STRIPE_GIFT_PRICE_ID set (gift checkout live), GSC verified + sitemap submitted, IGNIS scored (38,899/100K FORGE), staging confirmed HTTP 200
+- Tests: N/A
+- Deploy: context files updated (not committed this session — committed in S38 closeout)
+
+## Session Intent: Session 37
+Clear remaining infra blockers (STRIPE, GSC, IGNIS, staging).
+**Outcome: Achieved** — all 4 Now tasks done; SIL/closeout incomplete (recovered in S38).
+
+---
 
 ## Where We Left Off (Session 36 — 2026-04-06)
 
@@ -53,26 +77,19 @@ Restore Studio OS protocol integration; verify S33 pending user actions.
 
 ## Open Blockers
 
-- [ ] **`STRIPE_GIFT_PRICE_ID`** — create $24.99 one-time price in Stripe → `supabase secrets set STRIPE_GIFT_PRICE_ID=price_...`; gift checkout currently 503s
-- [ ] **Google Search Console** — create GSC property → download real verification HTML → replace `google-site-verification-REPLACE_ME.html` → submit sitemap
-- [x] **GA4** — G-RSGLPP4KDZ wired to all 97 HTML pages (S34) ✓
-- [ ] **Website staging DNS** — `*.staging A → 178.156.211.100` in Cloudflare — marked ✅ DONE in studio-ops S49; confirm staging site is live at `website.staging.vaultsparkstudios.com`
-- [ ] **IGNIS score** — project is UNTRACKED in studio-ops IGNIS; run IGNIS scoring for this project
+*(none)*
 
 ## Human Action Required
 
-- [ ] **[STRIPE]** Create `$24.99` one-time price in Stripe dashboard → run `supabase secrets set STRIPE_GIFT_PRICE_ID=price_...`
-- [ ] **[GSC]** Create Google Search Console property for `vaultsparkstudios.com` → replace placeholder verification file → submit sitemap
-- [ ] **[GA4]** Create GA4 property → get measurement ID → I can wire the gtag loader on all pages
 - [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token so I can create it)
 - [ ] **[WEB3FORMS]** Manually submit /join/ and /contact/ forms to confirm email delivery
 - [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
 
 ## Recommended First Action Next Session
 
-1. **GA4 wiring** — once you have measurement ID, I can wire gtag loader on all pages in one pass
-2. **STRIPE_GIFT_PRICE_ID** — 2 min in Stripe dashboard then one CLI command
-3. **Google Search Console** — replace placeholder file + submit sitemap
+1. **Mobile nav entrance animation** — blur fully fixed; add translateY+opacity fade-in for polish ([SIL] Now item)
+2. **CSS guard for .status badge nesting** — prevent regression ([SIL] Now item)
+3. **Lighthouse deployment timing** — persistent CI reliability gap ([SIL] Now item)
 
 ---
 

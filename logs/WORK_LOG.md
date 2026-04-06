@@ -1,5 +1,20 @@
 # Work Log
 
+## 2026-04-06 — Session 38
+
+- Fixed persistent iOS mobile nav blur: root cause was .site-header::before backdrop-filter (not the overlay itself) — disabled at ≤980px in media query; GPU compositing layer from header was containing the position:fixed nav overlay on iOS Safari
+- Pushed: `bdbd378`
+- IGNIS rescored: 47,091/100,000 · FORGE · 80.6% through tier
+- SIL: 401/500 · Velocity: 1 · Debt: →
+
+## 2026-04-06 — Session 37
+
+- Set STRIPE_GIFT_PRICE_ID: product `prod_UHhMAimiSwXo0S` + price `price_1TJ7xbGMN60PfJYsPCs5wUUz` ($24.99 one-time) via Stripe API; secret set via Supabase CLI
+- Google Search Console: GSC property verified, sitemap submitted
+- IGNIS scored first time: 38,899/100,000 · Tier: FORGE; fields added to PROJECT_STATUS.json
+- Staging confirmed: website.staging.vaultsparkstudios.com HTTP 200 ✓
+- SIL: 399/500 · Velocity: 4 · Debt: → (SIL/closeout deferred; recovered S38)
+
 ## 2026-04-06 — Session 36
 
 - Fixed mobile nav blur: removed backdrop-filter from .nav-center.open (background 0.98 opacity — blur was invisible but created GPU compositing artifact making menu text blurry on mobile)
