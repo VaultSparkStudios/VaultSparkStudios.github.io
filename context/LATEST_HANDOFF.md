@@ -10,7 +10,7 @@ Finish the light-mode contrast audit and remove the remaining unreadable gray an
 
 - Shipped: 1 contrast cleanup pass — darker blue-slate support text, readable hero/card titles on dark art, light-mode surfaces for shared game/project/detail panels
 - Tests: N/A — no additional automated verification run in this follow-up session
-- Deploy: committed + pushed to `main` (pending commit SHA) · GitHub Pages auto
+- Deploy: pushed to `main` (`9862948`) · GitHub Pages auto
 
 ---
 

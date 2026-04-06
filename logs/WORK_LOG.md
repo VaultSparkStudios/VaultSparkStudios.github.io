@@ -7,7 +7,7 @@
 - Fixed unreadable project/game titles on dark hero art with bright text + stronger overlay treatment in light mode
 - Converted shared dark content/card patterns (`.feature-block`, `.info-block`, `.stream-item`, patch panels, game/project cards) into true light-mode surfaces
 - IGNIS rescored: 46,115/100,000 · FORGE · 74.1% through tier
-- Pushed: pending commit SHA
+- Pushed: `9862948`
 - SIL: 409/500 · Velocity: 1 · Debt: →
 
 ## 2026-04-06 — Session 40
