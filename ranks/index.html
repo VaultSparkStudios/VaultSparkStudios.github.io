@@ -38,6 +38,8 @@
     .ranks-hero h1 { font-family:Georgia,"Times New Roman",serif; font-size:clamp(2.6rem,6vw,4.5rem); line-height:1; letter-spacing:-0.04em; margin:0.75rem 0 1rem; font-weight:400; }
     .ranks-hero p { color:var(--muted); font-size:1.05rem; max-width:52ch; margin:0 auto; line-height:1.65; }
     .ranks-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr)); gap:1.5rem; margin-bottom:4rem; }
+    .rank-card { background:rgba(10,13,22,0.9); border-radius:20px; padding:1.75rem; position:relative; overflow:hidden; }
+    .rank-card-copy { font-size:0.85rem; color:rgba(255,255,255,0.88); line-height:1.55; }
     .earn-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin-top:1.5rem; }
     .earn-card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:1.25rem 1.5rem; display:flex; align-items:flex-start; gap:1rem; }
     .earn-icon { font-size:1.5rem; flex-shrink:0; line-height:1; }
@@ -116,84 +118,84 @@
         <div class="ranks-grid" aria-label="Vault rank tiers">
 
           <!-- Spark Initiate -->
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(148,163,184,0.2);border-radius:20px;padding:1.75rem;position:relative;overflow:hidden;">
+          <div class="rank-card" style="border:1px solid rgba(148,163,184,0.2);">
             <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(148,163,184,0.06),transparent 70%);pointer-events:none;"></div>
             <div style="font-size:2rem;margin-bottom:0.75rem;">&#9889;</div>
-            <div style="font-weight:700;color:var(--text);font-size:1.1rem;margin-bottom:0.25rem;">Spark Initiate</div>
+            <div style="font-weight:700;color:#f8fbff;font-size:1.1rem;margin-bottom:0.25rem;">Spark Initiate</div>
             <div style="font-size:0.8rem;color:#94a3b8;font-weight:600;margin-bottom:1rem;">0 – 249 Vault Points</div>
-            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">Full access to the Vault Member dashboard, participate in challenges, and start earning points. The vault is open.</div>
+            <div class="rank-card-copy">Full access to the Vault Member dashboard, participate in challenges, and start earning points. The vault is open.</div>
           </div>
 
           <!-- Vault Runner -->
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(31,162,255,0.2);border-radius:20px;padding:1.75rem;position:relative;overflow:hidden;">
+          <div class="rank-card" style="border:1px solid rgba(31,162,255,0.2);">
             <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(31,162,255,0.06),transparent 70%);pointer-events:none;"></div>
             <div style="font-size:2rem;margin-bottom:0.75rem;">&#127939;</div>
-            <div style="font-weight:700;color:var(--text);font-size:1.1rem;margin-bottom:0.25rem;">Vault Runner</div>
+            <div style="font-weight:700;color:#f8fbff;font-size:1.1rem;margin-bottom:0.25rem;">Vault Runner</div>
             <div style="font-size:0.8rem;color:#1FA2FF;font-weight:600;margin-bottom:1rem;">250 – 999 Vault Points</div>
-            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">Community recognition badge and exclusive Vault Runner Discord role. The vault takes notice.</div>
+            <div class="rank-card-copy">Community recognition badge and exclusive Vault Runner Discord role. The vault takes notice.</div>
           </div>
 
           <!-- Rift Scout -->
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(16,185,129,0.2);border-radius:20px;padding:1.75rem;position:relative;overflow:hidden;">
+          <div class="rank-card" style="border:1px solid rgba(16,185,129,0.2);">
             <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(16,185,129,0.06),transparent 70%);pointer-events:none;"></div>
             <div style="font-size:2rem;margin-bottom:0.75rem;">&#128207;</div>
-            <div style="font-weight:700;color:var(--text);font-size:1.1rem;margin-bottom:0.25rem;">Rift Scout</div>
+            <div style="font-weight:700;color:#f8fbff;font-size:1.1rem;margin-bottom:0.25rem;">Rift Scout</div>
             <div style="font-size:0.8rem;color:#10B981;font-weight:600;margin-bottom:1rem;">1,000 – 2,999 Vault Points</div>
-            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">Rift Scout Discord role, +10% point bonus on all completed challenges. You're scouting deeper.</div>
+            <div class="rank-card-copy">Rift Scout Discord role, +10% point bonus on all completed challenges. You're scouting deeper.</div>
           </div>
 
           <!-- Vault Guard -->
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(6,182,212,0.2);border-radius:20px;padding:1.75rem;position:relative;overflow:hidden;">
+          <div class="rank-card" style="border:1px solid rgba(6,182,212,0.2);">
             <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(6,182,212,0.06),transparent 70%);pointer-events:none;"></div>
             <div style="font-size:2rem;margin-bottom:0.75rem;">&#128737;&#65039;</div>
-            <div style="font-weight:700;color:var(--text);font-size:1.1rem;margin-bottom:0.25rem;">Vault Guard</div>
+            <div style="font-weight:700;color:#f8fbff;font-size:1.1rem;margin-bottom:0.25rem;">Vault Guard</div>
             <div style="font-size:0.8rem;color:#06B6D4;font-weight:600;margin-bottom:1rem;">3,000 – 7,499 Vault Points</div>
-            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">Vault Guard Discord role and early access to development dispatches. Defending the vault's signal.</div>
+            <div class="rank-card-copy">Vault Guard Discord role and early access to development dispatches. Defending the vault's signal.</div>
           </div>
 
           <!-- Vault Breacher -->
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(139,92,246,0.2);border-radius:20px;padding:1.75rem;position:relative;overflow:hidden;">
+          <div class="rank-card" style="border:1px solid rgba(139,92,246,0.2);">
             <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(139,92,246,0.06),transparent 70%);pointer-events:none;"></div>
             <div style="font-size:2rem;margin-bottom:0.75rem;">&#128295;</div>
-            <div style="font-weight:700;color:var(--text);font-size:1.1rem;margin-bottom:0.25rem;">Vault Breacher</div>
+            <div style="font-weight:700;color:#f8fbff;font-size:1.1rem;margin-bottom:0.25rem;">Vault Breacher</div>
             <div style="font-size:0.8rem;color:#8B5CF6;font-weight:600;margin-bottom:1rem;">7,500 – 14,999 Vault Points</div>
-            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">Beta test priority and exclusive Vault Breacher Discord role. You go where others can't.</div>
+            <div class="rank-card-copy">Beta test priority and exclusive Vault Breacher Discord role. You go where others can't.</div>
           </div>
 
           <!-- Void Operative -->
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:1.75rem;position:relative;overflow:hidden;">
+          <div class="rank-card" style="border:1px solid rgba(255,255,255,0.1);">
             <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(255,255,255,0.03),transparent 70%);pointer-events:none;"></div>
             <div style="font-size:2rem;margin-bottom:0.75rem;">&#128373;&#65039;</div>
-            <div style="font-weight:700;color:var(--text);font-size:1.1rem;margin-bottom:0.25rem;">Void Operative</div>
+            <div style="font-weight:700;color:#f8fbff;font-size:1.1rem;margin-bottom:0.25rem;">Void Operative</div>
             <div style="font-size:0.8rem;color:rgba(255,255,255,0.72);font-weight:600;margin-bottom:1rem;">15,000 – 29,999 Vault Points</div>
-            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">Void Operative Discord role and access to sealed project previews. Clearance level: deep.</div>
+            <div class="rank-card-copy">Void Operative Discord role and access to sealed project previews. Clearance level: deep.</div>
           </div>
 
           <!-- Vault Keeper -->
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(200,80,0,0.25);border-radius:20px;padding:1.75rem;position:relative;overflow:hidden;">
+          <div class="rank-card" style="border:1px solid rgba(200,80,0,0.25);">
             <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(200,80,0,0.07),transparent 70%);pointer-events:none;"></div>
             <div style="font-size:2rem;margin-bottom:0.75rem;">&#128272;</div>
-            <div style="font-weight:700;color:var(--text);font-size:1.1rem;margin-bottom:0.25rem;">Vault Keeper</div>
+            <div style="font-weight:700;color:#f8fbff;font-size:1.1rem;margin-bottom:0.25rem;">Vault Keeper</div>
             <div style="font-size:0.8rem;color:#C85000;font-weight:600;margin-bottom:1rem;">30,000 – 59,999 Vault Points</div>
-            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">VIP Discord channel, ability to suggest new community challenges, and a glowing elite profile border.</div>
+            <div class="rank-card-copy">VIP Discord channel, ability to suggest new community challenges, and a glowing elite profile border.</div>
           </div>
 
           <!-- Forge Master -->
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(214,40,40,0.25);border-radius:20px;padding:1.75rem;position:relative;overflow:hidden;">
+          <div class="rank-card" style="border:1px solid rgba(214,40,40,0.25);">
             <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(214,40,40,0.07),transparent 70%);pointer-events:none;"></div>
             <div style="font-size:2rem;margin-bottom:0.75rem;">&#128293;</div>
-            <div style="font-weight:700;color:var(--text);font-size:1.1rem;margin-bottom:0.25rem;">Forge Master</div>
+            <div style="font-weight:700;color:#f8fbff;font-size:1.1rem;margin-bottom:0.25rem;">Forge Master</div>
             <div style="font-size:0.8rem;color:#D62828;font-weight:600;margin-bottom:1rem;">60,000 – 99,999 Vault Points</div>
-            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">Forge Master Discord role, first access to lore reveals, and direct studio channel. The vault forged you.</div>
+            <div class="rank-card-copy">Forge Master Discord role, first access to lore reveals, and direct studio channel. The vault forged you.</div>
           </div>
 
           <!-- The Sparked -->
-          <div style="background:rgba(10,13,22,0.9);border:1px solid rgba(255,196,0,0.3);border-radius:20px;padding:1.75rem;position:relative;overflow:hidden;box-shadow:0 0 40px rgba(255,196,0,0.05);">
+          <div class="rank-card" style="border:1px solid rgba(255,196,0,0.3);box-shadow:0 0 40px rgba(255,196,0,0.05);">
             <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle,rgba(255,196,0,0.1),transparent 70%);pointer-events:none;"></div>
             <div style="font-size:2rem;margin-bottom:0.75rem;">&#10024;</div>
             <div style="font-weight:700;color:#FFC400;font-size:1.1rem;margin-bottom:0.25rem;">The Sparked</div>
             <div style="font-size:0.8rem;color:#FFC400;font-weight:600;margin-bottom:1rem;">100,000+ Vault Points</div>
-            <div style="font-size:0.85rem;color:var(--muted);line-height:1.55;">Gold crown on the leaderboard, permanent Hall of Fame entry, exclusive lore, and direct studio contact. Maximum rank — achieved.</div>
+            <div class="rank-card-copy">Gold crown on the leaderboard, permanent Hall of Fame entry, exclusive lore, and direct studio contact. Maximum rank — achieved.</div>
           </div>
 
         </div>

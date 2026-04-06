@@ -2292,7 +2292,6 @@ body.light-mode .portal-tab:hover {
 }
 body.light-mode .portal-card,
 body.light-mode .stat-box,
-body.light-mode .rank-panel,
 body.light-mode .ach-card,
 body.light-mode .challenge-card,
 body.light-mode .leaderboard-row,
@@ -2308,8 +2307,17 @@ body.light-mode .challenge-card:hover,
 body.light-mode .ach-card:hover {
   background: rgba(215,224,248,0.9);
 }
+body.light-mode .rank-panel {
+  background: rgba(13,17,28,0.94);
+  border-color: rgba(255,255,255,0.08);
+}
 body.light-mode .rank-row:hover {
-  background: rgba(0,0,0,0.04);
+  background: rgba(255,255,255,0.04);
+}
+body.light-mode .rank-row-name,
+body.light-mode .rank-row-pts,
+body.light-mode .benefit-list li {
+  color: #eef2ff;
 }
 body.light-mode .nav-account-trigger {
   background: rgba(0,0,0,0.05);

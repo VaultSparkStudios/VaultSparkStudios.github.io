@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▅▆▆▇▇ (8 entries)
-Avgs — 3: 407.7 | 5: 404.6 | all: 403.8
-  └ 3-session: Dev 83.7 | Align 86.7 | Momentum 76.3 | Engage 77.0 | Process 84.0
+Sparkline (last 5 totals): ▆▆▇▇▇ (9 entries)
+Avgs — 3: 411.7 | 5: 407.2 | all: 404.9
+  └ 3-session: Dev 83.0 | Align 88.0 | Momentum 79.0 | Engage 78.3 | Process 83.3
 Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
 Momentum runway: ~3.0 sessions — SIL Now bucket restored
-Last session: 2026-04-06 | Session 41 | Total: 409/500 | Velocity: 1 | protocolVelocity: 1
+Last session: 2026-04-06 | Session 42 | Total: 412/500 | Velocity: 1 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -200,6 +200,30 @@ Avgs — 3: 405.0 | 5: 406.2 | all: 403.0
 1. **Theme persistence test contract** — align Playwright with the real source of truth for the active theme or restore a deterministic `body[data-theme]` signal during hydration. First step: inspect `tests/theme-persistence.spec.js` against `assets/theme-toggle.js`. High probability.
 2. **Light-mode screenshot smoke** — add a Chromium-only screenshot smoke for `/`, `/contact/`, and `/journal/` in light mode before deploys; catches contrast regressions that simple DOM assertions miss. First step: reuse the existing Playwright setup with forced localStorage theme. Medium probability.
 3. **Portal/investor theme parity audit** — compare `vault-member/portal.css` and `assets/investor-theme.css` against the refreshed public-site light palette to avoid visible theme drift between product areas. First step: grep for light-mode token overrides in both files. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Theme persistence test contract
+
+## 2026-04-06 — Session 42 | Total: 412/500 | Velocity: 1 | Debt: →
+Avgs — 3: 411.7 | 5: 407.2 | all: 404.9
+  └ 3-session: Dev 83.0 | Align 88.0 | Momentum 79.0 | Engage 78.3 | Process 83.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 83 | ↑ | Broad shared/theme fixes plus two page-specific inline corrections closed real readability regressions without adding new system complexity |
+| Creative Alignment | 88 | ↑ | The light theme now respects the visual intent of dark forge-like panels instead of flattening them into pale generic cards |
+| Momentum | 79 | ↑ | User-reported issues were handled in one direct pass and fixed at the repeated-pattern level |
+| Engagement | 80 | ↑ | Incorporated precise user feedback about which sections were still broken and resolved those exact recurring cases |
+| Process Quality | 82 | ↓ | Full closeout completed, but no automated verification was added yet for this visual class of regressions |
+| **Total** | **412/500** | ↑ | |
+
+**Top win:** Re-established a clear rule for light mode: dark panels stay dark and get white copy, instead of inheriting the same muted palette as true light surfaces
+**Top gap:** The site still lacks automated visual checks for these contrast regressions, so validation is partly manual
+**Intent outcome:** Achieved — remaining dark-panel readability failures were fixed across the shared system and the page-specific inline exceptions
+
+**Brainstorm**
+1. **Light-mode screenshot smoke** — add a Chromium-only screenshot smoke for `/`, `/ranks/`, `/games/`, and `/projects/` in forced light mode to catch dark-panel contrast regressions automatically. First step: reuse the existing Playwright setup with localStorage theme selection. High probability.
+2. **Dark-surface utility token** — formalize a shared `.dark-surface` utility or token recipe so intentionally dark panels in light mode do not need bespoke rescue selectors later. First step: extract the S42 panel recipe from `assets/style.css`. High probability.
+3. **Theme persistence test contract** — align Playwright with the real active-theme signal or restore a deterministic `data-theme` attribute after hydration. First step: compare `tests/theme-persistence.spec.js` with `assets/theme-toggle.js`. High probability.
 
 **Committed to TASK_BOARD:** [SIL] Theme persistence test contract
 

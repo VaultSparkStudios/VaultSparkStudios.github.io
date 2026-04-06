@@ -1,6 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 41)
+Last updated: 2026-04-06 (Session 42)
+
+## Session Intent: Session 42
+Fix the remaining dark-section contrast failures in light mode and catch all repeated instances of white/gray text logic applied to the wrong surfaces.
+**Outcome: Achieved** — intentionally dark panels now keep white readable copy in light mode across the homepage, public ranks page, project/game hero/card bands, and the Vault Member rank sidebar; the homepage Vault-Forge paragraph was also returned to dark text on its light surface.
+
+## Where We Left Off (Session 42 — 2026-04-06)
+
+- Shipped: 1 contrast hardening pass — shared dark-panel text fix in `assets/style.css`, homepage/ranks inline cleanup in `index.html` and `ranks/index.html`, portal rank sidebar fix in `vault-member/portal.css`
+- Tests: N/A — no additional automated verification run in this follow-up session
+- Deploy: pushed to `main` (pending commit SHA) · GitHub Pages auto
+
+---
 
 ## Session Intent: Session 41
 Finish the light-mode contrast audit and remove the remaining unreadable gray and dark-on-dark text states.

@@ -1918,9 +1918,6 @@ body.light-mode .stream-item,
 body.light-mode .classified-card,
 body.light-mode .compare-table,
 body.light-mode .pipeline-card-meta,
-body.light-mode .storyline,
-body.light-mode .member-feature,
-body.light-mode .rank-tier,
 body.light-mode .author-bio,
 body.light-mode .lb-table,
 body.light-mode .lb-preview-table,
@@ -2151,6 +2148,49 @@ body.light-mode .hero-stat-divider { background: rgba(22,32,51,0.10); }
 body.light-mode .policy-divider { background: rgba(22,32,51,0.07); }
 body.light-mode .search-result-card { border-color: rgba(22,32,51,0.10); }
 
+/* ── Dark panels that stay dark in light mode ── */
+body.light-mode .member-feature,
+body.light-mode .rank-tier,
+body.light-mode .storyline {
+  background: rgba(10, 13, 22, 0.72);
+  border-color: rgba(255, 255, 255, 0.10);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+body.light-mode .rank-tier:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+body.light-mode .membership-copy p,
+body.light-mode .member-feature strong,
+body.light-mode .member-feature p,
+body.light-mode .rank-tier-name,
+body.light-mode .rank-tier-pts,
+body.light-mode .rank-preview p,
+body.light-mode .media-copy h3,
+body.light-mode .media-copy p,
+body.light-mode .storyline,
+body.light-mode .storyline strong {
+  color: #f8fbff;
+}
+
+body.light-mode .hero-story,
+body.light-mode .hero-story strong {
+  color: var(--text);
+  text-shadow: none;
+}
+
+body.light-mode .hero-art h1,
+body.light-mode .hero-art .hero-art-content,
+body.light-mode .hero-art .hero-art-content p,
+body.light-mode .game-card-hero h2,
+body.light-mode .project-card-hero h2,
+body.light-mode .card-hero h3,
+body.light-mode .card-art h3 {
+  color: #f8fbff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
 /* ── Hardcoded white text → theme-aware ── */
 body.light-mode .hero-stat-val,
 body.light-mode .char-stat .stat-value,
@@ -2164,14 +2204,10 @@ body.light-mode .manifesto blockquote,
 body.light-mode .process-step h3,
 body.light-mode .pillar h3,
 body.light-mode .char-lore strong,
-body.light-mode .member-feature strong,
-body.light-mode .storyline strong,
 body.light-mode .referrer-name,
 body.light-mode .benefit-text strong,
 body.light-mode .member-count-pill strong { color: var(--text); }
-body.light-mode .hero-story,
 body.light-mode .timeline-item .tl-body,
-body.light-mode .media-copy p,
 body.light-mode .entry-body,
 body.light-mode .archive-link,
 body.light-mode .contact-grid p,
