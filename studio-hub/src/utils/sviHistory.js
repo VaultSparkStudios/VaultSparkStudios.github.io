@@ -128,3 +128,25 @@ export function bollingerBandwidth(boll, idx) {
   if (u == null || l == null || m == null || m === 0) return null;
   return ((u - l) / m) * 100;
 }
+
+// ── Alert detection ───────────────────────────────────────────────────────────
+
+/**
+ * Detect session-over-session SVI drops ≥ threshold points.
+ * Scans the full history and returns every snapshot where SVI dropped sharply.
+ * @param {Array} history - Full sviHistory array
+ * @param {number} threshold - Minimum drop magnitude to flag (default: 10)
+ * @returns {Array<{ ts: number, from: number, to: number, drop: number }>}
+ */
+export function getSviAlerts(history, threshold = 10) {
+  if (!history || history.length < 2) return [];
+  const alerts = [];
+  for (let i = 1; i < history.length; i++) {
+    const prev = history[i - 1].svi;
+    const curr = history[i].svi;
+    if (curr != null && prev != null && (prev - curr) >= threshold) {
+      alerts.push({ ts: history[i].ts, from: prev, to: curr, drop: prev - curr });
+    }
+  }
+  return alerts;
+}

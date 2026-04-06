@@ -34,7 +34,7 @@ import { getPredictiveAlerts, renderPredictiveAlerts } from "../utils/predictive
 import { auditProjectTruth, getTruthAuditTone } from "../utils/truthAudit.js";
 import { pushTruthDebtSnapshot, loadTruthDebtHistory, renderTruthDebtSparkline } from "../utils/truthDebtHistory.js";
 import { pushSilSnapshot, getSilTrendAlerts, renderSilAlertBanner, renderSilTrendBadge } from "../utils/silTrend.js";
-import { loadSviHistory } from "../utils/sviHistory.js";
+import { loadSviHistory, getSviAlerts } from "../utils/sviHistory.js";
 
 // Re-export for backwards compatibility (clientApp.js imports these from here)
 export { _pushAlertHistory as pushAlertHistory, _snoozeAlert as snoozeAlert };
@@ -2162,16 +2162,27 @@ export function renderStudioHubView(state) {
                 <polyline points="${pts}" fill="none" stroke="${sviColor}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
               </svg>`;
             }
+            // SVI drop alert — badge if the most recent snapshot dropped ≥10pts
+            const sviAlerts   = getSviAlerts(sviHistory);
+            const lastAlert   = sviAlerts.length ? sviAlerts[sviAlerts.length - 1] : null;
+            const isRecent    = lastAlert && lastAlert.ts === last.ts;
+            const alertBadge  = isRecent
+              ? `<div style="font-size:9px;font-weight:700;color:#fff;background:var(--red);border-radius:4px;padding:1px 5px;margin-top:4px;letter-spacing:0.04em;"
+                      title="SVI dropped ${lastAlert.drop}pts (${lastAlert.from}→${lastAlert.to}) this session">
+                   ▼${lastAlert.drop} pts
+                 </div>`
+              : '';
             return `
-              <div data-view="analytics" style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:10px 14px; text-align:center; cursor:pointer; transition:border-color 0.15s;"
+              <div data-view="analytics" style="background:var(--panel); border:1px solid ${isRecent ? 'rgba(239,68,68,0.4)' : 'var(--border)'}; border-radius:10px; padding:10px 14px; text-align:center; cursor:pointer; transition:border-color 0.15s;"
                    title="Studio Vitality Index — click to open Analytics"
-                   onmouseover="this.style.borderColor='rgba(122,231,199,0.3)'" onmouseout="this.style.borderColor=''">
+                   onmouseover="this.style.borderColor='rgba(122,231,199,0.3)'" onmouseout="this.style.borderColor='${isRecent ? 'rgba(239,68,68,0.4)' : ''}'">
                 <div style="font-size:9px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;font-weight:700;margin-bottom:4px;">SVI 🏛</div>
                 <div style="display:flex;align-items:baseline;gap:4px;justify-content:center;">
                   <div style="font-size:26px;font-weight:900;color:${sviColor};line-height:1;font-variant-numeric:tabular-nums;">${sviVal}</div>
                   <div style="font-size:13px;font-weight:700;color:${trendCol};">${sviTrend}</div>
                 </div>
                 ${sviSparkSvg}
+                ${alertBadge}
                 <div style="font-size:10px;color:var(--muted);margin-top:3px;">Vitality</div>
               </div>`;
           })()}

@@ -358,6 +358,37 @@ window._vsviDraw = function (tf) {
   });
 };
 
+// ── CSV export for SVI history ─────────────────────────────────────────────────
+// Generates a Blob from the full sviHistory array and triggers a download.
+window._vsviExportCSV = function () {
+  const raw = window.__vsviData || [];
+  if (!raw.length) return;
+
+  const header = 'date,timestamp,svi,trend,ciPassRate,weeklyCommits';
+  const rows = raw.map(d => {
+    const date = new Date(d.ts).toISOString().slice(0, 10);
+    return [
+      date,
+      d.ts,
+      d.svi ?? '',
+      d.trend ?? '',
+      d.ciPassRate ?? '',
+      d.weeklyCommits ?? '',
+    ].join(',');
+  });
+
+  const csv  = [header, ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `svi-history-${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
 function _sviStatsHtml(cur, ma7, ma20, bw, trend, pts) {
   const fmt1 = v => v != null ? v.toFixed(1) : '—';
   const trendDir = trend
@@ -1021,9 +1052,18 @@ function renderSVIChart(svi, sviHistory) {
         </div>
       </div>
 
-      <!-- Timeframe + legend row -->
+      <!-- Timeframe + legend + export row -->
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
-        <div style="display:flex;gap:4px;">${tfButtons}</div>
+        <div style="display:flex;gap:4px;align-items:center;">
+          ${tfButtons}
+          <button onclick="window._vsviExportCSV && window._vsviExportCSV()"
+            style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:rgba(149,163,183,0.7);transition:all 0.15s;letter-spacing:0.04em;margin-left:6px;"
+            title="Download SVI history as CSV"
+            onmouseover="this.style.background='rgba(122,231,199,0.1)';this.style.color='var(--cyan)'"
+            onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(149,163,183,0.7)'">
+            ↓ CSV
+          </button>
+        </div>
         ${legend}
       </div>
 
