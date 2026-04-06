@@ -228,7 +228,13 @@
           <strong id="gcb-total-call-of-doodie">—</strong>
         </div>
         <div class="gcb-divider"></div>
-        <a class="gcb-link" href="/leaderboards/">View Leaderboard</a>
+        <!-- Member score badge — shown when signed in -->
+        <div class="gcb-stat" id="gcb-personal-best" style="display:none;">
+          <span>Your best:</span>
+          <strong id="gcb-pb-value" style="color:var(--gold);">—</strong>
+        </div>
+        <div class="gcb-divider" id="gcb-pb-divider" style="display:none;"></div>
+        <a class="gcb-link" href="/leaderboards/#doodie">View Leaderboard</a>
       </div>
     </div>
 
@@ -298,12 +304,28 @@
               <div id="game-rating-msg" style="font-size:0.7rem;color:var(--dim);margin-top:0.3rem;">Sign in to rate</div>
             </div>
 
-            <div style="padding:1.5rem;border-radius:var(--radius);background:rgba(255,122,0,0.04);border:1px solid rgba(255,122,0,0.1);">
-              <p style="color:var(--muted);font-size:0.9rem;line-height:1.65;margin-bottom:1rem;">
-                Create a free Vault Member account to track your scores, earn achievements,
-                and join the access pool for future VaultSpark releases.
-              </p>
-              <a class="button-ghost" href="/vault-member/#register" style="width:100%;display:flex;justify-content:center;border-color:rgba(255,122,0,0.3);color:var(--orange);">Join The Vault — Free</a>
+            <!-- Member CTA — swaps content based on auth state -->
+            <div id="cod-member-cta" style="padding:1.5rem;border-radius:var(--radius);background:rgba(255,122,0,0.04);border:1px solid rgba(255,122,0,0.1);">
+              <!-- Guest state (default) -->
+              <div id="cod-cta-guest">
+                <p style="color:var(--muted);font-size:0.9rem;line-height:1.65;margin-bottom:1rem;">
+                  Create a free Vault Member account to track your scores, earn achievements,
+                  and join the access pool for future VaultSpark releases.
+                </p>
+                <a class="button-ghost" href="/vault-member/#register" style="width:100%;display:flex;justify-content:center;border-color:rgba(255,122,0,0.3);color:var(--orange);">Join The Vault — Free</a>
+              </div>
+              <!-- Signed-in state -->
+              <div id="cod-cta-member" style="display:none;">
+                <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:0.5rem;">Signed In As</div>
+                <div id="cod-member-handle" style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:0.25rem;">—</div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.75rem;padding-top:0.75rem;border-top:1px solid rgba(255,255,255,0.07);">
+                  <div>
+                    <div style="font-size:0.72rem;color:var(--dim);">Your Best Score</div>
+                    <div id="cod-member-best" style="font-size:1.3rem;font-weight:800;color:var(--gold);">—</div>
+                  </div>
+                  <a href="/vault-member/" style="font-size:0.82rem;color:var(--muted);text-decoration:none;">Dashboard →</a>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -693,10 +715,15 @@
         if(res.ok){
           scoreEl.value='';
           if(res.is_new_best){
-            resultEl.textContent='\uD83C\uDFC6 New high score! +'+res.xp_awarded+' XP awarded.';
+            resultEl.textContent='\uD83C\uDFC6 New high score! +'+(res.xp_awarded||0)+' XP awarded.';
             resultEl.style.color='#FFC400';
+            var fmt=res.high_score.toLocaleString();
             var bestEl=document.getElementById('vs-score-best');
-            if(bestEl)bestEl.textContent='Your best: '+res.high_score.toLocaleString();
+            var pbEl=document.getElementById('gcb-pb-value');
+            var memberBest=document.getElementById('cod-member-best');
+            if(bestEl)bestEl.textContent='Your best: '+fmt;
+            if(pbEl)pbEl.textContent=fmt;
+            if(memberBest)memberBest.textContent=fmt;
           }else{
             resultEl.textContent='Score logged. Your best remains '+res.high_score.toLocaleString()+'.';
             resultEl.style.color='var(--muted)';
@@ -712,12 +739,38 @@
         btn.disabled=false;btn.textContent='Submit';
       });
     };
-    if(!VSGame.getSession())return;
+    var session=VaultScore.getSession();
+    if(!session)return;
+
+    // Show score submit panel
     var panel=document.getElementById('vs-score-panel');
     if(panel)panel.style.display='block';
+
+    // Swap CTA card to member view
+    VaultScore.getMemberProfile().then(function(profile){
+      if(!profile)return;
+      var guestEl=document.getElementById('cod-cta-guest');
+      var memberEl=document.getElementById('cod-cta-member');
+      var handleEl=document.getElementById('cod-member-handle');
+      if(guestEl)guestEl.style.display='none';
+      if(memberEl)memberEl.style.display='block';
+      if(handleEl)handleEl.textContent=profile.username||session.user.email;
+    }).catch(function(){});
+
+    // Load personal best into all elements
     VaultScore.getMyScore(GAME).then(function(row){
-      var el=document.getElementById('vs-score-best');
-      if(row&&el)el.textContent='Your best: '+row.score.toLocaleString();
+      if(!row)return;
+      var fmt=row.score.toLocaleString();
+      var bestEl=document.getElementById('vs-score-best');
+      var pbEl=document.getElementById('gcb-pb-value');
+      var pbBar=document.getElementById('gcb-personal-best');
+      var pbDiv=document.getElementById('gcb-pb-divider');
+      var memberBest=document.getElementById('cod-member-best');
+      if(bestEl)bestEl.textContent='Your best: '+fmt;
+      if(pbEl)pbEl.textContent=fmt;
+      if(pbBar)pbBar.style.display='';
+      if(pbDiv)pbDiv.style.display='';
+      if(memberBest)memberBest.textContent=fmt;
     }).catch(function(){});
   })();
   </script>

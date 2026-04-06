@@ -341,15 +341,17 @@
       btn.disabled    = true;
 
       try {
-        // 1. Validate invite code exists and is unused (fast client-side check)
-        const { data: codeCheck } = await VSSupabase
-          .from('invite_codes')
-          .select('code')
-          .eq('code', inviteCode)
-          .single();
+        // 1. If invite code provided, do a fast client-side pre-check
+        if (inviteCode) {
+          const { data: codeCheck } = await VSSupabase
+            .from('invite_codes')
+            .select('code')
+            .eq('code', inviteCode.toUpperCase().trim())
+            .single();
 
-        if (!codeCheck) {
-          throw new Error('Invalid or already used invite code.');
+          if (!codeCheck) {
+            throw new Error('Invalid or already used invite code.');
+          }
         }
 
         // 2. Create Supabase auth user
@@ -362,12 +364,14 @@
 
         if (authErr) throw new Error(authErr.message);
 
-        // 3. Register vault member + redeem code (server-side RPC)
+        // 3. Register vault member — uses register_open (invite optional)
+        //    If invite code present: redeems it for +50 XP bonus + inviter reward
+        //    If no invite code: creates free account with 10 starter XP
         const { data: rpcResult, error: rpcErr } = await VSSupabase
-          .rpc('register_with_invite', {
-            p_invite_code: inviteCode,
+          .rpc('register_open', {
             p_username:    username,
             p_subscribe:   subscribe,
+            p_invite_code: inviteCode || '',
           });
 
         if (rpcErr) throw new Error(rpcErr.message);

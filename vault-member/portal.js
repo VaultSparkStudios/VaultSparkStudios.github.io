@@ -732,15 +732,17 @@
       btn.disabled    = true;
 
       try {
-        // 1. Validate invite code exists and is unused (fast client-side check)
-        const { data: codeCheck } = await VSSupabase
-          .from('invite_codes')
-          .select('code')
-          .eq('code', inviteCode)
-          .single();
+        // 1. If invite code provided, do a fast client-side pre-check
+        if (inviteCode) {
+          const { data: codeCheck } = await VSSupabase
+            .from('invite_codes')
+            .select('code')
+            .eq('code', inviteCode.toUpperCase().trim())
+            .single();
 
-        if (!codeCheck) {
-          throw new Error('Invalid or already used invite code.');
+          if (!codeCheck) {
+            throw new Error('Invalid or already used invite code.');
+          }
         }
 
         // 2. Create Supabase auth user
@@ -753,12 +755,12 @@
 
         if (authErr) throw new Error(authErr.message);
 
-        // 3. Register vault member + redeem code (server-side RPC)
+        // 3. Register vault member — invite code optional (+50 XP bonus if used)
         const { data: rpcResult, error: rpcErr } = await VSSupabase
-          .rpc('register_with_invite', {
-            p_invite_code: inviteCode,
+          .rpc('register_open', {
             p_username:    username,
             p_subscribe:   subscribe,
+            p_invite_code: inviteCode || '',
           });
 
         if (rpcErr) throw new Error(rpcErr.message);
@@ -941,10 +943,10 @@
       try {
         const { data: { session } } = await VSSupabase.auth.getSession();
         if (!session) throw new Error('Session expired. Please sign in again.');
-        const { error: rpcErr } = await VSSupabase.rpc('register_with_invite', {
-          p_invite_code: invite,
+        const { error: rpcErr } = await VSSupabase.rpc('register_open', {
           p_username:    username,
           p_subscribe:   subscribe,
+          p_invite_code: invite || '',
         });
         if (rpcErr) throw new Error(rpcErr.message);
         const { data: row } = await VSSupabase.from('vault_members').select('*').eq('id', session.user.id).single();

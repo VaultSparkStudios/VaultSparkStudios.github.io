@@ -6,7 +6,7 @@
 (function () {
   var STORAGE_KEY = 'vs_theme';
   var ACCOUNT_PREF_KEY = 'site_theme';
-  var DEFAULT_THEME = 'high-contrast';
+  var DEFAULT_THEME = 'dark';
   var SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
   var SUPABASE_ANON_KEY = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
   var SUPABASE_SESSION_KEYS = [
@@ -84,9 +84,14 @@
 
   function refreshPicker(theme) {
     var select = document.getElementById('theme-select');
-    if (!select) return;
-    select.value = theme;
-    select.title = 'Theme: ' + select.options[select.selectedIndex].text;
+    if (select) {
+      select.value = theme;
+      select.title = 'Theme: ' + select.options[select.selectedIndex].text;
+    }
+    // Sync mobile pills
+    document.querySelectorAll('.mobile-theme-pill').forEach(function (pill) {
+      pill.classList.toggle('active', pill.dataset.theme === theme);
+    });
   }
 
   function applyTheme(theme) {
@@ -314,6 +319,7 @@
     var navRight = document.querySelector('.nav-right');
     if (!navRight || document.getElementById('theme-select')) return;
 
+    // Desktop picker (hidden on mobile via CSS)
     var select = document.createElement('select');
     select.id = 'theme-select';
     select.className = 'theme-select';
@@ -326,8 +332,6 @@
       select.appendChild(option);
     });
 
-    refreshPicker(getTheme());
-
     select.addEventListener('change', function () {
       setTheme(select.value);
     });
@@ -339,6 +343,46 @@
       navRight.appendChild(select);
     }
 
+    refreshPicker(getTheme());
+
+    // Mobile pill switcher (inside the nav overlay footer)
+    injectMobileThemePills();
+  }
+
+  function injectMobileThemePills() {
+    if (document.getElementById('mobile-theme-bar')) return;
+    var footer = document.querySelector('.mobile-nav-footer');
+    if (!footer) return;
+
+    var bar = document.createElement('div');
+    bar.id = 'mobile-theme-bar';
+    bar.className = 'mobile-theme-bar';
+
+    var label = document.createElement('span');
+    label.className = 'mobile-theme-label';
+    label.textContent = 'Theme';
+    bar.appendChild(label);
+
+    var pills = document.createElement('div');
+    pills.className = 'mobile-theme-pills';
+
+    var SHORT = { dark: 'Dark', light: 'Light', ambient: 'Ambient', warm: 'Warm', cool: 'Cool', lava: 'Lava', 'high-contrast': 'Hi-Con' };
+
+    THEMES.forEach(function (theme) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'mobile-theme-pill';
+      btn.dataset.theme = theme.value;
+      btn.textContent = SHORT[theme.value] || theme.label;
+      btn.setAttribute('aria-label', 'Theme: ' + theme.label);
+      btn.addEventListener('click', function () {
+        setTheme(theme.value);
+      });
+      pills.appendChild(btn);
+    });
+
+    bar.appendChild(pills);
+    footer.insertBefore(bar, footer.firstChild);
     refreshPicker(getTheme());
   }
 
