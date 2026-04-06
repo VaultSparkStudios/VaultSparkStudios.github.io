@@ -10,7 +10,7 @@ Remove the false public claim that VaultSpark projects are open-source/MIT and r
 
 - Shipped: 1 rights-posture correction pass — proprietary IP notice rewrite for `/open-source/`, shared footer/resource label propagation to 72 HTML pages, sitemap/homepage copy updates, compliance test title update
 - Tests: N/A — no automated test run in this session; the compliance test expectation was updated locally
-- Deploy: pushed to `main` (pending commit SHA) · GitHub Pages auto
+- Deploy: pushed to `main` (`26b7afa`) · GitHub Pages auto
 
 ---
 
