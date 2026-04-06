@@ -6,7 +6,7 @@
 - Fixed a systemic readability gap by overriding `--steel` in light mode; many components were inheriting a pale gray accent that washed out on the white background
 - Synced browser theme color in `assets/theme-toggle.js` to the new light background
 - Verification: `npm.cmd test -- tests/theme-persistence.spec.js` ran; Chromium failures are tied to an existing `body[data-theme]` expectation mismatch, Firefox/WebKit browsers missing locally
-- Deploy: not pushed this session
+- Pushed: `7976f9b`
 - SIL: 414/500 · Velocity: 1 · Debt: →
 
 ## 2026-04-06 — Session 39

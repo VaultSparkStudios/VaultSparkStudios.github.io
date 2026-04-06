@@ -10,7 +10,7 @@ Fix the broken light-mode readability and make the light theme feel intentional 
 
 - Shipped: 2 theme-system improvements — refined global light palette/surfaces, browser theme-color synced to new light background
 - Tests: 0 passing / 6 failing — Playwright `tests/theme-persistence.spec.js`; Chromium fails on existing `body[data-theme]` expectation, Firefox/WebKit executables missing locally
-- Deploy: pending
+- Deploy: pushed to `main` (`7976f9b`) · GitHub Pages auto
 
 ---
 
