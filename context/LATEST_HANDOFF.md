@@ -1,6 +1,9 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 34)
+Last updated: 2026-04-06 (Session 36)
+
+## Session Intent: Session 36
+Fix blurry mobile menu + FORGE/SPARKED/VAULTED badge overlap on project/game pages.
 
 ## Where We Left Off (Session 35 — 2026-04-06)
 
