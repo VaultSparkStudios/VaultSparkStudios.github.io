@@ -34,6 +34,7 @@ import { getPredictiveAlerts, renderPredictiveAlerts } from "../utils/predictive
 import { auditProjectTruth, getTruthAuditTone } from "../utils/truthAudit.js";
 import { pushTruthDebtSnapshot, loadTruthDebtHistory, renderTruthDebtSparkline } from "../utils/truthDebtHistory.js";
 import { pushSilSnapshot, getSilTrendAlerts, renderSilAlertBanner, renderSilTrendBadge } from "../utils/silTrend.js";
+import { loadSviHistory } from "../utils/sviHistory.js";
 
 // Re-export for backwards compatibility (clientApp.js imports these from here)
 export { _pushAlertHistory as pushAlertHistory, _snoozeAlert as snoozeAlert };
@@ -97,6 +98,34 @@ function scoreRationale(scoring) {
 
   return needed.length ? `Needs: ${needed.slice(0, 2).join(", ")}` : null;
 }
+
+// ── Launch Readiness % (lightweight — card-level) ─────────────────────────────
+// Full 6-criteria version lives in projectScorePanel.js.
+// This 5-criteria version is fast enough to run per-card.
+function computeCardLR(project, repoData) {
+  let pass = 0;
+  const total = 5;
+  if (repoData?.ciRuns?.[0]?.conclusion === "success") pass++;
+  if ((repoData?.repo?.openIssues ?? 99) < 10) pass++;
+  if (repoData?.latestRelease || (repoData?.deployments?.length > 0) || project.deployedUrl) pass++;
+  const lastCmt = repoData?.commits?.[0];
+  if (lastCmt && daysSince(lastCmt.date) < 7) pass++;
+  if (project.status === "live" || project.vaultStatus === "sparked") pass++;
+  return Math.round((pass / total) * 100);
+}
+
+function lrBar(pct) {
+  const color = pct >= 80 ? "var(--green)" : pct >= 50 ? "var(--gold)" : "var(--red)";
+  return `<div style="display:flex;align-items:center;gap:5px;">
+    <div style="flex:1;height:3px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;">
+      <div style="width:${pct}%;height:100%;background:${color};border-radius:2px;"></div>
+    </div>
+    <span style="font-size:9px;font-weight:700;color:${color};min-width:24px;text-align:right;">${pct}%</span>
+  </div>`;
+}
+
+// ── Vault status icon prefix ──────────────────────────────────────────────────
+const VAULT_ICON = { forge: "⚒", sparked: "⚡", vaulted: "🏛" };
 
 // ── Quick win suggestion ──────────────────────────────────────────────────────
 function quickWin(scoring, repoData) {
@@ -704,7 +733,7 @@ function renderProjectCard(project, ghData, sbData, socialData, settings, scoreP
           <div style="display:flex; align-items:center; gap:6px; margin-top:4px; flex-wrap:wrap;">
             <span class="project-status-pill ${project.status}" style="margin:0;">${project.statusLabel}</span>
             <span class="project-card-type ${project.type}">${project.type}</span>
-            ${project.vaultStatus ? `<span class="vault-status-badge ${project.vaultStatus}" title="Vault status: ${project.vaultStatus.toUpperCase()}">${project.vaultStatus.toUpperCase()}</span>` : ""}
+            ${project.vaultStatus ? `<span class="vault-status-badge ${project.vaultStatus}" title="Vault status: ${project.vaultStatus.toUpperCase()}">${VAULT_ICON[project.vaultStatus] || ""} ${project.vaultStatus.toUpperCase()}</span>` : ""}
             ${(() => {
               const phase = project.developmentPhase || externalPhase || null;
               if (!phase) return '';
@@ -755,6 +784,19 @@ function renderProjectCard(project, ghData, sbData, socialData, settings, scoreP
               const days = daysSince(lastC.date);
               if (days < 5 || days > 13 || scoring.total <= 20) return "";
               return `<div style="font-size:10px; color:var(--muted); margin-top:2px; opacity:0.7;">⏳ stale in ${14 - Math.floor(days)}d if no commits</div>`;
+            })()}
+            ${(() => {
+              const lr = computeCardLR(project, repoData);
+              const lrColor = lr >= 80 ? 'var(--green)' : lr >= 50 ? 'var(--gold)' : 'var(--red)';
+              return `<div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.05);" title="Launch Readiness: ${lr}% — 5-criteria check (CI, issues, deployment, activity, status)">
+                <div style="font-size:8px;color:var(--muted);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;">🚀 Launch Ready</div>
+                <div style="display:flex;align-items:center;gap:4px;">
+                  <div style="flex:1;height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;">
+                    <div style="width:${lr}%;height:100%;background:${lrColor};border-radius:2px;transition:width 0.4s;"></div>
+                  </div>
+                  <span style="font-size:10px;font-weight:800;color:${lrColor};min-width:28px;text-align:right;">${lr}%</span>
+                </div>
+              </div>`;
             })()}
             <button data-score-explain="${project.id}" title="Explain this score"
               style="font-size:9px; color:rgba(255,255,255,0.3); background:none; border:none; cursor:pointer; padding:1px 4px; margin-top:2px; transition:color 0.1s;"
@@ -2032,6 +2074,7 @@ export function renderStudioHubView(state) {
   })();
   const silHistory  = pushSilSnapshot(silPerProject);
   const silAlerts   = getSilTrendAlerts(silHistory);
+  const sviHistory  = loadSviHistory();
 
   // Portfolio week-over-week trend
   const prevStudioAvg = (() => {
@@ -2095,6 +2138,43 @@ export function renderStudioHubView(state) {
             <div style="font-size:11px; color:var(--muted); margin-top:4px;">Trend</div>
           </div>
           ` : ""}
+          ${(() => {
+            // SVI mini widget — reads from Analytics history; gracefully empty if not yet visited
+            if (!sviHistory.length) return '';
+            const last      = sviHistory[sviHistory.length - 1];
+            const sviVal    = last.svi;
+            const sviColor  = sviVal >= 75 ? 'var(--green)' : sviVal >= 50 ? 'var(--cyan)' : sviVal >= 35 ? 'var(--gold)' : 'var(--red)';
+            const sviTrend  = last.trend || '→';
+            const trendCol  = sviTrend === '↑' ? 'var(--green)' : sviTrend === '↓' ? 'var(--red)' : 'var(--muted)';
+            // Mini sparkline from last 12 snapshots
+            const sparkVals = sviHistory.slice(-12).map(d => d.svi).filter(v => v != null);
+            let sviSparkSvg = '';
+            if (sparkVals.length >= 2) {
+              const sw = 56, sh = 18;
+              const mn = Math.min(...sparkVals), mx = Math.max(...sparkVals);
+              const range = mx - mn || 1;
+              const pts = sparkVals.map((v, i) => {
+                const x = (i / (sparkVals.length - 1)) * (sw - 4) + 2;
+                const y = sh - 2 - ((v - mn) / range) * (sh - 4);
+                return `${x.toFixed(1)},${y.toFixed(1)}`;
+              }).join(' ');
+              sviSparkSvg = `<svg width="${sw}" height="${sh}" style="display:block;margin:0 auto;">
+                <polyline points="${pts}" fill="none" stroke="${sviColor}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.85"/>
+              </svg>`;
+            }
+            return `
+              <div data-view="analytics" style="background:var(--panel); border:1px solid var(--border); border-radius:10px; padding:10px 14px; text-align:center; cursor:pointer; transition:border-color 0.15s;"
+                   title="Studio Vitality Index — click to open Analytics"
+                   onmouseover="this.style.borderColor='rgba(122,231,199,0.3)'" onmouseout="this.style.borderColor=''">
+                <div style="font-size:9px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;font-weight:700;margin-bottom:4px;">SVI 🏛</div>
+                <div style="display:flex;align-items:baseline;gap:4px;justify-content:center;">
+                  <div style="font-size:26px;font-weight:900;color:${sviColor};line-height:1;font-variant-numeric:tabular-nums;">${sviVal}</div>
+                  <div style="font-size:13px;font-weight:700;color:${trendCol};">${sviTrend}</div>
+                </div>
+                ${sviSparkSvg}
+                <div style="font-size:10px;color:var(--muted);margin-top:3px;">Vitality</div>
+              </div>`;
+          })()}
         </div>
       </div>
 

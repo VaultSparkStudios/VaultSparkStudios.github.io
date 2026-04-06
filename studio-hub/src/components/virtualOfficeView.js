@@ -4,7 +4,25 @@
 
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject, getGrade } from "../utils/projectScoring.js";
-import { timeAgo, daysSince } from "../utils/helpers.js";
+import { timeAgo, daysSince, scoreColor } from "../utils/helpers.js";
+
+const VAULT_COLORS = {
+  forge:   { bg: 'rgba(251,146,60,0.12)', color: '#fb923c', border: 'rgba(251,146,60,0.3)'  },
+  sparked: { bg: 'rgba(122,231,199,0.12)', color: '#7ae7c7', border: 'rgba(122,231,199,0.3)' },
+  vaulted: { bg: 'rgba(100,116,139,0.10)', color: '#64748b', border: 'rgba(100,116,139,0.2)' },
+};
+const VAULT_ICON = { forge: '⚒', sparked: '⚡', vaulted: '🏛' };
+
+function computeFloorLR(project, repoData) {
+  let pass = 0;
+  if (repoData?.ciRuns?.[0]?.conclusion === 'success') pass++;
+  if ((repoData?.repo?.openIssues ?? 99) < 10) pass++;
+  if (repoData?.latestRelease || repoData?.deployments?.length > 0 || project.deployedUrl) pass++;
+  const lastCmt = repoData?.commits?.[0];
+  if (lastCmt && daysSince(lastCmt.date) < 7) pass++;
+  if (project.status === 'live' || project.vaultStatus === 'sparked') pass++;
+  return Math.round((pass / 5) * 100);
+}
 
 function ciDot(ciRuns) {
   if (!ciRuns?.length) return `<span style="color:var(--muted); font-size:10px;">— no CI</span>`;
@@ -16,7 +34,7 @@ function ciDot(ciRuns) {
 }
 
 function roomCard(project, repoData, sbData, socialData, beaconData) {
-  const scoring  = scoreProject(project, repoData, sbData, socialData);
+  const scoring    = scoreProject(project, repoData, sbData, socialData);
   const lastCommit = repoData?.commits?.[0];
   const commitDays = lastCommit ? daysSince(lastCommit.date) : Infinity;
   const staleGlow  = commitDays > 30 ? "rgba(248,113,113,0.08)" : commitDays > 14 ? "rgba(255,200,116,0.06)" : "transparent";
@@ -27,7 +45,11 @@ function roomCard(project, repoData, sbData, socialData, beaconData) {
     ? `<span style="color:var(--cyan); font-size:10px; animation:pulse 2s infinite;">● live</span>`
     : "";
 
-  const sessions = sbData?.sessions?.[project.supabaseGameSlug];
+  const sessions  = sbData?.sessions?.[project.supabaseGameSlug];
+  const vs        = project.vaultStatus || "forge";
+  const vc        = VAULT_COLORS[vs] || VAULT_COLORS.forge;
+  const lr        = computeFloorLR(project, repoData);
+  const lrColor   = lr >= 80 ? "#4ade80" : lr >= 50 ? "#ffc874" : "#f87171";
 
   return `
     <div data-view="project:${project.id}" style="
@@ -40,7 +62,8 @@ function roomCard(project, repoData, sbData, socialData, beaconData) {
     onmouseover="this.style.background='rgba(122,231,199,0.05)'; this.style.borderColor='${project.color}99'"
     onmouseout="this.style.background='rgba(12,19,31,0.6)'; this.style.borderColor='${project.color}40'"
     >
-      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px;">
+      <!-- Name + Score row -->
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
         <div style="font-size:12px; font-weight:700; color:var(--text); line-height:1.2; min-width:0; flex:1; margin-right:8px;">
           ${project.name}
         </div>
@@ -50,10 +73,25 @@ function roomCard(project, repoData, sbData, socialData, beaconData) {
         </div>
       </div>
 
+      <!-- Score bar -->
       <div style="height:3px; background:rgba(255,255,255,0.06); border-radius:2px; margin-bottom:8px; overflow:hidden;">
         <div style="width:${scoring.total}%; height:100%; background:${scoring.gradeColor}; border-radius:2px;"></div>
       </div>
 
+      <!-- Vault status + Launch readiness row -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:7px; gap:6px;">
+        <span style="font-size:9px; font-weight:800; letter-spacing:0.07em; padding:2px 7px; border-radius:10px;
+          background:${vc.bg}; color:${vc.color}; border:1px solid ${vc.border}; white-space:nowrap;"
+          title="Vault Status: ${vs.toUpperCase()}">${VAULT_ICON[vs]} ${vs.toUpperCase()}</span>
+        <div style="display:flex; align-items:center; gap:4px; flex:1;" title="Launch Readiness: ${lr}%">
+          <div style="flex:1; height:3px; background:rgba(255,255,255,0.07); border-radius:2px; overflow:hidden; max-width:52px;">
+            <div style="width:${lr}%; height:100%; background:${lrColor}; border-radius:2px;"></div>
+          </div>
+          <span style="font-size:9px; font-weight:700; color:${lrColor};">🚀${lr}%</span>
+        </div>
+      </div>
+
+      <!-- CI + commit row -->
       <div style="display:flex; justify-content:space-between; align-items:center;">
         <div style="font-size:10px; color:var(--muted);">
           ${ciDot(repoData?.ciRuns)}

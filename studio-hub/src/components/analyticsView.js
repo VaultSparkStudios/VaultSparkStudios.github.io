@@ -4,6 +4,10 @@
 import { PROJECTS } from "../data/studioRegistry.js";
 import { scoreProject, getGrade } from "../utils/projectScoring.js";
 import { fmt, timeAgo, daysSince, ciStatus, scoreColor, scoreGrade, safeGetJSON } from "../utils/helpers.js";
+import {
+  loadSviHistory, pushSviSnapshot, filterSviHistory,
+  computeMA, computeBollinger, computeTrendLine, bollingerBandwidth,
+} from "../utils/sviHistory.js";
 import { forecastScores, getOverallForecastAccuracy, monteCarloForecast } from "../utils/scoreForecast.js";
 import { deltaBadge } from "./hub/hubHelpers.js";
 import { getScoreAnomalies } from "./hub/morningBrief.js";
@@ -152,6 +156,222 @@ function computeSVI(ghData, sbData, scoreHistory, alertCount) {
   }
 
   return { svi, trend, ciPassRate: Math.round(ciPassRate * 100), totalWeekCommits };
+}
+
+// ── SVI Chart SVG renderer (shared by initial render + _vsviDraw redraw) ──────
+function _sviDrawSvg(filtered) {
+  const W = 820, H = 280;
+  const ML = 44, MR = 64, MT = 14, MB = 24;
+  const CW = W - ML - MR;   // 712 — main chart width
+  const CH = 188;            // main chart height
+  const VH = 38;             // volume strip height
+  const VY = MT + CH + 10;  // volume strip y-start
+
+  const n = filtered.length;
+  if (n < 2) {
+    return `<text x="${W/2}" y="${H/2}" text-anchor="middle" font-size="12"
+      fill="rgba(149,163,183,0.45)">Open Analytics a few times to build history</text>`;
+  }
+
+  const sviVals = filtered.map(d => d.svi);
+  const volVals = filtered.map(d => d.weeklyCommits ?? 0);
+
+  const clamp  = v => Math.max(0, Math.min(100, v));
+  const xOf    = i => ML + (i / Math.max(1, n - 1)) * CW;
+  const yOf    = v => MT + (1 - clamp(v) / 100) * CH;
+
+  // Grade zone bands (background)
+  const zones = [
+    { min: 85, max: 100, fill: 'rgba(74,222,128,0.07)',  label: 'A+' },
+    { min: 70, max: 85,  fill: 'rgba(122,231,199,0.05)', label: 'A'  },
+    { min: 55, max: 70,  fill: 'rgba(105,179,255,0.04)', label: 'B+' },
+    { min: 35, max: 55,  fill: 'rgba(255,200,116,0.04)', label: 'B'  },
+    { min: 0,  max: 35,  fill: 'rgba(248,113,113,0.06)', label: 'C'  },
+  ];
+  const zoneBands = zones.map(z => {
+    const y1 = yOf(z.max), y2 = yOf(z.min);
+    return `<rect x="${ML}" y="${y1.toFixed(1)}" width="${CW}" height="${(y2 - y1).toFixed(1)}" fill="${z.fill}"/>
+      <text x="${W - MR + 5}" y="${((y1 + y2) / 2 + 4).toFixed(1)}" font-size="9" font-weight="700"
+        fill="rgba(149,163,183,0.4)">${z.label}</text>`;
+  }).join('');
+
+  // Horizontal grade separator dashes
+  const gradeLines = [85, 70, 55, 35].map(v => {
+    const y = yOf(v).toFixed(1);
+    return `<line x1="${ML}" y1="${y}" x2="${W - MR}" y2="${y}"
+      stroke="rgba(255,255,255,0.055)" stroke-width="1" stroke-dasharray="4,3"/>`;
+  }).join('');
+
+  // Technical indicators
+  const ma7   = computeMA(sviVals, 7);
+  const ma20  = computeMA(sviVals, 20);
+  const boll  = computeBollinger(sviVals, Math.min(20, n), 2);
+  const trend = computeTrendLine(sviVals);
+
+  // Bollinger band fill
+  const bUpper = boll.upper.map((v, i) => v != null ? [xOf(i), yOf(v)] : null).filter(Boolean);
+  const bLower = boll.lower.map((v, i) => v != null ? [xOf(i), yOf(v)] : null).filter(Boolean);
+  const bollFill = bUpper.length > 1
+    ? `<polygon points="${[...bUpper, ...[...bLower].reverse()].map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')}"
+        fill="rgba(105,179,255,0.07)" stroke="none"/>`
+    : '';
+
+  const pathLine = (vals, stroke, sw, dash = '', opacity = 1) => {
+    const pts = vals
+      .map((v, i) => v != null ? `${xOf(i).toFixed(1)},${yOf(v).toFixed(1)}` : null)
+      .filter(Boolean);
+    if (pts.length < 2) return '';
+    return `<polyline points="${pts.join(' ')}" fill="none" stroke="${stroke}" stroke-width="${sw}"
+      ${dash ? `stroke-dasharray="${dash}"` : ''} opacity="${opacity}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  };
+
+  const bollLines = pathLine(boll.upper, '#69b3ff', 0.8, '3,2', 0.45)
+                  + pathLine(boll.lower, '#69b3ff', 0.8, '3,2', 0.45);
+  const ma7Line   = pathLine(ma7,  '#ffc874', 1.3, '', 0.75);
+  const ma20Line  = pathLine(ma20, '#69b3ff', 1.3, '', 0.75);
+
+  // Trend channel
+  let trendLine = '';
+  if (trend && Math.abs(trend.slope) > 0.05) {
+    const x1 = xOf(0).toFixed(1),     y1 = yOf(clamp(trend.trendPoints[0])).toFixed(1);
+    const x2 = xOf(n - 1).toFixed(1), y2 = yOf(clamp(trend.trendPoints[n - 1])).toFixed(1);
+    const tc  = trend.slope > 0 ? 'rgba(74,222,128,0.45)' : 'rgba(248,113,113,0.45)';
+    trendLine = `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"
+      stroke="${tc}" stroke-width="1.8" stroke-dasharray="7,4"/>`;
+  }
+
+  // Gradient fill under main SVI line
+  const gradId  = 'svig';
+  const mainPts = sviVals.map((v, i) => `${xOf(i).toFixed(1)},${yOf(v).toFixed(1)}`);
+  const lastX   = xOf(n - 1).toFixed(1);
+  const curSvi  = sviVals[n - 1];
+  const dotColor = scoreColor(curSvi);
+
+  const gradDef = `<defs>
+    <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${dotColor}" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="${dotColor}" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="svi-clip">
+      <rect x="${ML}" y="${MT}" width="${CW}" height="${CH}"/>
+    </clipPath>
+  </defs>`;
+
+  const fillPoly = `<polygon clip-path="url(#svi-clip)"
+    points="${ML},${MT + CH} ${mainPts.join(' ')} ${lastX},${MT + CH}"
+    fill="url(#${gradId})" stroke="none"/>`;
+  const mainLine = `<polyline clip-path="url(#svi-clip)" points="${mainPts.join(' ')}"
+    fill="none" stroke="${dotColor}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+  // Current value endpoint dot + label
+  const curY = yOf(curSvi).toFixed(1);
+  const curDot = `
+    <circle cx="${lastX}" cy="${curY}" r="5" fill="${dotColor}" stroke="rgba(8,14,24,0.9)" stroke-width="2"/>
+    <rect x="${parseFloat(lastX) + 8}" y="${parseFloat(curY) - 10}" width="26" height="14" rx="3"
+      fill="${dotColor}" opacity="0.15"/>
+    <text x="${parseFloat(lastX) + 21}" y="${parseFloat(curY) + 1}" text-anchor="middle" font-size="10"
+      font-weight="800" fill="${dotColor}">${curSvi}</text>`;
+
+  // Y axis grid + labels
+  const yAxis = [0, 25, 50, 75, 100].map(v => {
+    const y = yOf(v).toFixed(1);
+    return `<line x1="${ML}" y1="${y}" x2="${W - MR}" y2="${y}"
+        stroke="rgba(255,255,255,0.035)" stroke-width="1"/>
+      <text x="${ML - 5}" y="${parseFloat(y) + 4}" text-anchor="end" font-size="9"
+        fill="rgba(149,163,183,0.4)">${v}</text>`;
+  }).join('');
+
+  // X axis date labels (~6 evenly spaced)
+  const labelCount = Math.min(6, n);
+  const xLabels = Array.from({ length: labelCount }, (_, i) => {
+    const idx = Math.round(i * (n - 1) / Math.max(1, labelCount - 1));
+    const d   = new Date(filtered[idx].ts);
+    const lbl = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return `<text x="${xOf(idx).toFixed(1)}" y="${MT + CH + MB - 2}" text-anchor="middle"
+      font-size="9" fill="rgba(149,163,183,0.4)">${lbl}</text>`;
+  }).join('');
+
+  // Volume bars
+  const maxVol  = Math.max(...volVals, 1);
+  const barW    = Math.max(2, (CW / n) * 0.72);
+  const volBars = volVals.map((v, i) => {
+    const bh = (v / maxVol) * VH;
+    const bx = (xOf(i) - barW / 2).toFixed(1);
+    const by = (VY + VH - bh).toFixed(1);
+    return `<rect x="${bx}" y="${by}" width="${barW.toFixed(1)}" height="${bh.toFixed(1)}"
+      fill="rgba(122,231,199,0.22)" rx="1"/>`;
+  }).join('');
+
+  // Chart border
+  const border = `<rect x="${ML}" y="${MT}" width="${CW}" height="${CH}"
+    fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>`;
+
+  return `${gradDef}
+    ${zoneBands}
+    ${yAxis}${gradeLines}
+    ${bollFill}${bollLines}
+    ${trendLine}
+    ${ma7Line}${ma20Line}
+    ${fillPoly}${mainLine}
+    ${curDot}
+    ${volBars}
+    <text x="${ML - 5}" y="${(VY + VH / 2 + 4).toFixed(1)}" text-anchor="end" font-size="8"
+      fill="rgba(149,163,183,0.3)">VOL</text>
+    ${xLabels}
+    ${border}`;
+}
+
+// ── Global interactive redraw for SVI chart timeframe buttons ─────────────────
+// Defined once at module load; safe to call via onclick attributes.
+window._vsviDraw = function (tf) {
+  const container = document.getElementById('svi-chart-container');
+  if (!container) return;
+
+  const raw = window.__vsviData || [];
+  const days = { '1W': 7, '1M': 30, '3M': 90, '6M': 180, '1Y': 365, 'ALL': null }[tf] ?? null;
+  const filtered = filterSviHistory(raw, days);
+
+  // Update SVG
+  const svg = document.getElementById('svi-chart-svg');
+  if (svg) svg.innerHTML = _sviDrawSvg(filtered);
+
+  // Update stats strip
+  const statsEl = document.getElementById('svi-stats-strip');
+  if (statsEl && filtered.length >= 2) {
+    const vals  = filtered.map(d => d.svi);
+    const ma7   = computeMA(vals, Math.min(7, vals.length));
+    const ma20  = computeMA(vals, Math.min(20, vals.length));
+    const boll  = computeBollinger(vals, Math.min(20, vals.length), 2);
+    const trend = computeTrendLine(vals);
+    const bw    = bollingerBandwidth(boll, vals.length - 1);
+    const last7 = ma7[vals.length - 1];
+    const last20 = ma20[vals.length - 1];
+    statsEl.innerHTML = _sviStatsHtml(vals[vals.length - 1], last7, last20, bw, trend, filtered.length);
+  }
+
+  // Update active button
+  container.querySelectorAll('.svi-tf-btn').forEach(btn => {
+    const active = btn.dataset.tf === tf;
+    btn.style.background  = active ? 'rgba(122,231,199,0.15)' : 'rgba(255,255,255,0.04)';
+    btn.style.color       = active ? 'var(--cyan)' : 'rgba(149,163,183,0.7)';
+    btn.style.borderColor = active ? 'rgba(122,231,199,0.35)' : 'rgba(255,255,255,0.08)';
+  });
+};
+
+function _sviStatsHtml(cur, ma7, ma20, bw, trend, pts) {
+  const fmt1 = v => v != null ? v.toFixed(1) : '—';
+  const trendDir = trend
+    ? (trend.slope > 0.05 ? `<span style="color:var(--green)">↗ Rising</span>`
+     : trend.slope < -0.05 ? `<span style="color:var(--red)">↘ Falling</span>`
+     : `<span style="color:var(--muted)">→ Flat</span>`)
+    : '<span style="color:var(--muted)">—</span>';
+  const r2Str = trend ? `R²&nbsp;${trend.r2.toFixed(2)}` : '';
+  return `
+    <span>MA7&nbsp;<strong style="color:#ffc874">${fmt1(ma7)}</strong></span>
+    <span>MA20&nbsp;<strong style="color:#69b3ff">${fmt1(ma20)}</strong></span>
+    ${bw != null ? `<span>BBW&nbsp;<strong style="color:rgba(149,163,183,0.8)">${fmt1(bw)}%</strong></span>` : ''}
+    <span>Trend&nbsp;${trendDir}${r2Str ? `&nbsp;<span style="color:var(--muted);font-size:9px;">(${r2Str})</span>` : ''}</span>
+    <span style="color:var(--muted)">${pts}&nbsp;pts</span>`;
 }
 
 // 2. Portfolio Balance Score (PBS 0–100) — score distribution evenness
@@ -717,32 +937,109 @@ function renderCockpit(computed) {
     </div>`;
 }
 
-// ─ 1. Studio Vitality ────────────────────────────────────────────────────────
-function renderVitality(svi, scoreHistory) {
-  const histVals = scoreHistory.slice(-14).map((snap) => {
-    const vals = Object.values(snap.scores || {}).filter((v) => v != null);
-    return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null;
-  });
-  const trendLabel = svi.trend === "↑" ? "Improving" : svi.trend === "↓" ? "Declining" : "Stable";
-  const trendColor = svi.trend === "↑" ? "var(--green)" : svi.trend === "↓" ? "var(--red)" : "var(--cyan)";
+// ─ 1. Studio Vitality Index — full stock-style historical chart ───────────────
+function renderSVIChart(svi, sviHistory) {
+  const trendLabel = svi.trend === '↑' ? 'Improving' : svi.trend === '↓' ? 'Declining' : 'Stable';
+  const trendColor = svi.trend === '↑' ? 'var(--green)' : svi.trend === '↓' ? 'var(--red)' : 'var(--cyan)';
+  const color      = scoreColor(svi.svi);
+  const grade      = scoreGrade(svi.svi);
+  const filtered   = filterSviHistory(sviHistory, null);
 
-  return section("Studio Vitality Index", "🏛", `
-    <div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start;">
-      <div>
-        <div style="font-size:64px;font-weight:900;color:${scoreColor(svi.svi)};line-height:1;">${svi.svi}</div>
-        <div style="font-size:13px;color:${trendColor};font-weight:700;margin-top:4px;">${svi.trend} ${trendLabel}</div>
-        <div style="font-size:10px;color:var(--muted);margin-top:2px;">${scoreGrade(svi.svi)} grade out of 100</div>
+  // Pre-compute stats for default (ALL) timeframe
+  const vals   = filtered.map(d => d.svi);
+  const ma7    = computeMA(vals, Math.min(7, vals.length));
+  const ma20   = computeMA(vals, Math.min(20, vals.length));
+  const boll   = computeBollinger(vals, Math.min(20, vals.length), 2);
+  const trend  = computeTrendLine(vals);
+  const bw     = bollingerBandwidth(boll, Math.max(0, vals.length - 1));
+  const last7  = ma7[vals.length - 1];
+  const last20 = ma20[vals.length - 1];
+
+  // Expose data for interactive redraws
+  window.__vsviData = sviHistory;
+
+  const timeframes = [
+    { tf: '1W', label: '1W' },
+    { tf: '1M', label: '1M' },
+    { tf: '3M', label: '3M' },
+    { tf: '6M', label: '6M' },
+    { tf: '1Y', label: '1Y' },
+    { tf: 'ALL', label: 'ALL' },
+  ];
+
+  const btnStyle = (active) => `
+    font-size:10px; font-weight:700; padding:3px 8px; border-radius:5px; cursor:pointer;
+    border:1px solid ${active ? 'rgba(122,231,199,0.35)' : 'rgba(255,255,255,0.08)'};
+    background:${active ? 'rgba(122,231,199,0.15)' : 'rgba(255,255,255,0.04)'};
+    color:${active ? 'var(--cyan)' : 'rgba(149,163,183,0.7)'};
+    transition:all 0.15s; letter-spacing:0.04em;`;
+
+  const tfButtons = timeframes.map(({ tf, label }) =>
+    `<button class="svi-tf-btn" data-tf="${tf}" style="${btnStyle(tf === 'ALL')}"
+      onclick="window._vsviDraw && window._vsviDraw('${tf}')">${label}</button>`
+  ).join('');
+
+  const legend = `
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <span style="font-size:9px;color:${color};display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="3"><line x1="0" y1="1.5" x2="20" y2="1.5" stroke="${color}" stroke-width="2.4"/></svg>SVI</span>
+      <span style="font-size:9px;color:#ffc874;display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="3"><line x1="0" y1="1.5" x2="20" y2="1.5" stroke="#ffc874" stroke-width="1.3"/></svg>MA7</span>
+      <span style="font-size:9px;color:#69b3ff;display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="3"><line x1="0" y1="1.5" x2="20" y2="1.5" stroke="#69b3ff" stroke-width="1.3"/></svg>MA20</span>
+      <span style="font-size:9px;color:rgba(105,179,255,0.6);display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="8"><polygon points="0,0 20,0 20,8 0,8" fill="rgba(105,179,255,0.07)"/><line x1="0" y1="0" x2="20" y2="0" stroke="#69b3ff" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.45"/><line x1="0" y1="8" x2="20" y2="8" stroke="#69b3ff" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.45"/></svg>Bollinger</span>
+      <span style="font-size:9px;color:rgba(74,222,128,0.6);display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="3"><line x1="0" y1="1.5" x2="20" y2="1.5" stroke="rgba(74,222,128,0.5)" stroke-width="1.8" stroke-dasharray="5,3"/></svg>Trend</span>
+      <span style="font-size:9px;color:rgba(122,231,199,0.4);display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="8"><rect x="0" y="0" width="20" height="8" fill="rgba(122,231,199,0.22)" rx="1"/></svg>Vol</span>
+    </div>`;
+
+  return `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;" id="svi-chart-container">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:16px;">🏛</span>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);">Studio Vitality Index</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:1px;">Historical performance chart · ${sviHistory.length} data point${sviHistory.length !== 1 ? 's' : ''} collected</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+          <!-- Current SVI readout -->
+          <div style="text-align:center;">
+            <div style="font-size:52px;font-weight:900;color:${color};line-height:1;font-variant-numeric:tabular-nums;">${svi.svi}</div>
+            <div style="font-size:12px;color:${trendColor};font-weight:700;margin-top:2px;">${svi.trend} ${trendLabel}</div>
+            <div style="font-size:10px;color:var(--muted);">${grade} · out of 100</div>
+          </div>
+          <!-- Signal cards -->
+          <div style="display:flex;flex-direction:column;gap:5px;min-width:130px;">
+            ${kv('CI Pass Rate', svi.ciPassRate + '%', svi.ciPassRate >= 80 ? 'var(--green)' : svi.ciPassRate >= 50 ? 'var(--gold)' : 'var(--red)')}
+            ${kv('Commits This Week', String(svi.totalWeekCommits))}
+            ${kv('History Depth', sviHistory.length + ' pts')}
+          </div>
+        </div>
       </div>
-      <div style="flex:1;min-width:180px;">
-        ${kv("CI Pass Rate", svi.ciPassRate + "%", svi.ciPassRate >= 80 ? "var(--green)" : svi.ciPassRate >= 50 ? "var(--yellow)" : "var(--red)")}
-        ${kv("Portfolio Commits This Week", String(svi.totalWeekCommits))}
-        ${kv("Score History Depth", scoreHistory.length + " snapshots")}
+
+      <!-- Timeframe + legend row -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+        <div style="display:flex;gap:4px;">${tfButtons}</div>
+        ${legend}
       </div>
-      <div style="flex:1;min-width:220px;">
-        <div style="font-size:10px;color:var(--muted);margin-bottom:6px;">Portfolio Avg Score — Last 14 Snapshots</div>
-        ${sparkline(histVals, { w: 260, h: 52, color: scoreColor(svi.svi) })}
+
+      <!-- Main chart SVG -->
+      <div style="overflow:hidden;border-radius:6px;background:rgba(8,14,24,0.35);border:1px solid rgba(255,255,255,0.04);">
+        <svg id="svi-chart-svg" viewBox="0 0 820 280" width="100%" style="display:block;max-height:280px;"
+          preserveAspectRatio="xMidYMid meet" aria-label="Studio Vitality Index chart">
+          ${_sviDrawSvg(filtered)}
+        </svg>
       </div>
-    </div>`);
+
+      <!-- Technical indicators strip -->
+      <div id="svi-stats-strip" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:11px;color:var(--muted);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:6px;border:1px solid rgba(255,255,255,0.04);">
+        ${_sviStatsHtml(svi.svi, last7, last20, bw, trend, filtered.length)}
+      </div>
+    </div>`;
 }
 
 // ─ 2. Project Leaderboard + Portfolio Balance ─────────────────────────────────
@@ -2420,6 +2717,8 @@ export function renderAnalyticsView(state) {
 
   // Compute all 15 proprietary scores
   const svi  = computeSVI(ghData, sbData, scoreHistory, alertCount);
+  // Push SVI snapshot for historical chart (30-min dedup in pushSviSnapshot)
+  const sviHistory = pushSviSnapshot({ svi: svi.svi, ciPassRate: svi.ciPassRate, weeklyCommits: svi.totalWeekCommits, trend: svi.trend });
   const pbs  = computePBS(allScores);
   const rcr  = computeRCR(ghData);
   const crs  = computeCRS(ghData, scoreHistory);
@@ -2441,7 +2740,7 @@ export function renderAnalyticsView(state) {
   const tabContent = {
     overview: () => `
       ${renderCockpit({ svi, pbs, rcr, crs, crs2, dti, socr, eci, fcr, aas, tdi, svs, ip, rri, rs })}
-      ${renderVitality(svi, scoreHistory)}
+      ${renderSVIChart(svi, sviHistory)}
       ${renderLeaderboard(allScores, scorePrev, pbs)}`,
     portfolio: () => `
       ${renderLeaderboard(allScores, scorePrev, pbs)}
