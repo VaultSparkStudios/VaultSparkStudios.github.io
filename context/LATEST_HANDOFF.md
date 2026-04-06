@@ -2,6 +2,18 @@
 
 Last updated: 2026-04-06 (Session 34)
 
+## Where We Left Off (Session 35 — 2026-04-06)
+
+- Shipped: 3 CI fixes — Lighthouse robots-txt assertion disabled (Cloudflare AI Labyrinth injects unknown directive at CDN edge), /vault-member/ removed from Lighthouse URLs (intentionally noindex), "Learn More" aria-label fix, axe-cli ChromeDriver version mismatch resolved via browser-driver-manager
+- Tests: N/A — CI infrastructure session
+- Deploy: Committed + pushed (`929a884`)
+
+## Session Intent: Session 35
+Fix failing CI workflows (Lighthouse SEO + axe-cli).
+**Outcome: Achieved** — all 3 CI failures fixed and pushed.
+
+---
+
 ## Where We Left Off (Session 34)
 
 - Shipped: Protocol restore — CLAUDE.md session aliases, AGENTS.md full Studio OS guide, prompts/start.md synced to v2.4 (Bash session lock + Active Session Beacon), context files restored with functional content

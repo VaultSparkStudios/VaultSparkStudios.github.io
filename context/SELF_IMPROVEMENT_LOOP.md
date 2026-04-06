@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▅ (1 entry — fresh baseline)
-Avgs — 3: — [N=1] | 5: — [N=1] | all: 391.0
-  └ 3-session: Dev 79 | Align 82 | Momentum 78 | Engage 70 | Process 82
-Velocity trend: →  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~4 sessions  |  Intent rate: 100% (last 1)
-Last session: 2026-04-06 | Session 34 | Total: 391/500 | Velocity: 1 | protocolVelocity: 1
+Sparkline (last 5 totals): ▅▅ (2 entries)
+Avgs — 3: — [N=2] | 5: — [N=2] | all: 396.0
+  └ 3-session: Dev 83.5 | Align 80.0 | Momentum 81.5 | Engage 69.0 | Process 82.0
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~1.5 sessions ⚠  |  Intent rate: 100% (last 2)
+Last session: 2026-04-06 | Session 35 | Total: 401/500 | Velocity: 3 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -58,3 +58,27 @@ Avgs — 3: — [N=1] | 5: — [N=1] | all: 391.0
 3. **IGNIS scoring** — run `npx tsx cli.ts score .` from vaultspark-ignis against this repo; add score to PROJECT_STATUS.json. First step: open vaultspark-ignis and run the CLI. Medium probability (requires ignis session).
 
 **Committed to TASK_BOARD:** [SIL] CSP propagation script · [SIL] Staging smoke test script
+
+## 2026-04-06 — Session 35 | Total: 401/500 | Velocity: 3 | Debt: →
+Avgs — 3: — [N=2] | 5: — [N=2] | all: 396.0
+  └ 3-session: Dev 83.5 | Align 80.0 | Momentum 81.5 | Engage 69.0 | Process 82.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 88 | ↑ | 3 CI bugs diagnosed and fixed; Cloudflare robots.txt injection identified |
+| Creative Alignment | 78 | → | CI-only session; no creative direction |
+| Momentum | 85 | ↑ | 3 velocity; 2 CI blockers cleared |
+| Engagement | 68 | → | No external signals; responsive to user direction |
+| Process Quality | 82 | → | Handoff clean; IGNIS still untracked |
+| **Total** | **401/500** | ↑ | |
+
+**Top win:** Root-caused all 3 CI failures and shipped targeted fixes in one pass — including identifying Cloudflare as the unexpected robots.txt rewriter
+**Top gap:** Runway at ~1.5 sessions ⚠ — Now bucket needs more tasks or STRIPE_GIFT_PRICE_ID/GSC need to be actioned
+**Intent outcome:** Achieved — user said "fix them", all 3 CI failures addressed
+
+**Brainstorm**
+1. **Lighthouse timing fix** — add `wait-on` or delay step so Lighthouse only runs after GitHub Pages deployment confirms live; prevents testing stale site. First step: add `wait-on` npm package + step. High probability.
+2. **robots.txt Cloudflare comment** — add a comment in `robots.txt` noting that Cloudflare AI Labyrinth injects additional directives at the CDN edge; prevents future confusion. First step: add 3-line comment. High probability.
+3. **CI status badge in CURRENT_STATE.md** — track CI green/red state per workflow in CURRENT_STATE; makes startup brief more useful. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] robots.txt Cloudflare note · [SIL] Lighthouse deployment timing fix

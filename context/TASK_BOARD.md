@@ -16,6 +16,8 @@ Last updated: 2026-04-06 (Session 34)
 
 ## Next
 
+- [ ] **[SIL] Lighthouse deployment timing** — add `wait-on` or delay step so Lighthouse runs after GitHub Pages confirms live; prevents testing stale site (current failures were against old cached deploy)
+- [ ] **[SIL] robots.txt Cloudflare note** — add comment in `robots.txt` explaining Cloudflare AI Labyrinth injects additional directives at CDN edge; prevents future confusion when live robots.txt differs from repo
 - [ ] **[SIL] CSP propagation script** — meta CSP tags duplicated across 97 pages; `scripts/propagate-csp.mjs` generates from single source + propagates; eliminates manual per-file CSP edits
 - [ ] **[SIL] Staging smoke test script** — `scripts/smoke-test.sh` pings website.staging before any push; 5-10 key URLs, exits non-zero on failure; enforces CANON-007 in practice
 
@@ -47,6 +49,7 @@ Last updated: 2026-04-06 (Session 34)
 
 ## Done (recent)
 
+- [x] **CI fixes (S35)** — Lighthouse SEO (robots-txt off, vault-member removed, link-text aria-label), axe ChromeDriver mismatch fixed
 - [x] **Protocol restore (S34)** — CLAUDE.md session aliases, AGENTS.md, prompts/start.md v2.4, context files restored
 - [x] **Cloudflare security hardening (S33)** — .nojekyll, security.txt, robots.txt (14 AI crawlers), CSP patch, X-Robots-Tag, Worker redeployed
 - [x] **Voidfall teaser page (S32)** — /universe/voidfall/ + sitemap entries
