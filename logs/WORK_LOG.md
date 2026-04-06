@@ -1,5 +1,14 @@
 # Work Log
 
+## 2026-04-06 — Session 40
+
+- Refined the public-site light mode in `assets/style.css` with a warmer premium palette, stronger contrast tokens, and shared light-mode overrides for cards, chips, buttons, forms, badges, nav, footer, and section chrome
+- Fixed a systemic readability gap by overriding `--steel` in light mode; many components were inheriting a pale gray accent that washed out on the white background
+- Synced browser theme color in `assets/theme-toggle.js` to the new light background
+- Verification: `npm.cmd test -- tests/theme-persistence.spec.js` ran; Chromium failures are tied to an existing `body[data-theme]` expectation mismatch, Firefox/WebKit browsers missing locally
+- Deploy: not pushed this session
+- SIL: 414/500 · Velocity: 1 · Debt: →
+
 ## 2026-04-06 — Session 39
 
 - Actioned all 3 SIL Now items in one pass

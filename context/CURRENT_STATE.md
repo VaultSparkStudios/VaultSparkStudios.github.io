@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-06 (Session 39)
+- Date: 2026-04-06 (Session 40)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S39 actioned all 3 SIL Now items — mobile nav entrance animation, .status badge CSS guard, Lighthouse CI deployment timing fix
+- Repo posture: S40 refined the shared light-mode design system — higher-contrast palette, warmer premium light surfaces, stronger borders/shadows, and improved readability across shared cards, chips, buttons, forms, nav, and footer elements
 
 ## What exists
 
@@ -24,6 +24,7 @@
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler.
 - **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260406-silpol`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
 - **Mobile nav** (`assets/style.css`) — S36 removed backdrop-filter from .nav-center.open; S38 disabled .site-header::before backdrop-filter at ≤980px (root iOS GPU compositing fix); S39 added @keyframes nav-enter (translateY -6px→0, opacity) for entrance animation
+- **Light-mode theme refresh** (`assets/style.css`, `assets/theme-toggle.js`) — S40 retuned light tokens (`--text`, `--muted`, `--dim`, `--steel`, panel/bg vars), replaced washed translucent dark-theme carryovers with warm ivory/glass surfaces, and added light-mode component overrides for buttons, cards, panels, timeline/social blocks, inputs, badges, footer, and section chrome
 - **CSS guard** (`assets/style.css`) — S39: `.hero-art > .status` rule locks badge to `position:absolute; top/left:1rem; z-index:2` — prevents S36 badge-overlap regression
 - **Lighthouse CI** (`.github/workflows/lighthouse.yml`) — S39: wait-on step added (120s timeout, 5s interval) to poll live site before Lighthouse runs
 - **Supabase** — 16 edge functions ACTIVE; cloud-hosted at fjnpzjjyhnpmunfoycrp.supabase.co
@@ -52,4 +53,6 @@
 - Per-form Web3Forms keys (all forms share single key)
 - Cloudflare WAF rule (CN/RU/HK JS Challenge) — status unknown
 - beacon.env not configured (Active Session Beacon inactive)
+- Theme persistence Playwright spec asserts `body[data-theme]`; current runtime visibly applies the selected theme but does not satisfy that attribute expectation during test timing
+- Firefox/WebKit Playwright browsers not installed locally; cross-browser theme verification incomplete in this workspace
 - IGNIS score: 46,855/100,000 · Tier: FORGE · 79.0% through tier (scored S39; -236 from S38 time decay)

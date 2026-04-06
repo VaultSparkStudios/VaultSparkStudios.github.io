@@ -1,16 +1,16 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 39)
+Last updated: 2026-04-06 (Session 40)
 
-## Session Intent: Session 39
-Complete all SIL Now items.
-**Outcome: Achieved** — all 3 SIL Now items shipped in one clean pass.
+## Session Intent: Session 40
+Fix the broken light-mode readability and make the light theme feel intentional and refined.
+**Outcome: Achieved** — shared light-mode tokens and surfaces were overhauled in one pass; contrast is materially stronger and the mode now reads as a designed premium variant instead of a washed dark-theme inversion.
 
-## Where We Left Off (Session 39 — 2026-04-06)
+## Where We Left Off (Session 40 — 2026-04-06)
 
-- Shipped: 3 improvements — nav entrance animation, CSS badge guard, Lighthouse deployment timing
-- Tests: N/A
-- Deploy: committed + pushed (`0cb8e52`) · GitHub Pages auto
+- Shipped: 2 theme-system improvements — refined global light palette/surfaces, browser theme-color synced to new light background
+- Tests: 0 passing / 6 failing — Playwright `tests/theme-persistence.spec.js`; Chromium fails on existing `body[data-theme]` expectation, Firefox/WebKit executables missing locally
+- Deploy: pending
 
 ---
 
@@ -29,6 +29,18 @@ Complete all SIL Now items.
 1. **prefers-reduced-motion guard** — add accessibility override for nav-enter animation ([SIL] Now)
 2. **robots.txt Cloudflare note** — 3-line comment fix ([SIL] Now)
 3. **closeout.md sync** — update prompts/closeout.md to v2.4 template ([SIL] Now)
+
+---
+
+## Session Intent: Session 39
+Complete all SIL Now items.
+**Outcome: Achieved** — all 3 SIL Now items shipped in one clean pass.
+
+## Where We Left Off (Session 39 — 2026-04-06)
+
+- Shipped: 3 improvements — nav entrance animation, CSS badge guard, Lighthouse deployment timing
+- Tests: N/A
+- Deploy: committed + pushed (`0cb8e52`) · GitHub Pages auto
 
 ---
 

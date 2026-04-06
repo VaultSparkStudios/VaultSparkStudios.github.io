@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▅▆▅ (6 entries)
-Avgs — 3: 400.0 | 5: 403.6 | all: 401.5
-  └ 3-session: Dev 86.7 | Align 81.0 | Momentum 78.3 | Engage 74.7 | Process 79.3
-Velocity trend: ↓  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~0.0 sessions ⛔ — Now bucket empty; pre-load from Next before next session
-Last session: 2026-04-06 | Session 39 | Total: 400/500 | Velocity: 0 | protocolVelocity: 1
+Sparkline (last 5 totals): ▇▅▆▅▇ (7 entries)
+Avgs — 3: 405.0 | 5: 406.2 | all: 403.0
+  └ 3-session: Dev 85.7 | Align 84.3 | Momentum 75.3 | Engage 75.3 | Process 85.0
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~3.0 sessions — SIL Now bucket restored
+Last session: 2026-04-06 | Session 40 | Total: 414/500 | Velocity: 1 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -178,3 +178,27 @@ Avgs — 3: 400.0 | 5: 403.6 | all: 401.5
 3. **IGNIS delta field** — add `ignisScoreDelta` to PROJECT_STATUS.json computed at each closeout; makes trajectory trend visible at a glance without digging into audit files. First step: add field to JSON schema. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] prefers-reduced-motion guard · [SIL] closeout.md sync (moved robots.txt note to Now)
+
+## 2026-04-06 — Session 40 | Total: 414/500 | Velocity: 1 | Debt: →
+Avgs — 3: 405.0 | 5: 406.2 | all: 403.0
+  └ 3-session: Dev 85.7 | Align 84.3 | Momentum 75.3 | Engage 75.3 | Process 85.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 84 | → | Shared CSS/theme rewrite improved readability broadly; verification run surfaced pre-existing Playwright contract issues |
+| Creative Alignment | 89 | ↑ | Light mode now feels intentional, premium, and first-class instead of washed out |
+| Momentum | 80 | ↑ | One user-facing theme system fix completed in one pass; Now bucket remains healthy |
+| Engagement | 77 | ↑ | Direct response to a concrete user pain point; applied across the public site rather than patching a single page |
+| Process Quality | 84 | → | Full closeout completed; context files updated; test run documented with limitations |
+| **Total** | **414/500** | ↑ | |
+
+**Top win:** Reframed light mode as a designed premium variant by fixing the shared tokens and surfaces that were making text disappear on pale backgrounds
+**Top gap:** Theme verification is partially blind until the Playwright contract is aligned with the runtime signal and missing browsers are installed locally
+**Intent outcome:** Achieved — unreadable/light-on-light states were addressed in the shared system, not with brittle page-by-page overrides
+
+**Brainstorm**
+1. **Theme persistence test contract** — align Playwright with the real source of truth for the active theme or restore a deterministic `body[data-theme]` signal during hydration. First step: inspect `tests/theme-persistence.spec.js` against `assets/theme-toggle.js`. High probability.
+2. **Light-mode screenshot smoke** — add a Chromium-only screenshot smoke for `/`, `/contact/`, and `/journal/` in light mode before deploys; catches contrast regressions that simple DOM assertions miss. First step: reuse the existing Playwright setup with forced localStorage theme. Medium probability.
+3. **Portal/investor theme parity audit** — compare `vault-member/portal.css` and `assets/investor-theme.css` against the refreshed public-site light palette to avoid visible theme drift between product areas. First step: grep for light-mode token overrides in both files. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Theme persistence test contract

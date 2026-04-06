@@ -33,7 +33,7 @@
   };
   var THEME_COLORS = {
     dark: '#06070b',
-    light: '#eef2ff',
+    light: '#f6efe5',
     ambient: '#08121c',
     warm: '#1f120b',
     cool: '#0a1830',

@@ -2,6 +2,13 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-06 — Light mode remains token-driven in the shared design system
+
+- Status: active
+- Decision: light-mode fixes should be applied in `assets/style.css` and theme metadata rather than page-by-page HTML patches whenever the issue is shared across public pages
+- Why: the unreadable text problem was systemic (`--steel` and translucent dark-mode carryovers), so a token-and-surface pass is lower risk, easier to maintain, and keeps light mode a first-class global experience
+- Preservation: page-specific CSS can still layer on top, but shared readability issues should be solved at the design-system level first
+
 ### 2026-03-31 — Public website repo keeps only public-safe operational material
 
 - Status: active

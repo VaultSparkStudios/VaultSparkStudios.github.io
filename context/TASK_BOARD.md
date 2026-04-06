@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 39)
+Last updated: 2026-04-06 (Session 40)
 
 ---
 
@@ -16,6 +16,7 @@ Last updated: 2026-04-06 (Session 39)
 
 - [ ] **[SIL] CSP propagation script** — meta CSP tags duplicated across 97 pages; `scripts/propagate-csp.mjs` generates from single source + propagates; eliminates manual per-file CSP edits
 - [ ] **[SIL] Staging smoke test script** — `scripts/smoke-test.sh` pings website.staging before any push; 5-10 key URLs, exits non-zero on failure; enforces CANON-007 in practice
+- [ ] **[SIL] Theme persistence test contract** — align Playwright with the real theme source of truth (class/select value vs `body[data-theme]`) or restore a deterministic `data-theme` signal during hydration; prevents false negatives while protecting light-mode regressions
 
 ## Next (prior)
 
@@ -43,6 +44,7 @@ Last updated: 2026-04-06 (Session 39)
 
 ## Done (recent)
 
+- [x] **Refined shared light mode (S40)** — overhauled light palette and component surfaces in `assets/style.css`; fixed low-contrast `--steel`/muted text issues; updated browser theme color in `assets/theme-toggle.js`
 - [x] **SIL Now items — polish + CI reliability (S39)** — mobile nav entrance animation (@keyframes nav-enter); .hero-art > .status CSS guard; Lighthouse wait-on deployment timing
 - [x] **Mobile nav iOS blur — root fix (S38)** — disabled .site-header::before backdrop-filter at ≤980px; S36 fix removed overlay blur but header's ::before still promoted GPU layer containing fixed nav on iOS Safari
 - [x] **IGNIS scored + staging confirmed (S37)** — 47,091/100,000 · FORGE tier (rescored S38); staging HTTP 200 confirmed

@@ -8,6 +8,14 @@ Boundary:
 
 ## Entries
 
+### 2026-04-06 — Light mode must be refined, readable, and first-class (S40)
+
+- Category: UX / Visual Quality
+- Human input: "fix the visual light mode theme as much of the text is unreadable (gray or white or invisiible on the white background) - make it a much more refined and improved light visual theme"
+- Area affected: `assets/style.css`, `assets/theme-toggle.js`
+- Required direction: light mode must be a premium designed variant, not a compromised fallback; text and supporting UI must remain readable on pale backgrounds across the public site
+- Why it matters: the user explicitly raised broad readability failure, so future theme work must protect contrast and overall polish in light mode as a first-class experience
+
 ### 2026-04-06 — Status badge and mobile menu UX standards (S36)
 
 - Category: UX / Visual Quality
