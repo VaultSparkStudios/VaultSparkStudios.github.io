@@ -1,5 +1,5 @@
 <!-- template-version: 2.4 -->
-<!-- synced-from: studio-ops/prompts/start.md @ Session 34 (2026-04-02) -->
+<!-- synced-from: studio-ops/prompts/start.md @ Session 50 (2026-04-06) -->
 # START
 
 Executed when the user says only `start`.
@@ -8,20 +8,37 @@ Executed when the user says only `start`.
 
 ## 1 · Session Lock  *(mandatory first action)*
 
-Create `context/.session-lock`:
+Write session lock via Bash (avoids Write tool "file not read" guard on new files):
+```bash
+echo "locked_by: agent-session
+session_start: $(date -u +%Y-%m-%dT%H:%M:%SZ)
+project: vaultsparkstudios-website" > context/.session-lock
 ```
-locked_by: agent-session
-session_start: <ISO timestamp>
-project: <slug>
+Overwrite if a stale lock exists. Lock is auto-cleared by the global Stop hook; also cleared manually at closeout.
+
+**Active Session Beacon** *(runs if `.claude/beacon.env` exists — silently skips otherwise)*
+
+```bash
+[ -f .claude/beacon.env ] && source .claude/beacon.env && \
+  printf '{"active":[{"project":"%s","agent":"claude-code","since":"%s"}]}' \
+    "$BEACON_PROJECT_ID" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" | \
+  gh gist edit "$BEACON_GIST_ID" -f active.json --filename active.json \
+  2>/dev/null || true
 ```
-Overwrite if a stale lock exists. Lock is cleared at closeout.
+
+Setup: create `.claude/beacon.env` (gitignored) with:
+```
+BEACON_GIST_ID=<gist-id-from-hub-settings>
+BEACON_PROJECT_ID=vaultsparkstudios-website
+```
+Get Gist ID from Hub Settings → "Active Session Beacon". The Stop hook clears the beacon on session end.
 
 **Session mode:**
 
 | Mode | Trigger | Focus |
 |---|---|---|
 | **BUILDER** | Default | This project only |
-| **FOUNDER** | "start: founder mode" | Cross-project strategy; read `portfolio/STUDIO_BRAIN.md` first |
+| **FOUNDER** | "start: founder mode" | Cross-project strategy; read `vaultspark-studio-ops/portfolio/STUDIO_BRAIN.md` first |
 
 ---
 
@@ -31,8 +48,8 @@ Check `context/SELF_IMPROVEMENT_LOOP.md`:
 
 | Condition | Type | Action |
 |---|---|---|
-| File missing or no dated entries | **A — Bootstrap** | Follow `prompts/initiate.md` — stop here |
-| 1 "Bootstrap/Foundation Baseline" entry; core files still template-only | **B — Foundation** | Follow `prompts/initiate.md` §B — stop here |
+| File missing or no dated entries | **A — Bootstrap** | Follow initiation protocol — stop here |
+| 1 "Bootstrap/Foundation Baseline" entry; core files still template-only | **B — Foundation** | Run Foundation scoring — stop here |
 | 2+ dated entries with real scores | **C — Returning** | Continue below |
 
 ---
@@ -53,7 +70,7 @@ Check `context/SELF_IMPROVEMENT_LOOP.md`:
 | 10 | `context/TRUTH_AUDIT.md` *(if present and relevant)* | Source-of-truth hierarchy, contradiction status |
 | 11 | Task-specific files | Only after all above are read |
 
-*Founder Mode: read `portfolio/STUDIO_BRAIN.md` between steps 9 and 10.*
+*Founder Mode: read `vaultspark-studio-ops/portfolio/STUDIO_BRAIN.md` between steps 9 and 10.*
 
 ---
 
@@ -72,12 +89,12 @@ From the Rolling Status header (no extra reads):
 ## 5 · Startup Rules
 
 - Repo files are source of truth — not prior chat memory
-- `PROJECT_STATUS.json` and registry JSON beat derived Markdown when values conflict
+- `PROJECT_STATUS.json` beats derived Markdown when values conflict
 - No code edits during startup unless immediately requested
 - `context/LATEST_HANDOFF.md` is the active handoff; all other handoff docs are historical
 - Note assumptions before acting on them
-- **Compacted/interrupted session:** Check if human direction is in `docs/CREATIVE_DIRECTION_RECORD.md`. If the last CDR entry predates work described in `LATEST_HANDOFF.md`, flag the gap and recover at closeout.
 - **⛔ Momentum Runway ≤ 2.0:** Begin with TASK_BOARD pre-loading before any feature or protocol work. Surface as first item in PRIORITIES.
+- **SPARKED + public site:** confirm staging exists at `website.staging.vaultsparkstudios.com` before any deploy
 
 ---
 
@@ -122,13 +139,9 @@ From the Rolling Status header (no extra reads):
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   IGNIS INSIGHT  ignisScore: {N}/100K ({TIER})
-  Top pattern: {most relevant IGNIS pattern}
-  Brainstorm rate: {brainstorm_conversion_rate}%  Intent rate: {intentCompletionRate}% (last 5)
-  {One synthesised observation from portfolio/IGNIS_CORE.md — velocity trend, engagement gap,
-   creative drift, stall pattern, runway warning, or applicable canon decision.
-   Write "— insufficient data (UNTRACKED)" if no project entry.}
+  {One synthesised observation — or "UNTRACKED" if no IGNIS entry}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  CANON CHECK    {Canon decision relevant to this session's planned work — or "none applicable"}
+  CANON CHECK    {Canon decision relevant to this session — or "none applicable"}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -139,7 +152,7 @@ From the Rolling Status header (no extra reads):
 | SIL bar · Avgs · FLOW · sparkline | `SELF_IMPROVEMENT_LOOP.md` Rolling Status header |
 | Days since | `Last session:` date vs today |
 | IGNIS score | `context/PROJECT_STATUS.json` → `ignisScore` |
-| TRUTH / Genome | `context/TRUTH_AUDIT.md` (or `unknown` if absent) |
+| TRUTH / Genome | `context/TRUTH_AUDIT.md` |
 | Compliance count | `context/CURRENT_STATE.md` |
 
 **SIL bar:** 20 chars · █ per 25 pts · ░ remainder
@@ -151,9 +164,9 @@ From the Rolling Status header (no extra reads):
 - Velocity: ✓ ≥2 or ↑ · ⚠ 1 stable · ⛔ 0 or ↓
 - Runway: ✓ >4 · ⚠ 2–4 · ⛔ ≤2
 
-**IGNIS INSIGHT:** Read only the project section in `portfolio/IGNIS_CORE.md`. Pull ignisScore, grade, brainstorm_conversion_rate, and one project-specific observation. If synthesis is older than `PROJECT_STATUS.json → ignisLastComputed` or flagged stale by truth audit, label it explicitly as stale. Write `UNTRACKED` if no project entry exists.
+**IGNIS INSIGHT:** This project is UNTRACKED in IGNIS. Write `UNTRACKED` until an IGNIS score exists in `context/PROJECT_STATUS.json`.
 
-**CANON CHECK:** Scan `docs/STUDIO_CANON.md` for decisions relevant to this session's planned work. Surface at most 1–2. Optional — skip if not working on protocol, templates, or initiation.
+**CANON CHECK:** Check CANON-006 (branding) and CANON-007 (staging) compliance if touching deployment or public pages.
 
 ---
 
@@ -164,7 +177,3 @@ If the user did not provide a session goal, ask:
 > **"What is the primary goal for this session?"** (one sentence)
 
 Log the declared intent in `context/LATEST_HANDOFF.md` under `Session Intent:`.
-
-**Key rules:**
-- SPARKED projects must have staging before deploying. See `docs/STAGING_PROTOCOL.md`.
-- Every public-facing project needs VaultSpark Studios branding. See CANON-006 in `docs/STUDIO_CANON.md`.

@@ -1,14 +1,34 @@
-# Project Brief
+# Project Brief — VaultSparkStudios.github.io
 
-This public repository contains the deployable website and browser-safe client code for `vaultsparkstudios.com`.
+## What it is
 
-Public-safe summary:
-- project: VaultSpark Studios website + member-facing web surfaces
-- status: live
-- owner: VaultSpark Studios
-- live URL: `https://vaultsparkstudios.com/`
-- GitHub: `https://github.com/VaultSparkStudios/VaultSparkStudios.github.io`
+The live public website and studio hub for VaultSpark Studios LLC.
+Live at: `https://vaultsparkstudios.com/`
+GitHub: `https://github.com/VaultSparkStudios/VaultSparkStudios.github.io`
 
-Boundary:
-- deployable site code and public documentation stay here
-- internal planning, operator workflows, business notes, credentials, detailed handoffs, and private roadmap material live in the private Studio OS / ops repository
+## Purpose
+
+- Public studio presence: games, projects, studio identity
+- Vault Member portal: 9-tier rank system, achievements, challenges, Discord role sync
+- VaultSparked membership: $4.99–$99.99/mo subscription tiers with Stripe
+- Investor portal (gated)
+- Universe pages: novel sagas and game lore (DreadSpike → Voidfall pivot)
+
+## Stack
+
+- **Host**: GitHub Pages (static, auto-deploy on push to main)
+- **Auth + DB**: Supabase (cloud-hosted at `fjnpzjjyhnpmunfoycrp.supabase.co`)
+- **Edge functions**: Supabase Edge Functions (16 ACTIVE) — checkout, webhooks, push, Discord sync, etc.
+- **Security**: Cloudflare Worker (`vaultspark-security-headers-production`) — CSP, X-Robots-Tag, HSTS, all 9 headers
+- **Payments**: Stripe — VaultSparked ($4.99/$9.99/$14.99/mo) + VaultSparked Eternal ($29.99/$49.99/$99.99/mo)
+- **Email forms**: Web3Forms
+- **Error tracking**: Sentry
+- **Web push**: VAPID keys, service worker
+- **CI**: GitHub Actions (Playwright compliance + e2e, Lighthouse, axe-core)
+- **Staging**: `website.staging.vaultsparkstudios.com` on Hetzner (CANON-007)
+
+## Owner
+
+VaultSpark Studios LLC — `https://vaultsparkstudios.com/`
+
+## Vault Status: SPARKED
