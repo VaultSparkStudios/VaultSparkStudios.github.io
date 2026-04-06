@@ -93,9 +93,9 @@ body.light-mode {
   --panel-strong: rgba(255, 249, 242, 0.97);
   --line: rgba(22, 32, 51, 0.12);
   --text: #162033;
-  --muted: #4f5f78;
-  --dim: #70809a;
-  --steel: #5c6b84;
+  --muted: #334155;
+  --dim: #475569;
+  --steel: #5b6b7f;
   --graphite: #d8d8df;
   --shadow: 0 18px 60px rgba(25, 36, 56, 0.12);
   --shadow-lg: 0 32px 80px rgba(25, 36, 56, 0.16);
@@ -976,6 +976,10 @@ body.light-mode .status {
 .card-art h3 {
   font-size: 1.68rem;
   letter-spacing: -0.04em;
+}
+body.light-mode .card-art h3 {
+  color: #f8fbff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
 }
 
 .card-body {
@@ -1955,9 +1959,123 @@ body.light-mode .arc-list,
 body.light-mode .arc-subscribe,
 body.light-mode .sidebar-block,
 body.light-mode .status-card,
-body.light-mode .incident-empty {
-  background: rgba(255,255,255,0.44);
+body.light-mode .incident-empty,
+body.light-mode .stream-item,
+body.light-mode .patch-toggle,
+body.light-mode .patch-toggle + div {
+  background: linear-gradient(180deg, rgba(255, 252, 248, 0.96), rgba(242, 246, 252, 0.88));
   border-color: rgba(22,32,51,0.10);
+  box-shadow: 0 16px 36px rgba(25, 36, 56, 0.08);
+}
+
+body.light-mode .feature-block h2,
+body.light-mode .info-block h2,
+body.light-mode .info-block h3,
+body.light-mode .demo-embed-wrap h2,
+body.light-mode .stream-msg,
+body.light-mode .patch-toggle,
+body.light-mode .patch-toggle + div strong {
+  color: var(--text);
+}
+
+body.light-mode .feature-list li,
+body.light-mode .info-row span:first-child,
+body.light-mode .stat-block span,
+body.light-mode .stream-date,
+body.light-mode .stream-fallback,
+body.light-mode .patch-toggle + div,
+body.light-mode .updates-header a {
+  color: var(--muted);
+}
+
+body.light-mode .hero-art h1,
+body.light-mode .game-card-hero h2,
+body.light-mode .project-card-hero h2,
+body.light-mode .card-hero h3,
+body.light-mode .hero-art .button-secondary,
+body.light-mode .hero-art .button-ghost {
+  color: #f8fbff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.42);
+}
+
+body.light-mode .hero-art::after,
+body.light-mode .game-card-hero::after,
+body.light-mode .project-card-hero::after,
+body.light-mode .card-hero::after,
+body.light-mode .project-card-hero::after {
+  background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.72));
+}
+
+body.light-mode .hero-art .button-secondary {
+  border-color: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.10);
+}
+
+body.light-mode .hero-art .button-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+body.light-mode .hero-art .status,
+body.light-mode .game-card-hero .status,
+body.light-mode .project-card-hero .status {
+  background: rgba(255, 250, 244, 0.9);
+  color: #162033;
+  text-shadow: none;
+}
+
+body.light-mode .game-card,
+body.light-mode .game-card-featured,
+body.light-mode .project-card,
+body.light-mode .project-card-featured {
+  background: linear-gradient(180deg, rgba(255, 251, 246, 0.98), rgba(242, 246, 252, 0.92));
+  border-color: rgba(22, 32, 51, 0.10);
+  box-shadow: 0 22px 48px rgba(25, 36, 56, 0.10);
+}
+
+body.light-mode .game-card-body > p,
+body.light-mode .project-card-body > p,
+body.light-mode .card-content p,
+body.light-mode .feature-list li,
+body.light-mode .game-card-body .game-eyebrow + p,
+body.light-mode .project-card-body .project-eyebrow + p {
+  color: var(--muted);
+}
+
+body.light-mode .game-card-body .game-eyebrow,
+body.light-mode .project-card-body .project-eyebrow {
+  color: #9a6200;
+}
+
+body.light-mode .page-hero p,
+body.light-mode .hero-stat-label,
+body.light-mode .feature-block > p,
+body.light-mode .info-block p,
+body.light-mode .info-row span:first-child,
+body.light-mode .stat-block span,
+body.light-mode .demo-placeholder-inner p,
+body.light-mode .faq-item p,
+body.light-mode .genre-btn,
+body.light-mode .filter-btn,
+body.light-mode .updates-header a,
+body.light-mode .stream-date,
+body.light-mode .stream-fallback,
+body.light-mode .game-community-bar span,
+body.light-mode .gcb-stat span {
+  color: var(--muted);
+}
+
+body.light-mode .page-hero .hero-stat-val,
+body.light-mode .feature-block h2,
+body.light-mode .info-block h3,
+body.light-mode .demo-placeholder-inner h3,
+body.light-mode .updates-header h2,
+body.light-mode .faq-item h3,
+body.light-mode .faq-item button,
+body.light-mode .game-community-bar strong,
+body.light-mode .gcb-stat strong,
+body.light-mode .gcb-link {
+  color: var(--text);
 }
 
 /* ── Tag / pill / chip elements ── */

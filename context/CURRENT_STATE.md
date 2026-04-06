@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-06 (Session 40)
+- Date: 2026-04-06 (Session 41)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S40 refined the shared light-mode design system — higher-contrast palette, warmer premium light surfaces, stronger borders/shadows, and improved readability across shared cards, chips, buttons, forms, nav, and footer elements
+- Repo posture: S41 finished the follow-up light-mode contrast cleanup — darker blue-slate text tokens, readable titles on dark artwork, and real light-mode surfaces for shared game/project/detail card patterns that were still carrying dark treatment
 
 ## What exists
 
@@ -25,6 +25,7 @@
 - **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260406-silpol`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
 - **Mobile nav** (`assets/style.css`) — S36 removed backdrop-filter from .nav-center.open; S38 disabled .site-header::before backdrop-filter at ≤980px (root iOS GPU compositing fix); S39 added @keyframes nav-enter (translateY -6px→0, opacity) for entrance animation
 - **Light-mode theme refresh** (`assets/style.css`, `assets/theme-toggle.js`) — S40 retuned light tokens (`--text`, `--muted`, `--dim`, `--steel`, panel/bg vars), replaced washed translucent dark-theme carryovers with warm ivory/glass surfaces, and added light-mode component overrides for buttons, cards, panels, timeline/social blocks, inputs, badges, footer, and section chrome
+- **Light-mode contrast follow-up** (`assets/style.css`) — S41 darkened the shared secondary text scale to blue-slate values, forced bright readable titles over dark hero/card artwork, strengthened light-mode overlays on game/project hero bands, and converted shared dark panels (`.feature-block`, `.info-block`, `.stream-item`, patch notes, game/project cards) into true light surfaces in light mode
 - **CSS guard** (`assets/style.css`) — S39: `.hero-art > .status` rule locks badge to `position:absolute; top/left:1rem; z-index:2` — prevents S36 badge-overlap regression
 - **Lighthouse CI** (`.github/workflows/lighthouse.yml`) — S39: wait-on step added (120s timeout, 5s interval) to poll live site before Lighthouse runs
 - **Supabase** — 16 edge functions ACTIVE; cloud-hosted at fjnpzjjyhnpmunfoycrp.supabase.co
@@ -55,4 +56,4 @@
 - beacon.env not configured (Active Session Beacon inactive)
 - Theme persistence Playwright spec asserts `body[data-theme]`; current runtime visibly applies the selected theme but does not satisfy that attribute expectation during test timing
 - Firefox/WebKit Playwright browsers not installed locally; cross-browser theme verification incomplete in this workspace
-- IGNIS score: 46,855/100,000 · Tier: FORGE · 79.0% through tier (scored S39; -236 from S38 time decay)
+- IGNIS score: 46,115/100,000 · Tier: FORGE · 74.1% through tier (rescored 2026-04-06)

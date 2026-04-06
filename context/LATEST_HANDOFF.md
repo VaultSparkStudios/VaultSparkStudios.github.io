@@ -1,6 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 40)
+Last updated: 2026-04-06 (Session 41)
+
+## Session Intent: Session 41
+Finish the light-mode contrast audit and remove the remaining unreadable gray and dark-on-dark text states.
+**Outcome: Achieved** — the follow-up pass fixed the lingering contrast failures in shared game/project/detail patterns by darkening the secondary text scale, restoring bright titles on dark artwork, and replacing leftover dark surfaces with actual light-mode panels.
+
+## Where We Left Off (Session 41 — 2026-04-06)
+
+- Shipped: 1 contrast cleanup pass — darker blue-slate support text, readable hero/card titles on dark art, light-mode surfaces for shared game/project/detail panels
+- Tests: N/A — no additional automated verification run in this follow-up session
+- Deploy: committed + pushed to `main` (pending commit SHA) · GitHub Pages auto
+
+---
 
 ## Session Intent: Session 40
 Fix the broken light-mode readability and make the light theme feel intentional and refined.

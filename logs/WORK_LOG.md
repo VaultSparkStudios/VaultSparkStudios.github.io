@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-04-06 — Session 41
+
+- Completed the light-mode contrast follow-up in `assets/style.css`
+- Darkened the shared secondary text hierarchy to blue-slate values (`--muted`, `--dim`, `--steel`) so light mode no longer falls back to washed gray copy
+- Fixed unreadable project/game titles on dark hero art with bright text + stronger overlay treatment in light mode
+- Converted shared dark content/card patterns (`.feature-block`, `.info-block`, `.stream-item`, patch panels, game/project cards) into true light-mode surfaces
+- IGNIS rescored: 46,115/100,000 · FORGE · 74.1% through tier
+- Pushed: pending commit SHA
+- SIL: 409/500 · Velocity: 1 · Debt: →
+
 ## 2026-04-06 — Session 40
 
 - Refined the public-site light mode in `assets/style.css` with a warmer premium palette, stronger contrast tokens, and shared light-mode overrides for cards, chips, buttons, forms, badges, nav, footer, and section chrome

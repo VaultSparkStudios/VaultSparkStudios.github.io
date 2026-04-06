@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▅▆▅▇ (7 entries)
-Avgs — 3: 405.0 | 5: 406.2 | all: 403.0
-  └ 3-session: Dev 85.7 | Align 84.3 | Momentum 75.3 | Engage 75.3 | Process 85.0
+Sparkline (last 5 totals): ▅▆▆▇▇ (8 entries)
+Avgs — 3: 407.7 | 5: 404.6 | all: 403.8
+  └ 3-session: Dev 83.7 | Align 86.7 | Momentum 76.3 | Engage 77.0 | Process 84.0
 Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
 Momentum runway: ~3.0 sessions — SIL Now bucket restored
-Last session: 2026-04-06 | Session 40 | Total: 414/500 | Velocity: 1 | protocolVelocity: 1
+Last session: 2026-04-06 | Session 41 | Total: 409/500 | Velocity: 1 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -200,5 +200,29 @@ Avgs — 3: 405.0 | 5: 406.2 | all: 403.0
 1. **Theme persistence test contract** — align Playwright with the real source of truth for the active theme or restore a deterministic `body[data-theme]` signal during hydration. First step: inspect `tests/theme-persistence.spec.js` against `assets/theme-toggle.js`. High probability.
 2. **Light-mode screenshot smoke** — add a Chromium-only screenshot smoke for `/`, `/contact/`, and `/journal/` in light mode before deploys; catches contrast regressions that simple DOM assertions miss. First step: reuse the existing Playwright setup with forced localStorage theme. Medium probability.
 3. **Portal/investor theme parity audit** — compare `vault-member/portal.css` and `assets/investor-theme.css` against the refreshed public-site light palette to avoid visible theme drift between product areas. First step: grep for light-mode token overrides in both files. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Theme persistence test contract
+
+## 2026-04-06 — Session 41 | Total: 409/500 | Velocity: 1 | Debt: →
+Avgs — 3: 407.7 | 5: 404.6 | all: 403.8
+  └ 3-session: Dev 83.7 | Align 86.7 | Momentum 76.3 | Engage 77.0 | Process 84.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 82 | ↓ | Contrast fixes are broad and safe, but this follow-up session did not include another automated verification pass |
+| Creative Alignment | 87 | ↓ | Light mode is now materially more legible while staying aligned with the refined premium visual direction |
+| Momentum | 78 | ↓ | One focused user-facing cleanup completed in a second pass; remaining work is verification, not design direction |
+| Engagement | 78 | ↑ | Incorporated direct user feedback about specific unreadable cases and fixed them at the shared selector level |
+| Process Quality | 84 | → | Full closeout completed; IGNIS refreshed; no new process regressions |
+| **Total** | **409/500** | ↓ | |
+
+**Top win:** Closed the gap between the polished shared light theme and the stubborn dark-art/card cases that were still making project and game pages feel broken
+**Top gap:** Visual verification remains partly manual until the theme persistence contract is fixed or screenshot smoke coverage exists
+**Intent outcome:** Achieved — the remaining gray and dark-on-dark light-mode states were addressed in the shared CSS system
+
+**Brainstorm**
+1. **Light-mode screenshot smoke** — add a Chromium-only screenshot smoke for `/`, `/games/`, and `/projects/` in forced light mode to catch contrast regressions before deploys. First step: reuse existing Playwright bootstrapping with localStorage theme selection. High probability.
+2. **Theme persistence test contract** — align Playwright with the real source of truth for active theme state or restore a deterministic `data-theme` signal after hydration. First step: compare `tests/theme-persistence.spec.js` with `assets/theme-toggle.js`. High probability.
+3. **Shared light-surface utility** — factor the repeated light-mode panel/card overrides into a smaller reusable utility section so future component additions inherit the right light surface by default. First step: group current S40/S41 selectors and identify the common surface recipe. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Theme persistence test contract
