@@ -22,6 +22,7 @@ Last updated: 2026-04-07 (Session 46)
 - [ ] **Run `node scripts/propagate-csp.mjs`** — script created S47 but not yet run; updates all 97 HTML pages with canonical CSP in one pass
 - [ ] **[SIL] CSP auto-sync CI check** — add `propagate-csp.mjs --dry-run` step to compliance workflow; fails if any HTML has stale CSP (S47 brainstorm)
 - [ ] **[SIL] Contact form GA4 events** — fire `gtag('event', 'form_submit')` + `form_error` in contact form JS; closes the conversion visibility gap (S47 brainstorm)
+- [ ] **[SIL] Referral link generator in portal** — "Share your referral link" button in portal settings copies `vaultsparkstudios.com/vault-member/?ref=username` to clipboard; makes referral system discoverable (S48 brainstorm)
 
 ## Next
 
@@ -56,10 +57,10 @@ Last updated: 2026-04-07 (Session 46)
 
 ## Human Action Required
 
-- [ ] **[DB] `register_open` migration** — add `p_ref_by TEXT DEFAULT ''` param to the `register_open` Supabase RPC; client already sends it (S47); without this, referral signup credit never reaches the DB
-- [ ] **[Sentry] Configure release workflow** — set repo vars `SENTRY_ORG` + `SENTRY_PROJECT` and secret `SENTRY_AUTH_TOKEN` in GitHub repo Settings; workflow `.github/workflows/sentry-release.yml` is ready (S47)
+- [x] **[DB] `register_open` migration** — phase56 applied live (S48): `referred_by` column, `p_ref_by` param, milestones updated ✅
+- [x] **[Sentry] Configure release workflow** — `SENTRY_AUTH_TOKEN` secret set; org/project hardcoded in workflow; CI passing (S48) ✅
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com (server-side test blocked by Web3Forms free tier)
 - [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
-- [ ] **[WEB3FORMS]** Manually submit /join/ and /contact/ forms to confirm email delivery
 - [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
 - [ ] **[WEB3FORMS-KEYS]** Create 3 separate keys in Web3Forms dashboard (join/, contact/, data-deletion/) for per-form lead tracking [low priority]
 

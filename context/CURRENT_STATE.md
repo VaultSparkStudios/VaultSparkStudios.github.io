@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-07 (Session 47)
+- Date: 2026-04-07 (Session 48)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S47 full audit implementation — 9 items across portal, DX, lore, CI; plus contact form toast pop-up and duplicate-subject form bug fix
+- Repo posture: S48 human actions cleared — Supabase phase56 migration live, Sentry release CI active, contact form fix deployed
 
 ## What exists
 
@@ -24,7 +24,8 @@
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler.
 - **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260406-navfix`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
 - **DX scripts** (`scripts/propagate-csp.mjs`, `scripts/smoke-test.sh`) — S47: CSP propagation from single constant to all HTML pages; staging smoke test (12 URLs, exits non-zero on failure; enforces CANON-007)
-- **Sentry release workflow** (`.github/workflows/sentry-release.yml`) — S47: tags each main push as Sentry release; requires SENTRY_AUTH_TOKEN/ORG/PROJECT secrets (human action)
+- **Sentry release workflow** (`.github/workflows/sentry-release.yml`) — S47 created, S48 fully wired: org `vaultspark-studios`, project `4511104933298176`, token set as GitHub secret; every push to main now tags a Sentry release
+- **Referral attribution** (`supabase/migrations/supabase-phase56-referral-attribution.sql`) — S48: `referred_by uuid` column on `vault_members`; `register_open` accepts `p_ref_by`, awards referrer +100 XP, fires recruiter/patron achievements; `get_referral_milestones` counts both invite-code and direct-link referrals; migration applied live
 - **Contact form** (`contact/index.html`) — S47: replaced inline success message with animated toast (spring slide-up, 7s countdown progress bar, manual dismiss, red error variant); fixed duplicate `name="subject"` field conflict that caused Web3Forms delivery failures
 - **Mobile nav** (`assets/style.css`, `assets/nav-toggle.js`) — S36 removed backdrop-filter from .nav-center.open; S38 disabled .site-header::before backdrop-filter at ≤980px (root iOS GPU compositing fix); S39 added @keyframes nav-enter; **S44 removed backdrop-filter: blur(2px) from #nav-backdrop (the true source of iOS blur + click interference), redesigned overlay with premium cubic-bezier animation, gold active-link accent, improved spacing and CTA polish**
 - **Theme FOUC prevention** (`assets/theme-toggle.js`, `scripts/propagate-nav.mjs`, all 72 HTML pages) — S44 injected tiny inline `<script>` at `<body>` start on every page that reads localStorage.vs_theme and stamps both `<html>` and `<body>` with the correct theme class before any content paints; theme-toggle.js also applies class to `<html>` immediately when called from `<head>`; eliminates dark flash when navigating in light mode
@@ -68,6 +69,5 @@
 - Cloudflare WAF rule (CN/RU/HK JS Challenge) — status unknown
 - beacon.env not configured (Active Session Beacon inactive)
 - Theme persistence Playwright spec updated (S46) — `#theme-select` replaced with `#theme-picker-btn` + `.theme-option[data-theme].active`; Firefox/WebKit not installed locally; full cross-browser run not verified
-- Referral attribution: client sends `p_ref_by` but DB `register_open` RPC not yet updated — requires human migration
-- Sentry release workflow ready but needs SENTRY_AUTH_TOKEN, SENTRY_ORG, SENTRY_PROJECT secrets set in GitHub
-- IGNIS score: 45,411/100,000 · Tier: FORGE · 69.4% through tier (rescored 2026-04-07 S47) · delta: −273
+- Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
+- IGNIS score: 45,848/100,000 · Tier: FORGE · 70.1% through tier (rescored 2026-04-07 S48) · delta: +437

@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▆ (14 entries)
-Avgs — 3: 431.7 | 5: 425.6 | 10: 416.8 | all: 413.5
-  └ 3-session: Dev 84.3 | Align 88.0 | Momentum 88.7 | Engage 84.7 | Process 86.0
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~3 sessions — Now queue cleared  |  Intent rate: 100% (last 5)
-Last session: 2026-04-07 | Session 47 | Total: 438/500 | Velocity: 7 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▆ (15 entries)
+Avgs — 3: 433.3 | 5: 427.4 | 10: 418.0 | all: 413.4
+  └ 3-session: Dev 85.0 | Align 85.3 | Momentum 89.0 | Engage 87.7 | Process 86.3
+Velocity trend: →  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~3 sessions — Now has 3 items  |  Intent rate: 100% (last 5)
+Last session: 2026-04-07 | Session 48 | Total: 424/500 | Velocity: 2 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -370,3 +370,27 @@ Avgs — 3: 431.7 | 5: 425.6 | 10: 416.8 | all: 413.5
 3. **Referral leaderboard row** — once DB migration lands, surface top-5 referrers as a row on `/leaderboards/` to drive viral loop; first step: add a `referred_count` view to Supabase. Medium probability (depends on DB migration).
 
 **Committed to TASK_BOARD:** [SIL] CSP auto-sync CI check · [SIL] Contact form GA4 events
+
+## 2026-04-07 — Session 48 | Total: 424/500 | Velocity: 2 | Debt: →
+Avgs — 3: 433.3 | 5: 427.4 | 10: 418.0 | all: 413.4
+  └ 3-session: Dev 85.0 | Align 85.3 | Momentum 89.0 | Engage 87.7 | Process 86.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 87 | ↑ | DB migration applied cleanly; Sentry CI passing; schema well-structured |
+| Creative Alignment | 78 | ↓ | Pure infra session; no creative work |
+| Momentum | 90 | → | 2 of 3 human blockers fully cleared; referral end-to-end |
+| Engagement | 88 | → | Immediate execution of user-directed actions |
+| Process Quality | 81 | → | All context files updated; IGNIS +437 |
+| **Total** | **424/500** | → | |
+
+**Top win:** Referral attribution now fully end-to-end — DB migration, client wiring, and milestone counting all live in one session
+**Top gap:** Web3Forms still unconfirmed (free tier blocks server testing); creative pillar work continues to lag
+**Intent outcome:** Achieved (2/3) — DB + Sentry done; Web3Forms requires human browser test
+
+**Brainstorm**
+1. **Referral link generator in portal** — add a "Share your referral link" button in portal settings that copies `vaultsparkstudios.com/vault-member/?ref=username` to clipboard; makes the referral system discoverable. First step: add button + clipboard write to `portal-settings.js`. High probability.
+2. **propagate-csp.mjs CI integration** — run `--dry-run` in the compliance workflow; fail if any page is out of sync; closes the CSP drift gap permanently. First step: add a bash step to `.github/workflows/e2e.yml`. High probability.
+3. **Contact form GA4 events** — `gtag('event', 'form_submit')` + `form_error` in contact form JS; visibility into conversion and failure rates. First step: add two calls after success/error branches. High probability.
+
+**Committed to TASK_BOARD:** [SIL] Referral link generator in portal

@@ -1,5 +1,12 @@
 # Work Log
 
+## 2026-04-07 — Session 48
+
+- supabase/migrations/supabase-phase56-referral-attribution.sql: created + applied via db-migrate workflow — `referred_by uuid` column on vault_members; register_open gains p_ref_by param (awards +100 XP to referrer, fires achievements, sets referred_by); get_referral_milestones updated to count both invite-code and direct-link referrals
+- .github/workflows/sentry-release.yml: switched from getsentry app action to sentry-cli; hardcoded org vaultspark-studios + project 4511104933298176; SENTRY_AUTH_TOKEN secret set; removed invalid secrets if-condition; CI passing
+- Pushed: d1abf8a + 810e695 + 952fbef
+- SIL: 424/500 · Velocity: 2 · Debt: →
+
 ## 2026-04-07 — Session 47
 
 - vault-member/index.html: added `id="nav-admin-link"` button to nav-account-menu (display:none; shown by showDashboard() for admin users)
