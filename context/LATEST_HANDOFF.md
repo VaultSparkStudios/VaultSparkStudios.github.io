@@ -1,6 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 43)
+Last updated: 2026-04-07 (Session 44)
+
+## Session Intent: Session 44
+Fix mobile nav blur + clicks not working, redesign mobile nav for optimal UX, fix light mode theme issues from screenshots, ensure selected theme persists across all pages, make theme selector premium/polished.
+**Outcome: Achieved** — all 5 goals shipped in one session; mobile blur root-caused to backdrop-filter on #nav-backdrop; theme FOUC eliminated via inline script on 72 pages; nav redesigned; premium custom theme picker built; light mode CSS gaps patched.
+
+## Where We Left Off (Session 44 — 2026-04-07)
+
+- Shipped: 5 improvements — mobile-nav (bug+UX), theme-persistence (FOUC fix), premium-picker, light-mode-css
+- Tests: N/A — no automated test run this session
+- Deploy: pushed to `main` (`4bd073e`) · GitHub Pages auto
+
+---
 
 ## Session Intent: Session 43
 Remove the false public claim that VaultSpark projects are open-source/MIT and replace it with the correct proprietary rights posture.
@@ -62,9 +74,9 @@ Fix the broken light-mode readability and make the light theme feel intentional 
 
 ## Recommended First Action Next Session
 
-1. **prefers-reduced-motion guard** — add accessibility override for nav-enter animation ([SIL] Now)
-2. **robots.txt Cloudflare note** — 3-line comment fix ([SIL] Now)
-3. **closeout.md sync** — update prompts/closeout.md to v2.4 template ([SIL] Now)
+1. **robots.txt Cloudflare note** — 3-line comment ([SIL] Now)
+2. **closeout.md sync** — update prompts/closeout.md to v2.4 template ([SIL] Now)
+3. **Theme persistence test contract** — verify Playwright spec matches new inline-script + theme-toggle.js body.dataset.theme behavior ([SIL] Now)
 
 ---
 

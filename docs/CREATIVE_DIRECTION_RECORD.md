@@ -8,6 +8,18 @@ Boundary:
 
 ## Entries
 
+### 2026-04-07 — Mobile nav redesign + premium theme selector direction (S44)
+
+- Category: UX / Visual Quality / Interaction Design
+- Human input: "mobile website menu is broken - fix this and diagnose why that was happening. It is blurry when I hit it and clicking the pages doesn't work - redesign nav for optimal user experience. Also see the 5 screenshots in your local folder in order to fix the light mode theme issues. Also make sure that the theme selected is the one that stays across entire site and becomes the default (it should not switch between pages) - make the theme selector more premium/polished"
+- Area affected: `assets/style.css`, `assets/theme-toggle.js`, `scripts/propagate-nav.mjs`, all 72 HTML pages
+- Required direction:
+  1. Mobile nav must be fully functional and styled (no blur, no click interference); the blur root cause must be diagnosed not papered over
+  2. Theme selection must persist without any flash or reset between page navigations — this is a hard UX requirement
+  3. The theme selector must look premium — not a bare browser `<select>` element; color swatches and polished interactions expected
+  4. Mobile nav UX must be redesigned with optimal experience in mind — not just patched
+- Why it matters: user has flagged mobile nav blur twice (S36, now S44) and discovered the true root cause was different each time; the standard is zero blur, zero click failures, zero theme flash on any page load
+
 ### 2026-04-06 — Light mode must be refined, readable, and first-class (S40)
 
 - Category: UX / Visual Quality

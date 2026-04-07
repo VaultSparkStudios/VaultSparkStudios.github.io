@@ -1,5 +1,16 @@
 # Work Log
 
+## 2026-04-07 — Session 44
+
+- Root-caused mobile nav blur to `backdrop-filter: blur(2px)` on `#nav-backdrop` (iOS Safari GPU compositing layer bleeds blur to z-index:200 overlay above it) — removed it
+- Fixed theme FOUC: `theme-toggle.js` now applies theme class to `<html>` immediately (available in `<head>`); `propagate-nav.mjs` injected inline theme script at `<body>` start across all 72 pages — eliminates dark flash when navigating in light mode
+- Redesigned mobile nav overlay: cubic-bezier animation, gold left-border active indicator, caret-as-button, improved CTA press states and spacing
+- Replaced bare `<select>` theme picker with a custom button+dropdown component (color swatches per theme, active checkmark, scale+fade animation, keyboard/click-outside dismiss)
+- Added `body.light-mode .manifesto` background override (studio page had hardcoded dark gradient); studio-grid timeline and process-step light-mode fixes
+- SW cache bumped to `vaultspark-20260406-navfix`
+- Pushed: `4bd073e`
+- SIL: 425/500 · Velocity: 5 · Debt: →
+
 ## 2026-04-06 — Session 43
 
 - Replaced the false public MIT/open-source posture with a proprietary rights + third-party attributions posture

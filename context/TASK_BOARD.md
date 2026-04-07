@@ -1,14 +1,16 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-06 (Session 43)
+Last updated: 2026-04-07 (Session 44)
 
 ---
 
 ## Now
 
 - [ ] **[SIL] robots.txt Cloudflare note** — add comment in `robots.txt` explaining Cloudflare AI Labyrinth injects additional directives at CDN edge; prevents future confusion when live robots.txt differs from repo
-- [ ] **[SIL] prefers-reduced-motion guard** — add `@media (prefers-reduced-motion: reduce)` override to disable nav-enter animation added S39; accessibility requirement; first step: add 3-line rule in style.css after `@keyframes nav-enter`
+- [x] **[SIL] prefers-reduced-motion guard** — global `@media (prefers-reduced-motion: reduce)` rule already present in style.css (line ~1464); disables all animations including nav-enter. Done.
 - [ ] **[SIL] closeout.md sync** — update `prompts/closeout.md` to current v2.4 template from studio-ops (same sync done for start.md in S34)
+- [ ] **[SIL] Theme persistence test contract** — align Playwright `tests/theme-persistence.spec.js` with new theme signal: body.dataset.theme is now set by the inline FOUC script + theme-toggle.js; verify the spec expectation matches actual runtime state
+- [ ] **[SIL] Nav backdrop opacity by theme** — `#nav-backdrop` uses hardcoded `rgba(0,0,0,0.6)` which is too dark in light mode; add a theme-aware CSS var for backdrop overlay color in each theme's token block
 
 ---
 
@@ -44,6 +46,7 @@ Last updated: 2026-04-06 (Session 43)
 
 ## Done (recent)
 
+- [x] **Mobile nav blur + clicks fix, theme FOUC, premium picker (S44)** — removed backdrop-filter from #nav-backdrop (iOS compositing root cause); injected inline theme script at body start across 72 pages; redesigned mobile nav; replaced select with custom picker; light mode CSS fixes
 - [x] **Rights posture correction (S43)** — replaced public MIT/open-source claims with a proprietary IP notice + third-party attributions page; propagated footer/resource label to `Technology & Rights`; updated sitemap labels and compliance-page title expectation
 - [x] **Dark-panel contrast hardening (S42)** — restored white copy on intentionally dark membership/rank/character sections in light mode; fixed homepage Vault-Forge paragraph and public `/ranks/` dark cards; updated `assets/style.css`, `index.html`, `ranks/index.html`, and `vault-member/portal.css`
 - [x] **Light-mode contrast cleanup follow-up (S41)** — darkened light-mode support text tokens, fixed unreadable titles over dark project/game art, and converted shared dark card/panel patterns to real light surfaces in `assets/style.css`

@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▇▇▇ (10 entries)
-Avgs — 3: 414.0 | 5: 411.2 | all: 406.5
-  └ 3-session: Dev 84.0 | Align 89.3 | Momentum 80.0 | Engage 80.3 | Process 80.3
+Sparkline (last 5 totals): ▆▆▆▆▆ (11 entries)
+Avgs — 3: 419.3 | 5: 416.2 | all: 408.2
+  └ 3-session: Dev 86.0 | Align 88.7 | Momentum 87.0 | Engage 82.3 | Process 81.0
 Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~3.0 sessions — SIL Now bucket restored
-Last session: 2026-04-06 | Session 43 | Total: 421/500 | Velocity: 1 | protocolVelocity: 1
+Momentum runway: ~0.9 sessions ⚠ — Now bucket has 2 SIL items; user-directed sessions not depleting board
+Last session: 2026-04-07 | Session 44 | Total: 425/500 | Velocity: 5 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -226,6 +226,30 @@ Avgs — 3: 414.0 | 5: 411.2 | all: 406.5
 3. **Theme persistence test contract** — align Playwright with the real active-theme signal or restore a deterministic `data-theme` attribute after hydration. First step: compare `tests/theme-persistence.spec.js` with `assets/theme-toggle.js`. High probability.
 
 **Committed to TASK_BOARD:** [SIL] Theme persistence test contract
+
+## 2026-04-07 — Session 44 | Total: 425/500 | Velocity: 5 | Debt: →
+Avgs — 3: 419.3 | 5: 416.2 | all: 408.2
+  └ 3-session: Dev 86.0 | Align 88.7 | Momentum 87.0 | Engage 82.3 | Process 81.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 84 | ↓ | Two root-cause bugs fixed cleanly; no CI run; elegant inline-script FOUC solution |
+| Creative Alignment | 87 | ↓ | Premium theme picker brand-aligned; nav polish aligns with vault aesthetic |
+| Momentum | 90 | ↑ | Velocity 5; all 5 user-directed tasks shipped; both bugs cleared |
+| Engagement | 82 | → | Screenshots directly addressed; all reported pain points resolved |
+| Process Quality | 82 | ↑ | Full closeout; CDR updated; context files current; IGNIS run |
+| **Total** | **425/500** | ↑ | |
+
+**Top win:** Eliminated the iOS mobile nav blur at its true root cause (#nav-backdrop backdrop-filter GPU layer) AND solved theme FOUC site-wide with a 2-layer fix — both had long histories of near-misses
+**Top gap:** Playwright theme-persistence spec still needs alignment with the new inline-script + body.dataset.theme signal before it can reliably test the fixed behavior
+**Intent outcome:** Achieved — all 5 user-stated goals shipped in one session
+
+**Brainstorm**
+1. **Theme persistence Playwright contract** — now that body.dataset.theme is reliably set by the inline FOUC script, update `tests/theme-persistence.spec.js` to assert this attribute directly; the test should validate light→navigate→still-light. First step: read the spec and compare against `theme-toggle.js` new behavior. High probability.
+2. **Nav backdrop opacity by theme** — the `#nav-backdrop` uses a hardcoded `rgba(0,0,0,0.6)` which looks wrong in light mode (too dark). Add theme-aware backdrop color using `--mobile-nav-bg` opacity layer. First step: add CSS var for backdrop color per theme in the theme mode blocks. High probability.
+3. **Theme picker animation polish** — add a subtle color-dot "pulse" on the active theme in the picker button when the theme changes; reinforces the interaction. First step: add a @keyframes swatch-pulse and apply to .theme-picker-swatch on theme change. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Theme persistence test contract (promote to Now) · [SIL] Nav backdrop opacity by theme
 
 ## 2026-04-06 — Session 42 | Total: 412/500 | Velocity: 1 | Debt: →
 Avgs — 3: 411.7 | 5: 407.2 | all: 404.9

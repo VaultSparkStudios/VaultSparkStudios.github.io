@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-06 (Session 43)
+- Date: 2026-04-07 (Session 44)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S43 corrected the public rights posture — `/open-source/` now functions as a proprietary IP notice plus third-party attribution page, and the old “Open Source / MIT” resource language was replaced site-wide with a technology/rights label
+- Repo posture: S43 corrected the public rights posture — `/open-source/` now functions as a proprietary IP notice plus third-party attribution page; S44 resolved the iOS mobile nav blur, theme FOUC, and replaced the bare theme `<select>` with a premium custom picker
 
 ## What exists
 
@@ -22,8 +22,10 @@
 
 ### Infrastructure
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler.
-- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260406-silpol`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
-- **Mobile nav** (`assets/style.css`) — S36 removed backdrop-filter from .nav-center.open; S38 disabled .site-header::before backdrop-filter at ≤980px (root iOS GPU compositing fix); S39 added @keyframes nav-enter (translateY -6px→0, opacity) for entrance animation
+- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260406-navfix`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
+- **Mobile nav** (`assets/style.css`, `assets/nav-toggle.js`) — S36 removed backdrop-filter from .nav-center.open; S38 disabled .site-header::before backdrop-filter at ≤980px (root iOS GPU compositing fix); S39 added @keyframes nav-enter; **S44 removed backdrop-filter: blur(2px) from #nav-backdrop (the true source of iOS blur + click interference), redesigned overlay with premium cubic-bezier animation, gold active-link accent, improved spacing and CTA polish**
+- **Theme FOUC prevention** (`assets/theme-toggle.js`, `scripts/propagate-nav.mjs`, all 72 HTML pages) — S44 injected tiny inline `<script>` at `<body>` start on every page that reads localStorage.vs_theme and stamps both `<html>` and `<body>` with the correct theme class before any content paints; theme-toggle.js also applies class to `<html>` immediately when called from `<head>`; eliminates dark flash when navigating in light mode
+- **Premium theme picker** (`assets/style.css`, `assets/theme-toggle.js`) — S44 replaced bare `<select>` with a custom button+dropdown component showing per-theme color swatches, active checkmark, animated chevron, scale+fade dropdown; mobile pill bar unchanged
 - **Light-mode theme refresh** (`assets/style.css`, `assets/theme-toggle.js`) — S40 retuned light tokens (`--text`, `--muted`, `--dim`, `--steel`, panel/bg vars), replaced washed translucent dark-theme carryovers with warm ivory/glass surfaces, and added light-mode component overrides for buttons, cards, panels, timeline/social blocks, inputs, badges, footer, and section chrome
 - **Light-mode contrast follow-up** (`assets/style.css`) — S41 darkened the shared secondary text scale to blue-slate values, forced bright readable titles over dark hero/card artwork, strengthened light-mode overlays on game/project hero bands, and converted shared dark panels (`.feature-block`, `.info-block`, `.stream-item`, patch notes, game/project cards) into true light surfaces in light mode
 - **Dark-panel contrast hardening** (`assets/style.css`, `index.html`, `ranks/index.html`, `vault-member/portal.css`) — S42 reversed the mistaken light-mode treatment on intentionally dark panels such as Studio Members feature tiles, homepage rank preview, DreadSpike storyline/media copy, portal rank panels, and public Vault Ranks cards; those sections now keep white text on dark backgrounds while the homepage Vault-Forge paragraph stays dark on its light surface
