@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▇ (12 entries)
-Avgs — 3: 426.3 | 5: 421.0 | all: 410.3
-  └ 3-session: Dev 85.7 | Align 89.0 | Momentum 87.0 | Engage 83.3 | Process 81.3
-Velocity trend: →  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~4 sessions — Now bucket has 5 SIL items
-Last session: 2026-04-07 | Session 45 | Total: 433/500 | Velocity: 0 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▆ (13 entries)
+Avgs — 3: 428.7 | 5: 423.8 | 10: 414.2 | all: 411.6
+  └ 3-session: Dev 85.7 | Align 87.7 | Momentum 87.7 | Engage 83.0 | Process 84.7
+Velocity trend: →  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~2 sessions — Now has 2 SIL items  |  Intent rate: 100% (last 5)
+Last session: 2026-04-07 | Session 46 | Total: 428/500 | Velocity: 0 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -322,3 +322,27 @@ Avgs — 3: 426.3 | 5: 421.0 | all: 410.3
 3. **Portal nav admin link** — `nav-admin-link` referenced in `showDashboard` but absent from HTML; admin tab toggle always invisible. First step: add `id="nav-admin-link"` to nav-account-menu. High probability.
 
 **Committed to TASK_BOARD:** [SIL] Theme picker swatch pulse
+
+## 2026-04-07 — Session 46 | Total: 428/500 | Velocity: 0 | Debt: →
+Avgs — 3: 428.7 | 5: 423.8 | 10: 414.2 | all: 411.6
+  └ 3-session: Dev 85.7 | Align 87.7 | Momentum 87.7 | Engage 83.0 | Process 84.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 86 | ↓ | Theme-persistence spec aligned; CSS var abstraction clean; no CI run |
+| Creative Alignment | 88 | → | Swatch pulse + backdrop var are brand-polish aligned; closeout.md sync benefits all projects |
+| Momentum | 84 | ↓ | Velocity 0 (all SIL); cleared entire Now backlog of 5 items in one pass |
+| Engagement | 82 | ↓ | Direct response to "complete next moves" directive; all SIL items actioned |
+| Process Quality | 88 | ↑ | closeout.md now at canonical v2.4; LATEST_HANDOFF, TASK_BOARD, WORK_LOG all updated |
+| **Total** | **428/500** | ↓ | |
+
+**Top win:** Cleared a 5-item SIL Now backlog accumulated across 3+ sessions in one focused pass — the theme-persistence spec fix has the highest forward value, restoring test confidence in the S44 custom picker
+**Top gap:** Velocity remains 0 for the third session — all work is SIL-labeled; need to wire non-SIL actionable features (portal admin link, referral attribution) to raise the metric
+**Intent outcome:** Achieved — all declared "next moves / blockers / flags" addressed and shipped
+
+**Brainstorm**
+1. **Portal nav admin link** — add `id="nav-admin-link"` to `vault-member/index.html` nav-account-menu; referenced in `showDashboard()` but missing, making admin tab permanently invisible. First step: grep for `nav-admin-link` in portal-auth.js to confirm exact ID. High probability.
+2. **Referral attribution wire** — `vs_ref` is already in sessionStorage; check `register_open` RPC signature for a `p_ref_by` param; wire it on signup. First step: read `supabase/functions/register_open/index.ts`. Medium probability.
+3. **Light-mode screenshot smoke** — Playwright screenshots of `/`, `/ranks/`, `/games/` in forced localStorage light mode before deploys; catches dark-panel contrast regressions that DOM assertions miss. First step: add a `tests/visual-smoke.spec.js` using `page.screenshot()` with a known-good baseline comparison. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Portal nav admin link · [SIL] Referral attribution wire

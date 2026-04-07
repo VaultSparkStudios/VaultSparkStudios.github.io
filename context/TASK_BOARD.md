@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-07 (Session 45)
+Last updated: 2026-04-07 (Session 46)
 
 ---
 
@@ -12,6 +12,8 @@ Last updated: 2026-04-07 (Session 45)
 - [x] **[SIL] Theme persistence test contract** — replaced `#theme-select` assertions with `#theme-picker-btn` + `.theme-option[data-theme=x].active`; `body[data-theme]` assertions preserved (S46)
 - [x] **[SIL] Nav backdrop opacity by theme** — added `--nav-backdrop-overlay` var to `:root` (dark) and `body.light-mode` (45% dark-navy); `#nav-backdrop` now uses var (S46)
 - [x] **[SIL] Theme picker swatch pulse** — `@keyframes swatch-pulse` added; `.swatch-pulse` class toggled in click handler + cleaned up on label reset (S46)
+- [ ] **[SIL] Portal nav admin link** — `nav-admin-link` is referenced in `showDashboard()` in `portal-auth.js` but is absent from `vault-member/index.html` nav-account-menu; admin tab toggle is permanently invisible for admin users; first step: add `id="nav-admin-link"` to nav-account-menu
+- [ ] **[SIL] Referral attribution wire** — `vs_ref` is stored in sessionStorage on `?ref=` arrival (S45); wire it into the `register_open` Supabase RPC as `p_ref_by` so referrers get signup credit; first step: check if RPC accepts the param or needs a new column
 
 ---
 
@@ -19,7 +21,8 @@ Last updated: 2026-04-07 (Session 45)
 
 - [ ] **[SIL] CSP propagation script** — meta CSP tags duplicated across 97 pages; `scripts/propagate-csp.mjs` generates from single source + propagates; eliminates manual per-file CSP edits
 - [ ] **[SIL] Staging smoke test script** — `scripts/smoke-test.sh` pings website.staging before any push; 5-10 key URLs, exits non-zero on failure; enforces CANON-007 in practice
-- [ ] **[SIL] Theme persistence test contract** — align Playwright with the real theme source of truth (class/select value vs `body[data-theme]`) or restore a deterministic `data-theme` signal during hydration; prevents false negatives while protecting light-mode regressions
+- [ ] **[SIL] Light-mode screenshot smoke** — Chromium-only Playwright screenshots of `/`, `/ranks/`, `/games/` in forced light mode to catch contrast regressions before deploys
+- [ ] **[SIL] IGNIS delta field** — add `ignisScoreDelta` to `PROJECT_STATUS.json` computed at each closeout; makes score trajectory visible without digging into audit files
 
 ## Next (prior)
 

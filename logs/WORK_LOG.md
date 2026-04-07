@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-04-07 — Session 46
+
+- robots.txt: added comment block explaining Cloudflare AI Labyrinth injects directives at CDN edge (prevents future confusion when live robots.txt differs from repo)
+- prompts/closeout.md: synced to studio-ops v2.4 — removed Step 7.5 (mandatory IGNIS every closeout), added Step 8.5 (IGNIS on-demand with skip conditions); updated synced-from tag
+- tests/theme-persistence.spec.js: replaced `waitForSelector('#theme-select')` + `.toHaveValue()` with `#theme-picker-btn` wait + `.theme-option[data-theme=x].active` class assertion; `body[data-theme]` assertions preserved; mobile test now checks `.mobile-theme-pill[data-theme=x].active`
+- assets/style.css: added `--nav-backdrop-overlay` CSS var to `:root` (rgba(0,0,0,0.6)) and `body.light-mode` (rgba(22,32,51,0.45)); `#nav-backdrop` now uses the var; added `@keyframes swatch-pulse` + `.swatch-pulse` utility class
+- assets/theme-toggle.js: click handler now removes/re-adds `.swatch-pulse` on the swatch element (void offsetWidth reflow trick to restart animation); cleans up class in label reset timer
+- Pushed: `d6240bb`
+- SIL: 428/500 · Velocity: 0 · Debt: →
+
 ## 2026-04-07 — Session 45
 
 - Root-caused auth tab switching bug on `vault-member/?ref=username`: `showAuth()` and `showDashboard()` in `portal-auth.js` threw TypeError because `nav-account-wrap`, `nav-signin-link`, `nav-join-btn` were missing from `vault-member/index.html` nav-right — added all missing portal nav elements (notif bell wrap, nav account dropdown with trigger/avatar/name/menu, IDs on Sign In/Join links)

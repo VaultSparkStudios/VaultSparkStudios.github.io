@@ -10,7 +10,7 @@ Complete all Now SIL queue items, remove blockers, fix flags.
 
 - Shipped: 5 improvements — robots.txt note, closeout.md sync, theme-persistence spec, nav backdrop var, swatch-pulse animation
 - Tests: N/A — no automated test run this session
-- Deploy: pending commit → GitHub Pages auto
+- Deploy: pushed `d6240bb` → GitHub Pages auto
 
 ---
 
@@ -99,10 +99,9 @@ Fix the broken light-mode readability and make the light theme feel intentional 
 
 ## Recommended First Action Next Session
 
-1. **robots.txt Cloudflare note** — 3-line comment ([SIL] Now)
-2. **closeout.md sync** — update prompts/closeout.md to v2.4 template ([SIL] Now)
-3. **Theme persistence test contract** — verify Playwright spec matches new inline-script + theme-toggle.js body.dataset.theme behavior ([SIL] Now)
-4. **Theme picker swatch pulse** — add @keyframes swatch-pulse to reinforce "Default saved" feedback ([SIL] Now)
+1. **Portal nav admin link** — add `id="nav-admin-link"` to nav-account-menu in `vault-member/index.html` ([SIL] Now)
+2. **Referral attribution wire** — check `register_open` RPC for `p_ref_by` param; wire `vs_ref` sessionStorage ([SIL] Now)
+3. **CSP propagation script** — extract CSP value to shared config in `scripts/propagate-nav.mjs` (Next → Now)
 
 ---
 
