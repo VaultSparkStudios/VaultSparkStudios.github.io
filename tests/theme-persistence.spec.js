@@ -9,13 +9,14 @@ test.describe('Theme persistence', () => {
     });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await page.waitForLoadState('networkidle');
-    await page.waitForSelector('#theme-select', { timeout: 15000 });
-    await expect(page.locator('#theme-select')).toHaveValue('warm');
+    // Custom picker (replaces bare <select> as of S44)
+    await page.waitForSelector('#theme-picker-btn', { timeout: 15000 });
+    await expect(page.locator('.theme-option[data-theme="warm"]')).toHaveClass(/active/);
     await expect(page.locator('body')).toHaveAttribute('data-theme', 'warm');
     await page.reload({ waitUntil: 'domcontentloaded' });
     await page.waitForLoadState('networkidle');
-    await page.waitForSelector('#theme-select', { timeout: 15000 });
-    await expect(page.locator('#theme-select')).toHaveValue('warm');
+    await page.waitForSelector('#theme-picker-btn', { timeout: 15000 });
+    await expect(page.locator('.theme-option[data-theme="warm"]')).toHaveClass(/active/);
     await expect(page.locator('body')).toHaveAttribute('data-theme', 'warm');
   });
 
@@ -26,10 +27,11 @@ test.describe('Theme persistence', () => {
     });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     await page.waitForLoadState('networkidle');
-    await page.waitForSelector('#theme-select', { timeout: 15000 });
+    // Custom picker (replaces bare <select> as of S44)
+    await page.waitForSelector('#theme-picker-btn', { timeout: 15000 });
     await page.locator('#hamburger').click({ force: true });
     await expect(page.locator('#nav-menu')).toHaveClass(/open/);
-    await expect(page.locator('#theme-select')).toHaveValue('high-contrast');
+    await expect(page.locator('.mobile-theme-pill[data-theme="high-contrast"]')).toHaveClass(/active/);
     await expect(page.locator('body')).toHaveAttribute('data-theme', 'high-contrast');
   });
 });

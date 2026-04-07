@@ -46,6 +46,7 @@
   --mobile-nav-dropdown-bg: rgba(255,255,255,0.08);
   --mobile-nav-dropdown-border: rgba(255,255,255,0.16);
   --focus-outline: #ffffff;
+  --nav-backdrop-overlay: rgba(0, 0, 0, 0.6);
 }
 
 
@@ -121,6 +122,7 @@ body.light-mode {
   --mobile-nav-dropdown-bg: rgba(22, 32, 51, 0.035);
   --mobile-nav-dropdown-border: rgba(22, 32, 51, 0.08);
   --focus-outline: #162033;
+  --nav-backdrop-overlay: rgba(22, 32, 51, 0.45);
   color: var(--text);
 }
 body.ambient-mode {
@@ -344,6 +346,11 @@ body.high-contrast-mode .hamburger span { background: var(--text); }
 }
 .theme-picker-btn:hover { border-color: var(--gold); }
 .theme-picker-btn:focus-visible { outline: 2px solid var(--focus-outline); outline-offset: 2px; }
+@keyframes swatch-pulse {
+  0%   { transform: scale(1);   box-shadow: 0 0 0 0 rgba(255,196,0,0.7); }
+  50%  { transform: scale(1.45); box-shadow: 0 0 0 5px rgba(255,196,0,0); }
+  100% { transform: scale(1);   box-shadow: 0 0 0 0 rgba(255,196,0,0); }
+}
 .theme-picker-swatch {
   width: 10px;
   height: 10px;
@@ -352,6 +359,7 @@ body.high-contrast-mode .hamburger span { background: var(--text); }
   border: 1.5px solid rgba(255,255,255,0.2);
   transition: border-color 0.18s;
 }
+.theme-picker-swatch.swatch-pulse { animation: swatch-pulse 0.55s ease-out; }
 body.light-mode .theme-picker-swatch { border-color: rgba(22,32,51,0.2); }
 .theme-picker-arrow {
   font-size: 0.5rem;
@@ -1757,7 +1765,7 @@ body.light-mode .text-white { color: var(--text); }
   position: fixed;
   inset: 0;
   z-index: 199;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--nav-backdrop-overlay);
   /* No backdrop-filter — causes iOS Safari GPU compositing layer that bleeds
      blur artifacts onto the z-index:200 fixed nav overlay above it. */
 }

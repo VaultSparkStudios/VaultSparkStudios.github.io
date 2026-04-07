@@ -426,12 +426,17 @@
         setTheme(theme.value);
         closeThemePicker();
         btn.setAttribute('aria-label', 'Select theme: ' + theme.label);
+        // Pulse the swatch to reinforce "saved" feedback
+        swatch.classList.remove('swatch-pulse');
+        void swatch.offsetWidth; // force reflow to restart animation
+        swatch.classList.add('swatch-pulse');
         // Flash "✓ Default saved" in button label
         if (_labelResetTimer) clearTimeout(_labelResetTimer);
         labelEl.textContent = '✓ Default saved';
         _labelResetTimer = setTimeout(function () {
           var saved = THEMES.find(function (t) { return t.value === getTheme(); });
           if (saved) labelEl.textContent = saved.label;
+          swatch.classList.remove('swatch-pulse');
           _labelResetTimer = null;
         }, 1800);
       });

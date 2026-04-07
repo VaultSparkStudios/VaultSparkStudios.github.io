@@ -6,12 +6,12 @@ Last updated: 2026-04-07 (Session 45)
 
 ## Now
 
-- [ ] **[SIL] robots.txt Cloudflare note** — add comment in `robots.txt` explaining Cloudflare AI Labyrinth injects additional directives at CDN edge; prevents future confusion when live robots.txt differs from repo
+- [x] **[SIL] robots.txt Cloudflare note** — added comment explaining Cloudflare AI Labyrinth injects directives at CDN edge (S46)
 - [x] **[SIL] prefers-reduced-motion guard** — global `@media (prefers-reduced-motion: reduce)` rule already present in style.css (line ~1464); disables all animations including nav-enter. Done.
-- [ ] **[SIL] closeout.md sync** — update `prompts/closeout.md` to current v2.4 template from studio-ops (same sync done for start.md in S34)
-- [ ] **[SIL] Theme persistence test contract** — align Playwright `tests/theme-persistence.spec.js` with new theme signal: body.dataset.theme is now set by the inline FOUC script + theme-toggle.js; verify the spec expectation matches actual runtime state
-- [ ] **[SIL] Nav backdrop opacity by theme** — `#nav-backdrop` uses hardcoded `rgba(0,0,0,0.6)` which is too dark in light mode; add a theme-aware CSS var for backdrop overlay color in each theme's token block
-- [ ] **[SIL] Theme picker swatch pulse** — add `@keyframes swatch-pulse` on `.theme-picker-swatch` triggered when theme changes; reinforces the "Default saved" feedback interaction; First step: add keyframes + class toggle in `setTheme()`
+- [x] **[SIL] closeout.md sync** — updated `prompts/closeout.md` to studio-ops v2.4: removed Step 7.5, added Step 8.5 (S46)
+- [x] **[SIL] Theme persistence test contract** — replaced `#theme-select` assertions with `#theme-picker-btn` + `.theme-option[data-theme=x].active`; `body[data-theme]` assertions preserved (S46)
+- [x] **[SIL] Nav backdrop opacity by theme** — added `--nav-backdrop-overlay` var to `:root` (dark) and `body.light-mode` (45% dark-navy); `#nav-backdrop` now uses var (S46)
+- [x] **[SIL] Theme picker swatch pulse** — `@keyframes swatch-pulse` added; `.swatch-pulse` class toggled in click handler + cleaned up on label reset (S46)
 
 ---
 
@@ -47,6 +47,7 @@ Last updated: 2026-04-07 (Session 45)
 
 ## Done (recent)
 
+- [x] **SIL Now queue — 5 items (S46)** — robots.txt note, closeout.md sync, theme-persistence spec fix, nav backdrop opacity var, swatch-pulse animation
 - [x] **Portal auth tab switching on referral link (S45)** — added missing portal nav HTML (`nav-account-wrap`, notif bell, `nav-signin-link`, `nav-join-btn`); null guards in `showAuth`/`showDashboard`; `?ref=` referral banner + sessionStorage tracking; theme picker hover-preview + DEFAULT badge + confirmation flash
 - [x] **Mobile nav blur + clicks fix, theme FOUC, premium picker (S44)** — removed backdrop-filter from #nav-backdrop (iOS compositing root cause); injected inline theme script at body start across 72 pages; redesigned mobile nav; replaced select with custom picker; light mode CSS fixes
 - [x] **Rights posture correction (S43)** — replaced public MIT/open-source claims with a proprietary IP notice + third-party attributions page; propagated footer/resource label to `Technology & Rights`; updated sitemap labels and compliance-page title expectation

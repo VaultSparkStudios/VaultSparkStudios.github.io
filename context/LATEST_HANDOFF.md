@@ -1,6 +1,19 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-07 (Session 45)
+Last updated: 2026-04-07 (Session 46)
+
+## Session Intent: Session 46
+Complete all Now SIL queue items, remove blockers, fix flags.
+**Outcome: Achieved** — all 5 Now SIL tasks shipped: robots.txt Cloudflare note, closeout.md synced to studio-ops v2.4, theme-persistence Playwright spec updated for custom picker, nav backdrop overlay made theme-aware via CSS var, swatch-pulse animation wired.
+
+## Where We Left Off (Session 46 — 2026-04-07)
+
+- Shipped: 5 improvements — robots.txt note, closeout.md sync, theme-persistence spec, nav backdrop var, swatch-pulse animation
+- Tests: N/A — no automated test run this session
+- Deploy: pending commit → GitHub Pages auto
+
+---
+
 
 ## Session Intent: Session 45
 Fix auth tab switching on `vault-member/?ref=username` referral link (users couldn't switch between Create Account / Sign In tabs); polish theme picker UX with explicit default-setting behavior.

@@ -1,5 +1,5 @@
 <!-- template-version: 2.4 -->
-<!-- synced-from: studio-ops/prompts/closeout.md @ Session 34 (2026-04-02) -->
+<!-- synced-from: studio-ops/prompts/closeout.md @ Session 46 (2026-04-07) -->
 # CLOSEOUT
 
 Executed when the user says only `closeout`.
@@ -248,19 +248,6 @@ Avgs — 3: XXX.X | 5: XXX.X | 10: XXX.X | 25: — | all: XXX.X
 
 ---
 
-### Step 7.5 · Run IGNIS Score  *(mandatory — every closeout)*
-
-```bash
-cd "C:/Users/p4cka/documents/development/vaultspark-studio-ops/ignis/src" && \
-  npx tsx cli.ts score "C:/Users/p4cka/documents/development/vaultsparkstudios.github.io"
-```
-
-Capture: `ignisScore` (integer), tier name → `ignisGrade`, date → `ignisLastComputed`.
-Update `context/PROJECT_STATUS.json` with all three fields.
-Copy the one-line IGNIS personality quote into `ignisNote` in Step 8.
-
----
-
 ### Step 8 · Write Audit JSON
 
 Create `audits/YYYY-MM-DD.json`. Multiple sessions same day: suffix `-2`, `-3`, etc.
@@ -311,6 +298,23 @@ Create `audits/YYYY-MM-DD.json`. Multiple sessions same day: suffix `-2`, `-3`, 
 - `ignisNote`: copy from Step 3.5 verbatim
 
 **Also update `context/PROJECT_STATUS.json`:** `silScore` · `silAvg3` · `silVelocity` · `silDebt` · `silLastSession`
+
+---
+
+### Step 8.5 · IGNIS Score Refresh  *(run when IGNIS repo is accessible)*
+
+Refresh this project's IGNIS score so `ignisScore` never goes stale after a meaningful session.
+
+```bash
+# From IGNIS repo root (adjust path as needed):
+npx tsx "C:\Users\p4cka\documents\development\vaultspark-ignis\cli.ts" score "<project-local-path>"
+```
+
+After running:
+- Update `context/PROJECT_STATUS.json` → `ignisScore`, `ignisGrade`, `ignisLastComputed` if the score changed.
+- If score changed by ≥500 IQ points, note it in the closeout output and in the SIL entry brainstorm.
+
+**Skip this step if:** IGNIS repo unavailable (CI/remote), or session had zero code/protocol changes. Note "IGNIS score not refreshed — [reason]" in closeout output when skipped.
 
 ---
 
