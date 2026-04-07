@@ -351,7 +351,7 @@
 
             <form class="contact-form" id="contact-form" novalidate>
               <input type="hidden" name="access_key" value="8f83d837-0348-43a4-8a0f-19c3a1d70d16" />
-              <input type="hidden" name="subject" value="VaultSpark Studios — Contact Form" />
+              <input type="hidden" name="subject" value="VaultSpark Studios — New Contact" />
               <input type="checkbox" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off" />
               <div class="form-grid">
                 <div class="form-group">
@@ -366,7 +366,7 @@
 
               <div class="form-group">
                 <label for="contact-subject">Subject</label>
-                <input type="text" id="contact-subject" name="subject" class="input-field" placeholder="What is this about?" required />
+                <input type="text" id="contact-subject" name="inquiry_subject" class="input-field" placeholder="What is this about?" required />
               </div>
 
               <div class="form-group">
@@ -466,10 +466,32 @@
     var toast = document.getElementById('contact-toast');
     var toastClose = document.getElementById('toast-close');
     var toastProgress = document.getElementById('toast-progress');
-    var dismissTimer, progressAnim;
+    var toastIcon = toast.querySelector('.toast-icon');
+    var toastTitle = toast.querySelector('.toast-title');
+    var toastMsg = toast.querySelector('.toast-msg');
+    var dismissTimer;
 
-    function showToast() {
-      toast.classList.remove('toast-leaving');
+    function showToast(isError) {
+      clearTimeout(dismissTimer);
+      toast.classList.remove('toast-leaving', 'toast-visible');
+      // Reset state
+      toast.style.borderColor = '';
+      toastIcon.style.background = '';
+      toastIcon.style.borderColor = '';
+      if (isError) {
+        toast.style.borderColor = 'rgba(248,113,113,0.35)';
+        toastIcon.style.background = 'rgba(248,113,113,0.12)';
+        toastIcon.style.borderColor = 'rgba(248,113,113,0.3)';
+        toastIcon.textContent = '✕';
+        toastTitle.style.color = '#f87171';
+        toastTitle.textContent = 'Transmission failed.';
+        toastMsg.textContent = 'Something went wrong — please email founder@vaultsparkstudios.com directly.';
+      } else {
+        toastIcon.textContent = '✓';
+        toastTitle.style.color = '';
+        toastTitle.textContent = 'Signal transmitted.';
+        toastMsg.textContent = 'Your message is in the vault. Response time is typically within 48 hours — the vault doesn\'t leave signals unanswered.';
+      }
       toast.classList.add('toast-visible');
 
       // Animate progress bar shrinking over TOAST_DURATION
@@ -512,7 +534,7 @@
       submitBtn.textContent = 'Transmitting…';
 
       var data = new FormData(this);
-      data.set('message', 'Subject: ' + subject + '\n\n' + message);
+      data.set('message', 'Subject: ' + subject + '\n\nFrom: ' + name + ' <' + email + '>\n\n' + message);
 
       try {
         var res = await fetch('https://api.web3forms.com/submit', {
@@ -525,21 +547,14 @@
           this.reset();
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
-          showToast();
+          showToast(false);
         } else {
           throw new Error(json.message || 'Submission failed');
         }
       } catch (err) {
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
-        var existing = this.querySelector('.contact-error');
-        if (!existing) {
-          var errEl = document.createElement('p');
-          errEl.className = 'contact-error';
-          errEl.style.cssText = 'color:#f87171;font-size:0.88rem;margin-top:0.75rem;';
-          errEl.textContent = 'Transmission failed — please try emailing founder@vaultsparkstudios.com directly.';
-          this.appendChild(errEl);
-        }
+        showToast(true);
       }
     });
   })();
