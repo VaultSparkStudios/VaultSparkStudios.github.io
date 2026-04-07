@@ -174,6 +174,13 @@ function findHtmlFiles(dir, base = dir) {
   return results;
 }
 
+// ─── Theme FOUC prevention script (injected at <body> start) ──────────────
+// Reads localStorage.vs_theme before any content renders — prevents flash of
+// wrong theme when navigating between pages. Tiny inline script, no external dep.
+// Applied at <body> start — sets theme class on both <html> and <body> before any
+// content paints, eliminating the dark-flash FOUC on page navigation.
+const THEME_FIX_SCRIPT = `<script>!function(){try{var t=localStorage.getItem('vs_theme'),m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(t&&m[t]){var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}}catch(e){}}();<\/script>`;
+
 // ─── Main ──────────────────────────────────────────────
 const files = findHtmlFiles(ROOT);
 let updated = 0;
@@ -203,6 +210,14 @@ for (const { full, rel } of files) {
   const footerRegex = /<footer class="site-footer"[^>]*>[\s\S]*?<\/footer>/;
   if (footerRegex.test(html)) {
     html = html.replace(footerRegex, footer);
+  }
+
+  // Inject theme FOUC prevention script right after <body> tag (idempotent)
+  if (!html.includes('vs_theme') || !html.includes('THEME_FIX') && !html.includes('theme-fix')) {
+    // Check if the tiny inline script is already present
+    if (!html.includes("localStorage.getItem('vs_theme')")) {
+      html = html.replace(/(<body[^>]*>)/, '$1\n' + THEME_FIX_SCRIPT);
+    }
   }
 
   // ─── Inject resource hints if missing ──────────────────

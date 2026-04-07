@@ -14,13 +14,13 @@
     'supabase.auth.token'
   ];
   var THEMES = [
-    { value: 'dark', label: 'Dark' },
-    { value: 'light', label: 'Light' },
-    { value: 'ambient', label: 'Ambient' },
-    { value: 'warm', label: 'Warm' },
-    { value: 'cool', label: 'Cool' },
-    { value: 'lava', label: 'Lava' },
-    { value: 'high-contrast', label: 'Dark - High Contrast' }
+    { value: 'dark',          label: 'Dark',               color: '#07080f' },
+    { value: 'light',         label: 'Light',              color: '#f6efe5' },
+    { value: 'ambient',       label: 'Ambient',            color: '#08121c' },
+    { value: 'warm',          label: 'Warm',               color: '#1f120b' },
+    { value: 'cool',          label: 'Cool',               color: '#0a1830' },
+    { value: 'lava',          label: 'Lava',               color: '#200a08' },
+    { value: 'high-contrast', label: 'High Contrast',      color: '#000000' }
   ];
   var THEME_CLASSES = {
     dark: 'dark-mode',
@@ -83,11 +83,22 @@
   }
 
   function refreshPicker(theme) {
-    var select = document.getElementById('theme-select');
-    if (select) {
-      select.value = theme;
-      select.title = 'Theme: ' + select.options[select.selectedIndex].text;
+    // Update desktop premium picker button swatch + label
+    var btn = document.getElementById('theme-picker-btn');
+    if (btn) {
+      var swatch = btn.querySelector('.theme-picker-swatch');
+      var labelEl = btn.querySelector('.theme-picker-label');
+      var entry = THEMES.find(function (t) { return t.value === theme; });
+      if (swatch && entry) swatch.style.background = entry.color;
+      if (labelEl && entry) labelEl.textContent = entry.label;
     }
+    // Update desktop option active states
+    document.querySelectorAll('.theme-option').forEach(function (opt) {
+      var isActive = opt.dataset.theme === theme;
+      opt.classList.toggle('active', isActive);
+      var check = opt.querySelector('.theme-opt-check');
+      if (check) check.style.opacity = isActive ? '1' : '0';
+    });
     // Sync mobile pills
     document.querySelectorAll('.mobile-theme-pill').forEach(function (pill) {
       pill.classList.toggle('active', pill.dataset.theme === theme);
@@ -97,24 +108,34 @@
   function applyTheme(theme) {
     var resolvedTheme = normalizeTheme(theme);
     var body = document.body;
+    var root = document.documentElement;
 
     updateThemeMeta(resolvedTheme);
 
-    if (!body) return resolvedTheme;
-
+    // Apply to <html> immediately (always available — prevents FOUC before <body> ready)
     Object.keys(THEME_CLASSES).forEach(function (key) {
-      body.classList.remove(THEME_CLASSES[key]);
+      root.classList.remove(THEME_CLASSES[key]);
     });
-
     if (THEME_CLASSES[resolvedTheme]) {
-      body.classList.add(THEME_CLASSES[resolvedTheme]);
+      root.classList.add(THEME_CLASSES[resolvedTheme]);
+    }
+    root.dataset.theme = resolvedTheme;
+
+    // Also apply to <body> when available
+    if (body) {
+      Object.keys(THEME_CLASSES).forEach(function (key) {
+        body.classList.remove(THEME_CLASSES[key]);
+      });
+      if (THEME_CLASSES[resolvedTheme]) {
+        body.classList.add(THEME_CLASSES[resolvedTheme]);
+      }
+      body.dataset.theme = resolvedTheme;
+      refreshPicker(resolvedTheme);
+      window.dispatchEvent(new CustomEvent('vs:theme-changed', {
+        detail: { theme: resolvedTheme }
+      }));
     }
 
-    body.dataset.theme = resolvedTheme;
-    refreshPicker(resolvedTheme);
-    window.dispatchEvent(new CustomEvent('vs:theme-changed', {
-      detail: { theme: resolvedTheme }
-    }));
     return resolvedTheme;
   }
 
@@ -315,38 +336,141 @@
     });
   }
 
+  /* ── Premium Theme Picker (replaces bare <select>) ── */
   function injectThemePicker() {
     var navRight = document.querySelector('.nav-right');
-    if (!navRight || document.getElementById('theme-select')) return;
+    if (!navRight || document.getElementById('theme-picker-btn')) return;
 
-    // Desktop picker (hidden on mobile via CSS)
-    var select = document.createElement('select');
-    select.id = 'theme-select';
-    select.className = 'theme-select';
-    select.setAttribute('aria-label', 'Select site theme');
+    var currentTheme = getTheme();
+    var currentEntry = THEMES.find(function (t) { return t.value === currentTheme; }) || THEMES[0];
+
+    // Wrapper
+    var wrapper = document.createElement('div');
+    wrapper.className = 'theme-picker';
+    wrapper.id = 'theme-picker';
+    wrapper.setAttribute('aria-label', 'Theme selector');
+
+    // Toggle button
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.id = 'theme-picker-btn';
+    btn.className = 'theme-picker-btn';
+    btn.setAttribute('aria-haspopup', 'listbox');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', 'Select theme: ' + currentEntry.label);
+
+    var swatch = document.createElement('span');
+    swatch.className = 'theme-picker-swatch';
+    swatch.style.background = currentEntry.color;
+    swatch.setAttribute('aria-hidden', 'true');
+
+    var labelEl = document.createElement('span');
+    labelEl.className = 'theme-picker-label';
+    labelEl.textContent = currentEntry.label;
+
+    var arrow = document.createElement('span');
+    arrow.className = 'theme-picker-arrow';
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.innerHTML = '&#9660;';
+
+    btn.appendChild(swatch);
+    btn.appendChild(labelEl);
+    btn.appendChild(arrow);
+
+    // Dropdown
+    var dropdown = document.createElement('div');
+    dropdown.className = 'theme-picker-dropdown';
+    dropdown.setAttribute('role', 'listbox');
+    dropdown.setAttribute('aria-label', 'Available themes');
 
     THEMES.forEach(function (theme) {
-      var option = document.createElement('option');
-      option.value = theme.value;
-      option.textContent = theme.label;
-      select.appendChild(option);
+      var opt = document.createElement('button');
+      opt.type = 'button';
+      opt.className = 'theme-option' + (theme.value === currentTheme ? ' active' : '');
+      opt.dataset.theme = theme.value;
+      opt.setAttribute('role', 'option');
+      opt.setAttribute('aria-selected', theme.value === currentTheme ? 'true' : 'false');
+
+      var optSwatch = document.createElement('span');
+      optSwatch.className = 'theme-opt-swatch';
+      optSwatch.style.background = theme.color;
+      optSwatch.setAttribute('aria-hidden', 'true');
+
+      var optLabel = document.createElement('span');
+      optLabel.textContent = theme.label;
+
+      var check = document.createElement('span');
+      check.className = 'theme-opt-check';
+      check.setAttribute('aria-hidden', 'true');
+      check.textContent = '✓';
+      check.style.opacity = theme.value === currentTheme ? '1' : '0';
+
+      opt.appendChild(optSwatch);
+      opt.appendChild(optLabel);
+      opt.appendChild(check);
+
+      opt.addEventListener('click', function () {
+        setTheme(theme.value);
+        closeThemePicker();
+        btn.setAttribute('aria-label', 'Select theme: ' + theme.label);
+      });
+
+      dropdown.appendChild(opt);
     });
 
-    select.addEventListener('change', function () {
-      setTheme(select.value);
-    });
+    wrapper.appendChild(btn);
+    wrapper.appendChild(dropdown);
 
+    // Insert before hamburger
     var hamburger = navRight.querySelector('.hamburger');
     if (hamburger) {
-      navRight.insertBefore(select, hamburger);
+      navRight.insertBefore(wrapper, hamburger);
     } else {
-      navRight.appendChild(select);
+      navRight.appendChild(wrapper);
     }
 
-    refreshPicker(getTheme());
+    // Toggle open/close
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (wrapper.classList.contains('open')) {
+        closeThemePicker();
+      } else {
+        openThemePicker();
+      }
+    });
+
+    // Close on outside click
+    document.addEventListener('click', function (e) {
+      if (!wrapper.contains(e.target)) {
+        closeThemePicker();
+      }
+    });
+
+    // Close on Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeThemePicker();
+    });
+
+    refreshPicker(currentTheme);
 
     // Mobile pill switcher (inside the nav overlay footer)
     injectMobileThemePills();
+  }
+
+  function openThemePicker() {
+    var wrapper = document.getElementById('theme-picker');
+    var btn = document.getElementById('theme-picker-btn');
+    if (!wrapper) return;
+    wrapper.classList.add('open');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+  }
+
+  function closeThemePicker() {
+    var wrapper = document.getElementById('theme-picker');
+    var btn = document.getElementById('theme-picker-btn');
+    if (!wrapper) return;
+    wrapper.classList.remove('open');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
   }
 
   function injectMobileThemePills() {
@@ -386,6 +510,7 @@
     refreshPicker(getTheme());
   }
 
+  // Apply immediately — also targets <html> so it fires before <body> exists
   applyTheme(getTheme());
 
   if (document.readyState === 'loading') {
