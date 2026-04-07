@@ -1,5 +1,19 @@
 # Work Log
 
+## 2026-04-07 — Session 47
+
+- vault-member/index.html: added `id="nav-admin-link"` button to nav-account-menu (display:none; shown by showDashboard() for admin users)
+- vault-member/portal-auth.js + portal.js (×2): wired `p_ref_by: sessionStorage.getItem('vs_ref')` to all 3 register_open RPC calls; pending DB migration
+- scripts/propagate-csp.mjs: created — single CSP_VALUE constant propagates to all HTML pages via regex replace
+- scripts/smoke-test.sh: created — 12-URL staging smoke test; exits non-zero on any failure; enforces CANON-007
+- tests/light-mode-screenshots.spec.js: created — Chromium-only Playwright spec; forces light-mode via localStorage; screenshots 3 pages
+- .github/workflows/sentry-release.yml: created — tags each main push as Sentry release; requires 3 secrets/vars
+- context/PROJECT_STATUS.json: added ignisScoreDelta field; prompts/closeout.md Step 8 updated to compute it
+- universe/voidfall/index.html: expanded with 4 sections — Transmission Archive (3 fragment cards), The Signal (world-building prose), Known Entities (3 cryptic entity rows), Saga meta grid (6 cells)
+- contact/index.html: built animated toast (spring slide-up, 7s countdown progress bar, manual dismiss, red error variant); fixed duplicate name="subject" field that caused Web3Forms delivery failures
+- Pushed: `f777943` + `f9ac3d4` + `1a94c14`
+- SIL: 438/500 · Velocity: 7 · Debt: →
+
 ## 2026-04-07 — Session 46
 
 - robots.txt: added comment block explaining Cloudflare AI Labyrinth injects directives at CDN edge (prevents future confusion when live robots.txt differs from repo)

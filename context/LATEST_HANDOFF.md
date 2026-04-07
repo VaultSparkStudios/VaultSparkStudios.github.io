@@ -1,6 +1,38 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-07 (Session 46)
+Last updated: 2026-04-07 (Session 47)
+
+## Session Intent: Session 47
+Implement all audit recommendations (9 items); then contact form success toast; then contact form bug fix (duplicate subject field / Web3Forms delivery failure).
+**Outcome: Achieved** — all 9 implementable audit items shipped; contact toast built; form bug fixed and pushed.
+
+## Where We Left Off (Session 47 — 2026-04-07)
+
+- Shipped: 11 improvements — portal admin link, referral attribution wire (3 RPC sites), CSP propagation script, staging smoke test, IGNIS delta field, light-mode screenshot spec, Voidfall page expansion (4 sections), Sentry release workflow, contact toast, contact form duplicate-subject fix
+- Tests: N/A — no automated test run this session
+- Deploy: pushed `f777943` + `f9ac3d4` + `1a94c14` → GitHub Pages auto
+
+---
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[DB] `register_open` migration** — add `p_ref_by TEXT DEFAULT ''` param to the `register_open` Supabase RPC; client sends it already; without this no referral credit reaches the DB
+- [ ] **[Sentry]** Set `SENTRY_ORG`, `SENTRY_PROJECT` (repo vars) + `SENTRY_AUTH_TOKEN` (secret) in GitHub Settings; `.github/workflows/sentry-release.yml` is ready
+- [ ] **[Contact]** Re-test contact form after duplicate-subject fix; check spam folder if email still missing; verify Web3Forms key `8f83d837...` is verified for founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. Run `node scripts/propagate-csp.mjs` — CSP script exists but hasn't been run yet; updates all 97 pages in one pass
+2. `register_open` DB migration — unblocks referral attribution completely
+3. Sentry secrets setup — one-time config, then releases auto-tag forever
+
+---
 
 ## Session Intent: Session 46
 Complete all Now SIL queue items, remove blockers, fix flags.

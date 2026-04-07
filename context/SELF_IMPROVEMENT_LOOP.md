@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▆ (13 entries)
-Avgs — 3: 428.7 | 5: 423.8 | 10: 414.2 | all: 411.6
-  └ 3-session: Dev 85.7 | Align 87.7 | Momentum 87.7 | Engage 83.0 | Process 84.7
-Velocity trend: →  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~2 sessions — Now has 2 SIL items  |  Intent rate: 100% (last 5)
-Last session: 2026-04-07 | Session 46 | Total: 428/500 | Velocity: 0 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▆ (14 entries)
+Avgs — 3: 431.7 | 5: 425.6 | 10: 416.8 | all: 413.5
+  └ 3-session: Dev 84.3 | Align 88.0 | Momentum 88.7 | Engage 84.7 | Process 86.0
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~3 sessions — Now queue cleared  |  Intent rate: 100% (last 5)
+Last session: 2026-04-07 | Session 47 | Total: 438/500 | Velocity: 7 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -346,3 +346,27 @@ Avgs — 3: 428.7 | 5: 423.8 | 10: 414.2 | all: 411.6
 3. **Light-mode screenshot smoke** — Playwright screenshots of `/`, `/ranks/`, `/games/` in forced localStorage light mode before deploys; catches dark-panel contrast regressions that DOM assertions miss. First step: add a `tests/visual-smoke.spec.js` using `page.screenshot()` with a known-good baseline comparison. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Portal nav admin link · [SIL] Referral attribution wire
+
+## 2026-04-07 — Session 47 | Total: 438/500 | Velocity: 7 | Debt: →
+Avgs — 3: 431.7 | 5: 425.6 | 10: 416.8 | all: 413.5
+  └ 3-session: Dev 84.3 | Align 88.0 | Momentum 88.7 | Engage 84.7 | Process 86.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 82 | → | Scripts/spec added; no test run; referral pending DB migration |
+| Creative Alignment | 88 | ↑ | Voidfall expansion on-brand; toast copy uses VaultSpark language |
+| Momentum | 91 | ↑ | 7 product-velocity items shipped; Now queue cleared |
+| Engagement | 88 | ↑ | Immediate response to form bug report; referral loop 90% wired |
+| Process Quality | 89 | ↑ | All context files updated; IGNIS refreshed; CSP delta tool built |
+| **Total** | **438/500** | ↑ | |
+
+**Top win:** Cleared the entire audit backlog (9 items) in one session and immediately responded to a live bug report — velocity from 0 to 7
+**Top gap:** IGNIS declined −273 (stagnation signal); CREATIVITY/SYNTHESIS still D — implementation sessions don't move creative pillars
+**Intent outcome:** Achieved — all audit items + contact toast + form fix shipped and pushed
+
+**Brainstorm**
+1. **CSP auto-sync CI check** — add a `propagate-csp.mjs --dry-run` step to the compliance workflow that fails if any HTML file has a stale CSP tag; prevents silent drift after CSP updates. First step: add a bash step to `.github/workflows/e2e.yml`. High probability.
+2. **Contact form GA4 events** — fire `gtag('event', 'form_submit', {form_id: 'contact'})` on success and `form_error` on failure; gives visibility into form conversion and failure rates. First step: add two `gtag()` calls to the contact form JS. High probability.
+3. **Referral leaderboard row** — once DB migration lands, surface top-5 referrers as a row on `/leaderboards/` to drive viral loop; first step: add a `referred_count` view to Supabase. Medium probability (depends on DB migration).
+
+**Committed to TASK_BOARD:** [SIL] CSP auto-sync CI check · [SIL] Contact form GA4 events

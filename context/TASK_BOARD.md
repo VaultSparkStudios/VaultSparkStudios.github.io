@@ -17,6 +17,12 @@ Last updated: 2026-04-07 (Session 46)
 
 ---
 
+## Now
+
+- [ ] **Run `node scripts/propagate-csp.mjs`** — script created S47 but not yet run; updates all 97 HTML pages with canonical CSP in one pass
+- [ ] **[SIL] CSP auto-sync CI check** — add `propagate-csp.mjs --dry-run` step to compliance workflow; fails if any HTML has stale CSP (S47 brainstorm)
+- [ ] **[SIL] Contact form GA4 events** — fire `gtag('event', 'form_submit')` + `form_error` in contact form JS; closes the conversion visibility gap (S47 brainstorm)
+
 ## Next
 
 - [x] **[SIL] CSP propagation script** — `scripts/propagate-csp.mjs` created; single CSP_VALUE constant at top propagates to all HTML files via `node scripts/propagate-csp.mjs` (S47)
