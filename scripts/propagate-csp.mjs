@@ -38,7 +38,8 @@ const SKIP_FILES = new Set([
   '404.html', 'offline.html'
 ]);
 
-const CSP_RE = /<meta\s+http-equiv=["']Content-Security-Policy["']\s+content=["'][^"']*["']\s*\/?>/i;
+// Matches both quote styles; content value may contain single quotes ('self' etc.)
+const CSP_RE = /<meta\s+http-equiv=["']Content-Security-Policy["']\s+content="[^"]*"\s*\/?>/i;
 const CSP_TAG = `<meta http-equiv="Content-Security-Policy" content="${CSP_VALUE}" />`;
 
 let updated = 0, skipped = 0, missing = [];
@@ -73,4 +74,8 @@ console.log(`\nDone. Updated: ${updated} · Unchanged: ${skipped} · Missing CSP
 if (missing.length) {
   console.log('Files without CSP tag (add manually):');
   missing.forEach(f => console.log('  ' + f));
+}
+if (DRY_RUN && updated > 0) {
+  console.error(`\nDRY RUN FAILED: ${updated} file(s) have a stale CSP tag. Run without --dry-run to fix.`);
+  process.exit(1);
 }

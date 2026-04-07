@@ -26,6 +26,9 @@ jobs:
           npm install -D @playwright/test
           npx playwright install --with-deps chromium
 
+      - name: CSP sync check
+        run: node scripts/propagate-csp.mjs --dry-run
+
       - name: Run compliance tests
         run: npx playwright test tests/compliance-pages.spec.js tests/games.spec.js --reporter=list --project=chromium
         env:

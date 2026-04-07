@@ -548,6 +548,7 @@
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
           showToast(false);
+          if (typeof gtag === 'function') gtag('event', 'form_submit', { form_id: 'contact' });
         } else {
           throw new Error(json.message || 'Submission failed');
         }
@@ -555,6 +556,7 @@
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
         showToast(true);
+        if (typeof gtag === 'function') gtag('event', 'form_error', { form_id: 'contact', error: err.message });
       }
     });
   })();
