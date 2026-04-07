@@ -8,7 +8,7 @@ jobs:
   sentry-release:
     name: Create Sentry Release
     runs-on: ubuntu-latest
-    if: ${{ secrets.SENTRY_AUTH_TOKEN != '' }}
+    # Requires SENTRY_AUTH_TOKEN secret set in repo Settings
     steps:
       - uses: actions/checkout@v4
         with:
