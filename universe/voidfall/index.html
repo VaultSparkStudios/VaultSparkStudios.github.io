@@ -257,6 +257,169 @@
       user-select: none;
     }
 
+    /* ─── Archive section ─── */
+    .vf-section {
+      padding: 5rem 0;
+      position: relative;
+    }
+
+    .vf-section + .vf-section {
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .vf-section-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .vf-section-label {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(214, 40, 40, 0.6);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .vf-section-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(214, 40, 40, 0.15);
+    }
+
+    /* ─── Transmission archive ─── */
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+
+    .archive-card {
+      background: rgba(8, 10, 20, 0.7);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      padding: 1.25rem 1.4rem;
+      transition: border-color 0.2s;
+    }
+
+    .archive-card:hover {
+      border-color: rgba(214, 40, 40, 0.2);
+    }
+
+    .archive-index {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(214, 40, 40, 0.5);
+      margin-bottom: 0.75rem;
+    }
+
+    .archive-text {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.85;
+      font-family: Georgia, serif;
+    }
+
+    .archive-text .redacted {
+      display: inline-block;
+      background: rgba(255,255,255,0.12);
+      color: transparent;
+      border-radius: 3px;
+      user-select: none;
+    }
+
+    /* ─── Signal / world section ─── */
+    .vf-world-prose {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.9;
+      max-width: 58ch;
+    }
+
+    .vf-world-prose strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ─── Entities ─── */
+    .entity-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      margin-top: 0.5rem;
+    }
+
+    .entity-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: rgba(8, 10, 20, 0.6);
+      border: 1px solid rgba(255,255,255,0.05);
+      border-left: 2px solid rgba(214, 40, 40, 0.3);
+      border-radius: 10px;
+    }
+
+    .entity-glyph {
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+      opacity: 0.7;
+    }
+
+    .entity-name {
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .entity-desc {
+      font-size: 0.84rem;
+      color: var(--dim);
+      line-height: 1.7;
+      font-family: Georgia, serif;
+    }
+
+    /* ─── Saga meta ─── */
+    .saga-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .saga-meta-cell {
+      padding: 1.1rem 1.25rem;
+      background: rgba(8, 10, 20, 0.5);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+    }
+
+    .saga-meta-label {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 0.4rem;
+    }
+
+    .saga-meta-value {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
     /* ─── Bottom sections ─── */
     .voidfall-footer-section {
       padding: 5rem 0 6rem;
@@ -285,6 +448,8 @@
       .voidfall-form-wrap { flex-direction: column; }
       .voidfall-form-wrap input[type="email"],
       .btn-voidfall { width: 100%; }
+      .archive-grid { grid-template-columns: 1fr; }
+      .saga-meta-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 
@@ -393,6 +558,121 @@
         </p>
       </div>
 
+    </div>
+  </section>
+
+  <!-- Transmission Archive -->
+  <section class="vf-section" aria-labelledby="archive-heading">
+    <div class="vf-section-inner">
+      <div class="vf-section-label" id="archive-heading">Transmission Archive</div>
+      <div class="archive-grid">
+        <div class="archive-card">
+          <div class="archive-index">Fragment · 001</div>
+          <p class="archive-text">
+            The event was classified <span class="redacted">████████████</span> within six hours.<br>
+            The classification was lifted eleven minutes later.<br>
+            No one agreed on why.
+          </p>
+        </div>
+        <div class="archive-card">
+          <div class="archive-index">Fragment · 002</div>
+          <p class="archive-text">
+            There is a threshold.<br>
+            It does not appear on instruments.<br>
+            Three have crossed it.<br>
+            None of them <span class="redacted">████████████████████</span>.
+          </p>
+        </div>
+        <div class="archive-card">
+          <div class="archive-index">Fragment · 003</div>
+          <p class="archive-text">
+            The signal lasted <span class="redacted">████</span> seconds.<br>
+            It was received in <span class="redacted">██████████████████</span> locations simultaneously.<br>
+            The message was the same everywhere.<br>
+            The meaning was not.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Signal — world-building -->
+  <section class="vf-section" aria-labelledby="signal-heading">
+    <div class="vf-section-inner">
+      <div class="vf-section-label" id="signal-heading">The Signal</div>
+      <p class="vf-world-prose">
+        Voidfall is not a story about first contact.<br>
+        It is a story about what <strong>second contact</strong> costs — and who pays it.<br><br>
+        The universe has a boundary. Not a physical edge, but a threshold of recognition —
+        a point at which what lies beyond decides whether to acknowledge what approaches.
+        Something approached. Something was acknowledged.<br><br>
+        What followed is recorded in six volumes. The first is called the <strong>Origin Sequence</strong>.
+        It begins not with the crossing, but with the <strong>three who were already waiting</strong>
+        when it arrived.
+      </p>
+    </div>
+  </section>
+
+  <!-- Known Entities -->
+  <section class="vf-section" aria-labelledby="entities-heading">
+    <div class="vf-section-inner">
+      <div class="vf-section-label" id="entities-heading">Known Entities — Origin Sequence</div>
+      <div class="entity-list">
+        <div class="entity-row">
+          <div class="entity-glyph" aria-hidden="true">◈</div>
+          <div>
+            <div class="entity-name">The Watcher</div>
+            <p class="entity-desc">Arrived first. Has not spoken since the crossing. Coordinates are disputed. May not be singular.</p>
+          </div>
+        </div>
+        <div class="entity-row">
+          <div class="entity-glyph" aria-hidden="true">◉</div>
+          <div>
+            <div class="entity-name">The Answered</div>
+            <p class="entity-desc">Sent the reply. Does not know what the question was. Continues to answer. The responses are coherent. The recipients are not.</p>
+          </div>
+        </div>
+        <div class="entity-row">
+          <div class="entity-glyph" aria-hidden="true">◌</div>
+          <div>
+            <div class="entity-name">The Crossed</div>
+            <p class="entity-desc"><span class="redacted" style="background:rgba(255,255,255,0.1);color:transparent;border-radius:3px;user-select:none;padding:0 0.2rem">Identity unresolved — Origin Sequence, Volume I</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Saga meta -->
+  <section class="vf-section" aria-labelledby="saga-heading">
+    <div class="vf-section-inner">
+      <div class="vf-section-label" id="saga-heading">The Saga</div>
+      <div class="saga-meta-grid">
+        <div class="saga-meta-cell">
+          <div class="saga-meta-label">Format</div>
+          <div class="saga-meta-value">Novel Saga</div>
+        </div>
+        <div class="saga-meta-cell">
+          <div class="saga-meta-label">First Volume</div>
+          <div class="saga-meta-value">Origin Sequence</div>
+        </div>
+        <div class="saga-meta-cell">
+          <div class="saga-meta-label">Total Volumes</div>
+          <div class="saga-meta-value">Six</div>
+        </div>
+        <div class="saga-meta-cell">
+          <div class="saga-meta-label">Status</div>
+          <div class="saga-meta-value" style="color:rgba(214,40,40,0.9);">In The Forge</div>
+        </div>
+        <div class="saga-meta-cell">
+          <div class="saga-meta-label">Genre</div>
+          <div class="saga-meta-value">Science Fiction</div>
+        </div>
+        <div class="saga-meta-cell">
+          <div class="saga-meta-label">Release</div>
+          <div class="saga-meta-value">When the vault is ready</div>
+        </div>
+      </div>
     </div>
   </section>
 

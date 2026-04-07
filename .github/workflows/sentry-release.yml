@@ -1,0 +1,26 @@
+name: Sentry Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  sentry-release:
+    name: Create Sentry Release
+    runs-on: ubuntu-latest
+    # Only runs if SENTRY_AUTH_TOKEN secret is configured
+    # Set in repo Settings → Secrets: SENTRY_AUTH_TOKEN, SENTRY_ORG, SENTRY_PROJECT
+    if: ${{ vars.SENTRY_ORG != '' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create Sentry release
+        uses: getsentry/sentry-github-actions-app@v1
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ vars.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ vars.SENTRY_PROJECT }}
+        with:
+          environment: production

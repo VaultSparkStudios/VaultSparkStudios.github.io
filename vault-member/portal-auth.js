@@ -373,11 +373,13 @@
         // 3. Register vault member — uses register_open (invite optional)
         //    If invite code present: redeems it for +50 XP bonus + inviter reward
         //    If no invite code: creates free account with 10 starter XP
+        // p_ref_by: DB function register_open must accept this param (add column if not present)
         const { data: rpcResult, error: rpcErr } = await VSSupabase
           .rpc('register_open', {
             p_username:    username,
             p_subscribe:   subscribe,
             p_invite_code: inviteCode || '',
+            p_ref_by:      sessionStorage.getItem('vs_ref') || '',
           });
 
         if (rpcErr) throw new Error(rpcErr.message);

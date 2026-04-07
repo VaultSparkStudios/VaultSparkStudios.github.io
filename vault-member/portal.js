@@ -756,11 +756,13 @@
         if (authErr) throw new Error(authErr.message);
 
         // 3. Register vault member — invite code optional (+50 XP bonus if used)
+        // p_ref_by: DB function register_open must accept this param (add column if not present)
         const { data: rpcResult, error: rpcErr } = await VSSupabase
           .rpc('register_open', {
             p_username:    username,
             p_subscribe:   subscribe,
             p_invite_code: inviteCode || '',
+            p_ref_by:      sessionStorage.getItem('vs_ref') || '',
           });
 
         if (rpcErr) throw new Error(rpcErr.message);
@@ -947,6 +949,7 @@
           p_username:    username,
           p_subscribe:   subscribe,
           p_invite_code: invite || '',
+          p_ref_by:      sessionStorage.getItem('vs_ref') || '',
         });
         if (rpcErr) throw new Error(rpcErr.message);
         const { data: row } = await VSSupabase.from('vault_members').select('*').eq('id', session.user.id).single();

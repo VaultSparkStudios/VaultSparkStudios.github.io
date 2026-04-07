@@ -12,17 +12,17 @@ Last updated: 2026-04-07 (Session 46)
 - [x] **[SIL] Theme persistence test contract** — replaced `#theme-select` assertions with `#theme-picker-btn` + `.theme-option[data-theme=x].active`; `body[data-theme]` assertions preserved (S46)
 - [x] **[SIL] Nav backdrop opacity by theme** — added `--nav-backdrop-overlay` var to `:root` (dark) and `body.light-mode` (45% dark-navy); `#nav-backdrop` now uses var (S46)
 - [x] **[SIL] Theme picker swatch pulse** — `@keyframes swatch-pulse` added; `.swatch-pulse` class toggled in click handler + cleaned up on label reset (S46)
-- [ ] **[SIL] Portal nav admin link** — `nav-admin-link` is referenced in `showDashboard()` in `portal-auth.js` but is absent from `vault-member/index.html` nav-account-menu; admin tab toggle is permanently invisible for admin users; first step: add `id="nav-admin-link"` to nav-account-menu
-- [ ] **[SIL] Referral attribution wire** — `vs_ref` is stored in sessionStorage on `?ref=` arrival (S45); wire it into the `register_open` Supabase RPC as `p_ref_by` so referrers get signup credit; first step: check if RPC accepts the param or needs a new column
+- [x] **[SIL] Portal nav admin link** — added `id="nav-admin-link"` to nav-account-menu in `vault-member/index.html`; `display:none` by default; JS shows it for admin users (S47)
+- [x] **[SIL] Referral attribution wire** — `p_ref_by: sessionStorage.getItem('vs_ref')` wired into all 3 `register_open` RPC calls in `portal-auth.js` + `portal.js` (S47); **requires DB migration**: add `p_ref_by` param to `register_open` Supabase function (human action — see below)
 
 ---
 
 ## Next
 
-- [ ] **[SIL] CSP propagation script** — meta CSP tags duplicated across 97 pages; `scripts/propagate-csp.mjs` generates from single source + propagates; eliminates manual per-file CSP edits
-- [ ] **[SIL] Staging smoke test script** — `scripts/smoke-test.sh` pings website.staging before any push; 5-10 key URLs, exits non-zero on failure; enforces CANON-007 in practice
-- [ ] **[SIL] Light-mode screenshot smoke** — Chromium-only Playwright screenshots of `/`, `/ranks/`, `/games/` in forced light mode to catch contrast regressions before deploys
-- [ ] **[SIL] IGNIS delta field** — add `ignisScoreDelta` to `PROJECT_STATUS.json` computed at each closeout; makes score trajectory visible without digging into audit files
+- [x] **[SIL] CSP propagation script** — `scripts/propagate-csp.mjs` created; single CSP_VALUE constant at top propagates to all HTML files via `node scripts/propagate-csp.mjs` (S47)
+- [x] **[SIL] Staging smoke test script** — `scripts/smoke-test.sh` created; 12 key URLs, exits non-zero on failure; enforces CANON-007 (S47)
+- [x] **[SIL] Light-mode screenshot smoke** — `tests/light-mode-screenshots.spec.js` created; Chromium-only, 3 pages, forced light-mode via localStorage (S47)
+- [x] **[SIL] IGNIS delta field** — `ignisScoreDelta` added to `PROJECT_STATUS.json`; closeout Step 8 updated to compute and write it (S47)
 
 ## Next (prior)
 
@@ -41,15 +41,27 @@ Last updated: 2026-04-07 (Session 46)
 
 ## Later
 
-- [ ] **Voidfall teaser → full page** — when Voidfall build is further along; expand teaser content
+- [x] **Voidfall teaser → full page** — expanded with Transmission Archive (3 fragments), The Signal world-building, Known Entities (3 entities), Saga meta grid; CSS added (S47)
+- [x] **Sentry release tagging** — `.github/workflows/sentry-release.yml` created; tags each main push as a Sentry release; requires SENTRY_AUTH_TOKEN, SENTRY_ORG, SENTRY_PROJECT repo secrets/vars (human action to configure, S47)
 - [ ] **`/vaultsparked/` Phase 2** — open Phase 2 when Phase 1 fills (subscriber_cap)
-- [ ] **Sentry source maps** — configure Sentry releases + source map uploads for better error tracking
 - [ ] **Web push test** — subscribe in portal, upload classified file, verify notification received
+
+---
+
+## Human Action Required
+
+- [ ] **[DB] `register_open` migration** — add `p_ref_by TEXT DEFAULT ''` param to the `register_open` Supabase RPC; client already sends it (S47); without this, referral signup credit never reaches the DB
+- [ ] **[Sentry] Configure release workflow** — set repo vars `SENTRY_ORG` + `SENTRY_PROJECT` and secret `SENTRY_AUTH_TOKEN` in GitHub repo Settings; workflow `.github/workflows/sentry-release.yml` is ready (S47)
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
+- [ ] **[WEB3FORMS]** Manually submit /join/ and /contact/ forms to confirm email delivery
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+- [ ] **[WEB3FORMS-KEYS]** Create 3 separate keys in Web3Forms dashboard (join/, contact/, data-deletion/) for per-form lead tracking [low priority]
 
 ---
 
 ## Done (recent)
 
+- [x] **Full audit implementation — 9 items (S47)** — portal admin link, referral attribution wire (3 RPC call sites), CSP propagation script, staging smoke test, IGNIS delta field, light-mode screenshot spec, Voidfall page expansion (4 new sections), Sentry release workflow
 - [x] **SIL Now queue — 5 items (S46)** — robots.txt note, closeout.md sync, theme-persistence spec fix, nav backdrop opacity var, swatch-pulse animation
 - [x] **Portal auth tab switching on referral link (S45)** — added missing portal nav HTML (`nav-account-wrap`, notif bell, `nav-signin-link`, `nav-join-btn`); null guards in `showAuth`/`showDashboard`; `?ref=` referral banner + sessionStorage tracking; theme picker hover-preview + DEFAULT badge + confirmation flash
 - [x] **Mobile nav blur + clicks fix, theme FOUC, premium picker (S44)** — removed backdrop-filter from #nav-backdrop (iOS compositing root cause); injected inline theme script at body start across 72 pages; redesigned mobile nav; replaced select with custom picker; light mode CSS fixes

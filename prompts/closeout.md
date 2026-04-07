@@ -297,7 +297,7 @@ Create `audits/YYYY-MM-DD.json`. Multiple sessions same day: suffix `-2`, `-3`, 
 - `durationMinutes`: short sprint 30–45 · focused 60–90 · deep architecture 120–180 · marathon 180+
 - `ignisNote`: copy from Step 3.5 verbatim
 
-**Also update `context/PROJECT_STATUS.json`:** `silScore` · `silAvg3` · `silVelocity` · `silDebt` · `silLastSession`
+**Also update `context/PROJECT_STATUS.json`:** `silScore` · `silAvg3` · `silVelocity` · `silDebt` · `silLastSession` · `ignisScoreDelta` (new score − prior `ignisScore`; set 0 if score not refreshed this session)
 
 ---
 
