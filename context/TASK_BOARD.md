@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-07 (Session 44)
+Last updated: 2026-04-07 (Session 45)
 
 ---
 
@@ -11,6 +11,7 @@ Last updated: 2026-04-07 (Session 44)
 - [ ] **[SIL] closeout.md sync** — update `prompts/closeout.md` to current v2.4 template from studio-ops (same sync done for start.md in S34)
 - [ ] **[SIL] Theme persistence test contract** — align Playwright `tests/theme-persistence.spec.js` with new theme signal: body.dataset.theme is now set by the inline FOUC script + theme-toggle.js; verify the spec expectation matches actual runtime state
 - [ ] **[SIL] Nav backdrop opacity by theme** — `#nav-backdrop` uses hardcoded `rgba(0,0,0,0.6)` which is too dark in light mode; add a theme-aware CSS var for backdrop overlay color in each theme's token block
+- [ ] **[SIL] Theme picker swatch pulse** — add `@keyframes swatch-pulse` on `.theme-picker-swatch` triggered when theme changes; reinforces the "Default saved" feedback interaction; First step: add keyframes + class toggle in `setTheme()`
 
 ---
 
@@ -46,6 +47,7 @@ Last updated: 2026-04-07 (Session 44)
 
 ## Done (recent)
 
+- [x] **Portal auth tab switching on referral link (S45)** — added missing portal nav HTML (`nav-account-wrap`, notif bell, `nav-signin-link`, `nav-join-btn`); null guards in `showAuth`/`showDashboard`; `?ref=` referral banner + sessionStorage tracking; theme picker hover-preview + DEFAULT badge + confirmation flash
 - [x] **Mobile nav blur + clicks fix, theme FOUC, premium picker (S44)** — removed backdrop-filter from #nav-backdrop (iOS compositing root cause); injected inline theme script at body start across 72 pages; redesigned mobile nav; replaced select with custom picker; light mode CSS fixes
 - [x] **Rights posture correction (S43)** — replaced public MIT/open-source claims with a proprietary IP notice + third-party attributions page; propagated footer/resource label to `Technology & Rights`; updated sitemap labels and compliance-page title expectation
 - [x] **Dark-panel contrast hardening (S42)** — restored white copy on intentionally dark membership/rank/character sections in light mode; fixed homepage Vault-Forge paragraph and public `/ranks/` dark cards; updated `assets/style.css`, `index.html`, `ranks/index.html`, and `vault-member/portal.css`

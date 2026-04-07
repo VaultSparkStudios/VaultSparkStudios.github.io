@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▆ (11 entries)
-Avgs — 3: 419.3 | 5: 416.2 | all: 408.2
-  └ 3-session: Dev 86.0 | Align 88.7 | Momentum 87.0 | Engage 82.3 | Process 81.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~0.9 sessions ⚠ — Now bucket has 2 SIL items; user-directed sessions not depleting board
-Last session: 2026-04-07 | Session 44 | Total: 425/500 | Velocity: 5 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▇ (12 entries)
+Avgs — 3: 426.3 | 5: 421.0 | all: 410.3
+  └ 3-session: Dev 85.7 | Align 89.0 | Momentum 87.0 | Engage 83.3 | Process 81.3
+Velocity trend: →  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~4 sessions — Now bucket has 5 SIL items
+Last session: 2026-04-07 | Session 45 | Total: 433/500 | Velocity: 0 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -298,3 +298,27 @@ Avgs — 3: 407.7 | 5: 404.6 | all: 403.8
 3. **Shared light-surface utility** — factor the repeated light-mode panel/card overrides into a smaller reusable utility section so future component additions inherit the right light surface by default. First step: group current S40/S41 selectors and identify the common surface recipe. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Theme persistence test contract
+
+## 2026-04-07 — Session 45 | Total: 433/500 | Velocity: 0 | Debt: →
+Avgs — 3: 426.3 | 5: 421.0 | all: 410.3
+  └ 3-session: Dev 85.7 | Align 89.0 | Momentum 87.0 | Engage 83.3 | Process 81.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 87 | ↑ | Root-caused TypeError from missing portal nav HTML; null guards added; clean targeted fix |
+| Creative Alignment | 88 | ↑ | Theme picker hover-preview + DEFAULT badge + confirmation flash makes the picker feel intentional |
+| Momentum | 89 | ↓ | Velocity 0 (no SIL board items); both user-reported issues addressed and shipped in one session |
+| Engagement | 85 | ↑ | Auth bug was a real blocker on referral path; referral banner adds clear UX context for invited users |
+| Process Quality | 84 | ↑ | Full closeout; null guards are forward-looking quality; commit message precise and descriptive |
+| **Total** | **433/500** | ↑ | |
+
+**Top win:** Found that the entire portal was silently failing on ?ref= URLs because nav-right was missing required IDs — one HTML fix unblocked auth flow, nav state, and tab switching simultaneously
+**Top gap:** Playwright theme-persistence spec still unaligned with new runtime signal; SIL velocity 0 for second user-directed session in a row
+**Intent outcome:** Achieved — both user-reported issues fixed and pushed
+
+**Brainstorm**
+1. **Theme picker swatch pulse** — add `@keyframes swatch-pulse` on `.theme-picker-swatch` triggered when theme changes; reinforces "Default saved" feedback. First step: add keyframes + brief class toggle in `setTheme()`. High probability.
+2. **Portal referral attribution** — `vs_ref` stored in sessionStorage on `?ref=`; wire into `register_open` RPC as `p_ref_by` so referrer gets credit for new signups. First step: check if RPC accepts param or needs a new one. Medium probability.
+3. **Portal nav admin link** — `nav-admin-link` referenced in `showDashboard` but absent from HTML; admin tab toggle always invisible. First step: add `id="nav-admin-link"` to nav-account-menu. High probability.
+
+**Committed to TASK_BOARD:** [SIL] Theme picker swatch pulse

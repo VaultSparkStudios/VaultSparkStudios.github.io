@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-07 (Session 44)
+- Date: 2026-04-07 (Session 45)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S43 corrected the public rights posture — `/open-source/` now functions as a proprietary IP notice plus third-party attribution page; S44 resolved the iOS mobile nav blur, theme FOUC, and replaced the bare theme `<select>` with a premium custom picker
+- Repo posture: S43 corrected the public rights posture — `/open-source/` now functions as a proprietary IP notice plus third-party attribution page; S44 resolved the iOS mobile nav blur, theme FOUC, and replaced the bare theme `<select>` with a premium custom picker; S45 fixed portal auth tab switching on referral link and polished the theme picker UX
 
 ## What exists
 
@@ -25,7 +25,9 @@
 - **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260406-navfix`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
 - **Mobile nav** (`assets/style.css`, `assets/nav-toggle.js`) — S36 removed backdrop-filter from .nav-center.open; S38 disabled .site-header::before backdrop-filter at ≤980px (root iOS GPU compositing fix); S39 added @keyframes nav-enter; **S44 removed backdrop-filter: blur(2px) from #nav-backdrop (the true source of iOS blur + click interference), redesigned overlay with premium cubic-bezier animation, gold active-link accent, improved spacing and CTA polish**
 - **Theme FOUC prevention** (`assets/theme-toggle.js`, `scripts/propagate-nav.mjs`, all 72 HTML pages) — S44 injected tiny inline `<script>` at `<body>` start on every page that reads localStorage.vs_theme and stamps both `<html>` and `<body>` with the correct theme class before any content paints; theme-toggle.js also applies class to `<html>` immediately when called from `<head>`; eliminates dark flash when navigating in light mode
-- **Premium theme picker** (`assets/style.css`, `assets/theme-toggle.js`) — S44 replaced bare `<select>` with a custom button+dropdown component showing per-theme color swatches, active checkmark, animated chevron, scale+fade dropdown; mobile pill bar unchanged
+- **Portal auth nav elements** (`vault-member/index.html`, `vault-member/portal-auth.js`) — S45 added missing portal nav elements to `index.html` nav-right (notif bell wrap with `id="notif-bell-wrap/badge/panel/list"`, account dropdown with `id="nav-account-wrap/trigger/avatar-sm/name/menu"`, `id="nav-signin-link"`, `id="nav-join-btn"`); added null guards to `showAuth()`/`showDashboard()` in `portal-auth.js`; this eliminates the TypeError that blocked auth tab switching on `?ref=` referral URLs
+- **Referral landing banner** (`vault-member/index.html`, `vault-member/portal-settings.js`) — S45 added `id="referral-banner"` element inside `auth-view`; `init()` reads `?ref=username`, validates, shows gold banner "Invited by @username — create your free account below to join the Vault!", stores referrer in `sessionStorage('vs_ref')` for future attribution
+- **Premium theme picker** (`assets/style.css`, `assets/theme-toggle.js`) — S44 replaced bare `<select>` with a custom button+dropdown component showing per-theme color swatches, active checkmark, animated chevron, scale+fade dropdown; S45 added hover-preview (apply without save, restore on mouse-leave), DEFAULT badge on active option, "✓ Default saved" button flash, "Choose Theme" section header, gold active-option tint; mobile pill bar unchanged
 - **Light-mode theme refresh** (`assets/style.css`, `assets/theme-toggle.js`) — S40 retuned light tokens (`--text`, `--muted`, `--dim`, `--steel`, panel/bg vars), replaced washed translucent dark-theme carryovers with warm ivory/glass surfaces, and added light-mode component overrides for buttons, cards, panels, timeline/social blocks, inputs, badges, footer, and section chrome
 - **Light-mode contrast follow-up** (`assets/style.css`) — S41 darkened the shared secondary text scale to blue-slate values, forced bright readable titles over dark hero/card artwork, strengthened light-mode overlays on game/project hero bands, and converted shared dark panels (`.feature-block`, `.info-block`, `.stream-item`, patch notes, game/project cards) into true light surfaces in light mode
 - **Dark-panel contrast hardening** (`assets/style.css`, `index.html`, `ranks/index.html`, `vault-member/portal.css`) — S42 reversed the mistaken light-mode treatment on intentionally dark panels such as Studio Members feature tiles, homepage rank preview, DreadSpike storyline/media copy, portal rank panels, and public Vault Ranks cards; those sections now keep white text on dark backgrounds while the homepage Vault-Forge paragraph stays dark on its light surface

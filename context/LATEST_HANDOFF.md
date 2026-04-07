@@ -1,6 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-07 (Session 44)
+Last updated: 2026-04-07 (Session 45)
+
+## Session Intent: Session 45
+Fix auth tab switching on `vault-member/?ref=username` referral link (users couldn't switch between Create Account / Sign In tabs); polish theme picker UX with explicit default-setting behavior.
+**Outcome: Achieved** — auth bug root-caused (TypeError from missing portal nav HTML in index.html); all missing nav elements added; null guards added to showAuth/showDashboard; `?ref=` referral banner wired; theme picker upgraded with hover-preview, DEFAULT badge, confirmation flash.
+
+## Where We Left Off (Session 45 — 2026-04-07)
+
+- Shipped: 2 improvements — portal auth tab fix + theme picker polish
+- Tests: N/A — no automated test run this session
+- Deploy: pushed to `main` (`6fab57a`) · GitHub Pages auto
+
+---
 
 ## Session Intent: Session 44
 Fix mobile nav blur + clicks not working, redesign mobile nav for optimal UX, fix light mode theme issues from screenshots, ensure selected theme persists across all pages, make theme selector premium/polished.
@@ -77,6 +89,7 @@ Fix the broken light-mode readability and make the light theme feel intentional 
 1. **robots.txt Cloudflare note** — 3-line comment ([SIL] Now)
 2. **closeout.md sync** — update prompts/closeout.md to v2.4 template ([SIL] Now)
 3. **Theme persistence test contract** — verify Playwright spec matches new inline-script + theme-toggle.js body.dataset.theme behavior ([SIL] Now)
+4. **Theme picker swatch pulse** — add @keyframes swatch-pulse to reinforce "Default saved" feedback ([SIL] Now)
 
 ---
 

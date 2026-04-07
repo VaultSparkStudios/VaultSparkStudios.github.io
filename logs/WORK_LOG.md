@@ -1,5 +1,14 @@
 # Work Log
 
+## 2026-04-07 — Session 45
+
+- Root-caused auth tab switching bug on `vault-member/?ref=username`: `showAuth()` and `showDashboard()` in `portal-auth.js` threw TypeError because `nav-account-wrap`, `nav-signin-link`, `nav-join-btn` were missing from `vault-member/index.html` nav-right — added all missing portal nav elements (notif bell wrap, nav account dropdown with trigger/avatar/name/menu, IDs on Sign In/Join links)
+- Added null guards to `showAuth()` and `showDashboard()` in `portal-auth.js` for forward safety
+- Added `?ref=username` referral handling in `portal-settings.js` init(): validates param, shows gold referral banner ("Invited by @username"), stores referrer in sessionStorage for future attribution
+- Enhanced theme picker: hover preview (applies theme without saving, restores on mouse leave via `dropdown.mouseleave`), DEFAULT badge on active theme option, "✓ Default saved" button confirmation flash (1.8s), "Choose Theme" section header, active option gold tint background
+- Pushed: `6fab57a`
+- SIL: 433/500 · Velocity: 0 · Debt: →
+
 ## 2026-04-07 — Session 44
 
 - Root-caused mobile nav blur to `backdrop-filter: blur(2px)` on `#nav-backdrop` (iOS Safari GPU compositing layer bleeds blur to z-index:200 overlay above it) — removed it
