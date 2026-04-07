@@ -459,6 +459,17 @@
         }
       }
 
+      // Show referral banner when arriving via ?ref=username
+      const refUsername = urlParams.get('ref');
+      if (refUsername && /^[a-zA-Z0-9_]{1,32}$/.test(refUsername)) {
+        sessionStorage.setItem('vs_ref', refUsername);
+        const banner = document.getElementById('referral-banner');
+        if (banner) {
+          banner.innerHTML = '✦ You were invited by <strong>' + refUsername.replace(/[<>&"]/g, function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c];}) + '</strong> — create your free account below to join the Vault!';
+          banner.style.display = '';
+        }
+      }
+
       // Switch to the correct auth tab immediately (before the async session
       // check) so visiting /vault-member/#login never flashes Create Account first.
       if (hash === '#login') switchTab('login');

@@ -6,11 +6,14 @@
       if (_notifRealtimeCh) { VSSupabase.removeChannel(_notifRealtimeCh); _notifRealtimeCh = null; }
       document.getElementById('auth-view').style.display = '';
       document.getElementById('dashboard-view').style.display = 'none';
-      document.getElementById('nav-account-wrap').style.display = 'none';
+      const _navAccWrap = document.getElementById('nav-account-wrap');
+      if (_navAccWrap) _navAccWrap.style.display = 'none';
       const bellWrap = document.getElementById('notif-bell-wrap');
       if (bellWrap) bellWrap.style.display = 'none';
-      document.getElementById('nav-signin-link').style.display = '';
-      document.getElementById('nav-join-btn').style.display = '';
+      const _navSignIn = document.getElementById('nav-signin-link');
+      if (_navSignIn) _navSignIn.style.display = '';
+      const _navJoin = document.getElementById('nav-join-btn');
+      if (_navJoin) _navJoin.style.display = '';
     }
 
     function showDashboard(member) {
@@ -21,10 +24,13 @@
 
       // Nav — show account dropdown, hide sign-in/join
       const navWrap = document.getElementById('nav-account-wrap');
-      navWrap.style.display = '';
-      document.getElementById('nav-account-name').textContent = member.username;
-      document.getElementById('nav-signin-link').style.display = 'none';
-      document.getElementById('nav-join-btn').style.display = 'none';
+      if (navWrap) navWrap.style.display = '';
+      const _navName = document.getElementById('nav-account-name');
+      if (_navName) _navName.textContent = member.username;
+      const _navSignIn2 = document.getElementById('nav-signin-link');
+      if (_navSignIn2) _navSignIn2.style.display = 'none';
+      const _navJoin2 = document.getElementById('nav-join-btn');
+      if (_navJoin2) _navJoin2.style.display = 'none';
 
       const rank     = VS.getRank(member.points);
       const nextRank = VS.getNextRank(member.points);

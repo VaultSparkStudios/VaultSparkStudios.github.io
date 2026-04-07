@@ -90,14 +90,15 @@
       var labelEl = btn.querySelector('.theme-picker-label');
       var entry = THEMES.find(function (t) { return t.value === theme; });
       if (swatch && entry) swatch.style.background = entry.color;
-      if (labelEl && entry) labelEl.textContent = entry.label;
+      if (labelEl && entry && !labelEl.textContent.startsWith('✓')) labelEl.textContent = entry.label;
     }
-    // Update desktop option active states
+    // Update desktop option active states + DEFAULT badge
     document.querySelectorAll('.theme-option').forEach(function (opt) {
       var isActive = opt.dataset.theme === theme;
       opt.classList.toggle('active', isActive);
-      var check = opt.querySelector('.theme-opt-check');
-      if (check) check.style.opacity = isActive ? '1' : '0';
+      opt.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      var badge = opt.querySelector('.theme-opt-default');
+      if (badge) badge.style.display = isActive ? '' : 'none';
     });
     // Sync mobile pills
     document.querySelectorAll('.mobile-theme-pill').forEach(function (pill) {
@@ -343,6 +344,7 @@
 
     var currentTheme = getTheme();
     var currentEntry = THEMES.find(function (t) { return t.value === currentTheme; }) || THEMES[0];
+    var _labelResetTimer = null;
 
     // Wrapper
     var wrapper = document.createElement('div');
@@ -383,6 +385,12 @@
     dropdown.setAttribute('role', 'listbox');
     dropdown.setAttribute('aria-label', 'Available themes');
 
+    // Section header
+    var header = document.createElement('div');
+    header.className = 'theme-picker-header';
+    header.textContent = 'Choose Theme';
+    dropdown.appendChild(header);
+
     THEMES.forEach(function (theme) {
       var opt = document.createElement('button');
       opt.type = 'button';
@@ -397,25 +405,43 @@
       optSwatch.setAttribute('aria-hidden', 'true');
 
       var optLabel = document.createElement('span');
+      optLabel.className = 'theme-opt-label';
       optLabel.textContent = theme.label;
 
-      var check = document.createElement('span');
-      check.className = 'theme-opt-check';
-      check.setAttribute('aria-hidden', 'true');
-      check.textContent = '✓';
-      check.style.opacity = theme.value === currentTheme ? '1' : '0';
+      var defaultBadge = document.createElement('span');
+      defaultBadge.className = 'theme-opt-default';
+      defaultBadge.textContent = 'DEFAULT';
+      defaultBadge.style.display = theme.value === currentTheme ? '' : 'none';
 
       opt.appendChild(optSwatch);
       opt.appendChild(optLabel);
-      opt.appendChild(check);
+      opt.appendChild(defaultBadge);
+
+      // Hover: preview theme without saving
+      opt.addEventListener('mouseenter', function () {
+        applyTheme(theme.value);
+      });
 
       opt.addEventListener('click', function () {
         setTheme(theme.value);
         closeThemePicker();
         btn.setAttribute('aria-label', 'Select theme: ' + theme.label);
+        // Flash "✓ Default saved" in button label
+        if (_labelResetTimer) clearTimeout(_labelResetTimer);
+        labelEl.textContent = '✓ Default saved';
+        _labelResetTimer = setTimeout(function () {
+          var saved = THEMES.find(function (t) { return t.value === getTheme(); });
+          if (saved) labelEl.textContent = saved.label;
+          _labelResetTimer = null;
+        }, 1800);
       });
 
       dropdown.appendChild(opt);
+    });
+
+    // Restore saved theme when mouse leaves dropdown without clicking
+    dropdown.addEventListener('mouseleave', function () {
+      applyTheme(getTheme());
     });
 
     wrapper.appendChild(btn);
@@ -448,7 +474,12 @@
 
     // Close on Escape
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeThemePicker();
+      if (e.key === 'Escape') {
+        if (wrapper.classList.contains('open')) {
+          applyTheme(getTheme()); // restore if previewing
+          closeThemePicker();
+        }
+      }
     });
 
     refreshPicker(currentTheme);
