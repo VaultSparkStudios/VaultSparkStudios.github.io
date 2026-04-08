@@ -1,5 +1,18 @@
 # Work Log
 
+## 2026-04-08 — Session 52
+
+- vault-member/portal-core.js: hash routing — reads window.location.hash on load, calls switchTab('login'|'register'|'forgot') automatically
+- vault-member/portal-auth.js: improved login error messages for username-not-found and invalid-credentials
+- projects/promogrind/index.html: hero CTA → #login; added "Already a member? Sign in →" in sidebar
+- assets/style.css + assets/theme-toggle.js: theme picker redesigned to 3-column tile grid; tile border fix for dark tiles
+- tests/theme-persistence.spec.js: updated selector from .theme-option to .theme-tile
+- cloudflare/security-headers-worker.js: added 'unsafe-inline' to script-src, static.cloudflareinsights.com to script-src, browser.sentry-cdn.com to connect-src; Worker redeployed via REST API
+- CF cache purged 3× during session (also diagnosed Worker cache TTL as source of stale site)
+- Pushed: 8e54635 (final); SW cache: vaultspark-20260408-fcdc581
+- IGNIS: not refreshed (no content changes; arch/infra session)
+- SIL: 428/500 · Velocity: 4 · Debt: →
+
 ## 2026-04-07 — Session 51
 
 - universe/voidfall/index.html: form_submit GA4 event on Kit subscribe success (form_name: voidfall_dispatch)

@@ -1,16 +1,16 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-07 (Session 51)
+Last updated: 2026-04-08 (Session 52)
 
-## Session Intent: Session 51
-Ship both committed SIL brainstorm items: Voidfall subscription GA4 + Fragment 004.
-**Outcome: Achieved** — both shipped in one commit (`09b1efe`).
+## Session Intent: Session 52
+Fix auth login (credentials not working), forgot password flow, PromoGrind sign-in tab, and redesign theme picker to tile grid.
+**Outcome: Achieved** — root cause of login/forgot PW was Cloudflare Worker CSP blocking all inline onclick handlers; fixed and redeployed. Hash routing, PromoGrind, and tile picker all shipped.
 
-## Where We Left Off (Session 51 — 2026-04-07)
+## Where We Left Off (Session 52 — 2026-04-08)
 
-- Shipped: 2 improvements — Voidfall dispatch `form_submit` GA4 event, Transmission Archive Fragment 004
+- Shipped: 5 improvements across 3 groups — auth (hash routing, error messages, CSP Worker fix), UX (theme tile picker + tile border fix), PromoGrind (sign-in CTA + sidebar link)
 - Tests: N/A
-- Deploy: pushed `09b1efe` → GitHub Pages auto
+- Deploy: pushed `8e54635` → GitHub Pages auto; Worker redeployed via REST API; CF cache purged
 
 ---
 
@@ -21,15 +21,14 @@ Ship both committed SIL brainstorm items: Voidfall subscription GA4 + Fragment 0
 ## Human Action Required
 
 - [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
-- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
 - [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
 
 ## Recommended First Action Next Session
 
-Now queue clear. Pull from Next:
-1. **[SIL] DreadSpike signal log entry** — add lore fragment or journal post for DreadSpike
-2. **[SIL] Voidfall entity 4 hint** — one-line atmospheric microcopy below The Crossed row
-3. **Per-form Web3Forms keys** — create 3 keys in dashboard (low priority)
+1. **[SIL] Remove inline onclick handlers** — move `switchTab()` / `oauthSignIn()` calls to addEventListener in portal-core.js; lets us remove `'unsafe-inline'` from Worker CSP (escalated from S52)
+2. **[SIL] Cloudflare cache purge on deploy** — wire CF purge into GitHub Actions workflow
+3. **[SIL] DreadSpike signal log entry** — 2 sessions overdue, escalate
 
 ---
 

@@ -8,6 +8,17 @@ Boundary:
 
 ## Entries
 
+### 2026-04-08 — Theme selector tile grid direction (S52)
+
+- Category: UX / Visual Quality / Interaction Design
+- Human input: "The theme picker is still the same old dropdown box that looks stale and unoriginal. It should use a theme selector like usemindframe.com does"
+- Area affected: `assets/style.css`, `assets/theme-toggle.js`
+- Required direction:
+  1. Theme selector must not look like a dropdown list — it must feel visually distinctive and modern
+  2. Reference target: usemindframe.com style — large visual tiles showing the actual theme colour, not a list of text options with small swatches
+  3. Each option should be immediately visually identifiable by its colour, not just its label
+- Why it matters: the prior "premium picker" (S44–S46) was still a vertical dropdown list with small swatches — the user flagged it as stale; the standard is now a tile/grid layout where colour is the primary UI signal
+
 ### 2026-04-07 — Mobile nav redesign + premium theme selector direction (S44)
 
 - Category: UX / Visual Quality / Interaction Design

@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-07 (Session 50)
+Last updated: 2026-04-08 (Session 52)
 
 ---
 
@@ -33,8 +33,10 @@ Last updated: 2026-04-07 (Session 50)
 
 - [x] **[SIL] Voidfall subscription GA4** — `form_submit` gtag event added to Kit subscribe success handler in `universe/voidfall/index.html` (S51)
 - [x] **[SIL] Voidfall Fragment 004** — 4th Transmission Archive card added; named thing, the answer, fully redacted (S51)
-- [ ] **[SIL] DreadSpike signal log entry** — add lore fragment or journal post for DreadSpike universe page (S51 brainstorm)
-- [ ] **[SIL] Voidfall entity 4 hint** — one-line atmospheric microcopy below The Crossed row hinting at unclassified 4th entity (S51 brainstorm)
+- [ ] **[SIL] DreadSpike signal log entry** — add lore fragment or journal post for DreadSpike universe page (S51 brainstorm — skipped 2 sessions, escalate)
+- [ ] **[SIL] Voidfall entity 4 hint** — one-line atmospheric microcopy below The Crossed row hinting at unclassified 4th entity (S51 brainstorm — skipped 2 sessions, escalate)
+- [ ] **[SIL] Remove inline onclick handlers from vault-member/index.html** — replace `onclick="switchTab()"`, `onclick="oauthSignIn()"` etc. with addEventListener calls in portal-core.js; eliminates need for `'unsafe-inline'` in Worker CSP (S52 brainstorm)
+- [ ] **[SIL] Cloudflare cache purge on deploy** — add automatic CF cache purge to GitHub Actions push workflow using stored CF credentials; avoids manual purge after every deploy (S52 brainstorm)
 
 ## Next (prior)
 
@@ -73,6 +75,7 @@ Last updated: 2026-04-07 (Session 50)
 
 ## Done (recent)
 
+- [x] **Auth tab hash routing + CSP Worker fix + theme tile picker + PromoGrind sign-in (S52)**
 - [x] **Voidfall dispatch GA4 + Fragment 004 (S51)**
 - [x] **CSP Turnstile fix + 3 SIL items (S50)** — canonical CSP updated with challenges.cloudflare.com (Turnstile); re-propagated 85 pages; join form GA4 form_error; Voidfall Chapter I excerpt; light-mode screenshot CI
 - [x] **CSP propagated + CI check + GA4 events (S49)** — 85 pages synced; e2e.yml CSP dry-run gate; contact form_submit/form_error events

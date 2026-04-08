@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▆ (18 entries)
-Avgs — 3: 434.3 | 5: 433.0 | 10: 422.5 | all: 416.3
-  └ 3-session: Dev 87.3 | Align 89.0 | Momentum 89.3 | Engage 87.7 | Process 81.0
-Velocity trend: →  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~0 — Now queue clear; add items before next session  |  Intent rate: 100% (last 5)
-Last session: 2026-04-07 | Session 51 | Total: 432/500 | Velocity: 2 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▆ (19 entries)
+Avgs — 3: 432.7 | 5: 431.8 | 10: 422.4 | all: 416.7
+  └ 3-session: Dev 85.3 | Align 87.3 | Momentum 87.7 | Engage 88.7 | Process 84.0
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~0.5 sessions (2 SIL Now items / avg vel 4)  |  Intent rate: 100% (last 5)
+Last session: 2026-04-08 | Session 52 | Total: 428/500 | Velocity: 4 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -466,3 +466,27 @@ Avgs — 3: 434.3 | 5: 433.0 | 10: 422.5 | all: 416.3
 3. **GA4 pageview enrichment** — push `page_title` and `universe_section` custom params in a page-level gtag call on universe pages; enables segment filtering in GA4. First step: check if analytics.js fires a custom event or relies on pageview auto-collection. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] DreadSpike signal log entry · [SIL] Voidfall entity 4 hint
+
+## 2026-04-08 — Session 52 | Total: 428/500 | Velocity: 4 | Debt: →
+Avgs — 3: 432.7 | 5: 431.8 | 10: 422.4 | all: 416.7
+  └ 3-session: Dev 85.3 | Align 87.3 | Momentum 87.7 | Engage 88.7 | Process 84.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 82 | ↓ | Lighthouse CI still failing (pre-existing); CSP regression found and fixed; arch clean |
+| Creative Alignment | 86 | ↓ | Tile picker matches user direction; CDR captured; portal UX improved |
+| Momentum | 87 | ↓ | 4 items shipped incl. critical login blocker; required multiple follow-up rounds |
+| Engagement | 89 | → | All 4 user-reported issues acted on; rapid iteration on tile visibility + CSP console errors |
+| Process Quality | 84 | ↑ | CF Worker deployed via REST API workaround; cache purged correctly; handoff complete |
+| **Total** | **428/500** | ↓ | |
+
+**Top win:** Diagnosed Cloudflare Worker CSP as root cause of completely non-functional portal login — identified from console logs and fixed in one targeted edit
+**Top gap:** Tile picker required a follow-up border fix and 3 cache purges; should have pre-validated tile legibility against dark panel before shipping
+**Intent outcome:** Achieved — all 4 user-reported issues resolved; login functional; picker redesigned; PromoGrind sign-in corrected
+
+**Brainstorm**
+1. **Remove inline onclick handlers from vault-member/index.html** — move `switchTab()` / `oauthSignIn()` to addEventListener in portal-core.js; removes need for `'unsafe-inline'` in Worker CSP, improving security posture. First step: grep all `onclick=` in index.html, count occurrences, move to DOMContentLoaded block. High probability.
+2. **Cloudflare cache purge on deploy** — add a GitHub Actions step after pages deployment that calls the CF purge API using a stored secret; eliminates the need to manually purge after every push. First step: add `CLOUDFLARE_ZONE_ID` and `CLOUDFLARE_API_KEY` secrets to GitHub repo, add curl step to deploy workflow. High probability.
+3. **Theme picker preview card** — show a mini site-preview card in the picker panel when hovering a tile (header colour + text colour sample); makes theme choice more confident without full page apply. First step: design a 120×60px preview element inside the dropdown panel showing panel bg + text. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Remove inline onclick handlers · [SIL] Cloudflare cache purge on deploy
