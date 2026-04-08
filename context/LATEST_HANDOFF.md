@@ -1,6 +1,37 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-07 (Session 49)
+Last updated: 2026-04-07 (Session 50)
+
+## Session Intent: Session 50
+Resume from compacted S49 context; complete S49 closeout; ship remaining SIL brainstorm items.
+**Outcome: Achieved** — S49 closeout completed; CSP Turnstile regression caught and fixed; 3 SIL items shipped (join GA4, Voidfall chapter, screenshot CI).
+
+## Where We Left Off (Session 50 — 2026-04-07)
+
+- Shipped: 4 improvements — CSP Turnstile domain fix (85 pages re-propagated), join form `form_error` GA4 event, Voidfall Chapter I excerpt (First Pages section), light-mode screenshot CI artifact
+- Tests: N/A
+- Deploy: pushed `5a00d16` + `7dc6aa9` → GitHub Pages auto
+
+---
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+Now queue is clear. Pull from Next:
+1. **[SIL] Voidfall subscription GA4** — `form_submit` event on "Get First Signal" success handler (quick)
+2. **[SIL] Voidfall Fragment 004** — 4th archive card with atmospheric prose (creative)
+3. **Per-form Web3Forms keys** — create 3 separate keys in dashboard for join/, contact/, data-deletion/
+
+---
 
 ## Session Intent: Session 49
 Complete items 1–4 from next-session list: propagate-csp.mjs run, CSP CI check, contact GA4 events, referral link generator.

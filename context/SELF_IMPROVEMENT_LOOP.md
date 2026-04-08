@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▆ (16 entries)
-Avgs — 3: 430.7 | 5: 430.8 | 10: 419.6 | all: 413.8
-  └ 3-session: Dev 85.3 | Align 84.7 | Momentum 89.7 | Engage 88.3 | Process 82.7
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~4 sessions — Now queue clear  |  Intent rate: 100% (last 5)
-Last session: 2026-04-07 | Session 49 | Total: 430/500 | Velocity: 3 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▆ (17 entries)
+Avgs — 3: 431.7 | 5: 432.6 | 10: 421.5 | all: 415.4
+  └ 3-session: Dev 87.3 | Align 84.0 | Momentum 91.0 | Engage 88.3 | Process 81.0
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~0 — Now queue clear; add items before next session  |  Intent rate: 100% (last 5)
+Last session: 2026-04-07 | Session 50 | Total: 441/500 | Velocity: 4 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -418,3 +418,27 @@ Avgs — 3: 430.7 | 5: 430.8 | 10: 419.6 | all: 413.8
 3. **Light-mode screenshot CI** — wire the existing `tests/light-mode-screenshots.spec.js` into the compliance job so screenshots are captured as artifacts on every push. First step: add spec to compliance job `run` line. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Join form GA4 events · [SIL] Voidfall chapter excerpt
+
+## 2026-04-07 — Session 50 | Total: 441/500 | Velocity: 4 | Debt: →
+Avgs — 3: 431.7 | 5: 432.6 | 10: 421.5 | all: 415.4
+  └ 3-session: Dev 87.3 | Align 84.0 | Momentum 91.0 | Engage 88.3 | Process 81.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 89 | ↑ | CSP Turnstile regression caught pre-deploy; screenshot CI wired |
+| Creative Alignment | 88 | ↑ | Voidfall Chapter I prose is first genuine narrative content on live site |
+| Momentum | 91 | → | 4 items shipped; Now queue clear again |
+| Engagement | 88 | → | Rapid execution; all S49 brainstorm items consumed |
+| Process Quality | 85 | ↑ | S49 closeout completed; IGNIS refreshed +952; context fully current |
+| **Total** | **441/500** | ↑ | |
+
+**Top win:** CSP Turnstile regression caught during closeout commit — prevented portal auth breakage from reaching production
+**Top gap:** IGNIS CREATIVITY pillar still grade D (3,351/10,000) — need more creative content like Voidfall chapter
+**Intent outcome:** Achieved — S49 closeout completed + 4 items shipped; CSP regression bonus catch
+
+**Brainstorm**
+1. **Voidfall subscription GA4** — `form_submit` gtag event on "Get First Signal" Kit success handler; first step: find doSubscribe() success branch in voidfall/index.html. High probability.
+2. **Voidfall Fragment 004** — 4th card in Transmission Archive with atmospheric redacted prose; deepens lore at zero cost; first step: write 2–3 sentences with strategic redactions. High probability.
+3. **CSP compliance badge in Studio Hub** — visual indicator showing CSP sync status (green/red) by querying CI artifact API; first step: check if GitHub Actions artifacts API is accessible without OAuth. Low probability.
+
+**Committed to TASK_BOARD:** [SIL] Voidfall subscription GA4 · [SIL] Voidfall Fragment 004

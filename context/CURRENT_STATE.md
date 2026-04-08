@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-07 (Session 49)
+- Date: 2026-04-07 (Session 50)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S49 CSP propagated to 85 pages; CSP auto-sync CI check live; contact GA4 events wired; referral link confirmed already existed
+- Repo posture: S50 CSP Turnstile domains added + 85 pages re-propagated; join form_error GA4; Voidfall Chapter I excerpt live; light-mode screenshot CI wired
 
 ## What exists
 
@@ -13,7 +13,7 @@
 - **Vault Member portal** (`vault-member/`) — 9-tier rank system, achievements, challenges, Discord role sync, onboarding tour, light-mode phase 2
 - **VaultSparked membership** (`vaultsparked/`) — Stripe $4.99–$99.99/mo, 6 price IDs, phase progress bar, gift checkout modal (gift price `price_1TJ7xbGMN60PfJYsPCs5wUUz` set S37)
 - **Investor portal** (`investor/`) — gated
-- **Universe** — DreadSpike (pivoted to Novel Saga), Voidfall teaser (`/universe/voidfall/`)
+- **Universe** — DreadSpike (pivoted to Novel Saga), Voidfall full lore page (`/universe/voidfall/`) — Transmission Archive (3 fragments), The Signal, Known Entities, Saga meta, Chapter I excerpt (S50)
 - **Studio Hub** (`studio-hub/`) — synced from vaultspark-studio-hub repo
 - **10 journal posts** — fireView() consent-gated
 - **8 game pages** — FORGE/SPARKED/VAULTED radial glow, data-status attrs; status badges correctly positioned (direct child of .hero-art)
@@ -70,4 +70,4 @@
 - beacon.env not configured (Active Session Beacon inactive)
 - Theme persistence Playwright spec updated (S46) — `#theme-select` replaced with `#theme-picker-btn` + `.theme-option[data-theme].active`; Firefox/WebKit not installed locally; full cross-browser run not verified
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
-- IGNIS score: 46,356/100,000 · Tier: FORGE · 70.9% through tier (rescored 2026-04-07 S49) · delta: +508
+- IGNIS score: 47,308/100,000 · Tier: FORGE · 82.1% through tier (rescored 2026-04-07 S50) · delta: +952

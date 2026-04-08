@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-04-07 — Session 50
+
+- scripts/propagate-csp.mjs: added challenges.cloudflare.com to script-src, connect-src, frame-src (Turnstile — was stripped in S49 run); re-propagated 85 pages
+- join/index.html: added form_error GA4 event to vault access request catch handler
+- universe/voidfall/index.html: added Chapter I excerpt (First Pages section) — opening prose + locked volume badge + CSS; first narrative content on live site
+- .github/workflows/e2e.yml: wired light-mode-screenshots.spec.js into compliance job; screenshots uploaded as 14-day artifact
+- Pushed: 5a00d16 + 7dc6aa9
+- IGNIS: 47,308 (+952)
+- SIL: 441/500 · Velocity: 4 · Debt: →
+
 ## 2026-04-07 — Session 49
 
 - scripts/propagate-csp.mjs: fixed regex (`[^"']*` → `[^"]*`) — was stopping at single-quotes inside CSP value; re-ran: 12 pages updated, 73 unchanged
