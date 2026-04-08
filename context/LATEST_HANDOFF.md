@@ -1,6 +1,39 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-07 (Session 48)
+Last updated: 2026-04-07 (Session 49)
+
+## Session Intent: Session 49
+Complete items 1–4 from next-session list: propagate-csp.mjs run, CSP CI check, contact GA4 events, referral link generator.
+**Outcome: Achieved** — all 4 done (referral link was already built; CSP regex bug fixed and 12 stale pages updated; CI gate live; GA4 events wired).
+
+## Where We Left Off (Session 49 — 2026-04-07)
+
+- Shipped: 3 improvements — CSP propagated to 85 pages (12 updated) + CI dry-run gate, contact form GA4 events, CSP script regex fix
+- Tests: N/A
+- Deploy: pushed `1c21109` → GitHub Pages auto
+
+---
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+Now queue is clear. Pull from Next:
+1. Light-mode screenshot spec — run locally or in CI to generate baseline screenshots
+2. Per-form Web3Forms keys — create 3 separate keys in dashboard
+3. Voidfall: add a second transmission excerpt or early chapter teaser to keep lore momentum
+
+---
+
+## Session Intent: Session 48
 
 ## Session Intent: Session 48
 Clear all 3 pending human actions: Supabase referral attribution migration, Sentry release CI, Web3Forms contact form verification.

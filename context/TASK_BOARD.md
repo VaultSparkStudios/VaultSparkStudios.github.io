@@ -19,10 +19,7 @@ Last updated: 2026-04-07 (Session 46)
 
 ## Now
 
-- [ ] **Run `node scripts/propagate-csp.mjs`** — script created S47 but not yet run; updates all 97 HTML pages with canonical CSP in one pass
-- [ ] **[SIL] CSP auto-sync CI check** — add `propagate-csp.mjs --dry-run` step to compliance workflow; fails if any HTML has stale CSP (S47 brainstorm)
-- [ ] **[SIL] Contact form GA4 events** — fire `gtag('event', 'form_submit')` + `form_error` in contact form JS; closes the conversion visibility gap (S47 brainstorm)
-- [ ] **[SIL] Referral link generator in portal** — "Share your referral link" button in portal settings copies `vaultsparkstudios.com/vault-member/?ref=username` to clipboard; makes referral system discoverable (S48 brainstorm)
+*(queue clear — see Next for upcoming items)*
 
 ## Next
 
@@ -68,6 +65,7 @@ Last updated: 2026-04-07 (Session 46)
 
 ## Done (recent)
 
+- [x] **CSP propagated + CI check + GA4 events (S49)** — 85 pages synced; e2e.yml CSP dry-run gate; contact form_submit/form_error events
 - [x] **Full audit implementation — 9 items (S47)** — portal admin link, referral attribution wire (3 RPC call sites), CSP propagation script, staging smoke test, IGNIS delta field, light-mode screenshot spec, Voidfall page expansion (4 new sections), Sentry release workflow
 - [x] **SIL Now queue — 5 items (S46)** — robots.txt note, closeout.md sync, theme-persistence spec fix, nav backdrop opacity var, swatch-pulse animation
 - [x] **Portal auth tab switching on referral link (S45)** — added missing portal nav HTML (`nav-account-wrap`, notif bell, `nav-signin-link`, `nav-join-btn`); null guards in `showAuth`/`showDashboard`; `?ref=` referral banner + sessionStorage tracking; theme picker hover-preview + DEFAULT badge + confirmation flash

@@ -15,10 +15,11 @@ import { join, relative, dirname } from 'path';
 // ─── CANONICAL CSP — edit here only ───────────────────────────────────────────
 const CSP_VALUE =
   "default-src 'self'; " +
-  "script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; " +
+  "script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com; " +
   "style-src 'self' 'unsafe-inline'; " +
   "img-src 'self' https: data:; " +
-  "connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; " +
+  "connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com; " +
+  "frame-src 'self' https://challenges.cloudflare.com; " +
   "font-src 'self'; " +
   "frame-ancestors 'self'; " +
   "base-uri 'self'; " +

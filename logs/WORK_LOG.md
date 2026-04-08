@@ -1,5 +1,13 @@
 # Work Log
 
+## 2026-04-07 — Session 49
+
+- scripts/propagate-csp.mjs: fixed regex (`[^"']*` → `[^"]*`) — was stopping at single-quotes inside CSP value; re-ran: 12 pages updated, 73 unchanged
+- .github/workflows/e2e.yml: added CSP sync check step (`node scripts/propagate-csp.mjs --dry-run`) before compliance tests
+- contact/index.html: wired GA4 events — `form_submit` on success, `form_error` on catch
+- Pushed: 1c21109
+- SIL: 430/500 · Velocity: 3 · Debt: →
+
 ## 2026-04-07 — Session 48
 
 - supabase/migrations/supabase-phase56-referral-attribution.sql: created + applied via db-migrate workflow — `referred_by uuid` column on vault_members; register_open gains p_ref_by param (awards +100 XP to referrer, fires achievements, sets referred_by); get_referral_milestones updated to count both invite-code and direct-link referrals

@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▆ (15 entries)
-Avgs — 3: 433.3 | 5: 427.4 | 10: 418.0 | all: 413.4
-  └ 3-session: Dev 85.0 | Align 85.3 | Momentum 89.0 | Engage 87.7 | Process 86.3
-Velocity trend: →  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~3 sessions — Now has 3 items  |  Intent rate: 100% (last 5)
-Last session: 2026-04-07 | Session 48 | Total: 424/500 | Velocity: 2 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▆ (16 entries)
+Avgs — 3: 430.7 | 5: 430.8 | 10: 419.6 | all: 413.8
+  └ 3-session: Dev 85.3 | Align 84.7 | Momentum 89.7 | Engage 88.3 | Process 82.7
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~4 sessions — Now queue clear  |  Intent rate: 100% (last 5)
+Last session: 2026-04-07 | Session 49 | Total: 430/500 | Velocity: 3 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -394,3 +394,27 @@ Avgs — 3: 433.3 | 5: 427.4 | 10: 418.0 | all: 413.4
 3. **Contact form GA4 events** — `gtag('event', 'form_submit')` + `form_error` in contact form JS; visibility into conversion and failure rates. First step: add two calls after success/error branches. High probability.
 
 **Committed to TASK_BOARD:** [SIL] Referral link generator in portal
+
+## 2026-04-07 — Session 49 | Total: 430/500 | Velocity: 3 | Debt: →
+Avgs — 3: 430.7 | 5: 430.8 | 10: 419.6 | all: 413.8
+  └ 3-session: Dev 85.3 | Align 84.7 | Momentum 89.7 | Engage 88.3 | Process 82.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 87 | → | CSP regex bug caught and fixed; CI gate now enforced |
+| Creative Alignment | 82 | ↑ | Short efficient session; work aligned to DX health |
+| Momentum | 91 | → | Now queue fully cleared; referral item resolved as already-done |
+| Engagement | 89 | → | Immediate execution; no drift |
+| Process Quality | 81 | → | All context files updated; IGNIS +508 |
+| **Total** | **430/500** | ↑ | |
+
+**Top win:** CSP now enforced in CI — the drift problem that would have silently affected 97 pages is permanently closed
+**Top gap:** Creative/lore work has stalled; Voidfall and game pages need content momentum
+**Intent outcome:** Achieved — all 4 items done; referral link was pre-existing (good discovery)
+
+**Brainstorm**
+1. **Join form GA4 events** — mirror the contact form pattern on `/join/`; `form_submit` + `form_error` events; first step: grep join form submission handler. High probability.
+2. **Voidfall chapter excerpt** — add a locked/redacted "Chapter 1 · Page 1" block to voidfall page; short atmospheric prose; drives lore engagement and makes the page feel alive. First step: write 3–4 sentences of opening prose. High probability.
+3. **Light-mode screenshot CI** — wire the existing `tests/light-mode-screenshots.spec.js` into the compliance job so screenshots are captured as artifacts on every push. First step: add spec to compliance job `run` line. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Join form GA4 events · [SIL] Voidfall chapter excerpt

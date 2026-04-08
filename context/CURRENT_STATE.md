@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-07 (Session 48)
+- Date: 2026-04-07 (Session 49)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S48 human actions cleared — Supabase phase56 migration live, Sentry release CI active, contact form fix deployed
+- Repo posture: S49 CSP propagated to 85 pages; CSP auto-sync CI check live; contact GA4 events wired; referral link confirmed already existed
 
 ## What exists
 
@@ -23,10 +23,10 @@
 ### Infrastructure
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler.
 - **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260406-navfix`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
-- **DX scripts** (`scripts/propagate-csp.mjs`, `scripts/smoke-test.sh`) — S47: CSP propagation from single constant to all HTML pages; staging smoke test (12 URLs, exits non-zero on failure; enforces CANON-007)
+- **DX scripts** (`scripts/propagate-csp.mjs`, `scripts/smoke-test.sh`) — S47 created; S49 regex fixed + dry-run exit-1 added; 85 pages now in sync with canonical CSP; `e2e.yml` compliance job runs `--dry-run` check before Playwright
 - **Sentry release workflow** (`.github/workflows/sentry-release.yml`) — S47 created, S48 fully wired: org `vaultspark-studios`, project `4511104933298176`, token set as GitHub secret; every push to main now tags a Sentry release
 - **Referral attribution** (`supabase/migrations/supabase-phase56-referral-attribution.sql`) — S48: `referred_by uuid` column on `vault_members`; `register_open` accepts `p_ref_by`, awards referrer +100 XP, fires recruiter/patron achievements; `get_referral_milestones` counts both invite-code and direct-link referrals; migration applied live
-- **Contact form** (`contact/index.html`) — S47: replaced inline success message with animated toast (spring slide-up, 7s countdown progress bar, manual dismiss, red error variant); fixed duplicate `name="subject"` field conflict that caused Web3Forms delivery failures
+- **Contact form** (`contact/index.html`) — S47: toast pop-up + duplicate-subject fix; S49: `gtag('event', 'form_submit')` + `form_error` GA4 events wired
 - **Mobile nav** (`assets/style.css`, `assets/nav-toggle.js`) — S36 removed backdrop-filter from .nav-center.open; S38 disabled .site-header::before backdrop-filter at ≤980px (root iOS GPU compositing fix); S39 added @keyframes nav-enter; **S44 removed backdrop-filter: blur(2px) from #nav-backdrop (the true source of iOS blur + click interference), redesigned overlay with premium cubic-bezier animation, gold active-link accent, improved spacing and CTA polish**
 - **Theme FOUC prevention** (`assets/theme-toggle.js`, `scripts/propagate-nav.mjs`, all 72 HTML pages) — S44 injected tiny inline `<script>` at `<body>` start on every page that reads localStorage.vs_theme and stamps both `<html>` and `<body>` with the correct theme class before any content paints; theme-toggle.js also applies class to `<html>` immediately when called from `<head>`; eliminates dark flash when navigating in light mode
 - **Portal admin link** (`vault-member/index.html`) — S47 added `id="nav-admin-link"` button to nav-account-menu; `display:none` by default; `showDashboard()` reveals it for admin users
@@ -70,4 +70,4 @@
 - beacon.env not configured (Active Session Beacon inactive)
 - Theme persistence Playwright spec updated (S46) — `#theme-select` replaced with `#theme-picker-btn` + `.theme-option[data-theme].active`; Firefox/WebKit not installed locally; full cross-browser run not verified
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
-- IGNIS score: 45,848/100,000 · Tier: FORGE · 70.1% through tier (rescored 2026-04-07 S48) · delta: +437
+- IGNIS score: 46,356/100,000 · Tier: FORGE · 70.9% through tier (rescored 2026-04-07 S49) · delta: +508
