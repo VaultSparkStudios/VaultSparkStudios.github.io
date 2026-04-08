@@ -638,6 +638,15 @@
             The meaning was not.
           </p>
         </div>
+        <div class="archive-card">
+          <div class="archive-index">Fragment · 004</div>
+          <p class="archive-text">
+            <span class="redacted">████████████████</span> asked what it wanted.<br>
+            It answered.<br>
+            The answer was <span class="redacted">███</span> words long.<br>
+            One of them was a name. The name was <span class="redacted">████████████████████████████</span>.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -845,6 +854,7 @@
         if (result.ok) {
           formArea.style.display = 'none';
           success.style.display = 'block';
+          if (typeof gtag === 'function') { gtag('event', 'form_submit', { form_name: 'voidfall_dispatch', form_location: '/universe/voidfall/' }); }
         } else {
           btn.disabled = false;
           btn.textContent = 'Get First Signal';
