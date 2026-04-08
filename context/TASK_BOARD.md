@@ -31,8 +31,10 @@ Last updated: 2026-04-07 (Session 50)
 - [x] **[SIL] Voidfall chapter I excerpt** — "First Pages" section added to `/universe/voidfall/` with opening Chapter I prose + locked volume badge (S50)
 - [x] **[SIL] Light-mode screenshot CI** — `tests/light-mode-screenshots.spec.js` wired into compliance job; screenshots uploaded as 14-day artifact (S50)
 
-- [ ] **[SIL] Voidfall subscription GA4** — add `form_submit` gtag event to "Get First Signal" Kit subscription success handler in `universe/voidfall/index.html` (S50 brainstorm)
-- [ ] **[SIL] Voidfall Fragment 004** — add a 4th card to the Transmission Archive grid with atmospheric redacted prose (S50 brainstorm)
+- [x] **[SIL] Voidfall subscription GA4** — `form_submit` gtag event added to Kit subscribe success handler in `universe/voidfall/index.html` (S51)
+- [x] **[SIL] Voidfall Fragment 004** — 4th Transmission Archive card added; named thing, the answer, fully redacted (S51)
+- [ ] **[SIL] DreadSpike signal log entry** — add lore fragment or journal post for DreadSpike universe page (S51 brainstorm)
+- [ ] **[SIL] Voidfall entity 4 hint** — one-line atmospheric microcopy below The Crossed row hinting at unclassified 4th entity (S51 brainstorm)
 
 ## Next (prior)
 
@@ -71,6 +73,7 @@ Last updated: 2026-04-07 (Session 50)
 
 ## Done (recent)
 
+- [x] **Voidfall dispatch GA4 + Fragment 004 (S51)**
 - [x] **CSP Turnstile fix + 3 SIL items (S50)** — canonical CSP updated with challenges.cloudflare.com (Turnstile); re-propagated 85 pages; join form GA4 form_error; Voidfall Chapter I excerpt; light-mode screenshot CI
 - [x] **CSP propagated + CI check + GA4 events (S49)** — 85 pages synced; e2e.yml CSP dry-run gate; contact form_submit/form_error events
 - [x] **Full audit implementation — 9 items (S47)** — portal admin link, referral attribution wire (3 RPC call sites), CSP propagation script, staging smoke test, IGNIS delta field, light-mode screenshot spec, Voidfall page expansion (4 new sections), Sentry release workflow

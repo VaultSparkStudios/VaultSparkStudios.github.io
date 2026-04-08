@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-07 (Session 50)
+- Date: 2026-04-07 (Session 51)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S50 CSP Turnstile domains added + 85 pages re-propagated; join form_error GA4; Voidfall Chapter I excerpt live; light-mode screenshot CI wired
+- Repo posture: S51 Voidfall dispatch GA4 + Fragment 004; S50 CSP Turnstile fix + Chapter I excerpt; light-mode screenshot CI
 
 ## What exists
 

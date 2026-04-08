@@ -1,5 +1,13 @@
 # Work Log
 
+## 2026-04-07 — Session 51
+
+- universe/voidfall/index.html: form_submit GA4 event on Kit subscribe success (form_name: voidfall_dispatch)
+- universe/voidfall/index.html: Fragment 004 added to Transmission Archive — the named thing, redacted
+- Pushed: 09b1efe
+- IGNIS: not refreshed (minor content changes)
+- SIL: 432/500 · Velocity: 2 · Debt: →
+
 ## 2026-04-07 — Session 50
 
 - scripts/propagate-csp.mjs: added challenges.cloudflare.com to script-src, connect-src, frame-src (Turnstile — was stripped in S49 run); re-propagated 85 pages

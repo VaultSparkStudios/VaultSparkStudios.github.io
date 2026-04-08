@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▆ (17 entries)
-Avgs — 3: 431.7 | 5: 432.6 | 10: 421.5 | all: 415.4
-  └ 3-session: Dev 87.3 | Align 84.0 | Momentum 91.0 | Engage 88.3 | Process 81.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
+Sparkline (last 5 totals): ▆▆▆▆▆ (18 entries)
+Avgs — 3: 434.3 | 5: 433.0 | 10: 422.5 | all: 416.3
+  └ 3-session: Dev 87.3 | Align 89.0 | Momentum 89.3 | Engage 87.7 | Process 81.0
+Velocity trend: →  |  Protocol velocity: →  |  Debt: →
 Momentum runway: ~0 — Now queue clear; add items before next session  |  Intent rate: 100% (last 5)
-Last session: 2026-04-07 | Session 50 | Total: 441/500 | Velocity: 4 | protocolVelocity: 1
+Last session: 2026-04-07 | Session 51 | Total: 432/500 | Velocity: 2 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -442,3 +442,27 @@ Avgs — 3: 431.7 | 5: 432.6 | 10: 421.5 | all: 415.4
 3. **CSP compliance badge in Studio Hub** — visual indicator showing CSP sync status (green/red) by querying CI artifact API; first step: check if GitHub Actions artifacts API is accessible without OAuth. Low probability.
 
 **Committed to TASK_BOARD:** [SIL] Voidfall subscription GA4 · [SIL] Voidfall Fragment 004
+
+## 2026-04-07 — Session 51 | Total: 432/500 | Velocity: 2 | Debt: →
+Avgs — 3: 434.3 | 5: 433.0 | 10: 422.5 | all: 416.3
+  └ 3-session: Dev 87.3 | Align 89.0 | Momentum 89.3 | Engage 87.7 | Process 81.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 85 | ↓ | No CI/test changes; clean commit |
+| Creative Alignment | 91 | ↑ | Fragment 004 strong lore; GA4 closes observability gap |
+| Momentum | 87 | ↓ | 2 items; short sprint; Now queue clear again |
+| Engagement | 87 | → | Immediate execution on both brainstorm items |
+| Process Quality | 82 | ↓ | Short session; context updated; IGNIS not refreshed (minor changes) |
+| **Total** | **432/500** | ↓ | |
+
+**Top win:** Fragment 004 lands a perfect beat — the named thing, the answer, fully redacted; escalates the archive's tension
+**Top gap:** Now queue keeps hitting zero; need a deeper Next backlog to sustain momentum
+**Intent outcome:** Achieved — both SIL items shipped in one commit
+
+**Brainstorm**
+1. **DreadSpike signal log entry** — add a journal post or lore fragment for DreadSpike; the saga page has no recent content signal. First step: check dreadspike/index.html for current content state. High probability.
+2. **Voidfall "entity sighting" microcopy** — add a short atmospheric note below The Crossed entity row hinting at a 4th unclassified entity; one line, redacted. First step: read Known Entities section. High probability.
+3. **GA4 pageview enrichment** — push `page_title` and `universe_section` custom params in a page-level gtag call on universe pages; enables segment filtering in GA4. First step: check if analytics.js fires a custom event or relies on pageview auto-collection. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] DreadSpike signal log entry · [SIL] Voidfall entity 4 hint
