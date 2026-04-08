@@ -27,6 +27,17 @@
       });
     }
 
+    // ── Hash routing — honour #login / #register from external links ──
+    (function () {
+      var h = window.location.hash.replace('#', '');
+      if (h === 'login' || h === 'register' || h === 'forgot') {
+        switchTab(h);
+        // Smooth-scroll to the auth card
+        var card = document.querySelector('.auth-card');
+        if (card) setTimeout(function () { card.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 80);
+      }
+    })();
+
     // ── Rank / Achievement definitions (browser mirror of canonical config) ───
     const RANK_VISUALS = {
       spark_initiate: { color: '#94a3b8', badgeClass: 'badge-ghost' },

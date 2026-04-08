@@ -11,12 +11,12 @@ test.describe('Theme persistence', () => {
     await page.waitForLoadState('networkidle');
     // Custom picker (replaces bare <select> as of S44)
     await page.waitForSelector('#theme-picker-btn', { timeout: 15000 });
-    await expect(page.locator('.theme-option[data-theme="warm"]')).toHaveClass(/active/);
+    await expect(page.locator('.theme-tile[data-theme="warm"]')).toHaveClass(/active/);
     await expect(page.locator('body')).toHaveAttribute('data-theme', 'warm');
     await page.reload({ waitUntil: 'domcontentloaded' });
     await page.waitForLoadState('networkidle');
     await page.waitForSelector('#theme-picker-btn', { timeout: 15000 });
-    await expect(page.locator('.theme-option[data-theme="warm"]')).toHaveClass(/active/);
+    await expect(page.locator('.theme-tile[data-theme="warm"]')).toHaveClass(/active/);
     await expect(page.locator('body')).toHaveAttribute('data-theme', 'warm');
   });
 

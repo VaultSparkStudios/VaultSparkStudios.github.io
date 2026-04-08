@@ -428,7 +428,7 @@
           const { data: lookedUp } = await VSSupabase
             .rpc('get_email_by_username', { p_username: emailOrUsername });
 
-          if (!lookedUp) throw new Error('No account found with that email or handle.');
+          if (!lookedUp) throw new Error('No account found with that handle. Try your email address instead, or use Forgot password? below to recover your account.');
           email = lookedUp;
         }
 
@@ -439,7 +439,7 @@
             throw new Error('Please confirm your email before signing in. Check your inbox for the confirmation link.');
           }
           if (error.message === 'Invalid login credentials') {
-            throw new Error('Incorrect email/handle or password.');
+            throw new Error('Incorrect email or password. If you forgot your password, use the "Forgot password?" link below.');
           }
           throw new Error(error.message);
         }

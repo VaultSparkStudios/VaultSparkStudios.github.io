@@ -83,22 +83,20 @@
   }
 
   function refreshPicker(theme) {
-    // Update desktop premium picker button swatch + label
+    // Update trigger button swatch + label
     var btn = document.getElementById('theme-picker-btn');
     if (btn) {
       var swatch = btn.querySelector('.theme-picker-swatch');
       var labelEl = btn.querySelector('.theme-picker-label');
       var entry = THEMES.find(function (t) { return t.value === theme; });
       if (swatch && entry) swatch.style.background = entry.color;
-      if (labelEl && entry && !labelEl.textContent.startsWith('✓')) labelEl.textContent = entry.label;
+      if (labelEl && entry) labelEl.textContent = entry.label;
     }
-    // Update desktop option active states + DEFAULT badge
-    document.querySelectorAll('.theme-option').forEach(function (opt) {
-      var isActive = opt.dataset.theme === theme;
-      opt.classList.toggle('active', isActive);
-      opt.setAttribute('aria-selected', isActive ? 'true' : 'false');
-      var badge = opt.querySelector('.theme-opt-default');
-      if (badge) badge.style.display = isActive ? '' : 'none';
+    // Update tile active states
+    document.querySelectorAll('.theme-tile').forEach(function (tile) {
+      var isActive = tile.dataset.theme === theme;
+      tile.classList.toggle('active', isActive);
+      tile.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
     // Sync mobile pills
     document.querySelectorAll('.mobile-theme-pill').forEach(function (pill) {
@@ -337,14 +335,14 @@
     });
   }
 
-  /* ── Premium Theme Picker (replaces bare <select>) ── */
+  /* ── Theme Tile Picker ── */
   function injectThemePicker() {
     var navRight = document.querySelector('.nav-right');
     if (!navRight || document.getElementById('theme-picker-btn')) return;
 
     var currentTheme = getTheme();
     var currentEntry = THEMES.find(function (t) { return t.value === currentTheme; }) || THEMES[0];
-    var _labelResetTimer = null;
+    var _confirmTimer = null;
 
     // Wrapper
     var wrapper = document.createElement('div');
@@ -352,12 +350,12 @@
     wrapper.id = 'theme-picker';
     wrapper.setAttribute('aria-label', 'Theme selector');
 
-    // Toggle button
+    // Toggle button — swatch dot + current theme name + chevron
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.id = 'theme-picker-btn';
     btn.className = 'theme-picker-btn';
-    btn.setAttribute('aria-haspopup', 'listbox');
+    btn.setAttribute('aria-haspopup', 'dialog');
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-label', 'Select theme: ' + currentEntry.label);
 
@@ -379,75 +377,77 @@
     btn.appendChild(labelEl);
     btn.appendChild(arrow);
 
-    // Dropdown
+    // Dropdown panel
     var dropdown = document.createElement('div');
     dropdown.className = 'theme-picker-dropdown';
-    dropdown.setAttribute('role', 'listbox');
-    dropdown.setAttribute('aria-label', 'Available themes');
+    dropdown.setAttribute('role', 'dialog');
+    dropdown.setAttribute('aria-label', 'Choose a theme');
 
-    // Section header
+    // Header label
     var header = document.createElement('div');
     header.className = 'theme-picker-header';
     header.textContent = 'Choose Theme';
     dropdown.appendChild(header);
 
+    // Tile grid
+    var grid = document.createElement('div');
+    grid.className = 'theme-grid';
+
     THEMES.forEach(function (theme) {
-      var opt = document.createElement('button');
-      opt.type = 'button';
-      opt.className = 'theme-option' + (theme.value === currentTheme ? ' active' : '');
-      opt.dataset.theme = theme.value;
-      opt.setAttribute('role', 'option');
-      opt.setAttribute('aria-selected', theme.value === currentTheme ? 'true' : 'false');
+      var tile = document.createElement('button');
+      tile.type = 'button';
+      tile.className = 'theme-tile theme-option' + (theme.value === currentTheme ? ' active' : '');
+      tile.dataset.theme = theme.value;
+      tile.setAttribute('aria-pressed', theme.value === currentTheme ? 'true' : 'false');
+      tile.setAttribute('aria-label', theme.label);
+      tile.style.background = theme.color;
+      // For light tile — ensure text contrast
+      if (theme.value === 'light') {
+        tile.style.color = 'rgba(30,40,60,0.85)';
+      }
 
-      var optSwatch = document.createElement('span');
-      optSwatch.className = 'theme-opt-swatch';
-      optSwatch.style.background = theme.color;
-      optSwatch.setAttribute('aria-hidden', 'true');
+      var nameEl = document.createElement('span');
+      nameEl.textContent = theme.label;
+      tile.appendChild(nameEl);
 
-      var optLabel = document.createElement('span');
-      optLabel.className = 'theme-opt-label';
-      optLabel.textContent = theme.label;
-
-      var defaultBadge = document.createElement('span');
-      defaultBadge.className = 'theme-opt-default';
-      defaultBadge.textContent = 'DEFAULT';
-      defaultBadge.style.display = theme.value === currentTheme ? '' : 'none';
-
-      opt.appendChild(optSwatch);
-      opt.appendChild(optLabel);
-      opt.appendChild(defaultBadge);
-
-      // Hover: preview theme without saving
-      opt.addEventListener('mouseenter', function () {
+      // Hover: preview without saving
+      tile.addEventListener('mouseenter', function () {
         applyTheme(theme.value);
       });
 
-      opt.addEventListener('click', function () {
+      tile.addEventListener('click', function () {
         setTheme(theme.value);
         closeThemePicker();
         btn.setAttribute('aria-label', 'Select theme: ' + theme.label);
-        // Pulse the swatch to reinforce "saved" feedback
         swatch.classList.remove('swatch-pulse');
-        void swatch.offsetWidth; // force reflow to restart animation
+        void swatch.offsetWidth;
         swatch.classList.add('swatch-pulse');
-        // Flash "✓ Default saved" in button label
-        if (_labelResetTimer) clearTimeout(_labelResetTimer);
-        labelEl.textContent = '✓ Default saved';
-        _labelResetTimer = setTimeout(function () {
-          var saved = THEMES.find(function (t) { return t.value === getTheme(); });
-          if (saved) labelEl.textContent = saved.label;
-          swatch.classList.remove('swatch-pulse');
-          _labelResetTimer = null;
-        }, 1800);
+        // Confirm flash
+        if (confirmEl) {
+          confirmEl.textContent = '✓ ' + theme.label + ' saved';
+          confirmEl.classList.add('show');
+          if (_confirmTimer) clearTimeout(_confirmTimer);
+          _confirmTimer = setTimeout(function () {
+            confirmEl.classList.remove('show');
+            _confirmTimer = null;
+          }, 1600);
+        }
       });
 
-      dropdown.appendChild(opt);
+      grid.appendChild(tile);
     });
 
-    // Restore saved theme when mouse leaves dropdown without clicking
-    dropdown.addEventListener('mouseleave', function () {
+    // Restore on mouse-leave
+    grid.addEventListener('mouseleave', function () {
       applyTheme(getTheme());
     });
+
+    dropdown.appendChild(grid);
+
+    // Confirm line
+    var confirmEl = document.createElement('div');
+    confirmEl.className = 'theme-picker-confirm';
+    dropdown.appendChild(confirmEl);
 
     wrapper.appendChild(btn);
     wrapper.appendChild(dropdown);
@@ -460,7 +460,7 @@
       navRight.appendChild(wrapper);
     }
 
-    // Toggle open/close
+    // Toggle
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
       if (wrapper.classList.contains('open')) {
@@ -481,15 +481,13 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         if (wrapper.classList.contains('open')) {
-          applyTheme(getTheme()); // restore if previewing
+          applyTheme(getTheme());
           closeThemePicker();
         }
       }
     });
 
     refreshPicker(currentTheme);
-
-    // Mobile pill switcher (inside the nav overlay footer)
     injectMobileThemePills();
   }
 
