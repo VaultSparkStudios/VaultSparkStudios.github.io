@@ -420,6 +420,52 @@
       color: var(--text);
     }
 
+    /* ─── Chapter excerpt ─── */
+    .chapter-excerpt {
+      max-width: 620px;
+      margin: 0 auto;
+      background: rgba(8, 10, 20, 0.7);
+      border: 1px solid rgba(214, 40, 40, 0.15);
+      border-left: 3px solid rgba(214, 40, 40, 0.5);
+      border-radius: 12px;
+      padding: 2.25rem 2.5rem;
+      position: relative;
+    }
+
+    .chapter-excerpt::before {
+      content: "ORIGIN SEQUENCE — CHAPTER I · PAGE I";
+      display: block;
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      color: rgba(214, 40, 40, 0.55);
+      margin-bottom: 1.5rem;
+    }
+
+    .chapter-excerpt-locked {
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.18);
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 1.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .chapter-prose {
+      font-family: Georgia, serif;
+      font-size: 0.93rem;
+      line-height: 1.9;
+      color: var(--muted);
+    }
+
+    .chapter-prose em {
+      color: var(--text);
+      font-style: normal;
+    }
+
     /* ─── Bottom sections ─── */
     .voidfall-footer-section {
       padding: 5rem 0 6rem;
@@ -672,6 +718,23 @@
           <div class="saga-meta-label">Release</div>
           <div class="saga-meta-value">When the vault is ready</div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chapter excerpt -->
+  <section class="vf-section" aria-labelledby="chapter-heading">
+    <div class="vf-section-inner">
+      <div class="vf-section-label" id="chapter-heading">First Pages</div>
+      <div class="chapter-excerpt" role="article" aria-label="Chapter I excerpt">
+        <p class="chapter-prose">
+          The light arrived before the sound.<br><br>
+          That is not how light works. <em>She knew that.</em> She had known it since she was nine years old, standing in a field with her father, watching a storm move in from the west. Sound lags. Light is instant. The physics are not negotiable.<br><br>
+          And yet.<br><br>
+          The light came first — a line of pale violet drawn across the sky above the facility, sharp-edged and perfectly still. Then, three full seconds later, the sound arrived: not a crash, not a boom, but something lower. A tone. <em>A frequency she felt in her back teeth.</em><br><br>
+          She stood at the observation window on Level 4 and watched the line fade, and did not reach for the radio, and did not press the emergency trigger, because she understood — with a certainty that was not hers and had not been there a moment before — that <em>this had already been decided.</em>
+        </p>
+        <div class="chapter-excerpt-locked">⚿ &nbsp; Volume I — Origin Sequence &nbsp; · &nbsp; In The Forge</div>
       </div>
     </div>
   </section>

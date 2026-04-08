@@ -717,9 +717,10 @@
             document.getElementById('vault-request-success').style.display = 'block';
             if (typeof gtag === 'function') { gtag('event', 'form_submit', { form_name: 'vault_access_request', form_location: '/join/' }); }
           } else { throw new Error(); }
-        } catch(_) {
+        } catch(err) {
           document.getElementById('vault-request-error').style.display = 'block';
           btn.disabled = false; btn.textContent = 'Request Access →';
+          if (typeof gtag === 'function') { gtag('event', 'form_error', { form_name: 'vault_access_request', form_location: '/join/', error: err && err.message || 'unknown' }); }
         }
       });
     })();

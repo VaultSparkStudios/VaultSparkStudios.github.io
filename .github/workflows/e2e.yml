@@ -34,6 +34,12 @@ jobs:
         env:
           BASE_URL: https://vaultsparkstudios.com
 
+      - name: Light-mode screenshot baseline
+        run: npx playwright test tests/light-mode-screenshots.spec.js --reporter=list --project=chromium
+        env:
+          BASE_URL: https://vaultsparkstudios.com
+        continue-on-error: true
+
       - name: Upload compliance results
         if: always()
         uses: actions/upload-artifact@v4
@@ -41,6 +47,14 @@ jobs:
           name: compliance-results
           path: playwright-report/
           retention-days: 7
+
+      - name: Upload light-mode screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: light-mode-screenshots
+          path: test-results/
+          retention-days: 14
 
   # ── Full E2E suite (requires auth secrets — skips gracefully if absent) ────────
   e2e:
