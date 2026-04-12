@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-11 (Session 53)
+Last updated: 2026-04-12 (Session 54)
 
 ---
 
@@ -19,7 +19,8 @@ Last updated: 2026-04-11 (Session 53)
 
 ## Now
 
-*(queue clear — see Next for upcoming items)*
+- [ ] **[SIL] Theme picker compact mode at 641–980px** — hide `.theme-picker-label` and `.theme-picker-arrow` at 641–980px so only the swatch dot shows; reduces nav crowding at tablet widths where picker now shows. First step: add media query rule to `assets/style.css`.
+- [ ] **[SIL] CF Worker auto-redeploy via GitHub Actions** — add Wrangler deploy step to a workflow so Worker CSP updates deploy automatically on push to main. First step: add `wrangler.toml` + deploy job to `.github/workflows/`.
 
 ## Next
 
@@ -74,13 +75,14 @@ Last updated: 2026-04-11 (Session 53)
 - [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
 - [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
 - [ ] **[WEB3FORMS-KEYS]** Create 3 separate keys in Web3Forms dashboard (join/, contact/, data-deletion/) for per-form lead tracking [low priority]
-- [ ] **[CF-SECRETS]** Add `CF_API_TOKEN` (Zone/Cache Purge) and `CF_ZONE_ID` secrets to GitHub repo → Settings → Secrets; enables auto cache purge workflow added S53
-- [ ] **[CSP-VERIFY]** After S53 deploy: open vault-member/index.html in DevTools console (incognito); confirm zero `Content-Security-Policy` errors; if violations appear, identify missed inline scripts and add their SHA-256 hashes; also redeploy Cloudflare Worker with updated script-src
+- [x] **[CF-SECRETS]** Add `CF_API_TOKEN` (Zone/Cache Purge) and `CF_ZONE_ID` secrets to GitHub repo → Settings → Secrets; enables auto cache purge workflow added S53 ✅ (S54)
+- [x] **[CSP-VERIFY]** After S53 deploy: open vault-member/index.html in DevTools console (incognito); confirm zero `Content-Security-Policy` errors ✅ (S54 — verified; remaining Cloudflare edge-injected inline scripts are platform-generated, unfixable with static hashes, accepted as limitation)
 
 ---
 
 ## Done (recent)
 
+- [x] **QR code CDN 404 fix + theme picker breakpoint fix + tile color improvements (S54)** — qrcode@1.5.3→@1.5.0; picker CSS moved from 980px→640px breakpoint; tileColor field; CF-SECRETS + CSP-VERIFY HAR cleared
 - [x] **CSP hardening: 'unsafe-inline' removed, SHA-256 hashes, portal-init.js extracted, DreadSpike/Voidfall lore, CF cache purge workflow (S53)**
 - [x] **Auth tab hash routing + CSP Worker fix + theme tile picker + PromoGrind sign-in (S52)**
 - [x] **Voidfall dispatch GA4 + Fragment 004 (S51)**

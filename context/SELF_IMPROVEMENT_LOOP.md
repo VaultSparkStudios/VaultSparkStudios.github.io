@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▇ (20 entries)
-Avgs — 3: 431.7 | 5: 433.2 | 10: 422.7 | all: 417.4
-  └ 3-session: Dev 85.3 | Align 89.0 | Momentum 89.0 | Engage 87.3 | Process 84.7
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~1.5 sessions (2 SIL items queued / avg vel 4)  |  Intent rate: 100% (last 5)
-Last session: 2026-04-11 | Session 53 | Total: 435/500 | Velocity: 4 | protocolVelocity: 1
+Sparkline (last 5 totals): ▇▆▆▆▅ (21 entries)
+Avgs — 3: 428.0 | 5: 431.4 | 10: 431.0 | all: 417.6
+  └ 3-session: Dev 83.7 | Align 85.3 | Momentum 87.3 | Engage 87.3 | Process 84.3
+Velocity trend: →  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~2 sessions (2 SIL items in Now / vel 0)  |  Intent rate: 100% (last 5)
+Last session: 2026-04-12 | Session 54 | Total: 421/500 | Velocity: 0 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -514,3 +514,27 @@ Avgs — 3: 431.7 | 5: 433.2 | 10: 422.7 | all: 417.4
 3. **[CF] Add CF_API_TOKEN + CF_ZONE_ID secrets** — cloudflare-cache-purge.yml is live but the secrets aren't yet set in GitHub repo; every push currently skips the purge step. First step: GitHub repo → Settings → Secrets → add CF_API_TOKEN (Zone/Cache Purge) and CF_ZONE_ID. Human action.
 
 **Committed to TASK_BOARD:** [SIL] CSP violation browser test (human action) · [HAR] Add CF_API_TOKEN + CF_ZONE_ID secrets to GitHub repo
+
+## 2026-04-12 — Session 54 | Total: 421/500 | Velocity: 0 | Debt: →
+Avgs — 3: 428.0 | 5: 431.4 | 10: 431.0 | all: 417.6
+  └ 3-session: Dev 83.7 | Align 85.3 | Momentum 87.3 | Engage 87.3 | Process 84.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 85 | ↑ | Real CDN regression fixed (QR 404); CSS breakpoint bug fixed; tile improvements; SW bumped |
+| Creative Alignment | 80 | ↓ | Pure bug fix session; no creative direction; soul fidelity intact |
+| Momentum | 85 | ↓ | Velocity 0; 2 HAR items resolved; 2 user-reported bugs fixed; no SIL board items completed |
+| Engagement | 86 | ↓ | Immediate fix of both user-reported bugs; CSP verification loop closed |
+| Process Quality | 85 | ↑ | Handoff accurate; S53 context correctly used; clean targeted commits; full closeout |
+| **Total** | **421/500** | ↓ | |
+
+**Top win:** Root-caused theme picker invisibility to a single CSS breakpoint rule at 980px — a silent UX regression hiding the picker for all users with sub-980px viewports (i.e. most laptop users); one line of CSS fixed it
+**Top gap:** Velocity 0 for second session in a row; both sessions have been reactive bug-fix; Now queue now has 2 SIL items to restore proactive momentum
+**Intent outcome:** Achieved — both user-reported bugs fixed and pushed
+
+**Brainstorm**
+1. **Theme picker compact mode at 641–980px** — now that the picker shows at tablet widths, hide `.theme-picker-label` and `.theme-picker-arrow` at 641–980px so only the swatch dot shows; reduces nav crowding without hiding the picker entirely. First step: add `@media (max-width: 980px)` rule targeting those elements to `style.css`. High probability.
+2. **CF Worker auto-redeploy via GitHub Actions** — add Wrangler deploy step to a workflow so Worker CSP updates ship automatically with main pushes; eliminates the manual redeploy step that's been pending since S53. First step: add `wrangler.toml` + deploy job to `.github/workflows/`. Medium probability.
+3. **Portal settings site theme selector** — add a "Site Theme" settings block in portal settings panel as a more discoverable alternative for logged-in users; mirrors the nav picker. First step: add settings-block with radio/button group to vault-member/index.html settings section. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Theme picker compact mode at 641–980px · [SIL] CF Worker auto-redeploy via GitHub Actions

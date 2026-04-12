@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-04-12 — Session 54
+
+- vault-member/index.html: qrcode CDN URL changed from @1.5.3 (jsDelivr 404) to @1.5.0; SRI hash updated to sha384-cis6rHaubFFg4u43HmrdI+X3wd2e5Vh2VxFSajC+XXESLbkXR9bnOIcoQBn+kGdc
+- assets/style.css: `.theme-picker { display: none; }` moved from @media (max-width: 980px) to @media (max-width: 640px) — root cause: picker hidden at all sub-980px viewports (common laptop window width); tile border opacity increased 0.18→0.28
+- assets/theme-toggle.js: `tileColor` field added to THEMES array (7 entries); `tile.style.background` updated to use `tileColor || color` for more distinct tile backgrounds
+- sw.js: CACHE_NAME bumped to vaultspark-20260412-e87a8ba
+- Pushed: 3e86c1f (required git pull --rebase due to remote CI commit)
+- IGNIS: not refreshed (no content changes)
+- SIL: 421/500 · Velocity: 0 · Debt: →
+
 ## 2026-04-11 — Session 53
 
 - universe/dreadspike/index.html: Signal Log section added — intercept-transmission card (ENTRY 001, TIMESTAMP REDACTED); lore-dense, on-voice

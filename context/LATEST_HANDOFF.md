@@ -1,6 +1,37 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-11 (Session 53)
+Last updated: 2026-04-12 (Session 54)
+
+## Session Intent: Session 54
+Fix two user-reported bugs: QR code 404 (jsDelivr `qrcode@1.5.3` has no `build/` path) and theme picker showing no options (CSS breakpoint hiding it at ≤980px).
+**Outcome: Achieved** — both bugs fixed and pushed. CF-SECRETS + CSP-VERIFY HAR items resolved.
+
+## Where We Left Off (Session 54 — 2026-04-12)
+
+- Shipped: QR code CDN fix (`qrcode@1.5.3` → `@1.5.0`, SRI hash updated); theme picker CSS hide rule moved from `@media (max-width: 980px)` to `@media (max-width: 640px)` — was hiding the picker at all sub-980px viewports (most laptop windows); `tileColor` field added to THEMES array in `theme-toggle.js` for more distinct tile backgrounds; tile border opacity 0.18→0.28; SW cache bumped to `vaultspark-20260412-e87a8ba`
+- Tests: N/A
+- Deploy: pushed `3e86c1f` → GitHub Pages auto (required `git pull --rebase` before push due to remote CI commit)
+
+---
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler — S53 updated script-src to SHA-256 hashes; changes won't take full effect until redeployed
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **[SIL] Theme picker compact mode at 641–980px** — hide label + arrow at tablet widths (Now queue, first item)
+2. **[SIL] CF Worker auto-redeploy via GitHub Actions** — add Wrangler deploy step to workflow (Now queue, second item)
+3. **[HAR] Redeploy Cloudflare Worker** — `wrangler deploy` to activate S53 hash-based CSP in Worker
+
+---
 
 ## Session Intent: Session 53
 Complete all escalated SIL items: DreadSpike signal log entry, Voidfall entity 4 hint, remove inline onclick handlers from portal (CSP hardening), Cloudflare cache purge on deploy.
