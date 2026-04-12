@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-12 (Session 56)
+Last updated: 2026-04-12 (Session 57)
 
 ---
 
@@ -30,11 +30,17 @@ Last updated: 2026-04-12 (Session 56)
 - [x] **[S55] Game page conversion** — social share + "More From the Vault" section added to Call of Doodie page
 - [x] **[S55] Nav propagated** — 75 pages updated with canonical nav/footer (new pages included)
 
-- [ ] **[SIL:2⛔] Theme picker compact mode at 641–980px** — hide `.theme-picker-label` and `.theme-picker-arrow` at 641–980px so only the swatch dot shows; reduces nav crowding at tablet widths where picker now shows. First step: add media query rule to `assets/style.css`. **MUST action next session.**
-- [ ] **[SIL:2⛔] CF Worker auto-redeploy via GitHub Actions** — add Wrangler deploy step to a workflow so Worker CSP updates deploy automatically on push to main. First step: add `wrangler.toml` + deploy job to `.github/workflows/`. **MUST action next session.**
-- [ ] **[S55 follow-up] Studio About enhancement** — enhance `/studio/index.html` founder story section; add personal story narrative, timeline depth, "Why VaultSpark" section
+- [x] **[SIL:2⛔] Theme picker compact mode at 641–980px** — added `.theme-picker-label { display:none }` + `.theme-picker-arrow { display:none }` to `@media (max-width:980px)` block in `assets/style.css` (S57)
+- [x] **[SIL:2⛔] CF Worker auto-redeploy via GitHub Actions** — created `.github/workflows/cloudflare-worker-deploy.yml`; triggers on `cloudflare/**` changes on main push; uses `npx wrangler@3 deploy --env production` with `CF_WORKER_API_TOKEN` secret (S57)
+- [x] **[S55 follow-up] Studio About enhancement** — added "Why VaultSpark" founder story section to `/studio/index.html`; personal narrative with origin story, philosophy blockquote, vault pressure metaphor; inserted before "Who Runs The Vault" section (S57)
 - [x] **[S55 follow-up] Portal daily loop `VSPublic` verify** — confirmed ✅ `supabase-public.js` assigns `window.VSPublic` at line 77; loaded in `<head>` without defer; available before portal JS at end of `<body>`
-- [ ] **[SIL] Genesis badge slots-remaining counter** — add live "X/100 spots claimed" counter to `/vaultsparked/` FAQ answer for genesis badge; query `member_achievements` excluding studio account IDs; first step: add `<span id="genesis-slots-left">` to FAQ + VSPublic query. High probability.
+- [x] **[SIL] Genesis badge slots-remaining counter** — added `<span id="genesis-slots-left">` to `/vaultsparked/` FAQ answer; created `/vaultsparked/vaultsparked.js` with live counter logic (3-tier colour: gold/orange/crimson); 2-step PostgREST query excludes 4 studio UUIDs from count; script loads as `defer` (S57)
+- [x] **[SIL] Vault Wall opt-in toggle (Phase 1)** — created `supabase/migrations/supabase-phase59-public-profile.sql` (adds `public_profile boolean DEFAULT true`); updated vault-wall queries to filter `.eq('public_profile',true)`; fixed broken `.count().head()` → `.count().get()` bug (S57); **[HAR] run db-migrate workflow to apply migration**
+- [x] **[SIL] Achievement SVG icons — VaultSparked + Forge Master** — created `assets/images/badges/vaultsparked.svg` (purple crystal gem, violet gradient, gold crown spark) and `assets/images/badges/forge-master.svg` (anvil + spark burst, crimson ring, ember particles) (S57)
+
+- [ ] **[SIL] Portal settings: public_profile toggle** — add "Show my profile on the Vault Wall" toggle to portal settings page; first step: add toggle HTML to settings privacy section + update handler to PATCH `public_profile`. Requires phase59 migration live.
+- [ ] **[SIL] Wire achievement SVG icons to portal** — update `portal.js` achievement definitions for `vaultsparked` and `forge_master` slugs to use SVG paths; renderer already supports image icons (S56). First step: grep achievement slug defs in portal.js.
+- [ ] **[SIL] Vault Wall: verify post-migration** — after phase59 HAR done, smoke test vault-wall in incognito to confirm `public_profile` filter working correctly.
 
 ## Next
 
@@ -92,6 +98,8 @@ Last updated: 2026-04-12 (Session 56)
 - [x] **[DB] Founding Vault Badge** — migration applied 2026-04-12 via Supabase CLI; 4 founding members badged: DreadSpike, OneKingdom, VaultSpark, Voidfall ✅
 - [x] **[CF-SECRETS]** Add `CF_API_TOKEN` (Zone/Cache Purge) and `CF_ZONE_ID` secrets to GitHub repo → Settings → Secrets; enables auto cache purge workflow added S53 ✅ (S54)
 - [x] **[CSP-VERIFY]** After S53 deploy: open vault-member/index.html in DevTools console (incognito); confirm zero `Content-Security-Policy` errors ✅ (S54 — verified; remaining Cloudflare edge-injected inline scripts are platform-generated, unfixable with static hashes, accepted as limitation)
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Needs Cloudflare API token with **Workers Scripts: Edit** + **Zone: Read** permissions (different from `CF_API_TOKEN` which is cache-purge only). Once set, every `cloudflare/**` push auto-deploys the Worker.
+- [ ] **[DB] Phase59 public_profile migration** — run db-migrate workflow or `supabase db push` to apply `supabase-phase59-public-profile.sql`; adds `public_profile boolean DEFAULT true` to `vault_members`. Safe additive change; existing members stay opted-in. Required before portal toggle + vault-wall filter go live.
 
 ---
 

@@ -151,6 +151,9 @@
     <!-- Community Stats -->
     <section style="padding:0 0 3rem;" aria-label="Community statistics">
       <div class="container">
+        <div class="vw-optin-notice" role="note">
+          This wall shows members who have opted in to public profiles. To control your visibility, visit <a href="/vault-member/?tab=settings" style="color:var(--gold);">Portal → Settings</a>.
+        </div>
         <div class="vw-stats" id="vw-stats">
           <div class="vw-stat"><strong id="stat-total">—</strong><span>Vault Members</span></div>
           <div class="vw-stat"><strong id="stat-week">—</strong><span>Joined this week</span></div>
@@ -319,10 +322,10 @@
 
         // Fetch top members + total count + recent
         var [topRes, countRes, recentRes, challengeRes] = await Promise.allSettled([
-          VSPublic.from('vault_members').select('username,rank_title,vault_points,created_at').order('vault_points',false).limit(20).get(),
-          VSPublic.from('vault_members').select('id').count().head(),
-          VSPublic.from('vault_members').select('username,rank_title,created_at').order('created_at',false).limit(12).get(),
-          VSPublic.from('challenge_submissions').select('id').count().head()
+          VSPublic.from('vault_members').select('username,rank_title,vault_points,created_at').eq('public_profile',true).order('vault_points',false).limit(20).get(),
+          VSPublic.from('vault_members').select('id').eq('public_profile',true).count().get(),
+          VSPublic.from('vault_members').select('username,rank_title,created_at').eq('public_profile',true).order('created_at',false).limit(12).get(),
+          VSPublic.from('challenge_submissions').select('id').count().get()
         ]);
 
         // Stats

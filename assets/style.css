@@ -1589,6 +1589,10 @@ body.light-mode .text-white { color: var(--text); }
   .nav-right .button.button-sm { display: none; }
   .nav-right .nav-icon-link { display: none; }
 
+  /* Compact theme picker at 641–980px — swatch dot only, no label or arrow */
+  .theme-picker-label { display: none; }
+  .theme-picker-arrow { display: none; }
+
   /* ── Mobile menu overlay ── */
   @keyframes nav-enter {
     from { opacity: 0; transform: translateY(-8px); }
