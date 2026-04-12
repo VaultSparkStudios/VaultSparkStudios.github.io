@@ -47,6 +47,10 @@ Last updated: 2026-04-11 (Session 53)
 
 ---
 
+## Deferred to Project Agents
+
+- cross-repo item owned by another repo agent:
+
 ## Blocked
 
 *(none)*
