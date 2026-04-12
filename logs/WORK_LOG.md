@@ -1,5 +1,16 @@
 # Work Log
 
+## 2026-04-12 — Session 56
+
+- supabase: phase57 migration applied via Supabase CLI (`supabase db query --linked`) — 4 studio accounts awarded Genesis Vault Member badge + 500 XP (DreadSpike, OneKingdom, VaultSpark, Voidfall)
+- supabase/migrations/supabase-phase58-genesis-vault-rename.sql: created and applied — renamed achievement slug/name/icon; `maybe_award_founding_badge` dropped and replaced with `maybe_award_genesis_badge(uuid)` excluding studio owner UUIDs from 100-slot rank count; prefs sentinel updated; point_events reason updated
+- assets/images/badges/genesis-vault-member.svg: created — 8-pointed star burst badge, dark navy background, gold `#f5a623` border ring + inner vault ring, radial gradients, void center + core dot; 64×64 viewBox
+- vault-member/portal.js:4568 + portal-settings.js:333: achievement icon renderer updated — icons starting with `/` render as `<img width="32" height="32">` instead of emoji text
+- vaultsparked/index.html: comparison table cell + FAQ entry updated from "Founding Vault Member" to "Genesis Vault Member" with inline SVG badge img
+- studio-pulse/index.html: pulse-item updated to "Genesis Vault Member Badge" · "S58 · Live"
+- context/: CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, PROJECT_STATUS, SELF_IMPROVEMENT_LOOP, WORK_LOG updated
+- SIL: 400/500 · Velocity: 0 (board) / 3 (practical) · Debt: →
+
 ## 2026-04-12 — Session 55
 
 - assets/theme-toggle.js: removed `theme-option` class from tile button className (was `.theme-tile theme-option`); `.theme-option { display:none }` legacy CSS rule was hiding all theme tiles; theme picker is now visible and functional

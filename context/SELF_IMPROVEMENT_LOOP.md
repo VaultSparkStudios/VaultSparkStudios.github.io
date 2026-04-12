@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▆▆▆▅█ (22 entries)
-Avgs — 3: 436.7 | 5: 432.0 | 10: 431.0 | all: 419.8
-  └ 3-session: Dev 87 | Align 91 | Momentum 94 | Engage 88 | Process 85
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-12 | Session 55 | Total: 455/500 | Velocity: +34 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▆▆▇▆
+Avgs — 3: 425.3 | 5: 427.8 | 10: 430.4 | all: 419.0
+  └ 3-session: Dev 84.3 | Align 83.7 | Momentum 85.0 | Engage 85.0 | Process 83.3
+Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~0.3 sessions ⚠ LOW — add items to Now before next session  |  Intent rate: 100% (last 5)
+Last session: 2026-04-12 | Session 56 | Total: 400/500 | Velocity: 0 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -564,3 +564,27 @@ Avgs — 3: 436.7 | 5: 432.0 | 10: 431.0 | all: 419.8
 3. **Vault Wall "Opt-in public profile" toggle in portal settings** — add a `public_profile` boolean to vault_members that Vault Wall reads; members who want to appear should opt in explicitly. Currently the wall shows all members. Low urgency but important for privacy posture.
 
 **Committed to TASK_BOARD:** [S55 follow-up] Studio About enhancement · [S55 follow-up] Portal daily loop VSPublic verify
+
+## 2026-04-12 — Session 56 | Total: 400/500 | Velocity: 0 | Debt: →
+Avgs — 3: 425.3 | 5: 427.8 | 10: 430.4 | all: 419.0
+  └ 3-session: Dev 84.3 | Align 83.7 | Momentum 85.0 | Engage 85.0 | Process 83.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 82 | ↓ | Migration verified; SVG icon created; portal renderer extended for image icons; no CI changes |
+| Creative Alignment | 80 | ↓ | On-brand Genesis name chosen via scored comparison; custom SVG aligns with premium feel; CDR captured |
+| Momentum | 76 | ↓ | Board velocity 0; 1 major blocker cleared (phase57 DB); rename was user-directed not board-planned |
+| Engagement | 81 | ↓ | User gave explicit creative direction (naming + slot exclusion); executed precisely and rapidly |
+| Process Quality | 81 | ↓ | Full closeout; all context files updated; CDR + DECISIONS updated; ops scripts unavailable (not in this repo) |
+| **Total** | **400/500** | ↓ | Short follow-up session |
+
+**Top win:** Studio accounts correctly excluded from 100 public slots — when real members join, all 100 slots are available; the badge's scarcity is now genuine
+**Top gap:** Two SIL:2⛔ items still unactioned (compact mode + CF Worker) — must be resolved in S57 or they've been skipped 3 sessions
+**Intent outcome:** Achieved — all user-requested work done and shipped
+
+**Brainstorm**
+1. **Genesis badge slots-remaining counter** — live "X/100 spots claimed" counter in `/vaultsparked/` FAQ answer; query `member_achievements` WHERE slug = 'genesis_vault_member' AND member NOT IN studio IDs; first step: add `<span id="genesis-slots-left">` + 3-line VSPublic query. High probability.
+2. **Achievement SVG icons for VaultSparked + Forge Master** — extend the SVG badge system beyond Genesis; VaultSparked could be a purple crystal/gem SVG; Forge Master an anvil-spark design; first step: design VaultSparked SVG. Medium probability.
+3. **Vault Wall opt-in toggle** — add `public_profile` boolean to `vault_members`; Vault Wall reads it so only consenting members are shown; critical for privacy posture as membership grows; first step: write DB migration adding the column with default `true`. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Genesis badge slots-remaining counter

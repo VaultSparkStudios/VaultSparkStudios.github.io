@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-12 (Session 55)
+Last updated: 2026-04-12 (Session 56)
 
 ---
 
@@ -30,10 +30,11 @@ Last updated: 2026-04-12 (Session 55)
 - [x] **[S55] Game page conversion** — social share + "More From the Vault" section added to Call of Doodie page
 - [x] **[S55] Nav propagated** — 75 pages updated with canonical nav/footer (new pages included)
 
-- [ ] **[SIL] Theme picker compact mode at 641–980px** — hide `.theme-picker-label` and `.theme-picker-arrow` at 641–980px so only the swatch dot shows; reduces nav crowding at tablet widths where picker now shows. First step: add media query rule to `assets/style.css`.
-- [ ] **[SIL] CF Worker auto-redeploy via GitHub Actions** — add Wrangler deploy step to a workflow so Worker CSP updates deploy automatically on push to main. First step: add `wrangler.toml` + deploy job to `.github/workflows/`.
+- [ ] **[SIL:2⛔] Theme picker compact mode at 641–980px** — hide `.theme-picker-label` and `.theme-picker-arrow` at 641–980px so only the swatch dot shows; reduces nav crowding at tablet widths where picker now shows. First step: add media query rule to `assets/style.css`. **MUST action next session.**
+- [ ] **[SIL:2⛔] CF Worker auto-redeploy via GitHub Actions** — add Wrangler deploy step to a workflow so Worker CSP updates deploy automatically on push to main. First step: add `wrangler.toml` + deploy job to `.github/workflows/`. **MUST action next session.**
 - [ ] **[S55 follow-up] Studio About enhancement** — enhance `/studio/index.html` founder story section; add personal story narrative, timeline depth, "Why VaultSpark" section
-- [ ] **[S55 follow-up] Portal daily loop `VSPublic` verify** — confirm `initDailyLoopWidget` has access to `VSPublic` on vault-member page (page loads `supabase-public.js` but need to verify scope)
+- [x] **[S55 follow-up] Portal daily loop `VSPublic` verify** — confirmed ✅ `supabase-public.js` assigns `window.VSPublic` at line 77; loaded in `<head>` without defer; available before portal JS at end of `<body>`
+- [ ] **[SIL] Genesis badge slots-remaining counter** — add live "X/100 spots claimed" counter to `/vaultsparked/` FAQ answer for genesis badge; query `member_achievements` excluding studio account IDs; first step: add `<span id="genesis-slots-left">` to FAQ + VSPublic query. High probability.
 
 ## Next
 

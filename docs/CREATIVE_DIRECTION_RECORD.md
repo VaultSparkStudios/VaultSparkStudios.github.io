@@ -8,6 +8,16 @@ Boundary:
 
 ## Entries
 
+### 2026-04-12 — Genesis Vault Member badge naming + studio account exclusion (S56)
+
+- Category: Brand / Legal / Community
+- Human input: (1) "Founder is not what it should be called — that is confusing and I want no legal confusion either"; (2) "remove my accounts from the first 100 but add the same badge to them"; (3) Asked for name options, scored Genesis vs Pioneer, chose Genesis.
+- Area affected: `supabase/migrations/`, `assets/images/badges/`, `vault-member/portal.js`, `vaultsparked/index.html`
+- Required direction:
+  1. Badge must not use "Founding" or "Founder" in its name — creates legal ambiguity; the standard is an evocative brand name with no ownership connotation
+  2. Studio owner test accounts must not consume public member slots — the 100 slots are explicitly for public members; studio accounts hold the badge separately and are hardcoded as excluded in the award function
+  3. Genesis chosen over Pioneer — Genesis is more distinctive, community-flex worthy, and brand-native; Pioneer is too generic and used widely across gaming platforms
+
 ### 2026-04-08 — Theme selector tile grid direction (S52)
 
 - Category: UX / Visual Quality / Interaction Design

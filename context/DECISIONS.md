@@ -2,6 +2,13 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-12 — Genesis Vault Member: badge naming and slot ownership (S56)
+
+- Status: active
+- Decision: The first-100 achievement badge is named "Genesis Vault Member" (slug: `genesis_vault_member`). "Founding Vault Member" was rejected to avoid legal ambiguity with the term "founder" (corporate/ownership connotations). "Pioneer" was scored and rejected as generic and potentially dated. "Genesis" won on distinctiveness, brand fit, longevity, and community flex factor.
+- Slot ownership: Studio owner accounts (DreadSpike, OneKingdom, VaultSpark, Voidfall) hold the badge permanently but do not consume any of the 100 public slots. The `maybe_award_genesis_badge()` function excludes those UUIDs from the rank count, ensuring all 100 slots are reserved for public members.
+- Why it matters: Protects the studio legally; makes the badge more memorable and community-meaningful; ensures public members feel the full weight of the limited slot count.
+
 ### 2026-04-06 — Light mode remains token-driven in the shared design system
 
 - Status: active

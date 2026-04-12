@@ -1,47 +1,30 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-12 (Session 55)
+Last updated: 2026-04-12 (Session 56)
 
-## Session Intent: Session 55
-10-item website improvement session: press kit, studio pulse, vault wall, invite/referral page, social proof strip, portal daily loop, founding badge, game conversion, theme bug fix.
-**Outcome: Achieved (9/10 + theme bug)** — All items shipped. Studio About enhancement deferred to next session.
+## Session Intent: Session 56
+Continuation of S55 — apply pending DB migration, update task list, then rename "Founding Vault Member" badge to "Genesis Vault Member" with custom SVG icon and exclude studio accounts from 100 public slots.
+**Outcome: Achieved** — All work shipped and pushed.
 
-## Where We Left Off (Session 55 — 2026-04-12)
+## Where We Left Off (Session 56 — 2026-04-12)
 
-### Theme bug fixed
-- `theme-toggle.js:399` — removed `theme-option` class from tile buttons; `.theme-option { display:none }` legacy CSS rule was hiding all tiles; dropdown showed "CHOOSE THEME" label but no options
+- Shipped: DB migration applied (phase57+58), Genesis Vault Member badge (rename + SVG + DB), portal image-icon renderer
+- Tests: N/A — no automated test run
+- Deploy: deployed to production (pushed `7b8192d`)
 
-### New pages (all have canonical nav/footer, propagated)
-- `/press/` — press kit: key facts, studio bio, logo grid, game catalog, membership stats, press contact
-- `/studio-pulse/` — Now/Next/Shipped transparency board, 8-game status grid, studio health panel
-- `/vault-wall/` — live member recognition wall (Supabase: rank distribution bar, podium top-3, leaderboard #4-20, recently joined grid)
-- `/invite/` — referral program UX (copy link, social share X/Reddit/Discord, referral stats, rewards cards, top inviters leaderboard; `referral_count` computed dynamically from `vault_members WHERE referred_by = user_id`)
-
-### Homepage enhancements
-- Social proof strip between hero and milestones — live member count, VaultSparked count, challenge completions, rank distribution bar (9-segment, live from Supabase)
-
-### Portal enhancements
-- Daily loop widget (`#daily-loop-widget`) added above the Complete Your Vault checklist on dashboard tab — shows login streak + active challenge title + login bonus chip
-- `initDailyLoopWidget(member)` in `portal-dashboard.js`; called from `portal.js` at 800ms delay alongside `checkDailyLogin`
-- **Note**: widget uses `window.VSPublic` — vault-member page loads `supabase-public.js` but scope needs verification in next session
-
-### Membership enhancements
-- `/vaultsparked/` comparison table — added Founding Vault Member badge row, Vault Wall recognition row, Referral bonus XP row
-- FAQ — added Founding Vault Member FAQ entry explaining badge
-
-### Game pages
-- Call of Doodie — social share strip + "More From the Vault" section
-
-### Database migration (pending human action)
-- `supabase/migrations/supabase-phase57-founding-vault-badge.sql` — awards 🏛️ Founding Vault Member + 500 XP to first 100 members by created_at; `maybe_award_founding_badge(uuid)` RPC for real-time awarding; idempotent via unique constraint + prefs sentinel
+### Genesis Vault Member badge (phase57 + phase58)
+- Phase57 migration applied 2026-04-12 — 4 founding members awarded: DreadSpike, OneKingdom, VaultSpark, Voidfall (all studio owner accounts)
+- Phase58: renamed `founding_vault_member` → `genesis_vault_member`; name → "Genesis Vault Member"; icon → `/assets/images/badges/genesis-vault-member.svg`
+- Custom SVG: `assets/images/badges/genesis-vault-member.svg` — 8-pointed star burst on dark navy `#0a0e1a`, gold `#f5a623` border ring + inner vault ring detail, void center with core spark dot; designed at 64×64 with radial gradients
+- Studio owner accounts (DreadSpike, OneKingdom, VaultSpark, Voidfall) hold the badge but do NOT consume public slots; `maybe_award_genesis_badge()` ranks only among non-studio accounts; **0 public slots consumed — all 100 open**
+- Portal achievement renderer updated: both `portal.js:4568` and `portal-settings.js:333` now check `def.icon.startsWith('/')` → render `<img>` instead of emoji text
+- `vaultsparked/index.html` and `studio-pulse/index.html` updated to Genesis naming
 
 ---
 
 ## Open Blockers
 
-- **[DB] Phase 57 migration** — `supabase-phase57-founding-vault-badge.sql` needs to be run in Supabase dashboard to award the founding badge to existing first-100 members
-- **Portal daily loop `VSPublic` scope** — ✅ Verified: `supabase-public.js` explicitly assigns `window.VSPublic` at line 77; loaded in `<head>` (not deferred), so it's available before portal JS at end of `<body>`. No issue.
-- **Studio About enhancement** — `/studio/index.html` founder story section enhancement deferred
+*(none)*
 
 ## Human Action Required
 
@@ -52,9 +35,9 @@ Last updated: 2026-04-12 (Session 55)
 
 ## Recommended First Action Next Session
 
-1. **[SIL] Theme picker compact mode at 641–980px** — hide label + arrow at tablet widths (Now queue, first item)
-2. **[SIL] CF Worker auto-redeploy via GitHub Actions** — add Wrangler deploy step to workflow (Now queue, second item)
-3. **[HAR] Redeploy Cloudflare Worker** — `wrangler deploy` to activate S53 hash-based CSP in Worker
+1. **[SIL:2⛔] Theme picker compact mode at 641–980px** — MUST action; add `@media (max-width:980px)` rule hiding `.theme-picker-label` + `.theme-picker-arrow` in `assets/style.css`
+2. **[SIL:2⛔] CF Worker auto-redeploy via GitHub Actions** — MUST action; add `wrangler.toml` + deploy job to `.github/workflows/`
+3. **[SIL] Genesis badge slots-remaining counter** — new; add live counter to `/vaultsparked/` FAQ showing X/100 spots claimed
 
 ---
 

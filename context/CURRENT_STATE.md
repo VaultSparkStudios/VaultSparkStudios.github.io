@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-12 (Session 55)
+- Date: 2026-04-12 (Session 56)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S55 major feature session — 7 new pages/features shipped; theme picker bug fixed; social proof layer, founding badge, daily loop widget, game conversion enhancements. S54 bug fixes (QR code CDN 404 fixed @1.5.3→@1.5.0, theme picker CSS breakpoint fix 980px→640px, tileColor field). S53 CSP hardening.
+- Repo posture: S56 follow-up — Genesis Vault Member badge (renamed from Founding), custom SVG icon, portal renderer image-icon support, studio accounts excluded from 100 public slots, phase57+58 DB migrations applied. S55 major feature session — 7 new pages/features shipped; theme picker bug fixed; social proof layer, genesis badge, daily loop widget, game conversion enhancements. S54 bug fixes.
 
 ## What exists
 
@@ -64,18 +64,18 @@
 - **Lighthouse** — CI enforced
 - **axe-core** — CI enforced
 
-## New pages and features shipped (S55)
+## New pages and features shipped (S55–S56)
 
 - **`/press/`** — full press kit with key facts, studio bio, logo grid, game catalog, press contact
 - **`/studio-pulse/`** — public dev transparency page (Now/Next/Shipped board, 8 game status grid, studio health)
 - **`/vault-wall/`** — public member recognition wall (live Supabase: rank distribution bar, podium, leaderboard #4-20, recently joined)
 - **`/invite/`** — referral program UX (referral link copy/share, stats, rewards, top inviters leaderboard)
 - **Social proof strip on homepage** — live member count, VaultSparked count, challenges count, rank distribution bar (9 segments)
-- **Daily loop widget in portal** — pinned banner showing login streak + active challenge title + bonus chip (shows above dash panes)
-- **`supabase/migrations/supabase-phase57-founding-vault-badge.sql`** — awards 🏛️ Founding Vault Member badge + 500 XP to first 100 members; `maybe_award_founding_badge()` RPC for real-time awarding
-- **Founding badge in `/vaultsparked/`** — added to comparison table + FAQ entry
+- **Daily loop widget in portal** — pinned banner showing login streak + active challenge title + bonus chip (shows above dash panes); `window.VSPublic` scope verified ✅
+- **Genesis Vault Member badge** (S56) — renamed from Founding Vault Member; slug `genesis_vault_member`; custom SVG icon (`assets/images/badges/genesis-vault-member.svg` — 8-pointed star burst, dark navy + gold); portal renderer supports image icons (path-based icons render as `<img>`); studio owner accounts excluded from 100 public slots via `maybe_award_genesis_badge()`; phase57+58 migrations applied; 0 public slots consumed
+- **Achievement image icon renderer** — `portal.js` + `portal-settings.js` now check if `def.icon` starts with `/` and render `<img>` instead of emoji; future-proof for all achievements
 - **Call of Doodie game page** — added social share + "More From the Vault" conversion section
-- **Theme picker bug fix** — removed `theme-option` class from tile buttons in `theme-toggle.js:399`; `.theme-option { display:none }` legacy rule was hiding all tiles
+- **Theme picker bug fix** — removed `theme-option` class from tile buttons in `theme-toggle.js:399`
 
 ## Known gaps
 
@@ -84,8 +84,7 @@
 - beacon.env not configured (Active Session Beacon inactive)
 - Theme persistence Playwright spec updated (S46) — `#theme-select` replaced with `#theme-picker-btn` + `.theme-option[data-theme].active`; Firefox/WebKit not installed locally; full cross-browser run not verified
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
-- IGNIS score: 47,308/100,000 · Tier: FORGE · 82.1% through tier (rescored 2026-04-07 S50) · delta: +952
-- **[DB] Founding Vault badge migration** — `supabase-phase57-founding-vault-badge.sql` needs to be run in Supabase dashboard
+- IGNIS score: 47,308/100,000 · Tier: FORGE · 82.1% through tier (rescored 2026-04-07 S50) · delta: +952 (not refreshed S56 — minor session)
 - **Studio About (`/studio/`) enhancement** — founder story section pending
-- **Portal daily challenges** — `initDailyLoopWidget` requires `VSPublic` (public Supabase client) to be available on vault-member page; verify wire-up
-- **Theme picker compact mode at 641–980px** — SIL item still pending
+- **Theme picker compact mode at 641–980px** — SIL:2⛔ — must action next session
+- **CF Worker auto-redeploy** — SIL:2⛔ — must action next session
