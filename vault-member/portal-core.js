@@ -464,3 +464,155 @@
       });
     }
 
+    // ── DOM event wiring (replaces all inline event handlers for CSP 'unsafe-inline' removal) ──
+    (function () {
+      function on(id, evt, fn) {
+        var el = document.getElementById(id);
+        if (el) el.addEventListener(evt, fn);
+      }
+      function onQ(selector, evt, fn) {
+        document.querySelectorAll(selector).forEach(function (el) {
+          el.addEventListener(evt, fn);
+        });
+      }
+
+      // ── Auth tabs ──────────────────────────────────────────────────────────
+      on('tab-register', 'click', function () { switchTab('register'); });
+      on('tab-login',    'click', function () { switchTab('login'); });
+
+      // ── OAuth buttons ──────────────────────────────────────────────────────
+      on('oauth-google-register',  'click', function () { oauthSignIn('google'); });
+      on('oauth-discord-register', 'click', function () { oauthSignIn('discord'); });
+      on('oauth-google-login',     'click', function () { oauthSignIn('google'); });
+      on('oauth-discord-login',    'click', function () { oauthSignIn('discord'); });
+
+      // ── Auth panel crosslinks ──────────────────────────────────────────────
+      on('switch-to-login-link',    'click', function (e) { e.preventDefault(); switchTab('login'); });
+      on('switch-to-register-link', 'click', function (e) { e.preventDefault(); switchTab('register'); });
+      on('forgot-link',             'click', function (e) { e.preventDefault(); switchTab('forgot'); });
+      on('back-to-login-link',      'click', function (e) { e.preventDefault(); switchTab('login'); });
+
+      // ── Notification bell ──────────────────────────────────────────────────
+      on('notif-bell-btn', 'click', function () { if (typeof toggleNotifPanel === 'function') toggleNotifPanel(); });
+
+      // ── Nav account dropdown menu ──────────────────────────────────────────
+      on('nav-menu-dashboard-btn', 'click', function () { switchDashTab('dashboard'); closeNavDropdown(); });
+      on('nav-menu-settings-btn',  'click', function () { switchDashTab('settings');  closeNavDropdown(); });
+      on('nav-admin-link',         'click', function () { switchDashTab('admin');     closeNavDropdown(); });
+      on('nav-menu-signout-btn',   'click', function () { VS.logout(); });
+
+      // ── Profile actions ────────────────────────────────────────────────────
+      on('vault-card-btn', 'click', function () { VS.showCardModal(); });
+      on('signout-btn',    'click', function () { VS.logout(); });
+
+      // ── Dashboard tabs (event delegation on .dash-tab) ─────────────────────
+      onQ('.dash-tab', 'click', function () {
+        var which = this.id.replace('tab-dash-', '');
+        if (which) switchDashTab(which);
+      });
+
+      // ── Studio Pulse notice ────────────────────────────────────────────────
+      on('pulseNotice', 'click', function () { this.style.display = 'none'; });
+      on('pulse-notice-close', 'click', function (e) {
+        e.stopPropagation();
+        var notice = document.getElementById('pulseNotice');
+        if (notice) notice.style.display = 'none';
+      });
+
+      // ── Complete Your Vault dismiss ────────────────────────────────────────
+      on('cvault-dismiss-btn', 'click', function () {
+        localStorage.setItem('vs_cvault_dismissed', '1');
+        var panel = document.getElementById('cvault-panel');
+        if (panel) panel.style.display = 'none';
+      });
+
+      // ── Vault stats ────────────────────────────────────────────────────────
+      on('pts-breakdown-btn', 'click', function () { if (typeof showPtsBreakdown === 'function') showPtsBreakdown(); });
+
+      // ── Referral ───────────────────────────────────────────────────────────
+      on('copyReferralBtn', 'click', function () {
+        var link = document.getElementById('referralLink');
+        if (!link) return;
+        var self = this;
+        navigator.clipboard.writeText(link.textContent).then(function () {
+          self.textContent = 'Copied!';
+          setTimeout(function () { self.textContent = 'Copy'; }, 2000);
+        });
+      });
+      on('referral-qr-btn', 'click', function () { if (typeof showReferralQR === 'function') showReferralQR(); });
+
+      // ── Gift ───────────────────────────────────────────────────────────────
+      on('gift-pts-btn',  'click', function () { if (typeof giftPoints === 'function') giftPoints(); });
+      on('gift-sub-btn',  'click', function () { if (typeof startGiftSubCheckout === 'function') startGiftSubCheckout(); });
+
+      // ── VaultSparked upgrade ───────────────────────────────────────────────
+      on('vaultsparked-upgrade-btn', 'click', function () { VS.startVaultSparkedCheckout(); });
+
+      // ── Claim Center ───────────────────────────────────────────────────────
+      on('open-treasury-btn',  'click', function () { switchDashTab('treasury'); });
+      on('view-milestones-btn','click', function () {
+        var el = document.getElementById('referral-milestones-panel');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+      on('view-progress-btn',    'click', function () { switchDashTab('dashboard'); });
+      on('open-member-card-btn', 'click', function () { VS.showCardModal(); });
+
+      // ── Classified Archive ─────────────────────────────────────────────────
+      on('archive-bookmarks-toggle', 'click', function () { if (typeof toggleArchiveBookmarks === 'function') toggleArchiveBookmarks(); });
+
+      // ── Vault Challenges ───────────────────────────────────────────────────
+      on('challenge-history-toggle', 'click', function () { if (typeof toggleChallengeHistory === 'function') toggleChallengeHistory(this); });
+
+      // ── Weekly recap dismiss ───────────────────────────────────────────────
+      var weeklyDismiss = document.querySelector('.weekly-recap-dismiss');
+      if (weeklyDismiss) weeklyDismiss.addEventListener('click', function () { if (typeof dismissWeeklyRecap === 'function') dismissWeeklyRecap(); });
+
+      // ── Settings ───────────────────────────────────────────────────────────
+      on('invite-copy-btn',         'click',  function () { if (typeof copyInviteCode === 'function') copyInviteCode(); });
+      on('settings-save-btn',       'click',  function () { VS.saveSettings(); });
+      on('open-customer-portal-btn','click',  function () { if (typeof VS.openCustomerPortal === 'function') VS.openCustomerPortal(); });
+      on('pw-reset-btn',            'click',  function () { if (typeof sendPasswordReset === 'function') sendPasswordReset(); });
+      on('export-data-btn',         'click',  function () { if (typeof exportMyData === 'function') exportMyData(); });
+      on('delete-account-btn',      'click',  function () { if (typeof requestDeleteAccount === 'function') requestDeleteAccount(); });
+
+      // ── Notification preferences ───────────────────────────────────────────
+      on('toggle-updates',    'change', function () { VS.savePrefs(); });
+      on('toggle-lore',       'change', function () { VS.savePrefs(); });
+      on('toggle-access',     'change', function () { VS.savePrefs(); });
+      on('toggle-push',       'change', function (e) { if (typeof togglePushNotifications === 'function') togglePushNotifications(e.target.checked); });
+      on('toggle-newsletter', 'change', function (e) { if (typeof toggleNewsletter === 'function') toggleNewsletter(e.target.checked); });
+
+      // ── Admin panel ────────────────────────────────────────────────────────
+      on('admin-pulse-btn',   'click', function () { if (typeof adminPostPulse === 'function') adminPostPulse(); });
+      on('admin-key-btn',     'click', function () { if (typeof adminPostBetaKey === 'function') adminPostBetaKey(); });
+      on('admin-file-btn',    'click', function () { if (typeof adminPostFile === 'function') adminPostFile(); });
+      on('load-analytics-btn','click', function () { if (typeof loadChallengeAnalytics === 'function') loadChallengeAnalytics(); });
+      on('admin-csv-btn',     'click', function () { if (typeof exportMemberCSV === 'function') exportMemberCSV(); });
+      on('admin-push-test-btn','click',function () { if (typeof adminTestPush === 'function') adminTestPush(); });
+      on('fanart-pending-btn', 'click',function () { if (typeof loadFanArtQueue === 'function') loadFanArtQueue('pending'); });
+      on('fanart-approved-btn','click',function () { if (typeof loadFanArtQueue === 'function') loadFanArtQueue('approved'); });
+      on('fanart-rejected-btn','click',function () { if (typeof loadFanArtQueue === 'function') loadFanArtQueue('rejected'); });
+
+      // ── Rank-Up ceremony overlay ───────────────────────────────────────────
+      on('ceremony-overlay',  'click', function () { if (typeof dismissCeremony === 'function') dismissCeremony(); });
+      on('ceremony-dismiss-btn','click',function () { if (typeof dismissCeremony === 'function') dismissCeremony(); });
+      var ceremonyCard = document.querySelector('.ceremony-card');
+      if (ceremonyCard) ceremonyCard.addEventListener('click', function (e) { e.stopPropagation(); });
+
+      // ── Referral QR modal ──────────────────────────────────────────────────
+      on('qr-modal-overlay', 'click', function () { if (typeof dismissQRModal === 'function') dismissQRModal(); });
+      var qrModal = document.querySelector('.qr-modal');
+      if (qrModal) qrModal.addEventListener('click', function (e) { e.stopPropagation(); });
+      var qrClose = document.querySelector('.qr-modal-close');
+      if (qrClose) qrClose.addEventListener('click', function () { if (typeof dismissQRModal === 'function') dismissQRModal(); });
+
+      // ── Vault Member Card modal ────────────────────────────────────────────
+      on('card-modal-overlay', 'click', function () { if (typeof dismissCardModal === 'function') dismissCardModal(); });
+      var cardModal = document.querySelector('.card-modal');
+      if (cardModal) cardModal.addEventListener('click', function (e) { e.stopPropagation(); });
+      on('card-download-btn',  'click', function () { VS.downloadCard(); });
+      on('card-share-btn',     'click', function () { VS.shareCard(); });
+      on('card-copy-link-btn', 'click', function () { VS.copyInviteLink(); });
+      on('card-modal-close-btn','click',function () { if (typeof dismissCardModal === 'function') dismissCardModal(); });
+    })();
+

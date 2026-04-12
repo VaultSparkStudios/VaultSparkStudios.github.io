@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-08 (Session 52)
+Last updated: 2026-04-11 (Session 53)
 
 ---
 
@@ -33,10 +33,10 @@ Last updated: 2026-04-08 (Session 52)
 
 - [x] **[SIL] Voidfall subscription GA4** — `form_submit` gtag event added to Kit subscribe success handler in `universe/voidfall/index.html` (S51)
 - [x] **[SIL] Voidfall Fragment 004** — 4th Transmission Archive card added; named thing, the answer, fully redacted (S51)
-- [ ] **[SIL] DreadSpike signal log entry** — add lore fragment or journal post for DreadSpike universe page (S51 brainstorm — skipped 2 sessions, escalate)
-- [ ] **[SIL] Voidfall entity 4 hint** — one-line atmospheric microcopy below The Crossed row hinting at unclassified 4th entity (S51 brainstorm — skipped 2 sessions, escalate)
-- [ ] **[SIL] Remove inline onclick handlers from vault-member/index.html** — replace `onclick="switchTab()"`, `onclick="oauthSignIn()"` etc. with addEventListener calls in portal-core.js; eliminates need for `'unsafe-inline'` in Worker CSP (S52 brainstorm)
-- [ ] **[SIL] Cloudflare cache purge on deploy** — add automatic CF cache purge to GitHub Actions push workflow using stored CF credentials; avoids manual purge after every deploy (S52 brainstorm)
+- [x] **[SIL] DreadSpike signal log entry** — intercept-transmission card added to DreadSpike universe page (S53)
+- [x] **[SIL] Voidfall entity 4 hint** — atmospheric one-liner below The Crossed row hinting at unclassified 4th entity (S53)
+- [x] **[SIL] Remove inline onclick handlers from vault-member/index.html** — all onclick/onchange/onmouseenter removed; portal-init.js extracted; portal-core.js event wiring complete; CSP updated to SHA-256 hashes; 85 pages propagated (S53)
+- [x] **[SIL] Cloudflare cache purge on deploy** — `.github/workflows/cloudflare-cache-purge.yml` created; triggers on push to main; uses CF_API_TOKEN + CF_ZONE_ID secrets (S53)
 
 ## Next (prior)
 
@@ -70,11 +70,14 @@ Last updated: 2026-04-08 (Session 52)
 - [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
 - [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
 - [ ] **[WEB3FORMS-KEYS]** Create 3 separate keys in Web3Forms dashboard (join/, contact/, data-deletion/) for per-form lead tracking [low priority]
+- [ ] **[CF-SECRETS]** Add `CF_API_TOKEN` (Zone/Cache Purge) and `CF_ZONE_ID` secrets to GitHub repo → Settings → Secrets; enables auto cache purge workflow added S53
+- [ ] **[CSP-VERIFY]** After S53 deploy: open vault-member/index.html in DevTools console (incognito); confirm zero `Content-Security-Policy` errors; if violations appear, identify missed inline scripts and add their SHA-256 hashes; also redeploy Cloudflare Worker with updated script-src
 
 ---
 
 ## Done (recent)
 
+- [x] **CSP hardening: 'unsafe-inline' removed, SHA-256 hashes, portal-init.js extracted, DreadSpike/Voidfall lore, CF cache purge workflow (S53)**
 - [x] **Auth tab hash routing + CSP Worker fix + theme tile picker + PromoGrind sign-in (S52)**
 - [x] **Voidfall dispatch GA4 + Fragment 004 (S51)**
 - [x] **CSP Turnstile fix + 3 SIL items (S50)** — canonical CSP updated with challenges.cloudflare.com (Turnstile); re-propagated 85 pages; join form GA4 form_error; Voidfall Chapter I excerpt; light-mode screenshot CI

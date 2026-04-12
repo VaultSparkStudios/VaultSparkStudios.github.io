@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▆ (19 entries)
-Avgs — 3: 432.7 | 5: 431.8 | 10: 422.4 | all: 416.7
-  └ 3-session: Dev 85.3 | Align 87.3 | Momentum 87.7 | Engage 88.7 | Process 84.0
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~0.5 sessions (2 SIL Now items / avg vel 4)  |  Intent rate: 100% (last 5)
-Last session: 2026-04-08 | Session 52 | Total: 428/500 | Velocity: 4 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▇ (20 entries)
+Avgs — 3: 431.7 | 5: 433.2 | 10: 422.7 | all: 417.4
+  └ 3-session: Dev 85.3 | Align 89.0 | Momentum 89.0 | Engage 87.3 | Process 84.7
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~1.5 sessions (2 SIL items queued / avg vel 4)  |  Intent rate: 100% (last 5)
+Last session: 2026-04-11 | Session 53 | Total: 435/500 | Velocity: 4 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -490,3 +490,27 @@ Avgs — 3: 432.7 | 5: 431.8 | 10: 422.4 | all: 416.7
 3. **Theme picker preview card** — show a mini site-preview card in the picker panel when hovering a tile (header colour + text colour sample); makes theme choice more confident without full page apply. First step: design a 120×60px preview element inside the dropdown panel showing panel bg + text. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Remove inline onclick handlers · [SIL] Cloudflare cache purge on deploy
+
+## 2026-04-11 — Session 53 | Total: 435/500 | Velocity: 4 | Debt: →
+Avgs — 3: 431.7 | 5: 433.2 | 10: 422.7 | all: 417.4
+  └ 3-session: Dev 85.3 | Align 89.0 | Momentum 89.0 | Engage 87.3 | Process 84.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 84 | ↑ | `'unsafe-inline'` removed from script-src across 85 pages + Worker; portal-core.js event wiring complete; portal-init.js extracted; SW precache updated; hashes unverified in browser |
+| Creative Alignment | 90 | ↑ | DreadSpike signal log (intercept-transmission card) and Voidfall entity 4 (atmospheric one-liner for unclassified entity) both on-voice and soul-aligned |
+| Momentum | 90 | ↑ | 4 SIL items cleared (all escalated/overdue); runway fully consumed; 100% intent completion |
+| Engagement | 87 | ↓ | Clean execution of all declared items; no drift |
+| Process Quality | 84 | → | Full closeout; propagate-csp.mjs updated for future runs; SW precache gap caught and fixed |
+| **Total** | **435/500** | ↑ | |
+
+**Top win:** Eliminated `'unsafe-inline'` from script-src site-wide — the last major CSP security gap; 85 pages + Worker now use SHA-256 hashes instead; this closes the portal login regression root-cause permanently
+**Top gap:** Hash-based CSP not browser-verified post-deploy; if any inline script was missed, it'll surface as a console error on first production load
+**Intent outcome:** Achieved — all 4 escalated SIL items shipped; CF cache purge workflow wired; DreadSpike + Voidfall lore both updated
+
+**Brainstorm**
+1. **CSP violation browser test** — after deploy, open vault-member in incognito DevTools console; confirm zero `Content-Security-Policy` violations; if violations appear, identify the script and add its hash. First step: push + wait for CF purge workflow. High probability.
+2. **portal-init.js SW precache bump** — sw.js STATIC_ASSETS was updated this session to include portal-init.js; bump CACHE_NAME date to force SW refresh on next deploy. First step: already done as part of S53 commit. Completed.
+3. **[CF] Add CF_API_TOKEN + CF_ZONE_ID secrets** — cloudflare-cache-purge.yml is live but the secrets aren't yet set in GitHub repo; every push currently skips the purge step. First step: GitHub repo → Settings → Secrets → add CF_API_TOKEN (Zone/Cache Purge) and CF_ZONE_ID. Human action.
+
+**Committed to TASK_BOARD:** [SIL] CSP violation browser test (human action) · [HAR] Add CF_API_TOKEN + CF_ZONE_ID secrets to GitHub repo

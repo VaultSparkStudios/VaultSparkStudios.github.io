@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-08 (Session 52)
+- Date: 2026-04-11 (Session 53)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S52 auth tab hash routing + CSP Worker fix + theme tile picker + PromoGrind sign-in; S51 Voidfall dispatch GA4 + Fragment 004
+- Repo posture: S53 CSP hardening (removed 'unsafe-inline' from script-src, SHA-256 hashes, 85 pages), inline onclick → addEventListener refactor, portal-init.js extracted, DreadSpike signal log, Voidfall entity 4, CF cache purge workflow
 
 ## What exists
 
@@ -13,7 +13,7 @@
 - **Vault Member portal** (`vault-member/`) — 9-tier rank system, achievements, challenges, Discord role sync, onboarding tour, light-mode phase 2
 - **VaultSparked membership** (`vaultsparked/`) — Stripe $4.99–$99.99/mo, 6 price IDs, phase progress bar, gift checkout modal (gift price `price_1TJ7xbGMN60PfJYsPCs5wUUz` set S37)
 - **Investor portal** (`investor/`) — gated
-- **Universe** — DreadSpike (pivoted to Novel Saga), Voidfall full lore page (`/universe/voidfall/`) — Transmission Archive (3 fragments), The Signal, Known Entities, Saga meta, Chapter I excerpt (S50)
+- **Universe** — DreadSpike (pivoted to Novel Saga; **S53: Signal Log entry added** — intercepted transmission card with lore fragment), Voidfall full lore page (`/universe/voidfall/`) — Transmission Archive (3 fragments), The Signal, Known Entities (**S53: atmospheric entity 4 hint added** below The Crossed row), Saga meta, Chapter I excerpt (S50)
 - **Studio Hub** (`studio-hub/`) — synced from vaultspark-studio-hub repo
 - **10 journal posts** — fireView() consent-gated
 - **8 game pages** — FORGE/SPARKED/VAULTED radial glow, data-status attrs; status badges correctly positioned (direct child of .hero-art)
@@ -21,9 +21,9 @@
 - **Compliance pages** — /cookies/, /accessibility/, /open-source/ (technology attributions + IP notice), /faq/, /careers/, /data-deletion/, /security/, sitemap
 
 ### Infrastructure
-- **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler.
+- **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler. **S53: script-src updated to SHA-256 hashes (removed 'unsafe-inline')**; needs redeploy.
 - **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260408-fcdc581`; STATIC_ASSETS includes `/universe/voidfall/` and `/universe/dreadspike/`
-- **DX scripts** (`scripts/propagate-csp.mjs`, `scripts/smoke-test.sh`) — S47 created; S49 regex fixed + dry-run exit-1 added; 85 pages now in sync with canonical CSP; `e2e.yml` compliance job runs `--dry-run` check before Playwright
+- **DX scripts** (`scripts/propagate-csp.mjs`, `scripts/smoke-test.sh`) — S47 created; S49 regex fixed + dry-run exit-1 added; **S53: CSP_VALUE updated to SHA-256 hashes (removed 'unsafe-inline')**; 85 pages propagated; `e2e.yml` compliance job runs `--dry-run` check before Playwright
 - **Sentry release workflow** (`.github/workflows/sentry-release.yml`) — S47 created, S48 fully wired: org `vaultspark-studios`, project `4511104933298176`, token set as GitHub secret; every push to main now tags a Sentry release
 - **Referral attribution** (`supabase/migrations/supabase-phase56-referral-attribution.sql`) — S48: `referred_by uuid` column on `vault_members`; `register_open` accepts `p_ref_by`, awards referrer +100 XP, fires recruiter/patron achievements; `get_referral_milestones` counts both invite-code and direct-link referrals; migration applied live
 - **Contact form** (`contact/index.html`) — S47: toast pop-up + duplicate-subject fix; S49: `gtag('event', 'form_submit')` + `form_error` GA4 events wired

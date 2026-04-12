@@ -1,6 +1,40 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-08 (Session 52)
+Last updated: 2026-04-11 (Session 53)
+
+## Session Intent: Session 53
+Complete all escalated SIL items: DreadSpike signal log entry, Voidfall entity 4 hint, remove inline onclick handlers from portal (CSP hardening), Cloudflare cache purge on deploy.
+**Outcome: Achieved** — all 4 SIL items shipped. `'unsafe-inline'` removed from script-src site-wide; SHA-256 hashes for FOUC + GA4 scripts added to Worker CSP + meta tags (85 pages); portal-init.js extracted; portal-core.js event wiring complete; CF cache purge workflow wired.
+
+## Where We Left Off (Session 53 — 2026-04-11)
+
+- Shipped: DreadSpike signal log (intercept-transmission card), Voidfall entity 4 hint (atmospheric one-liner), portal-init.js extracted from index.html inline scripts, all onclick/onchange/onmouseenter → addEventListener in portal-core.js, portal.css hover rules, CSP `'unsafe-inline'` → SHA-256 hashes in Worker + 85 meta tags, CF cache purge GitHub Actions workflow, portal-init.js added to SW precache
+- Tests: N/A — no automated test run
+- Deploy: not yet pushed — push after reading this
+
+---
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[CF-SECRETS]** Add `CF_API_TOKEN` (Zone/Cache Purge permission) and `CF_ZONE_ID` to GitHub repo → Settings → Secrets → Actions; this activates the auto-purge workflow added this session
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler — script-src now uses SHA-256 hashes instead of `'unsafe-inline'`; changes won't take effect until redeployed
+- [ ] **[CSP-VERIFY]** After deploy: open vault-member/index.html in DevTools console (incognito); confirm zero `Content-Security-Policy` errors
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **[HAR] Redeploy Cloudflare Worker** — the Worker script-src change needs a `wrangler deploy` to go live
+2. **[HAR] Add CF_API_TOKEN + CF_ZONE_ID** to GitHub repo secrets (activates auto-purge workflow)
+3. **[HAR] CSP browser verification** — open portal in DevTools console after deploy; confirm zero CSP violations
+4. Pull next SIL brainstorm item from SELF_IMPROVEMENT_LOOP.md
+
+---
 
 ## Session Intent: Session 52
 Fix auth login (credentials not working), forgot password flow, PromoGrind sign-in tab, and redesign theme picker to tile grid.

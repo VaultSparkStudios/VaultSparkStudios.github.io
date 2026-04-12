@@ -1,0 +1,28 @@
+name: Cloudflare Cache Purge
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  purge-cache:
+    name: Purge Cloudflare Cache
+    runs-on: ubuntu-latest
+    # Requires CF_API_TOKEN and CF_ZONE_ID secrets set in repo Settings.
+    # CF_API_TOKEN needs Zone / Cache Purge permission.
+    # CF_ZONE_ID is the zone ID for vaultsparkstudios.com (found in Cloudflare dashboard).
+    if: ${{ secrets.CF_API_TOKEN != '' && secrets.CF_ZONE_ID != '' }}
+    steps:
+      - name: Purge Cloudflare cache
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" \
+            -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CF_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}')
+          echo "Cloudflare purge response: $response"
+          if [ "$response" != "200" ]; then
+            echo "Warning: CF cache purge returned HTTP $response — check CF_API_TOKEN and CF_ZONE_ID secrets"
+            exit 0
+          fi
+          echo "Cache purged successfully"

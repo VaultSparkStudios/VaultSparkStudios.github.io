@@ -1,5 +1,20 @@
 # Work Log
 
+## 2026-04-11 — Session 53
+
+- universe/dreadspike/index.html: Signal Log section added — intercept-transmission card (ENTRY 001, TIMESTAMP REDACTED); lore-dense, on-voice
+- universe/voidfall/index.html: atmospheric entity 4 hint added below The Crossed row — "Something else was detected. The classification system has no record of it."
+- vault-member/portal-init.js: extracted 3 inline script blocks from index.html (offline sync, Complete Your Vault checklist, onboarding tour)
+- vault-member/portal-core.js: event wiring IIFE appended — all onclick/onchange/onmouseenter → addEventListener; view-progress-btn gap fixed
+- vault-member/portal.css: hover CSS rules added for notif-bell, delete-account, 4 quick-action-link classes (replaces inline onmouseenter/leave)
+- vault-member/index.html: all inline event handlers removed; IDs added to ~30 elements; portal-init.js script tag added
+- cloudflare/security-headers-worker.js: script-src 'unsafe-inline' → SHA-256 hashes (FOUC + GA4); needs Wrangler redeploy
+- scripts/propagate-csp.mjs: CSP_VALUE updated to hash-based script-src; re-propagated 85 pages
+- .github/workflows/cloudflare-cache-purge.yml: created; triggers on push to main; CF_API_TOKEN + CF_ZONE_ID secrets required
+- sw.js: portal-init.js added to STATIC_ASSETS; CACHE_NAME bumped to 20260411
+- IGNIS: not refreshed (no content score changes)
+- SIL: 435/500 · Velocity: 4 · Debt: →
+
 ## 2026-04-08 — Session 52
 
 - vault-member/portal-core.js: hash routing — reads window.location.hash on load, calls switchTab('login'|'register'|'forgot') automatically
