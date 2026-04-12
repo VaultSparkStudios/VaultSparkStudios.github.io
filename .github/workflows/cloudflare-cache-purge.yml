@@ -11,7 +11,6 @@ jobs:
     # Requires CF_API_TOKEN and CF_ZONE_ID secrets set in repo Settings.
     # CF_API_TOKEN needs Zone / Cache Purge permission.
     # CF_ZONE_ID is the zone ID for vaultsparkstudios.com (found in Cloudflare dashboard).
-    if: ${{ secrets.CF_API_TOKEN != '' && secrets.CF_ZONE_ID != '' }}
     steps:
       - name: Purge Cloudflare cache
         run: |
