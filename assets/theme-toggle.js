@@ -396,7 +396,7 @@
     THEMES.forEach(function (theme) {
       var tile = document.createElement('button');
       tile.type = 'button';
-      tile.className = 'theme-tile theme-option' + (theme.value === currentTheme ? ' active' : '');
+      tile.className = 'theme-tile' + (theme.value === currentTheme ? ' active' : '');
       tile.dataset.theme = theme.value;
       tile.setAttribute('aria-pressed', theme.value === currentTheme ? 'true' : 'false');
       tile.setAttribute('aria-label', theme.label);

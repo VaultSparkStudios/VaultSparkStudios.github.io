@@ -3,7 +3,7 @@
 ## Studio OS
 
 This project runs under the VaultSpark Studio OS.
-Local path: `C:\Users\p4cka\documents\development\VaultSparkStudios.github.io`
+Local path: *(see Studio Owner's local environment)*
 GitHub: https://github.com/VaultSparkStudios/VaultSparkStudios.github.io
 Live URL: https://vaultsparkstudios.com/
 
@@ -56,7 +56,7 @@ If the user says only `closeout`, follow `prompts/closeout.md`.
 
 Before committing or pushing to **any repo other than this one**, run:
 ```bash
-bash C:/Users/p4cka/documents/development/vaultspark-studio-ops/scripts/check-repo-lock.sh "<repo-local-path>"
+node <studio-ops-local-path>/scripts/ops.mjs check-lock "<repo-local-path>"
 ```
 If locked → do not write; add blocker to TASK_BOARD.
 

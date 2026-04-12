@@ -1,22 +1,47 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-12 (Session 54)
+Last updated: 2026-04-12 (Session 55)
 
-## Session Intent: Session 54
-Fix two user-reported bugs: QR code 404 (jsDelivr `qrcode@1.5.3` has no `build/` path) and theme picker showing no options (CSS breakpoint hiding it at ≤980px).
-**Outcome: Achieved** — both bugs fixed and pushed. CF-SECRETS + CSP-VERIFY HAR items resolved.
+## Session Intent: Session 55
+10-item website improvement session: press kit, studio pulse, vault wall, invite/referral page, social proof strip, portal daily loop, founding badge, game conversion, theme bug fix.
+**Outcome: Achieved (9/10 + theme bug)** — All items shipped. Studio About enhancement deferred to next session.
 
-## Where We Left Off (Session 54 — 2026-04-12)
+## Where We Left Off (Session 55 — 2026-04-12)
 
-- Shipped: QR code CDN fix (`qrcode@1.5.3` → `@1.5.0`, SRI hash updated); theme picker CSS hide rule moved from `@media (max-width: 980px)` to `@media (max-width: 640px)` — was hiding the picker at all sub-980px viewports (most laptop windows); `tileColor` field added to THEMES array in `theme-toggle.js` for more distinct tile backgrounds; tile border opacity 0.18→0.28; SW cache bumped to `vaultspark-20260412-e87a8ba`
-- Tests: N/A
-- Deploy: pushed `3e86c1f` → GitHub Pages auto (required `git pull --rebase` before push due to remote CI commit)
+### Theme bug fixed
+- `theme-toggle.js:399` — removed `theme-option` class from tile buttons; `.theme-option { display:none }` legacy CSS rule was hiding all tiles; dropdown showed "CHOOSE THEME" label but no options
+
+### New pages (all have canonical nav/footer, propagated)
+- `/press/` — press kit: key facts, studio bio, logo grid, game catalog, membership stats, press contact
+- `/studio-pulse/` — Now/Next/Shipped transparency board, 8-game status grid, studio health panel
+- `/vault-wall/` — live member recognition wall (Supabase: rank distribution bar, podium top-3, leaderboard #4-20, recently joined grid)
+- `/invite/` — referral program UX (copy link, social share X/Reddit/Discord, referral stats, rewards cards, top inviters leaderboard; `referral_count` computed dynamically from `vault_members WHERE referred_by = user_id`)
+
+### Homepage enhancements
+- Social proof strip between hero and milestones — live member count, VaultSparked count, challenge completions, rank distribution bar (9-segment, live from Supabase)
+
+### Portal enhancements
+- Daily loop widget (`#daily-loop-widget`) added above the Complete Your Vault checklist on dashboard tab — shows login streak + active challenge title + login bonus chip
+- `initDailyLoopWidget(member)` in `portal-dashboard.js`; called from `portal.js` at 800ms delay alongside `checkDailyLogin`
+- **Note**: widget uses `window.VSPublic` — vault-member page loads `supabase-public.js` but scope needs verification in next session
+
+### Membership enhancements
+- `/vaultsparked/` comparison table — added Founding Vault Member badge row, Vault Wall recognition row, Referral bonus XP row
+- FAQ — added Founding Vault Member FAQ entry explaining badge
+
+### Game pages
+- Call of Doodie — social share strip + "More From the Vault" section
+
+### Database migration (pending human action)
+- `supabase/migrations/supabase-phase57-founding-vault-badge.sql` — awards 🏛️ Founding Vault Member + 500 XP to first 100 members by created_at; `maybe_award_founding_badge(uuid)` RPC for real-time awarding; idempotent via unique constraint + prefs sentinel
 
 ---
 
 ## Open Blockers
 
-*(none)*
+- **[DB] Phase 57 migration** — `supabase-phase57-founding-vault-badge.sql` needs to be run in Supabase dashboard to award the founding badge to existing first-100 members
+- **Portal daily loop `VSPublic` scope** — ✅ Verified: `supabase-public.js` explicitly assigns `window.VSPublic` at line 77; loaded in `<head>` (not deferred), so it's available before portal JS at end of `<body>`. No issue.
+- **Studio About enhancement** — `/studio/index.html` founder story section enhancement deferred
 
 ## Human Action Required
 

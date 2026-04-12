@@ -244,6 +244,58 @@
       } else {
         badge.style.display = 'none';
       }
+      // Also update daily loop widget
+      const dlwStreak = document.getElementById('dlw-streak');
+      if (dlwStreak) dlwStreak.textContent = streak || 0;
+    }
+
+    // ── Daily Loop Widget ─────────────────────────────────────────────
+    async function initDailyLoopWidget(member) {
+      const widget = document.getElementById('daily-loop-widget');
+      if (!widget) return;
+
+      // Show widget
+      widget.style.display = '';
+
+      // Populate streak
+      const dlwStreak = document.getElementById('dlw-streak');
+      if (dlwStreak) dlwStreak.textContent = member.streak_count || 0;
+
+      // Show login bonus chip if claimed today
+      const todayUTC = new Date().toISOString().slice(0, 10);
+      if (member.last_login_date === todayUTC) {
+        const chip = document.getElementById('dlw-bonus-chip');
+        if (chip) chip.style.display = '';
+      }
+
+      // Load an active challenge title
+      try {
+        const VSPublic = window.VSPublic;
+        if (VSPublic) {
+          const result = await VSPublic
+            .from('challenges')
+            .select('title,points_reward')
+            .eq('is_active', true)
+            .order('created_at', false)
+            .limit(1)
+            .get();
+          const challenges = (result && result.data) || [];
+          const titleEl = document.getElementById('dlw-challenge-title');
+          if (titleEl) {
+            if (challenges.length > 0) {
+              const c = challenges[0];
+              titleEl.textContent = c.title + (c.points_reward ? ' (+' + c.points_reward + ' pts)' : '');
+            } else {
+              titleEl.textContent = 'No active challenges right now — check back soon.';
+              const btn = document.getElementById('dlw-challenge-btn');
+              if (btn) btn.style.display = 'none';
+            }
+          }
+        }
+      } catch(_) {
+        const titleEl = document.getElementById('dlw-challenge-title');
+        if (titleEl) titleEl.textContent = 'Open challenges to see what\'s active today.';
+      }
     }
 
     // ── Phase 2: Award points for this session's eligible actions ─

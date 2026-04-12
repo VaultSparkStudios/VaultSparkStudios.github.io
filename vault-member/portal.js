@@ -602,6 +602,9 @@
       // Feature 1: daily login bonus + streak
       setTimeout(() => checkDailyLogin(member), 600);
 
+      // Daily loop widget
+      setTimeout(() => initDailyLoopWidget(member), 800);
+
       // Phase 7: populate Discord status in settings
       updateDiscordUI(member.discord_id);
 

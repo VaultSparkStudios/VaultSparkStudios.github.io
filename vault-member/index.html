@@ -80,33 +80,8 @@
       </nav>
       <div class="nav-right">
         <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
-        <!-- Notification bell — shown when logged in -->
-        <div id="notif-bell-wrap" style="display:none;position:relative;">
-          <button type="button" id="notif-bell-btn" aria-label="Notifications" style="background:none;border:none;cursor:pointer;padding:0.3rem 0.4rem;color:var(--text);position:relative;display:flex;align-items:center;border-radius:8px;transition:background 0.15s;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
-            <span id="notif-badge" style="display:none;position:absolute;top:2px;right:2px;background:#ef4444;color:#fff;border-radius:50%;font-size:0.6rem;min-width:14px;height:14px;line-height:14px;text-align:center;font-weight:700;padding:0 2px;"></span>
-          </button>
-          <div id="notif-panel" style="display:none;position:absolute;right:0;top:calc(100% + 10px);width:330px;max-height:460px;overflow-y:auto;background:rgba(10,13,22,0.98);border:1px solid rgba(255,255,255,0.1);border-radius:16px;box-shadow:var(--shadow-lg);z-index:300;">
-            <div id="notif-list"><div class="notif-loading">Loading notifications…</div></div>
-          </div>
-        </div>
-        <!-- Account dropdown — shown when logged in -->
-        <div id="nav-account-wrap" class="nav-account-wrap">
-          <button type="button" id="nav-account-trigger" class="nav-account-trigger" aria-expanded="false" aria-label="Account menu">
-            <span id="nav-account-avatar-sm" class="nav-account-avatar-sm">⚡</span>
-            <span id="nav-account-name" class="nav-account-name">Account</span>
-            <span class="nav-account-caret">▾</span>
-          </button>
-          <div id="nav-account-menu" class="nav-account-menu" role="menu">
-            <button type="button" id="nav-menu-dashboard-btn" role="menuitem">Dashboard</button>
-            <button type="button" id="nav-menu-settings-btn" role="menuitem">Settings</button>
-            <button type="button" id="nav-admin-link" role="menuitem" style="display:none">Vault Command</button>
-            <div class="menu-divider"></div>
-            <button type="button" id="nav-menu-signout-btn" class="menu-signout" role="menuitem">Sign Out</button>
-          </div>
-        </div>
-        <a id="nav-signin-link" class="nav-signin" href="/vault-member/#login">Sign In</a>
-        <a id="nav-join-btn" class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
         <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -444,6 +419,32 @@
               <span style="font-size:1.5rem;">⭐</span>
               <span style="font-size:0.82rem;font-weight:600;color:var(--text);">View Ranks</span>
             </a>
+          </div>
+
+          <!-- ── Daily Loop Widget ── -->
+          <div id="daily-loop-widget" style="display:none;margin:0 0 1.25rem;background:rgba(255,196,0,0.03);border:1px solid rgba(255,196,0,0.12);border-radius:16px;padding:1.15rem 1.5rem;">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+              <div style="display:flex;align-items:center;gap:1.4rem;flex-wrap:wrap;">
+                <!-- Login streak -->
+                <div style="display:flex;align-items:center;gap:0.6rem;">
+                  <span style="font-size:1.5rem;line-height:1;">🔥</span>
+                  <div>
+                    <div style="font-size:1.3rem;font-weight:800;color:#fb923c;letter-spacing:-0.04em;line-height:1;" id="dlw-streak">0</div>
+                    <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);">Day Streak</div>
+                  </div>
+                </div>
+                <div style="width:1px;height:32px;background:rgba(255,255,255,0.08);flex-shrink:0;"></div>
+                <!-- Today's challenge prompt -->
+                <div>
+                  <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--dim);margin-bottom:0.2rem;">Today's Focus</div>
+                  <div id="dlw-challenge-title" style="font-size:0.9rem;font-weight:600;color:var(--text);">Loading challenge…</div>
+                </div>
+              </div>
+              <div style="display:flex;gap:0.65rem;align-items:center;flex-shrink:0;">
+                <span id="dlw-bonus-chip" style="display:none;font-size:0.72rem;font-weight:700;color:#10B981;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.2);border-radius:999px;padding:0.2rem 0.6rem;">✓ Login bonus claimed</span>
+                <button type="button" id="dlw-challenge-btn" onclick="document.getElementById('tab-dash-challenges').click()" style="padding:0.5rem 1.1rem;border-radius:999px;background:rgba(255,196,0,0.1);border:1px solid rgba(255,196,0,0.22);color:var(--gold);font-size:0.83rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,196,0,0.16)'" onmouseout="this.style.background='rgba(255,196,0,0.1)'">Open Challenges</button>
+              </div>
+            </div>
           </div>
 
           <!-- Complete Your Vault Checklist -->

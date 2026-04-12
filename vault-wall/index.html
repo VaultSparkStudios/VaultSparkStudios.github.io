@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <meta name="supabase-key" content="sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Wall — Top Members | VaultSpark Studios</title>
+  <meta name="description" content="The Vault Wall — VaultSpark Studios' top-ranked members, rank distribution, and live community stats. See who's leading the vault." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/vault-wall/" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Vault Wall — Top Members | VaultSpark Studios" />
+  <meta property="og:description" content="The Vault Wall — see the top-ranked Vault Members, rank distribution, and live community stats." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/vault-wall/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSparkStudios" />
+  <link rel="icon" type="image/png" href="../assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Vault Wall","item":"https://vaultsparkstudios.com/vault-wall/"}]}</script>
+  <style>
+    .vw-hero { padding:5.5rem 0 3rem; position:relative; }
+    .vw-hero::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 25% 50%,rgba(255,196,0,0.1),transparent 38%),radial-gradient(circle at 75% 40%,rgba(139,92,246,0.08),transparent 38%); pointer-events:none; }
+    .vw-hero .container { position:relative; z-index:1; }
+
+    /* Stat bar */
+    .vw-stats { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1rem; margin-bottom:3rem; }
+    .vw-stat { padding:1.2rem; border-radius:16px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.07); text-align:center; }
+    .vw-stat strong { display:block; font-size:1.8rem; font-weight:800; letter-spacing:-0.04em; color:var(--gold); line-height:1; margin-bottom:0.2rem; }
+    .vw-stat span { font-size:0.76rem; color:var(--muted); }
+
+    /* Rank distribution bar */
+    .rank-dist { display:flex; height:12px; border-radius:999px; overflow:hidden; margin:0.6rem 0 0.4rem; }
+    .rank-dist-seg { height:100%; transition:width 0.8s ease; }
+    .rank-dist-legend { display:flex; flex-wrap:wrap; gap:0.5rem 1.1rem; font-size:0.74rem; color:var(--muted); margin-top:0.5rem; }
+    .rank-dist-legend span { display:flex; align-items:center; gap:0.35rem; }
+    .rank-dist-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+
+    /* Top member podium */
+    .vw-podium { display:grid; grid-template-columns:1fr 1.1fr 1fr; gap:1rem; align-items:end; margin-bottom:2rem; }
+    .vw-podium-card { padding:1.5rem 1.25rem; border-radius:20px; text-align:center; border:1px solid rgba(255,255,255,0.08); background:rgba(255,255,255,0.025); transition:border-color 0.2s; }
+    .vw-podium-card:hover { border-color:rgba(255,196,0,0.18); }
+    .vw-podium-card.first { background:rgba(255,196,0,0.05); border-color:rgba(255,196,0,0.25); padding:2rem 1.25rem; }
+    .vw-podium-place { font-size:1.4rem; margin-bottom:0.4rem; }
+    .vw-podium-avatar { width:52px; height:52px; border-radius:50%; background:linear-gradient(135deg,rgba(255,196,0,0.2),rgba(31,162,255,0.15)); border:2px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:1.3rem; margin:0 auto 0.6rem; }
+    .vw-podium-card.first .vw-podium-avatar { width:64px; height:64px; border-color:rgba(255,196,0,0.4); font-size:1.6rem; }
+    .vw-podium-username { font-weight:700; font-size:0.92rem; color:var(--text); margin-bottom:0.2rem; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .vw-podium-rank { font-size:0.75rem; color:var(--muted); margin-bottom:0.4rem; }
+    .vw-podium-pts { font-size:0.82rem; font-weight:700; color:var(--gold); }
+
+    /* Member list */
+    .vw-list { display:grid; gap:0.6rem; }
+    .vw-row { display:grid; grid-template-columns:2rem auto 1fr auto auto; gap:0.9rem; align-items:center; padding:0.8rem 1.1rem; border-radius:12px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); transition:border-color 0.15s; }
+    .vw-row:hover { border-color:rgba(255,255,255,0.12); }
+    .vw-row-num { font-size:0.8rem; color:var(--dim); font-weight:600; text-align:center; }
+    .vw-row-avatar { width:32px; height:32px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:0.95rem; flex-shrink:0; }
+    .vw-row-name { font-size:0.88rem; font-weight:600; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .vw-row-rank { font-size:0.75rem; color:var(--muted); white-space:nowrap; }
+    .vw-row-pts { font-size:0.82rem; font-weight:700; color:var(--gold); white-space:nowrap; }
+
+    /* Recently joined */
+    .vw-recent-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:0.75rem; }
+    .vw-recent-card { padding:1rem; border-radius:14px; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; gap:0.75rem; }
+    .vw-recent-avatar { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; font-size:1rem; flex-shrink:0; }
+    .vw-recent-name { font-size:0.85rem; font-weight:600; color:var(--text); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .vw-recent-time { font-size:0.73rem; color:var(--dim); }
+
+    .vw-loading { text-align:center; padding:3rem; color:var(--muted); font-size:0.9rem; }
+    .vw-empty { text-align:center; padding:3rem; color:var(--dim); font-size:0.88rem; }
+
+    /* Opt-in notice */
+    .vw-optin-notice { padding:1rem 1.25rem; border-radius:12px; background:rgba(255,196,0,0.04); border:1px solid rgba(255,196,0,0.1); font-size:0.82rem; color:var(--muted); margin-bottom:2rem; }
+
+    @media (max-width:640px) { .vw-podium { grid-template-columns:1fr; } .vw-row { grid-template-columns:2rem 1fr auto; } .vw-row-rank { display:none; } }
+  </style>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pc92owTgV6BIa8Xc5NXyUVrfAQZaJSy2Rp+VITHyeQ8=' 'sha256-JujKqvQ+wLaBwZQ+rK0dDSeBX3rT7sN0wby2YNyIlDs=' 'sha256-aizFzz4bZutx7qgu7RXmRZGMRd5mYvlspNnLIvS4rkI=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <script src="/assets/theme-toggle.js"></script>
+  <script src="/assets/analytics.js" defer></script>
+  <script src="/assets/pwa-nav.js" defer></script>
+  <script src="/assets/cookie-consent.js" defer></script>
+</head>
+<body>
+<script>!function(){try{var t=localStorage.getItem('vs_theme'),m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(t&&m[t]){var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}}catch(e){}}();</script>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img loading="lazy" src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">Canon</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/journal/">Signal Log</a>
+        <a href="/contact/">Contact</a>
+
+        <div class="mobile-nav-footer">
+          <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
+          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <section class="vw-hero" aria-labelledby="vw-heading">
+      <div class="container">
+        <span class="eyebrow">Community &nbsp;·&nbsp; Members &nbsp;·&nbsp; Recognition</span>
+        <h1 id="vw-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.8rem,6vw,5rem);line-height:0.96;letter-spacing:-0.045em;margin:0.75rem 0 1rem;">The Vault<br>Wall.</h1>
+        <p style="color:var(--muted);font-size:1.08rem;max-width:54ch;line-height:1.65;">The members who have gone deepest into the vault. Ranked by Vault Points — earned by playing games, completing challenges, and contributing to the community.</p>
+        <div style="margin-top:1.25rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+          <a href="/vault-member/#register" class="button">Claim Your Rank &nbsp;→</a>
+          <a href="/ranks/" class="button-secondary">View All Ranks</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Community Stats -->
+    <section style="padding:0 0 3rem;" aria-label="Community statistics">
+      <div class="container">
+        <div class="vw-stats" id="vw-stats">
+          <div class="vw-stat"><strong id="stat-total">—</strong><span>Vault Members</span></div>
+          <div class="vw-stat"><strong id="stat-week">—</strong><span>Joined this week</span></div>
+          <div class="vw-stat"><strong id="stat-sparked">—</strong><span>The Sparked rank</span></div>
+          <div class="vw-stat"><strong id="stat-challenges">—</strong><span>Challenges completed</span></div>
+        </div>
+
+        <!-- Rank distribution -->
+        <div style="padding:1.5rem;border-radius:16px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);">
+          <div style="font-size:0.73rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.8rem;">Rank Distribution</div>
+          <div class="rank-dist" id="rank-dist-bar" aria-label="Rank distribution bar"></div>
+          <div class="rank-dist-legend">
+            <span><span class="rank-dist-dot" style="background:#94a3b8;"></span>Spark Initiate</span>
+            <span><span class="rank-dist-dot" style="background:#1FA2FF;"></span>Vault Runner</span>
+            <span><span class="rank-dist-dot" style="background:#10B981;"></span>Rift Scout</span>
+            <span><span class="rank-dist-dot" style="background:#06B6D4;"></span>Vault Guard</span>
+            <span><span class="rank-dist-dot" style="background:#8B5CF6;"></span>Vault Breacher</span>
+            <span><span class="rank-dist-dot" style="background:#555;"></span>Void Operative</span>
+            <span><span class="rank-dist-dot" style="background:#C85000;"></span>Vault Keeper</span>
+            <span><span class="rank-dist-dot" style="background:#D62828;"></span>Forge Master</span>
+            <span><span class="rank-dist-dot" style="background:#FFC400;"></span>The Sparked</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Top 3 Podium -->
+    <section style="padding:0 0 2rem;" aria-labelledby="podium-heading">
+      <div class="container">
+        <div class="eyebrow" style="margin-bottom:1.5rem;">Top Vault Members</div>
+        <div class="vw-podium" id="vw-podium">
+          <div class="vw-loading">Loading top members…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Full leaderboard -->
+    <section style="padding:0 0 4rem;" aria-labelledby="leaderboard-heading">
+      <div class="container">
+        <div class="section-head" style="margin-bottom:1.25rem;">
+          <div><h2 id="leaderboard-heading" style="font-size:1.4rem;">Vault Leaderboard</h2></div>
+          <a href="/leaderboards/" class="button-secondary button-sm">Full Leaderboard</a>
+        </div>
+        <div class="vw-optin-notice">Members shown here have public profiles. To appear on the Vault Wall, enable public profile visibility in your <a href="/vault-member/#settings" style="color:var(--gold);">Vault settings</a>.</div>
+        <div class="vw-list" id="vw-list">
+          <div class="vw-loading">Loading members…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recently joined -->
+    <section style="padding:0 0 4rem;" aria-labelledby="recent-heading">
+      <div class="container">
+        <div class="section-head" style="margin-bottom:1.25rem;">
+          <div><h2 id="recent-heading" style="font-size:1.4rem;">Recently Joined</h2></div>
+        </div>
+        <div class="vw-recent-grid" id="vw-recent">
+          <div class="vw-loading">Loading…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="padding:0 0 5rem;">
+      <div class="container">
+        <div style="padding:2.5rem 2.8rem;border-radius:var(--radius);background:linear-gradient(135deg,rgba(255,196,0,0.05),rgba(13,17,28,0.95) 50%,rgba(139,92,246,0.05));border:1px solid rgba(255,196,0,0.14);display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:0.76rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:0.35rem;">Join The Vault</div>
+            <h3 style="font-size:1.35rem;font-weight:700;margin-bottom:0.3rem;">Your name belongs on this wall.</h3>
+            <p style="color:var(--muted);font-size:0.93rem;max-width:48ch;">A free Vault Member account gets you ranked, tracked, and recognized across every VaultSpark game. The vault opens for everyone.</p>
+          </div>
+          <a href="/vault-member/#register" class="button" style="flex-shrink:0;white-space:nowrap;">Create Free Account &nbsp;→</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Where worlds are built. Where stories ignite. The vault is sparked. ⚡</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/universe/">Universe</a>
+          <a href="/studio/">About</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/vault-member/">Vault Membership</a>
+          <a href="/leaderboards/">Leaderboard</a>
+          <a href="/community/">Community Hub</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer">Reddit</a>
+          <a href="https://discord.com/users/vaultsparkstudios" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="/faq/">FAQ</a>
+          <a href="/careers/">Careers</a>
+          <a href="/open-source/">Technology &amp; Rights</a>
+          <a href="/accessibility/">Accessibility</a>
+          <a href="/security/">Security</a>
+          <a href="/sitemap-page/">Sitemap</a>
+        </div>
+      </div>
+      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
+        <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 VaultSpark Studios. All rights reserved. VaultSpark&trade; is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/supabase-public.js"></script>
+  <script src="/assets/nav-toggle.js" defer></script>
+  <script src="/assets/sentry-init.js" defer></script>
+  <script>
+  (function() {
+    'use strict';
+    function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+    function timeAgo(iso) {
+      var d = Math.floor((Date.now() - new Date(iso)) / 1000);
+      if (d < 60) return 'just now';
+      if (d < 3600) return Math.floor(d/60) + 'm ago';
+      if (d < 86400) return Math.floor(d/3600) + 'h ago';
+      if (d < 604800) return Math.floor(d/86400) + 'd ago';
+      return new Date(iso).toLocaleDateString('en-US', {month:'short',day:'numeric'});
+    }
+
+    var RANK_COLORS = {
+      'Spark Initiate':'#94a3b8','Vault Runner':'#1FA2FF','Rift Scout':'#10B981',
+      'Vault Guard':'#06B6D4','Vault Breacher':'#8B5CF6','Void Operative':'#6b7280',
+      'Vault Keeper':'#C85000','Forge Master':'#D62828','The Sparked':'#FFC400'
+    };
+    var RANK_ORDER = ['Spark Initiate','Vault Runner','Rift Scout','Vault Guard','Vault Breacher','Void Operative','Vault Keeper','Forge Master','The Sparked'];
+
+    function rankColor(r) { return RANK_COLORS[r] || '#94a3b8'; }
+    function rankEmoji(r) {
+      var map = {'The Sparked':'✨','Forge Master':'🔴','Vault Keeper':'🟤','Void Operative':'⬛','Vault Breacher':'🟣','Vault Guard':'🔵','Rift Scout':'🟢','Vault Runner':'💙','Spark Initiate':'⚡'};
+      return map[r] || '⚡';
+    }
+
+    async function loadWall() {
+      try {
+        var weekAgo = new Date(Date.now() - 7*24*60*60*1000).toISOString();
+
+        // Fetch top members + total count + recent
+        var [topRes, countRes, recentRes, challengeRes] = await Promise.allSettled([
+          VSPublic.from('vault_members').select('username,rank_title,vault_points,created_at').order('vault_points',false).limit(20).get(),
+          VSPublic.from('vault_members').select('id').count().head(),
+          VSPublic.from('vault_members').select('username,rank_title,created_at').order('created_at',false).limit(12).get(),
+          VSPublic.from('challenge_submissions').select('id').count().head()
+        ]);
+
+        // Stats
+        var total = countRes.status === 'fulfilled' ? (countRes.value.count || 0) : 0;
+        var challenges = challengeRes.status === 'fulfilled' ? (challengeRes.value.count || 0) : 0;
+        document.getElementById('stat-total').textContent = total.toLocaleString('en-US');
+        document.getElementById('stat-challenges').textContent = challenges.toLocaleString('en-US');
+
+        // Process top members
+        var members = topRes.status === 'fulfilled' ? (topRes.value.data || []) : [];
+
+        // Week joins
+        var weekJoins = members.filter(function(m){ return new Date(m.created_at) > new Date(weekAgo); }).length;
+        if (recentRes.status === 'fulfilled') {
+          var recentAll = recentRes.value.data || [];
+          weekJoins = recentAll.filter(function(m){ return new Date(m.created_at) > new Date(weekAgo); }).length;
+        }
+        document.getElementById('stat-week').textContent = weekJoins > 0 ? '+' + weekJoins : '0';
+
+        // Sparked count
+        var sparked = members.filter(function(m){ return m.rank_title === 'The Sparked'; }).length;
+        document.getElementById('stat-sparked').textContent = sparked;
+
+        // Rank distribution
+        var dist = {};
+        RANK_ORDER.forEach(function(r){ dist[r] = 0; });
+        members.forEach(function(m){ if (dist[m.rank_title] !== undefined) dist[m.rank_title]++; });
+        if (total > members.length) dist['Spark Initiate'] += (total - members.length);
+        var distBar = document.getElementById('rank-dist-bar');
+        distBar.innerHTML = '';
+        RANK_ORDER.forEach(function(r) {
+          var pct = total > 0 ? (dist[r] / total * 100) : 0;
+          if (pct < 0.5) return;
+          var seg = document.createElement('div');
+          seg.className = 'rank-dist-seg';
+          seg.style.width = pct.toFixed(1) + '%';
+          seg.style.background = rankColor(r);
+          seg.title = r + ': ' + dist[r];
+          distBar.appendChild(seg);
+        });
+
+        // Podium (top 3)
+        var podium = document.getElementById('vw-podium');
+        if (!members.length) {
+          podium.innerHTML = '<div class="vw-empty">No members yet — be the first!</div>';
+        } else {
+          var top3 = members.slice(0,3);
+          var order = top3.length >= 3 ? [top3[1], top3[0], top3[2]] : top3;
+          var places = top3.length >= 3 ? ['🥈','🥇','🥉'] : ['🥇','🥈','🥉'];
+          var isFirst = top3.length >= 3 ? [false,true,false] : [true,false,false];
+          podium.innerHTML = order.map(function(m,i) {
+            var pts = (m.vault_points||0).toLocaleString('en-US');
+            var cls = isFirst[i] ? 'vw-podium-card first' : 'vw-podium-card';
+            return '<div class="'+cls+'"><div class="vw-podium-place">'+places[i]+'</div>'
+              +'<div class="vw-podium-avatar" style="border-color:'+rankColor(m.rank_title)+'40;background:'+rankColor(m.rank_title)+'18;">'+rankEmoji(m.rank_title)+'</div>'
+              +'<div class="vw-podium-username">'+esc(m.username)+'</div>'
+              +'<div class="vw-podium-rank">'+esc(m.rank_title||'Spark Initiate')+'</div>'
+              +'<div class="vw-podium-pts">'+pts+' pts</div></div>';
+          }).join('');
+        }
+
+        // Full list (4–20)
+        var listEl = document.getElementById('vw-list');
+        if (members.length < 4) {
+          listEl.innerHTML = '<div class="vw-empty">More members coming soon.</div>';
+        } else {
+          listEl.innerHTML = members.slice(3).map(function(m,i) {
+            var pts = (m.vault_points||0).toLocaleString('en-US');
+            return '<div class="vw-row">'
+              +'<div class="vw-row-num">'+(i+4)+'</div>'
+              +'<div class="vw-row-avatar" style="border-color:'+rankColor(m.rank_title)+'40;background:'+rankColor(m.rank_title)+'12;">'+rankEmoji(m.rank_title)+'</div>'
+              +'<div class="vw-row-name">'+esc(m.username)+'</div>'
+              +'<div class="vw-row-rank">'+esc(m.rank_title||'Spark Initiate')+'</div>'
+              +'<div class="vw-row-pts">'+pts+' pts</div>'
+              +'</div>';
+          }).join('');
+        }
+
+        // Recently joined
+        var recentEl = document.getElementById('vw-recent');
+        var recentData = recentRes.status === 'fulfilled' ? (recentRes.value.data||[]) : [];
+        if (!recentData.length) {
+          recentEl.innerHTML = '<div class="vw-empty">No recent joins.</div>';
+        } else {
+          recentEl.innerHTML = recentData.map(function(m) {
+            return '<div class="vw-recent-card">'
+              +'<div class="vw-recent-avatar" style="border-color:'+rankColor(m.rank_title)+'40;background:'+rankColor(m.rank_title)+'12;">'+rankEmoji(m.rank_title)+'</div>'
+              +'<div><div class="vw-recent-name">'+esc(m.username)+'</div>'
+              +'<div class="vw-recent-time">'+timeAgo(m.created_at)+'</div></div>'
+              +'</div>';
+          }).join('');
+        }
+
+      } catch(e) {
+        ['vw-podium','vw-list','vw-recent'].forEach(function(id){
+          var el = document.getElementById(id);
+          if (el) el.innerHTML = '<div class="vw-empty">Could not load member data.</div>';
+        });
+      }
+    }
+
+    loadWall();
+  })();
+  </script>
+</body>
+</html>

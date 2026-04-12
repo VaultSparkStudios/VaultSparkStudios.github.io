@@ -1,5 +1,23 @@
 # Work Log
 
+## 2026-04-12 — Session 55
+
+- assets/theme-toggle.js: removed `theme-option` class from tile button className (was `.theme-tile theme-option`); `.theme-option { display:none }` legacy CSS rule was hiding all theme tiles; theme picker is now visible and functional
+- press/index.html: created — full press kit page (key facts, studio bio, logo grid, game catalog, membership stats, press contact)
+- studio-pulse/index.html: created — Now/Next/Shipped transparency board; 8-game status grid; studio health panel; session 55 stats
+- vault-wall/index.html: created — live member recognition wall; Supabase rank distribution bar (9 segments); top-3 podium; leaderboard #4-20; recently joined grid (12 members)
+- invite/index.html: created — referral program UX; copy/share referral link (X, Reddit, Discord); live referral stats; rewards cards; top inviters leaderboard (computed from referred_by counts, not a column)
+- index.html: social proof strip added between hero and milestones — live member count, VaultSparked count, challenge completions, rank distribution bar; proof-stat CSS added to page style block; JS populates via `VSPublic` promise chain
+- vault-member/index.html: daily loop widget `#daily-loop-widget` added above cvault-panel on dashboard tab — login streak, active challenge title, login bonus chip
+- vault-member/portal-dashboard.js: `initDailyLoopWidget(member)` added; `updateStreakBadge` updated to also set `dlw-streak` element; reads active challenge from `VSPublic.from('challenges')`
+- vault-member/portal.js: `setTimeout(() => initDailyLoopWidget(member), 800)` added alongside `checkDailyLogin`
+- supabase/migrations/supabase-phase57-founding-vault-badge.sql: created — awards 🏛️ Founding Vault Member + 500 XP to first 100 members by created_at; `maybe_award_founding_badge(uuid)` RPC; idempotent; **pending human action to run in Supabase dashboard**
+- vaultsparked/index.html: comparison table — 3 new rows (Founding Vault Member badge, Vault Wall recognition, Referral bonus XP); FAQ entry added for founding badge
+- games/call-of-doodie/index.html: social share strip + "More From the Vault" section added
+- scripts/propagate-nav.mjs: run; 75 pages updated including new pages
+- IGNIS: not refreshed
+- SIL: 455/500 · Velocity: +34 · Debt: ↓
+
 ## 2026-04-12 — Session 54
 
 - vault-member/index.html: qrcode CDN URL changed from @1.5.3 (jsDelivr 404) to @1.5.0; SRI hash updated to sha384-cis6rHaubFFg4u43HmrdI+X3wd2e5Vh2VxFSajC+XXESLbkXR9bnOIcoQBn+kGdc

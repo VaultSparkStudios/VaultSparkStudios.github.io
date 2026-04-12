@@ -659,6 +659,33 @@
     }
     @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
     @keyframes pulse-ring { 0%{transform:scale(0.85);opacity:0.5} 70%{transform:scale(2.2);opacity:0} 100%{transform:scale(2.2);opacity:0} }
+
+    /* ─── Social proof strip ─── */
+    .proof-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+    .proof-stat strong {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.04em;
+      line-height: 1;
+    }
+    .proof-stat span {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+    .proof-stat-wide {
+      grid-column: span 2;
+    }
+    @media (max-width: 640px) {
+      .proof-stat-wide { grid-column: span 1; }
+    }
   </style>
 
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pc92owTgV6BIa8Xc5NXyUVrfAQZaJSy2Rp+VITHyeQ8=' 'sha256-JujKqvQ+wLaBwZQ+rK0dDSeBX3rT7sN0wby2YNyIlDs=' 'sha256-aizFzz4bZutx7qgu7RXmRZGMRd5mYvlspNnLIvS4rkI=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
@@ -773,6 +800,35 @@
             </div>
           </div>
         </aside>
+      </div>
+    </section>
+
+    <!-- ── Social Proof Strip ───────────────────────────── -->
+    <section id="vault-proof" aria-label="Vault community stats" style="padding:2rem 0;border-top:1px solid rgba(255,255,255,0.05);">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem;align-items:center;" id="vault-proof-inner">
+          <!-- Populated by JS -->
+          <div class="proof-stat">
+            <strong id="proof-members">—</strong>
+            <span>Vault Members</span>
+          </div>
+          <div class="proof-stat">
+            <strong id="proof-sparked">—</strong>
+            <span>VaultSparked</span>
+          </div>
+          <div class="proof-stat">
+            <strong id="proof-challenges">—</strong>
+            <span>Challenges Completed</span>
+          </div>
+          <div class="proof-stat proof-stat-wide">
+            <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);margin-bottom:0.55rem;">Rank Distribution</div>
+            <div id="proof-rank-bar" style="display:flex;border-radius:6px;overflow:hidden;height:8px;gap:1px;background:rgba(255,255,255,0.04);" aria-label="Rank distribution across all members"></div>
+            <div id="proof-rank-legend" style="display:flex;flex-wrap:wrap;gap:0.4rem 0.8rem;margin-top:0.45rem;"></div>
+          </div>
+          <div style="text-align:right;">
+            <a href="/vault-wall/" class="button-secondary button-sm">View Vault Wall</a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1677,6 +1733,78 @@
       var todayUtc = Date.UTC(today.getUTCFullYear(), today.getUTCMonth(), today.getUTCDate());
       var days = Math.max(1, Math.floor((todayUtc - launchDateUtc) / 86400000));
       el.textContent = days.toLocaleString('en-US');
+    })();
+  </script>
+
+  <!-- Social Proof Strip -->
+  <script>
+    (function () {
+      var RANK_CONFIG = [
+        { title: 'Spark Initiate',  color: '#94a3b8' },
+        { title: 'Vault Runner',    color: '#60a5fa' },
+        { title: 'Rift Scout',      color: '#34d399' },
+        { title: 'Vault Guard',     color: '#a78bfa' },
+        { title: 'Vault Breacher',  color: '#f97316' },
+        { title: 'Void Operative',  color: '#f43f5e' },
+        { title: 'Vault Keeper',    color: '#fbbf24' },
+        { title: 'Forge Master',    color: '#ff7a00' },
+        { title: 'The Sparked',     color: '#FFC400' }
+      ];
+
+      Promise.allSettled([
+        VSPublic.from('vault_members').select('id').count().get(),
+        VSPublic.from('vault_members').select('id').eq('is_vaultsparked', true).count().get(),
+        VSPublic.from('challenge_submissions').select('id').count().get(),
+        VSPublic.from('vault_members').select('rank_title').get()
+      ]).then(function (results) {
+        var memberCount = 0, sparkedCount = 0, challengeCount = 0;
+        var rankCounts = {};
+
+        if (results[0].status === 'fulfilled') {
+          memberCount = results[0].value.count || (results[0].value.data || []).length;
+        }
+        if (results[1].status === 'fulfilled') {
+          sparkedCount = results[1].value.count || (results[1].value.data || []).length;
+        }
+        if (results[2].status === 'fulfilled') {
+          challengeCount = results[2].value.count || (results[2].value.data || []).length;
+        }
+        if (results[3].status === 'fulfilled') {
+          (results[3].value.data || []).forEach(function (m) {
+            var t = m.rank_title || 'Spark Initiate';
+            rankCounts[t] = (rankCounts[t] || 0) + 1;
+          });
+        }
+
+        var mEl = document.getElementById('proof-members');
+        var sEl = document.getElementById('proof-sparked');
+        var cEl = document.getElementById('proof-challenges');
+        if (mEl) mEl.textContent = memberCount > 0 ? memberCount.toLocaleString('en-US') : '—';
+        if (sEl) sEl.textContent = sparkedCount > 0 ? sparkedCount.toLocaleString('en-US') : '—';
+        if (cEl) cEl.textContent = challengeCount > 0 ? challengeCount.toLocaleString('en-US') : '—';
+
+        // Rank distribution bar
+        var total = Object.values(rankCounts).reduce(function (a, b) { return a + b; }, 0);
+        if (total > 0) {
+          var bar = document.getElementById('proof-rank-bar');
+          var legend = document.getElementById('proof-rank-legend');
+          if (bar) {
+            bar.innerHTML = RANK_CONFIG.map(function (r) {
+              var pct = ((rankCounts[r.title] || 0) / total * 100);
+              if (pct < 0.5) return '';
+              return '<div style="background:' + r.color + ';flex:' + pct + ';min-width:3px;" title="' + r.title + ': ' + Math.round(pct) + '%"></div>';
+            }).join('');
+          }
+          if (legend) {
+            legend.innerHTML = RANK_CONFIG.filter(function (r) { return rankCounts[r.title] > 0; }).map(function (r) {
+              return '<span style="display:flex;align-items:center;gap:0.3rem;font-size:0.67rem;color:var(--dim);">' +
+                '<span style="width:7px;height:7px;border-radius:50%;background:' + r.color + ';flex-shrink:0;"></span>' +
+                r.title.split(' ').slice(-1)[0] +
+                '</span>';
+            }).join('');
+          }
+        }
+      }).catch(function () {});
     })();
   </script>
 

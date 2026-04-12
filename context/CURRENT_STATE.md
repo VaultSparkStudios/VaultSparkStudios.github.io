@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-12 (Session 54)
+- Date: 2026-04-12 (Session 55)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S54 bug fixes (QR code CDN 404 fixed @1.5.3→@1.5.0, theme picker CSS breakpoint fix 980px→640px, tileColor field for distinct tile backgrounds); S53 CSP hardening (removed 'unsafe-inline' from script-src, SHA-256 hashes, 85 pages), inline onclick → addEventListener refactor, portal-init.js extracted, DreadSpike signal log, Voidfall entity 4, CF cache purge workflow
+- Repo posture: S55 major feature session — 7 new pages/features shipped; theme picker bug fixed; social proof layer, founding badge, daily loop widget, game conversion enhancements. S54 bug fixes (QR code CDN 404 fixed @1.5.3→@1.5.0, theme picker CSS breakpoint fix 980px→640px, tileColor field). S53 CSP hardening.
 
 ## What exists
 
@@ -64,6 +64,19 @@
 - **Lighthouse** — CI enforced
 - **axe-core** — CI enforced
 
+## New pages and features shipped (S55)
+
+- **`/press/`** — full press kit with key facts, studio bio, logo grid, game catalog, press contact
+- **`/studio-pulse/`** — public dev transparency page (Now/Next/Shipped board, 8 game status grid, studio health)
+- **`/vault-wall/`** — public member recognition wall (live Supabase: rank distribution bar, podium, leaderboard #4-20, recently joined)
+- **`/invite/`** — referral program UX (referral link copy/share, stats, rewards, top inviters leaderboard)
+- **Social proof strip on homepage** — live member count, VaultSparked count, challenges count, rank distribution bar (9 segments)
+- **Daily loop widget in portal** — pinned banner showing login streak + active challenge title + bonus chip (shows above dash panes)
+- **`supabase/migrations/supabase-phase57-founding-vault-badge.sql`** — awards 🏛️ Founding Vault Member badge + 500 XP to first 100 members; `maybe_award_founding_badge()` RPC for real-time awarding
+- **Founding badge in `/vaultsparked/`** — added to comparison table + FAQ entry
+- **Call of Doodie game page** — added social share + "More From the Vault" conversion section
+- **Theme picker bug fix** — removed `theme-option` class from tile buttons in `theme-toggle.js:399`; `.theme-option { display:none }` legacy rule was hiding all tiles
+
 ## Known gaps
 
 - Per-form Web3Forms keys (all forms share single key)
@@ -72,3 +85,7 @@
 - Theme persistence Playwright spec updated (S46) — `#theme-select` replaced with `#theme-picker-btn` + `.theme-option[data-theme].active`; Firefox/WebKit not installed locally; full cross-browser run not verified
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
 - IGNIS score: 47,308/100,000 · Tier: FORGE · 82.1% through tier (rescored 2026-04-07 S50) · delta: +952
+- **[DB] Founding Vault badge migration** — `supabase-phase57-founding-vault-badge.sql` needs to be run in Supabase dashboard
+- **Studio About (`/studio/`) enhancement** — founder story section pending
+- **Portal daily challenges** — `initDailyLoopWidget` requires `VSPublic` (public Supabase client) to be available on vault-member page; verify wire-up
+- **Theme picker compact mode at 641–980px** — SIL item still pending
