@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="Genesis Vault Member">
+  <defs>
+    <radialGradient id="gvm-bg" cx="50%" cy="38%" r="62%">
+      <stop offset="0%" stop-color="#1c2445"/>
+      <stop offset="100%" stop-color="#070a14"/>
+    </radialGradient>
+    <radialGradient id="gvm-glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f5a623" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#f5a623" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <circle cx="32" cy="32" r="31" fill="url(#gvm-bg)"/>
+
+  <!-- Inner glow -->
+  <circle cx="32" cy="32" r="20" fill="url(#gvm-glow)"/>
+
+  <!-- Outer border ring -->
+  <circle cx="32" cy="32" r="30.5" fill="none" stroke="#c8800a" stroke-width="2"/>
+
+  <!-- Inner vault ring detail -->
+  <circle cx="32" cy="32" r="21.5" fill="none" stroke="#c8800a" stroke-width="0.8" opacity="0.45"/>
+
+  <!-- 8-pointed genesis star
+       Outer points r=16 at 0°,45°,90°,135°,180°,225°,270°,315° (from 12 o'clock, clockwise)
+       Inner points r=7  at 22.5° offsets between each outer point -->
+  <polygon
+    points="
+      32,16
+      34.67,25.53
+      43.31,20.69
+      38.47,29.33
+      48,32
+      38.47,34.67
+      43.31,43.31
+      34.67,38.47
+      32,48
+      29.33,38.47
+      20.69,43.31
+      25.53,34.67
+      16,32
+      25.53,29.33
+      20.69,20.69
+      29.33,25.53
+    "
+    fill="#f5a623"
+    opacity="0.95"
+  />
+
+  <!-- Center void (vault opening) -->
+  <circle cx="32" cy="32" r="5.5" fill="#070a14"/>
+
+  <!-- Center core spark -->
+  <circle cx="32" cy="32" r="2.5" fill="#f5a623"/>
+</svg>

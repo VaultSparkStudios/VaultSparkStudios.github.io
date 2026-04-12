@@ -26,7 +26,7 @@ Last updated: 2026-04-12 (Session 55)
 - [x] **[S55] Invite page (`/invite/`)** — referral program UX with copy link, social share, stats, rewards cards, top inviters leaderboard
 - [x] **[S55] Social proof strip on homepage** — live member count, VaultSparked count, challenges completed, rank distribution bar
 - [x] **[S55] Daily loop widget in portal** — login streak + active challenge title + login bonus chip above dashboard panes
-- [x] **[S55] Founding Vault Member badge** — `supabase-phase57-founding-vault-badge.sql` migration; awards 🏛️ badge + 500 XP to first 100 members; comparison table + FAQ entry added to `/vaultsparked/`
+- [x] **[S55] Founding Vault Member badge** — `supabase-phase57-founding-vault-badge.sql` migration; awards 🏛️ badge + 500 XP to first 100 members; comparison table + FAQ entry added to `/vaultsparked/`; **migration applied 2026-04-12 — 4 founding members badged: DreadSpike, OneKingdom, VaultSpark, Voidfall**
 - [x] **[S55] Game page conversion** — social share + "More From the Vault" section added to Call of Doodie page
 - [x] **[S55] Nav propagated** — 75 pages updated with canonical nav/footer (new pages included)
 
@@ -88,7 +88,7 @@ Last updated: 2026-04-12 (Session 55)
 - [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
 - [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
 - [ ] **[WEB3FORMS-KEYS]** Create 3 separate keys in Web3Forms dashboard (join/, contact/, data-deletion/) for per-form lead tracking [low priority]
-- [ ] **[DB] Founding Vault Badge** — run `supabase/migrations/supabase-phase57-founding-vault-badge.sql` in Supabase dashboard; awards 🏛️ badge + 500 XP to first 100 members by join date
+- [x] **[DB] Founding Vault Badge** — migration applied 2026-04-12 via Supabase CLI; 4 founding members badged: DreadSpike, OneKingdom, VaultSpark, Voidfall ✅
 - [x] **[CF-SECRETS]** Add `CF_API_TOKEN` (Zone/Cache Purge) and `CF_ZONE_ID` secrets to GitHub repo → Settings → Secrets; enables auto cache purge workflow added S53 ✅ (S54)
 - [x] **[CSP-VERIFY]** After S53 deploy: open vault-member/index.html in DevTools console (incognito); confirm zero `Content-Security-Policy` errors ✅ (S54 — verified; remaining Cloudflare edge-injected inline scripts are platform-generated, unfixable with static hashes, accepted as limitation)
 

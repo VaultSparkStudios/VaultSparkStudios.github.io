@@ -4564,8 +4564,11 @@
           progressHtml = `<div style="margin-top:0.3rem;height:3px;background:linear-gradient(90deg,#10B981,#34d399);border-radius:2px;opacity:0.5;"></div>`;
         }
 
+        const achIconHtml = def.icon && def.icon.startsWith('/')
+          ? `<img src="${def.icon}" alt="${def.name}" width="32" height="32" style="display:block;margin:0 auto 0.1rem;">`
+          : def.icon;
         el.innerHTML = `
-          <div class="ach-icon">${def.icon}</div>
+          <div class="ach-icon">${achIconHtml}</div>
           <div class="ach-name">${def.name}</div>
           <div class="ach-desc">${earned ? def.desc : 'Locked — keep playing to unlock'}</div>
           ${progressHtml}
