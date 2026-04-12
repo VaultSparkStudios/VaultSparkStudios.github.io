@@ -14,13 +14,13 @@
     'supabase.auth.token'
   ];
   var THEMES = [
-    { value: 'dark',          label: 'Dark',               color: '#07080f' },
-    { value: 'light',         label: 'Light',              color: '#f6efe5' },
-    { value: 'ambient',       label: 'Ambient',            color: '#08121c' },
-    { value: 'warm',          label: 'Warm',               color: '#1f120b' },
-    { value: 'cool',          label: 'Cool',               color: '#0a1830' },
-    { value: 'lava',          label: 'Lava',               color: '#200a08' },
-    { value: 'high-contrast', label: 'High Contrast',      color: '#000000' }
+    { value: 'dark',          label: 'Dark',          color: '#07080f', tileColor: '#16192e' },
+    { value: 'light',         label: 'Light',         color: '#f6efe5', tileColor: '#f0e8d8' },
+    { value: 'ambient',       label: 'Ambient',       color: '#08121c', tileColor: '#0d2040' },
+    { value: 'warm',          label: 'Warm',          color: '#1f120b', tileColor: '#321808' },
+    { value: 'cool',          label: 'Cool',          color: '#0a1830', tileColor: '#0c2248' },
+    { value: 'lava',          label: 'Lava',          color: '#200a08', tileColor: '#38100c' },
+    { value: 'high-contrast', label: 'High Contrast', color: '#000000', tileColor: '#111111' },
   ];
   var THEME_CLASSES = {
     dark: 'dark-mode',
@@ -400,7 +400,7 @@
       tile.dataset.theme = theme.value;
       tile.setAttribute('aria-pressed', theme.value === currentTheme ? 'true' : 'false');
       tile.setAttribute('aria-label', theme.label);
-      tile.style.background = theme.color;
+      tile.style.background = theme.tileColor || theme.color;
       // For light tile — ensure text contrast
       if (theme.value === 'light') {
         tile.style.color = 'rgba(30,40,60,0.85)';

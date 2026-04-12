@@ -422,7 +422,7 @@ body.light-mode .theme-picker-swatch { border-color: rgba(22,32,51,0.2); }
   padding: 0 0 0.42rem;
   border-radius: 11px;
   height: 66px;
-  border: 2px solid rgba(255,255,255,0.18);
+  border: 2px solid rgba(255,255,255,0.28);
   cursor: pointer;
   font-family: inherit;
   font-size: 0.67rem;
@@ -1732,8 +1732,7 @@ body.light-mode .text-white { color: var(--text); }
     text-decoration-color: rgba(255,255,255,0.15);
   }
 
-  /* Hide desktop theme picker on mobile — pills used instead */
-  .theme-picker { display: none; }
+  /* Theme picker stays visible down to 600px; only hidden below that */
 
   /* ── Close button inside mobile overlay ── */
   .nav-close-btn {
@@ -1830,6 +1829,9 @@ body.light-mode .text-white { color: var(--text); }
   /* Compact brand text on small phones */
   .brand small { display: none; }
   .brand span { font-size: 0.9rem; }
+
+  /* Hide desktop theme picker on phones — mobile pills in hamburger used instead */
+  .theme-picker { display: none; }
 }
 
 /* ─── Cookie Consent Banner ──────────────────────────── */
