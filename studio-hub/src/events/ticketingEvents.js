@@ -1,7 +1,7 @@
 // Ticketing view event handlers — extracted from clientApp.js
 
 export function bindTicketingEvents(ctx) {
-  const { state, render, config, loadStoredCredentials, submitProjectTicket, submitRenameTicket, submitInitiateTicket, submitSparkTicket, loadTickets, navigate } = ctx;
+  const { state, render, config, loadStoredCredentials, submitProjectTicket, submitRenameTicket, submitInitiateTicket, submitSparkTicket, dispatchAnnounceWorkflow, loadTickets, navigate } = ctx;
 
   // Refresh
   document.getElementById("tickets-refresh-btn")?.addEventListener("click", () => {
@@ -184,6 +184,39 @@ export function bindTicketingEvents(ctx) {
       document.getElementById("spark-submit-form")?.reset();
     } else {
       state.sparkError = result.error;
+    }
+    render();
+  });
+
+  // Announce tab — dispatch post-announcements workflow
+  document.getElementById("announce-submit-form")?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const projectId = document.getElementById("announce-project-select")?.value || "";
+    const platform  = document.getElementById("announce-platform")?.value || "both";
+    const dryRun    = document.getElementById("announce-dry-run")?.checked !== false;
+
+    state.announceSubmitting = true;
+    state.announceError = null;
+    state.announceSuccess = null;
+    render();
+
+    const credentials = loadStoredCredentials();
+    const token = config.githubToken || credentials.githubToken || "";
+    const result = await dispatchAnnounceWorkflow(
+      { project: projectId, platform, dryRun },
+      token
+    );
+
+    state.announceSubmitting = false;
+    if (result.ok) {
+      state.announceSuccess = { actionsUrl: result.actionsUrl, dryRun };
+      state.announceError = null;
+      document.getElementById("announce-submit-form")?.reset();
+      // Re-check dry-run box after reset (safe default)
+      const dryRunBox = document.getElementById("announce-dry-run");
+      if (dryRunBox) dryRunBox.checked = true;
+    } else {
+      state.announceError = result.error;
     }
     render();
   });

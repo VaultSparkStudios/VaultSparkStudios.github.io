@@ -295,6 +295,7 @@ export function renderTicketingView(state) {
     renameSubmitting = false, renameSuccess = null, renameError = null,
     initiateSubmitting = false, initiateSuccess = null, initiateError = null,
     sparkSubmitting = false, sparkSuccess = null, sparkError = null,
+    announceSubmitting = false, announceSuccess = null, announceError = null,
   } = state;
 
   const openTickets   = tickets.filter((t) => t.state === "open");
@@ -330,6 +331,7 @@ export function renderTicketingView(state) {
         ${[
           { id: "listing",  label: "Project Listing" },
           { id: "spark",    label: "Spark This Project" },
+          { id: "announce", label: "Announce" },
           { id: "rename",   label: "Rename / Rebrand" },
           { id: "initiate", label: "Initiate Project" },
         ].map(({ id, label }) => {
@@ -862,6 +864,187 @@ export function renderTicketingView(state) {
                       <span>${item}</span>
                     </div>
                   `).join("")}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        `;
+      })() : ""}
+
+      <!-- Announce tab -->
+      ${ticketingTab === "announce" ? (() => {
+        const aStyle = `width:100%; background:rgba(12,19,31,0.8); border:1px solid var(--border); border-radius:8px;
+          color:var(--text); font:inherit; font-size:12px; padding:8px 12px; outline:none; box-sizing:border-box; transition:border-color 0.15s;`;
+        const lStyle = `display:block; font-size:10px; font-weight:700; letter-spacing:0.07em;
+          text-transform:uppercase; color:var(--muted); margin-bottom:5px;`;
+        const fStyle = `margin-bottom:14px;`;
+
+        const unannounced = PROJECTS.filter((p) => p.launchStatus === "deployed-unannounced");
+
+        return `
+        <div style="display:grid; grid-template-columns:minmax(280px,400px) 1fr; gap:24px; align-items:start;">
+
+          <!-- ── Announce Form ── -->
+          <div>
+            <div class="panel">
+              <div class="panel-header">
+                <span class="panel-title">POST ANNOUNCEMENT</span>
+                <span style="font-size:10px; color:#fb923c; font-weight:700; padding:2px 8px;
+                  border-radius:10px; background:rgba(251,146,60,0.08); border:1px solid rgba(251,146,60,0.2);">
+                  WORKFLOW DISPATCH
+                </span>
+              </div>
+              <div class="panel-body">
+                ${announceSuccess ? `
+                  <div style="padding:12px; background:rgba(251,146,60,0.08); border:1px solid rgba(251,146,60,0.2);
+                               border-radius:8px; margin-bottom:16px;">
+                    <div style="font-size:12px; font-weight:700; color:#fb923c; margin-bottom:4px;">
+                      Workflow dispatched ✓
+                    </div>
+                    <div style="font-size:11px; color:var(--muted); margin-bottom:6px;">
+                      The announcement workflow is now running on GitHub Actions.
+                      ${announceSuccess.dryRun ? '<strong style="color:var(--text);">Dry-run — no posts were made.</strong>' : ''}
+                    </div>
+                    <a href="${announceSuccess.actionsUrl}" target="_blank"
+                       style="font-size:11px; color:#fb923c; text-decoration:none;">View run in GitHub Actions →</a>
+                  </div>
+                ` : ""}
+                ${announceError ? `
+                  <div style="padding:10px 12px; background:rgba(239,68,68,0.08); border:1px solid rgba(239,68,68,0.25);
+                               border-radius:8px; margin-bottom:14px; font-size:11px; color:#f87171;">${escapeHtml(announceError)}</div>
+                ` : ""}
+
+                <form id="announce-submit-form">
+                  <div style="${fStyle}">
+                    <label style="${lStyle}">Project *</label>
+                    ${unannounced.length === 0
+                      ? `<div style="font-size:11px; color:var(--muted); padding:8px 0; line-height:1.5;">
+                           No <code style="font-size:10px;">deployed-unannounced</code> projects found.<br>
+                           All eligible projects may already be announced.
+                         </div>`
+                      : `<select id="announce-project-select" style="${aStyle}; cursor:pointer;" required>
+                          <option value="">— All deployed-unannounced —</option>
+                          ${unannounced.map((p) => `<option value="${p.id}" data-name="${p.name}"
+                            data-url="${p.deployedUrl || ''}">${p.name}${p.deployedUrl ? "" : " (no URL)"}</option>`).join("")}
+                        </select>
+                        <div style="font-size:10px; color:var(--muted); margin-top:3px;">
+                          Leave blank to announce all ${unannounced.length} eligible project${unannounced.length !== 1 ? "s" : ""}
+                        </div>`
+                    }
+                  </div>
+
+                  <div style="${fStyle}">
+                    <label style="${lStyle}">Platform</label>
+                    <select id="announce-platform" style="${aStyle}; cursor:pointer;">
+                      <option value="both" selected>Both (Reddit + X/Twitter)</option>
+                      <option value="reddit">Reddit only</option>
+                      <option value="twitter">X / Twitter only</option>
+                    </select>
+                  </div>
+
+                  <div style="margin-bottom:16px;">
+                    <label style="display:flex; align-items:flex-start; gap:10px; cursor:pointer;">
+                      <input type="checkbox" id="announce-dry-run" checked
+                        style="margin-top:2px; accent-color:#fb923c; flex-shrink:0;">
+                      <div>
+                        <div style="font-size:11px; font-weight:600; color:var(--text);">Dry run (recommended first)</div>
+                        <div style="font-size:10px; color:var(--muted); margin-top:1px;">
+                          Preview copy in the Actions log — no actual posts made. Uncheck to post for real.
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+
+                  <button type="submit" ${announceSubmitting || unannounced.length === 0 ? "disabled" : ""}
+                    style="width:100%; padding:10px; border-radius:8px; border:none;
+                           cursor:${announceSubmitting || unannounced.length === 0 ? "not-allowed" : "pointer"};
+                           font-size:12px; font-weight:700; letter-spacing:0.05em;
+                           background:${announceSubmitting ? "rgba(251,146,60,0.1)" : "rgba(251,146,60,0.12)"};
+                           color:${announceSubmitting || unannounced.length === 0 ? "var(--muted)" : "#fb923c"};
+                           border:1px solid rgba(251,146,60,0.25); transition:all 0.15s;">
+                    ${announceSubmitting ? "Dispatching…" : "Dispatch Announcement Workflow →"}
+                  </button>
+                  <div style="margin-top:8px; font-size:10px; color:var(--muted); text-align:center; line-height:1.5;">
+                    Triggers <code style="font-size:9px;">post-announcements.yml</code> in
+                    <code style="font-size:9px;">vaultspark-studio-ops</code>.
+                    Requires a token with <code style="font-size:9px;">workflow</code> scope.
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── How it Works ── -->
+          <div>
+            <div class="panel" style="margin-bottom:16px;">
+              <div class="panel-header"><span class="panel-title">WHAT GETS POSTED</span></div>
+              <div class="panel-body" style="font-size:12px; color:var(--muted); line-height:1.7;">
+                <div style="margin-bottom:12px;">
+                  Posts pre-generated announcement drafts from
+                  <code style="font-size:10px;">docs/launch/&lt;slug&gt;-announcement-draft.md</code>
+                  in studio-ops. Each draft contains platform-specific copy for Reddit and X/Twitter.
+                </div>
+                <div style="display:flex; flex-direction:column; gap:6px; margin-bottom:12px;">
+                  ${[
+                    ["Reddit", "Self-post to r/SideProject + project-specific subreddits"],
+                    ["X / Twitter", "Single tweet (≤280 chars) with link + hashtags"],
+                  ].map(([platform, desc]) => `
+                    <div style="display:flex; gap:10px; align-items:flex-start; padding:8px;
+                                background:rgba(255,255,255,0.02); border-radius:6px; border:1px solid var(--border);">
+                      <div style="font-size:11px; font-weight:700; color:var(--text); min-width:80px;">${platform}</div>
+                      <div style="font-size:11px;">${desc}</div>
+                    </div>
+                  `).join("")}
+                </div>
+                <div style="font-size:10px; padding:8px 10px; background:rgba(251,146,60,0.06);
+                             border-radius:6px; border:1px solid rgba(251,146,60,0.15); line-height:1.6;">
+                  <strong style="color:#fb923c;">Double-post protection:</strong>
+                  A post log tracks every successful post. Re-running the workflow skips already-announced targets.
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-header"><span class="panel-title">HOW IT WORKS</span></div>
+              <div class="panel-body" style="font-size:12px; color:var(--muted); line-height:1.7;">
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  ${[
+                    ["1", "Dispatch",  "Hub calls GitHub workflow_dispatch API — credentials never leave GitHub"],
+                    ["2", "Dry run",   "Workflow prints the full post copy to the Actions log for review"],
+                    ["3", "Go live",   "Uncheck dry-run, re-dispatch — workflow posts and logs results"],
+                    ["4", "Commit",    "post-log.json + registry update committed automatically"],
+                    ["5", "Done",      "launchStatus flips to 'announced' in PROJECT_REGISTRY.json"],
+                  ].map(([n, lbl, desc]) => `
+                    <div style="display:flex; gap:10px; align-items:flex-start;">
+                      <div style="width:18px; height:18px; border-radius:50%;
+                                  background:rgba(251,146,60,0.12); border:1px solid rgba(251,146,60,0.3);
+                                  color:#fb923c; font-size:10px; font-weight:800;
+                                  display:flex; align-items:center; justify-content:center; flex-shrink:0;">${n}</div>
+                      <div>
+                        <div style="font-size:11px; font-weight:700; color:var(--text); margin-bottom:1px;">${lbl}</div>
+                        <div style="font-size:11px; color:var(--muted);">${desc}</div>
+                      </div>
+                    </div>
+                  `).join("")}
+                </div>
+
+                <div style="margin-top:14px; padding:10px; background:rgba(255,255,255,0.02);
+                             border-radius:6px; border:1px solid var(--border); font-size:11px;">
+                  <div style="font-weight:700; color:var(--text); margin-bottom:4px;">Token scope required</div>
+                  <div>Your GitHub token needs <code style="font-size:10px;">workflow</code> scope to dispatch
+                  workflows. Generate one at <code style="font-size:10px;">github.com → Settings → Tokens</code>
+                  and save it in Hub Settings.</div>
+                </div>
+
+                <div style="margin-top:10px; padding:10px; background:rgba(255,255,255,0.02);
+                             border-radius:6px; border:1px solid var(--border); font-size:11px;">
+                  <div style="font-weight:700; color:var(--text); margin-bottom:4px;">Platform credentials</div>
+                  <div>Reddit + Twitter API credentials must be added to
+                  <code style="font-size:10px;">vaultspark-studio-ops</code> Actions secrets
+                  (<code style="font-size:10px;">REDDIT_CLIENT_ID</code>, <code style="font-size:10px;">TWITTER_API_KEY</code>, etc.).
+                  See <code style="font-size:10px;">secrets/SOCIAL_CREDENTIALS_TEMPLATE.md</code>.</div>
                 </div>
               </div>
             </div>

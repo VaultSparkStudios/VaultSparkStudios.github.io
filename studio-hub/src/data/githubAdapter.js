@@ -964,6 +964,51 @@ export async function submitSparkTicket(fields, token = "") {
   }
 }
 
+// Dispatch the post-announcements workflow via workflow_dispatch.
+// Returns { ok: true, actionsUrl } on success (GitHub returns 204 No Content).
+// Requires a token with `workflow` scope (Settings → Tokens → workflow checkbox).
+export async function dispatchAnnounceWorkflow(fields, token = "") {
+  if (!token) return { ok: false, error: "No GitHub token configured. Add one in Settings." };
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${STUDIO_OPS_REPO}/actions/workflows/post-announcements.yml/dispatches`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/vnd.github+json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ref: "main",
+          inputs: {
+            project:  fields.project  || "",
+            platform: fields.platform || "both",
+            dry_run:  fields.dryRun   ? "true" : "false",
+          },
+        }),
+      }
+    );
+
+    // 204 = accepted; no body
+    if (res.status === 204) {
+      const actionsUrl = `https://github.com/${STUDIO_OPS_REPO}/actions/workflows/post-announcements.yml`;
+      return { ok: true, actionsUrl };
+    }
+
+    // 422 usually means the workflow file doesn't exist on the ref yet
+    if (res.status === 422) {
+      return { ok: false, error: "Workflow not found on main branch. Ensure post-announcements.yml is pushed to main." };
+    }
+
+    const err = await res.json().catch(() => ({}));
+    return { ok: false, error: err.message || `GitHub error ${res.status}` };
+  } catch (e) {
+    return { ok: false, error: e?.message || "Network error" };
+  }
+}
+
 // Fetches decoded content for key portfolio files from studio-ops.
 // Returns { [filePath]: { content: string, truncated: boolean } }.
 const PORTFOLIO_CONTENT_FILES = [
