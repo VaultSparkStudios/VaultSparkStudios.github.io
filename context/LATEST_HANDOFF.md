@@ -1,11 +1,22 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 62 closeout)
+Last updated: 2026-04-13 (Session 63 redirect closeout)
 
-## Session Intent: Session 63
-S63 Now bucket: wire SVG achievement icons to portal defs, site-wide scroll reveals, membership social proof live data, vault wall manual smoke. IGNIS rescore now 6+ days stale — must run at session open.
+## Session Intent: Session 64
+S64 Now bucket: wire SVG achievement icons to portal defs, site-wide scroll reveals, membership social proof live data, vault wall manual smoke. IGNIS rescore stale — run at session open.
 
 ---
+
+## Where We Left Off (Session 63 redirect — 2026-04-13)
+
+**Session redirected from S63 planned work to comprehensive light mode text readability overhaul.**
+**Session output: 1 item shipped — light mode Phase 2 complete site-wide pass.**
+
+- **Light mode Phase 2 overhaul** — user reported many text areas still unreadable in light mode. Systematic audit of all 54 pages with hardcoded dark RGBA values. Two-phase fix:
+  1. `assets/style.css` +163 lines: new Phase 2 section covering `.rank-card`/`.rank-card-copy`, `.press-card`/`.game-press-card`/`.press-card h3`/`.press-quote blockquote`/`.contact-box`/`.fact-table`, `.character-block`, `.manifesto`, `.cta-panel`, `.vault-wall-cta`, `.team-founder-card`, `.mem-hero-proof`, `#contact-toast`/`.toast-title`/`.toast-sub`, `.contact-info-row`, `[data-event]` community cards, stage badges, `.pipeline-card-meta span`, `section[style*="border-top:1px solid rgba(255,255,255"]`, `.compare-table td.feature-name`, `#vs-toast`, `.rank-loyalty-panel`, `.studio-pulse-cta`, `.invite-box`/`.guest-invite-cta`/`.invite-link-input`, `#searchInput`/`.search-result-card`, `.vs-toast`
+  2. `vault-member/portal.css` +59 lines: `.profile-card`, `.challenge-counter-bar`/`.challenge-category-tabs`/`.challenge-category-tab`, `.member-stats-card`/`.member-profile-card`/`.member-rank-card`, `.member-leaderboard-item`, `.member-onboarding-panel`/`.member-dashboard-container`, `.whats-new-dialog`/`.pts-breakdown-dialog`/`.challenge-modal`/`.challenge-modal-body`, `.dashboard-intro`
+  3. HTML class additions: `studio/index.html` (`.cta-panel` + `.team-founder-card` on inline divs), `vault-wall/index.html` (`.vault-wall-cta`), `vaultsparked/index.html` (`.rank-loyalty-panel`), `studio-pulse/index.html` (`.studio-pulse-cta`)
+  - Commit: f79f0a7
 
 ## Where We Left Off (Session 62 — 2026-04-13)
 
