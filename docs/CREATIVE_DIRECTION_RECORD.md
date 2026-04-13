@@ -8,6 +8,19 @@ Boundary:
 
 ## Entries
 
+### 2026-04-13 — Homepage hero: remove logo image, forge wordmark animation, immersive identity-first design (S62)
+
+- Category: Visual Design / UX / Brand Identity
+- Human input: (1) "The top of the new website looks weird with the logo first before the main VaultSpark Studios title. Is there really nothing custom you can design for the homepage that is fully immersive to the user (perhaps removing the logo from that area and putting it elsewhere like in small icon format in the header and footer)"; (2) "Brainstorm the most immersive homepage ideas and score all options"; (3) "Implement A+B as a hybrid at highest quality — also pay close attention to the mobile design and make it desktop/tablet/smartphone (iphone/android) responsive"
+- Area affected: `index.html` (hero section CSS + HTML)
+- Required direction:
+  1. Cinematic logo image (`vaultspark-cinematic-logo.webp`) must not appear in the hero — it reads as "logo first, then the name" which feels weird and backwards
+  2. Logo icon (`vaultspark-icon.webp`) in the nav header is the correct placement — small icon format only
+  3. The studio name itself (VaultSpark Studios as large type) is the hero identity — no image dependency
+  4. The homepage hero must be genuinely immersive — the forge ignition concept (name "burns in" from a spark) and the vault door concept (vignette chamber spatial depth) were scored and selected
+  5. Full responsive is non-negotiable: desktop, tablet, iPhone, Android all explicitly tested via clamp() and breakpoints at 768/640/480/360px
+  6. The forge metaphor (fire meets steel, spark splits the forge) is the correct identity expression — it is the studio's own language and should be the foundational design principle for the hero
+
 ### 2026-04-13 — Homepage hero visual identity: no circles, must feel structurally different (S59–S60)
 
 - Category: Visual Design / UX

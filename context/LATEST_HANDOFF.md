@@ -1,9 +1,37 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 61 closeout)
+Last updated: 2026-04-13 (Session 62 closeout)
 
-## Session Intent: Session 62
-Continue S62 runway items: Annual Stripe checkout routing (after HAR), Membership page social proof live data, Vault Wall manual smoke (incognito verify). IGNIS rescore due (6+ days stale).
+## Session Intent: Session 63
+S63 Now bucket: wire SVG achievement icons to portal defs, site-wide scroll reveals, membership social proof live data, vault wall manual smoke. IGNIS rescore now 6+ days stale — must run at session open.
+
+---
+
+## Where We Left Off (Session 62 — 2026-04-13)
+
+**Session output: 1 item shipped — homepage forge ignition redesign.**
+**Session redirected from declared S62 intent by Studio Owner to homepage visual identity work.**
+
+- **Homepage hero forge ignition + vault door hybrid** — `vaultspark-cinematic-logo.webp` removed from hero entirely. `.forge-wordmark` h1 (aria-label="VaultSpark Studios") contains two `.forge-line` blocks: `forge-line-1` (VAULTSPARK, 700 weight, clamp 2.6–9.0rem) and `forge-line-2` (STUDIOS, 400 weight, 0.1em tracking, clamp 1.7–5.8rem). Each letter is a `.forge-letter` span with `--li` CSS custom property driving `animation-delay: calc(0.12s + var(--li)*0.065s)`. `letterForge` keyframe: opacity 0→1, translateY(10px)→0, blur 5px→0, gold text-shadow flares then cools. `forge-spark-burst`: gold radial blur div that blooms from center (0s) and fades before letters settle — visually causes the name to appear. `hero-chamber`: radial vignette darkens all four edges for spatial depth. `hero-reveal` class: all subsequent elements (tagline, eyebrow, sub, CTAs, meta, story) fade+slide in staggered from 1.35s to 2.08s. Responsive: 768/640/480/360px breakpoints; `prefers-reduced-motion` disables all animations instantly. Light-mode: warm-cream vignette; letters inherit dark text via var(--text). `vaultspark-icon.webp` remains in nav (already there). Logo preload removed. SW cache bumped to `vaultspark-20260413-d58d28b`. Commit: 779d197.
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions.
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler.
+- [ ] **[STRIPE-ANNUAL]** Create 2 new Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal). Wire to billing toggle checkout when created.
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **[SIL] Wire SVG achievement icons** — grep portal-core.js for ACHIEVEMENT_DEFS; update vaultsparked + forge_master icon fields to SVG paths
+2. **[SIL] Membership social proof live data** — grep membership/index.html for static stat values; wire to VSPublic Supabase
+3. **[IGNIS]** Rescore — run `npx tsx cli.ts score .` from studio-ops ignis; 6+ days stale
 
 ---
 

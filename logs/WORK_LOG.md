@@ -1,5 +1,13 @@
 # Work Log
 
+## 2026-04-13 — Session 62
+
+- index.html (homepage): cinematic logo image removed from hero; replaced with `.forge-wordmark` h1 containing `.forge-line-1` (VAULTSPARK, 700wt, clamp 2.6–9.0rem, -0.04em tracking) and `.forge-line-2` (STUDIOS, 400wt, clamp 1.7–5.8rem, 0.1em tracking); 17 `.forge-letter` spans with `--li` CSS custom property; `@keyframes letterForge` (opacity/translateY/blur/gold text-shadow cascade); `@keyframes forgeSparkBurst` (scale 0→2.6, gold radial blur); `@keyframes heroFadeUp` (subsequent element reveals); `.hero-chamber` vignette; `.hero-reveal` class; breakpoints at 768/640/480/360px; `prefers-reduced-motion` guard; light-mode vignette override; cinematic logo preload removed
+- sw.js: CACHE_NAME bumped to `vaultspark-20260413-d58d28b`
+- context/: CURRENT_STATE (S62 snapshot, hero entry), TASK_BOARD (S62 runway pre-load updated, SIL:1 counters on membership+vault-wall, 3 new SIL items), LATEST_HANDOFF (S63 intent + S62 full detail), PROJECT_STATUS (silScore 427, velocity 1, currentSession 63), SELF_IMPROVEMENT_LOOP (S62 entry + rolling status), WORK_LOG, CDR (S62 entry)
+- Commit: 779d197 · pushed to main (GitHub Pages auto-deploy)
+- SIL: 427/500 · Velocity: 1 (redirected session) · Debt: →
+
 ## 2026-04-13 — Session 61
 
 - supabase/migrations/supabase-phase59-public-profile.sql: applied live via `supabase db query --linked`; `public_profile boolean NOT NULL DEFAULT true` column confirmed + partial index `idx_vault_members_public_profile` confirmed on fjnpzjjyhnpmunfoycrp

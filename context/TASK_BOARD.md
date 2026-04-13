@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 61 closeout)
+Last updated: 2026-04-13 (Session 62 closeout)
 
 ---
 
@@ -57,11 +57,14 @@ Last updated: 2026-04-13 (Session 61 closeout)
 - [x] **[SIL] Voidfall Fragment 005** — 5th Transmission Archive card added to `/universe/voidfall/`; coordinates confirmed correct, nothing there, "keeps ████████"; continues intercept log pattern with new redaction teaser (S61)
 - [x] **[SIL] Portal: rank loyalty discount display** — Forge Master (25%, crimson chip) and The Sparked (50%, gold chip) rank loyalty discounts shown in Studio Access panel; `RANK_DISCOUNT` map in `loadStudioAccessPanel()`; non-discount members see upgrade CTA instead (S61)
 
-## Now (S62 runway pre-load)
+## Now (S63 runway pre-load)
 
-- [ ] **[SIL] Annual Stripe checkout routing** — when `vssBillingMode === 'annual'`, route to annual price IDs; add `ANNUAL_PRICE_IDS` map to `vaultsparked/billing-toggle.js`; HAR first: Studio Owner creates $44.99/yr + $269.99/yr Stripe prices. First step: check billing-toggle.js checkout handler for `vssBillingMode` read.
-- [ ] **[SIL] Membership page social proof live data** — `/membership/index.html` social proof strip currently uses static JS; wire to `VSPublic` Supabase client for live member count + VaultSparked count (same pattern as homepage strip). First step: grep membership/index.html for the static stat values.
-- [ ] **[SIL] Vault Wall manual smoke** — open `/vault-wall/` in incognito after phase59 deploy; confirm member cards render with `public_profile=true` filter and no console errors. First step: open incognito tab and check DevTools console.
+- [x] **[SIL] Homepage hero forge ignition redesign** — forge-wordmark h1 with letterForge animation, forge-spark-burst, hero-chamber vignette, hero-reveal cascade; cinematic logo removed from hero; full responsive; prefers-reduced-motion guard; light-mode overrides. Deployed 2026-04-13 (S62).
+- [ ] **[SIL:1] Membership page social proof live data** — `/membership/index.html` social proof strip currently uses static JS; wire to `VSPublic` Supabase client for live member count + VaultSparked count (same pattern as homepage strip). First step: grep membership/index.html for the static stat values.
+- [ ] **[SIL:1] Vault Wall manual smoke** — open `/vault-wall/` in incognito after phase59 deploy; confirm member cards render with `public_profile=true` filter and no console errors. First step: open incognito tab and check DevTools console.
+- [ ] **[SIL] Annual Stripe checkout routing** — when `vssBillingMode === 'annual'`, route to annual price IDs; add `ANNUAL_PRICE_IDS` map to `vaultsparked/billing-toggle.js`; HAR first: Studio Owner creates $44.99/yr + $269.99/yr Stripe prices. Exempt from [SIL:N] increment until HAR cleared.
+- [ ] **[SIL] Wire SVG achievement icons to portal defs** — `portal-core.js` ACHIEVEMENT_DEFS has `vaultsparked` and `forge_master` slugs; update `icon` field from emoji to `/assets/images/badges/vaultsparked.svg` + `/assets/images/badges/forge-master.svg`; renderer already handles path-based icons (S56). First step: grep portal-core.js for ACHIEVEMENT_DEFS.
+- [ ] **[SIL] Site-wide scroll reveals** — add IntersectionObserver in `assets/scroll-reveal.js`; `data-reveal="fade-up"` attrs on key homepage sections; same heroFadeUp aesthetic extended site-wide with no framework. First step: create scroll-reveal.js with observer + CSS reveal class.
 
 ## Next
 

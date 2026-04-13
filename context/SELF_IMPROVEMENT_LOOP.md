@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▅▆▄▆▇
-Avgs — 3: 437.7 | 5: 435.6 | 10: 431.0 | all: 424.0
-  └ 3-session: Dev 87.7 | Align 87.0 | Momentum 89.0 | Engage 87.0 | Process 87.0
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: ~3.0 sessions (pre-loaded S62)  |  Intent rate: 100% (last 5)
-Last session: 2026-04-13 | Session 61 | Total: 455/500 | Velocity: 9 | protocolVelocity: 9
+Sparkline (last 5 totals): ▆▆▆▇▆
+Avgs — 3: 434.0 | 5: 433.2 | 10: 431.0 | all: 424.1
+  └ 3-session: Dev 89.3 | Align 86.7 | Momentum 81.3 | Engage 89.7 | Process 87.0
+Velocity trend: ↓  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~1.5 sessions ⚠ (pre-loaded S63)  |  Intent rate: 80% (last 5)
+Last session: 2026-04-13 | Session 62 | Total: 427/500 | Velocity: 1 | protocolVelocity: 9
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -714,3 +714,27 @@ Avgs — 3: 437.7 | 5: 435.6 | all: 424.0
 3. **Wire SVG achievement icons to portal defs** — `portal.js` ACHIEVEMENT_DEFS has `vaultsparked` and `forge_master` slugs; update `icon` field to `/assets/images/badges/vaultsparked.svg` and `/assets/images/badges/forge-master.svg`; renderer already supports path-based icons (S56). First step: grep portal.js for ACHIEVEMENT_DEFS or achievement slug array. High probability.
 
 **Committed to TASK_BOARD:** [SIL] Annual Stripe checkout routing · [SIL] Membership social proof live data · [SIL] Vault Wall manual smoke
+
+## 2026-04-13 — Session 62 | Total: 427/500 | Velocity: 1 | Debt: →
+Avgs — 3: 434.0 | 5: 433.2 | 10: 431.0 | all: 424.1
+  └ 3-session: Dev 89.3 | Align 86.7 | Momentum 81.3 | Engage 89.7 | Process 87.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 92 | → | Clean CSS architecture; clamp() responsive; reduced-motion guard; no test run (CSS/HTML only) |
+| Creative Alignment | 92 | ↑ | Forge metaphor IS the studio identity — most SOUL-aligned hero since launch; CDR captured |
+| Momentum | 66 | ↓ | Redirected session; declared S62 intent (runway items) not started; velocity 1 |
+| Engagement | 91 | ↑ | Immediate execution on "looks weird" feedback; brainstorm → score → implement in one session |
+| Process Quality | 86 | ↓ | Full closeout; CDR written; IGNIS still stale (6+ days); all context files updated |
+| **Total** | **427/500** | ↓ | Redirected session; creative quality high but velocity low |
+
+**Top win:** The forge ignition animation expresses VaultSpark's core metaphor ("fire meets steel, a single spark") as the literal loading experience — the name now IS the brand statement, not a logo image
+**Top gap:** IGNIS 6+ days stale; S62 runway items (membership social proof, vault wall smoke) not actioned due to session redirect
+**Intent outcome:** Redirected — user steered session to homepage visual identity work before S62 runway items were started
+
+**Brainstorm**
+1. **Wire SVG achievement icons to portal defs** — `ACHIEVEMENT_DEFS` in `portal-core.js` needs `vaultsparked`/`forge_master` icon fields updated from emoji to SVG paths; renderer already supports path-based icons (S56); zero risk, immediate polish. First step: grep portal-core.js for ACHIEVEMENT_DEFS. High probability.
+2. **Site-wide scroll reveals** — extend the forge hero's entrance aesthetic to the whole site; IntersectionObserver in `assets/scroll-reveal.js` + `data-reveal` attrs on key sections; same heroFadeUp keyframe; no framework. First step: create scroll-reveal.js with threshold 0.15 observer. High probability.
+3. **Homepage light-mode forge animation smoke** — the letterForge keyframe gold text-shadow may render oddly in light mode at peak brightness; test all 6 themes with DevTools and add per-theme overrides if needed. First step: toggle each theme in DevTools, observe letterForge peak frame color. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Wire SVG achievement icons · [SIL] Site-wide scroll reveals

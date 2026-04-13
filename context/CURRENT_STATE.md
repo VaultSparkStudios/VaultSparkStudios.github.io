@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-13 (Session 61 closeout)
+- Date: 2026-04-13 (Session 62 closeout)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S61 — 9 items shipped: Portal Studio Access panel, VaultSparked CSP smoke test (CI wired), homepage hero structural redesign (centered cinematic), propagate-csp SKIP_DIRS (vaultsparked), portal public_profile toggle (CSP-safe, settings page), vault-wall smoke spec (tests/vault-wall.spec.js, CI), Voidfall Fragment 005, rank loyalty discount chips in Studio Access panel, phase59 DB migration applied live (public_profile column + index confirmed). S60 bug-fix — vaultsparked CSP, homepage circular fix. S59 major batch — /membership/ hub, Option C model, nav/footer propagation, vaultsparked overhaul, homepage Signal teaser.
+- Repo posture: S62 — 1 item shipped: homepage hero forge ignition + vault door hybrid redesign (cinematic logo image removed; VAULTSPARK/STUDIOS forge-wordmark letterForge animation; forge-spark-burst; hero-chamber vignette; hero-reveal cascade; full responsive 768/640/480/360px breakpoints; prefers-reduced-motion guard). S61 — 9 items shipped: Portal Studio Access panel, VaultSparked CSP smoke test (CI wired), homepage hero structural redesign (centered cinematic), propagate-csp SKIP_DIRS (vaultsparked), portal public_profile toggle (CSP-safe, settings page), vault-wall smoke spec (tests/vault-wall.spec.js, CI), Voidfall Fragment 005, rank loyalty discount chips in Studio Access panel, phase59 DB migration applied live (public_profile column + index confirmed). S60 bug-fix — vaultsparked CSP, homepage circular fix. S59 major batch — /membership/ hub, Option C model, nav/footer propagation, vaultsparked overhaul, homepage Signal teaser.
 
 ## What exists
 
@@ -23,7 +23,8 @@
 
 ### Infrastructure
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler. **S53: script-src updated to SHA-256 hashes (removed 'unsafe-inline')**; needs redeploy.
-- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260413-c2a04f92`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, `portal-init.js`, `members-directory.js`, `vaultsparked-checkout.js`, `billing-toggle.js`
+- **Homepage hero** (`index.html`) — S62: forge ignition + vault door hybrid; `vaultspark-cinematic-logo.webp` removed from hero; `.forge-wordmark` h1 with `.forge-line-1` (VAULTSPARK) + `.forge-line-2` (STUDIOS) animated via `letterForge` keyframe; `.forge-spark-burst` gold ignition point; `.hero-chamber` radial vignette; `.hero-reveal` stagger cascade; full responsive 768/640/480/360px; `prefers-reduced-motion` guard; light-mode overrides; icon remains in nav header only.
+- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260413-d58d28b`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, `portal-init.js`, `members-directory.js`, `vaultsparked-checkout.js`, `billing-toggle.js`
 - **DX scripts** (`scripts/propagate-csp.mjs`, `scripts/smoke-test.sh`) — S47 created; S49 regex fixed + dry-run exit-1 added; **S53: CSP_VALUE updated to SHA-256 hashes (removed 'unsafe-inline')**; 85 pages propagated; `e2e.yml` compliance job runs `--dry-run` check before Playwright
 - **Sentry release workflow** (`.github/workflows/sentry-release.yml`) — S47 created, S48 fully wired: org `vaultspark-studios`, project `4511104933298176`, token set as GitHub secret; every push to main now tags a Sentry release
 - **Referral attribution** (`supabase/migrations/supabase-phase56-referral-attribution.sql`) — S48: `referred_by uuid` column on `vault_members`; `register_open` accepts `p_ref_by`, awards referrer +100 XP, fires recruiter/patron achievements; `get_referral_milestones` counts both invite-code and direct-link referrals; migration applied live
