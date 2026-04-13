@@ -1,0 +1,42 @@
+{
+  "session": 64,
+  "date": "2026-04-13",
+  "auditFile": "2026-04-13-5.json",
+  "silTotal": 443,
+  "silBreakdown": {
+    "devHealth": 90,
+    "creativeAlignment": 88,
+    "momentum": 92,
+    "engagement": 91,
+    "processQuality": 82
+  },
+  "velocity": 7,
+  "intentOutcome": "achieved",
+  "avgLast3": 431.7,
+  "avgLast5": 434.0,
+  "avgLast10": 432.2,
+  "sparkline": "▆▇▆▆▆",
+  "itemsShipped": [
+    "assets/studio-stats.js — externalized CSP-blocked days-since-launch inline script",
+    "assets/membership-stats.js — externalized CSP-blocked membership social proof inline script",
+    "assets/scroll-reveal.js — IntersectionObserver fade-up reveals; CSS added to style.css",
+    "index.html — 7+ → 10+ worlds; scroll-reveal + studio-stats wired; 6 sections tagged",
+    "membership/index.html — social proof wired to membership-stats.js",
+    "rights/index.html — canonical /rights/ page created",
+    "open-source/index.html — redirect to /rights/ (meta refresh + JS replace; noindex)",
+    "scripts/propagate-nav.mjs — footer /open-source/ → /rights/; propagated 77 pages",
+    "vaultsparked/index.html — standard header/footer template; nav-toggle.js added",
+    "sitemap.xml, sitemap.html, sitemap-page/, press/ — /open-source/ → /rights/ references",
+    "tests/light-mode-screenshots.spec.js — extended 3 → 10 pages",
+    "tests/compliance-pages.spec.js — /open-source/ → /rights/",
+    "sw.js — cache bump s64; 3 new JS assets in STATIC_ASSETS"
+  ],
+  "harItems": [
+    "[CF-WORKER-TOKEN] Add secret to GitHub for Cloudflare Worker auto-deploy",
+    "[STRIPE-ANNUAL] Create $44.99/yr + $269.99/yr Stripe price IDs",
+    "[IGNIS] Rescore — 7+ days stale"
+  ],
+  "topWin": "Vaultsparked nav had been orphaned (custom CSS classes never defined) and invisible to propagate-nav for 9+ sessions due to SKIP_DIRS; caught from user screenshot and fully restored to standard template in one session",
+  "topGap": "IGNIS still stale 7+ days; no browser smoke run in sandbox; vaultsparked drift required user screenshot to detect",
+  "commit": "ac38e5c"
+}

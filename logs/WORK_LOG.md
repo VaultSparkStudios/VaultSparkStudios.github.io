@@ -1,5 +1,25 @@
 # Work Log
 
+## 2026-04-13 — Session 64
+
+- assets/studio-stats.js: CREATED — externalized CSP-blocked inline days-since-launch script; calculates live from UTC epoch; fixes hardcoded "393 Days since launch" fallback
+- assets/membership-stats.js: CREATED — externalized membership page social proof (proof-members, stat-members, proof-sparked, stat-sparked, stat-challenges) via VSPublic; fixes CSP-blocked inline script
+- assets/scroll-reveal.js: CREATED — IntersectionObserver fade-up reveals for `[data-reveal]` elements; `prefers-reduced-motion` guard; CSS block added to style.css
+- assets/style.css: scroll-reveal CSS block appended (`[data-reveal]`, `[data-reveal].revealed`, reduced-motion override)
+- index.html: `7+` → `10+` worlds; removed 11-line CSP-blocked inline script; added studio-stats.js + scroll-reveal.js as defer scripts; 6 sections tagged with `data-reveal="fade-up"`
+- membership/index.html: removed 27-line CSP-blocked inline social proof block; wired to membership-stats.js
+- rights/index.html: CREATED — canonical /rights/ URL for Technology & Rights page; all metadata updated
+- open-source/index.html: REPLACED — minimal redirect to /rights/ (`meta refresh` + JS `location.replace`; noindex)
+- scripts/propagate-nav.mjs: footer href updated `/open-source/` → `/rights/`; run propagated to 77 pages
+- vaultsparked/index.html: full nav/footer replacement — custom orphaned `.site-nav/.nav-links` removed; standard `<header class="site-header">` template inserted; nav-toggle.js added (was missing entirely); hamburger now functional
+- sitemap.xml, sitemap.html, sitemap-page/index.html, press/index.html: /open-source/ references updated to /rights/
+- tests/light-mode-screenshots.spec.js: PAGES array extended 3 → 10 (added press, contact, community, studio, roadmap, universe, membership)
+- tests/compliance-pages.spec.js: `/open-source/` → `/rights/` in compliance pages array
+- sw.js: CACHE_NAME bumped to `vaultspark-20260413-s64`; studio-stats.js, membership-stats.js, scroll-reveal.js added to STATIC_ASSETS
+- context/: TASK_BOARD, CURRENT_STATE, LATEST_HANDOFF, PROJECT_STATUS updated
+- Commit: ac38e5c · pushed to main (GitHub Pages auto-deploy); required `git pull --rebase` to integrate remote SW bump + studio-hub sync commits
+- SIL: 443/500 · Velocity: 7 · Debt: →
+
 ## 2026-04-13 — Session 63 (redirect)
 
 - assets/style.css: Phase 2 light mode overrides (+163 lines) — `.rank-card`/`.rank-card-copy`/`.earn-card`, `.press-card`/`.game-press-card`/`.press-card h3`/`.press-quote blockquote`/`.contact-box`/`.fact-table`, `.character-block`, `.manifesto`, `.cta-panel`, `.vault-wall-cta`, `.team-founder-card`, `.mem-hero-proof`, `#contact-toast`/`.toast-title`/`.toast-sub`, `.contact-info-row`, `[data-event]` community event cards, stage-sparked/forge/vaulted badges, `.pipeline-card-meta span`, `section[style*="border-top"]` dividers, `.compare-table td.feature-name`, `#vs-toast`, `.rank-loyalty-panel`, `.studio-pulse-cta`, `.invite-box`/`.guest-invite-cta`/`.invite-link-input`, `#searchInput`/`.search-result-card`, `.vs-toast`

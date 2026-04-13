@@ -8,6 +8,18 @@ Boundary:
 
 ## Entries
 
+### 2026-04-13 — /rights/ rename + vaultsparked standard nav restoration (S64)
+
+- Category: Information Architecture / Brand Integrity / UX
+- Human input: (1) "Should the Technology & Rights area link to an /open-source/ page or something else?"; (2) "Fix both and complete all recommendation items and hit list items"; (3) shared VaultSparkedError1.png screenshot showing broken nav
+- Area affected: `open-source/index.html` → `rights/index.html`; `vaultsparked/index.html`; `scripts/propagate-nav.mjs`; 77 pages via propagation
+- Required direction:
+  1. A proprietary-content page at `/open-source/` is architecturally misleading — the page explicitly says VaultSpark does NOT open source its work; the URL contradicts the content; canonical URL must reflect the content (`/rights/`)
+  2. `/open-source/` becomes a redirect (meta refresh + JS replace; noindex) — no 301 possible on GitHub Pages static hosting
+  3. Vaultsparked nav was broken because `propagate-nav.mjs` SKIP_DIRS contains `vaultsparked` — future nav fixes will never automatically propagate there; any nav changes must be applied manually to vaultsparked when propagated elsewhere
+  4. Custom `.site-nav / .nav-links / .nav-actions` classes in vaultsparked were orphaned (never defined in any CSS) — the only correct fix is to replace with the standard `<header class="site-header">` template used everywhere else
+  5. Hamburger menu on vaultsparked was silently non-functional because `nav-toggle.js` was never added to the page — critical omission caught and fixed
+
 ### 2026-04-13 — Homepage hero: remove logo image, forge wordmark animation, immersive identity-first design (S62)
 
 - Category: Visual Design / UX / Brand Identity

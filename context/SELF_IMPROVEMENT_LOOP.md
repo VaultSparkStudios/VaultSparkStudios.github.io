@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▅█▆▆▆
-Avgs — 3: 435.7 | 5: 433.0 | 10: 430.0 | all: 424.3
-  └ 3-session: Dev 90.3 | Align 89.0 | Momentum 78.7 | Engage 89.0 | Process 88.7
-Velocity trend: →  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~2.5 sessions (S64 runway pre-loaded)  |  Intent rate: 80% (last 5)
-Last session: 2026-04-13 | Session 63 | Total: 425/500 | Velocity: 1 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▇▆▆▆
+Avgs — 3: 431.7 | 5: 434.0 | 10: 432.2 | all: 425.1
+  └ 3-session: Dev 89.7 | Align 89.0 | Momentum 77.7 | Engage 89.3 | Process 86.0
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~3.0 sessions (S65 runway pre-loaded)  |  Intent rate: 80% (last 5)
+Last session: 2026-04-13 | Session 64 | Total: 443/500 | Velocity: 7 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -762,3 +762,28 @@ Avgs — 3: 435.7 | 5: 433.0 | 10: 430.0 | all: 424.3
 3. **Light mode design token audit** — `--gold` (#FFC400) is not overridden in light mode; on cream backgrounds it may appear washed out in some use cases; also `--steel`/`--dim` may benefit from recalibration for WCAG AA contrast ratio. First step: run Lighthouse accessibility audit in light mode and check contrast scores. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Extend light-mode screenshot spec to more pages
+
+---
+
+## 2026-04-13 — Session 64 | Total: 443/500 | Velocity: 7 | Debt: →
+Avgs — 3: 431.7 | 5: 434.0 | 10: 432.2 | all: 425.1
+  └ 3-session: Dev 89.7 | Align 89.0 | Momentum 77.7 | Engage 89.3 | Process 86.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 90 | ↑ | 3 new external JS assets (studio-stats, membership-stats, scroll-reveal); CSP inline script debt cleared; SW updated; no browser smoke in sandbox |
+| Creative Alignment | 88 | ↑ | /rights/ rename accurate to proprietary content; vaultsparked nav brought to standard; scroll reveals extend forge ignition aesthetic site-wide |
+| Momentum | 92 | ↑ | 7 items shipped: homepage stats fix, /rights/ rename (77 pages), membership social proof live, scroll reveals, extended screenshot spec, SVG icons verified, vaultsparked nav fix |
+| Engagement | 91 | ↑ | Immediate execution on "fix both and complete all recommendation and hit list items"; vaultsparked nav bug caught from user screenshot and fixed same session |
+| Process Quality | 82 | ↓ | Full closeout; ECONNRESET mid-closeout caused partial interruption (continued next session); SKIP_DIRS documented as reason vaultsparked nav drift went undetected |
+| **Total** | **443/500** | ↑ | High-velocity session; CSP + UX + infrastructure all advanced |
+
+**Top win:** Diagnosed that vaultsparked was in SKIP_DIRS — nav drift was structurally invisible to propagate-nav for 9+ sessions; fixed the page completely with the standard header/footer template in one edit
+**Top gap:** IGNIS still stale (7+ days); no browser smoke run in this sandbox; vaultsparked nav fix required user-reported screenshot to be caught at all
+**Intent outcome:** Achieved — all recommendation and hit list items completed; vaultsparked nav fixed mid-session from user screenshot
+
+**Brainstorm**
+1. **CSP hash registry** — a `scripts/csp-hash-registry.json` that maps each page's inline scripts to their SHA-256 hashes; propagate-csp.mjs reads from it; prevents future cases where a page in SKIP_DIRS silently drifts on CSP. First step: enumerate pages currently in SKIP_DIRS and document their expected hashes. Medium probability.
+2. **Vault Wall Playwright automation** — replace manual incognito smoke with a `tests/vault-wall.spec.js` Playwright spec that asserts member cards render with `public_profile=true` filter and zero console errors; removes the recurring [SIL:N⛔] escalation pattern. First step: create spec using the same pattern as vaultsparked-csp.spec.js. High probability.
+
+**Committed to TASK_BOARD:** [SIL] CSP hash registry · [SIL] Vault Wall Playwright spec
