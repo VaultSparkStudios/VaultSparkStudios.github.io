@@ -7,9 +7,16 @@ const { test, expect } = require('@playwright/test');
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 
 const PAGES = [
-  { path: '/',         name: 'homepage' },
-  { path: '/ranks/',   name: 'ranks' },
-  { path: '/games/',   name: 'games' },
+  { path: '/',             name: 'homepage' },
+  { path: '/ranks/',       name: 'ranks' },
+  { path: '/games/',       name: 'games' },
+  { path: '/press/',       name: 'press' },
+  { path: '/contact/',     name: 'contact' },
+  { path: '/community/',   name: 'community' },
+  { path: '/studio/',      name: 'studio' },
+  { path: '/roadmap/',     name: 'roadmap' },
+  { path: '/universe/',    name: 'universe' },
+  { path: '/membership/',  name: 'membership' },
 ];
 
 test.use({

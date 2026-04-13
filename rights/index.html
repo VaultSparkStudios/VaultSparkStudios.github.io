@@ -11,71 +11,128 @@
     gtag('config', 'G-RSGLPP4KDZ');
   </script>
   <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vault Members Directory | VaultSpark Studios</title>
-  <meta name="description" content="Browse the VaultSpark Vault Member directory. Search members, filter by rank, and view community profiles." />
-  <link rel="canonical" href="https://vaultsparkstudios.com/members/" />
+  <title>Technology Attributions &amp; IP Notice | VaultSpark Studios</title>
+  <meta name="description" content="VaultSpark Studios intellectual property notice, proprietary rights statement, and third-party technology attributions." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/rights/" />
+  <meta name="theme-color" content="#000000" />
   <meta name="robots" content="index, follow" />
-  <meta property="og:title" content="Vault Members Directory | VaultSpark Studios" />
-  <meta property="og:description" content="Browse Vault Members — search by name, filter by rank." />
+  <meta property="og:title" content="Technology Attributions & IP Notice | VaultSpark Studios" />
+  <meta property="og:description" content="VaultSpark Studios intellectual property notice, proprietary rights statement, and third-party technology attributions." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://vaultsparkstudios.com/members/" />
-  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-members.png" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/rights/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:site" content="@VaultSparkStudios" />
-  <meta name="twitter:title" content="Vault Members Directory | VaultSpark Studios" />
-  <meta name="twitter:description" content="Browse Vault Members — search by name, filter by rank." />
-  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-members.png" />
-  <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Community","item":"https://vaultsparkstudios.com/community/"},{"@type":"ListItem","position":3,"name":"Members","item":"https://vaultsparkstudios.com/members/"}]}
-  </script>
-  <link rel="icon" type="image/png" href="/assets/icon-32.png" />
-  <link rel="stylesheet" href="/assets/style.css" />
+  <meta name="twitter:title" content="Technology Attributions & IP Notice | VaultSpark Studios" />
+  <meta name="twitter:description" content="VaultSpark Studios intellectual property notice, proprietary rights statement, and third-party technology attributions." />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+  <link rel="icon" type="image/png" href="../assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
   <style>
-    .members-hero { padding:5rem 0 2.5rem; position:relative; }
-    .members-hero::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 15% 40%, rgba(255,196,0,0.09), transparent 35%), radial-gradient(circle at 85% 60%, rgba(31,162,255,0.07), transparent 35%); }
-    .members-hero .container { position:relative; z-index:1; }
-    .members-hero h1 { font-family:Georgia,"Times New Roman",serif; font-size:clamp(2.4rem,5vw,4rem); font-weight:400; letter-spacing:-0.04em; line-height:1; margin:0.75rem 0; }
-
-    /* Controls */
-    .members-controls { display:flex; gap:0.75rem; flex-wrap:wrap; margin-bottom:1.75rem; align-items:center; }
-    .members-search { flex:1; min-width:200px; max-width:340px; position:relative; }
-    .members-search input { width:100%; padding:0.6rem 0.9rem 0.6rem 2.4rem; background:var(--panel); border:1px solid var(--line); border-radius:10px; color:var(--text); font-size:0.9rem; font-family:inherit; outline:none; box-sizing:border-box; }
-    .members-search input:focus { border-color:rgba(255,196,0,0.4); }
-    .members-search-icon { position:absolute; left:0.75rem; top:50%; transform:translateY(-50%); color:var(--dim); font-size:0.85rem; pointer-events:none; }
-    .rank-filter-row { display:flex; gap:0.5rem; flex-wrap:wrap; }
-    .rank-filter-btn { padding:0.38rem 0.9rem; border-radius:999px; border:1px solid rgba(255,255,255,0.1); background:transparent; color:var(--dim); font-size:0.8rem; font-weight:700; font-family:inherit; cursor:pointer; transition:all 0.15s; white-space:nowrap; }
-    .rank-filter-btn:hover { border-color:rgba(255,196,0,0.35); color:var(--gold); }
-    .rank-filter-btn.active { background:rgba(255,196,0,0.12); border-color:rgba(255,196,0,0.4); color:var(--gold); }
-
-    /* Member cards grid */
-    .members-count { font-size:0.82rem; color:var(--dim); margin-bottom:1rem; }
-    .members-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:0.85rem; }
-    .member-card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:1.25rem 1rem; text-align:center; transition:border-color 0.15s, transform 0.15s; text-decoration:none; display:block; }
-    .member-card:hover { border-color:rgba(255,196,0,0.3); transform:translateY(-2px); }
-    .mc-avatar { width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.3rem; font-weight:800; margin:0 auto 0.65rem; }
-    .mc-username { font-weight:700; color:var(--text); font-size:0.9rem; margin-bottom:0.25rem; word-break:break-word; }
-    .mc-rank { font-size:0.73rem; font-weight:700; margin-bottom:0.35rem; }
-    .mc-pts { font-size:0.75rem; color:var(--dim); }
-    .mc-badge { display:inline-block; font-size:0.6rem; font-weight:800; text-transform:uppercase; letter-spacing:0.08em; padding:0.12rem 0.45rem; border-radius:4px; margin-top:0.4rem; background:rgba(255,196,0,0.1); color:var(--gold); border:1px solid rgba(255,196,0,0.2); }
-
-    /* Skeleton */
-    .mc-skeleton { animation:mc-pulse 1.2s ease-in-out infinite; }
-    .mc-skeleton .mc-avatar { background:rgba(255,255,255,0.05); }
-    .mc-skeleton .mc-username-sk { height:0.8rem; border-radius:4px; background:rgba(255,255,255,0.05); margin:0 auto 0.4rem; width:70%; }
-    .mc-skeleton .mc-rank-sk { height:0.65rem; border-radius:4px; background:rgba(255,255,255,0.04); margin:0 auto; width:50%; }
-    @keyframes mc-pulse { 0%,100%{opacity:0.5;}50%{opacity:1;} }
-
-    /* Empty */
-    .members-empty { text-align:center; padding:3rem 1rem; color:var(--muted); }
-    .members-empty-icon { font-size:3rem; margin-bottom:1rem; }
-
-    @media(max-width:600px) {
-      .members-grid { grid-template-columns:repeat(2, 1fr); }
-      .members-controls { flex-direction:column; align-items:stretch; }
-      .members-search { max-width:100%; }
+    .policy-hero { padding: 4rem 0 2.5rem; }
+    .policy-body {
+      max-width: 760px;
+      padding-bottom: 5rem;
+    }
+    .policy-body h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.45rem;
+      letter-spacing: -0.03em;
+      margin: 2.4rem 0 0.7rem;
+      color: var(--text);
+    }
+    .policy-body h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 1.4rem 0 0.45rem;
+      color: var(--text);
+    }
+    .policy-body p {
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.72;
+      margin-bottom: 0.9rem;
+    }
+    .policy-body ul {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 0.9rem;
+    }
+    .policy-body ul li {
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.72;
+      padding: 0.28rem 0 0.28rem 1.4rem;
+      position: relative;
+    }
+    .policy-body ul li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .policy-body a { color: var(--gold); }
+    .policy-body a:hover { color: #ffe066; }
+    .policy-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.07);
+      margin: 2rem 0;
+    }
+    .policy-updated {
+      display: inline-block;
+      padding: 0.4rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(255,196,0,0.06);
+      border: 1px solid rgba(255,196,0,0.15);
+      color: var(--gold);
+      font-size: 0.79rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+    }
+    .oss-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s;
+    }
+    .oss-card:hover {
+      border-color: rgba(255,196,0,0.2);
+    }
+    .oss-card h3 {
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .oss-license {
+      display: inline-block;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(255,196,0,0.08);
+      border: 1px solid rgba(255,196,0,0.15);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .oss-private {
+      background: rgba(148,163,184,0.08);
+      border-color: rgba(148,163,184,0.15);
+      color: #94a3b8;
     }
   </style>
+
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pc92owTgV6BIa8Xc5NXyUVrfAQZaJSy2Rp+VITHyeQ8=' 'sha256-JujKqvQ+wLaBwZQ+rK0dDSeBX3rT7sN0wby2YNyIlDs=' 'sha256-aizFzz4bZutx7qgu7RXmRZGMRd5mYvlspNnLIvS4rkI=' 'sha256-XdHcZWQrqgwOuuIEs9J5a0nYI4/agz9wQE8ikMlG4Gs=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
@@ -87,6 +144,7 @@
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/pwa-nav.js" defer></script>
 <script defer src="/assets/pwa-install.js"></script>
+<script src="/assets/cookie-consent.js" defer></script>
 </head>
 <body>
 <script>!function(){try{var t=localStorage.getItem('vs_theme'),m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(t&&m[t]){var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}}catch(e){}}();</script>
@@ -127,44 +185,79 @@
   </header>
 
   <main id="main-content">
-    <section class="members-hero">
+    <section class="policy-hero">
       <div class="container">
-        <span class="eyebrow">VaultSpark Community &nbsp;·&nbsp; Members</span>
-        <h1>Vault Member Directory</h1>
-        <p style="color:var(--muted);font-size:1rem;max-width:52ch;line-height:1.65;margin-top:0.5rem;">Browse members of the vault. Search by name or filter by rank.</p>
+        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Rights &amp; Attribution</span>
+        <h1 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(2rem,4.5vw,3.2rem);letter-spacing:-0.04em;line-height:1.1;margin:0.75rem 0 0;">Technology Attributions &amp; IP Notice</h1>
       </div>
     </section>
 
-    <section style="padding:0 0 4rem;">
+    <section style="padding:0 0 1rem;">
       <div class="container">
+        <div class="policy-body">
 
-        <!-- Controls -->
-        <div class="members-controls">
-          <div class="members-search">
-            <span class="members-search-icon" aria-hidden="true">⌕</span>
-            <input type="search" id="member-search" placeholder="Search members…" aria-label="Search members by username" autocomplete="off" />
+          <p>VaultSpark Studios publishes some code and site artifacts publicly, but VaultSpark products, worlds, brands, assets, and studio systems are proprietary unless we explicitly say otherwise in writing. This page states that rights posture clearly and attributes third-party technology we use.</p>
+
+          <h2>VaultSpark Rights Posture</h2>
+
+          <div class="oss-card">
+            <h3>Website, games, projects, lore, and studio systems <span class="oss-license oss-private">Proprietary</span></h3>
+            <p>All VaultSpark Studios games, software, pipelines, Studio OS materials, creative assets, names, logos, taglines, worldbuilding, characters, and related commercial code are proprietary to VaultSpark Studios LLC unless a specific repository or file says otherwise.</p>
           </div>
-          <div class="rank-filter-row" role="group" aria-label="Filter by rank">
-            <button class="rank-filter-btn active" data-rank="All">All Ranks</button>
-            <button class="rank-filter-btn" data-rank="Spark Initiate">Spark Initiate</button>
-            <button class="rank-filter-btn" data-rank="Vault Runner">Vault Runner</button>
-            <button class="rank-filter-btn" data-rank="Forge Guard">Forge Guard</button>
-            <button class="rank-filter-btn" data-rank="Vault Keeper">Vault Keeper</button>
-            <button class="rank-filter-btn" data-rank="The Sparked">The Sparked</button>
+
+          <div class="oss-card">
+            <h3>Public GitHub visibility <span class="oss-license oss-private">Not an implied license</span></h3>
+            <p>Code being visible on GitHub or deployed on the public web does not grant permission to reuse, copy, modify, train on, resell, or redistribute VaultSpark Studios property. Any permitted third-party use must be covered by an explicit written license from VaultSpark Studios LLC.</p>
           </div>
-        </div>
 
-        <div class="members-count" id="members-count">Loading…</div>
-        <div class="members-grid" id="members-grid" aria-label="Member directory">
-          <!-- Skeleton -->
-          <div class="member-card mc-skeleton" aria-hidden="true"><div class="mc-avatar"></div><div class="mc-username-sk"></div><div class="mc-rank-sk"></div></div>
-          <div class="member-card mc-skeleton" aria-hidden="true"><div class="mc-avatar"></div><div class="mc-username-sk"></div><div class="mc-rank-sk"></div></div>
-          <div class="member-card mc-skeleton" aria-hidden="true"><div class="mc-avatar"></div><div class="mc-username-sk"></div><div class="mc-rank-sk"></div></div>
-          <div class="member-card mc-skeleton" aria-hidden="true"><div class="mc-avatar"></div><div class="mc-username-sk"></div><div class="mc-rank-sk"></div></div>
-          <div class="member-card mc-skeleton" aria-hidden="true"><div class="mc-avatar"></div><div class="mc-username-sk"></div><div class="mc-rank-sk"></div></div>
-          <div class="member-card mc-skeleton" aria-hidden="true"><div class="mc-avatar"></div><div class="mc-username-sk"></div><div class="mc-rank-sk"></div></div>
-        </div>
+          <div class="oss-card">
+            <h3>Brand and creative restrictions <span class="oss-license oss-private">Reserved</span></h3>
+            <p>VaultSpark marks, product names, logos, key art, characters, lore, screenshots, trailers, music, and studio presentation assets are reserved rights materials. They are not covered by any software-style reuse license.</p>
+          </div>
 
+          <div class="oss-card">
+            <h3>Repository-specific exceptions <span class="oss-license oss-private">Explicit only</span></h3>
+            <p>If VaultSpark Studios ever releases a repository or file under a permissive license, that permission must be stated explicitly in that repository or file. Do not infer MIT or open-source rights from older site copy, public availability, or GitHub indexing.</p>
+          </div>
+
+          <div class="policy-divider"></div>
+
+          <h2>Third-Party Attributions</h2>
+          <p>VaultSpark Studios products and websites rely on third-party software, services, and frameworks. The list below is attribution, not a statement that VaultSpark-owned code is open-source.</p>
+
+          <h3>Website &amp; Frontend</h3>
+          <ul>
+            <li><strong>Google Analytics (GA4)</strong> — analytics and usage measurement</li>
+            <li><strong>Supabase</strong> — authentication, database, and real-time services (MIT / Apache 2.0)</li>
+            <li><strong>Sentry</strong> — error tracking and performance monitoring</li>
+            <li><strong>Web3Forms</strong> — contact form submission API</li>
+          </ul>
+
+          <h3>Build &amp; Development</h3>
+          <ul>
+            <li><strong>Node.js</strong> — JavaScript runtime (MIT)</li>
+            <li><strong>Playwright</strong> — end-to-end testing framework (Apache 2.0)</li>
+            <li><strong>Vite</strong> — frontend build tool (MIT)</li>
+            <li><strong>React</strong> — UI library (MIT)</li>
+            <li><strong>TypeScript</strong> — typed JavaScript (Apache 2.0)</li>
+          </ul>
+
+          <h3>Infrastructure</h3>
+          <ul>
+            <li><strong>GitHub Pages</strong> — static site hosting</li>
+            <li><strong>GitHub Actions</strong> — CI/CD workflows</li>
+            <li><strong>Cloudflare</strong> — DNS and CDN services</li>
+          </ul>
+
+          <div class="policy-divider"></div>
+
+          <h2>Usage Summary</h2>
+          <p>Unless a specific VaultSpark repository or file includes an explicit license grant from VaultSpark Studios LLC, assume all VaultSpark-produced code and materials are proprietary and all rights are reserved.</p>
+          <p>For trademark, copyright, and permitted-use boundaries, see our <a href="/privacy/#trademark">Trademark &amp; Copyright</a> and <a href="/terms/">Terms</a> pages.</p>
+
+          <p style="font-size:0.85rem;">Questions about rights or permitted use? Contact <a href="mailto:founder@vaultsparkstudios.com">founder@vaultsparkstudios.com</a>.</p>
+
+        </div>
       </div>
     </section>
   </main>
@@ -233,12 +326,6 @@
     </div>
   </footer>
 
-  <script src="/assets/kit.js" defer></script>
-  <script src="/assets/cookie-consent.js" defer></script>
   <script src="/assets/nav-toggle.js" defer></script>
-  <script src="/assets/members-directory.js" defer></script>
-<script src="/assets/vault-cta.js" defer></script>
 </body>
 </html>
-
-

@@ -9,7 +9,7 @@ const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 const COMPLIANCE_PAGES = [
   { path: '/cookies/',       title: /Cookie/i,      h1: true },
   { path: '/accessibility/', title: /Accessibility/i, h1: true },
-  { path: '/open-source/',   title: /Technology|Rights|Attributions/i, h1: true },
+  { path: '/rights/',        title: /Technology|Rights|Attributions/i, h1: true },
   { path: '/faq/',           title: /FAQ|Frequently/i, h1: true },
   { path: '/careers/',       title: /Careers/i,     h1: true },
   { path: '/data-deletion/', title: /Data Deletion/i, h1: true },

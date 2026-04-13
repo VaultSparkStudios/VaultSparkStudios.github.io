@@ -2842,3 +2842,23 @@ body.cool-mode::after,
 body.lava-mode::after {
   opacity: 0.4;
 }
+
+
+/* ─── Scroll-reveal ───────────────────────────────────────── */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+[data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal].revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
