@@ -104,5 +104,5 @@
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
 - IGNIS score: 47,308/100,000 · Tier: FORGE · last computed 2026-04-07 (stale 7+ days — **mandatory rescore at S66 session start**)
 - Annual Stripe price IDs ($44.99/yr, $269.99/yr) not yet created — billing toggle UI exists but annual checkout routes to same monthly price IDs
-- 404.html and offline.html use `'unsafe-inline'` in script-src (pre-SHA hardening debt; documented in `scripts/csp-hash-registry.json`)
+- ~~404.html and offline.html use `'unsafe-inline'`~~ — **FIXED S66**: SHA-256 hashes computed and applied to both pages; `csp-hash-registry.json` updated with hash entries
 - vaultsparked in SKIP_DIRS — nav changes must be manually applied there (not auto-propagated)

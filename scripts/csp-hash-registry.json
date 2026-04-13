@@ -9,13 +9,21 @@
       "lastVerified": "2026-04-13"
     },
     "404.html": {
-      "reason": "SKIP_FILES — error page with inline recovery script. Uses 'unsafe-inline' intentionally; SHA hardening deferred as low-traffic non-interactive page.",
-      "cspContent": "default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com",
+      "reason": "SKIP_FILES — error page with 2 inline scripts: GA4 init + search form handler. SHA-256 hardened S66; unsafe-inline removed.",
+      "inlineScriptHashes": [
+        "sha256-09uD3fDDD02G8jqNYt/Z45AQPDzZopvEX50h3r6Gbrs=",
+        "sha256-ESvNm5DWwF4KGXjI+5+2/Ny8yvwOuVBbsbM2bTtD+xw="
+      ],
+      "cspContent": "default-src 'self'; script-src 'self' 'sha256-09uD3fDDD02G8jqNYt/Z45AQPDzZopvEX50h3r6Gbrs=' 'sha256-ESvNm5DWwF4KGXjI+5+2/Ny8yvwOuVBbsbM2bTtD+xw=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com",
       "lastVerified": "2026-04-13"
     },
     "offline.html": {
-      "reason": "SKIP_FILES — service worker offline fallback. Uses 'unsafe-inline' intentionally; must function without external JS sources.",
-      "cspContent": "default-src 'self'; script-src 'self' 'unsafe-inline' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com",
+      "reason": "SKIP_FILES — service worker offline fallback with 2 inline scripts: GA4 init + online-reload listener. SHA-256 hardened S66; unsafe-inline removed.",
+      "inlineScriptHashes": [
+        "sha256-09uD3fDDD02G8jqNYt/Z45AQPDzZopvEX50h3r6Gbrs=",
+        "sha256-pgSyuEr/NIN1kTdlTabMEu9Ul7rfWjLoH4QadQTs+bY="
+      ],
+      "cspContent": "default-src 'self'; script-src 'self' 'sha256-09uD3fDDD02G8jqNYt/Z45AQPDzZopvEX50h3r6Gbrs=' 'sha256-pgSyuEr/NIN1kTdlTabMEu9Ul7rfWjLoH4QadQTs+bY=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com",
       "lastVerified": "2026-04-13"
     }
   }

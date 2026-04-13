@@ -11,6 +11,10 @@
     gtag('config', 'G-RSGLPP4KDZ');
   </script>
   <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="dns-prefetch" href="https://js.stripe.com" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Community Hub — Discord, Challenges &amp; Fan Art | VaultSpark Studios</title>
   <meta name="description" content="Join the VaultSpark community — Vault Members, Discord, fan art, leaderboards, and challenges. Where players, creators, and fans gather." />
@@ -212,7 +216,7 @@
     </section>
 
     <!-- Stats Strip -->
-    <section class="comm-section" style="padding-top:0;">
+    <section class="comm-section" style="padding-top:0;" data-reveal="fade-up">
       <div class="container">
         <div class="comm-stats" aria-live="polite" aria-atomic="false">
           <div class="comm-stat">
@@ -235,7 +239,7 @@
     </section>
 
     <!-- Discord CTA -->
-    <section class="comm-section">
+    <section class="comm-section" data-reveal="fade-up">
       <div class="container">
         <div class="discord-banner">
           <div class="discord-banner-copy">
@@ -252,7 +256,7 @@
     </section>
 
     <!-- Fan Art Showcase -->
-    <section class="comm-section">
+    <section class="comm-section" data-reveal="fade-up">
       <div class="container">
         <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Fan Art</div>
         <h2>Fan Art Showcase</h2>
@@ -305,7 +309,7 @@
     </section>
 
     <!-- Leaderboard Preview -->
-    <section class="comm-section">
+    <section class="comm-section" data-reveal="fade-up">
       <div class="container">
         <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Rankings</div>
         <h2>Community Leaderboard</h2>
@@ -329,7 +333,7 @@
     </section>
 
     <!-- Active Challenges -->
-    <section class="comm-section">
+    <section class="comm-section" data-reveal="fade-up">
       <div class="container">
         <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Challenges</div>
         <h2>Active Challenges</h2>
@@ -392,7 +396,7 @@
     </section>
 
     <!-- Recently Joined -->
-    <section class="comm-section">
+    <section class="comm-section" data-reveal="fade-up">
       <div class="container">
         <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Members</div>
         <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:0.6rem;">
@@ -410,7 +414,7 @@
     </section>
 
     <!-- Community Polls -->
-    <section class="comm-section">
+    <section class="comm-section" data-reveal="fade-up">
       <div class="container">
         <div class="comm-section-eyebrow">Community &nbsp;·&nbsp; Your Voice</div>
         <div style="display:flex;align-items:baseline;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:0.75rem;">
@@ -426,7 +430,7 @@
     </section>
 
     <!-- Bottom CTA -->
-    <section class="comm-bottom-cta">
+    <section class="comm-bottom-cta" data-reveal="fade-up">
       <div class="container">
         <span class="eyebrow">The Vault Is Open</span>
         <h2>Join The Vault</h2>
@@ -460,6 +464,7 @@
           <a href="/studio/">About</a>
           <a href="/studio-pulse/">Studio Pulse</a>
           <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/changelog/">Changelog</a>
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
           <a href="/universe/">Universe</a>
@@ -884,6 +889,7 @@
   loadGallery();
 })();
 </script>
+<script src="../assets/scroll-reveal.js" defer></script>
 </body>
 </html>
 

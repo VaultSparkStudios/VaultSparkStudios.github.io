@@ -2,6 +2,20 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-13 — 404/offline CSP hardening: SHA-256 hashes replace unsafe-inline (S66)
+
+- Status: active
+- Decision: 404.html and offline.html now use computed SHA-256 hashes in `script-src` instead of `'unsafe-inline'`. Hashes stored in `scripts/csp-hash-registry.json` with a note per file. The `propagate-csp.mjs --check-skipped` flag detects drift if inline scripts change without a registry update.
+- Hashes: GA4 init script shared between both pages (`sha256-09uD3fDDD02G8jqNYt/Z45AQPDzZopvEX50h3r6Gbrs=`). Each page has its own page-specific hash.
+- Maintenance rule: if any inline script in 404.html or offline.html is modified, re-run `node -e "crypto.createHash('sha256').update(scriptContent).digest('base64')"` and update both the CSP meta tag and the registry.
+- Why: removes the last `unsafe-inline` in script-src across all owned pages; closes the final CSP hardening gap opened in S53 when the main pages were hardened.
+
+### 2026-04-13 — Genius Hit List audit framework established (S66)
+
+- Status: active
+- Decision: at session start, if the user requests a site audit, produce fresh external scores across six dimensions (Feature Depth, UI/UX, Feedback Loop, Security, Performance/Speed, Code Quality) and generate a ranked Genius Hit List for the session. Scores and hit list are saved to memory (`project_genius_hitlist.md`) and the hit list items are added to TASK_BOARD as Now items.
+- Why: the SIL score tracks process and session quality; the external audit tracks the actual product quality from a user/visitor perspective. Both are needed for a complete picture. The gap between the two (SIL: 448/500 = 89.6% vs external: 81/100) reveals where process excellence isn't yet translating to product excellence.
+
 ### 2026-04-12 — Genesis Vault Member: badge naming and slot ownership (S56)
 
 - Status: active

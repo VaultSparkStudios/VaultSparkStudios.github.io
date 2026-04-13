@@ -124,6 +124,7 @@ function buildFooter() {
           <a href="/studio/">About</a>
           <a href="/studio-pulse/">Studio Pulse</a>
           <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/changelog/">Changelog</a>
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
           <a href="/universe/">Universe</a>
@@ -240,6 +241,13 @@ for (const { full, rel } of files) {
       '<link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />',
     ].join('\n  ');
     html = html.replace('<meta charset="UTF-8" />', '<meta charset="UTF-8" />\n  ' + hints);
+  }
+  // Add GTM + Stripe prefetch hints if missing (performance: eliminates DNS lookup latency)
+  if (!html.includes('googletagmanager.com"')) {
+    html = html.replace(
+      /<link rel="preconnect" href="https:\/\/fjnpzjjyhnpmunfoycrp\.supabase\.co" \/>/,
+      '<link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />\n  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />\n  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />\n  <link rel="dns-prefetch" href="https://www.google-analytics.com" />\n  <link rel="dns-prefetch" href="https://js.stripe.com" />'
+    );
   }
 
   if (DRY_RUN) {

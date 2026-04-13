@@ -11,6 +11,10 @@
     gtag('config', 'G-RSGLPP4KDZ');
   </script>
   <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="dns-prefetch" href="https://js.stripe.com" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vault Ranks — Earn Points &amp; Climb the Tiers | VaultSpark Studios</title>
   <meta name="description" content="Earn Vault Points and climb through the ranks. Every tier unlocks new perks and recognition. See all rank tiers and how to earn points." />
@@ -115,10 +119,10 @@
     </section>
 
     <!-- Rank Cards Grid -->
-    <section style="padding:0 0 4rem;">
+    <section style="padding:0 0 4rem;" data-reveal="fade-up">
       <div class="container">
 
-        <div class="ranks-grid" aria-label="Vault rank tiers">
+        <div class="ranks-grid" aria-label="Vault rank tiers" data-reveal="fade-up">
 
           <!-- Spark Initiate -->
           <div class="rank-card" style="border:1px solid rgba(148,163,184,0.2);">
@@ -204,7 +208,7 @@
         </div>
 
         <!-- CTA -->
-        <div style="background:rgba(31,162,255,0.06);border:1px solid rgba(31,162,255,0.15);border-radius:14px;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.25rem;margin-bottom:4rem;">
+        <div style="background:rgba(31,162,255,0.06);border:1px solid rgba(31,162,255,0.15);border-radius:14px;padding:1.5rem 2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.25rem;margin-bottom:4rem;" data-reveal="fade-up">
           <div>
             <div style="font-weight:700;color:var(--text);margin-bottom:0.3rem;">Track your rank</div>
             <div style="font-size:0.9rem;color:var(--muted);">See your current tier, points, and progress toward the next rank in your dashboard.</div>
@@ -219,7 +223,7 @@
           <p style="color:var(--muted);font-size:0.95rem;max-width:52ch;line-height:1.65;">Points accumulate across everything you do in the vault. Here are the main ways to earn.</p>
         </div>
 
-        <div class="earn-grid">
+        <div class="earn-grid" data-reveal="fade-up">
           <div class="earn-card">
             <div class="earn-icon">&#128197;</div>
             <div>
@@ -310,6 +314,7 @@
           <a href="/studio/">About</a>
           <a href="/studio-pulse/">Studio Pulse</a>
           <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/changelog/">Changelog</a>
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
           <a href="/universe/">Universe</a>
@@ -357,6 +362,7 @@
   <script src="/assets/kit.js" defer></script>
   <script src="/assets/nav-toggle.js" defer></script>
 <script src="/assets/vault-cta.js" defer></script>
+<script src="../assets/scroll-reveal.js" defer></script>
 </body>
 </html>
 

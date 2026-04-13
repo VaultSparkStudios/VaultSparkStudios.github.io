@@ -339,11 +339,27 @@
           ${progressHtml}
           ${(!earned && max <= 1) ? '<div style="margin-top:.3rem;font-size:.7rem;color:var(--dim);">🔒 Locked</div>' : ''}
         `;
+        // S66: Share button for earned achievements (VSShare may load deferred — check at click)
+        if (earned) {
+          const shareBtn = document.createElement('button');
+          shareBtn.type = 'button';
+          shareBtn.className = 'ach-share-btn';
+          shareBtn.textContent = '⚡ Share';
+          shareBtn.setAttribute('aria-label', 'Share ' + def.name + ' achievement');
+          shareBtn.addEventListener('click', function() {
+            if (typeof window.VSShare !== 'undefined') {
+              window.VSShare.openSharePanel(def, member.username || 'VaultMember');
+            } else {
+              alert('Share not available — please try again in a moment.');
+            }
+          });
+          el.appendChild(shareBtn);
+        }
         grid.appendChild(el);
       });
     }
 
-    // ── Rank progress bar (Vault Stats panel) ────────────────────
+    // ── Rank progress bar (Vault Stats panel) — S66 enhanced ─────
     function updateRankProgress(points) {
       const rank    = VS.getRank(points);
       const next    = VS.getNextRank(points);
@@ -351,22 +367,55 @@
       const pct     = document.getElementById('rankProgressPct');
       const label   = document.getElementById('rankNextLabel');
       const heading = document.getElementById('rankProgressLabel');
+      const track   = document.getElementById('rankProgressTrack');
       if (!bar) return;
+
+      // Determine rank color for CSS variable (blue→gold gradient by rank index)
+      const RANK_COLORS = [
+        '#1FA2FF', // Spark Initiate
+        '#38bdf8', // Vault Runner
+        '#818cf8', // Rift Scout
+        '#a78bfa', // Vault Guard
+        '#f472b6', // Vault Breacher
+        '#fb923c', // Void Operative
+        '#FFC400', // Vault Keeper
+        '#FFC400', // Forge Master
+        '#FFC400', // The Sparked
+      ];
+      const rankIdx  = VS.RANKS ? VS.RANKS.findIndex(r => r.name === rank.name) : 0;
+      const rankColor = RANK_COLORS[Math.max(0, rankIdx)] || '#FFC400';
+      if (track) track.style.setProperty('--rank-color', rankColor);
+
       if (!next) {
         bar.style.width      = '100%';
         bar.style.background = '#FFC400';
+        bar.setAttribute('aria-valuenow', '100');
         if (pct)     pct.textContent     = 'MAX';
-        if (label)   label.textContent   = 'Top rank achieved';
+        if (label)   label.textContent   = 'Top rank achieved — ' + points.toLocaleString() + ' pts';
         if (heading) heading.textContent = 'Rank progress';
+        if (track)   track.classList.add('progress-near-max');
         return;
       }
+
       const range    = rank.max - rank.min + 1;
       const progress = Math.min(100, Math.round(((points - rank.min) / range) * 100));
-      bar.style.width      = progress + '%';
-      bar.style.background = 'linear-gradient(90deg,#1FA2FF,#8B5CF6)';
+      const ptsToNext = next.min - points;
+
+      bar.style.width = progress + '%';
+      bar.setAttribute('aria-valuenow', String(progress));
+      // Color shift: low rank = blue→purple, high rank = orange→gold
+      bar.style.background = rankIdx >= 6
+        ? 'linear-gradient(90deg,' + rankColor + ',#fff9e0)'
+        : 'linear-gradient(90deg,' + rankColor + ',#8B5CF6)';
+
       if (pct)     pct.textContent   = progress + '%';
-      if (label)   label.textContent = (rank.max - points + 1) + ' pts to ' + next.name;
+      if (label)   label.textContent =
+        points.toLocaleString() + ' / ' + next.min.toLocaleString() + ' pts to ' + next.name
+        + ' — ' + ptsToNext.toLocaleString() + ' to go';
       if (heading) heading.textContent = 'Progress to ' + next.name;
+
+      // Shimmer when >80% full
+      if (track) track.classList.toggle('progress-near-max', progress > 80);
     }
 
     // ── Season XP dashboard mini-widget ──────────────────────────

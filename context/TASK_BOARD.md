@@ -81,10 +81,24 @@ Last updated: 2026-04-13 (Session 65 closeout)
 ## Now (S66 runway pre-load)
 
 - [ ] **[IGNIS] Rescore — mandatory** — `node ../vaultspark-studio-ops/scripts/ops.mjs rescore` at S66 start; IGNIS is 7+ days stale (last computed 2026-04-07). First step: open studio-ops session and run CLI.
-- [ ] **[SIL] Extend scroll-reveal to /studio/, /community/, /ranks/, /roadmap/** — check if `scroll-reveal.js` is linked on those 4 pages; add `data-reveal="fade-up"` to key sections (hero, feature blocks, stat panels). First step: grep those 4 index.html files for `scroll-reveal.js`.
-- [ ] **[SIL] 404/offline.html SHA hardening** — replace `'unsafe-inline'` in script-src with computed SHA-256 hashes; update `scripts/csp-hash-registry.json` entries; propagate-csp.mjs already skips these files. First step: extract inline scripts from 404.html, compute SHA-256, compare to registry snapshot.
+- [x] **[SIL] Extend scroll-reveal to /studio/, /community/, /ranks/, /roadmap/** — scroll-reveal.js linked on all 4 pages; data-reveal="fade-up" added to key sections. (S66)
+- [x] **[SIL] 404/offline.html SHA hardening** — `'unsafe-inline'` replaced with computed SHA-256 hashes in both files; `scripts/csp-hash-registry.json` updated with hashes + reason notes. (S66)
 - [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
 - [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Needs Workers Scripts: Edit + Zone: Read permissions.
+
+## Now (S66 Genius Hit List — implemented)
+
+- [x] **[S66 PERF] Preconnect + GTM/Stripe DNS-prefetch** — `propagate-nav.mjs` updated to inject `preconnect` for GTM + `dns-prefetch` for GTM, Google Analytics, and Stripe on every page; 77 pages updated. (S66)
+- [x] **[S66 SECURITY] 404/offline SHA hardening** — see above (S66)
+- [x] **[S66 UX] Scroll-reveal on /studio/, /community/, /ranks/, /roadmap/** — see above (S66)
+- [x] **[S66 FEEDBACK] Scroll-depth GA4 milestones** — `assets/scroll-depth.js` created; fires `scroll_milestone` at 25/50/75/100% on homepage, /membership/, /vaultsparked/. (S66)
+- [x] **[S66 UX] Rank XP progress bar enhancement** — milestone ticks, shimmer animation >80%, aria-progressbar attrs, XP count label below bar. (S66)
+- [x] **[S66 UX] Skeleton loaders for portal panels** — CSS pulse skeleton (`.skeleton`, `.skeleton-line`, `.skeleton-circle`, `.skeleton-card`) in portal.css; :empty pattern applied to profile/stats/achievements containers. (S66)
+- [x] **[S66 FEEDBACK] What's New portal modal enhancement** — PORTAL_VERSION constant; localStorage `vs_portal_last_seen` gate; hardcoded S66 fallback items; Escape dismiss + focus trap. (S66)
+- [x] **[S66 FEATURE] Game Notify Me forms** — `assets/notify-me.js` created; email capture with Web3Forms on all 4 FORGE game pages (vaultfront, solara, mindframe, the-exodus). (S66)
+- [x] **[S66 PERF] Critical CSS inline for homepage** — above-fold hero CSS extracted and inlined in index.html `<head>`; stylesheet moved to non-render-blocking load. (S66)
+- [x] **[S66 FEATURE] Achievement share card generator** — `vault-member/portal-share.js` created; Canvas PNG 1200×630 on badge unlock with download + copy-to-clipboard. (S66)
+- [x] **[S66 FEEDBACK] Public changelog at /changelog/** — new page listing all shipped sessions; added to sitemap.xml. (S66)
 
 ## Next
 

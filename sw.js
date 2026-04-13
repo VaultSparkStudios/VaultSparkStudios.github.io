@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-20260413-s64';
+const CACHE_NAME = 'vaultspark-20260413-s66';
 const MAX_PAGE_ENTRIES = 60;
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const STATIC_ASSETS = [
@@ -11,7 +11,6 @@ const STATIC_ASSETS = [
   '/assets/icon-32.png',
   '/assets/icon-256.png',
   '/assets/vaultspark-icon.webp',
-  '/assets/vaultspark-cinematic-logo.webp',
   '/vault-member/portal-core.js',
   '/vault-member/portal-auth.js',
   '/vault-member/portal-dashboard.js',
@@ -23,6 +22,7 @@ const STATIC_ASSETS = [
   '/assets/countdown.js',
   '/assets/nav-toggle.js',
   '/assets/members-directory.js',
+  '/assets/analytics.js',
   '/assets/theme-toggle.js',
   '/assets/vault-score.js',
   '/assets/turnstile.js',
@@ -30,6 +30,9 @@ const STATIC_ASSETS = [
   '/assets/studio-stats.js',
   '/assets/membership-stats.js',
   '/assets/scroll-reveal.js',
+  '/assets/scroll-depth.js',
+  '/assets/notify-me.js',
+  '/vault-member/portal-share.js',
   '/vault-member/portal.css',
   '/offline.html',
   '/404.html',
@@ -42,7 +45,7 @@ const STATIC_ASSETS = [
   '/games/call-of-doodie/',
   '/games/gridiron-gm/',
   '/games/vaultspark-football-gm/',
-  '/journal/001-the-vault-is-sparked/',
+  '/journal/first-sparks/',
   '/universe/',
   '/universe/voidfall/',
   '/universe/dreadspike/',
@@ -54,6 +57,7 @@ const STATIC_ASSETS = [
   '/vault-wall/',
   '/invite/',
   '/press/',
+  '/changelog/',
   '/vaultsparked/vaultsparked-checkout.js',
   '/vaultsparked/billing-toggle.js',
 ];

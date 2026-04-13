@@ -2,6 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="dns-prefetch" href="https://js.stripe.com" />
+  <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
   <script>
@@ -12,7 +18,8 @@
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vault Changelog — What We've Shipped | VaultSpark Studios</title>
-  <meta name="description" content="Every feature, fix, and improvement shipped to the VaultSpark Vault Member portal and public site — phase by phase." />
+  <meta name="description" content="Every session. Every shipped feature. The vault's full build log — from S55 to present." />
+  <meta name="theme-color" content="#000000" />
   <link rel="canonical" href="https://vaultsparkstudios.com/changelog/" />
   <meta name="robots" content="index, follow" />
   <meta property="og:title" content="Vault Changelog | VaultSpark Studios" />
@@ -28,6 +35,8 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Changelog","item":"https://vaultsparkstudios.com/changelog/"}]}
   </script>
   <link rel="icon" type="image/png" href="/assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="/assets/style.css" />
   <style>
     .cl-hero { padding:5rem 0 2.5rem; position:relative; }
@@ -102,15 +111,161 @@
   <main id="main-content">
     <section class="cl-hero">
       <div class="container">
-        <span class="eyebrow">VaultSpark Studios &nbsp;·&nbsp; Transparency</span>
+        <span class="eyebrow">What's Been Built</span>
         <h1>Vault Changelog</h1>
-        <p style="color:var(--muted);font-size:1rem;max-width:52ch;line-height:1.65;margin-top:0.5rem;">Every feature, fix, and improvement shipped to the vault and public site — written for members, not engineers.</p>
+        <p style="color:var(--muted);font-size:1rem;max-width:56ch;line-height:1.65;margin-top:0.5rem;">Every session. Every shipped feature. The vault's full build log.</p>
       </div>
     </section>
 
     <section style="padding:0 0 4rem;">
       <div class="container">
         <div class="cl-timeline">
+
+          <!-- S66 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S66</span><span class="cl-phase-date">2026-04-13</span>
+              <div class="cl-phase-title">Resource Hints, Scroll Depth, Notify Me Forms, Public Changelog</div>
+            </div>
+            <ul class="cl-items">
+              <li>Preconnect + GTM + Stripe resource hints added across key pages</li>
+              <li>404 and offline page SHA hardening — CSP integrity tightened</li>
+              <li>Scroll-reveal animations on /studio/, /community/, /ranks/, /roadmap/</li>
+              <li>Scroll-depth GA4 milestones (25 / 50 / 75 / 90%) added site-wide</li>
+              <li>What's New portal enhancement — improved unread signal UX</li>
+              <li>Game Notify Me forms: "Be First to Play" email capture on VaultFront, Solara, MindFrame, The Exodus</li>
+              <li>Critical CSS hero inline — above-the-fold render unblocked</li>
+              <li>Achievement share cards — shareable PNG-style social cards for member milestones</li>
+              <li>Public changelog page launched at /changelog/</li>
+            </ul>
+          </article>
+
+          <!-- S65 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S65</span><span class="cl-phase-date">2026-04-13</span>
+              <div class="cl-phase-title">Gold Contrast Fix, Signal Panel, Vault Wall Spec, CSP Registry</div>
+            </div>
+            <ul class="cl-items">
+              <li>Gold text contrast fixed to WCAG AA on all pages (was failing ratio)</li>
+              <li>Signal panel CSS classes standardised — reusable component across portal</li>
+              <li>Vault Wall Playwright end-to-end spec added</li>
+              <li>CSP hash registry created — all inline script hashes tracked centrally</li>
+              <li>Scroll reveals added to /membership/ and /press/ pages</li>
+            </ul>
+          </article>
+
+          <!-- S64 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S64</span><span class="cl-phase-date">2026-04-13</span>
+              <div class="cl-phase-title">Homepage Stat Fixes, /rights/ Rename, Social Proof Live</div>
+            </div>
+            <ul class="cl-items">
+              <li>Homepage stat counters fixed — correct numbers now display</li>
+              <li>/rights/ page renamed and updated with correct URL structure</li>
+              <li>Membership social proof strip went live</li>
+              <li>Site-wide scroll reveals enabled across all major sections</li>
+              <li>Extended light-mode screenshot spec for Playwright visual testing</li>
+            </ul>
+          </article>
+
+          <!-- S63 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S63</span><span class="cl-phase-date">2026-04-13</span>
+              <div class="cl-phase-title">Light Mode Phase 2 — Complete Overhaul</div>
+            </div>
+            <ul class="cl-items">
+              <li>Light mode Phase 2 shipped — 227 lines of targeted CSS covering 54 pages</li>
+              <li>All panels, cards, badges, and inputs now display correctly in light mode</li>
+              <li>No dark-on-dark text, contrast meets AA across every light-mode state</li>
+            </ul>
+          </article>
+
+          <!-- S62 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S62</span><span class="cl-phase-date">2026-04-13</span>
+              <div class="cl-phase-title">Homepage Forge Ignition Redesign</div>
+            </div>
+            <ul class="cl-items">
+              <li>Homepage hero redesigned with letterForge animation and vault door hybrid layout</li>
+              <li>Forge ignition sequence adds cinematic first-impression impact</li>
+              <li>Animation is GPU-composited — no layout shift, no jank</li>
+            </ul>
+          </article>
+
+          <!-- S61 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S61</span><span class="cl-phase-date">2026-04-12</span>
+              <div class="cl-phase-title">Portal Studio Access, Homepage Hero Centering, DB Migration</div>
+            </div>
+            <ul class="cl-items">
+              <li>Portal Studio Access panel added for studio-tier members</li>
+              <li>VaultSparked CSP smoke test added to CI</li>
+              <li>Homepage hero centering fixed on all viewport widths</li>
+              <li>Vault Wall spec added to test suite</li>
+              <li>Phase 59 DB migration went live in Supabase</li>
+            </ul>
+          </article>
+
+          <!-- S60 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S60</span><span class="cl-phase-date">2026-04-12</span>
+              <div class="cl-phase-title">VaultSparked CSP Cleared, Homepage Circular Element Fix</div>
+            </div>
+            <ul class="cl-items">
+              <li>All VaultSparked page CSP violations cleared — zero console errors</li>
+              <li>Homepage circular animated element rendering bug fixed</li>
+            </ul>
+          </article>
+
+          <!-- S59 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S59</span><span class="cl-phase-date">2026-04-12</span>
+              <div class="cl-phase-title">/membership/ Hub, Option C Model, Nav/Footer Propagation</div>
+            </div>
+            <ul class="cl-items">
+              <li>/membership/ page rebuilt as a full hub — tiers, perks, and CTAs in one place</li>
+              <li>Option C monetisation model finalised and documented</li>
+              <li>Nav and footer updates propagated across 77 pages</li>
+              <li>VaultSparked overhaul — new design with tier comparison table</li>
+            </ul>
+          </article>
+
+          <!-- S55–S58 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S55–S58</span><span class="cl-phase-date">2026-04-11</span>
+              <div class="cl-phase-title">Press Kit, Studio Pulse, Vault Wall, Invite, Social Proof</div>
+            </div>
+            <ul class="cl-items">
+              <li>Press kit page launched at /press/ with logos, studio bio, key facts, and press contact</li>
+              <li>Studio Pulse page at /studio-pulse/ with live dev session feed</li>
+              <li>Vault Wall launched — member name display on community wall</li>
+              <li>Invite/refer-a-friend page at /invite/ with referral code sharing</li>
+              <li>Social proof strip added to homepage — member count + community stats</li>
+              <li>Daily loop widget in the vault portal — streak + challenge nudges</li>
+              <li>Founding member badge — awarded to members who joined in Phase 1</li>
+              <li>Game conversion section added to unreleased game pages</li>
+            </ul>
+          </article>
+
+          <!-- Earlier sessions separator -->
+          <div style="text-align:center;padding:1.5rem 0 2rem;color:var(--dim);font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Earlier Sessions (March 2026)</div>
 
           <article class="cl-phase">
             <div class="cl-dot" aria-hidden="true"></div>
@@ -372,6 +527,7 @@
           <a href="/studio/">About</a>
           <a href="/studio-pulse/">Studio Pulse</a>
           <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/changelog/">Changelog</a>
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
           <a href="/universe/">Universe</a>
@@ -419,7 +575,8 @@
   <script src="/assets/kit.js" defer></script>
   <script src="/assets/cookie-consent.js" defer></script>
   <script src="/assets/nav-toggle.js" defer></script>
-<script src="/assets/vault-cta.js" defer></script>
+  <script src="/assets/vault-cta.js" defer></script>
+  <script src="/assets/scroll-reveal.js" defer></script>
 </body>
 </html>
 

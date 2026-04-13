@@ -14,6 +14,23 @@
       });
     });
 
+    // ── Nav account dropdown toggle ──────────────────────────────
+    (function() {
+      var trigger = document.getElementById('nav-account-trigger');
+      var menu    = document.getElementById('nav-account-menu');
+      if (trigger && menu) {
+        trigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var open = menu.style.display === 'block';
+          menu.style.display = open ? 'none' : 'block';
+        });
+        document.addEventListener('click', function(e) {
+          var wrap = document.getElementById('nav-account-wrap');
+          if (wrap && !wrap.contains(e.target)) menu.style.display = 'none';
+        });
+      }
+    })();
+
     // ── Tab switching ───────────────────────────────────────────
     // 'forgot' and 'reset' are overlay panels with no tab button
     function switchTab(which) {

@@ -17,6 +17,11 @@ const PAGES = [
   { path: '/roadmap/',     name: 'roadmap' },
   { path: '/universe/',    name: 'universe' },
   { path: '/membership/',  name: 'membership' },
+  { path: '/changelog/',   name: 'changelog' },
+  { path: '/games/vaultfront/',   name: 'game-vaultfront' },
+  { path: '/games/solara/',       name: 'game-solara' },
+  { path: '/games/mindframe/',    name: 'game-mindframe' },
+  { path: '/games/the-exodus/',   name: 'game-the-exodus' },
 ];
 
 test.use({

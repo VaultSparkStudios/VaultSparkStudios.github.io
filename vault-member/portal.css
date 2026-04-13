@@ -2413,3 +2413,202 @@ body.light-mode .dashboard-intro {
   background: linear-gradient(135deg, rgba(255,196,0,0.04), rgba(230,237,252,0.94) 40%, rgba(31,162,255,0.04));
   border-color: rgba(22,32,51,0.08);
 }
+
+/* ── S66: Rank progress bar enhancements ────────────────────── */
+.rank-progress-wrap {
+  position: relative;
+}
+
+/* Track wrapper — gives room for tick marks */
+.rank-progress-track {
+  position: relative;
+  height: 6px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 3px;
+  overflow: visible;
+}
+
+/* Tick marks at 25% and 75% via pseudo-elements; 50% tick injected by JS as .tick-mid */
+.rank-progress-track::before,
+.rank-progress-track::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  width: 2px;
+  height: 12px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 1px;
+  z-index: 2;
+  pointer-events: none;
+}
+.rank-progress-track::before { left: 25%; }
+.rank-progress-track::after  { left: 75%; }
+
+.rank-progress-track .tick-mid {
+  position: absolute;
+  top: -3px;
+  left: 50%;
+  width: 2px;
+  height: 12px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 1px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* The bar fill */
+#rankProgressBar {
+  border-radius: 3px;
+  transition: width 0.6s ease, background 0.6s ease;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Shimmer animation for near-max (>80%) */
+@keyframes rank-shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.rank-progress-track.progress-near-max #rankProgressBar {
+  background: linear-gradient(
+    90deg,
+    var(--rank-color, #FFC400) 0%,
+    #fff9e0 40%,
+    var(--rank-color, #FFC400) 60%,
+    #ffe066 100%
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: rank-shimmer 1.8s linear infinite;
+  box-shadow: 0 0 8px rgba(255,196,0,0.5);
+}
+
+/* XP label below bar */
+.rank-xp-label {
+  font-size: 0.72rem;
+  color: var(--dim);
+  margin-top: 0.3rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── S66: Skeleton loaders ───────────────────────────────────── */
+@keyframes skeleton-pulse {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.05) 25%,
+    rgba(255,255,255,0.10) 50%,
+    rgba(255,255,255,0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.5s infinite;
+  border-radius: 8px;
+}
+
+.skeleton-line {
+  height: 14px;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.skeleton-line.short { width: 55%; }
+.skeleton-line.med   { width: 75%; }
+
+.skeleton-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.skeleton-card {
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Profile card :empty skeleton */
+.profile-card:empty::before {
+  content: '';
+  display: block;
+  height: 60px;
+  border-radius: 12px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.05) 25%,
+    rgba(255,255,255,0.10) 50%,
+    rgba(255,255,255,0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.5s infinite;
+}
+
+/* Achievement grid :empty skeleton */
+.achievement-grid:empty {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
+  min-height: 120px;
+}
+.achievement-grid:empty::before,
+.achievement-grid:empty::after {
+  content: '';
+  border-radius: 12px;
+  min-height: 100px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.05) 25%,
+    rgba(255,255,255,0.08) 50%,
+    rgba(255,255,255,0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.5s infinite;
+}
+
+/* What's New badge on notif bell */
+#whats-new-bell-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 10px;
+  height: 10px;
+  background: var(--gold);
+  border-radius: 50%;
+  border: 2px solid #0a0c14;
+  pointer-events: none;
+  display: none;
+}
+#whats-new-bell-badge.visible { display: block; }
+
+/* ── S66: Achievement Share button ───────────────────────────── */
+.ach-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: rgba(255,196,0,0.08);
+  border: 1px solid rgba(255,196,0,0.25);
+  border-radius: 999px;
+  padding: 0.25rem 0.65rem;
+  cursor: pointer;
+  font-family: inherit;
+  margin-top: 0.45rem;
+  transition: background 0.2s ease;
+}
+.ach-share-btn:hover { background: rgba(255,196,0,0.15); }
+
+/* ── S66: What's New version badge ──────────────────────────── */
+.whats-new-version {
+  font-size: 0.65rem;
+  color: var(--dim);
+  text-align: center;
+  margin-top: 0.5rem;
+}

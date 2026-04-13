@@ -11,6 +11,10 @@
     gtag('config', 'G-RSGLPP4KDZ');
   </script>
   <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="dns-prefetch" href="https://js.stripe.com" />
   <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -534,10 +538,18 @@
                   <span style="font-size:0.75rem;color:var(--dim);" id="rankProgressLabel">Progress to next rank</span>
                   <span style="font-size:0.75rem;color:var(--dim);" id="rankProgressPct"></span>
                 </div>
-                <div style="height:4px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden;">
-                  <div id="rankProgressBar" style="height:100%;background:linear-gradient(90deg,#1FA2FF,#8B5CF6);border-radius:2px;transition:width 0.5s ease;width:0%;"></div>
+                <div class="rank-progress-track" id="rankProgressTrack">
+                  <span class="tick-mid" aria-hidden="true"></span>
+                  <div
+                    id="rankProgressBar"
+                    role="progressbar"
+                    aria-valuenow="0"
+                    aria-valuemin="0"
+                    aria-valuemax="100"
+                    style="height:6px;background:linear-gradient(90deg,#1FA2FF,#8B5CF6);border-radius:3px;transition:width 0.5s ease;width:0%;"
+                  ></div>
                 </div>
-                <div id="rankNextLabel" style="font-size:0.72rem;color:var(--dim);margin-top:0.3rem;"></div>
+                <div id="rankNextLabel" class="rank-xp-label"></div>
               </div>
 
               <!-- Season XP Mini-Widget -->
@@ -1560,6 +1572,7 @@
           <a href="/studio/">About</a>
           <a href="/studio-pulse/">Studio Pulse</a>
           <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/changelog/">Changelog</a>
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
           <a href="/universe/">Universe</a>
@@ -1611,6 +1624,7 @@
   <script src="portal-challenges.js"></script>
   <script src="portal-settings.js"></script>
   <script src="portal-init.js"></script>
+  <script src="portal-share.js" defer></script>
 
 
   <script src="/assets/pwa-install.js" defer></script>

@@ -11,6 +11,10 @@
     gtag('config', 'G-RSGLPP4KDZ');
   </script>
   <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="dns-prefetch" href="https://js.stripe.com" />
   <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -273,6 +277,27 @@
         </div>
       </div>
     </section>
+
+    <!-- Notify Me — Early Access -->
+    <section style="padding:2.5rem 0;border-top:1px solid rgba(255,255,255,0.06);">
+      <div class="container">
+        <div style="background:linear-gradient(135deg,rgba(255,196,0,0.06),rgba(13,17,28,0.97));border:1px solid rgba(255,196,0,0.18);border-radius:18px;padding:2rem 2.25rem;">
+          <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.6rem;">Early Access</div>
+          <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:1.55rem;font-weight:400;letter-spacing:-0.025em;margin:0 0 0.4rem;color:var(--text);">Be First to Play The Exodus</h2>
+          <p style="color:var(--muted);font-size:0.93rem;line-height:1.6;max-width:52ch;margin:0 0 1.25rem;">Drop your email — we'll notify you when The Exodus opens for early access.</p>
+          <form class="notify-me-form" data-game="The Exodus" novalidate>
+            <input type="hidden" name="access_key" value="af76f2ed-d5fd-4b28-8b73-a2e47be2bb71" />
+            <div class="notify-me-fields" style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+              <input type="email" name="email" required placeholder="you@email.com" autocomplete="email" style="flex:1;min-width:210px;height:44px;padding:0 1rem;border-radius:10px;border:1px solid rgba(255,196,0,0.25);background:rgba(255,255,255,0.05);color:var(--text);font-size:0.92rem;font-family:inherit;outline:none;" />
+              <button type="submit" class="button button-sm" style="height:44px;background:linear-gradient(135deg,#FFC400,#FF7A00);color:#000;font-weight:800;border:none;">Notify Me</button>
+            </div>
+            <p class="notify-me-feedback" hidden style="margin-top:0.75rem;font-size:0.88rem;line-height:1.5;"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+    <script src="../../assets/notify-me.js" defer></script>
+
   </main>
 
   <footer class="site-footer" aria-label="Site footer">
@@ -295,6 +320,7 @@
           <a href="/studio/">About</a>
           <a href="/studio-pulse/">Studio Pulse</a>
           <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/changelog/">Changelog</a>
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
           <a href="/universe/">Universe</a>

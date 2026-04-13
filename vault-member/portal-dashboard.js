@@ -1,3 +1,6 @@
+    // ── S66: Portal version — drives What's New deduplication ────
+    const PORTAL_VERSION = '2026-04-13-s66';
+
     // ── Phase 2: XP chip notification ────────────────────────────
     function showXpChip(pts, label) {
       const existing = document.querySelector('.xp-chip');
@@ -1285,20 +1288,61 @@
       }
     }
 
-    // ── Phase 14: What's New modal ───────────────────────────────
+    // ── Phase 14: What's New modal — S66 enhanced ────────────────
+    // S66 hardcoded fallback changelog items
+    const _WN_FALLBACK = [
+      { type: 'update',    message: 'Scroll depth analytics — now tracking how far you explore key pages' },
+      { type: 'milestone', message: 'Achievement Share Cards — earn a badge? Share it from the Vault' },
+      { type: 'info',      message: "What's New modal — you're reading it right now ⚡" },
+      { type: 'update',    message: 'Resource hints — pages load faster with DNS prefetch for all third-party domains' },
+    ];
+
     async function checkWhatsNew() {
+      // Skip if this portal version has already been acknowledged
+      if (localStorage.getItem('vs_portal_last_seen') === PORTAL_VERSION) return;
+
       try {
         const { data: pulses } = await VSSupabase
           .from('studio_pulse')
           .select('id,message,type,created_at')
           .order('created_at', { ascending: false })
           .limit(5);
-        if (!pulses || pulses.length === 0) return;
-        const lastSeen = localStorage.getItem('vs_last_pulse_seen_ts') || '1970-01-01';
-        const unseen = pulses.filter(p => p.created_at > lastSeen);
-        if (unseen.length === 0) return;
+
+        if (!pulses || pulses.length === 0) {
+          // No Supabase data — show fallback if not seen
+          _showWhatsNewBellBadge();
+          showWhatsNewModal(_WN_FALLBACK, null);
+          return;
+        }
+
+        const lastSeenDate = localStorage.getItem('vs_portal_last_seen_date') || '1970-01-01';
+        const unseen = pulses.filter(p => p.created_at > lastSeenDate);
+
+        if (unseen.length === 0) {
+          // All seen — mark version so we skip next time too
+          localStorage.setItem('vs_portal_last_seen', PORTAL_VERSION);
+          return;
+        }
+
+        _showWhatsNewBellBadge();
         showWhatsNewModal(unseen, pulses[0].created_at);
-      } catch (_) {}
+      } catch (_) {
+        // Network/Supabase failure — show fallback changelog
+        if (localStorage.getItem('vs_portal_last_seen') !== PORTAL_VERSION) {
+          _showWhatsNewBellBadge();
+          showWhatsNewModal(_WN_FALLBACK, null);
+        }
+      }
+    }
+
+    function _showWhatsNewBellBadge() {
+      const badge = document.getElementById('whats-new-bell-badge');
+      if (badge) badge.classList.add('visible');
+    }
+
+    function _hideWhatsNewBellBadge() {
+      const badge = document.getElementById('whats-new-bell-badge');
+      if (badge) badge.classList.remove('visible');
     }
 
     function showWhatsNewModal(items, latestTs) {
@@ -1307,33 +1351,46 @@
       modal.id = 'whats-new-modal';
       modal.className = 'whats-new-overlay';
       const typeEmoji = { info:'ℹ️', update:'🔔', lore:'📁', alert:'⚡', milestone:'🏆' };
-      const safeTs = latestTs.replace(/'/g, '');
-      const itemsHtml = items.slice(0, 4).map(p =>
+      const safeTs = latestTs ? latestTs.replace(/'/g, '') : null;
+      const displayItems = items.slice(0, 5);
+      const itemsHtml = displayItems.map(p =>
         '<div class="whats-new-item">'
         + '<span class="whats-new-item-icon">' + (typeEmoji[p.type] || '⚡') + '</span>'
         + '<div class="whats-new-item-text">' + p.message + '</div>'
         + '</div>'
       ).join('');
+
       modal.innerHTML = '<div role="dialog" aria-modal="true" aria-labelledby="whats-new-title" class="whats-new-dialog">'
         + '<div class="whats-new-header">'
         + '<h3 id="whats-new-title" class="whats-new-title">What\'s New in the Vault</h3>'
         + '<span class="whats-new-badge">'
-        + items.length + ' update' + (items.length > 1 ? 's' : '') + '</span>'
+        + displayItems.length + ' update' + (displayItems.length > 1 ? 's' : '') + '</span>'
         + '</div>'
         + '<div class="whats-new-body">' + itemsHtml + '</div>'
         + '<button id="whats-new-close-btn" class="whats-new-close-btn">Got it — I\'m up to speed</button>'
+        + '<div class="whats-new-version">Portal ' + PORTAL_VERSION + '</div>'
         + '</div>';
-      document.body.appendChild(modal);
+
       const _wnPrev = document.activeElement;
-      document.getElementById('whats-new-close-btn')?.focus();
+      document.body.appendChild(modal);
+      _trapFocus(modal);
+      const closeBtn = document.getElementById('whats-new-close-btn');
+      if (closeBtn) closeBtn.focus();
+
       const closeModal = () => {
         modal.remove();
+        _hideWhatsNewBellBadge();
         try { _wnPrev?.focus(); } catch(_) {}
-        localStorage.setItem('vs_last_pulse_seen_ts', safeTs);
+        // Persist: mark version seen and record the latest pulse timestamp
+        localStorage.setItem('vs_portal_last_seen', PORTAL_VERSION);
+        if (safeTs) localStorage.setItem('vs_portal_last_seen_date', safeTs);
+        // Also update legacy key for backward compat
+        if (safeTs) localStorage.setItem('vs_last_pulse_seen_ts', safeTs);
       };
-      document.getElementById('whats-new-close-btn').addEventListener('click', closeModal);
+
+      if (closeBtn) closeBtn.addEventListener('click', closeModal);
       modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-      modal.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+      modal.addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); closeModal(); } });
     }
 
     // ── Phase 14: Points breakdown modal ─────────────────────────
