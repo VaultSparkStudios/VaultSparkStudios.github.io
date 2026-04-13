@@ -171,6 +171,21 @@
       // Achievements grid (Feature 5: with progress bars)
       renderAchievementsGrid(member, achEarned);
 
+      // Merge relational achievements (member_achievements table: genesis badge, vaultsparked, etc.)
+      VSSupabase.from('member_achievements')
+        .select('achievements!achievement_id(slug)')
+        .eq('member_id', member._id)
+        .then(({ data: relAchs }) => {
+          if (!relAchs || !relAchs.length) return;
+          const relIds = relAchs.map(r => r.achievements && r.achievements.slug).filter(Boolean);
+          if (!relIds.length) return;
+          const merged = achEarned.slice();
+          relIds.forEach(function(slug) { if (merged.indexOf(slug) === -1) merged.push(slug); });
+          const statEl = document.getElementById('stat-achievements');
+          if (statEl) statEl.textContent = merged.length + ' / ' + VS.ACHIEVEMENT_DEFS.length;
+          renderAchievementsGrid(member, merged);
+        }).catch(function() {});
+
       // Newsletter prefs
       if (member.prefs) {
         const up   = document.getElementById('toggle-updates');

@@ -96,7 +96,10 @@
         { id: 'social',          icon: '🌐', name: 'Broadcast',         desc: 'Followed VaultSpark on a social platform'   },
         { id: 'recruiter',       icon: '🤝', name: 'Recruiter',         desc: 'Invited your first member to the Vault'     },
         { id: 'patron',          icon: '👑', name: 'Vault Patron',      desc: 'Invited 5 members — the vault grows'        },
-        { id: 'profile_complete',icon: '✍️', name: 'Identity Forged',   desc: 'Completed your Vault Member profile'        },
+        { id: 'profile_complete',     icon: '✍️',                                          name: 'Identity Forged',  desc: 'Completed your Vault Member profile'                           },
+        { id: 'genesis_vault_member', icon: '/assets/images/badges/genesis-vault-member.svg', name: 'Genesis Member',   desc: 'One of the first 100 members to join the Vault'                },
+        { id: 'vaultsparked',         icon: '/assets/images/badges/vaultsparked.svg',         name: 'VaultSparked',     desc: 'Upgraded to VaultSparked premium membership'                   },
+        { id: 'forge_master',         icon: '/assets/images/badges/forge-master.svg',         name: 'Forge Master',     desc: "Reached Forge Master rank — forged in the vault's heat"        },
       ],
 
       AVATARS: [
