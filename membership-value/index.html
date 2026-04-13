@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Membership Value Breakdown | VaultSpark Studios</title>
+  <meta name="description" content="See exactly what your VaultSpark Studios membership is worth — tier by tier value breakdown, market comparisons, and what we charge vs. what you get." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/membership-value/" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Vault Membership Value Breakdown | VaultSpark Studios" />
+  <meta property="og:description" content="Free tier worth $7–12/mo. VaultSparked delivers $28–45/mo of value for $4.99. See the full breakdown." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/membership-value/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSparkStudios" />
+  <link rel="icon" type="image/png" href="../assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <style>
+    /* ── Page layout ── */
+    .mv-page { min-height: 100vh; }
+
+    /* ── Hero ── */
+    .mv-hero {
+      position: relative;
+      padding: 5.5rem 0 4rem;
+      text-align: center;
+      overflow: hidden;
+    }
+    .mv-hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 25% 0%, rgba(255,196,0,0.10), transparent 45%),
+        radial-gradient(circle at 75% 0%, rgba(168,85,247,0.08), transparent 45%),
+        radial-gradient(circle at 50% 100%, rgba(31,162,255,0.05), transparent 50%);
+      pointer-events: none;
+    }
+    .mv-hero-label {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.1rem;
+      border: 1px solid rgba(255,196,0,0.22);
+      border-radius: 999px;
+      padding: 0.28rem 0.9rem;
+    }
+    .mv-hero h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.08;
+      margin: 0 auto 1.1rem;
+      max-width: 700px;
+    }
+    .mv-hero h1 em { font-style: normal; color: var(--gold); }
+    .mv-hero-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto 2rem;
+      line-height: 1.65;
+    }
+    .mv-hero-stat-row {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+    }
+    .mv-hero-stat { text-align: center; }
+    .mv-hero-stat-val {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .mv-hero-stat-val.purple { color: #a855f7; }
+    .mv-hero-stat-label { font-size: 0.78rem; color: var(--dim); margin-top: 0.3rem; }
+
+    /* ── Sections ── */
+    .mv-section { padding: 4.5rem 0; }
+    .mv-section + .mv-section { border-top: 1px solid rgba(255,255,255,0.05); }
+    .mv-section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 0.5rem;
+    }
+    .mv-section-title {
+      font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+      font-weight: 800;
+      margin-bottom: 0.6rem;
+    }
+    .mv-section-title span { color: var(--gold); }
+    .mv-section-title span.purple { color: #a855f7; }
+    .mv-section-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      max-width: 580px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* ── Value table ── */
+    .val-table-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+    }
+    .val-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .val-table th {
+      padding: 0.9rem 1.1rem;
+      text-align: left;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--dim);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+    }
+    .val-table th.val-th-price { text-align: right; color: var(--gold); }
+    .val-table td {
+      padding: 0.85rem 1.1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      vertical-align: middle;
+    }
+    .val-table tr:last-child td { border-bottom: none; }
+    .val-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .val-item-name { font-weight: 600; color: var(--text); }
+    .val-item-comp { font-size: 0.8rem; color: var(--dim); margin-top: 0.15rem; }
+    .val-price {
+      text-align: right;
+      font-weight: 700;
+      color: #34d399;
+      white-space: nowrap;
+    }
+    .val-total-row td {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.1) !important;
+      border-bottom: none !important;
+      background: rgba(255,255,255,0.03) !important;
+    }
+    .val-total-label {
+      font-weight: 800;
+      font-size: 0.95rem;
+    }
+    .val-total-price {
+      text-align: right;
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    /* ── Tier card ── */
+    .mv-tier-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .mv-tier-card {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.025);
+      padding: 1.75rem 1.5rem;
+      position: relative;
+    }
+    .mv-tier-card.sparked { border-color: rgba(255,196,0,0.22); }
+    .mv-tier-card.eternal { border-color: rgba(168,85,247,0.22); }
+    .mv-tier-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+      color: var(--dim);
+    }
+    .mv-tier-name.sparked { color: var(--gold); }
+    .mv-tier-name.eternal { color: #a855f7; }
+    .mv-tier-price { font-size: 1.9rem; font-weight: 900; margin-bottom: 0.2rem; }
+    .mv-tier-price sub { font-size: 0.9rem; font-weight: 700; vertical-align: 0.25em; }
+    .mv-tier-price .per { font-size: 0.8rem; font-weight: 600; color: var(--dim); }
+    .mv-tier-value-total {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(52,211,153,0.08);
+      border: 1px solid rgba(52,211,153,0.2);
+      border-radius: 999px;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #34d399;
+      margin: 0.7rem 0 1.1rem;
+    }
+    .mv-tier-ratio {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--gold);
+      margin-top: 0.5rem;
+    }
+    .mv-tier-ratio .ratio-num { font-size: 1.4rem; }
+
+    /* ── Savings callout ── */
+    .savings-banner {
+      background: linear-gradient(135deg, rgba(255,196,0,0.08), rgba(255,122,0,0.05));
+      border: 1px solid rgba(255,196,0,0.2);
+      border-radius: 14px;
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .savings-banner-text { flex: 1; }
+    .savings-banner-text strong { color: var(--gold); }
+    .savings-banner-text p { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; line-height: 1.5; }
+
+    /* ── Proposals section ── */
+    .proposal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .proposal-card {
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(255,255,255,0.02);
+      padding: 1.5rem;
+    }
+    .proposal-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.85rem;
+    }
+    .proposal-badge.new    { background: rgba(52,211,153,0.12); color: #34d399; border: 1px solid rgba(52,211,153,0.25); }
+    .proposal-badge.high   { background: rgba(255,196,0,0.1);  color: var(--gold); border: 1px solid rgba(255,196,0,0.25); }
+    .proposal-badge.bold   { background: rgba(168,85,247,0.1); color: #a855f7; border: 1px solid rgba(168,85,247,0.25); }
+    .proposal-badge.quick  { background: rgba(31,162,255,0.1); color: #7dd3fc; border: 1px solid rgba(31,162,255,0.25); }
+    .proposal-title { font-weight: 800; font-size: 1.05rem; margin-bottom: 0.4rem; }
+    .proposal-price { font-size: 0.82rem; color: var(--gold); font-weight: 700; margin-bottom: 0.6rem; }
+    .proposal-desc  { font-size: 0.87rem; color: var(--muted); line-height: 1.6; }
+    .proposal-why   { font-size: 0.79rem; color: var(--dim);  margin-top: 0.6rem; font-style: italic; line-height: 1.5; }
+
+    /* ── Comparison bars ── */
+    .comp-list { display: flex; flex-direction: column; gap: 0.85rem; }
+    .comp-row { display: flex; align-items: center; gap: 0.9rem; }
+    .comp-label { width: 160px; flex-shrink: 0; font-size: 0.84rem; color: var(--muted); }
+    .comp-bar-wrap { flex: 1; height: 8px; background: rgba(255,255,255,0.07); border-radius: 999px; overflow: hidden; }
+    .comp-bar { height: 100%; border-radius: 999px; transition: width 0.6s ease; }
+    .comp-bar.gold   { background: linear-gradient(90deg, #FFC400, #FF7A00); }
+    .comp-bar.dim    { background: rgba(255,255,255,0.2); }
+    .comp-bar.purple { background: linear-gradient(90deg, #7c3aed, #a855f7); }
+    .comp-price { width: 70px; text-align: right; font-weight: 700; font-size: 0.88rem; flex-shrink: 0; }
+
+    /* ── CTA ── */
+    .mv-cta {
+      text-align: center;
+      padding: 4rem 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .mv-cta h2 { font-size: 2rem; font-weight: 800; margin-bottom: 0.7rem; }
+    .mv-cta p  { color: var(--muted); margin-bottom: 1.75rem; font-size: 0.95rem; }
+    .mv-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-sparked {
+      background: linear-gradient(135deg, #FFC400, #FF7A00);
+      color: #000;
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.75rem 1.75rem;
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: inline-block;
+    }
+    .btn-outlined {
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--text);
+      font-weight: 700;
+      border-radius: 999px;
+      padding: 0.75rem 1.75rem;
+      text-decoration: none;
+      font-size: 0.95rem;
+      display: inline-block;
+    }
+
+    @media (max-width: 640px) {
+      .mv-hero { padding: 4rem 0 3rem; }
+      .mv-hero-stat-row { gap: 1.5rem; }
+      .savings-banner { flex-direction: column; gap: 1rem; }
+      .comp-label { width: 120px; font-size: 0.78rem; }
+      .mv-tier-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pc92owTgV6BIa8Xc5NXyUVrfAQZaJSy2Rp+VITHyeQ8=' 'sha256-JujKqvQ+wLaBwZQ+rK0dDSeBX3rT7sN0wby2YNyIlDs=' 'sha256-aizFzz4bZutx7qgu7RXmRZGMRd5mYvlspNnLIvS4rkI=' 'sha256-XdHcZWQrqgwOuuIEs9J5a0nYI4/agz9wQE8ikMlG4Gs=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+<script src="/assets/theme-toggle.js"></script>
+<script src="/assets/analytics.js" defer></script>
+<script src="/assets/pwa-nav.js" defer></script>
+<script defer src="/assets/pwa-install.js"></script>
+<script src="/assets/cookie-consent.js" defer></script>
+</head>
+<body>
+<script>!function(){try{var t=localStorage.getItem('vs_theme'),m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(t&&m[t]){var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}}catch(e){}}();</script>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img loading="lazy" src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">Canon</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/journal/">Signal Log</a>
+        <a href="/contact/">Contact</a>
+
+        <div class="mobile-nav-footer">
+          <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
+          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="mv-page">
+
+    <!-- Hero -->
+    <section class="mv-hero">
+      <div class="container">
+        <div class="mv-hero-label">Membership Value Transparency</div>
+        <h1>What your membership is <em>actually worth</em></h1>
+        <p class="mv-hero-sub">
+          We built this page to be honest about pricing. See exactly what you get per tier, what comparable services charge, and why our Phase 1 pricing is deliberately underpriced.
+        </p>
+        <div class="mv-hero-stat-row">
+          <div class="mv-hero-stat">
+            <div class="mv-hero-stat-val">$0</div>
+            <div class="mv-hero-stat-label">Free tier market value: ~$7–12/mo</div>
+          </div>
+          <div class="mv-hero-stat">
+            <div class="mv-hero-stat-val">$4.99</div>
+            <div class="mv-hero-stat-label">Sparked — market equivalent: ~$28–45/mo</div>
+          </div>
+          <div class="mv-hero-stat">
+            <div class="mv-hero-stat-val purple">$29.99</div>
+            <div class="mv-hero-stat-label">Eternal — market equivalent: ~$55–80/mo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tier cards overview -->
+    <section class="mv-section">
+      <div class="container">
+        <p class="mv-section-label">At a glance</p>
+        <h2 class="mv-section-title">Three tiers. One <span>Vault</span>.</h2>
+        <p class="mv-section-desc">
+          Value estimates are based on comparable subscription products — Discord Nitro, Twitch subscriptions, Patreon creator memberships, early-access gaming platforms, and rank-based community services.
+        </p>
+
+        <div class="mv-tier-grid">
+          <!-- Free -->
+          <div class="mv-tier-card">
+            <div class="mv-tier-name">Vault Member</div>
+            <div class="mv-tier-price"><sub>$</sub>0<span class="per"> /mo</span></div>
+            <div class="mv-tier-value-total">⚡ Market equivalent: ~$7–12/mo</div>
+            <div style="font-size:0.87rem;color:var(--muted);line-height:1.6;">
+              Rank system, challenges, community Discord, Vault Wall recognition, lore access (limited), and referral XP rewards — all at zero cost, forever.
+            </div>
+          </div>
+
+          <!-- VaultSparked -->
+          <div class="mv-tier-card sparked">
+            <div class="mv-tier-name sparked">⚡ VaultSparked</div>
+            <div class="mv-tier-price"><sub>$</sub>4.99<span class="per"> /mo</span></div>
+            <div class="mv-tier-value-total">⚡ Market equivalent: ~$28–45/mo</div>
+            <div style="font-size:0.87rem;color:var(--muted);line-height:1.6;margin-bottom:0.7rem;">
+              Full Archive access, beta first-wave, exclusive achievements, 2× streak multiplier, gold profile theme, 500 monthly XP bonus, Discord Sparked role, and grandfather pricing locked forever.
+            </div>
+            <div class="mv-tier-ratio">
+              <span class="ratio-num">~6–9×</span> value vs cost
+            </div>
+          </div>
+
+          <!-- Eternal -->
+          <div class="mv-tier-card eternal">
+            <div class="mv-tier-name eternal">◆ VaultSparked Eternal</div>
+            <div class="mv-tier-price"><sub>$</sub>29.99<span class="per"> /mo</span></div>
+            <div class="mv-tier-value-total" style="background:rgba(168,85,247,0.08);border-color:rgba(168,85,247,0.25);color:#a855f7;">◆ Market equivalent: ~$55–80/mo</div>
+            <div style="font-size:0.87rem;color:var(--muted);line-height:1.6;margin-bottom:0.7rem;">
+              Everything in Sparked, plus: studio credits (permanent), cross-product access, founder video updates, pro beta builds, purple Eternal Discord role, 1,000 monthly XP, and named in the Vault forever.
+            </div>
+            <div class="mv-tier-ratio" style="color:#a855f7;">
+              <span class="ratio-num">~2–3×</span> value vs cost
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Free tier value table -->
+    <section class="mv-section">
+      <div class="container">
+        <p class="mv-section-label">Tier 1</p>
+        <h2 class="mv-section-title">Free tier — <span>what you actually get</span></h2>
+        <p class="mv-section-desc">The free Vault Membership is not a stripped-down teaser. It's a complete community experience that stands on its own.</p>
+
+        <div class="val-table-wrap">
+          <table class="val-table">
+            <thead>
+              <tr>
+                <th style="width:50%">Benefit</th>
+                <th>Market equivalent</th>
+                <th class="val-th-price">Est. value/mo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="val-item-name">Vault Rank system + leaderboard</div>
+                  <div class="val-item-comp">9-tier progression, public ranking, Vault Points economy</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Achievement/rank platform (Steam, Razer Cortex)</td>
+                <td class="val-price">~$2–3</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Weekly challenges + daily login bonus</div>
+                  <div class="val-item-comp">Fresh challenge drops, streak system, daily XP</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Challenge apps (Duolingo Plus, HQ Trivia, Skillz)</td>
+                <td class="val-price">~$2–4</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Community Discord access</div>
+                  <div class="val-item-comp">Vault Member role, game channels, Signal channels</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Gaming community Discord (free, but Discord Nitro = $9.99/mo)</td>
+                <td class="val-price">~$0–2</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Classified Archive (limited)</div>
+                  <div class="val-item-comp">Lore fragments, transmission entries, universe content</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Gaming newsletter / lore subscription</td>
+                <td class="val-price">~$2–3</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Vault Wall recognition + profile</div>
+                  <div class="val-item-comp">Public member card, rank display, community presence</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Creator profile platforms (Linktree Pro, Koji)</td>
+                <td class="val-price">~$1–2</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Referral XP (+100 pts per invite)</div>
+                  <div class="val-item-comp">Earn rewards for growing the community</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Referral program rewards (retail/gaming equivalents)</td>
+                <td class="val-price">~$0–1</td>
+              </tr>
+              <tr class="val-total-row">
+                <td class="val-total-label">Total free-tier value</td>
+                <td></td>
+                <td class="val-total-price" style="color:#34d399;">~$7–15/mo</td>
+              </tr>
+              <tr class="val-total-row" style="background:rgba(52,211,153,0.04) !important;">
+                <td class="val-total-label" style="color:#34d399;">What you pay</td>
+                <td></td>
+                <td class="val-total-price" style="color:#34d399; font-size:1.5rem;">$0/mo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- VaultSparked value table -->
+    <section class="mv-section">
+      <div class="container">
+        <p class="mv-section-label">Tier 2</p>
+        <h2 class="mv-section-title"><span>VaultSparked</span> — the full value picture</h2>
+        <p class="mv-section-desc">Adding $4.99/mo unlocks a level of access that would cost $20–40/mo if purchased separately across equivalent platforms.</p>
+
+        <div class="val-table-wrap">
+          <table class="val-table">
+            <thead>
+              <tr>
+                <th style="width:50%">Additional benefit vs Free</th>
+                <th>Market equivalent</th>
+                <th class="val-th-price" style="color:#FFC400;">Est. value/mo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="val-item-name">Full Classified Archive access</div>
+                  <div class="val-item-comp">Complete lore vault, all transmission fragments, early narrative drops</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Game lore/newsletter Patreon (Tier 1: $3–5/mo)</td>
+                <td class="val-price" style="color:var(--gold);">~$3–5</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Beta first-wave access</div>
+                  <div class="val-item-comp">First access to all VaultSpark builds before general pool</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Patreon early-access tier (game studios: $5–15/mo)</td>
+                <td class="val-price" style="color:var(--gold);">~$5–10</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">500 monthly bonus Vault Points</div>
+                  <div class="val-item-comp">Accelerates rank progression every month</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">In-game currency purchases (gaming apps: $3–5/bundle)</td>
+                <td class="val-price" style="color:var(--gold);">~$2–4</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Exclusive Sparked achievements</div>
+                  <div class="val-item-comp">Achievements free members can never unlock — permanent vault record</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Achievement hunting services / Xbox/PS premium achievement access</td>
+                <td class="val-price" style="color:var(--gold);">~$2–3</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">2× streak multiplier</div>
+                  <div class="val-item-comp">Double XP on daily login streaks</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">XP boost in gaming apps / Duolingo Super boost</td>
+                <td class="val-price" style="color:var(--gold);">~$2–3</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">⚡ Sparked Discord role</div>
+                  <div class="val-item-comp">Exclusive role, Sparked-only channels, community identity</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Discord Nitro + Server Boost ($9.99 + $4.99/mo)</td>
+                <td class="val-price" style="color:var(--gold);">~$4–8</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Gold profile theme + Sparked badge</div>
+                  <div class="val-item-comp">Gold accent, Sparked badge on portal profile and Vault Wall</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Platform cosmetics (Twitch Bits bundles, Steam points shop)</td>
+                <td class="val-price" style="color:var(--gold);">~$2–4</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Grandfather pricing lock</div>
+                  <div class="val-item-comp">$4.99 locked forever — when Phase 2 opens higher, you keep your rate</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Price protection is rare — most platforms raise prices freely</td>
+                <td class="val-price" style="color:var(--gold);">Priceless</td>
+              </tr>
+              <tr class="val-total-row">
+                <td class="val-total-label">Additional value over Free</td>
+                <td></td>
+                <td class="val-total-price" style="color:var(--gold);">~$20–37/mo</td>
+              </tr>
+              <tr class="val-total-row">
+                <td class="val-total-label">Combined total value</td>
+                <td></td>
+                <td class="val-total-price" style="color:var(--gold);">~$28–45/mo</td>
+              </tr>
+              <tr class="val-total-row" style="background:rgba(255,196,0,0.04) !important;">
+                <td class="val-total-label" style="color:var(--gold);">What you pay</td>
+                <td></td>
+                <td class="val-total-price" style="color:var(--gold); font-size:1.5rem;">$4.99/mo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="savings-banner">
+          <div style="font-size:2.5rem; flex-shrink:0;">⚡</div>
+          <div class="savings-banner-text">
+            <strong>VaultSparked delivers 6–9× value vs cost.</strong>
+            <p>At $4.99/mo, you're getting roughly $28–45 of comparable services for less than the price of a single month of Discord Nitro. Phase 1 pricing is intentionally aggressive — we want the vault to fill with real members before prices reflect market rate.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Eternal value table -->
+    <section class="mv-section">
+      <div class="container">
+        <p class="mv-section-label">Tier 3</p>
+        <h2 class="mv-section-title"><span class="purple">Eternal</span> — studio-level access</h2>
+        <p class="mv-section-desc">VaultSparked Eternal is for members who want to be part of the studio's story — not just its products. The $29.99 premium buys permanent recognition and deep access.</p>
+
+        <div class="val-table-wrap">
+          <table class="val-table">
+            <thead>
+              <tr>
+                <th style="width:50%">Additional benefit vs VaultSparked</th>
+                <th>Market equivalent</th>
+                <th class="val-th-price" style="color:#a855f7;">Est. value/mo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="val-item-name">Studio credits — permanent</div>
+                  <div class="val-item-comp">Named in release credits for every VaultSpark title, forever</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Kickstarter backer credits ($50–150 one-time; amortized ~$2–3/mo)</td>
+                <td class="val-price" style="color:#a855f7;">~$2–4</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Cross-product Eternal access</div>
+                  <div class="val-item-comp">Eternal perks apply across every VaultSpark title, not just one</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Multi-game pass (Xbox Game Pass Ultimate: $16.99/mo)</td>
+                <td class="val-price" style="color:#a855f7;">~$10–15</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Pro beta builds</div>
+                  <div class="val-item-comp">Access to internal proto builds — not just first-wave release betas</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Patreon Tier 3 / dev supporter ($15–25/mo)</td>
+                <td class="val-price" style="color:#a855f7;">~$10–15</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Founder video updates</div>
+                  <div class="val-item-comp">Direct video dispatches from the studio — behind-the-scenes, decisions, direction</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Creator membership / YouTube Membership Tier 3 ($5–15/mo)</td>
+                <td class="val-price" style="color:#a855f7;">~$5–10</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">◆ Eternal Discord role + 1,000 monthly XP</div>
+                  <div class="val-item-comp">Distinct purple Eternal role; double the Sparked XP bonus</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Nitro + Server Boost + exclusive role positioning</td>
+                <td class="val-price" style="color:#a855f7;">~$5–8</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="val-item-name">Purple Eternal profile theme</div>
+                  <div class="val-item-comp">Distinct visual identity on portal + Vault Wall purple highlight</div>
+                </td>
+                <td style="color:var(--muted);font-size:0.85rem;">Platform cosmetics / exclusive profile customisation</td>
+                <td class="val-price" style="color:#a855f7;">~$2–4</td>
+              </tr>
+              <tr class="val-total-row">
+                <td class="val-total-label">Additional value over VaultSparked</td>
+                <td></td>
+                <td class="val-total-price" style="color:#a855f7;">~$34–56/mo</td>
+              </tr>
+              <tr class="val-total-row">
+                <td class="val-total-label">Combined total value</td>
+                <td></td>
+                <td class="val-total-price" style="color:#a855f7;">~$55–80/mo</td>
+              </tr>
+              <tr class="val-total-row" style="background:rgba(168,85,247,0.04) !important;">
+                <td class="val-total-label" style="color:#a855f7;">What you pay</td>
+                <td></td>
+                <td class="val-total-price" style="color:#a855f7; font-size:1.5rem;">$29.99/mo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Market comparison bars -->
+    <section class="mv-section">
+      <div class="container">
+        <p class="mv-section-label">Context</p>
+        <h2 class="mv-section-title">How we compare to the <span>market</span></h2>
+        <p class="mv-section-desc">VaultSparked sits below most comparable community subscriptions — intentionally. Phase 1 pricing is how we reward early members.</p>
+
+        <div class="comp-list" style="max-width:680px;">
+          <div class="comp-row">
+            <div class="comp-label">VaultSparked</div>
+            <div class="comp-bar-wrap"><div class="comp-bar gold" style="width:20%;"></div></div>
+            <div class="comp-price" style="color:var(--gold);">$4.99</div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-label">Twitch Sub Tier 1</div>
+            <div class="comp-bar-wrap"><div class="comp-bar dim" style="width:20%;"></div></div>
+            <div class="comp-price">$4.99</div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-label">YouTube Membership</div>
+            <div class="comp-bar-wrap"><div class="comp-bar dim" style="width:24%;"></div></div>
+            <div class="comp-price">$5.99</div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-label">Apple Arcade</div>
+            <div class="comp-bar-wrap"><div class="comp-bar dim" style="width:28%;"></div></div>
+            <div class="comp-price">$6.99</div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-label">PS Plus Essential</div>
+            <div class="comp-bar-wrap"><div class="comp-bar dim" style="width:32%;"></div></div>
+            <div class="comp-price">$7.99</div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-label">Discord Nitro</div>
+            <div class="comp-bar-wrap"><div class="comp-bar dim" style="width:40%;"></div></div>
+            <div class="comp-price">$9.99</div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-label">Patreon Creator (Mid)</div>
+            <div class="comp-bar-wrap"><div class="comp-bar dim" style="width:48%;"></div></div>
+            <div class="comp-price">$12/mo avg</div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-label">Twitch Sub Tier 3</div>
+            <div class="comp-bar-wrap"><div class="comp-bar dim" style="width:100%;"></div></div>
+            <div class="comp-price">$24.99</div>
+          </div>
+          <div class="comp-row">
+            <div class="comp-label" style="color:#a855f7;">Vault Eternal</div>
+            <div class="comp-bar-wrap"><div class="comp-bar purple" style="width:100%;"></div></div>
+            <div class="comp-price" style="color:#a855f7;">$29.99</div>
+          </div>
+        </div>
+
+        <p style="font-size:0.8rem;color:var(--dim);margin-top:1.5rem;font-style:italic;">
+          Note: Twitch subs go to individual creators. Discord Nitro is cosmetics only. VaultSparked combines community + achievement + early access + studio access in one sub — that's why the value ratio is high.
+        </p>
+      </div>
+    </section>
+
+    <!-- Innovation proposals -->
+    <section class="mv-section">
+      <div class="container">
+        <p class="mv-section-label">What's next</p>
+        <h2 class="mv-section-title">Proposed <span>pricing innovations</span></h2>
+        <p class="mv-section-desc">
+          The current structure is strong but has gaps. Here are the most compelling improvements — ranked by impact and feasibility.
+        </p>
+
+        <div class="proposal-grid">
+
+          <div class="proposal-card">
+            <span class="proposal-badge high">High impact</span>
+            <div class="proposal-title">Annual Plans</div>
+            <div class="proposal-price">$44.99/yr Sparked · $269.99/yr Eternal</div>
+            <div class="proposal-desc">Offer annual billing at a 25% discount. Reduces churn, improves cash flow predictability, and appeals to committed members who don't want monthly billing anxiety.</div>
+            <div class="proposal-why">No architecture changes needed — Stripe supports annual price IDs. Two new price IDs + UI toggle.</div>
+          </div>
+
+          <div class="proposal-card">
+            <span class="proposal-badge bold">Bold move</span>
+            <div class="proposal-title">Vault Lifetime Pass</div>
+            <div class="proposal-price">$299 one-time · All Sparked perks, forever</div>
+            <div class="proposal-desc">One-time payment for permanent Sparked access with a unique "Vault Lifer" badge and title. Zero churn risk. Superfan signal. Equivalent to ~5 years of $4.99/mo — great deal for the member, great LTV for the studio.</div>
+            <div class="proposal-why">Reduces ongoing revenue per seat but captures superfans who would otherwise churn. Separate from grandfather pricing (no monthly billing, no rate lock needed).</div>
+          </div>
+
+          <div class="proposal-card">
+            <span class="proposal-badge new">Fills the gap</span>
+            <div class="proposal-title">Mid-Tier: Vault Signal</div>
+            <div class="proposal-price">$9.99/mo — between Sparked and Eternal</div>
+            <div class="proposal-desc">The $4.99 → $29.99 jump is 6×. A $9.99 mid-tier bridges the gap for members who want more than Sparked but aren't ready for $30/mo. Includes: Sparked perks + monthly dev log video + feature voting + 750 XP bonus.</div>
+            <div class="proposal-why">Captures the "I'd pay $10" segment that currently converts to Free. Minimal unique content — existing assets (dev logs, voting) structured into a tier.</div>
+          </div>
+
+          <div class="proposal-card">
+            <span class="proposal-badge quick">Quick win</span>
+            <div class="proposal-title">Rank Loyalty Discount</div>
+            <div class="proposal-price">Forge Master: −20% off Sparked · The Sparked: −35%</div>
+            <div class="proposal-desc">Members who reach high ranks through engagement earn a discount on their first Sparked subscription. Creates a powerful conversion funnel: engage → rank up → unlock cheaper access → subscribe.</div>
+            <div class="proposal-why">Rewards the most active free members. Makes the rank system directly affect real money — massive incentive to stay engaged. Discount = Stripe coupon applied at checkout.</div>
+          </div>
+
+          <div class="proposal-card">
+            <span class="proposal-badge new">Community</span>
+            <div class="proposal-title">Gift Packs (Expanded)</div>
+            <div class="proposal-price">3-mo Sparked: $12.99 · 1-yr Sparked: $44.99</div>
+            <div class="proposal-desc">Gift checkout exists but only offers monthly cadence. Adding 3-month and annual gift options unlocks birthday/holiday gifting behaviour. Gaming gifts are a proven market — especially for friends who won't subscribe themselves.</div>
+            <div class="proposal-why">Gift subs are viral — the recipient becomes a new community member. Stripe supports gift receipts and delayed subscription starts.</div>
+          </div>
+
+          <div class="proposal-card">
+            <span class="proposal-badge bold">Long-term</span>
+            <div class="proposal-title">Studio Supporter Bundle</div>
+            <div class="proposal-price">$79/yr — one-time annual contribution</div>
+            <div class="proposal-desc">Non-recurring annual "Studio Support" payment. Unlocks: VaultSparked for 1 year + a permanent "Studio Supporter" badge. No recurring billing, no grandfather lock, no Eternal perks. Appeals to people allergic to subscriptions.</div>
+            <div class="proposal-why">Removes subscription friction for a segment of the market. Effectively same as annual Sparked but framed as a "support" action — psychologically different from a "subscription".</div>
+          </div>
+
+        </div>
+
+        <div class="savings-banner" style="margin-top:2.5rem;background:linear-gradient(135deg,rgba(168,85,247,0.07),rgba(31,162,255,0.04));border-color:rgba(168,85,247,0.2);">
+          <div style="font-size:2rem; flex-shrink:0;">◆</div>
+          <div class="savings-banner-text">
+            <strong style="color:#a855f7;">Immediate priority: annual plans.</strong>
+            <p>Annual billing is the single highest-impact change. It reduces churn by 40–60% industry-wide, increases LTV, and the 25% discount pays for itself in retention. Two Stripe price IDs + a UI toggle = done.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="mv-cta">
+      <div class="container">
+        <h2>Ready to join the Vault?</h2>
+        <p>Phase 1 pricing is locked forever for early members. Join now — prices only go up for new subscribers.</p>
+        <div class="mv-cta-btns">
+          <a href="/vault-member/#register" class="btn-sparked">Join Free →</a>
+          <a href="/vaultsparked/" class="btn-outlined">See All Tiers</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <img src="/assets/vaultspark-icon.webp" alt="VaultSpark Studios" width="36" height="36" loading="lazy" />
+          <span>VaultSpark Studios</span>
+        </a>
+        <p class="footer-tagline">Independent games studio. The vault is sparked.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer navigation">
+        <div class="footer-col">
+          <span class="footer-col-title">Studio</span>
+          <a href="/studio/">About</a>
+          <a href="/studio-pulse/">Studio Pulse</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/careers/">Careers</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Community</span>
+          <a href="/vault-member/">Vault Portal</a>
+          <a href="/vaultsparked/">Membership</a>
+          <a href="/membership-value/" aria-current="page">Value Breakdown</a>
+          <a href="/vault-wall/">Vault Wall</a>
+          <a href="/invite/">Referral</a>
+        </div>
+        <div class="footer-col">
+          <span class="footer-col-title">Technology &amp; Rights</span>
+          <a href="/open-source/">Attribution</a>
+          <a href="/security/">Security</a>
+          <a href="/accessibility/">Accessibility</a>
+          <a href="/cookies/">Cookies</a>
+          <a href="/data-deletion/">Data Deletion</a>
+        </div>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 VaultSpark Studios LLC. All rights reserved.</span>
+      <span class="footer-divider" aria-hidden="true">·</span>
+      <a href="/faq/">FAQ</a>
+    </div>
+  </footer>
+
+  <script src="/assets/nav-toggle.js" defer></script>
+</body>
+</html>
