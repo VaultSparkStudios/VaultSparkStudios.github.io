@@ -1,6 +1,47 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 60)
+Last updated: 2026-04-13 (Session 61)
+
+## Session Intent: Session 61
+Complete the open Now queue — Portal Studio Access panel, VaultSparked CSP smoke test, homepage hero structural redesign, plus HAR-blocked items noted.
+**Outcome: Achieved** — all 3 actionable Now items shipped; 2 HAR-blocked items carried forward.
+
+## Where We Left Off (Session 61 — 2026-04-13)
+
+- Shipped: 3 improvements — Portal Studio Access panel, VaultSparked CSP smoke test (+ homepage CSP), homepage hero structural redesign (centered cinematic layout)
+- Tests: CSP smoke test created and wired into CI compliance job
+- Deploy: ready to push
+
+### Detail
+
+- **Portal Studio Access panel** — `<div id="studio-access-panel">` added to dashboard grid in `vault-member/index.html` (after Connected Games). `loadStudioAccessPanel(planKey)` function added to `portal-dashboard.js` — renders 4 games with locked/unlocked state per tier (Football GM free, COD/Gridiron sparked, VaultFront eternal), gold upgrade CTA for free members. Called in `portal-auth.js` `showDashboard` — initial render from row `plan_key`, then updated with authoritative subscription result; also fires in `.catch()` fallback.
+- **VaultSparked CSP smoke test** — `tests/vaultsparked-csp.spec.js` created; Chromium-only; listens for `page.on('console')` + `page.on('pageerror')` and collects messages containing `Content-Security-Policy`; asserts zero violations after networkidle + 1.5s wait. Covers `/vaultsparked/` (primary) + `/` (bonus). Wired into `e2e.yml` compliance job as a non-optional step (not `continue-on-error`) — will block CI if future inline scripts sneak in.
+- **Homepage hero structural redesign** — Replaced 2-column grid layout (text left / logo card right) with full-width centered cinematic stack: eyebrow → logo banner (`.hero-logo`, centered, max 620px, blur glows via `::before/::after`) → h1 (smaller clamp 2.8–5.2rem, inline not `<br>`) → `.hero-sub` (centered paragraph) → `.hero-actions` (centered flex) → `.hero-meta-row` (chips left / stats right, separated by top border) → `.hero-story`. Removed `.hero-grid`, `.hero-card`, `.hero-visual`, `.logo-wrap`, `.hero-caption` CSS. Mobile: `.hero-logo` constrains to 80% width; `.hero-meta-row` stacks column at 980px. CDR direction satisfied: structurally distinct from all prior variants.
+- **SW cache** — bumped to `vaultspark-20260413-a5a0c499`
+
+---
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions.
+- [ ] **[DB] Phase59 public_profile migration** — run db-migrate workflow or `supabase db push` to apply `supabase-phase59-public-profile.sql`.
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler.
+- [ ] **[STRIPE-ANNUAL]** Create 2 new Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal). Wire to billing toggle checkout when created.
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **[SIL] Portal settings: public_profile toggle** — after phase59 migration is live, add member visibility toggle to settings page
+2. **[SIL] Vault Wall: verify post-migration** — smoke test vault-wall in incognito after phase59 HAR
+3. **[SIL] propagate-csp SKIP_DIRS: add vaultsparked** — prevents future CSP overwrites on that page
+
+---
 
 ## Session Intent: Session 60
 Bug-fix continuation of S59 — fix vaultsparked CSP violations (3 blocked scripts + inline event handlers) and revise homepage energy arc elements that user flagged as "weird circular addition."

@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 60)
+Last updated: 2026-04-13 (Session 61)
 
 ---
 
@@ -45,14 +45,17 @@ Last updated: 2026-04-13 (Session 60)
 - [x] **[S59] Nav template: Membership dropdown** — 7-link Membership dropdown added to propagate-nav.mjs; propagated to 77 pages; active link mapping added; footer Membership column added; Studio Pulse added to Studio footer column (S59)
 - [x] **[S59] Footer template update** — Membership column (6 links), Studio column updated (Studio Pulse + cleanup); propagated 77 pages (S59)
 - [x] **[S59] /vaultsparked/ overhaul** — removed founder video updates (4 locations); billing toggle (Monthly/Annual, JS price switching $4.99↔$44.99, $29.99↔$269.99); Studio Discount section (3-tier grid); Games Access section (per-tier); Rank Loyalty callout (25%/50%) (S59)
-- [ ] **[S59] Portal: Studio Access panel** — new dashboard panel showing games/projects accessible per tier (Free: Football GM browser game; Sparked: + COD + others; Eternal: + future exclusives); insert in portal-dashboard.js
+- [x] **[S59] Portal: Studio Access panel** — `<div id="studio-access-panel">` added to dashboard grid; `loadStudioAccessPanel(planKey)` in portal-dashboard.js renders 4 games with locked/unlocked state per tier; wired in portal-auth.js showDashboard (initial + authoritative subscription update) (S61)
 - [ ] **[SIL] Portal settings: public_profile toggle** — add "Show my profile on the Vault Wall" toggle to portal settings page; first step: add toggle HTML to settings privacy section + update handler to PATCH `public_profile`. Requires phase59 migration live.
 - [x] **[S59] Wire achievement SVG icons to portal** — ACHIEVEMENT_DEFS updated in portal-core.js (genesis_vault_member, vaultsparked, forge_master); async relational fetch wired in portal-auth.js showDashboard (S59)
 - [ ] **[SIL] Vault Wall: verify post-migration** — after phase59 HAR done, smoke test vault-wall in incognito to confirm `public_profile` filter working correctly.
 - [x] **[S60] VaultSparked CSP violations cleared** — all 3 blocked scripts resolved: externalized Stripe/checkout/phase/gift IIFE (260 lines) to `/vaultsparked/vaultsparked-checkout.js`; removed inline `onmouseover`/`onmouseout` from gift button (replaced with addEventListener); billing-toggle.js already external (S59). Zero inline scripts on the page. (S60)
 - [x] **[S60] Homepage circular element fix** — replaced hard-edged energy arc circles (the "weird circular addition") with blur-filtered diffuse `.hero-glow` spots; removed body radial gradient blobs; added gold `text-shadow` on "Is Sparked." for visible impact. (S60)
-- [ ] **[SIL] VaultSparked CSP smoke test** — Playwright spec that opens /vaultsparked/ in headless Chrome and asserts zero Content-Security-Policy console violations; catches future inline script regressions before deploy.
-- [ ] **[SIL] Homepage hero structural redesign** — user still perceives homepage as "the same" despite glow/color changes; needs a more structurally distinct hero layout (not just atmospheric adjustments). First step: sketch a new hero layout option — e.g. full-bleed hero panel, text below, or asymmetric split.
+- [x] **[SIL] VaultSparked CSP smoke test** — `tests/vaultsparked-csp.spec.js` created; Chromium-only; `page.on('console')` collects CSP errors; asserts zero violations on /vaultsparked/ + homepage; wired into e2e.yml compliance job as non-optional step (S61)
+- [x] **[SIL] Homepage hero structural redesign** — replaced 2-column grid (text left / logo card right) with full-width centered cinematic stack: eyebrow → logo banner (`.hero-logo`, 620px max, blur glows) → h1 inline → `.hero-sub` centered → CTAs centered → `.hero-meta-row` (chips + stats) → hero-story. Removed `.hero-card`/`.hero-visual`/`.logo-wrap` CSS. CDR direction satisfied (S61)
+- [ ] **[SIL] propagate-csp SKIP_DIRS: add vaultsparked** — add `'vaultsparked'` to SKIP_DIRS in `scripts/propagate-csp.mjs`; add standalone `<meta http-equiv="Content-Security-Policy">` tag directly in `vaultsparked/index.html`; prevents future global CSP propagation from overwriting page-specific hashes. First step: open propagate-csp.mjs, add to SKIP_DIRS array.
+- [ ] **[SIL] Voidfall Fragment 005** — add a 5th Transmission Archive card to `/universe/voidfall/`; continue the intercept log pattern; hint at a new entity or event without naming it. First step: read current Fragment 004 for tone/format.
+- [ ] **[SIL] Portal: rank loyalty discount display** — show the 25%/50% rank loyalty discount in the portal dashboard for Forge Master / The Sparked members (visual only — discount applied at Stripe checkout). First step: check member rank in showDashboard and conditionally show a "Your Rank Discount" chip in the Studio Access panel or VaultSparked CTA.
 
 ## Next
 

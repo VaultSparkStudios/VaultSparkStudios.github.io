@@ -119,6 +119,9 @@
         profileAvEl2.classList.toggle('pro-theme', rowIsPro);
       }
 
+      // Studio Access panel — initial render from row data
+      if (typeof loadStudioAccessPanel === 'function') loadStudioAccessPanel(rowPlanKey);
+
       // Async subscription check as authoritative fallback (catches members where plan_key column may be missing)
       VSSupabase.from('subscriptions')
         .select('status, plan, current_period_end')
@@ -144,6 +147,8 @@
           member.is_pro     = isPro;
           updateVaultStatusPanel(member, { isSparked: isSparked });
           updateClaimCenter(member, { isSparked: isSparked });
+          // Studio Access panel — update with authoritative plan
+          if (typeof loadStudioAccessPanel === 'function') loadStudioAccessPanel(planKey);
         }).catch(() => {
           if (sparkedBadge) sparkedBadge.style.display = 'none';
           if (ctaPanel)     ctaPanel.style.display     = '';
@@ -153,6 +158,7 @@
           member.is_pro     = false;
           updateVaultStatusPanel(member, { isSparked: false });
           updateClaimCenter(member, { isSparked: false });
+          if (typeof loadStudioAccessPanel === 'function') loadStudioAccessPanel('free');
         });
 
       // Extended stats (PromoGrind / Ledger)

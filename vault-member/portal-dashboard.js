@@ -1526,3 +1526,58 @@
         el.textContent = 'Could not load chart.';
       }
     }
+
+    // ── Studio Access panel — games & tools per tier ─────────────
+    function loadStudioAccessPanel(planKey) {
+      const el = document.getElementById('studio-access-content');
+      if (!el) return;
+
+      const isSparked = planKey === 'vault_sparked' || planKey === 'vault_sparked_pro';
+      const isPro     = planKey === 'vault_sparked_pro';
+
+      const ITEMS = [
+        { name: 'VaultSpark Football GM', url: '/games/vaultspark-football-gm/', tier: 'free',    desc: 'Browser sports sim — free for all Vault Members' },
+        { name: 'Call of Doodie',          url: '/games/call-of-doodie/',          tier: 'sparked', desc: 'Chaos shooter — VaultSparked & above' },
+        { name: 'Gridiron GM',             url: '/games/gridiron-gm/',             tier: 'sparked', desc: 'Football management — VaultSparked & above' },
+        { name: 'VaultFront',              url: '/games/vaultfront/',              tier: 'eternal', desc: 'Coming soon — Eternal members get first access' },
+      ];
+
+      const TIER_COLOR  = { free: '#94a3b8', sparked: '#FFC400', eternal: '#c084fc' };
+      const TIER_RGB    = { free: '148,163,184', sparked: '255,196,0', eternal: '192,132,252' };
+      const TIER_LABEL  = { free: 'Free', sparked: 'VaultSparked', eternal: 'Eternal' };
+
+      function unlocked(tier) {
+        return tier === 'free' || (tier === 'sparked' && isSparked) || (tier === 'eternal' && isPro);
+      }
+
+      el.innerHTML = ITEMS.map(function(g) {
+        const open  = unlocked(g.tier);
+        const color = TIER_COLOR[g.tier];
+        const rgb   = TIER_RGB[g.tier];
+        const label = TIER_LABEL[g.tier];
+        const nameHtml = open
+          ? '<a href="' + g.url + '" style="color:inherit;text-decoration:none;font-weight:700;">' + g.name + '</a>'
+          : '<span style="font-weight:700;">' + g.name + '</span>';
+        return '<div style="display:flex;align-items:center;gap:0.75rem;padding:0.65rem 0.85rem;border-radius:12px;margin-bottom:0.5rem;'
+          + 'background:rgba(255,255,255,' + (open ? '0.04' : '0.015') + ');'
+          + 'border:1px solid rgba(255,255,255,' + (open ? '0.08' : '0.04') + ');'
+          + 'opacity:' + (open ? '1' : '0.5') + ';">'
+          + '<span style="font-size:1.05rem;">' + (open ? '🔓' : '🔒') + '</span>'
+          + '<div style="flex:1;min-width:0;">'
+          + '<div style="font-size:0.87rem;color:' + (open ? 'var(--text)' : 'var(--dim)') + ';">' + nameHtml + '</div>'
+          + '<div style="font-size:0.75rem;color:var(--dim);margin-top:0.1rem;">' + g.desc + '</div>'
+          + '</div>'
+          + '<span style="font-size:0.66rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;'
+          + 'color:' + color + ';background:rgba(' + rgb + ',0.08);'
+          + 'border:1px solid rgba(' + rgb + ',0.2);border-radius:999px;padding:0.2rem 0.55rem;white-space:nowrap;">'
+          + label + '</span>'
+          + '</div>';
+      }).join('');
+
+      if (!isSparked) {
+        el.innerHTML += '<div style="margin-top:0.75rem;padding:0.8rem 1rem;border-radius:12px;'
+          + 'background:rgba(255,196,0,0.03);border:1px solid rgba(255,196,0,0.1);'
+          + 'font-size:0.8rem;color:var(--muted);">'
+          + 'Upgrade to <a href="/vaultsparked/" style="color:var(--gold);font-weight:700;">VaultSparked</a> to unlock more games.</div>';
+      }
+    }
