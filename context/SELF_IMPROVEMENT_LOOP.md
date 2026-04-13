@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▆▆▆
-Avgs — 3: 431.7 | 5: 434.0 | 10: 432.2 | all: 425.1
-  └ 3-session: Dev 89.7 | Align 89.0 | Momentum 77.7 | Engage 89.3 | Process 86.0
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~3.0 sessions (S65 runway pre-loaded)  |  Intent rate: 80% (last 5)
-Last session: 2026-04-13 | Session 64 | Total: 443/500 | Velocity: 7 | protocolVelocity: 1
+Sparkline (last 5 totals): ▇▆▆▆▆
+Avgs — 3: 438.7 | 5: 439.6 | 10: 432.1 | all: 425.8
+  └ 3-session: Dev 89.7 | Align 88.3 | Momentum 84.7 | Engage 88.3 | Process 87.7
+Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~3.0 sessions (S66 runway pre-loaded)  |  Intent rate: 100% (last session)
+Last session: 2026-04-13 | Session 65 | Total: 448/500 | Velocity: 6 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -787,3 +787,26 @@ Avgs — 3: 431.7 | 5: 434.0 | 10: 432.2 | all: 425.1
 2. **Vault Wall Playwright automation** — replace manual incognito smoke with a `tests/vault-wall.spec.js` Playwright spec that asserts member cards render with `public_profile=true` filter and zero console errors; removes the recurring [SIL:N⛔] escalation pattern. First step: create spec using the same pattern as vaultsparked-csp.spec.js. High probability.
 
 **Committed to TASK_BOARD:** [SIL] CSP hash registry · [SIL] Vault Wall Playwright spec
+
+## 2026-04-13 — Session 65 | Total: 448/500 | Velocity: 6 | Debt: ↓
+Avgs — 3: 438.7 | 5: 439.6 | 10: 432.1 | all: 425.8
+  └ 3-session: Dev 89.7 | Align 88.3 | Momentum 84.7 | Engage 88.3 | Process 87.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 92 | ↑ | Vault Wall spec automation (pageerror listener + hard assertions); CSP drift detection infrastructure (registry + --check-skipped); gold WCAG AA fix closes accessibility gap; light-mode classes replace unsafe inline styles |
+| Creative Alignment | 90 | ↑ | Scroll reveals extend forge ignition entrance aesthetic to /membership/ + /press/; gold contrast fix improves brand readability without changing brand voice; signal panel CSS migration preserves dark atmosphere on dark themes |
+| Momentum | 87 | ↓ | 5 items shipped (all declared + scroll reveal extras); IGNIS stale (7d+ threshold reached — mandatory S66 rescore); annual Stripe still HAR-blocked |
+| Engagement | 88 | ↓ | All 5 Genius Hit List items implemented; context recovered cleanly from mid-session compaction; no user-reported bugs or reversals |
+| Process Quality | 91 | ↑ | All 7 declared items implemented in one commit (63a4480); CSP registry documents known debt explicitly; closeout recovered cleanly from compaction interrupt; S66 runway pre-loaded with 4 items |
+| **Total** | **448/500** | ↑ | |
+
+**Top win:** All 7 declared session items implemented and committed in one clean batch — gold contrast WCAG AA fix, signal panel CSS class migration, vault wall spec automation (retiring [SIL:2⛔]), CSP drift detection infrastructure, scroll reveals on two high-conversion pages. Context recovery from mid-session compaction was seamless.
+**Top gap:** IGNIS 7+ days stale at closeout; will be mandatory rescore at S66 start.
+**Intent outcome:** Achieved — all declared Genius Hit List items + extras implemented at highest quality.
+
+**Brainstorm**
+1. **Extend scroll-reveal to /studio/, /community/, /ranks/, /roadmap/** — these 4 pages were explicitly skipped in S64/S65 due to time constraints; check if `scroll-reveal.js` is linked on each, add `data-reveal="fade-up"` to key sections. First step: grep 4 pages for `scroll-reveal.js`. High probability.
+2. **404/offline.html SHA hardening** — replace `'unsafe-inline'` in those pages' CSP meta tags with computed SHA-256 hashes; update `csp-hash-registry.json` with new snapshots; closes known debt documented in registry. First step: extract inline scripts from 404.html, compute hashes. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Extend scroll-reveal to /studio/community/ranks/roadmap · [SIL] 404/offline.html SHA hardening

@@ -1,9 +1,41 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 64 closeout)
+Last updated: 2026-04-13 (Session 65 closeout)
 
-## Session Intent: Session 65
-Implement all Genius Hit List items at highest quality: light-mode gold contrast fix, inline style= dark color audit + CSS class migration, Vault Wall Playwright spec (retire manual smoke), CSP hash registry with --check-skipped flag, scroll reveals for /membership/ + /press/. Plus TASK_BOARD and memory updates.
+## Session Intent: Session 66
+Run IGNIS rescore (mandatory — 7+ days stale). Then: extend scroll-reveal to /studio/, /community/, /ranks/, /roadmap/; 404/offline.html SHA hardening (replace 'unsafe-inline' with computed hashes + update csp-hash-registry.json); annual Stripe checkout routing (HAR-blocked).
+
+---
+
+## Where We Left Off (Session 65 — 2026-04-13)
+
+**Session output: 5 items shipped — all declared Genius Hit List items implemented.**
+
+- **Gold contrast WCAG AA fix** — `--gold: #7a5c00` (dark amber, ~5:1 contrast on `#f6efe5` cream) added to `body.light-mode {}` in `assets/style.css`. Bright gold `#FFC400` explicitly restored for `.countdown-classified` (hardcoded dark panels). Closes WCAG AA gap site-wide for all gold text uses (badges, labels, eyebrows, countdown).
+- **Signal teaser panel light-mode** — 3 inline `style=""` dark elements in `index.html` signal section converted to CSS classes: `.signal-teaser-panel` (outer panel), `.signal-image-card` (image card), `.signal-classified-chip` (chip). Light-mode `!important` overrides in `assets/style.css` give cream gradient bg + navy borders. Text is now readable in light mode.
+- **Vault Wall Playwright spec** — `tests/vault-wall.spec.js` fully rewritten: `#rank-dist-bar` visible assertion, `#vw-podium` visible assertion, `pageerror` CSP listener, rank-dist-seg count (soft warn, allows 0 in dry CI), auth-free public route check. Retires `[SIL:2⛔]` recurring manual smoke.
+- **CSP hash registry** — `scripts/csp-hash-registry.json` created; maps 3 excluded pages (vaultsparked/index.html, 404.html, offline.html) to their CSP content snapshots. `propagate-csp.mjs --check-skipped` flag added; all 3 verified OK.
+- **Scroll reveals — /membership/ + /press/** — `data-reveal="fade-up"` added to 5 membership sections (tiers, identity, discount, community, final-cta) and 6 press sections (facts, quote, logos, catalog, vault-member, contact). `scroll-reveal.js` linked on both pages (was missing).
+- **Commit:** 63a4480 — 9 files changed, 176 insertions, 39 deletions. Pushed to main (GitHub Pages auto-deploy).
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions.
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler.
+- [ ] **[STRIPE-ANNUAL]** Create 2 new Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal). Wire to billing toggle checkout when created.
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **[IGNIS] Rescore** — mandatory; IGNIS is 7+ days stale (last computed 2026-04-07). Run `node scripts/ops.mjs rescore` from studio-ops.
+2. **[SIL] Extend scroll-reveal** — grep `/studio/`, `/community/`, `/ranks/`, `/roadmap/` index.html files for `scroll-reveal.js`; add if missing; tag key sections.
+3. **[SIL] 404/offline SHA hardening** — extract inline scripts from 404.html, compute SHA-256 hashes; replace `'unsafe-inline'` in CSP meta tag.
 
 ---
 

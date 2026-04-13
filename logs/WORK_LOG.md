@@ -1,5 +1,20 @@
 # Work Log
 
+## 2026-04-13 — Session 65
+
+- assets/style.css: `--gold: #7a5c00` added to `body.light-mode {}` (dark amber, ~5:1 WCAG AA on `#f6efe5` cream); `#FFC400` override added for `.countdown-classified .countdown-value/.countdown-label` (hardcoded dark bg context)
+- assets/style.css: light-mode `!important` overrides for `.signal-teaser-panel` (cream gradient bg, navy border), `.signal-image-card` (light navy bg + border), `.signal-classified-chip` (white/80% bg, no backdrop-filter)
+- index.html: added CSS classes to 3 inline-style elements in signal teaser section: `signal-teaser-panel` (outer panel), `signal-image-card` (image card), `signal-classified-chip` (classified chip)
+- tests/vault-wall.spec.js: REWRITTEN — `#rank-dist-bar` visible assertion, `#vw-podium` visible assertion, `page.on('pageerror')` CSP listener, rank-dist-seg `.count()` soft warn (allows 0 in CI), auth-free public route check; retires `[SIL:2⛔]` manual smoke protocol
+- scripts/csp-hash-registry.json: CREATED — JSON snapshot of CSP meta content for 3 SKIP pages: vaultsparked/index.html (custom hashes), 404.html (unsafe-inline, documented debt), offline.html (unsafe-inline, documented debt); `version: "1.0"`, `updatedAt: "2026-04-13"`
+- scripts/propagate-csp.mjs: `--check-skipped` flag added at top of file; `checkSkipped()` function reads registry, extracts current CSP via regex, diffs strings, exits 1 on drift; conditional dispatch at `walk(ROOT)` site
+- membership/index.html: `data-reveal="fade-up"` added to 5 sections (mem-tiers, mem-identity, mem-discount, mem-community, mem-final-cta); `<script src="/assets/scroll-reveal.js" defer>` added before `</body>` (was missing)
+- press/index.html: `data-reveal="fade-up"` added to 6 sections (key facts, quote, logos, games catalog, vault member, contact); `<script src="/assets/scroll-reveal.js" defer>` added before `</body>` (was missing)
+- context/: CURRENT_STATE (S65 snapshot), TASK_BOARD (S66 runway pre-load), LATEST_HANDOFF (S65 full detail + S66 intent), PROJECT_STATUS (silScore 448, velocity 6, debt ↓, currentSession 66), SELF_IMPROVEMENT_LOOP (S65 entry + rolling status), TRUTH_AUDIT (gold contrast + CSP registry note), WORK_LOG updated
+- audits/2026-04-13-6.json: CREATED — S65 audit record
+- Commit: 63a4480 (9 files, +176/−39) · pushed to main (GitHub Pages auto-deploy)
+- SIL: 448/500 · Velocity: 6 · Debt: ↓
+
 ## 2026-04-13 — Session 64
 
 - assets/studio-stats.js: CREATED — externalized CSP-blocked inline days-since-launch script; calculates live from UTC epoch; fixes hardcoded "393 Days since launch" fallback

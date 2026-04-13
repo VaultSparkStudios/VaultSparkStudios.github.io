@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-13 (Session 64)
+- Date: 2026-04-13 (Session 65)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S64 — 6 items shipped: homepage stat fixes (days-since-launch CSP externalize + 7+→10+), /open-source/→/rights/ rename (77 pages + sitemap + redirect), membership social proof live-wired (externalized to membership-stats.js), site-wide scroll reveals (scroll-reveal.js + CSS + 6 homepage sections), extended light-mode screenshot spec (3→10 pages), SVG achievement icons verified already wired. S62 — 1 item shipped: homepage hero forge ignition + vault door hybrid redesign (cinematic logo image removed; VAULTSPARK/STUDIOS forge-wordmark letterForge animation; forge-spark-burst; hero-chamber vignette; hero-reveal cascade; full responsive 768/640/480/360px breakpoints; prefers-reduced-motion guard). S61 — 9 items shipped: Portal Studio Access panel, VaultSparked CSP smoke test (CI wired), homepage hero structural redesign (centered cinematic), propagate-csp SKIP_DIRS (vaultsparked), portal public_profile toggle (CSP-safe, settings page), vault-wall smoke spec (tests/vault-wall.spec.js, CI), Voidfall Fragment 005, rank loyalty discount chips in Studio Access panel, phase59 DB migration applied live (public_profile column + index confirmed). S60 bug-fix — vaultsparked CSP, homepage circular fix. S59 major batch — /membership/ hub, Option C model, nav/footer propagation, vaultsparked overhaul, homepage Signal teaser.
+- Repo posture: S65 — 5 items shipped: gold contrast WCAG AA fix (`--gold: #7a5c00` in `body.light-mode {}`, ~5:1 contrast on cream), signal-teaser panel CSS class migration (3 inline-style dark elements → `.signal-teaser-panel`/`.signal-image-card`/`.signal-classified-chip` with light-mode overrides), Vault Wall Playwright spec enhanced (`#rank-dist-bar` + `#vw-podium` visible assertions, pageerror CSP listener, rank-dist-seg soft count warn, auth-free route check — retires `[SIL:2⛔]` manual smoke), CSP hash registry created (`scripts/csp-hash-registry.json` snapshots 3 excluded pages; `propagate-csp.mjs --check-skipped` drift detection flag), scroll reveals extended to /membership/ (5 sections) + /press/ (6 sections). S64 — 6 items shipped: homepage stat fixes (days-since-launch CSP externalize + 7+→10+), /open-source/→/rights/ rename (77 pages + sitemap + redirect), membership social proof live-wired (externalized to membership-stats.js), site-wide scroll reveals (scroll-reveal.js + CSS + 6 homepage sections), extended light-mode screenshot spec (3→10 pages), SVG achievement icons verified already wired. S62 — 1 item shipped: homepage hero forge ignition + vault door hybrid redesign (cinematic logo image removed; VAULTSPARK/STUDIOS forge-wordmark letterForge animation; forge-spark-burst; hero-chamber vignette; hero-reveal cascade; full responsive 768/640/480/360px breakpoints; prefers-reduced-motion guard). S61 — 9 items shipped: Portal Studio Access panel, VaultSparked CSP smoke test (CI wired), homepage hero structural redesign (centered cinematic), propagate-csp SKIP_DIRS (vaultsparked), portal public_profile toggle (CSP-safe, settings page), vault-wall smoke spec (tests/vault-wall.spec.js, CI), Voidfall Fragment 005, rank loyalty discount chips in Studio Access panel, phase59 DB migration applied live (public_profile column + index confirmed). S60 bug-fix — vaultsparked CSP, homepage circular fix. S59 major batch — /membership/ hub, Option C model, nav/footer propagation, vaultsparked overhaul, homepage Signal teaser.
 
 ## What exists
 
@@ -88,6 +88,11 @@
 
 - **Studio stats + scroll reveals** (`assets/studio-stats.js`, `assets/scroll-reveal.js`, `index.html`) — S64: `days-since-launch` CSP-blocked inline script externalized to `studio-stats.js` (defer, no hash needed); stat corrected to `10+` Worlds in the forge (was `7+`); `scroll-reveal.js` IntersectionObserver fade-up reveals added with CSS; 6 homepage sections tagged `data-reveal="fade-up"`
 - **Membership stats live** (`assets/membership-stats.js`, `membership/index.html`) — S64: CSP-blocked inline social proof script externalized to `membership-stats.js` (defer); queries `VSPublic` for member count, sparked count, challenge count across 5 stat elements
+- **Gold contrast WCAG AA fix** (`assets/style.css`) — S65: `--gold: #7a5c00` added to `body.light-mode {}` (~5:1 contrast on `#f6efe5` cream); `.countdown-classified` panels get explicit `#FFC400` override (hardcoded dark bg context)
+- **Signal teaser panel light-mode** (`index.html`, `assets/style.css`) — S65: 3 inline-style dark elements get CSS classes (`signal-teaser-panel`, `signal-image-card`, `signal-classified-chip`); light-mode `!important` overrides in style.css; text now readable in light mode
+- **Vault Wall spec enhanced** (`tests/vault-wall.spec.js`) — S65: `#rank-dist-bar` + `#vw-podium` visible assertions; `pageerror` CSP listener; rank-dist-seg soft count warn; auth-free route check; retires `[SIL:2⛔]` manual smoke protocol
+- **CSP hash registry** (`scripts/csp-hash-registry.json`, `scripts/propagate-csp.mjs`) — S65: JSON snapshot of CSP content for 3 excluded pages (vaultsparked, 404, offline); `--check-skipped` flag on propagate-csp.mjs for drift detection
+- **Scroll reveals — /membership/ + /press/** (`membership/index.html`, `press/index.html`) — S65: `data-reveal="fade-up"` added to 5 membership sections (tiers, identity, discount, community, final-cta) and 6 press sections (facts, quote, logos, catalog, vault-member, contact); scroll-reveal.js linked on both pages
 
 ## Known gaps
 
@@ -97,6 +102,7 @@
 - **`CF_WORKER_API_TOKEN`** secret not yet added — cloudflare-worker-deploy.yml is ready but won't run without this secret (Workers:Edit + Zone:Read permissions)
 - Achievement SVGs created (vaultsparked + forge-master) but not yet wired to portal.js achievement slug definitions (remains open)
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
-- IGNIS score: 47,308/100,000 · Tier: FORGE · last computed 2026-04-07 (stale — no ignis CLI access this session)
+- IGNIS score: 47,308/100,000 · Tier: FORGE · last computed 2026-04-07 (stale 7+ days — **mandatory rescore at S66 session start**)
 - Annual Stripe price IDs ($44.99/yr, $269.99/yr) not yet created — billing toggle UI exists but annual checkout routes to same monthly price IDs
-- Vault Wall manual smoke (incognito) — public_profile filter live but browser-level verification pending
+- 404.html and offline.html use `'unsafe-inline'` in script-src (pre-SHA hardening debt; documented in `scripts/csp-hash-registry.json`)
+- vaultsparked in SKIP_DIRS — nav changes must be manually applied there (not auto-propagated)

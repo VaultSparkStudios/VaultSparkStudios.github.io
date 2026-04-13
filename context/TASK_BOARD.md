@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 62 closeout)
+Last updated: 2026-04-13 (Session 65 closeout)
 
 ---
 
@@ -77,6 +77,14 @@ Last updated: 2026-04-13 (Session 62 closeout)
 - [x] **[SIL] Vault Wall Playwright spec** — `tests/vault-wall.spec.js` enhanced: `#rank-dist-bar` visible assertion, `#vw-podium` visible assertion, pageerror CSP listener, rank-dist-seg count (soft warn), public auth-free route check. Replaces manual smoke. (S65)
 - [x] **[SIL] CSP hash registry** — `scripts/csp-hash-registry.json` created (vaultsparked/index.html, 404.html, offline.html); `propagate-csp.mjs --check-skipped` flag added; all 3 pages verified OK. (S65)
 - [x] **[SIL] Scroll reveals — /membership/ + /press/** — `data-reveal="fade-up"` added to 5 membership sections (tiers, identity, discount, community, final-cta) and 6 press sections (facts, quote, logos, catalog, vault member, contact). (S65)
+
+## Now (S66 runway pre-load)
+
+- [ ] **[IGNIS] Rescore — mandatory** — `node ../vaultspark-studio-ops/scripts/ops.mjs rescore` at S66 start; IGNIS is 7+ days stale (last computed 2026-04-07). First step: open studio-ops session and run CLI.
+- [ ] **[SIL] Extend scroll-reveal to /studio/, /community/, /ranks/, /roadmap/** — check if `scroll-reveal.js` is linked on those 4 pages; add `data-reveal="fade-up"` to key sections (hero, feature blocks, stat panels). First step: grep those 4 index.html files for `scroll-reveal.js`.
+- [ ] **[SIL] 404/offline.html SHA hardening** — replace `'unsafe-inline'` in script-src with computed SHA-256 hashes; update `scripts/csp-hash-registry.json` entries; propagate-csp.mjs already skips these files. First step: extract inline scripts from 404.html, compute SHA-256, compare to registry snapshot.
+- [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Needs Workers Scripts: Edit + Zone: Read permissions.
 
 ## Next
 
