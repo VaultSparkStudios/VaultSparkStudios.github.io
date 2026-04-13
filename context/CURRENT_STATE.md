@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-13 (Session 59)
+- Date: 2026-04-13 (Session 60)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S59 major batch — /membership/ hub page, membership model overhaul (Option C), nav Membership dropdown + footer column (77 pages), homepage hero (Explore Projects CTA, DreadSpike → unnamed Signal Detected teaser), vaultsparked overhaul (studio discount 20%/35%, games access grid, rank loyalty callout, annual billing toggle, removed founder video updates), shared CSS atmosphere layer, SW cache bump. S58: members directory CSP fix. S57: theme picker compact, CF Worker auto-redeploy, genesis badge slots counter, vault wall public_profile opt-in, Studio About founder story, achievement SVGs.
+- Repo posture: S60 bug-fix — vaultsparked all CSP violations cleared (Stripe/checkout/gift-modal IIFE externalized to vaultsparked-checkout.js; inline event handlers removed; billing-toggle.js already external); homepage circular energy arc elements replaced with diffuse blur glow spots (body radial gradients removed; gold text-shadow on "Is Sparked."). S59 major batch — /membership/ hub, Option C model, nav Membership dropdown + footer (77 pages), vaultsparked overhaul (studio discount 20%/35%, games access, rank loyalty, annual toggle), homepage Signal teaser + Projects CTA, shared CSS atmosphere, SW bump. S58: members directory CSP fix. S57: theme picker compact, CF Worker auto-redeploy, genesis badge slots counter, vault wall public_profile opt-in, Studio About founder story, achievement SVGs.
 
 ## What exists
 
@@ -23,7 +23,7 @@
 
 ### Infrastructure
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler. **S53: script-src updated to SHA-256 hashes (removed 'unsafe-inline')**; needs redeploy.
-- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260413-members-directory`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, `portal-init.js`, and `members-directory.js`
+- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260413-s5tmbqz`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, `portal-init.js`, `members-directory.js`, `vaultsparked-checkout.js`, `billing-toggle.js`
 - **DX scripts** (`scripts/propagate-csp.mjs`, `scripts/smoke-test.sh`) — S47 created; S49 regex fixed + dry-run exit-1 added; **S53: CSP_VALUE updated to SHA-256 hashes (removed 'unsafe-inline')**; 85 pages propagated; `e2e.yml` compliance job runs `--dry-run` check before Playwright
 - **Sentry release workflow** (`.github/workflows/sentry-release.yml`) — S47 created, S48 fully wired: org `vaultspark-studios`, project `4511104933298176`, token set as GitHub secret; every push to main now tags a Sentry release
 - **Referral attribution** (`supabase/migrations/supabase-phase56-referral-attribution.sql`) — S48: `referred_by uuid` column on `vault_members`; `register_open` accepts `p_ref_by`, awards referrer +100 XP, fires recruiter/patron achievements; `get_referral_milestones` counts both invite-code and direct-link referrals; migration applied live

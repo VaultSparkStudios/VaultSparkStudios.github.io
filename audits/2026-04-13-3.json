@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-website",
+  "date": "2026-04-13",
+  "session": 60,
+  "sessionType": "implementation",
+  "label": "S60: vaultsparked CSP clearance + homepage circular element fix",
+  "calibration": false,
+  "scores": {
+    "devHealth": 84,
+    "creativeAlignment": 80,
+    "momentum": 83,
+    "engagement": 88,
+    "processQuality": 85
+  },
+  "total": 420,
+  "maxScore": 500,
+  "velocity": 2,
+  "protocolVelocity": null,
+  "durationMinutes": 90,
+  "debt": "↓",
+  "rollingAvg3": {
+    "devHealth": 85.0,
+    "creativeAlignment": 84.3,
+    "momentum": 84.3,
+    "engagement": 87.0,
+    "processQuality": 86.7,
+    "total": 428.0
+  },
+  "rollingAvgTotals": { "3": 428.0, "5": 424.6, "10": 429.4, "25": null, "all": 421.9 },
+  "topWin": "Diagnosed that propagate-csp.mjs overwrites per-page hashes on all non-SKIP_DIRS pages — externalization was the only sustainable fix; cleared all 3 CSP violations blocking the vaultsparked checkout flow",
+  "topGap": "Homepage still perceived as 'the same' after two rounds of visual changes; glow/color adjustments alone are insufficient — structural layout change needed",
+  "intentOutcome": "Achieved",
+  "improvementsShipped": 2,
+  "improvementGroups": {
+    "security": ["vaultsparked checkout IIFE externalized to vaultsparked-checkout.js", "inline gift button event handlers replaced with addEventListener"],
+    "visual": ["homepage energy arc circles replaced with blur-filtered diffuse hero glows", "gold text-shadow on Is Sparked. heading", "body radial gradient blobs removed"]
+  },
+  "testsTotal": null,
+  "testsByType": {},
+  "testsDelta": null,
+  "deployStatus": "deployed",
+  "ignisFlags": ["intent-achieved", "debt-clear", "blocker-cleared"],
+  "ignisNote": "S60 revealed a systemic CSP architecture gap — propagate-csp.mjs treats vaultsparked like any other page despite its custom nav and unique inline JS needs; adding it to SKIP_DIRS would prevent future overwrites."
+}

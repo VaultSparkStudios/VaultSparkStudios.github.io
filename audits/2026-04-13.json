@@ -1,0 +1,44 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-website",
+  "date": "2026-04-13",
+  "session": 58,
+  "sessionType": "implementation",
+  "label": "S58: members directory CSP fix + S59 roadmap direction",
+  "calibration": false,
+  "scores": {
+    "devHealth": 85,
+    "creativeAlignment": 83,
+    "momentum": 82,
+    "engagement": 86,
+    "processQuality": 88
+  },
+  "total": 424,
+  "maxScore": 500,
+  "velocity": 1,
+  "protocolVelocity": null,
+  "durationMinutes": 60,
+  "debt": "→",
+  "rollingAvg3": {
+    "devHealth": 84.7,
+    "creativeAlignment": 83.7,
+    "momentum": 83.0,
+    "engagement": 85.0,
+    "processQuality": 84.7,
+    "total": 421.7
+  },
+  "rollingAvgTotals": { "3": 421.7, "5": 428.2, "10": 429.5, "25": null, "all": 420.0 },
+  "topWin": "Members directory no longer depends on CSP-blocked inline script — directory can load under the hardened security posture",
+  "topGap": "No browser/network smoke run in sandbox; production should be checked after deploy for CSP console output",
+  "intentOutcome": "Achieved",
+  "improvementsShipped": 1,
+  "improvementGroups": {
+    "security": ["members directory inline script → external asset CSP fix"]
+  },
+  "testsTotal": null,
+  "testsByType": {},
+  "testsDelta": null,
+  "deployStatus": "deployed",
+  "ignisFlags": ["intent-achieved", "compacted-resume"],
+  "ignisNote": "S58 was a single-fix session recovering from an interrupted S57 closeout; the members directory CSP fix is the correct pattern (externalize, don't hash inline) that S60 would later need to apply at larger scale to vaultsparked."
+}

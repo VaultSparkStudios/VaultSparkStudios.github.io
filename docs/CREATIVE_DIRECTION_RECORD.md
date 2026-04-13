@@ -8,6 +8,17 @@ Boundary:
 
 ## Entries
 
+### 2026-04-13 — Homepage hero visual identity: no circles, must feel structurally different (S59–S60)
+
+- Category: Visual Design / UX
+- Human input: (1) "The homepage looks exactly the same as before?" (S59); (2) "the Homepage feels the exact same besides a weird background circular addition" (S60); (3) implied: the hero redesign must feel structurally different, not just adjusted in color/glow
+- Area affected: `index.html` (page-specific `<style>` block, hero HTML)
+- Required direction:
+  1. Circular/ring visual elements (energy arcs, body radial blobs) are rejected — they read as "weird" and don't feel like a deliberate brand choice
+  2. Glow and atmospheric effects must be diffuse (blur-filtered, no hard circle outlines) to feel cinematic rather than geometric
+  3. Color and glow adjustments alone are NOT sufficient to constitute a "redesign" — a genuinely different homepage will require structural layout changes, not just CSS treatment
+  4. Gold accent on "Is Sparked." heading is directionally correct and should be maintained
+
 ### 2026-04-12 — Genesis Vault Member badge naming + studio account exclusion (S56)
 
 - Category: Brand / Legal / Community

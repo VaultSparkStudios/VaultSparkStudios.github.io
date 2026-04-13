@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 59)
+Last updated: 2026-04-13 (Session 60)
 
 ---
 
@@ -49,6 +49,10 @@ Last updated: 2026-04-13 (Session 59)
 - [ ] **[SIL] Portal settings: public_profile toggle** — add "Show my profile on the Vault Wall" toggle to portal settings page; first step: add toggle HTML to settings privacy section + update handler to PATCH `public_profile`. Requires phase59 migration live.
 - [x] **[S59] Wire achievement SVG icons to portal** — ACHIEVEMENT_DEFS updated in portal-core.js (genesis_vault_member, vaultsparked, forge_master); async relational fetch wired in portal-auth.js showDashboard (S59)
 - [ ] **[SIL] Vault Wall: verify post-migration** — after phase59 HAR done, smoke test vault-wall in incognito to confirm `public_profile` filter working correctly.
+- [x] **[S60] VaultSparked CSP violations cleared** — all 3 blocked scripts resolved: externalized Stripe/checkout/phase/gift IIFE (260 lines) to `/vaultsparked/vaultsparked-checkout.js`; removed inline `onmouseover`/`onmouseout` from gift button (replaced with addEventListener); billing-toggle.js already external (S59). Zero inline scripts on the page. (S60)
+- [x] **[S60] Homepage circular element fix** — replaced hard-edged energy arc circles (the "weird circular addition") with blur-filtered diffuse `.hero-glow` spots; removed body radial gradient blobs; added gold `text-shadow` on "Is Sparked." for visible impact. (S60)
+- [ ] **[SIL] VaultSparked CSP smoke test** — Playwright spec that opens /vaultsparked/ in headless Chrome and asserts zero Content-Security-Policy console violations; catches future inline script regressions before deploy.
+- [ ] **[SIL] Homepage hero structural redesign** — user still perceives homepage as "the same" despite glow/color changes; needs a more structurally distinct hero layout (not just atmospheric adjustments). First step: sketch a new hero layout option — e.g. full-bleed hero panel, text below, or asymmetric split.
 
 ## Next
 

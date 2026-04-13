@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-04-13 — Session 60
+
+- vaultsparked/vaultsparked-checkout.js: created — extracted full Stripe/checkout/phase/gift-modal IIFE (~260 lines) from inline `<script>` in vaultsparked/index.html; loaded via `<script src defer>`; clears CSP violation at line 1269 (hash sha256-NuW18QKfCcqsI6YFKzjMzaha0aUDmYg1g7MXBrScXh4= was not in global CSP)
+- vaultsparked/index.html: removed entire inline `<script>` block (checkout/phase/gift logic); removed `onmouseover`/`onmouseout` inline handlers from gift button (replaced with addEventListener in external file); both inline violations now gone
+- index.html (homepage): replaced `.energy-arc` circle divs with `.hero-glow` blur-filtered spots — no visible hard circle borders; removed body `radial-gradient` background blobs; added `text-shadow` gold glow on "Is Sparked." heading; updated mobile media query to reference `.hero-glow` instead of `.energy-arc`
+- sw.js: added `/vaultsparked/vaultsparked-checkout.js` + `/vaultsparked/billing-toggle.js` to STATIC_ASSETS; CACHE_NAME bumped
+- context/: CURRENT_STATE, TASK_BOARD, LATEST_HANDOFF, PROJECT_STATUS, SIL, WORK_LOG updated to S60
+- Commits: dd472e0 (vaultsparked CSP) · aa8cc98 (homepage glows) · pushed to main
+- SIL: 420/500 · Velocity: 2 · Debt: ↓
+
 ## 2026-04-13 — Session 59
 
 - membership/index.html: created — premium emotional hub; hero with 3 animated glow orbs (gold/blue/purple); 3 tier identity cards (free/sparked/eternal) with hover animations and glow; "What You're Joining" 5-pillar section; Studio Discount 20%/35% callout; live Supabase community stats; final CTA; CSP tag + FOUC prevention

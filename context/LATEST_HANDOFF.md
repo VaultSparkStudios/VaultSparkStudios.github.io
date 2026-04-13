@@ -1,6 +1,46 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 59)
+Last updated: 2026-04-13 (Session 60)
+
+## Session Intent: Session 60
+Bug-fix continuation of S59 — fix vaultsparked CSP violations (3 blocked scripts + inline event handlers) and revise homepage energy arc elements that user flagged as "weird circular addition."
+**Outcome: Achieved** — all CSP violations cleared via script externalization; homepage circles replaced with diffuse blur glows; gold glow on "Is Sparked."
+
+## Where We Left Off (Session 60 — 2026-04-13)
+
+- Shipped: 2 improvements — vaultsparked CSP full clearance, homepage circular fix
+- Tests: N/A — no automated test run
+- Deploy: deployed to production (aa8cc98) · GitHub Pages auto
+
+### Detail
+
+- **VaultSparked CSP — all 3 violations cleared** — The main Stripe/checkout/phase/gift-modal IIFE (~260 lines) was blocking CSP at line 1269 (hash `sha256-NuW18...`) and again implicitly at what was line 1543. Root cause: `propagate-csp.mjs` propagates the global 4-hash CSP to all pages including `vaultsparked/`, overwriting any per-page hashes. Only fix: full externalization. Moved IIFE to `/vaultsparked/vaultsparked-checkout.js` loaded as `<script src defer>`. Gift button `onmouseover`/`onmouseout` (line 881, cannot be hashed per CSP spec) moved to `addEventListener` inside `vaultsparked-checkout.js`. Billing toggle already external from S59. Zero inline scripts remain on the page.
+- **Homepage energy arc circles → diffuse glows** — Body radial gradient blobs removed (were the "weird circular addition" per user). Hard-edged `.energy-arc` circle divs replaced with `.hero-glow` elements using `filter: blur(80px)` — diffuse atmospheric, not visibly circular. Added `text-shadow` on gold "Is Sparked." heading.
+- **SW precache** — added `/vaultsparked/vaultsparked-checkout.js` + `/vaultsparked/billing-toggle.js`; CACHE_NAME bumped.
+
+---
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions.
+- [ ] **[DB] Phase59 public_profile migration** — run db-migrate workflow or `supabase db push` to apply `supabase-phase59-public-profile.sql`.
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler.
+- [ ] **[STRIPE-ANNUAL]** Create 2 new Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal). Wire to billing toggle checkout when created.
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **[S59] Portal: Studio Access panel** — portal-dashboard.js new panel showing games per tier; no external deps; pure portal UI.
+2. **[SIL] VaultSparked CSP smoke test** — Playwright spec asserting zero CSP violations on /vaultsparked/; prevents regression.
+3. **[SIL] Homepage hero structural redesign** — sketch a structurally different hero layout (user still perceives it as the same despite glow/color changes).
+
+---
 
 ## Session Intent: Session 59
 Membership system overhaul + homepage redesign. Full confirmed plan: /membership/ hub, membership pricing model (Option C), nav Membership dropdown, vaultsparked overhaul (studio discount, games access, rank loyalty, annual toggle), homepage hero + DreadSpike→Signal teaser, all-pages atmosphere, and achievement SVG wiring.

@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █▅▆▆▇
-Avgs — 3: 428.3 | 5: 428.8 | 10: 430.0 | all: 422.0
-  └ 3-session: Dev 85.3 | Align 86.0 | Momentum 85.7 | Engage 86.0 | Process 85.3
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~4.0 sessions ✓  |  Intent rate: 100% (last 5)
-Last session: 2026-04-13 | Session 59 | Total: 438/500 | Velocity: 2 | protocolVelocity: 6
+Sparkline (last 5 totals): ▆▅▆▄▄
+Avgs — 3: 428.0 | 5: 424.6 | 10: 429.4 | all: 421.9
+  └ 3-session: Dev 85.0 | Align 84.3 | Momentum 84.3 | Engage 87.0 | Process 86.7
+Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~1.8 sessions ⚠ pre-load recommended  |  Intent rate: 100% (last 5)
+Last session: 2026-04-13 | Session 60 | Total: 420/500 | Velocity: 2 | protocolVelocity: null
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -662,3 +662,29 @@ Avgs — 3: 428.3 | 5: 428.8 | all: 422.0
 3. **Vaultsparked annual checkout routing** — when Stripe annual price IDs exist, read `window.vssBillingMode` in the checkout button handler and route to the correct price ID. Medium probability (depends on HAR).
 
 **Committed to TASK_BOARD:** [S59] Portal: Studio Access panel
+
+---
+
+## 2026-04-13 — Session 60 | Total: 420/500 | Velocity: 2 | Debt: ↓
+Avgs — 3: 428.0 | 5: 424.6 | 10: 429.4 | all: 421.9
+  └ 3-session: Dev 85.0 | Align 84.3 | Momentum 84.3 | Engage 87.0 | Process 86.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 84 | ↓ | Inline script debt cleared from vaultsparked; correct CSP externalization pattern; no test run |
+| Creative Alignment | 80 | ↓ | Bug-fix session; homepage glow treatment atmospheric and on-brand; no new creative work |
+| Momentum | 83 | ↓ | 2 CSP/visual blockers cleared; checkout flow unblocked; runway drops to ~1.8 ⚠ |
+| Engagement | 88 | ↑ | Immediate response to second-round bug reports; all 3 console errors diagnosed and fixed |
+| Process Quality | 85 | → | Full closeout; CDR captured; all context files updated; IGNIS not refreshed (no CLI access) |
+| **Total** | **420/500** | ↓ | Reactive bug-fix session; CSP debt cleared |
+
+**Top win:** Diagnosed that `propagate-csp.mjs` overwrites any per-page hashes on all non-skipped dirs — making externalization the only sustainable fix; the checkout script was silently broken since S59 deployed.
+**Top gap:** Homepage still perceived as "the same" after two rounds of visual changes; glow/color adjustments alone aren't sufficient — structural layout change needed.
+**Intent outcome:** Achieved — all CSP violations cleared; circular elements replaced.
+
+**Brainstorm**
+1. **VaultSparked CSP smoke test** — Playwright spec opening /vaultsparked/ in headless Chrome, collecting console errors, asserting zero CSP violations; first step: create `tests/vaultsparked-csp.spec.js` with `page.on('console')` listener filtering for `Content-Security-Policy` messages. High probability.
+2. **Homepage hero structural redesign** — user still perceives homepage as "the same" after glow/color changes; needs a genuinely different layout — e.g. full-bleed cinematic hero background image/gradient, headline centered over it, CTAs below, card removed or repositioned; first step: sketch 2–3 layout concepts that keep VaultSpark brand but feel structurally distinct. Medium probability.
+3. **propagate-csp.mjs SKIP_DIRS: add vaultsparked** — vaultsparked uses its own custom nav and has page-specific JS requirements that differ from the standard 4-hash CSP; adding it to SKIP_DIRS would prevent future overwrites and force per-page CSP management; first step: add `'vaultsparked'` to SKIP_DIRS in propagate-csp.mjs and add a `<meta>` CSP tag directly to vaultsparked/index.html. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] VaultSparked CSP smoke test · [SIL] Homepage hero structural redesign
