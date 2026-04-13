@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-13 (Session 62 closeout)
+- Date: 2026-04-13 (Session 64)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S62 — 1 item shipped: homepage hero forge ignition + vault door hybrid redesign (cinematic logo image removed; VAULTSPARK/STUDIOS forge-wordmark letterForge animation; forge-spark-burst; hero-chamber vignette; hero-reveal cascade; full responsive 768/640/480/360px breakpoints; prefers-reduced-motion guard). S61 — 9 items shipped: Portal Studio Access panel, VaultSparked CSP smoke test (CI wired), homepage hero structural redesign (centered cinematic), propagate-csp SKIP_DIRS (vaultsparked), portal public_profile toggle (CSP-safe, settings page), vault-wall smoke spec (tests/vault-wall.spec.js, CI), Voidfall Fragment 005, rank loyalty discount chips in Studio Access panel, phase59 DB migration applied live (public_profile column + index confirmed). S60 bug-fix — vaultsparked CSP, homepage circular fix. S59 major batch — /membership/ hub, Option C model, nav/footer propagation, vaultsparked overhaul, homepage Signal teaser.
+- Repo posture: S64 — 6 items shipped: homepage stat fixes (days-since-launch CSP externalize + 7+→10+), /open-source/→/rights/ rename (77 pages + sitemap + redirect), membership social proof live-wired (externalized to membership-stats.js), site-wide scroll reveals (scroll-reveal.js + CSS + 6 homepage sections), extended light-mode screenshot spec (3→10 pages), SVG achievement icons verified already wired. S62 — 1 item shipped: homepage hero forge ignition + vault door hybrid redesign (cinematic logo image removed; VAULTSPARK/STUDIOS forge-wordmark letterForge animation; forge-spark-burst; hero-chamber vignette; hero-reveal cascade; full responsive 768/640/480/360px breakpoints; prefers-reduced-motion guard). S61 — 9 items shipped: Portal Studio Access panel, VaultSparked CSP smoke test (CI wired), homepage hero structural redesign (centered cinematic), propagate-csp SKIP_DIRS (vaultsparked), portal public_profile toggle (CSP-safe, settings page), vault-wall smoke spec (tests/vault-wall.spec.js, CI), Voidfall Fragment 005, rank loyalty discount chips in Studio Access panel, phase59 DB migration applied live (public_profile column + index confirmed). S60 bug-fix — vaultsparked CSP, homepage circular fix. S59 major batch — /membership/ hub, Option C model, nav/footer propagation, vaultsparked overhaul, homepage Signal teaser.
 
 ## What exists
 
@@ -18,7 +18,7 @@
 - **10 journal posts** — fireView() consent-gated
 - **8 game pages** — FORGE/SPARKED/VAULTED radial glow, data-status attrs; status badges correctly positioned (direct child of .hero-art)
 - **12 project pages** — status badges fixed (S36): moved outside .hero-art-content to prevent absolute-positioning overlap with h1
-- **Compliance pages** — /cookies/, /accessibility/, /open-source/ (technology attributions + IP notice), /faq/, /careers/, /data-deletion/, /security/, sitemap
+- **Compliance pages** — /cookies/, /accessibility/, /rights/ (technology attributions + IP notice; /open-source/ redirects here), /faq/, /careers/, /data-deletion/, /security/, sitemap
 - **Members directory** (`members/`) — S58: fixed profile-loading regression from CSP-blocked inline directory script; runtime moved to `/assets/members-directory.js`, clear-filter action uses event delegation, query supports current `vault_points`/`rank_title` plus legacy `points` fallback; "Founding Member" label updated to "Genesis Member".
 
 ### Infrastructure
@@ -43,7 +43,7 @@
 - **Light-mode Phase 2 complete overhaul** (`assets/style.css`, `vault-member/portal.css`) — S63: comprehensive pass across every page; 227 lines added; fixed rank-card, press-card, character-block, manifesto, contact-box, pipeline meta, stage badges, [data-event] community events, search inputs, invite-box, guest-invite-cta, toasts (#vs-toast, #contact-toast, #vs-toast); portal: profile-card, challenge-category-tabs, member stats/rank/leaderboard/dialog panels; 4 HTML inline-style divs converted to CSS-targetable classes (cta-panel, vault-wall-cta, rank-loyalty-panel, studio-pulse-cta, team-founder-card)
 - **Light-mode contrast follow-up** (`assets/style.css`) — S41 darkened the shared secondary text scale to blue-slate values, forced bright readable titles over dark hero/card artwork, strengthened light-mode overlays on game/project hero bands, and converted shared dark panels (`.feature-block`, `.info-block`, `.stream-item`, patch notes, game/project cards) into true light surfaces in light mode
 - **Dark-panel contrast hardening** (`assets/style.css`, `index.html`, `ranks/index.html`, `vault-member/portal.css`) — S42 reversed the mistaken light-mode treatment on intentionally dark panels such as Studio Members feature tiles, homepage rank preview, DreadSpike storyline/media copy, portal rank panels, and public Vault Ranks cards; those sections now keep white text on dark backgrounds while the homepage Vault-Forge paragraph stays dark on its light surface
-- **Rights posture correction** (`open-source/index.html`, `scripts/propagate-nav.mjs`, site HTML pages, `tests/compliance-pages.spec.js`) — S43 removed the public claim that VaultSpark repos/products are MIT/open-source, replaced `/open-source/` with a proprietary IP notice + third-party attributions page, changed the shared footer/resource label to “Technology & Rights,” updated sitemap labels, and aligned the compliance test title expectation with the new page
+- **Rights posture correction + /rights/ rename** (`rights/index.html`, `open-source/index.html` redirect, `scripts/propagate-nav.mjs`, 77 HTML pages, `tests/compliance-pages.spec.js`) — S43 replaced MIT/open-source claims with proprietary IP notice; S64 renamed the page from `/open-source/` → `/rights/` (more accurate URL); `/open-source/` now serves meta-refresh + JS redirect to `/rights/`; footer label “Technology & Rights” unchanged; compliance test updated to `/rights/`
 - **CSS guard** (`assets/style.css`) — S39: `.hero-art > .status` rule locks badge to `position:absolute; top/left:1rem; z-index:2` — prevents S36 badge-overlap regression
 - **Lighthouse CI** (`.github/workflows/lighthouse.yml`) — S39: wait-on step added (120s timeout, 5s interval) to poll live site before Lighthouse runs
 - **Supabase** — 16 edge functions ACTIVE; cloud-hosted at fjnpzjjyhnpmunfoycrp.supabase.co
@@ -85,6 +85,9 @@
 - **Achievement image icon renderer** — `portal.js` + `portal-settings.js` now check if `def.icon` starts with `/` and render `<img>` instead of emoji; future-proof for all achievements
 - **Call of Doodie game page** — added social share + "More From the Vault" conversion section
 - **Theme picker bug fix** — removed `theme-option` class from tile buttons in `theme-toggle.js:399`
+
+- **Studio stats + scroll reveals** (`assets/studio-stats.js`, `assets/scroll-reveal.js`, `index.html`) — S64: `days-since-launch` CSP-blocked inline script externalized to `studio-stats.js` (defer, no hash needed); stat corrected to `10+` Worlds in the forge (was `7+`); `scroll-reveal.js` IntersectionObserver fade-up reveals added with CSS; 6 homepage sections tagged `data-reveal="fade-up"`
+- **Membership stats live** (`assets/membership-stats.js`, `membership/index.html`) — S64: CSP-blocked inline social proof script externalized to `membership-stats.js` (defer); queries `VSPublic` for member count, sparked count, challenge count across 5 stat elements
 
 ## Known gaps
 

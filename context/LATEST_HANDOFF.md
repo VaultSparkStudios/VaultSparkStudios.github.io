@@ -1,9 +1,42 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 63 redirect closeout)
+Last updated: 2026-04-13 (Session 64 closeout)
 
-## Session Intent: Session 64
-S64 Now bucket: wire SVG achievement icons to portal defs, site-wide scroll reveals, membership social proof live data, vault wall manual smoke. IGNIS rescore stale — run at session open.
+## Session Intent: Session 65
+S65 Now bucket: inline style= dark color audit, light-mode gold token contrast check, Vault Wall manual smoke, IGNIS rescore (stale 6+ days).
+
+---
+
+## Where We Left Off (Session 64 — 2026-04-13)
+
+**Session output: 6 items shipped (+ SVG icons verified already done).**
+
+- **Homepage stat fixes** — `days-since-launch` inline script was CSP-blocked (showing hardcoded 393); externalized to `assets/studio-stats.js` (defer, script-src 'self'). `7+ Worlds in the forge` corrected to `10+` (4 FORGE games + 6 FORGE projects). Commit: 718a129.
+- **`/rights/` rename** — Technology & Rights page moved from `/open-source/` to `/rights/` (more accurate URL for a proprietary IP notice page). `/open-source/` now serves meta-refresh + JS redirect. `propagate-nav.mjs` footer template updated; propagated to 77 pages. sitemap.xml, sitemap.html, press/, compliance test updated. `/open-source/` marked `noindex, follow`.
+- **Membership social proof live** — CSP-blocked inline stats script on `/membership/` externalized to `assets/membership-stats.js` (defer). Queries VSPublic for vault_members count, active subscription count, completed challenge count. Populates proof-members/stat-members/proof-sparked/stat-sparked/stat-challenges.
+- **Site-wide scroll reveals** — `assets/scroll-reveal.js` created with IntersectionObserver (threshold 0.08, rootMargin -32px). `[data-reveal].revealed` CSS added to `assets/style.css` with `prefers-reduced-motion` guard. 6 homepage sections tagged: `#vault-proof`, Studio Milestones, `#vault-signal-section`, `#vault-membership`, Signal Log teaser, `#vault-live`.
+- **Extended light-mode screenshot spec** — `tests/light-mode-screenshots.spec.js` extended from 3 to 10 pages: homepage, ranks, games, press, contact, community, studio, roadmap, universe, membership.
+- **SVG achievement icons verified** — portal-core.js ACHIEVEMENT_DEFS already has SVG paths (wired S59); task confirmed done, marked complete on TASK_BOARD.
+- **SW cache bumped** — `vaultspark-20260413-s64`; studio-stats.js, membership-stats.js, scroll-reveal.js added to STATIC_ASSETS.
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions.
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler.
+- [ ] **[STRIPE-ANNUAL]** Create 2 new Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal). Wire to billing toggle checkout when created.
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **[SIL] Inline style= dark color audit** — `grep -rn 'style=".*rgba(0' --include="*.html"` to find remaining hardcoded darks not covered by S63 CSS pass
+2. **[SIL] Vault Wall manual smoke** — open `/vault-wall/` in incognito; confirm member cards + no CSP errors ([SIL:1] skip count)
+3. **[IGNIS]** Rescore — run `npx tsx cli.ts score .` from studio-ops ignis; 6+ days stale
 
 ---
 

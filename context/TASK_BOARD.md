@@ -61,12 +61,19 @@ Last updated: 2026-04-13 (Session 62 closeout)
 
 - [x] **[SIL] Homepage hero forge ignition redesign** — forge-wordmark h1 with letterForge animation, forge-spark-burst, hero-chamber vignette, hero-reveal cascade; cinematic logo removed from hero; full responsive; prefers-reduced-motion guard; light-mode overrides. Deployed 2026-04-13 (S62).
 - [x] **[SIL] Light mode Phase 2 complete overhaul** — 227 lines added across style.css + portal.css; fixed rank-card, press-card, character-block, manifesto, contact-box, pipeline-card meta, stage badges, [data-event] community cards, cta-panel, vault-wall-cta, compare-table, search inputs, invite-box, guest-invite-cta, #vs-toast, #contact-toast; portal: profile-card, challenge-category-tabs, member stats/rank/leaderboard cards, dialogs, dashboard containers; added CSS classes to 4 inline-style HTML elements (studio, vault-wall, vaultsparked, studio-pulse). Deployed 2026-04-13 (S63 redirect).
-- [ ] **[SIL:1] Membership page social proof live data** — `/membership/index.html` social proof strip currently uses static JS; wire to `VSPublic` Supabase client for live member count + VaultSparked count (same pattern as homepage strip). First step: grep membership/index.html for the static stat values.
+- [x] **[SIL:1] Membership page social proof live data** — Inline CSP-blocked script externalized to `assets/membership-stats.js` (defer, uses VSPublic); proof-members/stat-members/proof-sparked/stat-sparked/stat-challenges all live-wired. Deployed S64.
 - [ ] **[SIL:1] Vault Wall manual smoke** — open `/vault-wall/` in incognito after phase59 deploy; confirm member cards render with `public_profile=true` filter and no console errors. First step: open incognito tab and check DevTools console.
 - [ ] **[SIL] Annual Stripe checkout routing** — when `vssBillingMode === 'annual'`, route to annual price IDs; add `ANNUAL_PRICE_IDS` map to `vaultsparked/billing-toggle.js`; HAR first: Studio Owner creates $44.99/yr + $269.99/yr Stripe prices. Exempt from [SIL:N] increment until HAR cleared.
-- [ ] **[SIL] Wire SVG achievement icons to portal defs** — `portal-core.js` ACHIEVEMENT_DEFS has `vaultsparked` and `forge_master` slugs; update `icon` field from emoji to `/assets/images/badges/vaultsparked.svg` + `/assets/images/badges/forge-master.svg`; renderer already handles path-based icons (S56). First step: grep portal-core.js for ACHIEVEMENT_DEFS.
-- [ ] **[SIL] Site-wide scroll reveals** — add IntersectionObserver in `assets/scroll-reveal.js`; `data-reveal="fade-up"` attrs on key homepage sections; same heroFadeUp aesthetic extended site-wide with no framework. First step: create scroll-reveal.js with observer + CSS reveal class.
-- [ ] **[SIL] Extend light-mode screenshot spec** — `tests/light-mode-screenshots.spec.js` only covers 3 pages; add ranks, press, contact, community, studio, roadmap, universe to the spec array (7 more pages) to prevent silent light mode regressions. First step: read current spec and add page paths.
+- [x] **[SIL] Wire SVG achievement icons to portal defs** — Already wired in S59; portal-core.js ACHIEVEMENT_DEFS confirms SVG paths for genesis_vault_member, vaultsparked, forge_master. Task verified complete S64.
+- [x] **[SIL] Site-wide scroll reveals** — `assets/scroll-reveal.js` created (IntersectionObserver, fade-up); CSS added to `assets/style.css` with prefers-reduced-motion guard; 6 homepage sections tagged with `data-reveal="fade-up"`. Deployed S64.
+- [x] **[SIL] Extend light-mode screenshot spec** — `tests/light-mode-screenshots.spec.js` extended from 3 to 10 pages: added press, contact, community, studio, roadmap, universe, membership. Deployed S64.
+
+## Now (S65 runway pre-load)
+
+- [ ] **[SIL] Inline style= dark color audit** — grep all HTML for `style=".*rgba\([0-9]` patterns to find remaining hardcoded dark backgrounds not covered by S63 CSS pass; convert to CSS classes. First step: `grep -rn 'style=".*rgba(0' --include="*.html"`.
+- [ ] **[SIL] Light-mode gold token contrast** — `--gold` (#FFC400) may appear washed on cream backgrounds; run Lighthouse accessibility audit in light mode; check contrast scores for gold text on var(--bg). First step: Lighthouse CI report on /ranks/ in light mode.
+- [ ] **[SIL:1] Vault Wall manual smoke** — open `/vault-wall/` in incognito; confirm member cards render and no console errors. [SIL:1 — carried from S64]
+- [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first.
 
 ## Next
 
