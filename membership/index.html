@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-RSGLPP4KDZ');
+  </script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Membership — VaultSpark Studios</title>
+  <meta name="description" content="Vault Membership is your identity inside VaultSpark Studios. One account, every world we build. Three tiers — Free, Sparked, and Eternal. The vault recognizes you." />
+  <link rel="canonical" href="https://vaultsparkstudios.com/membership/" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="Vault Membership | VaultSpark Studios" />
+  <meta property="og:description" content="One account. Every world we build. Join free — or go deeper with VaultSparked and Eternal." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/membership/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/assets/og-image.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Vault Membership | VaultSpark Studios" />
+  <meta name="twitter:description" content="One account. Every world we build. Join free — or go deeper with VaultSparked and Eternal." />
+
+  <link rel="icon" type="image/png" href="../assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="../assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="../assets/style.css" />
+
+  <style>
+    /* ─── Page-specific: /membership/ ─── */
+
+    /* Hero */
+    .mem-hero {
+      position: relative;
+      padding: 6rem 0 4rem;
+      overflow: hidden;
+      text-align: center;
+    }
+    .mem-hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(255,196,0,0.09), transparent),
+        radial-gradient(circle at 15% 70%, rgba(31,162,255,0.08), transparent 45%),
+        radial-gradient(circle at 85% 65%, rgba(139,92,246,0.07), transparent 40%);
+      pointer-events: none;
+    }
+    .mem-hero .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      opacity: 0.55;
+      animation: drift 14s ease-in-out infinite;
+    }
+    .mem-hero .orb-gold {
+      width: 520px; height: 260px;
+      top: -60px; left: 50%;
+      transform: translateX(-50%);
+      background: radial-gradient(circle, rgba(255,196,0,0.18), transparent 65%);
+      animation-duration: 16s;
+    }
+    .mem-hero .orb-blue {
+      width: 320px; height: 320px;
+      top: 30%; left: -80px;
+      background: radial-gradient(circle, rgba(31,162,255,0.12), transparent 65%);
+      animation-duration: 18s;
+      animation-direction: reverse;
+    }
+    .mem-hero .orb-purple {
+      width: 280px; height: 280px;
+      top: 20%; right: -60px;
+      background: radial-gradient(circle, rgba(139,92,246,0.11), transparent 65%);
+      animation-duration: 20s;
+    }
+    .mem-hero-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      border: 1px solid rgba(255,196,0,0.22);
+      background: rgba(255,196,0,0.06);
+      padding: 0.32rem 0.9rem;
+      border-radius: 999px;
+      margin-bottom: 1.4rem;
+    }
+    .mem-hero h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      margin: 0 auto 1.2rem;
+      max-width: 900px;
+    }
+    .mem-hero h1 .gold { color: var(--gold); }
+    .mem-hero-sub {
+      max-width: 58ch;
+      margin: 0 auto 2.2rem;
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+    .mem-hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+    }
+    .mem-hero-proof {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 0.9rem 2rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      font-size: 0.82rem;
+      color: var(--dim);
+    }
+    .mem-hero-proof strong { color: var(--text); font-size: 1rem; }
+    .mem-hero-proof-item { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; }
+
+    /* Tier identity cards */
+    .mem-tiers {
+      padding: 5rem 0;
+    }
+    .mem-tiers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .mem-tier-card {
+      position: relative;
+      border-radius: 28px;
+      padding: 2.4rem 2rem;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      cursor: default;
+    }
+    .mem-tier-card:hover {
+      transform: translateY(-6px);
+    }
+    .mem-tier-card.tier-free {
+      border-color: rgba(148,163,184,0.2);
+    }
+    .mem-tier-card.tier-free:hover {
+      border-color: rgba(148,163,184,0.4);
+      box-shadow: 0 20px 60px rgba(148,163,184,0.06);
+    }
+    .mem-tier-card.tier-sparked {
+      border-color: rgba(31,162,255,0.2);
+      background: linear-gradient(180deg, rgba(31,162,255,0.05), var(--panel));
+    }
+    .mem-tier-card.tier-sparked:hover {
+      border-color: rgba(31,162,255,0.4);
+      box-shadow: 0 20px 60px rgba(31,162,255,0.1);
+    }
+    .mem-tier-card.tier-eternal {
+      border-color: rgba(139,92,246,0.25);
+      background: linear-gradient(180deg, rgba(139,92,246,0.07), var(--panel));
+    }
+    .mem-tier-card.tier-eternal:hover {
+      border-color: rgba(139,92,246,0.45);
+      box-shadow: 0 20px 60px rgba(139,92,246,0.12);
+    }
+    .mem-tier-card.tier-eternal .tier-glow {
+      position: absolute;
+      inset: -40% 20% 60% 20%;
+      background: radial-gradient(circle, rgba(139,92,246,0.18), transparent 65%);
+      filter: blur(40px);
+      pointer-events: none;
+    }
+    .mem-tier-card.tier-sparked .tier-glow {
+      position: absolute;
+      inset: -40% 20% 60% 20%;
+      background: radial-gradient(circle, rgba(31,162,255,0.14), transparent 65%);
+      filter: blur(40px);
+      pointer-events: none;
+    }
+    .tier-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+      margin-bottom: 1.4rem;
+    }
+    .tier-badge-free { background: rgba(148,163,184,0.1); color: #94a3b8; border: 1px solid rgba(148,163,184,0.2); }
+    .tier-badge-sparked { background: rgba(31,162,255,0.1); color: #1FA2FF; border: 1px solid rgba(31,162,255,0.25); }
+    .tier-badge-eternal { background: rgba(139,92,246,0.12); color: #a78bfa; border: 1px solid rgba(139,92,246,0.3); }
+    .mem-tier-name {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.9rem;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+    .mem-tier-price {
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .mem-tier-price-sub {
+      font-size: 0.8rem;
+      color: var(--dim);
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+    .mem-tier-tagline {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 1.6rem;
+    }
+    .mem-tier-features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .mem-tier-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+    .mem-tier-features li .check {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      margin-top: 1px;
+    }
+    .check-free { background: rgba(148,163,184,0.15); color: #94a3b8; }
+    .check-sparked { background: rgba(31,162,255,0.15); color: #1FA2FF; }
+    .check-eternal { background: rgba(139,92,246,0.15); color: #a78bfa; }
+    .mem-tier-cta {
+      display: block;
+      text-align: center;
+      padding: 0.9rem 1.5rem;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .mem-cta-free {
+      border: 1px solid rgba(148,163,184,0.3);
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+    }
+    .mem-cta-free:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.2); }
+    .mem-cta-sparked {
+      background: linear-gradient(135deg, rgba(31,162,255,0.9), rgba(0,120,220,0.9));
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(31,162,255,0.25);
+    }
+    .mem-cta-sparked:hover { box-shadow: 0 8px 32px rgba(31,162,255,0.4); transform: translateY(-1px); }
+    .mem-cta-eternal {
+      background: linear-gradient(135deg, rgba(139,92,246,0.9), rgba(109,40,217,0.9));
+      color: #fff;
+      box-shadow: 0 4px 20px rgba(139,92,246,0.3);
+    }
+    .mem-cta-eternal:hover { box-shadow: 0 8px 32px rgba(139,92,246,0.5); transform: translateY(-1px); }
+
+    /* What you're really joining */
+    .mem-identity {
+      padding: 5rem 0;
+      border-top: 1px solid var(--line);
+    }
+    .mem-identity-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .mem-identity-copy h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      margin-bottom: 1.2rem;
+    }
+    .mem-identity-copy p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1.02rem;
+      margin-bottom: 1rem;
+    }
+    .mem-identity-copy p:last-of-type { margin-bottom: 1.8rem; }
+    .mem-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .mem-pillar {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: 1.15rem 1.2rem;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      transition: border-color 0.2s;
+    }
+    .mem-pillar:hover { border-color: rgba(255,196,0,0.2); }
+    .mem-pillar-icon {
+      font-size: 1.4rem;
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255,196,0,0.06);
+      border: 1px solid rgba(255,196,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mem-pillar strong {
+      display: block;
+      font-size: 0.92rem;
+      margin-bottom: 0.22rem;
+      color: var(--text);
+    }
+    .mem-pillar p {
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Studio discount strip */
+    .mem-discount {
+      padding: 4rem 0;
+      border-top: 1px solid var(--line);
+    }
+    .mem-discount-inner {
+      position: relative;
+      padding: 3rem;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(135deg, rgba(255,196,0,0.06) 0%, rgba(10,13,22,0.95) 50%, rgba(139,92,246,0.05) 100%);
+      border: 1px solid rgba(255,196,0,0.15);
+      overflow: hidden;
+    }
+    .mem-discount-inner::before {
+      content: "";
+      position: absolute;
+      inset: -30% 55% -30% -15%;
+      background: radial-gradient(circle, rgba(255,196,0,0.09), transparent 60%);
+      filter: blur(50px);
+      pointer-events: none;
+    }
+    .mem-discount-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .mem-discount-copy h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      letter-spacing: -0.04em;
+      margin-bottom: 0.8rem;
+    }
+    .mem-discount-copy p {
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+      font-size: 1.02rem;
+    }
+    .mem-discount-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .mem-discount-card {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1.2rem 1.4rem;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.025);
+    }
+    .mem-discount-pct {
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .mem-discount-pct.sparked { color: #1FA2FF; }
+    .mem-discount-pct.eternal { color: #a78bfa; }
+    .mem-discount-info strong {
+      display: block;
+      font-size: 0.92rem;
+      margin-bottom: 0.18rem;
+    }
+    .mem-discount-info span {
+      font-size: 0.8rem;
+      color: var(--dim);
+    }
+
+    /* Vault Community section */
+    .mem-community {
+      padding: 5rem 0;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+    .mem-community h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+    }
+    .mem-community p {
+      color: var(--muted);
+      max-width: 56ch;
+      margin: 0 auto 2.5rem;
+      font-size: 1.02rem;
+      line-height: 1.7;
+    }
+    .mem-stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .mem-stat-block {
+      padding: 2rem;
+      border-radius: 24px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+    .mem-stat-block strong {
+      display: block;
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+    .mem-stat-block span {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+    }
+
+    /* Final CTA section */
+    .mem-final-cta {
+      padding: 5rem 0;
+      border-top: 1px solid var(--line);
+      text-align: center;
+    }
+    .mem-final-cta h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 5vw, 4rem);
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+      margin-bottom: 1.2rem;
+    }
+    .mem-final-cta p {
+      max-width: 52ch;
+      margin: 0 auto 2.4rem;
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.68;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .mem-tiers-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+      .mem-identity-grid { grid-template-columns: 1fr; }
+      .mem-discount-grid { grid-template-columns: 1fr; }
+      .mem-stat-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .mem-hero { padding: 4.5rem 0 3rem; }
+      .mem-hero h1 { font-size: clamp(2.4rem, 10vw, 3.5rem); }
+      .mem-discount-inner { padding: 2rem; }
+      .mem-hero-proof { gap: 1rem; padding: 0.8rem 1.2rem; }
+    }
+  </style>
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-pc92owTgV6BIa8Xc5NXyUVrfAQZaJSy2Rp+VITHyeQ8=' 'sha256-JujKqvQ+wLaBwZQ+rK0dDSeBX3rT7sN0wby2YNyIlDs=' 'sha256-aizFzz4bZutx7qgu7RXmRZGMRd5mYvlspNnLIvS4rkI=' 'sha256-XdHcZWQrqgwOuuIEs9J5a0nYI4/agz9wQE8ikMlG4Gs=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+
+  <script src="/assets/theme-toggle.js"></script>
+  <script src="/assets/analytics.js" defer></script>
+  <script src="/assets/pwa-nav.js" defer></script>
+  <script src="/assets/supabase-public.js" defer></script>
+</head>
+<body>
+<script>!function(){try{var t=localStorage.getItem('vs_theme'),m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(t&&m[t]){var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}}catch(e){}}();</script>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════ -->
+<header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img loading="lazy" src="../assets/vaultspark-icon.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span>VaultSpark Studios<small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">Canon</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/">About Membership</a><a href="/vaultsparked/">Choose Your Tier</a><a href="/membership-value/">Value Breakdown</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#FFC400;">Member Area</span><a href="/vault-member/">Vault Portal</a><a href="/vault-wall/">Vault Wall</a><a href="/invite/">Refer a Friend</a></div></div>
+        <a href="/universe/">Universe</a>
+        <a href="/studio/">Studio</a>
+        <a href="/journal/">Signal Log</a>
+        <a href="/contact/">Contact</a>
+
+        <div class="mobile-nav-footer">
+          <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
+          <a class="mobile-nav-join" href="/membership/">Membership</a>
+          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+<!-- ═══ MAIN ═════════════════════════════════════════════ -->
+<main id="main-content">
+
+  <!-- ── Hero ─────────────────────────────────────────── -->
+  <section class="mem-hero" aria-labelledby="mem-hero-heading">
+    <div class="orb orb-gold" aria-hidden="true"></div>
+    <div class="orb orb-blue" aria-hidden="true"></div>
+    <div class="orb orb-purple" aria-hidden="true"></div>
+
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="mem-hero-eyebrow">Vault Membership</div>
+
+      <h1 id="mem-hero-heading">
+        The Vault<br><span class="gold">Recognizes You.</span>
+      </h1>
+
+      <p class="mem-hero-sub">
+        One account. Every world we build. Your Vault Membership is your identity
+        inside the VaultSpark universe — the foundation that follows you across
+        every game, every rank, every achievement we ship.
+      </p>
+
+      <div class="mem-hero-actions">
+        <a class="button" href="/vault-member/#register">Create Free Account</a>
+        <a class="button-secondary" href="/vaultsparked/">Choose Your Tier</a>
+        <a class="button-ghost" href="/membership-value/">See The Value</a>
+      </div>
+
+      <div class="mem-hero-proof" aria-label="Vault community stats">
+        <div class="mem-hero-proof-item">
+          <strong id="proof-members">—</strong>
+          <span>Vault Members</span>
+        </div>
+        <div style="width:1px;height:30px;background:rgba(255,255,255,0.1);"></div>
+        <div class="mem-hero-proof-item">
+          <strong id="proof-sparked">—</strong>
+          <span>VaultSparked</span>
+        </div>
+        <div style="width:1px;height:30px;background:rgba(255,255,255,0.1);"></div>
+        <div class="mem-hero-proof-item">
+          <strong>Free</strong>
+          <span>To join forever</span>
+        </div>
+        <div style="width:1px;height:30px;background:rgba(255,255,255,0.1);"></div>
+        <div class="mem-hero-proof-item">
+          <strong>1</strong>
+          <span>Account, every world</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Tier Identity Cards ─────────────────────────── -->
+  <section class="mem-tiers" aria-labelledby="tiers-heading">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:1rem;">
+        <span class="eyebrow">Three Tiers</span>
+        <h2 id="tiers-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);letter-spacing:-0.04em;margin-top:0.5rem;">Choose Your Identity in the Vault</h2>
+        <p style="color:var(--muted);max-width:54ch;margin:0.8rem auto 0;font-size:1.02rem;line-height:1.68;">The vault is free to enter. Go deeper when you're ready.</p>
+      </div>
+
+      <div class="mem-tiers-grid">
+        <!-- Free -->
+        <div class="mem-tier-card tier-free">
+          <span class="tier-badge tier-badge-free">◈ Vault Member</span>
+          <div class="mem-tier-name">Vault<br>Member</div>
+          <div class="mem-tier-price" style="color:var(--text);">Free</div>
+          <div class="mem-tier-price-sub">Forever free — no credit card</div>
+          <p class="mem-tier-tagline">Your foundation in the vault. Cross-game rank, achievements, and community access — at no cost, forever.</p>
+          <ul class="mem-tier-features">
+            <li><span class="check check-free">✓</span> Cross-game Vault Rank (9 tiers)</li>
+            <li><span class="check check-free">✓</span> Achievement tracking</li>
+            <li><span class="check check-free">✓</span> Community challenges</li>
+            <li><span class="check check-free">✓</span> Vault Wall profile</li>
+            <li><span class="check check-free">✓</span> Play all free games</li>
+            <li><span class="check check-free">✓</span> Studio Signal lore drops</li>
+          </ul>
+          <a href="/vault-member/#register" class="mem-tier-cta mem-cta-free">Join Free</a>
+        </div>
+
+        <!-- VaultSparked -->
+        <div class="mem-tier-card tier-sparked">
+          <div class="tier-glow" aria-hidden="true"></div>
+          <span class="tier-badge tier-badge-sparked">⚡ VaultSparked</span>
+          <div class="mem-tier-name">Vault<br>Sparked</div>
+          <div class="mem-tier-price" style="color:#1FA2FF;">$4.99<small style="font-size:1rem;font-weight:400;color:var(--dim);">/mo</small></div>
+          <div class="mem-tier-price-sub">or $44.99/yr · save 25%</div>
+          <p class="mem-tier-tagline">The core supporter tier. Get premium access, 2× XP, studio discounts, and deeper integration across every game.</p>
+          <ul class="mem-tier-features">
+            <li><span class="check check-sparked">✓</span> Everything in Free</li>
+            <li><span class="check check-sparked">✓</span> 2× XP on all games</li>
+            <li><span class="check check-sparked">✓</span> VaultSparked badge + Discord role</li>
+            <li><span class="check check-sparked">✓</span> Blue VaultSparked profile theme</li>
+            <li><span class="check check-sparked">✓</span> 20% studio discount on all products</li>
+            <li><span class="check check-sparked">✓</span> Priority challenge queue</li>
+            <li><span class="check check-sparked">✓</span> Select game access</li>
+          </ul>
+          <a href="/vaultsparked/" class="mem-tier-cta mem-cta-sparked">Get VaultSparked</a>
+        </div>
+
+        <!-- Eternal -->
+        <div class="mem-tier-card tier-eternal">
+          <div class="tier-glow" aria-hidden="true"></div>
+          <span class="tier-badge tier-badge-eternal">♾ VaultSparked Eternal</span>
+          <div class="mem-tier-name">Vault<br>Eternal</div>
+          <div class="mem-tier-price" style="color:#a78bfa;">$29.99<small style="font-size:1rem;font-weight:400;color:var(--dim);">/mo</small></div>
+          <div class="mem-tier-price-sub">or $269.99/yr · save 25% · grandfather-locked</div>
+          <p class="mem-tier-tagline">The highest tier. Maximum everything. You are baked into the vault records permanently — this price is locked for life.</p>
+          <ul class="mem-tier-features">
+            <li><span class="check check-eternal">✓</span> Everything in VaultSparked</li>
+            <li><span class="check check-eternal">✓</span> 3× XP multiplier</li>
+            <li><span class="check check-eternal">✓</span> 35% studio discount on all products</li>
+            <li><span class="check check-eternal">✓</span> Cross-product Eternal access</li>
+            <li><span class="check check-eternal">✓</span> Eternal beta builds &amp; early drops</li>
+            <li><span class="check check-eternal">✓</span> Named in studio credits — forever</li>
+            <li><span class="check check-eternal">✓</span> Purple Eternal profile theme</li>
+            <li><span class="check check-eternal">✓</span> Vault records permanent entry</li>
+          </ul>
+          <a href="/vaultsparked/" class="mem-tier-cta mem-cta-eternal">Go Eternal</a>
+        </div>
+      </div>
+
+      <p style="text-align:center;margin-top:1.8rem;font-size:0.82rem;color:var(--dim);">
+        Current prices are grandfather-locked — early members keep this rate forever as the vault grows.
+        <a href="/membership-value/" style="color:var(--gold);text-decoration:none;margin-left:0.4em;">See value breakdown →</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ── What You're Really Joining ─────────────────── -->
+  <section class="mem-identity" aria-labelledby="identity-heading">
+    <div class="container">
+      <div class="mem-identity-grid">
+        <div class="mem-identity-copy">
+          <span class="eyebrow">More Than a Subscription</span>
+          <h2 id="identity-heading">You're Not Paying<br>For Features.<br>You're Joining a Universe.</h2>
+          <p>
+            Vault Membership isn't a SaaS product. It's your stake in the VaultSpark universe.
+            Your rank grows as we ship games. Your achievements cross every title we build.
+            Your name is in the vault records the day you go Eternal.
+          </p>
+          <p>
+            This is the community that comes with us — through every launch, every experiment,
+            every world that warps into existence under the forge. The vault builds outward
+            from here.
+          </p>
+          <a class="button" href="/vault-member/#register">Claim Your Place</a>
+        </div>
+
+        <div class="mem-pillars" role="list">
+          <div class="mem-pillar" role="listitem">
+            <div class="mem-pillar-icon" aria-hidden="true">⚡</div>
+            <div>
+              <strong>Cross-Game Vault Rank</strong>
+              <p>One rank system, every game. Your progress in Call of Doodie, Football GM, Solara, and every future title feeds the same vault rank.</p>
+            </div>
+          </div>
+          <div class="mem-pillar" role="listitem">
+            <div class="mem-pillar-icon" aria-hidden="true">🏆</div>
+            <div>
+              <strong>Studio-Wide Achievements</strong>
+              <p>Milestones that only registered Vault Members can unlock — tied to the studio's history, not just a single game.</p>
+            </div>
+          </div>
+          <div class="mem-pillar" role="listitem">
+            <div class="mem-pillar-icon" aria-hidden="true">🔓</div>
+            <div>
+              <strong>Early Access Before the Vault Opens</strong>
+              <p>Every new game, tool, and beta invite goes to Vault Members first. You're not on a mailing list — you're in the vault.</p>
+            </div>
+          </div>
+          <div class="mem-pillar" role="listitem">
+            <div class="mem-pillar-icon" aria-hidden="true">📡</div>
+            <div>
+              <strong>Lore, Signals &amp; Studio Dispatches</strong>
+              <p>Character dispatches, world-building reveals, canon fragments, and studio decisions — delivered to members before the vault opens to the public.</p>
+            </div>
+          </div>
+          <div class="mem-pillar" role="listitem">
+            <div class="mem-pillar-icon" aria-hidden="true">🎯</div>
+            <div>
+              <strong>Studio Discount — On Everything</strong>
+              <p>VaultSparked and Eternal members get 20%–35% off every VaultSpark product, game, and tool — now and as the studio grows.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Studio Discount Callout ─────────────────────── -->
+  <section class="mem-discount" aria-labelledby="discount-heading">
+    <div class="container">
+      <div class="mem-discount-inner">
+        <div class="mem-discount-grid">
+          <div class="mem-discount-copy">
+            <span class="eyebrow">Studio Benefit</span>
+            <h2 id="discount-heading">Your Membership<br>Pays for Itself.</h2>
+            <p>
+              VaultSparked and Eternal members get a permanent studio-wide discount on every
+              VaultSpark product — games, tools, and projects. Not just the ones live today.
+              Every future release, every expansion, every new world we build.
+            </p>
+            <a class="button-secondary" href="/vaultsparked/">Compare Tiers</a>
+          </div>
+
+          <div class="mem-discount-cards">
+            <div class="mem-discount-card">
+              <div class="mem-discount-pct sparked">20%</div>
+              <div class="mem-discount-info">
+                <strong>VaultSparked Discount</strong>
+                <span>$4.99/mo — 20% off all VaultSpark products &amp; games</span>
+              </div>
+            </div>
+            <div class="mem-discount-card">
+              <div class="mem-discount-pct eternal">35%</div>
+              <div class="mem-discount-info">
+                <strong>Eternal Discount</strong>
+                <span>$29.99/mo — 35% off all VaultSpark products &amp; games</span>
+              </div>
+            </div>
+            <div style="padding:1rem 1.4rem;border-radius:14px;background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.1);font-size:0.82rem;color:var(--muted);line-height:1.55;">
+              <strong style="color:var(--gold);display:block;margin-bottom:0.3rem;">Rank Loyalty Bonus</strong>
+              Reach <strong style="color:var(--text);">Forge Master</strong> rank and get 25% off your first month upgrading.
+              Hit <strong style="color:var(--gold);">The Sparked</strong> and that drops to 50% off.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Community / Social Proof ───────────────────── -->
+  <section class="mem-community" aria-labelledby="community-heading">
+    <div class="container">
+      <span class="eyebrow">The Vault Community</span>
+      <h2 id="community-heading">Everyone Starts<br>From the Same Spark.</h2>
+      <p>
+        The vault ranks are earned — not bought. Whether you join free or go Eternal,
+        your rank is a measure of your time in the vault. No shortcuts. No pay-to-win.
+        Just the work.
+      </p>
+
+      <div class="mem-stat-row">
+        <div class="mem-stat-block">
+          <strong id="stat-members">—</strong>
+          <span>Vault Members</span>
+        </div>
+        <div class="mem-stat-block">
+          <strong id="stat-sparked">—</strong>
+          <span>VaultSparked</span>
+        </div>
+        <div class="mem-stat-block">
+          <strong id="stat-challenges">—</strong>
+          <span>Challenges Completed</span>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a class="button-secondary" href="/vault-wall/">View Vault Wall</a>
+        <a class="button-secondary" href="/leaderboards/">Leaderboard</a>
+        <a class="button-secondary" href="/invite/">Refer a Friend</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Final CTA ───────────────────────────────────── -->
+  <section class="mem-final-cta" aria-labelledby="final-cta-heading">
+    <div class="container">
+      <span class="eyebrow">Ready?</span>
+      <h2 id="final-cta-heading">The Vault<br>Is Open.</h2>
+      <p>
+        Free to enter. Impossible to ignore once you're inside.
+        Create your account now — your Vault Rank starts the moment you join.
+      </p>
+      <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+        <a class="button" href="/vault-member/#register">Join Free — No Card Needed</a>
+        <a class="button-secondary" href="/vaultsparked/">Go VaultSparked</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ═══ FOOTER ════════════════════════════════════════════ -->
+<footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Where worlds are built. Where stories ignite. The vault is sparked. ⚡</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/studio/">About</a>
+          <a href="/studio-pulse/">Studio Pulse</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/universe/">Universe</a>
+          <a href="/leaderboards/">Leaderboard</a>
+          <a href="/community/">Community Hub</a>
+        </div>
+        <div class="footer-col">
+          <h4>Membership</h4>
+          <a href="/membership/">About Membership</a>
+          <a href="/vaultsparked/">Choose Your Tier</a>
+          <a href="/membership-value/">Value Breakdown</a>
+          <a href="/vault-member/">Vault Portal</a>
+          <a href="/vault-wall/">Vault Wall</a>
+          <a href="/invite/">Refer a Friend</a>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <a href="https://x.com/VaultSpark" target="_blank" rel="noreferrer">X / Twitter</a>
+          <a href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer">Reddit</a>
+          <a href="https://discord.com/users/vaultsparkstudios" target="_blank" rel="noreferrer">Discord</a>
+          <a href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer">YouTube</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="/faq/">FAQ</a>
+          <a href="/careers/">Careers</a>
+          <a href="/open-source/">Technology &amp; Rights</a>
+          <a href="/accessibility/">Accessibility</a>
+          <a href="/security/">Security</a>
+          <a href="/sitemap-page/">Sitemap</a>
+        </div>
+      </div>
+      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
+        <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 VaultSpark Studios. All rights reserved. VaultSpark&trade; is a trademark of VaultSpark Studios.</span>
+        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a></span>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // Populate live community stats
+  document.addEventListener('DOMContentLoaded', function() {
+    if (!window.VSPublic) return;
+    VSPublic.from('vault_members').select('id', { count: 'exact', head: true }).then(function(r) {
+      var n = r.count || 0;
+      ['proof-members','stat-members'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = n >= 1000 ? (n/1000).toFixed(1)+'k' : n;
+      });
+    });
+    VSPublic.from('vault_members').select('id', { count: 'exact', head: true }).eq('subscription_status','active').then(function(r) {
+      var n = r.count || 0;
+      ['proof-sparked','stat-sparked'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = n;
+      });
+    });
+    VSPublic.from('vault_challenges').select('id', { count: 'exact', head: true }).eq('completed', true).then(function(r) {
+      var n = r.count || 0;
+      ['stat-challenges'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) el.textContent = n;
+      });
+    });
+  });
+</script>
+</body>
+</html>

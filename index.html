@@ -641,7 +641,8 @@
       .hero-grid,
       .media-grid,
       .membership-grid,
-      .studio-grid { grid-template-columns: 1fr; }
+      .studio-grid,
+      .signal-split { grid-template-columns: 1fr; }
       .hero-caption { position: static; margin-top: 1rem; flex-direction: column; align-items: flex-start; }
       .logo-wrap { inset: 6rem 1rem 4.2rem 1rem; }
       .hero-visual { min-height: 340px; }
@@ -714,6 +715,7 @@
         <a href="/" class="active">Home</a>
         <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
         <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">Canon</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/">About Membership</a><a href="/vaultsparked/">Choose Your Tier</a><a href="/membership-value/">Value Breakdown</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#FFC400;">Member Area</span><a href="/vault-member/">Vault Portal</a><a href="/vault-wall/">Vault Wall</a><a href="/invite/">Refer a Friend</a></div></div>
         <a href="/universe/">Universe</a>
         <a href="/studio/">Studio</a>
         <a href="/journal/">Signal Log</a>
@@ -721,6 +723,7 @@
 
         <div class="mobile-nav-footer">
           <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
+          <a class="mobile-nav-join" href="/membership/">Membership</a>
           <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
           <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
         </div>
@@ -763,7 +766,8 @@
 
           <div class="hero-actions">
             <a class="button" href="/games/">Explore Our Games</a>
-            <a class="button-secondary" href="/vault-member/#register">Enter The Vault &nbsp;→</a>
+            <a class="button-secondary" href="/projects/">Explore Our Projects</a>
+            <a class="button-ghost" href="/vault-member/#register">Enter The Vault &nbsp;→</a>
           </div>
 
           <div class="hero-story">
@@ -1153,7 +1157,7 @@
               </p>
               <div class="hero-actions">
                 <a class="button" href="/vault-member/#register">Create Free Account</a>
-                <a class="button-secondary" href="/vault-member/">About Vault Membership</a>
+                <a class="button-secondary" href="/membership/">About Vault Membership</a>
               </div>
 
               <div class="membership-features" style="margin-top:1.8rem;">
@@ -1306,51 +1310,44 @@
       </div>
     </section>
 
-    <!-- ── Character Feature: DreadSpike ──────────────────── -->
-    <section id="characters" aria-labelledby="characters-heading">
+    <!-- ── Universe Signal Teaser ──────────────────────── -->
+    <section id="characters" aria-labelledby="signal-heading" style="padding:3rem 0;">
       <div class="container">
-        <div class="section-head">
-          <div>
-            <h2 id="characters-heading">Character Feature: DreadSpike</h2>
-            <p>A wrong transmission from the dark. The signal that called the wrong being into our realm.</p>
-          </div>
-          <a class="button-secondary button-sm" href="/universe/">Explore The Universe</a>
-        </div>
+        <div style="position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,0.07);background:linear-gradient(135deg,rgba(200,0,0,0.06),rgba(0,0,0,0.6) 50%,rgba(31,162,255,0.05));padding:3.5rem;">
+          <!-- Atmospheric glow layers -->
+          <div style="position:absolute;inset:-30% 55% -30% -15%;background:radial-gradient(circle,rgba(200,0,0,0.12),transparent 60%);filter:blur(60px);pointer-events:none;" aria-hidden="true"></div>
+          <div style="position:absolute;inset:-20% -10% -20% 65%;background:radial-gradient(circle,rgba(31,162,255,0.08),transparent 60%);filter:blur(60px);pointer-events:none;" aria-hidden="true"></div>
 
-        <div class="media-shell">
-          <div class="media-grid">
-            <div class="video-card">
-              <div class="video-frame">
-                <img src="assets/dreadspike-poster.webp" alt="DreadSpike cinematic — VaultSpark Studios original character" width="1280" height="720" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;" loading="lazy" decoding="async" />
+          <div style="position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;" class="signal-split">
+            <div>
+              <div style="display:flex;align-items:center;gap:0.6rem;margin-bottom:1.4rem;">
+                <span style="width:7px;height:7px;border-radius:50%;background:#D62828;box-shadow:0 0 8px rgba(214,40,40,0.8);display:inline-block;animation:pulse-dot 2s ease-in-out infinite;" aria-hidden="true"></span>
+                <span style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:#D62828;">Signal Detected</span>
               </div>
-            </div>
-
-            <div class="media-copy">
-              <h3>When DreadSpike enters the void, even the stars pull back.</h3>
-              <p>
-                Crimson light cuts across frozen space. Fiery ash drifts around him. Every movement
-                feels ritualistic, every strike feels fated, and every frame hints at a larger war still manifesting.
-              </p>
-              <div class="storyline">
-                <strong>From the vault:</strong> DreadSpike is not what the signal expected to find.
-                A wrong transmission crossed a threshold that should have remained closed — and what answered
-                was never meant to be reached. His full story arrives in <em>Voidfall</em>.
+              <h2 id="signal-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);letter-spacing:-0.045em;line-height:1.04;margin-bottom:1rem;">Something answered.<br>The threshold is open.</h2>
+              <p style="color:var(--muted);line-height:1.68;margin-bottom:1rem;font-size:0.98rem;">A transmission crossed from somewhere it should not have. What came through was not what the signal expected to find. Crimson light. Frozen space. Something old and impossible — now awake.</p>
+              <div style="padding:1rem 1.15rem;border-radius:16px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);margin-bottom:1.6rem;font-size:0.9rem;color:var(--muted);line-height:1.62;">
+                <strong style="color:var(--text);">From the vault records:</strong> Classification incomplete. Signal origin — unresolved. The full transmission is sealed until further notice.
               </div>
-              <p>
-                The vault has been building toward this character since the first cinematic released.
-                <em>Voidfall</em> is the debut Novel Saga from VaultSpark Studios — and DreadSpike is at the center of it.
-              </p>
               <div class="hero-actions">
-                <a class="button" href="/universe/voidfall/">⚡ Voidfall — Coming Soon</a>
-                <a class="button-secondary" href="/universe/dreadspike/">Character Profile &nbsp;→</a>
+                <a class="button" href="/universe/">Enter The Universe</a>
+                <a class="button-secondary" href="/universe/voidfall/">Transmission Archive</a>
               </div>
             </div>
-          </div>
 
-          <div class="still-grid" aria-label="DreadSpike still frames">
-            <div class="still"><picture><source srcset="assets/dreadspike-still-1.webp" type="image/webp"><img src="assets/dreadspike-still-1.jpg" alt="DreadSpike in the void — cinematic still frame 1" loading="lazy" /></picture></div>
-            <div class="still"><picture><source srcset="assets/dreadspike-still-2.webp" type="image/webp"><img src="assets/dreadspike-still-2.jpg" alt="DreadSpike with crimson light — cinematic still frame 2" loading="lazy" /></picture></div>
-            <div class="still"><picture><source srcset="assets/dreadspike-still-3.webp" type="image/webp"><img src="assets/dreadspike-still-3.jpg" alt="DreadSpike surrounded by fiery ash — cinematic still frame 3" loading="lazy" /></picture></div>
+            <div style="position:relative;">
+              <div style="position:relative;border-radius:22px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);background:rgba(0,0,0,0.4);aspect-ratio:9/12;display:flex;align-items:center;justify-content:center;">
+                <img src="assets/dreadspike-poster.webp" alt="Classified cinematic — VaultSpark Studios universe" width="1280" height="720" style="width:100%;height:100%;object-fit:cover;opacity:0.72;filter:saturate(0.7) brightness(0.7);" loading="lazy" decoding="async" />
+                <!-- Redaction overlay -->
+                <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.15) 0%,transparent 35%,transparent 65%,rgba(0,0,0,0.55) 100%);"></div>
+                <div style="position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;">
+                  <div style="background:rgba(0,0,0,0.7);border:1px solid rgba(214,40,40,0.3);border-radius:10px;padding:0.7rem 1rem;backdrop-filter:blur(6px);">
+                    <span style="font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:#D62828;">⬛ CLASSIFICATION PENDING</span><br>
+                    <span style="font-size:0.78rem;color:var(--dim);letter-spacing:0.04em;">Identity withheld · Origin: unresolved</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1388,7 +1385,7 @@
             <div class="timeline-item">
               <span class="tl-label">Vault Expansion</span>
               <strong>Character-led media experiments</strong>
-              <div class="tl-body">DreadSpike is the center of <em>Voidfall</em> — the debut VaultSpark Novel Saga. The full story is coming.</div>
+              <div class="tl-body">A debut Novel Saga is in the vault — transmission fragments already surfacing. The full story is sealed until further notice.</div>
             </div>
             <div class="timeline-item">
               <span class="tl-label">Vault Future</span>
@@ -1567,14 +1564,23 @@
         <div class="footer-col">
           <h4>Studio</h4>
           <a href="/">Home</a>
-          <a href="/universe/">Universe</a>
           <a href="/studio/">About</a>
+          <a href="/studio-pulse/">Studio Pulse</a>
           <a href="/roadmap/">Vault Pipeline</a>
           <a href="/journal/">Signal Log</a>
           <a href="/press/">Press Kit</a>
-          <a href="/vault-member/">Vault Membership</a>
+          <a href="/universe/">Universe</a>
           <a href="/leaderboards/">Leaderboard</a>
           <a href="/community/">Community Hub</a>
+        </div>
+        <div class="footer-col">
+          <h4>Membership</h4>
+          <a href="/membership/">About Membership</a>
+          <a href="/vaultsparked/">Choose Your Tier</a>
+          <a href="/membership-value/">Value Breakdown</a>
+          <a href="/vault-member/">Vault Portal</a>
+          <a href="/vault-wall/">Vault Wall</a>
+          <a href="/invite/">Refer a Friend</a>
         </div>
         <div class="footer-col">
           <h4>Connect</h4>

@@ -1,23 +1,29 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 58)
+Last updated: 2026-04-13 (Session 59)
 
-## Session Intent: Session 58
-Revise the next-step improvement direction to exclude Voidfall/DreadSpike ideas, keep the ecosystem-focused ideas, and fix `/members/` not showing profiles.
-**Outcome: Achieved** — revised strategy kept the website ecosystem centered on Vault identity, community, Studio Hub, project rooms, command-center surfaces, challenges, feed, onboarding, and a guarded Vault Guide; `/members/` profile loading regression fixed.
+## Session Intent: Session 59
+Membership system overhaul + homepage redesign. Full confirmed plan: /membership/ hub, membership pricing model (Option C), nav Membership dropdown, vaultsparked overhaul (studio discount, games access, rank loyalty, annual toggle), homepage hero + DreadSpike→Signal teaser, all-pages atmosphere, and achievement SVG wiring.
+**Outcome: Achieved** — all core items shipped. 77 pages propagated with new Membership nav/footer. See detail below.
 
-## Where We Left Off (Session 58 — 2026-04-13)
+## Where We Left Off (Session 59 — 2026-04-13)
 
-- Shipped: members-directory CSP/data fix — externalized `/members/` runtime to `assets/members-directory.js`, removed inline `onclick`, added `vault_points`/`rank_title` query with legacy `points` fallback, renamed public badge label to Genesis Member, bumped service worker cache.
-- Tests: `node --check assets/members-directory.js` passing; static grep confirmed the blocked inline directory loader and inline `onclick` were removed. No browser/network test run in this sandbox.
-- Deploy: not pushed in this session.
+- Shipped: 10-item S59 batch (see detail below)
+- Tests: CSP propagation clean (90 pages; 0 updates needed since hashes already propagated); no browser test run in this sandbox
+- Deploy: not yet pushed — staged and ready
 
 ### Detail
 
-- **Root cause** — `/members/` directory logic lived in an inline script that was blocked by the hardened CSP. The browser warnings for `frame-ancestors` and `X-Frame-Options` are meta-header warnings; the profile load failure was the blocked inline script.
-- **Fix** — new external self-hosted script runs under `script-src 'self'`; clear-filter control uses event delegation rather than inline handlers.
-- **Data tolerance** — loader first queries current public member fields (`vault_points`, `rank_title`) and falls back to legacy `points` if needed.
-- **Cache** — `sw.js` cache name bumped and `/assets/members-directory.js` added to `STATIC_ASSETS`.
+- **Vault Membership model confirmed** — Option C hybrid: community identity layer (free), VaultSparked ($4.99/mo), Eternal ($29.99/mo); studio discount 20%/35% off all VaultSpark products
+- **New /membership/index.html** — premium emotional hub; hero with gold glow orbs; 3 tier identity cards (animated hover); "What You're Joining" section with 5 pillars; Studio Discount callout (20%/35%); Community stats (live Supabase); Final CTA. CSP tag correct.
+- **Nav Membership dropdown** — 7 links: About Membership, Choose Your Tier, Value Breakdown, (divider), Vault Portal, Vault Wall, Refer a Friend. Propagated to 77 pages.
+- **Footer Membership column** — new 5th column in all pages' footers; Studio column updated with Studio Pulse added, Vault Membership link replaced with proper structure
+- **Homepage hero** — added "Explore Our Projects" + "button-ghost" CTA alongside "Explore Our Games"; DreadSpike section → unnamed "Signal Detected" teaser (classification pending, no character names); "Now Igniting" timeline DreadSpike reference removed → mysterious teaser
+- **Homepage membership CTA** — /vault-member/ → /membership/ for "About Vault Membership" link
+- **Shared CSS atmosphere** — `body::after` ambient radial glow blooms at page edges; `.button-ghost` variant; `.panel` inner glow; `.surface-section::before` gold separator dot; card hover shadow enhancement
+- **vaultsparked/index.html overhaul** — removed founder video updates (perk card + list item + comparison table row + FAQ text); added billing toggle (Monthly/Annual with JS price switching $4.99→$44.99, $29.99→$269.99); Studio Discount section (3-tier grid: —/20%/35%); Games Access section (per-tier game list grid); Rank Loyalty callout (25% Forge Master / 50% The Sparked first month)
+- **propagate-nav.mjs** — Membership active link mapping; Membership dropdown; Studio Pulse in footer Studio column; new Membership footer column
+- **SW cache** — CACHE_NAME bumped to `s59a`; /membership/, /membership-value/, /vault-wall/, /invite/, /press/ added to STATIC_ASSETS
 
 ---
 
@@ -30,15 +36,16 @@ Revise the next-step improvement direction to exclude Voidfall/DreadSpike ideas,
 - [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions.
 - [ ] **[DB] Phase59 public_profile migration** — run db-migrate workflow or `supabase db push` to apply `supabase-phase59-public-profile.sql`.
 - [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler.
+- [ ] **[STRIPE-ANNUAL]** Create 2 new Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal). Wire to billing toggle checkout when created.
 - [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
 - [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
 - [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
 
 ## Recommended First Action Next Session
 
-1. **[SIL] Wire achievement SVG icons to portal** — update `portal.js` achievement definitions for `vaultsparked` + `forge_master`.
-2. **[SIL] Portal settings: public_profile toggle** — after phase59 migration is live, add the member visibility toggle.
-3. **Members directory browser smoke** — after deploy, open `/members/` and confirm cards render with no CSP violations beyond known meta-header warnings.
+1. **[SIL] Portal settings: public_profile toggle** — after phase59 migration is live, add the member visibility toggle.
+2. **[S59] Portal: Studio Access panel** — portal-dashboard.js new panel showing games per tier (Free/Sparked/Eternal).
+3. **[S59] Rank Loyalty Discount wire** — when Stripe annual price IDs exist, wire billing toggle to actual checkout; detect rank at checkout and apply Stripe coupon automatically.
 
 ---
 

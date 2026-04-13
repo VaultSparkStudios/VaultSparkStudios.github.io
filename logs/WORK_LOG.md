@@ -1,5 +1,16 @@
 # Work Log
 
+## 2026-04-13 — Session 59
+
+- membership/index.html: created — premium emotional hub; hero with 3 animated glow orbs (gold/blue/purple); 3 tier identity cards (free/sparked/eternal) with hover animations and glow; "What You're Joining" 5-pillar section; Studio Discount 20%/35% callout; live Supabase community stats; final CTA; CSP tag + FOUC prevention
+- scripts/propagate-nav.mjs: Membership active link mapping; Membership primary nav dropdown (7 links); mobile nav Membership link; footer Membership column (6 links); Studio footer column updated (Studio Pulse added); propagated to 77 pages
+- index.html (homepage): hero: "Explore Our Projects" + button-ghost CTA added; DreadSpike section → unnamed "Signal Detected" atmospheric teaser (classification pending, no names, crimson glow, redacted poster); "Now Igniting" DreadSpike reference → mysterious "debut Novel Saga" teaser; membership CTA links to /membership/ instead of /vault-member/; .signal-split responsive CSS added
+- assets/style.css: cinematic atmosphere additions — body::after ambient radial glow blooms; .button-ghost variant; .panel inner glow; .surface-section::before gold separator dot; .card:hover shadow enhancement; light-mode override for atmosphere elements
+- vaultsparked/index.html: removed founder video updates (perk-card, perks list li, comparison table row, FAQ mention — 4 locations); added billing toggle (Monthly/Annual buttons, JS price switching $4.99↔$44.99, $29.99↔$269.99, window.vssBillingMode); Studio Discount section (3-col grid: —/20%/35%); Games Access section (per-tier game list 3-col grid); Rank Loyalty Discount callout (25% Forge Master / 50% The Sparked, first month); responsive CSS for new sections
+- sw.js: CACHE_NAME bumped to s59a; /membership/, /membership-value/, /vault-wall/, /invite/, /press/ added to STATIC_ASSETS
+- context/: TASK_BOARD, CURRENT_STATE, LATEST_HANDOFF, PROJECT_STATUS all updated to S59
+- memory: project_vaultspark_state.md updated with S59 decisions and shipped items
+
 ## 2026-04-12 — Session 57
 
 - assets/style.css: added `.theme-picker-label { display:none }` + `.theme-picker-arrow { display:none }` to `@media (max-width:980px)` block — compact theme picker at tablet widths (SIL:2⛔ cleared)

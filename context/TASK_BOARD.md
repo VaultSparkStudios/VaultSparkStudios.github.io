@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 58)
+Last updated: 2026-04-13 (Session 59)
 
 ---
 
@@ -39,8 +39,15 @@ Last updated: 2026-04-13 (Session 58)
 - [x] **[SIL] Achievement SVG icons — VaultSparked + Forge Master** — created `assets/images/badges/vaultsparked.svg` (purple crystal gem, violet gradient, gold crown spark) and `assets/images/badges/forge-master.svg` (anvil + spark burst, crimson ring, ember particles) (S57)
 - [x] **[S58 Fix] Members directory profiles not showing** — moved CSP-blocked inline `/members/` directory loader to `assets/members-directory.js`; removed inline clear-filter handler; query now prefers `vault_points`/`rank_title` and falls back to legacy `points`; bumped SW cache.
 
+- [x] **[S59] Homepage redesign** — hero: "Explore Projects" CTA added + button-ghost variant; DreadSpike section converted to unnamed "Signal Detected" atmospheric teaser (classification pending, no names); membership CTA → /membership/; "Now Igniting" DreadSpike reference removed (S59)
+- [x] **[S59] All pages: same atmosphere** — shared CSS atmosphere in style.css: body::after ambient glow, panel inner glow, surface-section gold separator dot, button-ghost variant, card hover shadow enhancement (S59)
+- [x] **[S59] Create /membership/index.html** — premium emotional hub: hero with 3 animated glow orbs; 3 tier identity cards (free/sparked/eternal) with hover; "What You're Joining" 5-pillar section; studio discount 20%/35% callout; community stats (live Supabase); final CTA (S59)
+- [x] **[S59] Nav template: Membership dropdown** — 7-link Membership dropdown added to propagate-nav.mjs; propagated to 77 pages; active link mapping added; footer Membership column added; Studio Pulse added to Studio footer column (S59)
+- [x] **[S59] Footer template update** — Membership column (6 links), Studio column updated (Studio Pulse + cleanup); propagated 77 pages (S59)
+- [x] **[S59] /vaultsparked/ overhaul** — removed founder video updates (4 locations); billing toggle (Monthly/Annual, JS price switching $4.99↔$44.99, $29.99↔$269.99); Studio Discount section (3-tier grid); Games Access section (per-tier); Rank Loyalty callout (25%/50%) (S59)
+- [ ] **[S59] Portal: Studio Access panel** — new dashboard panel showing games/projects accessible per tier (Free: Football GM browser game; Sparked: + COD + others; Eternal: + future exclusives); insert in portal-dashboard.js
 - [ ] **[SIL] Portal settings: public_profile toggle** — add "Show my profile on the Vault Wall" toggle to portal settings page; first step: add toggle HTML to settings privacy section + update handler to PATCH `public_profile`. Requires phase59 migration live.
-- [ ] **[SIL] Wire achievement SVG icons to portal** — update `portal.js` achievement definitions for `vaultsparked` and `forge_master` slugs to use SVG paths; renderer already supports image icons (S56). First step: grep achievement slug defs in portal.js.
+- [x] **[S59] Wire achievement SVG icons to portal** — ACHIEVEMENT_DEFS updated in portal-core.js (genesis_vault_member, vaultsparked, forge_master); async relational fetch wired in portal-auth.js showDashboard (S59)
 - [ ] **[SIL] Vault Wall: verify post-migration** — after phase59 HAR done, smoke test vault-wall in incognito to confirm `public_profile` filter working correctly.
 
 ## Next

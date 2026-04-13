@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆█▅▆▆
-Avgs — 3: 421.7 | 5: 428.2 | 10: 429.5 | all: 420.0
-  └ 3-session: Dev 84.7 | Align 83.7 | Momentum 83.0 | Engage 85.0 | Process 84.7
+Sparkline (last 5 totals): █▅▆▆▇
+Avgs — 3: 428.3 | 5: 428.8 | 10: 430.0 | all: 422.0
+  └ 3-session: Dev 85.3 | Align 86.0 | Momentum 85.7 | Engage 86.0 | Process 85.3
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~3.0 sessions ✓  |  Intent rate: 100% (last 5)
-Last session: 2026-04-13 | Session 58 | Total: 426/500 | Velocity: 1 | protocolVelocity: 5
+Momentum runway: ~4.0 sessions ✓  |  Intent rate: 100% (last 5)
+Last session: 2026-04-13 | Session 59 | Total: 438/500 | Velocity: 2 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -636,3 +636,29 @@ Avgs — 3: 421.7 | 5: 428.2 | 10: 429.5 | all: 420.0
 3. **Members directory smoke test** — add a Playwright smoke for `/members/` that asserts either member cards or a graceful empty/error state and catches CSP console violations. First step: create a focused spec with mocked Supabase response. Medium probability.
 
 **Committed to TASK_BOARD:** [S58 Fix] Members directory profiles not showing
+
+---
+
+## 2026-04-13 — Session 59 | Total: 438/500 | Velocity: 2 | Debt: →
+Avgs — 3: 428.3 | 5: 428.8 | all: 422.0
+  └ 3-session: Dev 85.3 | Align 86.0 | Momentum 85.7 | Engage 86.0 | Process 85.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 86 | ↑ | 77-page nav propagation clean; CSP prop clean (90 pages/0 updates); JS billing toggle syntax valid; no browser smoke run |
+| Creative Alignment | 90 | ↑ | Major membership model decision confirmed + fully implemented; Option C hybrid locked; DreadSpike teaser conversion excellent |
+| Momentum | 88 | ↑ | 10-item batch shipped in one session; all major confirmed items complete; 2 deferred (Stripe annual IDs, portal panel) |
+| Engagement | 87 | ↑ | All user requests honoured; pricing decision chain fully resolved; atmosphere/redesign delivered as requested |
+| Process Quality | 87 | ↑ | Full context file write-back; memory updated; SIL scored; WORK_LOG appended |
+| **Total** | **438/500** | ↑ | |
+
+**Top win:** Membership model decision (Option C) fully implemented in a single session — /membership/ hub, nav dropdown, footer, vaultsparked overhaul, homepage DreadSpike→Signal teaser, all in one batch.
+**Top gap:** Annual Stripe price IDs not yet created (no Stripe CLI access in this sandbox); billing toggle UI exists but can't route to actual annual checkout yet.
+**Intent outcome:** Achieved — all confirmed items shipped except portal Studio Access panel (deferred Next) and Stripe annual IDs (HAR).
+
+**Brainstorm**
+1. **Portal Studio Access panel** — add a "Studio Access" panel to portal-dashboard.js that shows which games/projects each tier unlocks; requires no external dependencies; pure portal UI. High probability. Commit to TASK_BOARD.
+2. **Membership /membership/ page social proof live data** — currently uses a static JS snippet; wire to the same VSPublic Supabase client as the homepage social proof strip for consistent numbers. High probability.
+3. **Vaultsparked annual checkout routing** — when Stripe annual price IDs exist, read `window.vssBillingMode` in the checkout button handler and route to the correct price ID. Medium probability (depends on HAR).
+
+**Committed to TASK_BOARD:** [S59] Portal: Studio Access panel

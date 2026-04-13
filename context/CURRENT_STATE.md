@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-13 (Session 58)
+- Date: 2026-04-13 (Session 59)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S58 members directory CSP fix — `/members/` profile loader externalized to `assets/members-directory.js`, inline `onclick` removed, public member query now tries `vault_points`/`rank_title` first with legacy `points` fallback, SW cache bumped. S57: theme picker compact, CF Worker auto-redeploy workflow, genesis badge live slots counter, vault wall public_profile opt-in, Studio About founder story, achievement SVGs.
+- Repo posture: S59 major batch — /membership/ hub page, membership model overhaul (Option C), nav Membership dropdown + footer column (77 pages), homepage hero (Explore Projects CTA, DreadSpike → unnamed Signal Detected teaser), vaultsparked overhaul (studio discount 20%/35%, games access grid, rank loyalty callout, annual billing toggle, removed founder video updates), shared CSS atmosphere layer, SW cache bump. S58: members directory CSP fix. S57: theme picker compact, CF Worker auto-redeploy, genesis badge slots counter, vault wall public_profile opt-in, Studio About founder story, achievement SVGs.
 
 ## What exists
 

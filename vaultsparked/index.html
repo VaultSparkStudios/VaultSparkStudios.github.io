@@ -700,6 +700,14 @@
     /* ─── Responsive ─── */
     @media (max-width: 900px) {
       .pricing-cards { grid-template-columns: 1fr; max-width: 480px; }
+      #studio-discount .container > div[style*="grid-template-columns:1fr 1fr 1fr"],
+      #games-access .container > div[style*="grid-template-columns:1fr 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+        max-width: 480px;
+      }
+      #rank-loyalty [style*="grid-template-columns:1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
     }
     @media (max-width: 700px) {
       .faq-grid { grid-template-columns: 1fr; }
@@ -778,6 +786,14 @@
           Phase 1 pricing is locked forever for early members. Prices only increase for <em>new</em> subscribers.
         </p>
 
+        <!-- Billing toggle -->
+        <div style="display:flex;justify-content:center;margin-bottom:2rem;">
+          <div style="display:inline-flex;align-items:center;gap:0;border:1px solid rgba(255,255,255,0.12);border-radius:999px;background:rgba(255,255,255,0.04);padding:4px;" role="group" aria-label="Billing period">
+            <button id="billing-monthly" type="button" style="padding:0.45rem 1.3rem;border-radius:999px;border:none;font-size:0.85rem;font-weight:700;font-family:inherit;cursor:pointer;background:rgba(255,255,255,0.12);color:#fff;transition:all 0.2s;">Monthly</button>
+            <button id="billing-annual" type="button" style="padding:0.45rem 1.3rem;border-radius:999px;border:none;font-size:0.85rem;font-weight:700;font-family:inherit;cursor:pointer;background:transparent;color:var(--dim);transition:all 0.2s;">Annual <span style="font-size:0.72rem;font-weight:800;color:#10B981;margin-left:3px;">SAVE 25%</span></button>
+          </div>
+        </div>
+
         <div class="pricing-cards">
 
           <!-- FREE -->
@@ -847,7 +863,6 @@
               <li><span class="pf-pro">◆</span> VaultSparked Eternal Discord role</li>
               <li><span class="pf-pro">◆</span> Cross-product Eternal access</li>
               <li><span class="pf-pro">◆</span> Eternal beta builds &amp; early drops</li>
-              <li><span class="pf-pro">◆</span> Founder video studio updates</li>
               <li><span class="pf-pro">◆</span> Named in studio credits — forever</li>
               <li><span class="pf-pro">◆</span> Purple Eternal profile theme</li>
               <li><span class="pf-pro">◆</span> Baked into the Vault records permanently</li>
@@ -870,6 +885,107 @@
 
         <div class="grandfather-notice">
           <p><strong>Grandfather pricing guarantee:</strong> Your Phase 1 price is locked forever. When Phase 2 opens at a higher price, you keep paying your original rate — always. This is a permanent commitment.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- STUDIO DISCOUNT -->
+    <section style="padding:4rem 0;border-top:1px solid rgba(255,255,255,0.05);" id="studio-discount">
+      <div class="container">
+        <p class="sparked-section-label">Studio Benefit</p>
+        <h2 class="sparked-section-title">Your Membership Pays for Itself</h2>
+        <p class="sparked-section-sub">VaultSparked and Eternal members get a permanent studio-wide discount on every VaultSpark product — games, tools, and projects. Not just what's live today. Every future release too.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;max-width:900px;margin:2rem auto 0;">
+          <!-- Free -->
+          <div style="padding:2rem;border-radius:24px;background:var(--panel);border:1px solid var(--line);text-align:center;">
+            <div style="font-size:2.2rem;font-weight:900;color:var(--muted);letter-spacing:-0.04em;margin-bottom:0.4rem;">—</div>
+            <div style="font-size:0.82rem;font-weight:700;margin-bottom:0.3rem;color:var(--text);">Vault Member</div>
+            <div style="font-size:0.75rem;color:var(--dim);">Free forever · No discount</div>
+          </div>
+          <!-- Sparked -->
+          <div style="padding:2rem;border-radius:24px;background:linear-gradient(180deg,rgba(31,162,255,0.06),var(--panel));border:1px solid rgba(31,162,255,0.22);text-align:center;position:relative;overflow:hidden;">
+            <div style="font-size:2.8rem;font-weight:900;color:#1FA2FF;letter-spacing:-0.04em;line-height:1;margin-bottom:0.4rem;">20%</div>
+            <div style="font-size:0.82rem;font-weight:700;margin-bottom:0.3rem;color:var(--text);">VaultSparked</div>
+            <div style="font-size:0.75rem;color:var(--dim);">Off every VaultSpark product</div>
+          </div>
+          <!-- Eternal -->
+          <div style="padding:2rem;border-radius:24px;background:linear-gradient(180deg,rgba(139,92,246,0.07),var(--panel));border:1px solid rgba(139,92,246,0.28);text-align:center;">
+            <div style="font-size:2.8rem;font-weight:900;color:#a78bfa;letter-spacing:-0.04em;line-height:1;margin-bottom:0.4rem;">35%</div>
+            <div style="font-size:0.82rem;font-weight:700;margin-bottom:0.3rem;color:var(--text);">VaultSparked Eternal</div>
+            <div style="font-size:0.75rem;color:var(--dim);">Off every VaultSpark product</div>
+          </div>
+        </div>
+        <p style="text-align:center;margin-top:1.2rem;font-size:0.8rem;color:var(--dim);">Discount applies automatically at checkout. No codes needed. Valid on all current and future VaultSpark releases.</p>
+      </div>
+    </section>
+
+    <!-- GAMES ACCESS -->
+    <section style="padding:4rem 0;border-top:1px solid rgba(255,255,255,0.05);" id="games-access">
+      <div class="container">
+        <p class="sparked-section-label">Vault Game Access</p>
+        <h2 class="sparked-section-title">Games included with your membership</h2>
+        <p class="sparked-section-sub">All browser games within the VaultSpark ecosystem are integrated with your Vault Membership. Your rank, XP, and achievements flow across every title.</p>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem;max-width:1000px;margin:2rem auto 0;">
+          <!-- Free games -->
+          <div style="padding:1.8rem;border-radius:24px;background:var(--panel);border:1px solid var(--line);">
+            <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--dim);margin-bottom:1.2rem;">Vault Member · Free</div>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.7rem;">
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;"><span style="font-size:0.7rem;background:rgba(148,163,184,0.15);color:#94a3b8;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✓</span>Call of Doodie</li>
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--muted);"><span style="font-size:0.7rem;background:rgba(148,163,184,0.15);color:#94a3b8;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✓</span>VaultSpark Football GM</li>
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--dim);"><span style="font-size:0.7rem;background:rgba(255,255,255,0.04);color:var(--dim);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">—</span><em>Coming games (free tier)</em></li>
+            </ul>
+          </div>
+          <!-- Sparked games -->
+          <div style="padding:1.8rem;border-radius:24px;background:linear-gradient(180deg,rgba(31,162,255,0.05),var(--panel));border:1px solid rgba(31,162,255,0.18);">
+            <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#1FA2FF;margin-bottom:1.2rem;">VaultSparked · $4.99/mo</div>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.7rem;">
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;"><span style="font-size:0.7rem;background:rgba(31,162,255,0.15);color:#1FA2FF;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✓</span>Everything in Free</li>
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--muted);"><span style="font-size:0.7rem;background:rgba(31,162,255,0.15);color:#1FA2FF;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">+</span>2× XP on all games</li>
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--muted);"><span style="font-size:0.7rem;background:rgba(31,162,255,0.15);color:#1FA2FF;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">+</span>20% off game DLC &amp; extras</li>
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--dim);"><span style="font-size:0.7rem;background:rgba(255,255,255,0.04);color:var(--dim);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">+</span><em>Sparked-exclusive game modes (coming)</em></li>
+            </ul>
+          </div>
+          <!-- Eternal games -->
+          <div style="padding:1.8rem;border-radius:24px;background:linear-gradient(180deg,rgba(139,92,246,0.06),var(--panel));border:1px solid rgba(139,92,246,0.22);">
+            <div style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#a78bfa;margin-bottom:1.2rem;">Eternal · $29.99/mo</div>
+            <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:0.7rem;">
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;"><span style="font-size:0.7rem;background:rgba(139,92,246,0.15);color:#a78bfa;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">✓</span>Everything in VaultSparked</li>
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--muted);"><span style="font-size:0.7rem;background:rgba(139,92,246,0.15);color:#a78bfa;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">◆</span>3× XP on all games</li>
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--muted);"><span style="font-size:0.7rem;background:rgba(139,92,246,0.15);color:#a78bfa;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">◆</span>35% off all game DLC &amp; extras</li>
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--muted);"><span style="font-size:0.7rem;background:rgba(139,92,246,0.15);color:#a78bfa;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">◆</span>Beta builds — every game</li>
+              <li style="display:flex;align-items:center;gap:0.6rem;font-size:0.88rem;color:var(--dim);"><span style="font-size:0.7rem;background:rgba(255,255,255,0.04);color:var(--dim);border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">◆</span><em>Eternal-exclusive future content</em></li>
+            </ul>
+          </div>
+        </div>
+        <p style="text-align:center;margin-top:1.2rem;font-size:0.8rem;color:var(--dim);">Game access expands as new titles ship. Your Vault Rank and XP carry across every game in the ecosystem.</p>
+      </div>
+    </section>
+
+    <!-- RANK LOYALTY DISCOUNT -->
+    <section style="padding:3rem 0;border-top:1px solid rgba(255,255,255,0.05);" id="rank-loyalty">
+      <div class="container" style="max-width:780px;">
+        <div style="position:relative;padding:2.5rem;border-radius:var(--radius);background:linear-gradient(135deg,rgba(255,196,0,0.05),rgba(10,13,22,0.9) 60%,rgba(214,40,40,0.04));border:1px solid rgba(255,196,0,0.15);overflow:hidden;">
+          <div style="position:absolute;inset:-30% 60% -30% -10%;background:radial-gradient(circle,rgba(255,196,0,0.08),transparent 65%);filter:blur(40px);pointer-events:none;" aria-hidden="true"></div>
+          <div style="position:relative;z-index:1;">
+            <div style="font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);margin-bottom:0.8rem;">Rank Loyalty Bonus</div>
+            <h3 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-0.04em;margin-bottom:0.8rem;">Your rank earns you a deal.</h3>
+            <p style="color:var(--muted);font-size:0.95rem;line-height:1.65;margin-bottom:1.5rem;">Members who've built serious vault rank deserve recognition when they upgrade. We reward loyalty in the vault with a first-month discount.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+              <div style="padding:1.2rem;border-radius:16px;background:rgba(214,40,40,0.06);border:1px solid rgba(214,40,40,0.15);">
+                <div style="font-size:1.6rem;font-weight:900;color:#D62828;letter-spacing:-0.04em;margin-bottom:0.3rem;">25% off</div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:0.2rem;">Forge Master rank</div>
+                <div style="font-size:0.78rem;color:var(--dim);">60,000+ vault points · First month upgrading</div>
+              </div>
+              <div style="padding:1.2rem;border-radius:16px;background:rgba(255,196,0,0.05);border:1px solid rgba(255,196,0,0.2);">
+                <div style="font-size:1.6rem;font-weight:900;color:var(--gold);letter-spacing:-0.04em;margin-bottom:0.3rem;">50% off</div>
+                <div style="font-size:0.85rem;font-weight:700;color:var(--text);margin-bottom:0.2rem;">The Sparked rank</div>
+                <div style="font-size:0.78rem;color:var(--dim);">100,000+ vault points · First month upgrading</div>
+              </div>
+            </div>
+            <p style="margin-top:1rem;font-size:0.78rem;color:var(--dim);">Discount applied automatically at checkout when you're signed in and your rank qualifies. Applies to first month only.</p>
+          </div>
         </div>
       </div>
     </section>
@@ -935,12 +1051,6 @@
             <span class="perk-icon">🧪</span>
             <div class="perk-title">Eternal Beta Builds</div>
             <div class="perk-desc">Access to internal development builds, test branches, and experimental features before anyone else.</div>
-            <span class="perk-badge purple">Eternal Only</span>
-          </div>
-          <div class="perk-card pro-perk">
-            <span class="perk-icon">🎬</span>
-            <div class="perk-title">Founder Video Updates</div>
-            <div class="perk-desc">Exclusive video studio updates direct from the founder — behind-the-scenes dev progress, direction, and decision logs.</div>
             <span class="perk-badge purple">Eternal Only</span>
           </div>
           <div class="perk-card pro-perk">
@@ -1041,12 +1151,6 @@
               <td class="col-pro"><span class="check">✓</span></td>
             </tr>
             <tr>
-              <td class="feature-name">Founder video updates</td>
-              <td class="col-free"><span class="cross">—</span></td>
-              <td class="col-sparked"><span class="cross">—</span></td>
-              <td class="col-pro"><span class="check">✓</span></td>
-            </tr>
-            <tr>
               <td class="feature-name">Studio credits</td>
               <td class="col-free"><span class="cross">—</span></td>
               <td class="col-sparked"><span class="cross">—</span></td>
@@ -1111,7 +1215,7 @@
           </div>
           <div class="faq-item">
             <div class="faq-q">Does VaultSparked Eternal include everything in VaultSparked?</div>
-            <div class="faq-a">Yes — Eternal is a superset. You get all Sparked perks plus the Eternal-exclusive features (cross-product access, Eternal beta builds, founder videos, permanent studio credits, and the Eternal Discord role).</div>
+            <div class="faq-a">Yes — Eternal is a superset. You get all Sparked perks plus the Eternal-exclusive features (cross-product access, Eternal beta builds, permanent studio credits, and the Eternal Discord role).</div>
           </div>
           <div class="faq-item">
             <div class="faq-q">Is billing secure?</div>
@@ -1435,5 +1539,55 @@
   </div>
 </div>
 <script src="/vaultsparked/vaultsparked.js" defer></script>
+<script>
+  // Billing toggle — Monthly / Annual
+  (function() {
+    var btnMonthly = document.getElementById('billing-monthly');
+    var btnAnnual = document.getElementById('billing-annual');
+    if (!btnMonthly || !btnAnnual) return;
+
+    var PRICES = {
+      sparked: { monthly: '4.99', annual: '44.99' },
+      pro:     { monthly: '29.99', annual: '269.99' }
+    };
+
+    var mode = 'monthly';
+
+    function applyMode(m) {
+      mode = m;
+      // Toggle button styles
+      if (m === 'monthly') {
+        btnMonthly.style.background = 'rgba(255,255,255,0.12)';
+        btnMonthly.style.color = '#fff';
+        btnAnnual.style.background = 'transparent';
+        btnAnnual.style.color = 'var(--dim)';
+      } else {
+        btnAnnual.style.background = 'rgba(255,255,255,0.12)';
+        btnAnnual.style.color = '#fff';
+        btnMonthly.style.background = 'transparent';
+        btnMonthly.style.color = 'var(--dim)';
+      }
+
+      // Update price displays
+      var sparkedEl = document.getElementById('sparked-price-display');
+      var sparkedPeriodEl = document.getElementById('sparked-period');
+      var proEl = document.getElementById('pro-price-display');
+      var proPeriodEl = document.getElementById('pro-period');
+
+      if (sparkedEl) sparkedEl.innerHTML = '<sub>$</sub>' + PRICES.sparked[m];
+      if (sparkedPeriodEl) sparkedPeriodEl.textContent = m === 'annual' ? 'per year · save 25%' : 'per month';
+      if (proEl) proEl.innerHTML = '<sub>$</sub>' + PRICES.pro[m];
+      if (proPeriodEl) proPeriodEl.textContent = m === 'annual' ? 'per year · save 25%' : 'per month';
+
+      // Store for checkout handler to read
+      window.vssBillingMode = m;
+    }
+
+    btnMonthly.addEventListener('click', function() { applyMode('monthly'); });
+    btnAnnual.addEventListener('click', function() { applyMode('annual'); });
+
+    window.vssBillingMode = 'monthly';
+  })();
+</script>
 </body>
 </html>
