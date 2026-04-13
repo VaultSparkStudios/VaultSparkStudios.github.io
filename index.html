@@ -83,36 +83,58 @@
   </script>
 
   <style>
-    /* ─── Page-specific styles ─── */
+    /* ─── Page-specific styles — Homepage ─── */
 
+    /* ── Deep atmospheric background ── */
+    body {
+      background:
+        radial-gradient(ellipse 100% 50% at 50% -5%, rgba(255,196,0,0.055), transparent),
+        radial-gradient(ellipse 60% 40% at 5% 80%, rgba(31,162,255,0.04), transparent),
+        radial-gradient(ellipse 60% 40% at 95% 75%, rgba(139,92,246,0.035), transparent),
+        #000;
+      background-attachment: fixed;
+    }
+
+    /* ── Animated energy arcs ── */
     .energy-arc {
       position: absolute;
-      width: 42vw; height: 42vw;
-      min-width: 360px; min-height: 360px;
-      max-width: 640px; max-height: 640px;
+      width: 52vw; height: 52vw;
+      min-width: 420px; min-height: 420px;
+      max-width: 760px; max-height: 760px;
       border-radius: 50%;
-      border: 2px solid rgba(255,255,255,0.05);
-      filter: blur(1px);
+      border: 1.5px solid rgba(255,255,255,0.04);
       pointer-events: none;
-      opacity: 0.8;
     }
     .energy-arc.left {
-      left: -12vw; top: 5rem;
-      border-left-color: rgba(31,162,255,0.55);
-      box-shadow: inset 0 0 48px rgba(31,162,255,0.08), 0 0 80px rgba(31,162,255,0.14);
-      animation: drift 10s ease-in-out infinite;
+      left: -16vw; top: 3rem;
+      border-left-color: rgba(31,162,255,0.65);
+      border-bottom-color: rgba(31,162,255,0.2);
+      box-shadow: inset 0 0 80px rgba(31,162,255,0.06), 0 0 120px rgba(31,162,255,0.18);
+      animation: drift 12s ease-in-out infinite;
     }
     .energy-arc.right {
-      right: -12vw; top: 7rem;
-      border-right-color: rgba(255,122,0,0.6);
-      box-shadow: inset 0 0 48px rgba(255,122,0,0.08), 0 0 80px rgba(255,122,0,0.16);
-      animation: drift 11s ease-in-out infinite reverse;
+      right: -16vw; top: 5rem;
+      border-right-color: rgba(255,122,0,0.7);
+      border-top-color: rgba(255,122,0,0.2);
+      box-shadow: inset 0 0 80px rgba(255,122,0,0.06), 0 0 120px rgba(255,122,0,0.2);
+      animation: drift 13s ease-in-out infinite reverse;
+    }
+    /* Third arc — gold, centered top */
+    .energy-arc.gold {
+      width: 36vw; height: 36vw;
+      min-width: 280px; min-height: 280px;
+      max-width: 520px; max-height: 520px;
+      top: -8rem; left: 50%;
+      transform: translateX(-50%);
+      border-top-color: rgba(255,196,0,0.3);
+      box-shadow: 0 0 100px rgba(255,196,0,0.08);
+      animation: drift 18s ease-in-out infinite;
     }
 
     /* ─── Hero ─── */
     .hero {
       position: relative;
-      padding: 5.6rem 0 3rem;
+      padding: 6.5rem 0 4rem;
       overflow: clip;
     }
     .hero::before {
@@ -120,94 +142,97 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 36%, rgba(31,162,255,0.11), transparent 0 18%),
-        radial-gradient(circle at 82% 40%, rgba(255,122,0,0.11), transparent 0 20%);
+        radial-gradient(ellipse 80% 70% at 20% 40%, rgba(31,162,255,0.09), transparent),
+        radial-gradient(ellipse 70% 60% at 85% 45%, rgba(255,122,0,0.09), transparent),
+        radial-gradient(ellipse 50% 40% at 50% 95%, rgba(255,196,0,0.04), transparent);
       pointer-events: none;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 1.5rem;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 2.5rem;
       align-items: center;
       position: relative;
       z-index: 1;
     }
 
     h1 {
-      margin: 1rem 0 0.9rem;
+      margin: 1.1rem 0 1rem;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(3rem, 6.5vw, 5.8rem);
-      line-height: 0.93;
-      letter-spacing: -0.046em;
+      font-size: clamp(3.4rem, 7.5vw, 6.8rem);
+      line-height: 0.9;
+      letter-spacing: -0.052em;
     }
 
     .hero-copy p {
-      max-width: 54ch;
+      max-width: 52ch;
       color: var(--muted);
-      font-size: 1.08rem;
-      line-height: 1.65;
+      font-size: 1.1rem;
+      line-height: 1.68;
     }
 
     .hero-actions {
       display: flex;
-      gap: 0.9rem;
+      gap: 0.85rem;
       flex-wrap: wrap;
-      margin-top: 1.8rem;
+      margin-top: 2rem;
     }
 
     .hero-story {
-      margin-top: 1.8rem;
-      padding: 1.05rem 1.15rem;
-      border-radius: 18px;
+      margin-top: 2rem;
+      padding: 1.1rem 1.2rem;
+      border-radius: 20px;
       background:
-        linear-gradient(90deg, rgba(31,162,255,0.09), rgba(255,122,0,0.09)),
-        var(--panel);
-      border: 1px solid var(--line);
+        linear-gradient(135deg, rgba(31,162,255,0.07), rgba(255,122,0,0.06)),
+        rgba(10,13,22,0.7);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-left: 3px solid rgba(255,196,0,0.4);
       color: var(--steel);
-      font-size: 0.95rem;
-      line-height: 1.6;
+      font-size: 0.94rem;
+      line-height: 1.65;
+      backdrop-filter: blur(6px);
     }
     .hero-story strong { color: var(--text); }
 
     /* ─── Hero visual card ─── */
     .hero-card {
       position: relative;
-      padding: 1.15rem;
-      border-radius: 28px;
-      background: linear-gradient(180deg, var(--panel-strong), var(--panel));
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow-lg);
+      padding: 1.25rem;
+      border-radius: 32px;
+      background: linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 32px 80px rgba(0,0,0,0.5), 0 0 80px rgba(255,196,0,0.03);
       overflow: hidden;
     }
     .hero-card::before {
       content: "";
       position: absolute;
-      inset: -20% auto auto 10%;
-      width: 40%; height: 50%;
-      background: radial-gradient(circle, rgba(31,162,255,0.22), transparent 65%);
-      filter: blur(24px);
-      animation: pulseGlow 6s ease-in-out infinite;
+      inset: -20% auto auto 5%;
+      width: 50%; height: 55%;
+      background: radial-gradient(circle, rgba(31,162,255,0.26), transparent 65%);
+      filter: blur(32px);
+      animation: pulseGlow 7s ease-in-out infinite;
     }
     .hero-card::after {
       content: "";
       position: absolute;
-      inset: auto 10% -18% auto;
-      width: 42%; height: 52%;
-      background: radial-gradient(circle, rgba(255,122,0,0.24), transparent 65%);
-      filter: blur(24px);
-      animation: pulseGlow 7s ease-in-out infinite reverse;
+      inset: auto 5% -20% auto;
+      width: 50%; height: 55%;
+      background: radial-gradient(circle, rgba(255,122,0,0.28), transparent 65%);
+      filter: blur(32px);
+      animation: pulseGlow 8s ease-in-out infinite reverse;
     }
 
     .hero-visual {
       position: relative;
-      min-height: 530px;
-      border-radius: 22px;
+      min-height: 560px;
+      border-radius: 24px;
       padding: 1rem;
       background:
-        linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.24)),
-        linear-gradient(135deg, var(--bg) 0%, var(--bg-soft) 48%, var(--bg) 100%);
-      border: 1px solid var(--line);
+        linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.3)),
+        linear-gradient(135deg, #010205 0%, #060b18 48%, #010205 100%);
+      border: 1px solid rgba(255,255,255,0.06);
       overflow: hidden;
       isolation: isolate;
     }
@@ -652,8 +677,9 @@
       .membership-features { grid-template-columns: 1fr; }
     }
     @media (max-width: 640px) {
-      .hero { padding-top: 4.6rem; }
-      .energy-arc { opacity: 0.45; }
+      .hero { padding-top: 5rem; }
+      .energy-arc { opacity: 0.35; }
+      .energy-arc.gold { display: none; }
       .video-frame { width: 100%; }
       .membership-inner { padding: 1.8rem; }
       .dispatch-inner { padding: 1.5rem; }
@@ -751,17 +777,18 @@
 
     <!-- ── Hero ──────────────────────────────────────────── -->
     <section class="hero" aria-labelledby="hero-heading">
+      <div class="energy-arc gold" aria-hidden="true"></div>
       <div class="energy-arc left" aria-hidden="true"></div>
       <div class="energy-arc right" aria-hidden="true"></div>
 
       <div class="container hero-grid">
         <div class="hero-copy">
-          <span class="eyebrow">Independent Studio &nbsp;·&nbsp; Cinematic Worlds &nbsp;·&nbsp; Live Games</span>
-          <h1 id="hero-heading">The Vault<br>Is Sparked.</h1>
+          <span class="eyebrow" style="display:inline-flex;align-items:center;gap:0.5rem;"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(255,196,0,0.7);display:inline-block;animation:sparkPulse 2s ease-in-out infinite;" aria-hidden="true"></span> Independent Studio &nbsp;·&nbsp; Games &nbsp;·&nbsp; Tools &nbsp;·&nbsp; Cinematic Worlds</span>
+          <h1 id="hero-heading">The Vault<br><em style="font-style:normal;color:var(--gold);">Is Sparked.</em></h1>
           <p>
-            VaultSpark Studios engineers games, characters, and cinematic worlds
-            that arrive charged, loud, and impossible to ignore. Three sparked,
-            ten in the forge, one vaulted. Zero compromises.
+            VaultSpark Studios builds games, tools, and cinematic worlds that arrive
+            charged and impossible to ignore. Three sparked, ten in the forge.
+            One vault — yours to enter.
           </p>
 
           <div class="hero-actions">
@@ -808,7 +835,7 @@
     </section>
 
     <!-- ── Social Proof Strip ───────────────────────────── -->
-    <section id="vault-proof" aria-label="Vault community stats" style="padding:2rem 0;border-top:1px solid rgba(255,255,255,0.05);">
+    <section id="vault-proof" aria-label="Vault community stats" style="padding:2rem 0;border-top:1px solid rgba(255,255,255,0.06);background:linear-gradient(90deg,rgba(31,162,255,0.02),transparent 50%,rgba(255,196,0,0.02));">
       <div class="container">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem;align-items:center;" id="vault-proof-inner">
           <!-- Populated by JS -->
@@ -907,14 +934,19 @@
     </section>
 
     <!-- ── Forged From The Vault (Projects) ──────────────── -->
-    <section id="vault-forged" aria-labelledby="projects-heading">
-      <div class="container">
+    <section id="vault-forged" aria-labelledby="projects-heading" style="position:relative;">
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(255,196,0,0.03),transparent);pointer-events:none;" aria-hidden="true"></div>
+      <div class="container" style="position:relative;z-index:1;">
         <div class="section-head">
           <div>
-            <h2 id="projects-heading">Forged From The Vault</h2>
-            <p>Every VaultSpark world — unsealed from the vault and live, deep in the forge, or sealed under pressure for what comes next.</p>
+            <span class="eyebrow">Games &amp; Projects</span>
+            <h2 id="projects-heading" style="margin-top:0.4rem;">Forged From The Vault</h2>
+            <p>Every VaultSpark world — live and playable, deep in the forge, or sealed under pressure for what comes next.</p>
           </div>
-          <a class="button-secondary button-sm" href="/games/">View All Games</a>
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;">
+            <a class="button-secondary button-sm" href="/games/">All Games</a>
+            <a class="button-secondary button-sm" href="/projects/">All Projects</a>
+          </div>
         </div>
 
         <!-- SPARKED 🔥 — Live & Playable -->
@@ -1143,13 +1175,13 @@
     </section>
 
     <!-- ── Vault Membership ───────────────────────────────── -->
-    <section id="vault-membership" class="membership-section" aria-labelledby="membership-heading">
+    <section id="vault-membership" class="membership-section" aria-labelledby="membership-heading" style="background:linear-gradient(180deg,rgba(255,196,0,0.015),transparent 30%)">
       <div class="container">
         <div class="membership-inner">
           <div class="membership-grid">
             <div class="membership-copy">
               <span class="eyebrow">Studio Members</span>
-              <h2 id="membership-heading">One Account.<br>Every World We Build.</h2>
+              <h2 id="membership-heading">One Account.<br><em style="font-style:normal;color:var(--gold);">Every World We Build.</em></h2>
               <p>
                 Your free Studio Member profile follows you across every VaultSpark
                 game — tracking your ranking, achievements, and exclusive access as the

@@ -2598,19 +2598,17 @@ body.light-mode .studio-grid .panel .tl-label { color: var(--gold); }
    Adds depth, glow layering, and immersive section treatments
    ───────────────────────────────────────────────────────────────── */
 
-/* Ambient page glow — subtle radial blooms at page edges */
-body::after {
+/* Ambient page glow — subtle radial blooms injected via .site-header::after
+   (safe: scoped to the standard page header, never affects custom layouts) */
+.site-header::after {
   content: "";
-  position: fixed;
+  position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(255,196,0,0.025), transparent),
-    radial-gradient(ellipse 50% 60% at 0% 100%, rgba(31,162,255,0.02), transparent),
-    radial-gradient(ellipse 50% 60% at 100% 100%, rgba(139,92,246,0.02), transparent);
+    radial-gradient(ellipse 140% 120% at 50% -30%, rgba(255,196,0,0.04), transparent);
   pointer-events: none;
   z-index: 0;
 }
-body > * { position: relative; z-index: 1; }
 
 /* Enhanced card hover glow */
 .card:hover {
