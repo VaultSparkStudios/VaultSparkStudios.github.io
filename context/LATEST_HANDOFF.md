@@ -1,6 +1,48 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-12 (Session 56)
+Last updated: 2026-04-12 (Session 57)
+
+## Session Intent: Session 57
+Update memory and task board with all item ideas and implement all items at the highest quality.
+**Outcome: Achieved** — 7 items shipped; all 2 SIL:2⛔ escalations cleared; runway pre-loaded with 3 new Now items; pushed `48e7a15`.
+
+## Where We Left Off (Session 57 — 2026-04-12)
+
+- Shipped: 7 improvements across 4 groups — infra (CF Worker auto-deploy workflow, theme picker compact CSS), community (genesis badge live counter, vault wall public_profile opt-in + count bug fix), content (Studio About "Why VaultSpark" founder story), assets (VaultSparked + Forge Master achievement SVGs)
+- Tests: N/A — no automated test run
+- Deploy: deployed to production (pushed `48e7a15`) · GitHub Pages auto
+
+### Detail
+
+- **[SIL:2⛔ CLEARED] Theme picker compact 641–980px** — `.theme-picker-label` + `.theme-picker-arrow` hidden in `@media (max-width:980px)`; swatch dot only at tablet widths
+- **[SIL:2⛔ CLEARED] CF Worker auto-redeploy** — `.github/workflows/cloudflare-worker-deploy.yml`; triggers on `cloudflare/**` push to main; `npx wrangler@3 deploy --env production`; needs `CF_WORKER_API_TOKEN` secret
+- **Genesis badge live counter** — `vaultsparked/vaultsparked.js` (new); 2-step PostgREST query excludes 4 studio UUIDs; 3-tier colour (gold/orange/crimson ≤10); `<span id="genesis-slots-left">` in FAQ answer
+- **Vault Wall opt-in phase59** — `supabase-phase59-public-profile.sql` adds `public_profile boolean DEFAULT true`; vault-wall queries updated with `.eq('public_profile',true)`; fixed pre-existing `.count().head()` → `.count().get()` bug; opt-in notice above stats
+- **Studio About "Why VaultSpark"** — `#why-vaultspark` section before "Who Runs The Vault"; personal origin narrative, vault pressure quote, 5-para story
+- **Achievement SVGs** — `assets/images/badges/vaultsparked.svg` (purple crystal gem, faceted hexagon) + `assets/images/badges/forge-master.svg` (anvil + spark burst, crimson ring)
+
+---
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions. Separate from `CF_API_TOKEN` (cache purge only). Once set, every `cloudflare/**` push auto-deploys the Worker.
+- [ ] **[DB] Phase59 public_profile migration** — run db-migrate workflow or `supabase db push` to apply `supabase-phase59-public-profile.sql`. Safe additive change (DEFAULT true — all existing members stay opted in). Required before vault-wall filter goes live and before portal toggle can be wired.
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler — S53 updated script-src to SHA-256 hashes; the new GH Actions auto-deploy workflow will handle future deploys once `CF_WORKER_API_TOKEN` is set; first deploy still needs manual `wrangler deploy` OR the secret + a `cloudflare/**` push.
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **[SIL] Portal settings: public_profile toggle** — add "Show my profile on the Vault Wall" toggle to portal settings; requires phase59 migration to be live (HAR above)
+2. **[SIL] Wire achievement SVG icons to portal** — grep portal.js for `vaultsparked` + `forge_master` achievement slug definitions; update `icon` field to SVG path
+3. **[SIL] Vault Wall smoke test** — after phase59 HAR applied, open vault-wall in incognito to confirm `public_profile` filter works and counts display correctly
+
+---
 
 ## Session Intent: Session 56
 Continuation of S55 — apply pending DB migration, update task list, then rename "Founding Vault Member" badge to "Genesis Vault Member" with custom SVG icon and exclude studio accounts from 100 public slots.

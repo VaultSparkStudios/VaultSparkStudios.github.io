@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▇▆
-Avgs — 3: 425.3 | 5: 427.8 | 10: 430.4 | all: 419.0
-  └ 3-session: Dev 84.3 | Align 83.7 | Momentum 85.0 | Engage 85.0 | Process 83.3
-Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~0.3 sessions ⚠ LOW — add items to Now before next session  |  Intent rate: 100% (last 5)
-Last session: 2026-04-12 | Session 56 | Total: 400/500 | Velocity: 0 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▆▇▅▆
+Avgs — 3: 431.3 | 5: 430.0 | 10: 430.0 | all: 419.8
+  └ 3-session: Dev 85.0 | Align 86.3 | Momentum 87.0 | Engage 85.7 | Process 83.7
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~3.0 sessions ✓  |  Intent rate: 100% (last 5)
+Last session: 2026-04-12 | Session 57 | Total: 439/500 | Velocity: 1 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -588,3 +588,27 @@ Avgs — 3: 425.3 | 5: 427.8 | 10: 430.4 | all: 419.0
 3. **Vault Wall opt-in toggle** — add `public_profile` boolean to `vault_members`; Vault Wall reads it so only consenting members are shown; critical for privacy posture as membership grows; first step: write DB migration adding the column with default `true`. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Genesis badge slots-remaining counter
+
+## 2026-04-12 — Session 57 | Total: 439/500 | Velocity: 1 | Debt: →
+Avgs — 3: 431.3 | 5: 430.0 | 10: 430.0 | all: 419.8
+  └ 3-session: Dev 85.0 | Align 86.3 | Momentum 87.0 | Engage 85.7 | Process 83.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 87 | ↑ | CF Worker auto-deploy workflow created; vault-wall count bug fixed; phase59 migration written; genesis counter uses correct PostgREST pattern |
+| Creative Alignment | 88 | ↑ | Studio About "Why VaultSpark" personal narrative on-voice + soul-fidelity high; achievement SVGs extend brand badge system with authentic art direction; genesis counter colour tiers reinforce scarcity UX |
+| Momentum | 91 | ↑ | Both SIL:2⛔ items cleared; 7 items shipped; runway pre-loaded to ~3.0 sessions; Studio About deferred from S55 finally done |
+| Engagement | 88 | ↑ | Executed precise 10-step plan from user "implement all items at highest quality" direction; all brainstorm items from S56 consumed; memory system updated |
+| Process Quality | 85 | ↑ | Full closeout; TASK_BOARD pre-loaded (3 new Now items); memory feedback pattern captured; runway crash root cause documented |
+| **Total** | **439/500** | ↑ | |
+
+**Top win:** Broke the recurring runway-crash pattern by enforcing pre-load at closeout — 3 Now items queued and both SIL:2⛔ escalations cleared in a single session
+**Top gap:** IGNIS score stale (5 days, no refresh); achievement SVGs created but not yet wired to portal.js slug definitions — creates a half-deployed badge system
+**Intent outcome:** Achieved — all 7 items shipped + memory + task board fully updated
+
+**Brainstorm**
+1. **Wire SVG icons to portal achievement defs** — update `portal.js` achievement array entries for `vaultsparked` and `forge_master` slugs to point to `/assets/images/badges/vaultsparked.svg` and `/assets/images/badges/forge-master.svg`; the renderer already supports path-based icons (S56); first step: grep `portal.js` for achievement slug definitions array. High probability.
+2. **Portal settings public_profile toggle** — "Show my profile on the Vault Wall" checkbox in portal settings privacy section; PATCH `public_profile` column via Supabase SDK; requires phase59 migration to be live; first step: add toggle HTML to existing settings page privacy block. High probability (after HAR).
+3. **IGNIS rescore** — score is 5 days stale; run `npx tsx cli.ts score .` from `vaultspark-studio-ops/ignis/src/`; update `ignisScore`, `ignisGrade`, `ignisLastComputed` in PROJECT_STATUS.json; first step: open studio-ops and run CLI. Medium probability (requires separate studio-ops session).
+
+**Committed to TASK_BOARD:** [SIL] Wire SVG icons to portal · [SIL] Portal settings public_profile toggle

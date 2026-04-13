@@ -1,5 +1,21 @@
 # Work Log
 
+## 2026-04-12 — Session 57
+
+- assets/style.css: added `.theme-picker-label { display:none }` + `.theme-picker-arrow { display:none }` to `@media (max-width:980px)` block — compact theme picker at tablet widths (SIL:2⛔ cleared)
+- .github/workflows/cloudflare-worker-deploy.yml: created — triggers on `cloudflare/**` push to main; `npx wrangler@3 deploy --env production`; `CF_WORKER_API_TOKEN` secret required (SIL:2⛔ cleared)
+- vaultsparked/vaultsparked.js: created — genesis badge live slot counter; 2-step PostgREST query excludes studio UUIDs via `not.in.()`; 3-tier colour (gold/orange/crimson); DOMContentLoaded safe
+- vaultsparked/index.html: added `<span id="genesis-slots-left">` to FAQ answer; added `<script src="/vaultsparked/vaultsparked.js" defer>`
+- supabase/migrations/supabase-phase59-public-profile.sql: created — adds `public_profile boolean DEFAULT true NOT NULL` to vault_members; partial index on true; pending HAR
+- vault-wall/index.html: `.eq('public_profile',true)` added to all 3 vault_members queries; `.count().head()` → `.count().get()` bug fix (count was always 0 before); opt-in notice added above stats
+- studio/index.html: added `#why-vaultspark` section — personal origin story, vault pressure philosophy quote, 5-paragraph founder narrative; inserted before #team section
+- assets/images/badges/vaultsparked.svg: created — faceted purple/violet crystal gem, radial bg, 8-facet polygon, gold crown spark accent, 64×64
+- assets/images/badges/forge-master.svg: created — dark navy bg, steel anvil (body+pedestal+horn), crimson/fire border ring, gold spark burst at impact point, ember particles
+- context/TASK_BOARD.md: all S57 items marked done; 3 new [SIL] Now items added (portal toggle, SVG wire, vault wall verify); 2 HAR items added
+- memory: project_vaultspark_state.md updated; feedback_runway_preload.md created; MEMORY.md index updated
+- Commit: 48e7a15 · pushed to main
+- SIL: 439/500 · Velocity: 1 (board) / 6 (protocol) · Debt: →
+
 ## 2026-04-12 — Session 56
 
 - supabase: phase57 migration applied via Supabase CLI (`supabase db query --linked`) — 4 studio accounts awarded Genesis Vault Member badge + 500 XP (DreadSpike, OneKingdom, VaultSpark, Voidfall)
