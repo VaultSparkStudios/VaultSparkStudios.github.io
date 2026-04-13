@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-13 (Session 60)
+- Date: 2026-04-13 (Session 61 closeout)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S60 bug-fix — vaultsparked all CSP violations cleared (Stripe/checkout/gift-modal IIFE externalized to vaultsparked-checkout.js; inline event handlers removed; billing-toggle.js already external); homepage circular energy arc elements replaced with diffuse blur glow spots (body radial gradients removed; gold text-shadow on "Is Sparked."). S59 major batch — /membership/ hub, Option C model, nav Membership dropdown + footer (77 pages), vaultsparked overhaul (studio discount 20%/35%, games access, rank loyalty, annual toggle), homepage Signal teaser + Projects CTA, shared CSS atmosphere, SW bump. S58: members directory CSP fix. S57: theme picker compact, CF Worker auto-redeploy, genesis badge slots counter, vault wall public_profile opt-in, Studio About founder story, achievement SVGs.
+- Repo posture: S61 — 9 items shipped: Portal Studio Access panel, VaultSparked CSP smoke test (CI wired), homepage hero structural redesign (centered cinematic), propagate-csp SKIP_DIRS (vaultsparked), portal public_profile toggle (CSP-safe, settings page), vault-wall smoke spec (tests/vault-wall.spec.js, CI), Voidfall Fragment 005, rank loyalty discount chips in Studio Access panel, phase59 DB migration applied live (public_profile column + index confirmed). S60 bug-fix — vaultsparked CSP, homepage circular fix. S59 major batch — /membership/ hub, Option C model, nav/footer propagation, vaultsparked overhaul, homepage Signal teaser.
 
 ## What exists
 
@@ -23,7 +23,7 @@
 
 ### Infrastructure
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler. **S53: script-src updated to SHA-256 hashes (removed 'unsafe-inline')**; needs redeploy.
-- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260413-s5tmbqz`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, `portal-init.js`, `members-directory.js`, `vaultsparked-checkout.js`, `billing-toggle.js`
+- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260413-c2a04f92`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, `portal-init.js`, `members-directory.js`, `vaultsparked-checkout.js`, `billing-toggle.js`
 - **DX scripts** (`scripts/propagate-csp.mjs`, `scripts/smoke-test.sh`) — S47 created; S49 regex fixed + dry-run exit-1 added; **S53: CSP_VALUE updated to SHA-256 hashes (removed 'unsafe-inline')**; 85 pages propagated; `e2e.yml` compliance job runs `--dry-run` check before Playwright
 - **Sentry release workflow** (`.github/workflows/sentry-release.yml`) — S47 created, S48 fully wired: org `vaultspark-studios`, project `4511104933298176`, token set as GitHub secret; every push to main now tags a Sentry release
 - **Referral attribution** (`supabase/migrations/supabase-phase56-referral-attribution.sql`) — S48: `referred_by uuid` column on `vault_members`; `register_open` accepts `p_ref_by`, awards referrer +100 XP, fires recruiter/patron achievements; `get_referral_milestones` counts both invite-code and direct-link referrals; migration applied live
@@ -67,7 +67,7 @@
 
 - **CF Worker auto-redeploy** (`.github/workflows/cloudflare-worker-deploy.yml`) — S57: triggers on `cloudflare/**` changes pushed to main; runs `npx wrangler@3 deploy --env production`; requires `CF_WORKER_API_TOKEN` secret (Workers:Edit + Zone:Read). Pending HAR to add secret.
 - **Genesis badge slots counter** (`vaultsparked/vaultsparked.js`) — S57: live counter in /vaultsparked/ FAQ showing X/100 public spots remaining; PostgREST query excludes 4 studio owner UUIDs; 3-tier colour (gold → orange → crimson ≤10); loads as defer external script
-- **Vault Wall public_profile opt-in** — S57: `supabase/migrations/supabase-phase59-public-profile.sql` adds `public_profile boolean DEFAULT true`; vault-wall queries updated to `.eq('public_profile', true)`; pre-existing `.count().head()` bug fixed → `.count().get()`; opt-in notice added. Pending phase59 HAR migration.
+- **Vault Wall public_profile opt-in** — S57: migration written + vault-wall queries updated to `.eq('public_profile', true)`. **S61: migration applied live** — `public_profile boolean NOT NULL DEFAULT true` column + partial index `idx_vault_members_public_profile` confirmed on fjnpzjjyhnpmunfoycrp. `tests/vault-wall.spec.js` smoke spec added to CI (continue-on-error).
 - **Studio About "Why VaultSpark"** (`studio/index.html`) — S57: added `#why-vaultspark` founder story section before "Who Runs The Vault"; personal origin narrative, vault pressure philosophy quote, 5 paragraphs
 - **Achievement SVG icons** — S57: `assets/images/badges/vaultsparked.svg` (faceted purple crystal gem, gold crown spark) + `assets/images/badges/forge-master.svg` (anvil + spark burst, crimson ring, ember particles)
 
@@ -90,11 +90,8 @@
 - Cloudflare WAF rule (CN/RU/HK JS Challenge) — status unknown
 - beacon.env not configured (Active Session Beacon inactive)
 - **`CF_WORKER_API_TOKEN`** secret not yet added — cloudflare-worker-deploy.yml is ready but won't run without this secret (Workers:Edit + Zone:Read permissions)
-- **Phase59 migration** (`public_profile` column) not yet applied — vault-wall filter + portal toggle both depend on this HAR
-- Achievement SVGs created (vaultsparked + forge-master) but not yet wired to portal.js achievement slug definitions
+- Achievement SVGs created (vaultsparked + forge-master) but not yet wired to portal.js achievement slug definitions (remains open)
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
-- IGNIS score: 47,308/100,000 · Tier: FORGE · last computed 2026-04-07 (5 days stale)
-- IGNIS score: 47,308/100,000 · Tier: FORGE · 82.1% through tier (rescored 2026-04-07 S50) · delta: +952 (not refreshed S56 — minor session)
-- **Studio About (`/studio/`) enhancement** — founder story section pending
-- **Theme picker compact mode at 641–980px** — SIL:2⛔ — must action next session
-- **CF Worker auto-redeploy** — SIL:2⛔ — must action next session
+- IGNIS score: 47,308/100,000 · Tier: FORGE · last computed 2026-04-07 (stale — no ignis CLI access this session)
+- Annual Stripe price IDs ($44.99/yr, $269.99/yr) not yet created — billing toggle UI exists but annual checkout routes to same monthly price IDs
+- Vault Wall manual smoke (incognito) — public_profile filter live but browser-level verification pending

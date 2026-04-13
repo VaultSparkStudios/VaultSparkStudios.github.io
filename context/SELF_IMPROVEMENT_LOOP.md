@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▅▆▄▄
-Avgs — 3: 428.0 | 5: 424.6 | 10: 429.4 | all: 421.9
-  └ 3-session: Dev 85.0 | Align 84.3 | Momentum 84.3 | Engage 87.0 | Process 86.7
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~1.8 sessions ⚠ pre-load recommended  |  Intent rate: 100% (last 5)
-Last session: 2026-04-13 | Session 60 | Total: 420/500 | Velocity: 2 | protocolVelocity: null
+Sparkline (last 5 totals): ▅▆▄▆▇
+Avgs — 3: 437.7 | 5: 435.6 | 10: 431.0 | all: 424.0
+  └ 3-session: Dev 87.7 | Align 87.0 | Momentum 89.0 | Engage 87.0 | Process 87.0
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
+Momentum runway: ~3.0 sessions (pre-loaded S62)  |  Intent rate: 100% (last 5)
+Last session: 2026-04-13 | Session 61 | Total: 455/500 | Velocity: 9 | protocolVelocity: 9
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -688,3 +688,29 @@ Avgs — 3: 428.0 | 5: 424.6 | 10: 429.4 | all: 421.9
 3. **propagate-csp.mjs SKIP_DIRS: add vaultsparked** — vaultsparked uses its own custom nav and has page-specific JS requirements that differ from the standard 4-hash CSP; adding it to SKIP_DIRS would prevent future overwrites and force per-page CSP management; first step: add `'vaultsparked'` to SKIP_DIRS in propagate-csp.mjs and add a `<meta>` CSP tag directly to vaultsparked/index.html. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] VaultSparked CSP smoke test · [SIL] Homepage hero structural redesign
+
+---
+
+## 2026-04-13 — Session 61 | Total: 455/500 | Velocity: 9 | Debt: ↓
+Avgs — 3: 437.7 | 5: 435.6 | all: 424.0
+  └ 3-session: Dev 87.7 | Align 87.0 | Momentum 89.0 | Engage 87.0 | Process 87.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 92 | ↑ | Phase59 migration applied live and verified (column + index confirmed); CI CSP smoke test non-optional; portal toggle CSP-safe via addEventListener; DB + frontend fully in sync |
+| Creative Alignment | 88 | ↑ | Voidfall Fragment 005 on-brand atmospheric; homepage centered redesign is genuine structural shift; rank discount chips UX coherent with Studio brand |
+| Momentum | 95 | ↑ | 9 items shipped + 1 major HAR cleared; all S60 brainstorm items consumed; runway pre-loaded 3 items |
+| Engagement | 90 | ↑ | Immediate execution on all requests; DB migration applied via CLI despite Docker offline; zero blockers at closeout |
+| Process Quality | 90 | ↑ | Full closeout; TASK_BOARD reconciled; LATEST_HANDOFF updated with full S61 detail; phase59 HAR cleared; session lock cleared |
+| **Total** | **455/500** | ↑ | High-velocity session; DB + product + CI all advanced |
+
+**Top win:** Phase59 migration applied live via `supabase db query --linked` — public_profile toggle, vault-wall filter, and rank discount chips all went live simultaneously in one session with zero downtime and confirmed via schema introspection.
+**Top gap:** IGNIS score is now 6 days stale; achievement SVGs for `vaultsparked`/`forge_master` are created but not wired to portal achievement definitions; annual Stripe routing still pending HAR.
+**Intent outcome:** Achieved + exceeded — user asked to apply the migration; delivered the migration plus 8 additional items from the SIL queue in the same session.
+
+**Brainstorm**
+1. **Annual Stripe checkout routing** — `vssBillingMode` is already read in vaultsparked checkout handler; add `ANNUAL_PRICE_IDS = { sparked: 'price_...', eternal: 'price_...' }` map; switch on mode before creating checkout session. First step: check `vaultsparked/billing-toggle.js` checkout button handler. High probability (after HAR).
+2. **Membership page social proof live data** — `/membership/index.html` social proof strip uses static JS; changing member count requires a deploy; wire to `VSPublic.from('vault_members').select(...).count()` same as homepage strip. First step: grep membership/index.html for static stat values. High probability.
+3. **Wire SVG achievement icons to portal defs** — `portal.js` ACHIEVEMENT_DEFS has `vaultsparked` and `forge_master` slugs; update `icon` field to `/assets/images/badges/vaultsparked.svg` and `/assets/images/badges/forge-master.svg`; renderer already supports path-based icons (S56). First step: grep portal.js for ACHIEVEMENT_DEFS or achievement slug array. High probability.
+
+**Committed to TASK_BOARD:** [SIL] Annual Stripe checkout routing · [SIL] Membership social proof live data · [SIL] Vault Wall manual smoke

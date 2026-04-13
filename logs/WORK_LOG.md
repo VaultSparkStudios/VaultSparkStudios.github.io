@@ -1,5 +1,23 @@
 # Work Log
 
+## 2026-04-13 — Session 61
+
+- supabase/migrations/supabase-phase59-public-profile.sql: applied live via `supabase db query --linked`; `public_profile boolean NOT NULL DEFAULT true` column confirmed + partial index `idx_vault_members_public_profile` confirmed on fjnpzjjyhnpmunfoycrp
+- vault-member/index.html: added `<div id="studio-access-panel">` to dashboard grid (after Connected Games); added public_profile toggle in Data & Privacy settings section (CSP-safe: no inline handlers)
+- vault-member/portal-dashboard.js: added `loadStudioAccessPanel(planKey, rankName)` — 4-game tier grid (Football GM free, COD+Gridiron sparked, VaultFront eternal); `RANK_DISCOUNT` map for Forge Master (25%) and The Sparked (50%); rank discount chips; upgrade CTA for non-discount members
+- vault-member/portal-auth.js: wired `loadStudioAccessPanel` in `showDashboard` — initial render from row `rowPlanKey`, authoritative update in `.then()` and `.catch()` fallback; `buildMember` reads `public_profile` from row
+- vault-member/portal-settings.js: added `savePublicProfileToggle(checked)` — PATCHes `vault_members.public_profile`; updates `_currentMember`; shows toast; wired via addEventListener IIFE
+- tests/vaultsparked-csp.spec.js: created — Chromium-only; collects CSP console/pageerror messages; asserts zero violations on /vaultsparked/ + /; 1.5s wait after networkidle
+- tests/vault-wall.spec.js: created — asserts page load, h1 visible, zero CSP errors (3s wait), public route accessible (<400 status)
+- .github/workflows/e2e.yml: added VaultSparked CSP smoke step (non-optional) + Vault Wall smoke step (continue-on-error: true) to compliance job
+- scripts/propagate-csp.mjs: added `'vaultsparked'` to SKIP_DIRS
+- universe/voidfall/index.html: Fragment 005 added — "The coordinates were confirmed correct. There was nothing there. It keeps ████████."
+- index.html (homepage): 2-column `.hero-grid` replaced with centered `.hero-center` stack; `.hero-logo` (620px, dual blur glows); h1 clamp(2.8rem,5.5vw,5.2rem); `.hero-meta-row`; removed `.hero-grid/.hero-card/.hero-visual/.logo-wrap/.hero-caption` CSS
+- sw.js: CACHE_NAME bumped to `vaultspark-20260413-c2a04f92`
+- context/: TASK_BOARD (all S61 items marked done; 3 Now runway items added), CURRENT_STATE (S61 snapshot), LATEST_HANDOFF (S62 intent + S61 full detail), PROJECT_STATUS (silScore 455, velocity 9, currentSession 62), SELF_IMPROVEMENT_LOOP (S61 entry + rolling status), WORK_LOG updated
+- Commits: c22bb3d (portal access panel, CSP smoke, homepage hero) · 0b3f4cd (5 SIL items) · cbbb205 (studio-os protocol) · pushed to main
+- SIL: 455/500 · Velocity: 9 · Debt: ↓
+
 ## 2026-04-13 — Session 60
 
 - vaultsparked/vaultsparked-checkout.js: created — extracted full Stripe/checkout/phase/gift-modal IIFE (~260 lines) from inline `<script>` in vaultsparked/index.html; loaded via `<script src defer>`; clears CSP violation at line 1269 (hash sha256-NuW18QKfCcqsI6YFKzjMzaha0aUDmYg1g7MXBrScXh4= was not in global CSP)

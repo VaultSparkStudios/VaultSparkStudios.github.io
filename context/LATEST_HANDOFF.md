@@ -1,6 +1,47 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 61)
+Last updated: 2026-04-13 (Session 61 closeout)
+
+## Session Intent: Session 62
+Continue S62 runway items: Annual Stripe checkout routing (after HAR), Membership page social proof live data, Vault Wall manual smoke (incognito verify). IGNIS rescore due (6+ days stale).
+
+---
+
+## Where We Left Off (Session 61 — 2026-04-13)
+
+**Session output: 9 items shipped + 1 live DB migration.**
+
+- **Phase59 migration applied live** — `supabase db query --linked --file supabase/migrations/supabase-phase59-public-profile.sql` applied to fjnpzjjyhnpmunfoycrp. Column `public_profile boolean NOT NULL DEFAULT true` confirmed + partial index `idx_vault_members_public_profile` confirmed. Portal toggle + Vault Wall filter are now fully live.
+- **Portal Studio Access panel** — `<div id="studio-access-panel">` in dashboard grid; `loadStudioAccessPanel(planKey, rankName)` in portal-dashboard.js renders 4 games per tier (Football GM free, COD+Gridiron sparked, VaultFront eternal); rank loyalty discount chips (Forge Master 25% crimson, The Sparked 50% gold); upgrade CTA for non-discount free members. Called in portal-auth.js with initial row plan + authoritative subscription result.
+- **VaultSparked CSP smoke test** — `tests/vaultsparked-csp.spec.js` Chromium-only spec; `page.on('console')` + `page.on('pageerror')` collect CSP errors; zero violations asserted on /vaultsparked/ + /; wired into e2e.yml compliance job (non-optional — blocks CI if violated).
+- **Homepage hero structural redesign** — 2-column grid → full-width centered cinematic stack: eyebrow → `.hero-logo` (620px max, dual blur glows via ::before/::after) → h1 → `.hero-sub` → `.hero-actions` → `.hero-meta-row` → `.hero-story`. Removed `.hero-grid`, `.hero-card`, `.hero-visual`, `.logo-wrap`, `.hero-caption` CSS. CDR satisfied.
+- **propagate-csp SKIP_DIRS** — `'vaultsparked'` added to SKIP_DIRS in `scripts/propagate-csp.mjs`; future propagation runs skip the directory.
+- **Portal public_profile toggle** — "Show me on the Vault Wall" checkbox in Data & Privacy settings section; CSP-safe: no inline handlers; wired via `addEventListener` in IIFE at bottom of `portal-settings.js`; `savePublicProfileToggle()` PATCHes `vault_members.public_profile` + shows toast.
+- **Vault Wall smoke spec** — `tests/vault-wall.spec.js` created; tests page load, h1, zero CSP errors, public accessibility; wired into e2e.yml as `continue-on-error: true`.
+- **Voidfall Fragment 005** — 5th Transmission Archive card: coordinates confirmed, nothing there, "keeps ████████".
+- **Rank loyalty discount display** — `RANK_DISCOUNT = { 'Forge Master': 25, 'The Sparked': 50 }` in `loadStudioAccessPanel`; discount chip shows in portal Studio Access panel for qualifying members.
+- **SW cache** — bumped to `vaultspark-20260413-c2a04f92`.
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions.
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler.
+- [ ] **[STRIPE-ANNUAL]** Create 2 new Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal). Wire to billing toggle checkout when created.
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **[SIL] Vault Wall manual smoke** — open `/vault-wall/` in incognito; confirm members show, no CSP errors, `public_profile` filter working
+2. **[SIL] Membership social proof live data** — wire `/membership/index.html` static stat JS to `VSPublic` Supabase for consistent live numbers
+3. **[IGNIS]** Rescore — run `npx tsx cli.ts score .` from studio-ops ignis; update PROJECT_STATUS.json
+
+---
 
 ## Session Intent: Session 61
 Complete the open Now queue — Portal Studio Access panel, VaultSparked CSP smoke test, homepage hero structural redesign, plus HAR-blocked items noted.
