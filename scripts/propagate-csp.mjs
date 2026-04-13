@@ -12,6 +12,10 @@
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join, relative, dirname } from 'path';
 
+// Usage: node scripts/propagate-csp.mjs [--dry-run] [--check-skipped]
+//   --dry-run        Report stale pages without writing (used in CI)
+//   --check-skipped  Verify SKIP_DIRS/SKIP_FILES CSP against csp-hash-registry.json
+
 // ─── CANONICAL CSP — edit here only ───────────────────────────────────────────
 const CSP_VALUE =
   "default-src 'self'; " +
@@ -71,13 +75,70 @@ function processFile(full, rel) {
   console.log(`${DRY_RUN ? '[dry] ' : ''}updated  ${rel}`);
 }
 
-walk(ROOT);
-console.log(`\nDone. Updated: ${updated} · Unchanged: ${skipped} · Missing CSP tag: ${missing.length}`);
-if (missing.length) {
-  console.log('Files without CSP tag (add manually):');
-  missing.forEach(f => console.log('  ' + f));
+if (process.argv.includes('--check-skipped')) {
+  checkSkipped();
+} else {
+  walk(ROOT);
+  console.log(`\nDone. Updated: ${updated} · Unchanged: ${skipped} · Missing CSP tag: ${missing.length}`);
+  if (missing.length) {
+    console.log('Files without CSP tag (add manually):');
+    missing.forEach(f => console.log('  ' + f));
+  }
+  if (DRY_RUN && updated > 0) {
+    console.error(`\nDRY RUN FAILED: ${updated} file(s) have a stale CSP tag. Run without --dry-run to fix.`);
+    process.exit(1);
+  }
 }
-if (DRY_RUN && updated > 0) {
-  console.error(`\nDRY RUN FAILED: ${updated} file(s) have a stale CSP tag. Run without --dry-run to fix.`);
-  process.exit(1);
+
+/**
+ * --check-skipped: reads csp-hash-registry.json and verifies each page's
+ * current CSP content matches the last-verified snapshot. Exits 1 on drift.
+ */
+function checkSkipped() {
+  const registryPath = join(ROOT, 'scripts', 'csp-hash-registry.json');
+  let registry;
+  try {
+    registry = JSON.parse(readFileSync(registryPath, 'utf8'));
+  } catch {
+    console.error('ERROR: scripts/csp-hash-registry.json not found or invalid JSON.');
+    console.error('       Create it by running: node scripts/propagate-csp.mjs (normal run) then manually populate.');
+    process.exit(1);
+  }
+
+  let drifted = 0;
+  let checked = 0;
+  const CONTENT_RE = /<meta\s+http-equiv=["']Content-Security-Policy["']\s+content="([^"]*)"/i;
+
+  for (const [rel, entry] of Object.entries(registry.pages)) {
+    const full = join(ROOT, rel);
+    let src;
+    try {
+      src = readFileSync(full, 'utf8');
+    } catch {
+      console.warn(`WARN  ${rel} — file not found (skipped)`);
+      continue;
+    }
+    const match = src.match(CONTENT_RE);
+    const current = match ? match[1] : null;
+    if (!current) {
+      console.warn(`WARN  ${rel} — no CSP meta tag found`);
+      continue;
+    }
+    checked++;
+    if (current === entry.cspContent) {
+      console.log(`OK    ${rel}`);
+    } else {
+      console.error(`DRIFT ${rel}`);
+      console.error(`      Expected (registry): ...${entry.cspContent.slice(-80)}`);
+      console.error(`      Current  (file):      ...${current.slice(-80)}`);
+      drifted++;
+    }
+  }
+
+  console.log(`\nChecked: ${checked} · Drifted: ${drifted}`);
+  if (drifted > 0) {
+    console.error(`\nCSP DRIFT DETECTED on ${drifted} page(s).`);
+    console.error('Update scripts/csp-hash-registry.json or restore the expected CSP on the page.');
+    process.exit(1);
+  }
 }

@@ -3,7 +3,7 @@
 Last updated: 2026-04-13 (Session 64 closeout)
 
 ## Session Intent: Session 65
-S65 Now bucket: inline style= dark color audit, light-mode gold token contrast check, Vault Wall manual smoke, IGNIS rescore (stale 6+ days).
+Implement all Genius Hit List items at highest quality: light-mode gold contrast fix, inline style= dark color audit + CSS class migration, Vault Wall Playwright spec (retire manual smoke), CSP hash registry with --check-skipped flag, scroll reveals for /membership/ + /press/. Plus TASK_BOARD and memory updates.
 
 ---
 

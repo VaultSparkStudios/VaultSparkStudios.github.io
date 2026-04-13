@@ -123,6 +123,7 @@ body.light-mode {
   --mobile-nav-dropdown-border: rgba(22, 32, 51, 0.08);
   --focus-outline: #162033;
   --nav-backdrop-overlay: rgba(22, 32, 51, 0.45);
+  --gold: #7a5c00;          /* dark amber — WCAG AA on cream bg (~5:1) */
   color: var(--text);
 }
 body.ambient-mode {
@@ -2664,6 +2665,27 @@ body.light-mode .step-num { color: rgba(255,196,0,0.6) !important; }
 /* ── Home studio-grid right panel (timeline-inside-panel) ── */
 body.light-mode .studio-grid .panel .timeline-item strong { color: var(--text); }
 body.light-mode .studio-grid .panel .tl-label { color: var(--gold); }
+
+/* ── Universe Signal Teaser (dark inline-style panel → light surface) ── */
+body.light-mode .signal-teaser-panel {
+  background: linear-gradient(135deg, rgba(200,0,0,0.04), rgba(22,32,51,0.05) 50%, rgba(31,162,255,0.04)) !important;
+  border-color: rgba(22,32,51,0.10) !important;
+}
+body.light-mode .signal-image-card {
+  background: rgba(22,32,51,0.04) !important;
+  border-color: rgba(22,32,51,0.10) !important;
+}
+body.light-mode .signal-classified-chip {
+  background: rgba(255,255,255,0.80) !important;
+  border-color: rgba(214,40,40,0.25) !important;
+  backdrop-filter: none !important;
+}
+
+/* ── Countdown on hardcoded dark panels: restore bright gold ── */
+body.light-mode .countdown-classified .countdown-value,
+body.light-mode .countdown-classified .countdown-label {
+  color: #FFC400;
+}
 
 /* ─── Touch target: minimum 44x44 for all interactive ──── */
 @media (pointer: coarse) {

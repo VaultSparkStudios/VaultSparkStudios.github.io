@@ -70,12 +70,13 @@ Last updated: 2026-04-13 (Session 62 closeout)
 
 ## Now (S65 runway pre-load)
 
-- [ ] **[SIL] Inline style= dark color audit** — grep all HTML for `style=".*rgba\([0-9]` patterns to find remaining hardcoded dark backgrounds not covered by S63 CSS pass; convert to CSS classes. First step: `grep -rn 'style=".*rgba(0' --include="*.html"`.
-- [ ] **[SIL] Light-mode gold token contrast** — `--gold` (#FFC400) may appear washed on cream backgrounds; run Lighthouse accessibility audit in light mode; check contrast scores for gold text on var(--bg). First step: Lighthouse CI report on /ranks/ in light mode.
-- [ ] **[SIL:2⛔] Vault Wall manual smoke** — open `/vault-wall/` in incognito; confirm member cards render and no console errors. [SIL:2⛔ — carried from S64]
+- [x] **[SIL] Inline style= dark color audit** — 4 hits in index.html signal section; converted outer panel, image card, classified chip to CSS classes (`signal-teaser-panel`, `signal-image-card`, `signal-classified-chip`); light-mode overrides added to style.css. (S65)
+- [x] **[SIL] Light-mode gold contrast** — `--gold: #7a5c00` added to `body.light-mode {}` in style.css; ~5:1 contrast on cream bg (WCAG AA). Dark countdown panels get explicit `#FFC400` override. (S65)
+- [x] **[SIL:2⛔] Vault Wall manual smoke** — retired via Playwright spec; `tests/vault-wall.spec.js` now asserts `#rank-dist-bar`, `#vw-podium`, pageerror CSP listener, and auth-free access. (S65)
 - [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first.
-- [ ] **[SIL] Vault Wall Playwright spec** — create `tests/vault-wall.spec.js`; assert member cards render with public_profile filter and zero CSP console errors; replaces recurring manual smoke pattern. First step: copy pattern from vaultsparked-csp.spec.js.
-- [ ] **[SIL] CSP hash registry** — `scripts/csp-hash-registry.json` maps each SKIP_DIRS page to its expected inline SHA-256 hashes; propagate-csp.mjs reads it; prevents silent CSP drift on skipped pages. First step: enumerate current SKIP_DIRS pages and document their hashes.
+- [x] **[SIL] Vault Wall Playwright spec** — `tests/vault-wall.spec.js` enhanced: `#rank-dist-bar` visible assertion, `#vw-podium` visible assertion, pageerror CSP listener, rank-dist-seg count (soft warn), public auth-free route check. Replaces manual smoke. (S65)
+- [x] **[SIL] CSP hash registry** — `scripts/csp-hash-registry.json` created (vaultsparked/index.html, 404.html, offline.html); `propagate-csp.mjs --check-skipped` flag added; all 3 pages verified OK. (S65)
+- [x] **[SIL] Scroll reveals — /membership/ + /press/** — `data-reveal="fade-up"` added to 5 membership sections (tiers, identity, discount, community, final-cta) and 6 press sections (facts, quote, logos, catalog, vault member, contact). (S65)
 
 ## Next
 
