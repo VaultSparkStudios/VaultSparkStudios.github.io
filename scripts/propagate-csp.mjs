@@ -31,7 +31,8 @@ const DRY_RUN = process.argv.includes('--dry-run');
 
 const SKIP_DIRS = new Set([
   'node_modules', 'playwright-report', 'test-results',
-  'investor', 'studio-hub', '.git', '.well-known', 'scripts'
+  'investor', 'studio-hub', '.git', '.well-known', 'scripts',
+  'vaultsparked',  // page-specific CSP managed directly — do not overwrite
 ]);
 
 const SKIP_FILES = new Set([

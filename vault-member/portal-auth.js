@@ -120,7 +120,7 @@
       }
 
       // Studio Access panel — initial render from row data
-      if (typeof loadStudioAccessPanel === 'function') loadStudioAccessPanel(rowPlanKey);
+      if (typeof loadStudioAccessPanel === 'function') loadStudioAccessPanel(rowPlanKey, rank.name);
 
       // Async subscription check as authoritative fallback (catches members where plan_key column may be missing)
       VSSupabase.from('subscriptions')
@@ -148,7 +148,7 @@
           updateVaultStatusPanel(member, { isSparked: isSparked });
           updateClaimCenter(member, { isSparked: isSparked });
           // Studio Access panel — update with authoritative plan
-          if (typeof loadStudioAccessPanel === 'function') loadStudioAccessPanel(planKey);
+          if (typeof loadStudioAccessPanel === 'function') loadStudioAccessPanel(planKey, rank.name);
         }).catch(() => {
           if (sparkedBadge) sparkedBadge.style.display = 'none';
           if (ctaPanel)     ctaPanel.style.display     = '';
@@ -158,7 +158,7 @@
           member.is_pro     = false;
           updateVaultStatusPanel(member, { isSparked: false });
           updateClaimCenter(member, { isSparked: false });
-          if (typeof loadStudioAccessPanel === 'function') loadStudioAccessPanel('free');
+          if (typeof loadStudioAccessPanel === 'function') loadStudioAccessPanel('free', rank.name);
         });
 
       // Extended stats (PromoGrind / Ledger)
@@ -201,6 +201,10 @@
         if (lore) lore.checked = member.prefs.lore    !== false;
         if (acc)  acc.checked  = member.prefs.access  !== false;
       }
+
+      // Vault Wall visibility toggle
+      const ppToggle = document.getElementById('toggle-public-profile');
+      if (ppToggle) ppToggle.checked = member.public_profile !== false;
 
       // Settings tab — populate
       buildAvatarGrid(member.avatar_id || 'spark');
@@ -333,6 +337,7 @@
         onboarding_completed: row.onboarding_completed || false,
         challenge_streak:     row.challenge_streak     || 0,
         last_challenge_date:  row.last_challenge_date  || null,
+        public_profile:       row.public_profile       !== false,
       };
     }
 

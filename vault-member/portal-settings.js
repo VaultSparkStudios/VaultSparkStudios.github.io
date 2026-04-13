@@ -551,3 +551,29 @@
         }
       }
     })();
+
+    // ── Vault Wall public profile toggle ─────────────────────────────────────
+    async function savePublicProfileToggle(checked) {
+      try {
+        const { data: { session } } = await VSSupabase.auth.getSession();
+        if (!session) return;
+        await VSSupabase.from('vault_members')
+          .update({ public_profile: !!checked })
+          .eq('id', session.user.id);
+        if (_currentMember) _currentMember.public_profile = !!checked;
+        if (typeof showToast === 'function') {
+          showToast(checked ? 'Profile visible on Vault Wall' : 'Profile hidden from Vault Wall',
+            { emoji: checked ? '✓' : '🔒', duration: 2400 });
+        }
+      } catch (_) {}
+    }
+
+    // Wire toggle after DOM ready
+    (function () {
+      var toggle = document.getElementById('toggle-public-profile');
+      if (toggle) {
+        toggle.addEventListener('change', function () {
+          savePublicProfileToggle(toggle.checked);
+        });
+      }
+    })();

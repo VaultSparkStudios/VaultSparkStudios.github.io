@@ -1528,7 +1528,7 @@
     }
 
     // ── Studio Access panel — games & tools per tier ─────────────
-    function loadStudioAccessPanel(planKey) {
+    function loadStudioAccessPanel(planKey, rankName) {
       const el = document.getElementById('studio-access-content');
       if (!el) return;
 
@@ -1574,7 +1574,22 @@
           + '</div>';
       }).join('');
 
-      if (!isSparked) {
+      // Rank loyalty discount chip
+      const RANK_DISCOUNT = { 'Forge Master': 25, 'The Sparked': 50 };
+      const discount = rankName ? RANK_DISCOUNT[rankName] : null;
+      if (discount) {
+        const discountRgb = discount === 50 ? '255,196,0' : '248,113,113';
+        const discountColor = discount === 50 ? '#FFC400' : '#f87171';
+        el.innerHTML += '<div style="display:flex;align-items:center;gap:0.65rem;margin-top:0.75rem;'
+          + 'padding:0.7rem 0.9rem;border-radius:12px;'
+          + 'background:rgba(' + discountRgb + ',0.04);border:1px solid rgba(' + discountRgb + ',0.15);">'
+          + '<span style="font-size:1rem;">⚡</span>'
+          + '<div style="flex:1;font-size:0.8rem;color:var(--muted);">'
+          + '<strong style="color:' + discountColor + ';">' + discount + '% rank loyalty discount</strong> on VaultSparked — applied automatically at checkout.'
+          + ' Your <strong>' + rankName + '</strong> rank earned this.'
+          + '</div>'
+          + '</div>';
+      } else if (!isSparked) {
         el.innerHTML += '<div style="margin-top:0.75rem;padding:0.8rem 1rem;border-radius:12px;'
           + 'background:rgba(255,196,0,0.03);border:1px solid rgba(255,196,0,0.1);'
           + 'font-size:0.8rem;color:var(--muted);">'
