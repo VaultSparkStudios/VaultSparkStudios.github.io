@@ -44,7 +44,6 @@
   <link rel="apple-touch-icon" href="assets/icon-256.png" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="stylesheet" href="assets/style.css" />
-  <link rel="preload" href="assets/vaultspark-cinematic-logo.webp" as="image" type="image/webp" fetchpriority="high" />
   <link rel="preload" href="assets/vaultspark-icon.webp" as="image" type="image/webp" />
   <!-- dreadspike-poster is below the fold; no preload needed -->
   <link rel="prefetch" href="/vault-member/" />
@@ -140,44 +139,48 @@
       text-align: center;
     }
 
-    /* ── Logo banner ── */
-    .hero-logo {
-      position: relative;
-      max-width: 620px;
-      margin: 2rem auto 2.5rem;
+    /* ── Forge Wordmark — replaces cinematic logo image ── */
+    .forge-wordmark {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.0;
+      text-align: center;
+      user-select: none;
     }
-    .hero-logo::before {
-      content: "";
-      position: absolute;
-      inset: -30% -15%;
-      background: radial-gradient(circle, rgba(31,162,255,0.18), transparent 65%);
-      filter: blur(44px);
-      animation: pulseGlow 8s ease-in-out infinite;
-      pointer-events: none;
+    .forge-line {
+      display: block;
     }
-    .hero-logo::after {
-      content: "";
-      position: absolute;
-      inset: -30% -15%;
-      background: radial-gradient(circle, rgba(255,196,0,0.12), transparent 65%);
-      filter: blur(55px);
-      animation: pulseGlow 12s ease-in-out infinite reverse;
-      pointer-events: none;
+    .forge-line-1 {
+      font-size: clamp(2.6rem, 13vw, 9.0rem);
+      font-weight: 700;
+      letter-spacing: -0.04em;
     }
-    .hero-logo img {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 0 40px rgba(255,196,0,0.25));
+    .forge-line-2 {
+      font-size: clamp(1.7rem, 8.4vw, 5.8rem);
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      margin-top: 0.04em;
+    }
+    .forge-letter {
+      display: inline-block;
+      opacity: 0;
+      animation: letterForge 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(0.12s + var(--li, 0) * 0.065s);
     }
 
-    h1 {
-      margin: 0 0 1.25rem;
+    /* ── Hero tagline (cinematic sub-statement below wordmark) ── */
+    .hero-tagline {
+      margin: 0.65rem 0 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.8rem, 5.5vw, 5.2rem);
-      line-height: 1;
-      letter-spacing: -0.045em;
+      font-size: clamp(1.45rem, 3.2vw, 2.6rem);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-style: italic;
+    }
+    .hero-tagline em {
+      font-style: normal;
+      color: var(--gold);
+      text-shadow: 0 0 35px rgba(255,196,0,0.45), 0 0 70px rgba(255,196,0,0.2);
     }
 
     .hero-sub {
@@ -212,6 +215,95 @@
       backdrop-filter: blur(6px);
     }
     .hero-story strong { color: var(--text); }
+
+    /* ── Forge Spark Burst — ignition point that blooms then fades ── */
+    .forge-spark-burst {
+      position: absolute;
+      top: 38%;
+      left: 50%;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,216,60,0.92) 0%, rgba(255,140,0,0.5) 38%, transparent 72%);
+      filter: blur(28px);
+      pointer-events: none;
+      z-index: 1;
+      transform: translate(-50%, -50%) scale(0);
+      opacity: 0;
+      animation: forgeSparkBurst 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* ── Hero vignette chamber — spatial depth from all edges ── */
+    .hero-chamber {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 82% at 50% 44%, transparent 36%, rgba(0,0,0,0.6) 100%),
+        linear-gradient(180deg, rgba(0,0,0,0.18) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.22) 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Staggered reveal for hero elements after wordmark ── */
+    .hero-reveal {
+      opacity: 0;
+      animation: heroFadeUp 0.62s ease-out forwards;
+      animation-delay: var(--reveal-delay, 1.4s);
+    }
+
+    /* ── Forge keyframes ── */
+    @keyframes forgeSparkBurst {
+      0%   { opacity: 0; transform: translate(-50%,-50%) scale(0); filter: blur(8px); }
+      18%  { opacity: 1; transform: translate(-50%,-50%) scale(0.35); filter: blur(20px); }
+      52%  { opacity: 0.85; transform: translate(-50%,-50%) scale(1.1); filter: blur(30px); }
+      100% { opacity: 0; transform: translate(-50%,-50%) scale(2.6); filter: blur(50px); }
+    }
+    @keyframes letterForge {
+      0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+        filter: blur(5px);
+        text-shadow: 0 0 55px rgba(255,196,0,1), 0 0 110px rgba(255,130,0,0.75);
+      }
+      28% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+        text-shadow: 0 0 28px rgba(255,196,0,0.6);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+        text-shadow: none;
+      }
+    }
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Light-mode: soften vignette edges ── */
+    body.light-mode .hero-chamber,
+    body.ambient-mode .hero-chamber,
+    body.warm-mode .hero-chamber,
+    body.cool-mode .hero-chamber {
+      background:
+        radial-gradient(ellipse 90% 82% at 50% 44%, transparent 36%, rgba(210,205,200,0.45) 100%),
+        linear-gradient(180deg, rgba(200,195,190,0.12) 0%, transparent 20%, transparent 80%, rgba(200,195,190,0.15) 100%);
+    }
+
+    /* ── Reduced-motion: instant reveal, no animations ── */
+    @media (prefers-reduced-motion: reduce) {
+      .forge-letter,
+      .forge-spark-burst,
+      .hero-reveal {
+        opacity: 1 !important;
+        animation: none !important;
+        transform: none !important;
+        filter: none !important;
+      }
+    }
 
     /* ── Stats + chips strip ── */
     .hero-meta-row {
@@ -631,20 +723,48 @@
       .membership-grid,
       .studio-grid,
       .signal-split { grid-template-columns: 1fr; }
-      .hero-logo { max-width: 80%; }
       .hero-meta-row { flex-direction: column; align-items: flex-start; }
       .dispatch-inner { flex-direction: column; align-items: flex-start; }
       .dispatch-form input[type="email"] { width: 100%; }
       .dispatch-form { width: 100%; }
       .membership-features { grid-template-columns: 1fr; }
     }
+    /* Tablet — tighten hero padding, reduce tagline gap */
+    @media (max-width: 768px) {
+      .hero { padding: 5.5rem 0 3.2rem; }
+      .hero-tagline { margin-top: 0.5rem; }
+      .hero-sub { font-size: 1.05rem; }
+      .forge-spark-burst { width: 180px; height: 180px; }
+    }
+    /* Mobile — compact hero, smaller glows */
     @media (max-width: 640px) {
-      .hero { padding-top: 5rem; }
-      .hero-glow { opacity: 0.55; }
+      .hero { padding: 5rem 0 2.8rem; }
+      .hero-glow { opacity: 0.5; }
       .hero-glow.gold { display: none; }
       .video-frame { width: 100%; }
       .membership-inner { padding: 1.8rem; }
       .dispatch-inner { padding: 1.5rem; }
+      .hero-tagline { font-size: clamp(1.3rem, 5vw, 1.7rem); }
+      .forge-spark-burst { width: 140px; height: 140px; top: 32%; }
+      .hero-story { font-size: 0.9rem; }
+      .hero-actions { gap: 0.7rem; }
+    }
+    /* Small phones — scale down CTAs to stacked full-width */
+    @media (max-width: 480px) {
+      .hero-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions .button,
+      .hero-actions .button-secondary,
+      .hero-actions .button-ghost { text-align: center; }
+      .forge-line-1 { letter-spacing: -0.03em; }
+      .forge-line-2 { letter-spacing: 0.07em; }
+      .hero-meta-row { gap: 1rem; }
+      .hero-stats { gap: 1rem; }
+    }
+    /* Very small phones (≤360px) — prevent overflow */
+    @media (max-width: 360px) {
+      .forge-line-1 { letter-spacing: -0.02em; }
+      .forge-line-2 { letter-spacing: 0.04em; font-size: 1.55rem; }
+      .hero-tagline { font-size: 1.2rem; }
     }
     @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.85)} }
     @keyframes pulse-ring { 0%{transform:scale(0.85);opacity:0.5} 70%{transform:scale(2.2);opacity:0} 100%{transform:scale(2.2);opacity:0} }
@@ -739,32 +859,44 @@
 
     <!-- ── Hero ──────────────────────────────────────────── -->
     <section class="hero" aria-labelledby="hero-heading">
+      <!-- Vignette chamber — spatial depth from all four edges -->
+      <div class="hero-chamber" aria-hidden="true"></div>
+
+      <!-- Forge spark — ignition burst before letters appear -->
+      <div class="forge-spark-burst" aria-hidden="true"></div>
+
+      <!-- Atmosphere glows -->
       <div class="hero-glow blue" aria-hidden="true"></div>
       <div class="hero-glow orange" aria-hidden="true"></div>
       <div class="hero-glow gold" aria-hidden="true"></div>
 
       <div class="container hero-center">
-        <span class="eyebrow" style="display:inline-flex;align-items:center;gap:0.5rem;"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(255,196,0,0.7);display:inline-block;animation:sparkPulse 2s ease-in-out infinite;" aria-hidden="true"></span> Independent Studio &nbsp;·&nbsp; Games &nbsp;·&nbsp; Tools &nbsp;·&nbsp; Cinematic Worlds</span>
 
-        <div class="hero-logo">
-          <img src="assets/vaultspark-cinematic-logo.webp" alt="VaultSpark Studios cinematic logo" width="600" height="200" loading="eager" fetchpriority="high" decoding="async" />
-        </div>
+        <!-- 1. Forge Wordmark — h1 for SEO; letters animate individually -->
+        <h1 id="hero-heading" class="forge-wordmark" aria-label="VaultSpark Studios"><span class="forge-line forge-line-1" aria-hidden="true"><span class="forge-letter" style="--li:0">V</span><span class="forge-letter" style="--li:1">A</span><span class="forge-letter" style="--li:2">U</span><span class="forge-letter" style="--li:3">L</span><span class="forge-letter" style="--li:4">T</span><span class="forge-letter" style="--li:5">S</span><span class="forge-letter" style="--li:6">P</span><span class="forge-letter" style="--li:7">A</span><span class="forge-letter" style="--li:8">R</span><span class="forge-letter" style="--li:9">K</span></span><span class="forge-line forge-line-2" aria-hidden="true"><span class="forge-letter" style="--li:11">S</span><span class="forge-letter" style="--li:12">T</span><span class="forge-letter" style="--li:13">U</span><span class="forge-letter" style="--li:14">D</span><span class="forge-letter" style="--li:15">I</span><span class="forge-letter" style="--li:16">O</span><span class="forge-letter" style="--li:17">S</span></span></h1>
 
-        <h1 id="hero-heading">The Vault <em style="font-style:normal;color:var(--gold);text-shadow:0 0 40px rgba(255,196,0,0.45),0 0 80px rgba(255,196,0,0.2);">Is Sparked.</em></h1>
+        <!-- 2. Tagline — reveals after wordmark settles -->
+        <p class="hero-tagline hero-reveal" style="--reveal-delay:1.35s">The Vault <em>Is Sparked.</em></p>
 
-        <p class="hero-sub">
+        <!-- 3. Eyebrow context — subtle category label -->
+        <span class="eyebrow hero-reveal" style="--reveal-delay:1.52s;display:inline-flex;align-items:center;gap:0.5rem;"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(255,196,0,0.7);display:inline-block;animation:sparkPulse 2s ease-in-out infinite;" aria-hidden="true"></span> Independent Studio &nbsp;·&nbsp; Games &nbsp;·&nbsp; Tools &nbsp;·&nbsp; Cinematic Worlds</span>
+
+        <!-- 4. Sub copy -->
+        <p class="hero-sub hero-reveal" style="--reveal-delay:1.66s">
           VaultSpark Studios builds games, tools, and cinematic worlds that arrive
           charged and impossible to ignore. Three sparked, ten in the forge.
           One vault — yours to enter.
         </p>
 
-        <div class="hero-actions">
+        <!-- 5. CTAs -->
+        <div class="hero-actions hero-reveal" style="--reveal-delay:1.8s">
           <a class="button" href="/games/">Explore Our Games</a>
           <a class="button-secondary" href="/projects/">Explore Our Projects</a>
           <a class="button-ghost" href="/vault-member/#register">Enter The Vault &nbsp;→</a>
         </div>
 
-        <div class="hero-meta-row">
+        <!-- 6. Meta strip — chips + stats -->
+        <div class="hero-meta-row hero-reveal" style="--reveal-delay:1.94s">
           <div class="chips" aria-label="VaultSpark project categories">
             <span class="chip">Sports Simulation</span>
             <span class="chip">Fantasy Worlds</span>
@@ -784,7 +916,8 @@
           </div>
         </div>
 
-        <div class="hero-story">
+        <!-- 7. Story block -->
+        <div class="hero-story hero-reveal" style="--reveal-delay:2.08s">
           <strong>The Vault-Forge:</strong> Every VaultSpark project begins the same way —
           fire meets steel, a single spark splits the forge, and a new cinematic world
           warps into existence. The vault does not store things. It pressurizes them.
