@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-12 (Session 57)
+- Date: 2026-04-13 (Session 58)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: S57 improvements batch — theme picker compact at 641–980px (SIL:2⛔ cleared), CF Worker auto-redeploy GH Actions workflow (SIL:2⛔ cleared), genesis badge live slots counter, vault wall public_profile opt-in (phase59 migration + query fix), Studio About "Why VaultSpark" founder story, achievement SVGs (vaultsparked + forge-master). S56: Genesis Vault Member badge. S55: 10-item improvement batch.
+- Repo posture: S58 members directory CSP fix — `/members/` profile loader externalized to `assets/members-directory.js`, inline `onclick` removed, public member query now tries `vault_points`/`rank_title` first with legacy `points` fallback, SW cache bumped. S57: theme picker compact, CF Worker auto-redeploy workflow, genesis badge live slots counter, vault wall public_profile opt-in, Studio About founder story, achievement SVGs.
 
 ## What exists
 
@@ -19,10 +19,11 @@
 - **8 game pages** — FORGE/SPARKED/VAULTED radial glow, data-status attrs; status badges correctly positioned (direct child of .hero-art)
 - **12 project pages** — status badges fixed (S36): moved outside .hero-art-content to prevent absolute-positioning overlap with h1
 - **Compliance pages** — /cookies/, /accessibility/, /open-source/ (technology attributions + IP notice), /faq/, /careers/, /data-deletion/, /security/, sitemap
+- **Members directory** (`members/`) — S58: fixed profile-loading regression from CSP-blocked inline directory script; runtime moved to `/assets/members-directory.js`, clear-filter action uses event delegation, query supports current `vault_points`/`rank_title` plus legacy `points` fallback; "Founding Member" label updated to "Genesis Member".
 
 ### Infrastructure
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler. **S53: script-src updated to SHA-256 hashes (removed 'unsafe-inline')**; needs redeploy.
-- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260412-e87a8ba`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, and `portal-init.js`
+- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260413-members-directory`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, `portal-init.js`, and `members-directory.js`
 - **DX scripts** (`scripts/propagate-csp.mjs`, `scripts/smoke-test.sh`) — S47 created; S49 regex fixed + dry-run exit-1 added; **S53: CSP_VALUE updated to SHA-256 hashes (removed 'unsafe-inline')**; 85 pages propagated; `e2e.yml` compliance job runs `--dry-run` check before Playwright
 - **Sentry release workflow** (`.github/workflows/sentry-release.yml`) — S47 created, S48 fully wired: org `vaultspark-studios`, project `4511104933298176`, token set as GitHub secret; every push to main now tags a Sentry release
 - **Referral attribution** (`supabase/migrations/supabase-phase56-referral-attribution.sql`) — S48: `referred_by uuid` column on `vault_members`; `register_open` accepts `p_ref_by`, awards referrer +100 XP, fires recruiter/patron achievements; `get_referral_milestones` counts both invite-code and direct-link referrals; migration applied live

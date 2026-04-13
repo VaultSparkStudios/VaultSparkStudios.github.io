@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▇▅▆
-Avgs — 3: 431.3 | 5: 430.0 | 10: 430.0 | all: 419.8
-  └ 3-session: Dev 85.0 | Align 86.3 | Momentum 87.0 | Engage 85.7 | Process 83.7
+Sparkline (last 5 totals): ▆█▅▆▆
+Avgs — 3: 421.7 | 5: 428.2 | 10: 429.5 | all: 420.0
+  └ 3-session: Dev 84.7 | Align 83.7 | Momentum 83.0 | Engage 85.0 | Process 84.7
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
 Momentum runway: ~3.0 sessions ✓  |  Intent rate: 100% (last 5)
-Last session: 2026-04-12 | Session 57 | Total: 439/500 | Velocity: 1 | protocolVelocity: 6
+Last session: 2026-04-13 | Session 58 | Total: 426/500 | Velocity: 1 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -612,3 +612,27 @@ Avgs — 3: 431.3 | 5: 430.0 | 10: 430.0 | all: 419.8
 3. **IGNIS rescore** — score is 5 days stale; run `npx tsx cli.ts score .` from `vaultspark-studio-ops/ignis/src/`; update `ignisScore`, `ignisGrade`, `ignisLastComputed` in PROJECT_STATUS.json; first step: open studio-ops and run CLI. Medium probability (requires separate studio-ops session).
 
 **Committed to TASK_BOARD:** [SIL] Wire SVG icons to portal · [SIL] Portal settings public_profile toggle
+
+## 2026-04-13 — Session 58 | Total: 426/500 | Velocity: 1 | Debt: →
+Avgs — 3: 421.7 | 5: 428.2 | 10: 429.5 | all: 420.0
+  └ 3-session: Dev 84.7 | Align 83.7 | Momentum 83.0 | Engage 85.0 | Process 84.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 85 | ↓ | Members directory CSP failure fixed cleanly; JS syntax checked; no browser smoke in sandbox |
+| Creative Alignment | 83 | ↓ | Strategy direction refocused away from Voidfall/DreadSpike and onto existing studio/member ecosystem |
+| Momentum | 82 | ↓ | 1 user-visible regression fixed; broader roadmap was advisory |
+| Engagement | 86 | ↓ | User-reported console errors acted on directly |
+| Process Quality | 88 | ↑ | Root cause documented; public-safe closeout write-back completed |
+| **Total** | **426/500** | ↓ | |
+
+**Top win:** `/members/` no longer depends on a CSP-blocked inline script, so the directory can load under the hardened security posture.
+**Top gap:** No browser/network smoke run in this sandbox; production should be checked after deploy for live Supabase data and CSP console output.
+**Intent outcome:** Achieved — roadmap direction revised and members page fix implemented.
+
+**Brainstorm**
+1. **Vault Passport foundation** — unify public profile, member card, badges, referral streak, and rank into one account identity surface. First step: define the public profile data contract after phase59 lands. High probability.
+2. **Studio Command Center module** — homepage module powered by existing Studio Pulse, Vault Wall, Genesis counter, and project status JSON. First step: design a static-data MVP that reads existing public JSON/surfaces. High probability.
+3. **Members directory smoke test** — add a Playwright smoke for `/members/` that asserts either member cards or a graceful empty/error state and catches CSP console violations. First step: create a focused spec with mocked Supabase response. Medium probability.
+
+**Committed to TASK_BOARD:** [S58 Fix] Members directory profiles not showing

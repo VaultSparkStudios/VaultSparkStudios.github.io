@@ -252,3 +252,12 @@ Public-safe note:
 - internal session-by-session execution detail now lives in the private Studio OS / ops repository
 - a local private backup of the pre-sanitization work log was preserved outside this repo on 2026-04-03
 - 2026-04-03 closeout: public-repo sanitization follow-through completed and local Playwright credential handling was moved behind a private ignored file
+
+## 2026-04-13 — Session 58
+
+- Fixed `/members/` profile loading regression caused by the hardened CSP blocking the inline directory script.
+- Added `assets/members-directory.js`, moved the directory query/render/search/filter logic into that external script, and replaced the inline clear-filter handler with event delegation.
+- Made the member query tolerate current `vault_points`/`rank_title` fields with legacy `points` fallback.
+- Bumped `sw.js` cache name and added `/assets/members-directory.js` to `STATIC_ASSETS`.
+- Verification: `node --check assets/members-directory.js` passed; static grep confirmed the blocked inline directory loader and inline `onclick` were removed.
+- SIL: 426/500 · Velocity: 1 · Debt: →

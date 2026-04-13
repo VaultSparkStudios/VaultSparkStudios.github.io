@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-12 (Session 57)
+Last updated: 2026-04-13 (Session 58)
 
 ---
 
@@ -37,6 +37,7 @@ Last updated: 2026-04-12 (Session 57)
 - [x] **[SIL] Genesis badge slots-remaining counter** — added `<span id="genesis-slots-left">` to `/vaultsparked/` FAQ answer; created `/vaultsparked/vaultsparked.js` with live counter logic (3-tier colour: gold/orange/crimson); 2-step PostgREST query excludes 4 studio UUIDs from count; script loads as `defer` (S57)
 - [x] **[SIL] Vault Wall opt-in toggle (Phase 1)** — created `supabase/migrations/supabase-phase59-public-profile.sql` (adds `public_profile boolean DEFAULT true`); updated vault-wall queries to filter `.eq('public_profile',true)`; fixed broken `.count().head()` → `.count().get()` bug (S57); **[HAR] run db-migrate workflow to apply migration**
 - [x] **[SIL] Achievement SVG icons — VaultSparked + Forge Master** — created `assets/images/badges/vaultsparked.svg` (purple crystal gem, violet gradient, gold crown spark) and `assets/images/badges/forge-master.svg` (anvil + spark burst, crimson ring, ember particles) (S57)
+- [x] **[S58 Fix] Members directory profiles not showing** — moved CSP-blocked inline `/members/` directory loader to `assets/members-directory.js`; removed inline clear-filter handler; query now prefers `vault_points`/`rank_title` and falls back to legacy `points`; bumped SW cache.
 
 - [ ] **[SIL] Portal settings: public_profile toggle** — add "Show my profile on the Vault Wall" toggle to portal settings page; first step: add toggle HTML to settings privacy section + update handler to PATCH `public_profile`. Requires phase59 migration live.
 - [ ] **[SIL] Wire achievement SVG icons to portal** — update `portal.js` achievement definitions for `vaultsparked` and `forge_master` slugs to use SVG paths; renderer already supports image icons (S56). First step: grep achievement slug defs in portal.js.

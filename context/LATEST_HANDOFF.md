@@ -1,6 +1,46 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-12 (Session 57)
+Last updated: 2026-04-13 (Session 58)
+
+## Session Intent: Session 58
+Revise the next-step improvement direction to exclude Voidfall/DreadSpike ideas, keep the ecosystem-focused ideas, and fix `/members/` not showing profiles.
+**Outcome: Achieved** — revised strategy kept the website ecosystem centered on Vault identity, community, Studio Hub, project rooms, command-center surfaces, challenges, feed, onboarding, and a guarded Vault Guide; `/members/` profile loading regression fixed.
+
+## Where We Left Off (Session 58 — 2026-04-13)
+
+- Shipped: members-directory CSP/data fix — externalized `/members/` runtime to `assets/members-directory.js`, removed inline `onclick`, added `vault_points`/`rank_title` query with legacy `points` fallback, renamed public badge label to Genesis Member, bumped service worker cache.
+- Tests: `node --check assets/members-directory.js` passing; static grep confirmed the blocked inline directory loader and inline `onclick` were removed. No browser/network test run in this sandbox.
+- Deploy: not pushed in this session.
+
+### Detail
+
+- **Root cause** — `/members/` directory logic lived in an inline script that was blocked by the hardened CSP. The browser warnings for `frame-ancestors` and `X-Frame-Options` are meta-header warnings; the profile load failure was the blocked inline script.
+- **Fix** — new external self-hosted script runs under `script-src 'self'`; clear-filter control uses event delegation rather than inline handlers.
+- **Data tolerance** — loader first queries current public member fields (`vault_points`, `rank_title`) and falls back to legacy `points` if needed.
+- **Cache** — `sw.js` cache name bumped and `/assets/members-directory.js` added to `STATIC_ASSETS`.
+
+---
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions.
+- [ ] **[DB] Phase59 public_profile migration** — run db-migrate workflow or `supabase db push` to apply `supabase-phase59-public-profile.sql`.
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler.
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here
+
+## Recommended First Action Next Session
+
+1. **[SIL] Wire achievement SVG icons to portal** — update `portal.js` achievement definitions for `vaultsparked` + `forge_master`.
+2. **[SIL] Portal settings: public_profile toggle** — after phase59 migration is live, add the member visibility toggle.
+3. **Members directory browser smoke** — after deploy, open `/members/` and confirm cards render with no CSP violations beyond known meta-header warnings.
+
+---
 
 ## Session Intent: Session 57
 Update memory and task board with all item ideas and implement all items at the highest quality.
