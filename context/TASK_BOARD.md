@@ -66,6 +66,7 @@ Last updated: 2026-04-13 (Session 62 closeout)
 - [ ] **[SIL] Annual Stripe checkout routing** — when `vssBillingMode === 'annual'`, route to annual price IDs; add `ANNUAL_PRICE_IDS` map to `vaultsparked/billing-toggle.js`; HAR first: Studio Owner creates $44.99/yr + $269.99/yr Stripe prices. Exempt from [SIL:N] increment until HAR cleared.
 - [ ] **[SIL] Wire SVG achievement icons to portal defs** — `portal-core.js` ACHIEVEMENT_DEFS has `vaultsparked` and `forge_master` slugs; update `icon` field from emoji to `/assets/images/badges/vaultsparked.svg` + `/assets/images/badges/forge-master.svg`; renderer already handles path-based icons (S56). First step: grep portal-core.js for ACHIEVEMENT_DEFS.
 - [ ] **[SIL] Site-wide scroll reveals** — add IntersectionObserver in `assets/scroll-reveal.js`; `data-reveal="fade-up"` attrs on key homepage sections; same heroFadeUp aesthetic extended site-wide with no framework. First step: create scroll-reveal.js with observer + CSS reveal class.
+- [ ] **[SIL] Extend light-mode screenshot spec** — `tests/light-mode-screenshots.spec.js` only covers 3 pages; add ranks, press, contact, community, studio, roadmap, universe to the spec array (7 more pages) to prevent silent light mode regressions. First step: read current spec and add page paths.
 
 ## Next
 

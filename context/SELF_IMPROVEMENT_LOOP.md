@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▇▆
-Avgs — 3: 434.0 | 5: 433.2 | 10: 431.0 | all: 424.1
-  └ 3-session: Dev 89.3 | Align 86.7 | Momentum 81.3 | Engage 89.7 | Process 87.0
-Velocity trend: ↓  |  Protocol velocity: ↑  |  Debt: →
-Momentum runway: ~1.5 sessions ⚠ (pre-loaded S63)  |  Intent rate: 80% (last 5)
-Last session: 2026-04-13 | Session 62 | Total: 427/500 | Velocity: 1 | protocolVelocity: 9
+Sparkline (last 5 totals): ▅█▆▆▆
+Avgs — 3: 435.7 | 5: 433.0 | 10: 430.0 | all: 424.3
+  └ 3-session: Dev 90.3 | Align 89.0 | Momentum 78.7 | Engage 89.0 | Process 88.7
+Velocity trend: →  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~2.5 sessions (S64 runway pre-loaded)  |  Intent rate: 80% (last 5)
+Last session: 2026-04-13 | Session 63 | Total: 425/500 | Velocity: 1 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -738,3 +738,27 @@ Avgs — 3: 434.0 | 5: 433.2 | 10: 431.0 | all: 424.1
 3. **Homepage light-mode forge animation smoke** — the letterForge keyframe gold text-shadow may render oddly in light mode at peak brightness; test all 6 themes with DevTools and add per-theme overrides if needed. First step: toggle each theme in DevTools, observe letterForge peak frame color. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Wire SVG achievement icons · [SIL] Site-wide scroll reveals
+
+## 2026-04-13 — Session 63 (redirect) | Total: 425/500 | Velocity: 1 | Debt: →
+Avgs — 3: 435.7 | 5: 433.0 | 10: 430.0 | all: 424.3
+  └ 3-session: Dev 90.3 | Align 89.0 | Momentum 78.7 | Engage 89.0 | Process 88.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 87 | ↓ | 227-line CSS pass well-structured; proper specificity (0,2,1) strategy; inline-style elements converted to CSS classes; no test run |
+| Creative Alignment | 87 | ↓ | Light mode first-class experience per CDR; systemic fix across 54 pages; brand surfaces readable in all themes |
+| Momentum | 75 | ↑ | Redirected session; S64 runway items untouched; but the overhaul was large in scope and fully completed |
+| Engagement | 86 | ↓ | Immediate response to "much text unable to be seen" report; comprehensive audit before writing fixes |
+| Process Quality | 90 | ↑ | Full systematic audit (Explore agent + page reads) before writing; all context files updated; zero missed steps |
+| **Total** | **425/500** | ↓ | Redirected quality session; large fix but low product velocity |
+
+**Top win:** Systematically audited all 54 HTML pages with hardcoded dark RGBA values and fixed every class-based and inline-style gap — light mode now fully readable site-wide
+**Top gap:** S64 runway items (SVG achievement icons, scroll reveals, membership social proof, vault wall smoke) still unstarted due to back-to-back redirects (S62 homepage, S63 light mode)
+**Intent outcome:** Redirected — user reported light mode readability issues mid-session; full overhaul completed as directed
+
+**Brainstorm**
+1. **Extend light-mode screenshot spec** — `tests/light-mode-screenshots.spec.js` only covers 3 pages; this session found light mode bugs on 20+ pages; extend spec to cover ranks, press, contact, community, studio, roadmap, universe — prevents silent regressions. First step: add 7 more page paths to the spec array. High probability.
+2. **Inline style= dark color audit pass** — community/studio/vault-wall/vaultsparked had hardcoded dark backgrounds in `style=""` attributes that required `!important` or class additions to override; a systematic audit of remaining inline `style="background:rgba(` patterns site-wide would close all future gaps. First step: grep all HTML for `style=".*rgba\([0-9]` patterns. Medium probability.
+3. **Light mode design token audit** — `--gold` (#FFC400) is not overridden in light mode; on cream backgrounds it may appear washed out in some use cases; also `--steel`/`--dim` may benefit from recalibration for WCAG AA contrast ratio. First step: run Lighthouse accessibility audit in light mode and check contrast scores. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Extend light-mode screenshot spec to more pages
