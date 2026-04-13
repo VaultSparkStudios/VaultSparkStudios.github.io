@@ -2437,6 +2437,169 @@ body.light-mode .fan-art-vote { color: var(--text); }
   contain-intrinsic-size: auto 400px;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   Light Mode Surface Overrides — Phase 2
+   Covers page-specific classes not handled in Phase 1 above.
+   Same (0,2,1) specificity strategy — no !important except
+   where overriding inline style= attributes.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Ranks page ── */
+body.light-mode .rank-card {
+  background: linear-gradient(180deg, rgba(255,252,248,0.96), rgba(242,246,252,0.88));
+  border-color: rgba(22,32,51,0.10);
+  box-shadow: 0 16px 36px rgba(25,36,56,0.08);
+}
+body.light-mode .rank-card-copy { color: var(--muted); }
+body.light-mode .earn-card {
+  background: rgba(255,252,248,0.92);
+  border-color: rgba(22,32,51,0.10);
+}
+
+/* ── Press page ── */
+body.light-mode .press-card,
+body.light-mode .game-press-card {
+  background: linear-gradient(180deg, rgba(255,252,248,0.96), rgba(242,246,252,0.88));
+  border-color: rgba(22,32,51,0.10);
+  box-shadow: 0 16px 36px rgba(25,36,56,0.07);
+}
+body.light-mode .press-card h3 { color: var(--text); }
+body.light-mode .press-quote { background: rgba(255,196,0,0.04); }
+body.light-mode .press-quote blockquote { color: var(--text); }
+body.light-mode .contact-box {
+  background: linear-gradient(135deg, rgba(31,162,255,0.05), rgba(240,244,252,0.94) 40%, rgba(255,196,0,0.05));
+  border-color: rgba(22,32,51,0.10);
+}
+body.light-mode .fact-table tr { border-color: rgba(22,32,51,0.08); }
+body.light-mode .logo-tile { border-color: rgba(22,32,51,0.12); }
+body.light-mode .logo-tile-light { background: rgba(255,255,255,0.98); }
+
+/* ── Universe page ── */
+body.light-mode .character-block {
+  background: linear-gradient(135deg, rgba(214,40,40,0.03), rgba(240,244,252,0.94) 40%, rgba(31,162,255,0.03));
+  border-color: rgba(214,40,40,0.10);
+  box-shadow: 0 16px 36px rgba(25,36,56,0.08);
+}
+
+/* ── Studio page — manifesto + founder card ── */
+body.light-mode .manifesto {
+  background: linear-gradient(135deg, rgba(255,196,0,0.04), rgba(240,244,252,0.94) 40%, rgba(31,162,255,0.04));
+  border-color: rgba(255,196,0,0.14);
+}
+body.light-mode .team-founder-card {
+  background: rgba(255,252,248,0.94) !important;
+  border-color: rgba(22,32,51,0.10) !important;
+}
+body.light-mode .team-founder-card a {
+  background: rgba(22,32,51,0.04) !important;
+  border-color: rgba(22,32,51,0.12) !important;
+  color: var(--muted) !important;
+}
+
+/* ── Shared CTA block (studio + vault-wall + press contact-box variant) ── */
+body.light-mode .cta-panel {
+  background: linear-gradient(135deg, rgba(31,162,255,0.05), rgba(240,244,252,0.94) 40%, rgba(255,196,0,0.05)) !important;
+  border-color: rgba(22,32,51,0.10) !important;
+}
+
+/* ── Membership page ── */
+body.light-mode .mem-hero-proof {
+  background: rgba(22,32,51,0.04);
+  border-color: rgba(22,32,51,0.10);
+}
+body.light-mode .mem-hero-proof strong { color: var(--text); }
+
+/* ── Contact page — toast + row borders ── */
+body.light-mode #contact-toast {
+  background: rgba(255,252,248,0.98) !important;
+  border-color: rgba(52,211,153,0.40) !important;
+  box-shadow: 0 8px 40px rgba(25,36,56,0.14), 0 0 0 1px rgba(52,211,153,0.10) !important;
+}
+body.light-mode .toast-title { color: var(--text); }
+body.light-mode .toast-sub,
+body.light-mode .toast-msg { color: var(--muted); }
+body.light-mode .contact-info-row { border-color: rgba(22,32,51,0.07); }
+
+/* ── Community page — event cards (inline style= overrides) ── */
+body.light-mode [data-event] {
+  background: linear-gradient(180deg, rgba(255,252,248,0.96), rgba(242,246,252,0.88)) !important;
+  border-color: rgba(22,32,51,0.10) !important;
+}
+
+/* ── Roadmap page — stage badges readable on light ── */
+body.light-mode .stage-sparked { background: rgba(249,115,22,0.08); border-color: rgba(249,115,22,0.20); }
+body.light-mode .stage-forge   { background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.18); }
+body.light-mode .stage-vaulted { background: rgba(100,116,139,0.08); color: #4b5563; border-color: rgba(100,116,139,0.14); }
+body.light-mode .pipeline-card-meta span {
+  background: rgba(22,32,51,0.05);
+  border-color: rgba(22,32,51,0.08);
+}
+
+/* ── Section dividers that use white rgba borders ── */
+body.light-mode .community-section-divider,
+body.light-mode section[style*="border-top:1px solid rgba(255,255,255"] {
+  border-top-color: rgba(22,32,51,0.07) !important;
+}
+
+/* ── Vault-wall / join CTA panel ── */
+body.light-mode .vault-wall-cta {
+  background: linear-gradient(135deg, rgba(255,196,0,0.05), rgba(240,244,252,0.94) 50%, rgba(139,92,246,0.05)) !important;
+  border-color: rgba(255,196,0,0.16) !important;
+}
+
+/* ── VaultSparked page ── */
+body.light-mode .compare-table td.feature-name { color: var(--text); }
+body.light-mode #vs-toast {
+  background: rgba(255,252,248,0.97) !important;
+  border-color: rgba(22,32,51,0.12) !important;
+  color: var(--text) !important;
+}
+body.light-mode .rank-loyalty-panel {
+  background: linear-gradient(135deg, rgba(255,196,0,0.05), rgba(240,244,252,0.94) 60%, rgba(214,40,40,0.03)) !important;
+  border-color: rgba(255,196,0,0.16) !important;
+}
+
+/* ── Studio Pulse page CTA panel ── */
+body.light-mode .studio-pulse-cta {
+  background: linear-gradient(135deg, rgba(16,185,129,0.04), rgba(240,244,252,0.94) 50%, rgba(31,162,255,0.04)) !important;
+  border-color: rgba(16,185,129,0.14) !important;
+}
+
+/* ── Invite page ── */
+body.light-mode .invite-box,
+body.light-mode .guest-invite-cta {
+  background: linear-gradient(135deg, rgba(255,196,0,0.05), rgba(240,244,252,0.94) 50%, rgba(31,162,255,0.05));
+  border-color: rgba(255,196,0,0.16);
+}
+body.light-mode .invite-link-input {
+  background: rgba(255,255,255,0.82);
+  border-color: rgba(22,32,51,0.12);
+  color: var(--text);
+}
+body.light-mode .invite-link-input:focus { border-color: rgba(255,196,0,0.45); }
+
+/* ── Search page ── */
+body.light-mode #searchInput {
+  background: rgba(255,255,255,0.88);
+  border-color: rgba(22,32,51,0.12);
+  color: var(--text);
+}
+body.light-mode .search-result-card {
+  background: rgba(255,252,248,0.92);
+  border-color: rgba(22,32,51,0.08);
+}
+body.light-mode .search-result-card:hover {
+  background: rgba(255,255,255,0.98);
+  border-color: rgba(22,32,51,0.14);
+}
+
+/* ── Shared toast notifications ── */
+body.light-mode .vs-toast {
+  background: rgba(255,252,248,0.97);
+  border-color: rgba(255,196,0,0.35);
+  color: var(--gold);
+}
+
 /* ─── Performance: GPU-composited animations ──────────────── */
 .card,
 .card-hero,
