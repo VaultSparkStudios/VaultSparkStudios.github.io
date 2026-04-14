@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▆▆▆▆
-Avgs — 3: 438.7 | 5: 439.6 | 10: 432.1 | all: 425.8
-  └ 3-session: Dev 89.7 | Align 88.3 | Momentum 84.7 | Engage 88.3 | Process 87.7
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~3.0 sessions (S66 runway pre-loaded)  |  Intent rate: 100% (last session)
-Last session: 2026-04-13 | Session 65 | Total: 448/500 | Velocity: 6 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▆
+Avgs — 3: 446.7 | 5: 438.4 | 10: 434.0 | all: 427.3
+  └ 3-session: Dev 92.0 | Align 89.0 | Momentum 86.0 | Engage 88.0 | Process 85.7
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~2.0 sessions (S67 pre-load needed)  |  Intent rate: 100% (last session)
+Last session: 2026-04-13 | Session 66 | Total: 449/500 | Velocity: 11 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -810,3 +810,29 @@ Avgs — 3: 438.7 | 5: 439.6 | 10: 432.1 | all: 425.8
 2. **404/offline.html SHA hardening** — replace `'unsafe-inline'` in those pages' CSP meta tags with computed SHA-256 hashes; update `csp-hash-registry.json` with new snapshots; closes known debt documented in registry. First step: extract inline scripts from 404.html, compute hashes. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Extend scroll-reveal to /studio/community/ranks/roadmap · [SIL] 404/offline.html SHA hardening
+
+## 2026-04-13 — Session 66 | Total: 449/500 | Velocity: 11 | Debt: ↓
+Avgs — 3: 446.7 | 5: 438.4 | 10: 434.0 | 25: — | all: 427.3
+  └ 3-session: Dev 92.0 | Align 89.0 | Momentum 86.0 | Engage 88.0 | Process 85.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 94 | ↑ | 4 new JS files, CI green, CSP inline debt fully cleared, csp-hash-registry updated |
+| Creative Alignment | 92 | ↑ | Genius Hit List framework established; feedback loop items align with community engagement SOUL pillar |
+| Momentum | 93 | ↑ | Velocity 11 (3× average); 2 [SIL] debt items cleared; IGNIS rescore declared mandatory but skipped |
+| Engagement | 88 | → | Public changelog + scroll-depth GA4 milestones add feedback transparency; share card generator = community flex |
+| Process Quality | 82 | ↓ | S66 work shipped but not committed/closed out in-session; closeout happened in S67 start — real handoff gap |
+| **Total** | **449/500** | ↑ | +1 vs S65; +3rd-highest ever this project |
+
+**Top win:** Genius Hit List framework delivered 11 items in one session across perf/security/UX/feedback/features — 3× average velocity, all items merged into a single feat commit.
+**Top gap:** S66 work was shipped but closeout never ran in-session; S67 start detected uncommitted dirty tree and had to retroactively commit + close out, creating a real handoff discontinuity.
+**Intent outcome:** Achieved — all 3 declared items done (scroll-reveal extend ✓ · SHA hardening ✓ · annual Stripe HAR-blocked ✓), scope expanded with 8 additional Genius Hit List items.
+
+**Brainstorm**
+1. **Closeout-commit gate in prompts/closeout.md** — add an explicit pre-commit enforcement: if git status shows ≥10 modified files uncommitted at closeout start, block closeout until commit completes. Prevents S66 → S67 handoff gap recurring. First step: add check to Step 0 of closeout.md. High probability.
+2. **Auto-commit harness on context/* changes** — opinionated hook that auto-commits context file writes at closeout using a standard message template; eliminates the "forgot to commit" class of errors. First step: draft the hook in .claude/settings.json. Medium probability.
+3. **Genius Hit List audit as scheduled job** — cron the audit prompt monthly so fresh external-review scores arrive in context without a human asking. First step: add to ScheduleWakeup or CronCreate configuration. Medium probability.
+4. **Rank XP bar celebrate animation** — when user levels up (XP threshold crossed), fire confetti burst + play short chime; higher stakes than silent bar fill. First step: add rankLevelUp event emitter to portal.js. Medium probability.
+5. **Per-page critical CSS automation** — extend S66's homepage critical CSS inline pattern with a `scripts/inline-critical-css.mjs` that generates above-fold CSS per top-landing-page using Puppeteer + cssnano. First step: run critical on /membership/ and /vaultsparked/ to validate. Low probability (tooling overhead).
+
+**Committed to TASK_BOARD:** [SIL] Closeout-commit gate · [SIL] Genius Hit List as scheduled audit job

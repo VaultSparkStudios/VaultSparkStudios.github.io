@@ -355,3 +355,15 @@ Public-safe note:
 - Bumped `sw.js` cache name and added `/assets/members-directory.js` to `STATIC_ASSETS`.
 - Verification: `node --check assets/members-directory.js` passed; static grep confirmed the blocked inline directory loader and inline `onclick` were removed.
 - SIL: 426/500 · Velocity: 1 · Debt: →
+
+## 2026-04-13 — Session 66
+
+- Genius Hit List framework delivered — 11 items shipped across 5 groups
+- PERF: preconnect + DNS-prefetch on 77 pages; critical CSS inlined on homepage
+- SECURITY: 404.html + offline.html SHA-256 hardening (removes last `'unsafe-inline'` in script-src); csp-hash-registry.json updated
+- UX: scroll-reveal extended to /studio/, /community/, /ranks/, /roadmap/; rank XP progress bar with milestone ticks + shimmer + aria; skeleton loaders in portal
+- FEEDBACK: scroll-depth GA4 milestones (25/50/75/100%) on 3 conversion pages; What's New modal with version gate + focus trap; public /changelog/ page
+- FEATURES: notify-me email capture on 4 FORGE game pages; Canvas-based achievement share card generator in portal
+- Process gap: S66 work was not committed in-session. S67 start detected 95+ modified files + 4 new JS files in dirty tree; committed retroactively as `9579487` and closeout run at S67 start
+- Brainstorm #1 (closeout-commit gate in closeout.md) committed to TASK_BOARD to prevent recurrence
+- SIL: 449/500 · Velocity: 11 · Debt: ↓

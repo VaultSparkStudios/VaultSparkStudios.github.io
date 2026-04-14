@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 65 closeout)
+Last updated: 2026-04-13 (Session 66 closeout, run retroactively at S67 start)
 
 ---
 
@@ -62,7 +62,7 @@ Last updated: 2026-04-13 (Session 65 closeout)
 - [x] **[SIL] Homepage hero forge ignition redesign** — forge-wordmark h1 with letterForge animation, forge-spark-burst, hero-chamber vignette, hero-reveal cascade; cinematic logo removed from hero; full responsive; prefers-reduced-motion guard; light-mode overrides. Deployed 2026-04-13 (S62).
 - [x] **[SIL] Light mode Phase 2 complete overhaul** — 227 lines added across style.css + portal.css; fixed rank-card, press-card, character-block, manifesto, contact-box, pipeline-card meta, stage badges, [data-event] community cards, cta-panel, vault-wall-cta, compare-table, search inputs, invite-box, guest-invite-cta, #vs-toast, #contact-toast; portal: profile-card, challenge-category-tabs, member stats/rank/leaderboard cards, dialogs, dashboard containers; added CSS classes to 4 inline-style HTML elements (studio, vault-wall, vaultsparked, studio-pulse). Deployed 2026-04-13 (S63 redirect).
 - [x] **[SIL:1] Membership page social proof live data** — Inline CSP-blocked script externalized to `assets/membership-stats.js` (defer, uses VSPublic); proof-members/stat-members/proof-sparked/stat-sparked/stat-challenges all live-wired. Deployed S64.
-- [ ] **[SIL:1] Vault Wall manual smoke** — open `/vault-wall/` in incognito after phase59 deploy; confirm member cards render with `public_profile=true` filter and no console errors. First step: open incognito tab and check DevTools console.
+- [x] **[SIL:1] Vault Wall manual smoke** — retired S65; replaced by `tests/vault-wall.spec.js` Playwright automation (asserts `#rank-dist-bar`, `#vw-podium`, pageerror CSP listener, auth-free access).
 - [ ] **[SIL] Annual Stripe checkout routing** — when `vssBillingMode === 'annual'`, route to annual price IDs; add `ANNUAL_PRICE_IDS` map to `vaultsparked/billing-toggle.js`; HAR first: Studio Owner creates $44.99/yr + $269.99/yr Stripe prices. Exempt from [SIL:N] increment until HAR cleared.
 - [x] **[SIL] Wire SVG achievement icons to portal defs** — Already wired in S59; portal-core.js ACHIEVEMENT_DEFS confirms SVG paths for genesis_vault_member, vaultsparked, forge_master. Task verified complete S64.
 - [x] **[SIL] Site-wide scroll reveals** — `assets/scroll-reveal.js` created (IntersectionObserver, fade-up); CSS added to `assets/style.css` with prefers-reduced-motion guard; 6 homepage sections tagged with `data-reveal="fade-up"`. Deployed S64.
@@ -99,6 +99,14 @@ Last updated: 2026-04-13 (Session 65 closeout)
 - [x] **[S66 PERF] Critical CSS inline for homepage** — above-fold hero CSS extracted and inlined in index.html `<head>`; stylesheet moved to non-render-blocking load. (S66)
 - [x] **[S66 FEATURE] Achievement share card generator** — `vault-member/portal-share.js` created; Canvas PNG 1200×630 on badge unlock with download + copy-to-clipboard. (S66)
 - [x] **[S66 FEEDBACK] Public changelog at /changelog/** — new page listing all shipped sessions; added to sitemap.xml. (S66)
+
+## Now (S67 runway pre-load)
+
+- [ ] **[SIL:1] IGNIS Rescore** — now 6 days stale (last computed 2026-04-07); threshold is 7 days. Run `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website`. First step: ensure studio-ops CLI is accessible.
+- [ ] **[SIL] Closeout-commit gate** — edit `prompts/closeout.md` Step 0 to check git status at closeout start: if ≥10 modified files are uncommitted, block closeout until commit completes. Prevents S66→S67 handoff gap recurring. First step: add a Step 0.5 pre-commit check.
+- [ ] **[SIL] Genius Hit List as scheduled audit** — schedule the audit prompt as a weekly/monthly recurring task that generates fresh external-review scores + ranked hit list into `docs/GENIUS_LIST.md` without requiring a human prompt. First step: draft the ScheduleWakeup or CronCreate payload.
+- [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
+- [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read).
 
 ## Next
 

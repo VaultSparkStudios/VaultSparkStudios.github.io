@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-13
+Last reviewed: 2026-04-13 (S66 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise

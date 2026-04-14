@@ -1,9 +1,61 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 65 closeout)
+Last updated: 2026-04-13 (Session 66 closeout, run retroactively at start of S67)
 
-## Session Intent: Session 66
-Run IGNIS rescore (mandatory — 7+ days stale). Then: extend scroll-reveal to /studio/, /community/, /ranks/, /roadmap/; 404/offline.html SHA hardening (replace 'unsafe-inline' with computed hashes + update csp-hash-registry.json); annual Stripe checkout routing (HAR-blocked).
+## Session Intent: Session 67
+Extend the Genius Hit List framework: run fresh external audit scores, produce next session's ranked hit list, execute top items. Also: [IGNIS] rescore (now 6d stale, mandatory); [SIL] closeout-commit gate in closeout.md Step 0; [SIL] Genius Hit List as scheduled audit job.
+
+---
+
+## Where We Left Off (Session 66 — 2026-04-13)
+
+**Session output: 11 items shipped across 5 groups (perf, security, UX, feedback, features) — Genius Hit List framework delivered in one session. Single feat commit `9579487` created at S67 start after detecting S66 was never closed out.**
+
+### Performance
+- **Preconnect + DNS-prefetch hints** — `scripts/propagate-nav.mjs` updated to inject `preconnect` for GTM + `dns-prefetch` for GTM/GA/Stripe on every page; propagated to 77 pages.
+- **Critical CSS inlined for homepage** — above-fold hero CSS extracted and inlined in `<head>`; main stylesheet moved to non-render-blocking load.
+
+### Security
+- **404.html + offline.html SHA-256 hardening** — `'unsafe-inline'` replaced with computed SHA-256 hashes in both files' CSP meta tags. Hashes: GA4 inline (shared) = `sha256-09uD3fDDD02G8jqNYt/Z45AQPDzZopvEX50h3r6Gbrs=`, 404 search handler = `sha256-ESvNm5DWwF4KGXjI+5+2/Ny8yvwOuVBbsbM2bTtD+xw=`, offline reload handler = `sha256-pgSyuEr/NIN1kTdlTabMEu9Ul7rfWjLoH4QadQTs+bY=`.
+- **scripts/csp-hash-registry.json** — updated with the three page hashes + per-file reason notes. `propagate-csp.mjs --check-skipped` now detects drift if inline scripts change without a registry update.
+
+### UX
+- **Scroll-reveal extended** — `assets/scroll-reveal.js` linked on `/studio/`, `/community/`, `/ranks/`, `/roadmap/`; `data-reveal="fade-up"` added to key sections on each.
+- **Rank XP progress bar enhancement** (`vault-member/portal-dashboard.js` + `portal.css`) — milestone ticks, shimmer animation when progress >80%, aria-progressbar attrs, XP count label below bar.
+- **Skeleton loaders in portal** (`vault-member/portal.css`) — `.skeleton`, `.skeleton-line`, `.skeleton-circle`, `.skeleton-card` with pulse animation; `:empty` pattern applied to profile/stats/achievements containers.
+
+### Feedback loop
+- **Scroll-depth GA4 milestones** — `assets/scroll-depth.js` created; fires `scroll_milestone` at 25/50/75/100% on homepage, `/membership/`, `/vaultsparked/`.
+- **What's New portal modal enhancement** (`vault-member/portal-dashboard.js`) — `PORTAL_VERSION` constant + `localStorage` `vs_portal_last_seen` gate + hardcoded S66 fallback items; Escape dismiss + focus trap.
+- **Public changelog page** — `/changelog/` created listing all shipped sessions; added to `sitemap.xml`.
+
+### Features
+- **Game Notify Me forms** — `assets/notify-me.js` created; email capture + Web3Forms submit on all 4 FORGE game pages (vaultfront, solara, mindframe, the-exodus).
+- **Achievement share card generator** — `vault-member/portal-share.js` created; Canvas PNG 1200×630 on badge unlock with download + copy-to-clipboard actions.
+
+## Process Gap Noted
+
+S66 work shipped but closeout never ran in-session. S67 start detected ~95 modified files + 4 untracked JS in dirty tree and ran commit + closeout retroactively. Brainstorm #1 (closeout-commit gate) committed to TASK_BOARD as `[SIL]` to prevent recurrence.
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required
+
+- [ ] **[IGNIS]** Rescore — now 6 days stale; threshold is 7d. Run `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website` in the next session.
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions.
+- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler.
+- [ ] **[STRIPE-ANNUAL]** Create 2 new Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal). Wire to billing toggle checkout when created.
+- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com.
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard.
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here.
+
+## Recommended First Action Next Session
+
+1. **[IGNIS] Rescore** — single command, addresses staleness; expected to benefit from S66 shipped improvements (security, perf, feedback loop).
+2. **[SIL] Closeout-commit gate** — edit `prompts/closeout.md` Step 0 to require git status clean before proceeding (prevents S66 gap recurring).
+3. **Genius Hit List refresh** — audit current site, generate fresh ranked list, queue next batch.
 
 ---
 
