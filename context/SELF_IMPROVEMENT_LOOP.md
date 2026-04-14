@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▆
-Avgs — 3: 446.7 | 5: 438.4 | 10: 434.0 | all: 427.3
-  └ 3-session: Dev 92.0 | Align 89.0 | Momentum 86.0 | Engage 88.0 | Process 85.7
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~2.0 sessions (S67 pre-load needed)  |  Intent rate: 100% (last session)
-Last session: 2026-04-13 | Session 66 | Total: 449/500 | Velocity: 11 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▅
+Avgs — 3: 423.3 | 5: 427.6 | 10: 430.4 | all: 425.7
+  └ 3-session: Dev 88.3 | Align 80.7 | Momentum 70.7 | Engage 83.3 | Process 80.7
+Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~1.2 sessions (low — S68 pre-load required)  |  Intent rate: 80% (last 5 — S67 redirected)
+Last session: 2026-04-14 | Session 67 | Total: 373/500 | Velocity: 1 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -836,3 +836,30 @@ Avgs — 3: 446.7 | 5: 438.4 | 10: 434.0 | 25: — | all: 427.3
 5. **Per-page critical CSS automation** — extend S66's homepage critical CSS inline pattern with a `scripts/inline-critical-css.mjs` that generates above-fold CSS per top-landing-page using Puppeteer + cssnano. First step: run critical on /membership/ and /vaultsparked/ to validate. Low probability (tooling overhead).
 
 **Committed to TASK_BOARD:** [SIL] Closeout-commit gate · [SIL] Genius Hit List as scheduled audit job
+
+
+## 2026-04-14 — Session 67 (CSP hotfix — intent redirected) | Total: 373/500 | Velocity: 1 | Debt: →
+Avgs — 3: 423.3 | 5: 427.6 | 10: 430.4 | all: 425.7
+  └ 3-session: Dev 88.3 | Align 80.7 | Momentum 70.7 | Engage 83.3 | Process 80.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 85 | ↓ | Root-cause fix, clean propagation. -7 for shipping a bug to prod that a smoke test should have caught. |
+| Creative Alignment | 75 | ↓ | No creative work; ecosystem contribution low for pure hotfix. |
+| Momentum | 55 | ↓ | Intent redirected — none of S67 declared items done. Velocity 1. But prod blocker cleared in-session. |
+| Engagement | 80 | ↓ | Studio Owner flagged with screenshot + full console log → fast feedback loop. |
+| Process Quality | 78 | ↓ | Clean handoff, clean commit, rebase handled. -7 for S53 CSP hardening leaving the inline event handler behind — latent bug since S53. |
+| **Total** | **373/500** | ↓ 76 | |
+
+**Top win:** Live site restored in one surgical commit. Hotfix touched meta CSP + Worker CSP + canonical + vaultsparked + registry in one pass, propagated to 88 pages, clean rebase + push.
+**Top gap:** The CSS onload event handler was silently broken since S53 CSP hardening (no unsafe-hashes, no test for computed styles). Existing Playwright suite checks HTTP + DOM but not `getComputedStyle`.
+**Intent outcome:** Redirected — Studio Owner escalated a production issue; declared S67 intent (Genius Hit List refresh + IGNIS + closeout-commit gate) deferred to S68.
+
+**Brainstorm**
+1. **Browser computed-style smoke test** — `tests/computed-styles.spec.js` opens `/` and asserts `getComputedStyle(body).backgroundImage` and `.hero` class visibility are non-trivial. Would have caught the S67 bug pre-deploy. First step: add Chromium spec to e2e.yml. High probability.
+2. **CSP `unsafe-hashes` evaluation** — if we want to keep the print/onload trick anywhere, we need `unsafe-hashes + hash of the literal handler`. Probably not worth it; external-script pattern is cleaner. First step: audit repo for any other inline event handlers. High probability.
+3. **Inline-script hash auto-generator** — `scripts/generate-csp-hashes.mjs` extracts all inline `<script>` bodies across the repo and prints the SHA-256 set for paste into CSP. Running this at closeout would have flagged the 5 missing S65/S66 hashes before they shipped. First step: reuse the regex from this session to walk all HTML. High probability.
+4. **Closeout-commit gate + CSP freshness gate combined** — Step 0 in `prompts/closeout.md` fails closeout if (a) git tree dirty OR (b) any inline script hash not in CSP. First step: wire (3) as a precommit hook. Medium probability.
+5. **Cloudflare Worker deploy retry** — without `CF_WORKER_API_TOKEN`, Worker CSP diverges from meta CSP on every hash bump. Either set the token (HAR) or script a local Wrangler fallback. First step: script `cloudflare/deploy-local.sh` that checks token + runs wrangler. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Browser computed-style smoke test · (existing S68 items kept: [SIL:1] Closeout-commit gate, [SIL:2⛔] IGNIS Rescore)

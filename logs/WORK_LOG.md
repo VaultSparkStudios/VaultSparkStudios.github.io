@@ -1,5 +1,14 @@
 # Work Log
 
+## 2026-04-14 — Session 67 (CSP hotfix — intent redirected)
+
+- index.html: removed `media="print" onload="this.media='all'"` async-CSS trick (inline event handler was CSP-blocked → stylesheet stayed print-only → site rendered unstyled in prod); `<link rel="stylesheet" href="assets/style.css" />` now loads normally (critical CSS already inlined, no FOUC concern)
+- index.html + vaultsparked/index.html + cloudflare/security-headers-worker.js + scripts/propagate-csp.mjs: 5 new SHA-256 hashes added to `script-src` (signal-panel VAULT_LIVE_URL script 1UY3+…, Kit form-wiring tzcyzR…, dZNuqX…, 6LhxaK…, GEw0Ad…) — hashes computed from local inline script bodies; match browser-reported blocks
+- scripts/propagate-csp.mjs: ran → 88 pages updated; --check-skipped → OK on all 3 registry entries
+- scripts/csp-hash-registry.json: vaultsparked entry updated with 5 new hashes in cspContent; lastVerified → 2026-04-14
+- Commit: 5fd3918 (94 files, +96/−97) · rebased onto origin/main (pulled `b890e69 leaderboard data` + `2279708 sw bump`) · pushed → b4e1088
+- SIL: — · Velocity: 1 · Debt: →
+
 ## 2026-04-13 — Session 65
 
 - assets/style.css: `--gold: #7a5c00` added to `body.light-mode {}` (dark amber, ~5:1 WCAG AA on `#f6efe5` cream); `#FFC400` override added for `.countdown-classified .countdown-value/.countdown-label` (hardcoded dark bg context)

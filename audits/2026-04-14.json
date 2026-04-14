@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-website",
+  "date": "2026-04-14",
+  "session": 67,
+  "sessionType": "hotfix",
+  "label": "csp-hotfix-intent-redirected",
+  "calibration": false,
+  "scores": {
+    "devHealth": 85,
+    "creativeAlignment": 75,
+    "momentum": 55,
+    "engagement": 80,
+    "processQuality": 78
+  },
+  "total": 373,
+  "maxScore": 500,
+  "velocity": 1,
+  "protocolVelocity": 0,
+  "durationMinutes": 45,
+  "debt": "\u2192",
+  "rollingAvg3": {
+    "devHealth": 88.3,
+    "creativeAlignment": 80.7,
+    "momentum": 70.7,
+    "engagement": 83.3,
+    "processQuality": 80.7,
+    "total": 423.3
+  },
+  "rollingAvgTotals": { "3": 423.3, "5": 427.6, "10": 430.4, "25": null, "all": 425.7 },
+  "topWin": "Live site restored in one surgical commit: removed CSP-blocked onload event handler, added 5 missing inline-script SHA-256 hashes to meta CSP + Worker + canonical + vaultsparked + registry, propagated 88 pages, clean rebase + push.",
+  "topGap": "The CSS onload event handler was silently broken since S53 CSP hardening. Existing Playwright suite checks HTTP + DOM but not computed styles, so the bug shipped unseen.",
+  "intentOutcome": "Redirected",
+  "improvementsShipped": 1,
+  "improvementGroups": { "security": 1 },
+  "testsTotal": null,
+  "testsByType": {},
+  "testsDelta": 0,
+  "deployStatus": "deployed",
+  "ignisFlags": ["intent-redirected", "blocker-cleared", "low-velocity"],
+  "ignisNote": "A tiny CSP fossil from S53 (leftover inline event handler after 'unsafe-inline' was removed) took down the entire visual render of the live site — hashes don't cover event handlers, and no test asserted computed styles. Fast, clean surgical fix. Pattern: when hardening CSP, audit for inline event handlers, not just inline scripts."
+}

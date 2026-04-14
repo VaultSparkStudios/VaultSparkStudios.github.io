@@ -1,6 +1,16 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 66 closeout, run retroactively at S67 start)
+Last updated: 2026-04-14 (Session 67 closeout — CSP hotfix, intent redirected)
+
+## Now (S68 runway pre-load)
+
+- [ ] **[HOTFIX-VERIFY]** Open `https://vaultsparkstudios.com/` in a browser (incognito + hard reload) after GitHub Pages deploys `b4e1088`. Confirm the site is styled. Open DevTools console and confirm zero CSP violations.
+- [ ] **[SIL:1] IGNIS Rescore** — now 7d+ stale (last 2026-04-07). Run `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website`.
+- [ ] **[SIL:1] Closeout-commit gate** — `prompts/closeout.md` Step 0 pre-check: block closeout if git working tree is dirty beyond trivial changes; force a commit first. Prevents the S66→S67 dirty-handoff pattern from recurring.
+- [ ] **[SIL] Genius Hit List as scheduled audit** — schedule recurring audit job that generates `docs/GENIUS_LIST.md` without human prompt.
+- [ ] **[SIL] Browser smoke test for computed styles** — playwright spec that opens `/` and asserts `getComputedStyle(body).backgroundImage !== 'none'` (would have caught the S67 CSS bug pre-deploy). Rationale: this CSP failure shipped silently because HTTP 200 + JSON responses looked fine; only real-browser render caught it.
+- [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
+- [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read). Blocks automatic Worker CSP sync from S67.
 
 ---
 
@@ -102,9 +112,9 @@ Last updated: 2026-04-13 (Session 66 closeout, run retroactively at S67 start)
 
 ## Now (S67 runway pre-load)
 
-- [ ] **[SIL:1] IGNIS Rescore** — now 6 days stale (last computed 2026-04-07); threshold is 7 days. Run `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website`. First step: ensure studio-ops CLI is accessible.
-- [ ] **[SIL] Closeout-commit gate** — edit `prompts/closeout.md` Step 0 to check git status at closeout start: if ≥10 modified files are uncommitted, block closeout until commit completes. Prevents S66→S67 handoff gap recurring. First step: add a Step 0.5 pre-commit check.
-- [ ] **[SIL] Genius Hit List as scheduled audit** — schedule the audit prompt as a weekly/monthly recurring task that generates fresh external-review scores + ranked hit list into `docs/GENIUS_LIST.md` without requiring a human prompt. First step: draft the ScheduleWakeup or CronCreate payload.
+- [ ] **[SIL:2⛔] IGNIS Rescore** — moved to S68 runway above (now past staleness threshold).
+- [ ] **[SIL:1] Closeout-commit gate** — moved to S68 runway above.
+- [ ] **[SIL:1] Genius Hit List as scheduled audit** — moved to S68 runway above.
 - [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
 - [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read).
 

@@ -1,9 +1,52 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-13 (Session 66 closeout, run retroactively at start of S67)
+Last updated: 2026-04-14 (Session 67)
 
-## Session Intent: Session 67
-Extend the Genius Hit List framework: run fresh external audit scores, produce next session's ranked hit list, execute top items. Also: [IGNIS] rescore (now 6d stale, mandatory); [SIL] closeout-commit gate in closeout.md Step 0; [SIL] Genius Hit List as scheduled audit job.
+## Session Intent: Session 68
+Resume the S67 declared-but-deferred items: [IGNIS] rescore (now 7d stale, past threshold — mandatory); [SIL] closeout-commit gate in `prompts/closeout.md` Step 0; [SIL] Genius Hit List as scheduled audit job. Then continue Genius Hit List refresh (fresh external audit → next hit list).
+
+---
+
+## Where We Left Off (Session 67 — 2026-04-14)
+
+**Session output: 1 critical hotfix shipped — intent redirected. Studio Owner reported the live site was rendering unstyled (screenshot attached). Planned S67 work (Genius Hit List refresh, IGNIS rescore, closeout-commit gate) deferred to S68.**
+
+### Root cause
+Line 62 of `index.html` used the `rel=stylesheet media="print" onload="this.media='all'"` async-CSS optimization. The `onload` inline event handler was blocked by CSP (which can only whitelist hashed scripts, not inline handlers — `unsafe-hashes` not set). The stylesheet stayed `media="print"` forever → zero CSS applied → site rendered as unstyled DOM. Separately, 5 inline scripts added in S65/S66 (signal panel VAULT_LIVE_URL config, Kit form wiring, others at lines 1761/1777/1799/1875) never had their hashes added to CSP, so they were blocked too.
+
+### Hotfix
+- **`index.html:62`** — removed the media-print/onload swap; `<link rel="stylesheet" href="assets/style.css" />` loads normally. Critical CSS already inlined in `<head>`, so render cost is negligible.
+- **CSP updated in 3 places** — `index.html` meta, `vaultsparked/index.html` meta (SKIP_DIRS page), `cloudflare/security-headers-worker.js` response headers. Five new hashes: `sha256-1UY3+YG3/aghZuROwdh01e6q3uBGn09YVftjxTlBqTE=`, `sha256-tzcyzRA1BVljjKPxQcsqyEn62T2GndOkIweuNdj2DbI=`, `sha256-dZNuqX91zJojUg7FRdKg5d3LknfbrNLsddyjo/JDQiQ=`, `sha256-6LhxaKZePez9MP4tlBaCqBzlgynkabWjj7FWyMEaYng=`, `sha256-GEw0AdBFktwtVecnKrmGqCnQhddgYdiccv8eggRcnA0=`. Browser-blocked hashes matched locally-computed hashes 1:1.
+- **Canonical propagated** — `scripts/propagate-csp.mjs` CSP_VALUE updated; `node scripts/propagate-csp.mjs` ran → 88 pages updated. `--check-skipped` → OK on all 3 registry entries.
+- **Registry bumped** — `scripts/csp-hash-registry.json` vaultsparked entry updated + `lastVerified: 2026-04-14`.
+- **Commit** — `5fd3918` (94 files, +96/−97). Rebased onto origin/main (pulled `b890e69` leaderboard-data + `2279708` sw-bump). Pushed → `b4e1088`.
+
+### Why the meta+Worker had to both change
+Browser enforces the intersection of all active CSPs. Worker response header and meta tag are both present; hashes missing from *either* still block. Worker hashes take effect only after GH Actions `cloudflare-worker-deploy.yml` runs (requires `CF_WORKER_API_TOKEN` secret — still HAR-pending).
+
+### Process gap
+The `onload="this.media='all'"` trick was added when CSP had `'unsafe-inline'`. When S53 hardened CSP to hash-only (removed `'unsafe-inline'`), the inline event handler was silently left behind — hashes don't cover event handlers. No test caught it. Candidate for S68 brainstorm: CI smoke should open `/` in a real browser and assert computed `body` styles are present, not just that the page returns 200.
+
+## Open Blockers
+
+*(none)*
+
+## Human Action Required (carried forward from S66)
+
+- [ ] **[IGNIS]** Rescore — now 7d stale as of 2026-04-14; threshold crossed. Run `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website` in S68.
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Workers Scripts: Edit + Zone: Read permissions. **Until this is set, the Worker CSP update from this session won't deploy — meta-tag CSP alone is enough for modern browsers but Worker header is the stricter layer.**
+- [ ] **[CF-WORKER]** Manual redeploy of `cloudflare/security-headers-worker.js` via Wrangler is the fallback if the token isn't set.
+- [ ] **[STRIPE-ANNUAL]** Create 2 Stripe annual price IDs: $44.99/yr (Sparked), $269.99/yr (Eternal).
+- [ ] **[WEB3FORMS]** Test contact form from browser.
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active.
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here.
+
+## Recommended First Action Next Session
+
+1. **Verify live site** — reload `https://vaultsparkstudios.com/` after GitHub Pages deploy; confirm styled. Open DevTools console; confirm zero CSP violations.
+2. **[IGNIS] Rescore** — past staleness threshold.
+3. **[SIL] Closeout-commit gate** — `prompts/closeout.md` Step 0 pre-commit check so a dirty tree blocks closeout.
+4. **Genius Hit List refresh** — originally S67's core intent.
 
 ---
 
@@ -36,20 +79,6 @@ Extend the Genius Hit List framework: run fresh external audit scores, produce n
 ## Process Gap Noted
 
 S66 work shipped but closeout never ran in-session. S67 start detected ~95 modified files + 4 untracked JS in dirty tree and ran commit + closeout retroactively. Brainstorm #1 (closeout-commit gate) committed to TASK_BOARD as `[SIL]` to prevent recurrence.
-
-## Open Blockers
-
-*(none)*
-
-## Human Action Required
-
-- [ ] **[IGNIS]** Rescore — now 6 days stale; threshold is 7d. Run `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website` in the next session.
-- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions.
-- [ ] **[CF-WORKER]** Redeploy Cloudflare Worker (`cloudflare/security-headers-worker.js`) via Wrangler.
-- [ ] **[STRIPE-ANNUAL]** Create 2 new Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal). Wire to billing toggle checkout when created.
-- [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com.
-- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard.
-- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here.
 
 ## Recommended First Action Next Session
 
