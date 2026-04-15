@@ -52,7 +52,10 @@
         copyButton.textContent = '✓ Copied!';
         copyButton.classList.add('copied');
         showFeedback('good', 'Referral link copied', 'Paste it anywhere your people already trust you.');
-        if (window.VSFunnel) window.VSFunnel.track('invite_copy_link', { page_path: window.location.pathname });
+        if (window.VSFunnel) {
+          window.VSFunnel.track('invite_copy_link', { page_path: window.location.pathname });
+          window.VSFunnel.trackStage('invite_referral', 'copy_link', { page_path: window.location.pathname });
+        }
         setTimeout(function () {
           copyButton.textContent = 'Copy Link';
           copyButton.classList.remove('copied');
@@ -65,20 +68,29 @@
       navigator.clipboard.writeText(message).then(function () {
         discordButton.textContent = '✓ Copied!';
         showFeedback('good', 'Discord message copied', 'Drop it into your server, DM, or community thread.');
-        if (window.VSFunnel) window.VSFunnel.track('invite_copy_discord', { page_path: window.location.pathname });
+        if (window.VSFunnel) {
+          window.VSFunnel.track('invite_copy_discord', { page_path: window.location.pathname });
+          window.VSFunnel.trackStage('invite_referral', 'copy_discord', { page_path: window.location.pathname });
+        }
         setTimeout(function () { discordButton.textContent = 'Copy Discord Message'; }, 1800);
       });
     });
 
     xButton.addEventListener('click', function () {
       var text = 'Just joined the @VaultSparkStudios vault. Come build the community with me: ' + link;
-      if (window.VSFunnel) window.VSFunnel.track('invite_share_x', { page_path: window.location.pathname });
+      if (window.VSFunnel) {
+        window.VSFunnel.track('invite_share_x', { page_path: window.location.pathname });
+        window.VSFunnel.trackStage('invite_referral', 'share_x', { page_path: window.location.pathname });
+      }
       window.open('https://x.com/intent/tweet?text=' + encodeURIComponent(text), '_blank', 'noopener');
     });
 
     redditButton.addEventListener('click', function () {
       var title = 'Just joined VaultSpark Studios — an indie game studio building some cool stuff';
-      if (window.VSFunnel) window.VSFunnel.track('invite_share_reddit', { page_path: window.location.pathname });
+      if (window.VSFunnel) {
+        window.VSFunnel.track('invite_share_reddit', { page_path: window.location.pathname });
+        window.VSFunnel.trackStage('invite_referral', 'share_reddit', { page_path: window.location.pathname });
+      }
       window.open('https://www.reddit.com/submit?url=' + encodeURIComponent(link) + '&title=' + encodeURIComponent(title), '_blank', 'noopener');
     });
   }
@@ -191,6 +203,7 @@
         totalCount >= 1 ? 'Recruiter' : 'Pending';
 
       showFeedback('neutral', 'Referral link ready', 'Share your link where your people already trust you — private DMs, Discord communities, or social posts.');
+      if (window.VSFunnel) window.VSFunnel.trackStage('invite_referral', 'ready', { page_path: window.location.pathname });
     } catch (error) {
       console.warn('[invite] member load error', error);
     }

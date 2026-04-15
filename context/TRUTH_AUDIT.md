@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-15 (S69 closeout)
+Last reviewed: 2026-04-15 (S70 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -14,3 +14,6 @@ Public-safe summary:
 - CSP registry (S65): `scripts/csp-hash-registry.json` documents excluded pages' CSP snapshots; 404.html + offline.html no longer carry `'unsafe-inline'` debt, and skipped-page drift checks now pass cleanly
 - Repo-wide CSP truth changed in S69: `node scripts/csp-audit.mjs` now passes across all 93 HTML files after the legacy debt cleanup
 - Cloudflare Worker truth changed in S69: live production security-header policy was redeployed manually via Wrangler; Worker version `f0c9672a-25ae-413f-b131-e0ee9027b69b` now matches the repo-side CSP state
+- Policy-generation truth changed in S70: `config/csp-policy.mjs` is now the shared source of truth for page CSP, redirect-page CSP, Worker CSP, and the repo-wide audit path
+- Redirect truth changed in S70: legacy `investor/**` pages are now minimal hardened redirects without inline GA/bootstrap/redirect code
+- Derived-view freshness improved in S70: `api/public-intelligence.json` was regenerated during closeout after memory updates so the public intelligence payload reflects current Session 70 truth

@@ -82,7 +82,10 @@
       }
 
       showReferrer(result.data[0]);
-      if (window.VSFunnel) window.VSFunnel.track('join_referral_loaded', { event_label: ref, page_path: window.location.pathname });
+      if (window.VSFunnel) {
+        window.VSFunnel.track('join_referral_loaded', { event_label: ref, page_path: window.location.pathname });
+        window.VSFunnel.trackStage('join_referral', 'loaded', { event_label: ref, page_path: window.location.pathname });
+      }
     } catch (_) {
       showGeneric();
     }
@@ -95,7 +98,10 @@
     button.disabled = true;
     button.textContent = 'Sending…';
     showFeedback('neutral', 'Request in transit', 'Your request is being sent to the studio. You will be contacted when an invite cycle opens.');
-    if (window.VSFunnel) window.VSFunnel.track('vault_access_request_started', { page_path: window.location.pathname });
+    if (window.VSFunnel) {
+      window.VSFunnel.track('vault_access_request_started', { page_path: window.location.pathname });
+      window.VSFunnel.trackStage('join_access_request', 'started', { page_path: window.location.pathname });
+    }
 
     try {
       var response = await fetch('https://api.web3forms.com/submit', {
@@ -109,14 +115,20 @@
       document.getElementById('vault-request-success').style.display = 'block';
       showFeedback('good', 'Request received', 'You are on the shortlist. Watch your inbox for an invite cycle or direct follow-up from the studio.');
       if (typeof gtag === 'function') gtag('event', 'form_submit', { form_name: 'vault_access_request', form_location: '/join/' });
-      if (window.VSFunnel) window.VSFunnel.track('vault_access_request_success', { page_path: window.location.pathname });
+      if (window.VSFunnel) {
+        window.VSFunnel.track('vault_access_request_success', { page_path: window.location.pathname });
+        window.VSFunnel.trackStage('join_access_request', 'success', { page_path: window.location.pathname });
+      }
     } catch (error) {
       document.getElementById('vault-request-error').style.display = 'block';
       button.disabled = false;
       button.textContent = 'Request Access →';
       showFeedback('bad', 'Request failed', 'Please retry in a moment, or use the contact page if the problem continues.');
       if (typeof gtag === 'function') gtag('event', 'form_error', { form_name: 'vault_access_request', form_location: '/join/', error: error.message || 'unknown' });
-      if (window.VSFunnel) window.VSFunnel.track('vault_access_request_error', { page_path: window.location.pathname, error: error.message || 'unknown' });
+      if (window.VSFunnel) {
+        window.VSFunnel.track('vault_access_request_error', { page_path: window.location.pathname, error: error.message || 'unknown' });
+        window.VSFunnel.trackStage('join_access_request', 'error', { page_path: window.location.pathname, error: error.message || 'unknown' });
+      }
     }
   }
 

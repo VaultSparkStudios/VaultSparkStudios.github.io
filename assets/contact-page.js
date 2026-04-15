@@ -73,7 +73,10 @@
     submitBtn.disabled = true;
     submitBtn.textContent = 'Transmitting…';
     showFeedback('neutral', 'Signal in transit', 'Your message is being transmitted directly to the studio inbox.');
-    if (window.VSFunnel) window.VSFunnel.track('contact_submit_started', { page_path: window.location.pathname });
+    if (window.VSFunnel) {
+      window.VSFunnel.track('contact_submit_started', { page_path: window.location.pathname });
+      window.VSFunnel.trackStage('contact_signal', 'started', { page_path: window.location.pathname });
+    }
 
     var data = new FormData(form);
     data.set('message', 'Subject: ' + subject + '\n\nFrom: ' + name + ' <' + email + '>\n\n' + message);
@@ -88,14 +91,20 @@
       showFeedback('good', 'Signal transmitted', 'Response time is typically within 48 hours. If this is time-sensitive, email founder@vaultsparkstudios.com directly.');
       showToast(false);
       if (typeof gtag === 'function') gtag('event', 'form_submit', { form_id: 'contact' });
-      if (window.VSFunnel) window.VSFunnel.track('contact_submit_success', { page_path: window.location.pathname });
+      if (window.VSFunnel) {
+        window.VSFunnel.track('contact_submit_success', { page_path: window.location.pathname });
+        window.VSFunnel.trackStage('contact_signal', 'success', { page_path: window.location.pathname });
+      }
     } catch (error) {
       submitBtn.disabled = false;
       submitBtn.textContent = originalText;
       showFeedback('bad', 'Transmission failed', 'Please retry, or email founder@vaultsparkstudios.com directly if the issue continues.');
       showToast(true);
       if (typeof gtag === 'function') gtag('event', 'form_error', { form_id: 'contact', error: error.message });
-      if (window.VSFunnel) window.VSFunnel.track('contact_submit_error', { page_path: window.location.pathname, error: error.message || 'unknown' });
+      if (window.VSFunnel) {
+        window.VSFunnel.track('contact_submit_error', { page_path: window.location.pathname, error: error.message || 'unknown' });
+        window.VSFunnel.trackStage('contact_signal', 'error', { page_path: window.location.pathname, error: error.message || 'unknown' });
+      }
     }
   }
 

@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2026-04-15T19:08:58.546Z",
+  "project": {
+    "name": "VaultSparkStudios.github.io",
+    "slug": "vaultsparkstudios-website",
+    "status": "live",
+    "health": "green",
+    "vaultStatus": "SPARKED",
+    "currentSession": 70,
+    "lastUpdated": "2026-04-15",
+    "currentFocus": "S70 turned the audit into a live public intelligence and policy-generation layer: generated truth JSON, live Studio Pulse, shared proof runtime, adaptive CTAs, stage-based funnel telemetry, a shared CSP source, and hardened investor redirects. Immediate focus is now the next-order integration pass: Studio Hub/social-dashboard bridge work, stronger cohesion across public surfaces, and an AI/pathways layer.",
+    "nextMilestone": "Complete the audit follow-through by extending the public intelligence bridge into Studio Hub/social signals, shipping higher-order guidance/personalization layers, and refreshing IGNIS after the new architectural baseline is in place.",
+    "blockers": [
+      "CF_WORKER_API_TOKEN missing, so Worker deploys still require local Wrangler auth",
+      "Public intelligence JSON exists but generation is not yet automated in closeout/build flow",
+      "Annual Stripe price IDs still do not exist for the billing toggle",
+      "IGNIS refresh failed in closeout; current score still dates to 2026-04-07",
+      "Studio Hub / social dashboard / public site do not yet share one public-safe intelligence contract"
+    ],
+    "ignis": {
+      "score": 47308,
+      "grade": "FORGE",
+      "lastComputed": "2026-04-07"
+    }
+  },
+  "pulse": {
+    "now": [
+      "[AUDIT] Public intelligence generator — `scripts/generate-public-intelligence.mjs` now compiles a public-safe truth payload from `PROJECT_STATUS.json`, `TASK_BOARD.md`, and `LATEST_HANDOFF.md` into `api/public-intelligence.json`.",
+      "[AUDIT] Live Studio Pulse — `/studio-pulse/` now reads live session/focus/queue/catalog data from the generated public intelligence payload via `assets/public-intelligence.js` + `assets/studio-pulse-live.js` instead of frozen hardcoded Session 55 content.",
+      "[AUDIT] Shared live proof layer — `assets/live-proof.js` now hydrates homepage, membership, and VaultSparked proof counters from the same public Supabase queries instead of page-specific duplicate scripts.",
+      "[AUDIT] Adaptive CTA baseline — `assets/adaptive-cta.js` now shifts key CTAs based on session/referral/membership-intent state across homepage, membership, VaultSparked, join, and invite.",
+      "[AUDIT] Funnel stage telemetry baseline — `assets/funnel-tracking.js` now supports stage events and auto-detects engagement/submit starts for tagged forms; join/contact/invite scripts now emit stage success/error transitions.",
+      "[AUDIT] Generated CSP source — `config/csp-policy.mjs` now owns the canonical page/Worker/redirect CSP variants; `scripts/propagate-csp.mjs`, `scripts/csp-audit.mjs`, and `cloudflare/security-headers-worker.js` all consume that shared source instead of carrying duplicated policy strings.",
+      "[AUDIT] Investor surface hardening — legacy `investor/` redirects now use minimal redirect pages plus `assets/redirect-page.js`; inline GA/bootstrap/redirect code was removed and the route family no longer depends on `script-src 'unsafe-inline'`.",
+      "[AUDIT] Studio Hub + social dashboard bridge — promote selected public-safe Studio OS / Studio Hub / social signals into the site’s intelligence payload rather than keeping the bridge repo-local only."
+    ],
+    "next": [
+      "[AUDIT] Auto-generate public intelligence during closeout/build — wire `node scripts/generate-public-intelligence.mjs` into the closeout/deploy path so public truth cannot drift after memory updates.",
+      "[AUDIT] Local browser verification target — add a local static-server/browser smoke path so Playwright can verify unshipped working-tree changes instead of defaulting to live production.",
+      "[AUDIT] Studio Hub + social dashboard intelligence contract — define a shared public-safe schema that can feed homepage intelligence, Studio Pulse, Studio Hub, and future social widgets from one source."
+    ],
+    "shipped": [
+      "Public intelligence generator shipped — `scripts/generate-public-intelligence.mjs` now compiles a public-safe payload from `PROJECT_STATUS.json`, `TASK_BOARD.md`, and `LATEST_HANDOFF.md` into `api/public-intelligence.json`.",
+      "Studio Pulse stopped being a frozen snapshot — `/studio-pulse/` now renders session stats, queue items, and catalog cards from generated truth via `assets/public-intelligence.js` and `assets/studio-pulse-live.js`.",
+      "Homepage gained a public Studio OS surface — `index.html` now exposes a “Studio Intelligence” section fed by generated truth, while proof/activity logic moved into shared external runtime (`assets/home-intelligence.js`, `assets/live-proof.js`).",
+      "Adaptive CTA baseline shipped — homepage, membership, VaultSparked, join, and invite now use `assets/adaptive-cta.js` so key CTAs react to session/referral/membership-intent state instead of staying static.",
+      "Funnel telemetry deepened — `assets/funnel-tracking.js` now supports stage-style events and tagged form engagement tracking; join/contact/invite flows now emit explicit started/success/error/ready transitions.",
+      "Generated CSP source shipped — `config/csp-policy.mjs` now owns the canonical page/Worker/redirect policies, and `scripts/propagate-csp.mjs`, `scripts/csp-audit.mjs`, and `cloudflare/security-headers-worker.js` all consume that shared source."
+    ]
+  },
+  "stats": {
+    "sessionsCompleted": 70,
+    "liveProjects": 3,
+    "projectsInForge": 5,
+    "activeEdgeFunctions": 16,
+    "vaultRankTiers": 9
+  },
+  "catalog": [
+    {
+      "name": "Call of Doodie",
+      "type": "game",
+      "status": "SPARKED",
+      "progress": 88,
+      "note": "Live, public, and still actively refined."
+    },
+    {
+      "name": "VaultSpark Football GM",
+      "type": "game",
+      "status": "SPARKED",
+      "progress": 76,
+      "note": "Live beta with ongoing polish and iteration."
+    },
+    {
+      "name": "MindFrame",
+      "type": "game",
+      "status": "FORGE",
+      "progress": 42,
+      "note": "Core identity is strong; next step is deeper live adoption."
+    },
+    {
+      "name": "Solara",
+      "type": "game",
+      "status": "FORGE",
+      "progress": 30,
+      "note": "World and combat systems still consolidating."
+    },
+    {
+      "name": "VaultFront",
+      "type": "game",
+      "status": "FORGE",
+      "progress": 24,
+      "note": "Early runtime and gameplay differentiation still in progress."
+    },
+    {
+      "name": "The Exodus",
+      "type": "game",
+      "status": "FORGE",
+      "progress": 18,
+      "note": "Conceptual direction is stronger than implementation depth."
+    },
+    {
+      "name": "PromoGrind",
+      "type": "project",
+      "status": "SPARKED",
+      "progress": 91,
+      "note": "Live utility product with incremental UX refinements."
+    },
+    {
+      "name": "Vorn",
+      "type": "project",
+      "status": "FORGE",
+      "progress": 61,
+      "note": "Strong operating direction, still moving toward fuller agent-native depth."
+    }
+  ]
+}

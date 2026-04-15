@@ -404,3 +404,34 @@ Public-safe note:
 - Logged into Wrangler locally, deployed `vaultspark-security-headers-production` to `vaultsparkstudios.com/*`, and published version `f0c9672a-25ae-413f-b131-e0ee9027b69b`
 - Verified live production headers on `/` and `/vaultsparked/` with browser-like requests after Cloudflare blocked plain curl probes
 - SIL: 447/500 · Velocity: 2 · Debt: ↓
+
+## 2026-04-15 — Session 70
+
+- Converted the website audit into shipped architecture instead of leaving it as a recommendation list
+- Added `scripts/generate-public-intelligence.mjs` and `api/public-intelligence.json` as a public-safe bridge from Studio OS truth to the live site
+- Rewired `/studio-pulse/` to consume generated truth via `assets/public-intelligence.js` and `assets/studio-pulse-live.js`
+- Added a homepage “Studio Intelligence” surface plus shared runtime in `assets/home-intelligence.js`
+- Unified proof counters across homepage, membership, and VaultSparked with `assets/live-proof.js`
+- Added adaptive CTA behavior across homepage, membership, VaultSparked, join, and invite with `assets/adaptive-cta.js`
+- Extended funnel telemetry to stage-oriented flow events in `assets/funnel-tracking.js` and join/contact/invite scripts
+- Verification: generation + hook scan passed; live-site Playwright smoke still points at undeployed production and is not a valid local verification of the new code
+- SIL: 439/500 · Velocity: 5 · Debt: ↓
+
+## 2026-04-15 — Session 70 follow-through
+
+- Extracted canonical page/Worker/redirect CSP variants into `config/csp-policy.mjs`
+- Rewired `scripts/propagate-csp.mjs`, `scripts/csp-audit.mjs`, and `cloudflare/security-headers-worker.js` to consume the shared CSP source
+- Re-propagated the canonical page CSP across the repo and revalidated skipped pages via `node scripts/propagate-csp.mjs --check-skipped`
+- Hardened legacy `investor/**` redirects by removing inline GA/bootstrap/redirect scripts and replacing them with minimal redirect documents plus `assets/redirect-page.js`
+- Regenerated `api/public-intelligence.json` after memory updates so the public payload reflects the current Session 70 truth
+- Verification: `node scripts/generate-public-intelligence.mjs` passed; `node scripts/propagate-csp.mjs --check-skipped` passed; `node scripts/csp-audit.mjs` passed
+- SIL: 446/500 · Velocity: 7 · Debt: ↓
+
+## 2026-04-15 — Session 70 closeout
+
+- Refreshed `context/TASK_BOARD.md`, `CURRENT_STATE.md`, `LATEST_HANDOFF.md`, `DECISIONS.md`, `TRUTH_AUDIT.md`, `SELF_IMPROVEMENT_LOOP.md`, and `PROJECT_STATUS.json` to reflect the final pushed state
+- Re-generated `api/public-intelligence.json` after the final memory updates so the public payload matches closeout truth
+- Generated per-project state outputs: `context/STATE_VECTOR.json`, `context/GENOME_HISTORY.json`, and `docs/GENOME_HISTORY.md`
+- Updated protocol entropy successfully; IGNIS stale report succeeded, but project re-score failed and remains an open tooling blocker
+- Prepared audit closeout artifact for 2026-04-15 and finalized the repo for commit/push
+- SIL: 452/500 · Velocity: 7 · Debt: ↓

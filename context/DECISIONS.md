@@ -2,6 +2,20 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-15 — CSP policy generation now comes from one structured source shared by meta propagation, audit, and Worker headers (S70)
+
+- Status: active
+- Decision: page meta CSP, redirect-page CSP, and Cloudflare Worker CSP are now generated from `config/csp-policy.mjs` instead of being hand-maintained as separate long strings in multiple files.
+- Why: S69 closed the repo-wide CSP debt, but the remaining maintenance risk was policy drift between propagation, audit, and live headers. One structured source cuts that drift surface materially.
+- Maintenance rule: if a new inline script hash or allowlist domain is needed, update `config/csp-policy.mjs`, rerun `node scripts/propagate-csp.mjs`, and verify with `node scripts/csp-audit.mjs`.
+
+### 2026-04-15 — Public operating surfaces should be generated from Studio OS truth, not hand-maintained HTML snapshots (S70)
+
+- Status: active
+- Decision: public-facing transparency/operating surfaces should consume a generated public-safe payload derived from repo truth files (`PROJECT_STATUS.json`, `TASK_BOARD.md`, `LATEST_HANDOFF.md`) instead of relying on hardcoded session-era copy in page HTML.
+- Why: the audit found that the site’s “Studio OS” / transparency story was strategically strong but operationally stale. Generated truth keeps the public site synchronized with real studio state without exposing private operator detail.
+- Maintenance rule: whenever public-facing operating status changes, rerun `node scripts/generate-public-intelligence.mjs` and keep `api/public-intelligence.json` aligned until this generation step is automated in closeout/build.
+
 ### 2026-04-15 — Manual Wrangler deploy is the approved fallback when Worker CSP must ship before GitHub automation exists (S69)
 
 - Status: active

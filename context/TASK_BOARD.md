@@ -1,15 +1,35 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 69 CSP cleanup + Worker deploy)
+Last updated: 2026-04-15 (Session 70 audit execution + public intelligence layer)
+
+## Now (S70 audit execution)
+
+- [x] **[AUDIT] Public intelligence generator** — `scripts/generate-public-intelligence.mjs` now compiles a public-safe truth payload from `PROJECT_STATUS.json`, `TASK_BOARD.md`, and `LATEST_HANDOFF.md` into `api/public-intelligence.json`.
+- [x] **[AUDIT] Live Studio Pulse** — `/studio-pulse/` now reads live session/focus/queue/catalog data from the generated public intelligence payload via `assets/public-intelligence.js` + `assets/studio-pulse-live.js` instead of frozen hardcoded Session 55 content.
+- [x] **[AUDIT] Shared live proof layer** — `assets/live-proof.js` now hydrates homepage, membership, and VaultSparked proof counters from the same public Supabase queries instead of page-specific duplicate scripts.
+- [x] **[AUDIT] Adaptive CTA baseline** — `assets/adaptive-cta.js` now shifts key CTAs based on session/referral/membership-intent state across homepage, membership, VaultSparked, join, and invite.
+- [x] **[AUDIT] Funnel stage telemetry baseline** — `assets/funnel-tracking.js` now supports stage events and auto-detects engagement/submit starts for tagged forms; join/contact/invite scripts now emit stage success/error transitions.
+- [x] **[AUDIT] Generated CSP source** — `config/csp-policy.mjs` now owns the canonical page/Worker/redirect CSP variants; `scripts/propagate-csp.mjs`, `scripts/csp-audit.mjs`, and `cloudflare/security-headers-worker.js` all consume that shared source instead of carrying duplicated policy strings.
+- [x] **[AUDIT] Investor surface hardening** — legacy `investor/**` redirects now use minimal redirect pages plus `assets/redirect-page.js`; inline GA/bootstrap/redirect code was removed and the route family no longer depends on `script-src 'unsafe-inline'`.
+- [ ] **[AUDIT] Studio Hub + social dashboard bridge** — promote selected public-safe Studio OS / Studio Hub / social signals into the site’s intelligence payload rather than keeping the bridge repo-local only.
+- [ ] **[AUDIT] Public AI concierge / pathways** — build a constrained intent router for player / member / supporter / investor / lore-seeker entry paths.
+- [ ] **[AUDIT] Cohesion pass for related-content graph** — deepen cross-links between games, projects, universe, membership, journal, changelog, and studio surfaces.
+
+- [ ] **[SIL:2⛔] Genius Hit List as scheduled audit** — schedule recurring audit job that generates `docs/GENIUS_LIST.md` without human prompt.
+- [ ] **[SIL:1] Live Worker header verification script** — codify the browser-like header check used in S69 so post-deploy verification does not rely on ad hoc curl commands. First step: add `scripts/verify-live-headers.mjs` for `/` and `/vaultsparked/`.
+- [ ] **[SIL:1] Local Worker deploy helper** — add a small wrapper/script that checks Wrangler auth and deploys `cloudflare/security-headers-worker.js` safely when GitHub Actions cannot. First step: script a `cloudflare/deploy-worker-local.ps1` flow around `wrangler whoami` + `wrangler deploy --env production`.
+
+## Next (S70 post-closeout)
+
+- [ ] **[AUDIT] Auto-generate public intelligence during closeout/build** — wire `node scripts/generate-public-intelligence.mjs` into the closeout/deploy path so public truth cannot drift after memory updates.
+- [ ] **[AUDIT] Local browser verification target** — add a local static-server/browser smoke path so Playwright can verify unshipped working-tree changes instead of defaulting to live production.
+- [ ] **[AUDIT] Studio Hub + social dashboard intelligence contract** — define a shared public-safe schema that can feed homepage intelligence, Studio Pulse, Studio Hub, and future social widgets from one source.
 
 ## Now (S69 runway pre-load)
 
 - [ ] **[SIL:2⛔] IGNIS Rescore** — still stale since 2026-04-07. Run `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website`.
-- [ ] **[SIL:1] Genius Hit List as scheduled audit** — schedule recurring audit job that generates `docs/GENIUS_LIST.md` without human prompt.
 - [ ] **[AUDIT] Conversion funnel instrumentation + feedback states** — **partial S68**: `/membership/`, `/vaultsparked/`, `/invite/`, `/join/`, and `/contact/` now have CTA/view events and stronger feedback panels, but stage-by-stage reporting and broader form outcome coverage still need completion.
 - [ ] **[AUDIT] Premium proof/depth pass on conversion pages** — **partial S68**: homepage, membership, and VaultSparked now show live recent shipped work / live vault proof / stronger next-step messaging. Continue with member outcomes, testimonials, and trust objections handling.
-- [ ] **[SIL] Live Worker header verification script** — codify the browser-like header check used in S69 so post-deploy verification does not rely on ad hoc curl commands. First step: add `scripts/verify-live-headers.mjs` for `/` and `/vaultsparked/`.
-- [ ] **[SIL] Local Worker deploy helper** — add a small wrapper/script that checks Wrangler auth and deploys `cloudflare/security-headers-worker.js` safely when GitHub Actions cannot. First step: script a `cloudflare/deploy-worker-local.ps1` flow around `wrangler whoami` + `wrangler deploy --env production`.
 - [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
 - [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read). S69 proved the manual Wrangler fallback works, but automatic Worker CSP sync is still blocked without this secret.
 

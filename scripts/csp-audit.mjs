@@ -14,6 +14,7 @@
 import crypto from 'crypto';
 import { readFileSync, readdirSync, statSync } from 'fs';
 import { dirname, join, relative } from 'path';
+import { PAGE_CSP, WORKER_CSP } from '../config/csp-policy.mjs';
 
 const ROOT = join(dirname(new URL(import.meta.url).pathname.replace(/^\/([A-Z]:)/, '$1')), '..');
 
@@ -27,24 +28,6 @@ const CANON_SKIP_FILES = new Set(['vaultspark-football-gm/game.html', '404.html'
 
 const CSP_META_RE = /<meta\s+http-equiv=["']Content-Security-Policy["']\s+content="([^"]*)"\s*\/?>/i;
 const INLINE_SCRIPT_RE = /<script\b([^>]*)>([\s\S]*?)<\/script>/gi;
-
-function collectQuotedValue(source, anchorRegex) {
-  const match = source.match(anchorRegex);
-  if (!match) throw new Error(`Unable to locate ${anchorRegex}`);
-  const block = match[1];
-  const parts = [...block.matchAll(/"([^"]*)"/g)].map((m) => m[1]);
-  return parts.join('');
-}
-
-function loadCanonicalCsp() {
-  const src = readFileSync(join(ROOT, 'scripts', 'propagate-csp.mjs'), 'utf8');
-  return collectQuotedValue(src, /const CSP_VALUE\s*=\s*([\s\S]*?)\/\/ ─/);
-}
-
-function loadWorkerCsp() {
-  const src = readFileSync(join(ROOT, 'cloudflare', 'security-headers-worker.js'), 'utf8');
-  return collectQuotedValue(src, /'Content-Security-Policy':\s*([\s\S]*?),\s*\n\s*'Strict-Transport-Security'/);
-}
 
 function walk(dir, files = []) {
   for (const entry of readdirSync(dir)) {
@@ -84,8 +67,8 @@ function extractInlineHashes(html) {
   return hashes;
 }
 
-const canonicalCsp = loadCanonicalCsp();
-const workerCsp = loadWorkerCsp();
+const canonicalCsp = PAGE_CSP;
+const workerCsp = WORKER_CSP;
 const files = walk(ROOT);
 const failures = [];
 let checked = 0;

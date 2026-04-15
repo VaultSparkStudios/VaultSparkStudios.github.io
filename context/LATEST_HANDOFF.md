@@ -1,6 +1,56 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 69)
+Last updated: 2026-04-15 (Session 70)
+
+## Session Intent: Session 70
+Audit the website deeply, score it, convert the highest-leverage recommendations into real implementation work, and update repo memory/task surfaces so the roadmap survives beyond the session.
+
+## Where We Left Off (Session 70)
+- Shipped: 7 structural improvements across public intelligence, Studio Pulse, proof systems, CTA logic, funnel telemetry, generated CSP sources, and investor-surface hardening
+- Tests: `node scripts/generate-public-intelligence.mjs`, `node scripts/propagate-csp.mjs --check-skipped`, `node scripts/csp-audit.mjs`, `state-vector --project .`, and `entropy --update --project .` passed locally; live-site Playwright smoke still points at undeployed production and is not a valid verification of these local code changes
+- Deploy: committed and pushed to `main`; GitHub Pages / downstream production rollout pending
+
+### Shipped
+- **Public intelligence generator shipped** — `scripts/generate-public-intelligence.mjs` now compiles a public-safe payload from `PROJECT_STATUS.json`, `TASK_BOARD.md`, and `LATEST_HANDOFF.md` into `api/public-intelligence.json`.
+- **Studio Pulse stopped being a frozen snapshot** — `/studio-pulse/` now renders session stats, queue items, and catalog cards from generated truth via `assets/public-intelligence.js` and `assets/studio-pulse-live.js`.
+- **Homepage gained a public Studio OS surface** — `index.html` now exposes a “Studio Intelligence” section fed by generated truth, while proof/activity logic moved into shared external runtime (`assets/home-intelligence.js`, `assets/live-proof.js`).
+- **Adaptive CTA baseline shipped** — homepage, membership, VaultSparked, join, and invite now use `assets/adaptive-cta.js` so key CTAs react to session/referral/membership-intent state instead of staying static.
+- **Funnel telemetry deepened** — `assets/funnel-tracking.js` now supports stage-style events and tagged form engagement tracking; join/contact/invite flows now emit explicit started/success/error/ready transitions.
+- **Generated CSP source shipped** — `config/csp-policy.mjs` now owns the canonical page/Worker/redirect policies, and `scripts/propagate-csp.mjs`, `scripts/csp-audit.mjs`, and `cloudflare/security-headers-worker.js` all consume that shared source.
+- **Investor redirect hardening shipped** — legacy `investor/**` redirect pages were collapsed to minimal redirect documents plus `assets/redirect-page.js`, removing the remaining `script-src 'unsafe-inline'` dependency on that route family.
+
+### Verification
+- `node scripts/generate-public-intelligence.mjs` → **passed**
+- `node scripts/propagate-csp.mjs --check-skipped` → **passed**
+- `node scripts/csp-audit.mjs` → **passed** (93 HTML files)
+- `node ../vaultspark-studio-ops/scripts/ops.mjs state-vector --project .` → **passed**
+- `node ../vaultspark-studio-ops/scripts/ops.mjs entropy --update --project .` → **passed**
+- `node ../vaultspark-studio-ops/scripts/ops.mjs genome-snapshot --project .` → **passed**
+- `node ../vaultspark-studio-ops/scripts/ops.mjs genome-history --project .` → **passed**
+- `node ../vaultspark-studio-ops/scripts/ops.mjs rescore` → **passed** (staleness report only; project confirmed stale)
+- `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website` → **failed** (IGNIS CLI error; score not refreshed)
+- structural hook scan across modified pages/scripts → **passed**
+- `npx playwright test tests/computed-styles.spec.js --project=chromium --workers=1` against default `BASE_URL=https://vaultsparkstudios.com` → **fails on the live site still reporting `VaultKit is not defined`**, which is not a valid local verification of the unshipped repo changes
+
+### Open carry-forward
+- **Studio Hub/social dashboard bridge is only partially real** — the public intelligence payload currently reads local Studio OS truth only.
+- **IGNIS remains stale** — project refresh failed in closeout, so the current score still dates to 2026-04-07.
+- **Annual Stripe routing remains HAR-blocked** — annual price IDs still do not exist.
+- **Public intelligence generation is still manual** — the JSON was regenerated during closeout, but the step is not yet wired into closeout/build automation.
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions so future Worker header/CSP changes do not require local Wrangler deploys.
+- [ ] **[STRIPE-ANNUAL]** Create 2 Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal).
+- [ ] **[WEB3FORMS]** Test contact form from browser.
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active.
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here.
+
+## Recommended First Action Next Session
+
+1. **[AUDIT] Studio Hub + social dashboard bridge** — define the public-safe shared intelligence contract first so homepage intelligence, Studio Pulse, and downstream studio surfaces can stop diverging.
+2. **[AUDIT] Auto-generate public intelligence during closeout/build** — remove the manual regeneration step before it drifts.
+3. **[AUDIT] Local browser verification target** — make unshipped browser verification local-first instead of live-first.
 
 ## Session Intent: Session 69
 Finish the repo-wide CSP cleanup batches, clear the remaining special-page and inline-handler debt, deploy the updated Cloudflare Worker security headers live, verify production headers, and close out the session cleanly.

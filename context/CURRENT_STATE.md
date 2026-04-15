@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-15 (Session 69)
+- Date: 2026-04-15 (Session 70)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: **S69 — repo-wide CSP cleanup batch and live Worker sync shipped.** The S68 guardrails remain in place (`tests/computed-styles.spec.js`, `.github/workflows/e2e.yml`, `scripts/csp-audit.mjs`, closeout CSP gate), but the repo has now been brought back into compliance: `node scripts/csp-audit.mjs` passes across all 93 HTML files after canonical CSP propagation, skipped-page registry updates, residual inline-handler removal on legacy public routes, and new shared runtime assets for error/public handler cases (`assets/error-pages.js`, `assets/public-page-handlers.js`). The Cloudflare Worker CSP layer was manually redeployed via Wrangler OAuth on 2026-04-15, and live production headers were verified on `/` and `/vaultsparked/` with browser-like requests. Immediate focus has shifted from CSP debt triage to automation (`CF_WORKER_API_TOKEN`), stale IGNIS, and finishing the broader funnel/proof follow-through.
+- Repo posture: **S70 — audit execution closed with a live public intelligence + policy-generation layer.** The S69 CSP-clean baseline still holds, and S70 added a generated truth payload (`scripts/generate-public-intelligence.mjs` → `api/public-intelligence.json`), a live Studio Pulse renderer (`assets/public-intelligence.js`, `assets/studio-pulse-live.js`), shared proof hydration (`assets/live-proof.js`), adaptive CTA logic (`assets/adaptive-cta.js`), richer funnel stage telemetry (`assets/funnel-tracking.js` plus join/contact/invite flow updates), and a generated CSP source (`config/csp-policy.mjs`) now shared by page propagation, audit, and the Cloudflare Worker. The session is closed out, committed, and ready for the next integration layer: richer Studio Hub/social-dashboard intelligence, AI/pathways guidance, and broader cohesion between public surfaces.
 
 ## What exists
 
@@ -23,7 +23,7 @@
 
 ### Infrastructure
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: `f0c9672a-25ae-413f-b131-e0ee9027b69b`). Manually redeployed via Wrangler on 2026-04-15 after the repo-wide CSP cleanup; production route `vaultsparkstudios.com/*` verified live.
-- **CSP audit gate** (`scripts/csp-audit.mjs`) — S68 added a repo-wide inline-script hash audit that compares each page's inline script hashes against page CSP, canonical CSP, and Worker CSP. **Current result: passing** — 93 HTML files checked clean after the S69 cleanup/deploy pass.
+- **CSP source + audit gate** (`config/csp-policy.mjs`, `scripts/propagate-csp.mjs`, `scripts/csp-audit.mjs`) — S70 extracted page/Worker/redirect CSP variants into one structured source. Propagation, audit, and Worker headers now read from the same module. **Current result: passing** — 93 HTML files checked clean after the S70 re-propagation pass.
 - **Computed render smoke** (`tests/computed-styles.spec.js`) — S68 added a real-browser homepage styling check (computed body background, hero spacing, header border, zero page errors). Local Chromium run passed on 2026-04-15.
 - **Homepage hero** (`index.html`) — S62: forge ignition + vault door hybrid; `vaultspark-cinematic-logo.webp` removed from hero; `.forge-wordmark` h1 with `.forge-line-1` (VAULTSPARK) + `.forge-line-2` (STUDIOS) animated via `letterForge` keyframe; `.forge-spark-burst` gold ignition point; `.hero-chamber` radial vignette; `.hero-reveal` stagger cascade; full responsive 768/640/480/360px; `prefers-reduced-motion` guard; light-mode overrides; icon remains in nav header only.
 - **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260413-d58d28b`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, `portal-init.js`, `members-directory.js`, `vaultsparked-checkout.js`, `billing-toggle.js`
@@ -91,6 +91,11 @@
 
 - **Studio stats + scroll reveals** (`assets/studio-stats.js`, `assets/scroll-reveal.js`, `index.html`) — S64: `days-since-launch` CSP-blocked inline script externalized to `studio-stats.js` (defer, no hash needed); stat corrected to `10+` Worlds in the forge (was `7+`); `scroll-reveal.js` IntersectionObserver fade-up reveals added with CSS; 6 homepage sections tagged `data-reveal="fade-up"`
 - **Membership stats live** (`assets/membership-stats.js`, `membership/index.html`) — S64: CSP-blocked inline social proof script externalized to `membership-stats.js` (defer); queries `VSPublic` for member count, sparked count, challenge count across 5 stat elements
+- **Public intelligence layer** (`scripts/generate-public-intelligence.mjs`, `api/public-intelligence.json`, `assets/public-intelligence.js`, `assets/studio-pulse-live.js`, `assets/home-intelligence.js`) — S70: generated a public-safe bridge from Studio OS truth into the live site. `/studio-pulse/` now renders session/focus/queue/catalog data from generated repo truth instead of stale hand-authored HTML, and the homepage now exposes a “Studio Intelligence” surface backed by the same payload.
+- **Shared proof layer** (`assets/live-proof.js`) — S70: homepage, membership, and VaultSparked now share one live proof runtime for public member/sparked/challenge counts and rank-distribution rendering instead of duplicating that logic per page.
+- **Adaptive CTA layer** (`assets/adaptive-cta.js`) — S70: homepage, membership, VaultSparked, join, and invite now shift key calls-to-action based on current session state, referral state, and prior membership intent.
+- **Funnel stage telemetry baseline** (`assets/funnel-tracking.js`, `assets/join-page.js`, `assets/contact-page.js`, `assets/invite-page.js`) — S70: added stage-oriented flow events (`engaged`, `submit_started`, `success`, `error`, `ready`) on tagged forms and referral actions.
+- **Hardened redirect surfaces** (`assets/redirect-page.js`, `investor/**`) — S70: legacy investor redirect pages were collapsed to minimal meta-refresh + external redirect runtime pages. Inline GA/bootstrap/redirect scripts were removed so the route family no longer requires `script-src 'unsafe-inline'`.
 - **Gold contrast WCAG AA fix** (`assets/style.css`) — S65: `--gold: #7a5c00` added to `body.light-mode {}` (~5:1 contrast on `#f6efe5` cream); `.countdown-classified` panels get explicit `#FFC400` override (hardcoded dark bg context)
 - **Signal teaser panel light-mode** (`index.html`, `assets/style.css`) — S65: 3 inline-style dark elements get CSS classes (`signal-teaser-panel`, `signal-image-card`, `signal-classified-chip`); light-mode `!important` overrides in style.css; text now readable in light mode
 - **Vault Wall spec enhanced** (`tests/vault-wall.spec.js`) — S65: `#rank-dist-bar` + `#vw-podium` visible assertions; `pageerror` CSP listener; rank-dist-seg soft count warn; auth-free route check; retires `[SIL:2⛔]` manual smoke protocol
@@ -103,9 +108,11 @@
 - Cloudflare WAF rule (CN/RU/HK JS Challenge) — status unknown
 - beacon.env not configured (Active Session Beacon inactive)
 - **`CF_WORKER_API_TOKEN`** secret not yet added — cloudflare-worker-deploy.yml is ready, but S69 still had to use manual local Wrangler auth to deploy the Worker update. Future CSP changes will keep depending on manual deploys until the secret exists.
-- Funnel instrumentation/proof depth is still only partially finished — S68 foundations are live, but stage-by-stage reporting and deeper trust/testimonial surfaces still need the next pass.
+- Public intelligence payload exists, but generation is still manual for now — the next step is automating `node scripts/generate-public-intelligence.mjs` in closeout/build flow.
+- Funnel instrumentation/proof depth is still only partially finished — the stage baseline is live, but richer reporting, deeper proof/testimonial surfaces, and more guided next-step UX still need the next pass.
+- Studio Hub / social dashboard / public site still do not share one public-safe intelligence contract.
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
-- IGNIS score: 47,308/100,000 · Tier: FORGE · last computed 2026-04-07 (stale 7+ days — **mandatory rescore next session**)
+- IGNIS score refresh is still blocked by tooling failure — `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website` failed in closeout, so the current value remains 47,308/100,000 · Tier: FORGE · last computed 2026-04-07
 - Annual Stripe price IDs ($44.99/yr, $269.99/yr) not yet created — billing toggle UI exists but annual checkout routes to same monthly price IDs
 - ~~404.html and offline.html use `'unsafe-inline'`~~ — **FIXED S66**: SHA-256 hashes computed and applied to both pages; `csp-hash-registry.json` updated with hash entries
 - vaultsparked in SKIP_DIRS — nav changes must be manually applied there (not auto-propagated)

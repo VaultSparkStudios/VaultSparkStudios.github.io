@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▅▆▆
-Avgs — 3: 418.7 | 5: 430.6 | 10: 432.3 | all: 424.5
-  └ 3-session: Dev 90.3 | Align 80.3 | Momentum 73.7 | Engage 87.7 | Process 86.7
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~1.8 sessions  |  Intent rate: 80% (last 5)
-Last session: 2026-04-15 | Session 69 | Total: 447/500 | Velocity: 2 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▆▆▆▇
+Avgs — 3: 445.7 | 5: 444.0 | 10: 435.8 | all: 426.1
+  └ 3-session: Dev 91.7 | Align 86.0 | Momentum 87.0 | Engage 89.3 | Process 91.7
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~0.9 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-15 | Session 70 | Total: 452/500 | Velocity: 7 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -911,3 +911,75 @@ Avgs — 3: 418.7 | 5: 430.6 | 10: 432.3 | all: 424.5
 3. **Canonical CSP source split** — move the long `script-src` hash list into a structured source file and generate the Worker/meta strings from it to reduce manual string editing risk. First step: extract hash arrays into a JSON/module consumed by `propagate-csp.mjs`. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Live Worker header verification script · [SIL] Local Worker deploy helper
+
+## 2026-04-15 — Session 70 | Total: 439/500 | Velocity: 5 | Debt: ↓
+Avgs — 3: 440.7 | 5: 434.0 | 10: 432.9 | all: 425.0
+  └ 3-session: Dev 88.7 | Align 84.7 | Momentum 80.3 | Engage 88.7 | Process 91.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 88 | ↓ | Shared architecture shipped cleanly, but verification is still weaker than implementation depth because the browser smoke target is the undeployed live site |
+| Creative Alignment | 87 | ↑ | The site now behaves more like a public operating surface for the studio instead of only a marketing shell |
+| Momentum | 86 | ↑ | Audit findings were converted into real multi-surface implementation in one session |
+| Engagement | 89 | ↓ | Adaptive CTAs and stage telemetry materially improve future learning loops and visitor-state responsiveness |
+| Process Quality | 89 | ↓ | Memory/task write-back preserved the roadmap; the remaining process gap is that the new intelligence generator is not yet automated |
+| **Total** | **439/500** | ↓ 8 | |
+
+**Top win:** The repo gained a real public intelligence spine: generated truth JSON, live Studio Pulse, shared proof hydration, adaptive CTAs, and stage telemetry now exist as reusable systems.
+**Top gap:** Verification still lags implementation depth — structural checks passed, but true browser verification of the modified local surfaces was not completed in-session.
+**Intent outcome:** Achieved — the audit was preserved in memory/task surfaces and the highest-leverage structural recommendations were actually implemented.
+
+**Brainstorm**
+1. **Generated CSP source** — replace the duplicated Worker/meta CSP strings with a structured source file and emit both outputs from it. First step: extract the hash arrays into a shared JSON/module consumed by `propagate-csp.mjs` and the Worker. High probability.
+2. **Studio ecosystem bridge** — let the public intelligence payload ingest public-safe Studio Hub / social-dashboard signals instead of reading only this repo’s local truth. First step: define the public contract fields and add one importer. High probability.
+3. **Vault pathways / AI concierge** — build a constrained intent router that guides visitors into player/member/supporter/investor/lore-seeker paths instead of generic hero CTAs. First step: ship a lightweight pathways panel on the homepage using existing adaptive-state data. Medium probability.
+
+**Committed to TASK_BOARD:** [AUDIT] Generated CSP source · [AUDIT] Studio Hub + social dashboard bridge
+
+## 2026-04-15 — Session 70 follow-through | Total: 446/500 | Velocity: 7 | Debt: ↓
+Avgs — 3: 444.0 | 5: 435.4 | 10: 433.6 | all: 425.5
+  └ 3-session: Dev 91.0 | Align 84.3 | Momentum 82.3 | Engage 89.7 | Process 92.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 93 | ↑ | Shared CSP source landed, re-propagation completed, investor redirect hardening shipped, and the CSP audit is green again |
+| Creative Alignment | 85 | ↓ | This was still infrastructure-heavy, but it directly protects the public operating-surface work from drift |
+| Momentum | 87 | ↑ | The top two structural carry-forwards from the earlier S70 audit pass were closed in the same session |
+| Engagement | 89 | → | The site is more trustworthy and coherent, though the next loop still needs stronger live verification and Studio Hub bridging |
+| Process Quality | 92 | ↑ | Memory, task surfaces, policy generation, propagation, and audit are now aligned instead of manually stitched together |
+| **Total** | **446/500** | **↑ 7** | |
+
+**Top win:** CSP is no longer a brittle copy-paste surface. Policy source, propagation, audit, and Worker headers now share one maintainable spine, and the last obvious public redirect exception was removed.
+**Top gap:** The public intelligence layer still stops at this repo. The next real leverage point is the Studio Hub/social-dashboard contract plus browser verification against shipped code.
+**Intent outcome:** Achieved — the highest-value remaining S70 structural items were implemented, verified locally, and written back into repo memory.
+
+**Brainstorm**
+1. **Public intelligence auto-closeout** — run `node scripts/generate-public-intelligence.mjs` automatically from the closeout flow so the public payload cannot drift after memory updates. First step: add the command to `prompts/closeout.md` and document it in the handoff checklist. High probability.
+2. **Studio Hub/social contract module** — formalize a small public-safe schema for cross-surface intelligence so homepage, Studio Pulse, Studio Hub, and future social dashboard widgets all render from the same contract. First step: define fields in a JSON/module next to `PROJECT_STATUS.json`. High probability.
+3. **Local browser verification target** — add a local static-server/browser smoke path so render verification can hit the working tree instead of live production by default. First step: wire one npm script or Playwright baseURL override for local runs. High probability.
+
+**Committed to TASK_BOARD:** [AUDIT] Studio Hub + social dashboard bridge · [AUDIT] Public AI concierge / pathways
+
+## 2026-04-15 — Session 70 closeout | Total: 452/500 | Velocity: 7 | Debt: ↓
+Avgs — 3: 445.7 | 5: 444.0 | 10: 435.8 | all: 426.1
+  └ 3-session: Dev 91.7 | Align 86.0 | Momentum 87.0 | Engage 89.3 | Process 91.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 94 | ↑ | Shared CSP source shipped, repo-wide propagation/audit passed, investor redirect hardening landed, and generated public intelligence was refreshed after memory updates |
+| Creative Alignment | 86 | ↑ | The site now better reflects the studio as a live operating surface while preserving the public premium/intentional brand posture |
+| Momentum | 88 | ↑ | The session closed nearly all top audit-follow-through items and ended with a committed, pushed state instead of a partial handoff |
+| Engagement | 90 | ↑ | Feedback was translated into shipped architecture, tighter trust surfaces, and a cleaner next-session runway |
+| Process Quality | 94 | ↑ | Full closeout completed with task/memory truth refreshed, truth audit updated, audit JSON written, and project state/genome outputs generated |
+| **Total** | **452/500** | **↑ 6** | |
+
+**Top win:** The website now has both a public intelligence spine and a maintainable CSP/policy spine, which removes two of the biggest drift risks exposed by the audit.
+**Top gap:** IGNIS is still stale because the project re-score command failed in closeout, and true local browser verification still is not the default path.
+**Intent outcome:** Achieved — the audit recommendations were converted into real implementation, memory was updated, and the repo was closed out cleanly to a pushed state.
+
+**Brainstorm**
+1. **Auto-closeout intelligence refresh** — bake `node scripts/generate-public-intelligence.mjs` into the closeout/build path so public truth regenerates automatically after memory writes. First step: add it to `prompts/closeout.md` and one package/script entry. High probability.
+2. **Studio ecosystem intelligence schema** — define one public-safe contract for Studio Hub, social dashboard, homepage, and Studio Pulse so cross-surface data stops being custom per page. First step: add a small shared schema module next to `PROJECT_STATUS.json`. High probability.
+3. **Local-first browser verification** — add a local static server + Playwright baseURL override so smoke tests validate unshipped code rather than live production by default. First step: create one local smoke command and document it in handoff/closeout. High probability.
+
+**Committed to TASK_BOARD:** [AUDIT] Auto-generate public intelligence during closeout/build · [AUDIT] Local browser verification target
