@@ -1,0 +1,154 @@
+{
+  "schemaVersion": "1.0",
+  "generatedFrom": "ops runtime-pack synthesized manifest",
+  "synthesized": true,
+  "identity": {
+    "slug": "vaultsparkstudios-website",
+    "name": "VaultSparkStudios.github.io",
+    "repo": "VaultSparkStudios/VaultSparkStudios.github.io",
+    "owner": "VaultSpark Studios",
+    "type": "website",
+    "lifecycle": "deployed",
+    "audience": "public-live",
+    "vaultStatus": "SPARKED"
+  },
+  "studioOs": {
+    "applied": true,
+    "templateVersion": "3.2",
+    "complianceVersion": "1.5",
+    "sessionModeDefault": "builder",
+    "requiredFilesPresent": false
+  },
+  "listingMetadata": {
+    "canonicalSummary": "Studio website and Vault Member portal. Auth, rank system, points economy, classified lore, Discord role sync, Stripe subscriptions, admin panel.",
+    "tagline": "Studio OS migration applied. VaultSparked Discord role live.",
+    "tags": [
+      "website",
+      "live",
+      "deployed"
+    ],
+    "categories": [
+      "website",
+      "public-live"
+    ],
+    "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
+    "websiteDescription": "Studio website and Vault Member portal. Auth, rank system, points economy, classified lore, Discord role sync, Stripe subscriptions, admin panel.",
+    "socialDescription": "Studio website and Vault Member portal. Auth, rank system, points economy, classified lore, Discord role sync, Stripe subscriptions, admin panel.",
+    "brandingLabel": "A VaultSpark Studios Network"
+  },
+  "surfaces": {
+    "local": [
+      {
+        "label": "workspace",
+        "path": "C:\\Users\\p4cka\\documents\\development\\VaultSparkStudios.github.io"
+      }
+    ],
+    "staging": [
+      {
+        "label": "staging",
+        "url": "https://website.staging.vaultsparkstudios.com"
+      }
+    ],
+    "production": [
+      {
+        "label": "live",
+        "url": "https://vaultsparkstudios.com/"
+      }
+    ],
+    "preview": [],
+    "admin": [],
+    "api": [],
+    "docs": [],
+    "github": [
+      {
+        "label": "repo",
+        "url": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io"
+      }
+    ],
+    "testing": []
+  },
+  "capabilities": {
+    "auth": false,
+    "payments": true,
+    "analytics": false,
+    "email": false,
+    "ai": false,
+    "publishing": false,
+    "community": false,
+    "storage": false,
+    "cron": false
+  },
+  "integrations": {
+    "studioHub": {
+      "enabled": true,
+      "mode": "private"
+    },
+    "website": {
+      "enabled": true,
+      "mode": "public-safe"
+    },
+    "socialDashboard": {
+      "enabled": true,
+      "mode": "private"
+    },
+    "sparkFunnel": {
+      "enabled": true,
+      "mode": "growth"
+    },
+    "ignis": {
+      "enabled": true,
+      "mode": "portfolio-intelligence"
+    },
+    "founderQueue": {
+      "enabled": true,
+      "mode": "private"
+    }
+  },
+  "secretsCapabilities": [],
+  "hosting": {
+    "hostingProvider": "hetzner",
+    "liveUrl": "https://vaultsparkstudios.com/",
+    "stagingUrl": "https://website.staging.vaultsparkstudios.com",
+    "privatePreviewUrl": null,
+    "localDevUrl": null,
+    "deployStatus": "announced",
+    "testInstructions": []
+  },
+  "capacity": {
+    "currentPlanTier": "unknown",
+    "freePlanCeilings": [],
+    "fitsCurrentCapacity": true,
+    "preferredRuntime": "hetzner",
+    "fallbackRuntime": "hetzner",
+    "notes": ""
+  },
+  "publicMetadata": {
+    "privateByDefault": true,
+    "publicReady": true,
+    "publicRepoSanitized": false,
+    "brandingRequired": false,
+    "brandingCompliant": null,
+    "footerAttribution": "Powered by VaultSpark Studios",
+    "websiteListingRequired": true
+  },
+  "automation": {
+    "safeActions": [
+      "refresh-generated-surfaces"
+    ],
+    "guardedActions": [
+      "propagate-templates"
+    ],
+    "blockedActions": [
+      "change-canon",
+      "flip-repo-public",
+      "alter-licensing"
+    ]
+  },
+  "contracts": {
+    "hub": "context/contracts/hub.json",
+    "websitePublic": "context/contracts/website-public.json",
+    "socialDashboard": "context/contracts/social-dashboard.json",
+    "sparkFunnel": "context/contracts/sparkfunnel.json",
+    "ignis": "context/contracts/ignis.json"
+  }
+}
