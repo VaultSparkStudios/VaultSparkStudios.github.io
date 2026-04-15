@@ -863,3 +863,27 @@ Avgs — 3: 423.3 | 5: 427.6 | 10: 430.4 | all: 425.7
 5. **Cloudflare Worker deploy retry** — without `CF_WORKER_API_TOKEN`, Worker CSP diverges from meta CSP on every hash bump. Either set the token (HAR) or script a local Wrangler fallback. First step: script `cloudflare/deploy-local.sh` that checks token + runs wrangler. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Browser computed-style smoke test · (existing S68 items kept: [SIL:1] Closeout-commit gate, [SIL:2⛔] IGNIS Rescore)
+
+## 2026-04-15 — Session 68 | Total: 436/500 | Velocity: 7 | Debt: ↓
+Avgs — 3: 419.3 | 5: 430.6 | 10: 432.9 | all: 426.0
+  └ 3-session: Dev 87.0 | Align 82.3 | Momentum 78.0 | Engage 85.0 | Process 86.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 91 | ↑ | New browser render smoke passed; CSP audit gate added; public inline runtime externalized on key funnel pages |
+| Creative Alignment | 84 | ↑ | Depth/proof improvements on homepage, membership, and vaultsparked strengthen the studio's public front door without diluting brand |
+| Momentum | 82 | ↑ | High-leverage structural items shipped in one batch, but repo-wide CSP cleanup remains open |
+| Engagement | 90 | ↑ | Audit feedback was translated directly into product changes: better CTA feedback, stronger proof, stronger funnel instrumentation |
+| Process Quality | 89 | ↑ | Closeout gate, CSP gate, handoff, decisions, and task memory all updated; one verification command was missing locally and documented |
+| **Total** | **436/500** | ↑ 63 | |
+
+**Top win:** The session converted the audit into real system leverage instead of another wishlist: render smoke, CSP audit, closeout hardening, runtime extraction, funnel tracking, and proof surfaces all landed together.
+**Top gap:** The new CSP audit exposed a much larger repo-wide hash debt than expected; cleanup is now the true critical path.
+**Intent outcome:** Achieved — memory updated, task board expanded, and the top implementable structural items were actually shipped.
+
+**Brainstorm**
+1. **Repo-wide CSP autofix helper** — build a script that groups audit failures by page and generates the required hash additions for page/meta/Worker layers. First step: extend `scripts/csp-audit.mjs` with optional grouped output. High probability.
+2. **Stage telemetry map for key funnels** — move from CTA/view events to stage-by-stage lifecycle events (view → interact → submit → success/fail) across membership/contact/join/invite. First step: define a canonical event schema in `assets/funnel-tracking.js`. High probability.
+3. **Trust/proof source unification** — centralize live proof data so homepage, membership, vaultsparked, and studio-pulse all render from the same source. First step: extract a small shared public proof loader. Medium probability.
+
+**Committed to TASK_BOARD:** [AUDIT] Repo-wide CSP debt cleanup · [AUDIT] Conversion funnel instrumentation + feedback states

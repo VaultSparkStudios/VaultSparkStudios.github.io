@@ -477,7 +477,7 @@
             </p>
 
             <div class="join-actions fade-up fade-up-delay-1">
-              <a class="join-cta" href="/vault-member/#register" id="join-cta">
+              <a class="join-cta" href="/vault-member/#register" id="join-cta" data-track-event="join_primary_cta_click" data-track-category="join" data-track-label="claim_your_spot" data-track-location="/join/">
                 Claim Your Spot &nbsp;→
               </a>
               <span class="join-cta-note">Free forever. No credit card required.</span>
@@ -553,6 +553,7 @@
           </form>
           <div id="vault-request-success" style="display:none;padding:1rem;color:var(--green);font-size:0.92rem;font-weight:600;">&#10003; Request received — we'll be in touch when a spot opens.</div>
           <div id="vault-request-error" style="display:none;padding:0.5rem;color:#f87171;font-size:0.88rem;">Something went wrong. <a href="/contact/" style="color:var(--gold);">Contact us instead →</a></div>
+          <div id="vault-request-feedback" class="feedback-panel" aria-live="polite"></div>
           <p style="font-size:0.8rem;color:var(--dim);margin-top:0.75rem;">No spam. One email when your invite is ready.</p>
         </div>
       </div>
@@ -629,120 +630,9 @@
   <script src="../assets/supabase-public.js"></script>
 
   <script src="/assets/nav-toggle.js" defer></script>
-
-  <script>
-    /* ── Rank slug → CSS class map ───────────────────────── */
-    const RANK_CLASSES = {
-      'spark initiate':  'rank-spark-initiate',
-      'vault runner':    'rank-vault-runner',
-      'rift scout':      'rank-rift-scout',
-      'vault guard':     'rank-vault-guard',
-      'vault breacher':  'rank-vault-breacher',
-      'void operative':  'rank-void-operative',
-      'vault keeper':    'rank-vault-keeper',
-      'forge master':    'rank-forge-master',
-      'the sparked':     'rank-the-sparked',
-    };
-
-    function rankClass(rankName) {
-      if (!rankName) return 'rank-spark-initiate';
-      return RANK_CLASSES[rankName.toLowerCase()] || 'rank-spark-initiate';
-    }
-
-    function showGeneric() {
-      document.getElementById('referrer-card').style.display   = 'none';
-      document.getElementById('generic-badge').style.display   = 'inline-flex';
-      document.getElementById('join-heading-generic').style.display = '';
-      document.getElementById('join-heading-ref').style.display = 'none';
-    }
-
-    function showReferrer(member) {
-      const avatar   = document.getElementById('ref-avatar');
-      const name     = document.getElementById('ref-name');
-      const badge    = document.getElementById('ref-rank-badge');
-      const card     = document.getElementById('referrer-card');
-      const headingRef     = document.getElementById('join-heading-ref');
-      const headingGeneric = document.getElementById('join-heading-generic');
-      const subtext  = document.getElementById('join-subtext');
-
-      avatar.textContent = member.avatar_emoji || '⚡';
-      name.textContent   = member.username || 'A Vault Member';
-
-      const rn = member.rank_name || 'Spark Initiate';
-      badge.textContent = rn;
-      badge.className   = 'rank-badge ' + rankClass(rn);
-
-      // Swap heading
-      headingRef.style.display     = '';
-      headingGeneric.style.display = 'none';
-
-      // Update subtext to be personalised
-      subtext.textContent = member.username
-        ? `${member.username} personally unlocked the vault door for you. VaultSpark Studios is a free indie game community — earn rank, unlock lore, and play across every world we forge.`
-        : 'You've been personally invited to the Vault. Free to join — forever.';
-
-      card.style.display = 'inline-flex';
-      card.classList.remove('join-state-loading');
-    }
-
-    /* ── Referral flow ───────────────────────────────────── */
-    (async function() {
-      const params = new URLSearchParams(window.location.search);
-      const ref    = params.get('ref');
-
-      if (!ref) { showGeneric(); return; }
-
-      try {
-        const { data, error } = await VSPublic
-          .from('vault_members')
-          .select('username,rank_name,avatar_emoji')
-          .eq('username', ref)
-          .limit(1)
-          .get();
-
-        if (error || !data || data.length === 0) {
-          showGeneric();
-          return;
-        }
-
-        showReferrer(data[0]);
-      } catch (_) {
-        showGeneric();
-      }
-    })();
-
-  </script>
-
+  <script src="/assets/funnel-tracking.js" defer></script>
   <script src="/assets/sentry-init.js" defer></script>
-  <script>
-    (function() {
-      var f = document.getElementById('vault-request-form');
-      if (!f) return;
-      f.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        var btn = document.getElementById('vault-request-btn');
-        btn.disabled = true; btn.textContent = 'Sending…';
-        try {
-          var r = await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(Object.fromEntries(new FormData(f)))
-          });
-          if (r.ok) {
-            f.style.display = 'none';
-            document.getElementById('vault-request-success').style.display = 'block';
-            if (typeof gtag === 'function') { gtag('event', 'form_submit', { form_name: 'vault_access_request', form_location: '/join/' }); }
-          } else { throw new Error(); }
-        } catch(err) {
-          document.getElementById('vault-request-error').style.display = 'block';
-          btn.disabled = false; btn.textContent = 'Request Access →';
-          if (typeof gtag === 'function') { gtag('event', 'form_error', { form_name: 'vault_access_request', form_location: '/join/', error: err && err.message || 'unknown' }); }
-        }
-      });
-    })();
-  </script>
+  <script src="/assets/join-page.js" defer></script>
 </body>
 </html>
-
-
 

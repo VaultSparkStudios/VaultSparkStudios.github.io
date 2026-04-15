@@ -381,13 +381,14 @@
               </div>
 
               <div>
-                <button type="submit" class="button" style="width:100%;">Send Signal &nbsp;→</button>
+                <button type="submit" class="button" style="width:100%;" data-track-event="contact_cta_click" data-track-category="contact" data-track-label="send_signal" data-track-location="/contact/">Send Signal &nbsp;→</button>
               </div>
             </form>
 
             <div class="form-success" id="contact-success" role="status">
               ✓ Signal sent — your message has been transmitted to the vault.
             </div>
+            <div id="contact-feedback" class="feedback-panel" aria-live="polite"></div>
 
             <p style="color:var(--dim);font-size:0.78rem;margin-top:1.2rem;line-height:1.6;">
               By submitting this form you consent to VaultSpark Studios receiving and storing your message for the purpose of responding to your inquiry. See our <a href="/privacy/" style="color:var(--muted);">Privacy Policy</a> for details.
@@ -476,110 +477,10 @@
   </div>
 
   <script src="/assets/nav-toggle.js" defer></script>
-  <script>
-  (function () {
-    var TOAST_DURATION = 7000; // ms before auto-dismiss
-    var toast = document.getElementById('contact-toast');
-    var toastClose = document.getElementById('toast-close');
-    var toastProgress = document.getElementById('toast-progress');
-    var toastIcon = toast.querySelector('.toast-icon');
-    var toastTitle = toast.querySelector('.toast-title');
-    var toastMsg = toast.querySelector('.toast-msg');
-    var dismissTimer;
-
-    function showToast(isError) {
-      clearTimeout(dismissTimer);
-      toast.classList.remove('toast-leaving', 'toast-visible');
-      // Reset state
-      toast.style.borderColor = '';
-      toastIcon.style.background = '';
-      toastIcon.style.borderColor = '';
-      if (isError) {
-        toast.style.borderColor = 'rgba(248,113,113,0.35)';
-        toastIcon.style.background = 'rgba(248,113,113,0.12)';
-        toastIcon.style.borderColor = 'rgba(248,113,113,0.3)';
-        toastIcon.textContent = '✕';
-        toastTitle.style.color = '#f87171';
-        toastTitle.textContent = 'Transmission failed.';
-        toastMsg.textContent = 'Something went wrong — please email founder@vaultsparkstudios.com directly.';
-      } else {
-        toastIcon.textContent = '✓';
-        toastTitle.style.color = '';
-        toastTitle.textContent = 'Signal transmitted.';
-        toastMsg.textContent = 'Your message is in the vault. Response time is typically within 48 hours — the vault doesn\'t leave signals unanswered.';
-      }
-      toast.classList.add('toast-visible');
-
-      // Animate progress bar shrinking over TOAST_DURATION
-      toastProgress.style.transition = 'none';
-      toastProgress.style.transform = 'scaleX(1)';
-      // Force reflow before starting animation
-      toastProgress.getBoundingClientRect();
-      toastProgress.style.transition = 'transform ' + TOAST_DURATION + 'ms linear';
-      toastProgress.style.transform = 'scaleX(0)';
-
-      dismissTimer = setTimeout(dismissToast, TOAST_DURATION);
-    }
-
-    function dismissToast() {
-      clearTimeout(dismissTimer);
-      toast.classList.add('toast-leaving');
-      toast.addEventListener('transitionend', function onEnd() {
-        toast.classList.remove('toast-visible', 'toast-leaving');
-        toastProgress.style.transition = 'none';
-        toastProgress.style.transform = 'scaleX(1)';
-        toast.removeEventListener('transitionend', onEnd);
-      }, { once: true });
-    }
-
-    toastClose.addEventListener('click', dismissToast);
-
-    // Contact form → Web3Forms
-    document.getElementById('contact-form').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      var name    = document.getElementById('contact-name').value.trim();
-      var email   = document.getElementById('contact-email').value.trim();
-      var subject = document.getElementById('contact-subject').value.trim();
-      var message = document.getElementById('contact-message').value.trim();
-
-      if (!name || !email || !subject || !message) return;
-
-      var submitBtn = this.querySelector('button[type="submit"]');
-      var originalText = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Transmitting…';
-
-      var data = new FormData(this);
-      data.set('message', 'Subject: ' + subject + '\n\nFrom: ' + name + ' <' + email + '>\n\n' + message);
-
-      try {
-        var res = await fetch('https://api.web3forms.com/submit', {
-          method: 'POST',
-          body: data
-        });
-        var json = await res.json();
-
-        if (json.success) {
-          this.reset();
-          submitBtn.disabled = false;
-          submitBtn.textContent = originalText;
-          showToast(false);
-          if (typeof gtag === 'function') gtag('event', 'form_submit', { form_id: 'contact' });
-        } else {
-          throw new Error(json.message || 'Submission failed');
-        }
-      } catch (err) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-        showToast(true);
-        if (typeof gtag === 'function') gtag('event', 'form_error', { form_id: 'contact', error: err.message });
-      }
-    });
-  })();
-  </script>
+  <script src="/assets/funnel-tracking.js" defer></script>
+  <script src="/assets/contact-page.js" defer></script>
 
 </body>
 </html>
-
 
 

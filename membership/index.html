@@ -597,9 +597,9 @@
       </p>
 
       <div class="mem-hero-actions">
-        <a class="button" href="/vault-member/#register">Create Free Account</a>
-        <a class="button-secondary" href="/vaultsparked/">Choose Your Tier</a>
-        <a class="button-ghost" href="/membership-value/">See The Value</a>
+        <a class="button" href="/vault-member/#register" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="create_free_account" data-track-location="/membership/">Create Free Account</a>
+        <a class="button-secondary" href="/vaultsparked/" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="choose_your_tier" data-track-location="/membership/">Choose Your Tier</a>
+        <a class="button-ghost" href="/membership-value/" data-track-event="membership_primary_cta_click" data-track-category="membership" data-track-label="see_value" data-track-location="/membership/">See The Value</a>
       </div>
 
       <div class="mem-hero-proof" aria-label="Vault community stats">
@@ -651,7 +651,7 @@
             <li><span class="check check-free">✓</span> Play all free games</li>
             <li><span class="check check-free">✓</span> Studio Signal lore drops</li>
           </ul>
-          <a href="/vault-member/#register" class="mem-tier-cta mem-cta-free">Join Free</a>
+          <a href="/vault-member/#register" class="mem-tier-cta mem-cta-free" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="free" data-track-plan="free" data-track-location="/membership/">Join Free</a>
         </div>
 
         <!-- VaultSparked -->
@@ -671,7 +671,7 @@
             <li><span class="check check-sparked">✓</span> Priority challenge queue</li>
             <li><span class="check check-sparked">✓</span> Select game access</li>
           </ul>
-          <a href="/vault-member/#register" class="mem-tier-cta mem-cta-sparked">Start Free → Upgrade</a>
+          <a href="/vault-member/#register" class="mem-tier-cta mem-cta-sparked" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="vaultsparked" data-track-plan="vault_sparked" data-track-location="/membership/">Start Free → Upgrade</a>
         </div>
 
         <!-- Eternal -->
@@ -692,7 +692,7 @@
             <li><span class="check check-eternal">✓</span> Purple Eternal profile theme</li>
             <li><span class="check check-eternal">✓</span> Vault records permanent entry</li>
           </ul>
-          <a href="/vault-member/#register" class="mem-tier-cta mem-cta-eternal">Start Free → Go Eternal</a>
+          <a href="/vault-member/#register" class="mem-tier-cta mem-cta-eternal" data-track-event="membership_tier_cta_click" data-track-category="membership" data-track-label="vaultsparked_eternal" data-track-plan="vault_sparked_pro" data-track-location="/membership/">Start Free → Go Eternal</a>
         </div>
       </div>
 
@@ -840,6 +840,20 @@
     </div>
   </section>
 
+  <section class="surface-section" data-track-view="membership_recent_ships_view" data-track-category="membership" data-track-location="/membership/" aria-labelledby="membership-recent-heading">
+    <div class="container">
+      <div style="display:flex;align-items:end;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1.4rem;">
+        <div>
+          <span class="eyebrow">Fresh From The Forge</span>
+          <h2 id="membership-recent-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.8rem,3.6vw,2.8rem);letter-spacing:-0.04em;margin-top:0.4rem;">Proof the studio is shipping.</h2>
+          <p style="color:var(--muted);max-width:56ch;line-height:1.68;margin-top:0.7rem;">Membership is stronger when the studio keeps moving. These cards are pulled from the live public changelog, not frozen marketing copy.</p>
+        </div>
+        <a class="button-secondary" href="/changelog/" data-track-event="membership_recent_ships_click" data-track-category="membership" data-track-label="open_changelog" data-track-location="/membership/">Open Changelog</a>
+      </div>
+      <div class="recent-ships-grid" data-recent-ships></div>
+    </div>
+  </section>
+
   <!-- ── Final CTA ───────────────────────────────────── -->
   <section class="mem-final-cta" data-reveal="fade-up" aria-labelledby="final-cta-heading">
     <div class="container">
@@ -849,9 +863,13 @@
         Free to enter. Impossible to ignore once you're inside.
         Create your account now — your Vault Rank starts the moment you join.
       </p>
+      <div class="feedback-panel show neutral" style="max-width:640px;margin:0 auto 1.6rem;">
+        <strong class="feedback-panel-title">What happens next</strong>
+        <div class="feedback-panel-copy">Create the free account first, then decide whether you want Sparked or Eternal once you can see your portal, rank, and community identity live.</div>
+      </div>
       <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-        <a class="button" href="/vault-member/#register">Join Free — No Card Needed</a>
-        <a class="button-secondary" href="/vaultsparked/#pricing">See Pricing Tiers</a>
+        <a class="button" href="/vault-member/#register" data-track-event="membership_final_cta_click" data-track-category="membership" data-track-label="join_free" data-track-location="/membership/">Join Free — No Card Needed</a>
+        <a class="button-secondary" href="/vaultsparked/#pricing" data-track-event="membership_final_cta_click" data-track-category="membership" data-track-label="see_pricing_tiers" data-track-location="/membership/">See Pricing Tiers</a>
       </div>
     </div>
   </section>
@@ -927,5 +945,7 @@
 <script src="/assets/membership-stats.js" defer></script>
 <script src="/assets/scroll-reveal.js" defer></script>
 <script src="../assets/scroll-depth.js" defer></script>
+<script src="/assets/funnel-tracking.js" defer></script>
+<script src="/assets/recent-ships.js" defer></script>
 </body>
 </html>

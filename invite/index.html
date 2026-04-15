@@ -389,13 +389,14 @@
         <p style="color:var(--muted);font-size:0.9rem;margin:0 0 0.5rem;">Anyone who joins the Vault through your link is counted as your referral.</p>
         <div class="invite-link-row">
           <input type="text" class="invite-link-input" id="referral-link-input" readonly aria-label="Your referral link" />
-          <button type="button" class="copy-btn" id="copy-link-btn" onclick="copyReferralLink()">Copy Link</button>
+          <button type="button" class="copy-btn" id="copy-link-btn" data-track-event="invite_copy_cta_click" data-track-category="invite" data-track-label="copy_referral_link" data-track-location="/invite/">Copy Link</button>
         </div>
         <div class="share-row">
           <button type="button" class="share-btn" id="share-x-btn">Share on X / Twitter</button>
-          <button type="button" class="share-btn" id="share-discord-btn" onclick="shareDiscord()">Copy Discord Message</button>
+          <button type="button" class="share-btn" id="share-discord-btn">Copy Discord Message</button>
           <button type="button" class="share-btn" id="share-reddit-btn">Share on Reddit</button>
         </div>
+        <div id="invite-feedback" class="feedback-panel" aria-live="polite"></div>
       </section>
 
       <section aria-labelledby="ref-stats-heading" style="margin-bottom:3rem;">
@@ -565,206 +566,8 @@
   </footer>
 
 <script src="/assets/supabase-public.js" defer></script>
+<script src="/assets/funnel-tracking.js" defer></script>
 <script src="/assets/sentry-init.js" defer></script>
-<script>
-(function () {
-  var SUPABASE_URL = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
-  var SUPABASE_ANON = 'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij';
-  var SESSION_KEYS = ['sb-fjnpzjjyhnpmunfoycrp-auth-token', 'supabase.auth.token'];
-  var _username = null;
-  var _userId = null;
-
-  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-  function getSession() {
-    for (var i = 0; i < SESSION_KEYS.length; i++) {
-      var raw = null;
-      try { raw = localStorage.getItem(SESSION_KEYS[i]); } catch(_) {}
-      if (!raw) continue;
-      try {
-        var p = JSON.parse(raw);
-        var cands = [p, p && p.currentSession, p && p.session].filter(Boolean);
-        if (Array.isArray(p)) cands = cands.concat(p);
-        for (var j = 0; j < cands.length; j++) {
-          var s = cands[j];
-          if (s && s.access_token && s.user && s.user.id) return s;
-        }
-      } catch(_) {}
-    }
-    return null;
-  }
-
-  function buildReferralLink(username) {
-    return 'https://vaultsparkstudios.com/vault-member/?ref=' + encodeURIComponent(username);
-  }
-
-  window.copyReferralLink = function () {
-    var input = document.getElementById('referral-link-input');
-    var btn = document.getElementById('copy-link-btn');
-    if (!input || !btn) return;
-    navigator.clipboard.writeText(input.value).then(function () {
-      btn.textContent = '✓ Copied!';
-      btn.classList.add('copied');
-      setTimeout(function () { btn.textContent = 'Copy Link'; btn.classList.remove('copied'); }, 1800);
-    }).catch(function () {
-      input.select();
-      document.execCommand('copy');
-    });
-  };
-
-  window.shareDiscord = function () {
-    if (!_username) return;
-    var link = buildReferralLink(_username);
-    var msg = 'I\'m in the VaultSpark Studios vault! Come join me — free to sign up: ' + link;
-    navigator.clipboard.writeText(msg).then(function () {
-      var btn = document.getElementById('share-discord-btn');
-      if (btn) { btn.textContent = '✓ Copied!'; setTimeout(function () { btn.textContent = 'Copy Discord Message'; }, 1800); }
-    }).catch(function () {});
-  };
-
-  async function loadMemberData(session) {
-    var res = await fetch(
-      SUPABASE_URL + '/rest/v1/vault_members?select=username&id=eq.' + encodeURIComponent(session.user.id) + '&limit=1',
-      { headers: { apikey: SUPABASE_ANON, Authorization: 'Bearer ' + session.access_token, Accept: 'application/json' } }
-    );
-    if (!res.ok) throw new Error('member load failed');
-    var rows = await res.json();
-    return rows && rows[0] ? rows[0] : null;
-  }
-
-  async function loadReferralCount(userId, token) {
-    var res = await fetch(
-      SUPABASE_URL + '/rest/v1/vault_members?select=id&referred_by=eq.' + encodeURIComponent(userId),
-      { headers: { apikey: SUPABASE_ANON, Authorization: 'Bearer ' + token, Accept: 'application/json', Prefer: 'count=exact', Range: '0-0' } }
-    );
-    return parseInt((res.headers.get('content-range') || '').split('/')[1] || '0');
-  }
-
-  async function loadTopReferrers() {
-    // Compute referral counts via subquery: count vault_members rows grouped by referred_by
-    try {
-      // Fetch all members who referred someone, then aggregate client-side from the referred_by field
-      var res = await fetch(
-        SUPABASE_URL + '/rest/v1/vault_members?select=username,referred_by&referred_by=not.is.null&limit=500',
-        { headers: { apikey: SUPABASE_ANON, Accept: 'application/json' } }
-      );
-      if (!res.ok) return [];
-      var rows = await res.json();
-      if (!rows || !rows.length) return [];
-
-      // Count by referred_by uuid
-      var counts = {};
-      rows.forEach(function (r) {
-        if (r.referred_by) counts[r.referred_by] = (counts[r.referred_by] || 0) + 1;
-      });
-
-      // Now fetch usernames for the referrer IDs
-      var ids = Object.keys(counts);
-      if (!ids.length) return [];
-      var idFilter = ids.map(function (id) { return 'id.eq.' + id; }).join(',');
-      var nameRes = await fetch(
-        SUPABASE_URL + '/rest/v1/vault_members?select=id,username&or=(' + encodeURIComponent(idFilter) + ')',
-        { headers: { apikey: SUPABASE_ANON, Accept: 'application/json' } }
-      );
-      if (!nameRes.ok) return [];
-      var nameRows = await nameRes.json();
-      var nameMap = {};
-      nameRows.forEach(function (n) { nameMap[n.id] = n.username; });
-
-      return Object.keys(counts)
-        .map(function (id) { return { username: nameMap[id] || 'Vault Member', referral_count: counts[id] }; })
-        .sort(function (a, b) { return b.referral_count - a.referral_count; })
-        .slice(0, 10);
-    } catch(_) { return []; }
-  }
-
-  async function init() {
-    var session = getSession();
-
-    // Load top referrers (public data)
-    loadTopReferrers().then(function (rows) {
-      var container = document.getElementById('top-inviters-list');
-      if (!container) return;
-      if (!rows || !rows.length) {
-        container.innerHTML = '<div style="color:var(--dim);font-size:0.88rem;padding:1.5rem;text-align:center;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:12px;">No referrals recorded yet — be the first to grow the vault.</div>';
-        return;
-      }
-      var RANK_COLORS = ['gold','silver','bronze'];
-      container.innerHTML = rows.map(function (r, i) {
-        var numClass = 'inviter-rank-num' + (i < 3 ? ' ' + RANK_COLORS[i] : '');
-        return '<div class="inviter-row">' +
-          '<div class="' + numClass + '">' + (i + 1) + '</div>' +
-          '<div class="inviter-name">' + esc(r.username || 'Vault Member') + '</div>' +
-          '<div class="inviter-count">' + (r.referral_count || 0) + ' invite' + (r.referral_count !== 1 ? 's' : '') + '</div>' +
-          '</div>';
-      }).join('');
-    });
-
-    if (!session) {
-      var guestEl = document.getElementById('invite-guest');
-      if (guestEl) guestEl.style.display = '';
-      return;
-    }
-
-    // Logged in — show referral box
-    var loggedInEl = document.getElementById('invite-logged-in');
-    if (loggedInEl) loggedInEl.style.display = '';
-
-    try {
-      var member = await loadMemberData(session);
-      if (!member) return;
-
-      _username = member.username;
-      _userId = session.user.id;
-
-      var refLink = buildReferralLink(member.username);
-      var linkInput = document.getElementById('referral-link-input');
-      if (linkInput) linkInput.value = refLink;
-
-      // Share buttons
-      var xBtn = document.getElementById('share-x-btn');
-      if (xBtn) {
-        var xText = 'Just joined the @VaultSparkStudios vault! Come build the community with me: ' + refLink;
-        xBtn.onclick = function () { window.open('https://x.com/intent/tweet?text=' + encodeURIComponent(xText), '_blank', 'noopener'); };
-      }
-      var redditBtn = document.getElementById('share-reddit-btn');
-      if (redditBtn) {
-        var redditTitle = 'Just joined VaultSpark Studios — an indie game studio building some cool stuff';
-        redditBtn.onclick = function () { window.open('https://www.reddit.com/submit?url=' + encodeURIComponent(refLink) + '&title=' + encodeURIComponent(redditTitle), '_blank', 'noopener'); };
-      }
-
-      // Stats — compute referral count dynamically
-      var totalCount = await loadReferralCount(session.user.id, session.access_token);
-
-      // Week count
-      var weekAgo = new Date(Date.now() - 7 * 86400000).toISOString();
-      var weekRes = await fetch(
-        SUPABASE_URL + '/rest/v1/vault_members?select=id&referred_by=eq.' + encodeURIComponent(session.user.id) + '&created_at=gte.' + encodeURIComponent(weekAgo),
-        { headers: { apikey: SUPABASE_ANON, Authorization: 'Bearer ' + session.access_token, Accept: 'application/json', Prefer: 'count=exact', Range: '0-0' } }
-      );
-      var weekCount = parseInt((weekRes.headers.get('content-range') || '').split('/')[1] || '0');
-
-      var statTotal = document.getElementById('stat-total');
-      var statWeek = document.getElementById('stat-this-week');
-      var statRank = document.getElementById('stat-rank');
-      if (statTotal) statTotal.textContent = totalCount;
-      if (statWeek) statWeek.textContent = weekCount;
-
-      // Rank label
-      var rankLabel = totalCount >= 10 ? 'Signal Master' : totalCount >= 5 ? 'Amplifier' : totalCount >= 1 ? 'Recruiter' : 'Pending';
-      if (statRank) statRank.textContent = rankLabel;
-
-    } catch(err) {
-      console.warn('[invite] member load error', err);
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
-</script>
+<script src="/assets/invite-page.js" defer></script>
 </body>
 </html>

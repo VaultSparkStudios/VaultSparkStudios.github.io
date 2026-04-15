@@ -2,6 +2,13 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-15 — Browser render + CSP integrity are now first-class delivery gates (S68)
+
+- Status: active
+- Decision: this repo now treats real browser styling integrity and CSP hash integrity as deployment-grade checks, not optional diagnostics. `tests/computed-styles.spec.js` is the minimum browser smoke for homepage render correctness, and `scripts/csp-audit.mjs` is the source of truth for inline-script/CSP drift across page/meta/canonical/Worker layers.
+- Why: S67 proved that HTTP 200 and DOM-level smoke checks were insufficient; the site can be "up" while visually broken. S68 also proved the inline-script/CSP debt is repo-wide rather than localized.
+- Maintenance rule: when HTML inline scripts, CSP tags, or Worker CSP change, run `node scripts/csp-audit.mjs`. When top-level render structure changes on `/`, keep the computed-style smoke aligned with the new visual contract rather than removing the guard.
+
 ### 2026-04-13 — 404/offline CSP hardening: SHA-256 hashes replace unsafe-inline (S66)
 
 - Status: active

@@ -792,8 +792,33 @@
           earns it, or go Pro and get priority access to everything VaultSpark is building.
         </p>
         <div class="sparked-cta-row">
-          <a href="#pricing" class="sparked-cta-primary">⚡ See Pricing</a>
-          <a href="/vault-member/#register" class="sparked-cta-secondary">Join Free First</a>
+          <a href="#pricing" class="sparked-cta-primary" data-track-event="vaultsparked_hero_pricing_click">⚡ See Pricing</a>
+          <a href="/vault-member/#register" class="sparked-cta-secondary" data-track-event="vaultsparked_hero_free_click">Join Free First</a>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding:2.5rem 0;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);background:linear-gradient(180deg,rgba(255,196,0,0.03),rgba(31,162,255,0.02));">
+      <div class="container">
+        <p class="sparked-section-label">Live Proof</p>
+        <h2 class="sparked-section-title">The vault is already moving.</h2>
+        <p class="sparked-section-sub">Membership lands harder when it feels real. These signals pull from the live public system instead of static marketing claims.</p>
+        <div class="live-proof-grid">
+          <article class="live-proof-card">
+            <div class="live-proof-stat" id="vs-proof-members">—</div>
+            <div class="live-proof-label">Vault Members</div>
+            <p class="live-proof-detail">Accounts already created across the ecosystem.</p>
+          </article>
+          <article class="live-proof-card">
+            <div class="live-proof-stat" id="vs-proof-sparked">—</div>
+            <div class="live-proof-label">VaultSparked Members</div>
+            <p class="live-proof-detail">Members already paying to go deeper into the vault.</p>
+          </article>
+          <article class="live-proof-card">
+            <div class="live-proof-stat" id="vs-proof-challenges">—</div>
+            <div class="live-proof-label">Challenge Completions</div>
+            <p class="live-proof-detail">Proof that member progression is already active, not theoretical.</p>
+          </article>
         </div>
       </div>
     </section>
@@ -834,7 +859,7 @@
               <li><span class="pf-check">✓</span> Classified Archive (limited)</li>
               <li><span class="pf-check">✓</span> Beta early-access pool</li>
             </ul>
-            <a href="/vault-member/#register" class="pricing-btn pricing-btn-free">Join the Vault Free</a>
+            <a href="/vault-member/#register" class="pricing-btn pricing-btn-free" data-track-event="vaultsparked_free_tier_click">Join the Vault Free</a>
           </div>
 
           <!-- VAULTSPARKED -->
@@ -863,7 +888,7 @@
             <div class="pricing-promo">
               <input type="text" id="sparked-promo-input" placeholder="Promo code (optional)" autocomplete="off" aria-label="Promo code for VaultSparked" />
             </div>
-            <button id="vaultsparked-upgrade-btn" class="pricing-btn pricing-btn-sparked">⚡ Go VaultSparked</button>
+            <button id="vaultsparked-upgrade-btn" class="pricing-btn pricing-btn-sparked" data-track-event="vaultsparked_paid_tier_click">⚡ Go VaultSparked</button>
           </div>
 
           <!-- VAULTSPARKED ETERNAL -->
@@ -891,7 +916,7 @@
             <div class="pricing-promo">
               <input type="text" id="pro-promo-input" placeholder="Promo code (optional)" autocomplete="off" class="pro-input" aria-label="Promo code for VaultSparked Eternal" />
             </div>
-            <button id="vaultsparked-pro-upgrade-btn" class="pricing-btn pricing-btn-pro">◆ Go VaultSparked Eternal</button>
+            <button id="vaultsparked-pro-upgrade-btn" class="pricing-btn pricing-btn-pro" data-track-event="vaultsparked_eternal_tier_click">◆ Go VaultSparked Eternal</button>
           </div>
 
         </div><!-- /pricing-cards -->
@@ -907,6 +932,15 @@
         <div class="grandfather-notice">
           <p><strong>Grandfather pricing guarantee:</strong> Your Phase 1 price is locked forever. When Phase 2 opens at a higher price, you keep paying your original rate — always. This is a permanent commitment.</p>
         </div>
+      </div>
+    </section>
+
+    <section style="padding:4rem 0;border-top:1px solid rgba(255,255,255,0.05);" data-track-view="vaultsparked_recent_ships_view">
+      <div class="container">
+        <p class="sparked-section-label">Fresh From The Forge</p>
+        <h2 class="sparked-section-title">Recent momentum, visible on the page.</h2>
+        <p class="sparked-section-sub">Shipping proof reduces hesitation. This block automatically pulls the latest changelog milestones so the membership page never feels frozen.</p>
+        <div class="recent-ships-grid" data-recent-ships aria-live="polite"></div>
       </div>
     </section>
 
@@ -1252,8 +1286,12 @@
         <h2>The vault's open.<br />The spark's yours.</h2>
         <p>Join the Vault free, or lock in Phase 1 pricing before it's gone.</p>
         <div class="sparked-cta-row">
-          <a href="#pricing" class="sparked-cta-primary">⚡ See Pricing</a>
-          <a href="/vault-member/#register" class="sparked-cta-secondary">Join Free</a>
+          <a href="#pricing" class="sparked-cta-primary" data-track-event="vaultsparked_bottom_pricing_click">⚡ See Pricing</a>
+          <a href="/vault-member/#register" class="sparked-cta-secondary" data-track-event="vaultsparked_bottom_free_click">Join Free</a>
+        </div>
+        <div class="feedback-panel neutral show" style="max-width:680px;margin:1.5rem auto 0;text-align:left;">
+          <div class="feedback-panel-title">What happens next</div>
+          <div class="feedback-panel-copy">Free signup creates your vault account first. Paid tiers upgrade that same account so your rank, achievements, referrals, and unlocks stay attached to one identity.</div>
         </div>
       </div>
     </section>
@@ -1331,8 +1369,12 @@
 
 <!-- Supabase client (for anon phase reads) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/assets/supabase-public.js"></script>
 <script src="/assets/membership-access.js"></script>
 <script src="/assets/vault-cta.js" defer></script>
+<script src="/assets/funnel-tracking.js" defer></script>
+<script src="/assets/recent-ships.js" defer></script>
+<script src="/assets/vaultsparked-proof.js" defer></script>
 
 <script src="/vaultsparked/vaultsparked-checkout.js" defer></script>
 

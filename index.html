@@ -906,9 +906,9 @@
 
         <!-- 5. CTAs -->
         <div class="hero-actions hero-reveal" style="--reveal-delay:1.8s">
-          <a class="button" href="/games/">Explore Our Games</a>
-          <a class="button-secondary" href="/projects/">Explore Our Projects</a>
-          <a class="button-ghost" href="/vault-member/#register">Enter The Vault &nbsp;→</a>
+          <a class="button" href="/games/" data-track-event="home_hero_games_click">Explore Our Games</a>
+          <a class="button-secondary" href="/projects/" data-track-event="home_hero_projects_click">Explore Our Projects</a>
+          <a class="button-ghost" href="/vault-member/#register" data-track-event="home_hero_vault_click">Enter The Vault &nbsp;→</a>
         </div>
 
         <!-- 6. Meta strip — chips + stats -->
@@ -1001,6 +1001,20 @@
             <div style="font-size:0.82rem;color:var(--muted);">Formal investment program launches</div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="surface-section" data-reveal="fade-up" data-track-view="home_recent_ships_view">
+      <div class="container">
+        <div class="section-head" style="margin-bottom:1.5rem;">
+          <div>
+            <p class="eyebrow">Fresh From The Forge</p>
+            <h2>Recent Shipped Work</h2>
+            <p>Live release proof pulled from the changelog so the homepage always reflects current momentum.</p>
+          </div>
+          <a class="button-secondary button-sm" href="/changelog/" data-track-event="home_recent_ships_changelog_click">Full Changelog</a>
+        </div>
+        <div class="recent-ships-grid" data-recent-ships aria-live="polite"></div>
       </div>
     </section>
 
@@ -1295,8 +1309,8 @@
                 vault expands. This is the foundation of something larger.
               </p>
               <div class="hero-actions">
-                <a class="button" href="/vault-member/#register">Create Free Account</a>
-                <a class="button-secondary" href="/membership/">About Vault Membership</a>
+                <a class="button" href="/vault-member/#register" data-track-event="home_membership_free_click">Create Free Account</a>
+                <a class="button-secondary" href="/membership/" data-track-event="home_membership_about_click">About Vault Membership</a>
               </div>
 
               <div class="membership-features" style="margin-top:1.8rem;">
@@ -1554,7 +1568,7 @@
           <span style="font-size:0.85rem;font-weight:700;color:var(--gold);letter-spacing:0.02em;">Read the signal →</span>
         </a>
         <div style="margin-top:1rem;text-align:right;">
-          <a href="/journal/" style="font-size:0.85rem;color:var(--muted);text-decoration:none;transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">All dispatches →</a>
+          <a href="/journal/" class="journal-link-inline" style="font-size:0.85rem;color:var(--muted);text-decoration:none;transition:color 0.15s;">All dispatches →</a>
         </div>
       </div>
     </section>
@@ -1754,6 +1768,8 @@
   <!-- ═══ SCRIPTS ═══════════════════════════════════════════ -->
   <script src="assets/supabase-public.js"></script>
   <script src="assets/kit.js" defer></script>
+  <script src="/assets/funnel-tracking.js" defer></script>
+  <script src="/assets/recent-ships.js" defer></script>
   <script src="/assets/cookie-consent.js" defer></script>
   <script src="/assets/pwa-install.js" defer></script>
   <script src="/assets/nav-toggle.js" defer></script>
@@ -1949,6 +1965,5 @@
   <script src="assets/scroll-depth.js" defer></script>
 </body>
 </html>
-
 
 

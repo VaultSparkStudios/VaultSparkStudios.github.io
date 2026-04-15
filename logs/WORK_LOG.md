@@ -1,5 +1,24 @@
 # Work Log
 
+## 2026-04-15 — Session 68 (structural upgrade batch)
+
+- scripts/csp-audit.mjs: created — repo-wide inline-script hash audit; compares inline script hashes against page CSP, canonical CSP, and Worker CSP
+- tests/computed-styles.spec.js: created — Chromium render-integrity smoke for homepage (computed body background, hero padding, header border, zero page errors)
+- .github/workflows/e2e.yml: added `node scripts/csp-audit.mjs` gate and computed-style smoke step
+- prompts/closeout.md: Step 0 hardened with git-clean gate + CSP audit requirement for inline/CSP changes
+- assets/funnel-tracking.js: created — shared CTA/view tracking via declarative `data-track-*` attributes
+- assets/recent-ships.js: created — pulls recent shipped work from `/changelog/` and hydrates `[data-recent-ships]`
+- assets/contact-page.js, assets/join-page.js, assets/invite-page.js: created — externalized public-page runtime and added stronger success/error/next-step feedback states
+- assets/vaultsparked-proof.js: created — live member/progression proof for `/vaultsparked/`
+- assets/style.css: added shared `live-proof-*`, `recent-ship-*`, `feedback-panel`, and `journal-link-inline` styles
+- contact/index.html, join/index.html, invite/index.html: removed large inline runtime; wired new external assets and feedback panels
+- membership/index.html, vaultsparked/index.html, index.html: added CTA tracking, recent shipped work sections, stronger next-step messaging, and live proof surfaces
+- Verification:
+  - `node scripts/csp-audit.mjs` → fails on broad legacy repo debt (expected truth surfaced by new gate)
+  - `npx playwright test tests/computed-styles.spec.js --reporter=list --project=chromium` → passed
+  - `npm.cmd run validate:browser-render` → missing local script in package.json
+- SIL: 436/500 · Velocity: 7 · Debt: ↓
+
 ## 2026-04-14 — Session 67 (CSP hotfix — intent redirected)
 
 - index.html: removed `media="print" onload="this.media='all'"` async-CSS trick (inline event handler was CSP-blocked → stylesheet stayed print-only → site rendered unstyled in prod); `<link rel="stylesheet" href="assets/style.css" />` now loads normally (critical CSS already inlined, no FOUC concern)

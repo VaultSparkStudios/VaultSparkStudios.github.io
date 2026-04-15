@@ -12,6 +12,10 @@ Compare actual work to the declared intent in `context/LATEST_HANDOFF.md → Ses
 
 Classify: **Achieved** · **Partial** *(note scope drift)* · **Redirected** *(log reason)*
 
+**Git-clean gate:** before proceeding, run `git status --porcelain -uno`. If the working tree is dirty beyond trivial closeout/context edits, stop and commit first. Do not continue closeout against a large dirty tree.
+
+**CSP gate:** if the session touched HTML inline scripts, CSP tags, or the Worker CSP, run `node scripts/csp-audit.mjs` before writing the final handoff.
+
 **Bypass audit:** If any commit this session bypassed safety hooks (`--no-verify`, `--no-gpg-sign`), log in `context/DECISIONS.md`: date · what hook was bypassed · reason · follow-up task to fix root cause. Add that follow-up to `context/TASK_BOARD.md` under Now. Normalizing hook bypasses erodes the safety net.
 
 ---

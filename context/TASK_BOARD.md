@@ -1,14 +1,19 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-14 (Session 67 closeout — CSP hotfix, intent redirected)
+Last updated: 2026-04-15 (Session 68 structural upgrade batch)
 
 ## Now (S68 runway pre-load)
 
-- [ ] **[HOTFIX-VERIFY]** Open `https://vaultsparkstudios.com/` in a browser (incognito + hard reload) after GitHub Pages deploys `b4e1088`. Confirm the site is styled. Open DevTools console and confirm zero CSP violations.
+- [ ] **[HOTFIX-VERIFY]** Open `https://vaultsparkstudios.com/` in a browser (incognito + hard reload) after the next deploy. Confirm the site is styled. Open DevTools console and confirm zero CSP violations on homepage + `/vaultsparked/`.
 - [ ] **[SIL:1] IGNIS Rescore** — now 7d+ stale (last 2026-04-07). Run `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website`.
-- [ ] **[SIL:1] Closeout-commit gate** — `prompts/closeout.md` Step 0 pre-check: block closeout if git working tree is dirty beyond trivial changes; force a commit first. Prevents the S66→S67 dirty-handoff pattern from recurring.
+- [x] **[SIL:1] Closeout-commit gate** — `prompts/closeout.md` Step 0 pre-check now blocks closeout if git working tree is dirty beyond trivial changes and requires CSP audit when inline/CSP surfaces changed. Shipped S68.
 - [ ] **[SIL] Genius Hit List as scheduled audit** — schedule recurring audit job that generates `docs/GENIUS_LIST.md` without human prompt.
-- [ ] **[SIL] Browser smoke test for computed styles** — playwright spec that opens `/` and asserts `getComputedStyle(body).backgroundImage !== 'none'` (would have caught the S67 CSS bug pre-deploy). Rationale: this CSP failure shipped silently because HTTP 200 + JSON responses looked fine; only real-browser render caught it.
+- [x] **[SIL] Browser smoke test for computed styles** — `tests/computed-styles.spec.js` added; local Chromium run passed S68; CI workflow now runs it against live pages.
+- [ ] **[AUDIT] Remove remaining inline event handlers from public pages** — **partial S68**: `/contact/`, `/join/`, `/invite/`, and one homepage inline hover handler removed; residual debt remains across games, projects, journal, `community/`, and `investor-portal/`.
+- [x] **[AUDIT] CSP drift gate** — `scripts/csp-audit.mjs` added and wired into `.github/workflows/e2e.yml`. Current output correctly reveals broad legacy repo debt; cleanup remains open below.
+- [ ] **[AUDIT] Repo-wide CSP debt cleanup** — new S68 audit now fails on many pages with missing inline-script hashes in page/meta/canonical/Worker CSP. Clean up legacy routes until `node scripts/csp-audit.mjs` passes cleanly.
+- [ ] **[AUDIT] Conversion funnel instrumentation + feedback states** — **partial S68**: `/membership/`, `/vaultsparked/`, `/invite/`, `/join/`, and `/contact/` now have CTA/view events and stronger feedback panels, but stage-by-stage reporting and broader form outcome coverage still need completion.
+- [ ] **[AUDIT] Premium proof/depth pass on conversion pages** — **partial S68**: homepage, membership, and VaultSparked now show live recent shipped work / live vault proof / stronger next-step messaging. Continue with member outcomes, testimonials, and trust objections handling.
 - [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
 - [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read). Blocks automatic Worker CSP sync from S67.
 

@@ -1,9 +1,60 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-14 (Session 67)
+Last updated: 2026-04-15 (Session 68)
 
 ## Session Intent: Session 68
-Resume the S67 declared-but-deferred items: [IGNIS] rescore (now 7d stale, past threshold — mandatory); [SIL] closeout-commit gate in `prompts/closeout.md` Step 0; [SIL] Genius Hit List as scheduled audit job. Then continue Genius Hit List refresh (fresh external audit → next hit list).
+Audit the live project, score it, and produce one combined ranked implementation plan covering current features, depth, UI/UX, feedback loops, security, and speed. Keep the output compact, but upgrade the runway with the highest-leverage items rather than another generic wish list.
+
+## Session 68 startup audit snapshot (2026-04-15)
+
+- **Recommended external score:** `82/100`
+  - Feature depth `86`
+  - UI / UX `84`
+  - Feedback loop `78`
+  - Security posture `79`
+  - Speed / performance `81`
+  - Delivery / code quality `83`
+- **Core finding:** the product is unusually deep for a static-site architecture, but its next ceiling is structural, not decorative. The biggest limiter is residual inline-handler / CSP drift debt across public pages, followed by incomplete conversion instrumentation and incomplete proof loops on the main money/community surfaces.
+- **Highest-priority implementation order:**
+  1. Browser computed-style smoke + closeout/CSP drift gates
+  2. Remove remaining inline handlers from public pages
+  3. Add `CF_WORKER_API_TOKEN` or deploy fallback so Worker CSP stops lagging meta CSP
+  4. Instrument full funnel + strengthen success/error/next-step feedback states
+  5. Deepen homepage + membership + vaultsparked proof surfaces
+  6. Wire annual Stripe routing once HAR clears
+- **Observed repo signal:** local scan still finds many inline `onclick` / `onmouseover` / `onsubmit` patterns in public pages (`games/`, `projects/`, `journal/`, `community/`, `investor-portal/`), so the S67 CSP incident is not fully isolated.
+
+## Where We Left Off (Session 68 — 2026-04-15)
+
+**Session output: major structural upgrade batch shipped after the audit. The highest-leverage items were implemented first, with one new truth surfaced: the repo-wide CSP debt is substantially larger than the S67 homepage incident.**
+
+### Shipped
+- **Browser render guard added** — `tests/computed-styles.spec.js` now opens `/` and asserts real computed styling (body background image, hero padding, header border, zero page errors). Local Chromium run passed on 2026-04-15.
+- **CI/e2e guard upgraded** — `.github/workflows/e2e.yml` now runs both `node scripts/csp-audit.mjs` and the computed render smoke against the live site.
+- **Closeout process hardened** — `prompts/closeout.md` Step 0 now enforces a git-clean gate and requires `node scripts/csp-audit.mjs` whenever inline/CSP surfaces changed.
+- **CSP drift gate shipped** — `scripts/csp-audit.mjs` created. It hashes inline `<script>` blocks and checks those hashes against page CSP, canonical CSP, and Worker CSP.
+- **Public funnel runtime externalized** — large inline runtime removed from `/contact/`, `/join/`, and `/invite/`; replaced with `assets/contact-page.js`, `assets/join-page.js`, and `assets/invite-page.js`.
+- **Feedback loop improved** — `/contact/`, `/join/`, `/invite/`, `/membership/`, and `/vaultsparked/` now have stronger success/error/next-step panels rather than silent submits or dead-end CTA states.
+- **Tracking layer added** — `assets/funnel-tracking.js` created and wired into homepage, membership, vaultsparked, contact, join, and invite. CTA/view events are now emitted from shared declarative attributes.
+- **Proof/depth pass shipped** — `assets/recent-ships.js` now hydrates recent shipped work from `/changelog/`; homepage, `/membership/`, and `/vaultsparked/` now expose live recent-ships sections. `assets/vaultsparked-proof.js` adds live member/progression proof to `/vaultsparked/`.
+- **Homepage cleanup** — removed the inline hover handler on the journal link and replaced it with CSS.
+
+### Verification
+- `npx playwright test tests/computed-styles.spec.js --reporter=list --project=chromium` → **passed** (run escalated due sandbox spawn restriction).
+- `node scripts/csp-audit.mjs` → **fails correctly** with hundreds of issues across many legacy pages. This is not a regression from S68 changes; it reveals existing repo-wide debt that was previously unguarded.
+- `npm.cmd run validate:browser-render` → **not available locally**; package.json currently only exposes `test` and `test:a11y`.
+
+### Open blockers / carry-forward
+- **Repo-wide CSP cleanup now explicit** — the new audit reveals missing inline-script hashes across many routes (`games/`, `projects/`, `community/`, `investor-portal/`, and more). The guard is shipped, but the repo is not yet passing it.
+- **Worker CSP sync still blocked** — `CF_WORKER_API_TOKEN` still missing, so meta CSP and Worker CSP can drift after future changes unless Wrangler is run manually.
+- **Annual Stripe routing still HAR-blocked** — annual price IDs do not yet exist.
+- **IGNIS still stale** — not refreshed in S68.
+
+## Recommended First Action Next Session
+
+1. **Start repo-wide CSP cleanup** — use `node scripts/csp-audit.mjs` as the source of truth and burn down the failing routes in batches.
+2. **Finish the inline-handler removal pass** — continue through `games/`, `projects/`, `journal/`, `community/`, and `investor-portal/`.
+3. **Set `CF_WORKER_API_TOKEN` or manually redeploy the Worker** — otherwise the stricter header policy will keep lagging behind meta-tag updates.
 
 ---
 
