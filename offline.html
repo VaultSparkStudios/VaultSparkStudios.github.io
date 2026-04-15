@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ"></script>
-  <script>
+    <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
@@ -15,7 +15,7 @@
   <meta name="description" content="No connection detected. The vault will be waiting when you're back online." />
   <meta name="robots" content="noindex, nofollow" />
   <meta name="theme-color" content="#000000" />
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-09uD3fDDD02G8jqNYt/Z45AQPDzZopvEX50h3r6Gbrs=' 'sha256-pgSyuEr/NIN1kTdlTabMEu9Ul7rfWjLoH4QadQTs+bY=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-bL/8PICYU8gGT1wjuRN/P7+s+lryCt+83wHP4RfhYKg=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
   <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
   <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
@@ -98,16 +98,13 @@
     <h1 class="offline-title" id="offline-heading">You're Offline</h1>
     <p class="offline-sub">No connection detected. The vault will be right here when you're back online — your progress is safe.</p>
     <div class="offline-actions">
-      <button type="button" class="button" onclick="window.location.reload()">Try Again</button>
+      <button type="button" class="button try-again-btn">Try Again</button>
       <a href="/" class="button-secondary" style="padding:0.7rem 1.4rem;">Back to Home</a>
     </div>
   </main>
 
-  <script>
-    window.addEventListener('online', function () {
-      window.location.reload();
-    });
-  </script>
+  <script src="/assets/error-pages.js" defer></script>
+  <script src="/assets/public-page-handlers.js" defer></script>
 
 </body>
 </html>

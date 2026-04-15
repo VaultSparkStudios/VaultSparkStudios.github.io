@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▅
-Avgs — 3: 423.3 | 5: 427.6 | 10: 430.4 | all: 425.7
-  └ 3-session: Dev 88.3 | Align 80.7 | Momentum 70.7 | Engage 83.3 | Process 80.7
-Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~1.2 sessions (low — S68 pre-load required)  |  Intent rate: 80% (last 5 — S67 redirected)
-Last session: 2026-04-14 | Session 67 | Total: 373/500 | Velocity: 1 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▆▅▆▆
+Avgs — 3: 418.7 | 5: 430.6 | 10: 432.3 | all: 424.5
+  └ 3-session: Dev 90.3 | Align 80.3 | Momentum 73.7 | Engage 87.7 | Process 86.7
+Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~1.8 sessions  |  Intent rate: 80% (last 5)
+Last session: 2026-04-15 | Session 69 | Total: 447/500 | Velocity: 2 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -887,3 +887,27 @@ Avgs — 3: 419.3 | 5: 430.6 | 10: 432.9 | all: 426.0
 3. **Trust/proof source unification** — centralize live proof data so homepage, membership, vaultsparked, and studio-pulse all render from the same source. First step: extract a small shared public proof loader. Medium probability.
 
 **Committed to TASK_BOARD:** [AUDIT] Repo-wide CSP debt cleanup · [AUDIT] Conversion funnel instrumentation + feedback states
+
+## 2026-04-15 — Session 69 | Total: 447/500 | Velocity: 2 | Debt: ↓
+Avgs — 3: 418.7 | 5: 430.6 | 10: 432.3 | all: 424.5
+  └ 3-session: Dev 90.3 | Align 80.3 | Momentum 73.7 | Engage 87.7 | Process 86.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 95 | ↑ | Repo-wide CSP debt closed; canonical/page/Worker layers aligned; audit passes; live Worker deploy completed and verified |
+| Creative Alignment | 82 | ↓ | Mostly security/runtime work, but it protects the trust and polish of the public front door without compromising brand standards |
+| Momentum | 84 | ↑ | Declared cleanup/deploy intent achieved; 2 substantive Now tasks cleared and a real infrastructure blocker was removed |
+| Engagement | 93 | ↑ | Strong acceptance loop: the user confirmed the plan, the work shipped end-to-end, and production verification closed the loop the same session |
+| Process Quality | 93 | ↑ | Full closeout path, truth surfaces updated, live deploy verified, and manual-auth fallback documented cleanly; only IGNIS staleness keeps this short of perfect |
+| **Total** | **447/500** | **↑ 11** | |
+
+**Top win:** The repo moved from “CSP gate exposes broad hidden debt” to “audit clean and live Worker synced” in one session, which turns CSP from a liability back into an enforceable delivery rule.
+**Top gap:** Worker deployment is still not automated, so a future CSP change can drift again unless `CF_WORKER_API_TOKEN` is finally added or the local fallback is scripted.
+**Intent outcome:** Achieved — cleanup batches were completed, the Worker was deployed live, production headers were verified, and the session was fully closed out.
+
+**Brainstorm**
+1. **Live header verification script** — codify the browser-like production header check into a repeatable script so post-deploy verification stops being ad hoc. First step: add `scripts/verify-live-headers.mjs` targeting `/` and `/vaultsparked/`. High probability.
+2. **Local Worker deploy helper** — wrap the Wrangler fallback into a small script that checks auth, deploys production, and prints the version ID. First step: create `cloudflare/deploy-worker-local.ps1` around `wrangler whoami` + `wrangler deploy --env production`. High probability.
+3. **Canonical CSP source split** — move the long `script-src` hash list into a structured source file and generate the Worker/meta strings from it to reduce manual string editing risk. First step: extract hash arrays into a JSON/module consumed by `propagate-csp.mjs`. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Live Worker header verification script · [SIL] Local Worker deploy helper

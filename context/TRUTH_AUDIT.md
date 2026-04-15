@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-13 (S66 closeout)
+Last reviewed: 2026-04-15 (S69 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -11,4 +11,6 @@ Public-safe summary:
 - tests/theme-persistence.spec.js updated (S46) to match custom picker runtime; `body[data-theme]` is the authoritative theme signal set by theme-toggle.js
 - /open-source/ is now a redirect to /rights/ (S64) — all nav/footer/sitemap references updated; compliance-pages.spec.js updated to match
 - gold contrast: `--gold: #7a5c00` in light mode (S65) — WCAG AA compliant (~5:1 on cream); dark panels with hardcoded bg still use `#FFC400` override; no copy changes needed
-- CSP registry (S65): `scripts/csp-hash-registry.json` documents excluded pages' CSP snapshots; 404.html + offline.html explicitly acknowledge `'unsafe-inline'` debt
+- CSP registry (S65): `scripts/csp-hash-registry.json` documents excluded pages' CSP snapshots; 404.html + offline.html no longer carry `'unsafe-inline'` debt, and skipped-page drift checks now pass cleanly
+- Repo-wide CSP truth changed in S69: `node scripts/csp-audit.mjs` now passes across all 93 HTML files after the legacy debt cleanup
+- Cloudflare Worker truth changed in S69: live production security-header policy was redeployed manually via Wrangler; Worker version `f0c9672a-25ae-413f-b131-e0ee9027b69b` now matches the repo-side CSP state

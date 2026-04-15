@@ -2,6 +2,13 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-15 — Manual Wrangler deploy is the approved fallback when Worker CSP must ship before GitHub automation exists (S69)
+
+- Status: active
+- Decision: until `CF_WORKER_API_TOKEN` exists in GitHub Actions, local Wrangler OAuth auth is the approved fallback for deploying `cloudflare/security-headers-worker.js`. After any such deploy, verify production headers with a browser-like request, not only a plain `curl -I`, because Cloudflare may challenge bot-like probes.
+- Why: S69 completed the repo-wide CSP cleanup, but the live Worker header layer still required a production deploy. GitHub automation was still blocked by the missing secret; local Wrangler deploy + live header verification closed the gap safely in the same session.
+- Maintenance rule: treat `scripts/propagate-csp.mjs`, `scripts/csp-hash-registry.json`, and `cloudflare/security-headers-worker.js` as a single CSP change surface. If one changes, audit locally, deploy the Worker, and verify live headers before closeout.
+
 ### 2026-04-15 — Browser render + CSP integrity are now first-class delivery gates (S68)
 
 - Status: active

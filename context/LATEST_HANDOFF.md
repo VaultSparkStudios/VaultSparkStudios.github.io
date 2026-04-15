@@ -1,9 +1,47 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 68)
+Last updated: 2026-04-15 (Session 69)
 
-## Session Intent: Session 68
-Audit the live project, score it, and produce one combined ranked implementation plan covering current features, depth, UI/UX, feedback loops, security, and speed. Keep the output compact, but upgrade the runway with the highest-leverage items rather than another generic wish list.
+## Session Intent: Session 69
+Finish the repo-wide CSP cleanup batches, clear the remaining special-page and inline-handler debt, deploy the updated Cloudflare Worker security headers live, verify production headers, and close out the session cleanly.
+
+## Where We Left Off (Session 69)
+- Shipped: 5 improvements across security, runtime cleanup, Worker deployment, and verification
+- Tests: `node scripts/csp-audit.mjs` passing · `node scripts/propagate-csp.mjs --check-skipped` passing
+- Deploy: deployed to production via Cloudflare Worker (`vaultspark-security-headers-production` · `f0c9672a-25ae-413f-b131-e0ee9027b69b`)
+
+### Shipped
+- **Repo-wide CSP cleanup completed** — the S68 audit backlog was burned down across the remaining route families and residual edge cases until `node scripts/csp-audit.mjs` passed across all 93 HTML files.
+- **Legacy inline-handler debt removed on the targeted public routes** — shared behavior moved into `assets/public-page-handlers.js` and `assets/error-pages.js`; special pages and legacy public surfaces no longer depend on the remaining inline handler patterns that were blocking CSP compliance.
+- **Canonical/Worker CSP synchronized** — `scripts/propagate-csp.mjs`, `scripts/csp-hash-registry.json`, `cloudflare/security-headers-worker.js`, and the propagated page meta tags now agree on the current hash set.
+- **Cloudflare Worker redeployed live** — local Wrangler OAuth auth was used as the fallback because `CF_WORKER_API_TOKEN` still is not set in GitHub Actions. Production Worker route `vaultsparkstudios.com/*` now serves the updated CSP/header policy.
+- **Production headers verified** — Cloudflare blocked plain bot-like `curl -I`, but browser-like requests returned `200 OK` and the expected Worker headers on `/` and `/vaultsparked/`, including the updated `Content-Security-Policy`, HSTS, frame/options, referrer, permissions, and robots headers.
+
+### Verification
+- `node scripts/csp-audit.mjs` → **passed**
+- `node scripts/propagate-csp.mjs --check-skipped` → **passed** (`vaultsparked/index.html`, `404.html`, `offline.html`)
+- `wrangler deploy --env production` → **passed**; version `f0c9672a-25ae-413f-b131-e0ee9027b69b`
+- Live header checks on `https://vaultsparkstudios.com/` and `https://vaultsparkstudios.com/vaultsparked/` with browser-like UA → **200 OK** + expected security headers
+
+### Open carry-forward
+- **Automation gap remains** — the live deploy is complete, but `CF_WORKER_API_TOKEN` is still missing, so future Worker updates still require local Wrangler auth until GitHub Actions can deploy automatically.
+- **IGNIS remains stale** — still last computed on 2026-04-07.
+- **Annual Stripe routing remains HAR-blocked** — annual price IDs still do not exist.
+- **Conversion-depth follow-through remains open** — funnel stage telemetry and deeper trust/proof surfaces are still the next product-facing pass now that CSP/security debt is cleared.
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` secret to GitHub repo → Settings → Secrets → Actions. Cloudflare API token needs **Workers Scripts: Edit** + **Zone: Read** permissions. S69 proved the manual fallback works, but automation is still blocked without the secret.
+- [ ] **[STRIPE-ANNUAL]** Create 2 Stripe annual price IDs: $44.99/yr (Sparked) + $269.99/yr (Eternal).
+- [ ] **[WEB3FORMS]** Test contact form from browser.
+- [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active.
+- [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here.
+
+## Recommended First Action Next Session
+
+1. **[IGNIS] Rescore** — stale beyond threshold; update project cognition baseline before the next larger product pass.
+2. **[AUDIT] Finish funnel stage telemetry** — move from CTA/view events to full stage lifecycle reporting across membership, vaultsparked, join, invite, and contact.
+3. **[SIL] Automate Worker verification/deploy fallback** — add a repeatable local deploy helper and browser-like live header verification script so future CSP sessions close faster and safer.
 
 ## Session 68 startup audit snapshot (2026-04-15)
 

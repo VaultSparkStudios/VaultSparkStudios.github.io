@@ -395,3 +395,12 @@ Public-safe note:
 - Process gap: S66 work was not committed in-session. S67 start detected 95+ modified files + 4 new JS files in dirty tree; committed retroactively as `9579487` and closeout run at S67 start
 - Brainstorm #1 (closeout-commit gate in closeout.md) committed to TASK_BOARD to prevent recurrence
 - SIL: 449/500 · Velocity: 11 · Debt: ↓
+
+## 2026-04-15 — Session 69
+
+- Completed the repo-wide CSP cleanup opened by S68: canonical/page/Worker hashes aligned and `node scripts/csp-audit.mjs` now passes across 93 HTML files
+- Added shared runtime helpers `assets/public-page-handlers.js` and `assets/error-pages.js` to remove residual inline-handler patterns on legacy public/special pages
+- Updated `scripts/propagate-csp.mjs`, `scripts/csp-hash-registry.json`, and `cloudflare/security-headers-worker.js` as the canonical CSP sources of truth
+- Logged into Wrangler locally, deployed `vaultspark-security-headers-production` to `vaultsparkstudios.com/*`, and published version `f0c9672a-25ae-413f-b131-e0ee9027b69b`
+- Verified live production headers on `/` and `/vaultsparked/` with browser-like requests after Cloudflare blocked plain curl probes
+- SIL: 447/500 · Velocity: 2 · Debt: ↓

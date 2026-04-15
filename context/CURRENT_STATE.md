@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-15 (Session 68)
+- Date: 2026-04-15 (Session 69)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: **S68 — structural upgrade batch shipped after the startup audit.** New browser render guard and CSP drift gate are now in-repo: `tests/computed-styles.spec.js` passed in Chromium, `.github/workflows/e2e.yml` now runs the computed render smoke plus `node scripts/csp-audit.mjs`, and `prompts/closeout.md` now blocks closeout on large dirty trees and requires CSP audit when inline/CSP surfaces changed. Conversion/runtime debt was reduced on public funnel pages: `/contact/`, `/join/`, and `/invite/` had their inline runtime removed into external assets (`assets/contact-page.js`, `assets/join-page.js`, `assets/invite-page.js`) and now expose stronger success/error/next-step feedback panels plus funnel events. `/membership/`, `/vaultsparked/`, and `/` now have richer proof surfaces via `assets/recent-ships.js`, `assets/vaultsparked-proof.js`, and `assets/funnel-tracking.js` (live recent shipped work, live vault proof, stronger CTA instrumentation). **Important repo truth uncovered by the new gate:** `scripts/csp-audit.mjs` currently fails across many legacy pages due to widespread pre-existing inline-script hash debt, so the new audit is correct but the repo is not yet globally compliant. **Worker CSP header still won't update until `CF_WORKER_API_TOKEN` is set (HAR) or Wrangler is run manually.** S67 — 1 critical hotfix shipped (unstyled homepage CSP break) as previously documented.
+- Repo posture: **S69 — repo-wide CSP cleanup batch and live Worker sync shipped.** The S68 guardrails remain in place (`tests/computed-styles.spec.js`, `.github/workflows/e2e.yml`, `scripts/csp-audit.mjs`, closeout CSP gate), but the repo has now been brought back into compliance: `node scripts/csp-audit.mjs` passes across all 93 HTML files after canonical CSP propagation, skipped-page registry updates, residual inline-handler removal on legacy public routes, and new shared runtime assets for error/public handler cases (`assets/error-pages.js`, `assets/public-page-handlers.js`). The Cloudflare Worker CSP layer was manually redeployed via Wrangler OAuth on 2026-04-15, and live production headers were verified on `/` and `/vaultsparked/` with browser-like requests. Immediate focus has shifted from CSP debt triage to automation (`CF_WORKER_API_TOKEN`), stale IGNIS, and finishing the broader funnel/proof follow-through.
 
 ## What exists
 
@@ -22,8 +22,8 @@
 - **Members directory** (`members/`) — S58: fixed profile-loading regression from CSP-blocked inline directory script; runtime moved to `/assets/members-directory.js`, clear-filter action uses event delegation, query supports current `vault_points`/`rank_title` plus legacy `points` fallback; "Founding Member" label updated to "Genesis Member".
 
 ### Infrastructure
-- **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: c1fd7b80). Deployed via Wrangler. **S53: script-src updated to SHA-256 hashes (removed 'unsafe-inline')**; needs redeploy.
-- **CSP audit gate** (`scripts/csp-audit.mjs`) — S68 added a repo-wide inline-script hash audit that compares each page's inline script hashes against page CSP, canonical CSP, and Worker CSP. Current result: gate exposes broad legacy debt across dozens of pages, which is now an explicit tracked blocker rather than hidden risk.
+- **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: `f0c9672a-25ae-413f-b131-e0ee9027b69b`). Manually redeployed via Wrangler on 2026-04-15 after the repo-wide CSP cleanup; production route `vaultsparkstudios.com/*` verified live.
+- **CSP audit gate** (`scripts/csp-audit.mjs`) — S68 added a repo-wide inline-script hash audit that compares each page's inline script hashes against page CSP, canonical CSP, and Worker CSP. **Current result: passing** — 93 HTML files checked clean after the S69 cleanup/deploy pass.
 - **Computed render smoke** (`tests/computed-styles.spec.js`) — S68 added a real-browser homepage styling check (computed body background, hero spacing, header border, zero page errors). Local Chromium run passed on 2026-04-15.
 - **Homepage hero** (`index.html`) — S62: forge ignition + vault door hybrid; `vaultspark-cinematic-logo.webp` removed from hero; `.forge-wordmark` h1 with `.forge-line-1` (VAULTSPARK) + `.forge-line-2` (STUDIOS) animated via `letterForge` keyframe; `.forge-spark-burst` gold ignition point; `.hero-chamber` radial vignette; `.hero-reveal` stagger cascade; full responsive 768/640/480/360px; `prefers-reduced-motion` guard; light-mode overrides; icon remains in nav header only.
 - **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260413-d58d28b`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, `portal-init.js`, `members-directory.js`, `vaultsparked-checkout.js`, `billing-toggle.js`
@@ -102,10 +102,10 @@
 - Per-form Web3Forms keys (all forms share single key)
 - Cloudflare WAF rule (CN/RU/HK JS Challenge) — status unknown
 - beacon.env not configured (Active Session Beacon inactive)
-- **`CF_WORKER_API_TOKEN`** secret not yet added — cloudflare-worker-deploy.yml is ready but won't run without this secret (Workers:Edit + Zone:Read permissions)
-- **Repo-wide CSP debt remains large** — S68 `scripts/csp-audit.mjs` correctly fails on many legacy pages because inline script hashes are missing from page/meta/canonical/Worker CSP in dozens of routes. The new gate is shipped; the repo cleanup is not finished.
+- **`CF_WORKER_API_TOKEN`** secret not yet added — cloudflare-worker-deploy.yml is ready, but S69 still had to use manual local Wrangler auth to deploy the Worker update. Future CSP changes will keep depending on manual deploys until the secret exists.
+- Funnel instrumentation/proof depth is still only partially finished — S68 foundations are live, but stage-by-stage reporting and deeper trust/testimonial surfaces still need the next pass.
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
-- IGNIS score: 47,308/100,000 · Tier: FORGE · last computed 2026-04-07 (stale 7+ days — **mandatory rescore at S66 session start**)
+- IGNIS score: 47,308/100,000 · Tier: FORGE · last computed 2026-04-07 (stale 7+ days — **mandatory rescore next session**)
 - Annual Stripe price IDs ($44.99/yr, $269.99/yr) not yet created — billing toggle UI exists but annual checkout routes to same monthly price IDs
 - ~~404.html and offline.html use `'unsafe-inline'`~~ — **FIXED S66**: SHA-256 hashes computed and applied to both pages; `csp-hash-registry.json` updated with hash entries
 - vaultsparked in SKIP_DIRS — nav changes must be manually applied there (not auto-propagated)
