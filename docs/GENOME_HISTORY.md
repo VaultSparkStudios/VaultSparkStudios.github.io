@@ -8,16 +8,16 @@
 
 ---
 
-## Dimension Heatmap (last 2 sessions)
+## Dimension Heatmap (last 3 sessions)
 
-| Dimension | Trend | S70 | S72 |
-|---|:---:|:---:|:---:|
-| Schema alignment | → | 🔴 | 🔴 |
-| Prompt/template alignment | → | 🔴 | 🔴 |
-| Derived-view freshness | → | 🔴 | 🔴 |
-| Handoff continuity | → | 🔴 | 🔴 |
-| Contradiction density | → | 🔴 | 🔴 |
-| **Overall status** | | 🟢 | 🟢 |
+| Dimension | Trend | S70 | S72 | S73 |
+|---|:---:|:---:|:---:|:---:|
+| Schema alignment | → | 🔴 | 🔴 | 🔴 |
+| Prompt/template alignment | → | 🔴 | 🔴 | 🔴 |
+| Derived-view freshness | → | 🔴 | 🔴 | 🔴 |
+| Handoff continuity | → | 🔴 | 🔴 | 🔴 |
+| Contradiction density | → | 🔴 | 🔴 | 🔴 |
+| **Overall status** | | 🟢 | 🟢 | 🟢 |
 
 ---
 
@@ -27,12 +27,13 @@
 |---|---|---|---|---|---|
 | 2026-04-15 | S70 | 0/25 | 🟢 green | 0 | S70 turned the audit into a live public intelligence and pol |
 | 2026-04-15 | S72 | 0/25 | 🟢 green | 0 | S72 completed the shared intelligence bridge/build/verificat |
+| 2026-04-15 | S73 | 0/25 | 🟢 green | 0 | S73 closed out the protocol/status cleanup fully: startup an |
 
 ---
 
 ## Statistics
 
-- Sessions tracked: **2**
+- Sessions tracked: **3**
 - Average genome score: **0.0/25**
 - Peak: **0/25** · Low: **0/25**
 - Current: **0/25** (green)

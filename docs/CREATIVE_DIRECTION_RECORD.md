@@ -8,6 +8,17 @@ Boundary:
 
 ## Entries
 
+### 2026-04-15 — Studio OS startup/status signals must reflect current reality, not stale ops metadata (S73)
+
+- Category: Process Integrity / Operating UX
+- Human input: "Complete all signals and fix flags"
+- Area affected: `prompts/start.md`, startup/status signal surfaces, repo memory freshness
+- Required direction:
+  1. Startup/status warnings should be treated as real debt to clear, not decorative diagnostics to leave sitting in the brief
+  2. Prompt/template drift must be fixed by syncing the underlying protocol, not by hand-waving the mismatch in the brief
+  3. Stale status signals such as CDR freshness and IGNIS recency should be actively closed when the repo can own them in-session
+  4. Cross-repo freshness signals are still valid, but if they depend on sibling Studio OS repos they should be refreshed deliberately rather than accepted as permanent warnings
+
 ### 2026-04-13 — /rights/ rename + vaultsparked standard nav restoration (S64)
 
 - Category: Information Architecture / Brand Integrity / UX

@@ -1,5 +1,6 @@
-<!-- template-version: 3.0 -->
-<!-- synced-from: studio-ops/prompts/start.md @ Session 63 (2026-04-13) -->
+<!-- template-version: 3.2 -->
+<!-- synced-from: studio-ops/prompts/start.md @ Session 76 (2026-04-14) -->
+<!-- v3.2 changes: blocker preflight rule, execution-first action queue -->
 # START
 
 Executed when the user says only `start`.
@@ -33,12 +34,30 @@ BEACON_PROJECT_ID=<project-id-from-studioRegistry.js>
 ```
 Get values from Hub Settings → "Active Session Beacon". The Stop hook clears the beacon on session end.
 
-**Session mode:**
+**Session mode (v3.1 — auto-detected):**
+
+Run the mode detector immediately after the session lock:
+```bash
+node scripts/detect-session-mode.mjs --explain
+```
+It classifies the session as BUILDER (this-project) or FOUNDER (portfolio-wide) by heuristic on TASK_BOARD scope + LATEST_HANDOFF content + any passed-in user messages. If the classification would flip the current mode, it auto-updates `context/PROJECT_STATUS.json` → `sessionMode`. Re-run mid-session if the user issues a cross-project directive.
 
 | Mode | Trigger | Focus |
 |---|---|---|
-| **BUILDER** | Default | This project only |
-| **FOUNDER** | "start: founder mode" | Cross-project strategy; read `portfolio/STUDIO_BRAIN.md` first |
+| **BUILDER** | Default / single-project scope | This project only |
+| **FOUNDER** | Detected: portfolio-wide scope, cross-project refs, `portfolio/STUDIO_BRAIN.md` or `STUDIO_PULSE.md` referenced | Cross-project strategy; read `portfolio/STUDIO_BRAIN.md` + `STUDIO_PULSE.md` first |
+
+**v3.1 secrets discovery rule (mandatory):** Before labeling any item "Human Action Required" or "human-blocked", run:
+```bash
+node scripts/check-secrets.mjs --for <capability>
+```
+If the capability is READY, proceed autonomously using `scripts/lib/secrets.mjs` `getSecret(key, capability)`. The phantom-blocker pattern is forbidden.
+
+**v3.2 blocker preflight rule (mandatory):** After secrets discovery, agents must try the blocker with elevated/admin access before leaving it as human-blocked:
+```bash
+node scripts/ops.mjs blocker-preflight
+```
+If the blocker is agent-attemptable, attempt it first. Human escalation is the last step, not the first.
 
 ---
 
@@ -105,6 +124,11 @@ From the Rolling Status header (no extra reads):
 - Note assumptions before acting on them
 - **Compacted/interrupted session:** Check if human direction is in `docs/CREATIVE_DIRECTION_RECORD.md`. If the last CDR entry predates work described in `LATEST_HANDOFF.md`, flag the gap and recover at closeout.
 - **⛔ Momentum Runway ≤ 2.0:** Begin with TASK_BOARD pre-loading before any feature or protocol work. Surface as first item in PRIORITIES.
+- **Execution-first workflow:** Generate the action queue before substantial implementation work:
+  ```bash
+  node scripts/ops.mjs action-queue
+  ```
+  Pull the top local work item from there and use the blocker attempts section before creating any new human escalation.
 
 ---
 

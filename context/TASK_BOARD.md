@@ -1,6 +1,12 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 72 contract/build/local verification pass)
+Last updated: 2026-04-15 (Session 73 signal cleanup closeout)
+
+## Done (S73 signal cleanup)
+
+- [x] **[STUDIO-OS] Startup/closeout prompt sync** — `prompts/start.md` and `prompts/closeout.md` are resynced to template v3.2 while preserving the repo-specific targeted startup reads and public-intelligence closeout gate.
+- [x] **[IGNIS] Status signal cleanup** — local IGNIS CLI fallback refreshed this project to `46,489 FORGE` on 2026-04-15; stale IGNIS wording was removed from repo truth/public derivatives.
+- [x] **[OPS] Revenue/status freshness cleanup** — sibling `portfolio/REVENUE_SIGNALS.md` was refreshed, public-intelligence/contracts were regenerated, state vector/entropy/genome outputs were updated, and the runway signal was recalculated from the real open `Now` queue.
 
 ## Done (S72 audit follow-through)
 
@@ -38,7 +44,7 @@ Last updated: 2026-04-15 (Session 72 contract/build/local verification pass)
 
 ## Now (S69 runway pre-load)
 
-- [ ] **[SIL:2⛔] IGNIS Rescore** — still stale since 2026-04-07. Run `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website`.
+- [x] **[SIL:2⛔] IGNIS Rescore** — refreshed 2026-04-15 via local IGNIS CLI fallback; current score `46,489 FORGE` and the startup stale-IGNIS flag is cleared.
 - [ ] **[AUDIT] Conversion funnel instrumentation + feedback states** — **partial S68**: `/membership/`, `/vaultsparked/`, `/invite/`, `/join/`, and `/contact/` now have CTA/view events and stronger feedback panels, but stage-by-stage reporting and broader form outcome coverage still need completion.
 - [ ] **[AUDIT] Premium proof/depth pass on conversion pages** — **partial S68**: homepage, membership, and VaultSparked now show live recent shipped work / live vault proof / stronger next-step messaging. Continue with member outcomes, testimonials, and trust objections handling.
 - [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
@@ -122,7 +128,7 @@ Last updated: 2026-04-15 (Session 72 contract/build/local verification pass)
 
 ## Now (S66 runway pre-load)
 
-- [ ] **[IGNIS] Rescore — mandatory** — `node ../vaultspark-studio-ops/scripts/ops.mjs rescore` at S66 start; IGNIS is 7+ days stale (last computed 2026-04-07). First step: open studio-ops session and run CLI.
+- [x] **[IGNIS] Rescore — mandatory** — completed in S73 via local IGNIS CLI fallback; stale score cleared.
 - [x] **[SIL] Extend scroll-reveal to /studio/, /community/, /ranks/, /roadmap/** — scroll-reveal.js linked on all 4 pages; data-reveal="fade-up" added to key sections. (S66)
 - [x] **[SIL] 404/offline.html SHA hardening** — `'unsafe-inline'` replaced with computed SHA-256 hashes in both files; `scripts/csp-hash-registry.json` updated with hashes + reason notes. (S66)
 - [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
@@ -144,7 +150,7 @@ Last updated: 2026-04-15 (Session 72 contract/build/local verification pass)
 
 ## Now (S67 runway pre-load)
 
-- [ ] **[SIL:2⛔] IGNIS Rescore** — moved to S68 runway above (now past staleness threshold).
+- [x] **[SIL:2⛔] IGNIS Rescore** — resolved in S73; score refreshed to `46,489 FORGE`.
 - [ ] **[SIL:1] Closeout-commit gate** — moved to S68 runway above.
 - [ ] **[SIL:1] Genius Hit List as scheduled audit** — moved to S68 runway above.
 - [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.

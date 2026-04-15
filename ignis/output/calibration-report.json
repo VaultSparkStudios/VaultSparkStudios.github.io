@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-04-15T22:09:08.920Z",
+  "project": "vaultsparkstudios-website",
+  "metrics": [
+    {
+      "name": "naive_mae",
+      "value": 525,
+      "interpretation": "Recent score movement is predictable."
+    },
+    {
+      "name": "trend",
+      "value": 10,
+      "interpretation": "Recent trajectory is positive or stable."
+    },
+    {
+      "name": "stability",
+      "value": 97,
+      "interpretation": "Score behavior is stable enough for higher-confidence recommendations."
+    },
+    {
+      "name": "sample_size",
+      "value": 28,
+      "interpretation": "Enough history to start model calibration seriously."
+    }
+  ],
+  "strengths": [
+    "Short-horizon score forecasting is becoming tractable.",
+    "History depth is sufficient to begin recommendation grading and regime detection."
+  ],
+  "weaknesses": [],
+  "recommendations": [
+    "Log prediction outcomes and recommendation acceptance on every scoring run.",
+    "Demote certainty automatically when stability and sample size are weak.",
+    "Track strategy-level hit rates, not just raw score accuracy."
+  ]
+}

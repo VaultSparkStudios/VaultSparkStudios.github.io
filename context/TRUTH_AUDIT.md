@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-15 (S70 closeout)
+Last reviewed: 2026-04-15 (S73 signal cleanup)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -20,3 +20,6 @@ Public-safe summary:
 - Startup truth changed in S71: `prompts/start.md` now treats `LATEST_HANDOFF.md` and `SELF_IMPROVEMENT_LOOP.md` as section-scoped startup sources, so current-session startup reads no longer depend on loading full append-only histories
 - Contract truth changed in S72: `context/contracts/website-public.json`, `hub.json`, and `social-dashboard.json` are now generated alongside `api/public-intelligence.json` as the shared public-safe bridge between website, Studio Hub, and Social Dashboard
 - Verification truth changed in S72: local-first browser verification now uses `scripts/local-preview-server.mjs` + `scripts/run-local-browser-verify.mjs` with a BASE_URL override so unshipped code can be validated without depending on live production
+- Protocol truth changed in S73: `prompts/start.md` is resynced to studio-ops template v3.2 while preserving the repo-specific targeted-read discipline added in S71
+- Protocol truth changed further in S73 closeout: `prompts/closeout.md` is also resynced to studio-ops template v3.2 while keeping the website repo's generated public-intelligence gate intact
+- Intelligence truth changed in S73: IGNIS was rescored locally to `46,489 FORGE` on 2026-04-15, so repo status/public derivatives should no longer describe the score as stale

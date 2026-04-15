@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-04-15T22:09:08.932Z",
+  "project": "vaultsparkstudios-website",
+  "summary": "4 guarded actions are staged; top write is \"Make contradiction sentinel the first founder/startup signal\" and current contradiction trust is 100%.",
+  "policy": {
+    "mode": "manual-approval",
+    "approvalsRequired": [
+      "Founder approval before any write action executes.",
+      "Each action must carry an explicit rollback plan in the queue artifact."
+    ],
+    "rollbackExpectation": "Every action must remain reversible through git or managed-file rollback notes."
+  },
+  "actions": [
+    {
+      "id": "refresh-score",
+      "type": "refresh-score",
+      "title": "Refresh score and intelligence artifacts",
+      "description": "Recompute and persist the current score, founder brief, calibration report, and action plan.",
+      "requiresApproval": true,
+      "approvalReason": "This rewrites canonical runtime artifacts under ignis/output.",
+      "rollbackPlan": "Re-run the previous scoring cycle from git history or restore the prior artifact snapshots.",
+      "targetPath": "ignis/output",
+      "status": "pending_approval"
+    },
+    {
+      "id": "snapshot-evidence",
+      "type": "snapshot-evidence",
+      "title": "Capture a timestamped evidence snapshot",
+      "description": "Persist a point-in-time evidence/founder snapshot for later comparison.",
+      "requiresApproval": true,
+      "approvalReason": "This creates a new timestamped artifact under ignis/output/evidence-snapshots.",
+      "rollbackPlan": "Delete the timestamped snapshot file if it was created in error.",
+      "targetPath": "ignis/output/evidence-snapshots",
+      "status": "pending_approval"
+    },
+    {
+      "id": "stamp-contradiction",
+      "type": "stamp-contradiction",
+      "title": "Stamp the current top contradiction",
+      "description": "Persist the highest-severity contradiction so founder surfaces and audits can reference the same stamp.",
+      "requiresApproval": true,
+      "approvalReason": "This writes a new contradiction stamp that other surfaces may treat as current truth context.",
+      "rollbackPlan": "Restore the previous contradiction stamp or remove the generated stamp if it was noise.",
+      "targetPath": "ignis/output/contradiction-stamp.json",
+      "notes": "No contradictions detected. Internal consistency is high.",
+      "status": "pending_approval"
+    },
+    {
+      "id": "create-task",
+      "type": "create-task",
+      "title": "Create a managed task-board item from the top action",
+      "description": "Insert a managed Now-bucket task for \"Make contradiction sentinel the first founder/startup signal\".",
+      "requiresApproval": true,
+      "approvalReason": "This mutates the Studio OS task board and therefore needs explicit approval.",
+      "rollbackPlan": "Remove the managed [IGNIS EXEC] line from TASK_BOARD.md if the action should not stay in the queue.",
+      "targetPath": "context/TASK_BOARD.md",
+      "status": "pending_approval"
+    }
+  ]
+}

@@ -1,5 +1,17 @@
 # Work Log
 
+## 2026-04-15 — Session 73 (startup signal cleanup)
+
+- prompts/start.md: resynced from studio-ops template line `3.2`; preserved S71 targeted-read discipline while adding the newer auto-mode, secrets discovery, blocker-preflight, and execution-first startup rules
+- prompts/closeout.md: resynced to template line `3.2`; retained the S72 public-intelligence gate and added blocker-preflight language for Human Action Required handling
+- docs/CREATIVE_DIRECTION_RECORD.md: added S73 entry capturing the directive that startup/status warnings must be treated as real debt and cleared, not tolerated
+- context/PROJECT_STATUS.json: updated IGNIS to `46,489 FORGE` (`ignisScoreDelta: -819`, `ignisLastComputed: 2026-04-15`); removed the stale-IGNIS blocker; refreshed current focus/milestone copy
+- context/CURRENT_STATE.md, TASK_BOARD.md, LATEST_HANDOFF.md, TRUTH_AUDIT.md, DECISIONS.md: updated so repo truth no longer reports IGNIS as stale and now records the prompt-template sync
+- closeout ops: ran `doctor --update-json`, `state-vector --project .`, `entropy --update --project .`, `genome-snapshot --project .`, `genome-history --project .`, `rescore`, and `content-pipeline`; refreshed sibling `portfolio/REVENUE_SIGNALS.md`
+- Verification:
+  - `..\\vaultspark-ignis\\node_modules\\.bin\\tsx.cmd ..\\vaultspark-ignis\\cli.ts score .` → passed (run escalated because sandbox blocks `tsx`/`esbuild` child-process spawn)
+- Deploy: none; protocol/status truth cleanup only
+
 ## 2026-04-15 — Session 72 (shared bridge + build gate + local verify)
 
 - scripts/generate-public-intelligence.mjs: rewritten to emit `api/public-intelligence.json` plus `context/contracts/website-public.json`, `hub.json`, and `social-dashboard.json`; added `--check` drift mode; generator now reads the latest handoff block instead of full append-only history

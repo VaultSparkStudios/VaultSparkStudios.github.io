@@ -1,26 +1,25 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-04-15T21:54:10.612Z",
+  "generatedAt": "2026-04-15T22:34:06.765Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 72,
+    "currentSession": 73,
     "lastUpdated": "2026-04-15",
-    "currentFocus": "S72 completed the shared intelligence bridge/build/verification pass: public intelligence now emits website/hub/social-dashboard contracts, CI checks drift, and local-first browser verification exists for unshipped code. Immediate focus is now the next product layer: AI/pathways guidance, related-content cohesion, broader local verification coverage, and an IGNIS refresh.",
-    "nextMilestone": "Ship the next-order experience layer on top of the new contract spine: public AI/pathways guidance, stronger cross-surface cohesion, and a refreshed IGNIS baseline after the architectural follow-through.",
+    "currentFocus": "S73 closed out the protocol/status cleanup fully: startup and closeout prompts are back on the current template line, IGNIS/revenue/status surfaces are fresh again, and the repo truth/derived outputs were regenerated cleanly. Immediate product focus returns to AI/pathways guidance, related-content cohesion, and broader local verification coverage.",
+    "nextMilestone": "Ship the next-order experience layer on top of the contract spine: public AI/pathways guidance, stronger cross-surface cohesion, and broader local verification coverage, while using the refreshed IGNIS baseline to target execution/creativity lift.",
     "blockers": [
       "CF_WORKER_API_TOKEN missing, so Worker deploys still require local Wrangler auth",
       "Annual Stripe price IDs still do not exist for the billing toggle",
-      "IGNIS refresh failed in closeout; current score still dates to 2026-04-07",
       "Full local verification coverage is not expanded yet; only the core local smoke path is validated"
     ],
     "ignis": {
-      "score": 47308,
+      "score": 46489,
       "grade": "FORGE",
-      "lastComputed": "2026-04-07"
+      "lastComputed": "2026-04-15"
     }
   },
   "pulse": {
@@ -42,16 +41,16 @@
       "[SIL] Local verify full-suite baseline — decide which Playwright specs belong in the default local-first suite beyond `computed-styles` + `vaultsparked-csp`, then codify that list in `verify:local`."
     ],
     "shipped": [
-      "Shared bridge contracts shipped — `scripts/generate-public-intelligence.mjs` now emits `context/contracts/website-public.json`, `hub.json`, and `social-dashboard.json` alongside `api/public-intelligence.json`, using runtime-pack metadata and Studio Hub registry/social metadata as the shared public-safe contract spine.",
-      "Website consumers now expose bridge data — homepage and `/studio-pulse/` now render shared ecosystem/social bridge signals (`assets/home-intelligence.js`, `assets/studio-pulse-live.js`, `index.html`, `studio-pulse/index.html`) instead of treating the bridge as generator-only metadata.",
-      "Public-intelligence automation shipped — `package.json` now exposes `build` + `build:check`, CI runs the drift check in `.github/workflows/e2e.yml`, and `prompts/closeout.md` now explicitly treats generated intelligence/contracts as synchronized truth surfaces.",
-      "Local-first browser verification shipped — `scripts/local-preview-server.mjs` and `scripts/run-local-browser-verify.mjs` now provide a supported local static-preview + Playwright path for unshipped code, including dynamic local ports and Windows-safe command invocation.",
-      "Local verification contract bug fixed — `tests/compliance-pages.spec.js` now clears `localStorage` after first navigation/reload instead of touching it on `about:blank`, so the cookie-banner tests are compatible with local preview.",
-      "`node scripts/generate-public-intelligence.mjs` → passed"
+      "Prompt compliance closed — `prompts/start.md` and `prompts/closeout.md` are now back on the studio-ops v3.2 template line, while the repo-specific targeted-read startup discipline and public-intelligence closeout gate were preserved instead of overwritten.",
+      "Stale status signals cleared — IGNIS was refreshed to `46,489 FORGE` on 2026-04-15, the CDR gap was closed, the SIL runway figure was recalculated from the real open `Now` queue, and repo truth no longer reports the score/status surfaces as stale.",
+      "Derived truth refreshed — `api/public-intelligence.json`, `context/contracts/*.json`, `context/STATE_VECTOR.json`, `docs/GENOME_HISTORY.md`, project entropy/genome outputs, and sibling `portfolio/REVENUE_SIGNALS.md` were regenerated so founder/startup checks read current data.",
+      "`..\\\\vaultspark-ignis\\\\node_modules\\\\.bin\\\\tsx.cmd ..\\\\vaultspark-ignis\\\\cli.ts score .` → passed",
+      "`node scripts/generate-public-intelligence.mjs` → passed",
+      "`node ..\\\\vaultspark-studio-ops\\\\scripts\\\\ops.mjs state-vector --project .` → passed"
     ]
   },
   "stats": {
-    "sessionsCompleted": 72,
+    "sessionsCompleted": 73,
     "liveProjects": 3,
     "projectsInForge": 5,
     "activeEdgeFunctions": 16,

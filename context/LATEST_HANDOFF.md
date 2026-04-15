@@ -1,6 +1,48 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 72)
+Last updated: 2026-04-15 (Session 73)
+
+## Session Intent: Session 73
+Complete all startup/status signal cleanup, make the warnings truthful again, and close the session out fully through commit/push.
+
+## Where We Left Off (Session 73)
+- Shipped: 3 improvements across prompt compliance, stale-signal cleanup, and closeout truth refresh
+- Tests: `tsx ..\\vaultspark-ignis\\cli.ts score .` passed via local CLI fallback; `node scripts/generate-public-intelligence.mjs`, `state-vector --project .`, `entropy --update --project .`, `genome-snapshot --project .`, `genome-history --project .`, `node ../vaultspark-studio-ops/scripts/ops.mjs rescore`, and `content-pipeline` passed
+- Deploy: committed and pushed to `main`; no production runtime deploy required
+
+### Shipped
+- **Prompt compliance closed** — `prompts/start.md` and `prompts/closeout.md` are now back on the studio-ops v3.2 template line, while the repo-specific targeted-read startup discipline and public-intelligence closeout gate were preserved instead of overwritten.
+- **Stale status signals cleared** — IGNIS was refreshed to `46,489 FORGE` on 2026-04-15, the CDR gap was closed, the SIL runway figure was recalculated from the real open `Now` queue, and repo truth no longer reports the score/status surfaces as stale.
+- **Derived truth refreshed** — `api/public-intelligence.json`, `context/contracts/*.json`, `context/STATE_VECTOR.json`, `docs/GENOME_HISTORY.md`, project entropy/genome outputs, and sibling `portfolio/REVENUE_SIGNALS.md` were regenerated so founder/startup checks read current data.
+
+### Verification
+- `..\\vaultspark-ignis\\node_modules\\.bin\\tsx.cmd ..\\vaultspark-ignis\\cli.ts score .` → **passed**
+- `node scripts/generate-public-intelligence.mjs` → **passed**
+- `node ..\\vaultspark-studio-ops\\scripts\\ops.mjs state-vector --project .` → **passed**
+- `node ..\\vaultspark-studio-ops\\scripts\\ops.mjs entropy --update --project .` → **passed**
+- `node ..\\vaultspark-studio-ops\\scripts\\ops.mjs genome-snapshot --project .` → **passed**
+- `node ..\\vaultspark-studio-ops\\scripts\\ops.mjs genome-history --project .` → **passed**
+- `node ..\\vaultspark-studio-ops\\scripts\\ops.mjs rescore` → **passed**
+- `node ..\\vaultspark-studio-ops\\scripts\\ops.mjs content-pipeline` → **passed**
+
+### Open carry-forward
+- **AI/pathways guidance remains the top product layer** — now that the status/ops debt is cleared, the next leverage point is routing visitors by intent on the live site.
+- **Related-content cohesion pass remains open** — the games/projects/universe/membership/journal/changelog graph still needs deeper connective tissue.
+- **Local verification coverage still needs breadth** — the local-first path is in place, but broader coverage beyond the core smoke pair is still the next verification pass.
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` in GitHub Actions secrets so future Worker deploys stop depending on local Wrangler auth.
+- [ ] **[STRIPE-ANNUAL]** Create the annual Stripe price IDs ($44.99/yr and $269.99/yr) so annual routing can be completed.
+- [ ] **[WEB3FORMS]** Run a real browser submission for the public forms to confirm delivery.
+- [ ] **[WAF]** Confirm the Cloudflare WAF JS Challenge rule for CN/RU/HK is active.
+- [ ] **[BEACON]** Run the Studio Hub beacon setup and copy `.claude/beacon.env` here if active-session signaling is desired.
+
+## Recommended First Action Next Session
+
+1. **[AUDIT] Public AI concierge / pathways** — use the contract spine to route visitors by intent instead of leaving the intelligence layer informational only.
+2. **[AUDIT] Cohesion pass for related-content graph** — deepen cross-links across public surfaces now that the signal debt is cleared.
+3. **[AUDIT] Expand local verification coverage** — grow beyond the core smoke pair now that startup/status truth is clean.
 
 ## Session Intent: Session 72
 Complete the three audit carry-forwards together: shared Studio Hub/social-dashboard bridge work, public-intelligence automation in closeout/build flow, and a real local-first browser verification target.
@@ -27,7 +69,7 @@ Complete the three audit carry-forwards together: shared Studio Hub/social-dashb
 ### Open carry-forward
 - **AI/pathways guidance remains the next product layer** — the contract/build spine is in place; the next leverage point is using it to guide visitors into the right entry paths.
 - **Related-content cohesion pass remains open** — games/projects/universe/membership/journal/changelog surfaces still need deeper graph-style cross-linking.
-- **IGNIS remains stale** — current score still dates to 2026-04-07.
+- **IGNIS is refreshed** — rescored to `46,489 FORGE` on 2026-04-15; the stale startup flag is cleared, and the next leverage point is improving execution/creativity rather than waiting on the score refresh itself.
 - **Local verification coverage should expand** — the local-first path exists and the core smoke pair passes, but broader local-suite coverage is still the next verification pass.
 
 ## Human Action Required
@@ -42,7 +84,7 @@ Complete the three audit carry-forwards together: shared Studio Hub/social-dashb
 
 1. **[AUDIT] Public AI concierge / pathways** — use the new contract spine to route visitors by intent instead of leaving the intelligence layer informational only.
 2. **[AUDIT] Cohesion pass for related-content graph** — deepen cross-links across public surfaces now that shared data exists.
-3. **[SIL:2⛔] IGNIS Rescore** — still stale and now overdue relative to the architectural progress shipped in S72.
+3. **[AUDIT] Expand local verification coverage** — grow beyond the core smoke pair now that the signal/ops debt is out of the way.
 
 ## Session Intent: Session 71
 Tighten the Studio OS startup path so `start` reads only the current handoff/SIL slices it actually needs and stops producing clipped startup briefs from oversized append-only context files.

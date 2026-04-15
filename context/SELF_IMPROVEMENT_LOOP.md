@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▇▆▆
-Avgs — 3: 442.3 | 5: 442.4 | 10: 437.0 | all: 426.5
-  └ 3-session: Dev 90.7 | Align 84.0 | Momentum 85.0 | Engage 88.0 | Process 94.7
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~2.7 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-15 | Session 72 | Total: 447/500 | Velocity: 3 | protocolVelocity: 0
+Sparkline (last 5 totals): ▇▇▆▆▆
+Avgs — 3: 438.0 | 5: 442.4 | 10: 438.2 | all: 426.7
+  └ 3-session: Dev 88.7 | Align 85.0 | Momentum 80.7 | Engage 88.0 | Process 95.7
+Velocity trend: ↓  |  Protocol velocity: ↑  |  Debt: ↓
+Momentum runway: ~4.6 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-15 | Session 73 | Total: 439/500 | Velocity: 0 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -1030,3 +1030,27 @@ Avgs — 3: 442.3 | 5: 442.4 | 10: 437.0 | all: 426.5
 3. **Pathways intelligence layer** — use the new contract spine to drive a visitor-intent router across homepage, membership, invite, and vaultsparked. First step: define 4-5 public-safe intent states and their CTA swaps. High probability.
 
 **Committed to TASK_BOARD:** [SIL] Startup snapshot helper · [SIL] Local verify full-suite baseline
+
+## 2026-04-15 — Session 73 | Total: 439/500 | Velocity: 0 | Debt: ↓
+Avgs — 3: 438.0 | 5: 442.4 | 10: 438.2 | all: 426.7
+  └ 3-session: Dev 88.7 | Align 85.0 | Momentum 80.7 | Engage 88.0 | Process 95.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 88 | ↓ | IGNIS refresh, prompt sync, and derived truth regeneration all landed cleanly; no runtime regressions or schema drift left behind |
+| Creative Alignment | 89 | ↑ | The session followed explicit human direction to treat stale warnings as real debt, and the repo now presents a truer operating picture |
+| Momentum | 75 | ↓ | No product velocity shipped, but the declared cleanup intent was completed and one real stale blocker class was removed |
+| Engagement | 90 | ↑ | Direct response to the user's correction; proposal acceptance and feedback-loop health remained strong (`22/25`, `25/25`) |
+| Process Quality | 97 | ↑ | Full closeout completed with prompt compliance, truth refresh, audit JSON, state vector, entropy, genome, and revenue/status surfaces updated |
+| **Total** | **439/500** | ↓ | |
+
+**Top win:** Closed the gap between startup/status warnings and actual repo state by refreshing IGNIS, revenue/status derivatives, and prompt compliance in one clean pass.
+**Top gap:** Product-facing work is still deferred; AI/pathways guidance, cohesion, and broader local verification coverage remain the next leverage points.
+**Intent outcome:** Achieved — the stale signal/template drift class was cleared and the repo was closed out fully instead of stopping at partial cleanup.
+
+**Brainstorm**
+1. **Startup snapshot helper** — emit one deterministic startup payload so `start` never needs to pattern-read append-only files again. First step: create `scripts/startup-snapshot.mjs` that outputs latest handoff + SIL header + latest SIL entry. High probability.
+2. **Local verify suite tiers** — formalize `core` and `extended` local verification lists so coverage expands without slowing the default path. First step: codify the spec groups in `scripts/run-local-browser-verify.mjs`. High probability.
+3. **Founder/status sentinel** — render one compact “highest-risk / highest-next-action” summary from the public-intelligence bundle so startup/hand-off drift is visually obvious sooner. First step: add a sentinel block to the generated intelligence payload and startup brief. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL:1] Startup snapshot helper · [SIL:1] Local verify full-suite baseline

@@ -2,6 +2,20 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-15 — Startup protocol sync should preserve local targeted-read hardening while staying on the current studio-ops template line (S73)
+
+- Status: active
+- Decision: `prompts/start.md` is now resynced to template v3.2, but it keeps the S71 local rule that startup reads only the newest `LATEST_HANDOFF` block plus the SIL header/latest entry instead of reverting to full-history append-only reads.
+- Why: the template-drift flag was real, but blindly replacing the local prompt would have reintroduced the clipped-startup problem that S71 fixed.
+- Maintenance rule: when pulling future studio-ops prompt changes, merge them into the repo-local targeted-read discipline instead of overwriting it.
+
+### 2026-04-15 — Closeout protocol sync should preserve repo-specific public-intelligence gates while staying on the current template line (S73)
+
+- Status: active
+- Decision: `prompts/closeout.md` is now resynced to template v3.2, but it retains the repo-local S72 rule that generated public-intelligence/contract files must be refreshed after truth changes.
+- Why: the prompt-version drift needed to be cleared, but the website repo has a real generated-truth surface that generic closeout text does not fully capture on its own.
+- Maintenance rule: future studio-ops closeout prompt updates should be merged into the repo-local public-intelligence gate rather than replacing it.
+
 ### 2026-04-15 — Public intelligence is now a contract-backed bridge across website, Studio Hub, and Social Dashboard (S72)
 
 - Status: active

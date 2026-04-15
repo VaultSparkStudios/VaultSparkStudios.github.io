@@ -1,5 +1,6 @@
-<!-- template-version: 3.0 -->
-<!-- synced-from: studio-ops/prompts/closeout.md @ Session 63 (2026-04-13) -->
+<!-- template-version: 3.2 -->
+<!-- synced-from: studio-ops/prompts/closeout.md @ Session 76 (2026-04-14) -->
+<!-- v3.2 changes: blocker preflight required before retaining Human Action Required items -->
 # CLOSEOUT
 
 Executed when the user says only `closeout`.
@@ -201,6 +202,12 @@ Write both into the Rolling Status header (Step 2).
 ### Step 4.5 · Human Action Required  *(mandatory — never skip)*
 
 Scan the full session for items only the Studio Owner can resolve: external service setup, manual approvals, financial actions, legal, decisions only the human can make.
+
+**Blocker preflight requirement:** before keeping an item as human-blocked, run:
+```bash
+node scripts/ops.mjs blocker-preflight
+```
+If the blocker is agent-attemptable, attempt it first. Keep `Human Action Required` only for genuinely human-owned work.
 
 **If items exist:** write a `## Human Action Required` section in `context/LATEST_HANDOFF.md` and add to `context/TASK_BOARD.md` under `## Human Action Required` (separate from `## Blocked` — blocked = agent-resolvable).
 

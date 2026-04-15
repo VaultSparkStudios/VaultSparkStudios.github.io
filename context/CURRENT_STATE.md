@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-15 (Session 72)
+- Date: 2026-04-15 (Session 73 closeout)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: **S72 — the audit follow-through now spans shared contract, generation, and local verification instead of only page runtime.** Public intelligence now emits `api/public-intelligence.json` plus generated bridge contracts for website/public, Studio Hub, and Social Dashboard; homepage and Studio Pulse consume the shared ecosystem/social summary; build/CI now enforce public-intelligence sync; and a local-first browser verification path exists for unshipped code via local preview + Playwright. The next product layer is AI/pathways guidance, broader surface cohesion, and the still-stale IGNIS refresh.
+- Repo posture: **S73 — the startup/status signal cleanup is now caught up with the actual repo state instead of lagging behind it.** The S72 contract/build/local-verification spine remains in place; `prompts/start.md` is resynced to the current studio-ops template line while preserving targeted startup reads; the CDR gap is closed; and IGNIS is refreshed to `46,489 FORGE` (2026-04-15). The next product layer is AI/pathways guidance, broader surface cohesion, and wider local verification coverage.
 
 ## What exists
 
@@ -58,12 +58,10 @@
 - **Staging** — website.staging.vaultsparkstudios.com on Hetzner (CANON-007; confirmed live HTTP 200, S37)
 
 ### Studio OS (restored S34)
-- `prompts/start.md` — S71 targeted-read discipline added: latest handoff block only, SIL header + latest entry only, optional-file probe-first reads
-- `prompts/closeout.md` — S72 public-intelligence gate added: generated intelligence/contracts must be refreshed after truth changes
+- `prompts/start.md` — S73 resynced to template v3.2 while preserving S71 targeted-read discipline (latest handoff block only, SIL header + latest entry only, optional-file probe-first reads) plus the newer session-mode/secrets/blocker/action-queue rules
+- `prompts/closeout.md` — S73 resynced to template v3.2 blocker-preflight language while retaining the S72 public-intelligence gate
 - `CLAUDE.md` — session aliases: start/closeout → prompts/
 - `AGENTS.md` — full Studio OS agent guide
-- `prompts/start.md` — v2.4 (Bash session lock + Active Session Beacon)
-- `prompts/closeout.md` — v2.4 (synced to studio-ops @ S46: Step 7.5→8.5)
 - All context/ files functional with real content
 - `.claude/settings.json` — Stop hook (session lock clear + PROJECT_STATUS stamp) + PostToolUse JSON validator
 
@@ -116,7 +114,7 @@
 - Funnel instrumentation/proof depth is still only partially finished — the stage baseline is live, but richer reporting, deeper proof/testimonial surfaces, and more guided next-step UX still need the next pass.
 - Full local-browser verification now exists, but only the core local smoke path has been explicitly validated so far (`computed-styles` + `vaultsparked-csp`); broader local-suite coverage should expand from this baseline.
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
-- IGNIS score refresh is still blocked by tooling failure — `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website` failed in closeout, so the current value remains 47,308/100,000 · Tier: FORGE · last computed 2026-04-07
+- Revenue signals are still generated from `vaultspark-studio-ops`, so the startup revenue-freshness flag depends on refreshing that sibling repo output when project truth changes
 - Annual Stripe price IDs ($44.99/yr, $269.99/yr) not yet created — billing toggle UI exists but annual checkout routes to same monthly price IDs
 - ~~404.html and offline.html use `'unsafe-inline'`~~ — **FIXED S66**: SHA-256 hashes computed and applied to both pages; `csp-hash-registry.json` updated with hash entries
 - vaultsparked in SKIP_DIRS — nav changes must be manually applied there (not auto-propagated)
