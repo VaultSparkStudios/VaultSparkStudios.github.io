@@ -32,6 +32,9 @@ jobs:
       - name: CSP integrity audit
         run: node scripts/csp-audit.mjs
 
+      - name: Public intelligence sync check
+        run: npm run build:check
+
       - name: Run compliance tests
         run: npx playwright test tests/compliance-pages.spec.js tests/games.spec.js --reporter=list --project=chromium
         env:

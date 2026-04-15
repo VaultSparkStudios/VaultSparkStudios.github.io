@@ -1,6 +1,16 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 70 audit execution + public intelligence layer)
+Last updated: 2026-04-15 (Session 72 contract/build/local verification pass)
+
+## Done (S72 audit follow-through)
+
+- [x] **[AUDIT] Studio Hub + social dashboard bridge** — `scripts/generate-public-intelligence.mjs` now emits shared public-safe bridge contracts in `context/contracts/` and the site surfaces consume shared ecosystem/social bridge metadata instead of keeping the bridge implicit.
+- [x] **[AUDIT] Auto-generate public intelligence during closeout/build** — `npm run build` now regenerates public intelligence + contracts, `npm run build:check` enforces drift in CI, and `prompts/closeout.md` now treats these generated files as synchronized closeout surfaces.
+- [x] **[AUDIT] Local browser verification target** — `scripts/local-preview-server.mjs` + `scripts/run-local-browser-verify.mjs` now provide a local-first Playwright path for unshipped code; focused local Chromium smoke verified `computed-styles` + `vaultsparked-csp`.
+
+## Done (S71 protocol)
+
+- [x] **[STUDIO-OS] Startup prompt targeted-read hardening** — `prompts/start.md` now explicitly limits startup reads on append-only files to the latest `LATEST_HANDOFF` block, the `SELF_IMPROVEMENT_LOOP` rolling header plus latest entry, and probe-first optional-file checks so startup briefs do not get clipped by oversized context loads.
 
 ## Now (S70 audit execution)
 
@@ -11,19 +21,20 @@ Last updated: 2026-04-15 (Session 70 audit execution + public intelligence layer
 - [x] **[AUDIT] Funnel stage telemetry baseline** — `assets/funnel-tracking.js` now supports stage events and auto-detects engagement/submit starts for tagged forms; join/contact/invite scripts now emit stage success/error transitions.
 - [x] **[AUDIT] Generated CSP source** — `config/csp-policy.mjs` now owns the canonical page/Worker/redirect CSP variants; `scripts/propagate-csp.mjs`, `scripts/csp-audit.mjs`, and `cloudflare/security-headers-worker.js` all consume that shared source instead of carrying duplicated policy strings.
 - [x] **[AUDIT] Investor surface hardening** — legacy `investor/**` redirects now use minimal redirect pages plus `assets/redirect-page.js`; inline GA/bootstrap/redirect code was removed and the route family no longer depends on `script-src 'unsafe-inline'`.
-- [ ] **[AUDIT] Studio Hub + social dashboard bridge** — promote selected public-safe Studio OS / Studio Hub / social signals into the site’s intelligence payload rather than keeping the bridge repo-local only.
 - [ ] **[AUDIT] Public AI concierge / pathways** — build a constrained intent router for player / member / supporter / investor / lore-seeker entry paths.
 - [ ] **[AUDIT] Cohesion pass for related-content graph** — deepen cross-links between games, projects, universe, membership, journal, changelog, and studio surfaces.
 
 - [ ] **[SIL:2⛔] Genius Hit List as scheduled audit** — schedule recurring audit job that generates `docs/GENIUS_LIST.md` without human prompt.
-- [ ] **[SIL:1] Live Worker header verification script** — codify the browser-like header check used in S69 so post-deploy verification does not rely on ad hoc curl commands. First step: add `scripts/verify-live-headers.mjs` for `/` and `/vaultsparked/`.
-- [ ] **[SIL:1] Local Worker deploy helper** — add a small wrapper/script that checks Wrangler auth and deploys `cloudflare/security-headers-worker.js` safely when GitHub Actions cannot. First step: script a `cloudflare/deploy-worker-local.ps1` flow around `wrangler whoami` + `wrangler deploy --env production`.
+- [ ] **[SIL:2⛔] Live Worker header verification script** — codify the browser-like header check used in S69 so post-deploy verification does not rely on ad hoc curl commands. First step: add `scripts/verify-live-headers.mjs` for `/` and `/vaultsparked/`.
+- [ ] **[SIL:2⛔] Local Worker deploy helper** — add a small wrapper/script that checks Wrangler auth and deploys `cloudflare/security-headers-worker.js` safely when GitHub Actions cannot. First step: script a `cloudflare/deploy-worker-local.ps1` flow around `wrangler whoami` + `wrangler deploy --env production`.
 
-## Next (S70 post-closeout)
+## Next (S72 post-closeout)
 
-- [ ] **[AUDIT] Auto-generate public intelligence during closeout/build** — wire `node scripts/generate-public-intelligence.mjs` into the closeout/deploy path so public truth cannot drift after memory updates.
-- [ ] **[AUDIT] Local browser verification target** — add a local static-server/browser smoke path so Playwright can verify unshipped working-tree changes instead of defaulting to live production.
-- [ ] **[AUDIT] Studio Hub + social dashboard intelligence contract** — define a shared public-safe schema that can feed homepage intelligence, Studio Pulse, Studio Hub, and future social widgets from one source.
+- [ ] **[AUDIT] Expand local verification coverage** — grow the local-first browser suite beyond the core `computed-styles` + `vaultsparked-csp` smoke pair so more public pages default to local verification before live checks.
+- [ ] **[AUDIT] Public AI concierge / pathways** — build a constrained intent router for player / member / supporter / investor / lore-seeker entry paths.
+- [ ] **[AUDIT] Cohesion pass for related-content graph** — deepen cross-links between games, projects, universe, membership, journal, changelog, and studio surfaces.
+- [ ] **[SIL] Startup snapshot helper** — add `scripts/startup-snapshot.mjs` so startup can read one deterministic current-state payload instead of pattern-matching multiple append-only files.
+- [ ] **[SIL] Local verify full-suite baseline** — decide which Playwright specs belong in the default local-first suite beyond `computed-styles` + `vaultsparked-csp`, then codify that list in `verify:local`.
 
 ## Now (S69 runway pre-load)
 

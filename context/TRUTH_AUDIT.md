@@ -17,3 +17,6 @@ Public-safe summary:
 - Policy-generation truth changed in S70: `config/csp-policy.mjs` is now the shared source of truth for page CSP, redirect-page CSP, Worker CSP, and the repo-wide audit path
 - Redirect truth changed in S70: legacy `investor/**` pages are now minimal hardened redirects without inline GA/bootstrap/redirect code
 - Derived-view freshness improved in S70: `api/public-intelligence.json` was regenerated during closeout after memory updates so the public intelligence payload reflects current Session 70 truth
+- Startup truth changed in S71: `prompts/start.md` now treats `LATEST_HANDOFF.md` and `SELF_IMPROVEMENT_LOOP.md` as section-scoped startup sources, so current-session startup reads no longer depend on loading full append-only histories
+- Contract truth changed in S72: `context/contracts/website-public.json`, `hub.json`, and `social-dashboard.json` are now generated alongside `api/public-intelligence.json` as the shared public-safe bridge between website, Studio Hub, and Social Dashboard
+- Verification truth changed in S72: local-first browser verification now uses `scripts/local-preview-server.mjs` + `scripts/run-local-browser-verify.mjs` with a BASE_URL override so unshipped code can be validated without depending on live production

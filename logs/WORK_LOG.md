@@ -1,5 +1,31 @@
 # Work Log
 
+## 2026-04-15 — Session 72 (shared bridge + build gate + local verify)
+
+- scripts/generate-public-intelligence.mjs: rewritten to emit `api/public-intelligence.json` plus `context/contracts/website-public.json`, `hub.json`, and `social-dashboard.json`; added `--check` drift mode; generator now reads the latest handoff block instead of full append-only history
+- scripts/lib/public-intelligence-contracts.mjs: created — shared contract builder using runtime-pack metadata and Studio Hub registry/social metadata
+- package.json: added `build`, `build:check`, and `verify:local`
+- prompts/closeout.md: added public-intelligence gate so generated intelligence/contracts must be refreshed after truth changes
+- .github/workflows/e2e.yml: added `npm run build:check` drift gate
+- scripts/local-preview-server.mjs + scripts/run-local-browser-verify.mjs: created local static preview + Playwright wrapper for local-first unshipped verification; dynamic local port + Windows-safe command invocation
+- index.html + studio-pulse/index.html + assets/home-intelligence.js + assets/studio-pulse-live.js: now surface ecosystem/social bridge metadata to the public site
+- tests/compliance-pages.spec.js: cookie-banner tests now clear localStorage after first navigation/reload instead of touching `about:blank`
+- Verification:
+  - `npm run build:check` → passed
+  - `node scripts/run-local-browser-verify.mjs tests/computed-styles.spec.js` → passed
+  - `node scripts/run-local-browser-verify.mjs tests/computed-styles.spec.js tests/vaultsparked-csp.spec.js` → passed
+- Deploy: none; repo/runtime update only
+- SIL: 447/500 · Velocity: 3 · Debt: ↓
+
+## 2026-04-15 — Session 71 (startup prompt hardening)
+
+- Root-caused clipped startup briefs to oversized context reads during `start`, especially full reads of `context/LATEST_HANDOFF.md` and historical `context/SELF_IMPROVEMENT_LOOP.md`
+- prompts/start.md: added targeted-read discipline for append-only files; startup now reads only the newest handoff block, the SIL rolling header plus latest entry when needed, and probe-first optional-file checks
+- context/: CURRENT_STATE, DECISIONS, TASK_BOARD, LATEST_HANDOFF, TRUTH_AUDIT, PROJECT_STATUS, SELF_IMPROVEMENT_LOOP updated to preserve the new startup rule
+- Verification: reviewed `git diff -- prompts/start.md` and matched the new rule against current `LATEST_HANDOFF.md` / `SELF_IMPROVEMENT_LOOP.md` structure
+- Deploy: none; protocol/docs change only
+- SIL: 428/500 · Velocity: 1 · Debt: ↓
+
 ## 2026-04-15 — Session 68 (structural upgrade batch)
 
 - scripts/csp-audit.mjs: created — repo-wide inline-script hash audit; compares inline script hashes against page CSP, canonical CSP, and Worker CSP

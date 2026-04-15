@@ -2,6 +2,27 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-15 — Public intelligence is now a contract-backed bridge across website, Studio Hub, and Social Dashboard (S72)
+
+- Status: active
+- Decision: `scripts/generate-public-intelligence.mjs` now emits both the public website payload (`api/public-intelligence.json`) and generated bridge contracts in `context/contracts/website-public.json`, `hub.json`, and `social-dashboard.json`.
+- Why: S70 created the public intelligence payload, but it was still repo-local in schema. The missing leverage point was a shared public-safe contract that downstream surfaces could trust without scraping ad hoc fields.
+- Maintenance rule: when listing metadata, runtime-pack integration data, Studio Hub registry metadata, or public pulse/social fields change, regenerate all contract/intelligence outputs together via `node scripts/generate-public-intelligence.mjs`.
+
+### 2026-04-15 — Local-first browser verification is the default path for unshipped code (S72)
+
+- Status: active
+- Decision: unshipped browser verification should run against a local static preview via `scripts/local-preview-server.mjs` and `scripts/run-local-browser-verify.mjs`, not against production by default.
+- Why: live-first Playwright checks only validate the last deployed site, which leaves working-tree regressions invisible during implementation. The new local preview path closes that gap for static-site work.
+- Maintenance rule: use `npm run verify:local` or `node scripts/run-local-browser-verify.mjs <tests...>` for local smoke on changed public surfaces before relying on live-site checks.
+
+### 2026-04-15 — Startup context loading should be section-scoped for append-only files (S71)
+
+- Status: active
+- Decision: `prompts/start.md` now treats `context/LATEST_HANDOFF.md` and `context/SELF_IMPROVEMENT_LOOP.md` as section-scoped startup sources rather than full-history reads. Startup should read only the newest handoff block, the SIL rolling header, and the latest SIL entry when needed.
+- Why: the append-only files have grown large enough that full reads create clipped startup briefs, noisy context loading, and unstable optional checks even though only the newest sections matter for normal startup.
+- Maintenance rule: during startup, probe optional files first and prefer targeted section/pattern reads over full-file reads for historical logs unless the user explicitly asks for history.
+
 ### 2026-04-15 — CSP policy generation now comes from one structured source shared by meta propagation, audit, and Worker headers (S70)
 
 - Status: active

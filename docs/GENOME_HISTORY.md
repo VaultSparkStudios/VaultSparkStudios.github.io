@@ -8,16 +8,16 @@
 
 ---
 
-## Dimension Heatmap (last 1 sessions)
+## Dimension Heatmap (last 2 sessions)
 
-| Dimension | Trend | S70 |
-|---|:---:|:---:|
-| Schema alignment | → | 🔴 |
-| Prompt/template alignment | → | 🔴 |
-| Derived-view freshness | → | 🔴 |
-| Handoff continuity | → | 🔴 |
-| Contradiction density | → | 🔴 |
-| **Overall status** | | 🟢 |
+| Dimension | Trend | S70 | S72 |
+|---|:---:|:---:|:---:|
+| Schema alignment | → | 🔴 | 🔴 |
+| Prompt/template alignment | → | 🔴 | 🔴 |
+| Derived-view freshness | → | 🔴 | 🔴 |
+| Handoff continuity | → | 🔴 | 🔴 |
+| Contradiction density | → | 🔴 | 🔴 |
+| **Overall status** | | 🟢 | 🟢 |
 
 ---
 
@@ -26,12 +26,13 @@
 | Date | Session | Total | Status | Delta | Notes |
 |---|---|---|---|---|---|
 | 2026-04-15 | S70 | 0/25 | 🟢 green | 0 | S70 turned the audit into a live public intelligence and pol |
+| 2026-04-15 | S72 | 0/25 | 🟢 green | 0 | S72 completed the shared intelligence bridge/build/verificat |
 
 ---
 
 ## Statistics
 
-- Sessions tracked: **1**
+- Sessions tracked: **2**
 - Average genome score: **0.0/25**
 - Peak: **0/25** · Low: **0/25**
 - Current: **0/25** (green)

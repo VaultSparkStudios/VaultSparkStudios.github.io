@@ -44,10 +44,31 @@
       setStat('pulse-stat-edge', intel.stats.activeEdgeFunctions);
       setStat('pulse-stat-ranks', intel.stats.vaultRankTiers);
       setStat('pulse-stat-status', String(intel.project.ignis.score).toLocaleString('en-US'));
+      setStat('pulse-stat-social', intel.stats.trackedSocialAccounts);
       renderList('pulse-now-list', intel.pulse.now, 'now');
       renderList('pulse-next-list', intel.pulse.next, 'next');
       renderList('pulse-shipped-list', intel.pulse.shipped, 'shipped');
       renderCatalog(intel.catalog);
+
+      var bridgeNote = document.getElementById('pulse-bridge-note');
+      if (bridgeNote && intel.ecosystem && intel.ecosystem.bridges) {
+        var parts = [];
+        if (intel.ecosystem.bridges.studioHub && intel.ecosystem.bridges.studioHub.enabled) {
+          parts.push('Studio Hub shares the listing, pulse, and catalog contract');
+        }
+        if (intel.ecosystem.bridges.socialDashboard && intel.ecosystem.bridges.socialDashboard.enabled) {
+          parts.push('Social Dashboard reads the same social-presence bridge');
+        }
+        if (intel.social && intel.social.summary) {
+          parts.push(
+            intel.social.summary.trackedAccounts + ' tracked accounts with ' +
+            intel.social.summary.liveApiAccounts + ' live API-capable sources'
+          );
+        }
+        if (parts.length) {
+          bridgeNote.textContent = parts.join('. ') + '.';
+        }
+      }
     });
   });
 })();

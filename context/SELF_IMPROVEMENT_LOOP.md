@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▆▇
-Avgs — 3: 445.7 | 5: 444.0 | 10: 435.8 | all: 426.1
-  └ 3-session: Dev 91.7 | Align 86.0 | Momentum 87.0 | Engage 89.3 | Process 91.7
+Sparkline (last 5 totals): ▆▆▇▆▆
+Avgs — 3: 442.3 | 5: 442.4 | 10: 437.0 | all: 426.5
+  └ 3-session: Dev 90.7 | Align 84.0 | Momentum 85.0 | Engage 88.0 | Process 94.7
 Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~0.9 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-15 | Session 70 | Total: 452/500 | Velocity: 7 | protocolVelocity: 0
+Momentum runway: ~2.7 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-15 | Session 72 | Total: 447/500 | Velocity: 3 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -983,3 +983,50 @@ Avgs — 3: 445.7 | 5: 444.0 | 10: 435.8 | all: 426.1
 3. **Local-first browser verification** — add a local static server + Playwright baseURL override so smoke tests validate unshipped code rather than live production by default. First step: create one local smoke command and document it in handoff/closeout. High probability.
 
 **Committed to TASK_BOARD:** [AUDIT] Auto-generate public intelligence during closeout/build · [AUDIT] Local browser verification target
+
+## 2026-04-15 — Session 71 | Total: 428/500 | Velocity: 1 | Debt: ↓
+Avgs — 3: 446.7 | 5: 442.4 | all: 426.2
+  └ 3-session: Dev 91.3 | Align 84.7 | Momentum 83.0 | Engage 89.3 | Process 93.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 86 | ↓ | No product/runtime code shipped, but the startup protocol now avoids oversized context reads and clipping risk |
+| Creative Alignment | 82 | ↓ | Protocol-only session; brand/product direction unchanged |
+| Momentum | 78 | ↓ | One focused protocol fix completed cleanly; main product queue intentionally left untouched |
+| Engagement | 88 | ↓ | Directly addressed the user's startup-brief failure report in the same session |
+| Process Quality | 94 | ↑ | Root cause identified quickly, startup prompt hardened, and repo memory updated to preserve the new rule |
+| **Total** | **428/500** | ↓ | |
+
+**Top win:** Startup now reads the current handoff/SIL slices it actually needs instead of dragging the full append-only history into context.
+**Top gap:** This is still prompt-enforced rather than tool-enforced; a dedicated startup snapshot helper would remove more ambiguity.
+**Intent outcome:** Achieved — the startup brief cut-off was root-caused and the protocol was tightened in-repo.
+
+**Brainstorm**
+1. **Startup snapshot helper** — add a small script that emits the latest handoff block, SIL rolling header, and latest SIL entry in one deterministic output. First step: create `scripts/startup-snapshot.mjs`. High probability.
+2. **Fresh-startup brief artifact** — optionally cache a generated `docs/STARTUP_BRIEF.md` at closeout so `start` can render instantly when the file is fresh. First step: add a closeout hook after memory updates. Medium probability.
+
+**Committed to TASK_BOARD:** (no new items — protocol hardening landed directly)
+
+## 2026-04-15 — Session 72 | Total: 447/500 | Velocity: 3 | Debt: ↓
+Avgs — 3: 442.3 | 5: 442.4 | 10: 437.0 | all: 426.5
+  └ 3-session: Dev 90.7 | Align 84.0 | Momentum 85.0 | Engage 88.0 | Process 94.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 92 | ↑ | Shared contract generation, build/check automation, and local verification runtime all landed cleanly and were exercised locally |
+| Creative Alignment | 84 | ↑ | Infrastructure-heavy session, but the public site now reflects the studio ecosystem more truthfully instead of treating it as isolated page copy |
+| Momentum | 89 | ↑ | All three declared audit carry-forwards were implemented in one session and moved from backlog to shipped runtime/protocol |
+| Engagement | 86 | ↓ | The work improves future learning loops materially, though this session focused more on system plumbing than direct user-facing feedback surfaces |
+| Process Quality | 96 | ↑ | Generator/build/CI/closeout/local verify now align around one shared truth spine, and local verification caught then fixed a real test contract bug |
+| **Total** | **447/500** | ↑ | |
+
+**Top win:** The public intelligence layer is no longer a repo-local payload; it now has a generated contract spine shared across website, Studio Hub, Social Dashboard, build, CI, and local verification.
+**Top gap:** IGNIS is still stale, and the broader local-first verification suite still needs to expand beyond the core smoke pair that was validated here.
+**Intent outcome:** Achieved — all three requested audit carry-forwards were implemented and verified at the repo/runtime level.
+
+**Brainstorm**
+1. **Startup snapshot helper** — add `scripts/startup-snapshot.mjs` so startup can consume one deterministic payload instead of pattern-reading append-only files. First step: emit latest handoff block + SIL header + latest SIL entry in one JSON/MD output. High probability.
+2. **Local verify suite tiers** — split local verification into `core` and `extended` tiers so the fast default stays reliable while broader coverage grows intentionally. First step: codify the spec list in `run-local-browser-verify.mjs`. High probability.
+3. **Pathways intelligence layer** — use the new contract spine to drive a visitor-intent router across homepage, membership, invite, and vaultsparked. First step: define 4-5 public-safe intent states and their CTA swaps. High probability.
+
+**Committed to TASK_BOARD:** [SIL] Startup snapshot helper · [SIL] Local verify full-suite baseline

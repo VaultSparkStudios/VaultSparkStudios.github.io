@@ -1,6 +1,74 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 70)
+Last updated: 2026-04-15 (Session 72)
+
+## Session Intent: Session 72
+Complete the three audit carry-forwards together: shared Studio Hub/social-dashboard bridge work, public-intelligence automation in closeout/build flow, and a real local-first browser verification target.
+
+## Where We Left Off (Session 72)
+- Shipped: 3 improvements across shared intelligence contracts, build/CI automation, and local browser verification
+- Tests: `npm run build:check` passed; `node scripts/run-local-browser-verify.mjs tests/computed-styles.spec.js tests/vaultsparked-csp.spec.js` passed locally against local preview
+- Deploy: local repo/runtime update only; no production deploy required
+
+### Shipped
+- **Shared bridge contracts shipped** — `scripts/generate-public-intelligence.mjs` now emits `context/contracts/website-public.json`, `hub.json`, and `social-dashboard.json` alongside `api/public-intelligence.json`, using runtime-pack metadata and Studio Hub registry/social metadata as the shared public-safe contract spine.
+- **Website consumers now expose bridge data** — homepage and `/studio-pulse/` now render shared ecosystem/social bridge signals (`assets/home-intelligence.js`, `assets/studio-pulse-live.js`, `index.html`, `studio-pulse/index.html`) instead of treating the bridge as generator-only metadata.
+- **Public-intelligence automation shipped** — `package.json` now exposes `build` + `build:check`, CI runs the drift check in `.github/workflows/e2e.yml`, and `prompts/closeout.md` now explicitly treats generated intelligence/contracts as synchronized truth surfaces.
+- **Local-first browser verification shipped** — `scripts/local-preview-server.mjs` and `scripts/run-local-browser-verify.mjs` now provide a supported local static-preview + Playwright path for unshipped code, including dynamic local ports and Windows-safe command invocation.
+- **Local verification contract bug fixed** — `tests/compliance-pages.spec.js` now clears `localStorage` after first navigation/reload instead of touching it on `about:blank`, so the cookie-banner tests are compatible with local preview.
+
+### Verification
+- `node scripts/generate-public-intelligence.mjs` → **passed**
+- `npm run build:check` → **passed**
+- `node scripts/run-local-browser-verify.mjs tests/computed-styles.spec.js` → **passed**
+- `node scripts/run-local-browser-verify.mjs tests/computed-styles.spec.js tests/vaultsparked-csp.spec.js` → **passed**
+- Full default `npm run verify:local` run surfaced an `about:blank` localStorage test bug first; that test contract was fixed in-session. Focused core local smoke now passes cleanly.
+
+### Open carry-forward
+- **AI/pathways guidance remains the next product layer** — the contract/build spine is in place; the next leverage point is using it to guide visitors into the right entry paths.
+- **Related-content cohesion pass remains open** — games/projects/universe/membership/journal/changelog surfaces still need deeper graph-style cross-linking.
+- **IGNIS remains stale** — current score still dates to 2026-04-07.
+- **Local verification coverage should expand** — the local-first path exists and the core smoke pair passes, but broader local-suite coverage is still the next verification pass.
+
+## Human Action Required
+
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` in GitHub Actions secrets so future Worker deploys stop depending on local Wrangler auth.
+- [ ] **[STRIPE-ANNUAL]** Create the annual Stripe price IDs ($44.99/yr and $269.99/yr) so annual routing can be completed.
+- [ ] **[WEB3FORMS]** Run a real browser submission for the public forms to confirm delivery.
+- [ ] **[WAF]** Confirm the Cloudflare WAF JS Challenge rule for CN/RU/HK is active.
+- [ ] **[BEACON]** Run the Studio Hub beacon setup and copy `.claude/beacon.env` here if active-session signaling is desired.
+
+## Recommended First Action Next Session
+
+1. **[AUDIT] Public AI concierge / pathways** — use the new contract spine to route visitors by intent instead of leaving the intelligence layer informational only.
+2. **[AUDIT] Cohesion pass for related-content graph** — deepen cross-links across public surfaces now that shared data exists.
+3. **[SIL:2⛔] IGNIS Rescore** — still stale and now overdue relative to the architectural progress shipped in S72.
+
+## Session Intent: Session 71
+Tighten the Studio OS startup path so `start` reads only the current handoff/SIL slices it actually needs and stops producing clipped startup briefs from oversized append-only context files.
+
+## Where We Left Off (Session 71)
+- Shipped: 1 protocol improvement across startup loading discipline
+- Tests: prompt diff reviewed locally; no runtime/site tests needed
+- Deploy: local repo protocol/docs update only; no public site deploy required
+
+### Shipped
+- **Startup prompt hardened for large context files** — `prompts/start.md` now explicitly requires targeted reads for append-only startup sources: the newest `LATEST_HANDOFF` session block only, the `SELF_IMPROVEMENT_LOOP` rolling header plus latest entry only when needed, and probe-first optional-file checks for `SESSION_PLAN`, `STARTUP_BRIEF`, template drift, and revenue signals.
+- **Startup rule clarified** — startup is now explicitly defined as targeted rather than archival, so section reads and pattern reads are the default for append-only logs unless historical review is requested.
+
+### Verification
+- `git diff -- prompts/start.md` → **reviewed**
+- Manual startup diagnosis against `context/LATEST_HANDOFF.md` + `context/SELF_IMPROVEMENT_LOOP.md` structure → **matches current file layout**
+
+### Open carry-forward
+- The startup brief can now be built cleanly, but no helper script exists yet; execution still depends on the startup prompt being followed accurately.
+- Product priorities are unchanged from S70: Studio Hub/social-dashboard bridge, auto-generated public intelligence in closeout/build, and local-first browser verification remain the highest-leverage next steps.
+
+## Recommended First Action Next Session
+
+1. **[AUDIT] Studio Hub + social dashboard bridge** — keep product work on the main architectural path opened in S70.
+2. **[AUDIT] Auto-generate public intelligence during closeout/build** — remove the remaining manual regeneration step.
+3. **[AUDIT] Local browser verification target** — make local verification the default companion to the new startup discipline.
 
 ## Session Intent: Session 70
 Audit the website deeply, score it, convert the highest-leverage recommendations into real implementation work, and update repo memory/task surfaces so the roadmap survives beyond the session.

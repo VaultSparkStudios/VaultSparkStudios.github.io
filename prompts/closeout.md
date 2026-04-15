@@ -16,6 +16,8 @@ Classify: **Achieved** · **Partial** *(note scope drift)* · **Redirected** *(l
 
 **CSP gate:** if the session touched HTML inline scripts, CSP tags, or the Worker CSP, run `node scripts/csp-audit.mjs` before writing the final handoff.
 
+**Public intelligence gate:** if the session changed `PROJECT_STATUS.json`, `TASK_BOARD.md`, `LATEST_HANDOFF.md`, runtime-pack metadata, or any public-intelligence consumer/runtime, run `node scripts/generate-public-intelligence.mjs` after final memory writes. Treat `api/public-intelligence.json` and `context/contracts/*.json` as generated truth surfaces that must stay synchronized.
+
 **Bypass audit:** If any commit this session bypassed safety hooks (`--no-verify`, `--no-gpg-sign`), log in `context/DECISIONS.md`: date · what hook was bypassed · reason · follow-up task to fix root cause. Add that follow-up to `context/TASK_BOARD.md` under Now. Normalizing hook bypasses erodes the safety net.
 
 ---
@@ -30,8 +32,9 @@ Classify: **Achieved** · **Partial** *(note scope drift)* · **Redirected** *(l
 6. `context/SELF_IMPROVEMENT_LOOP.md` — **mandatory**
 7. `docs/CREATIVE_DIRECTION_RECORD.md` — **mandatory if human gave creative direction**
 8. `context/TRUTH_AUDIT.md` — when source-of-truth, schemas, prompts/templates, or derived surfaces changed
-9. Any repo-specific files whose truth changed
-10. **Delete `context/.session-lock`** — mandatory last step
+9. Generated public intelligence surfaces — `node scripts/generate-public-intelligence.mjs` when applicable
+10. Any repo-specific files whose truth changed
+11. **Delete `context/.session-lock`** — mandatory last step
 
 ### Where We Left Off  *(write to top of LATEST_HANDOFF.md)*
 

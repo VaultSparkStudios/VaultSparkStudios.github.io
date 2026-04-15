@@ -36,11 +36,10 @@ test.describe('Compliance & utility pages (S38b)', () => {
 
 test.describe('Cookie consent banner', () => {
   test('banner appears on first visit and links to /cookies/', async ({ page, context }) => {
-    // Clear storage to simulate first visit
+    await page.goto(BASE + '/');
     await context.clearCookies();
     await page.evaluate(() => localStorage.clear());
-
-    await page.goto(BASE + '/');
+    await page.reload();
 
     // Banner should appear
     const banner = page.locator('#cookieConsent');
@@ -52,10 +51,10 @@ test.describe('Cookie consent banner', () => {
   });
 
   test('banner disappears after accepting', async ({ page, context }) => {
+    await page.goto(BASE + '/');
     await context.clearCookies();
     await page.evaluate(() => localStorage.clear());
-
-    await page.goto(BASE + '/');
+    await page.reload();
 
     const banner = page.locator('#cookieConsent');
     await expect(banner).toBeVisible({ timeout: 5000 });
@@ -69,10 +68,10 @@ test.describe('Cookie consent banner', () => {
   });
 
   test('banner disappears after declining', async ({ page, context }) => {
+    await page.goto(BASE + '/');
     await context.clearCookies();
     await page.evaluate(() => localStorage.clear());
-
-    await page.goto(BASE + '/');
+    await page.reload();
 
     const banner = page.locator('#cookieConsent');
     await expect(banner).toBeVisible({ timeout: 5000 });

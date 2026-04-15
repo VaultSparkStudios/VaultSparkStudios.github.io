@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-15 (Session 70)
+- Date: 2026-04-15 (Session 72)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: **S70 — audit execution closed with a live public intelligence + policy-generation layer.** The S69 CSP-clean baseline still holds, and S70 added a generated truth payload (`scripts/generate-public-intelligence.mjs` → `api/public-intelligence.json`), a live Studio Pulse renderer (`assets/public-intelligence.js`, `assets/studio-pulse-live.js`), shared proof hydration (`assets/live-proof.js`), adaptive CTA logic (`assets/adaptive-cta.js`), richer funnel stage telemetry (`assets/funnel-tracking.js` plus join/contact/invite flow updates), and a generated CSP source (`config/csp-policy.mjs`) now shared by page propagation, audit, and the Cloudflare Worker. The session is closed out, committed, and ready for the next integration layer: richer Studio Hub/social-dashboard intelligence, AI/pathways guidance, and broader cohesion between public surfaces.
+- Repo posture: **S72 — the audit follow-through now spans shared contract, generation, and local verification instead of only page runtime.** Public intelligence now emits `api/public-intelligence.json` plus generated bridge contracts for website/public, Studio Hub, and Social Dashboard; homepage and Studio Pulse consume the shared ecosystem/social summary; build/CI now enforce public-intelligence sync; and a local-first browser verification path exists for unshipped code via local preview + Playwright. The next product layer is AI/pathways guidance, broader surface cohesion, and the still-stale IGNIS refresh.
 
 ## What exists
 
@@ -58,6 +58,8 @@
 - **Staging** — website.staging.vaultsparkstudios.com on Hetzner (CANON-007; confirmed live HTTP 200, S37)
 
 ### Studio OS (restored S34)
+- `prompts/start.md` — S71 targeted-read discipline added: latest handoff block only, SIL header + latest entry only, optional-file probe-first reads
+- `prompts/closeout.md` — S72 public-intelligence gate added: generated intelligence/contracts must be refreshed after truth changes
 - `CLAUDE.md` — session aliases: start/closeout → prompts/
 - `AGENTS.md` — full Studio OS agent guide
 - `prompts/start.md` — v2.4 (Bash session lock + Active Session Beacon)
@@ -92,6 +94,9 @@
 - **Studio stats + scroll reveals** (`assets/studio-stats.js`, `assets/scroll-reveal.js`, `index.html`) — S64: `days-since-launch` CSP-blocked inline script externalized to `studio-stats.js` (defer, no hash needed); stat corrected to `10+` Worlds in the forge (was `7+`); `scroll-reveal.js` IntersectionObserver fade-up reveals added with CSS; 6 homepage sections tagged `data-reveal="fade-up"`
 - **Membership stats live** (`assets/membership-stats.js`, `membership/index.html`) — S64: CSP-blocked inline social proof script externalized to `membership-stats.js` (defer); queries `VSPublic` for member count, sparked count, challenge count across 5 stat elements
 - **Public intelligence layer** (`scripts/generate-public-intelligence.mjs`, `api/public-intelligence.json`, `assets/public-intelligence.js`, `assets/studio-pulse-live.js`, `assets/home-intelligence.js`) — S70: generated a public-safe bridge from Studio OS truth into the live site. `/studio-pulse/` now renders session/focus/queue/catalog data from generated repo truth instead of stale hand-authored HTML, and the homepage now exposes a “Studio Intelligence” surface backed by the same payload.
+- **Shared public-intelligence contracts** (`scripts/lib/public-intelligence-contracts.mjs`, `context/contracts/website-public.json`, `context/contracts/hub.json`, `context/contracts/social-dashboard.json`) — S72: generated bridge contracts now define the public-safe listing, pulse, and social-presence schema shared across the website, Studio Hub, and Social Dashboard.
+- **Public-intelligence build + CI sync** (`package.json`, `.github/workflows/e2e.yml`) — S72: `npm run build` regenerates public intelligence + contracts, and `npm run build:check` now runs in CI to catch drift before it reaches production.
+- **Local-first browser verification** (`scripts/local-preview-server.mjs`, `scripts/run-local-browser-verify.mjs`, `tests/compliance-pages.spec.js`) — S72: local preview + Playwright BASE_URL override now provide a supported path for unshipped browser verification; cookie-banner tests were corrected to clear localStorage after navigation so they work locally as well as live.
 - **Shared proof layer** (`assets/live-proof.js`) — S70: homepage, membership, and VaultSparked now share one live proof runtime for public member/sparked/challenge counts and rank-distribution rendering instead of duplicating that logic per page.
 - **Adaptive CTA layer** (`assets/adaptive-cta.js`) — S70: homepage, membership, VaultSparked, join, and invite now shift key calls-to-action based on current session state, referral state, and prior membership intent.
 - **Funnel stage telemetry baseline** (`assets/funnel-tracking.js`, `assets/join-page.js`, `assets/contact-page.js`, `assets/invite-page.js`) — S70: added stage-oriented flow events (`engaged`, `submit_started`, `success`, `error`, `ready`) on tagged forms and referral actions.
@@ -108,9 +113,8 @@
 - Cloudflare WAF rule (CN/RU/HK JS Challenge) — status unknown
 - beacon.env not configured (Active Session Beacon inactive)
 - **`CF_WORKER_API_TOKEN`** secret not yet added — cloudflare-worker-deploy.yml is ready, but S69 still had to use manual local Wrangler auth to deploy the Worker update. Future CSP changes will keep depending on manual deploys until the secret exists.
-- Public intelligence payload exists, but generation is still manual for now — the next step is automating `node scripts/generate-public-intelligence.mjs` in closeout/build flow.
 - Funnel instrumentation/proof depth is still only partially finished — the stage baseline is live, but richer reporting, deeper proof/testimonial surfaces, and more guided next-step UX still need the next pass.
-- Studio Hub / social dashboard / public site still do not share one public-safe intelligence contract.
+- Full local-browser verification now exists, but only the core local smoke path has been explicitly validated so far (`computed-styles` + `vaultsparked-csp`); broader local-suite coverage should expand from this baseline.
 - Contact form: Web3Forms delivery requires browser test to confirm (server-side testing blocked by free tier)
 - IGNIS score refresh is still blocked by tooling failure — `node ../vaultspark-studio-ops/scripts/ops.mjs rescore --project vaultsparkstudios-website` failed in closeout, so the current value remains 47,308/100,000 · Tier: FORGE · last computed 2026-04-07
 - Annual Stripe price IDs ($44.99/yr, $269.99/yr) not yet created — billing toggle UI exists but annual checkout routes to same monthly price IDs

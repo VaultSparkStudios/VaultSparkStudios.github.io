@@ -56,6 +56,14 @@ Check `context/SELF_IMPROVEMENT_LOOP.md`:
 
 ## 3 · Load Context  *(read in order — do not skip or reorder)*
 
+**Read discipline for large append-only files**
+
+- Read full contents only for compact source-of-truth files (`PROJECT_BRIEF`, `SOUL`, `BRAIN`, `CURRENT_STATE`, `DECISIONS`, `TASK_BOARD`)
+- For `context/LATEST_HANDOFF.md`, read **only the newest session block**: from the first `## Session Intent:` through the next `## Session Intent:` (or EOF)
+- For `context/SELF_IMPROVEMENT_LOOP.md`, read the Rolling Status header first, then read **only the latest dated entry** when you need the most recent scores / brainstorm / committed items
+- For optional files (`SESSION_PLAN`, `STARTUP_BRIEF`, template/version checks, revenue signals), probe existence + freshness first; only read the minimal lines needed
+- Do not read the full history of append-only files during startup unless the user explicitly asks for historical review
+
 | # | File | Purpose |
 |---|---|---|
 | 1 | `AGENTS.md` | Role rules, enforcement, session aliases |
@@ -65,10 +73,10 @@ Check `context/SELF_IMPROVEMENT_LOOP.md`:
 | 5 | `context/CURRENT_STATE.md` | Live snapshot of what exists |
 | 6 | `context/DECISIONS.md` | Key decisions with rationale |
 | 7 | `context/TASK_BOARD.md` | Now / Next / Blocked / Later tasks |
-| 8 | `context/LATEST_HANDOFF.md` | Authoritative handoff from last session |
-| 9 | `context/SELF_IMPROVEMENT_LOOP.md` — **header only** | Rolling Status: sparkline, avgs, last scores |
+| 8 | `context/LATEST_HANDOFF.md` — **latest session block only** | Authoritative handoff from last session |
+| 9 | `context/SELF_IMPROVEMENT_LOOP.md` — **header first, then latest entry only if needed** | Rolling Status, last scores, latest brainstorm |
 | 10 | `context/TRUTH_AUDIT.md` *(if present and relevant)* | Source-of-truth hierarchy, contradiction status |
-| 11 | `docs/SESSION_PLAN.md` *(if < 48h old)* | Predicted SIL range, scope cap, risk flags — surface in DASHBOARD |
+| 11 | `docs/SESSION_PLAN.md` *(if < 48h old; probe first, then targeted read)* | Predicted SIL range, scope cap, risk flags — surface in DASHBOARD |
 | 12 | Task-specific files | Only after all above are read |
 
 *Founder Mode: read `portfolio/STUDIO_BRAIN.md` between steps 9 and 10.*
@@ -93,6 +101,7 @@ From the Rolling Status header (no extra reads):
 - `PROJECT_STATUS.json` and registry JSON beat derived Markdown when values conflict
 - No code edits during startup unless immediately requested
 - `context/LATEST_HANDOFF.md` is the active handoff; all other handoff docs are historical
+- Startup should be **targeted, not archival**: prefer section reads and pattern reads over full-file reads for append-only logs
 - Note assumptions before acting on them
 - **Compacted/interrupted session:** Check if human direction is in `docs/CREATIVE_DIRECTION_RECORD.md`. If the last CDR entry predates work described in `LATEST_HANDOFF.md`, flag the gap and recover at closeout.
 - **⛔ Momentum Runway ≤ 2.0:** Begin with TASK_BOARD pre-loading before any feature or protocol work. Surface as first item in PRIORITIES.
@@ -175,7 +184,7 @@ Render the startup brief using box-drawing UI. If `docs/STARTUP_BRIEF.md` exists
 
 | Field | Source |
 |---|---|
-| Score bar · per-category bars · sparkline · Avgs | `SELF_IMPROVEMENT_LOOP.md` Rolling Status header + last entry scores |
+| Score bar · per-category bars · sparkline · Avgs | `SELF_IMPROVEMENT_LOOP.md` Rolling Status header + latest entry scores |
 | Days since | `Last session:` date vs today |
 | IGNIS score | `context/PROJECT_STATUS.json` → `ignisScore`, `ignisGrade`, `ignisLastComputed` |
 | Truth / Genome | `context/TRUTH_AUDIT.md` → `context/PROJECT_STATUS.json` |
@@ -183,7 +192,7 @@ Render the startup brief using box-drawing UI. If `docs/STARTUP_BRIEF.md` exists
 | CDR Gap | Last `YYYY-MM-DD` entry in `docs/CREATIVE_DIRECTION_RECORD.md` vs `Last updated:` in `context/LATEST_HANDOFF.md` |
 | Templates | Compare `template-version:` in `prompts/start.md` vs `START_PROMPT.template.md` |
 | Revenue signals | `Generated:` date in `portfolio/REVENUE_SIGNALS.md` vs today |
-| Prediction | `docs/SESSION_PLAN.md` `generated-at` comment; include only if < 48h old |
+| Prediction | `docs/SESSION_PLAN.md` `generated-at` comment; probe file age first, then include only if < 48h old |
 | Genius Hit List | `docs/GENIUS_LIST.md` if present; else call `scripts/generate-genius-list.mjs --brief` |
 
 **Signal thresholds:**

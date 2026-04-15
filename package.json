@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "build": "node scripts/generate-public-intelligence.mjs",
+    "build:check": "node scripts/generate-public-intelligence.mjs --check",
     "test": "npx playwright test",
     "test:a11y": "npx playwright test tests/accessibility.spec.js",
+    "verify:local": "node scripts/run-local-browser-verify.mjs",
     "provision:test-accounts": "node scripts/provision-vault-test-accounts.mjs"
   },
   "devDependencies": {
