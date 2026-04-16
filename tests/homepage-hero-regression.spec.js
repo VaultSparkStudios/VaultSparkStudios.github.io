@@ -3,6 +3,7 @@ const { test, expect } = require('@playwright/test');
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 
 test('live homepage hero and brand shell render coherently', async ({ page }) => {
+  test.setTimeout(30000);
   const pageErrors = [];
   const failedRequests = [];
 

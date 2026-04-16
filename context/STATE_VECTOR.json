@@ -1,9 +1,9 @@
 {
   "vectorVersion": "1.0",
   "generatedAt": "2026-04-16",
-  "generatedAtMs": 1776366383786,
+  "generatedAtMs": 1776367801451,
   "session": 78,
-  "vectorHash": "1f75ccfe0ebc8794",
+  "vectorHash": "4211f96cb6389bed",
   "silTotal": 481,
   "silAvg3": 471.3,
   "velocity": 4,
@@ -29,8 +29,8 @@
   "slug": "vaultsparkstudios-website",
   "type": "website",
   "lifecycle": "deployed",
-  "nextMilestone": "Confirm the fingerprinted shell path on production/staging after deploy propagation, stabilize the broader local browser suite, and then run the premium proof/depth pass on homepage + membership + VaultSparked while annual activation stays behind the missing Stripe yearly plan keys.",
-  "currentFocus": "Session 77 is closed out: the website shell is now fingerprinted from one generated manifest, the service worker only caches fingerprinted shell assets, the homepage brand/hero shell has a runtime health monitor, and browser verification now includes a dedicated homepage shell regression gate. The remaining focus is post-deploy live verification of the new shell path, broader browser-suite stability, and the next proof/depth pass on the core conversion pages.",
+  "nextMilestone": "Stabilize the broader local browser suite, review the live shell-health telemetry/fallback behavior, and then run the premium proof/depth pass on homepage + membership + VaultSparked while annual activation stays behind the missing Stripe yearly plan keys.",
+  "currentFocus": "Session 77 is closed out: the website shell is fingerprinted from one generated manifest, the service worker only caches fingerprinted shell assets, the homepage brand/hero shell has a runtime health monitor, and browser verification now includes a dedicated homepage shell regression gate that passed on both production and staging after push. The remaining focus is broader browser-suite stability, shell telemetry/fallback review, and the next proof/depth pass on the core conversion pages.",
   "lastShipped": "4 improvements across shell fingerprinting, service-worker cache discipline, homepage shell observability, and browser regression gating",
   "blockers": [
     "CF_WORKER_API_TOKEN missing, so Worker deploys still require local Wrangler auth",

@@ -75,7 +75,7 @@ Last updated: 2026-04-16 (Session 77 closeout)
 ## Now (Session 77 leverage)
 
 - [ ] **[GENIUS][STABILITY] Broader local browser-suite stabilization** — the scoped intelligence gate is green, but the broader local Playwright suite still shows some first-attempt flake under heavier parallel Chromium load; stabilize retries/timeouts so the full browser verify path is consistently clean.
-- [ ] **[SIL] Post-deploy shell verification sweep** — after the fingerprinted shell release propagates, run the new live browser verify path against production and staging and confirm the generated shell asset URLs, homepage brand shell, and hero/title contract are all green outside local preview.
+- [x] **[SIL] Post-deploy shell verification sweep** — **DONE S77**: fixed the Windows live-verify wrapper, increased the homepage shell spec timeout for real live runs, and verified the fingerprinted homepage shell contract against both production and staging after push.
 - [ ] **[SIL] Shell telemetry + fallback audit** — once the fingerprinted shell path is live, review the homepage shell-health event/fallback behavior and tune the monitor if it is too noisy or misses a real broken-shell state.
 - [ ] **[GENIUS][CONVERSION] Premium proof/depth pass** — deepen homepage, membership, and VaultSparked conviction with stronger outcomes, objection handling, and “what happens next” clarity now that the feedback loop exists.
 - [ ] **[GENIUS][COHESION] World gravity system** — connect games, lore, changelog, and membership surfaces more aggressively so world-specific discovery compounds instead of resetting at each page.

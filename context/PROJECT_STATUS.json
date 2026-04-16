@@ -11,13 +11,12 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Session 77 is closed out: the website shell is now fingerprinted from one generated manifest, the service worker only caches fingerprinted shell assets, the homepage brand/hero shell has a runtime health monitor, and browser verification now includes a dedicated homepage shell regression gate. The remaining focus is post-deploy live verification of the new shell path, broader browser-suite stability, and the next proof/depth pass on the core conversion pages.",
-  "nextMilestone": "Confirm the fingerprinted shell path on production/staging after deploy propagation, stabilize the broader local browser suite, and then run the premium proof/depth pass on homepage + membership + VaultSparked while annual activation stays behind the missing Stripe yearly plan keys.",
+  "currentFocus": "Session 77 is closed out: the website shell is fingerprinted from one generated manifest, the service worker only caches fingerprinted shell assets, the homepage brand/hero shell has a runtime health monitor, and browser verification now includes a dedicated homepage shell regression gate that passed on both production and staging after push. The remaining focus is broader browser-suite stability, shell telemetry/fallback review, and the next proof/depth pass on the core conversion pages.",
+  "nextMilestone": "Stabilize the broader local browser suite, review the live shell-health telemetry/fallback behavior, and then run the premium proof/depth pass on homepage + membership + VaultSparked while annual activation stays behind the missing Stripe yearly plan keys.",
   "blockers": [
     "CF_WORKER_API_TOKEN missing, so Worker deploys still require local Wrangler auth",
     "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
-    "The broader local browser suite still shows some first-attempt flaky timeouts under heavier parallel Chromium load",
-    "The new fingerprinted shell path still needs post-push production/staging browser verification after GitHub Pages propagation"
+    "The broader local browser suite still shows some first-attempt flaky timeouts under heavier parallel Chromium load"
   ],
   "lastUpdated": "2026-04-16",
   "truthAuditStatus": "green",

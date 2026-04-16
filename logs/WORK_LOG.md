@@ -12,7 +12,11 @@
   - `npm run build:check` → passed
   - `node scripts/verify-sw-assets.mjs` → passed
   - `node scripts/run-local-browser-verify.mjs tests/homepage-hero-regression.spec.js tests/computed-styles.spec.js tests/navigation.spec.js` → passed (8 checks)
-- Closeout: Studio OS write-back completed; generated truth refreshed; repo prepared for commit/push with the new shell-hardening path
+- Follow-through:
+  - `scripts/run-live-browser-verify.mjs`: fixed Windows execution by running `.cmd` Playwright launches through the shell when needed
+  - `tests/homepage-hero-regression.spec.js`: increased timeout for real live-site runs so post-push verification stops flaking on the fixed 3s settle window
+  - `node scripts/run-live-browser-verify.mjs` → passed against both production and staging after push
+- Closeout: Studio OS write-back completed; generated truth refreshed; repo committed and pushed to `main`; homepage shell/browser verification passed on both production and staging
 
 ## 2026-04-16 — Session 76 (feedback loop + release confidence)
 

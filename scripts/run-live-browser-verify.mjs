@@ -26,9 +26,10 @@ function resolvePlaywrightRunner() {
 
 function run(command, commandArgs, extraEnv = {}) {
   return new Promise((resolve, reject) => {
+    const useShell = process.platform === 'win32' && /\.cmd$/i.test(command);
     const child = spawn(command, commandArgs, {
       cwd: root,
-      shell: false,
+      shell: useShell,
       stdio: 'inherit',
       env: { ...process.env, ...extraEnv }
     });

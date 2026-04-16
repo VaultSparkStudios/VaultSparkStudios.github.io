@@ -49,13 +49,13 @@ Avgs — 3: 471.3 | 5: 461.4 | 10: 451.9 | 25: 440.1 | all: 432.9
 | **Total** | **481/500** | ↑ | |
 
 **Top win:** The shared website shell moved from mutable cache-risk territory to a fingerprinted, monitored, browser-gated release path.
-**Top gap:** Production/staging still need a post-propagation browser verify pass on the new fingerprinted shell URLs after the push lands.
+**Top gap:** The broader local browser suite still needs stabilization so the full verify path becomes as boring as the new homepage shell gate.
 **Intent outcome:** Achieved — the full shell-hardening/"100/100" plan shipped as a release-manifest pipeline plus runtime/browser safeguards and is ready for deploy verification
 
 **Brainstorm**
-1. **Post-deploy shell verification sweep** — confirm the new fingerprinted shell path on production and staging after propagation. First step: run `scripts/run-live-browser-verify.mjs` against both environments and inspect the generated shell URLs in-network. High probability.
-2. **Shell telemetry + fallback audit** — review whether the homepage shell-health event/fallback is too noisy or too quiet once it sees real traffic. First step: inspect the analytics event behavior after deploy and tighten the trigger thresholds if needed. High probability.
-3. **Broader-suite stabilization** — make the full browser suite as boring as the new homepage shell gate. First step: isolate the remaining heavy-parallel flakes and compare trace timing against the new shell spec baseline. High probability.
+1. **Shell telemetry + fallback audit** — review whether the homepage shell-health event/fallback is too noisy or too quiet once it sees real traffic. First step: inspect the analytics event behavior after deploy and tighten the trigger thresholds if needed. High probability.
+2. **Broader-suite stabilization** — make the full browser suite as boring as the new homepage shell gate. First step: isolate the remaining heavy-parallel flakes and compare trace timing against the new shell spec baseline. High probability.
+3. **Homepage shell metrics surfacing** — expose a small public-safe shell-health read in the existing intelligence layer so regressions are visible without digging into analytics. First step: add one generated shell-health summary slot to the public intelligence payload. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL] Post-deploy shell verification sweep · [SIL] Shell telemetry + fallback audit
 

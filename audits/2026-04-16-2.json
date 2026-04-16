@@ -35,7 +35,7 @@
     "all": 432.9
   },
   "topWin": "The shared website shell moved from mutable cache-risk territory to a fingerprinted, monitored, browser-gated release path.",
-  "topGap": "Production/staging still need a post-propagation browser verify pass on the new fingerprinted shell URLs after the push lands.",
+  "topGap": "The broader local browser suite still needs stabilization so the full verify path becomes as boring as the new homepage shell gate.",
   "intentOutcome": "Achieved",
   "improvementsShipped": 4,
   "improvementGroups": {
@@ -44,14 +44,15 @@
     "observability": 1,
     "browser-gating": 1
   },
-  "testsTotal": 11,
+  "testsTotal": 13,
   "testsByType": {
     "build": 2,
     "assetAudit": 1,
-    "browser": 8
+    "browser": 8,
+    "liveBrowser": 2
   },
   "testsDelta": null,
-  "deployStatus": "pending-post-push-propagation",
+  "deployStatus": "deployed-and-verified",
   "ignisFlags": [
     "intent-achieved",
     "debt-clear"
