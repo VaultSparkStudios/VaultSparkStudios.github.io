@@ -1,5 +1,17 @@
 # Work Log
 
+## 2026-04-16 — Session 79 (conversion depth + world gravity + verify docs)
+
+- assets/trust-depth.js: rewrote the shared trust-depth runtime so homepage, membership, and VaultSparked each render their own proof, low-risk sequence, hesitation, and next-step language instead of sharing the earlier generic card set
+- assets/intent-state.js + assets/related-content.js: added per-world affinity inference plus richer related-rail context maps/headings so the cohesion layer can route users through flagship game and universe pages instead of stopping at the main conversion pages
+- games/vaultfront/index.html + games/solara/index.html + games/mindframe/index.html + games/the-exodus/index.html + universe/voidfall/index.html + universe/dreadspike/index.html: mounted the shared world-gravity related rails on the key FORGE and universe surfaces
+- tests/intelligence-surfaces.spec.js: extended the local browser gate to assert related-rail presence on the new game/universe routes and raised the file timeout to stabilize the heavier coverage under the local wrapper
+- docs/LOCAL_VERIFY.md: documented the supported `intelligence`, `core`, and `extended` tiers plus the lower-worker default policy for the local Playwright wrapper
+- Verification:
+  - `node --check assets/intent-state.js assets/trust-depth.js assets/related-content.js` → passed
+  - `npm run build:check` → passed
+  - `node scripts/run-local-browser-verify.mjs tests/intelligence-surfaces.spec.js` → passed (`12/12`)
+
 ## 2026-04-16 — Session 78 (suite stabilization + shell telemetry audit)
 
 - scripts/run-local-browser-verify.mjs: capped local Chromium worker pressure by tier so the broad local suite favors repeatable signal over noisy local saturation

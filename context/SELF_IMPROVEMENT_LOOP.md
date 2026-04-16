@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇▇█▇
-Avgs — 3: 476.3 | 5: 468.8 | 10: 455.6 | 25: 442.0 | all: 433.8
-  └ 3-session: Dev 96.0 | Align 93.7 | Momentum 94.3 | Engage 93.3 | Process 99.0
+Sparkline (last 5 totals): ▇▇█▇█
+Avgs — 3: 479.7 | 5: 474.4 | 10: 438.1 | 25: 430.0 | all: 432.5
+  └ 3-session: Dev 96.7 | Align 94.7 | Momentum 95.0 | Engage 93.7 | Process 99.7
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: ~1.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-16 | Session 78 | Total: 476/500 | Velocity: 2 | protocolVelocity: 1
+Momentum runway: ~1.7 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-16 | Session 79 | Total: 482/500 | Velocity: 3 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,30 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-16 — Session 79 | Total: 482/500 | Velocity: 3 | Debt: ↓
+Avgs — 3: 479.7 | 5: 474.4 | 10: 438.1 | 25: 430.0 | all: 432.5
+  └ 3-session: Dev 96.7 | Align 94.7 | Momentum 95.0 | Engage 93.7 | Process 99.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 97 | ↑ | Shared conversion/cohesion runtime got stronger without fragmenting into page-specific scripts, build integrity stayed clean, and the expanded intelligence-surface browser gate passed end-to-end |
+| Creative Alignment | 95 | ↑ | The new trust language and world-gravity rails make the site feel more like one intentional vault system instead of separate marketing, game, and lore islands |
+| Momentum | 96 | ↑ | All three remaining carry-forwards were converted into shipped code and documentation in one session instead of being re-listed again |
+| Engagement | 95 | ↑ | The work directly answered the user's request to implement the full remaining idea set at optimal quality and turned that direction into visible front-door improvements |
+| Process Quality | 99 | ↓ | The session stayed evidence-driven and fully written back into repo truth; only the remaining generated-truth refresh/recompute step keeps it just short of perfect at this moment |
+| **Total** | **482/500** | ↑ | |
+
+**Top win:** The site’s cohesion layer now reaches the actual game and lore pages, so world-specific curiosity can keep compounding into identity, support, and adjacent story instead of collapsing into a dead end.
+**Top gap:** The next conversion-focused improvement is no longer the core trio; it is whether the stronger proof language should spread into join/invite and whether the `/games/` and `/universe/` hub pages should become better route orchestrators.
+**Intent outcome:** Achieved — the remaining proof/depth, world-gravity, and local-verify-documentation carry-forwards were all shipped and browser-verified
+
+**Brainstorm**
+1. **Join/invite proof-depth extension** — apply the stronger trust/objection language to the other high-intent public routes so they inherit the same conviction quality as homepage, membership, and VaultSparked. First step: map the highest-friction prompt on each page into one dedicated trust card. High probability.
+2. **Games/universe hub gravity pass** — treat `/games/` and `/universe/` as route orchestrators, not only collection pages. First step: mount stronger shared rail or guide surfaces on those two hub routes and verify the click-through story feels deliberate. High probability.
+3. **Scheduled Genius audit ritual** — convert the still-open Genius Hit List meta-item into a real recurring operating rhythm so the public site keeps getting scored as a system, not only improved reactively. First step: decide whether the schedule lives in studio-ops or this repo’s own workflow/docs. Medium probability.
+
+**Committed to TASK_BOARD:** [GENIUS][CONVERSION] Extend proof/depth beyond the three core pages · [GENIUS][COHESION] Extend gravity onto the `/games/` and `/universe/` hubs
 
 ## 2026-04-16 — Session 78 | Total: 476/500 | Velocity: 2 | Debt: ↓
 Avgs — 3: 476.3 | 5: 468.8 | 10: 455.6 | 25: 442.0 | all: 433.8

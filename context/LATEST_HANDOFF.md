@@ -1,6 +1,29 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 78 closeout)
+Last updated: 2026-04-16 (Session 79 closeout)
+
+## Session Intent: Session 79
+Close the remaining user-facing carry-forwards by shipping the premium proof/depth pass, extending world gravity onto the key game/lore pages, and writing down the local verify contract explicitly.
+
+## Where We Left Off (Session 79)
+- Shipped: 3 improvements across conversion depth, world-gravity cohesion, and verification documentation
+- Tests: `npm run build:check` passed; focused local browser verification passed `12/12` for the expanded intelligence-surface suite
+- Deploy: pending; the work is implemented locally and browser-verified against the local preview path
+
+### Shipped
+- **Premium proof/depth shipped** — `assets/trust-depth.js` now renders context-specific proof/objection/next-step modules on homepage, membership, and VaultSparked instead of the earlier generic card set. The homepage now speaks more directly about what is already real and what still needs to be earned; membership makes the free-first identity path clearer; and VaultSparked now explains the paid layer, the safe decision sequence, and the annual-pricing honesty guard more explicitly.
+- **World gravity system shipped** — `assets/intent-state.js` now infers per-world affinity (`vaultfront`, `solara`, `mindframe`, `the-exodus`, `voidfall`, `dreadspike`) and `assets/related-content.js` now uses that signal plus richer context maps/headings to render related rails on the key FORGE and universe pages. Those pages now hand users into membership, paid support, changelog, Studio Pulse, and adjacent lore instead of behaving like isolated brochures.
+- **Local verify contract shipped** — `docs/LOCAL_VERIFY.md` now documents the intended `intelligence`, `core`, and `extended` tiers plus the lower-worker default policy, and `tests/intelligence-surfaces.spec.js` now verifies the new game/universe gravity rails under the supported local preview wrapper.
+
+### Verification
+- `node --check assets/intent-state.js assets/trust-depth.js assets/related-content.js` → **passed**
+- `npm run build:check` → **passed**
+- `node scripts/run-local-browser-verify.mjs tests/intelligence-surfaces.spec.js` → **passed** (`12/12`)
+
+### Open carry-forward
+- **Join/invite can inherit the stronger proof language next** — the premium proof/depth pass is now strong on the three core conversion pages, but the next conversion-focused session could carry the same conviction layer onto other high-intent public routes.
+- **The hub pages can become stronger gravity orchestrators** — the per-world pages now hand off properly, but `/games/` and `/universe/` still have room to route more intentionally into account, support, and adjacent saga surfaces.
+- **The scheduled Genius Hit List audit is still the standing meta-pass** — the repo still benefits from periodically rerunning the ranked combined-audit so these systems stay compounding instead of drifting back into piecemeal iteration.
 
 ## Session Intent: Session 78
 Close the remaining verification carry-forwards by stabilizing the broader local browser suite and auditing the homepage shell telemetry/fallback path.

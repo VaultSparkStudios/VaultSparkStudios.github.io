@@ -1,6 +1,12 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 78 closeout)
+Last updated: 2026-04-16 (Session 79 closeout)
+
+## Done (Session 79 conversion depth + world gravity + verify docs)
+
+- [x] **[GENIUS][CONVERSION] Premium proof/depth pass** — **DONE S79**: `assets/trust-depth.js` now renders context-specific conviction modules on homepage, membership, and VaultSparked, with clearer proof, lower-risk sequencing, objection handling, and pricing-honesty language instead of the earlier generic trust cards.
+- [x] **[GENIUS][COHESION] World gravity system** — **DONE S79**: `assets/related-content.js` plus `assets/intent-state.js` now infer per-world affinity and render related rails on `games/vaultfront`, `games/solara`, `games/mindframe`, `games/the-exodus`, `universe/voidfall`, and `universe/dreadspike`, so game/lore discovery compounds into membership/support/story surfaces instead of dead-ending.
+- [x] **[SIL] Local verify documentation pass** — **DONE S79**: added `docs/LOCAL_VERIFY.md`, documented the `intelligence` / `core` / `extended` tier contract and default worker counts, and expanded `tests/intelligence-surfaces.spec.js` so the new world-gravity routes are covered by the local browser gate.
 
 ## Done (Session 78 suite stabilization + shell telemetry audit)
 
@@ -80,13 +86,15 @@ Last updated: 2026-04-16 (Session 78 closeout)
 ## Now (Session 77 leverage)
 
 - [x] **[SIL] Post-deploy shell verification sweep** — **DONE S77**: fixed the Windows live-verify wrapper, increased the homepage shell spec timeout for real live runs, and verified the fingerprinted homepage shell contract against both production and staging after push.
-- [ ] **[GENIUS][CONVERSION] Premium proof/depth pass** — deepen homepage, membership, and VaultSparked conviction with stronger outcomes, objection handling, and “what happens next” clarity now that the feedback loop exists.
-- [ ] **[GENIUS][COHESION] World gravity system** — connect games, lore, changelog, and membership surfaces more aggressively so world-specific discovery compounds instead of resetting at each page.
-- [ ] **[SIL] Local verify documentation pass** — document the lower-worker local verification contract and the difference between `core`, `intelligence`, and `extended` so future sessions do not accidentally reintroduce noisy 4-worker local runs.
+- [x] **[GENIUS][CONVERSION] Premium proof/depth pass** — **DONE S79**: homepage, membership, and VaultSparked now expose stronger proof, objection handling, and next-step clarity through the upgraded shared trust-depth runtime.
+- [x] **[GENIUS][COHESION] World gravity system** — **DONE S79**: game and universe pages now render explicit gravity rails and world-affinity-aware handoffs into membership, support, changelog, and adjacent lore.
+- [x] **[SIL] Local verify documentation pass** — **DONE S79**: `docs/LOCAL_VERIFY.md` now makes the lower-worker local verify contract explicit and the intelligence-surface coverage now includes the new world-gravity routes.
 
 ## Next (Session 77+)
 
 - [ ] **[SIL:2⛔] Genius Hit List as scheduled audit** — keep running the ranked combined-audit pass periodically so the website does not slip back into piecemeal iteration.
+- [ ] **[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages** — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.
+- [ ] **[GENIUS][COHESION] Extend gravity onto the `/games/` and `/universe/` hubs** — the per-world pages now hand off properly, but the main collection hubs can still become stronger route orchestrators.
 - [ ] **[OPS] Annual Stripe activation once keys exist** — replace the annual placeholder path only after the real Stripe annual plan keys are created.
 - [ ] **[OPS] CF Worker automation unblock** — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth.
 

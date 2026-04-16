@@ -2,6 +2,27 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-16 — Trust-depth guidance should stay context-specific by conversion surface instead of using one generic proof card set (Session 79)
+
+- Status: active
+- Decision: `assets/trust-depth.js` should keep separate proof/objection/next-step modules for homepage, membership, and VaultSparked rather than collapsing those surfaces back into one generic trust card template.
+- Why: the three pages serve different jobs in the funnel. Homepage needs reality/proof and low-risk sequencing, membership needs identity clarity, and VaultSparked needs explicit paid-layer honesty and objection handling. One generic card set flattened those differences and weakened conviction.
+- Maintenance rule: when refining trust language, preserve the shared module architecture but tune the context-specific content first instead of duplicating HTML or reverting to one-size-fits-all copy.
+
+### 2026-04-16 — World-gravity cohesion now includes game and universe pages, not only conversion pages (Session 79)
+
+- Status: active
+- Decision: the related-rail / world-gravity system is now considered a site-wide cohesion surface and should extend onto the key game and universe pages, with `assets/intent-state.js` inferring per-world affinity for those routes.
+- Why: the earlier cohesion layer only covered the main conversion pages, which meant world-specific interest still dead-ended once a user entered a FORGE game page or lore page. Extending the rails onto those pages turns them into compounding entry points instead of isolated brochures.
+- Maintenance rule: new flagship game or universe pages should either wire the shared related rail or explicitly justify why they are intentionally standalone.
+
+### 2026-04-16 — The lower-worker local verify policy must be documented as repo contract, not only encoded in the runner (Session 79)
+
+- Status: active
+- Decision: the intended worker-count/tier behavior for `scripts/run-local-browser-verify.mjs` is now documented in `docs/LOCAL_VERIFY.md` and should be treated as part of the repo’s verification contract.
+- Why: Session 78 fixed the runner behavior in code, but that knowledge was still implicit. Without a written contract, future sessions can easily “optimize” back into noisy local saturation and reintroduce false failures.
+- Maintenance rule: if local verify tiers, default browsers, or worker counts change, update `docs/LOCAL_VERIFY.md` in the same session so the repo truth stays aligned with the runner.
+
 ### 2026-04-16 — Local browser verification should cap worker pressure instead of maximizing parallelism by default (Session 78)
 
 - Status: active

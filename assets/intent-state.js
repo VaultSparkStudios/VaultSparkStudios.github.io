@@ -68,6 +68,18 @@
     return null;
   }
 
+  function inferWorldAffinity(path) {
+    if (path.indexOf('/games/vaultfront') === 0) return 'vaultfront';
+    if (path.indexOf('/games/solara') === 0) return 'solara';
+    if (path.indexOf('/games/mindframe') === 0) return 'mindframe';
+    if (path.indexOf('/games/the-exodus') === 0) return 'the-exodus';
+    if (path.indexOf('/universe/voidfall') === 0) return 'voidfall';
+    if (path.indexOf('/universe/dreadspike') === 0) return 'dreadspike';
+    if (path.indexOf('/games') === 0) return 'games';
+    if (path.indexOf('/universe') === 0 || path.indexOf('/journal') === 0) return 'universe';
+    return inferBaseIntent(path) || 'general';
+  }
+
   function inferJourneyStage(path, loggedIn, membershipIntent) {
     if (loggedIn) return 'member';
     if (path.indexOf('/vaultsparked') === 0) return 'pricing';
@@ -146,7 +158,7 @@
       intent: intent,
       confidence: inferConfidence(pathway, baseIntent, membershipIntent, loggedIn, exposureCount, feedbackSummary),
       journey_stage: inferJourneyStage(path, loggedIn, membershipIntent),
-      world_affinity: safeGet(STORAGE_KEYS.worldAffinity) || inferBaseIntent(path) || 'general',
+      world_affinity: safeGet(STORAGE_KEYS.worldAffinity) || inferWorldAffinity(path),
       trust_level: inferTrustLevel(visitCount, exposureCount, loggedIn),
       membership_temperature: inferMembershipTemperature(intent, membershipIntent, loggedIn, path),
       returning_status: visitCount > 1 ? 'returning' : 'new',

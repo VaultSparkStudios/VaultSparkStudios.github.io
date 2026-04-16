@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-16 (S78 closeout)
+Last reviewed: 2026-04-16 (S79 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -50,3 +50,7 @@ Public-safe summary:
 - Session 78 truth changed: `tests/responsive.spec.js` now targets a deterministic leaderboard wrapper and `tests/games.spec.js` now uses `waitUntil: 'domcontentloaded'` for page-load smoke checks, removing two avoidable local-timeout classes
 - Session 78 truth changed: `assets/shell-health.js` now dedupes repeated shell issue events per browser session and records an explicit healthy state when the homepage shell resolves cleanly
 - Verification truth changed in Session 78: the targeted local verify batch (`compliance-pages`, `responsive`, `vault-wall`) passed `27/27`, and the full extended local Chromium suite passed `86/86` on 2026-04-16
+- Session 79 truth changed: `assets/trust-depth.js` now renders context-specific conversion-proof modules for homepage, membership, and VaultSparked instead of one generic proof-card set
+- Session 79 truth changed: `assets/intent-state.js` now infers per-world affinity for the flagship game and universe routes, and `assets/related-content.js` plus the key game/universe pages now render shared world-gravity rails instead of leaving those routes as dead ends
+- Verification truth changed in Session 79: `tests/intelligence-surfaces.spec.js` now covers the new game/universe gravity rails and the focused local intelligence-surface verify passed `12/12` on 2026-04-16 after the timeout ceiling was raised for the heavier coverage
+- Documentation truth changed in Session 79: `docs/LOCAL_VERIFY.md` now defines the supported local browser verification tiers and worker-count contract explicitly, so the lower-worker local runner policy is not implicit knowledge anymore
