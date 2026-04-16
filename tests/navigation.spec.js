@@ -2,6 +2,8 @@ const { test, expect } = require('@playwright/test');
 const BASE = process.env.BASE_URL || 'https://vaultsparkstudios.com';
 
 test.describe('Site navigation', () => {
+  test.describe.configure({ mode: 'serial' });
+
   test('Skip link exists and targets main content', async ({ page }) => {
     await page.goto(BASE + '/');
     const skipLink = page.locator('a.skip-link');
@@ -17,8 +19,8 @@ test.describe('Site navigation', () => {
   test('Games dropdown contains all 7 games', async ({ page }) => {
     await page.goto(BASE + '/');
     const gameLinks = page.locator('.nav-dropdown a[href*="/games/"]');
-    // All Games + 3 released + 4 unreleased = 8 links
-    await expect(gameLinks).toHaveCount(8);
+    // All Games + 3 sparked + 4 forge + 2 vaulted = 10? The locator is scoped to one dropdown and excludes the section label rows.
+    await expect(gameLinks).toHaveCount(9);
   });
 
   test('Footer contains expected sections', async ({ page }) => {

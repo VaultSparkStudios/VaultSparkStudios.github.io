@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▇▇█
-Avgs — 3: 460.0 | 5: 450.8 | 10: 448.6 | 25: 438.0 | all: 431.8
-  └ 3-session: Dev 93.0 | Align 90.7 | Momentum 89.0 | Engage 92.0 | Process 96.3
+Sparkline (last 5 totals): ▆▇▇▇█
+Avgs — 3: 471.3 | 5: 461.4 | 10: 451.9 | 25: 440.1 | all: 432.9
+  └ 3-session: Dev 95.0 | Align 92.3 | Momentum 93.3 | Engage 93.0 | Process 97.7
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: ~4.7 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-16 | Session 76 | Total: 472/500 | Velocity: 5 | protocolVelocity: 1
+Momentum runway: ~1.2 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-16 | Session 77 | Total: 481/500 | Velocity: 4 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,30 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-16 — Session 77 | Total: 481/500 | Velocity: 4 | Debt: ↓
+Avgs — 3: 471.3 | 5: 461.4 | 10: 451.9 | 25: 440.1 | all: 432.9
+  └ 3-session: Dev 95.0 | Align 92.3 | Momentum 93.3 | Engage 93.0 | Process 97.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 97 | ↑ | The shared shell now has a real manifest/fingerprinting pipeline, service-worker cache discipline, and focused browser/runtime verification instead of relying on mutable filenames and hope |
+| Creative Alignment | 95 | ↑ | The session protected the homepage brand shell directly, which preserves the studio's front-door identity instead of treating reliability as generic plumbing |
+| Momentum | 95 | ↑ | Four high-leverage shell-hardening items were shipped end-to-end in one session and moved the repo materially closer to the long-term reliability target |
+| Engagement | 94 | → | The work came directly from the user's "100/100" quality bar and turned that direction into a concrete prevention+detection system |
+| Process Quality | 100 | ↑ | Full write-back, generated truth refresh, dedicated verification, and commit/push closeout all stayed aligned with the new shell-delivery contract |
+| **Total** | **481/500** | ↑ | |
+
+**Top win:** The shared website shell moved from mutable cache-risk territory to a fingerprinted, monitored, browser-gated release path.
+**Top gap:** Production/staging still need a post-propagation browser verify pass on the new fingerprinted shell URLs after the push lands.
+**Intent outcome:** Achieved — the full shell-hardening/"100/100" plan shipped as a release-manifest pipeline plus runtime/browser safeguards and is ready for deploy verification
+
+**Brainstorm**
+1. **Post-deploy shell verification sweep** — confirm the new fingerprinted shell path on production and staging after propagation. First step: run `scripts/run-live-browser-verify.mjs` against both environments and inspect the generated shell URLs in-network. High probability.
+2. **Shell telemetry + fallback audit** — review whether the homepage shell-health event/fallback is too noisy or too quiet once it sees real traffic. First step: inspect the analytics event behavior after deploy and tighten the trigger thresholds if needed. High probability.
+3. **Broader-suite stabilization** — make the full browser suite as boring as the new homepage shell gate. First step: isolate the remaining heavy-parallel flakes and compare trace timing against the new shell spec baseline. High probability.
+
+**Committed to TASK_BOARD:** [SIL] Post-deploy shell verification sweep · [SIL] Shell telemetry + fallback audit
 
 ## 2026-04-16 — Session 76 | Total: 472/500 | Velocity: 5 | Debt: ↓
 Avgs — 3: 460.0 | 5: 450.8 | 10: 448.6 | 25: 438.0 | all: 431.8

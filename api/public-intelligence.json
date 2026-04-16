@@ -1,20 +1,21 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-04-16T17:35:48.363Z",
+  "generatedAt": "2026-04-16T19:06:48.268Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 76,
+    "currentSession": 77,
     "lastUpdated": "2026-04-16",
-    "currentFocus": "Session 76 is closed out: the website now has shared browser-local micro-feedback, feedback-aware public-safe intelligence/trust surfaces, adaptive hesitation-aware personalization, and a scoped release-confidence gate that passes across local preview, live headers, and staging. The remaining focus is broader browser-suite stability and a deeper proof/objection-handling pass on the core conversion pages.",
-    "nextMilestone": "Stabilize the broader local browser suite, run the premium proof/depth pass on homepage + membership + VaultSparked, and keep annual activation parked behind the missing Stripe yearly plan keys.",
+    "currentFocus": "Session 77 is closed out: the website shell is now fingerprinted from one generated manifest, the service worker only caches fingerprinted shell assets, the homepage brand/hero shell has a runtime health monitor, and browser verification now includes a dedicated homepage shell regression gate. The remaining focus is post-deploy live verification of the new shell path, broader browser-suite stability, and the next proof/depth pass on the core conversion pages.",
+    "nextMilestone": "Confirm the fingerprinted shell path on production/staging after deploy propagation, stabilize the broader local browser suite, and then run the premium proof/depth pass on homepage + membership + VaultSparked while annual activation stays behind the missing Stripe yearly plan keys.",
     "blockers": [
       "CF_WORKER_API_TOKEN missing, so Worker deploys still require local Wrangler auth",
       "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
-      "The broader local browser suite still shows some first-attempt flaky timeouts under heavier parallel Chromium load"
+      "The broader local browser suite still shows some first-attempt flaky timeouts under heavier parallel Chromium load",
+      "The new fingerprinted shell path still needs post-push production/staging browser verification after GitHub Pages propagation"
     ],
     "ignis": {
       "score": 46489,
@@ -34,17 +35,10 @@
       "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
       "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
     ],
-    "shipped": [
-      "Micro-feedback engine shipped — `assets/micro-feedback.js` now renders a shared public-safe goal/blocker/usefulness prompt on homepage, membership, VaultSparked, join, invite, and Studio Pulse; local summaries are visible immediately instead of disappearing into analytics.",
-      "Feedback-to-Ops bridge shipped — `scripts/generate-public-intelligence.mjs`, `scripts/lib/public-intelligence-contracts.mjs`, `assets/public-intelligence.js`, and the generated `context/contracts/*.json` / `api/public-intelligence.json` payloads now support feedback-summary enrichment for downstream website / Studio Hub / social-dashboard surfaces.",
-      "Adaptive narrative personalization shipped — `assets/adaptive-cta.js`, `assets/pathways-router.js`, and `assets/network-spine.js` now react more explicitly to hesitation states such as `need_proof`, `price_unsure`, `want_gameplay`, and progress-tracking member intent.",
-      "Release-confidence gate shipped — `scripts/release-confidence.mjs` plus `npm run verify:confidence` now unify public-intelligence generation, scoped local browser verification, live header verification, and staging health into one confidence report.",
-      "Local-preview runtime blocker fixed — `assets/intent-state.js` no longer emits change events from `noteExposure()`, which had been causing telemetry/trust/network rerenders to recursively re-note exposure on the heavier pages; the scoped local intelligence suite is now green.",
-      "`node --check assets/micro-feedback.js assets/intent-state.js assets/adaptive-cta.js assets/pathways-router.js assets/network-spine.js assets/public-intelligence.js assets/telemetry-matrix.js assets/trust-depth.js scripts/release-confidence.mjs scripts/run-local-browser-verify.mjs` → passed"
-    ]
+    "shipped": []
   },
   "stats": {
-    "sessionsCompleted": 76,
+    "sessionsCompleted": 77,
     "liveProjects": 3,
     "projectsInForge": 5,
     "activeEdgeFunctions": 16,

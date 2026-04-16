@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-16 (S76 closeout)
+Last reviewed: 2026-04-16 (S77 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -39,3 +39,8 @@ Public-safe summary:
 - Session 76 truth changed: `assets/intent-state.js` no longer emits shared change events from `noteExposure()`, fixing the local-preview render/exposure loop on homepage, membership, VaultSparked, and Studio Pulse
 - Session 76 truth changed: `sw.js` cache name moved to `vaultspark-20260416-feedback` so the new feedback asset is cache-tracked with the existing shared runtime
 - Verification truth changed in Session 76: `node scripts/release-confidence.mjs` passed on 2026-04-16 with public-intelligence generation, local browser verify (`intelligence` tier), live header verification, and staging health all green
+- Session 77 truth changed: `scripts/build-shell-assets.mjs` and `assets/shell-manifest.json` now define the canonical shared shell release, and all public HTML pages are rewritten to the generated fingerprinted shell asset URLs during build
+- Session 77 truth changed: shared shell runtime now includes `assets/shell-health.js`, and the homepage explicitly monitors the brand/header shell, hero heading, stylesheet attachment, and forge-letter reveal contract
+- Session 77 truth changed: `sw.js` now caches only fingerprinted shell asset URLs and bypasses mutable shell source URLs, so shell cache behavior is tied to the generated manifest instead of stable filenames
+- Session 77 truth changed: `tests/homepage-hero-regression.spec.js`, `scripts/run-live-browser-verify.mjs`, the updated local verify runner, release-confidence script, and CI workflow now treat the homepage header/hero shell as a dedicated browser-gated truth surface
+- Verification truth changed in Session 77: `npm run build`, `npm run build:check`, `node scripts/verify-sw-assets.mjs`, and the focused local browser verify run all passed against the new fingerprinted shell path on 2026-04-16

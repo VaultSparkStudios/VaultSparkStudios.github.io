@@ -1,22 +1,23 @@
 {
   "vectorVersion": "1.0",
   "generatedAt": "2026-04-16",
-  "generatedAtMs": 1776309425921,
-  "session": 76,
-  "vectorHash": "3eecc0cb0f848d8b",
-  "silTotal": 461,
-  "silAvg3": 451.3,
+  "generatedAtMs": 1776366383786,
+  "session": 78,
+  "vectorHash": "1f75ccfe0ebc8794",
+  "silTotal": 481,
+  "silAvg3": 471.3,
   "velocity": 4,
   "debt": "↓",
-  "runway": "~5.1 sessions",
+  "runway": "~1.2 sessions",
   "intentRate": "100% (last 5)",
   "openNow": 0,
-  "openNext": 2,
+  "openNext": 3,
   "openBlocked": 0,
   "topNow": [],
   "topNext": [
-    "**[SIL] Release confidence gate** — unify local/staging/live verification into o",
-    "**[SIL] Micro-feedback engine** — add tiny “was this useful / what stopped you /"
+    "**[SIL:2⛔] Genius Hit List as scheduled audit** — keep running the ranked combin",
+    "**[OPS] Annual Stripe activation once keys exist** — replace the annual placehol",
+    "**[OPS] CF Worker automation unblock** — add `CF_WORKER_API_TOKEN` so Worker dep"
   ],
   "health": "green",
   "truthStatus": "green",
@@ -28,12 +29,12 @@
   "slug": "vaultsparkstudios-website",
   "type": "website",
   "lifecycle": "deployed",
-  "nextMilestone": "Verify the new Session 75 surfaces in a real browser, ship the micro-feedback engine, and build the release-confidence gate while annual Stripe activation waits on the missing yearly plan keys.",
-  "currentFocus": "Session 75 is closed out and pushed: the website now has a shared intent-state, telemetry matrix, trust-depth layer, and Vault Network spine across the main public conversion surfaces. The remaining focus is one clean browser verification pass plus deeper user-feedback and form-outcome loops.",
-  "lastShipped": "4 improvements across shared intelligence, conversion guidance, trust depth, and network cohesion",
+  "nextMilestone": "Confirm the fingerprinted shell path on production/staging after deploy propagation, stabilize the broader local browser suite, and then run the premium proof/depth pass on homepage + membership + VaultSparked while annual activation stays behind the missing Stripe yearly plan keys.",
+  "currentFocus": "Session 77 is closed out: the website shell is now fingerprinted from one generated manifest, the service worker only caches fingerprinted shell assets, the homepage brand/hero shell has a runtime health monitor, and browser verification now includes a dedicated homepage shell regression gate. The remaining focus is post-deploy live verification of the new shell path, broader browser-suite stability, and the next proof/depth pass on the core conversion pages.",
+  "lastShipped": "4 improvements across shell fingerprinting, service-worker cache discipline, homepage shell observability, and browser regression gating",
   "blockers": [
     "CF_WORKER_API_TOKEN missing, so Worker deploys still require local Wrangler auth",
     "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
-    "This environment still does not have one clean browser verification pass for the new Session 75 shared surfaces"
+    "The broader local browser suite still shows some first-attempt flaky timeouts under heavier parallel Chromium load"
   ]
 }

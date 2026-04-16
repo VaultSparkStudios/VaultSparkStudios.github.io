@@ -11,6 +11,7 @@ const rawArgs = process.argv.slice(2);
 const TIERS = {
   intelligence: [
     'tests/computed-styles.spec.js',
+    'tests/homepage-hero-regression.spec.js',
     'tests/intelligence-surfaces.spec.js',
     'tests/micro-feedback.spec.js',
     'tests/vaultsparked-csp.spec.js'
@@ -18,6 +19,7 @@ const TIERS = {
   core: [
     'tests/computed-styles.spec.js',
     'tests/compliance-pages.spec.js',
+    'tests/homepage-hero-regression.spec.js',
     'tests/micro-feedback.spec.js',
     'tests/navigation.spec.js',
     'tests/pages.spec.js',
@@ -27,6 +29,7 @@ const TIERS = {
   extended: [
     'tests/computed-styles.spec.js',
     'tests/compliance-pages.spec.js',
+    'tests/homepage-hero-regression.spec.js',
     'tests/navigation.spec.js',
     'tests/pages.spec.js',
     'tests/micro-feedback.spec.js',
@@ -144,7 +147,7 @@ function waitForReady(child, timeoutMs = 15000) {
 }
 
 async function main() {
-  await run('node', ['scripts/generate-public-intelligence.mjs']);
+  await run('npm', ['run', 'build']);
 
   const server = spawn('node', ['scripts/local-preview-server.mjs'], {
     cwd: process.cwd(),

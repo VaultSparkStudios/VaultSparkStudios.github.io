@@ -2,6 +2,20 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-16 — Shared shell assets must ship from one fingerprinted manifest, not mutable stable URLs (Session 77)
+
+- Status: active
+- Decision: the website shell now treats `assets/style.css`, `assets/theme-toggle.js`, `assets/nav-toggle.js`, and `assets/shell-health.js` as release assets that must be fingerprinted, generated into one manifest, and consumed from those generated URLs across the site.
+- Why: the shared header/homepage shell is sensitive to mixed-version HTML/CSS/JS states. Mutable stable URLs plus service-worker/browser cache reuse make it possible for new HTML to pair with old shell assets and break the site in ways that are hard to reproduce.
+- Maintenance rule: shared shell assets should be added to `scripts/build-shell-assets.mjs`, emitted through `assets/shell-manifest.json`, and referenced through the generated shell URLs rather than being hand-linked by stable production names.
+
+### 2026-04-16 — Homepage shell regressions require both runtime fallback and browser-gate coverage (Session 77)
+
+- Status: active
+- Decision: the homepage header/hero shell is now protected by both a runtime health monitor (`assets/shell-health.js`) and a dedicated browser regression test (`tests/homepage-hero-regression.spec.js`) wired into local/live verification and release-confidence.
+- Why: the homepage shell is the brand anchor of the whole site. If the header or hero title fails, the break is immediately user-visible and too important to leave to incidental test coverage or manual checking.
+- Maintenance rule: changes to the homepage shell should keep the health monitor and regression spec aligned with the intended visible contract rather than weakening or removing those guards.
+
 ### 2026-04-16 — Public micro-feedback should ship browser-local and public-safe before any backend capture layer (Session 76)
 
 - Status: active

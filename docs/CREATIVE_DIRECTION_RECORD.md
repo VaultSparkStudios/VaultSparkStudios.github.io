@@ -8,6 +8,17 @@ Boundary:
 
 ## Entries
 
+### 2026-04-16 — Website shell must be hardened to the practical "100/100" standard, not just patched (S77)
+
+- Category: Reliability / QA / Delivery Quality
+- Human input: "How to get everything to 100/100?"; "Implement the entire 100/100 plan at optimal quality"
+- Area affected: shared shell asset delivery, service worker caching, homepage hero/header verification, closeout/deploy quality bar
+- Required direction:
+  1. The right long-term answer is not a single patch; it is a whole-system prevention+detection plan that removes mixed-version shell drift, catches homepage shell regressions early, and makes recovery obvious
+  2. Shared shell assets should be treated as release artifacts with canonical versioning/fingerprinting, not mutable stable production names
+  3. The homepage "VaultSpark Studios" shell is the brand anchor and must have dedicated browser regression coverage instead of relying on incidental tests
+  4. The quality target is "optimal quality" end-to-end: prevention, runtime fallback, verification, and closeout discipline all need to be part of the implementation
+
 ### 2026-04-15 — Studio OS startup/status signals must reflect current reality, not stale ops metadata (S73)
 
 - Category: Process Integrity / Operating UX

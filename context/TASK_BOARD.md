@@ -1,6 +1,13 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 76 closeout)
+Last updated: 2026-04-16 (Session 77 closeout)
+
+## Done (Session 77 shell hardening + regression gate)
+
+- [x] **[GENIUS][STABILITY] Fingerprinted shell asset pipeline** — **DONE S77**: shipped `scripts/build-shell-assets.mjs`, generated `assets/shell-manifest.json`, rewrote the site HTML to fingerprinted shared shell asset URLs, and moved the release build onto one canonical shell manifest.
+- [x] **[GENIUS][STABILITY] Service-worker shell hardening** — **DONE S77**: `sw.js` now caches only fingerprinted shared shell assets, bypasses mutable shell source URLs, and derives the shell cache identity from the same release fingerprints.
+- [x] **[GENIUS][OBSERVABILITY] Homepage shell health monitor** — **DONE S77**: added `assets/shell-health.js` on the homepage to detect missing header/hero shell state, force-reveal stuck forge letters, and emit a public-safe shell-health event instead of silently failing.
+- [x] **[GENIUS][QA] Homepage hero/header regression gate** — **DONE S77**: added `tests/homepage-hero-regression.spec.js`, wired it into local/live browser verification plus release-confidence/CI, and corrected `tests/navigation.spec.js` so the changed public nav contract passes locally.
 
 ## Done (Session 76 feedback loop + confidence gate)
 
@@ -68,6 +75,8 @@ Last updated: 2026-04-16 (Session 76 closeout)
 ## Now (Session 77 leverage)
 
 - [ ] **[GENIUS][STABILITY] Broader local browser-suite stabilization** — the scoped intelligence gate is green, but the broader local Playwright suite still shows some first-attempt flake under heavier parallel Chromium load; stabilize retries/timeouts so the full browser verify path is consistently clean.
+- [ ] **[SIL] Post-deploy shell verification sweep** — after the fingerprinted shell release propagates, run the new live browser verify path against production and staging and confirm the generated shell asset URLs, homepage brand shell, and hero/title contract are all green outside local preview.
+- [ ] **[SIL] Shell telemetry + fallback audit** — once the fingerprinted shell path is live, review the homepage shell-health event/fallback behavior and tune the monitor if it is too noisy or misses a real broken-shell state.
 - [ ] **[GENIUS][CONVERSION] Premium proof/depth pass** — deepen homepage, membership, and VaultSparked conviction with stronger outcomes, objection handling, and “what happens next” clarity now that the feedback loop exists.
 - [ ] **[GENIUS][COHESION] World gravity system** — connect games, lore, changelog, and membership surfaces more aggressively so world-specific discovery compounds instead of resetting at each page.
 

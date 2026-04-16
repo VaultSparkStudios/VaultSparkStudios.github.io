@@ -8,16 +8,16 @@
 
 ---
 
-## Dimension Heatmap (last 4 sessions)
+## Dimension Heatmap (last 6 sessions)
 
-| Dimension | Trend | S70 | S72 | S73 | S75 |
-|---|:---:|:---:|:---:|:---:|:---:|
-| Schema alignment | → | 🔴 | 🔴 | 🔴 | 🔴 |
-| Prompt/template alignment | → | 🔴 | 🔴 | 🔴 | 🔴 |
-| Derived-view freshness | → | 🔴 | 🔴 | 🔴 | 🔴 |
-| Handoff continuity | → | 🔴 | 🔴 | 🔴 | 🔴 |
-| Contradiction density | → | 🔴 | 🔴 | 🔴 | 🔴 |
-| **Overall status** | | 🟢 | 🟢 | 🟢 | 🟢 |
+| Dimension | Trend | S70 | S72 | S73 | S75 | S76 | S78 |
+|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| Schema alignment | → | 🔴 | 🔴 | 🔴 | 🔴 | 🔴 | 🔴 |
+| Prompt/template alignment | → | 🔴 | 🔴 | 🔴 | 🔴 | 🔴 | 🔴 |
+| Derived-view freshness | → | 🔴 | 🔴 | 🔴 | 🔴 | 🔴 | 🔴 |
+| Handoff continuity | → | 🔴 | 🔴 | 🔴 | 🔴 | 🔴 | 🔴 |
+| Contradiction density | → | 🔴 | 🔴 | 🔴 | 🔴 | 🔴 | 🔴 |
+| **Overall status** | | 🟢 | 🟢 | 🟢 | 🟢 | 🟢 | 🟢 |
 
 ---
 
@@ -29,12 +29,14 @@
 | 2026-04-15 | S72 | 0/25 | 🟢 green | 0 | S72 completed the shared intelligence bridge/build/verificat |
 | 2026-04-15 | S73 | 0/25 | 🟢 green | 0 | S73 closed out the protocol/status cleanup fully: startup an |
 | 2026-04-16 | S75 | 0/25 | 🟢 green | 0 | Session 74 is closed out and pushed: the first visitor-intel |
+| 2026-04-16 | S76 | 0/25 | 🟢 green | 0 | Session 75 is closed out and pushed: the website now has a s |
+| 2026-04-16 | S78 | 0/25 | 🟢 green | 0 | Session 77 is closed out: the website shell is now fingerpri |
 
 ---
 
 ## Statistics
 
-- Sessions tracked: **4**
+- Sessions tracked: **6**
 - Average genome score: **0.0/25**
 - Peak: **0/25** · Low: **0/25**
 - Current: **0/25** (green)

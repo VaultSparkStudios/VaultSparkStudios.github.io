@@ -1,12 +1,24 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-20260416-63f6af9';
+const CACHE_NAME = 'vaultspark-shell-9cdaf308e2-14e2419e21-0bed44ecc6-46c9767ab8';
 const MAX_PAGE_ENTRIES = 60;
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
+const FINGERPRINTED_SHELL_ASSETS = [
+  '/assets/style.shell-9cdaf308e2.css',
+  '/assets/theme-toggle.shell-14e2419e21.js',
+  '/assets/nav-toggle.shell-0bed44ecc6.js',
+  '/assets/shell-health.shell-46c9767ab8.js',
+];
+const NON_CACHEABLE_SHELL_SOURCES = [
+  '/assets/style.css',
+  '/assets/theme-toggle.js',
+  '/assets/nav-toggle.js',
+  '/assets/shell-health.js',
+];
 const STATIC_ASSETS = [
   '/',
-  '/assets/style.css',
+  '/assets/style.shell-9cdaf308e2.css',
   '/assets/kit.js',
   '/assets/icon-32.png',
   '/assets/icon-256.png',
@@ -20,10 +32,10 @@ const STATIC_ASSETS = [
   '/vault-member/portal-init.js',
   '/assets/game-utils.js',
   '/assets/countdown.js',
-  '/assets/nav-toggle.js',
+  '/assets/nav-toggle.shell-0bed44ecc6.js',
   '/assets/members-directory.js',
   '/assets/analytics.js',
-  '/assets/theme-toggle.js',
+  '/assets/theme-toggle.shell-14e2419e21.js',
   '/assets/vault-score.js',
   '/assets/turnstile.js',
   '/assets/pwa-nav.js',
@@ -148,6 +160,20 @@ self.addEventListener('fetch', (e) => {
   // Stale-while-revalidate for assets (CSS, JS, images, fonts)
   // Serves cached version immediately while fetching fresh copy in background
   if (url.pathname.startsWith('/assets/')) {
+    if (NON_CACHEABLE_SHELL_SOURCES.includes(url.pathname)) {
+      e.respondWith(fetch(request));
+      return;
+    }
+
+    const shouldCacheAsset =
+      FINGERPRINTED_SHELL_ASSETS.includes(url.pathname) ||
+      !NON_CACHEABLE_SHELL_SOURCES.some((assetPath) => url.pathname === assetPath);
+
+    if (!shouldCacheAsset) {
+      e.respondWith(fetch(request));
+      return;
+    }
+
     e.respondWith(
       caches.open(CACHE_NAME).then(async (cache) => {
         const cached = await cache.match(request);

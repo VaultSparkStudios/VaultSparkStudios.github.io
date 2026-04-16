@@ -1,6 +1,31 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 76 closeout)
+Last updated: 2026-04-16 (Session 77 closeout)
+
+## Session Intent: Session 77
+Implement the full shell-hardening / "100/100" prevention+detection plan, then close out through commit/push.
+
+## Where We Left Off (Session 77)
+- Shipped: 4 improvements across shell fingerprinting, service-worker cache discipline, homepage shell observability, and browser regression gating
+- Tests: `npm run build` passed; `npm run build:check` passed; `node scripts/verify-sw-assets.mjs` passed; focused local browser verify passed (`homepage-hero-regression`, `computed-styles`, `navigation`) with 8 passing checks
+- Deploy: committed and pushed to `main`; GitHub Pages production/staging verification of the new fingerprinted shell path should be re-run after propagation
+
+### Shipped
+- **Fingerprinted shell asset pipeline shipped** — `scripts/build-shell-assets.mjs` now fingerprints `assets/style.css`, `assets/theme-toggle.js`, `assets/nav-toggle.js`, and `assets/shell-health.js`, emits `assets/shell-manifest.json`, rewrites every HTML page to the generated shell URLs, and keeps the shared shell release on one canonical manifest instead of mutable stable names.
+- **Service-worker shell hardening shipped** — `sw.js` now caches only the fingerprinted shell URLs and explicitly bypasses mutable shell source paths, removing the mixed-version HTML/CSS/JS drift class that can break the shared header and homepage hero.
+- **Homepage shell health monitor shipped** — `assets/shell-health.js` now validates the homepage brand/header shell, hero heading, stylesheet attachment, and forge-letter visibility, force-reveals the hero letters if they get stuck hidden, and emits a public-safe health event when the shell is degraded.
+- **Homepage hero/header regression gate shipped** — `tests/homepage-hero-regression.spec.js`, `scripts/run-live-browser-verify.mjs`, the updated local verify runner, release-confidence script, and CI workflow now treat the homepage shell as a first-class browser gate instead of relying on incidental coverage.
+
+### Verification
+- `npm run build` → **passed**
+- `npm run build:check` → **passed**
+- `node scripts/verify-sw-assets.mjs` → **passed**
+- `node scripts/run-local-browser-verify.mjs tests/homepage-hero-regression.spec.js tests/computed-styles.spec.js tests/navigation.spec.js` → **passed** (8 checks)
+
+### Open carry-forward
+- **Run the live shell verification pass after deploy propagation** — the local fingerprinted shell path is green, but production/staging should confirm the new generated shell asset references once GitHub Pages finishes serving the pushed build.
+- **Broader-suite local browser stability still needs tightening** — the homepage shell gate is green, but the broader local Playwright load still shows some first-attempt flake and should be stabilized before calling the whole browser suite boring.
+- **Premium proof/depth is still the next conversion multiplier** — the site now has safer shell delivery and stronger regression detection, so the next user-facing leverage point remains deeper proof, outcomes, and objection handling on the core conversion pages.
 
 ## Session Intent: Session 76
 Close the feedback loop, ship the release-confidence gate, fix the local-preview blocker, then complete full closeout through commit/push.

@@ -100,10 +100,10 @@ async function main() {
   const results = [];
 
   try {
-    await run('node', ['scripts/generate-public-intelligence.mjs']);
-    results.push({ label: 'public intelligence build', ok: true, detail: 'generated current payload + contracts' });
+    await run('npm', ['run', 'build']);
+    results.push({ label: 'site build', ok: true, detail: 'generated shell manifest, fingerprinted shell assets, and current public payloads' });
   } catch (error) {
-    results.push({ label: 'public intelligence build', ok: false, detail: error.message });
+    results.push({ label: 'site build', ok: false, detail: error.message });
   }
 
   if (OPTIONS.skipLocal) {
@@ -118,8 +118,16 @@ async function main() {
   }
 
   if (OPTIONS.skipLive) {
+    results.push({ label: 'production browser verify', skipped: true, ok: false, detail: 'skipped by flag' });
     results.push({ label: 'live headers', skipped: true, ok: false, detail: 'skipped by flag' });
   } else {
+    try {
+      await run('node', ['scripts/run-live-browser-verify.mjs', '--skip-staging']);
+      results.push({ label: 'production browser verify', ok: true, detail: 'homepage shell regression passed against production' });
+    } catch (error) {
+      results.push({ label: 'production browser verify', ok: false, detail: error.message });
+    }
+
     try {
       await run('node', ['scripts/verify-live-headers.mjs']);
       results.push({ label: 'live headers', ok: true, detail: 'production security headers and CSP matched expectations' });
@@ -129,8 +137,20 @@ async function main() {
   }
 
   if (OPTIONS.skipStaging) {
+    results.push({ label: 'staging browser verify', skipped: true, ok: false, detail: 'skipped by flag' });
     results.push({ label: 'staging health', skipped: true, ok: false, detail: 'skipped by flag' });
   } else {
+    if (projectStatus.stagingUrl) {
+      try {
+        await run('node', ['scripts/run-live-browser-verify.mjs', '--skip-production']);
+        results.push({ label: 'staging browser verify', ok: true, detail: 'homepage shell regression passed against staging' });
+      } catch (error) {
+        results.push({ label: 'staging browser verify', ok: false, detail: error.message });
+      }
+    } else {
+      results.push({ label: 'staging browser verify', skipped: true, ok: false, detail: 'no staging URL configured' });
+    }
+
     const staging = await probeStaging(projectStatus.stagingUrl);
     results.push({
       label: 'staging health',

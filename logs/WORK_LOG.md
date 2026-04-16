@@ -1,5 +1,19 @@
 # Work Log
 
+## 2026-04-16 — Session 77 (shell hardening + homepage regression gate)
+
+- scripts/build-shell-assets.mjs: created the generated shared-shell release pipeline; fingerprints `style.css`, `theme-toggle.js`, `nav-toggle.js`, and `shell-health.js`; rewrites HTML entrypoints; emits `assets/shell-manifest.json`; and cleans old generated shell files
+- assets/shell-health.js + index.html: added homepage shell-health monitoring, force-reveal fallback for stuck forge letters, and public-safe analytics signaling for degraded header/hero shell state
+- sw.js: rewired shell caching so only fingerprinted shared shell assets are cacheable and mutable source shell URLs are bypassed
+- package.json + scripts/run-local-browser-verify.mjs + scripts/run-live-browser-verify.mjs + scripts/release-confidence.mjs + .github/workflows/e2e.yml: wired the new shell build/verify flow into build, local verify, live verify, release-confidence, and CI
+- tests/homepage-hero-regression.spec.js + tests/navigation.spec.js: added dedicated homepage shell coverage and aligned the nav expectation with the current 9-link games menu
+- Verification:
+  - `npm run build` → passed
+  - `npm run build:check` → passed
+  - `node scripts/verify-sw-assets.mjs` → passed
+  - `node scripts/run-local-browser-verify.mjs tests/homepage-hero-regression.spec.js tests/computed-styles.spec.js tests/navigation.spec.js` → passed (8 checks)
+- Closeout: Studio OS write-back completed; generated truth refreshed; repo prepared for commit/push with the new shell-hardening path
+
 ## 2026-04-16 — Session 76 (feedback loop + release confidence)
 
 - assets/micro-feedback.js: created shared browser-local micro-feedback module for goal/blocker/usefulness capture and local summary rendering
