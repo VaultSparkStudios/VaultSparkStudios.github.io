@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-16 (S77 closeout)
+Last reviewed: 2026-04-16 (S78 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -45,3 +45,8 @@ Public-safe summary:
 - Session 77 truth changed: `tests/homepage-hero-regression.spec.js`, `scripts/run-live-browser-verify.mjs`, the updated local verify runner, release-confidence script, and CI workflow now treat the homepage header/hero shell as a dedicated browser-gated truth surface
 - Verification truth changed in Session 77: `npm run build`, `npm run build:check`, `node scripts/verify-sw-assets.mjs`, and the focused local browser verify run all passed against the new fingerprinted shell path on 2026-04-16
 - Verification truth changed further in Session 77: `scripts/run-live-browser-verify.mjs` is now Windows-safe for `.cmd` Playwright launches, and the homepage shell regression spec passed against both production and staging after the push on 2026-04-16
+- Session 78 truth changed: `scripts/run-local-browser-verify.mjs` now caps local Chromium worker pressure by tier so the broad local suite is optimized for repeatable signal rather than maximum parallelism
+- Session 78 truth changed: `tests/compliance-pages.spec.js` now targets the visible cookie banner surface and seeds consent state before navigation, which matches the real runtime contract more accurately than checking the zero-sized wrapper node
+- Session 78 truth changed: `tests/responsive.spec.js` now targets a deterministic leaderboard wrapper and `tests/games.spec.js` now uses `waitUntil: 'domcontentloaded'` for page-load smoke checks, removing two avoidable local-timeout classes
+- Session 78 truth changed: `assets/shell-health.js` now dedupes repeated shell issue events per browser session and records an explicit healthy state when the homepage shell resolves cleanly
+- Verification truth changed in Session 78: the targeted local verify batch (`compliance-pages`, `responsive`, `vault-wall`) passed `27/27`, and the full extended local Chromium suite passed `86/86` on 2026-04-16

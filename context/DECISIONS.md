@@ -2,6 +2,13 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-16 — Local browser verification should cap worker pressure instead of maximizing parallelism by default (Session 78)
+
+- Status: active
+- Decision: `scripts/run-local-browser-verify.mjs` now chooses lower default Chromium worker counts for local verification tiers, with the `extended` tier explicitly capped to two workers unless a session overrides it intentionally.
+- Why: the broad local suite was failing mostly from machine-local page/context setup saturation, not from product regressions. Four Chromium workers created noisy timeouts that hid the real failures.
+- Maintenance rule: local verification defaults should optimize for signal quality and repeatability over raw throughput; increase workers only deliberately and with evidence that the suite stays boring.
+
 ### 2026-04-16 — Shared shell assets must ship from one fingerprinted manifest, not mutable stable URLs (Session 77)
 
 - Status: active

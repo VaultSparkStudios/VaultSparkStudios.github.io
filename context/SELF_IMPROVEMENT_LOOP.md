@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▇▇█
-Avgs — 3: 471.3 | 5: 461.4 | 10: 451.9 | 25: 440.1 | all: 432.9
-  └ 3-session: Dev 95.0 | Align 92.3 | Momentum 93.3 | Engage 93.0 | Process 97.7
+Sparkline (last 5 totals): ▇▇▇█▇
+Avgs — 3: 476.3 | 5: 468.8 | 10: 455.6 | 25: 442.0 | all: 433.8
+  └ 3-session: Dev 96.0 | Align 93.7 | Momentum 94.3 | Engage 93.3 | Process 99.0
 Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: ~1.2 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-16 | Session 77 | Total: 481/500 | Velocity: 4 | protocolVelocity: 1
+Momentum runway: ~1.0 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-16 | Session 78 | Total: 476/500 | Velocity: 2 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,30 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-16 — Session 78 | Total: 476/500 | Velocity: 2 | Debt: ↓
+Avgs — 3: 476.3 | 5: 468.8 | 10: 455.6 | 25: 442.0 | all: 433.8
+  └ 3-session: Dev 96.0 | Align 93.7 | Momentum 94.3 | Engage 93.3 | Process 99.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 96 | ↓ | No new product surface shipped, but the local verification path is much more trustworthy and the full extended suite is now green end-to-end |
+| Creative Alignment | 94 | ↓ | Reliability work stayed aligned with the premium front-door brand by protecting the homepage shell and cleaning the test contract around the real visible UI |
+| Momentum | 94 | ↓ | Two carry-forward items were fully closed and converted from vague concerns into a clean verified suite plus a de-noised shell monitor |
+| Engagement | 92 | ↓ | The work directly followed the user's remaining closeout items and improved future operator confidence even though it was mostly internal quality work |
+| Process Quality | 100 | → | The session was evidence-driven, verified with targeted and broad browser runs, and fully written back into repo truth |
+| **Total** | **476/500** | ↓ | |
+
+**Top win:** The broad local Chromium verification path went from noisy timeout territory to a clean `86/86` pass, which makes future browser regressions far easier to trust and diagnose.
+**Top gap:** The next leverage is user-facing again: deeper proof/outcome/objection handling on the core conversion pages now that the delivery and verification path is stable.
+**Intent outcome:** Achieved — the broader local browser suite was stabilized and the homepage shell telemetry/fallback path was audited and de-noised
+
+**Brainstorm**
+1. **Premium proof/depth pass** — convert the stabilized shell/intelligence trust into stronger proof blocks on homepage, membership, and VaultSparked. First step: map the top objection categories into 3 reusable proof modules. High probability.
+2. **World gravity system** — make games, lore, changelog, and membership discovery compound more aggressively. First step: extend the related-rail logic with world-affinity weighting on game and universe pages. High probability.
+3. **Local verify contract docs** — document the tier/worker expectations for local verification so future sessions do not regress back into noisy 4-worker local runs. First step: add a short verification section to repo docs or handoff guidance. High probability.
+
+**Committed to TASK_BOARD:** [GENIUS][CONVERSION] Premium proof/depth pass · [SIL] Local verify documentation pass
 
 ## 2026-04-16 — Session 77 | Total: 481/500 | Velocity: 4 | Debt: ↓
 Avgs — 3: 471.3 | 5: 461.4 | 10: 451.9 | 25: 440.1 | all: 432.9

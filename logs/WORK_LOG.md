@@ -1,5 +1,17 @@
 # Work Log
 
+## 2026-04-16 — Session 78 (suite stabilization + shell telemetry audit)
+
+- scripts/run-local-browser-verify.mjs: capped local Chromium worker pressure by tier so the broad local suite favors repeatable signal over noisy local saturation
+- tests/compliance-pages.spec.js: fixed cookie-consent coverage to target the visible banner node and seed consent state before navigation instead of relying on a zero-sized wrapper plus reload timing
+- tests/responsive.spec.js: fixed the mobile leaderboard smoke to use a deterministic wrapper locator
+- tests/games.spec.js: switched the game-page smoke tests to `waitUntil: 'domcontentloaded'` so local page checks do not wait on unnecessary full-load timing
+- assets/shell-health.js: added per-session issue dedupe and explicit healthy-state reporting for homepage shell telemetry
+- Verification:
+  - `node scripts/run-local-browser-verify.mjs tests/compliance-pages.spec.js tests/responsive.spec.js tests/vault-wall.spec.js` → passed (`27/27`)
+  - `node scripts/run-local-browser-verify.mjs --tier extended` → passed (`86/86`)
+- Closeout: full Studio OS write-back completed; no production deploy required; repo prepared for commit/push with the verification-hardening follow-up
+
 ## 2026-04-16 — Session 77 (shell hardening + homepage regression gate)
 
 - scripts/build-shell-assets.mjs: created the generated shared-shell release pipeline; fingerprints `style.css`, `theme-toggle.js`, `nav-toggle.js`, and `shell-health.js`; rewrites HTML entrypoints; emits `assets/shell-manifest.json`; and cleans old generated shell files

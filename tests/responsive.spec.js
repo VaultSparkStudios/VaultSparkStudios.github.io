@@ -30,7 +30,7 @@ test.describe('Mobile viewport (375px)', () => {
 
   test('Leaderboard table is scrollable on mobile', async ({ page }) => {
     await page.goto(BASE + '/leaderboards/');
-    await expect(page.locator('.lb-table-wrap')).toBeVisible();
+    await expect(page.locator('.lb-table-wrap').first()).toBeVisible();
   });
 
   test('Contact form usable on mobile', async ({ page }) => {

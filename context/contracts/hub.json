@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-04-16T19:30:17.812Z",
+  "generatedAt": "2026-04-16T21:07:57.753Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,14 +22,13 @@
     }
   },
   "pulse": {
-    "currentSession": 78,
+    "currentSession": 79,
     "lastUpdated": "2026-04-16",
-    "currentFocus": "Session 77 is closed out: the website shell is fingerprinted from one generated manifest, the service worker only caches fingerprinted shell assets, the homepage brand/hero shell has a runtime health monitor, and browser verification now includes a dedicated homepage shell regression gate that passed on both production and staging after push. The remaining focus is broader browser-suite stability, shell telemetry/fallback review, and the next proof/depth pass on the core conversion pages.",
-    "nextMilestone": "Stabilize the broader local browser suite, review the live shell-health telemetry/fallback behavior, and then run the premium proof/depth pass on homepage + membership + VaultSparked while annual activation stays behind the missing Stripe yearly plan keys.",
+    "currentFocus": "Session 78 is closed out: the shared shell hardening remains live, the homepage shell monitor is de-noised with per-session dedupe and healthy-state reporting, and the broader local Chromium verification path is now stable with the full extended suite passing 86/86. The remaining focus is the next proof/depth pass on the conversion pages, the world-gravity cohesion pass, and documenting the new local verify contract clearly.",
+    "nextMilestone": "Run the premium proof/depth pass on homepage + membership + VaultSparked, then strengthen cross-surface world gravity and document the lower-worker local verification contract so future sessions preserve the clean suite signal.",
     "blockers": [
       "CF_WORKER_API_TOKEN missing, so Worker deploys still require local Wrangler auth",
-      "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
-      "The broader local browser suite still shows some first-attempt flaky timeouts under heavier parallel Chromium load"
+      "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only"
     ],
     "queues": {
       "now": [

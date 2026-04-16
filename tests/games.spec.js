@@ -28,7 +28,7 @@ const UNRELEASED_GAMES = FORGE_GAMES;
 test.describe('SPARKED game pages', () => {
   for (const game of SPARKED_GAMES) {
     test(`${game.slug} page loads and has play button`, async ({ page }) => {
-      await page.goto(BASE + '/games/' + game.slug + '/');
+      await page.goto(BASE + '/games/' + game.slug + '/', { waitUntil: 'domcontentloaded' });
       await expect(page).toHaveTitle(game.title);
       await expect(page.locator('h1')).toBeVisible();
       await expect(page.locator('footer.site-footer')).toBeVisible();
@@ -42,7 +42,7 @@ test.describe('SPARKED game pages', () => {
 test.describe('FORGE game pages', () => {
   for (const game of FORGE_GAMES) {
     test(`${game.slug} page loads`, async ({ page }) => {
-      await page.goto(BASE + '/games/' + game.slug + '/');
+      await page.goto(BASE + '/games/' + game.slug + '/', { waitUntil: 'domcontentloaded' });
       await expect(page).toHaveTitle(game.title);
       await expect(page.locator('h1')).toBeVisible();
       await expect(page.locator('footer.site-footer')).toBeVisible();
@@ -53,7 +53,7 @@ test.describe('FORGE game pages', () => {
 test.describe('VAULTED game pages', () => {
   for (const game of VAULTED_GAMES) {
     test(`${game.slug} page loads`, async ({ page }) => {
-      await page.goto(BASE + '/games/' + game.slug + '/');
+      await page.goto(BASE + '/games/' + game.slug + '/', { waitUntil: 'domcontentloaded' });
       await expect(page).toHaveTitle(game.title);
       await expect(page.locator('h1')).toBeVisible();
       await expect(page.locator('footer.site-footer')).toBeVisible();
@@ -63,7 +63,7 @@ test.describe('VAULTED game pages', () => {
 
 test.describe('Games index filter', () => {
   test('games page loads and shows filter buttons', async ({ page }) => {
-    await page.goto(BASE + '/games/');
+    await page.goto(BASE + '/games/', { waitUntil: 'domcontentloaded' });
     await expect(page).toHaveTitle(/Games/i);
     // Filter buttons should be present
     const filterBtns = page.locator('.filter-btn');
@@ -74,7 +74,7 @@ test.describe('Games index filter', () => {
   });
 
   test('SPARKED filter shows only sparked games', async ({ page }) => {
-    await page.goto(BASE + '/games/');
+    await page.goto(BASE + '/games/', { waitUntil: 'domcontentloaded' });
     // Click SPARKED filter button
     const sparkedBtn = page.locator('.filter-btn', { hasText: /sparked/i });
     if (await sparkedBtn.count() > 0) {
@@ -89,7 +89,7 @@ test.describe('Games index filter', () => {
   });
 
   test('vault status legend is visible', async ({ page }) => {
-    await page.goto(BASE + '/games/');
+    await page.goto(BASE + '/games/', { waitUntil: 'domcontentloaded' });
     const legend = page.locator('.vault-status-legend');
     await expect(legend).toBeVisible();
   });

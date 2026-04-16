@@ -36,13 +36,12 @@ test.describe('Compliance & utility pages (S38b)', () => {
 
 test.describe('Cookie consent banner', () => {
   test('banner appears on first visit and links to /cookies/', async ({ page, context }) => {
-    await page.goto(BASE + '/');
     await context.clearCookies();
-    await page.evaluate(() => localStorage.clear());
-    await page.reload();
+    await page.addInitScript(() => localStorage.clear());
+    await page.goto(BASE + '/');
 
     // Banner should appear
-    const banner = page.locator('#cookieConsent');
+    const banner = page.locator('#cookieConsent .vs-cookie-banner');
     await expect(banner).toBeVisible({ timeout: 5000 });
 
     // Should link to /cookies/
@@ -51,16 +50,15 @@ test.describe('Cookie consent banner', () => {
   });
 
   test('banner disappears after accepting', async ({ page, context }) => {
-    await page.goto(BASE + '/');
     await context.clearCookies();
-    await page.evaluate(() => localStorage.clear());
-    await page.reload();
+    await page.addInitScript(() => localStorage.clear());
+    await page.goto(BASE + '/');
 
-    const banner = page.locator('#cookieConsent');
+    const banner = page.locator('#cookieConsent .vs-cookie-banner');
     await expect(banner).toBeVisible({ timeout: 5000 });
 
     await page.locator('#cookieAccept').click();
-    await expect(banner).not.toBeVisible();
+    await expect(page.locator('#cookieConsent')).toHaveCount(0);
 
     // Consent should be stored
     const consent = await page.evaluate(() => localStorage.getItem('vs_cookie_consent'));
@@ -68,29 +66,24 @@ test.describe('Cookie consent banner', () => {
   });
 
   test('banner disappears after declining', async ({ page, context }) => {
-    await page.goto(BASE + '/');
     await context.clearCookies();
-    await page.evaluate(() => localStorage.clear());
-    await page.reload();
+    await page.addInitScript(() => localStorage.clear());
+    await page.goto(BASE + '/');
 
-    const banner = page.locator('#cookieConsent');
+    const banner = page.locator('#cookieConsent .vs-cookie-banner');
     await expect(banner).toBeVisible({ timeout: 5000 });
 
     await page.locator('#cookieDecline').click();
-    await expect(banner).not.toBeVisible();
+    await expect(page.locator('#cookieConsent')).toHaveCount(0);
 
     const consent = await page.evaluate(() => localStorage.getItem('vs_cookie_consent'));
     expect(consent).toBe('declined');
   });
 
   test('banner does not appear on repeat visit after accepting', async ({ page }) => {
-    // Set consent pre-visit
-    await page.goto(BASE + '/');
-    await page.evaluate(() => localStorage.setItem('vs_cookie_consent', 'accepted'));
-
+    await page.addInitScript(() => localStorage.setItem('vs_cookie_consent', 'accepted'));
     await page.goto(BASE + '/games/');
-    const banner = page.locator('#cookieConsent');
-    await expect(banner).not.toBeVisible();
+    await expect(page.locator('#cookieConsent')).toHaveCount(0);
   });
 });
 

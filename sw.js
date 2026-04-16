@@ -1,14 +1,14 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-20260416-447db40';
+const CACHE_NAME = 'vaultspark-shell-9cdaf308e2-14e2419e21-0bed44ecc6-0995bd7945';
 const MAX_PAGE_ENTRIES = 60;
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const FINGERPRINTED_SHELL_ASSETS = [
   '/assets/style.shell-9cdaf308e2.css',
   '/assets/theme-toggle.shell-14e2419e21.js',
   '/assets/nav-toggle.shell-0bed44ecc6.js',
-  '/assets/shell-health.shell-46c9767ab8.js',
+  '/assets/shell-health.shell-0995bd7945.js',
 ];
 const NON_CACHEABLE_SHELL_SOURCES = [
   '/assets/style.css',

@@ -1,6 +1,11 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 77 closeout)
+Last updated: 2026-04-16 (Session 78 closeout)
+
+## Done (Session 78 suite stabilization + shell telemetry audit)
+
+- [x] **[GENIUS][STABILITY] Broader local browser-suite stabilization** — **DONE S78**: reduced local Playwright worker pressure in `scripts/run-local-browser-verify.mjs`, fixed the deterministic cookie-consent and responsive-spec failures, and brought the extended local browser suite to `86/86` passing on Chromium.
+- [x] **[SIL] Shell telemetry + fallback audit** — **DONE S78**: audited `assets/shell-health.js`, added session-level issue dedupe plus explicit healthy-state reporting, and verified the homepage shell monitor still passes through the local/live regression gates after the de-noising changes.
 
 ## Done (Session 77 shell hardening + regression gate)
 
@@ -74,11 +79,10 @@ Last updated: 2026-04-16 (Session 77 closeout)
 
 ## Now (Session 77 leverage)
 
-- [ ] **[GENIUS][STABILITY] Broader local browser-suite stabilization** — the scoped intelligence gate is green, but the broader local Playwright suite still shows some first-attempt flake under heavier parallel Chromium load; stabilize retries/timeouts so the full browser verify path is consistently clean.
 - [x] **[SIL] Post-deploy shell verification sweep** — **DONE S77**: fixed the Windows live-verify wrapper, increased the homepage shell spec timeout for real live runs, and verified the fingerprinted homepage shell contract against both production and staging after push.
-- [ ] **[SIL] Shell telemetry + fallback audit** — once the fingerprinted shell path is live, review the homepage shell-health event/fallback behavior and tune the monitor if it is too noisy or misses a real broken-shell state.
 - [ ] **[GENIUS][CONVERSION] Premium proof/depth pass** — deepen homepage, membership, and VaultSparked conviction with stronger outcomes, objection handling, and “what happens next” clarity now that the feedback loop exists.
 - [ ] **[GENIUS][COHESION] World gravity system** — connect games, lore, changelog, and membership surfaces more aggressively so world-specific discovery compounds instead of resetting at each page.
+- [ ] **[SIL] Local verify documentation pass** — document the lower-worker local verification contract and the difference between `core`, `intelligence`, and `extended` so future sessions do not accidentally reintroduce noisy 4-worker local runs.
 
 ## Next (Session 77+)
 

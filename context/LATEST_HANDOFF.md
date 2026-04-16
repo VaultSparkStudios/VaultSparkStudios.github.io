@@ -1,6 +1,27 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 77 closeout)
+Last updated: 2026-04-16 (Session 78 closeout)
+
+## Session Intent: Session 78
+Close the remaining verification carry-forwards by stabilizing the broader local browser suite and auditing the homepage shell telemetry/fallback path.
+
+## Where We Left Off (Session 78)
+- Shipped: 2 improvements across local browser-suite stabilization and homepage shell telemetry hardening
+- Tests: targeted local verification passed for compliance/responsive/vault-wall; full extended local browser verification passed `86/86` on Chromium after the runner/test fixes
+- Deploy: committed and pushed to `main`; no additional production deploy was required because the work was test/monitoring/runtime-hardening only
+
+### Shipped
+- **Broader local browser-suite stabilization shipped** — `scripts/run-local-browser-verify.mjs` now caps worker pressure for local Chromium runs, `tests/compliance-pages.spec.js` now targets the actual visible cookie banner and seeds consent state before navigation, `tests/responsive.spec.js` now uses a deterministic leaderboard wrapper locator, and `tests/games.spec.js` avoids unnecessary full-load waits on game pages. The full extended local browser suite is now green instead of timing out under local resource pressure.
+- **Homepage shell telemetry audit shipped** — `assets/shell-health.js` now dedupes repeated shell issue events per browser session and records an explicit healthy state when the homepage shell resolves cleanly, so the fallback/telemetry path is less noisy without weakening the regression guard.
+
+### Verification
+- `node scripts/run-local-browser-verify.mjs tests/compliance-pages.spec.js tests/responsive.spec.js tests/vault-wall.spec.js` → **passed** (`27/27`)
+- `node scripts/run-local-browser-verify.mjs --tier extended` → **passed** (`86/86`)
+
+### Open carry-forward
+- **Premium proof/depth is still the next conversion multiplier** — the shell and verification path are now materially safer, so the next high-leverage user-facing move remains deeper proof, outcomes, and objection handling on the core conversion pages.
+- **World gravity system remains the next cohesion pass** — games, lore, changelog, and membership surfaces still have room for stronger cross-surface compounding.
+- **Local verify documentation should be made explicit** — the lower-worker local verification contract now exists in code, but it should be written down so future sessions do not accidentally regress the runner behavior.
 
 ## Session Intent: Session 77
 Implement the full shell-hardening / "100/100" prevention+detection plan, then close out through commit/push.

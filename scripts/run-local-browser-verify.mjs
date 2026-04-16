@@ -67,6 +67,23 @@ function parseArgs(argv) {
 }
 
 const testArgs = parseArgs(rawArgs);
+const selectedTier = rawArgs.includes('--tier')
+  ? rawArgs[rawArgs.indexOf('--tier') + 1] || 'core'
+  : 'core';
+
+function resolveWorkerCount(tier, args) {
+  if (args.some((arg) => arg.startsWith('--workers'))) {
+    return null;
+  }
+
+  if (!args.every((arg) => arg.startsWith('--'))) {
+    return '2';
+  }
+
+  if (tier === 'extended') return '2';
+  if (tier === 'core') return '3';
+  return '2';
+}
 
 function resolvePlaywrightRunner() {
   const localBin = process.platform === 'win32'
@@ -159,7 +176,12 @@ async function main() {
   try {
     await waitForReady(server);
     const runner = resolvePlaywrightRunner();
-    await run(runner.command, [...runner.args, 'test', ...testArgs, '--project=chromium', '--reporter=list'], {
+    const workerCount = resolveWorkerCount(selectedTier, testArgs);
+    const playwrightArgs = [...runner.args, 'test', ...testArgs, '--project=chromium', '--reporter=list'];
+    if (workerCount) {
+      playwrightArgs.push(`--workers=${workerCount}`);
+    }
+    await run(runner.command, playwrightArgs, {
       BASE_URL: baseUrl,
     });
   } finally {
