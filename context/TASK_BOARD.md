@@ -1,6 +1,34 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 82 — Genius Hit List execution)
+Last updated: 2026-04-16 (Session 83 — 10-item Genius Hit List)
+
+## Session 83 — Genius Hit List (10 items, 8 unblocked + 2 HAR)
+
+Ranked by impact × unblockedness. Scope override approved by Studio Owner: implement all unblocked items at quality bar.
+
+### Unblocked — sprint targets
+
+- [x] **[S83][COHESION] Unified cross-portal shell** — **DONE S83**: `assets/portal-shell.css` with shared tokens + primitive classes + tablet breakpoint; linked from all 3 portals.
+- [x] **[S83][BRAND] Typography unify (Georgia H1/H2)** — **DONE S83**: canonical Georgia serif + -0.02em letter-spacing on all h1/h2 in `assets/style.css`.
+- [x] **[S83][UX] Tablet breakpoint 768–1024px** — **DONE S83**: membership tier grid, investor KPI strip + dashboard sidebar, all portal-grid primitives hit 2-col between 768–1024.
+- [x] **[S83][CONVERSION] Testimonials + outcomes on /membership/** — **DONE S83**: `data/member-voices.json` + `assets/member-voices.js` + new "Honest Voices" section. Opt-in quotes schema (empty-start, no fabrication), live vault outcomes, rank distribution.
+- [x] **[S83][FEATURE] Member Forge Feed on /vault-wall/** — **DONE S83**: `assets/forge-feed.js` reads `/api/public-intelligence.json`, composes 4 stream classes into aria-live feed between season+rival and podium.
+- [x] **[S83][COHESION] World-gravity rails on /games/ + /universe/ hubs** — **DONE S83**: `[data-related-root]` + intent-state + related-content wired on both collection hubs. Hubs now hand off instead of dead-ending.
+- [x] **[S83][FEATURE] Leaderboard schema + seasons + rivals** — **DONE S83**: ItemList JSON-LD on `/vault-wall/`; `data/seasons.json` + `assets/seasons-rivals.js` render live season countdown + nearest-rival callout with honest states.
+- [x] **[S83][CI] Dual-URL Lighthouse gate** — **DONE S83**: `lighthouse-staging` job added to `.github/workflows/lighthouse.yml` (Hetzner staging, continue-on-error, push-to-main only). S82 brainstorm closed.
+
+### HAR-blocked — preflighted S83
+
+- [ ] **[S83][AI][HAR:ANTHROPIC_API_KEY] Ask IGNIS public concierge** — Claude-powered chat widget via new Supabase edge function. Preflight S83: key not present in repo secrets or Supabase config; blocker genuine.
+- [ ] **[S83][SECURITY][HAR:CF_WORKER_API_TOKEN] Edge-gate portals + CSP nonce + rate-limit/CSRF** — three S80 Tier 1 items unblock on one secret. Preflight S83: secret still absent. Highest-leverage founder action on the board.
+
+### S83 carry-forward
+
+- [ ] **[SIL] Watch first post-push Lighthouse run** — tightened budgets + new local-preview runtime; if red, iterate once.
+- [ ] **[SIL] Watch first post-push playwright-axe run** — local-preview migration will exercise the new path; real violations (vs. challenge-page noise) are real work.
+
+---
+
 
 ## Session 82 — Genius Hit List execution (6 shipped)
 

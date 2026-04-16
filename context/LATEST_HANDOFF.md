@@ -1,8 +1,36 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 82 closeout)
+Last updated: 2026-04-16 (Session 83 closeout)
 
-## Session Intent: Session 82
+## Session Intent: Session 83
+Sync the 10-item S83 Genius Hit List into TASK_BOARD + memory and implement every unblocked item at highest/optimal quality.
+
+## Where We Left Off (Session 83)
+- Shipped: 8 items at quality bar — unified cross-portal shell, site-wide H1/H2 serif unification, 768–1024 tablet breakpoint, member voices + outcomes on /membership/, Forge Feed on /vault-wall/, world-gravity rails on /games/ + /universe/ hubs, leaderboard ItemList schema + seasons countdown + nearest-rival callout, dual-URL Lighthouse CI gate.
+- Deferred: 2 items legitimately HAR-blocked after preflight (Ask IGNIS concierge → ANTHROPIC_API_KEY; Edge-gate portals + CSP nonce + rate-limit/CSRF bundle → CF_WORKER_API_TOKEN — single secret unlocks 3 Tier 1 items).
+- Tests: `npm run build:check` → passed (shell + public intelligence synced); `node scripts/csp-audit.mjs` → passed (94 HTML files); `node --check` on all 3 new JS assets → passed; JSON sanity on both new data files → passed.
+- Deploy: pending — /closeout autopilot will commit + push.
+
+### Shipped
+- **Unified cross-portal shell** (`assets/portal-shell.css`, `vault-member/index.html`, `investor-portal/index.html`, `studio-hub/index.html`) — shared design tokens (surface, border, accent, shadow, focus-ring), primitive classes (`.portal-card`, `.portal-pill`, `.portal-stat`, `.portal-section-title`, `.portal-divider`, `.portal-grid-{2,3,4,auto}`), and one canonical tablet breakpoint for portal grids. Linked from all three portals so future cross-portal refactors have one coherent vocabulary to consume instead of each portal reinventing cards/pills.
+- **Typography unify — Georgia H1/H2** (`assets/style.css:568`) — all H1/H2 now default to the canonical Georgia serif stack with `-0.02em` letter-spacing. Kills drift to sans across journal/games/studio/ranks where no explicit override existed.
+- **Tablet breakpoint 768–1024px** (`assets/portal-shell.css`, `membership/index.html`, `investor-portal/index.html`) — membership tier grid, investor KPI strip + dashboard sidebar, and all portal-grid primitives now hit 2-col between 768–1024, collapse to 1-col below 768. Closes an S80 Tier 3 gap.
+- **Testimonials + outcomes on /membership/** (`data/member-voices.json`, `assets/member-voices.js`, `membership/index.html`) — new "Honest Voices" section before the community block: opt-in member quotes (schema ready, starts empty — no fabrication), live vault outcomes (4-stat grid from VSPublic), rank distribution visual. Honest empty states on all three panels; the page never fakes members.
+- **Member Forge Feed on /vault-wall/** (`assets/forge-feed.js`, `vault-wall/index.html`) — live activity stream between season+rival and the podium. Reads `/api/public-intelligence.json`, composes 4 stream classes (shipped / catalog-moves / studio-queue / community) into an aria-live feed with session+updated footer. Honest empty state on feed failure.
+- **World-gravity rails on /games/ + /universe/ hubs** (`games/index.html`, `universe/index.html`) — `[data-related-root]` + `intent-state.js` + `related-content.js` wired onto both collection hubs. The MAP keys `games` and `universe` already existed in the shared runtime, so the hubs now route into vaultmember/membership/voidfall/dreadspike/studiopulse instead of dead-ending.
+- **Leaderboard schema + seasons countdown + nearest rival** (`vault-wall/index.html`, `data/seasons.json`, `assets/seasons-rivals.js`) — `ItemList` JSON-LD on `/vault-wall/` for the leaderboard (SEO); `seasons.json` declares the pre-season state honestly (no active season backdated); live season countdown + nearest-rival callout with honest states for inactive/anon/top-of-vault.
+- **Dual-URL Lighthouse CI gate** (`.github/workflows/lighthouse.yml`) — new `lighthouse-staging` job after the local-preview run, targeting `website.staging.vaultsparkstudios.com` (Hetzner, not Cloudflare-fronted). `continue-on-error: true` so staging noise doesn't block merges while local-preview stays the authoritative gate. S82 brainstorm carry-forward closed.
+
+### Deferred — HAR-blocked after preflight
+- **Ask IGNIS public concierge** — needs `ANTHROPIC_API_KEY` in Supabase edge-function secrets. Preflight confirmed key not present locally or in `.claude/settings`. Blocker genuine.
+- **Edge-gate private portals + CSP nonce migration + rate-limit/CSRF on forms** — three S80 Tier 1 items all unlock on a single `CF_WORKER_API_TOKEN`. Batched into one founder ask per the new `feedback_har_leverage` memory rule. Preflight confirmed secret still absent.
+
+### Open carry-forward
+- **First post-push Lighthouse run (S82 + S83)** — tightened budgets from S82 meet the new local-preview runtime from S82 + the new staging runtime from S83 simultaneously. If budgets are short, iterate once rather than relaxing targets.
+- **First post-push playwright-axe run (S82 carry-forward)** — local-preview migration exercises the real shipped HTML; any surfaced violations are real a11y work.
+- **CF_WORKER_API_TOKEN + ANTHROPIC_API_KEY** — two batched founder asks that unblock 4 distinct Tier 1/Tier 2 items (3 security + 1 AI).
+
+## Prior Session Intent: Session 82
 Implement all Genius Hit List items at highest/optimal quality.
 
 ## Where We Left Off (Session 82)

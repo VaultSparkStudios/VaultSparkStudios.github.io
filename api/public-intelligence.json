@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-04-16T23:19:24.887Z",
+  "generatedAt": "2026-04-16T23:45:15.949Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -9,8 +9,8 @@
     "vaultStatus": "SPARKED",
     "currentSession": 82,
     "lastUpdated": "2026-04-16",
-    "currentFocus": "Session 81 closed out: five CI-workflow fixes shipped in one commit chain resolved three chronic failures (Accessibility axe-cli, Lighthouse wait-on, E2E compliance sw.js drift), one S80-only regression (Sitemap push race), and one latent failure (playwright-axe lockfile). Key architectural move: retired `sw-version.yml`'s on-push trigger — it was fighting S77's fingerprinted shell pipeline over sw.js CACHE_NAME, producing the E2E compliance drift. Fingerprinted shell pipeline is now the single owner. S80 posture still applies: master audit 77/100 + 28-item Tier 1–4 plan, /ignis/ live, Public Operating Surface relocated off homepage.",
-    "nextMilestone": "Confirm the in-progress Lighthouse + E2E runs green on commit 91ea72c follow-up, then resume Tier 2 depth work: Ask IGNIS concierge, unified cross-portal shell, /membership/ testimonials, /social/ aggregation, Forge Feed. CF_WORKER_API_TOKEN is still the highest-leverage single blocker for Tier 1 infrastructure items.",
+    "currentFocus": "Session 82 closed out: 6 Genius Hit List items shipped at quality bar. CI root-cause fix migrated Lighthouse + playwright-axe to scripts/local-preview-server.mjs on 127.0.0.1:4173 — Cloudflare WAF was serving managed-challenge HTML to GitHub Actions runner IPs (that's why Lighthouse wait-on timed out and axe's --text/--bg contrast collapsed to NaN on 18 tests). Homepage noscript fallbacks + 4s JS-hydration-timeout toast completed the S80 Tier 1 partial. Hero-story contrast boosted (color var(--text), darker bg, gold strong, explicit light-mode dark-panel override). Lighthouse budgets tightened to Perf 0.85 / A11y 0.95 / BP 0.90 / SEO 0.95. will-change on forge-letter + forge-spark-burst. Keyboard-accessible mega-dropdowns via nav-toggle.js rewrite (aria-haspopup/expanded/controls, arrow-key cycling, ESC, focusout collapse); fingerprinted shell rebuilt (nav-toggle.shell-8a1b93790f.js, 76 HTML files updated).",
+    "nextMilestone": "Confirm post-push Lighthouse + playwright-axe runs are green with the new local-preview runtime and tightened budgets. If first Lighthouse run is red, iterate budget once rather than relaxing target. Then resume Tier 2 depth work: Ask IGNIS concierge, /membership/ testimonials, /social/ aggregation, Forge Feed. CF_WORKER_API_TOKEN is still the highest-leverage single blocker for Tier 1 infrastructure items.",
     "blockers": [
       "CF_WORKER_API_TOKEN missing — blocks edge-gating private portals, CSP nonce migration, and rate-limit/CSRF on forms (S80 Tier 1 infrastructure items)",
       "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only"

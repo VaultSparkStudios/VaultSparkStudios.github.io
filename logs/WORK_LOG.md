@@ -1,5 +1,24 @@
 # Work Log
 
+## 2026-04-16 — Session 83 (10-item Genius Hit List — 8 shipped, 2 HAR-deferred)
+
+- assets/portal-shell.css (new): shared portal design tokens (surface, border, accent, shadow, focus-ring) + primitive classes (.portal-card, .portal-pill, .portal-stat, .portal-section-title, .portal-divider, .portal-grid-2/3/4/auto) + canonical tablet breakpoint. Linked from /vault-member/, /investor-portal/, /studio-hub/.
+- assets/style.css (+8 lines after h1-h6 reset): canonical Georgia serif + -0.02em letter-spacing on all h1, h2 site-wide. Kills drift to sans on journal/games/studio where no override existed.
+- membership/index.html: tablet 768–1024 2-col override for mem-tiers-grid / mem-identity-grid / mem-discount-grid / mem-stat-row; retained <768px 1-col collapse. Added .mem-voices section styles + wired /assets/member-voices.js + new "Honest Voices" section (data-member-voices, data-member-outcomes, data-rank-distribution) between community and recent-ships blocks.
+- investor-portal/index.html: tablet 768–1024 override on inv-dashboard-grid + inv-kpi-strip; linked /assets/portal-shell.css.
+- studio-hub/index.html: linked /assets/portal-shell.css before src/styles/hub.css.
+- data/member-voices.json (new): opt-in member quotes schema (starts empty — honest, no fabrication).
+- assets/member-voices.js (new): renders member voices + live vault outcomes (from VSPublic) + rank distribution. Honest empty states on all three panels.
+- assets/forge-feed.js (new): live activity stream reading /api/public-intelligence.json; composes 4 stream classes (shipped / catalog-moves / studio-queue / community). Honest empty state on feed failure.
+- assets/seasons-rivals.js (new) + data/seasons.json (new): live season countdown + nearest-rival callout. Honest states: inactive season / anonymous viewer / top-of-vault / active countdown.
+- vault-wall/index.html: added ItemList JSON-LD for leaderboard; added season + rival grid + Forge Feed section (with all associated CSS); wired forge-feed.js + seasons-rivals.js.
+- games/index.html + universe/index.html: added [data-related-root] sections before </main> + wired intent-state.js + related-content.js scripts. MAP keys `games` + `universe` already existed in related-content.js — hubs now hand off instead of dead-ending.
+- .github/workflows/lighthouse.yml: added `lighthouse-staging` job (needs: lighthouse, continue-on-error: true, only on push to main) targeting website.staging.vaultsparkstudios.com (Hetzner, not Cloudflare-fronted). S82 brainstorm closed.
+- scripts/build-shell-assets.mjs: rebuilt shell → new style.shell-1b62491f6c.css hash; 89 HTML files updated.
+- scripts/generate-public-intelligence.mjs: regenerated api/public-intelligence.json + context/contracts/*.json to clear drift from new session content.
+- Verification: npm run build:check ✓; csp-audit ✓ (94 files); node --check on 3 new JS assets ✓; JSON sanity on 2 new data files ✓.
+- Memory: added feedback_har_leverage.md — batch HAR asks by shared secret (CF_WORKER_API_TOKEN unblocks 3 items, ANTHROPIC_API_KEY unblocks Ask IGNIS + future AI).
+
 ## 2026-04-16 — Session 82 (Genius Hit List execution — 6 shipped)
 
 - .github/workflows/lighthouse.yml + accessibility.yml: both jobs now start `scripts/local-preview-server.mjs` on 127.0.0.1:4173 before running tooling, and point Lighthouse URLs / Playwright BASE_URL at the local preview. Cloudflare WAF returns managed-challenge HTML to GitHub Actions runner IPs, which is why Lighthouse `wait-on` hit its 6-minute ceiling and axe's `--text/--bg` CSS-var contrast resolved to NaN on all 18 playwright-axe tests. S81 patched symptoms; S82 fixes the root cause.

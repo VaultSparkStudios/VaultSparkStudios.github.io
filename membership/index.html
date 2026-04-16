@@ -38,7 +38,7 @@
   <link rel="icon" type="image/png" href="../assets/icon-32.png" />
   <link rel="apple-touch-icon" href="../assets/icon-256.png" />
   <link rel="manifest" href="/manifest.json" />
-  <link rel="stylesheet" href="../assets/style.shell-9cdaf308e2.css" />
+  <link rel="stylesheet" href="../assets/style.shell-1b62491f6c.css" />
 
   <style>
     /* ─── Page-specific: /membership/ ─── */
@@ -512,7 +512,14 @@
     }
 
     /* Responsive */
-    @media (max-width: 980px) {
+    /* S83 tablet breakpoint — 2-col at 768–1024 before collapsing to 1-col */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .mem-tiers-grid    { grid-template-columns: repeat(2, 1fr); }
+      .mem-identity-grid { grid-template-columns: repeat(2, 1fr); }
+      .mem-discount-grid { grid-template-columns: repeat(2, 1fr); }
+      .mem-stat-row      { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 767px) {
       .mem-tiers-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
       .mem-identity-grid { grid-template-columns: 1fr; }
       .mem-discount-grid { grid-template-columns: 1fr; }
@@ -523,6 +530,74 @@
       .mem-hero h1 { font-size: clamp(2.4rem, 10vw, 3.5rem); }
       .mem-discount-inner { padding: 2rem; }
       .mem-hero-proof { gap: 1rem; padding: 0.8rem 1.2rem; }
+    }
+
+    /* S83 — Member voices + outcomes */
+    .mem-voices { padding: 4rem 0; }
+    .mem-voices-head { text-align: center; margin-bottom: 2.5rem; }
+    .mem-voices-head h2 { font-family: Georgia, "Times New Roman", serif; letter-spacing: -0.02em; font-size: clamp(1.9rem, 3.8vw, 2.8rem); line-height: 1.15; margin: 0.4rem 0 0.9rem; }
+    .mem-voices-head p { color: var(--muted); max-width: 56ch; margin: 0 auto; line-height: 1.68; }
+    .mv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+    .mv-card { display: flex; flex-direction: column; gap: 1.1rem; }
+    .mv-quote {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.08rem;
+      line-height: 1.6;
+      color: var(--text);
+      position: relative;
+      padding-left: 1rem;
+      border-left: 2px solid var(--gold);
+    }
+    .mv-caption { display: flex; flex-direction: column; gap: 0.2rem; }
+    .mv-name { font-weight: 700; color: var(--text); }
+    .mv-meta { font-size: 0.78rem; color: var(--dim); display: inline-flex; gap: 0.35rem; flex-wrap: wrap; }
+    .mv-meta-rank { color: var(--gold); font-weight: 600; }
+    .mv-empty {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 2.2rem 1.5rem;
+      border-radius: 14px;
+      background: rgba(255,196,0,0.04);
+      border: 1px dashed rgba(255,196,0,0.25);
+    }
+    .mv-empty-eyebrow {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--gold);
+      margin-bottom: 0.6rem;
+    }
+    .mv-empty-body { color: var(--muted); max-width: 52ch; margin: 0 auto 1.2rem; line-height: 1.68; }
+    .mv-outcomes { margin-top: 3rem; }
+    .mv-outcomes-empty {
+      padding: 1.4rem;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+    .mv-rank-dist {
+      display: flex;
+      width: 100%;
+      height: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.06);
+      margin-top: 1rem;
+    }
+    .mv-rank-seg { display: block; height: 100%; }
+    .mv-rank-caption { margin-top: 0.6rem; font-size: 0.82rem; color: var(--dim); text-align: center; }
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .mv-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 767px) {
+      .mv-grid { grid-template-columns: 1fr; }
     }
   </style>
 
@@ -837,6 +912,32 @@
     </div>
   </section>
 
+  <!-- ── Member Voices + Outcomes (S83) ──────────────── -->
+  <section class="mem-voices" data-reveal="fade-up" aria-labelledby="voices-heading">
+    <div class="container">
+      <div class="mem-voices-head">
+        <span class="eyebrow">Honest Voices</span>
+        <h2 id="voices-heading">Words From The Vault.</h2>
+        <p>
+          Opt-in quotes from real members. No scripted testimonials, no actors. When the feed is empty,
+          the page says so — the vault does not fake proof.
+        </p>
+      </div>
+
+      <div data-member-voices data-state="loading" aria-live="polite">
+        <div class="mv-outcomes-empty">Loading member voices…</div>
+      </div>
+
+      <div class="mv-outcomes" aria-labelledby="outcomes-heading">
+        <h3 id="outcomes-heading" class="eyebrow" style="text-align:center;display:block;margin-bottom:0.9rem;">Live Vault Outcomes</h3>
+        <div data-member-outcomes data-state="loading">
+          <div class="mv-outcomes-empty">Resolving live member counts…</div>
+        </div>
+        <div data-rank-distribution data-state="loading" style="margin-top:1.4rem;"></div>
+      </div>
+    </div>
+  </section>
+
   <!-- ── Community / Social Proof ───────────────────── -->
   <section class="mem-community" data-reveal="fade-up" aria-labelledby="community-heading">
     <div class="container">
@@ -994,6 +1095,7 @@
 <script src="/assets/funnel-tracking.js" defer></script>
 <script src="/assets/micro-feedback.js" defer></script>
 <script src="/assets/recent-ships.js" defer></script>
+<script src="/assets/member-voices.js" defer></script>
 </body>
 </html>
 

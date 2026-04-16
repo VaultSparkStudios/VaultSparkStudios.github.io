@@ -2,14 +2,14 @@
 // Handles: Push Notifications + Offline Asset Caching
 
 <<<<<<< HEAD
-const CACHE_NAME = 'vaultspark-shell-9cdaf308e2-14e2419e21-8a1b93790f-0995bd7945';
+const CACHE_NAME = 'vaultspark-shell-1b62491f6c-14e2419e21-8a1b93790f-0995bd7945';
 =======
 const CACHE_NAME = 'vaultspark-shell-9cdaf308e2-14e2419e21-0bed44ecc6-0995bd7945';
 >>>>>>> 2074eb7 (fix(ci): resolve 4 flaky workflow checks + retire sw-version race)
 const MAX_PAGE_ENTRIES = 60;
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const FINGERPRINTED_SHELL_ASSETS = [
-  '/assets/style.shell-9cdaf308e2.css',
+  '/assets/style.shell-1b62491f6c.css',
   '/assets/theme-toggle.shell-14e2419e21.js',
   '/assets/nav-toggle.shell-8a1b93790f.js',
   '/assets/shell-health.shell-0995bd7945.js',
@@ -22,7 +22,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
 ];
 const STATIC_ASSETS = [
   '/',
-  '/assets/style.shell-9cdaf308e2.css',
+  '/assets/style.shell-1b62491f6c.css',
   '/assets/kit.js',
   '/assets/icon-32.png',
   '/assets/icon-256.png',

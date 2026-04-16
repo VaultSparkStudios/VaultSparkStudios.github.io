@@ -47,3 +47,31 @@ jobs:
         if: always()
         run: |
           if [ -n "${PREVIEW_PID:-}" ]; then kill "$PREVIEW_PID" || true; fi
+
+  # S83 — dual-URL gate. Staging is Hetzner-hosted (not Cloudflare-fronted),
+  # so runs cleanly from GitHub Actions IPs. Catches network-path regressions
+  # the local preview cannot see. Non-blocking: continue-on-error so a staging
+  # hiccup does not block a merge when local preview is green.
+  lighthouse-staging:
+    runs-on: ubuntu-latest
+    needs: lighthouse
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for staging reachability
+        run: npx --yes wait-on --timeout 120000 --interval 5000 https://website.staging.vaultsparkstudios.com/
+
+      - name: Run Lighthouse against staging
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            https://website.staging.vaultsparkstudios.com/
+            https://website.staging.vaultsparkstudios.com/games/
+            https://website.staging.vaultsparkstudios.com/membership/
+            https://website.staging.vaultsparkstudios.com/vaultsparked/
+            https://website.staging.vaultsparkstudios.com/vault-wall/
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true

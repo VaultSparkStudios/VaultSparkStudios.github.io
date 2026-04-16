@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇██▇▇
-Avgs — 3: 479.3 | 5: 478.0 | 10: 447.9 | 25: 434.7 | all: 436.4
-  └ 3-session: Dev 95.3 | Align 94.0 | Momentum 95.0 | Engage 92.7 | Process 99.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~3.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-16 | Session 82 | Total: 476/500 | Velocity: 6 | protocolVelocity: 6
+Sparkline (last 5 totals): ██▇▇█
+Avgs — 3: 478.7 | 5: 478.4 | 10: 452.3 | 25: 436.8 | all: 438.2
+  └ 3-session: Dev 95.7 | Align 93.3 | Momentum 95.7 | Engage 93.3 | Process 99.0
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~4.0 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-16 | Session 83 | Total: 478/500 | Velocity: 8 | protocolVelocity: 8
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,33 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-16 — Session 83 | Total: 478/500 | Velocity: 8 | Debt: →
+Avgs — 3: 478.7 | 5: 478.4 | 10: 452.3 | 25: 436.8 | all: 438.2
+  └ 3-session: Dev 95.7 | Align 93.3 | Momentum 95.7 | Engage 93.3 | Process 99.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 97 | ↑1 | 8 items shipped in one sprint at quality bar with no new debt. New `portal-shell.css` is additive — didn't touch existing portal stylesheets, so it can't regress them. All new JS modules ship honest empty states instead of fake content. `build:check` + `csp-audit` + `node --check` + JSON sanity all green. Shell regen picked up cleanly (89 HTML files updated). |
+| Creative Alignment | 93 | ↑1 | Biggest alignment win: refused to ship fake testimonials. "Honest Voices" empty state + data-file schema matches the existing annual-Stripe-honesty + FORGE/SPARKED transparency posture. Season countdown declares inactive state rather than backdating. Forge Feed labels "temporarily offline — nothing is fabricated" on failure. Consistent with the studio's no-fake-proof voice. |
+| Momentum | 95 | ↓1 | 8 items shipped, 0 new blockers, intent fully achieved. 2 HAR-deferred items are legitimately blocked, not skipped. Velocity 8 (up from S82's 6). Slight dock: first post-push CI for both S82 and S83 still unseen. |
+| Engagement | 94 | ↑1 | Three engagement-surface wins shipped (testimonials section, Forge Feed, seasons+rivals), all starting in honest empty-state. Room to grow as real content seeds in. Tablet breakpoint closes a mid-range device UX gap. |
+| Process Quality | 99 | → | Write-back in canonical order; memory pattern captured for the HAR-cluster rule; build:check re-run after public-intelligence regen to confirm sync; shell rebuilt before closeout to prevent drift. |
+| **Total** | **478/500** | ↑2 | |
+
+**Top win:** Eight items at quality bar in one sprint while staying honest — every new surface (member voices, forge feed, seasons, rivals) ships a real empty state instead of fake content. The unified cross-portal shell is additive, so it buys design-vocabulary convergence without forcing any portal to rewrite its styles. The HAR-cluster memory pattern (one secret → N items) will improve every future `/go` sprint that hits batched blockers.
+
+**Top gap:** First post-push Lighthouse runs now carry combined pressure: S82's tightened budgets (Perf 0.85 / A11y 0.95 / BP 0.90 / SEO 0.95) run against *both* local-preview (authoritative gate) and staging (new advisory gate). If both fail, advisory staging keeps merges flowing. If local-preview fails, that's real work — budgets + real page must meet.
+
+**Intent outcome:** Achieved — all 8 unblocked items implemented at quality bar. 2 HAR-deferred items preflighted and surfaced as batched founder asks per the new memory rule.
+
+**Brainstorm** *(2 items — next-sprint candidates)*
+1. **Seed `data/member-voices.json` with 3–4 real founding-member quotes** — once Studio Owner collects opt-in quotes from DreadSpike / OneKingdom / VaultSpark / Voidfall, seeding the file with 3–4 real voices converts the honest-empty surface into a live conversion lift. Zero-code; content-only operation. Probability: **High** the next time the founder talks to Genesis members.
+2. **Extract Forge Feed + seasons-rivals data into the shared public-intelligence contract** — if seasons + member-voices were part of the generated contract, Studio Hub and the social-dashboard could consume them for cross-portal visibility. Probability: **Medium** — sensible once a second consumer exists.
+
+**Committed to TASK_BOARD:** 2 HAR-deferred items remain explicit in the S83 HAR-blocked section; 2 S82 carry-forward SIL items stay open until first post-push CI runs land.
+
+---
 
 ## 2026-04-16 — Session 82 | Total: 476/500 | Velocity: 6 | Debt: ↓
 Avgs — 3: 479.3 | 5: 478.0 | 10: 447.9 | 25: 434.7 | all: 436.4

@@ -15,7 +15,8 @@
   <title>Investor Dashboard | VaultSpark Studios</title>
   <meta name="robots" content="noindex, nofollow" />
   <link rel="icon" type="image/png" href="../assets/icon-32.png" />
-  <link rel="stylesheet" href="../assets/style.shell-9cdaf308e2.css" />
+  <link rel="stylesheet" href="../assets/style.shell-1b62491f6c.css" />
+  <link rel="stylesheet" href="../assets/portal-shell.css" />
   <link rel="stylesheet" href="../assets/investor-theme.css" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js" integrity="sha384-tuevtT+97g9yLeuT/m52ejUJbc0hzsN6MPLiQEccySreiGjrcgk2tMBJR7/l6HGM" crossorigin="anonymous"></script>
@@ -84,12 +85,15 @@
       50%       { opacity: 0.4; }
     }
 
-    @media (max-width: 900px) {
+    /* S83 tablet breakpoint — 2-col KPI strip + stacked sidebar at 768–1024 */
+    @media (min-width: 768px) and (max-width: 1024px) {
       .inv-dashboard-grid { grid-template-columns: 1fr; }
+      .inv-kpi-strip      { grid-template-columns: repeat(2, 1fr); }
     }
 
-    @media (max-width: 800px) {
-      .inv-kpi-strip { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 767px) {
+      .inv-dashboard-grid { grid-template-columns: 1fr; }
+      .inv-kpi-strip      { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 600px) {
