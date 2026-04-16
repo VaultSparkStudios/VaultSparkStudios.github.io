@@ -84,7 +84,17 @@ jobs:
           git add sitemap.xml feed.xml member-sitemap.xml
           if ! git diff --cached --quiet; then
             git commit -m "chore: auto-update sitemap + feed [skip ci]"
-            git push
+            # Push with retry — rebase onto any commits (e.g. sw-version bump) that
+            # landed in parallel. 3 attempts handles normal race contention.
+            for attempt in 1 2 3; do
+              if git push; then
+                exit 0
+              fi
+              echo "Push attempt $attempt rejected — rebasing on origin/main and retrying"
+              git pull --rebase origin main
+            done
+            echo "Push failed after 3 rebase attempts"
+            exit 1
           else
             echo "No changes, skipping commit"
           fi

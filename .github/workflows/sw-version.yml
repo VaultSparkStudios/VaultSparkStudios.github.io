@@ -1,18 +1,28 @@
 name: Bump SW Cache Version
 
+# ── RETIRED 2026-04-16 (S80) ─────────────────────────────────────
+# This workflow was superseded by the fingerprinted shell-asset pipeline
+# added in S77 (`scripts/build-shell-assets.mjs`). That pipeline now owns
+# `sw.js`'s CACHE_NAME and derives it from shell-asset content hashes
+# (e.g. `vaultspark-shell-9cdaf308e2-...`) instead of date+commit.
+#
+# The two schemes fought each other: sw-version re-wrote CACHE_NAME on every
+# push, and `build:check` in e2e.yml then flagged the result as drift against
+# the fingerprint-based expected value. The e2e compliance job has been
+# failing intermittently because of this race.
+#
+# The workflow is kept in-tree with only a manual trigger so the history is
+# preserved and so deliberate re-enable is possible, but it no longer fires
+# on push. Delete the file once sw-version is confirmed unused for ≥ 5
+# sessions.
+# ──────────────────────────────────────────────────────────────────
+
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'assets/**.css'
-      - 'assets/**.js'
-      - 'sw.js'
-      - '**.html'
+  workflow_dispatch:
 
 jobs:
   bump:
     runs-on: ubuntu-latest
-    # Skip if this commit was itself the version bump (avoid infinite loop)
     if: "!contains(github.event.head_commit.message, '[sw-bump]')"
     permissions:
       contents: write
@@ -28,7 +38,6 @@ jobs:
           NEW_VERSION="vaultspark-${DATE}-${SHORT_SHA}"
           echo "Setting CACHE_NAME to: $NEW_VERSION"
           sed -i "s/const CACHE_NAME = '[^']*'/const CACHE_NAME = '$NEW_VERSION'/" sw.js
-          # Verify the change
           grep "CACHE_NAME" sw.js
 
       - name: Commit updated sw.js

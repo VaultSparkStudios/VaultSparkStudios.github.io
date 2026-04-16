@@ -13,7 +13,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Wait for GitHub Pages deployment
-        run: npx --yes wait-on --timeout 120000 --interval 5000 https://vaultsparkstudios.com/
+        # Pages deploys routinely take 3-5 minutes from push to serve; 120s was
+        # racing the deploy. 6-minute ceiling with 10s polling is plenty of
+        # headroom without dragging the CI run if Pages is already live.
+        run: npx --yes wait-on --timeout 360000 --interval 10000 https://vaultsparkstudios.com/
 
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v11

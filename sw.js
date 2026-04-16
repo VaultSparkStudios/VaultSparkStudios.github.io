@@ -1,7 +1,11 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-20260416-8ace0e8';
+<<<<<<< HEAD
+const CACHE_NAME = 'vaultspark-shell-9cdaf308e2-14e2419e21-0bed44ecc6-0995bd7945';
+=======
+const CACHE_NAME = 'vaultspark-shell-9cdaf308e2-14e2419e21-0bed44ecc6-0995bd7945';
+>>>>>>> 2074eb7 (fix(ci): resolve 4 flaky workflow checks + retire sw-version race)
 const MAX_PAGE_ENTRIES = 60;
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const FINGERPRINTED_SHELL_ASSETS = [
