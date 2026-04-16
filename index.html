@@ -943,7 +943,7 @@
     </section>
 
     <!-- ── Social Proof Strip ───────────────────────────── -->
-    <section id="vault-proof" data-reveal="fade-up" aria-label="Vault community stats" style="padding:2rem 0;border-top:1px solid rgba(255,255,255,0.06);background:linear-gradient(90deg,rgba(31,162,255,0.02),transparent 50%,rgba(255,196,0,0.02));">
+    <section id="vault-proof" data-reveal="fade-up" aria-label="Vault community stats" aria-live="polite" aria-atomic="false" style="padding:2rem 0;border-top:1px solid rgba(255,255,255,0.06);background:linear-gradient(90deg,rgba(31,162,255,0.02),transparent 50%,rgba(255,196,0,0.02));">
       <div class="container">
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.75rem;align-items:center;" id="vault-proof-inner">
           <!-- Populated by JS -->
@@ -971,50 +971,42 @@
       </div>
     </section>
 
-    <section class="surface-section" data-reveal="fade-up" aria-labelledby="studio-intelligence-heading">
+    <!--
+      Public Operating Surface relocated to /studio-pulse/ (S80).
+      Rationale: Studio OS internals (focus, blockers, IGNIS score, ecosystem links)
+      are dev/ops content that broke the cinematic homepage momentum and risked
+      leaking proprietary operating posture. /studio-pulse/ already surfaces the
+      same signals for visitors who want that transparency.
+    -->
+    <section class="surface-section" data-reveal="fade-up" aria-labelledby="studio-pulse-teaser-heading">
       <div class="container">
-        <div class="section-head" style="margin-bottom:1.5rem;">
-          <div>
-            <p class="eyebrow">Studio Intelligence</p>
-            <h2 id="studio-intelligence-heading">The Public Operating Surface</h2>
-            <p>Live, public-safe signals pulled from the Studio OS so the site reflects what the studio is actually doing right now.</p>
+        <div class="pulse-teaser" style="display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;padding:2.25rem 2.4rem;border-radius:var(--radius);background:linear-gradient(135deg,rgba(16,185,129,0.06),rgba(13,17,28,0.9) 45%,rgba(31,162,255,0.05));border:1px solid rgba(16,185,129,0.18);">
+          <div class="pulse-teaser-copy" style="flex:1 1 420px;min-width:260px;">
+            <p class="eyebrow" style="color:#10B981;">Studio Transparency</p>
+            <h2 id="studio-pulse-teaser-heading">The vault builds in the open.</h2>
+            <p>Every session, we publish a live operating surface — what's shipping, what's next, and the IGNIS score behind the velocity. No marketing polish. No roadmap theater. Just the forge, live.</p>
           </div>
-          <span id="intel-session" class="button-secondary button-sm" style="pointer-events:none;">Loading session…</span>
-        </div>
-        <div class="milestones-grid">
-          <article class="surface-card">
-            <div class="eyebrow" style="margin-bottom:0.8rem;">Current Focus</div>
-            <p id="intel-focus" style="color:var(--muted);line-height:1.7;">Loading current studio focus…</p>
-          </article>
-          <article class="surface-card">
-            <div class="eyebrow" style="margin-bottom:0.8rem;">Next Milestone</div>
-            <p id="intel-next" style="color:var(--muted);line-height:1.7;">Loading next milestone…</p>
-          </article>
-          <article class="surface-card">
-            <div class="eyebrow" style="margin-bottom:0.8rem;">IGNIS</div>
-            <p id="intel-ignis" style="color:var(--muted);line-height:1.7;">Loading cognition score…</p>
-          </article>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem;">
-          <article class="surface-card">
-            <div class="eyebrow" style="margin-bottom:0.8rem;">Fresh Ships</div>
-            <ul id="intel-shipped-list" style="margin:0;padding-left:1rem;color:var(--muted);line-height:1.7;"></ul>
-          </article>
-          <article class="surface-card">
-            <div class="eyebrow" style="margin-bottom:0.8rem;">Current Blockers</div>
-            <ul id="intel-blockers-list" style="margin:0;padding-left:1rem;color:var(--muted);line-height:1.7;"></ul>
-          </article>
-          <article class="surface-card">
-            <div class="eyebrow" style="margin-bottom:0.8rem;">Studio Network</div>
-            <ul id="intel-ecosystem-list" style="margin:0;padding-left:1rem;color:var(--muted);line-height:1.7;"></ul>
-          </article>
+          <div class="pulse-teaser-actions" style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+            <a class="button" href="/studio-pulse/" data-track-event="home_pulse_teaser_click">Open Studio Pulse &nbsp;→</a>
+            <a class="button-ghost" href="/ignis/" data-track-event="home_ignis_teaser_click">What is IGNIS?</a>
+          </div>
         </div>
       </div>
     </section>
 
     <section class="surface-section vault-journey-rail" data-reveal="fade-up" aria-label="Visitor pathways">
       <div class="container">
-        <div data-pathways-root data-pathways-context="home" data-pathways-limit="4"></div>
+        <div data-pathways-root data-pathways-context="home" data-pathways-limit="4">
+          <noscript>
+            <p class="eyebrow">Where to next</p>
+            <ul style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem;">
+              <li><a class="button-secondary" href="/games/">Explore games</a></li>
+              <li><a class="button-secondary" href="/membership/">Join the vault</a></li>
+              <li><a class="button-secondary" href="/universe/">Enter the universe</a></li>
+              <li><a class="button-secondary" href="/studio-pulse/">Studio Pulse</a></li>
+            </ul>
+          </noscript>
+        </div>
       </div>
     </section>
 
@@ -1797,6 +1789,7 @@
           <a href="/">Home</a>
           <a href="/studio/">About</a>
           <a href="/studio-pulse/">Studio Pulse</a>
+          <a href="/ignis/">IGNIS</a>
           <a href="/roadmap/">Vault Pipeline</a>
           <a href="/changelog/">Changelog</a>
           <a href="/journal/">Signal Log</a>

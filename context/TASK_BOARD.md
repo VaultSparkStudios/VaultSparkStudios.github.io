@@ -1,6 +1,56 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 79 closeout)
+Last updated: 2026-04-16 (Session 80 — master audit + Tier 1 implementation)
+
+## Session 80 — Master Audit Plan (28 items, ranked)
+
+Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.md`. Public Operating Surface confirmed as homepage misfit (duplicates `/studio-pulse/`, risks leaking Studio OS internals) — relocated S80.
+
+### Tier 1 — Immediate, high-impact
+
+- [x] **[S80][UX] Relocate Public Operating Surface off homepage** — removed lines 974-1013 intel section; replaced with compact Studio Pulse teaser link. Internal ops signals no longer leak to marketing surface.
+- [ ] **[S80][SECURITY][HAR:CF_WORKER_TOKEN] Edge-gate private portals** — return 401 at Cloudflare Worker for `/investor-portal/`, `/vault-member/`, `/studio-hub/` instead of relying on noindex + JS auth. Blocked on `CF_WORKER_API_TOKEN`.
+- [ ] **[S80][SECURITY][HAR:CF_WORKER_TOKEN] Migrate CSP from SHA hashes to nonce-based** — current 73-hash policy is unmaintainable and false-security. Needs Worker-level nonce injection. Blocked on `CF_WORKER_API_TOKEN`.
+- [~] **[S80][A11Y] Accessibility pass (partial)** — `aria-live="polite"` added to vault-proof region. Still open: hero-story contrast boost, keyboard-accessible mega-dropdowns (touches fingerprinted shell asset `nav-toggle`), DreadSpike video pause control.
+- [~] **[S80][UX] noscript fallbacks on homepage data-* sections (partial)** — pathways section has static fallback; still open: telemetry / trust-depth / micro-feedback / network-spine / related-root + 4s JS timeout toast.
+- [x] **[S80][UX] Games catalog improvements** — URL-persisted filter state (`?status=sparked`), inline search, `width`/`height` + `loading="lazy"` on thumbnails.
+- [ ] **[S80][SECURITY][HAR:CF_WORKER_TOKEN] Rate-limit + CSRF on contact & ask-founders** — 3/hr/IP via Worker + signed nonce; expire signed investor doc URLs at 1hr. Blocked on `CF_WORKER_API_TOKEN`.
+
+### Tier 2 — Depth & new features
+
+- [x] **[S80][AI] IGNIS narrative surface** — explainer tooltip on every IGNIS mention; link to new `/ignis/` explainer page framing IGNIS as studio transparency signal (not opaque "cognition score").
+- [ ] **[S80][AI] "Ask IGNIS" public concierge** — Claude-powered chat widget via Supabase edge function answering "which game?" / "what's new?" / "what's Vault?". Rate-limit + prompt cache. Signature AI moment.
+- [ ] **[S80][COHESION] Unified cross-portal shell** — shared header/sidebar/nav skin across `/vault-member/`, `/investor-portal/`, `/studio-hub/`. Shared design tokens + auth-state pill.
+- [ ] **[S80][FEATURE] Member "Forge Feed"** — live activity stream on `/vault-wall/` (shipped work, journal posts, leaderboard shifts, new FORGE games).
+- [ ] **[S80][CONVERSION] Testimonials on /membership/** — member quotes, playtime stats, rank distribution visual. Biggest conversion lift available.
+- [ ] **[S80][COHESION] `/social/` dashboard page** — live aggregation of GitHub / Bluesky / Reddit / YouTube / Discord activity. Doubles as press asset.
+- [ ] **[S80][FEATURE] Leaderboard schema + seasons + rivals** — JSON-LD, season countdowns, "nearest rival" callout. Retention hook.
+- [ ] **[S80][BRAND] Resolve ETERNAL tier vocabulary** — either fold into SPARKED or document as 4th canonical state (CANON decision).
+
+### Tier 3 — Performance, SEO, polish
+
+- [ ] **[S80][PERF] Lighthouse budget tightening in CI** — Performance ≥0.85, A11y ≥0.95, Best Practices ≥0.90, SEO ≥0.95.
+- [ ] **[S80][PERF] Animation optimization** — `will-change: transform` on forge-letter + forge-spark-burst; poster frame on DreadSpike video.
+- [x] **[S80][SEO] Sitemap changefreq segmentation** — journal entries `never`, game catalog `daily`, legal pages `yearly`; add `datePublished` to VideoGame JSON-LD; journal entries → `schema:Article`.
+- [ ] **[S80][BRAND] Typography unify** — Georgia serif for H1/H2 across journal + games + studio (currently drifts to sans).
+- [ ] **[S80][UX] Tablet breakpoint (768–1024px)** — membership tiers (2-col) + investor KPI grid (2-col).
+- [ ] **[S80][UX] Offline page redesign** — vault/forge aesthetic (vignette + gold accent), replace generic 📡.
+- [ ] **[S80][COMPLIANCE] Investor action logging consent** — explicit checkbox before enabling `investorAuth.logAction()` calls (GDPR).
+- [x] **[S80][SEO] robots.txt cleanup** — remove misleading "Cloudflare AI Labyrinth" comment.
+
+### Tier 4 — Innovation moonshots
+
+- [ ] **[SIL] Ask IGNIS concierge** — Claude-powered public chat widget answering "which game?" / "what's new?" / "what's Vault?". Rate-limited via existing Supabase edge function pattern; uses public-intelligence.json as context. High probability (1-session scope).
+- [ ] **[SIL] Unified cross-portal shell** — extract shared header/sidebar design tokens into `assets/portal-shell.css`, consume across `/vault-member/`, `/investor-portal/`, `/studio-hub/`. Pure design refactor, no auth changes.
+- [ ] **[S80][INNOVATION] Dynamic hero** — swap to most-active game's art + live session count.
+- [ ] **[S80][INNOVATION] Personalized returning-member homepage** — based on last-played game, unread journal, rank progress.
+- [ ] **[S80][INNOVATION] Studio Time Machine** — scrub changelog visually to see studio evolution month-by-month.
+- [ ] **[S80][AI] Investor AI Q&A** — Claude + retrieval over approved investor docs. Replaces half the "Ask the Founders" queue.
+- [ ] **[S80][FEATURE] PWA push for SPARKED drops + leaderboard overtakes** — opt-in, Vault-members only.
+
+---
+
+
 
 ## Done (Session 79 conversion depth + world gravity + verify docs)
 

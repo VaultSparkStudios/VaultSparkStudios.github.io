@@ -1,6 +1,36 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 79 closeout)
+Last updated: 2026-04-16 (Session 80 closeout)
+
+## Session Intent: Session 80
+Run a full site audit across 10 dimensions (Design/UX, Copy, Perf, SEO, A11y, Security, Brand, Innovation, AI, Ecosystem), produce a combined 28-item master refinement plan ranked Tier 1–4, capture it in memory + TASK_BOARD, and implement the in-repo safe Tier 1–3 items at the highest quality. Also explicitly evaluate whether "The Public Operating Surface" belongs on the homepage.
+
+## Where We Left Off (Session 80)
+- Shipped: 6 improvements across homepage transparency boundary, IGNIS narrative surface, accessibility signal, games UX, SEO/sitemap, and site-wide footer cohesion
+- Tests: `node scripts/csp-audit.mjs` → passed (94 HTML files); `node scripts/generate-public-intelligence.mjs` → regenerated all contracts cleanly
+- Deploy: committed + pushed to main (GitHub Pages + CF cache purge auto-trigger); no Worker redeploy (CSP unchanged)
+
+### Shipped
+- **Public Operating Surface relocated off homepage** (`index.html`) — Studio OS internals (current focus, blockers, IGNIS score, ecosystem links) no longer leak to the marketing surface. Replaced with a compact Studio Pulse + IGNIS teaser block linking to `/studio-pulse/` (existing rich transparency page) and the new `/ignis/` page. Rationale captured in HTML comment. Audit determined the section was a cognitive-friction misfit that risked exposing proprietary operating posture.
+- **IGNIS narrative surface shipped** (`ignis/index.html`, `assets/ignis-live.js`, `scripts/propagate-nav.mjs`, `sitemap.xml`, `studio-pulse/index.html`) — New `/ignis/` explainer converts an opaque number into a brand/transparency signal. Features a live score gauge hydrated from `api/public-intelligence.json`, four-tier color scale (Vaulted/Forge/Sparked/Ignited), five pillars (Velocity/Learning/Focus/Truth/Compound), and a "Why we publish it" argument. Studio Pulse IGNIS stat now links here; IGNIS added to the Studio footer column and propagated across 78 pages.
+- **Homepage accessibility + resilience signal shipped** (`index.html`) — `aria-live="polite"` added to the vault-proof stat region so screen-reader users are notified when live counts update. `<noscript>` fallback added to the pathways data-root section with four static navigation links so the surface degrades gracefully without JS.
+- **Games catalog URL filter state shipped** (`assets/games-filter-url.js`, `games/index.html`) — `?status=sparked|forge|vaulted` hydrates the matching filter on load and is written back when filters change, so filtered catalog views are shareable and survive page refresh. Layered on top of the existing CSP-hashed inline filter script to avoid hash churn.
+- **SEO + footer cohesion pass** — `sitemap.xml` gained `/ignis/` entry at priority 0.8; `scripts/propagate-nav.mjs` added IGNIS to the canonical Studio footer column and propagated to all 78 public HTML pages.
+- **Master audit + 28-item roadmap captured** (`context/TASK_BOARD.md`, `memory/project_master_audit_s80.md`) — Overall site score **77/100** across 10 dimensions. 28 items ranked Tier 1 (immediate) → Tier 4 (moonshots). HAR-blocked items flagged with `[HAR:CF_WORKER_TOKEN]`. Partial items marked `[~]` honestly.
+
+### Verification
+- `node scripts/csp-audit.mjs` → **passed** (94 HTML files)
+- `node scripts/propagate-csp.mjs` → updated ignis/index.html to canonical CSP
+- `node scripts/propagate-nav.mjs` → updated 78 pages with new footer IGNIS link
+- `node scripts/generate-public-intelligence.mjs` → regenerated `api/public-intelligence.json` + 3 bridge contracts cleanly
+- Homepage sanity checks: pulse-teaser present, old `intel-focus` gone, aria-live active
+
+### Open carry-forward
+- **Tier 1 infrastructure items remain HAR-blocked on `CF_WORKER_API_TOKEN`** — edge-gate private portals (401 at Worker for `/investor-portal/`, `/vault-member/`, `/studio-hub/`), migrate CSP from 73 SHA hashes to nonce-based, and add rate-limit + CSRF on contact/ask-founders forms.
+- **A11y pass is partial** — keyboard-accessible mega-dropdowns touch fingerprinted `nav-toggle.shell-*.js` and need a shell-build pipeline run; DreadSpike video pause control still pending.
+- **noscript fallbacks partial** — pathways section has fallback; telemetry/trust-depth/micro-feedback/network-spine/related-root still need static fallbacks + 4s JS timeout toast.
+- **Tier 2 depth features queued** — "Ask IGNIS" Claude concierge, unified cross-portal shell, member Forge Feed, /membership/ testimonials, /social/ aggregation page, leaderboard schema + seasons.
+- **Tier 4 moonshots captured in TASK_BOARD** — dynamic hero, personalized returning-member homepage, Studio Time Machine, investor AI Q&A, PWA push.
 
 ## Session Intent: Session 79
 Close the remaining user-facing carry-forwards by shipping the premium proof/depth pass, extending world gravity onto the key game/lore pages, and writing down the local verify contract explicitly.

@@ -1,5 +1,22 @@
 # Work Log
 
+## 2026-04-16 — Session 80 (master audit + Tier 1 implementation)
+
+- context/TASK_BOARD.md + memory/project_master_audit_s80.md: captured full 10-dimension site audit (77/100 overall) plus a 28-item master plan ranked Tier 1 (immediate) → Tier 4 (moonshots), with HAR-blocked infrastructure items explicitly flagged
+- index.html: removed the "Public Operating Surface" section (lines 974-1013 previously) and replaced it with a compact Studio Pulse + IGNIS teaser block; internal ops signals no longer leak to the marketing surface
+- index.html: added aria-live="polite" to the #vault-proof stat region + <noscript> static-link fallback to the [data-pathways-root] section so the surface degrades gracefully without JS
+- ignis/index.html (new): full /ignis/ explainer page with live gauge, four-tier color scale (Vaulted/Forge/Sparked/Ignited), five pillars (Velocity/Learning/Focus/Truth/Compound), and a "Why we publish it" argument
+- assets/ignis-live.js (new): hydrates the /ignis/ gauge from /api/public-intelligence.json with tier-aware color coding and aria-valuemin/valuemax progressbar roles
+- assets/games-filter-url.js (new) + games/index.html: layered URL-state on top of the existing CSP-hashed inline filter — ?status=sparked|forge|vaulted hydrates the matching filter on load and is written back on click so filtered catalog views are shareable + refresh-safe
+- studio-pulse/index.html: the IGNIS stat label now links to /ignis/ with a dotted-underline affordance
+- scripts/propagate-nav.mjs: added /ignis/ to the canonical Studio footer column; propagated to 78 public pages
+- sitemap.xml: added /ignis/ entry at priority 0.8
+- Verification:
+  - `node scripts/csp-audit.mjs` → passed (94 HTML files)
+  - `node scripts/propagate-csp.mjs` → updated ignis/index.html to canonical CSP
+  - `node scripts/propagate-nav.mjs` → 78 pages updated
+  - `node scripts/generate-public-intelligence.mjs` → regenerated public intelligence + 3 bridge contracts cleanly
+
 ## 2026-04-16 — Session 79 (conversion depth + world gravity + verify docs)
 
 - assets/trust-depth.js: rewrote the shared trust-depth runtime so homepage, membership, and VaultSparked each render their own proof, low-risk sequence, hesitation, and next-step language instead of sharing the earlier generic card set

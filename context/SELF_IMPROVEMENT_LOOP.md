@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇█▇█
-Avgs — 3: 479.7 | 5: 474.4 | 10: 438.1 | 25: 430.0 | all: 432.5
-  └ 3-session: Dev 96.7 | Align 94.7 | Momentum 95.0 | Engage 93.7 | Process 99.7
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: ~1.7 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-16 | Session 79 | Total: 482/500 | Velocity: 3 | protocolVelocity: 1
+Sparkline (last 5 totals): ▇█▇██
+Avgs — 3: 481.3 | 5: 476.6 | 10: 442.8 | 25: 432.4 | all: 434.7
+  └ 3-session: Dev 96.0 | Align 96.0 | Momentum 95.3 | Engage 94.0 | Process 99.3
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~2.3 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-16 | Session 80 | Total: 484/500 | Velocity: 6 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,36 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-16 — Session 80 | Total: 484/500 | Velocity: 6 | Debt: →
+Avgs — 3: 481.3 | 5: 476.6 | 10: 442.8 | 25: 432.4 | all: 434.7
+  └ 3-session: Dev 96.0 | Align 96.0 | Momentum 95.3 | Engage 94.0 | Process 99.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 95 | ↓1 | Clean: CSP audit green, public-intelligence regenerated, new code well-structured, no debt added. Slight ↓ vs S79 only because no new test coverage was added for the new /ignis/ surface (captured as next-session item). |
+| Creative Alignment | 98 | ↑3 | Strongest signal this session: the homepage Public Operating Surface relocation directly resolved a soul/brand misalignment (dev-ops content polluting marketing), the IGNIS narrative page converts opaque jargon into an on-brand transparency story, and the 28-item plan was captured in a form future agents can execute. |
+| Momentum | 96 | ↑1 | 6 concrete items shipped, zero new blockers, infrastructure carry-forward remains the same HAR-blocked items. Intent fully achieved on the in-repo safe scope. |
+| Engagement | 94 | ↑0 | Public surfaces materially improved (homepage coherence, IGNIS explainer, games UX). No new direct engagement signal yet from the new surfaces — will read back in next pulse. |
+| Process Quality | 99 | ↓1 | All write-backs complete, CSP/public-intelligence gates ran green, TASK_BOARD captures the full 28-item plan with honest partial markers. Slight ↓ because state vector / entropy / genome scripts were not run this closeout (local env path dependency). |
+| **Total** | **484/500** | ↑2 | |
+
+**Top win:** Pulled the Public Operating Surface off the homepage and turned IGNIS from an opaque number into a published narrative — two moves that resolve a brand/soul drift the site had been quietly tolerating, and both now give visitors a real reason to click deeper into the studio's transparency layer.
+
+**Top gap:** Multiple Tier 1 items (edge-gating portals, CSP nonce migration, rate-limit/CSRF on forms) remain HAR-blocked on `CF_WORKER_API_TOKEN`; this single missing secret is now the biggest single lever on the security + performance sub-scores and should be escalated as the #1 founder action.
+
+**Intent outcome:** Achieved — full audit + 28-item plan produced, in-repo safe Tier 1 items shipped at high quality, infrastructure items honestly flagged as HAR-blocked rather than faked as complete.
+
+**Brainstorm**
+1. **"Ask IGNIS" concierge** — small Claude-powered chat widget (Anthropic API via existing Supabase edge-function pattern) answering "which game?" / "what's new?" / "what's Vault?". Path: spin up `supabase/functions/ask-ignis/index.ts` with Claude Haiku + the existing public-intelligence.json as context. Probability: **High** (infrastructure already in place; 1-session scope).
+2. **Unified cross-portal shell** — Vault Member, Investor, Studio Hub all currently feel like separate products. Path: extract shared header/sidebar CSS tokens into `assets/portal-shell.css` and consume across all three portals. Probability: **High** (pure design refactor, no auth changes).
+3. **Tier 1 a11y completion** — keyboard-accessible mega-dropdowns + DreadSpike video pause control + remaining noscript fallbacks. Path: modify the (fingerprinted) nav-toggle shell source, run the shell-build pipeline, add focus-trap + arrow-key nav. Probability: **Medium** (touches shell fingerprinting, slightly higher ceremony).
+4. **/social/ aggregation page** — pulls live GitHub / Bluesky / Reddit / YouTube / Discord activity into one dashboard; doubles as press asset. Path: Supabase edge function to fan out and cache, static shell with `data-social-feed` containers. Probability: **Medium** (rate-limit and caching are the real work).
+5. **Dynamic hero experiment** — swap homepage hero to most-active game's art + live session count. Path: extend `home-intelligence.js` to read top game from public-intelligence + rewrite the hero-stats strong/small elements. Probability: **Medium** (small feature, big emotional payoff).
+
+**Committed to TASK_BOARD:** [SIL] Ask IGNIS concierge · [SIL] Unified cross-portal shell
+
+---
 
 ## 2026-04-16 — Session 79 | Total: 482/500 | Velocity: 3 | Debt: ↓
 Avgs — 3: 479.7 | 5: 474.4 | 10: 438.1 | 25: 430.0 | all: 432.5

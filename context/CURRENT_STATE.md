@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-16 (Session 79 closeout state)
+- Date: 2026-04-16 (Session 80 closeout state)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: **Session 79 converted the remaining user-facing carry-forwards into shipped runtime changes.** Homepage, membership, and VaultSparked now use a more specific trust-depth layer instead of generic proof cards; the world-gravity/related-rail system now extends onto the key FORGE game pages plus the two main universe pages; the shared intent model now infers page-specific world affinity; and the local browser verification contract is documented explicitly in `docs/LOCAL_VERIFY.md`. The new game/lore gravity rails were browser-verified locally through `tests/intelligence-surfaces.spec.js` after the timeout ceiling was raised for the heavier coverage.
+- Repo posture: **Session 80 ran a full 10-dimension site audit (overall 77/100) and implemented the in-repo safe Tier 1 items on top of it.** The "Public Operating Surface" internal-ops block has been removed from the homepage and replaced with a Studio Pulse + IGNIS teaser — Studio OS internals no longer leak to the marketing surface. The new `/ignis/` explainer page converts the opaque IGNIS number into a narrative/brand signal with a live gauge, four-tier scale, five pillars, and a "why we publish it" argument. The vault-proof stat region is now screen-reader live; the pathways section has a noscript fallback; the games catalog now supports shareable/refresh-safe URL filter state; and IGNIS is now site-wide in the Studio footer column (78 pages). The 28-item master plan is captured in TASK_BOARD and memory; infrastructure items (CSP nonce migration, edge-gating the private portals, rate-limit/CSRF on forms) remain HAR-blocked on `CF_WORKER_API_TOKEN`.
 
 ## What exists
 
