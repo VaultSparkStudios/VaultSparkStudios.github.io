@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █▇██▇
-Avgs — 3: 482.0 | 5: 477.0 | 10: 446.3 | 25: 433.0 | all: 435.3
-  └ 3-session: Dev 95.3 | Align 95.0 | Momentum 94.7 | Engage 93.7 | Process 99.3
-Velocity trend: ↓  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: ~2.1 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-16 | Session 81 | Total: 478/500 | Velocity: 0 | protocolVelocity: 5
+Sparkline (last 5 totals): ▇██▇▇
+Avgs — 3: 479.3 | 5: 478.0 | 10: 447.9 | 25: 434.7 | all: 436.4
+  └ 3-session: Dev 95.3 | Align 94.0 | Momentum 95.0 | Engage 92.7 | Process 99.0
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~3.0 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-16 | Session 82 | Total: 476/500 | Velocity: 6 | protocolVelocity: 6
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,32 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-16 — Session 82 | Total: 476/500 | Velocity: 6 | Debt: ↓
+Avgs — 3: 479.3 | 5: 478.0 | 10: 447.9 | 25: 434.7 | all: 436.4
+  └ 3-session: Dev 95.3 | Align 94.0 | Momentum 95.0 | Engage 92.7 | Process 99.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 96 | ↑1 | CI fix this session is a genuine root-cause fix, not a symptom patch — local-preview bypasses Cloudflare WAF that had collapsed Lighthouse `wait-on` and axe contrast-ratio checks. Noscript fallbacks + hydration-timeout give the homepage real graceful degradation. nav-toggle keyboard a11y rewritten to the correct pattern (aria-haspopup/expanded/controls + arrow cycling + ESC + focusout collapse). `npm run build:check`, `csp-audit`, propagate-csp all clean. Only hold-back: Lighthouse budget tightening is aspirational and may flag on first run. |
+| Creative Alignment | 92 | ↓3 | Mostly infra + a11y + CI. No new creative direction given, no SOUL/CDR changes. Alignment preserved (noscript fallbacks re-use existing vocabulary — Studio Pulse, IGNIS, Studio Hub) but no new alignment signal shipped. |
+| Momentum | 96 | ↑3 | Real velocity 6 (up from S81's 0 user-facing) at quality bar, plus protocol velocity 6. Zero new blockers. Intent fully achieved on in-repo scope. Deferred items (Ask IGNIS, testimonials, /social/, ETERNAL) are legitimately out-of-scope, not skipped. |
+| Engagement | 93 | ↓1 | Public-surface engagement mechanics improved (a11y, hydration resilience, keyboard nav) but no new public-facing engagement feature shipped. Same pattern as S81. |
+| Process Quality | 99 | → | All write-backs in canonical order; DECISIONS captures the root-cause vs. symptom-patch decision; fingerprinted shell rebuilt before closeout; build:check run twice (initial + after public-intelligence regen) to confirm sync. |
+| **Total** | **476/500** | ↓2 | |
+
+**Top win:** Identified that S81's CI "fixes" were symptom patches and landed the real root-cause fix — Cloudflare WAF was serving managed-challenge HTML to GitHub Actions runner IPs, which is why Lighthouse `wait-on` hit its 6-minute ceiling and axe's contrast-ratio collapsed to NaN on 18 tests. Moving both jobs to `scripts/local-preview-server.mjs` audits the real shipped artifact and bypasses WAF entirely.
+
+**Top gap:** Tightened Lighthouse budgets (Perf 0.85 / A11y 0.95 / BP 0.90 / SEO 0.95) were applied in the same session as the CI runtime migration, so first real confirmation comes on push. If the first run is red, it's likely an honest-gap issue (one budget iteration) rather than a plumbing issue.
+
+**Intent outcome:** Achieved — all unblocked Genius Hit List items implemented at quality bar (6 shipped). The 4 deferred items are HAR-blocked (Ask IGNIS needs Claude API key + edge function; /social/ needs API tokens) or require founder input (testimonials, ETERNAL canon), not skipped by fatigue.
+
+**Brainstorm** *(1 item — CI robustness follow-up)*
+1. **Dual-URL release confidence gate** — once local-preview Lighthouse is known-good, add a second low-stakes Lighthouse run against staging (`website.staging.vaultsparkstudios.com` — Hetzner, not Cloudflare-fronted) so we also catch real-world regressions that only show up over the network. Staging already exists (CANON-007) so the cost is one extra job. Probability: **High** once first post-S82 Lighthouse run is known to pass.
+
+**Committed to TASK_BOARD:** [SIL] Watch first post-push Lighthouse run (already in S82 board)
+
+---
 
 ## 2026-04-16 — Session 81 | Total: 478/500 | Velocity: 0 (protocol) | Debt: ↓
 Avgs — 3: 482.0 | 5: 477.0 | 10: 446.3 | 25: 433.0 | all: 435.3

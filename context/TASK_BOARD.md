@@ -1,6 +1,19 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 81 — CI flakiness cleanup)
+Last updated: 2026-04-16 (Session 82 — Genius Hit List execution)
+
+## Session 82 — Genius Hit List execution (6 shipped)
+
+- [x] **[S82][CI][ROOT-CAUSE] Migrate Lighthouse + playwright-axe CI to local preview server** — Cloudflare WAF returns managed-challenge HTML to GitHub Actions runner IPs, which collapsed Lighthouse `wait-on` to timeout and axe `--text/--bg` contrast to NaN. Both workflows now spin up `scripts/local-preview-server.mjs` on 127.0.0.1:4173 and point tooling there. Fixes what S81 only patched symptomatically.
+- [x] **[S82][UX] Noscript fallbacks + 4s JS-hydration-timeout toast** — completes S80 Tier 1 partial. Telemetry, trust-depth, micro-feedback, network-spine, related-rail each ship real static fallback. `assets/hydration-timeout.js` renders aria-live status + GA4 `hydration_timeout` event when roots fail to hydrate within 4s.
+- [x] **[S82][A11Y] Hero-story contrast + DreadSpike audit close** — hero-story `color: var(--text)` over darker bg; strong → gold; light-mode dark-panel override. DreadSpike "video pause" moot (static poster, no autoplay).
+- [x] **[S82][PERF] Lighthouse CI budgets tightened** — Perf 0.85, A11y 0.95, BP 0.90, SEO 0.95 (up from 0.70/0.85/0.85/0.90). May require one budget iteration based on first local-preview run.
+- [x] **[S82][PERF] Animation optimization** — `will-change: transform, opacity` on `.forge-letter` + `.forge-spark-burst`.
+- [x] **[S82][A11Y] Keyboard-accessible mega-dropdowns** — `nav-toggle.js` adds `aria-haspopup/expanded/controls`, ArrowDown opens + focuses first item, arrow-key cycle inside dropdown, ESC closes + restores focus, focusout collapses. Fingerprinted shell rebuilt: `nav-toggle.shell-8a1b93790f.js`.
+- [ ] **[SIL] Watch first post-push Lighthouse run** — tightened budgets + new local-preview runtime; if red, iterate once.
+
+---
+
 
 ## Session 81 — CI plumbing cleanup
 

@@ -1,5 +1,17 @@
 # Work Log
 
+## 2026-04-16 — Session 82 (Genius Hit List execution — 6 shipped)
+
+- .github/workflows/lighthouse.yml + accessibility.yml: both jobs now start `scripts/local-preview-server.mjs` on 127.0.0.1:4173 before running tooling, and point Lighthouse URLs / Playwright BASE_URL at the local preview. Cloudflare WAF returns managed-challenge HTML to GitHub Actions runner IPs, which is why Lighthouse `wait-on` hit its 6-minute ceiling and axe's `--text/--bg` CSS-var contrast resolved to NaN on all 18 playwright-axe tests. S81 patched symptoms; S82 fixes the root cause.
+- index.html: `<noscript>` fallbacks for the five data-* roots (telemetry-matrix, trust-depth, micro-feedback, network-spine, related-root) — each links to its canonical surface. Closes S80 Tier 1 partial.
+- assets/hydration-timeout.js (new) + index.html: 4s JS-hydration-timeout toast. Sweeps `[data-js-hydrate]` elements after DOMContentLoaded; if a root still contains only `<noscript>`, renders an aria-live status box with fallback links and fires a `hydration_timeout` GA4 event.
+- index.html: hero-story contrast boost — color `var(--steel)`→`var(--text)`, bg 0.7→0.82 alpha, strong → `var(--gold)`, `body.light-mode .hero-story` override keeps the panel dark on cream pages.
+- .lighthouserc.json: Perf 0.70→0.85, A11y 0.85→0.95, BP 0.85→0.90, SEO 0.90→0.95 (S80 Tier 3 targets).
+- index.html: `will-change: transform, opacity` on `.forge-letter` + `.forge-spark-burst`.
+- assets/nav-toggle.js: keyboard-accessible mega-dropdowns. `aria-haspopup="menu"` + `aria-expanded` + `aria-controls` on each trigger; ArrowDown opens + focuses first item; arrow-key cycle within dropdown; ESC closes + returns focus to trigger; focusout collapses. Mobile tap-to-toggle preserved; global ESC closes mobile menu.
+- scripts/build-shell-assets.mjs: rebuilt shell (new nav-toggle hash `8a1b93790f`); 76 HTML files updated.
+- Verification: `node --check` both new/changed JS assets ✓; `npm run build:check` ✓; `node scripts/csp-audit.mjs` ✓ (94 files); propagate-csp dry-run clean.
+
 ## 2026-04-16 — Session 81 (CI flakiness cleanup)
 
 - .github/workflows/sitemap.yml: wrapped the generated-files push in a 3-attempt retry-with-rebase loop so race losses against sibling bot commits (sw-version, etc.) no longer fail the workflow

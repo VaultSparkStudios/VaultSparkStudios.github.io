@@ -27,11 +27,34 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      # Cloudflare's WAF returns managed-challenge HTML to GitHub Actions runner
+      # IPs, so pointing Playwright at https://vaultsparkstudios.com/ audits the
+      # challenge shell (no --text/--bg CSS custom props → contrast ratio NaN
+      # and all page.goto() lands on the wrong DOM). Running axe against a
+      # local preview server built from the same repo artifacts audits the real
+      # shipped HTML/CSS/JS without the WAF in the way.
+      - name: Start local preview server
+        run: |
+          node scripts/local-preview-server.mjs &
+          echo "PREVIEW_PID=$!" >> $GITHUB_ENV
+        env:
+          LOCAL_PREVIEW_HOST: 127.0.0.1
+          LOCAL_PREVIEW_PORT: '4173'
+
+      - name: Wait for local preview
+        run: npx --yes wait-on --timeout 30000 --interval 500 http://127.0.0.1:4173/
+
       - name: Run axe accessibility tests via Playwright
         run: npx playwright test tests/accessibility.spec.js --project=chromium
         env:
+          BASE_URL: http://127.0.0.1:4173
           VAULT_TEST_EMAIL: ${{ secrets.VAULT_TEST_EMAIL }}
           VAULT_TEST_PASSWORD: ${{ secrets.VAULT_TEST_PASSWORD }}
+
+      - name: Stop local preview
+        if: always()
+        run: |
+          if [ -n "${PREVIEW_PID:-}" ]; then kill "$PREVIEW_PID" || true; fi
 
       - name: Upload Playwright report
         if: always()

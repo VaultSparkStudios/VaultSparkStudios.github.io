@@ -12,23 +12,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Wait for GitHub Pages deployment
-        # Pages deploys routinely take 3-5 minutes from push to serve; 120s was
-        # racing the deploy. 6-minute ceiling with 10s polling is plenty of
-        # headroom without dragging the CI run if Pages is already live.
-        run: npx --yes wait-on --timeout 360000 --interval 10000 https://vaultsparkstudios.com/
+      # Cloudflare's WAF returns managed-challenge HTML to GitHub Actions runner
+      # IPs, so pointing Lighthouse at https://vaultsparkstudios.com/ audits the
+      # challenge page (not the site) and wait-on times out. Running Lighthouse
+      # against a local preview server built from the same repo artifacts
+      # audits the real shipped HTML/CSS/JS without the WAF in the way.
+      - name: Start local preview server
+        run: |
+          node scripts/local-preview-server.mjs &
+          echo "PREVIEW_PID=$!" >> $GITHUB_ENV
+        env:
+          LOCAL_PREVIEW_HOST: 127.0.0.1
+          LOCAL_PREVIEW_PORT: '4173'
+
+      - name: Wait for local preview
+        run: npx --yes wait-on --timeout 30000 --interval 500 http://127.0.0.1:4173/
 
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
-            https://vaultsparkstudios.com/
-            https://vaultsparkstudios.com/games/
-            https://vaultsparkstudios.com/community/
-            https://vaultsparkstudios.com/leaderboards/
-            https://vaultsparkstudios.com/journal/
-            https://vaultsparkstudios.com/ranks/
-            https://vaultsparkstudios.com/contact/
+            http://127.0.0.1:4173/
+            http://127.0.0.1:4173/games/
+            http://127.0.0.1:4173/community/
+            http://127.0.0.1:4173/leaderboards/
+            http://127.0.0.1:4173/journal/
+            http://127.0.0.1:4173/ranks/
+            http://127.0.0.1:4173/contact/
           configPath: ./.lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
+
+      - name: Stop local preview
+        if: always()
+        run: |
+          if [ -n "${PREVIEW_PID:-}" ]; then kill "$PREVIEW_PID" || true; fi

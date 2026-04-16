@@ -219,3 +219,10 @@ Public-safe decisions retained in this repo:
 **Studio canon:** `vaultspark-studio-ops/docs/STUDIO_CANON.md` → CANON-008
 
 ---
+
+## 2026-04-16 — S82: CI moved to local preview server (root-cause fix, not symptom patch)
+
+- Status: active
+- Decision: Lighthouse CI + playwright-axe now run against `scripts/local-preview-server.mjs` on 127.0.0.1:4173 instead of the Cloudflare-fronted `https://vaultsparkstudios.com/`. Applies to `.github/workflows/lighthouse.yml` and `.github/workflows/accessibility.yml`.
+- Why: Cloudflare's WAF returns a managed-challenge HTML page to GitHub Actions runner IPs. That caused Lighthouse's `wait-on` to hit its 6-minute ceiling (HTTP was non-200 for the whole window) and axe's `--text/--bg` CSS-custom-prop contrast check to resolve to `NaN` (:root in the challenge page doesn't define our tokens). S81 patched the symptoms (wait-on ceiling, lockfile, axe-cli continue-on-error) but didn't address the cause. Running the real shipped HTML/CSS/JS from the repo locally — no network, no WAF — audits the real artifact and bypasses the challenge entirely.
+- Rollback path: if local-preview scoring is noticeably different from production scoring in a way that matters for release confidence, we can run a second Lighthouse job against staging (`website.staging.vaultsparkstudios.com`, Hetzner, not Cloudflare-fronted) and gate release on both.

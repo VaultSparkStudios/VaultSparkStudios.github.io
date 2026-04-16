@@ -1,6 +1,36 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 81 closeout)
+Last updated: 2026-04-16 (Session 82 closeout)
+
+## Session Intent: Session 82
+Implement all Genius Hit List items at highest/optimal quality.
+
+## Where We Left Off (Session 82)
+- Shipped: 6 Genius Hit List items at quality bar spanning CI root-cause fix, homepage resilience, a11y, perf budgets, and keyboard nav
+- Tests: `npm run build:check` → passed (shell + public intelligence synced); `node scripts/csp-audit.mjs` → passed (94 HTML files); `node --check` on both new/changed JS assets → passed
+- Deploy: pending — /closeout autopilot will commit + push
+
+### Shipped
+- **CI root-cause fix** (`.github/workflows/lighthouse.yml`, `.github/workflows/accessibility.yml`) — Both workflows now start `scripts/local-preview-server.mjs` on 127.0.0.1:4173 and point Lighthouse URLs / Playwright BASE_URL at the local preview. Cloudflare's WAF returns a managed-challenge HTML page to GitHub Actions runner IPs, which is why Lighthouse `wait-on` timed out after 6 minutes and axe's `--text/--bg` CSS-custom-prop contrast check resolved to `NaN` (18 tests failed on S81). S81's fixes (wait-on ceiling, lockfile, axe-cli continue-on-error) were symptom patches. S82 serves the real shipped HTML/CSS/JS locally, bypassing WAF entirely.
+- **Homepage noscript fallbacks + 4s JS-hydration-timeout toast** (`index.html`, `assets/hydration-timeout.js`) — Completes the S80 Tier 1 partial. Five data-* roots (telemetry-matrix, trust-depth, micro-feedback, network-spine, related-root) each ship a meaningful static `<noscript>` fallback pointing at canonical surfaces (Studio Pulse, IGNIS, contact form, Studio Hub, GitHub, Games, Universe, Membership, Journal). `hydration-timeout.js` sweeps `[data-js-hydrate]` elements 4s after DOMContentLoaded; if a root still has only `<noscript>` children, it renders an aria-live status box with a one-line fallback and fires a `hydration_timeout` GA4 event.
+- **Hero-story contrast boost** (`index.html`) — `.hero-story` color raised from `var(--steel)` to `var(--text)`; background tightened from 0.7 to 0.82 alpha; border opacity raised; strong moved to `var(--gold)` for hierarchy; explicit `body.light-mode .hero-story` override forces the panel to stay dark (colour `#f3f4f6`, gold strong `#FFC400`) so the block is readable on the cream light-mode page. Closes S80 a11y partial.
+- **Lighthouse CI budgets tightened** (`.lighthouserc.json`) — Perf 0.70→0.85, A11y 0.85→0.95, BP 0.85→0.90, SEO 0.90→0.95 (matches S80 Tier 3 target). Now runs against local preview, so scores should be cleaner; may need one iteration if first run flags real gaps.
+- **Animation optimization** (`index.html`) — `will-change: transform, opacity` on `.forge-letter` + `.forge-spark-burst` to promote GPU compositing for the forge-ignition hero animation. Single addition each, no behaviour change.
+- **Keyboard-accessible mega-dropdowns** (`assets/nav-toggle.js`, `assets/shell-manifest.json`, 76 HTML pages) — `nav-toggle.js` now sets `aria-haspopup="menu"`, `aria-expanded`, and `aria-controls` on each dropdown trigger; ArrowDown opens the dropdown + focuses the first link; ArrowUp/Down cycle within the dropdown; ESC closes + returns focus to the trigger; focusout collapses any `dropdown-open` state. Mobile tap-to-toggle preserved. Fingerprinted shell asset rebuilt → `nav-toggle.shell-8a1b93790f.js`; 76 HTML files now reference the new URL.
+
+### Verification
+- `node --check assets/hydration-timeout.js` → **passed**
+- `node --check assets/nav-toggle.js` → **passed**
+- `node scripts/build-shell-assets.mjs` → 76 HTML files updated, manifest emitted
+- `npm run build:check` → **passed** (shell + public intelligence both in sync after regen)
+- `node scripts/csp-audit.mjs` → **passed** (94 HTML files)
+- `node scripts/propagate-csp.mjs --dry-run` → 0 updated, 90 unchanged, 2 expected skips
+
+### Open carry-forward
+- **First post-push Lighthouse run** — Budgets tightened + runtime now local preview. If Perf 0.85 or A11y 0.95 is short on first execution, iterate once rather than relaxing budgets.
+- **First post-push playwright-axe run** — Local-preview migration will exercise the new path; any surfaced real a11y violations (as opposed to challenge-page noise) are real work.
+- **S81 carry-forward cleared at root cause** — sw-version 5-session deletion watch still applies (earliest S86).
+- **Tier 1 HAR-blocked items unchanged** — CF_WORKER_API_TOKEN still gates edge-gating portals, CSP nonce migration, rate-limit/CSRF on forms.
 
 ## Session Intent: Session 81
 Diagnose the four red CI workflow checks that had been failing (including one S80 regression) and ship targeted fixes in one commit so the next push flips the commit status board green without leaving follow-up debt.

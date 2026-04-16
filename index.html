@@ -180,6 +180,7 @@
     .forge-letter {
       display: inline-block;
       opacity: 0;
+      will-change: transform, opacity;
       animation: letterForge 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       animation-delay: calc(0.12s + var(--li, 0) * 0.065s);
     }
@@ -221,16 +222,21 @@
       border-radius: 20px;
       background:
         linear-gradient(135deg, rgba(31,162,255,0.07), rgba(255,122,0,0.06)),
-        rgba(10,13,22,0.7);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-left: 3px solid rgba(255,196,0,0.4);
-      color: var(--steel);
+        rgba(10,13,22,0.82);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-left: 3px solid rgba(255,196,0,0.6);
+      color: var(--text);
       font-size: 0.94rem;
       line-height: 1.65;
       text-align: left;
       backdrop-filter: blur(6px);
     }
-    .hero-story strong { color: var(--text); }
+    .hero-story strong { color: var(--gold); }
+    body.light-mode .hero-story {
+      background: rgba(10,13,22,0.9);
+      color: #f3f4f6;
+    }
+    body.light-mode .hero-story strong { color: #FFC400; }
 
     /* ── Forge Spark Burst — ignition point that blooms then fades ── */
     .forge-spark-burst {
@@ -246,6 +252,7 @@
       z-index: 1;
       transform: translate(-50%, -50%) scale(0);
       opacity: 0;
+      will-change: transform, opacity;
       animation: forgeSparkBurst 0.95s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
 
@@ -1012,31 +1019,71 @@
 
     <section class="surface-section telemetry-matrix" data-reveal="fade-up" data-track-view="home_telemetry_matrix_view" aria-label="Journey telemetry">
       <div class="container">
-        <div data-telemetry-matrix data-telemetry-context="home"></div>
+        <div data-telemetry-matrix data-telemetry-context="home" data-js-hydrate="telemetry-matrix">
+          <noscript>
+            <p class="eyebrow">Journey telemetry</p>
+            <p class="lead-text">Live conversion telemetry requires JavaScript. Repo-truth metrics are published on <a href="/studio-pulse/">Studio Pulse</a> and <a href="/ignis/">IGNIS</a>.</p>
+          </noscript>
+        </div>
       </div>
     </section>
 
     <section class="surface-section trust-depth" data-reveal="fade-up" data-track-view="home_trust_depth_view" aria-label="Trust depth">
       <div class="container">
-        <div data-trust-depth-root data-trust-context="home"></div>
+        <div data-trust-depth-root data-trust-context="home" data-js-hydrate="trust-depth">
+          <noscript>
+            <p class="eyebrow">Why trust the vault</p>
+            <ul style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;">
+              <li><strong>Ship weekly.</strong> Every shipped change is listed on <a href="/changelog/">the public changelog</a>.</li>
+              <li><strong>Publish the score.</strong> Our internal transparency score is public at <a href="/ignis/">/ignis/</a>.</li>
+              <li><strong>Member-first pricing.</strong> Free tier is real. Paid tier is <a href="/vaultsparked/">VaultSparked</a>, no upsell traps.</li>
+              <li><strong>Founder on the record.</strong> The studio's why and what's off-limits lives at <a href="/studio/">/studio/</a>.</li>
+            </ul>
+          </noscript>
+        </div>
       </div>
     </section>
 
     <section class="surface-section micro-feedback" data-reveal="fade-up" data-track-view="home_micro_feedback_view" aria-label="Visitor feedback">
       <div class="container">
-        <div data-micro-feedback-root data-feedback-context="home"></div>
+        <div data-micro-feedback-root data-feedback-context="home" data-js-hydrate="micro-feedback">
+          <noscript>
+            <p class="eyebrow">Tell us what's missing</p>
+            <p class="lead-text">The live feedback widget needs JavaScript. You can still reach the studio directly — <a href="/contact/">contact form</a> or email <a href="mailto:founder@vaultsparkstudios.com">founder@vaultsparkstudios.com</a>.</p>
+          </noscript>
+        </div>
       </div>
     </section>
 
     <section class="surface-section network-spine" data-reveal="fade-up" data-track-view="home_network_spine_view" aria-label="Vault network">
       <div class="container">
-        <div data-network-spine data-network-context="home"></div>
+        <div data-network-spine data-network-context="home" data-js-hydrate="network-spine">
+          <noscript>
+            <p class="eyebrow">The vault network</p>
+            <ul style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem;">
+              <li><a class="button-secondary" href="/studio-hub/">Studio Hub</a></li>
+              <li><a class="button-secondary" href="/studio-pulse/">Studio Pulse</a></li>
+              <li><a class="button-secondary" href="/ignis/">IGNIS score</a></li>
+              <li><a class="button-secondary" href="https://github.com/VaultSparkStudios" rel="noopener">GitHub</a></li>
+            </ul>
+          </noscript>
+        </div>
       </div>
     </section>
 
     <section class="surface-section related-rail" data-reveal="fade-up" aria-label="Related vault surfaces">
       <div class="container">
-        <div data-related-root data-related-context="home" data-related-limit="4"></div>
+        <div data-related-root data-related-context="home" data-related-limit="4" data-js-hydrate="related">
+          <noscript>
+            <p class="eyebrow">Continue through the vault</p>
+            <ul style="list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.75rem;">
+              <li><a class="button-secondary" href="/games/">Games catalog</a></li>
+              <li><a class="button-secondary" href="/universe/">Universe &amp; lore</a></li>
+              <li><a class="button-secondary" href="/membership/">Membership</a></li>
+              <li><a class="button-secondary" href="/journal/">Journal</a></li>
+            </ul>
+          </noscript>
+        </div>
       </div>
     </section>
 
@@ -1849,13 +1896,14 @@
   <script src="/assets/adaptive-cta.js" defer></script>
   <script src="/assets/pathways-router.js" defer></script>
   <script src="/assets/related-content.js" defer></script>
+  <script src="/assets/hydration-timeout.js" defer></script>
   <script src="/assets/funnel-tracking.js" defer></script>
   <script src="/assets/micro-feedback.js" defer></script>
   <script src="/assets/recent-ships.js" defer></script>
   <script src="/assets/home-intelligence.js" defer></script>
   <script src="/assets/cookie-consent.js" defer></script>
   <script src="/assets/pwa-install.js" defer></script>
-  <script src="/assets/nav-toggle.shell-0bed44ecc6.js" defer></script>
+  <script src="/assets/nav-toggle.shell-8a1b93790f.js" defer></script>
   <script src="/assets/vault-cta.js" defer></script>
   <script src="/assets/sentry-init.js" defer></script>
   <script src="/assets/studio-stats.js" defer></script>
