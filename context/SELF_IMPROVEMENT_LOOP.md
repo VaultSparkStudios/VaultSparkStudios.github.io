@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇█▇██
-Avgs — 3: 481.3 | 5: 476.6 | 10: 442.8 | 25: 432.4 | all: 434.7
-  └ 3-session: Dev 96.0 | Align 96.0 | Momentum 95.3 | Engage 94.0 | Process 99.3
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~2.3 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-16 | Session 80 | Total: 484/500 | Velocity: 6 | protocolVelocity: 1
+Sparkline (last 5 totals): █▇██▇
+Avgs — 3: 482.0 | 5: 477.0 | 10: 446.3 | 25: 433.0 | all: 435.3
+  └ 3-session: Dev 95.3 | Align 95.0 | Momentum 94.7 | Engage 93.7 | Process 99.3
+Velocity trend: ↓  |  Protocol velocity: ↑  |  Debt: ↓
+Momentum runway: ~2.1 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-16 | Session 81 | Total: 478/500 | Velocity: 0 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,33 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-16 — Session 81 | Total: 478/500 | Velocity: 0 (protocol) | Debt: ↓
+Avgs — 3: 482.0 | 5: 477.0 | 10: 446.3 | 25: 433.0 | all: 435.3
+  └ 3-session: Dev 95.3 | Align 95.0 | Momentum 94.7 | Engage 93.7 | Process 99.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 95 | → | CI plumbing materially improved: 1 S80 regression fixed, 3 chronic failures diagnosed + fixed, 1 latent failure cleared. `npm run build:check` green end-to-end. Slight no-change because lockfile strategy (gitignore + `npm install`) is pragmatic not ideal. |
+| Creative Alignment | 94 | ↓4 | Pure infra session with no creative direction — SOUL unchanged, CDR untouched, brand surfaces unchanged. Lower than S80 by definition since there's no creative surface to align on. |
+| Momentum | 93 | ↓3 | Protocol velocity high (5 CI fixes in one commit chain), but zero user-facing task velocity per SIL rubric. The S80 runway items are still open. |
+| Engagement | 92 | ↓2 | No new public-surface engagement work — infra-only. |
+| Process Quality | 99 | → | All write-backs, audit JSON, CSP audit, build:check, public-intel regen done cleanly. CI status diagnosis was methodical (failed-run log → root-cause → single-commit fix). |
+| **Total** | **478/500** | ↓6 | |
+
+**Top win:** Diagnosed and killed the hidden `sw-version` vs `build-shell-assets` race that had been quietly dropping E2E compliance checks to red since S77 — not just patched the symptom.
+
+**Top gap:** Two CI runs (Lighthouse, E2E) were still in_progress at closeout, so final green confirmation is deferred to whoever opens the next session; also the playwright-axe lockfile fix was committed in a follow-up after the main CI-fix commit, so it's technically an unverified fix until next push fires.
+
+**Intent outcome:** Achieved — all 4 declared CI failures diagnosed + fixed, plus a 5th latent failure (playwright-axe npm ci) surfaced and fixed mid-session.
+
+**Brainstorm** *(1 item — protocol-only session shortcut)*
+1. **Delete `sw-version.yml` entirely once confirmed unused for 5 sessions** — keeping retired workflows around accumulates cruft; set a calendar reminder for S86 to sweep.
+   Path: `rm .github/workflows/sw-version.yml`. Probability: **High** once verified.
+
+**Committed to TASK_BOARD:** [SIL] S86 sweep to delete retired sw-version.yml
+
+---
 
 ## 2026-04-16 — Session 80 | Total: 484/500 | Velocity: 6 | Debt: →
 Avgs — 3: 481.3 | 5: 476.6 | 10: 442.8 | 25: 432.4 | all: 434.7

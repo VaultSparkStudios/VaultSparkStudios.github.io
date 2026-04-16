@@ -19,7 +19,10 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm ci
+        # Lockfile is gitignored in this repo by convention, so `npm ci` can't
+        # run in CI. Use `npm install` to regenerate the lockfile from
+        # package.json on-the-fly. Slightly slower but correct for this repo.
+        run: npm install --no-audit --no-fund
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium

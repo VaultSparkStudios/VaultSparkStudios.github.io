@@ -1,6 +1,18 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 80 — master audit + Tier 1 implementation)
+Last updated: 2026-04-16 (Session 81 — CI flakiness cleanup)
+
+## Session 81 — CI plumbing cleanup
+
+- [x] **[S81][CI] Sitemap workflow push-rebase retry** — 3-attempt retry-with-rebase loop in `.github/workflows/sitemap.yml` so bot-commit races no longer fail the job (fixed S80 regression).
+- [x] **[S81][CI] Accessibility axe-cli non-blocking** — `continue-on-error: true` on the axe-cli step; playwright-axe is the authoritative a11y signal (Cloudflare WAF was returning a managed-challenge page that axe mis-audited).
+- [x] **[S81][CI] playwright-axe lockfile fix** — `npm ci` → `npm install --no-audit --no-fund` because `package-lock.json` is gitignored by repo convention.
+- [x] **[S81][CI] Lighthouse wait-on ceiling raised** — 120s → 360s with 10s polling; prior timeout was racing GitHub Pages deploy time.
+- [x] **[S81][INFRA] Retire `sw-version.yml` on-push trigger** — S77 fingerprinted shell pipeline is now the single owner of `sw.js` CACHE_NAME. Workflow kept as `workflow_dispatch`-only with a deprecation note until confirmed unused for ≥ 5 sessions.
+- [ ] **[SIL] S86 sweep — delete retired `sw-version.yml`** — if no one has re-enabled it manually by S86, `rm .github/workflows/sw-version.yml` and remove the in-file deprecation header.
+
+---
+
 
 ## Session 80 — Master Audit Plan (28 items, ranked)
 
