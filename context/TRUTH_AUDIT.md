@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-15 (S75 closeout)
+Last reviewed: 2026-04-16 (S76 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -32,3 +32,10 @@ Public-safe summary:
 - Session 75 truth changed: telemetry, trust, and network surfaces now render from shared modules on homepage, membership, VaultSparked, and Studio Pulse
 - Session 75 truth changed: `sw.js` cache name moved to `vaultspark-20260415-intent` and now caches the new shared intelligence assets
 - Session 75 truth changed: generated public-intelligence/contracts were refreshed again after the final Session 75 memory/task updates so downstream public surfaces read current truth
+- Session 76 truth changed: `assets/micro-feedback.js` now provides browser-local, public-safe feedback capture and local summary rendering across homepage, membership, VaultSparked, join, invite, and Studio Pulse
+- Session 76 truth changed: `assets/public-intelligence.js`, `assets/telemetry-matrix.js`, and `assets/trust-depth.js` can now enrich runtime reads with feedback-summary data without exposing private user data
+- Session 76 truth changed: `scripts/release-confidence.mjs` now exists and `package.json` exposes `npm run verify:confidence` as the scoped release gate for changed intelligence surfaces
+- Session 76 truth changed: `scripts/run-local-browser-verify.mjs` now supports the focused `intelligence` tier and prefers the local Playwright binary instead of `npx`
+- Session 76 truth changed: `assets/intent-state.js` no longer emits shared change events from `noteExposure()`, fixing the local-preview render/exposure loop on homepage, membership, VaultSparked, and Studio Pulse
+- Session 76 truth changed: `sw.js` cache name moved to `vaultspark-20260416-feedback` so the new feedback asset is cache-tracked with the existing shared runtime
+- Verification truth changed in Session 76: `node scripts/release-confidence.mjs` passed on 2026-04-16 with public-intelligence generation, local browser verify (`intelligence` tier), live header verification, and staging health all green

@@ -1,6 +1,14 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 75 closeout)
+Last updated: 2026-04-16 (Session 76 closeout)
+
+## Done (Session 76 feedback loop + confidence gate)
+
+- [x] **[GENIUS][FEEDBACK] Micro-feedback engine** — **DONE S76**: shipped `assets/micro-feedback.js` across homepage, membership, VaultSparked, join, invite, and Studio Pulse to capture public-safe goal/blocker/usefulness signals and render live local summaries.
+- [x] **[GENIUS][OPS] Feedback-to-Ops bridge** — **DONE S76**: extended `scripts/generate-public-intelligence.mjs`, `assets/public-intelligence.js`, and the shared `context/contracts/*.json` bridge so feedback summaries can enrich public-safe intelligence/trust surfaces.
+- [x] **[GENIUS][INTELLIGENCE] Adaptive narrative personalization** — **DONE S76**: upgraded shared CTA/pathway/network modules so hesitation states like `need_proof`, `price_unsure`, and `want_gameplay` shift copy emphasis and next-move framing.
+- [x] **[SIL] Release confidence gate** — **DONE S76**: added `scripts/release-confidence.mjs` plus `npm run verify:confidence` to unify public-intelligence generation, focused local browser verification, live header checks, and staging health.
+- [x] **[AUDIT] Expand local verification coverage** — **DONE S76**: added `tests/micro-feedback.spec.js`, introduced the focused `intelligence` local verify tier, and fixed the local-preview render/exposure loop so the changed intelligence surfaces now pass a scoped browser gate.
 
 ## Done (Session 74 visitor-intelligence + tooling)
 
@@ -52,15 +60,22 @@ Last updated: 2026-04-15 (Session 75 closeout)
 
 ## Now (S74 runway pre-load)
 
-- [ ] **[AUDIT] Expand local verification coverage** — the `core` and `extended` local tiers now exist, but this environment still timed out on a clean Playwright pass; finish real local/browser execution once the runtime issue is cleared.
+- [x] **[AUDIT] Expand local verification coverage** — **DONE S76**: the focused `intelligence` tier, `tests/micro-feedback.spec.js`, and the `noteExposure()` loop fix now provide a clean scoped browser-confidence path on the changed pages.
 - [x] **[SIL] Conversion telemetry matrix** — **DONE S75**: the shared intent-state spine now feeds pathway-aware/stage-aware telemetry and visible conversion-read surfaces on homepage, membership, and VaultSparked.
 - [x] **[SIL] Trust-depth module for conversion pages** — **DONE S75**: reusable proof/next-step/hesitation/founder-promise blocks now render on homepage, membership, and VaultSparked.
 - [ ] **[SIL:2⛔] Genius Hit List as scheduled audit** — still open; elevate it into the next working session if no other blocked dependency clears first.
 
-## Next (Session 76 leverage)
+## Now (Session 77 leverage)
 
-- [ ] **[SIL] Release confidence gate** — unify local/staging/live verification into one honest command so Session 75’s shared intelligence surfaces have one reliable browser-confidence read before future pushes.
-- [ ] **[SIL] Micro-feedback engine** — add tiny “was this useful / what stopped you / what were you looking for” prompts on key conversion pages and feed the answers into Studio Ops/public-safe summaries.
+- [ ] **[GENIUS][STABILITY] Broader local browser-suite stabilization** — the scoped intelligence gate is green, but the broader local Playwright suite still shows some first-attempt flake under heavier parallel Chromium load; stabilize retries/timeouts so the full browser verify path is consistently clean.
+- [ ] **[GENIUS][CONVERSION] Premium proof/depth pass** — deepen homepage, membership, and VaultSparked conviction with stronger outcomes, objection handling, and “what happens next” clarity now that the feedback loop exists.
+- [ ] **[GENIUS][COHESION] World gravity system** — connect games, lore, changelog, and membership surfaces more aggressively so world-specific discovery compounds instead of resetting at each page.
+
+## Next (Session 77+)
+
+- [ ] **[SIL:2⛔] Genius Hit List as scheduled audit** — keep running the ranked combined-audit pass periodically so the website does not slip back into piecemeal iteration.
+- [ ] **[OPS] Annual Stripe activation once keys exist** — replace the annual placeholder path only after the real Stripe annual plan keys are created.
+- [ ] **[OPS] CF Worker automation unblock** — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth.
 
 ## Now (S69 runway pre-load)
 

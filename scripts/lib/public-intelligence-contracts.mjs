@@ -95,6 +95,12 @@ export async function buildPublicContracts(runtimePack, projectStatus, pulse, ca
       nextMilestone: projectStatus.nextMilestone,
       pulseKeys: ['now', 'next', 'shipped'],
     },
+    feedbackSignals: {
+      mode: 'browser-local-public-safe',
+      prompts: ['goal', 'blocker', 'usefulness'],
+      outputFields: ['topGoal', 'topBlocker', 'topUsefulness', 'totalResponses'],
+      surfaces: ['/', '/membership/', '/vaultsparked/', '/join/', '/invite/', '/studio-pulse/'],
+    },
     socialPresence: {
       summary: socialSummary,
       featuredAccounts,
@@ -158,6 +164,11 @@ export async function buildPublicContracts(runtimePack, projectStatus, pulse, ca
       summary: socialSummary,
       featuredAccounts,
     },
+    feedbackSignals: {
+      mode: 'browser-local-public-safe',
+      source: '/api/public-intelligence.json',
+      summaryFields: ['topGoal', 'topBlocker', 'topUsefulness', 'totalResponses'],
+    },
   };
 
   const socialDashboard = {
@@ -200,6 +211,10 @@ export async function buildPublicContracts(runtimePack, projectStatus, pulse, ca
       publicIntelEndpoint: '/api/public-intelligence.json',
       stageTelemetryEnabled: true,
       entryPaths: ['/join/', '/invite/', '/membership/', '/vaultsparked/', '/contact/'],
+    },
+    feedbackSignals: {
+      mode: 'browser-local-public-safe',
+      summaryFields: ['topGoal', 'topBlocker', 'topUsefulness', 'totalResponses'],
     },
   };
 

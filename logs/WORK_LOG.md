@@ -1,5 +1,24 @@
 # Work Log
 
+## 2026-04-16 — Session 76 (feedback loop + release confidence)
+
+- assets/micro-feedback.js: created shared browser-local micro-feedback module for goal/blocker/usefulness capture and local summary rendering
+- index.html + membership/index.html + vaultsparked/index.html + join/index.html + invite/index.html + studio-pulse/index.html + assets/style.css + sw.js: wired/styled the new shared feedback surface across the main public conversion pages and bumped the service-worker cache
+- assets/public-intelligence.js + assets/telemetry-matrix.js + assets/trust-depth.js: upgraded shared intelligence/trust surfaces so feedback summaries can enrich runtime reads
+- scripts/generate-public-intelligence.mjs + scripts/lib/public-intelligence-contracts.mjs + api/public-intelligence.json + context/contracts/*.json: extended the public-safe payload/contracts so feedback rollups can bridge into website/Hub/social-dashboard surfaces
+- assets/adaptive-cta.js + assets/pathways-router.js + assets/network-spine.js: added stronger hesitation-aware/adaptive narrative behavior
+- scripts/release-confidence.mjs: created scoped release-confidence gate
+- scripts/run-local-browser-verify.mjs + tests/micro-feedback.spec.js + package.json: added focused `intelligence` verify tier support, dedicated micro-feedback coverage, and `npm run verify:confidence`
+- assets/intent-state.js: fixed the real local-preview blocker by preventing `noteExposure()` from emitting shared change events and causing rerender/exposure loops on heavy pages
+- Verification:
+  - `node --check assets/micro-feedback.js assets/intent-state.js assets/adaptive-cta.js assets/pathways-router.js assets/network-spine.js assets/public-intelligence.js assets/telemetry-matrix.js assets/trust-depth.js scripts/release-confidence.mjs scripts/run-local-browser-verify.mjs` → passed
+  - `node scripts/generate-public-intelligence.mjs` → passed
+  - `node scripts/run-local-browser-verify.mjs tests/micro-feedback.spec.js` → passed
+  - `node scripts/verify-live-headers.mjs` → passed
+  - `Invoke-WebRequest https://website.staging.vaultsparkstudios.com` → HTTP 200
+  - `node scripts/release-confidence.mjs` → passed
+- Closeout: full Studio OS write-back completed; generated truth refreshed; repo committed and pushed to `main`; no production runtime deploy performed
+
 ## 2026-04-15 — Session 75 (shared intelligence conversion layer)
 
 - docs/GENIUS_LIST.md: created the ranked Genius Hit List and turned the audit output into repo truth

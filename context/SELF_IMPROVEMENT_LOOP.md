@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▆▆▇▇
-Avgs — 3: 451.3 | 5: 445.8 | 10: 444.8 | 25: 436.3 | all: 428.1
-  └ 3-session: Dev 91.0 | Align 89.0 | Momentum 85.3 | Engage 90.0 | Process 96.0
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~5.1 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-15 | Session 75 | Total: 461/500 | Velocity: 4 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▆▇▇█
+Avgs — 3: 460.0 | 5: 450.8 | 10: 448.6 | 25: 438.0 | all: 431.8
+  └ 3-session: Dev 93.0 | Align 90.7 | Momentum 89.0 | Engage 92.0 | Process 96.3
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
+Momentum runway: ~4.7 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-16 | Session 76 | Total: 472/500 | Velocity: 5 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,30 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-16 — Session 76 | Total: 472/500 | Velocity: 5 | Debt: ↓
+Avgs — 3: 460.0 | 5: 450.8 | 10: 448.6 | 25: 438.0 | all: 431.8
+  └ 3-session: Dev 93.0 | Align 90.7 | Momentum 89.0 | Engage 92.0 | Process 96.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 95 | ↑ | Real runtime blocker was fixed, focused browser verification is now green, and the release-confidence gate made the changed surface genuinely testable |
+| Creative Alignment | 92 | ↑ | The website feels more like an adaptive studio system instead of a smart brochure; feedback and guidance now reinforce the same brand language |
+| Momentum | 94 | ↑ | Velocity 5 with the feedback loop, release gate, runtime fix, and adaptive layer all closed in one session |
+| Engagement | 94 | ↑ | Direct user feedback capture finally exists on the core public surfaces, materially improving loop health |
+| Process Quality | 97 | ↑ | Full write-back, generated-truth refresh, confidence verification, and commit-ready closeout all completed cleanly |
+| **Total** | **472/500** | ↑ | |
+
+**Top win:** The site can now learn directly from users and ship changed intelligence surfaces behind one honest release-confidence gate.
+**Top gap:** The broader local browser suite still has some first-attempt flake under heavier Chromium load.
+**Intent outcome:** Achieved — the feedback loop, adaptive guidance, runtime unblock, and scoped release-confidence gate all shipped end-to-end in one session
+
+**Brainstorm**
+1. **Broader-suite stabilization** — make the full local Playwright path boring by tuning retries/timeouts and reducing shared-state test coupling. First step: isolate the flaky intelligence pages under parallel load and compare trace timing. High probability.
+2. **Premium proof/depth pass** — turn new feedback signals into stronger conversion proof and objection handling on homepage, membership, and VaultSparked. First step: map the top blocker answers to 3 reusable trust modules. High probability.
+3. **World gravity system** — use the same intent/feedback spine to connect games, lore, changelog, and membership surfaces more aggressively. First step: add world-affinity-weighted related rails on the top game and universe pages. Medium probability.
+
+**Committed to TASK_BOARD:** [GENIUS][STABILITY] Broader local browser-suite stabilization · [GENIUS][CONVERSION] Premium proof/depth pass
 
 ## 2026-04-15 — Session 75 | Total: 461/500 | Velocity: 4 | Debt: ↓
 Avgs — 3: 451.3 | 5: 445.8 | 10: 444.8 | 25: 436.3 | all: 428.1

@@ -2,6 +2,27 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-16 — Public micro-feedback should ship browser-local and public-safe before any backend capture layer (Session 76)
+
+- Status: active
+- Decision: the first direct feedback loop is implemented as a browser-local, public-safe shared module (`assets/micro-feedback.js`) that captures goal, blocker, and usefulness signals on key public pages and feeds summary reads back into the site/runtime layer.
+- Why: the site needed real user feedback immediately, but this repo is a static public website and should not invent a rushed backend/PII surface just to start learning. Local-first capture gives fast product signal, keeps the feature safe for a public repo, and provides a clean contract shape for future Studio Ops ingestion.
+- Maintenance rule: any future server-side feedback sink should preserve the current public-safe schema and should not replace the shared client module with page-local ad hoc prompts.
+
+### 2026-04-16 — Release confidence should default to a scoped intelligence tier, not the entire browser suite (Session 76)
+
+- Status: active
+- Decision: `scripts/release-confidence.mjs` now defaults local browser verification to the focused `intelligence` tier rather than the broader full-suite path.
+- Why: this session changed the shared intelligence/conversion surfaces directly, and the right delivery gate was the changed-surface path plus live headers and staging health. Waiting on the entire local suite would have made the release signal noisier without improving truth for the actual risk surface.
+- Maintenance rule: widen the default confidence gate only when the broader suite is stable enough to be boring; changed-surface confidence should stay fast and honest.
+
+### 2026-04-16 — Exposure tracking must not emit intent-state change events (Session 76)
+
+- Status: active
+- Decision: `assets/intent-state.js` no longer emits a `vs:intent-state-change` event from `noteExposure()`.
+- Why: on heavier pages the telemetry/trust/network surfaces were rerendering in response to exposure changes, immediately re-noting exposure, and creating a loop that blocked local-preview verification. Exposure is useful for intelligence and confidence modeling, but it is not itself a UI-state change that should trigger surface rerenders.
+- Maintenance rule: only emit shared intent-state change events for meaningful visitor-state updates that should legitimately cause visible rerendering.
+
 ### 2026-04-15 — Public visitor-state should be inferred once and shared across all conversion surfaces (Session 75)
 
 - Status: active

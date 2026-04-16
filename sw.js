@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-20260416-f63bbbb';
+const CACHE_NAME = 'vaultspark-20260416-feedback-c6b2db5';
 const MAX_PAGE_ENTRIES = 60;
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const STATIC_ASSETS = [
@@ -32,6 +32,7 @@ const STATIC_ASSETS = [
   '/assets/telemetry-matrix.js',
   '/assets/trust-depth.js',
   '/assets/network-spine.js',
+  '/assets/micro-feedback.js',
   '/assets/pathways-router.js',
   '/assets/related-content.js',
   '/assets/membership-stats.js',

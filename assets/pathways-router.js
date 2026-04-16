@@ -123,11 +123,47 @@
     return sessionLine + ' · ' + proofBits.slice(0, 3).join(' · ');
   }
 
+  function personalizeCards(cards, state, intel) {
+    var feedback = intel && intel.feedback && intel.feedback.localSummary ? intel.feedback.localSummary : null;
+
+    return cards.map(function (item) {
+      var next = Object.assign({}, item);
+
+      if (state.hesitation_signal === 'need_proof' && item.key === 'investor') {
+        next.title = 'I need proof before I commit';
+        next.summary = 'Start with live operating signals, current focus, shipped work, and confidence surfaces before any deeper ask.';
+        next.proof = 'Best first stop: Studio Pulse and recent shipped signals.';
+        next.cta = 'See Proof First';
+      }
+
+      if (state.hesitation_signal === 'want_gameplay' && item.key === 'player') {
+        next.title = 'I want the strongest playable proof';
+        next.summary = 'Skip explanation-heavy surfaces and go straight to the live games, progression signal, and worlds already in motion.';
+        next.proof = 'Best first stop: playable games and rank-carrying identity.';
+        next.cta = 'Open Live Games';
+      }
+
+      if (feedback && feedback.topGoal && feedback.topGoal.key === 'track_progress' && item.key === 'investor') {
+        next.title = 'I want to track what is actually shipping';
+        next.summary = 'Use the operating path first. Pulse, changelog, and network surfaces now form one visibility layer.';
+        next.proof = 'Best first stop: Studio Pulse, changelog, and network spine.';
+        next.cta = 'Track Progress';
+      }
+
+      if (state.intent === 'lore' && item.key === 'lore') {
+        next.summary = 'Enter through the archive, signal logs, and world surfaces first. The vault should earn identity and support through atmosphere and gravity.';
+      }
+
+      return next;
+    });
+  }
+
   function renderRoot(root, intel) {
     var context = inferContext(root);
     var limit = Number(root.dataset.pathwaysLimit || 3);
     var selected = getSelection();
-    var cards = getCards(context, limit);
+    var state = window.VSIntentState ? window.VSIntentState.getState() : {};
+    var cards = personalizeCards(getCards(context, limit), state, intel);
     var note = buildContextNote(intel, context);
 
     root.innerHTML =

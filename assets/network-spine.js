@@ -65,6 +65,7 @@
     var state = window.VSIntentState ? window.VSIntentState.getState() : {};
     var links = featuredLinks(context, intel);
     var bridgeSummary = [];
+    var focusCopy = 'This is the connective tissue. Freshness, labels, links, and public-safe truth are now meant to feel like one network instead of parallel tools.';
 
     if (bridges && bridges.studioHub && bridges.studioHub.enabled) {
       bridgeSummary.push('Studio Hub: ' + bridges.studioHub.mode);
@@ -76,12 +77,20 @@
       bridgeSummary.push(intel.social.summary.trackedAccounts + ' tracked accounts');
     }
 
+    if (state.hesitation_signal === 'need_proof') {
+      focusCopy = 'The strongest hesitation signal is proof. This network layer exists to show that the website, pulse, repo, and social surfaces are all reporting from the same operating spine.';
+    } else if (state.intent === 'investor') {
+      focusCopy = 'Your current read looks analytical. Use this network to trace live status, code, public pulse, and cross-channel presence before you trust any single surface.';
+    } else if (state.intent === 'lore') {
+      focusCopy = 'Your current read looks world-first. This network is here to prove the archive, studio pulse, and public surfaces belong to the same living system.';
+    }
+
     root.innerHTML =
       '<div class="network-spine-shell">' +
         '<div class="network-spine-head">' +
           '<p class="network-spine-kicker">Vault Network</p>' +
           '<h3 class="network-spine-title">One operating spine across website, pulse, hub, and social surfaces.</h3>' +
-          '<p class="network-spine-copy">This is the connective tissue. Freshness, labels, links, and public-safe truth are now meant to feel like one network instead of parallel tools.</p>' +
+          '<p class="network-spine-copy">' + focusCopy + '</p>' +
         '</div>' +
         '<div class="network-spine-meta">' +
           '<span class="network-spine-badge">Session ' + (intel && intel.project ? intel.project.currentSession : '—') + '</span>' +

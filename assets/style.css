@@ -3161,7 +3161,8 @@ body.light-mode .feedback-panel {
 }
 .telemetry-matrix-shell,
 .trust-depth-shell,
-.network-spine-shell {
+.network-spine-shell,
+.micro-feedback-shell {
   border-radius: 28px;
   border: 1px solid rgba(255,255,255,0.08);
   background:
@@ -3172,14 +3173,17 @@ body.light-mode .feedback-panel {
 }
 .telemetry-matrix-head,
 .trust-depth-head,
-.network-spine-head {
+.network-spine-head,
+.micro-feedback-head {
   margin-bottom: 1rem;
 }
 .telemetry-matrix-kicker,
 .trust-depth-kicker,
 .network-spine-kicker,
 .telemetry-card-label,
-.trust-depth-label {
+.trust-depth-label,
+.micro-feedback-kicker,
+.micro-feedback-label {
   display: inline-flex;
   align-items: center;
   font-size: 0.72rem;
@@ -3190,7 +3194,8 @@ body.light-mode .feedback-panel {
 }
 .telemetry-matrix-title,
 .trust-depth-title,
-.network-spine-title {
+.network-spine-title,
+.micro-feedback-title {
   margin: 0.4rem 0 0.55rem;
   font-family: Georgia, "Times New Roman", serif;
   font-size: clamp(1.35rem, 3vw, 2rem);
@@ -3198,7 +3203,8 @@ body.light-mode .feedback-panel {
 }
 .telemetry-matrix-copy,
 .trust-depth-copy,
-.network-spine-copy {
+.network-spine-copy,
+.micro-feedback-copy {
   margin: 0;
   color: var(--muted);
   line-height: 1.65;
@@ -3285,10 +3291,11 @@ body.light-mode .feedback-panel {
   gap: 1rem;
 }
 .trust-depth-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 .telemetry-card,
-.trust-depth-card {
+.trust-depth-card,
+.micro-feedback-summary-card {
   display: flex;
   flex-direction: column;
   gap: 0.7rem;
@@ -3302,13 +3309,15 @@ body.light-mode .feedback-panel {
   border-color: rgba(255,196,0,0.16);
 }
 .telemetry-card strong,
-.trust-depth-card strong {
+.trust-depth-card strong,
+.micro-feedback-summary-card strong {
   color: var(--text);
   font-size: 1rem;
   line-height: 1.4;
 }
 .telemetry-card p,
-.trust-depth-card p {
+.trust-depth-card p,
+.micro-feedback-summary-card p {
   margin: 0;
   color: var(--muted);
   font-size: 0.9rem;
@@ -3324,8 +3333,74 @@ body.light-mode .feedback-panel {
 }
 .telemetry-matrix,
 .trust-depth,
-.network-spine {
+.network-spine,
+.micro-feedback {
   padding: 2.5rem 0 0;
+}
+.micro-feedback-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.micro-feedback-summary-empty {
+  grid-column: 1 / -1;
+}
+.micro-feedback-form {
+  display: grid;
+  gap: 1rem;
+}
+.micro-feedback-group {
+  display: grid;
+  gap: 0.7rem;
+}
+.micro-feedback-question {
+  color: var(--text);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.micro-feedback-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+.micro-feedback-option,
+.micro-feedback-submit {
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  font: inherit;
+}
+.micro-feedback-option {
+  padding: 0.62rem 0.95rem;
+  cursor: pointer;
+  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+.micro-feedback-option:hover,
+.micro-feedback-option.is-active {
+  border-color: rgba(255,196,0,0.28);
+  background: rgba(255,196,0,0.08);
+  box-shadow: 0 10px 24px rgba(255,196,0,0.08);
+  transform: translateY(-1px);
+}
+.micro-feedback-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.micro-feedback-status {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.micro-feedback-submit {
+  padding: 0.72rem 1.2rem;
+  background: linear-gradient(135deg, rgba(255,196,0,0.2), rgba(31,162,255,0.12));
+  font-weight: 700;
+  cursor: pointer;
 }
 body.light-mode .vault-journey-shell,
 body.light-mode .related-rail-shell {
@@ -3342,7 +3417,8 @@ body.light-mode .related-rail-card {
 }
 body.light-mode .telemetry-matrix-shell,
 body.light-mode .trust-depth-shell,
-body.light-mode .network-spine-shell {
+body.light-mode .network-spine-shell,
+body.light-mode .micro-feedback-shell {
   background:
     linear-gradient(135deg, rgba(255,196,0,0.05), rgba(31,162,255,0.04)),
     rgba(255,251,245,0.92);
@@ -3351,12 +3427,19 @@ body.light-mode .network-spine-shell {
 }
 body.light-mode .telemetry-card,
 body.light-mode .trust-depth-card,
-body.light-mode .network-spine-card {
+body.light-mode .network-spine-card,
+body.light-mode .micro-feedback-summary-card {
   background: rgba(255,255,255,0.72);
+  border-color: rgba(22,32,51,0.08);
+}
+body.light-mode .micro-feedback-option,
+body.light-mode .micro-feedback-submit {
+  background: rgba(255,255,255,0.86);
   border-color: rgba(22,32,51,0.08);
 }
 @media (max-width: 980px) {
   .telemetry-matrix-grid,
+  .micro-feedback-summary,
   .vault-journey-grid,
   .related-rail-grid,
   .trust-depth-grid,

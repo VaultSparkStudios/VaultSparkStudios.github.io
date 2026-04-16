@@ -1,5 +1,7 @@
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
+import fs from 'node:fs';
+import path from 'node:path';
 
 const host = process.env.LOCAL_PREVIEW_HOST || '127.0.0.1';
 const port = process.env.LOCAL_PREVIEW_PORT || String(4300 + Math.floor(Math.random() * 400));
@@ -7,9 +9,16 @@ const baseUrl = `http://${host}:${port}`;
 const rawArgs = process.argv.slice(2);
 
 const TIERS = {
+  intelligence: [
+    'tests/computed-styles.spec.js',
+    'tests/intelligence-surfaces.spec.js',
+    'tests/micro-feedback.spec.js',
+    'tests/vaultsparked-csp.spec.js'
+  ],
   core: [
     'tests/computed-styles.spec.js',
     'tests/compliance-pages.spec.js',
+    'tests/micro-feedback.spec.js',
     'tests/navigation.spec.js',
     'tests/pages.spec.js',
     'tests/vaultsparked-csp.spec.js',
@@ -20,6 +29,7 @@ const TIERS = {
     'tests/compliance-pages.spec.js',
     'tests/navigation.spec.js',
     'tests/pages.spec.js',
+    'tests/micro-feedback.spec.js',
     'tests/games.spec.js',
     'tests/light-mode-screenshots.spec.js',
     'tests/responsive.spec.js',
@@ -55,10 +65,35 @@ function parseArgs(argv) {
 
 const testArgs = parseArgs(rawArgs);
 
+function resolvePlaywrightRunner() {
+  const localBin = process.platform === 'win32'
+    ? path.join(process.cwd(), 'node_modules', '.bin', 'playwright.cmd')
+    : path.join(process.cwd(), 'node_modules', '.bin', 'playwright');
+
+  if (fs.existsSync(localBin)) {
+    return {
+      command: localBin,
+      args: []
+    };
+  }
+
+  return {
+    command: 'npx',
+    args: ['playwright']
+  };
+}
+
 function run(command, commandArgs, extraEnv = {}) {
   return new Promise((resolve, reject) => {
     let child;
-    if (process.platform === 'win32' && (command === 'npm' || command === 'npx')) {
+    const isWindowsCmd = process.platform === 'win32' && (
+      command === 'npm' ||
+      command === 'npx' ||
+      /\.cmd$/i.test(command) ||
+      /\.bat$/i.test(command)
+    );
+
+    if (isWindowsCmd) {
       const commandLine = [command, ...commandArgs]
         .map((part) => (/[\s"]/).test(part) ? `"${part.replace(/"/g, '\\"')}"` : part)
         .join(' ');
@@ -120,7 +155,8 @@ async function main() {
 
   try {
     await waitForReady(server);
-    await run('npx', ['playwright', 'test', ...testArgs, '--project=chromium', '--reporter=list'], {
+    const runner = resolvePlaywrightRunner();
+    await run(runner.command, [...runner.args, 'test', ...testArgs, '--project=chromium', '--reporter=list'], {
       BASE_URL: baseUrl,
     });
   } finally {

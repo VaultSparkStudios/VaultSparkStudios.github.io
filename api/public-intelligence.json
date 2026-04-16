@@ -1,20 +1,20 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-04-16T03:16:49.436Z",
+  "generatedAt": "2026-04-16T17:35:48.363Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 75,
-    "lastUpdated": "2026-04-15",
-    "currentFocus": "Session 75 is closed out and pushed: the website now has a shared intent-state, telemetry matrix, trust-depth layer, and Vault Network spine across the main public conversion surfaces. The remaining focus is one clean browser verification pass plus deeper user-feedback and form-outcome loops.",
-    "nextMilestone": "Verify the new Session 75 surfaces in a real browser, ship the micro-feedback engine, and build the release-confidence gate while annual Stripe activation waits on the missing yearly plan keys.",
+    "currentSession": 76,
+    "lastUpdated": "2026-04-16",
+    "currentFocus": "Session 76 is closed out: the website now has shared browser-local micro-feedback, feedback-aware public-safe intelligence/trust surfaces, adaptive hesitation-aware personalization, and a scoped release-confidence gate that passes across local preview, live headers, and staging. The remaining focus is broader browser-suite stability and a deeper proof/objection-handling pass on the core conversion pages.",
+    "nextMilestone": "Stabilize the broader local browser suite, run the premium proof/depth pass on homepage + membership + VaultSparked, and keep annual activation parked behind the missing Stripe yearly plan keys.",
     "blockers": [
       "CF_WORKER_API_TOKEN missing, so Worker deploys still require local Wrangler auth",
       "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
-      "This environment still does not have one clean browser verification pass for the new Session 75 shared surfaces"
+      "The broader local browser suite still shows some first-attempt flaky timeouts under heavier parallel Chromium load"
     ],
     "ignis": {
       "score": 46489,
@@ -30,20 +30,21 @@
       "[GENIUS][COHESION] Vault Network Spine — DONE S75: added a shared `assets/network-spine.js` surface on homepage, membership, VaultSparked, and Studio Pulse so website, GitHub, Studio Hub/social-dashboard bridge state, and pulse surfaces now read as one network."
     ],
     "next": [
-      "[SIL] Release confidence gate — unify local/staging/live verification into one honest command so Session 75’s shared intelligence surfaces have one reliable browser-confidence read before future pushes.",
-      "[SIL] Micro-feedback engine — add tiny “was this useful / what stopped you / what were you looking for” prompts on key conversion pages and feed the answers into Studio Ops/public-safe summaries."
+      "[SIL:2⛔] Genius Hit List as scheduled audit — keep running the ranked combined-audit pass periodically so the website does not slip back into piecemeal iteration.",
+      "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
+      "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
     ],
     "shipped": [
-      "Shared visitor-state spine shipped — `assets/intent-state.js` now defines one visitor model for intent, confidence, journey stage, world affinity, trust, membership temperature, and returning status; `assets/pathways-router.js`, `assets/adaptive-cta.js`, `assets/related-content.js`, and `assets/funnel-tracking.js` were rewired to consume it.",
-      "Conversion telemetry matrix shipped — `assets/telemetry-matrix.js` now renders an explicit journey read and best-next-move on `/`, `/membership/`, and `/vaultsparked/` instead of leaving the intelligence layer invisible.",
-      "Trust-depth layer shipped — `assets/trust-depth.js` now adds shared proof/hesitation/founder-promise/what-happens-next modules on homepage, membership, and VaultSparked.",
-      "Vault Network spine shipped — `assets/network-spine.js` now connects homepage, membership, VaultSparked, and Studio Pulse to the same website/Studio Hub/social-dashboard bridge language and freshness cues.",
-      "`node --check assets/intent-state.js` → passed",
-      "`node --check assets/telemetry-matrix.js` → passed"
+      "Micro-feedback engine shipped — `assets/micro-feedback.js` now renders a shared public-safe goal/blocker/usefulness prompt on homepage, membership, VaultSparked, join, invite, and Studio Pulse; local summaries are visible immediately instead of disappearing into analytics.",
+      "Feedback-to-Ops bridge shipped — `scripts/generate-public-intelligence.mjs`, `scripts/lib/public-intelligence-contracts.mjs`, `assets/public-intelligence.js`, and the generated `context/contracts/*.json` / `api/public-intelligence.json` payloads now support feedback-summary enrichment for downstream website / Studio Hub / social-dashboard surfaces.",
+      "Adaptive narrative personalization shipped — `assets/adaptive-cta.js`, `assets/pathways-router.js`, and `assets/network-spine.js` now react more explicitly to hesitation states such as `need_proof`, `price_unsure`, `want_gameplay`, and progress-tracking member intent.",
+      "Release-confidence gate shipped — `scripts/release-confidence.mjs` plus `npm run verify:confidence` now unify public-intelligence generation, scoped local browser verification, live header verification, and staging health into one confidence report.",
+      "Local-preview runtime blocker fixed — `assets/intent-state.js` no longer emits change events from `noteExposure()`, which had been causing telemetry/trust/network rerenders to recursively re-note exposure on the heavier pages; the scoped local intelligence suite is now green.",
+      "`node --check assets/micro-feedback.js assets/intent-state.js assets/adaptive-cta.js assets/pathways-router.js assets/network-spine.js assets/public-intelligence.js assets/telemetry-matrix.js assets/trust-depth.js scripts/release-confidence.mjs scripts/run-local-browser-verify.mjs` → passed"
     ]
   },
   "stats": {
-    "sessionsCompleted": 75,
+    "sessionsCompleted": 76,
     "liveProjects": 3,
     "projectsInForge": 5,
     "activeEdgeFunctions": 16,
@@ -168,6 +169,29 @@
         }
       ]
     }
+  },
+  "feedback": {
+    "enabled": true,
+    "mode": "browser-local-public-safe",
+    "prompts": [
+      "goal",
+      "blocker",
+      "usefulness"
+    ],
+    "surfaces": [
+      "/",
+      "/membership/",
+      "/vaultsparked/",
+      "/join/",
+      "/invite/",
+      "/studio-pulse/"
+    ],
+    "summaryFields": [
+      "topGoal",
+      "topBlocker",
+      "topUsefulness",
+      "totalResponses"
+    ]
   },
   "social": {
     "summary": {

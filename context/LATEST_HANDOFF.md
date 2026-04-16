@@ -1,6 +1,48 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 75 closeout)
+Last updated: 2026-04-16 (Session 76 closeout)
+
+## Session Intent: Session 76
+Close the feedback loop, ship the release-confidence gate, fix the local-preview blocker, then complete full closeout through commit/push.
+
+## Where We Left Off (Session 76)
+- Shipped: 5 improvements across direct feedback capture, public-safe intelligence bridging, adaptive personalization, scoped release-confidence tooling, and runtime stabilization
+- Tests: `node --check` passed on changed shared modules; `node scripts/generate-public-intelligence.mjs` passed; `tests/micro-feedback.spec.js` passed locally; `node scripts/release-confidence.mjs` passed with local browser verify (`intelligence` tier), live headers, and staging health, though some broader-suite Playwright tests still needed retry under heavier local load
+- Deploy: committed and pushed to `main`; no production runtime deploy required
+
+### Shipped
+- **Micro-feedback engine shipped** — `assets/micro-feedback.js` now renders a shared public-safe goal/blocker/usefulness prompt on homepage, membership, VaultSparked, join, invite, and Studio Pulse; local summaries are visible immediately instead of disappearing into analytics.
+- **Feedback-to-Ops bridge shipped** — `scripts/generate-public-intelligence.mjs`, `scripts/lib/public-intelligence-contracts.mjs`, `assets/public-intelligence.js`, and the generated `context/contracts/*.json` / `api/public-intelligence.json` payloads now support feedback-summary enrichment for downstream website / Studio Hub / social-dashboard surfaces.
+- **Adaptive narrative personalization shipped** — `assets/adaptive-cta.js`, `assets/pathways-router.js`, and `assets/network-spine.js` now react more explicitly to hesitation states such as `need_proof`, `price_unsure`, `want_gameplay`, and progress-tracking member intent.
+- **Release-confidence gate shipped** — `scripts/release-confidence.mjs` plus `npm run verify:confidence` now unify public-intelligence generation, scoped local browser verification, live header verification, and staging health into one confidence report.
+- **Local-preview runtime blocker fixed** — `assets/intent-state.js` no longer emits change events from `noteExposure()`, which had been causing telemetry/trust/network rerenders to recursively re-note exposure on the heavier pages; the scoped local intelligence suite is now green.
+
+### Verification
+- `node --check assets/micro-feedback.js assets/intent-state.js assets/adaptive-cta.js assets/pathways-router.js assets/network-spine.js assets/public-intelligence.js assets/telemetry-matrix.js assets/trust-depth.js scripts/release-confidence.mjs scripts/run-local-browser-verify.mjs` → **passed**
+- `node scripts/generate-public-intelligence.mjs` → **passed**
+- `node scripts/run-local-browser-verify.mjs tests/micro-feedback.spec.js` → **passed**
+- `node scripts/verify-live-headers.mjs` → **passed**
+- `Invoke-WebRequest https://website.staging.vaultsparkstudios.com` → **HTTP 200**
+- `node scripts/release-confidence.mjs` → **passed**
+
+### Open carry-forward
+- **Broader-suite local browser stability still needs tightening** — the scoped intelligence tier is green, but the broader local Playwright load still shows some first-attempt flake and should be stabilized before calling the whole browser suite boring.
+- **Premium proof/depth is the next conversion multiplier** — the feedback loop now exists, so the next leverage point is deeper proof, outcomes, and objection handling on the core conversion pages.
+- **Annual Stripe activation remains human-blocked** — annual checkout still depends on the real annual Stripe plan keys.
+
+## Human Action Required
+
+- [ ] **[STRIPE-ANNUAL]** Create the annual Stripe price/plan keys so the annual checkout scaffolding can be activated for real.
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` in GitHub Actions secrets so future Worker deploys stop depending on local Wrangler auth.
+- [ ] **[WEB3FORMS]** Run a real browser submission for the public forms to confirm delivery.
+- [ ] **[WAF]** Confirm the Cloudflare WAF JS Challenge rule for CN/RU/HK is active.
+- [ ] **[BEACON]** Run the Studio Hub beacon setup and copy `.claude/beacon.env` here if active-session signaling is desired.
+
+## Recommended First Action Next Session
+
+1. **Stabilize the broader local browser suite** so the full Playwright path is as reliable as the new scoped intelligence gate.
+2. **Run the premium proof/depth pass** on homepage, membership, and VaultSparked using the new micro-feedback signals.
+3. **Keep annual activation parked behind the real Stripe keys** and only remove the honesty gate after the plans exist.
 
 ## Session Intent: Session 75
 Audit the live website, turn the Genius queue into repo truth, and implement the top shared intelligence/conversion/cohesion systems in one sprint.

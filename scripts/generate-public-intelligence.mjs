@@ -192,6 +192,13 @@ const payload = {
       github: contracts.websitePublic.surfaces.github,
     },
   },
+  feedback: {
+    enabled: true,
+    mode: 'browser-local-public-safe',
+    prompts: ['goal', 'blocker', 'usefulness'],
+    surfaces: ['/','/membership/','/vaultsparked/','/join/','/invite/','/studio-pulse/'],
+    summaryFields: ['topGoal', 'topBlocker', 'topUsefulness', 'totalResponses'],
+  },
   social: contracts.socialDashboard.socialPresence,
 };
 

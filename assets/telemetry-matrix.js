@@ -90,6 +90,7 @@
     var context = inferContext(root);
     var state = window.VSIntentState ? window.VSIntentState.getState() : {};
     var nextAction = nextActionFor(context, state);
+    var feedback = intel && intel.feedback && intel.feedback.localSummary ? intel.feedback.localSummary : null;
     var bridgeCopy = 'Generated from the same public-safe truth spine that feeds the website, Studio Hub, and social dashboard.';
     if (intel && intel.ecosystem && intel.ecosystem.bridges) {
       var enabled = [];
@@ -98,6 +99,10 @@
       if (enabled.length) {
         bridgeCopy = enabled.join(' + ') + ' read the same contract-backed operating signal, so this page is not making up its own story.';
       }
+    }
+    var feedbackCopy = 'No local feedback signal yet. The routing model is still running on observed intent and exposure only.';
+    if (feedback && feedback.totalResponses) {
+      feedbackCopy = 'Local feedback says the top friction is "' + (feedback.topBlocker ? feedback.topBlocker.label : 'unclear') + '" and the strongest interest is "' + (feedback.topGoal ? feedback.topGoal.label : 'exploration') + '".';
     }
 
     root.innerHTML =
@@ -112,6 +117,7 @@
           '<span class="telemetry-badge">' + state.journey_stage + ' stage</span>' +
           '<span class="telemetry-badge">' + state.trust_level + ' trust</span>' +
           '<span class="telemetry-badge">' + state.returning_status + ' visitor</span>' +
+          '<span class="telemetry-badge">' + (state.feedback_count || 0) + ' feedback signals</span>' +
         '</div>' +
         '<div class="telemetry-matrix-grid">' +
           '<article class="telemetry-card telemetry-card-primary">' +
@@ -130,6 +136,11 @@
             '<strong>One truth source across the network</strong>' +
             '<p>' + bridgeCopy + '</p>' +
           '</article>' +
+          '<article class="telemetry-card">' +
+            '<span class="telemetry-card-label">Feedback Loop</span>' +
+            '<strong>Real hesitation is now a live input.</strong>' +
+            '<p>' + feedbackCopy + '</p>' +
+          '</article>' +
         '</div>' +
       '</div>';
 
@@ -142,19 +153,18 @@
     var roots = document.querySelectorAll('[data-telemetry-matrix]');
     if (!roots.length) return;
 
-    window.VSPublicIntel.get().then(function (intel) {
-      roots.forEach(function (root) {
-        renderRoot(root, intel);
-      });
-    });
-
-    document.addEventListener('vs:intent-state-change', function () {
+    function rerender() {
       window.VSPublicIntel.get().then(function (intel) {
         roots.forEach(function (root) {
           renderRoot(root, intel);
         });
       });
-    });
+    }
+
+    rerender();
+
+    document.addEventListener('vs:intent-state-change', rerender);
+    document.addEventListener('vs:feedback-change', rerender);
   }
 
   document.addEventListener('DOMContentLoaded', init);

@@ -70,6 +70,44 @@
     return null;
   }
 
+  function applyHesitationConfig(mode, state) {
+    if (!state.hesitation_signal) return null;
+
+    if (state.hesitation_signal === 'need_proof' && mode === 'membership') {
+      return {
+        href: '/studio-pulse/',
+        label: 'See Live Proof First',
+        note: 'Your latest friction signal says you need more proof before committing. Read the live operating surface, then come back to pricing.'
+      };
+    }
+
+    if (state.hesitation_signal === 'not_clear' && mode === 'account') {
+      return {
+        href: '/membership/',
+        label: 'See How Membership Works',
+        note: 'The current signal says the path is not clear enough yet. Start with the identity layer explainer before creating the account.'
+      };
+    }
+
+    if (state.hesitation_signal === 'want_gameplay' && mode === 'membership') {
+      return {
+        href: '/games/',
+        label: 'See The Live Games First',
+        note: 'The current hesitation signal is product depth. Follow the playable surfaces first, then come back if the worlds earn deeper support.'
+      };
+    }
+
+    if (state.hesitation_signal === 'price_unsure' && mode === 'membership') {
+      return {
+        href: '/vault-member/#register',
+        label: 'Start Free Before Paying',
+        note: 'The price signal is still cold. The safest path is free identity, then paid depth only if the vault keeps proving itself.'
+      };
+    }
+
+    return null;
+  }
+
   function applyConfig(element, config) {
     if (!element || !config) return;
     if (config.href) element.setAttribute('href', config.href);
@@ -128,8 +166,16 @@
           label: 'See Live Pricing',
           note: 'You have already shown membership intent. The fastest next step is comparing the live tiers.'
         });
+        var hesitationConfig = applyHesitationConfig(mode, state);
+        if (hesitationConfig) applyConfig(element, hesitationConfig);
         var pathwayConfig = applyPathwayConfig(mode, state);
         if (pathwayConfig) applyConfig(element, pathwayConfig);
+        return;
+      }
+
+      var hesitationConfig = applyHesitationConfig(mode, state);
+      if (hesitationConfig) {
+        applyConfig(element, hesitationConfig);
         return;
       }
 

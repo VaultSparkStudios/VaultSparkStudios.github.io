@@ -14,6 +14,7 @@
     var freshShipCount = intel && intel.pulse && intel.pulse.shipped ? intel.pulse.shipped.length : 0;
     var activeEdges = intel && intel.stats ? intel.stats.activeEdgeFunctions : 0;
     var trackedAccounts = intel && intel.social && intel.social.summary ? intel.social.summary.trackedAccounts : 0;
+    var feedback = intel && intel.feedback && intel.feedback.localSummary ? intel.feedback.localSummary : null;
 
     var whyReal = {
       label: 'Why This Is Real',
@@ -33,6 +34,14 @@
       copy: 'If conviction is still forming, the vault supports that. Use the free identity, read the live pulse, or follow the universe surfaces first. Nothing here requires blind faith.'
     };
 
+    var friction = {
+      label: 'Current Friction',
+      title: 'The strongest local hesitation signal is visible now.',
+      copy: feedback && feedback.topBlocker
+        ? 'Recent local feedback most often points to "' + feedback.topBlocker.label + '". This is now treated as a design problem, not just a user problem.'
+        : 'No local blocker pattern has been captured yet, so this layer is still leading with inferred hesitation rather than direct feedback.'
+    };
+
     if (context === 'vaultsparked') {
       next.copy = state.membership_temperature === 'hot'
         ? 'You are already showing purchase intent. The remaining question is whether Sparked or Eternal better matches how directly you want to back the studio.'
@@ -46,7 +55,11 @@
       hesitation.copy = 'If you are still deciding whether the vault is for you, follow the universe, journal, and pulse surfaces. The system is designed to let conviction build gradually.';
     }
 
-    return [whyReal, next, hesitation, {
+    if (feedback && feedback.topGoal && feedback.topGoal.key === 'track_progress') {
+      next.copy = 'The strongest local interest is progress visibility. Studio Pulse, changelog, and the network surfaces should now read like one operating console instead of loose updates.';
+    }
+
+    return [whyReal, next, hesitation, friction, {
       label: 'Founder Promise',
       title: 'The site is trying to feel earned, not generic.',
       copy: 'VaultSpark is treating branding, proof, operations, and community identity as one system. ' + trackedAccounts + ' tracked social/account surfaces and the Studio OS bridge exist to keep that promise coherent.'
@@ -63,7 +76,7 @@
         '<div class="trust-depth-head">' +
           '<p class="trust-depth-kicker">Trust Depth</p>' +
           '<h3 class="trust-depth-title">Reduce hesitation without flattening the brand.</h3>' +
-          '<p class="trust-depth-copy">This layer is here to answer the quiet questions: is this real, what happens next, and what is the safest way to move forward?</p>' +
+          '<p class="trust-depth-copy">This layer is here to answer the quiet questions: is this real, what happens next, what is the safest way to move forward, and what is still causing friction.</p>' +
         '</div>' +
         '<div class="trust-depth-grid">' +
           modules.map(function (item) {
@@ -85,19 +98,18 @@
     var roots = document.querySelectorAll('[data-trust-depth-root]');
     if (!roots.length) return;
 
-    window.VSPublicIntel.get().then(function (intel) {
-      roots.forEach(function (root) {
-        renderRoot(root, intel);
-      });
-    });
-
-    document.addEventListener('vs:intent-state-change', function () {
+    function rerender() {
       window.VSPublicIntel.get().then(function (intel) {
         roots.forEach(function (root) {
           renderRoot(root, intel);
         });
       });
-    });
+    }
+
+    rerender();
+
+    document.addEventListener('vs:intent-state-change', rerender);
+    document.addEventListener('vs:feedback-change', rerender);
   }
 
   document.addEventListener('DOMContentLoaded', init);

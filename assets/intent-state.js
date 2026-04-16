@@ -7,7 +7,8 @@
     worldAffinity: 'vs_world_affinity',
     visitCount: 'vs_visit_count',
     lastPath: 'vs_last_path',
-    exposures: 'vs_intent_exposures'
+    exposures: 'vs_intent_exposures',
+    feedback: 'vs_micro_feedback_v1'
   };
   var SESSION_KEYS = ['sb-fjnpzjjyhnpmunfoycrp-auth-token', 'supabase.auth.token'];
   var SESSION_MARK = 'vs_intent_visit_mark';
@@ -90,13 +91,35 @@
     return 'early';
   }
 
-  function inferConfidence(pathway, baseIntent, membershipIntent, loggedIn, exposureCount) {
+  function readFeedbackSummary() {
+    var feedback = safeGetJson(STORAGE_KEYS.feedback, []);
+    return feedback.reduce(function (summary, entry) {
+      if (!entry || typeof entry !== 'object') return summary;
+      summary.count += 1;
+      if (entry.usefulness === 'useful') summary.useful += 1;
+      if (entry.blocker) {
+        summary.lastBlocker = entry.blocker;
+        summary.blockers[entry.blocker] = Number(summary.blockers[entry.blocker] || 0) + 1;
+      }
+      return summary;
+    }, {
+      count: 0,
+      useful: 0,
+      lastBlocker: '',
+      blockers: {}
+    });
+  }
+
+  function inferConfidence(pathway, baseIntent, membershipIntent, loggedIn, exposureCount, feedbackSummary) {
     var score = 0;
     if (loggedIn) score += 45;
     if (pathway) score += 25;
     if (membershipIntent) score += 15;
     if (baseIntent) score += 10;
     score += Math.min(15, exposureCount * 3);
+    if (feedbackSummary.useful) score += Math.min(8, feedbackSummary.useful * 2);
+    if (feedbackSummary.lastBlocker === 'not_clear' || feedbackSummary.lastBlocker === 'need_proof') score -= 6;
+    if (feedbackSummary.lastBlocker === 'price_unsure') score -= 4;
     return Math.min(95, score);
   }
 
@@ -117,10 +140,11 @@
     var visitCount = Number(safeGet(STORAGE_KEYS.visitCount) || 1);
     var exposureCount = readExposureCount();
     var loggedIn = !!session;
+    var feedbackSummary = readFeedbackSummary();
 
     return {
       intent: intent,
-      confidence: inferConfidence(pathway, baseIntent, membershipIntent, loggedIn, exposureCount),
+      confidence: inferConfidence(pathway, baseIntent, membershipIntent, loggedIn, exposureCount, feedbackSummary),
       journey_stage: inferJourneyStage(path, loggedIn, membershipIntent),
       world_affinity: safeGet(STORAGE_KEYS.worldAffinity) || inferBaseIntent(path) || 'general',
       trust_level: inferTrustLevel(visitCount, exposureCount, loggedIn),
@@ -132,6 +156,8 @@
       pathway: pathway,
       visit_count: visitCount,
       exposure_count: exposureCount,
+      feedback_count: feedbackSummary.count,
+      hesitation_signal: feedbackSummary.lastBlocker || '',
       current_path: path,
       session: session
     };
@@ -159,7 +185,6 @@
     var exposures = safeGetJson(STORAGE_KEYS.exposures, {});
     exposures[name] = Number(exposures[name] || 0) + 1;
     safeSetJson(STORAGE_KEYS.exposures, exposures);
-    emitChange();
   }
 
   function setPathway(pathway) {
