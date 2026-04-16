@@ -7,7 +7,7 @@
   // ── Public Supabase client (anon, no auth needed for phase reads) ──
   var VSPublic = supabase.createClient(
     'https://fjnpzjjyhnpmunfoycrp.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqbnB6amp5aG5wbXVuZm95Y3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI5MDYxOTcsImV4cCI6MjA1ODQ4MjE5N30.kCTCm73J0AeN0-hTlZ98ZEL7kdZ7YbKSnJVt35lGCeQ'
+    'sb_publishable_thM93D_GVKW5qzAiZpNl1w_AVGILCij'
   );
 
   // ── Toast helper ────────────────────────────────────────────────────
