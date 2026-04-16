@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 74 closeout)
+Last updated: 2026-04-15 (Session 75 closeout)
 
 ## Done (Session 74 visitor-intelligence + tooling)
 
@@ -11,6 +11,13 @@ Last updated: 2026-04-15 (Session 74 closeout)
 - [x] **[SIL] Startup snapshot helper** — added `scripts/startup-snapshot.mjs` plus `npm run startup:snapshot`; `prompts/start.md` now explicitly recognizes the helper as a deterministic startup aid.
 - [x] **[SIL] Local verify full-suite baseline** — `scripts/run-local-browser-verify.mjs` now supports `core` and `extended` tiers; `tests/intelligence-surfaces.spec.js` was added to cover the new pathway and related rails.
 - [x] **[AUDIT] Annual routing honesty gate** — VaultSparked annual pricing now truthfully degrades: annual display stays visible, but checkout blocks with a clear message until the real annual Stripe plan keys exist.
+
+## Now (Session 75 Genius queue)
+
+- [x] **[GENIUS][INTELLIGENCE] Vault Intent Graph** — **DONE S75**: shipped `assets/intent-state.js` and rewired pathways, adaptive CTAs, related rails, and funnel payloads to read one shared visitor-state model instead of maintaining separate intent logic.
+- [x] **[GENIUS][FEEDBACK] Conversion Telemetry Matrix** — **DONE S75**: expanded telemetry with pathway-aware/stage-aware payload fields and shipped a visible telemetry matrix surface on `/`, `/membership/`, and `/vaultsparked/` so the current journey read and best-next-move are explicit.
+- [x] **[GENIUS][CONVERSION] Trust Depth Layer** — **DONE S75**: added reusable trust-depth modules on `/`, `/membership/`, and `/vaultsparked/` covering proof, next-step framing, hesitation handling, and founder-promise language.
+- [x] **[GENIUS][COHESION] Vault Network Spine** — **DONE S75**: added a shared `assets/network-spine.js` surface on homepage, membership, VaultSparked, and Studio Pulse so website, GitHub, Studio Hub/social-dashboard bridge state, and pulse surfaces now read as one network.
 
 ## Done (S73 signal cleanup)
 
@@ -46,9 +53,14 @@ Last updated: 2026-04-15 (Session 74 closeout)
 ## Now (S74 runway pre-load)
 
 - [ ] **[AUDIT] Expand local verification coverage** — the `core` and `extended` local tiers now exist, but this environment still timed out on a clean Playwright pass; finish real local/browser execution once the runtime issue is cleared.
-- [ ] **[SIL] Conversion telemetry matrix** — extend the new pathway layer into shared stage-by-stage journey/form reporting so homepage, join, contact, invite, membership, and VaultSparked expose where intent strengthens or leaks.
-- [ ] **[SIL] Trust-depth module for conversion pages** — add reusable proof/outcome/objection-handling blocks so homepage, membership, and VaultSparked deepen trust on top of the new pathway rails.
+- [x] **[SIL] Conversion telemetry matrix** — **DONE S75**: the shared intent-state spine now feeds pathway-aware/stage-aware telemetry and visible conversion-read surfaces on homepage, membership, and VaultSparked.
+- [x] **[SIL] Trust-depth module for conversion pages** — **DONE S75**: reusable proof/next-step/hesitation/founder-promise blocks now render on homepage, membership, and VaultSparked.
 - [ ] **[SIL:2⛔] Genius Hit List as scheduled audit** — still open; elevate it into the next working session if no other blocked dependency clears first.
+
+## Next (Session 76 leverage)
+
+- [ ] **[SIL] Release confidence gate** — unify local/staging/live verification into one honest command so Session 75’s shared intelligence surfaces have one reliable browser-confidence read before future pushes.
+- [ ] **[SIL] Micro-feedback engine** — add tiny “was this useful / what stopped you / what were you looking for” prompts on key conversion pages and feed the answers into Studio Ops/public-safe summaries.
 
 ## Now (S69 runway pre-load)
 

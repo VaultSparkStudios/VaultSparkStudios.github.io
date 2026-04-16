@@ -86,14 +86,12 @@
   }
 
   function selectedPathwayKey() {
-    try {
-      var selected = window.localStorage.getItem('vs_entry_pathway');
-      if (selected === 'lore') return 'universe';
-      if (selected === 'player') return 'games';
-      if (selected === 'supporter') return 'vaultsparked';
-      if (selected === 'member') return 'vaultmember';
-      if (selected === 'investor') return 'studiopulse';
-    } catch (_) {}
+    var selected = window.VSIntentState ? window.VSIntentState.getState().pathway : null;
+    if (selected === 'lore') return 'universe';
+    if (selected === 'player') return 'games';
+    if (selected === 'supporter') return 'vaultsparked';
+    if (selected === 'member') return 'vaultmember';
+    if (selected === 'investor') return 'studiopulse';
     return null;
   }
 
@@ -139,7 +137,7 @@
     if (!roots.length) return;
     roots.forEach(renderRoot);
 
-    document.addEventListener('vs:pathway-change', function () {
+    document.addEventListener('vs:intent-state-change', function () {
       roots.forEach(renderRoot);
     });
   }

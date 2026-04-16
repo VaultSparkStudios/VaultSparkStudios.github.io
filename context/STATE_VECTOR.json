@@ -1,24 +1,23 @@
 {
   "vectorVersion": "1.0",
   "generatedAt": "2026-04-16",
-  "generatedAtMs": 1776298342734,
-  "session": 75,
-  "vectorHash": "c2895be853f0bc6c",
-  "silTotal": 454,
-  "silAvg3": 446.7,
-  "velocity": 3,
+  "generatedAtMs": 1776309425921,
+  "session": 76,
+  "vectorHash": "3eecc0cb0f848d8b",
+  "silTotal": 461,
+  "silAvg3": 451.3,
+  "velocity": 4,
   "debt": "↓",
-  "runway": "~8.5 sessions",
+  "runway": "~5.1 sessions",
   "intentRate": "100% (last 5)",
-  "openNow": 4,
-  "openNext": 0,
+  "openNow": 0,
+  "openNext": 2,
   "openBlocked": 0,
-  "topNow": [
-    "**[AUDIT] Expand local verification coverage** — the `core` and `extended` local",
-    "**[SIL] Conversion telemetry matrix** — extend the new pathway layer into shared",
-    "**[SIL] Trust-depth module for conversion pages** — add reusable proof/outcome/o"
+  "topNow": [],
+  "topNext": [
+    "**[SIL] Release confidence gate** — unify local/staging/live verification into o",
+    "**[SIL] Micro-feedback engine** — add tiny “was this useful / what stopped you /"
   ],
-  "topNext": [],
   "health": "green",
   "truthStatus": "green",
   "genome": null,
@@ -29,12 +28,12 @@
   "slug": "vaultsparkstudios-website",
   "type": "website",
   "lifecycle": "deployed",
-  "nextMilestone": "Finish the runtime proof pass on top of the new pathway layer: complete one clean local or staging browser verify run, deepen conversion trust surfaces, and activate annual checkout once the Stripe annual plan keys exist.",
-  "currentFocus": "Session 74 is closed out and pushed: the first visitor-intelligence layer now exists on top of the contract spine, with constrained pathways, related-content rails, startup snapshot tooling, live-header verification, and a safer local Worker deploy fallback all in-repo. The remaining focus is one clean browser verification pass plus deeper proof/instrumentation follow-through.",
-  "lastShipped": "7 improvements across visitor guidance, site cohesion, ops tooling, verification tooling, and pricing honesty",
+  "nextMilestone": "Verify the new Session 75 surfaces in a real browser, ship the micro-feedback engine, and build the release-confidence gate while annual Stripe activation waits on the missing yearly plan keys.",
+  "currentFocus": "Session 75 is closed out and pushed: the website now has a shared intent-state, telemetry matrix, trust-depth layer, and Vault Network spine across the main public conversion surfaces. The remaining focus is one clean browser verification pass plus deeper user-feedback and form-outcome loops.",
+  "lastShipped": "4 improvements across shared intelligence, conversion guidance, trust depth, and network cohesion",
   "blockers": [
     "CF_WORKER_API_TOKEN missing, so Worker deploys still require local Wrangler auth",
     "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
-    "This environment did not complete a clean local Playwright run for the new visitor-intelligence layer"
+    "This environment still does not have one clean browser verification pass for the new Session 75 shared surfaces"
   ]
 }

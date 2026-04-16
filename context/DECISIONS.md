@@ -2,6 +2,20 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-15 — Public visitor-state should be inferred once and shared across all conversion surfaces (Session 75)
+
+- Status: active
+- Decision: the public website now infers visitor state through one shared local runtime, `assets/intent-state.js`, and shared conversion surfaces must consume that runtime instead of inventing page-specific intent logic.
+- Why: Session 74 proved the site could route visitors intelligently, but the intent logic was still distributed across pathways, CTAs, rails, and analytics. One source of truth reduces drift and lets trust/telemetry surfaces speak the same language.
+- Maintenance rule: new public guidance or conversion surfaces should read from `window.VSIntentState` or explicitly justify why they do not.
+
+### 2026-04-15 — Conversion guidance should ship as reusable shared modules, not bespoke page copy (Session 75)
+
+- Status: active
+- Decision: the intelligence/cohesion layer now lives in shared public modules (`assets/telemetry-matrix.js`, `assets/trust-depth.js`, `assets/network-spine.js`) that are wired into key public pages rather than duplicated in page-local HTML blocks.
+- Why: the website, Studio Hub bridge, and social-dashboard bridge need one coherent operational language. Shared modules make the guidance adaptive, easier to tune, and harder to let drift across surfaces.
+- Maintenance rule: update the shared modules first when refining conversion/trust/network guidance; avoid creating page-specific copies unless the page has a materially different role.
+
 ### 2026-04-15 — Visitor-intelligence should route intent with lightweight local memory, not a chat UI (Session 74)
 
 - Status: active

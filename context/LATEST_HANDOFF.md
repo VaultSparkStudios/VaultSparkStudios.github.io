@@ -1,6 +1,46 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 74 closeout)
+Last updated: 2026-04-15 (Session 75 closeout)
+
+## Session Intent: Session 75
+Audit the live website, turn the Genius queue into repo truth, and implement the top shared intelligence/conversion/cohesion systems in one sprint.
+
+## Where We Left Off (Session 75)
+- Shipped: 4 improvements across shared intelligence, conversion guidance, trust depth, and network cohesion
+- Tests: 2 verification checks passed (`node --check` on the new runtime modules, `npm run build`) · delta: -1; browser verification is still pending
+- Deploy: committed and pushed to `main`; no production runtime deploy required
+
+### Shipped
+- **Shared visitor-state spine shipped** — `assets/intent-state.js` now defines one visitor model for intent, confidence, journey stage, world affinity, trust, membership temperature, and returning status; `assets/pathways-router.js`, `assets/adaptive-cta.js`, `assets/related-content.js`, and `assets/funnel-tracking.js` were rewired to consume it.
+- **Conversion telemetry matrix shipped** — `assets/telemetry-matrix.js` now renders an explicit journey read and best-next-move on `/`, `/membership/`, and `/vaultsparked/` instead of leaving the intelligence layer invisible.
+- **Trust-depth layer shipped** — `assets/trust-depth.js` now adds shared proof/hesitation/founder-promise/what-happens-next modules on homepage, membership, and VaultSparked.
+- **Vault Network spine shipped** — `assets/network-spine.js` now connects homepage, membership, VaultSparked, and Studio Pulse to the same website/Studio Hub/social-dashboard bridge language and freshness cues.
+
+### Verification
+- `node --check assets/intent-state.js` → **passed**
+- `node --check assets/telemetry-matrix.js` → **passed**
+- `node --check assets/trust-depth.js` → **passed**
+- `node --check assets/network-spine.js` → **passed**
+- `npm run build` → **passed**
+
+### Open carry-forward
+- **Browser verification still needs one clean pass** — the new shared surfaces are syntax/build-verified, but not yet browser-confirmed in this environment.
+- **The feedback loop is still only half-closed** — the telemetry spine exists, but direct user micro-feedback and form-outcome depth are still the next leverage point.
+- **Annual Stripe activation remains human-blocked** — the frontend is now honest, but annual checkout still depends on real annual Stripe plan keys.
+
+## Human Action Required
+
+- [ ] **[STRIPE-ANNUAL]** Create the annual Stripe price/plan keys so the annual checkout scaffolding can be activated for real.
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` in GitHub Actions secrets so future Worker deploys stop depending on local Wrangler auth.
+- [ ] **[WEB3FORMS]** Run a real browser submission for the public forms to confirm delivery.
+- [ ] **[WAF]** Confirm the Cloudflare WAF JS Challenge rule for CN/RU/HK is active.
+- [ ] **[BEACON]** Run the Studio Hub beacon setup and copy `.claude/beacon.env` here if active-session signaling is desired.
+
+## Recommended First Action Next Session
+
+1. **Run one clean browser verification pass** against homepage, membership, VaultSparked, and Studio Pulse so the Session 75 shared surfaces are runtime-confirmed.
+2. **Ship the micro-feedback engine** on the key conversion pages and wire the outputs into the public-safe telemetry spine.
+3. **Build the release-confidence gate** that unifies local, staging, and live checks while annual Stripe activation waits on the human keys.
 
 ## Session Intent: Session 74
 Take the top backlog ideas from startup review, write them into repo memory, and implement the highest-leverage runtime/tooling changes in one pass.

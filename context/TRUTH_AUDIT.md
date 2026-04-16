@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-15 (S74 closeout)
+Last reviewed: 2026-04-15 (S75 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -28,3 +28,7 @@ Public-safe summary:
 - Verification truth changed in Session 74: `scripts/verify-live-headers.mjs` now codifies the browser-like live header check and `cloudflare/deploy-worker-local.ps1` codifies the manual Wrangler fallback path
 - Pricing truth changed in Session 74: annual membership pricing may be shown, but annual checkout now fails honestly until the real Stripe annual plan keys exist
 - Closeout truth changed in Session 74: project status, handoff, task board, SIL, audit JSON, and generated public-intelligence surfaces were refreshed together before the repo was committed and pushed
+- Session 75 truth changed: `assets/intent-state.js` is now the shared visitor-state source for public intelligence/conversion surfaces instead of letting each module infer intent independently
+- Session 75 truth changed: telemetry, trust, and network surfaces now render from shared modules on homepage, membership, VaultSparked, and Studio Pulse
+- Session 75 truth changed: `sw.js` cache name moved to `vaultspark-20260415-intent` and now caches the new shared intelligence assets
+- Session 75 truth changed: generated public-intelligence/contracts were refreshed again after the final Session 75 memory/task updates so downstream public surfaces read current truth

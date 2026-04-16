@@ -86,7 +86,7 @@
   }
 
   function getSelection() {
-    var selected = safeGet(STORAGE_KEY);
+    var selected = window.VSIntentState ? window.VSIntentState.getState().pathway : safeGet(STORAGE_KEY);
     return PATHWAYS[selected] ? selected : null;
   }
 
@@ -161,8 +161,12 @@
     if (!target) return;
     var key = target.getAttribute('data-pathway-select') || target.getAttribute('data-pathway-key');
     if (!PATHWAYS[key]) return;
-    safeSet(STORAGE_KEY, key);
-    document.dispatchEvent(new CustomEvent('vs:pathway-change', { detail: { pathway: key } }));
+    if (window.VSIntentState) {
+      window.VSIntentState.setPathway(key);
+    } else {
+      safeSet(STORAGE_KEY, key);
+      document.dispatchEvent(new CustomEvent('vs:pathway-change', { detail: { pathway: key } }));
+    }
   }
 
   function init() {
@@ -179,6 +183,14 @@
       var target = event.target.closest('[data-pathway-select], [data-pathway-key]');
       if (!target) return;
       rememberSelection(target);
+    });
+
+    document.addEventListener('vs:intent-state-change', function () {
+      window.VSPublicIntel.get().then(function (intel) {
+        roots.forEach(function (root) {
+          renderRoot(root, intel);
+        });
+      });
     });
   }
 

@@ -805,6 +805,12 @@
       </div>
     </section>
 
+    <section class="telemetry-matrix" data-track-view="vaultsparked_telemetry_matrix_view" aria-label="VaultSparked telemetry">
+      <div class="container">
+        <div data-telemetry-matrix data-telemetry-context="vaultsparked"></div>
+      </div>
+    </section>
+
     <section style="padding:2.5rem 0;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);background:linear-gradient(180deg,rgba(255,196,0,0.03),rgba(31,162,255,0.02));">
       <div class="container">
         <p class="sparked-section-label">Live Proof</p>
@@ -827,6 +833,18 @@
             <p class="live-proof-detail">Proof that member progression is already active, not theoretical.</p>
           </article>
         </div>
+      </div>
+    </section>
+
+    <section class="trust-depth" data-track-view="vaultsparked_trust_depth_view" aria-label="VaultSparked trust layer">
+      <div class="container">
+        <div data-trust-depth-root data-trust-context="vaultsparked"></div>
+      </div>
+    </section>
+
+    <section class="network-spine" data-track-view="vaultsparked_network_spine_view" aria-label="Vault network">
+      <div class="container">
+        <div data-network-spine data-network-context="vaultsparked"></div>
       </div>
     </section>
 
@@ -1384,6 +1402,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script src="/assets/supabase-public.js"></script>
 <script src="/assets/public-intelligence.js" defer></script>
+<script src="/assets/intent-state.js" defer></script>
+<script src="/assets/telemetry-matrix.js" defer></script>
+<script src="/assets/trust-depth.js" defer></script>
+<script src="/assets/network-spine.js" defer></script>
 <script src="/assets/live-proof.js" defer></script>
 <script src="/assets/adaptive-cta.js" defer></script>
 <script src="/assets/pathways-router.js" defer></script>

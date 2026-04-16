@@ -1,5 +1,23 @@
 # Work Log
 
+## 2026-04-15 — Session 75 (shared intelligence conversion layer)
+
+- docs/GENIUS_LIST.md: created the ranked Genius Hit List and turned the audit output into repo truth
+- context/TASK_BOARD.md: added the Session 75 Genius queue and the next SIL follow-through items (`Release confidence gate`, `Micro-feedback engine`)
+- assets/intent-state.js: created the shared visitor-state runtime for intent, confidence, stage, trust, world affinity, membership temperature, and returning status
+- assets/adaptive-cta.js + assets/pathways-router.js + assets/related-content.js + assets/funnel-tracking.js: rewired the existing intelligent surfaces to consume the shared state instead of maintaining separate intent logic
+- assets/telemetry-matrix.js: created a shared conversion-read surface for homepage, membership, and VaultSparked
+- assets/trust-depth.js: created a shared trust/proof/hesitation/founder-promise module for the main conversion surfaces
+- assets/network-spine.js: created a shared ecosystem/network-cohesion surface for homepage, membership, VaultSparked, and Studio Pulse
+- assets/style.css + index.html + membership/index.html + vaultsparked/index.html + join/index.html + invite/index.html + studio-pulse/index.html + sw.js: wired the new runtime/modules into the public site and bumped the cache forward
+- Verification:
+  - `node --check assets/intent-state.js` → passed
+  - `node --check assets/telemetry-matrix.js` → passed
+  - `node --check assets/trust-depth.js` → passed
+  - `node --check assets/network-spine.js` → passed
+  - `npm run build` → passed
+- Closeout: full Studio OS write-back completed; regenerated public intelligence/contracts; committed and pushed to `main`; no production runtime deploy performed
+
 ## 2026-04-15 — Session 74 (visitor-intelligence + tooling pass)
 
 - assets/pathways-router.js: created — constrained visitor pathways (`player`, `member`, `supporter`, `investor`, `lore`) with remembered local intent and shared rendering on homepage, membership, VaultSparked, join, and invite
