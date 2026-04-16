@@ -1,6 +1,16 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 73 signal cleanup closeout)
+Last updated: 2026-04-15 (Session 74 closeout)
+
+## Done (Session 74 visitor-intelligence + tooling)
+
+- [x] **[AUDIT] Public AI concierge / pathways** — shipped `assets/pathways-router.js` and routed homepage, membership, VaultSparked, join, and invite through constrained player / member / supporter / investor / lore-seeker entry paths with remembered local intent.
+- [x] **[AUDIT] Cohesion pass for related-content graph** — shipped `assets/related-content.js` and added cross-surface rails so key public pages now hand off into the next relevant vault surface instead of dead-ending.
+- [x] **[SIL:2⛔] Live Worker header verification script** — added `scripts/verify-live-headers.mjs` plus `npm run verify:headers` for browser-like live header checks on `/` and `/vaultsparked/`.
+- [x] **[SIL:2⛔] Local Worker deploy helper** — added `cloudflare/deploy-worker-local.ps1` to codify the manual Wrangler fallback path until GitHub Worker secrets exist.
+- [x] **[SIL] Startup snapshot helper** — added `scripts/startup-snapshot.mjs` plus `npm run startup:snapshot`; `prompts/start.md` now explicitly recognizes the helper as a deterministic startup aid.
+- [x] **[SIL] Local verify full-suite baseline** — `scripts/run-local-browser-verify.mjs` now supports `core` and `extended` tiers; `tests/intelligence-surfaces.spec.js` was added to cover the new pathway and related rails.
+- [x] **[AUDIT] Annual routing honesty gate** — VaultSparked annual pricing now truthfully degrades: annual display stays visible, but checkout blocks with a clear message until the real annual Stripe plan keys exist.
 
 ## Done (S73 signal cleanup)
 
@@ -18,7 +28,7 @@ Last updated: 2026-04-15 (Session 73 signal cleanup closeout)
 
 - [x] **[STUDIO-OS] Startup prompt targeted-read hardening** — `prompts/start.md` now explicitly limits startup reads on append-only files to the latest `LATEST_HANDOFF` block, the `SELF_IMPROVEMENT_LOOP` rolling header plus latest entry, and probe-first optional-file checks so startup briefs do not get clipped by oversized context loads.
 
-## Now (S70 audit execution)
+## Done (S70 audit execution)
 
 - [x] **[AUDIT] Public intelligence generator** — `scripts/generate-public-intelligence.mjs` now compiles a public-safe truth payload from `PROJECT_STATUS.json`, `TASK_BOARD.md`, and `LATEST_HANDOFF.md` into `api/public-intelligence.json`.
 - [x] **[AUDIT] Live Studio Pulse** — `/studio-pulse/` now reads live session/focus/queue/catalog data from the generated public intelligence payload via `assets/public-intelligence.js` + `assets/studio-pulse-live.js` instead of frozen hardcoded Session 55 content.
@@ -27,27 +37,25 @@ Last updated: 2026-04-15 (Session 73 signal cleanup closeout)
 - [x] **[AUDIT] Funnel stage telemetry baseline** — `assets/funnel-tracking.js` now supports stage events and auto-detects engagement/submit starts for tagged forms; join/contact/invite scripts now emit stage success/error transitions.
 - [x] **[AUDIT] Generated CSP source** — `config/csp-policy.mjs` now owns the canonical page/Worker/redirect CSP variants; `scripts/propagate-csp.mjs`, `scripts/csp-audit.mjs`, and `cloudflare/security-headers-worker.js` all consume that shared source instead of carrying duplicated policy strings.
 - [x] **[AUDIT] Investor surface hardening** — legacy `investor/**` redirects now use minimal redirect pages plus `assets/redirect-page.js`; inline GA/bootstrap/redirect code was removed and the route family no longer depends on `script-src 'unsafe-inline'`.
-- [ ] **[AUDIT] Public AI concierge / pathways** — build a constrained intent router for player / member / supporter / investor / lore-seeker entry paths.
-- [ ] **[AUDIT] Cohesion pass for related-content graph** — deepen cross-links between games, projects, universe, membership, journal, changelog, and studio surfaces.
+- [x] **[AUDIT] Public AI concierge / pathways** — constrained intent router now ships on homepage, membership, VaultSparked, join, and invite.
+- [x] **[AUDIT] Cohesion pass for related-content graph** — related rails now connect games, membership, universe, journal/changelog, and studio operating surfaces.
 
-- [ ] **[SIL:2⛔] Genius Hit List as scheduled audit** — schedule recurring audit job that generates `docs/GENIUS_LIST.md` without human prompt.
-- [ ] **[SIL:2⛔] Live Worker header verification script** — codify the browser-like header check used in S69 so post-deploy verification does not rely on ad hoc curl commands. First step: add `scripts/verify-live-headers.mjs` for `/` and `/vaultsparked/`.
-- [ ] **[SIL:2⛔] Local Worker deploy helper** — add a small wrapper/script that checks Wrangler auth and deploys `cloudflare/security-headers-worker.js` safely when GitHub Actions cannot. First step: script a `cloudflare/deploy-worker-local.ps1` flow around `wrangler whoami` + `wrangler deploy --env production`.
+- [x] **[SIL:2⛔] Live Worker header verification script** — `scripts/verify-live-headers.mjs` now performs browser-like live header checks for `/` and `/vaultsparked/`.
+- [x] **[SIL:2⛔] Local Worker deploy helper** — `cloudflare/deploy-worker-local.ps1` now wraps `wrangler whoami` + production deploy.
 
-## Next (S72 post-closeout)
+## Now (S74 runway pre-load)
 
-- [ ] **[AUDIT] Expand local verification coverage** — grow the local-first browser suite beyond the core `computed-styles` + `vaultsparked-csp` smoke pair so more public pages default to local verification before live checks.
-- [ ] **[AUDIT] Public AI concierge / pathways** — build a constrained intent router for player / member / supporter / investor / lore-seeker entry paths.
-- [ ] **[AUDIT] Cohesion pass for related-content graph** — deepen cross-links between games, projects, universe, membership, journal, changelog, and studio surfaces.
-- [ ] **[SIL] Startup snapshot helper** — add `scripts/startup-snapshot.mjs` so startup can read one deterministic current-state payload instead of pattern-matching multiple append-only files.
-- [ ] **[SIL] Local verify full-suite baseline** — decide which Playwright specs belong in the default local-first suite beyond `computed-styles` + `vaultsparked-csp`, then codify that list in `verify:local`.
+- [ ] **[AUDIT] Expand local verification coverage** — the `core` and `extended` local tiers now exist, but this environment still timed out on a clean Playwright pass; finish real local/browser execution once the runtime issue is cleared.
+- [ ] **[SIL] Conversion telemetry matrix** — extend the new pathway layer into shared stage-by-stage journey/form reporting so homepage, join, contact, invite, membership, and VaultSparked expose where intent strengthens or leaks.
+- [ ] **[SIL] Trust-depth module for conversion pages** — add reusable proof/outcome/objection-handling blocks so homepage, membership, and VaultSparked deepen trust on top of the new pathway rails.
+- [ ] **[SIL:2⛔] Genius Hit List as scheduled audit** — still open; elevate it into the next working session if no other blocked dependency clears first.
 
 ## Now (S69 runway pre-load)
 
 - [x] **[SIL:2⛔] IGNIS Rescore** — refreshed 2026-04-15 via local IGNIS CLI fallback; current score `46,489 FORGE` and the startup stale-IGNIS flag is cleared.
-- [ ] **[AUDIT] Conversion funnel instrumentation + feedback states** — **partial S68**: `/membership/`, `/vaultsparked/`, `/invite/`, `/join/`, and `/contact/` now have CTA/view events and stronger feedback panels, but stage-by-stage reporting and broader form outcome coverage still need completion.
-- [ ] **[AUDIT] Premium proof/depth pass on conversion pages** — **partial S68**: homepage, membership, and VaultSparked now show live recent shipped work / live vault proof / stronger next-step messaging. Continue with member outcomes, testimonials, and trust objections handling.
-- [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
+- [ ] **[AUDIT] Conversion funnel instrumentation + feedback states** — **partial Session 74**: pathway memory and smarter CTA notes now sharpen intent, but deeper stage reporting and broader submit feedback still need completion.
+- [ ] **[AUDIT] Premium proof/depth pass on conversion pages** — **partial Session 74**: pathways, related rails, and annual honesty now improve trust and navigation, but testimonials/member outcomes/objection handling are still open.
+- [ ] **[SIL] Annual Stripe checkout routing** — implementation is scaffolded and honest, but still HAR-blocked until the Studio Owner creates the annual Stripe plan keys.
 - [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read). S69 proved the manual Wrangler fallback works, but automatic Worker CSP sync is still blocked without this secret.
 
 ---
@@ -205,6 +213,8 @@ Last updated: 2026-04-15 (Session 73 signal cleanup closeout)
 
 - [x] **[DB] `register_open` migration** — phase56 applied live (S48): `referred_by` column, `p_ref_by` param, milestones updated ✅
 - [x] **[Sentry] Configure release workflow** — `SENTRY_AUTH_TOKEN` secret set; org/project hardcoded in workflow; CI passing (S48) ✅
+- [ ] **[STRIPE-ANNUAL]** Create the annual Stripe yearly price IDs so the honest annual pricing preview can be activated into a real checkout route.
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` to GitHub Actions secrets so Worker deploys stop depending on local Wrangler auth.
 - [ ] **[WEB3FORMS]** Test contact form from browser — confirm email arrives at founder@vaultsparkstudios.com (server-side test blocked by Web3Forms free tier)
 - [ ] **[WAF]** Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
 - [ ] **[BEACON]** Run `node scripts/configure-beacon.mjs` in studio-ops → copy `.claude/beacon.env` here

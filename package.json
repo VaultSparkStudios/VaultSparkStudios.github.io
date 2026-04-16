@@ -8,6 +8,9 @@
     "test": "npx playwright test",
     "test:a11y": "npx playwright test tests/accessibility.spec.js",
     "verify:local": "node scripts/run-local-browser-verify.mjs",
+    "verify:local:extended": "node scripts/run-local-browser-verify.mjs --tier extended",
+    "verify:headers": "node scripts/verify-live-headers.mjs",
+    "startup:snapshot": "node scripts/startup-snapshot.mjs",
     "provision:test-accounts": "node scripts/provision-vault-test-accounts.mjs"
   },
   "devDependencies": {

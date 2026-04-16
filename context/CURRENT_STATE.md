@@ -2,10 +2,10 @@
 
 ## Snapshot
 
-- Date: 2026-04-15 (Session 73 closeout)
+- Date: 2026-04-15 (Session 74 closeout state)
 - Overall status: live · green
 - Vault Status: SPARKED
-- Repo posture: **S73 — the startup/status signal cleanup is now caught up with the actual repo state instead of lagging behind it.** The S72 contract/build/local-verification spine remains in place; `prompts/start.md` is resynced to the current studio-ops template line while preserving targeted startup reads; the CDR gap is closed; and IGNIS is refreshed to `46,489 FORGE` (2026-04-15). The next product layer is AI/pathways guidance, broader surface cohesion, and wider local verification coverage.
+- Repo posture: **Session 74 closed out a full visitor-intelligence + tooling pass on top of the S72 contract/build spine.** Shared pathway routing and related-content rails now guide homepage, membership, VaultSparked, join, and invite visitors by intent instead of leaving the intelligence surface purely informational; startup/header/deploy tooling gaps are codified in-repo; annual pricing is now honest about the remaining Stripe blocker; the repo was committed/pushed; and the remaining gap is a clean runtime browser verify plus deeper proof/instrumentation follow-through.
 
 ## What exists
 
@@ -22,11 +22,18 @@
 - **Members directory** (`members/`) — S58: fixed profile-loading regression from CSP-blocked inline directory script; runtime moved to `/assets/members-directory.js`, clear-filter action uses event delegation, query supports current `vault_points`/`rank_title` plus legacy `points` fallback; "Founding Member" label updated to "Genesis Member".
 
 ### Infrastructure
+- **Visitor pathways layer** (`assets/pathways-router.js`, `assets/adaptive-cta.js`, `index.html`, `membership/index.html`, `vaultsparked/index.html`, `join/index.html`, `invite/index.html`) — Session 74 shipped a constrained intent router for player / member / supporter / investor / lore-seeker paths. It remembers local pathway choice, personalizes CTA copy/notes, and renders pathway cards on the main public entry surfaces.
+- **Related-content rails** (`assets/related-content.js`, same page set as above) — Session 74 added shared “continue through the vault” rails so high-intent pages now hand users into the next relevant game/membership/universe/studio surface instead of forcing cold navigation.
+- **Local verification tiering** (`scripts/run-local-browser-verify.mjs`, `tests/intelligence-surfaces.spec.js`, `package.json`) — Session 74 introduced `core` and `extended` local verify tiers and added pathway/related-rail coverage; generator/build checks pass, but this environment still timed out on a clean Playwright local-preview run.
+- **Startup snapshot helper** (`scripts/startup-snapshot.mjs`, `prompts/start.md`, `package.json`) — startup can now read one deterministic current-state payload for the latest handoff/SIL slices before the required source-of-truth reads.
+- **Live header verification script** (`scripts/verify-live-headers.mjs`) — browser-like live header verification is now codified for `/` and `/vaultsparked/` instead of relying on ad hoc curl/manual checks.
+- **Local Worker deploy helper** (`cloudflare/deploy-worker-local.ps1`) — the manual Wrangler fallback path is now scripted and guarded until GitHub Worker automation is fully unblocked.
+- **Annual checkout honesty gate** (`vaultsparked/billing-toggle.js`, `vaultsparked/vaultsparked-checkout.js`, `vaultsparked/index.html`) — annual display remains visible, but checkout now fails honestly with a clear message until the actual annual Stripe plan keys exist instead of pretending the route is live.
 - **Cloudflare Worker** (`cloudflare/security-headers-worker.js`) — all 9 security headers, CSP, X-Robots-Tag: noai. Worker: `vaultspark-security-headers-production` (Version: `f0c9672a-25ae-413f-b131-e0ee9027b69b`). Manually redeployed via Wrangler on 2026-04-15 after the repo-wide CSP cleanup; production route `vaultsparkstudios.com/*` verified live.
 - **CSP source + audit gate** (`config/csp-policy.mjs`, `scripts/propagate-csp.mjs`, `scripts/csp-audit.mjs`) — S70 extracted page/Worker/redirect CSP variants into one structured source. Propagation, audit, and Worker headers now read from the same module. **Current result: passing** — 93 HTML files checked clean after the S70 re-propagation pass.
 - **Computed render smoke** (`tests/computed-styles.spec.js`) — S68 added a real-browser homepage styling check (computed body background, hero spacing, header border, zero page errors). Local Chromium run passed on 2026-04-15.
 - **Homepage hero** (`index.html`) — S62: forge ignition + vault door hybrid; `vaultspark-cinematic-logo.webp` removed from hero; `.forge-wordmark` h1 with `.forge-line-1` (VAULTSPARK) + `.forge-line-2` (STUDIOS) animated via `letterForge` keyframe; `.forge-spark-burst` gold ignition point; `.hero-chamber` radial vignette; `.hero-reveal` stagger cascade; full responsive 768/640/480/360px; `prefers-reduced-motion` guard; light-mode overrides; icon remains in nav header only.
-- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260413-d58d28b`; STATIC_ASSETS includes `/universe/voidfall/`, `/universe/dreadspike/`, `portal-init.js`, `members-directory.js`, `vaultsparked-checkout.js`, `billing-toggle.js`
+- **Service worker** (`sw.js`) — CACHE_NAME: `vaultspark-20260415-journeys`; STATIC_ASSETS now also include the shared visitor-intelligence assets `/assets/pathways-router.js` and `/assets/related-content.js` alongside the existing public runtime files
 - **DX scripts** (`scripts/propagate-csp.mjs`, `scripts/smoke-test.sh`) — S47 created; S49 regex fixed + dry-run exit-1 added; **S53: CSP_VALUE updated to SHA-256 hashes (removed 'unsafe-inline')**; 85 pages propagated; `e2e.yml` compliance job runs `--dry-run` check before Playwright
 - **Sentry release workflow** (`.github/workflows/sentry-release.yml`) — S47 created, S48 fully wired: org `vaultspark-studios`, project `4511104933298176`, token set as GitHub secret; every push to main now tags a Sentry release
 - **Referral attribution** (`supabase/migrations/supabase-phase56-referral-attribution.sql`) — S48: `referred_by uuid` column on `vault_members`; `register_open` accepts `p_ref_by`, awards referrer +100 XP, fires recruiter/patron achievements; `get_referral_milestones` counts both invite-code and direct-link referrals; migration applied live

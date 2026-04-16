@@ -4,10 +4,56 @@ import { once } from 'node:events';
 const host = process.env.LOCAL_PREVIEW_HOST || '127.0.0.1';
 const port = process.env.LOCAL_PREVIEW_PORT || String(4300 + Math.floor(Math.random() * 400));
 const baseUrl = `http://${host}:${port}`;
-const args = process.argv.slice(2);
-const testArgs = args.length
-  ? args
-  : ['tests/computed-styles.spec.js', 'tests/compliance-pages.spec.js', 'tests/vaultsparked-csp.spec.js'];
+const rawArgs = process.argv.slice(2);
+
+const TIERS = {
+  core: [
+    'tests/computed-styles.spec.js',
+    'tests/compliance-pages.spec.js',
+    'tests/navigation.spec.js',
+    'tests/pages.spec.js',
+    'tests/vaultsparked-csp.spec.js',
+    'tests/intelligence-surfaces.spec.js'
+  ],
+  extended: [
+    'tests/computed-styles.spec.js',
+    'tests/compliance-pages.spec.js',
+    'tests/navigation.spec.js',
+    'tests/pages.spec.js',
+    'tests/games.spec.js',
+    'tests/light-mode-screenshots.spec.js',
+    'tests/responsive.spec.js',
+    'tests/vault-wall.spec.js',
+    'tests/vaultsparked-csp.spec.js',
+    'tests/intelligence-surfaces.spec.js'
+  ]
+};
+
+function parseArgs(argv) {
+  let tier = 'core';
+  const passthrough = [];
+
+  for (let i = 0; i < argv.length; i += 1) {
+    if (argv[i] === '--tier' && argv[i + 1]) {
+      tier = argv[i + 1];
+      i += 1;
+      continue;
+    }
+    if (argv[i] === '--list') {
+      const list = TIERS[tier] || TIERS.core;
+      console.log(list.join('\n'));
+      process.exit(0);
+    }
+    passthrough.push(argv[i]);
+  }
+
+  if (passthrough.length) {
+    return passthrough;
+  }
+  return TIERS[tier] || TIERS.core;
+}
+
+const testArgs = parseArgs(rawArgs);
 
 function run(command, commandArgs, extraEnv = {}) {
   return new Promise((resolve, reject) => {

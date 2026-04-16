@@ -75,6 +75,11 @@ Check `context/SELF_IMPROVEMENT_LOOP.md`:
 
 ## 3 · Load Context  *(read in order — do not skip or reorder)*
 
+**Startup snapshot helper**
+
+- If `scripts/startup-snapshot.mjs` exists, run it first as a fast current-state aid.
+- It does **not** replace the required source-of-truth reads below; it compresses the latest handoff/SIL slices so startup stays deterministic.
+
 **Read discipline for large append-only files**
 
 - Read full contents only for compact source-of-truth files (`PROJECT_BRIEF`, `SOUL`, `BRAIN`, `CURRENT_STATE`, `DECISIONS`, `TASK_BOARD`)

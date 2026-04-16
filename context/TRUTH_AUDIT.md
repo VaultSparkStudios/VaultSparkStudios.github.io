@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-15 (S73 signal cleanup)
+Last reviewed: 2026-04-15 (S74 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -23,3 +23,8 @@ Public-safe summary:
 - Protocol truth changed in S73: `prompts/start.md` is resynced to studio-ops template v3.2 while preserving the repo-specific targeted-read discipline added in S71
 - Protocol truth changed further in S73 closeout: `prompts/closeout.md` is also resynced to studio-ops template v3.2 while keeping the website repo's generated public-intelligence gate intact
 - Intelligence truth changed in S73: IGNIS was rescored locally to `46,489 FORGE` on 2026-04-15, so repo status/public derivatives should no longer describe the score as stale
+- Visitor-intelligence truth changed in Session 74: homepage, membership, VaultSparked, join, and invite now render shared pathway and related-content rails via external scripts instead of leaving the route choice implicit
+- Startup truth changed in Session 74: `scripts/startup-snapshot.mjs` now exists as a deterministic startup aid, and `prompts/start.md` explicitly recognizes it
+- Verification truth changed in Session 74: `scripts/verify-live-headers.mjs` now codifies the browser-like live header check and `cloudflare/deploy-worker-local.ps1` codifies the manual Wrangler fallback path
+- Pricing truth changed in Session 74: annual membership pricing may be shown, but annual checkout now fails honestly until the real Stripe annual plan keys exist
+- Closeout truth changed in Session 74: project status, handoff, task board, SIL, audit JSON, and generated public-intelligence surfaces were refreshed together before the repo was committed and pushed

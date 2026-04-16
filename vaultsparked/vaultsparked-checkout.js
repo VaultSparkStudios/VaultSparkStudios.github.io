@@ -116,6 +116,19 @@
     return VSPublic;
   }
 
+  function resolvePlan(plan) {
+    var billingMode = window.vssBillingMode || 'monthly';
+    var availability = window.VSSCheckoutAvailability || {};
+    var annualPlanKeys = availability.annualPlanKeys || {};
+
+    if (billingMode !== 'annual') return plan;
+
+    if (plan === 'vault_sparked' && annualPlanKeys.sparked) return annualPlanKeys.sparked;
+    if (plan === 'vault_sparked_pro' && annualPlanKeys.pro) return annualPlanKeys.pro;
+
+    return null;
+  }
+
   async function startCheckout(plan, promoCode) {
     var btnId = plan === 'vault_sparked_pro' ? 'vaultsparked-pro-upgrade-btn' : 'vaultsparked-upgrade-btn';
     var btn = document.getElementById(btnId);
@@ -132,7 +145,12 @@
         return;
       }
 
-      var body = { plan: plan };
+      var resolvedPlan = resolvePlan(plan);
+      if (!resolvedPlan) {
+        throw new Error('Annual checkout is not live yet. Join free first or use the monthly plan today.');
+      }
+
+      var body = { plan: resolvedPlan };
       if (promoCode) body.promo_code = promoCode;
 
       var res = await client.functions.invoke('create-checkout', {

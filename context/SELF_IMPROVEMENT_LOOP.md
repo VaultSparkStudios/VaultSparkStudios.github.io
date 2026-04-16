@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇▆▆▆
-Avgs — 3: 438.0 | 5: 442.4 | 10: 438.2 | all: 426.7
-  └ 3-session: Dev 88.7 | Align 85.0 | Momentum 80.7 | Engage 88.0 | Process 95.7
-Velocity trend: ↓  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: ~4.6 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-15 | Session 73 | Total: 439/500 | Velocity: 0 | protocolVelocity: 1
+Sparkline (last 5 totals): ▆▆▆▆▇
+Avgs — 3: 446.7 | 5: 441.4 | 10: 443.0 | 25: 435.4 | all: 427.2
+  └ 3-session: Dev 90.7 | Align 87.0 | Momentum 84.7 | Engage 88.3 | Process 96.0
+Velocity trend: ↑  |  Protocol velocity: ↓  |  Debt: ↓
+Momentum runway: ~8.5 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-15 | Session 74 | Total: 454/500 | Velocity: 3 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -1054,3 +1054,27 @@ Avgs — 3: 438.0 | 5: 442.4 | 10: 438.2 | all: 426.7
 3. **Founder/status sentinel** — render one compact “highest-risk / highest-next-action” summary from the public-intelligence bundle so startup/hand-off drift is visually obvious sooner. First step: add a sentinel block to the generated intelligence payload and startup brief. Medium probability.
 
 **Committed to TASK_BOARD:** [SIL:1] Startup snapshot helper · [SIL:1] Local verify full-suite baseline
+
+## 2026-04-15 — Session 74 | Total: 454/500 | Velocity: 3 | Debt: ↓
+Avgs — 3: 446.7 | 5: 441.4 | 10: 443.0 | all: 427.2
+  └ 3-session: Dev 90.7 | Align 87.0 | Momentum 84.7 | Engage 88.3 | Process 96.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 92 | ↑ | Shared pathway/related runtime shipped cleanly, new tooling closed real ops gaps, and generated truth stayed synchronized; the only material deduction is the missing clean Playwright pass in this environment |
+| Creative Alignment | 88 | ↓ | The work materially improves how visitors understand the studio and its worlds, though the session leaned more operational than brand-expansive |
+| Momentum | 90 | ↑ | The declared top startup items were converted into shipped code and moved the site toward the next conversion milestone instead of staying as audit notes |
+| Engagement | 89 | ↓ | Feedback signals remain strong (`22/25`, `25/25`), and the new pathway layer should improve future learning loops, but this session did not yet finish the deeper proof/outcome surfaces |
+| Process Quality | 95 | ↓ | Full write-back, audit, generated public-intelligence refresh, and git publish completed; only the blocked browser verify kept this from a near-perfect process score |
+| **Total** | **454/500** | **↑ 15** | |
+
+**Top win:** The website now has an actual visitor-intelligence layer instead of just a status surface, and the supporting startup/header/deploy tooling was closed in the same pass.
+**Top gap:** Clean browser verification of the new pathway layer still did not complete in this environment, so the next session should start by turning the static/runtime wiring into a confirmed browser pass.
+**Intent outcome:** Achieved — the top backlog ideas were written into repo memory, implemented at runtime/tooling level, and closed out to a pushed state.
+
+**Brainstorm**
+1. **Conversion telemetry matrix** — finish stage-by-stage pathway/form reporting so each public journey exposes exactly where intent strengthens or leaks. First step: extend `assets/funnel-tracking.js` and the join/contact/invite success/error states to emit shared pathway-aware stage events. High probability.
+2. **Trust-depth module for conversion pages** — add reusable proof blocks for testimonials, member outcomes, objections, and “what happens next” guidance across homepage, membership, and VaultSparked. First step: define one shared data shape + component renderer instead of bespoke page copy. High probability.
+3. **Scheduled Genius Hit List audit** — convert the lingering SIL item into an actual recurring generator/report so startup can see the highest-leverage ideas without manual prompting. First step: wire one ops entry point that renders `docs/GENIUS_LIST.md` on demand from the existing heuristics. Medium probability.
+
+**Committed to TASK_BOARD:** [SIL] Conversion telemetry matrix · [SIL] Trust-depth module for conversion pages

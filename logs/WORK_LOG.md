@@ -1,5 +1,25 @@
 # Work Log
 
+## 2026-04-15 — Session 74 (visitor-intelligence + tooling pass)
+
+- assets/pathways-router.js: created — constrained visitor pathways (`player`, `member`, `supporter`, `investor`, `lore`) with remembered local intent and shared rendering on homepage, membership, VaultSparked, join, and invite
+- assets/related-content.js: created — shared “continue through the vault” rails to improve graph cohesion across public surfaces
+- assets/adaptive-cta.js: upgraded to personalize CTA copy/notes from remembered pathway intent instead of using only login/referral/membership-intent state
+- assets/style.css + index.html + membership/index.html + vaultsparked/index.html + join/index.html + invite/index.html: wired and styled the new pathway/related rails across the main public entry surfaces
+- vaultsparked/billing-toggle.js + vaultsparked/vaultsparked-checkout.js + vaultsparked/index.html: added annual-checkout honesty gate; annual pricing preview remains visible, but checkout now blocks cleanly until real annual Stripe plan keys exist
+- scripts/startup-snapshot.mjs + prompts/start.md + package.json: added a deterministic startup snapshot helper and npm shortcut
+- scripts/verify-live-headers.mjs + cloudflare/deploy-worker-local.ps1 + package.json: codified the live header verification path and the manual local Worker deploy fallback
+- scripts/run-local-browser-verify.mjs + tests/intelligence-surfaces.spec.js: added `core` / `extended` local verify tiers and new coverage for pathway/related rails
+- sw.js: cache name bumped and new shared JS assets added to STATIC_ASSETS
+- Verification:
+  - `node scripts/startup-snapshot.mjs --json` → passed
+  - `node scripts/generate-public-intelligence.mjs` → passed
+  - static `rg` wiring checks for pathways/related rails across homepage, membership, VaultSparked, join, and invite → passed
+  - `node scripts/run-local-browser-verify.mjs --tier core` → blocked in this environment (`spawn EPERM` in sandbox; escalated retries timed out before Playwright completed)
+  - `node ..\\vaultspark-studio-ops\\scripts\\ops.mjs doctor --update-json`, `state-vector --project .`, `entropy --update --project .`, `genome-snapshot --project .`, `genome-history --project .`, and `content-pipeline` → passed
+  - `node ..\\vaultspark-studio-ops\\scripts\\ops.mjs rescore --project vaultsparkstudios-website` plus direct IGNIS CLI fallback → failed (`regretAverage` TypeError inside founder-brief generation); prior 2026-04-15 IGNIS score remains the current fresh value
+- Closeout: full Studio OS write-back completed; repo committed and pushed to `main`; no production runtime deploy performed
+
 ## 2026-04-15 — Session 73 (startup signal cleanup)
 
 - prompts/start.md: resynced from studio-ops template line `3.2`; preserved S71 targeted-read discipline while adding the newer auto-mode, secrets discovery, blocker-preflight, and execution-first startup rules

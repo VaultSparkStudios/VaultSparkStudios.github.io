@@ -1,6 +1,47 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-15 (Session 73)
+Last updated: 2026-04-15 (Session 74 closeout)
+
+## Session Intent: Session 74
+Take the top backlog ideas from startup review, write them into repo memory, and implement the highest-leverage runtime/tooling changes in one pass.
+
+## Where We Left Off (Session 74)
+- Shipped: 7 improvements across visitor guidance, site cohesion, ops tooling, verification tooling, and pricing honesty
+- Tests: 3 verification checks passed (startup snapshot, public-intelligence generation, static wiring audit) · delta: +1; local browser verify remains blocked in this environment
+- Deploy: committed and pushed to `main`; no production runtime deploy required
+
+### Shipped
+- **Public AI/pathways layer shipped** — `assets/pathways-router.js` now renders constrained player / member / supporter / investor / lore-seeker entry paths on homepage, membership, VaultSparked, join, and invite; adaptive CTA copy now respects remembered pathway intent.
+- **Related-content cohesion shipped** — `assets/related-content.js` now adds shared “continue through the vault” rails across the same key public entry surfaces so users do not dead-end after the first conversion page.
+- **Startup + verification tooling shipped** — `scripts/startup-snapshot.mjs`, `scripts/verify-live-headers.mjs`, `cloudflare/deploy-worker-local.ps1`, `tests/intelligence-surfaces.spec.js`, and the `core` / `extended` local verify tiers were added; `prompts/start.md`, `package.json`, and `sw.js` were updated to recognize the new flow.
+- **Annual honesty gate shipped** — `/vaultsparked/` now tells the truth about annual checkout: pricing preview is visible, but checkout blocks cleanly until the actual annual Stripe plan keys exist instead of pretending the route is live.
+
+### Verification
+- `node scripts/startup-snapshot.mjs --json` → **passed**
+- `node scripts/generate-public-intelligence.mjs` → **passed**
+- `rg -n "data-pathways-root|data-related-root|pathways-router.js|related-content.js|pricing-honesty-note" index.html membership/index.html vaultsparked/index.html join/index.html invite/index.html` → **passed**
+- `node scripts/run-local-browser-verify.mjs --tier core` → **blocked in this environment** (`spawn EPERM` in sandbox; escalated retries timed out before Playwright completed)
+- `node ..\\vaultspark-studio-ops\\scripts\\ops.mjs doctor --update-json`, `state-vector --project .`, `entropy --update --project .`, `genome-snapshot --project .`, `genome-history --project .`, and `content-pipeline` → **passed**
+- `node ..\\vaultspark-studio-ops\\scripts\\ops.mjs rescore --project vaultsparkstudios-website` and the direct local IGNIS CLI fallback → **failed** (`regretAverage` TypeError inside IGNIS founder-brief generation); last successful score from 2026-04-15 remains fresh
+
+### Open carry-forward
+- **Runtime verification still needs one clean browser pass** — the local tiering/spec work is in, but this environment did not complete the Playwright run cleanly.
+- **Deeper conversion-proof work remains open** — pathways and related rails are now live, but richer testimonials/member outcomes/objection handling are still the next trust layer.
+- **Annual Stripe activation remains human-blocked** — the frontend now degrades honestly, but the real annual checkout route still depends on the Studio Owner creating the Stripe plan keys.
+
+## Human Action Required
+
+- [ ] **[STRIPE-ANNUAL]** Create the annual Stripe price/plan keys so the new annual checkout scaffolding can be activated for real.
+- [ ] **[CF-WORKER-TOKEN]** Add `CF_WORKER_API_TOKEN` in GitHub Actions secrets so future Worker deploys stop depending on local Wrangler auth.
+- [ ] **[WEB3FORMS]** Run a real browser submission for the public forms to confirm delivery.
+- [ ] **[WAF]** Confirm the Cloudflare WAF JS Challenge rule for CN/RU/HK is active.
+- [ ] **[BEACON]** Run the Studio Hub beacon setup and copy `.claude/beacon.env` here if active-session signaling is desired.
+
+## Recommended First Action Next Session
+
+1. **Run one clean local or staging browser verify pass** against the new `core` local suite so the visitor-intelligence layer is browser-confirmed, not only statically wired.
+2. **Finish the next conversion-depth layer** — testimonials/member outcomes/trust objections handling on homepage, membership, and VaultSparked.
+3. **Activate annual checkout once Stripe keys exist** — replace the null annual plan placeholders and re-run the pricing flow.
 
 ## Session Intent: Session 73
 Complete all startup/status signal cleanup, make the warnings truthful again, and close the session out fully through commit/push.

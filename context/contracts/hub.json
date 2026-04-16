@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-04-15T22:34:06.763Z",
+  "generatedAt": "2026-04-16T00:12:36.048Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,40 +22,36 @@
     }
   },
   "pulse": {
-    "currentSession": 73,
+    "currentSession": 75,
     "lastUpdated": "2026-04-15",
-    "currentFocus": "S73 closed out the protocol/status cleanup fully: startup and closeout prompts are back on the current template line, IGNIS/revenue/status surfaces are fresh again, and the repo truth/derived outputs were regenerated cleanly. Immediate product focus returns to AI/pathways guidance, related-content cohesion, and broader local verification coverage.",
-    "nextMilestone": "Ship the next-order experience layer on top of the contract spine: public AI/pathways guidance, stronger cross-surface cohesion, and broader local verification coverage, while using the refreshed IGNIS baseline to target execution/creativity lift.",
+    "currentFocus": "Session 74 is closed out and pushed: the first visitor-intelligence layer now exists on top of the contract spine, with constrained pathways, related-content rails, startup snapshot tooling, live-header verification, and a safer local Worker deploy fallback all in-repo. The remaining focus is one clean browser verification pass plus deeper proof/instrumentation follow-through.",
+    "nextMilestone": "Finish the runtime proof pass on top of the new pathway layer: complete one clean local or staging browser verify run, deepen conversion trust surfaces, and activate annual checkout once the Stripe annual plan keys exist.",
     "blockers": [
       "CF_WORKER_API_TOKEN missing, so Worker deploys still require local Wrangler auth",
-      "Annual Stripe price IDs still do not exist for the billing toggle",
-      "Full local verification coverage is not expanded yet; only the core local smoke path is validated"
+      "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
+      "This environment did not complete a clean local Playwright run for the new visitor-intelligence layer"
     ],
     "queues": {
       "now": [
-        "[AUDIT] Public intelligence generator — `scripts/generate-public-intelligence.mjs` now compiles a public-safe truth payload from `PROJECT_STATUS.json`, `TASK_BOARD.md`, and `LATEST_HANDOFF.md` into `api/public-intelligence.json`.",
-        "[AUDIT] Live Studio Pulse — `/studio-pulse/` now reads live session/focus/queue/catalog data from the generated public intelligence payload via `assets/public-intelligence.js` + `assets/studio-pulse-live.js` instead of frozen hardcoded Session 55 content.",
-        "[AUDIT] Shared live proof layer — `assets/live-proof.js` now hydrates homepage, membership, and VaultSparked proof counters from the same public Supabase queries instead of page-specific duplicate scripts.",
-        "[AUDIT] Adaptive CTA baseline — `assets/adaptive-cta.js` now shifts key CTAs based on session/referral/membership-intent state across homepage, membership, VaultSparked, join, and invite.",
-        "[AUDIT] Funnel stage telemetry baseline — `assets/funnel-tracking.js` now supports stage events and auto-detects engagement/submit starts for tagged forms; join/contact/invite scripts now emit stage success/error transitions.",
-        "[AUDIT] Generated CSP source — `config/csp-policy.mjs` now owns the canonical page/Worker/redirect CSP variants; `scripts/propagate-csp.mjs`, `scripts/csp-audit.mjs`, and `cloudflare/security-headers-worker.js` all consume that shared source instead of carrying duplicated policy strings.",
-        "[AUDIT] Investor surface hardening — legacy `investor/` redirects now use minimal redirect pages plus `assets/redirect-page.js`; inline GA/bootstrap/redirect code was removed and the route family no longer depends on `script-src 'unsafe-inline'`.",
-        "[AUDIT] Public AI concierge / pathways — build a constrained intent router for player / member / supporter / investor / lore-seeker entry paths."
+        "[AUDIT] Expand local verification coverage — the `core` and `extended` local tiers now exist, but this environment still timed out on a clean Playwright pass; finish real local/browser execution once the runtime issue is cleared.",
+        "[SIL] Conversion telemetry matrix — extend the new pathway layer into shared stage-by-stage journey/form reporting so homepage, join, contact, invite, membership, and VaultSparked expose where intent strengthens or leaks.",
+        "[SIL] Trust-depth module for conversion pages — add reusable proof/outcome/objection-handling blocks so homepage, membership, and VaultSparked deepen trust on top of the new pathway rails.",
+        "[SIL:2⛔] Genius Hit List as scheduled audit — still open; elevate it into the next working session if no other blocked dependency clears first."
       ],
       "next": [
-        "[AUDIT] Expand local verification coverage — grow the local-first browser suite beyond the core `computed-styles` + `vaultsparked-csp` smoke pair so more public pages default to local verification before live checks.",
-        "[AUDIT] Public AI concierge / pathways — build a constrained intent router for player / member / supporter / investor / lore-seeker entry paths.",
-        "[AUDIT] Cohesion pass for related-content graph — deepen cross-links between games, projects, universe, membership, journal, changelog, and studio surfaces.",
-        "[SIL] Startup snapshot helper — add `scripts/startup-snapshot.mjs` so startup can read one deterministic current-state payload instead of pattern-matching multiple append-only files.",
-        "[SIL] Local verify full-suite baseline — decide which Playwright specs belong in the default local-first suite beyond `computed-styles` + `vaultsparked-csp`, then codify that list in `verify:local`."
+        "[SIL] CSP propagation script — `scripts/propagate-csp.mjs` created; single CSP_VALUE constant at top propagates to all HTML files via `node scripts/propagate-csp.mjs` (S47)",
+        "[SIL] Staging smoke test script — `scripts/smoke-test.sh` created; 12 key URLs, exits non-zero on failure; enforces CANON-007 (S47)",
+        "[SIL] Light-mode screenshot smoke — `tests/light-mode-screenshots.spec.js` created; Chromium-only, 3 pages, forced light-mode via localStorage (S47)",
+        "[SIL] IGNIS delta field — `ignisScoreDelta` added to `PROJECT_STATUS.json`; closeout Step 8 updated to compute and write it (S47)",
+        "[SIL] Join form GA4 form_error — `form_error` gtag event added to vault access request catch handler in `join/index.html` (S50)"
       ],
       "shipped": [
-        "Prompt compliance closed — `prompts/start.md` and `prompts/closeout.md` are now back on the studio-ops v3.2 template line, while the repo-specific targeted-read startup discipline and public-intelligence closeout gate were preserved instead of overwritten.",
-        "Stale status signals cleared — IGNIS was refreshed to `46,489 FORGE` on 2026-04-15, the CDR gap was closed, the SIL runway figure was recalculated from the real open `Now` queue, and repo truth no longer reports the score/status surfaces as stale.",
-        "Derived truth refreshed — `api/public-intelligence.json`, `context/contracts/*.json`, `context/STATE_VECTOR.json`, `docs/GENOME_HISTORY.md`, project entropy/genome outputs, and sibling `portfolio/REVENUE_SIGNALS.md` were regenerated so founder/startup checks read current data.",
-        "`..\\\\vaultspark-ignis\\\\node_modules\\\\.bin\\\\tsx.cmd ..\\\\vaultspark-ignis\\\\cli.ts score .` → passed",
-        "`node scripts/generate-public-intelligence.mjs` → passed",
-        "`node ..\\\\vaultspark-studio-ops\\\\scripts\\\\ops.mjs state-vector --project .` → passed"
+        "Public AI/pathways layer shipped — `assets/pathways-router.js` now renders constrained player / member / supporter / investor / lore-seeker entry paths on homepage, membership, VaultSparked, join, and invite; adaptive CTA copy now respects remembered pathway intent.",
+        "Related-content cohesion shipped — `assets/related-content.js` now adds shared “continue through the vault” rails across the same key public entry surfaces so users do not dead-end after the first conversion page.",
+        "Startup + verification tooling shipped — `scripts/startup-snapshot.mjs`, `scripts/verify-live-headers.mjs`, `cloudflare/deploy-worker-local.ps1`, `tests/intelligence-surfaces.spec.js`, and the `core` / `extended` local verify tiers were added; `prompts/start.md`, `package.json`, and `sw.js` were updated to recognize the new flow.",
+        "Annual honesty gate shipped — `/vaultsparked/` now tells the truth about annual checkout: pricing preview is visible, but checkout blocks cleanly until the actual annual Stripe plan keys exist instead of pretending the route is live.",
+        "`node scripts/startup-snapshot.mjs --json` → passed",
+        "`node scripts/generate-public-intelligence.mjs` → passed"
       ]
     },
     "ignis": {

@@ -2,6 +2,20 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-15 — Visitor-intelligence should route intent with lightweight local memory, not a chat UI (Session 74)
+
+- Status: active
+- Decision: the first public AI/pathways layer is implemented as a constrained pathway router (`player`, `member`, `supporter`, `investor`, `lore`) plus adaptive CTA copy and related-content rails, all backed by local pathway memory rather than a freeform chatbot.
+- Why: this repo needed guidance and cohesion, not a generic chat widget. A constrained pathway layer improves navigation and conversion while staying brand-safe, static-site-friendly, and CSP-clean.
+- Maintenance rule: new public entry pages should either render the shared pathway rail or explicitly justify why they do not.
+
+### 2026-04-15 — Annual pricing may be displayed before checkout is live only if the route fails honestly (Session 74)
+
+- Status: active
+- Decision: `/vaultsparked/` may continue showing annual pricing preview, but annual checkout must not silently route through monthly logic. Until real annual Stripe plan keys exist, the UI must clearly state that annual checkout is not yet live.
+- Why: the previous state implied annual was functionally available when it was still blocked by missing Stripe setup. Honest degradation is better than a misleading “working” toggle.
+- Maintenance rule: once annual plan keys exist, replace the null placeholders in the billing/checkout config and remove the honesty warning path.
+
 ### 2026-04-15 — Startup protocol sync should preserve local targeted-read hardening while staying on the current studio-ops template line (S73)
 
 - Status: active
