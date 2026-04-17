@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-04-17T05:19:37.287Z",
+  "generatedAt": "2026-04-17T07:09:31.512Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 88,
+    "currentSession": 89,
     "lastUpdated": "2026-04-17",
-    "currentFocus": "Session 87 closed (recovery writeback at S88 start). All S86 carry-forward items cleared. Live now: repo-wide lint gate (lint-repo.mjs catches conflict markers + committed secrets pre-push); voice-leak patrol complete (trust-depth.js + adaptive-cta.js scrubbed of internal enum/signal language); Voidfall lore-gate fragments live (rank-2 + rank-4 on /universe/voidfall/); studio-pulse-live.js broadcasts to vault:events on real shipments; all 8 game pages emit VideoGame JSON-LD via schema-injector; native-feel + ignis-lens + schema-injector propagated site-wide to 105 HTML files; all 79 public-page og:image tags now point at the dynamic /_og/ worker with per-page title/eyebrow/status. Full S86 runtime stack still live: ask-ignis + Vault Oracle + IGNIS Lens; edge-gate + rate-limit + nonce CSP + /_csrf on Cloudflare Worker; og-image-worker on /_og/* zone route.",
-    "nextMilestone": "Founder actions outstanding: (1) Revoke compromised classic PAT at github.com/settings/tokens (exposure closure only). (2) Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to scoped CLOUDFLARE_API_TOKEN. Agent-doable next: (1) Watch Lighthouse + playwright-axe after 105-page script injection to verify budgets hold. (2) Social Dashboard bidirectional mirror (cross-repo). (3) Decision on nav rename Studio Pulse → Forge Window.",
+    "currentFocus": "Session 88 closed: Genius/verification wave implemented against the S87 CI failures. E2E browser gates now run against local preview (scripts/local-preview-server.mjs at 127.0.0.1:4173) instead of Cloudflare-fronted production, removing the GitHub Actions managed-challenge failure class. Shared footer contrast and labeled-container ARIA roles were hardened; canonical footer template propagated; shell regenerated to assets/style.shell-93fad06736.css with sw.js/cache manifest updated. Scheduled Genius refresh now exists via scripts/generate-genius-list.mjs and npm run genius:list; docs/GENIUS_LIST.md has been regenerated from current repo truth. Non-browser verification is green: build:check, csp-audit, propagate-nav syntax, JSON parse, diff whitespace, and local preview HTTP smoke.",
+    "nextMilestone": "Post-push GitHub Actions confirmation for the CI recovery wave: Lighthouse, Accessibility Audit, and E2E should be rechecked after publish. Founder actions outstanding: (1) revoke compromised classic PAT at github.com/settings/tokens. (2) Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to scoped CLOUDFLARE_API_TOKEN. (3) Create annual Stripe price IDs before annual checkout activation. Agent-doable next: confirm CI, rerun npm run genius:list after CI status changes, Social Dashboard bidirectional mirror (cross-repo), and nav rename decision Studio Pulse -> Forge Window if founder signs off.",
     "blockers": [
       "MANUAL: revoke compromised classic PAT at github.com/settings/tokens (exposure occurred in agent transcript during token extraction; workflow secret already rotated off it, revocation is pure cleanup)",
       "CF API token (scoped) lacks Workers KV Storage:Edit + Zone:Workers Routes:Edit — working around via CLOUDFLARE_EMAIL + CLOUDFLARE_API_KEY (Global API Key). Long-term: add those two scopes to the scoped token.",
@@ -33,19 +33,25 @@
     ],
     "queues": {
       "now": [
-        "[GENIUS][INTELLIGENCE] Vault Intent Graph — DONE S75: shipped `assets/intent-state.js` and rewired pathways, adaptive CTAs, related rails, and funnel payloads to read one shared visitor-state model instead of maintaining separate intent logic.",
-        "[GENIUS][FEEDBACK] Conversion Telemetry Matrix — DONE S75: expanded telemetry with pathway-aware/stage-aware payload fields and shipped a visible telemetry matrix surface on `/`, `/membership/`, and `/vaultsparked/` so the current journey read and best-next-move are explicit.",
-        "[GENIUS][CONVERSION] Trust Depth Layer — DONE S75: added reusable trust-depth modules on `/`, `/membership/`, and `/vaultsparked/` covering proof, next-step framing, hesitation handling, and founder-promise language.",
-        "[GENIUS][COHESION] Vault Network Spine — DONE S75: added a shared `assets/network-spine.js` surface on homepage, membership, VaultSparked, and Studio Pulse so website, GitHub, Studio Hub/social-dashboard bridge state, and pulse surfaces now read as one network."
+        "[S89][VERIFY] Confirm post-push CI recovery — check GitHub Actions for Lighthouse, Accessibility Audit, and E2E after the Session 88 commit lands. If the local-preview/a11y fixes hold, update `PROJECT_STATUS.json`, `LATEST_HANDOFF.md`, and generated public intelligence; if any run is red, fix from the actual CI artifact/logs.",
+        "[SIL] CI result ingestion for Genius List — rerun `npm run genius:list` after post-push CI status is known so `docs/GENIUS_LIST.md` reflects current release confidence instead of pre-push local verification.",
+        "[SIL] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path once repo lock/write safety is confirmed for the Social Dashboard workspace."
       ],
       "next": [
-        "[SIL:2⛔] Genius Hit List as scheduled audit — keep running the ranked combined-audit pass periodically so the website does not slip back into piecemeal iteration.",
+        "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
         "[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.",
         "[GENIUS][COHESION] Extend gravity onto the `/games/` and `/universe/` hubs — the per-world pages now hand off properly, but the main collection hubs can still become stronger route orchestrators.",
         "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
-      "shipped": []
+      "shipped": [
+        "Implemented CI recovery wave: `.github/workflows/e2e.yml` now runs required browser gates against `scripts/local-preview-server.mjs` on `127.0.0.1:4173` instead of Cloudflare-fronted production, removing the \"Just a moment...\" managed-challenge failure class from compliance/games/full E2E tests.",
+        "Implemented workflow hygiene: E2E jobs now install from the repo contract with `npm install --no-audit --no-fund`; they no longer run `npm init -y` inside CI.",
+        "Implemented a11y hardening: shared footer has explicit dark/light backgrounds and light-mode contrast overrides; footer status spans now carry stable classes from `scripts/propagate-nav.mjs`; labeled non-semantic containers on homepage/games/community/leaderboards/members/ranks/Vault Wall got appropriate `role` attributes.",
+        "Regenerated shell: new stylesheet fingerprint `assets/style.shell-93fad06736.css`; `assets/shell-manifest.json`, `sw.js`, and HTML references updated by `scripts/build-shell-assets.mjs`.",
+        "Implemented scheduled Genius refresh: added `scripts/generate-genius-list.mjs`, exposed it as `npm run genius:list`, and regenerated `docs/GENIUS_LIST.md` from current repo truth instead of the stale Session 75 artifact.",
+        "Verification completed locally: `npm run build:check` clean; `node scripts/csp-audit.mjs` clean on 98 HTML files; `node --check scripts/propagate-nav.mjs` clean; local preview HTTP smoke returns 200 for `/`, `/games/`, `/community/`, `/leaderboards/`."
+      ]
     },
     "ignis": {
       "score": 46489,

@@ -34,7 +34,7 @@
 {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Vault Ranks","item":"https://vaultsparkstudios.com/ranks/"}]}
   </script>
   <link rel="icon" type="image/png" href="/assets/icon-32.png" />
-  <link rel="stylesheet" href="/assets/style.shell-1b62491f6c.css" />
+  <link rel="stylesheet" href="/assets/style.shell-93fad06736.css" />
   <style>
     .ranks-hero { padding:5rem 0 3rem; position:relative; text-align:center; }
     .ranks-hero::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 20% 50%, rgba(255,196,0,0.1), transparent 35%), radial-gradient(circle at 80% 40%, rgba(31,162,255,0.08), transparent 35%); }
@@ -121,7 +121,7 @@
     <section style="padding:0 0 4rem;" data-reveal="fade-up">
       <div class="container">
 
-        <div class="ranks-grid" aria-label="Vault rank tiers" data-reveal="fade-up">
+        <div class="ranks-grid" role="list" aria-label="Vault rank tiers" data-reveal="fade-up">
 
           <!-- Spark Initiate -->
           <div class="rank-card" style="border:1px solid rgba(148,163,184,0.2);">
@@ -348,10 +348,10 @@
         </div>
       </div>
       <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
-        <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
-        <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
-        <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
-        <span style="color:#7EC9FF;">⬡ SEALED — Deep forge</span>
+        <span class="status-sparked" style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span class="status-forge" style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span class="status-vaulted" style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+        <span class="status-sealed" style="color:#7EC9FF;">⬡ SEALED — Deep forge</span>
         <span style="margin-left:auto;color:var(--muted);font-weight:500;">27 initiatives under the vault banner · <a href="/studio-pulse/" style="color:var(--gold);">open the Forge Window &rarr;</a></span>
       </div>
       <div class="footer-bottom">
@@ -370,7 +370,6 @@
 <script src="/assets/schema-injector.js" defer></script>
 </body>
 </html>
-
 
 
 

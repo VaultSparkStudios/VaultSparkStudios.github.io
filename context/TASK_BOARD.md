@@ -1,6 +1,22 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 87 — 7 items shipped; recovery closeout writes back S87 state + og:image sweep)
+Last updated: 2026-04-17 (Session 88 closeout — CI/a11y recovery + Genius generator shipped)
+
+## Now (Session 89 pre-load)
+
+- [ ] **[S89][VERIFY] Confirm post-push CI recovery** — check GitHub Actions for Lighthouse, Accessibility Audit, and E2E after the Session 88 commit lands. If the local-preview/a11y fixes hold, update `PROJECT_STATUS.json`, `LATEST_HANDOFF.md`, and generated public intelligence; if any run is red, fix from the actual CI artifact/logs.
+- [ ] **[SIL] CI result ingestion for Genius List** — rerun `npm run genius:list` after post-push CI status is known so `docs/GENIUS_LIST.md` reflects current release confidence instead of pre-push local verification.
+- [ ] **[SIL] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path once repo lock/write safety is confirmed for the Social Dashboard workspace.
+
+## Session 88 — Genius Hit List execution / CI recovery
+
+- [x] **[S88][CI] Move required E2E browser gates to local preview** — **DONE S88**: `.github/workflows/e2e.yml` now starts `scripts/local-preview-server.mjs`, waits on `http://127.0.0.1:4173/`, and runs compliance, games, computed-style, homepage-shell, VaultSparked CSP, Vault Wall, light-mode, and full E2E browser tests against the local artifact instead of Cloudflare-fronted production. This addresses the S87 "Just a moment..." Cloudflare challenge failure class.
+- [x] **[S88][CI] Stop mutating package.json in E2E workflow setup** — **DONE S88**: E2E jobs now use `npm install --no-audit --no-fund` instead of `npm init -y && npm install -D @playwright/test`, preserving the repo dependency contract in CI.
+- [x] **[S88][A11Y] Footer contrast hardening** — **DONE S88**: shared footer now has explicit dark/light backgrounds; light-mode footer links/status legend colors are token-driven and contrast-safe. Canonical footer template updated in `scripts/propagate-nav.mjs` and propagated across standard HTML entrypoints.
+- [x] **[S88][A11Y] ARIA role cleanup for labeled containers** — **DONE S88**: added semantic roles to previously labeled plain `<div>` containers on homepage, games, community, leaderboards, members, ranks, and Vault Wall surfaces to address axe `aria-prohibited-attr` failures.
+- [x] **[S88][SHELL] Regenerate fingerprinted shell assets** — **DONE S88**: new stylesheet fingerprint `assets/style.shell-93fad06736.css`; `assets/shell-manifest.json`, `sw.js`, and HTML references updated via `scripts/build-shell-assets.mjs`.
+- [x] **[S88][INTELLIGENCE] Genius Hit List scheduled audit generator** — **DONE S88**: added `scripts/generate-genius-list.mjs` plus `npm run genius:list`; regenerated `docs/GENIUS_LIST.md` from current repo truth so startup/go no longer depends on the stale Session 75 artifact.
+- [x] **[S88][VERIFY] Non-browser gates** — **DONE S88**: `npm run build:check` clean; `node scripts/csp-audit.mjs` clean on 98 HTML files; `node --check scripts/propagate-nav.mjs` clean; local preview HTTP smoke returns 200 for `/`, `/games/`, `/community/`, `/leaderboards/`.
 
 ## Session 86 addendum — runtime activation + all follow-ups (8 activations)
 
@@ -40,7 +56,7 @@ Session cut off before closeout; recovery writeback done as S88 start. All 7 ite
 - [ ] **[FOUNDER ACTION — OPEN] Add `Workers KV Storage:Edit` + `Zone:Workers Routes:Edit` to CLOUDFLARE_API_TOKEN** — so agents can skip the Global API Key fallback for KV + zone-route operations.
 - [ ] **[FOUNDER ACTION — SECURITY] Revoke compromised classic PAT at https://github.com/settings/tokens** — pure exposure closure; workflow no longer depends on it.
 - [ ] **[FOLLOWUP] Social Dashboard bidirectional mirror** — needs cross-repo work (normalized activity feed exposure on Social Dashboard side + pull here).
-- [ ] **[SIL] Watch first post-S86/S87 Lighthouse + playwright-axe runs** — 105 pages got new script injections + og:image rewrite; verify tightened S82/S83 budgets still hold.
+- [x] **[SIL] Watch first post-S86/S87 Lighthouse + playwright-axe runs** — **DONE S88**: latest S87 recovery push showed Lighthouse, Accessibility, and E2E red. S88 implemented the local-preview E2E correction plus shared footer/a11y fixes; CI rerun still needs post-push confirmation.
 - [ ] **[DECISION] Rename nav "Studio Pulse" → "Forge Window"** — URL frozen for SEO; awaiting brand sign-off.
 
 ---
@@ -341,7 +357,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **[AUDIT] Expand local verification coverage** — **DONE S76**: the focused `intelligence` tier, `tests/micro-feedback.spec.js`, and the `noteExposure()` loop fix now provide a clean scoped browser-confidence path on the changed pages.
 - [x] **[SIL] Conversion telemetry matrix** — **DONE S75**: the shared intent-state spine now feeds pathway-aware/stage-aware telemetry and visible conversion-read surfaces on homepage, membership, and VaultSparked.
 - [x] **[SIL] Trust-depth module for conversion pages** — **DONE S75**: reusable proof/next-step/hesitation/founder-promise blocks now render on homepage, membership, and VaultSparked.
-- [ ] **[SIL:2⛔] Genius Hit List as scheduled audit** — still open; elevate it into the next working session if no other blocked dependency clears first.
+- [x] **[SIL:2⛔] Genius Hit List as scheduled audit** — **DONE S88**: added deterministic repo-truth generator at `scripts/generate-genius-list.mjs`, exposed as `npm run genius:list`, and regenerated `docs/GENIUS_LIST.md`.
 
 ## Now (Session 77 leverage)
 
@@ -352,7 +368,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 
 ## Next (Session 77+)
 
-- [ ] **[SIL:2⛔] Genius Hit List as scheduled audit** — keep running the ranked combined-audit pass periodically so the website does not slip back into piecemeal iteration.
+- [x] **[SIL:2⛔] Genius Hit List as scheduled audit** — **DONE S88**: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.
 - [ ] **[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages** — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.
 - [ ] **[GENIUS][COHESION] Extend gravity onto the `/games/` and `/universe/` hubs** — the per-world pages now hand off properly, but the main collection hubs can still become stronger route orchestrators.
 - [ ] **[OPS] Annual Stripe activation once keys exist** — replace the annual placeholder path only after the real Stripe annual plan keys are created.

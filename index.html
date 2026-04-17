@@ -59,7 +59,7 @@
     .site-header::before{content:'';position:absolute;inset:0;z-index:-1;background:var(--header-bg);backdrop-filter:blur(20px) saturate(1.5);-webkit-backdrop-filter:blur(20px) saturate(1.5)}
     .nav{min-height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:1rem}
   </style>
-  <link rel="stylesheet" href="assets/style.shell-1b62491f6c.css" />
+  <link rel="stylesheet" href="assets/style.shell-93fad06736.css" />
   <link rel="preload" href="assets/vaultspark-icon.webp" as="image" type="image/webp" />
   <!-- dreadspike-poster is below the fold; no preload needed -->
   <link rel="prefetch" href="/vault-member/" />
@@ -1031,7 +1031,7 @@
 
         <!-- 6. Meta strip — chips + stats -->
         <div class="hero-meta-row hero-reveal" style="--reveal-delay:1.94s">
-          <div class="chips" aria-label="VaultSpark project categories">
+          <div class="chips" role="group" aria-label="VaultSpark project categories">
             <span class="chip">Sports Simulation</span>
             <span class="chip">Fantasy Worlds</span>
             <span class="chip">Comedy Chaos</span>
@@ -1081,7 +1081,7 @@
           </div>
           <div class="proof-stat proof-stat-wide">
             <div style="font-size:0.68rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--dim);margin-bottom:0.55rem;">Rank Distribution</div>
-            <div id="proof-rank-bar" style="display:flex;border-radius:6px;overflow:hidden;height:8px;gap:1px;background:rgba(255,255,255,0.04);" aria-label="Rank distribution across all members"></div>
+            <div id="proof-rank-bar" role="img" style="display:flex;border-radius:6px;overflow:hidden;height:8px;gap:1px;background:rgba(255,255,255,0.04);" aria-label="Rank distribution across all members"></div>
             <div id="proof-rank-legend" style="display:flex;flex-wrap:wrap;gap:0.4rem 0.8rem;margin-top:0.45rem;"></div>
           </div>
           <div style="text-align:right;">
@@ -1280,7 +1280,7 @@
           </div>
           <a href="/members/" class="button-secondary button-sm">Browse Members</a>
         </div>
-        <div id="vault-signal-feed" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0.65rem;" aria-live="polite" aria-label="Recent vault member activity"></div>
+        <div id="vault-signal-feed" role="list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:0.65rem;" aria-live="polite" aria-label="Recent vault member activity"></div>
       </div>
     </section>
 
@@ -1567,7 +1567,7 @@
               </div>
             </div>
 
-            <div class="rank-preview" aria-label="Vault Rank tiers">
+            <div class="rank-preview" role="group" aria-label="Vault Rank tiers">
               <h4>Vault Rank System</h4>
               <div class="rank-tier">
                 <div class="rank-dot" style="background:#94a3b8;"></div>
@@ -1985,10 +1985,10 @@
         </div>
       </div>
       <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
-        <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
-        <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
-        <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
-        <span style="color:#7EC9FF;">⬡ SEALED — Deep forge</span>
+        <span class="status-sparked" style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span class="status-forge" style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span class="status-vaulted" style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+        <span class="status-sealed" style="color:#7EC9FF;">⬡ SEALED — Deep forge</span>
         <span style="margin-left:auto;color:var(--muted);font-weight:500;">27 initiatives under the vault banner · <a href="/studio-pulse/" style="color:var(--gold);">open the Forge Window &rarr;</a></span>
       </div>
       <div class="footer-bottom">
@@ -2031,4 +2031,3 @@
 <script src="/assets/schema-injector.js" defer></script>
 </body>
 </html>
-

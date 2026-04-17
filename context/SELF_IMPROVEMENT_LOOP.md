@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████▇
-Avgs — 3: 481.7 | 5: 481.0 | 10: 464.8 | 25: 444.2 | all: 444.0
-  └ 3-session: Dev 97.3 | Align 97.0 | Momentum 97.3 | Engage 95.3 | Process 92.7
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓↓
-Momentum runway: ~6 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-17 | Session 87 (recovery closeout) | Total: 476/500 | Velocity: 7 (+ og:image sweep) | protocolVelocity: 7
+Sparkline (last 5 totals): ███▇▇
+Avgs — 3: 479.3 | 5: 481.4 | 10: 480.2 | 25: 450.2 | all: 440.7
+  └ 3-session: Dev 97.0 | Align 96.7 | Momentum 97.3 | Engage 95.0 | Process 93.3
+Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
+Momentum runway: ~0.4 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-17 | Session 88 | Total: 478/500 | Velocity: 7 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,31 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-17 — Session 88 | Total: 478/500 | Velocity: 7 | Debt: ↓
+Avgs — 3: 479.3 | 5: 481.4 | 10: 480.2 | 25: 450.2 | all: 440.7
+  └ 3-session: Dev 97.0 | Align 96.7 | Momentum 97.3 | Engage 95.0 | Process 93.3
+
+| Category | Score | vs Last | Notes |
+|---|---:|---|---|
+| Dev Health | 96 | ↓1 | CI route selection fixed at root for E2E, shell/intelligence surfaces regenerated, and non-browser gates are green. Docked for local Playwright browser hangs and pending post-push Actions confirmation. |
+| Creative Alignment | 96 | ↓1 | Work preserved the public-live promise: no false CI confidence, no fabricated Genius list, and light-mode/footer contrast stays first-class. Mostly infra/a11y, so less brand-expansive than S87. |
+| Momentum | 96 | ↓1 | 7 meaningful items shipped, including the stale Genius scheduled-audit item. Intent achieved on the unblocked repo-truth scope; external founder actions remain unchanged. |
+| Engagement | 94 | ↓1 | Better release confidence and accessibility improve user trust, but this session did not add a new engagement surface. |
+| Process Quality | 96 | ↑6 | Closeout recovered the large dirty tree into explicit memory, refreshed public intelligence/state/genome/entropy outputs, added a fresh Now runway, and wrote audit JSON. |
+| **Total** | **478/500** | ↑2 | |
+
+**Top win:** S88 turned ambiguous challenge-page CI failures into local-artifact browser gates and closed the shared a11y classes that were actually red.
+**Top gap:** Local Playwright still hangs in this sandbox, so the first post-push GitHub Actions run is the authoritative browser signal.
+**Intent outcome:** Achieved — all unblocked current Genius/release-confidence items were implemented; founder-only PAT/token/Stripe actions remain outside agent scope.
+
+**Brainstorm**
+1. **CI result ingestion into public intelligence.** First step: add a small GitHub Actions status reader that writes a public-safe release-confidence summary into generated intelligence after successful post-push runs. Execution probability: High.
+2. **A11y artifact triage helper.** First step: add a script that parses axe/Lighthouse JSON artifacts and maps failures to shared CSS/template owners. Execution probability: Medium.
+3. **Cross-repo mirror contract test.** First step: write a fixture contract test for Website -> Social Dashboard activity payload before editing the Social Dashboard repo. Execution probability: Medium.
+4. **Playwright sandbox fallback tier.** First step: document and script an HTTP/DOM-only smoke tier for environments where browser process spawn/hangs make Playwright unusable. Execution probability: High.
+
+**Committed to TASK_BOARD:** [SIL] CI result ingestion for Genius List · [SIL] Social Dashboard bidirectional mirror
 
 ## 2026-04-17 — Session 87 — carry-forward sweep + og:image upgrade (recovery closeout) | Total: 476/500 | Velocity: 7 | Debt: ↓
 **Scores:** Dev 97 · Align 97 · Momentum 97 · Engage 95 · Process 90

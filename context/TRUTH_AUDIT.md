@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-16 (S79 closeout)
+Last reviewed: 2026-04-17 (S88 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -54,3 +54,6 @@ Public-safe summary:
 - Session 79 truth changed: `assets/intent-state.js` now infers per-world affinity for the flagship game and universe routes, and `assets/related-content.js` plus the key game/universe pages now render shared world-gravity rails instead of leaving those routes as dead ends
 - Verification truth changed in Session 79: `tests/intelligence-surfaces.spec.js` now covers the new game/universe gravity rails and the focused local intelligence-surface verify passed `12/12` on 2026-04-16 after the timeout ceiling was raised for the heavier coverage
 - Documentation truth changed in Session 79: `docs/LOCAL_VERIFY.md` now defines the supported local browser verification tiers and worker-count contract explicitly, so the lower-worker local runner policy is not implicit knowledge anymore
+- Session 88 truth changed: `.github/workflows/e2e.yml` now runs its browser gates against the local preview artifact instead of Cloudflare-fronted production, extending the S82 local-preview release-confidence decision to the full E2E workflow.
+- Session 88 truth changed: `scripts/generate-genius-list.mjs` and `npm run genius:list` now generate `docs/GENIUS_LIST.md` from current repo truth, replacing the stale Session 75 static hit list.
+- Verification truth changed in Session 88: non-browser gates passed locally (`build:check`, CSP audit on 98 HTML files, JS syntax, JSON parse, diff whitespace, and HTTP preview smoke), while local Playwright browser execution remains blocked by sandbox hangs; post-push GitHub Actions is the authoritative browser signal.

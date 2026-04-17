@@ -282,3 +282,10 @@ Public-safe decisions retained in this repo:
 - Decision: Lighthouse CI + playwright-axe now run against `scripts/local-preview-server.mjs` on 127.0.0.1:4173 instead of the Cloudflare-fronted `https://vaultsparkstudios.com/`. Applies to `.github/workflows/lighthouse.yml` and `.github/workflows/accessibility.yml`.
 - Why: Cloudflare's WAF returns a managed-challenge HTML page to GitHub Actions runner IPs. That caused Lighthouse's `wait-on` to hit its 6-minute ceiling (HTTP was non-200 for the whole window) and axe's `--text/--bg` CSS-custom-prop contrast check to resolve to `NaN` (:root in the challenge page doesn't define our tokens). S81 patched the symptoms (wait-on ceiling, lockfile, axe-cli continue-on-error) but didn't address the cause. Running the real shipped HTML/CSS/JS from the repo locally — no network, no WAF — audits the real artifact and bypasses the challenge entirely.
 - Rollback path: if local-preview scoring is noticeably different from production scoring in a way that matters for release confidence, we can run a second Lighthouse job against staging (`website.staging.vaultsparkstudios.com`, Hetzner, not Cloudflare-fronted) and gate release on both.
+
+### 2026-04-17 — S88: E2E browser gates use local preview as the authoritative CI artifact
+
+- Status: active
+- Decision: `.github/workflows/e2e.yml` compliance and full E2E browser gates now start `scripts/local-preview-server.mjs` and test `http://127.0.0.1:4173/` instead of `https://vaultsparkstudios.com`.
+- Why: GitHub-hosted runners can receive Cloudflare managed-challenge HTML from the production domain, which makes E2E failures describe the challenge page rather than the shipped repo artifact. S88 extends the S82 local-preview decision from Lighthouse/axe to the E2E workflow.
+- Maintenance rule: post-push GitHub Actions is still the authoritative browser signal for the workflow change, but the target should remain the local artifact unless a future staging gate is explicitly added.

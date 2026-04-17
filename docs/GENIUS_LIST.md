@@ -1,215 +1,127 @@
-# Genius Hit List — Session 75
+# Genius Hit List — Session 88
 
-Generated: 2026-04-15
+Generated: 2026-04-17
 Project: `VaultSparkStudios.github.io`
-Source: repo-truth audit of public surfaces, shared runtime, Studio OS bridge, current blockers, and live improvement queues
+Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall: **86/100**
-- Brand / Identity: **93**
-- UX / UI: **84**
-- Product Depth: **82**
-- AI / Intelligence: **78**
-- Ops Integration / Cohesion: **88**
-- Feedback Loop: **74**
-- Security: **91**
-- Speed / Performance: **81**
-- SEO / Discoverability: **80**
+- Overall opportunity pressure: **87/100**
+- Health: **green**
+- Current SIL: **476/500**
+- Current focus: Session 88 in progress: Genius/verification wave implemented against the S87 CI failures. E2E browser gates now run against local preview (scripts/local-preview-server.mjs at 127.0.0.1:4173) instead of Cloudflare-fronted production, removing the GitHub Actions managed-challenge failure class. Shared footer contrast and labeled-container ARIA roles were hardened; canonical footer template propagated; shell regenerated to assets/style.shell-93fad06736.css with sw.js/cache manifest updated. Scheduled Genius refresh now exists via scripts/generate-genius-list.mjs and npm run genius:list; docs/GENIUS_LIST.md has been regenerated from current repo truth. Non-browser verification is green: build:check, csp-audit, propagate-nav syntax, and local preview HTTP smoke.
 
 ## Strategic Read
 
-The site is already differentiated. The highest-leverage gap is no longer visual polish; it is systems cohesion. The next leap is to turn the website into a truly adaptive vault surface where routing, proof, telemetry, Studio OS truth, social presence, and user feedback all reinforce each other through one shared intelligence model.
+## Session Intent: Session 88 Implement all Genius Hit List items at the highest/optimal quality. Practical scope for this session focused on the highest-impact unblocked item from current repo truth: recover the S87 release gates by fixing CI route selection and shared accessibility regressions. ## Where We Are (Session 88 — in progress) - Implemented CI recovery wave: .github/workflows/e2e.yml now runs required browser gates against scripts/local-preview-server.mjs on 127.0.0.1:4173 instead of Cloudflare-fronted
+
+The strongest near-term leverage is release confidence first, then cross-surface cohesion. Founder-only credential and pricing actions stay visible, but they are not treated as local implementation work until the external dependency clears.
 
 ## Ranked Hit List
 
 ### NOW
 
-#### 1. [INTELLIGENCE] Vault Intent Graph
+#### 1. [VERIFY] Post-push CI confirmation
 Final score: **96**
+Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
+Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
-Create one shared visitor-state model that every major surface reads and updates:
-- `intent`
-- `confidence`
-- `journey_stage`
-- `world_affinity`
-- `trust_level`
-- `membership_temperature`
-- `returning_status`
+First command: `gh run list --limit 10`
 
-Why it matters:
-- Current pathway memory is useful but shallow.
-- CTA logic, rails, trust modules, and telemetry are still partially separate systems.
-- This becomes the decision layer for the whole public site.
+#### 2. [VERIFY] Watch first post-push Lighthouse + playwright-axe runs
+Final score: **88**
+[SIL] Watch first post-push Lighthouse + playwright-axe runs — heavier pulse page + animated gradients; verify tightened S82/S83 budgets still hold.
+Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
 
-First implementation:
-- Add one shared runtime module that normalizes session state and exposes read/write helpers.
-- Rewire pathways, adaptive CTA, related rails, and homepage intelligence blocks to consume it.
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [FEEDBACK LOOP] Conversion Telemetry Matrix
-Final score: **95**
+#### 3. [VERIFY] Watch first post-push Lighthouse run
+Final score: **87**
+[SIL] Watch first post-push Lighthouse run — S82+S83+S84 combined pressure on tightened budgets + new local-preview + staging dual-URL gate. Iterate once if red.
+Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
 
-Track the full journey, not just clicks:
-- CTA exposure
-- pathway selection
-- proof-module exposure
-- form engagement
-- hesitation points
-- abandonment
-- return-path behavior
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-Why it matters:
-- Current telemetry is event-capable but not decision-grade.
-- This is the missing system for understanding where trust strengthens or leaks.
+#### 4. [VERIFY] Watch first post-push playwright-axe run
+Final score: **87**
+[SIL] Watch first post-push playwright-axe run — local-preview migration path.
+Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
 
-First implementation:
-- Extend `assets/funnel-tracking.js` with shared stage semantics and pathway-aware payloads.
-- Emit one generated public-safe summary and one richer Studio Hub/social-dashboard bridge payload.
-
-#### 3. [CONVERSION] Trust Depth Layer
-Final score: **93**
-
-Add reusable modules for:
-- member outcomes
-- proof of activity
-- objections handled
-- what happens next
-- why this exists
-- founder promise
-
-Why it matters:
-- Homepage, `/membership/`, and `/vaultsparked/` now route users better, but they still need stronger conviction architecture.
-
-First implementation:
-- Create one shared data shape plus renderer for trust modules across key conversion pages.
-
-#### 4. [COHESION] Network Spine Across Website / Studio Hub / Social Dashboard
-Final score: **91**
-
-Make the ecosystem visibly connected:
-- shared freshness stamps
-- shared operating labels
-- shared signal cards
-- shared cross-links
-- shared contract-backed summaries
-
-Why it matters:
-- The bridge exists technically, but the user-facing experience still feels more adjacent than unified.
-
-First implementation:
-- Introduce a common “Vault Network” strip/card pattern across homepage, Studio Pulse, and relevant public hub-facing surfaces.
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### NEXT
 
-#### 5. [INTELLIGENCE] Adaptive Narrative Personalization
-Final score: **90**
-
-Adapt copy and emphasis by inferred visitor type:
-- player
-- member
-- supporter
-- investor
-- lore-seeker
-
-Scope:
-- hero subcopy
-- CTA language
-- trust modules
-- related rails
-- proof emphasis
-
-#### 6. [WORLD DESIGN] World Gravity System
-Final score: **88**
-
-Tie games, projects, lore, journal, and membership into one stronger universe graph:
-- saga trails
-- entity threads
-- “continue this world” rails
-- world-specific proof and dispatch surfaces
-
-#### 7. [OPS] Release Confidence Gate
+#### 1. [VERIFY] Lighthouse budget tightening in CI
 Final score: **87**
+[S80][PERF] Lighthouse budget tightening in CI — Performance ≥0.85, A11y ≥0.95, Best Practices ≥0.90, SEO ≥0.95.
+Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
 
-Turn verification into one reliable confidence gate:
-- local
-- staging
-- live headers
-- pathways
-- trust modules
-- forms
-- theme modes
-- intelligence surfaces
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 8. [FEEDBACK LOOP] Micro-Feedback Engine
+#### 2. [VERIFY] Web push test
+Final score: **87**
+Web push test — subscribe in portal, upload classified file, verify notification received
+Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 3. [BRAND] Forge Window naming decision
 Final score: **86**
+Decide whether navigation should say Studio Pulse or Forge Window while preserving /studio-pulse/ for SEO.
+Why it matters: The page experience changed; navigation language needs founder sign-off before public vocabulary changes.
 
-Add low-friction prompts on key pages:
-- what are you here for?
-- what stopped you?
-- was this useful?
-- what should exist next?
+#### 4. [COHESION] Social Dashboard bidirectional mirror
+Final score: **85**
+[FOLLOWUP] Social Dashboard bidirectional mirror — needs cross-repo work (normalized activity feed exposure on Social Dashboard side + pull here).
+Why it matters: Shared bridge work compounds across Website, Studio Hub, and Social Dashboard instead of improving one page in isolation.
 
-Then roll the output into Studio Ops summaries.
+First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 5. [SECURITY] Add CF_WORKER_API_TOKEN secret to GitHub repo → Settings → Secrets → Actions. Needs Workers Scripts: Edit + Zone: Read permissions.
+Final score: **84**
+[CF-WORKER-TOKEN] Add CF_WORKER_API_TOKEN secret to GitHub repo → Settings → Secrets → Actions. Needs Workers Scripts: Edit + Zone: Read permissions.
+Why it matters: Security cleanup lowers operational risk without changing public promises or membership logic.
+
+First command: `node scripts/lint-repo.mjs`
 
 ### LATER
 
-#### 9. [PERFORMANCE] Simplification Pass
+#### 1. [SECURITY] Cloudflare WAF rule (CN/RU/HK)
 Final score: **84**
+Cloudflare WAF rule (CN/RU/HK) — JS Challenge firewall rule; requires API token with Zone / Firewall Services / Edit + Zone / Zone / Read; or Studio Owner can create in dashboard [human action / provide token]
+Why it matters: Security cleanup lowers operational risk without changing public promises or membership logic.
 
-Reduce structural complexity without losing atmosphere:
-- collapse duplicated responsibilities
-- reduce page-level inline styling
-- defer lower-value runtime
-- tighten shared asset loading
+First command: `node scripts/lint-repo.mjs`
 
-#### 10. [SEO] Topic Engine
-Final score: **83**
+#### 2. [SECURITY] Add CF_WORKER_API_TOKEN to GitHub Actions secrets so Worker deploys stop depending on local Wrangler auth.
+Final score: **84**
+[CF-WORKER-TOKEN] Add CF_WORKER_API_TOKEN to GitHub Actions secrets so Worker deploys stop depending on local Wrangler auth.
+Why it matters: Security cleanup lowers operational risk without changing public promises or membership logic.
 
-Build compounding search surfaces:
-- game-specific topic clusters
-- lore / worldbuilding clusters
-- membership / value clusters
-- studio process / shipping clusters
+First command: `node scripts/lint-repo.mjs`
 
-#### 11. [BRAND] Founder Signal Layer
-Final score: **82**
+#### 3. [SECURITY] Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
+Final score: **84**
+[WAF] Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
+Why it matters: Security cleanup lowers operational risk without changing public promises or membership logic.
 
-Expose the studio philosophy more deliberately:
-- why the vault exists
-- what the studio rejects
-- what users are joining
-- what makes VaultSpark different
-
-#### 12. [AI] Public Genius Refresh Surface
-Final score: **80**
-
-Turn the Genius Hit List into a recurring generated artifact with:
-- ranked opportunities
-- leverage score
-- confidence score
-- dependency status
-- recommended next implementation wave
+First command: `node scripts/lint-repo.mjs`
 
 ## Recommended Build Order
 
-1. Vault Intent Graph
-2. Conversion Telemetry Matrix
-3. Trust Depth Layer
-4. Network Spine
-5. Adaptive Narrative Personalization
-6. Release Confidence Gate
-7. World Gravity System
-8. Micro-Feedback Engine
-9. Performance Simplification Pass
-10. SEO Topic Engine
-11. Founder Signal Layer
-12. Public Genius Refresh Surface
+1. Post-push CI confirmation
+2. Watch first post-push Lighthouse + playwright-axe runs
+3. Watch first post-push Lighthouse run
+4. Watch first post-push playwright-axe run
+5. Lighthouse budget tightening in CI
+6. Web push test
+7. Forge Window naming decision
+8. Social Dashboard bidirectional mirror
+9. Add CF_WORKER_API_TOKEN secret to GitHub repo → Settings → Secrets → Actions. Needs Workers Scripts: Edit + Zone: Read permissions.
+10. Cloudflare WAF rule (CN/RU/HK)
+11. Add CF_WORKER_API_TOKEN to GitHub Actions secrets so Worker deploys stop depending on local Wrangler auth.
+12. Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
 
 ## Best Immediate Move
 
-If only one implementation wave happens next, it should combine:
-- Vault Intent Graph
-- Conversion Telemetry Matrix
-- Trust Depth Layer
-
-That trio upgrades the site from “polished and intelligently structured” to “adaptive, measurable, and compounding.”
+Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.

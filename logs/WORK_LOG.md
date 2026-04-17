@@ -756,3 +756,12 @@ Public-safe note:
 - Updated protocol entropy successfully; IGNIS stale report succeeded, but project re-score failed and remains an open tooling blocker
 - Prepared audit closeout artifact for 2026-04-15 and finalized the repo for commit/push
 - SIL: 452/500 · Velocity: 7 · Debt: ↓
+
+## 2026-04-17 — Session 88
+
+- Implemented the Genius/CI recovery wave after S87 post-push failures: E2E browser gates now run against local preview instead of Cloudflare-fronted production, and workflow setup no longer mutates package metadata with `npm init -y`.
+- Hardened accessibility issues found by CI: footer contrast now has explicit dark/light surfaces and status legend classes; labeled plain containers now carry semantic roles across homepage, games, community, leaderboards, members, ranks, and Vault Wall surfaces.
+- Regenerated shell assets to `assets/style.shell-93fad06736.css` and synchronized `assets/shell-manifest.json`, `sw.js`, and HTML references.
+- Added `scripts/generate-genius-list.mjs` plus `npm run genius:list`; regenerated `docs/GENIUS_LIST.md` from current repo truth.
+- Verification: `npm run build:check`, `node scripts/csp-audit.mjs`, JS syntax checks, JSON parse, `git diff --check`, and local preview HTTP smoke passed; local Playwright browser execution hung in sandbox, so post-push Actions remains the browser signal.
+- SIL: 478/500 · Velocity: 7 · Debt: ↓
