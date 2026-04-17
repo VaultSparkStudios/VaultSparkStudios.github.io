@@ -8,6 +8,26 @@ Boundary:
 
 ## Entries
 
+### 2026-04-17 — Studio Pulse must be a user-facing experience, not a founder-facing analytical page (S85)
+
+- Category: Soul / Brand / Product Framing
+- Human input (verbatim): "propose a full redesign of https://vaultsparkstudios.com/studio-pulse/ - it reads like an analytical, founder-facing page. Why would a user care about that page? Users want an immersive, easy to understand, engaging experience. That's what the pulse should provide. They have no clue what an IGNIS score means, etc."
+- Area affected: `/studio-pulse/`, homepage pulse teaser, public-intelligence payload shape, sealed-vault pattern used across `/games/` and `/projects/` hubs
+- Required direction:
+  1. Studio Pulse promises life; it must deliver a living window into the worlds being built, not a DevOps transparency receipt.
+  2. Studio-OS vocabulary that users have no mental model for — IGNIS score, sessions completed, edge-function counts, Now/Next/Shipped kanban, CI-green health boxes — is actively harmful to the brand on this page and should be removed or relocated to `/ignis/`.
+  3. The experience should be cinematic and easy to understand: the forge is alive, worlds are at different heat levels, sealed initiatives glow in the deep.
+
+### 2026-04-17 — All 27 studio initiatives must be incorporated across the website, without unveiling proprietary info (S85)
+
+- Category: Portfolio / Brand / IP Posture
+- Human input (verbatim): "Make sure all 27 repos are incorporated all across the website (name could be TBD unless you think adding a name now will help in establishing trademark/IP even while they are still private/not published)"
+- Area affected: `/studio-pulse/`, `/`, `/games/`, `/projects/`, site-wide footer (79 files), public-intelligence schema
+- Required direction:
+  1. Portfolio scale is part of the brand — "the vault is deep" — and should be visible everywhere a visitor lands.
+  2. Unnamed/private projects must not be disclosed by name or by hint — the sigil/glyph treatment is the correct pattern, and the count is the signal.
+  3. The Studio Owner retains full naming optionality; do not force codenames to bootstrap trademark/IP before the founder has chosen names. Preferred approach: treat the sigil-tile SEALED slot as the public presence of an unannounced project until the founder is ready to introduce it.
+
 ### 2026-04-17 — Session 84 closeout CDR review
 
 CDR reviewed — no new entries this session. S84 was pure execution of the S80 Tier 2/3/4 backlog: 7 items shipped at quality bar with no new creative direction given by the Studio Owner beyond the two standalone `/go` commands. Honest-voice and no-fabrication posture was preserved in-kind across every new surface (/social/ honest grouping, personalized welcome honest empty state, push prompt eligibility gating, dynamic hero honest empty state, offline "sealed" framing). No canon-affecting decisions; ETERNAL tier vocabulary was correctly held as escalation-only per CLAUDE.md.

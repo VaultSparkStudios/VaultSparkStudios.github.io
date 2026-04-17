@@ -1,6 +1,40 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 84 closeout)
+Last updated: 2026-04-17 (Session 85 closeout)
+
+## Session Intent: Session 85
+Reframe `/studio-pulse/` from a founder-facing ops kanban into a user-facing immersive "Forge Window," and incorporate the full 27-initiative portfolio across the website without revealing proprietary info.
+
+## Where We Left Off (Session 85)
+- Shipped: **8 items at quality bar** across two `/go` rounds. Round 1: (1) `/studio-pulse/` fully rebuilt as **The Forge Window** (cinematic hero with breathing ember backdrop, portfolio heartbeat strip, current-focus band, Living Worlds grid, Tools & Platforms grid, 12-tile Sealed Vault sigil grid, signal strip, coming-next teasers); killed the Now/Next/Shipped founder kanban + IGNIS tile + sessions/edge-functions stats + "All Systems Green" checklist. (2) Catalog pipeline rewritten to source from `studio-hub/src/data/studioRegistry.js` (15 registry items vs prior 8 hand-authored) with self-hosted-override rule so `deployedUrl` on the studio domain elevates an item to SPARKED. (3) Portfolio scale block added to `public-intelligence.json` (`{total:27, publicListed:15, sealedCount:12, sparked:4, forge:9, vaulted:2}`). (4) Homepage pulse teaser rewritten — "27 initiatives. One vault. One live window." replaces the prior "builds in the open / IGNIS" framing. Round 2: (5) Reusable `assets/sealed-vault-row.js` component — count-driven SVG sigil grid with scoped injected CSS, context-aware copy, `prefers-reduced-motion` guards, no inline scripts (CSP-clean). (6) Mounted on `/games/` hub (context=games) and (7) `/projects/` hub (context=projects) with `public-intelligence.js` loader appended. (8) `scripts/propagate-nav.mjs` footer legend upgraded — fourth chip `⬡ SEALED — Deep forge` + "27 initiatives under the vault banner · open the Forge Window →" inline signal; propagated across 79 HTML files.
+- Deferred: Softening the homepage `Studio Intelligence` surface (`intel-focus`/`intel-ignis`/`intel-next` IDs) — confirmed on scan those IDs are no longer actually live on the homepage; only `/assets/home-intelligence.js` still references them defensively. No user-facing action needed; remove dead code in a future cleanup sweep.
+- Tests: `node --check` on new/edited JS (`studio-pulse-live.js`, `sealed-vault-row.js`, `generate-public-intelligence.mjs`) → all passed. `node scripts/csp-audit.mjs` → passed (95 HTML files). `node scripts/propagate-csp.mjs` → 0 updated, 91 unchanged. `node scripts/generate-public-intelligence.mjs` → written (portfolio block confirmed via curl). Local preview (127.0.0.1:4173) smoke: `/`, `/studio-pulse/`, `/games/`, `/projects/` all returned 200.
+- Deploy: pending — manual commit + push from this closeout (closeout-autopilot script not installed in this repo).
+
+### Shipped
+- **`/studio-pulse/` redesigned as The Forge Window** (`studio-pulse/index.html`, `assets/studio-pulse-live.js`) — immersive cinematic rebuild: animated ember breathing hero, portfolio heartbeat (4 tone-coded tiles), current-focus band auto-selecting top-progress FORGE game, Living Worlds grid with heat bars + translated status labels (`PLAYABLE NOW` / `TAKING SHAPE` / `RESTING`), Tools & Platforms grid, 12-tile Sealed Vault sigil grid with staggered pulse + `prefers-reduced-motion` guards, signal strip with session/moves-shipped counter linking to Signal Log + changelog, three vague coming-next teasers. Removed: Now/Next/Shipped kanban, IGNIS stat tile, sessions/edge-functions/ranks counters, "Studio Health — All Systems Green" checklist, bridge-status note. Full light-mode overrides preserved. No new inline scripts (CSP-clean).
+- **Registry-driven catalog** (`scripts/generate-public-intelligence.mjs`) — `CATALOG` constant replaced with dynamic import of `studio-hub/src/data/studioRegistry.js` → `PROJECTS`. Filters out internal items (`website`, `studio-ops`). Derives `status` from `vaultStatus` with a self-hosted override: `deployedUrl` on `vaultsparkstudios.com` + non-vaulted = SPARKED. `progressForPhase(developmentPhase, vaultStatus)` mapping converts registry phases into honest visible progress percentages. Catalog sorts SPARKED → FORGE (progress desc) → VAULTED. 15 items now publicly listed vs previous 8.
+- **Portfolio scale block on `public-intelligence.json`** — new `portfolio: { total:27, publicListed:15, sealedCount:12, sparked:4, forge:9, vaulted:2 }` key. Sealed count is a pure scale signal — zero names, zero categories, zero proprietary leakage.
+- **Homepage pulse teaser refreshed** (`index.html`) — replaced "Studio Transparency / The vault builds in the open / IGNIS" with "The Forge Window / 27 initiatives. One vault. One live window." + "Browse worlds" secondary CTA. IGNIS link retained site-wide in nav + footer for the curious, but de-emphasized on the marketing surface.
+- **Reusable Sealed Vault row** (`assets/sealed-vault-row.js`) — self-contained component with injected scoped CSS (`vs-sealed-*` class prefix). Reads `VSPublicIntel.portfolio.sealedCount`. Context-aware copy via `data-sealed-vault-context="games|projects|default"` attribute on the host `<div data-sealed-vault-row>`. Builds count-driven SVG sigil tiles with staggered `animation-delay` based on index, honors `prefers-reduced-motion`. Light-mode overrides built-in. No inline scripts.
+- **Mounted sealed-vault row on `/games/` and `/projects/` hubs** (`games/index.html`, `projects/index.html`) — single `<div data-sealed-vault-row>` drop-in before each hub's existing CTA section. `public-intelligence.js` loader + `sealed-vault-row.js` component appended to the scripts-at-end-of-body block on both pages.
+- **Site-wide footer scale signal** (`scripts/propagate-nav.mjs`) — footer vault-status-legend extended with fourth chip (`⬡ SEALED — Deep forge`, `#7EC9FF`) + right-aligned "27 initiatives under the vault banner · open the Forge Window →" line. Propagated to 79 HTML files cleanly.
+
+### Verification
+- `node --check` on `assets/studio-pulse-live.js`, `assets/sealed-vault-row.js`, `scripts/generate-public-intelligence.mjs` → **all passed**
+- `node scripts/generate-public-intelligence.mjs` → regenerated api + 3 contract files; `portfolio.sealedCount=12`, `catalog.length=15` confirmed via curl against local preview
+- `node scripts/csp-audit.mjs` → **passed** (95 HTML files; no new inline scripts introduced)
+- `node scripts/propagate-csp.mjs` → 0 updated, 91 unchanged
+- `node scripts/propagate-nav.mjs` → **79 updated, 6 skipped** (portal + game-runtime + error pages)
+- Local preview smoke on 127.0.0.1:4173 → `/` 200, `/studio-pulse/` 200, `/games/` 200, `/projects/` 200, `/api/public-intelligence.json` 200 with portfolio block present
+
+### Open carry-forward
+- [SIL] Watch first post-push Lighthouse + playwright-axe runs — S85 propagated nav footer legend on 79 files, rebuilt pulse page with large animated background gradients + pulsing sigil grid; verify perf + a11y budgets hold.
+- [FOLLOWUP] Soften homepage "Studio Intelligence" dead-code references — `assets/home-intelligence.js` still references `intel-focus` / `intel-ignis` / `intel-next` / `intel-shipped-list` / `intel-blockers-list` / `intel-ecosystem-list` defensively (all setText/renderList calls now no-op because the IDs are gone from the live homepage). Safe to strip on a low-risk sweep.
+- [FOLLOWUP] Consider updating nav dropdown label from "Studio Pulse" → "Forge Window" (URL stays `/studio-pulse/` for SEO) — requires founder sign-off on brand swap.
+- [HAR] Unchanged HAR pair: Ask IGNIS (ANTHROPIC_API_KEY) + 3-item edge-gate/CSP-nonce/rate-limit bundle (CF_WORKER_API_TOKEN).
+
+---
 
 ## Session Intent: Session 84
 Ship unblocked S80 Tier 2/3/4 items at quality bar across as many `/go` rounds as scope cap permits.

@@ -17,8 +17,8 @@
     gtag('config', 'G-RSGLPP4KDZ');
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Studio Pulse — What We're Building | VaultSpark Studios</title>
-  <meta name="description" content="The Studio Pulse — live transparency into what VaultSpark Studios is building right now. Current focus, recent ships, what's coming next." />
+  <title>Studio Pulse — The Forge Window | VaultSpark Studios</title>
+  <meta name="description" content="A live window into the forge. Every world we're building, every tool in motion, every sealed initiative glowing in the deep vault. Updated every session." />
   <link rel="canonical" href="https://vaultsparkstudios.com/studio-pulse/" />
   <meta name="theme-color" content="#000000" />
   <meta name="robots" content="index, follow" />
@@ -38,49 +38,156 @@
   <link rel="stylesheet" href="../assets/style.shell-1b62491f6c.css" />
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Studio Pulse","item":"https://vaultsparkstudios.com/studio-pulse/"}]}</script>
   <style>
-    .pulse-hero { padding:5.5rem 0 3rem; position:relative; }
-    .pulse-hero::before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 15% 50%,rgba(255,196,0,0.08),transparent 35%),radial-gradient(circle at 85% 40%,rgba(31,162,255,0.08),transparent 35%); pointer-events:none; }
-    .pulse-hero .container { position:relative; z-index:1; }
+    /* ── The Forge Window ───────────────────────────────────────────── */
+    .forge-hero { padding:5rem 0 3rem; position:relative; overflow:hidden; }
+    .forge-hero::before { content:""; position:absolute; inset:-10% -5%; pointer-events:none; z-index:0;
+      background:
+        radial-gradient(40% 60% at 18% 30%, rgba(255,154,0,0.14), transparent 65%),
+        radial-gradient(35% 55% at 82% 65%, rgba(31,162,255,0.10), transparent 65%),
+        radial-gradient(80% 100% at 50% 120%, rgba(255,196,0,0.08), transparent 70%);
+      filter:blur(18px);
+      animation: forge-breathe 7s ease-in-out infinite; }
+    @keyframes forge-breathe { 0%,100% { opacity:.85; transform:scale(1); } 50% { opacity:1; transform:scale(1.04); } }
+    @media (prefers-reduced-motion: reduce) { .forge-hero::before { animation:none; } }
+    .forge-hero .container { position:relative; z-index:1; }
 
-    /* Live indicator */
-    .pulse-live-dot { width:8px; height:8px; border-radius:50%; background:#10B981; display:inline-block; position:relative; margin-right:0.4rem; }
-    .pulse-live-dot::after { content:""; position:absolute; inset:-4px; border-radius:50%; background:rgba(16,185,129,0.3); animation:pulse-ring 2s ease-out infinite; }
+    .forge-live-pill { display:inline-flex; align-items:center; gap:0.5rem; padding:0.35rem 0.9rem;
+      background:rgba(255,154,0,0.08); border:1px solid rgba(255,154,0,0.26); border-radius:999px;
+      font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; color:#FFB347; }
+    .forge-live-dot { width:8px; height:8px; border-radius:50%; background:#FF9A00; position:relative; }
+    .forge-live-dot::after { content:""; position:absolute; inset:-5px; border-radius:50%;
+      background:rgba(255,154,0,0.35); animation:pulse-ring 2.2s ease-out infinite; }
+    @media (prefers-reduced-motion: reduce) { .forge-live-dot::after { animation:none; } }
 
-    /* Board columns */
-    .pulse-board { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.25rem; }
+    .forge-h1 { font-family:Georgia,'Times New Roman',serif; font-size:clamp(3rem,7vw,6rem);
+      line-height:0.94; letter-spacing:-0.048em; margin:0.75rem 0 0.9rem; }
+    .forge-h1 em { font-style:normal; color:var(--gold); }
+    .forge-lede { color:var(--muted); font-size:1.1rem; max-width:58ch; line-height:1.65; margin:0 0 1.4rem; }
+    .forge-hero-actions { display:flex; gap:0.7rem; flex-wrap:wrap; }
+    .forge-hero-meta { margin-top:1.2rem; font-size:0.82rem; color:var(--muted); }
+    .forge-hero-meta strong { color:var(--text); font-weight:600; }
 
-    .pulse-col-header { font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:1rem; padding-bottom:0.7rem; border-bottom:2px solid; }
-    .pulse-col-header.now { color:#FFC400; border-color:rgba(255,196,0,0.35); }
-    .pulse-col-header.next { color:#1FA2FF; border-color:rgba(31,162,255,0.35); }
-    .pulse-col-header.shipped { color:#10B981; border-color:rgba(16,185,129,0.35); }
+    /* ── Portfolio heartbeat strip ─────────────────────────────────── */
+    .forge-heartbeat { display:grid; grid-template-columns:repeat(4,1fr); gap:0.9rem;
+      padding:1.25rem; border-radius:18px; background:rgba(255,255,255,0.025);
+      border:1px solid rgba(255,255,255,0.07); }
+    .forge-heartbeat-tile { padding:1rem 1.1rem; border-radius:12px; text-align:left;
+      background:rgba(8,11,18,0.55); border-left:3px solid rgba(255,255,255,0.15); }
+    .forge-heartbeat-tile.tone-sparked { border-left-color:#FFC400; }
+    .forge-heartbeat-tile.tone-forge   { border-left-color:#FF9A00; }
+    .forge-heartbeat-tile.tone-sealed  { border-left-color:#1FA2FF; }
+    .forge-heartbeat-tile.tone-total   { border-left-color:#C6A964; }
+    .forge-heartbeat-tile strong { display:block; font-family:Georgia,'Times New Roman',serif;
+      font-size:2.2rem; font-weight:700; letter-spacing:-0.04em; color:var(--text); line-height:1; margin-bottom:0.45rem; }
+    .forge-heartbeat-tile span { font-size:0.78rem; color:var(--muted); letter-spacing:0.02em; }
+    @media (max-width:780px) { .forge-heartbeat { grid-template-columns:repeat(2,1fr); } }
+    @media (max-width:460px) { .forge-heartbeat { grid-template-columns:1fr; } }
 
-    .pulse-item { padding:1.1rem 1.2rem; border-radius:14px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.07); margin-bottom:0.7rem; transition:border-color 0.2s; }
-    .pulse-item:hover { border-color:rgba(255,255,255,0.14); }
-    .pulse-item:last-child { margin-bottom:0; }
-    .pulse-item-label { font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; margin-bottom:0.35rem; }
-    .pulse-item.now .pulse-item-label { color:#FFC400; }
-    .pulse-item.next .pulse-item-label { color:#1FA2FF; }
-    .pulse-item.shipped .pulse-item-label { color:#10B981; }
-    .pulse-item-title { font-size:0.92rem; font-weight:700; color:var(--text); margin-bottom:0.3rem; line-height:1.35; }
-    .pulse-item-desc { font-size:0.82rem; color:var(--muted); line-height:1.55; }
-    .pulse-item-meta { margin-top:0.6rem; font-size:0.73rem; color:var(--dim); }
+    /* ── Current focus band ───────────────────────────────────────── */
+    .forge-current-focus { padding:2.2rem 2.4rem; border-radius:20px;
+      background:linear-gradient(135deg, rgba(255,154,0,0.08), rgba(10,13,22,0.95) 60%, rgba(31,162,255,0.05));
+      border:1px solid rgba(255,154,0,0.18); position:relative; overflow:hidden; }
+    .forge-current-focus::after { content:""; position:absolute; inset:auto -20% -40% -20%; height:80%;
+      background:radial-gradient(closest-side, rgba(255,154,0,0.15), transparent 75%); pointer-events:none; z-index:0; }
+    .forge-current-focus > * { position:relative; z-index:1; }
+    .focus-eyebrow { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.73rem; font-weight:800;
+      letter-spacing:0.14em; text-transform:uppercase; color:#FFB347; margin-bottom:0.85rem; }
+    .focus-dot { width:8px; height:8px; border-radius:50%; background:#FF9A00; box-shadow:0 0 14px rgba(255,154,0,0.7);
+      animation:focus-pulse 1.9s ease-in-out infinite; }
+    @keyframes focus-pulse { 50% { opacity:0.45; } }
+    @media (prefers-reduced-motion: reduce) { .focus-dot { animation:none; } }
+    .focus-name { font-family:Georgia,'Times New Roman',serif; font-size:clamp(2rem,4.5vw,3.2rem);
+      line-height:1; letter-spacing:-0.03em; margin-bottom:0.85rem; color:var(--text); }
+    .focus-note { font-size:1.02rem; color:var(--muted); max-width:60ch; line-height:1.6; margin-bottom:1.1rem; }
+    .focus-link { font-weight:700; font-size:0.92rem; color:var(--gold); text-decoration:none; border-bottom:1px solid rgba(255,196,0,0.35); }
+    .focus-link:hover { border-color:rgba(255,196,0,0.7); }
 
-    /* Game status bars */
-    .game-status-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1rem; }
-    .game-status-card { padding:1.25rem; border-radius:16px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.07); }
-    .game-status-name { font-weight:700; font-size:0.92rem; margin-bottom:0.3rem; color:var(--text); }
-    .game-status-tag { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:0.75rem; display:inline-block; }
-    .game-progress-track { height:4px; border-radius:999px; background:rgba(255,255,255,0.07); overflow:hidden; margin-bottom:0.4rem; }
-    .game-progress-fill { height:100%; border-radius:999px; }
-    .game-status-note { font-size:0.8rem; color:var(--dim); line-height:1.5; }
+    /* ── World / tool cards ───────────────────────────────────────── */
+    .forge-card-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:1.1rem; }
+    .forge-world-card { display:block; position:relative; padding:1.35rem 1.4rem; border-radius:18px;
+      background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.08);
+      text-decoration:none; color:inherit; overflow:hidden; transition:transform 0.22s ease, border-color 0.22s ease, background 0.22s ease; }
+    .forge-world-card:hover { transform:translateY(-2px); border-color:rgba(255,255,255,0.2); background:rgba(255,255,255,0.05); }
+    .forge-world-card:focus-visible { outline:2px solid var(--gold); outline-offset:3px; }
+    .forge-world-glow { position:absolute; inset:-40% -20% auto -20%; height:85%; pointer-events:none; opacity:0.55; }
+    .forge-world-card.tone-sparked .forge-world-glow { background:radial-gradient(closest-side, rgba(255,196,0,0.22), transparent 70%); }
+    .forge-world-card.tone-forge   .forge-world-glow { background:radial-gradient(closest-side, rgba(31,162,255,0.16), transparent 70%); }
+    .forge-world-card.tone-vaulted .forge-world-glow { background:radial-gradient(closest-side, rgba(148,163,184,0.14), transparent 70%); opacity:0.4; }
+    .forge-world-card > *:not(.forge-world-glow) { position:relative; z-index:1; }
+    .forge-world-head { margin-bottom:0.55rem; }
+    .forge-world-status { font-size:0.68rem; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; padding:0.22rem 0.55rem; border-radius:999px; }
+    .forge-world-card.tone-sparked .forge-world-status { color:#FFC400; background:rgba(255,196,0,0.08); border:1px solid rgba(255,196,0,0.3); }
+    .forge-world-card.tone-forge   .forge-world-status { color:#7EC9FF; background:rgba(31,162,255,0.08); border:1px solid rgba(31,162,255,0.3); }
+    .forge-world-card.tone-vaulted .forge-world-status { color:#94a3b8; background:rgba(148,163,184,0.06); border:1px solid rgba(148,163,184,0.25); }
+    .forge-world-name { font-family:Georgia,'Times New Roman',serif; font-size:1.45rem; line-height:1.1; letter-spacing:-0.02em; margin:0.15rem 0 0.5rem; color:var(--text); }
+    .forge-world-note { font-size:0.88rem; color:var(--muted); line-height:1.55; margin-bottom:1rem; min-height:2.5em; }
+    .forge-world-heat { height:5px; border-radius:999px; background:rgba(255,255,255,0.06); overflow:hidden; margin-bottom:0.8rem; }
+    .forge-world-heat-fill { height:100%; border-radius:999px; background:linear-gradient(90deg, rgba(255,196,0,0.85), rgba(255,154,0,0.85)); transition:width 0.6s ease; }
+    .forge-world-card.tone-forge   .forge-world-heat-fill { background:linear-gradient(90deg, rgba(31,162,255,0.75), rgba(126,201,255,0.75)); }
+    .forge-world-card.tone-vaulted .forge-world-heat-fill { background:linear-gradient(90deg, rgba(148,163,184,0.5), rgba(148,163,184,0.3)); }
+    .forge-world-enter { font-size:0.8rem; font-weight:700; letter-spacing:0.04em; color:var(--gold); }
 
-    /* Stats row */
-    .pulse-stats { display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:1rem; }
-    .pulse-stat { padding:1.25rem; border-radius:16px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.07); text-align:center; }
-    .pulse-stat strong { display:block; font-size:1.8rem; font-weight:800; letter-spacing:-0.03em; color:var(--gold); }
-    .pulse-stat span { font-size:0.78rem; color:var(--muted); }
+    /* ── Sealed vault grid ─────────────────────────────────────────── */
+    .forge-sealed-wrap { padding:2rem; border-radius:20px; background:rgba(8,11,18,0.65); border:1px solid rgba(31,162,255,0.14); position:relative; overflow:hidden; }
+    .forge-sealed-wrap::before { content:""; position:absolute; inset:0; pointer-events:none;
+      background:radial-gradient(60% 80% at 50% 10%, rgba(31,162,255,0.09), transparent 70%); }
+    .forge-sealed-caption { font-size:1rem; color:var(--muted); max-width:62ch; line-height:1.6; margin:0.3rem 0 1.4rem; position:relative; z-index:1; }
+    .forge-sealed-caption strong { color:#7EC9FF; font-family:Georgia,'Times New Roman',serif; font-size:1.4rem; font-weight:700; margin-right:0.25em; }
+    .forge-sealed-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:0.7rem; position:relative; z-index:1; }
+    @media (max-width:900px) { .forge-sealed-grid { grid-template-columns:repeat(4,1fr); } }
+    @media (max-width:520px) { .forge-sealed-grid { grid-template-columns:repeat(3,1fr); } }
+    .forge-sealed-tile { aspect-ratio:1/1; border-radius:14px; background:rgba(8,11,18,0.85); border:1px solid rgba(31,162,255,0.18);
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.45rem; color:rgba(126,201,255,0.55);
+      position:relative; overflow:hidden; transition:color 0.3s ease, border-color 0.3s ease; }
+    .forge-sealed-tile::before { content:""; position:absolute; inset:0; background:radial-gradient(closest-side, rgba(31,162,255,0.12), transparent 75%);
+      opacity:0.5; animation:sealed-pulse 3.4s ease-in-out infinite; animation-delay:var(--seal-delay,0s); }
+    @keyframes sealed-pulse { 50% { opacity:1; } }
+    @media (prefers-reduced-motion: reduce) { .forge-sealed-tile::before { animation:none; } }
+    .forge-sealed-tile:hover { color:rgba(126,201,255,0.95); border-color:rgba(31,162,255,0.45); }
+    .forge-sealed-sigil { width:30px; height:30px; position:relative; z-index:1; }
+    .forge-sealed-label { font-size:0.62rem; font-weight:800; letter-spacing:0.2em; position:relative; z-index:1; }
+    .forge-sealed-foot { margin-top:1.3rem; font-size:0.85rem; color:var(--muted); position:relative; z-index:1; }
+    .forge-sealed-foot a { color:var(--gold); font-weight:600; }
 
-    @media (max-width:980px) { .pulse-board { grid-template-columns:1fr; } }
+    /* ── Signal strip ─────────────────────────────────────────────── */
+    .forge-signal-strip { padding:1.9rem 2rem; border-radius:18px; background:rgba(255,255,255,0.025); border:1px solid rgba(255,255,255,0.08); }
+    .signal-strip-eyebrow { font-size:0.72rem; font-weight:800; letter-spacing:0.14em; text-transform:uppercase; color:#FFB347; margin-bottom:0.8rem; }
+    .signal-strip-head { display:flex; justify-content:space-between; align-items:flex-end; gap:1.5rem; margin-bottom:0.9rem; flex-wrap:wrap; }
+    .signal-strip-session { font-family:Georgia,'Times New Roman',serif; font-size:1.7rem; color:var(--text); letter-spacing:-0.02em; }
+    .signal-strip-updated { font-size:0.82rem; color:var(--muted); }
+    .signal-strip-count { text-align:right; }
+    .signal-strip-count strong { display:block; font-family:Georgia,'Times New Roman',serif; font-size:2.4rem; color:var(--gold); line-height:1; }
+    .signal-strip-count span { font-size:0.78rem; color:var(--muted); }
+    .signal-strip-body { font-size:0.96rem; color:var(--muted); line-height:1.65; margin-bottom:1.1rem; }
+    .signal-strip-body a { color:var(--gold); }
+    .signal-strip-cta { display:flex; gap:0.6rem; flex-wrap:wrap; }
+
+    /* ── Coming next teasers ──────────────────────────────────────── */
+    .forge-teasers { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1rem; }
+    .forge-teaser { padding:1.3rem 1.4rem; border-radius:16px; background:rgba(8,11,18,0.55); border:1px dashed rgba(255,255,255,0.14); position:relative; }
+    .forge-teaser-glyph { color:rgba(255,196,0,0.55); margin-bottom:0.7rem; }
+    .forge-teaser-eyebrow { font-size:0.76rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; color:#FFC400; margin-bottom:0.55rem; }
+    .forge-teaser-body { font-size:0.9rem; color:var(--muted); line-height:1.55; margin:0; }
+
+    /* Light mode overrides — restore readable contrast on cream bg */
+    body.light-mode .forge-heartbeat,
+    body.light-mode .forge-world-card,
+    body.light-mode .forge-signal-strip,
+    body.light-mode .forge-sealed-wrap,
+    body.light-mode .forge-teaser { background:rgba(255,255,255,0.85); border-color:rgba(17,24,39,0.12); }
+    body.light-mode .forge-heartbeat-tile { background:rgba(246,239,229,0.8); }
+    body.light-mode .forge-heartbeat-tile span,
+    body.light-mode .forge-world-note,
+    body.light-mode .forge-sealed-caption,
+    body.light-mode .signal-strip-body,
+    body.light-mode .signal-strip-updated,
+    body.light-mode .forge-teaser-body { color:#4a5568; }
+
+    @media (max-width:700px) {
+      .forge-h1 { font-size:clamp(2.4rem,9vw,3.4rem); }
+      .forge-current-focus { padding:1.6rem 1.5rem; }
+      .forge-signal-strip { padding:1.4rem 1.3rem; }
+    }
   </style>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-/wHCWsu3/A7Rt8oL/T5Qg3eslm9p+kU2tEYgp4v/xIY=' 'sha256-+OaCNUpUU5GoCU4+oad9b9MacDUFH32YR3GImBA4UN4=' 'sha256-+RIrT64inX0ubBcjOoYWhy7Jb6SAZMUiKEk/eCZqtNg=' 'sha256-1f+iUGaS/tV/IT/SxHxFryi8N+j1nu0ax/cPjHvkExQ=' 'sha256-1UY3+YG3/aghZuROwdh01e6q3uBGn09YVftjxTlBqTE=' 'sha256-1ZsX1Q3JhID5b3Unk1zg9jtp8HuHxURfCnyFzo6uAeU=' 'sha256-2mXITJ1YD8lz4Tw3hXIAQ2hgaIcyBsso606s9iI5g2A=' 'sha256-2xXUg/196h/tX0WnVQlbChmt/j93eXuHaPJeAf1YhVQ=' 'sha256-3OXxYM9KCkAI2lTufdyuFj+VO9LWJnySU3fV5Rgp+Iw=' 'sha256-4y2yTgN07L7tuLdqd22tHqnjb1Yo5EQcJNPOH/fTj6k=' 'sha256-6LhxaKZePez9MP4tlBaCqBzlgynkabWjj7FWyMEaYng=' 'sha256-7BacaBw1R2dA5pWgHSvkrmJ4PsSbfZCGoEbQC+jzAMI=' 'sha256-7bRYfRNF3v0rtgRf+qfpnIxeQQIWRYrnclRLEPwxwhY=' 'sha256-7C2vUIVAJvKmknoPiB6IBynlB3mvTHXCIrMRUB/LZvY=' 'sha256-8T9MUAz019BccEVCJ6buo7p+JM+fJYzUcvnWnduGEog=' 'sha256-8U0RIjARy7qzYC5RwK9GeXc0WtOgOcNhxUTTsE1enp0=' 'sha256-9i2pD2QhYd3osboHWtoNhCnJdrGpc2iGaYBai+wuX90=' 'sha256-AaR3SCdKNH1u0oZvTcN5k27P2LYSqbxtvArx3Bs92YA=' 'sha256-aizFzz4bZutx7qgu7RXmRZGMRd5mYvlspNnLIvS4rkI=' 'sha256-B0Ih8HRLmhPzlG26g5c3tsl1F+qMGidoXr6Tw2pTFI0=' 'sha256-bL/8PICYU8gGT1wjuRN/P7+s+lryCt+83wHP4RfhYKg=' 'sha256-CdXn9YGiqMwd3FW7xyPE30YBeudv+VZ6kKHJ7Cdn5bU=' 'sha256-ciajO9x2ca79NU8K+BmjlysfzbF0ffjN/2i314BZNFc=' 'sha256-Cn8cgKQdmoC3d/Tv86QQd+nDdze0KUVRIfNKXGO52+A=' 'sha256-COUnE3ToJZYJKwuHSNCT8VrWs3abhnWVBQOTHgGTwCk=' 'sha256-cTWw+/37UKLZzzibF7Z4sFhqshwkFkfMvN5moVpGWVs=' 'sha256-DI8wO3BL8C0RW1hL/m3q5V89wajK3zC8Sb+e41ZK1iY=' 'sha256-dZNuqX91zJojUg7FRdKg5d3LknfbrNLsddyjo/JDQiQ=' 'sha256-eFO5NODxDfDVqyEPyqdG/Dz8Mtdjnvh9goAJJe+xoNo=' 'sha256-eRNx56eNVfqSfkdV0D89AOJYd32voJKxy+nRg2ECi4E=' 'sha256-eTF0uPI6DpYpKVmaJJeRRm5TSXzdtCyFkiuOgTRNN5E=' 'sha256-f+8wKcR7c1J4kLNcGbnkeOUhOQc0Ey4PFpiCyQ4EbtU=' 'sha256-GEw0AdBFktwtVecnKrmGqCnQhddgYdiccv8eggRcnA0=' 'sha256-gjrsK+3+1qjtugXehTH/NW0COoI/iuInT8VAUsoz7Xw=' 'sha256-h4sfDKt6K2tjjF3dmOKlVPaxGoKBPgazLnQjsxfHup4=' 'sha256-hMokIpxJV+xG8muehdpUbahVuudRpv7yJP+FKbCjRII=' 'sha256-JlgNW+c5oNngZ1rXtsZXGRsLLX0Yr0DkXQGCLvv1Hlk=' 'sha256-JtO+XML6gBWvTOulkLJgMR3keUN/GqVhk3HPRcztEow=' 'sha256-JujKqvQ+wLaBwZQ+rK0dDSeBX3rT7sN0wby2YNyIlDs=' 'sha256-kbZWY0z2jKEzGLEhfIYBmsc9SwjJa1BmsRwJx7IHfjM=' 'sha256-KecdaJxOiEnwU5qkfW1UHfDsvTfFNioRpAdMt2431PM=' 'sha256-ljgqE4jQKsGm9I/gZbnwtQjLit940k13FUOyoXw1vfg=' 'sha256-LwC/urUyBuOCbU/WBOtkkeiNYU5er25TOxMTF1nNaJE=' 'sha256-mcd67U10waTeaveNwnkY7gYqld6zyN/2PCZQAZF9XgA=' 'sha256-mj9nbBksLckGNaRqDEvnDqifesV34AUlZGqmGntABCQ=' 'sha256-MkWf/kTAOal6If76oa1+fA8xjWeUKKkt1BgpDj4D7LU=' 'sha256-MPCNW8EeYdQO2ENDhJ36wrnu8OnJ9mGgpWmIG21C3rg=' 'sha256-mTVeUmhtx5tdNVR3a747EpmWpUe6l35d9FVRZA+XL9Y=' 'sha256-N/OCmgWRMrDt1JSXitj/rQjPFxJqGhaXPgP7OMRyGB8=' 'sha256-N0fOl/CVxtz6VGyUDrx9bSrgpwyQqxRCoGuWCUBXjA8=' 'sha256-n7gCSh+hU/1xcTDzaobqnsaiWHAUFiqLnpUCOcQSh98=' 'sha256-NOZjWwcSx/j6+rpN4af2WO21BHp+jDrUk/cqQdz3+3c=' 'sha256-o2BXKuyloE3HMVrNhJie0MaDnpdDnG5Msdu62ocdKJI=' 'sha256-O8b0wiLMhUX3A8djPdIJh9k5o1aqly2z9vZZ5sYRZ1s=' 'sha256-OGjKTgfIj8EtC+b24/ADQRob4X3P68RTQi09Z4ssH5g=' 'sha256-oVeOPKPGaKBhpCTYRMKU5qxgqdBjeIb6+nFty1ZXD9A=' 'sha256-P6RV97xfCg4rXjSFg5I9z/dfimNO4ic3nGDhY266ZU8=' 'sha256-pc92owTgV6BIa8Xc5NXyUVrfAQZaJSy2Rp+VITHyeQ8=' 'sha256-q0ByLDZkrFNE5/fVAMa1R4yuB0HHf0j2b+PZwHk7BT8=' 'sha256-qxoC3mKtgmaAmqcL6kfLRd6m2Pmz+aI2b0K0gVjdil0=' 'sha256-rg03oIvrgJxvUNs0QaxQQhzO+NXBVDIiJGjE/nzHLzg=' 'sha256-RRh7pYvJv7ZfAIjulsFXRkeNgc2BM3YeFb46Ak7y3v8=' 'sha256-rv9m+Zwiq39ImAp3CNjC6iySpzCV+/saUqey0gFksjY=' 'sha256-SEG/Iqfp7Jz9ZaM9HXJBeOYplq3Ufv3Lm2TVMyNnqE0=' 'sha256-TBtL6/PNVhPQm61ugN8uNWsNQABMTd35wXKPsL7Fv8c=' 'sha256-TLVBJnWanYh2sw4nDSOC8TLLUfLwFbAG6cctPL95C74=' 'sha256-tzcyzRA1BVljjKPxQcsqyEn62T2GndOkIweuNdj2DbI=' 'sha256-uqyuMjRe3AHxCzBx0FvgB/xL8EKRN1D1jKbWtYfhaa4=' 'sha256-uYEDRGI6TjjpHLWrfzmxAaLptsIOhOI1g4taK18Oxc4=' 'sha256-v9v+Yk52U9LnkFCjckD+mkYvN+N/a1Jl0e5ypZ56JV8=' 'sha256-vmyfqyDZUXXqWf75d8otxKiGl/+tsLjksDDru9KO3M8=' 'sha256-vQEQ5JoaFVv7EkF7Lar4nFxADSCU/ambnhlH6nAntTY=' 'sha256-w2Fca9bqvC7M598cwJOt+MJuHa4b54qrjP1ocOg24p4=' 'sha256-wn0C6i6EwMM/GnXgjKUdPY1N4pC0jmszlxsRTTv/vyM=' 'sha256-XdHcZWQrqgwOuuIEs9J5a0nYI4/agz9wQE8ikMlG4Gs=' 'sha256-XMTWN+tTWBvU9w0HAaXxS6Bb29p1eYb6VNKiS5/vlH0=' 'sha256-YVLnuhVB/nuNGzEDOQgQEQRIufzMjqotqcvE58rdAOc=' 'sha256-z7Sl5Tg//aXuL4lvfOeTl+rbuzK91l/8vs8P6bsG108=' 'sha256-zmT6FzF6S2On2wGptP8icP1tOkFozNId+19sT3vReuU=' 'sha256-zUKHQIDMxojEgcPgYQ+IcB3n7qz/F4cg8BBwGiu4hMI=' 'sha256-zYL1PYLsJ2AVFrGRzf2g71M9If1UAmx1nHJSR0GfDx8=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com https://challenges.cloudflare.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com https://challenges.cloudflare.com https://browser.sentry-cdn.com; frame-src 'self' https://challenges.cloudflare.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com;" />
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -135,101 +242,97 @@
     <div id="vs-push-prompt-root" class="container"></div>
 
     <!-- Hero -->
-    <section class="pulse-hero" aria-labelledby="pulse-heading">
+    <section class="forge-hero" aria-labelledby="pulse-heading">
       <div class="container">
-        <div style="display:inline-flex;align-items:center;gap:0.4rem;padding:0.3rem 0.8rem;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:999px;font-size:0.73rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:#10B981;margin-bottom:1rem;">
-          <span class="pulse-live-dot" aria-hidden="true"></span>
-          Live Studio Feed &nbsp;·&nbsp; Updated each session
+        <div class="forge-live-pill">
+          <span class="forge-live-dot" aria-hidden="true"></span>
+          Live from the forge
         </div>
-        <h1 id="pulse-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(2.8rem,6vw,5rem);line-height:0.96;letter-spacing:-0.045em;margin:0.5rem 0 1rem;">Studio<br>Pulse.</h1>
-        <p style="color:var(--muted);font-size:1.08rem;max-width:56ch;line-height:1.65;">Radical transparency into how VaultSpark Studios builds. What's active right now, what just shipped, and what's coming next. Updated every session.</p>
-        <div style="margin-top:1.25rem;display:flex;gap:0.6rem;align-items:center;font-size:0.82rem;color:var(--muted);">
-          <span>Last updated: <strong id="pulse-last-updated" style="color:var(--text);">Loading live session data…</strong></span>
-          &nbsp;·&nbsp;
-          <a href="/studio/" style="color:var(--muted);">About the studio →</a>
+        <h1 id="pulse-heading" class="forge-h1">The Forge<br>Window<em>.</em></h1>
+        <p class="forge-lede">A live look inside the vault. Every world we're shaping. Every tool in motion. Every sealed initiative glowing in the deep. Nothing pretends to be further along than it is.</p>
+        <div class="forge-hero-actions">
+          <a class="button" href="#current-focus">See what's firing &nbsp;&darr;</a>
+          <a class="button-secondary" href="/membership/">Get closer to the forge</a>
+        </div>
+        <div class="forge-hero-meta">
+          Last heartbeat: <strong id="forge-last-updated">Reading live session…</strong>
+          &nbsp;·&nbsp; <a href="/studio/" style="color:inherit;border-bottom:1px dotted rgba(255,255,255,0.25);">About the studio</a>
         </div>
       </div>
     </section>
 
-    <!-- Studio Stats -->
-    <section style="padding:0 0 3rem;" aria-labelledby="stats-heading">
+    <!-- Portfolio heartbeat -->
+    <section style="padding:0 0 3.5rem;" aria-labelledby="heartbeat-heading">
       <div class="container">
-        <div class="eyebrow" style="margin-bottom:1.25rem;">Studio at a Glance</div>
-        <div class="pulse-stats">
-          <div class="pulse-stat"><strong id="pulse-stat-sessions">—</strong><span>Sessions completed</span></div>
-          <div class="pulse-stat"><strong id="pulse-stat-live">—</strong><span>Live projects</span></div>
-          <div class="pulse-stat"><strong id="pulse-stat-forge">—</strong><span>Projects in the forge</span></div>
-          <div class="pulse-stat"><strong id="pulse-stat-edge">—</strong><span>Active edge functions</span></div>
-          <div class="pulse-stat"><strong id="pulse-stat-ranks">—</strong><span>Vault rank tiers</span></div>
-          <div class="pulse-stat"><strong id="pulse-stat-status">—</strong><span><a href="/ignis/" style="color:inherit;text-decoration:none;border-bottom:1px dotted rgba(255,255,255,0.3);" title="What is IGNIS?">IGNIS score</a></span></div>
-          <div class="pulse-stat"><strong id="pulse-stat-social">—</strong><span>Tracked social accounts</span></div>
+        <div class="section-head" style="margin-bottom:1rem;">
+          <div><div class="eyebrow">Portfolio heartbeat</div><h2 id="heartbeat-heading" class="sr-only">Portfolio scale</h2></div>
+        </div>
+        <div class="forge-heartbeat" id="forge-heartbeat" role="list" aria-label="Portfolio state counts"></div>
+      </div>
+    </section>
+
+    <!-- Current focus -->
+    <section id="current-focus" style="padding:0 0 3.5rem;" aria-labelledby="focus-heading">
+      <div class="container">
+        <h2 id="focus-heading" class="sr-only">Currently in the forge</h2>
+        <div class="forge-current-focus" id="forge-current-focus">
+          <div class="focus-eyebrow"><span class="focus-dot" aria-hidden="true"></span>Right now in the forge</div>
+          <div class="focus-name">Reading the live session…</div>
+          <div class="focus-note">The forge is breathing. Give it a second.</div>
         </div>
       </div>
     </section>
 
-    <!-- Now / Next / Shipped Board -->
-    <section style="padding:0 0 4rem;" aria-labelledby="board-heading">
+    <!-- The Living Worlds -->
+    <section style="padding:0 0 4rem;" aria-labelledby="worlds-heading">
       <div class="container">
-        <div class="section-head" style="margin-bottom:2rem;">
-          <div><div class="eyebrow">Build Board</div><h2 id="board-heading">Now / Next / Shipped</h2></div>
+        <div class="section-head" style="margin-bottom:1.6rem;">
+          <div><div class="eyebrow">The living worlds</div><h2 id="worlds-heading">Worlds in motion</h2></div>
+          <a href="/games/" class="button-secondary button-sm">All worlds &rarr;</a>
         </div>
-        <div class="pulse-board">
+        <div class="forge-card-grid" id="forge-worlds-grid"></div>
+      </div>
+    </section>
 
-          <!-- NOW column -->
-          <div>
-            <div class="pulse-col-header now">Now Building</div>
+    <!-- Tools & Platforms -->
+    <section style="padding:0 0 4rem;" aria-labelledby="tools-heading">
+      <div class="container">
+        <div class="section-head" style="margin-bottom:1.6rem;">
+          <div><div class="eyebrow">Tools &amp; platforms</div><h2 id="tools-heading">Everything else the vault is building</h2></div>
+          <a href="/projects/" class="button-secondary button-sm">All projects &rarr;</a>
+        </div>
+        <div class="forge-card-grid" id="forge-tools-grid"></div>
+      </div>
+    </section>
 
-            <div id="pulse-now-list"></div>
-          </div>
-
-          <!-- NEXT column -->
-          <div>
-            <div class="pulse-col-header next">Coming Next</div>
-
-            <div id="pulse-next-list"></div>
-          </div>
-
-          <!-- SHIPPED column -->
-          <div>
-            <div class="pulse-col-header shipped">Recently Shipped</div>
-
-            <div id="pulse-shipped-list"></div>
-          </div>
-
+    <!-- Sealed in the Deep Forge -->
+    <section style="padding:0 0 4rem;" aria-labelledby="sealed-heading">
+      <div class="container">
+        <div class="forge-sealed-wrap">
+          <div class="eyebrow" style="color:#7EC9FF;">Sealed in the deep forge</div>
+          <h2 id="sealed-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.6rem,3vw,2.3rem);letter-spacing:-0.02em;margin:0.3rem 0 0.6rem;">Not every world speaks yet.</h2>
+          <p class="forge-sealed-caption" id="forge-sealed-caption">Loading sealed-vault census…</p>
+          <div class="forge-sealed-grid" id="forge-sealed-grid" aria-hidden="true"></div>
+          <p class="forge-sealed-foot">When a seal breaks, <a href="/membership/">Vault Members hear first</a>. The vault rewards proximity.</p>
         </div>
       </div>
     </section>
 
-    <!-- Game Status Board -->
-    <section style="padding:0 0 4rem;" aria-labelledby="game-status-heading">
+    <!-- Signal strip -->
+    <section style="padding:0 0 4rem;" aria-labelledby="signal-heading">
       <div class="container">
-        <div class="section-head" style="margin-bottom:2rem;">
-          <div><div class="eyebrow">Catalog Status</div><h2 id="game-status-heading">Game &amp; Project Build State</h2></div>
-          <a href="/games/" class="button-secondary button-sm">View All</a>
-        </div>
-        <div class="game-status-grid" id="pulse-catalog-grid"></div>
+        <h2 id="signal-heading" class="sr-only">Latest signal</h2>
+        <div class="forge-signal-strip" id="forge-signal-strip"></div>
       </div>
     </section>
 
-    <!-- Studio health note -->
-    <section style="padding:0 0 5rem;">
+    <!-- Coming next teasers -->
+    <section style="padding:0 0 4rem;" aria-labelledby="next-heading">
       <div class="container">
-        <div class="studio-pulse-cta" style="padding:2rem 2.4rem;border-radius:var(--radius);background:linear-gradient(135deg,rgba(16,185,129,0.04),rgba(13,17,28,0.95) 50%,rgba(31,162,255,0.04));border:1px solid rgba(16,185,129,0.12);display:flex;align-items:flex-start;gap:1.5rem;flex-wrap:wrap;">
-          <div style="flex-shrink:0;width:44px;height:44px;border-radius:50%;background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.25);display:flex;align-items:center;justify-content:center;font-size:1.2rem;" aria-hidden="true">⚡</div>
-          <div style="flex:1;min-width:260px;">
-            <div style="font-size:0.74rem;font-weight:800;text-transform:uppercase;letter-spacing:0.1em;color:#10B981;margin-bottom:0.35rem;">Studio Health</div>
-            <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:0.4rem;">Status: Sparked &mdash; All Systems Green</h3>
-            <p style="font-size:0.88rem;color:var(--muted);line-height:1.65;">CI passing. Sentry active. 16 edge functions live. GitHub Pages auto-deploy operational. Cloudflare Worker handling all security headers. The vault is fully pressurized and the forge is hot.</p>
-            <p id="pulse-bridge-note" style="font-size:0.82rem;color:var(--muted);line-height:1.65;margin-top:0.7rem;">Loading Studio Hub and social-dashboard bridge status…</p>
-            <div style="margin-top:0.9rem;display:flex;gap:1rem;flex-wrap:wrap;font-size:0.78rem;">
-              <span style="color:#10B981;">✓ CI green</span>
-              <span style="color:#10B981;">✓ Sentry active</span>
-              <span style="color:#10B981;">✓ Auth operational</span>
-              <span style="color:#10B981;">✓ Payments live</span>
-              <span style="color:#10B981;">✓ Push notifications active</span>
-            </div>
-          </div>
+        <div class="section-head" style="margin-bottom:1.6rem;">
+          <div><div class="eyebrow">Next to escape the vault</div><h2 id="next-heading">What's being sharpened</h2></div>
         </div>
+        <div class="forge-teasers" id="forge-next-teasers"></div>
       </div>
     </section>
 
@@ -301,10 +404,12 @@
           <a href="/sitemap-page/">Sitemap</a>
         </div>
       </div>
-      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
+      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
         <span style="color:#fbbf24;">🔥 SPARKED — Live</span>
         <span style="color:#f59e0b;">⚒️ FORGE — Building</span>
         <span style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+        <span style="color:#7EC9FF;">⬡ SEALED — Deep forge</span>
+        <span style="margin-left:auto;color:var(--muted);font-weight:500;">27 initiatives under the vault banner · <a href="/studio-pulse/" style="color:var(--gold);">open the Forge Window &rarr;</a></span>
       </div>
       <div class="footer-bottom">
         <span>&copy; 2026 VaultSpark Studios. All rights reserved. VaultSpark&trade; is a trademark of VaultSpark Studios.</span>

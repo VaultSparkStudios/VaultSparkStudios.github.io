@@ -2,6 +2,27 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-17 — `/studio-pulse/` is a user-facing experience ("The Forge Window"), not a founder-facing ops dashboard (Session 85)
+
+- Status: active
+- Decision: `/studio-pulse/` presents an immersive, player-first view of the portfolio — cinematic hero, portfolio heartbeat, Living Worlds + Tools grids, Sealed Vault sigil grid, latest-signal strip. No raw Studio OS kanban items, no IGNIS number, no session/edge-functions stats, no green-checkbox health box. IGNIS and Studio OS internals remain accessible at `/ignis/` for the curious, linked but de-emphasized on marketing surfaces.
+- Why: founder reviewed the prior page and correctly flagged that it read as an analytical ops kanban. Users have no mental model for "IGNIS score," "sessions completed," "edge functions," or a Now/Next/Shipped Trello board. A "Pulse" page that promises life should deliver a living window into the worlds being built, not a devops transparency receipt.
+- Maintenance rule: new Pulse additions must pass the "would a visiting player care?" filter. Anything that reads as internal ops belongs on `/ignis/` or in the private Studio Ops repo, not on this page.
+
+### 2026-04-17 — Portfolio catalog sources from studio-hub registry, not hand-authored constants (Session 85)
+
+- Status: active
+- Decision: `scripts/generate-public-intelligence.mjs` dynamically imports `studio-hub/src/data/studioRegistry.js → PROJECTS` to build the public catalog. It filters internal-only items (`website`, `studio-ops`), applies a self-hosted-SPARKED override (items with `deployedUrl` on the studio domain and non-vaulted status are treated as SPARKED regardless of the registry `vaultStatus` flag — the registry lags actual launch state), and maps `developmentPhase` to visible progress percentages.
+- Why: the prior hand-authored `CATALOG` array drifted from reality (Call of Doodie and PromoGrind were stuck at manual progress values for months). Registry-as-source-of-truth means adding a project to the hub automatically surfaces it on the public site the next time `npm run build` runs.
+- Maintenance rule: do not regress to hand-authored catalog entries. If a progress value needs correction, fix `progressForPhase()` or the registry `developmentPhase` — not the call site.
+
+### 2026-04-17 — Unnamed/sealed initiatives are represented as a pure count, never as codenames (Session 85)
+
+- Status: active
+- Decision: the gap between the 27-initiative portfolio total and the 15 publicly listed items is surfaced as a `portfolio.sealedCount = 12` number rendered as sigil-only SVG tiles via `assets/sealed-vault-row.js`. No codenames, no category hints, no descriptions — only a count and a uniform vault-lock glyph.
+- Why: founder direction asked for portfolio scale to be visible across the site without unveiling proprietary info. Forcing codenames on unnamed projects risks trademark/IP drift (locking in names before the founder has chosen them) and spoils future launches. A sigil-only treatment establishes brand presence ("the vault has sealed things, the forge is large") while preserving full naming optionality for the founder.
+- Maintenance rule: a project graduates from the sealed count to a named catalog tile only when it is added to `studio-hub/src/data/studioRegistry.js` with a real name + `vaultStatus`. The sealed count auto-decrements because `sealedCount = PORTFOLIO_TOTAL - publicListed`.
+
 ### 2026-04-16 — Trust-depth guidance should stay context-specific by conversion surface instead of using one generic proof card set (Session 79)
 
 - Status: active

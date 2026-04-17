@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 import { buildPublicContracts } from './lib/public-intelligence-contracts.mjs';
 
 const root = process.cwd();
@@ -17,16 +18,94 @@ const outputTargets = [
   path.join(contractsDir, 'social-dashboard.json'),
 ];
 
-const CATALOG = [
-  { name: 'Call of Doodie', type: 'game', status: 'SPARKED', progress: 88, note: 'Live, public, and still actively refined.' },
-  { name: 'VaultSpark Football GM', type: 'game', status: 'SPARKED', progress: 76, note: 'Live beta with ongoing polish and iteration.' },
-  { name: 'MindFrame', type: 'game', status: 'FORGE', progress: 42, note: 'Core identity is strong; next step is deeper live adoption.' },
-  { name: 'Solara', type: 'game', status: 'FORGE', progress: 30, note: 'World and combat systems still consolidating.' },
-  { name: 'VaultFront', type: 'game', status: 'FORGE', progress: 24, note: 'Early runtime and gameplay differentiation still in progress.' },
-  { name: 'The Exodus', type: 'game', status: 'FORGE', progress: 18, note: 'Conceptual direction is stronger than implementation depth.' },
-  { name: 'PromoGrind', type: 'project', status: 'SPARKED', progress: 91, note: 'Live utility product with incremental UX refinements.' },
-  { name: 'Vorn', type: 'project', status: 'FORGE', progress: 61, note: 'Strong operating direction, still moving toward fuller agent-native depth.' },
-];
+// Portfolio scale — total initiatives tracked across the VaultSpark org
+// (public + deep-forge sealed). The delta surfaces as "sealed" slots on the site.
+const PORTFOLIO_TOTAL = 27;
+
+// Public-safe rewrites of registry notes for each listed initiative. Keeps
+// player-facing language aligned even when the registry description is
+// engineer-flavoured. Keys are registry `id` values.
+const CATALOG_NOTES = {
+  'call-of-doodie': 'Playable now. Satirical multiplayer chaos, live and still sharpening.',
+  'vaultspark-football-gm': 'Live beta. Deep football GM with analytics — polish rounds still in motion.',
+  'gridiron-gm': 'Resting in the vault. Legacy GM sim, paused on known bugs.',
+  'gridiron-gm-play': 'Resting in the vault. Browser deployment of Gridiron GM.',
+  'solara': 'Desert survival world. Systems converging.',
+  'vaultfront': 'Strategy world taking shape. Early runtime, big ambitions.',
+  'vaultspark-forge': 'Crafting-and-building world in early concept. Sealed silhouette for now.',
+  'the-exodus': 'Narrative survival — a dying world, a hard decision. Direction locked, scope expanding.',
+  'voidfall': 'Nine-book cosmic-horror saga. Book 1 at lock. Not a game — a world.',
+  'promogrind': 'Live utility. Vault-gated promo engine, iterating on UX.',
+  'mindframe': 'Metacognition training platform. Live on external infra; identity consolidating.',
+  'velaxis': 'Crypto market intelligence dashboard. Production-stable v1.7.',
+  'statsforge': 'Sports analytics platform. ForgeRating + ForgeAI, 500K+ programmatic pages.',
+  'vorn': 'Social-first, agent-native platform. Give your agent a home.',
+  'social-dashboard': 'Internal social-ops surface. Bridges live social data into the studio.',
+};
+
+// Translate developmentPhase → approximate visible progress so the forge reads
+// honestly without leaking internal velocity numbers.
+function progressForPhase(phase, vaultStatus) {
+  if (vaultStatus === 'vaulted') return 10;
+  const map = {
+    'live-production': 95,
+    'live-internal': 90,
+    'live-beta': 78,
+    'pre-launch': 85,
+    'integration': 72,
+    'backend-dev': 48,
+    'full-stack-dev': 42,
+    'design': 28,
+    'writing': 32,
+    'concept': 14,
+    'paused': 10,
+  };
+  return map[phase] || 35;
+}
+
+async function loadRegistryCatalog() {
+  const registryUrl = pathToFileURL(
+    path.join(process.cwd(), 'studio-hub', 'src', 'data', 'studioRegistry.js')
+  ).href;
+  const { PROJECTS } = await import(registryUrl);
+  const catalog = [];
+  for (const project of PROJECTS) {
+    if (!project || !project.id) continue;
+    if (project.id === 'website') continue; // this very site
+    if (project.id === 'studio-ops') continue; // private internal ops
+    const vaultRaw = (project.vaultStatus || 'forge').toLowerCase();
+    // If an initiative is deployed on the studio's own domain and not paused,
+    // treat it as SPARKED regardless of the registry vaultStatus flag — the
+    // registry lags behind actual launch state for several items.
+    const selfHosted = (project.deployedUrl || '').includes('vaultsparkstudios.com');
+    const effectivelySparked = vaultRaw === 'sparked' || (selfHosted && vaultRaw !== 'vaulted');
+    const status = vaultRaw === 'vaulted' ? 'VAULTED'
+      : effectivelySparked ? 'SPARKED'
+      : 'FORGE';
+    const typeMap = { game: 'game', tool: 'tool', platform: 'platform', infrastructure: 'tool' };
+    const type = typeMap[project.type] || 'project';
+    catalog.push({
+      id: project.id,
+      name: project.name,
+      type,
+      status,
+      progress: progressForPhase(project.developmentPhase, vaultRaw),
+      note: CATALOG_NOTES[project.id] || 'In the forge.',
+      deployedUrl: project.deployedUrl || null,
+      color: project.color || null,
+    });
+  }
+  // Stable order: SPARKED first, then FORGE by progress desc, then VAULTED last
+  const rank = { SPARKED: 0, FORGE: 1, VAULTED: 2 };
+  catalog.sort((a, b) => {
+    const r = rank[a.status] - rank[b.status];
+    if (r !== 0) return r;
+    return b.progress - a.progress;
+  });
+  return catalog;
+}
+
+const CATALOG = await loadRegistryCatalog();
 
 const checkMode = process.argv.includes('--check');
 
@@ -181,6 +260,14 @@ const payload = {
     activeEdgeFunctions: 16,
     vaultRankTiers: 9,
     trackedSocialAccounts: contracts.websitePublic.socialPresence.summary.trackedAccounts,
+  },
+  portfolio: {
+    total: PORTFOLIO_TOTAL,
+    publicListed: CATALOG.length,
+    sealedCount: Math.max(0, PORTFOLIO_TOTAL - CATALOG.length),
+    sparked: countByStatus(CATALOG, 'SPARKED'),
+    forge: countByStatus(CATALOG, 'FORGE'),
+    vaulted: countByStatus(CATALOG, 'VAULTED'),
   },
   catalog: CATALOG,
   ecosystem: {

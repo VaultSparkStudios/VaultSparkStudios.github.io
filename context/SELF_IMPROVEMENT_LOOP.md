@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █▇▇██
-Avgs — 3: 478.0 | 5: 478.4 | 10: 455.1 | 25: 438.2 | all: 439.8
-  └ 3-session: Dev 96.3 | Align 93.0 | Momentum 95.7 | Engage 94.0 | Process 98.7
-Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~4.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-16 | Session 84 | Total: 479/500 | Velocity: 7 | protocolVelocity: 7
+Sparkline (last 5 totals): ▇▇███
+Avgs — 3: 480.7 | 5: 479.4 | 10: 460.5 | 25: 441.0 | all: 441.5
+  └ 3-session: Dev 96.7 | Align 94.3 | Momentum 96.3 | Engage 94.7 | Process 98.7
+Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~4.5 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-17 | Session 85 | Total: 484/500 | Velocity: 8 | protocolVelocity: 8
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,18 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-17 — Session 85 | Total: 484/500 | Velocity: 8 | Debt: →
+**Scores:** Dev 97 · Align 96 · Momentum 97 · Engage 96 · Process 98
+**Shipped (8):** Forge Window rebuild · registry-driven catalog · portfolio scale block · homepage teaser refresh · reusable Sealed Vault component · mounts on `/games/` + `/projects/` · site-wide footer scale signal (79 files).
+**Intent:** Achieved — explicit user brief ("redesign Studio Pulse user-first; incorporate 27 repos without unveiling proprietary info") delivered end-to-end in one session plus cohesion pass.
+**Brainstorm:**
+- The "Sealed Vault" sigil treatment turned a potential proprietary-info trap into a brand asset — the count is the signal. Reusable pattern.
+- Registry-as-source-of-truth collapsed hand-authored drift (CoD was stuck at manual progress=88 for months). Regeneration now follows reality.
+- "The Forge Window" language broke the founder/kanban frame cleanly. Consider whether the nav label follows. No auto-rename without founder sign-off.
+**Commit to TASK_BOARD:** (1) Strip dead intel-* references in `home-intelligence.js`. (2) Founder-decision: rename Studio Pulse nav label.
+
+---
 
 ## 2026-04-16 — Session 84 | Total: 479/500 | Velocity: 7 | Debt: →
 Avgs — 3: 478.0 | 5: 478.4 | 10: 455.1 | 25: 438.2 | all: 439.8

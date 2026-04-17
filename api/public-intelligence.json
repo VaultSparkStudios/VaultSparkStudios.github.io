@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-04-17T00:26:54.717Z",
+  "generatedAt": "2026-04-17T02:13:43.929Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 84,
-    "lastUpdated": "2026-04-16",
-    "currentFocus": "Session 84 closed out: 7 S80 Tier 2/3/4 items shipped at quality bar across two `/go` rounds. Offline page redesigned (vault-forge aesthetic with SVG vault-lock sigil, Georgia SEALED wordmark, aria-live network pill). Investor action logging gated behind GDPR opt-in consent (first-login banner + profile-page toggle). /social/ dashboard page live — reads public-intelligence.social, groups handles honestly (Live / Limited / Reserved). Personalized returning-visitor welcome band on homepage reading VSIntentState (branches on journey_stage x world_affinity x trust_level). Studio nav dropdown propagated across 79 HTML files — /social/ + /press/ now first-class nav destinations. Dynamic hero spotlight between hero sub-copy and CTAs showing highest-progress SPARKED or FORGE title. PWA push opt-in prompt on /studio-pulse/ + /vault-wall/ + /changelog/ deep-linking to #push anchor in portal. Two items still HAR-deferred (unchanged from S83): Ask IGNIS (ANTHROPIC_API_KEY) + 3-item edge-gate/CSP-nonce/rate-limit bundle (CF_WORKER_API_TOKEN).",
-    "nextMilestone": "Watch first post-push Lighthouse + playwright-axe runs (now also exercising S84's 79-file nav propagation against the tightened budgets + dual-URL gate from S82/S83). Then next pickups: extract `public-intelligence.social` into the shared `website-public` contract for Studio Hub consumption (zero-risk cohesion win); ship category-aware send-push edge function + push_preferences column to close the second half of S80 Tier 4 push item. ETERNAL tier vocabulary remains a founder-only CANON decision. CF_WORKER_API_TOKEN still the highest-leverage single founder action (unlocks 3 Tier 1 items).",
+    "currentSession": 85,
+    "lastUpdated": "2026-04-17",
+    "currentFocus": "Session 85 closed out: 8 items shipped at quality bar across two `/go` rounds on a founder-directed brief — reframe /studio-pulse/ as an immersive user-facing experience and incorporate the full 27-initiative portfolio across the site without revealing any proprietary info. Round 1: /studio-pulse/ rebuilt as \"The Forge Window\" (cinematic breathing hero, portfolio heartbeat strip, current-focus band, Living Worlds + Tools grids with heat bars, 12-tile Sealed Vault sigil grid, signal strip, coming-next teasers; killed the Now/Next/Shipped founder kanban + IGNIS tile + sessions/edge-functions counters + All-Systems-Green checklist). Catalog pipeline rewritten to source from studio-hub/src/data/studioRegistry.js with self-hosted SPARKED override — 15 items listed vs prior 8. Portfolio scale block added to public-intelligence.json (total:27, publicListed:15, sealedCount:12, sparked:4, forge:9, vaulted:2). Homepage pulse teaser rewritten around \"27 initiatives. One vault. One live window.\" Round 2: reusable assets/sealed-vault-row.js component with scoped injected CSS + context-aware copy + CSP-clean rendering; mounted on /games/ + /projects/ hubs; scripts/propagate-nav.mjs footer legend extended with fourth SEALED chip + site-wide 27-initiative signal propagated across 79 HTML files. Two HAR items unchanged: Ask IGNIS (ANTHROPIC_API_KEY) + 3-item edge-gate/CSP-nonce/rate-limit bundle (CF_WORKER_API_TOKEN).",
+    "nextMilestone": "Watch first post-push Lighthouse + playwright-axe runs — S85 rebuilt the Pulse page with large animated gradients + pulsing sigil grid and propagated footer changes across 79 files; verify the tightened S82/S83 budgets still hold. Then next pickups: strip dead intel-* references from assets/home-intelligence.js (setText/renderList calls are now defensive no-ops because IDs are gone from the live homepage); founder-decision on renaming the nav label \"Studio Pulse\" → \"Forge Window\" (URL stays /studio-pulse/ for SEO); ship category-aware send-push edge function + push_preferences column to close the second half of S80 Tier 4 push item. CF_WORKER_API_TOKEN remains the highest-leverage single founder action (unlocks 3 Tier 1 infra items).",
     "blockers": [
       "CF_WORKER_API_TOKEN missing — blocks edge-gating private portals, CSP nonce migration, and rate-limit/CSRF on forms (3 S80 Tier 1 infrastructure items)",
       "ANTHROPIC_API_KEY missing in Supabase edge-function secrets — blocks Ask IGNIS concierge and future AI surfaces",
@@ -36,79 +36,174 @@
       "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
       "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
     ],
-    "shipped": [
-      "Offline page redesign (`offline.html`, `assets/error-pages.js`) — inline-SVG vault-lock sigil with dashed-orbit pulse + gold/blue radial vignette + giant Georgia \"SEALED\" wordmark + gold \"Signal Lost\" eyebrow + aria-live `#offline-net-status` pill that flips to \"Signal restored — reopening the vault\" via `navigator.onLine` on `online` event with a 900ms reload grace. `prefers-reduced-motion` guards on pulse + dot; full light-mode override.",
-      "Investor action logging consent (GDPR) (`assets/investor-auth.js`, new `assets/investor-consent-toggle.js`, `investor-portal/profile/index.html`) — `VSInvestorAuth.logAction()` is a no-op until `vs_inv_activity_consent === 'granted'`. First-login consent banner auto-renders once; profile-page toggle lets investors change their mind anytime. New `getConsent()` + `setConsent()` API + `investor:consent-change` event. External consent-toggle script so the profile page's hashed inline-script CSP registry stays untouched. Legal basis (GDPR Art. 6(1)(a)) + audit-trail retention disclosed on the toggle card.",
-      "`/social/` dashboard page (new `social/index.html`, new `assets/social-dashboard.js`) — `/social/` consumes `public-intelligence.json.social` and renders: four-stat channel-footprint summary, featured channels (top 5), honest three-tier grouping (Live presence / Limited presence / Reserved handles — claimed handles aren't faked as active). Offline fallback points at `/contact/`, GitHub, subreddit only. propagate-csp injected the canonical CSP automatically.",
-      "Personalized returning-visitor homepage band (new `assets/home-personalized.js`, `index.html`) — layered on `VSIntentState`. Renders a welcome-back band between hero and social-proof strip for returning / logged-in / pathway-active / membership-intent visitors. Copy branches on `journey_stage` (pricing → VaultSparked, considering → membership-value, activation → finish-joining, member → vault portal, exploring → studio-pulse) and `world_affinity` (links back to last world). Dismissable (session-scoped). GA4 `personalized_welcome_shown`. Honest empty state for fresh anonymous visitors.",
-      "Studio nav dropdown propagated (`scripts/propagate-nav.mjs`, 79 HTML files) — flat \"Studio\" link replaced with a dropdown: *About · Studio Pulse · IGNIS · Vault Pipeline · Changelog · Press Kit · Social · Signal Log*. Makes `/social/` and `/press/` first-class primary-nav destinations.",
-      "Dynamic hero spotlight (new `assets/home-dynamic-hero.js`, `index.html`) — subtle gold pill between hero sub-copy and CTAs: \"🔥 Most-played right now: <game> <progress%> →\" for the highest-progress SPARKED title, falling back to \"⚒️ Hottest in the forge: <game> <progress%> →\" for the highest-progress FORGE title when nothing is sparked. Reads `public-intelligence.catalog`; routes correctly for `/games/` vs `/universe/`. Renders nothing when intelligence is down (honest empty state)."
-    ]
+    "shipped": []
   },
   "stats": {
-    "sessionsCompleted": 84,
-    "liveProjects": 3,
-    "projectsInForge": 5,
+    "sessionsCompleted": 85,
+    "liveProjects": 4,
+    "projectsInForge": 9,
     "activeEdgeFunctions": 16,
     "vaultRankTiers": 9,
     "trackedSocialAccounts": 15
   },
+  "portfolio": {
+    "total": 27,
+    "publicListed": 15,
+    "sealedCount": 12,
+    "sparked": 4,
+    "forge": 9,
+    "vaulted": 2
+  },
   "catalog": [
     {
+      "id": "call-of-doodie",
       "name": "Call of Doodie",
       "type": "game",
       "status": "SPARKED",
-      "progress": 88,
-      "note": "Live, public, and still actively refined."
+      "progress": 85,
+      "note": "Playable now. Satirical multiplayer chaos, live and still sharpening.",
+      "deployedUrl": "https://vaultsparkstudios.com/call-of-doodie/",
+      "color": "#ff9478"
     },
     {
+      "id": "promogrind",
+      "name": "PromoGrind",
+      "type": "tool",
+      "status": "SPARKED",
+      "progress": 85,
+      "note": "Live utility. Vault-gated promo engine, iterating on UX.",
+      "deployedUrl": "https://vaultsparkstudios.com/promogrind/",
+      "color": "#7ae7c7"
+    },
+    {
+      "id": "football-gm",
       "name": "VaultSpark Football GM",
       "type": "game",
       "status": "SPARKED",
-      "progress": 76,
-      "note": "Live beta with ongoing polish and iteration."
+      "progress": 78,
+      "note": "In the forge.",
+      "deployedUrl": "https://vaultsparkstudios.com/vaultspark-football-gm/",
+      "color": "#69b3ff"
     },
     {
+      "id": "social-dashboard",
+      "name": "Social Dashboard",
+      "type": "tool",
+      "status": "SPARKED",
+      "progress": 72,
+      "note": "Internal social-ops surface. Bridges live social data into the studio.",
+      "deployedUrl": "https://app-social-dashboard.vaultsparkstudios.com",
+      "color": "#7ae7c7"
+    },
+    {
+      "id": "mindframe",
       "name": "MindFrame",
-      "type": "game",
+      "type": "tool",
       "status": "FORGE",
-      "progress": 42,
-      "note": "Core identity is strong; next step is deeper live adoption."
+      "progress": 85,
+      "note": "Metacognition training platform. Live on external infra; identity consolidating.",
+      "deployedUrl": "https://steadfast-determination-production.up.railway.app",
+      "color": "#38bdf8"
     },
     {
+      "id": "velaxis",
+      "name": "Velaxis",
+      "type": "tool",
+      "status": "FORGE",
+      "progress": 85,
+      "note": "Crypto market intelligence dashboard. Production-stable v1.7.",
+      "deployedUrl": null,
+      "color": "#4ade80"
+    },
+    {
+      "id": "statsforge",
+      "name": "StatVault",
+      "type": "platform",
+      "status": "FORGE",
+      "progress": 48,
+      "note": "Sports analytics platform. ForgeRating + ForgeAI, 500K+ programmatic pages.",
+      "deployedUrl": null,
+      "color": "#f97316"
+    },
+    {
+      "id": "solara",
       "name": "Solara",
       "type": "game",
       "status": "FORGE",
-      "progress": 30,
-      "note": "World and combat systems still consolidating."
+      "progress": 42,
+      "note": "Desert survival world. Systems converging.",
+      "deployedUrl": null,
+      "color": "#ffc874"
     },
     {
+      "id": "voidfall",
+      "name": "Voidfall",
+      "type": "game",
+      "status": "FORGE",
+      "progress": 32,
+      "note": "Nine-book cosmic-horror saga. Book 1 at lock. Not a game — a world.",
+      "deployedUrl": null,
+      "color": "#818cf8"
+    },
+    {
+      "id": "vaultfront",
       "name": "VaultFront",
       "type": "game",
       "status": "FORGE",
-      "progress": 24,
-      "note": "Early runtime and gameplay differentiation still in progress."
+      "progress": 28,
+      "note": "Strategy world taking shape. Early runtime, big ambitions.",
+      "deployedUrl": null,
+      "color": "#c084fc"
     },
     {
+      "id": "the-exodus",
       "name": "The Exodus",
       "type": "game",
       "status": "FORGE",
-      "progress": 18,
-      "note": "Conceptual direction is stronger than implementation depth."
+      "progress": 28,
+      "note": "Narrative survival — a dying world, a hard decision. Direction locked, scope expanding.",
+      "deployedUrl": null,
+      "color": "#f472b6"
     },
     {
-      "name": "PromoGrind",
-      "type": "project",
-      "status": "SPARKED",
-      "progress": 91,
-      "note": "Live utility product with incremental UX refinements."
-    },
-    {
+      "id": "vorn",
       "name": "Vorn",
-      "type": "project",
+      "type": "platform",
       "status": "FORGE",
-      "progress": 61,
-      "note": "Strong operating direction, still moving toward fuller agent-native depth."
+      "progress": 28,
+      "note": "Social-first, agent-native platform. Give your agent a home.",
+      "deployedUrl": "https://joinvorn.com",
+      "color": "#a78bfa"
+    },
+    {
+      "id": "vaultspark-forge",
+      "name": "VaultSpark Forge",
+      "type": "game",
+      "status": "FORGE",
+      "progress": 14,
+      "note": "Crafting-and-building world in early concept. Sealed silhouette for now.",
+      "deployedUrl": null,
+      "color": "#fb923c"
+    },
+    {
+      "id": "gridiron-gm",
+      "name": "Gridiron GM",
+      "type": "game",
+      "status": "VAULTED",
+      "progress": 10,
+      "note": "Resting in the vault. Legacy GM sim, paused on known bugs.",
+      "deployedUrl": null,
+      "color": "#6ae3b2"
+    },
+    {
+      "id": "gridiron-gm-play",
+      "name": "Gridiron GM Play",
+      "type": "game",
+      "status": "VAULTED",
+      "progress": 10,
+      "note": "Resting in the vault. Browser deployment of Gridiron GM.",
+      "deployedUrl": null,
+      "color": "#6ae3b2"
     }
   ],
   "ecosystem": {

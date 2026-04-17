@@ -1,5 +1,19 @@
 # Work Log
 
+## 2026-04-17 — Session 85 (Forge Window redesign + 27-initiative portfolio cohesion — 8 shipped across 2 `/go` rounds)
+
+- studio-pulse/index.html (rebuilt): title + meta-description → "Studio Pulse — The Forge Window"; `<style>` block replaced with `.forge-*` design system (hero ember animation, heartbeat tiles, current-focus band, world cards with tone variants sparked/forge/vaulted, sealed-vault sigil grid, signal strip, teasers); `<main>` content replaced — hero + heartbeat + current-focus + Living Worlds + Tools & Platforms + Sealed Vault + Signal strip + Coming Next. Removed: Now/Next/Shipped kanban, IGNIS stat tile, sessions/edge-functions/ranks/social counters, "All Systems Green" checklist, bridge-status note. `prefers-reduced-motion` guards on every animated element. Light-mode overrides preserved.
+- assets/studio-pulse-live.js (rewritten): renders `forge-heartbeat`, `forge-current-focus` (picks highest-progress FORGE game), worlds grid, tools grid, sealed-vault sigil grid (count-driven, staggered pulse), signal strip, coming-next teasers. Slug-to-path route map for 15 known items; fallback to `deployedUrl` or type home. All external string content HTML-escaped.
+- scripts/generate-public-intelligence.mjs: imported `pathToFileURL`; replaced static `CATALOG` constant with async `loadRegistryCatalog()` that imports `studio-hub/src/data/studioRegistry.js → PROJECTS`, filters `website` + `studio-ops`, applies self-hosted SPARKED override (`deployedUrl` on vaultsparkstudios.com + non-vaulted = SPARKED), maps `developmentPhase` → visible progress via `progressForPhase()`, sorts SPARKED→FORGE(progress desc)→VAULTED. Added `CATALOG_NOTES` mapping (15 player-facing rewrites). Added `PORTFOLIO_TOTAL = 27` + `portfolio` key on payload (`total`, `publicListed`, `sealedCount`, `sparked`, `forge`, `vaulted`).
+- index.html: pulse-teaser eyebrow + heading + body + CTAs rewritten — "The Forge Window / 27 initiatives. One vault. One live window." Primary CTA opens Forge Window; secondary CTA now "Browse worlds" (was "What is IGNIS?").
+- assets/sealed-vault-row.js (new): reusable component reading `VSPublicIntel.portfolio.sealedCount`. Self-injected scoped CSS (`vs-sealed-*` prefix), context-aware copy via `data-sealed-vault-context`, count-driven SVG sigils with staggered animation-delay, `prefers-reduced-motion` honored, light-mode overrides. No inline scripts.
+- games/index.html: `<div data-sealed-vault-row data-sealed-vault-context="games">` mounted before gravity rail; `public-intelligence.js` + `sealed-vault-row.js` scripts appended before `</body>`.
+- projects/index.html: `<div data-sealed-vault-row data-sealed-vault-context="projects">` mounted before CTA section; same script pair appended.
+- scripts/propagate-nav.mjs: footer vault-status-legend extended with fourth chip (`⬡ SEALED — Deep forge`, #7EC9FF) + right-aligned "27 initiatives under the vault banner · open the Forge Window →" inline signal. Propagated to 79 HTML files.
+- api/public-intelligence.json + 3 contract files: regenerated. Catalog grew from 8 items to 15, portfolio block present.
+
+---
+
 ## 2026-04-16 — Session 84 (S80 Tier 2/3/4 — 7 shipped across 2 `/go` rounds)
 
 - offline.html (rewritten): vault-forge aesthetic — inline-SVG vault-lock sigil with dashed-orbit pulse, gold+blue radial vignette, Georgia "SEALED" wordmark (clamp 8rem-18rem), aria-live `#offline-net-status` pill, light-mode overrides. Replaces generic 📡 + "You're Offline" with "The vault is sealed." + Signal Lost eyebrow. prefers-reduced-motion guards on pulse + dot.

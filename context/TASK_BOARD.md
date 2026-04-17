@@ -1,6 +1,31 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 84 — 7 S80 Tier 2/3/4 items shipped across 2 `/go` rounds)
+Last updated: 2026-04-17 (Session 85 — Forge Window redesign + 27-initiative portfolio cohesion; 8 items shipped)
+
+## Session 85 — Forge Window redesign + portfolio cohesion (8 shipped)
+
+### Round 1 (5 items)
+
+- [x] **[S85][UX] /studio-pulse/ rebuilt as "The Forge Window"** — **DONE S85**: cinematic immersive rebuild; animated ember hero, portfolio heartbeat strip, current-focus band, Living Worlds + Tools grids, 12-tile Sealed Vault sigil grid, signal strip, coming-next teasers. Killed Now/Next/Shipped kanban, IGNIS tile, sessions + edge-functions counters, "All Systems Green" checklist. `prefers-reduced-motion` + light-mode guards. No inline scripts.
+- [x] **[S85][INTELLIGENCE] Registry-driven catalog** — **DONE S85**: `generate-public-intelligence.mjs` replaces static CATALOG with dynamic `studio-hub/src/data/studioRegistry.js` import; `progressForPhase` mapping; self-hosted SPARKED override. 15 items now publicly listed vs prior 8.
+- [x] **[S85][INTELLIGENCE] Portfolio scale block on public intelligence** — **DONE S85**: `portfolio: {total:27, publicListed:15, sealedCount:12, sparked:4, forge:9, vaulted:2}` added to `public-intelligence.json`. Zero private/proprietary data surfaced.
+- [x] **[S85][UX] Homepage pulse teaser refreshed** — **DONE S85**: "Studio Transparency / builds in the open / IGNIS" replaced with "The Forge Window / 27 initiatives. One vault. One live window." + "Browse worlds" CTA.
+- [x] **[S85][COHESION] Reusable Sealed Vault row component** — **DONE S85**: `assets/sealed-vault-row.js` self-contained with injected scoped CSS, context-aware copy (`games|projects|default`), count-driven SVG sigil tiles, reduced-motion honored, CSP-clean.
+
+### Round 2 (3 items)
+
+- [x] **[S85][COHESION] Sealed Vault row on /games/ hub** — **DONE S85**: `<div data-sealed-vault-row data-sealed-vault-context="games">` mounted before gravity rail; loader + component scripts appended.
+- [x] **[S85][COHESION] Sealed Vault row on /projects/ hub** — **DONE S85**: mounted before CTA section with context=projects.
+- [x] **[S85][COHESION] Footer-wide 27-initiative signal** — **DONE S85**: `propagate-nav.mjs` footer legend extended with fourth SEALED chip + inline "27 initiatives under the vault banner · open the Forge Window →"; propagated across 79 HTML files.
+
+### S85 carry-forward
+
+- [ ] **[SIL] Watch first post-push Lighthouse + playwright-axe runs** — heavier pulse page + animated gradients; verify tightened S82/S83 budgets still hold.
+- [ ] **[FOLLOWUP] Strip dead intel-* references in home-intelligence.js** — IDs no longer on homepage; defensive setText/renderList calls now no-op. Low-risk cleanup sweep.
+- [ ] **[FOLLOWUP] Founder decision: rename nav "Studio Pulse" → "Forge Window"** — URL stays `/studio-pulse/` for SEO; needs brand sign-off.
+- [ ] **[FOLLOWUP] Names for sealed initiatives (12 remaining)** — when a sealed project gets a public name + vault status, it auto-promotes from the sealed count to a named catalog tile.
+
+---
 
 ## Session 84 — S80 Tier 2/3/4 execution (7 shipped)
 
