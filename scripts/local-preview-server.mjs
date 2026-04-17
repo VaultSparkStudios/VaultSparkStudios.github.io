@@ -1,11 +1,16 @@
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
+import zlib from 'node:zlib';
 import { URL } from 'node:url';
 
 const root = process.cwd();
 const host = process.env.LOCAL_PREVIEW_HOST || '127.0.0.1';
 const port = Number(process.env.LOCAL_PREVIEW_PORT || 4173);
+
+const COMPRESSIBLE = new Set([
+  '.html', '.css', '.js', '.mjs', '.json', '.svg', '.txt', '.xml',
+]);
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -50,11 +55,23 @@ const server = http.createServer((req, res) => {
 
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME[ext] || 'application/octet-stream';
-  res.writeHead(200, {
+  const acceptEncoding = req.headers['accept-encoding'] || '';
+  const canGzip = COMPRESSIBLE.has(ext) && acceptEncoding.includes('gzip');
+
+  const headers = {
     'Content-Type': contentType,
     'Cache-Control': 'no-store',
-  });
-  fs.createReadStream(filePath).pipe(res);
+  };
+  if (canGzip) headers['Content-Encoding'] = 'gzip';
+  if (canGzip) headers['Vary'] = 'Accept-Encoding';
+
+  res.writeHead(200, headers);
+  const stream = fs.createReadStream(filePath);
+  if (canGzip) {
+    stream.pipe(zlib.createGzip()).pipe(res);
+  } else {
+    stream.pipe(res);
+  }
 });
 
 server.listen(port, host, () => {

@@ -183,6 +183,8 @@
       will-change: transform, opacity;
       animation: letterForge 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       animation-delay: calc(0.12s + var(--li, 0) * 0.065s);
+      /* Static gold glow — not animated so compositor can handle opacity+transform */
+      text-shadow: 0 0 18px rgba(255,196,0,0.35);
     }
 
     /* ── Hero tagline (cinematic sub-statement below wordmark) ── */
@@ -390,24 +392,9 @@
       100% { opacity: 0; transform: translate(-50%,-50%) scale(2.6); filter: blur(50px); }
     }
     @keyframes letterForge {
-      0% {
-        opacity: 0;
-        transform: translateY(10px) scale(0.96);
-        filter: blur(5px);
-        text-shadow: 0 0 55px rgba(255,196,0,1), 0 0 110px rgba(255,130,0,0.75);
-      }
-      28% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-        text-shadow: 0 0 28px rgba(255,196,0,0.6);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        filter: blur(0);
-        text-shadow: none;
-      }
+      0%   { opacity: 0; transform: translateY(10px) scale(0.96); }
+      28%  { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
     @keyframes heroFadeUp {
       from { opacity: 0; transform: translateY(14px); }
@@ -935,7 +922,7 @@
   <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
   <meta name="referrer" content="strict-origin-when-cross-origin" />
-<script src="/assets/theme-toggle.shell-14e2419e21.js"></script>
+<script defer src="/assets/theme-toggle.shell-14e2419e21.js"></script>
 <script src="/assets/analytics.js" defer></script>
 <script src="/assets/pwa-nav.js" defer></script>
 <script src="/assets/shell-health.shell-0995bd7945.js" defer></script>
@@ -1499,7 +1486,7 @@
                   <span>Coming Back</span>
                 </div>
                 <div class="card-actions">
-                  <a class="button-secondary" href="/games/gridiron-gm/" aria-label="Learn more about Gridiron GM">Learn More</a>
+                  <a class="button-secondary" href="/games/gridiron-gm/">View Gridiron GM</a>
                   <a class="button" href="/vault-member/#register">Get Early Access</a>
                 </div>
               </div>
