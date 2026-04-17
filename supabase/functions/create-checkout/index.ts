@@ -1,6 +1,7 @@
 // VaultSpark Studios — Stripe Checkout Session Creator
-// Three-tier membership: vault_sparked, vault_sparked_pro, promogrind_pro (legacy)
-// Phase-aware pricing via reserve_phase_slot RPC.
+// Plans: vault_sparked, vault_sparked_pro (phase-aware monthly),
+//        vault_sparked_annual, vault_sparked_pro_annual (fixed annual),
+//        promogrind_pro (legacy env-var).
 //
 // Deploy: supabase functions deploy create-checkout
 // Set secrets:
@@ -20,9 +21,17 @@ const stripe = new Stripe(Deno.env.get('STRIPE_SECRET_KEY') ?? '', {
 const APP_URL = Deno.env.get('APP_URL') ?? 'https://vaultsparkstudios.com';
 
 const SUCCESS_URLS: Record<string, string> = {
-  vault_sparked:     `${APP_URL}/vault-member/?checkout=success&plan=sparked`,
-  vault_sparked_pro: `${APP_URL}/vault-member/?checkout=success&plan=pro`,
-  promogrind_pro:    `${APP_URL}/promogrind/?checkout=success`,
+  vault_sparked:          `${APP_URL}/vault-member/?checkout=success&plan=sparked`,
+  vault_sparked_annual:   `${APP_URL}/vault-member/?checkout=success&plan=sparked&billing=annual`,
+  vault_sparked_pro:      `${APP_URL}/vault-member/?checkout=success&plan=pro`,
+  vault_sparked_pro_annual: `${APP_URL}/vault-member/?checkout=success&plan=pro&billing=annual`,
+  promogrind_pro:         `${APP_URL}/promogrind/?checkout=success`,
+};
+
+// Fixed annual Stripe price IDs — not phase-gated (annual is a flat rate).
+const ANNUAL_PRICE_IDS: Record<string, string> = {
+  vault_sparked_annual:     'price_1TNJPfGMN60PfJYsHKVkjL12',
+  vault_sparked_pro_annual: 'price_1TNJPtGMN60PfJYsAXZYQNVj',
 };
 
 function buildCorsHeaders(origin: string | null) {
@@ -67,7 +76,10 @@ serve(async (req: Request) => {
     let priceId: string;
     let enrolledPhase = 1;
 
-    if (plan === 'vault_sparked' || plan === 'vault_sparked_pro') {
+    if (ANNUAL_PRICE_IDS[plan]) {
+      // Annual plans — fixed price, no phase slot needed.
+      priceId = ANNUAL_PRICE_IDS[plan];
+    } else if (plan === 'vault_sparked' || plan === 'vault_sparked_pro') {
       const { data: slotData, error: slotError } = await supabase
         .rpc('reserve_phase_slot', { p_plan_key: plan });
 

@@ -7,8 +7,8 @@
   if (!btnMonthly || !btnAnnual) return;
 
   var ANNUAL_PLAN_KEYS = {
-    sparked: null,
-    pro: null
+    sparked: 'vault_sparked_annual',
+    pro: 'vault_sparked_pro_annual'
   };
   var PRICES = {
     sparked: { monthly: '4.99',  annual: '44.99'  },
@@ -44,8 +44,8 @@
     if (proEl)           proEl.innerHTML         = '<sub>$</sub>' + PRICES.pro[m];
     if (proPeriodEl)     proPeriodEl.textContent = m === 'annual' ? 'per year · save 25%' : 'per month';
     if (honestyNote) {
-      honestyNote.textContent = m === 'annual' && !window.VSSCheckoutAvailability.annualEnabled
-        ? 'Annual pricing is visible now, but annual checkout activates after the Stripe annual plans are published. Monthly and free membership are live today.'
+      honestyNote.textContent = m === 'annual'
+        ? 'Annual billing — billed once per year. Cancel anytime from your portal settings.'
         : 'Cancel anytime from your portal settings. No annual lock-in.';
     }
 
