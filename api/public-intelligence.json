@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-04-17T19:25:11.654Z",
+  "generatedAt": "2026-04-17T19:42:12.455Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -25,9 +25,9 @@
   },
   "pulse": {
     "now": [
-      "[S90][COHESION] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`.",
-      "[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages — carry the stronger trust language and objection-handling from homepage/membership/VaultSparked into join/invite high-intent routes.",
-      "[SIL] Playwright sandbox fallback tier — document and script an HTTP/DOM-only smoke tier for environments where browser process spawn/hangs make Playwright unusable. S89 brainstorm item."
+      "[S90][COHESION] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. [DEFERRED — needs founder confirm before cross-repo write]",
+      "[SIL] A11y artifact triage helper — script that parses axe/Lighthouse CI JSON artifacts and maps failures to shared CSS/template owners. S89 brainstorm item.",
+      "[SIL] Contract validation gate — `scripts/validate-contracts.mjs` validates context/contracts/*.json against expected schema before Social Dashboard mirror work touches that payload."
     ],
     "next": [
       "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -476,12 +476,12 @@
   },
   "ciHealth": {
     "allGreen": false,
-    "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-04-17T18:51:46.295Z",
+    "summary": "CI gates in progress or status unknown.",
+    "checkedAt": "2026-04-17T19:37:07.335Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
-        "status": "failure"
+        "status": "success"
       },
       {
         "name": "Accessibility Audit",
@@ -489,7 +489,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "success"
+        "status": "in_progress"
       }
     ]
   }

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "node scripts/build-shell-assets.mjs && node scripts/generate-public-intelligence.mjs",
-    "build:check": "node scripts/build-shell-assets.mjs --check && node scripts/generate-public-intelligence.mjs --check && node scripts/lint-repo.mjs",
+    "build:check": "node scripts/build-shell-assets.mjs --check && node scripts/generate-public-intelligence.mjs --check && node scripts/lint-repo.mjs && node scripts/validate-contracts.mjs --check",
     "lint:repo": "node scripts/lint-repo.mjs",
     "lint:repo:staged": "node scripts/lint-repo.mjs --staged",
     "test": "npx playwright test",
@@ -17,6 +17,7 @@
     "startup:snapshot": "node scripts/startup-snapshot.mjs",
     "genius:list": "node scripts/generate-genius-list.mjs",
     "smoke:http": "node scripts/smoke-http.mjs",
+    "validate:contracts": "node scripts/validate-contracts.mjs",
     "provision:test-accounts": "node scripts/provision-vault-test-accounts.mjs"
   },
   "devDependencies": {

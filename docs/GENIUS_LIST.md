@@ -28,26 +28,26 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 2. [VERIFY] CI result ingestion into public intelligence
-Final score: **94**
-[SIL] CI result ingestion into public intelligence — add GitHub Actions status reader that writes a public-safe release-confidence summary into generated intelligence after successful post-push runs. S89 brainstorm item, High probability.
-Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 3. [VERIFY] Staging Lighthouse recovery
+#### 2. [VERIFY] Playwright sandbox fallback tier
 Final score: **93**
-[PERF] Staging Lighthouse recovery — /games/ at 0.84 and /vaultsparked/ at 0.81 on staging (both just below 0.85 threshold, continue-on-error). Brand icon fix applied; may need further optimization.
+[SIL] Playwright sandbox fallback tier — document and script an HTTP/DOM-only smoke tier for environments where browser process spawn/hangs make Playwright unusable. S89 brainstorm item.
 Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 4. [COHESION] Social Dashboard bidirectional mirror
+#### 3. [COHESION] Social Dashboard bidirectional mirror
 Final score: **89**
 [S90][COHESION] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at ../vaultspark-social-dashboard.
 Why it matters: Shared bridge work compounds across Website, Studio Hub, and Social Dashboard instead of improving one page in isolation.
 
 First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 4. [INTELLIGENCE] Extend proof/depth beyond the three core pages
+Final score: **87**
+[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages — carry the stronger trust language and objection-handling from homepage/membership/VaultSparked into join/invite high-intent routes.
+Why it matters: Keeping the ranked audit fresh prevents the site from sliding back into piecemeal iteration.
+
+First command: `node scripts/generate-genius-list.mjs`
 
 ### NEXT
 
@@ -110,9 +110,9 @@ First command: `node scripts/lint-repo.mjs`
 ## Recommended Build Order
 
 1. Post-push CI confirmation
-2. CI result ingestion into public intelligence
-3. Staging Lighthouse recovery
-4. Social Dashboard bidirectional mirror
+2. Playwright sandbox fallback tier
+3. Social Dashboard bidirectional mirror
+4. Extend proof/depth beyond the three core pages
 5. Watch first post-push Lighthouse + playwright-axe runs
 6. Watch first post-push Lighthouse run
 7. Watch first post-push playwright-axe run

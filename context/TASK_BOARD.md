@@ -4,9 +4,15 @@ Last updated: 2026-04-17 (Session 89 — full CI green, all gates stable)
 
 ## Now (Session 90 pre-load)
 
-- [ ] **[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`.
-- [ ] **[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages** — carry the stronger trust language and objection-handling from homepage/membership/VaultSparked into join/invite high-intent routes.
-- [ ] **[SIL] Playwright sandbox fallback tier** — document and script an HTTP/DOM-only smoke tier for environments where browser process spawn/hangs make Playwright unusable. S89 brainstorm item.
+- [ ] **[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. **[DEFERRED — needs founder confirm before cross-repo write]**
+- [ ] **[SIL] A11y artifact triage helper** — script that parses axe/Lighthouse CI JSON artifacts and maps failures to shared CSS/template owners. S89 brainstorm item.
+- [ ] **[SIL] Contract validation gate** — `scripts/validate-contracts.mjs` validates context/contracts/*.json against expected schema before Social Dashboard mirror work touches that payload.
+
+## Session 89 third sprint — trust-depth + DX tooling
+
+- [x] **[GENIUS][CONVERSION] Extend proof/depth to join/invite** — **DONE S89**: `trust-depth.js` extended with `join` and `invite` contexts (4 honest modules each); sections mounted on `join/index.html` + `invite/index.html` with `trust-depth.js` + `live-proof.js` scripts. Covers "free is permanent", "why invite-only", "what your friend gets", "the honest ask".
+- [x] **[SIL] Playwright sandbox fallback tier** — **DONE S89**: `scripts/smoke-http.mjs` + `npm run smoke:http`; 12 URL checks using Node.js HTTP only; no Playwright/Chrome required; documented in `docs/LOCAL_VERIFY.md` as `http` tier.
+- [x] **[S89][CI] Fix CI beacon build:check drift** — **DONE S89**: `normalizeForCheck()` excludes `ciHealth` so beacon `api/ci-status.json` commits don't trigger false drift failures in compliance E2E job.
 
 ## Session 89 second sprint — CI stability
 
