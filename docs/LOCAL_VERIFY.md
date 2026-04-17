@@ -1,6 +1,6 @@
 # Local Verify Contract
 
-Last updated: 2026-04-16
+Last updated: 2026-04-17
 
 `scripts/run-local-browser-verify.mjs` is the supported browser-check entrypoint for unshipped work in this repo. It always:
 
@@ -11,6 +11,8 @@ Last updated: 2026-04-16
 
 ## Commands
 
+- `npm run smoke:http`
+  - **No-browser fallback.** Fetches 12 key URLs with Node.js HTTP and checks status codes + content strings. Start the preview server first (`node scripts/local-preview-server.mjs &`). Use when Playwright process spawn hangs or times out. Passes in ~3s.
 - `npm run verify:local`
   - Default `core` tier.
 - `node scripts/run-local-browser-verify.mjs --tier intelligence`
@@ -22,6 +24,10 @@ Last updated: 2026-04-16
 
 ## Tier contract
 
+- `http` (no-browser fallback — `npm run smoke:http`)
+  - Use when Playwright fails to spawn or hangs. Covers: `/`, `/games/`, `/community/`, `/leaderboards/`, `/membership/`, `/vaultsparked/`, `/ranks/`, `/studio-pulse/`, `/vault-wall/`, `/api/public-intelligence.json`, `/manifest.json`, `/sw.js`.
+  - Does NOT validate CSS, JS execution, screenshots, interactive behaviour, or a11y.
+  - Prerequisite: start `scripts/local-preview-server.mjs` first.
 - `intelligence`
   - Use when the session mainly touched homepage shell, trust/telemetry/pathway surfaces, or other public-intelligence modules.
   - Current scope: `computed-styles`, `homepage-hero-regression`, `intelligence-surfaces`, `micro-feedback`, `vaultsparked-csp`.
@@ -51,6 +57,8 @@ This is deliberate. Session 78 proved that lower worker pressure is the reliable
 
 ## Recommended usage
 
+- Browser won't spawn / hangs:
+  - `node scripts/local-preview-server.mjs & npm run smoke:http`
 - Shared shell or homepage work:
   - `node scripts/run-local-browser-verify.mjs --tier intelligence`
 - Typical public-page/runtime work:
