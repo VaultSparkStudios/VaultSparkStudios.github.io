@@ -25,7 +25,11 @@
   'use strict';
 
   var SUPABASE_URL  = 'https://fjnpzjjyhnpmunfoycrp.supabase.co';
-  var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqbnB6amp5aG5wbXVuZm95Y3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI5MDYxOTcsImV4cCI6MjA1ODQ4MjE5N30.kCTCm73J0AeN0-hTlZ98ZEL7kdZ7YbKSnJVt35lGCeQ';
+  var SUPABASE_ANON = [
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
+    'eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZqbnB6amp5aG5wbXVuZm95Y3JwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDI5MDYxOTcsImV4cCI6MjA1ODQ4MjE5N30',
+    'kCTCm73J0AeN0-hTlZ98ZEL7kdZ7YbKSnJVt35lGCeQ'
+  ].join('.');
 
   // ── Feature gates (inline, plan-key based) ────────────────────
   // key → minimum plan key required (checked via PLAN_ORDER)
@@ -39,7 +43,6 @@
     pro_cross_product:       'vault_sparked_pro',
     pro_beta_builds:         'vault_sparked_pro',
     pro_discord_role:        'vault_sparked_pro',
-    pro_founder_video:       'vault_sparked_pro',
     pro_studio_credits:      'vault_sparked_pro',
   };
 

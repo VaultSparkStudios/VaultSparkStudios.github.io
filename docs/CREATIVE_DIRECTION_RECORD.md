@@ -196,3 +196,14 @@ CDR reviewed — no new creative direction this session. User invoked `start`, t
 ## 2026-04-17 — Session 89 (no new entries)
 
 CDR reviewed — no new creative direction this session. User invoked `start`, three rounds of `/go`, and `closeout`. All S89 work was CI recovery, LCP performance optimization, trust-depth language extension, and developer tooling — execution against existing Genius Hit List priorities and SIL brainstorm items. No new brand, canon, public-promise, membership-tier, launch-date, or auth/security flow direction was introduced. The trust-depth modules on join/invite follow the existing "honest empty states / no fabrication / free is real" canon already established in S74–S79; no new creative decisions required.
+
+## 2026-04-17 — Session 91 — Membership value page public-safe direction
+
+- Category: Public copy / Membership value messaging
+- Human input: "the membership value page needs to be updated as it shows internal pricing strategy as Proposed pricing innovations -- also the Elite membership should be updated to remove Founder video updates -- look for any other website fixes"
+- Area affected: `membership-value/index.html`, `vaultsparked/index.html`, shared membership entitlement config
+- Required direction:
+  1. Public value pages must not expose internal pricing strategy, future pricing experiments, revenue rationale, churn/LTV rationale, or implementation notes.
+  2. Eternal/Elite membership must not promise Founder video updates.
+  3. Related membership copy should use public-facing product language rather than internal development wording.
+- Why it matters: membership pages are public conversion surfaces. They should explain the value a member receives, not reveal studio pricing strategy or stale internal entitlement promises.

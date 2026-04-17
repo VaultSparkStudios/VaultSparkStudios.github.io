@@ -816,3 +816,12 @@ Public-safe note:
 - Follow-up post-push fixes isolated footer legend selectors, removed footer `content-visibility` from axe's path, corrected ranks list semantics, restored homepage `#main-content`, stabilized the leaderboard a11y test, and added a stable `/vault-treasury/` route.
 - Verification: `npm run build:check`, `node scripts/csp-audit.mjs`, JS syntax checks, JSON parse, `git diff --check`, and local preview HTTP smoke passed. Post-push GitHub Actions: E2E, Accessibility, Pages, Secret Lint, Sentry, Cache Purge, Minify, and Sitemap green; Lighthouse remains red on homepage performance and homepage SEO.
 - SIL: 478/500 · Velocity: 7 · Debt: ↓
+
+## 2026-04-17 — Session 91
+
+- Cleaned the public `/membership-value/` page so it no longer exposes internal pricing-strategy language or the "Proposed pricing innovations" section.
+- Replaced that section with public-safe annual-plan value copy for Sparked Annual and Eternal Annual, matching the live annual pricing posture.
+- Removed Founder video updates from Eternal/Elite value copy and from shared entitlement config (`assets/membership-access.js`, `assets/vault-sdk.js`, `supabase/functions/_shared/membershipAccess.ts`).
+- Softened `/vaultsparked/` Eternal beta-build wording from internal development language to public-facing experimental-build language.
+- Verification: `npm run build:check`, `npm run smoke:http`, `node scripts/csp-audit.mjs`, and syntax checks for touched membership runtime files passed.
+- SIL: 470/500 · Velocity: 1 · Debt: →

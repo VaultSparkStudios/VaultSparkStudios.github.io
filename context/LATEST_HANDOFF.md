@@ -1,6 +1,34 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 90 closeout)
+Last updated: 2026-04-17 (Session 91 closeout)
+
+## Where We Left Off (Session 91)
+- Shipped: 1 public-facing cleanup — membership value page no longer exposes internal pricing-strategy language, Eternal/Elite no longer promises Founder video updates, and stale Founder-video entitlement gates were removed from the shared membership runtime/config.
+- Tests: `npm run build:check` ✓, `npm run smoke:http` ✓ (12/12), `node scripts/csp-audit.mjs` ✓ (98 HTML files), `node --check assets/membership-access.js` ✓, `node --check assets/vault-sdk.js` ✓.
+- Deploy: pending commit/push from closeout.
+
+## Session Intent: Session 91
+User asked: "start - the membership value page needs to be updated as it shows internal pricing strategy as Proposed pricing innovations -- also the Elite membership should be updated to remove Founder video updates -- look for any other website fixes." Outcome: Achieved. The public value page now shows annual-plan value copy instead of internal pricing proposals; Eternal/Elite copy and config no longer include Founder video updates; one related `/vaultsparked/` wording issue was cleaned up.
+
+## Where We Left Off (Session 91 — detail)
+- **Membership value page cleaned up:** `membership-value/index.html` replaced the public "Proposed pricing innovations" section with public-safe annual options: Sparked Annual ($44.99/yr), Eternal Annual ($269.99/yr), and monthly flexibility. Removed internal strategy phrasing around churn, LTV, cash-flow predictability, market-rate timing, implementation notes, and future pricing experiments.
+- **Eternal/Elite Founder video update removed:** removed "Founder video updates" from the Eternal value summary and value table. Adjusted Eternal estimated value ranges after removing that row.
+- **Entitlement config aligned:** removed `pro_founder_video` from `assets/membership-access.js`, `assets/vault-sdk.js`, and `supabase/functions/_shared/membershipAccess.ts`.
+- **Related website fix:** `/vaultsparked/` Eternal Beta Builds copy no longer says "internal development builds"; it now uses public-facing experimental-build language.
+- **Audit scan:** targeted scan of public HTML/JS/TS files is clean for `Founder video`, `pricing innovations`, `pricing strategy`, `internal development`, `internal proto`, `LTV`, `churn`, `cash flow`, and `market rate`. Historical context/audit notes may still mention old phrasing as session history.
+
+## Human Action Required
+- [ ] **Revoke compromised classic PAT** — user explicitly deferred; workflow no longer depends on it.
+- [ ] **Verify annual checkout end-to-end** — test annual billing toggle → checkout → Stripe → portal flow in a real browser against staging before treating as fully browser-confirmed.
+- [ ] **Confirm Social Dashboard mirror** — repo has uncommitted work; need explicit OK before cross-repo writes.
+- [ ] **Forge Window nav rename** — awaiting brand sign-off before sitewide propagation.
+
+## Next Session Load
+- Start with `context/LATEST_HANDOFF.md`, then `context/TASK_BOARD.md`, then `context/SELF_IMPROVEMENT_LOOP.md` rolling header, then `docs/GENIUS_LIST.md`.
+- First agent task: Verify annual checkout end-to-end (staging browser test) OR Social Dashboard mirror if founder confirms.
+- Second agent task: Forge Window nav rename if brand sign-off is given.
+
+---
 
 ## Where We Left Off (Session 90)
 - Shipped: 7 items — A11y triage helper, HTTP smoke pre-gate in CI, CI-aware Genius List filtering, CF_WORKER_API_TOKEN secret set, Cloudflare token scopes expanded, annual Stripe prices created ($44.99/yr + $269.99/yr), annual checkout activated and deployed.

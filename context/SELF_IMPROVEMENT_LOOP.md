@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ██▇▇█▇
-Avgs — 3: 475.0 | 5: 477.0 | 10: 479.1 | 25: 451.8 | all: 441.6
-  └ 3-session: Dev 96.3 | Align 94.0 | Momentum 96.3 | Engage 89.3 | Process 94.7
-Velocity trend: ↓  |  Protocol velocity: →  |  Debt: ↓↓
-Momentum runway: ~2.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-17 | Session 90 | Total: 466/500 | Velocity: 7 | protocolVelocity: 9
+Sparkline (last 5 totals): ▇▇█▇▇
+Avgs — 3: 472.3 | 5: 474.2 | 10: 478.1 | 25: 456.6 | all: 442.2
+  └ 3-session: Dev 96.7 | Align 95.3 | Momentum 94.7 | Engage 90.7 | Process 95.0
+Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
+Momentum runway: ~0.5 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-17 | Session 91 | Total: 470/500 | Velocity: 1 | protocolVelocity: 8
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,32 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-17 — Session 91 | Total: 470/500 | Velocity: 1 | Debt: →
+Avgs — 3: 472.3 | 5: 474.2 | 10: 478.1 | 25: 456.6 | all: 442.2
+  └ 3-session: Dev 96.7 | Align 95.3 | Momentum 94.7 | Engage 90.7 | Process 95.0
+
+| Category | Score | vs Last | Notes |
+|---|---:|---|---|
+| Dev Health | 96 | ↑1 | Small but clean public-copy/config change; `build:check`, HTTP smoke, CSP audit, and touched JS syntax checks passed. No schema drift found. |
+| Creative Alignment | 97 | ↑4 | Strong public-surface alignment: removed internal pricing strategy, stale Founder-video promises, and internal development wording from membership surfaces. CDR captured the user direction. |
+| Momentum | 90 | ↓6 | One focused user-requested cleanup shipped completely. Velocity is intentionally lower than the previous infra sweep, but the stated intent was achieved. |
+| Engagement | 92 | ↑5 | Improves trust on a conversion page by making the value page member-facing and removing stale/overpromising Elite/Eternal language. |
+| Process Quality | 95 | → | Startup and closeout followed the available local protocol; missing Studio OS scripts were noted. Handoff, task board, truth audit, CDR, status, audit JSON, and work log updated. |
+| **Total** | **470/500** | ↑4 | |
+
+**Top win:** The membership value page now explains live member value instead of exposing internal pricing proposals and revenue rationale.
+**Top gap:** The repo is still missing several canonical Studio OS scripts (`ops.mjs`, startup renderer, closeout autopilot, state-vector/entropy tooling), so parts of closeout had to be performed manually.
+**Intent outcome:** Achieved — membership value page cleaned, Eternal/Elite Founder video update removed, and a nearby `/vaultsparked/` wording issue fixed.
+
+**Brainstorm**
+1. **Membership copy regression guard.** First step: add a small public-copy lint rule for banned phrases on conversion pages (`pricing innovations`, `LTV`, `churn`, `internal development`, `Founder video`). Execution probability: High.
+2. **Annual checkout browser verification.** First step: run the annual billing toggle through staging checkout in a real browser and confirm Stripe receives the annual plan key. Execution probability: High.
+3. **Closeout tooling restore.** First step: restore or vendor the missing `scripts/ops.mjs` / closeout-autopilot runtime pack so the protocol can run end-to-end again. Execution probability: Medium.
+
+**Committed to TASK_BOARD:** [S91][PUBLIC-COPY] Membership value page public-safe cleanup
+
+---
 
 ## 2026-04-17 — Session 90 | Total: 466/500 | Velocity: 7 | Debt: ↓↓
 Avgs — 3: 475.0 | 5: 477.0 | 10: 479.1 | 25: 451.8 | all: 441.6

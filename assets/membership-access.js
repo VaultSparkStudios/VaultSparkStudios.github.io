@@ -230,15 +230,6 @@ const CONFIG = {
         ]
       }
     },
-    "pro_founder_video": {
-      "label": "Founder video updates",
-      "rule": {
-        "requiresAccount": true,
-        "allowedPlans": [
-          "vault_sparked_pro"
-        ]
-      }
-    },
     "pro_studio_credits": {
       "label": "Studio credits",
       "rule": {

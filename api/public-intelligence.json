@@ -1,15 +1,15 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-04-17T21:14:01.447Z",
+  "generatedAt": "2026-04-17T23:44:04.721Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 90,
+    "currentSession": 91,
     "lastUpdated": "2026-04-17",
-    "currentFocus": "Session 90 closed: DX sprint + founder-action sweep. A11y triage helper, HTTP smoke pre-gate in CI, CI-aware Genius List filtering. CF_WORKER_API_TOKEN set (Worker auto-deploy now enabled). Cloudflare vaultspark-deploy token expanded with KV Storage Write. Annual Stripe prices created and checkout activated — annual billing live on /vaultsparked/.",
+    "currentFocus": "Session 91 closed: membership value public cleanup shipped. /membership-value/ no longer exposes internal pricing-strategy/proposal language; annual options are now public-safe live-plan copy. Eternal/Elite no longer promises Founder video updates, and the stale pro_founder_video entitlement was removed from shared membership config.",
     "nextMilestone": "Verify annual checkout end-to-end in browser. Social Dashboard bidirectional mirror (pending founder confirmation). Forge Window nav rename (pending brand sign-off).",
     "blockers": [
       "MANUAL: revoke compromised classic PAT at github.com/settings/tokens — user explicitly deferred; workflow no longer depends on it",
@@ -35,10 +35,16 @@
       "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
       "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
     ],
-    "shipped": []
+    "shipped": [
+      "Membership value page cleaned up: `membership-value/index.html` replaced the public \"Proposed pricing innovations\" section with public-safe annual options: Sparked Annual ($44.99/yr), Eternal Annual ($269.99/yr), and monthly flexibility. Removed internal strategy phrasing around churn, LTV, cash-flow predictability, market-rate timing, implementation notes, and future pricing experiments.",
+      "Eternal/Elite Founder video update removed: removed \"Founder video updates\" from the Eternal value summary and value table. Adjusted Eternal estimated value ranges after removing that row.",
+      "Entitlement config aligned: removed `pro_founder_video` from `assets/membership-access.js`, `assets/vault-sdk.js`, and `supabase/functions/_shared/membershipAccess.ts`.",
+      "Related website fix: `/vaultsparked/` Eternal Beta Builds copy no longer says \"internal development builds\"; it now uses public-facing experimental-build language.",
+      "Audit scan: targeted scan of public HTML/JS/TS files is clean for `Founder video`, `pricing innovations`, `pricing strategy`, `internal development`, `internal proto`, `LTV`, `churn`, `cash flow`, and `market rate`. Historical context/audit notes may still mention old phrasing as session history."
+    ]
   },
   "stats": {
-    "sessionsCompleted": 90,
+    "sessionsCompleted": 91,
     "liveProjects": 4,
     "projectsInForge": 9,
     "activeEdgeFunctions": 16,
@@ -469,7 +475,7 @@
   "ciHealth": {
     "allGreen": true,
     "summary": "All CI gates passing — E2E, Accessibility, Lighthouse.",
-    "checkedAt": "2026-04-17T20:27:37.643Z",
+    "checkedAt": "2026-04-17T21:10:15.924Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "1.3",
+  "project": "VaultSparkStudios.github.io",
+  "slug": "vaultsparkstudios-website",
+  "date": "2026-04-17",
+  "session": 91,
+  "intent": "Clean up public membership value messaging, remove Founder video updates from Elite/Eternal membership, and scan for related website fixes.",
+  "intentOutcome": "Achieved",
+  "summary": "Public membership value copy was cleaned up to remove internal pricing strategy, future pricing proposal language, and stale Founder-video entitlement promises.",
+  "shipped": [
+    "Replaced /membership-value/ Proposed pricing innovations section with public-safe annual-plan value copy.",
+    "Removed Founder video updates from Eternal/Elite value copy.",
+    "Removed pro_founder_video from shared membership entitlement configuration and VaultSDK gates.",
+    "Reworded /vaultsparked/ Eternal beta-build copy to avoid internal development wording."
+  ],
+  "verification": [
+    "npm run build:check",
+    "npm run smoke:http",
+    "node scripts/csp-audit.mjs",
+    "node --check assets/membership-access.js",
+    "node --check assets/vault-sdk.js",
+    "targeted public HTML/JS/TS phrase scan"
+  ],
+  "sil": {
+    "total": 470,
+    "velocity": 1,
+    "debt": "→",
+    "categories": {
+      "devHealth": 96,
+      "creativeAlignment": 97,
+      "momentum": 90,
+      "engagement": 92,
+      "processQuality": 95
+    }
+  },
+  "ignisNote": "This was a compact but high-trust public-copy correction: the website now talks like a member-facing product surface instead of exposing internal pricing strategy.",
+  "blockers": [
+    "Annual checkout remains unverified end-to-end in browser.",
+    "Social Dashboard mirror still requires founder confirmation before cross-repo writes.",
+    "Forge Window nav rename still awaits brand sign-off."
+  ]
+}

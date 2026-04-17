@@ -1,12 +1,16 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 90 closeout — 7 items shipped)
+Last updated: 2026-04-17 (Session 91 closeout — membership value cleanup shipped)
 
 ## Now (Session 91 pre-load)
 
 - [ ] **[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. **[DEFERRED — awaiting founder confirm before cross-repo write]**
 - [ ] **[FOLLOWUP] Forge Window nav rename** — rename "Studio Pulse" nav label to "Forge Window" sitewide via `propagate-nav.mjs`. URL stays `/studio-pulse/` for SEO. **[PENDING brand sign-off]**
 - [ ] **[FOLLOWUP] Verify annual checkout end-to-end** — test the annual billing toggle → checkout → Stripe → portal flow against staging. Annual prices are live but the path hasn't been browser-tested yet.
+
+## Session 91 — membership value public cleanup
+
+- [x] **[S91][PUBLIC-COPY] Membership value page public-safe cleanup** — **DONE S91**: `/membership-value/` no longer shows "Proposed pricing innovations" or internal pricing/revenue rationale; section now presents live annual options. Eternal/Elite membership copy and entitlement configs no longer include Founder video updates. `/vaultsparked/` Eternal beta-build copy no longer says "internal development builds." Verification: `npm run build:check`, `npm run smoke:http`, `node scripts/csp-audit.mjs`, and touched JS syntax checks passed.
 
 ## Session 90 — DX tooling + founder-action sweep (7 items)
 
