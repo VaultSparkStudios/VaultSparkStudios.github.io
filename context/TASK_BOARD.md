@@ -1,12 +1,12 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 89 — full CI green, all gates stable)
+Last updated: 2026-04-17 (Session 89 closeout — 10 items shipped, all CI green)
 
 ## Now (Session 90 pre-load)
 
 - [ ] **[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. **[DEFERRED — needs founder confirm before cross-repo write]**
 - [ ] **[SIL] A11y artifact triage helper** — script that parses axe/Lighthouse CI JSON artifacts and maps failures to shared CSS/template owners. S89 brainstorm item.
-- [ ] **[SIL] Contract validation gate** — `scripts/validate-contracts.mjs` validates context/contracts/*.json against expected schema before Social Dashboard mirror work touches that payload.
+- [x] **[SIL] Contract validation gate** — **DONE S89**: `scripts/validate-contracts.mjs` validates all 3 contracts (`social-dashboard.json`, `website-public.json`, `hub.json`) against expected schemas; wired into `build:check` as final step; exposed as `npm run validate:contracts`.
 
 ## Session 89 third sprint — trust-depth + DX tooling
 

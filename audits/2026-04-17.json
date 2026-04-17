@@ -1,57 +1,43 @@
 {
   "schemaVersion": "1.3",
-  "session": 84,
+  "session": 89,
   "date": "2026-04-17",
-  "slug": "vaultsparkstudios-website",
-  "intent": "Ship unblocked S80 Tier 2/3/4 items at quality bar across as many /go rounds as scope cap permits.",
-  "intentOutcome": "Achieved",
-  "velocity": 7,
-  "protocolVelocity": 7,
-  "debtDelta": "flat",
-  "scores": {
-    "devHealth": 96,
-    "creativeAlignment": 93,
-    "momentum": 96,
-    "engagement": 95,
-    "processQuality": 98,
-    "total": 479
+  "totalScore": 481,
+  "maxScore": 500,
+  "velocity": 10,
+  "debtDelta": "down",
+  "intentOutcome": "exceeded",
+  "categories": {
+    "devHealth": 99,
+    "creativeAlignment": 96,
+    "momentum": 98,
+    "engagement": 93,
+    "processQuality": 95
   },
   "shipped": [
-    "Offline page redesign — vault-forge aesthetic with SVG vault-lock sigil, Georgia SEALED wordmark, aria-live network pill (offline.html, assets/error-pages.js)",
-    "Investor action logging GDPR consent — opt-in banner + profile toggle + logAction gated until granted (assets/investor-auth.js, assets/investor-consent-toggle.js, investor-portal/profile/index.html)",
-    "/social/ dashboard page — public presence map with honest Live/Limited/Reserved grouping (social/index.html, assets/social-dashboard.js)",
-    "Personalized returning-visitor homepage band — reads VSIntentState, branches on journey_stage x world_affinity x trust_level (assets/home-personalized.js, index.html)",
-    "Studio nav dropdown propagated across 79 HTML files — /social/ + /press/ now first-class primary-nav (scripts/propagate-nav.mjs)",
-    "Dynamic hero spotlight — highest-progress SPARKED or FORGE title between hero sub-copy and CTAs (assets/home-dynamic-hero.js, index.html)",
-    "PWA push opt-in surface on /studio-pulse/ + /vault-wall/ + /changelog/ deep-linking to new #push anchor on portal (assets/push-prompt.js, vault-member/index.html)"
+    "perf: gzip in local-preview-server.mjs",
+    "perf: theme-toggle.shell defer on 83 HTML files",
+    "perf: letterForge keyframe compositor-safe (opacity+transform only)",
+    "perf: brand nav icon 76KB to 4KB via sharp",
+    "seo: descriptive link text for Gridiron GM",
+    "feat: CI status beacon + ciHealth in public-intelligence.json + Studio Pulse pill",
+    "ci: Lighthouse 3-run median + 0.80 threshold + workflow_dispatch",
+    "fix: exclude ciHealth from build:check drift comparison",
+    "feat: trust-depth join/invite contexts",
+    "feat: scripts/smoke-http.mjs HTTP smoke tier",
+    "feat: scripts/validate-contracts.mjs contract validation gate"
   ],
-  "deferred": [
-    { "item": "ETERNAL tier vocabulary decision", "reason": "CANON decision — escalation only per CLAUDE.md, not implementation." },
-    { "item": "Studio Time Machine", "reason": "Scope overflow for this sprint." },
-    { "item": "Server-side push broadcast category routing", "reason": "Client-side opt-in shipped; server-side send-push category filter + push_preferences column is a separate coupled change across RPC + edge function." },
-    { "item": "Ask IGNIS public concierge", "reason": "ANTHROPIC_API_KEY absent — preflighted, legitimately HAR-blocked (unchanged from S83)." },
-    { "item": "Edge-gate portals + CSP nonce + rate-limit/CSRF (3 items)", "reason": "CF_WORKER_API_TOKEN absent — preflighted, legitimately HAR-blocked (unchanged from S83)." }
+  "deferred": ["Social Dashboard bidirectional mirror"],
+  "humanActionRequired": [
+    "Revoke compromised classic PAT",
+    "Expand scoped Cloudflare API token",
+    "Create annual Stripe price IDs"
   ],
-  "blockers": [
-    "CF_WORKER_API_TOKEN missing — blocks 3 S80 Tier 1 security items",
-    "ANTHROPIC_API_KEY missing in Supabase — blocks Ask IGNIS + future AI surfaces",
-    "Annual Stripe plan keys absent — blocks real annual checkout"
-  ],
-  "memory": [],
-  "verification": {
-    "buildCheck": "passed",
-    "cspAudit": "passed (95 files, up from 94)",
-    "jsSyntax": "passed (error-pages, investor-auth, investor-consent-toggle, social-dashboard, home-personalized, home-dynamic-hero, push-prompt)",
-    "propagateCsp": "1 updated (social/index.html — canonical CSP)",
-    "propagateNav": "79 updated, 6 skipped (portal + game-runtime + error pages)",
-    "shellRebuilt": "unchanged hashes (1b62491f6c-14e2419e21-8a1b93790f-0995bd7945)",
-    "publicIntelligenceRegenerated": true,
-    "closeoutAutopilot": "not installed in this repo — manual commit + push with human confirmation per protocol fallback"
-  },
-  "ignis": {
-    "score": 46489,
-    "grade": "FORGE",
-    "lastComputed": "2026-04-15",
-    "refreshRequired": false
+  "ciState": {
+    "e2e": "success",
+    "accessibility": "success",
+    "lighthouse": "success",
+    "pages": "success",
+    "secretLint": "success"
   }
 }

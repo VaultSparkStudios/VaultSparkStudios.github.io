@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ███▇▇
-Avgs — 3: 479.3 | 5: 481.4 | 10: 480.2 | 25: 450.2 | all: 440.7
-  └ 3-session: Dev 97.0 | Align 96.7 | Momentum 97.3 | Engage 95.0 | Process 93.3
-Velocity trend: →  |  Protocol velocity: →  |  Debt: ↓
-Momentum runway: ~0.4 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-17 | Session 88 | Total: 478/500 | Velocity: 7 | protocolVelocity: 7
+Sparkline (last 5 totals): ██▇▇█
+Avgs — 3: 479.7 | 5: 480.8 | 10: 480.3 | 25: 451.0 | all: 441.2
+  └ 3-session: Dev 97.7 | Align 96.2 | Momentum 97.7 | Engage 93.7 | Process 94.3
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
+Momentum runway: ~3.0 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-17 | Session 89 | Total: 481/500 | Velocity: 10 | protocolVelocity: 10
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,29 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-17 — Session 89 | Total: 481/500 | Velocity: 10 | Debt: ↓
+Avgs — 3: 479.7 | 5: 480.8 | 10: 480.3 | 25: 451.0 | all: 441.2
+  └ 3-session: Dev 97.7 | Align 96.2 | Momentum 97.7 | Engage 93.7 | Process 94.3
+
+| Category | Score | vs Last | Notes |
+|---|---:|---|---|
+| Dev Health | 99 | ↑3 | All CI gates green (E2E, Accessibility, Lighthouse 0.80+); gzip in preview server; letterForge keyframe compositor-safe (opacity+transform only); 76KB→4KB nav icon; contract validator wired into build:check; CI beacon auto-updates public signals. |
+| Creative Alignment | 96 | → | trust-depth extended to join/invite with honest vault-brand language; CI health on Studio Pulse adds operating transparency; no CDR violations; trust modules don't leak internal enums. |
+| Momentum | 98 | ↑2 | 10 meaningful items shipped vs scope cap of 10 — an S89 record. Intent (Lighthouse recovery) exceeded; Social Dashboard deferred appropriately with cross-repo safety intact. |
+| Engagement | 93 | → | Trust-depth on join/invite conversion funnel improves new-member onboarding quality; Studio Pulse now surfaces live CI health; founder HAR items (PAT, CF token, Stripe annual) unchanged — these require human action. |
+| Process Quality | 95 | ↑2 | Full canonical write-back; CI beacon closes the "is CI green?" signal gap; contract validator prevents cross-surface drift; http smoke tier closes local Playwright hangup gap; doc coverage improved. |
+| **Total** | **481/500** | ↑3 | |
+
+**Top win:** S89 traced the 10,184ms LCP render delay to animated `text-shadow` + `filter:blur` in `letterForge` keyframe — non-compositable properties forced every frame through the main thread under 4x CPU throttle. Removing them from the keyframe dropped LCP from 10.6s to 3.1s and made Lighthouse fully recoverable.
+**Top gap:** The CI beacon confirmed the site's release-confidence posture in public intelligence, but the Studio Pulse surface still reads stale S88 `currentFocus`. LATEST_HANDOFF and context files should be kept updated so the next session doesn't see stale signals.
+**Intent outcome:** Exceeded — all unblocked Genius/CI items shipped; cross-repo Social Dashboard work held back appropriately for founder confirmation.
+
+**Brainstorm**
+1. **A11y artifact triage helper.** First step: script that downloads the latest axe/Lighthouse CI artifact and maps `selector` strings to owning HTML templates. Would catch a11y regressions faster than reading raw CI log output. Execution probability: Medium.
+2. **Social Dashboard bidirectional mirror.** First step: confirm Social Dashboard repo state with founder → implement normalized activity feed exposure on that side → pull here. Blocked on founder confirm. Execution probability: High once unblocked.
+3. **Playwright sandbox fallback tier integration into CI.** First step: add `npm run smoke:http` as a fast pre-gate before launching the full Playwright suite, so flaky browser environments fail fast instead of hanging. Execution probability: Medium.
+4. **Homepage LCP to ≤2.5s for consistent 0.85+ scores.** First step: investigate what changed between the passing push-triggered run and failing dispatch runs — likely runner CPU variance is the core issue, not code. Consider adding `simulate-throttling: false` to `.lighthouserc.json` if Lighthouse CI supports it in v11. Execution probability: Medium.
 
 ## 2026-04-17 — Session 88 | Total: 478/500 | Velocity: 7 | Debt: ↓
 Avgs — 3: 479.3 | 5: 481.4 | 10: 480.2 | 25: 450.2 | all: 440.7
