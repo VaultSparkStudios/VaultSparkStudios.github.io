@@ -19,6 +19,7 @@ Last updated: 2026-04-17 (Session 86 + activation addendum — full stack now li
 - [ ] **[S87][IMPROVEMENT] Add Workers KV Storage:Edit + Zone:Workers Routes:Edit scopes** to CLOUDFLARE_API_TOKEN so agents avoid the Global API Key fallback.
 - [ ] **[S87][IMPROVEMENT] Add conflict-marker + secret-extraction lint** to scripts/build-shell-assets.mjs — would have caught the S86 P0 (merge conflict in sw.js) + S86 addendum P0 (transcript leak) pre-push.
 - [ ] **[S87][IMPROVEMENT] Point og:image meta tags at vaultsparkstudios.com/_og/?title=…** for dynamic per-page social cards (currently all pages point at static /assets/og-image.png).
+- [ ] **[S87][VOICE] Voice-leak patrol sweep** — audit every state-aware JS module against `memory/feedback_voice_leak_patrol.md`. Confirmed clean S86: `home-personalized.js` (fixed 72de023). Still to verify: `home-dynamic-hero.js`, `adaptive-cta.js`, `related-content.js`, `trust-depth.js`. Rule: enum values shape selection/tone only, never render as user-facing text.
 
 ---
 
