@@ -37,7 +37,7 @@ First command: `gh run list --limit 10`
 
 #### 3. [VERIFY] Recover final red CI gate
 Final score: **95**
-[S89][LIGHTHOUSE] Recover final red CI gate — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance 0.55 vs 0.85, homepage SEO 0.93 vs 0.95, and /games/ performance 0.84 vs 0.85.
+[S89][LIGHTHOUSE] Recover final red CI gate — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance 0.56 vs 0.85 and homepage SEO 0.93 vs 0.95.
 Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`

@@ -4,7 +4,7 @@ Last updated: 2026-04-17 (Session 88 closeout — CI/a11y recovery + Genius gene
 
 ## Now (Session 89 pre-load)
 
-- [ ] **[S89][LIGHTHOUSE] Recover final red CI gate** — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance `0.55` vs `0.85`, homepage SEO `0.93` vs `0.95`, and `/games/` performance `0.84` vs `0.85`.
+- [ ] **[S89][LIGHTHOUSE] Recover final red CI gate** — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance `0.56` vs `0.85` and homepage SEO `0.93` vs `0.95`.
 - [ ] **[SIL] CI result ingestion for Genius List** — rerun `npm run genius:list` after Lighthouse recovery so `docs/GENIUS_LIST.md` reflects final release confidence instead of the current partial-green CI posture.
 - [ ] **[SIL] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path once repo lock/write safety is confirmed for the Social Dashboard workspace.
 

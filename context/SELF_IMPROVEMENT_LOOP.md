@@ -49,7 +49,7 @@ Avgs — 3: 479.3 | 5: 481.4 | 10: 480.2 | 25: 450.2 | all: 440.7
 | **Total** | **478/500** | ↑2 | |
 
 **Top win:** S88 turned ambiguous challenge-page CI failures into local-artifact browser gates and closed the shared a11y classes that were actually red.
-**Top gap:** Lighthouse remains red on the real local-preview artifact: homepage performance/SEO and `/games/` performance are the next recovery target.
+**Top gap:** Lighthouse remains red on the real local-preview artifact: homepage performance and homepage SEO are the next recovery target.
 **Intent outcome:** Achieved — all unblocked current Genius/release-confidence items were implemented; founder-only PAT/token/Stripe actions remain outside agent scope.
 
 **Brainstorm**

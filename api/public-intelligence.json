@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-04-17T16:06:10.812Z",
+  "generatedAt": "2026-04-17T16:25:49.562Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -10,12 +10,12 @@
     "currentSession": 88,
     "lastUpdated": "2026-04-17",
     "currentFocus": "Session 88 closed: Genius/verification wave implemented against the S87 CI failures. E2E browser gates now run against local preview (scripts/local-preview-server.mjs at 127.0.0.1:4173) instead of Cloudflare-fronted production, removing the GitHub Actions managed-challenge failure class. Shared footer contrast, footer selector isolation, labeled-container ARIA roles, ranks list semantics, homepage skip target, leaderboard a11y test strict-mode, and the /vault-treasury/ route were hardened. Scheduled Genius refresh now exists via scripts/generate-genius-list.mjs and npm run genius:list; docs/GENIUS_LIST.md has been regenerated from current repo truth. Post-push GitHub Actions: E2E, Accessibility, Pages, Secret Lint, Sentry, Cache Purge, Minify, and Sitemap are green; Lighthouse is the only red gate.",
-    "nextMilestone": "Recover Lighthouse CI from real local-preview scores: homepage performance 0.55 vs 0.85, homepage SEO 0.93 vs 0.95, and /games/ performance 0.84 vs 0.85. Founder actions outstanding: (1) revoke compromised classic PAT at github.com/settings/tokens. (2) Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to scoped CLOUDFLARE_API_TOKEN. (3) Create annual Stripe price IDs before annual checkout activation. Agent-doable next: fix Lighthouse, rerun npm run genius:list after CI status changes, Social Dashboard bidirectional mirror (cross-repo), and nav rename decision Studio Pulse -> Forge Window if founder signs off.",
+    "nextMilestone": "Recover Lighthouse CI from real local-preview scores: homepage performance 0.56 vs 0.85 and homepage SEO 0.93 vs 0.95. Founder actions outstanding: (1) revoke compromised classic PAT at github.com/settings/tokens. (2) Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to scoped CLOUDFLARE_API_TOKEN. (3) Create annual Stripe price IDs before annual checkout activation. Agent-doable next: fix Lighthouse, rerun npm run genius:list after CI status changes, Social Dashboard bidirectional mirror (cross-repo), and nav rename decision Studio Pulse -> Forge Window if founder signs off.",
     "blockers": [
       "MANUAL: revoke compromised classic PAT at github.com/settings/tokens (exposure occurred in agent transcript during token extraction; workflow secret already rotated off it, revocation is pure cleanup)",
       "CF API token (scoped) lacks Workers KV Storage:Edit + Zone:Workers Routes:Edit — working around via CLOUDFLARE_EMAIL + CLOUDFLARE_API_KEY (Global API Key). Long-term: add those two scopes to the scoped token.",
       "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
-      "Lighthouse CI is red on real local-preview scores: homepage performance 0.55, homepage SEO 0.93, /games/ performance 0.84"
+      "Lighthouse CI is red on real local-preview scores: homepage performance 0.56 and homepage SEO 0.93"
     ],
     "ignis": {
       "score": 46489,
@@ -25,7 +25,7 @@
   },
   "pulse": {
     "now": [
-      "[S89][LIGHTHOUSE] Recover final red CI gate — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance `0.55` vs `0.85`, homepage SEO `0.93` vs `0.95`, and `/games/` performance `0.84` vs `0.85`.",
+      "[S89][LIGHTHOUSE] Recover final red CI gate — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance `0.56` vs `0.85` and homepage SEO `0.93` vs `0.95`.",
       "[SIL] CI result ingestion for Genius List — rerun `npm run genius:list` after Lighthouse recovery so `docs/GENIUS_LIST.md` reflects final release confidence instead of the current partial-green CI posture.",
       "[SIL] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path once repo lock/write safety is confirmed for the Social Dashboard workspace."
     ],

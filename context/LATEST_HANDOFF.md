@@ -18,7 +18,7 @@ Implement all Genius Hit List items at the highest/optimal quality. Practical sc
 - **Regenerated shell:** new stylesheet fingerprint `assets/style.shell-93fad06736.css`; `assets/shell-manifest.json`, `sw.js`, and HTML references updated by `scripts/build-shell-assets.mjs`.
 - **Implemented scheduled Genius refresh:** added `scripts/generate-genius-list.mjs`, exposed it as `npm run genius:list`, and regenerated `docs/GENIUS_LIST.md` from current repo truth instead of the stale Session 75 artifact.
 - **Verification completed locally:** `npm run build:check` clean; `node scripts/csp-audit.mjs` clean on 98 HTML files; `node --check scripts/propagate-nav.mjs` clean; local preview HTTP smoke returns 200 for `/`, `/games/`, `/community/`, `/leaderboards/`.
-- **Post-push CI state:** E2E green (`24573098187`), Accessibility green (`24573098151`), Pages green, and support workflows green. Lighthouse red (`24573098159`) on real local-preview scores: homepage performance `0.55` vs `0.85`, homepage SEO `0.93` vs `0.95`, `/games/` performance `0.84` vs `0.85`.
+- **Post-push CI state:** E2E green, Accessibility green, Pages green, and support workflows green on the final closeout commit `6043316`. Lighthouse remains red (`24575122222`) on real local-preview scores: homepage performance `0.56` vs `0.85` and homepage SEO `0.93` vs `0.95`.
 
 ## Human Action Required
 - [ ] **Revoke compromised classic PAT** — open https://github.com/settings/tokens and revoke the old classic PAT exposed during the earlier secret-extraction incident. The workflow secret is already rotated off it; this closes exposure risk.
@@ -27,7 +27,7 @@ Implement all Genius Hit List items at the highest/optimal quality. Practical sc
 
 ## Next Session Load
 - Start with `context/LATEST_HANDOFF.md`, then `context/TASK_BOARD.md`, then `context/SELF_IMPROVEMENT_LOOP.md` rolling header, then `docs/GENIUS_LIST.md`.
-- First agent task: recover Lighthouse thresholds using the real local-preview reports, starting with homepage performance/SEO and the `/games/` 0.01 performance miss. Do not chase Cloudflare challenge-page assumptions; that failure class is resolved.
+- First agent task: recover Lighthouse thresholds using the real local-preview report, starting with homepage performance and homepage SEO. Do not chase Cloudflare challenge-page assumptions; that failure class is resolved.
 - Second agent task: rerun `npm run genius:list` after Lighthouse recovery so the Genius List reflects the final CI posture, then either implement the Social Dashboard bidirectional mirror or decide/execute the Studio Pulse -> Forge Window nav label change if the founder gives brand sign-off.
 
 ---
