@@ -1,23 +1,29 @@
 (function () {
   'use strict';
 
-  var WORLD_LABELS = {
-    vaultfront:   { label: 'VaultFront',       href: '/games/vaultfront/' },
-    solara:       { label: 'Solara',           href: '/games/solara/' },
-    mindframe:    { label: 'MindFrame',        href: '/games/mindframe/' },
-    'the-exodus': { label: 'The Exodus',       href: '/games/the-exodus/' },
-    voidfall:     { label: 'Voidfall',         href: '/universe/voidfall/' },
-    dreadspike:   { label: 'DreadSpike',       href: '/universe/dreadspike/' },
-    games:        { label: 'the game catalog', href: '/games/' },
-    universe:     { label: 'the universe',     href: '/universe/' }
+  // Voice rule: no internal enum values ever appear in user-facing copy.
+  // "trust_level" shapes tone (warmth/familiarity), never content.
+  // "visit_count" shapes cadence bucket, never a raw number.
+  // "world_affinity" and "journey_stage" drive the sentence, always in vault-forge voice.
+
+  var WORLD_COPY = {
+    vaultfront:   { verb: 'walking the halls of',       label: 'VaultFront',  href: '/games/vaultfront/' },
+    solara:       { verb: 'chasing light through',      label: 'Solara',      href: '/games/solara/' },
+    mindframe:    { verb: 'turning the gears of',       label: 'MindFrame',   href: '/games/mindframe/' },
+    'the-exodus': { verb: 'crossing',                   label: 'The Exodus',  href: '/games/the-exodus/' },
+    voidfall:     { verb: 'deep in',                    label: "Voidfall's transmissions", href: '/universe/voidfall/' },
+    dreadspike:   { verb: 'tracing',                    label: "DreadSpike's lore",        href: '/universe/dreadspike/' },
+    games:        { verb: 'browsing',                   label: 'the worlds',  href: '/games/' },
+    universe:     { verb: 'reading',                    label: 'the universe', href: '/universe/' }
   };
 
+  // Per-stage framing. Eyebrow is warm and short; CTA matches the stage's next real move.
   var STAGE_COPY = {
-    pricing:     { eyebrow: 'Last seen pricing',          cta: 'Resume VaultSparked',   href: '/vaultsparked/' },
-    considering: { eyebrow: 'Still weighing membership',  cta: 'See membership value',  href: '/membership-value/' },
-    activation:  { eyebrow: 'Mid-signup',                 cta: 'Finish joining',        href: '/vault-member/#register' },
-    member:      { eyebrow: 'Welcome back, member',       cta: 'Open the Vault',        href: '/vault-member/' },
-    exploring:   { eyebrow: 'Welcome back',               cta: 'See what shipped',      href: '/studio-pulse/' }
+    pricing:     { eyebrow: 'Ready when you are',   cta: 'Resume VaultSparked',   href: '/vaultsparked/' },
+    considering: { eyebrow: 'Still thinking it over', cta: 'See what members get', href: '/membership-value/' },
+    activation:  { eyebrow: 'Almost there',          cta: 'Finish joining',        href: '/vault-member/#register' },
+    member:      { eyebrow: 'Welcome back, member',  cta: 'Open the Vault',        href: '/vault-member/' },
+    exploring:   { eyebrow: 'Welcome back',          cta: 'See what shipped',      href: '/studio-pulse/' }
   };
 
   function esc(s) {
@@ -26,15 +32,66 @@
     });
   }
 
+  // Cadence bucket from raw visit count — never show the number to the user.
+  // first-return / regular / frequent → drives tone, not displayed.
+  function cadence(visitCount) {
+    var n = Number(visitCount) || 1;
+    if (n <= 2) return 'first-return';
+    if (n <= 6) return 'regular';
+    return 'frequent';
+  }
+
+  // Warmth tier from trust_level — drives an optional closing touch, never exposed as text.
+  function warmth(trustLevel) {
+    if (trustLevel === 'high' || trustLevel === 'high-trust') return 'deep';
+    if (trustLevel === 'medium' || trustLevel === 'building' || trustLevel === 'medium-trust') return 'warm';
+    return 'neutral';
+  }
+
   function buildLineHtml(state) {
-    var world = WORLD_LABELS[state.world_affinity];
-    var parts = [];
-    if (world) {
-      parts.push('Last time you were exploring <a href="' + esc(world.href) + '">' + esc(world.label) + '</a>.');
+    var stage = state.journey_stage;
+    var world = WORLD_COPY[state.world_affinity];
+    var cad = cadence(state.visit_count);
+    var warm = warmth(state.trust_level);
+
+    // Member branch: always feels like a homecoming, no need to reference a world.
+    if (stage === 'member') {
+      return warm === 'deep'
+        ? 'Your rank is where you left it. The vault remembers you.'
+        : 'Your rank is where you left it. Step back in.';
     }
-    var visits = state.visit_count > 1 ? ' · visit ' + state.visit_count : '';
-    parts.push('You were at the <strong>' + esc(state.trust_level) + '-trust</strong> stage' + esc(visits) + '.');
-    return parts.join(' ');
+
+    // Pricing branch: speak to the decision, not the page.
+    if (stage === 'pricing') {
+      return world
+        ? 'You were weighing VaultSparked after ' + esc(world.verb) + ' <a href="' + esc(world.href) + '">' + esc(world.label) + '</a>.'
+        : 'You were weighing VaultSparked last time — still nothing hidden behind a dark pattern.';
+    }
+
+    // Activation branch: only one thing matters — the unfinished signup.
+    if (stage === 'activation') {
+      return 'You started the vault keys and didn\'t finish. Picks up where you left off.';
+    }
+
+    // Considering branch: soft nudge with proof.
+    if (stage === 'considering') {
+      return world
+        ? 'Still curious about membership after ' + esc(world.verb) + ' <a href="' + esc(world.href) + '">' + esc(world.label) + '</a>? Here\'s what members actually get.'
+        : 'Still weighing membership? Here\'s what members actually get — honestly, no fluff.';
+    }
+
+    // Exploring branch (default): world-anchored if we know one, cadence-flavored otherwise.
+    if (world) {
+      var opener = warm === 'deep'
+        ? 'You\'ve been '
+        : (cad === 'frequent' ? 'Back again — last time you were ' : 'Last time you were ');
+      return opener + esc(world.verb) + ' <a href="' + esc(world.href) + '">' + esc(world.label) + '</a>. The forge has kept moving since.';
+    }
+
+    // No world affinity yet — generic warm return.
+    if (cad === 'frequent') return 'You know the way by now. The forge has kept shipping.';
+    if (cad === 'regular')  return 'Glad you\'re back. The forge has kept shipping.';
+    return 'The forge has been busy since you last stopped by.';
   }
 
   function render(root, state) {
