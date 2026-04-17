@@ -26,7 +26,18 @@ function stripMd(text) {
     .trim();
 }
 
-function openTasks(taskBoard) {
+// Items that are only meaningful when CI is RED. When CI is all-green these
+// become stale carry-forward noise — suppress them so implementation items rise.
+function isStaleMonitoringItem(task) {
+  return (
+    /watch first post-push (lighthouse|playwright|axe|e2e)/i.test(task) ||
+    // S80 Lighthouse budget tightening — thresholds raised in S82, already shipped.
+    /\[s80\]\[perf\] lighthouse budget tightening/i.test(task) ||
+    (/\[sil\]/i.test(task) && /lighthouse budget tightening/i.test(task))
+  );
+}
+
+function openTasks(taskBoard, { ciGreen = false } = {}) {
   const seen = new Set();
   return taskBoard
     .split(/\r?\n/)
@@ -34,6 +45,7 @@ function openTasks(taskBoard) {
     .map((line) => stripMd(line.replace(/^- \[ \]\s*/, '')))
     .filter(Boolean)
     .filter((task) => {
+      if (ciGreen && isStaleMonitoringItem(task)) return false;
       const key = task
         .replace(/\[[^\]]+\]/g, '')
         .replace(/\s+—.*$/, '')
@@ -108,16 +120,18 @@ function commandFor(category, task) {
   return '';
 }
 
-function ensureMinimum(items) {
+function ensureMinimum(items, { ciGreen = false } = {}) {
   const defaults = [
-    {
+    // Only surface CI confirmation default when CI is not confirmed green.
+    // When ciHealth.allGreen is true this item is stale and buries real work.
+    ...(!ciGreen ? [{
       category: 'VERIFY',
       title: 'Post-push CI confirmation',
       score: 96,
       task: 'Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.',
       rationale: 'The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.',
       command: 'gh run list --limit 10',
-    },
+    }] : []),
     {
       category: 'COHESION',
       title: 'Social Dashboard bidirectional mirror',
@@ -160,11 +174,13 @@ function section(title, items) {
 }
 
 const status = readJson('context/PROJECT_STATUS.json');
+const intelligence = readJson('api/public-intelligence.json');
+const ciGreen = intelligence.ciHealth?.allGreen === true;
 const taskBoard = read('context/TASK_BOARD.md');
 const handoff = read('context/LATEST_HANDOFF.md');
-const tasks = openTasks(taskBoard);
+const tasks = openTasks(taskBoard, { ciGreen });
 
-const items = ensureMinimum(tasks.map(itemFromTask))
+const items = ensureMinimum(tasks.map(itemFromTask), { ciGreen })
   .sort((a, b) => b.score - a.score)
   .slice(0, 12);
 
@@ -181,6 +197,7 @@ const body = `# Genius Hit List — Session ${status.currentSession || 'Current'
 `- Overall opportunity pressure: **${avg}/100**\n` +
 `- Health: **${status.health || 'unknown'}**\n` +
 `- Current SIL: **${status.silScore || 'unknown'}/500**\n` +
+`- CI health: **${ciGreen ? 'all-green ✓' : 'check gh run list'}**\n` +
 `- Current focus: ${status.currentFocus || 'Not recorded.'}\n\n` +
 `## Strategic Read\n\n` +
 `${latestIntent(handoff)}\n\n` +
@@ -192,7 +209,9 @@ section('LATER', later) + '\n' +
 `## Recommended Build Order\n\n` +
 items.map((item, index) => `${index + 1}. ${item.title}`).join('\n') +
 `\n\n## Best Immediate Move\n\n` +
-`Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.\n`;
+(ciGreen
+  ? `CI is all-green. Focus on the top unblocked implementation item above, then rerun this generator after shipping.\n`
+  : `Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.\n`);
 
 writeFileSync(outPath, body, 'utf8');
 console.log(`Wrote ${outPath}`);
