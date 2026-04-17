@@ -13,29 +13,6 @@
     return Math.floor(diff / 86400) + 'd ago';
   }
 
-  function setText(id, value) {
-    var el = document.getElementById(id);
-    if (el) el.textContent = value;
-  }
-
-  function renderShips(container, items) {
-    if (!container || !items || !items.length) return;
-    container.innerHTML = items.map(function (item) {
-      return '<li>' + esc(item) + '</li>';
-    }).join('');
-  }
-
-  function renderList(container, items) {
-    if (!container) return;
-    if (!items || !items.length) {
-      container.innerHTML = '<li>No current public signal.</li>';
-      return;
-    }
-    container.innerHTML = items.map(function (item) {
-      return '<li>' + esc(item) + '</li>';
-    }).join('');
-  }
-
   function renderActivityFeed() {
     if (!window.VSPublic) return;
     var section = document.getElementById('vault-signal-section');
@@ -105,40 +82,5 @@
     initKitForms();
     initActiveNav();
     renderActivityFeed();
-
-    if (!window.VSPublicIntel) return;
-    window.VSPublicIntel.get().then(function (intel) {
-      if (!intel) return;
-      setText('intel-session', 'Session ' + intel.project.currentSession);
-      setText('intel-focus', intel.project.currentFocus);
-      setText('intel-next', intel.project.nextMilestone);
-      setText('intel-ignis', String(intel.project.ignis.score).toLocaleString('en-US') + ' · ' + intel.project.ignis.grade);
-      renderShips(document.getElementById('intel-shipped-list'), intel.pulse.shipped.slice(0, 3));
-      var blockerList = document.getElementById('intel-blockers-list');
-      if (blockerList) {
-        renderList(blockerList, (intel.project.blockers || []).slice(0, 3));
-      }
-
-      var ecosystemList = document.getElementById('intel-ecosystem-list');
-      if (ecosystemList) {
-        var summary = intel.social && intel.social.summary ? intel.social.summary : null;
-        var bridgeLines = [];
-        if (intel.ecosystem && intel.ecosystem.bridges) {
-          if (intel.ecosystem.bridges.studioHub && intel.ecosystem.bridges.studioHub.enabled) {
-            bridgeLines.push('Studio Hub bridge active in ' + intel.ecosystem.bridges.studioHub.mode + ' mode');
-          }
-          if (intel.ecosystem.bridges.socialDashboard && intel.ecosystem.bridges.socialDashboard.enabled) {
-            bridgeLines.push('Social Dashboard bridge active in ' + intel.ecosystem.bridges.socialDashboard.mode + ' mode');
-          }
-        }
-        if (summary) {
-          bridgeLines.push(
-            summary.trackedAccounts + ' social accounts tracked · ' +
-            summary.liveApiAccounts + ' live API-ready'
-          );
-        }
-        renderList(ecosystemList, bridgeLines.slice(0, 3));
-      }
-    });
   });
 })();

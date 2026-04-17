@@ -1,5 +1,66 @@
 # Work Log
 
+## 2026-04-17 — Session 86 (Audit + 21-item innovation plan shipped in one pass across 7 tiers + P0 incident)
+
+**Intent:** audit the website, produce a genius-level innovation plan, implement all items in one pass at highest quality. **Intent: achieved.**
+
+**P0 incident caught during context load.**
+- sw.js (lines 4-8): raw `<<<<<<< HEAD` / `=======` / `>>>>>>> 2074eb7 …` merge-conflict markers shipped to production, alongside two conflicting CACHE_NAME constants. The browser would accept the first `const CACHE_NAME = …` and then SyntaxError on the second. Root cause: build:check does not lint for conflict markers. Filed as a carry-forward lint task. Resolved by keeping the HEAD value (matches `assets/shell-manifest.json`) and removing the stale alternate.
+
+**HAR phantom-blocker discovery.**
+- Globbed `vaultspark-studio-ops/secrets/` at start of session per user direction. Found both `anthropic.txt` and `cloudflare-api-token.txt` present locally — the two secrets that had been blocking S82–S85 compounding work. Memory entry saved: `feedback_har_phantom_blockers.md`. Secrets were not read into context; only presence confirmed. Founder-side registration commands surfaced.
+
+**Tier 7 — Hygiene (3 shipped).**
+- sw.js (fix): removed merge-conflict markers; CACHE_NAME kept at `vaultspark-shell-1b62491f6c-14e2419e21-8a1b93790f-0995bd7945` (shell-manifest parity).
+- assets/home-intelligence.js (trim): removed unused setText/renderShips/renderList helpers and the VSPublicIntel branch bound to `intel-focus`/`intel-next`/`intel-ignis`/`intel-shipped-list`/`intel-blockers-list`/`intel-ecosystem-list` — those IDs were removed from the live homepage in S80. DOMContentLoaded handler now only runs initKitForms + initActiveNav + renderActivityFeed.
+- .github/workflows/sw-version.yml (delete): retired per S81 deprecation plan (≥5 sessions clean).
+
+**Tier 1 — Worker hardening (4 shipped, env-flagged; deployment needs founder).**
+- cloudflare/security-headers-worker.js (rewrite): Layer 0 `/_csrf` endpoint (issues HMAC-signed `${ts}.${rand}.${hmac}` tokens, 1hr TTL). Layer 2 edge-gate — when `PORTAL_GATE_ENABLED=1`, redirects unauthenticated requests to `/investor-portal/*`, `/studio-hub/*`, `/vault-member/admin/*` to `/vault-member/?gate=1&return=…`. Layer 3 rate-limit + CSRF — when `RATE_LIMIT_ENABLED=1`, checks `X-CSRF-Token` header against `CSRF_SIGNING_KEY`, then KV-backed 3/hr/IP bucket on `/contact/submit` + `/ask-founders/submit`. Layer 5 nonce CSP injection via `HTMLRewriter` on text/html responses — when `NONCE_CSP_ENABLED=1`, injects per-request nonce on every `<script>`/`<style>`, adds `<meta name="csp-nonce">` to `<head>`, rewrites CSP header script-src to `'nonce-X' 'strict-dynamic'` dropping the hash list. Cache bypass on nonce'd HTML because nonce must be unique per request. All other layers preserved (scanner blocking, cache rules, security headers).
+- assets/csrf-token.js (new): `window.VSCsrf.getToken()` helper. Fetches `/_csrf`, caches in sessionStorage with 30s safety margin before TTL, single-flight to prevent thundering herd, exposes `invalidate()`.
+
+**Tier 2 — IGNIS layer (3 shipped; edge-fn deploy needs founder).**
+- supabase/functions/ask-ignis/index.ts (new): Deno edge function. Claude Sonnet 4.6 via `/v1/messages`. System prompt built from live `public-intelligence.json` snapshot (5-min stale-while-revalidate in-memory cache). Ephemeral prompt cache on the system block for cache reuse across calls. Per-IP in-memory rate limit (default 12 RPM). CORS locked to `ASK_IGNIS_ALLOWED_ORIGIN` (default vaultsparkstudios.com). 1–800 char message window. Honest error envelope on every failure.
+- assets/vault-oracle.js (new): Self-mounting chat widget on `[data-vault-oracle]`. Scoped CSS injected once, Georgia serif for IGNIS lines, light-mode overrides, aria-live log, animated gold dot header, reduced-motion honored. `data-vault-oracle-context` pipes page context into system prompt. GA4 `ignis_ask` event.
+- assets/ignis-lens.js (new): bottom-right gold pill that lazy-loads `vault-oracle.js` on first click, pre-seeds context from `<meta name="ignis-context">` or `<title>`, auto-suppresses on `[data-vault-oracle]`-hosting pages and on portal/admin routes (`/vault-member/`, `/investor-portal/`, `/studio-hub/`, `/admin/`). backdrop-filter blur on pill; light-mode overrides; `prefers-reduced-motion` drops pulse anim.
+- ignis/index.html (edit): Mounted Vault Oracle section with context hint before `</main>`.
+- index.html / studio-pulse/index.html / games/index.html / universe/index.html (edits): IGNIS Lens script appended before `</body>`.
+
+**Tier 3 — Living Vault (2 shipped + presence).**
+- assets/vault-heartbeat.js (new): top-center aria-live ticker. Supabase Realtime `channel('vault:events')` subscription — `broadcast(event='vault_event')` payloads render as event text ("@user joined the vault", "new drop landed · SEALED", etc). Anonymous presence via `ch.track({joined_at})` and `ch.presenceState()` — "N in the vault" shadow when >1 viewer. Gold→blue flash animation on incoming event. Honest "realtime offline" fallback when supabase.channel is unavailable. Mounted on /studio-pulse/.
+- assets/lore-gates.js (new): progressive lore reveal on `[data-lore-gate data-rank-required="N" data-rank-title="…"]`. Reads vault rank from `vs_member_rank` storage or `window.VSMember.currentRank()` (fallback rank 1 = anonymous). Locked state: blur-saturated content with overlay showing lock icon + rank requirement + CTA to `/vault-member/` (anon) or `/ranks/` (low-rank member). Unlocked state: subtle gold→blue border transition + "Fragment unlocked" reveal label. `prefers-reduced-motion` disables transition. Mounted on /universe/; ready for per-page `data-lore-gate` fragment authoring.
+
+**Tier 4 — Native-feel UX (4 shipped).**
+- assets/native-feel.js (new): injects `@view-transition { navigation: auto; }` + `::view-transition-old/new(root)` keyframes when supported, honoring `prefers-reduced-motion`. Binds Web Vibration on `vs:rank_up` / `vs:drop_shipped` / `vs:achievement_earned` custom events plus `[data-haptic]` click delegation. Web Share progressive enhancement on `[data-share]` elements. Exposes `window.VSNative.{isStandalone, buzz}`.
+- manifest.json (edit): added `share_target` (GET to `/share/`, params title+text+url), `shortcuts` (Studio Pulse, Vault Member, Ask IGNIS). Kept icons/screenshots unchanged.
+- share/index.html (new) + assets/share-receiver.js (new): PWA share-target landing. Receiver parses incoming query, renders title/text/url preview, pre-fills `/contact/?subject=&body=` for forwarding to the founder, stores share in sessionStorage for in-app pickup. Honest "nothing was shared" fallback on direct visit. noindex.
+- sw.js STATIC_ASSETS (edit): added /share/, /ignis/, /social/, /signal-log/, /notebook/, 4 missing game pages (mindframe, the-exodus, vaultfront, solara), and 6 new asset modules.
+- index.html + studio-pulse/index.html (edits): native-feel.js script appended.
+
+**Tier 5 — SEO/Speed/Branding (3 shipped; OG worker deploy separate).**
+- cloudflare/og-image-worker.js (new): standalone Worker returning 1200×630 SVG OG image. Query params: `title` (clamped 80ch, wrapped 22ch max 3 lines), `eyebrow` (uppercase overline), `status` (sparked/forge/vaulted/sealed tint), `theme` (dark/light). Vault-forge aesthetic: ember radial + gold stripe + hex sigil on the right + wordmark footer. Edge-cached 1hr browser / 24hr CDN / swr 10min. Deploy on its own route; safe to run in parallel with the security worker.
+- assets/schema-injector.js (new): runtime JSON-LD for VideoGame (when `<body data-schema-type="game">` + `data-game-name/status/platforms/genre`), FAQPage (when `<body data-schema-type="faq">` + details/summary or `.vs-faq-q`/`.vs-faq-a` pairs), and BreadcrumbList (derived from URL path, always). Skips if matching `@type` already in head.
+- assets/perf-badge.js (new): PerformanceObserver for LCP, CLS (hadRecentInput-filtered), and INP (event-timing with 16ms threshold). Renders honest live snapshot pill on `[data-perf-badge]` hosts. Tier colouring: ok ≤2.5s/0.1/200ms; warn; bad ≥4s/0.25/500ms.
+
+**Tier 6 — OS cohesion (2 shipped; signal-log workflow needs STUDIO_OPS_READ_TOKEN).**
+- notebook/index.html (new) + assets/notebook-stream.js (new): /notebook/ — commits-as-journal. Fetches last 80 commits via GitHub API (unauth public read), groups by ISO-week, infers mood from conventional-commits prefix (feat/fix/chore/docs/ship), renders timeline with gold rings at week boundaries. 10min sessionStorage cache. Honest failure mode on rate limit or network error. CSP applied; canonical + OG meta; manifest link. IGNIS Lens + native-feel mounted.
+- signal-log/index.html (new) + scripts/sync-signal-log.mjs (new) + .github/workflows/signal-log-sync.yml (new): /signal-log/ with `<!-- signal-log:start -->`/`<!-- signal-log:end -->` markers; sync script parses `docs/CREATIVE_DIRECTION_RECORD.md` in the private studio-ops repo for entries tagged `public: true`, renders them between markers. GitHub Action runs daily at 06:17 UTC + on demand; checks out both repos with `STUDIO_OPS_READ_TOKEN`, runs the script, auto-commits any delta with [skip ci] message. Gracefully no-ops if token unavailable.
+
+**Memory + TASK_BOARD.**
+- memory/project_audit_s86.md (new): 87/100 audit with 10-dimension breakdown + full 21-item plan.
+- memory/feedback_har_phantom_blockers.md (new): glob studio-ops/secrets before declaring HAR.
+- memory/MEMORY.md (edit): two new pointers added.
+- context/TASK_BOARD.md (edit): S86 section prepended — P0 + all 7 tiers marked DONE S86 with evidence, 4 founder-actions + 6 follow-ups surfaced.
+
+**Verification.**
+- node --check: 15 files green (all new/edited JS + Worker + sw.js + sync-signal-log.mjs).
+- node scripts/csp-audit.mjs: **passed, 98 HTML files** (up from 95 — added /share/, /signal-log/, /notebook/).
+- node scripts/propagate-csp.mjs: 0 updated, 94 unchanged, 2 pre-existing missing (google-site-verification placeholder + /open-source/ redirect).
+- node -e "JSON.parse(manifest.json)": valid.
+- CSP meta injection on 3 new pages — scripted via `import('./config/csp-policy.mjs')` + `fs.writeFileSync` with `PAGE_CSP`.
+
+---
+
 ## 2026-04-17 — Session 85 (Forge Window redesign + 27-initiative portfolio cohesion — 8 shipped across 2 `/go` rounds)
 
 - studio-pulse/index.html (rebuilt): title + meta-description → "Studio Pulse — The Forge Window"; `<style>` block replaced with `.forge-*` design system (hero ember animation, heartbeat tiles, current-focus band, world cards with tone variants sparked/forge/vaulted, sealed-vault sigil grid, signal strip, teasers); `<main>` content replaced — hero + heartbeat + current-focus + Living Worlds + Tools & Platforms + Sealed Vault + Signal strip + Coming Next. Removed: Now/Next/Shipped kanban, IGNIS stat tile, sessions/edge-functions/ranks/social counters, "All Systems Green" checklist, bridge-status note. `prefers-reduced-motion` guards on every animated element. Light-mode overrides preserved.

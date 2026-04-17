@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇███
-Avgs — 3: 480.7 | 5: 479.4 | 10: 460.5 | 25: 441.0 | all: 441.5
-  └ 3-session: Dev 96.7 | Align 94.3 | Momentum 96.3 | Engage 94.7 | Process 98.7
-Velocity trend: ↑  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~4.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-17 | Session 85 | Total: 484/500 | Velocity: 8 | protocolVelocity: 8
+Sparkline (last 5 totals): ▇████
+Avgs — 3: 482.7 | 5: 480.6 | 10: 463.2 | 25: 443.0 | all: 443.3
+  └ 3-session: Dev 97.0 | Align 96.3 | Momentum 97.7 | Engage 95.7 | Process 97.3
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
+Momentum runway: ~6 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-17 | Session 86 | Total: 485/500 | Velocity: 21 | protocolVelocity: 21
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,20 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-17 — Session 86 | Total: 485/500 | Velocity: 21 | Debt: ↓
+**Scores:** Dev 97 · Align 97 · Momentum 99 · Engage 96 · Process 96
+**Shipped (21 + P0):** P0 sw.js merge-conflict fix · Tier 7 hygiene (intel-* dead code strip + sw-version.yml retire) · Tier 1 Worker hardening (edge-gate + nonce CSP + rate-limit + CSRF, all env-flagged) · Tier 2 IGNIS layer (ask-ignis edge fn + Vault Oracle widget + IGNIS Lens on 4 surfaces) · Tier 3 Living Vault (Realtime heartbeat + presence on /studio-pulse/ + lore-gates on /universe/) · Tier 4 Native-feel UX (View Transitions + Web Vibration + Web Share + share_target manifest + /share/ handler + expanded SW pre-cache + app shortcuts) · Tier 5 SEO/Brand (standalone og-image-worker + schema injector + live perf badge) · Tier 6 OS cohesion (/notebook/ commit-journal + /signal-log/ with CDR auto-sync workflow).
+**Intent:** Achieved — founder brief "audit + genius-level innovation plan + implement every item at highest quality in one pass with minimal token waste" delivered end-to-end. Velocity 21 vs scope cap 12 (1.75×) explicitly authorized by the founder brief.
+**Brainstorm:**
+- **HAR phantom-blocker pattern is the single biggest leak in the studio's motion.** S82–S85 deferred 4 compounding-leverage items behind two secrets that were sitting on the founder's drive the whole time. Memory + feedback entry saved (`feedback_har_phantom_blockers.md`). Glob `vaultspark-studio-ops/secrets/` at every /start blocker preflight going forward.
+- **P0 sw.js merge-conflict markers shipped to production.** `build:check` does not lint for `<<<<<<<` / `=======` / `>>>>>>>`. Trivial fix: add a conflict-marker regex scan to the shell-build gate. Filed as S87 item.
+- **Env-flagged rollouts of security changes pay dividends.** All 4 Worker hardening features landed as code without any production behavior change — founder flips flags one at a time with staging smoke between each. Use this pattern for any future high-blast-radius Worker edit.
+- **The "Vault Oracle" framing of Ask IGNIS is stronger than a generic chatbot.** Ceremonial, vault-forge voice, state-aware via live public-intelligence snapshot, ephemeral prompt cache keeps it cheap. The IGNIS Lens auto-seeds page context so every page becomes a conversation seed. Compounding UX.
+- **The Realtime heartbeat + anonymous presence on /studio-pulse/ is unprecedented for a studio-indie site.** Even offline it degrades gracefully. When events actually broadcast, it becomes a magnetic surface. Worth wiring studio-pulse-live.js to emit on shipped events.
+**Commit to TASK_BOARD:** (1) Add conflict-marker lint to scripts/build-shell-assets.mjs (would have caught the S86 P0). (2) Propagate ignis-lens.js + native-feel.js site-wide via propagate-nav.mjs.
+
+---
 
 ## 2026-04-17 — Session 85 | Total: 484/500 | Velocity: 8 | Debt: →
 **Scores:** Dev 97 · Align 96 · Momentum 97 · Engage 96 · Process 98

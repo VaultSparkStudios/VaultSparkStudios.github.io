@@ -8,6 +8,16 @@ Boundary:
 
 ## Entries
 
+### 2026-04-17 — Genius-level innovation brief: make this the best website in history (S86)
+
+- Category: Soul / Ambition / Feature density
+- Human input (verbatim): "check vaultspark-studio-ops/secrets for any keys needed on the human side ---then make those changes -- then Audit website (and provide score/rating) and provide a full plan to refine/improve current features, add depth or new innovative features, improve UI/UX/user-experience and user feedback loop, improve mobile responsiveness (on desktop/tablet/smartphone-iPhone/android), improve AI/intelligence (further IGNIS integration), improve cohesion/integration to Studio OS/Ops/Studio Hub/Social Dashboard/etc., and to improve security/speed/SEO/Branding. Recommend the top items in one combined list to implement (do all of this with minimal token waste). Use genius-level, sophisticated thinking and be as innovative as possible to make this the best website in history."
+- Follow-up human input (verbatim): "Update memory/task board with all items and implement all items at the highest/optimal quality in one pass"
+- Area affected: entire site — `/studio-pulse/`, `/ignis/`, `/universe/`, `/games/`, plus new surfaces `/notebook/`, `/signal-log/`, `/share/`; Cloudflare Worker layer; Supabase edge functions; service worker; manifest.
+- Signals read back into the site: (1) "The Vault Oracle" framing for Ask IGNIS — ceremonial, precise, poetic; not a generic chatbot. (2) The "Living Vault" pattern — Realtime heartbeat + anonymous presence shadow on /studio-pulse/ so the page is literally alive. (3) Adaptive Lore Gates on /universe/ — the vault itself rewards rank with deeper content. (4) Founder Notebook as "the forge writes itself" — commits-as-journal, no editorial layer. (5) Signal Log as "what we changed because you said something" — the studio's open communications loop. Every surface keeps the honest-voice, sealed-vault, vault-forge vocabulary.
+- Off-limits the brief did not contradict: proprietary-info boundary preserved — sealed projects remain sealed (12 sigil tiles, no codenames); private studio-ops repo still holds detailed operator runbooks; secrets stay in runtime env, never committed.
+- Maintenance rule: innovation velocity should continue to come from the genre-agnostic catalog of patterns we've built (registry-driven catalog, sealed-vault sigil, intent-state spine, portal-shell tokens, IGNIS layer, Living Vault). Don't bolt on third-party chrome that would dilute the vault-forge identity.
+
 ### 2026-04-17 — Studio Pulse must be a user-facing experience, not a founder-facing analytical page (S85)
 
 - Category: Soul / Brand / Product Framing

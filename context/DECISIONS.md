@@ -2,6 +2,27 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-17 — Worker hardening rolls in behind env flags (Session 86)
+
+- Status: active
+- Decision: All four new Cloudflare Worker features added in S86 (edge-gate for private portals, HTMLRewriter nonce CSP injection, KV-backed rate-limit on public forms, CSRF HMAC nonce endpoint) are gated on `PORTAL_GATE_ENABLED`, `NONCE_CSP_ENABLED`, `RATE_LIMIT_ENABLED` env vars. The Worker deploys with zero production-behavior change; founder flips flags one at a time with staging smoke between each.
+- Why: security changes on the edge have catastrophic blast radius if wrong. The existing 73-hash CSP policy has been kept deliberately because swapping it to nonce mode in one move risks breaking any inline script that wasn't catalogued. Phased rollout lets each layer prove itself before it gates real traffic.
+- Maintenance rule: any future high-blast-radius Worker edit defaults to env-flagged. Repo push is always safe; flag-flip is always confirmed.
+
+### 2026-04-17 — HAR phantom-blocker preflight is a durable /start step (Session 86)
+
+- Status: active
+- Decision: Every /start blocker preflight must glob `vaultspark-studio-ops/secrets/*.{txt,env}` and cross-reference against TASK_BOARD `[HAR:…]` tags. If the referenced secret file exists locally, reclassify from "human-blocked" (founder-unreachable) to "operator-blocked" (founder has keys, needs to register runtime); surface the exact registration command and proceed.
+- Why: S82–S85 carried 4 compounding items behind `[HAR:ANTHROPIC_API_KEY]` and `[HAR:CF_WORKER_API_TOKEN]` while both secret files sat on the founder's drive. The mislabel cost three sessions of compounding-leverage work.
+- Maintenance rule: never read raw secret values into agent context — presence only. Memory pattern: `memory/feedback_har_phantom_blockers.md`.
+
+### 2026-04-17 — Ask IGNIS uses Claude Sonnet 4.6 with ephemeral prompt caching (Session 86)
+
+- Status: active
+- Decision: `ask-ignis` Supabase edge function defaults to `claude-sonnet-4-6` and marks its system block as `cache_control: { type: 'ephemeral' }`. The live-intelligence snapshot also has a 5-minute in-memory stale-while-revalidate cache on the Deno instance.
+- Why: the Vault Oracle use case (1–4 sentence replies reading a stable public-intelligence snapshot in ceremonial vault-forge voice) is a retrieval-and-tone task, not a reasoning task. Sonnet 4.6 is cheaper + faster + still supports prompt caching. Repeat calls within a 5-min window are near-free on the cached prefix.
+- Maintenance rule: do not upgrade to Opus without a clear reason tied to Oracle reply quality.
+
 ### 2026-04-17 — `/studio-pulse/` is a user-facing experience ("The Forge Window"), not a founder-facing ops dashboard (Session 85)
 
 - Status: active

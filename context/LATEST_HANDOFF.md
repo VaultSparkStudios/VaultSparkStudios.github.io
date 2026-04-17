@@ -1,6 +1,77 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 85 closeout)
+Last updated: 2026-04-17 (Session 86 closeout)
+
+## Session Intent: Session 86
+Audit the website, produce a genius-level innovation plan covering refinements, depth + innovation, UX/UI/mobile, AI/IGNIS, Studio OS cohesion, security/speed/SEO/branding — then implement every item in one pass at highest quality with minimal token waste.
+
+## Where We Left Off (Session 86)
+- Shipped: **21 items at quality bar across 7 tiers + 1 P0 production incident caught** (see below). Velocity 21 vs scope cap 12 — 1.75× explicitly authorized by the founder brief ("implement all items at the highest/optimal quality in one pass"). Intent fully achieved.
+- Carry-forward is founder-action-weighted: 4 founder unlock items (Supabase + Cloudflare secrets registration + Worker deploy + STUDIO_OPS_READ_TOKEN repo secret) and 6 low-risk follow-up sweeps (site-wide IGNIS Lens propagation, VideoGame schema body attrs on 8 game pages, lore-gate fragment authoring on /universe/voidfall/, CONFLICT-MARKER lint in build:check, studio-pulse-live broadcast to vault:events, Social Dashboard bidirectional mirror).
+- Tests: `node --check` on 15 files → all passed. `node scripts/csp-audit.mjs` → **passed, 98 HTML files** (up from 95). `node scripts/propagate-csp.mjs` → 0 updated, 94 unchanged, 2 pre-existing missing (intentional). Manifest JSON-valid.
+- Deploy: pending — manual commit + push from this closeout. No production runtime changes until founder registers secrets + flips env flags. Worker + edge-function code is env-gated: pushing the repo is safe, flipping `PORTAL_GATE_ENABLED=1` / `NONCE_CSP_ENABLED=1` / `RATE_LIMIT_ENABLED=1` and deploying ask-ignis + og-image-worker requires founder confirmation.
+
+### P0 incident caught + fixed
+- **sw.js live merge-conflict markers** — `<<<<<<< HEAD` / `=======` / `>>>>>>> 2074eb7 (fix(ci): resolve 4 flaky workflow checks + retire sw-version race)` shipped to production (commit `7ec6402` or earlier, unresolved during the S81 cleanup). First `const CACHE_NAME` was accepted by the browser; the second triggered SyntaxError, which silently failed the service worker registration. Root cause: `npm run build:check` does not lint for conflict markers. Resolved in S86 by keeping the HEAD value (matches `assets/shell-manifest.json`) and removing the stale alternate. **Follow-up: add conflict-marker lint to scripts/build-shell-assets.mjs.**
+
+### HAR phantom-blocker discovery
+- Globbed `vaultspark-studio-ops/secrets/` at session start per founder direction. Found both `anthropic.txt` and `cloudflare-api-token.txt` present locally — the exact two secrets that had been tagged `[HAR]` across S82, S83, S84, and S85, blocking 4 compounding-leverage items. No raw values were read into agent context; presence was confirmed via `ls -la`. Memory: `feedback_har_phantom_blockers.md`. Classification corrected from "human-blocked" (founder-unreachable) to "operator-blocked" (founder has keys, needs to register them with the runtime). Surfaced the exact 2 terminal commands at session start.
+
+### Shipped — Tier 7 Hygiene (3)
+- **sw.js merge-conflict fix** — P0 production bug resolved.
+- **home-intelligence.js dead-code trim** — removed setText/renderShips/renderList helpers + VSPublicIntel branch (setText/renderList calls were no-op because the `intel-*` IDs were deleted from homepage in S80). DOMContentLoaded handler now only does initKitForms + initActiveNav + renderActivityFeed.
+- **sw-version.yml retired** — 5 sessions clean since S81 deprecation.
+
+### Shipped — Tier 1 Worker hardening (4, env-flagged)
+- **cloudflare/security-headers-worker.js rewrite** — layered handler with `/_csrf` endpoint issuing HMAC-signed tokens, edge-gate redirecting private-portal requests without session cookie, per-IP + CSRF-verified rate limit on `/contact/submit` + `/ask-founders/submit`, HTMLRewriter nonce injection on HTML responses with CSP script-src swap to `'nonce-X' 'strict-dynamic'`. All four features behind env flags (`PORTAL_GATE_ENABLED`, `RATE_LIMIT_ENABLED`, `NONCE_CSP_ENABLED`) so the rewrite can be deployed with zero behavior change, then phased on one flag at a time.
+- **assets/csrf-token.js** — `window.VSCsrf.getToken()` client helper with sessionStorage cache + 30s TTL safety margin + single-flight.
+
+### Shipped — Tier 2 IGNIS layer (3)
+- **supabase/functions/ask-ignis/index.ts** — Claude Sonnet 4.6 edge function with live-snapshot system prompt (5-min stale-while-revalidate in-memory intel cache), ephemeral prompt caching on the system block, per-IP RPM limit, CORS locked to the site domain, CORS + rate-limit + JSON-body validation + Anthropic error passthrough, 1–800 char message window.
+- **assets/vault-oracle.js** — chat widget that mounts on `[data-vault-oracle]`. Scoped CSS; light-mode parity; aria-live log; Georgia serif for IGNIS responses.
+- **assets/ignis-lens.js** — bottom-right gold pill that lazy-loads Oracle on first click; auto-pre-seeds context from `<meta name="ignis-context">` or `<title>`; auto-suppresses on portal/admin routes and pages already hosting `[data-vault-oracle]`.
+- Mounted Vault Oracle on `/ignis/`; Lens on `/`, `/studio-pulse/`, `/games/`, `/universe/`.
+
+### Shipped — Tier 3 Living Vault (2 + presence)
+- **assets/vault-heartbeat.js** — top-center aria-live ticker. Subscribes to Supabase Realtime `channel('vault:events')`, renders broadcast events with flash animation, tracks anonymous presence and shows "N in the vault" shadow when >1 viewer. Honest "realtime offline" fallback. Mounted on `/studio-pulse/`.
+- **assets/lore-gates.js** — rank-gated lore fragment reveal. Markup contract: `<div data-lore-gate data-rank-required="3" data-rank-title="Spark Adept">…</div>`. Locked → blur-saturate + CTA; unlocked → subtle reveal label. Mounted on `/universe/`; ready for per-page fragment authoring.
+
+### Shipped — Tier 4 Native-feel UX (4)
+- **assets/native-feel.js** — View Transitions API (`@view-transition { navigation: auto }`) + Web Vibration on rank-up / drop-shipped / achievement-earned custom events + `[data-haptic]` click delegation + Web Share progressive enhancement on `[data-share]`. Exposes `window.VSNative.{isStandalone, buzz}`.
+- **manifest.json updates** — `share_target` (GET `/share/`) + `shortcuts` (Studio Pulse, Vault Member, Ask IGNIS).
+- **share/index.html + assets/share-receiver.js** — PWA share-target landing. Parses incoming title/text/url, pre-fills `/contact/?subject=&body=` for forwarding. noindex.
+- **sw.js STATIC_ASSETS extension** — /share/, /ignis/, /social/, /signal-log/, /notebook/, 4 missing game pages, and 6 new asset modules.
+
+### Shipped — Tier 5 SEO/Speed/Branding (3)
+- **cloudflare/og-image-worker.js** — standalone Worker returning 1200×630 SVG OG images. Query params: title, eyebrow, status (chip colour), theme. Edge-cached 1hr/24hr/swr. Deploy on its own route.
+- **assets/schema-injector.js** — runtime JSON-LD for VideoGame / FAQPage / BreadcrumbList. Skips if matching @type already in head.
+- **assets/perf-badge.js** — PerformanceObserver for LCP/CLS/INP, renders honest live-snapshot pill on `[data-perf-badge]` hosts.
+
+### Shipped — Tier 6 OS cohesion (2)
+- **notebook/index.html + assets/notebook-stream.js** — `/notebook/` renders commits as a week-grouped journal via GitHub API (unauth public read).
+- **signal-log/index.html + scripts/sync-signal-log.mjs + .github/workflows/signal-log-sync.yml** — `/signal-log/` with CDR public-entry auto-sync. Daily workflow + manual trigger; gracefully no-ops if `STUDIO_OPS_READ_TOKEN` repo secret not set.
+
+### Verification
+- `node --check`: 15 files all passed (csrf-token, vault-oracle, ignis-lens, vault-heartbeat, lore-gates, native-feel, schema-injector, perf-badge, notebook-stream, share-receiver, home-intelligence, sw.js, security-headers-worker, og-image-worker, sync-signal-log).
+- `node scripts/csp-audit.mjs`: **passed, 98 HTML files** (up from 95 — /share/, /signal-log/, /notebook/ added).
+- `node scripts/propagate-csp.mjs`: 0 updated, 94 unchanged, 2 pre-existing missing (intentional: google-site-verification placeholder + /open-source/ redirect).
+- `manifest.json`: JSON-valid.
+
+### Open carry-forward
+- **[FOUNDER ACTION] Register ANTHROPIC_API_KEY + deploy ask-ignis** — `supabase secrets set ANTHROPIC_API_KEY=$(cat ../vaultspark-studio-ops/secrets/anthropic.txt) --project-ref fjnpzjjyhnpmunfoycrp && supabase functions deploy ask-ignis --project-ref fjnpzjjyhnpmunfoycrp`.
+- **[FOUNDER ACTION] Register Worker secrets + flip env flags** — via Wrangler: `CSRF_SIGNING_KEY` (required first; nothing else works without it), create `RATE_LIMIT` KV namespace, then flip `PORTAL_GATE_ENABLED=1`, `RATE_LIMIT_ENABLED=1`, and finally `NONCE_CSP_ENABLED=1` after a staging smoke test confirms no inline-script breakage.
+- **[FOUNDER ACTION] Deploy og-image-worker.js** — on its own route (recommended: `og.vaultsparkstudios.com/*`). Then point `og:image` meta URLs at the new route for dynamic per-page cards.
+- **[FOUNDER ACTION] Add STUDIO_OPS_READ_TOKEN repo secret** — enables `signal-log-sync.yml` to read the private CDR.
+- **[FOLLOWUP] Add CONFLICT-MARKER lint to scripts/build-shell-assets.mjs** — would have caught the S86 P0.
+- **[FOLLOWUP] Mount ignis-lens.js + native-feel.js site-wide via propagate-nav.mjs** — currently on ~6 surfaces each.
+- **[FOLLOWUP] Add `data-schema-type="game"` body attrs to 8 game pages** — schema-injector emits VideoGame once attrs exist.
+- **[FOLLOWUP] Author lore-gate fragments on /universe/voidfall/** — contract documented in `assets/lore-gates.js`.
+- **[FOLLOWUP] Wire studio-pulse-live.js to broadcast to vault:events** — currently heartbeat only consumes external broadcasts; internal drop events should also notify.
+- **[FOLLOWUP] Social Dashboard bidirectional mirror** — needs cross-repo work.
+- **[SIL] Watch first post-push Lighthouse + playwright-axe runs** — S86 added new surfaces and animated UI; verify S82/S83 tightened budgets still hold.
+- **[FOUNDER DECISION] Rename nav "Studio Pulse" → "Forge Window"** — URL frozen for SEO; awaiting brand sign-off.
+
+---
 
 ## Session Intent: Session 85
 Reframe `/studio-pulse/` from a founder-facing ops kanban into a user-facing immersive "Forge Window," and incorporate the full 27-initiative portfolio across the website without revealing proprietary info.

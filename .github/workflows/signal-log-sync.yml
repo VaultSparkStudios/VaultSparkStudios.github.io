@@ -1,0 +1,53 @@
+name: signal-log-sync
+
+# Pulls public-tagged entries from the private studio-ops CDR into /signal-log/.
+# Runs daily and on demand. Skips silently if the source repo isn't accessible.
+
+on:
+  schedule:
+    - cron: '17 6 * * *'   # daily 06:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout site
+        uses: actions/checkout@v4
+        with:
+          path: site
+
+      - name: Checkout studio-ops (private)
+        uses: actions/checkout@v4
+        with:
+          repository: VaultSparkStudios/vaultspark-studio-ops
+          token: ${{ secrets.STUDIO_OPS_READ_TOKEN }}
+          path: studio-ops
+        continue-on-error: true
+
+      - name: Run signal-log sync
+        working-directory: site
+        env:
+          STUDIO_OPS_PATH: ${{ github.workspace }}/studio-ops
+        run: |
+          if [ -d "$STUDIO_OPS_PATH" ]; then
+            node scripts/sync-signal-log.mjs
+          else
+            echo "studio-ops not accessible (likely missing STUDIO_OPS_READ_TOKEN secret) — skipping."
+          fi
+
+      - name: Commit + push if changed
+        working-directory: site
+        run: |
+          if git diff --quiet --exit-code; then
+            echo "No signal-log changes."
+            exit 0
+          fi
+          git config user.name "vaultspark-signal-bot"
+          git config user.email "noreply@vaultsparkstudios.com"
+          git add signal-log/index.html
+          git commit -m "chore: sync signal-log from CDR public entries [skip ci]"
+          git push
