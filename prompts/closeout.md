@@ -13,12 +13,6 @@ Compare actual work to the declared intent in `context/LATEST_HANDOFF.md → Ses
 
 Classify: **Achieved** · **Partial** *(note scope drift)* · **Redirected** *(log reason)*
 
-**Git-clean gate:** before proceeding, run `git status --porcelain -uno`. If the working tree is dirty beyond trivial closeout/context edits, stop and commit first. Do not continue closeout against a large dirty tree.
-
-**CSP gate:** if the session touched HTML inline scripts, CSP tags, or the Worker CSP, run `node scripts/csp-audit.mjs` before writing the final handoff.
-
-**Public intelligence gate:** if the session changed `PROJECT_STATUS.json`, `TASK_BOARD.md`, `LATEST_HANDOFF.md`, runtime-pack metadata, or any public-intelligence consumer/runtime, run `node scripts/generate-public-intelligence.mjs` after final memory writes. Treat `api/public-intelligence.json` and `context/contracts/*.json` as generated truth surfaces that must stay synchronized.
-
 **Bypass audit:** If any commit this session bypassed safety hooks (`--no-verify`, `--no-gpg-sign`), log in `context/DECISIONS.md`: date · what hook was bypassed · reason · follow-up task to fix root cause. Add that follow-up to `context/TASK_BOARD.md` under Now. Normalizing hook bypasses erodes the safety net.
 
 ---
@@ -33,9 +27,13 @@ Classify: **Achieved** · **Partial** *(note scope drift)* · **Redirected** *(l
 6. `context/SELF_IMPROVEMENT_LOOP.md` — **mandatory**
 7. `docs/CREATIVE_DIRECTION_RECORD.md` — **mandatory if human gave creative direction**
 8. `context/TRUTH_AUDIT.md` — when source-of-truth, schemas, prompts/templates, or derived surfaces changed
-9. Generated public intelligence surfaces — `node scripts/generate-public-intelligence.mjs` when applicable
-10. Any repo-specific files whose truth changed
-11. **Delete `context/.session-lock`** — mandatory last step
+9. Any repo-specific files whose truth changed
+10. **Delete `context/.session-lock`** — handled by autopilot in step 11
+11. **Run closeout autopilot (v3.1 — mandatory)**:
+    ```bash
+    node scripts/ops.mjs closeout
+    ```
+    Runs: doctor --loop → refresh startup brief → stamp PROJECT_STATUS → git status + diff preview → **HUMAN CONFIRMATION** → commit (conventional msg) → push → clear lock + beacon → print STATUS BOARD. Never skip confirmation. `--dry-run` shows the plan without writing.
 
 ### Where We Left Off  *(write to top of LATEST_HANDOFF.md)*
 
@@ -203,11 +201,14 @@ Write both into the Rolling Status header (Step 2).
 
 Scan the full session for items only the Studio Owner can resolve: external service setup, manual approvals, financial actions, legal, decisions only the human can make.
 
-**Blocker preflight requirement:** before keeping an item as human-blocked, run:
+**Mandatory blocker preflight before adding or retaining any item here:**
 ```bash
 node scripts/ops.mjs blocker-preflight
 ```
-If the blocker is agent-attemptable, attempt it first. Keep `Human Action Required` only for genuinely human-owned work.
+Rules:
+- Run secrets discovery first for any mapped capability.
+- If the blocker is agent-attemptable, try the elevated/admin/API path before leaving it here.
+- Only keep an item in `Human Action Required` when the agent-side attempt failed, access is genuinely absent, or the action is truly owner-only.
 
 **If items exist:** write a `## Human Action Required` section in `context/LATEST_HANDOFF.md` and add to `context/TASK_BOARD.md` under `## Human Action Required` (separate from `## Blocked` — blocked = agent-resolvable).
 
@@ -457,6 +458,14 @@ No direction this session → confirm "CDR reviewed — no new entries" in close
 
 Reply with the **CLOSEOUT STATUS BOARD** below. Fill every field — do not omit sections.
 Use `✓` for done, `□` for pending/skipped (with reason), `—` for not-applicable.
+
+Before presenting it, validate the candidate board with:
+
+```bash
+node scripts/validate-closeout-board-format.mjs --stdin
+```
+
+If validation fails, repair the board first. Do not replace the canonical closeout board with prose.
 
 **Score bars:** 20-char progress bar for each /100 score: `█` per 5 pts.
 **Overall bar:** 24-char bar for /500 total.
