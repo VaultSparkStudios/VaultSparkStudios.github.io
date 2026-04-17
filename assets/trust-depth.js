@@ -11,6 +11,8 @@
     if (path === '/') return 'home';
     if (path.indexOf('/membership') === 0) return 'membership';
     if (path.indexOf('/vaultsparked') === 0) return 'vaultsparked';
+    if (path.indexOf('/join') === 0) return 'join';
+    if (path.indexOf('/invite') === 0) return 'invite';
     return 'home';
   }
 
@@ -124,6 +126,54 @@
       ]
     };
 
+    contexts.join = [
+      {
+        label: 'What Free Actually Means',
+        title: 'Free is a permanent tier, not a trial.',
+        copy: 'The Vault Member account has no expiry date, no credit card requirement, and no downgrade event. Rank, achievements, challenges, and community access stay with you however long it takes the studio to earn deeper support.'
+      },
+      {
+        label: 'What Happens Immediately',
+        title: 'One account gives you the whole identity layer.',
+        copy: 'After registration, the vault begins recognizing your progress across games, worlds, and community surfaces. The progression system starts accumulating from that first moment — there is nothing to unlock or upgrade before it becomes real.'
+      },
+      {
+        label: 'Why The Invite System Exists',
+        title: 'Controlled access keeps the community tight on purpose.',
+        copy: state.returning_status === 'returning' || state.journey_stage === 'activation'
+          ? 'You are already past the gate — the vault is ready when you are. Registration takes about sixty seconds.'
+          : 'Early access is managed through invites to prevent the community layer from scaling faster than the systems that support it. Waitlist means the request is real, not ignored.'
+      },
+      {
+        label: 'What Still Has To Be Earned',
+        title: 'The studio should prove the vault before asking for paid support.',
+        copy: blockerCopy + ' The honest sequence: free account first, then community proof, then paid only when the depth feels worth backing.'
+      }
+    ];
+
+    contexts.invite = [
+      {
+        label: 'What Your Friend Gets',
+        title: 'You are inviting someone into the real vault, not a marketing funnel.',
+        copy: 'A free account with rank tracking, challenges, classified lore access, and a permanent community identity. No credit card. No pressure to upgrade. The same free tier you use if you have it, or a genuine entry point if they are new.'
+      },
+      {
+        label: 'Why Referrals Are Tracked',
+        title: 'Referring is recorded as community signal, not lead generation.',
+        copy: 'Every successful referral adds to your vault rank progress and contributes to recruiter achievements. The studio tracks it because building a tight community through personal trust is how the vault should grow — not ads.'
+      },
+      {
+        label: 'What The Honest Ask Is',
+        title: 'Only share if you\'d actually vouch for the studio.',
+        copy: 'If the vault, games, or community feel worth recommending — share. If you\'re still figuring out whether it\'s worth it yourself, that\'s the right place to be too. No reward is worth a weak endorsement.'
+      },
+      {
+        label: 'What Still Has To Be Earned',
+        title: 'The referral system should make the vault feel worth referring.',
+        copy: blockerCopy + ' If something is making inviting feel awkward, that signal matters — the feedback box below is how it reaches the studio.'
+      }
+    ];
+
     return contexts[context] || contexts.home;
   }
 
@@ -135,18 +185,23 @@
     var titles = {
       home: 'Before we ask for anything, here\'s what\'s real.',
       membership: 'Here\'s what membership actually is, in plain terms.',
-      vaultsparked: 'Here\'s what you get for paying, without the push.'
+      vaultsparked: 'Here\'s what you get for paying, without the push.',
+      join: 'What the vault actually is before you decide to enter.',
+      invite: 'What you\'re actually sharing when you send an invite.'
     };
     var copies = {
       home: 'What\'s already live. What the safest first step is. What still has to be earned.',
       membership: 'What membership means. What free already unlocks. When paid depth actually matters.',
-      vaultsparked: 'What the paid tiers are for. What changes after upgrade. The honest guardrails. How to decide without pressure.'
+      vaultsparked: 'What the paid tiers are for. What changes after upgrade. The honest guardrails. How to decide without pressure.',
+      join: 'What free means. What starts immediately. Why invite-only. What still has to be earned.',
+      invite: 'What your friend gets. Why referrals are tracked. The honest ask.'
     };
-    // Kicker was "Trust Depth" — internal taxonomy. Now user-facing.
     var kickers = {
       home: 'Ground truth',
       membership: 'Membership, clearly',
-      vaultsparked: 'The paid tier, clearly'
+      vaultsparked: 'The paid tier, clearly',
+      join: 'Before you enter',
+      invite: 'Before you share'
     };
 
     root.innerHTML =
