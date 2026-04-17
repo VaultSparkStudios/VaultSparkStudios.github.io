@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 86 + activation addendum — full stack now live; one manual founder action remaining)
+Last updated: 2026-04-17 (Session 87 — 7 items shipped; recovery closeout writes back S87 state + og:image sweep)
 
 ## Session 86 addendum — runtime activation + all follow-ups (8 activations)
 
@@ -16,10 +16,32 @@ Last updated: 2026-04-17 (Session 86 + activation addendum — full stack now li
 ### S86 addendum carry-forward
 
 - [ ] **[FOUNDER ACTION — SECURITY]** Revoke compromised classic PAT at https://github.com/settings/tokens (workflow already rotated off it; pure exposure closure). Requires browser + 2FA — not API-automatable.
-- [ ] **[S87][IMPROVEMENT] Add Workers KV Storage:Edit + Zone:Workers Routes:Edit scopes** to CLOUDFLARE_API_TOKEN so agents avoid the Global API Key fallback.
-- [ ] **[S87][IMPROVEMENT] Add conflict-marker + secret-extraction lint** to scripts/build-shell-assets.mjs — would have caught the S86 P0 (merge conflict in sw.js) + S86 addendum P0 (transcript leak) pre-push.
-- [ ] **[S87][IMPROVEMENT] Point og:image meta tags at vaultsparkstudios.com/_og/?title=…** for dynamic per-page social cards (currently all pages point at static /assets/og-image.png).
-- [ ] **[S87][VOICE] Voice-leak patrol sweep** — audit every state-aware JS module against `memory/feedback_voice_leak_patrol.md`. Confirmed clean S86: `home-personalized.js` (fixed 72de023). Still to verify: `home-dynamic-hero.js`, `adaptive-cta.js`, `related-content.js`, `trust-depth.js`. Rule: enum values shape selection/tone only, never render as user-facing text.
+- [ ] **[FOUNDER ACTION — OPEN] Add Workers KV Storage:Edit + Zone:Workers Routes:Edit scopes** to CLOUDFLARE_API_TOKEN so agents avoid the Global API Key fallback. *(Was S87 carry-forward; founder action, still open.)*
+- [x] **[S87][IMPROVEMENT] Add conflict-marker + secret-extraction lint** — **DONE S87**: `scripts/lint-repo.mjs` scans all text files for `<<<<<<<`/`=======`/`>>>>>>>` conflict markers + `ghp_`/`sk-`/`AKIA` secret patterns; wired into `npm run build:check`. Would have caught both S86 P0 incidents pre-push.
+- [x] **[S87][IMPROVEMENT] Point og:image meta tags at vaultsparkstudios.com/_og/?title=…** — **DONE S87 (recovery)**: `scripts/update-og-images.mjs` updated 79 public HTML pages to use the dynamic worker URL with per-page title/eyebrow/status params. Static PNG fallbacks replaced across the board.
+- [x] **[S87][VOICE] Voice-leak patrol sweep** — **DONE S87**: `assets/trust-depth.js` (6 engineering-jargon leaks removed), `assets/adaptive-cta.js` (5 "friction signal / price signal cold" notes softened). `home-dynamic-hero.js`, `related-content.js` audited clean. `home-personalized.js` was fixed in S86 (72de023).
+
+---
+
+## Session 87 — Carry-forward sweep + og:image dynamic upgrade (7 items)
+
+Session cut off before closeout; recovery writeback done as S88 start. All 7 items committed in `ea49a01`.
+
+- [x] **[S87][HYGIENE] Repo-wide lint gate** — `scripts/lint-repo.mjs`: conflict-marker + secret-pattern scan on all text files; wired into `npm run build:check` (`lint:repo` + `lint:repo:staged`). Catches the S86 P0 class (sw.js markers) and S86-addendum P0 class (PAT grep leak) pre-push.
+- [x] **[S87][VOICE] Voice-leak patrol sweep** — `assets/trust-depth.js` (6 engineering-jargon leaks scrubbed: "browser-local friction signal", "inferred hesitation", "warming membership intent", etc.); `assets/adaptive-cta.js` (5 internal-signal notes softened). All 4 state-aware modules audited.
+- [x] **[S87][LORE] Voidfall lore-gate fragments** — rank-2 "Observer's Log" pre-crossing fragment + rank-4 "Spark Adept Transmission 011" added to `/universe/voidfall/`; ignis-lens + native-feel mounted on that page.
+- [x] **[S87][REALTIME] studio-pulse-live broadcast** — `maybeBroadcastShipped()` in `assets/studio-pulse-live.js` emits client-to-client `vault_event` when top shipped entry changes; vault-heartbeat ticker animates on receipt.
+- [x] **[S87][SCHEMA] VideoGame JSON-LD on all 8 game pages** — `data-schema-type="game"` + `data-game-name/status/platforms/genre` body attrs added; `schema-injector.js` now emits VideoGame JSON-LD at runtime on all game pages.
+- [x] **[S87][PROPAGATION] Site-wide script injection** — `scripts/inject-new-scripts.mjs` (new idempotent injector): applied native-feel.js + ignis-lens.js + schema-injector.js to 105 HTML files (4 skipped: 404/offline/open-source/google-verify).
+- [x] **[S87][SEO] og:image dynamic upgrade** — `scripts/update-og-images.mjs` (new): rewrote all 79 public-page og:image meta tags to point at `/_og/?title=…&eyebrow=…&status=…`; per-page title from og:title, eyebrow + status from path-based rules; game pages carry correct forge/sparked/sealed status.
+
+### S87 carry-forward
+
+- [ ] **[FOUNDER ACTION — OPEN] Add `Workers KV Storage:Edit` + `Zone:Workers Routes:Edit` to CLOUDFLARE_API_TOKEN** — so agents can skip the Global API Key fallback for KV + zone-route operations.
+- [ ] **[FOUNDER ACTION — SECURITY] Revoke compromised classic PAT at https://github.com/settings/tokens** — pure exposure closure; workflow no longer depends on it.
+- [ ] **[FOLLOWUP] Social Dashboard bidirectional mirror** — needs cross-repo work (normalized activity feed exposure on Social Dashboard side + pull here).
+- [ ] **[SIL] Watch first post-S86/S87 Lighthouse + playwright-axe runs** — 105 pages got new script injections + og:image rewrite; verify tightened S82/S83 budgets still hold.
+- [ ] **[DECISION] Rename nav "Studio Pulse" → "Forge Window"** — URL frozen for SEO; awaiting brand sign-off.
 
 ---
 
@@ -76,15 +98,15 @@ Audit baseline 87/100. Full plan + scoring in `memory/project_audit_s86.md`. P0 
 
 ### S86 carry-forward (deferred / per-page sweeps)
 
-- [ ] **[FOLLOWUP] Mount ignis-lens.js + native-feel.js site-wide via propagate-nav.mjs** — currently on 6 surfaces.
-- [ ] **[FOLLOWUP] Add `data-schema-type="game"` body attrs to all 8 game pages** — schema-injector emits VideoGame once attrs present.
-- [ ] **[FOLLOWUP] Wire studio-pulse-live.js to broadcast to vault:events** when `intel.pulse.shipped` changes — currently heartbeat only consumes external broadcasts.
-- [ ] **[FOLLOWUP] Author lore-gate fragments on /universe/voidfall/** — markup contract documented in `assets/lore-gates.js`.
-- [ ] **[FOLLOWUP] Add CONFLICT-MARKER lint to scripts/build-shell-assets.mjs** — would have caught the S86 P0 incident.
-- [ ] **[FOUNDER ACTION] Register ANTHROPIC_API_KEY with Supabase ask-ignis fn** — `supabase secrets set ANTHROPIC_API_KEY=$(cat …/anthropic.txt) --project-ref fjnpzjjyhnpmunfoycrp`
-- [ ] **[FOUNDER ACTION] Register Worker secrets via Wrangler** — `CSRF_SIGNING_KEY`, then flip `PORTAL_GATE_ENABLED=1`, `NONCE_CSP_ENABLED=1`, `RATE_LIMIT_ENABLED=1` after smoke test.
-- [ ] **[FOUNDER ACTION] Deploy og-image-worker.js to its own route** — e.g. `og.vaultsparkstudios.com/*` then point `og:image` URLs at it.
-- [ ] **[FOUNDER ACTION] Add STUDIO_OPS_READ_TOKEN repo secret** — enables signal-log workflow to read private CDR.
+- [x] **[FOLLOWUP] Mount ignis-lens.js + native-feel.js site-wide** — **DONE S87**: `scripts/inject-new-scripts.mjs` applied site-wide; 105 HTML files updated (native-feel + ignis-lens + schema-injector injected before `</body>`).
+- [x] **[FOLLOWUP] Add `data-schema-type="game"` body attrs to all 8 game pages** — **DONE S87**: all 8 game pages have `data-schema-type="game"` + `data-game-name/status/platforms/genre`; schema-injector emits VideoGame JSON-LD at runtime.
+- [x] **[FOLLOWUP] Wire studio-pulse-live.js to broadcast to vault:events** — **DONE S87**: `maybeBroadcastShipped()` emits client-to-client vault_event broadcast when top shipped entry changes; listeners see vault-heartbeat ticker animate.
+- [x] **[FOLLOWUP] Author lore-gate fragments on /universe/voidfall/** — **DONE S87**: rank-2 Observer's Log (pre-crossing fragment) + rank-4 Spark Adept Transmission 011 added after Known Entities; ignis-lens + native-feel mounted on the page.
+- [x] **[FOLLOWUP] Add CONFLICT-MARKER lint** — **DONE S87**: `scripts/lint-repo.mjs` (new) handles this; wired into `build:check`.
+- [x] **[FOUNDER ACTION] Register ANTHROPIC_API_KEY with Supabase ask-ignis fn** — **DONE S86 addendum**: function deployed, reachable from /ignis/ Vault Oracle + IGNIS Lens.
+- [x] **[FOUNDER ACTION] Register Worker secrets via Wrangler** — **DONE S86 addendum**: `CSRF_SIGNING_KEY` set; `PORTAL_GATE_ENABLED=1`, `NONCE_CSP_ENABLED=1`, `RATE_LIMIT_ENABLED=1` all live.
+- [x] **[FOUNDER ACTION] Deploy og-image-worker.js to its own route** — **DONE S86 addendum**: deployed to `vaultsparkstudios.com/_og/*` zone route + workers.dev URL; og:image meta tags now point at it (S87 recovery).
+- [x] **[FOUNDER ACTION] Add STUDIO_OPS_READ_TOKEN repo secret** — **DONE S86 addendum**: rotated onto gh CLI OAuth token; signal-log-sync workflow verified green.
 
 ---
 

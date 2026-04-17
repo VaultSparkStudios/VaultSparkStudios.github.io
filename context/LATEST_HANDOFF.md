@@ -1,6 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 86 closeout)
+Last updated: 2026-04-17 (Session 87 — recovery closeout)
+
+## Session Intent: Session 87
+Clear all S86 carry-forward items (voice-leak patrol, lore gates, site-wide propagation, schema attrs, studio-pulse broadcast), add repo-wide lint gate, and upgrade og:image meta tags to the dynamic worker.
+
+## Where We Left Off (Session 87 — recovery closeout)
+- **7 items shipped in commit `ea49a01` before terminal was cut off.** Recovery start (S88) completed closeout writeback.
+- **S87 items:** (1) `scripts/lint-repo.mjs` — conflict-marker + committed-secrets scan wired into `build:check`; catches S86 P0 class incidents pre-push. (2) Voice-leak patrol complete — `trust-depth.js` (6 internal jargon leaks removed), `adaptive-cta.js` (5 "friction signal" notes softened); all 4 state-aware modules audited clean. (3) `/universe/voidfall/` lore-gate fragments: rank-2 Observer's Log + rank-4 Spark Adept Transmission 011 added after Known Entities; ignis-lens + native-feel mounted. (4) `assets/studio-pulse-live.js` `maybeBroadcastShipped()` — emits client-to-client `vault_event` broadcast when top shipped entry changes; vault-heartbeat ticker animates on receipt. (5) All 8 game pages got `data-schema-type="game"` + `data-game-name/status/platforms/genre` attrs; schema-injector emits VideoGame JSON-LD at runtime. (6) `scripts/inject-new-scripts.mjs` — idempotent site-wide injector applied native-feel + ignis-lens + schema-injector to 105 HTML files (4 skipped). (7) `scripts/update-og-images.mjs` — rewrote all 79 public-page `og:image` tags to `/_og/?title=…&eyebrow=…&status=…`; per-page title from og:title, path-based eyebrow/status, game pages carry forge/sparked/sealed status.
+- **Build verification (S87):** `node --check` on 6 JS files → all green. `npm run build:check` (shell sync + intel sync + lint-repo on 615 files) → all green. `csp-audit` → 98 HTML files passed.
+- **Working tree:** clean at closeout (only `.session-lock` modified by recovery start).
+- **Carry-forward:** see S87 section in TASK_BOARD. Remaining open: PAT revocation (founder browser action), CLOUDFLARE_API_TOKEN scope improvement (founder), Social Dashboard mirror (cross-repo), Lighthouse/axe smoke after new script injection on 105 pages, nav rename decision.
+
+---
 
 ## Session Intent: Session 86
 Audit the website, produce a genius-level innovation plan covering refinements, depth + innovation, UX/UI/mobile, AI/IGNIS, Studio OS cohesion, security/speed/SEO/branding — then implement every item in one pass at highest quality with minimal token waste. Then (addendum): complete all 4 founder runtime unlocks and all 4 identified follow-ups in the same session.

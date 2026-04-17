@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████
-Avgs — 3: 482.7 | 5: 481.4 | 10: 464.0 | 25: 443.4 | all: 443.6
-  └ 3-session: Dev 97.3 | Align 96.7 | Momentum 98.3 | Engage 95.7 | Process 96.0
-Velocity trend: ↑↑  |  Protocol velocity: ↑  |  Debt: ↓↓
+Sparkline (last 5 totals): █████▇
+Avgs — 3: 481.7 | 5: 481.0 | 10: 464.8 | 25: 444.2 | all: 444.0
+  └ 3-session: Dev 97.3 | Align 97.0 | Momentum 97.3 | Engage 95.3 | Process 92.7
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓↓
 Momentum runway: ~6 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-17 | Session 86+addendum | Total: 484/500 (addendum) · 485 (ship) | Velocity: 21 + 8 activations | protocolVelocity: 29
+Last session: 2026-04-17 | Session 87 (recovery closeout) | Total: 476/500 | Velocity: 7 (+ og:image sweep) | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,20 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-17 — Session 87 — carry-forward sweep + og:image upgrade (recovery closeout) | Total: 476/500 | Velocity: 7 | Debt: ↓
+**Scores:** Dev 97 · Align 97 · Momentum 97 · Engage 95 · Process 90
+**Shipped (7):** (1) `scripts/lint-repo.mjs` — conflict-marker + committed-secrets repo scan wired into `build:check`. (2) Voice-leak patrol complete: `trust-depth.js` (6 jargon leaks), `adaptive-cta.js` (5 signal-language notes), all 4 state-aware modules audited. (3) Voidfall lore-gate fragments: rank-2 Observer's Log + rank-4 Spark Adept Transmission 011; ignis-lens + native-feel mounted. (4) `studio-pulse-live.js` broadcasts `vault_event` to `vault:events` on real shipped-entry changes. (5) 8 game pages: `data-schema-type="game"` + metadata attrs → VideoGame JSON-LD at runtime. (6) `inject-new-scripts.mjs` site-wide: 105 HTML files got native-feel + ignis-lens + schema-injector. (7) `update-og-images.mjs`: 79 public-page `og:image` tags rewired to dynamic `/_og/` worker.
+**Intent:** Achieved — all S86 carry-forward items cleared; repo lint gate + SEO og:image upgrade added.
+**Process docked 10pts for:** Terminal cut off before closeout. Context files (TASK_BOARD, LATEST_HANDOFF, CURRENT_STATE, SIL, PROJECT_STATUS.json) not written back until recovery start. Code committed and pushed cleanly; only the studio-OS writeback was missing.
+**Brainstorm:**
+- **Recovery start protocol works.** The session-lock + context-read + git-log triad is sufficient to reconstruct full state after a terminal crash. The canonical read order made recovery fast. No work was lost.
+- **og:image dynamic upgrade is a compounding SEO win.** Every page now generates a branded SVG card with the correct status chip at the edge. Zero maintenance — worker handles changes automatically. The `update-og-images.mjs` script is reusable for future batch meta-tag ops.
+- **lint-repo.mjs is the durable fix for the two S86 P0 classes.** Both the conflict-marker incident (sw.js) and the transcript-leak incident (grep on secret file) produce artifacts that this scan catches pre-push. The staged-only variant (`lint:repo:staged`) enables pre-commit use.
+- **IGNIS Lens + native-feel are now site-wide.** 105 pages vs prior ~6. Every page is now a conversation seed for the Vault Oracle.
+**Commit to TASK_BOARD:** (1) Watch Lighthouse + playwright-axe after 105-page script injection — new scripts may push LCP/CLS budgets. (2) Social Dashboard bidirectional mirror next cross-repo priority.
+
+---
 
 ## 2026-04-17 — Session 86 addendum — runtime activation + all follow-ups | Total: 484/500 | Velocity: +8 | Debt: ↓↓
 **Scores:** Dev 98 · Align 97 · Momentum 99 · Engage 96 · Process 94
