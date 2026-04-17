@@ -4,8 +4,8 @@ Last updated: 2026-04-17 (Session 88 closeout — CI/a11y recovery + Genius gene
 
 ## Now (Session 89 pre-load)
 
-- [ ] **[S89][VERIFY] Confirm post-push CI recovery** — check GitHub Actions for Lighthouse, Accessibility Audit, and E2E after the Session 88 commit lands. If the local-preview/a11y fixes hold, update `PROJECT_STATUS.json`, `LATEST_HANDOFF.md`, and generated public intelligence; if any run is red, fix from the actual CI artifact/logs.
-- [ ] **[SIL] CI result ingestion for Genius List** — rerun `npm run genius:list` after post-push CI status is known so `docs/GENIUS_LIST.md` reflects current release confidence instead of pre-push local verification.
+- [ ] **[S89][LIGHTHOUSE] Recover final red CI gate** — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance `0.55` vs `0.85`, homepage SEO `0.93` vs `0.95`, and `/games/` performance `0.84` vs `0.85`.
+- [ ] **[SIL] CI result ingestion for Genius List** — rerun `npm run genius:list` after Lighthouse recovery so `docs/GENIUS_LIST.md` reflects final release confidence instead of the current partial-green CI posture.
 - [ ] **[SIL] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path once repo lock/write safety is confirmed for the Social Dashboard workspace.
 
 ## Session 88 — Genius Hit List execution / CI recovery
@@ -17,6 +17,7 @@ Last updated: 2026-04-17 (Session 88 closeout — CI/a11y recovery + Genius gene
 - [x] **[S88][SHELL] Regenerate fingerprinted shell assets** — **DONE S88**: new stylesheet fingerprint `assets/style.shell-93fad06736.css`; `assets/shell-manifest.json`, `sw.js`, and HTML references updated via `scripts/build-shell-assets.mjs`.
 - [x] **[S88][INTELLIGENCE] Genius Hit List scheduled audit generator** — **DONE S88**: added `scripts/generate-genius-list.mjs` plus `npm run genius:list`; regenerated `docs/GENIUS_LIST.md` from current repo truth so startup/go no longer depends on the stale Session 75 artifact.
 - [x] **[S88][VERIFY] Non-browser gates** — **DONE S88**: `npm run build:check` clean; `node scripts/csp-audit.mjs` clean on 98 HTML files; `node --check scripts/propagate-nav.mjs` clean; local preview HTTP smoke returns 200 for `/`, `/games/`, `/community/`, `/leaderboards/`.
+- [x] **[S88][VERIFY] Post-push browser gate recovery** — **DONE S88**: follow-up commits fixed footer selector collisions, axe footer evaluation, ranks list semantics, homepage skip-target ID, leaderboard table strict-mode, and `/vault-treasury/` route stability. GitHub Actions now show E2E and Accessibility green; Lighthouse remains red only on real score thresholds.
 
 ## Session 86 addendum — runtime activation + all follow-ups (8 activations)
 

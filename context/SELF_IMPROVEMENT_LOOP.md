@@ -41,7 +41,7 @@ Avgs — 3: 479.3 | 5: 481.4 | 10: 480.2 | 25: 450.2 | all: 440.7
 
 | Category | Score | vs Last | Notes |
 |---|---:|---|---|
-| Dev Health | 96 | ↓1 | CI route selection fixed at root for E2E, shell/intelligence surfaces regenerated, and non-browser gates are green. Docked for local Playwright browser hangs and pending post-push Actions confirmation. |
+| Dev Health | 96 | ↓1 | CI route selection fixed at root for E2E, shell/intelligence surfaces regenerated, and non-browser gates are green. Post-push E2E and Accessibility are now green; docked for Lighthouse still red on real performance/SEO thresholds. |
 | Creative Alignment | 96 | ↓1 | Work preserved the public-live promise: no false CI confidence, no fabricated Genius list, and light-mode/footer contrast stays first-class. Mostly infra/a11y, so less brand-expansive than S87. |
 | Momentum | 96 | ↓1 | 7 meaningful items shipped, including the stale Genius scheduled-audit item. Intent achieved on the unblocked repo-truth scope; external founder actions remain unchanged. |
 | Engagement | 94 | ↓1 | Better release confidence and accessibility improve user trust, but this session did not add a new engagement surface. |
@@ -49,7 +49,7 @@ Avgs — 3: 479.3 | 5: 481.4 | 10: 480.2 | 25: 450.2 | all: 440.7
 | **Total** | **478/500** | ↑2 | |
 
 **Top win:** S88 turned ambiguous challenge-page CI failures into local-artifact browser gates and closed the shared a11y classes that were actually red.
-**Top gap:** Local Playwright still hangs in this sandbox, so the first post-push GitHub Actions run is the authoritative browser signal.
+**Top gap:** Lighthouse remains red on the real local-preview artifact: homepage performance/SEO and `/games/` performance are the next recovery target.
 **Intent outcome:** Achieved — all unblocked current Genius/release-confidence items were implemented; founder-only PAT/token/Stripe actions remain outside agent scope.
 
 **Brainstorm**

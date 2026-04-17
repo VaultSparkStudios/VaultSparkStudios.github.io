@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-04-17T07:09:31.512Z",
+  "generatedAt": "2026-04-17T16:06:10.810Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -24,17 +24,18 @@
   "pulse": {
     "currentSession": 89,
     "lastUpdated": "2026-04-17",
-    "currentFocus": "Session 88 closed: Genius/verification wave implemented against the S87 CI failures. E2E browser gates now run against local preview (scripts/local-preview-server.mjs at 127.0.0.1:4173) instead of Cloudflare-fronted production, removing the GitHub Actions managed-challenge failure class. Shared footer contrast and labeled-container ARIA roles were hardened; canonical footer template propagated; shell regenerated to assets/style.shell-93fad06736.css with sw.js/cache manifest updated. Scheduled Genius refresh now exists via scripts/generate-genius-list.mjs and npm run genius:list; docs/GENIUS_LIST.md has been regenerated from current repo truth. Non-browser verification is green: build:check, csp-audit, propagate-nav syntax, JSON parse, diff whitespace, and local preview HTTP smoke.",
-    "nextMilestone": "Post-push GitHub Actions confirmation for the CI recovery wave: Lighthouse, Accessibility Audit, and E2E should be rechecked after publish. Founder actions outstanding: (1) revoke compromised classic PAT at github.com/settings/tokens. (2) Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to scoped CLOUDFLARE_API_TOKEN. (3) Create annual Stripe price IDs before annual checkout activation. Agent-doable next: confirm CI, rerun npm run genius:list after CI status changes, Social Dashboard bidirectional mirror (cross-repo), and nav rename decision Studio Pulse -> Forge Window if founder signs off.",
+    "currentFocus": "Session 88 closed: Genius/verification wave implemented against the S87 CI failures. E2E browser gates now run against local preview (scripts/local-preview-server.mjs at 127.0.0.1:4173) instead of Cloudflare-fronted production, removing the GitHub Actions managed-challenge failure class. Shared footer contrast, footer selector isolation, labeled-container ARIA roles, ranks list semantics, homepage skip target, leaderboard a11y test strict-mode, and the /vault-treasury/ route were hardened. Scheduled Genius refresh now exists via scripts/generate-genius-list.mjs and npm run genius:list; docs/GENIUS_LIST.md has been regenerated from current repo truth. Post-push GitHub Actions: E2E, Accessibility, Pages, Secret Lint, Sentry, Cache Purge, Minify, and Sitemap are green; Lighthouse is the only red gate.",
+    "nextMilestone": "Recover Lighthouse CI from real local-preview scores: homepage performance 0.55 vs 0.85, homepage SEO 0.93 vs 0.95, and /games/ performance 0.84 vs 0.85. Founder actions outstanding: (1) revoke compromised classic PAT at github.com/settings/tokens. (2) Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to scoped CLOUDFLARE_API_TOKEN. (3) Create annual Stripe price IDs before annual checkout activation. Agent-doable next: fix Lighthouse, rerun npm run genius:list after CI status changes, Social Dashboard bidirectional mirror (cross-repo), and nav rename decision Studio Pulse -> Forge Window if founder signs off.",
     "blockers": [
       "MANUAL: revoke compromised classic PAT at github.com/settings/tokens (exposure occurred in agent transcript during token extraction; workflow secret already rotated off it, revocation is pure cleanup)",
       "CF API token (scoped) lacks Workers KV Storage:Edit + Zone:Workers Routes:Edit — working around via CLOUDFLARE_EMAIL + CLOUDFLARE_API_KEY (Global API Key). Long-term: add those two scopes to the scoped token.",
-      "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only"
+      "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
+      "Lighthouse CI is red on real local-preview scores: homepage performance 0.55, homepage SEO 0.93, /games/ performance 0.84"
     ],
     "queues": {
       "now": [
-        "[S89][VERIFY] Confirm post-push CI recovery — check GitHub Actions for Lighthouse, Accessibility Audit, and E2E after the Session 88 commit lands. If the local-preview/a11y fixes hold, update `PROJECT_STATUS.json`, `LATEST_HANDOFF.md`, and generated public intelligence; if any run is red, fix from the actual CI artifact/logs.",
-        "[SIL] CI result ingestion for Genius List — rerun `npm run genius:list` after post-push CI status is known so `docs/GENIUS_LIST.md` reflects current release confidence instead of pre-push local verification.",
+        "[S89][LIGHTHOUSE] Recover final red CI gate — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance `0.55` vs `0.85`, homepage SEO `0.93` vs `0.95`, and `/games/` performance `0.84` vs `0.85`.",
+        "[SIL] CI result ingestion for Genius List — rerun `npm run genius:list` after Lighthouse recovery so `docs/GENIUS_LIST.md` reflects final release confidence instead of the current partial-green CI posture.",
         "[SIL] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path once repo lock/write safety is confirmed for the Social Dashboard workspace."
       ],
       "next": [
@@ -48,9 +49,9 @@
         "Implemented CI recovery wave: `.github/workflows/e2e.yml` now runs required browser gates against `scripts/local-preview-server.mjs` on `127.0.0.1:4173` instead of Cloudflare-fronted production, removing the \"Just a moment...\" managed-challenge failure class from compliance/games/full E2E tests.",
         "Implemented workflow hygiene: E2E jobs now install from the repo contract with `npm install --no-audit --no-fund`; they no longer run `npm init -y` inside CI.",
         "Implemented a11y hardening: shared footer has explicit dark/light backgrounds and light-mode contrast overrides; footer status spans now carry stable classes from `scripts/propagate-nav.mjs`; labeled non-semantic containers on homepage/games/community/leaderboards/members/ranks/Vault Wall got appropriate `role` attributes.",
+        "Implemented CI hotfix hardening: footer status legend classes were isolated from game-status selectors; footer `content-visibility` was removed so axe evaluates the real dark footer surface; ranks cards now satisfy `role=list`; homepage skip target is `#main-content`; leaderboard table test no longer fails strict mode; `/vault-treasury/` now has a stable page instead of a missing route/redirect during axe scan.",
         "Regenerated shell: new stylesheet fingerprint `assets/style.shell-93fad06736.css`; `assets/shell-manifest.json`, `sw.js`, and HTML references updated by `scripts/build-shell-assets.mjs`.",
-        "Implemented scheduled Genius refresh: added `scripts/generate-genius-list.mjs`, exposed it as `npm run genius:list`, and regenerated `docs/GENIUS_LIST.md` from current repo truth instead of the stale Session 75 artifact.",
-        "Verification completed locally: `npm run build:check` clean; `node scripts/csp-audit.mjs` clean on 98 HTML files; `node --check scripts/propagate-nav.mjs` clean; local preview HTTP smoke returns 200 for `/`, `/games/`, `/community/`, `/leaderboards/`."
+        "Implemented scheduled Genius refresh: added `scripts/generate-genius-list.mjs`, exposed it as `npm run genius:list`, and regenerated `docs/GENIUS_LIST.md` from current repo truth instead of the stale Session 75 artifact."
       ]
     },
     "ignis": {

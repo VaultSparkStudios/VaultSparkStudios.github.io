@@ -763,5 +763,6 @@ Public-safe note:
 - Hardened accessibility issues found by CI: footer contrast now has explicit dark/light surfaces and status legend classes; labeled plain containers now carry semantic roles across homepage, games, community, leaderboards, members, ranks, and Vault Wall surfaces.
 - Regenerated shell assets to `assets/style.shell-93fad06736.css` and synchronized `assets/shell-manifest.json`, `sw.js`, and HTML references.
 - Added `scripts/generate-genius-list.mjs` plus `npm run genius:list`; regenerated `docs/GENIUS_LIST.md` from current repo truth.
-- Verification: `npm run build:check`, `node scripts/csp-audit.mjs`, JS syntax checks, JSON parse, `git diff --check`, and local preview HTTP smoke passed; local Playwright browser execution hung in sandbox, so post-push Actions remains the browser signal.
+- Follow-up post-push fixes isolated footer legend selectors, removed footer `content-visibility` from axe's path, corrected ranks list semantics, restored homepage `#main-content`, stabilized the leaderboard a11y test, and added a stable `/vault-treasury/` route.
+- Verification: `npm run build:check`, `node scripts/csp-audit.mjs`, JS syntax checks, JSON parse, `git diff --check`, and local preview HTTP smoke passed. Post-push GitHub Actions: E2E, Accessibility, Pages, Secret Lint, Sentry, Cache Purge, Minify, and Sitemap green; Lighthouse remains red on homepage performance/SEO and `/games/` performance.
 - SIL: 478/500 · Velocity: 7 · Debt: ↓

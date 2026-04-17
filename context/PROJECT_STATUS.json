@@ -6,17 +6,18 @@
   "lifecycle": "deployed",
   "audience": "public-live",
   "status": "live",
-  "health": "green",
+  "health": "yellow",
   "owner": "VaultSpark Studios",
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Session 88 closed: Genius/verification wave implemented against the S87 CI failures. E2E browser gates now run against local preview (scripts/local-preview-server.mjs at 127.0.0.1:4173) instead of Cloudflare-fronted production, removing the GitHub Actions managed-challenge failure class. Shared footer contrast and labeled-container ARIA roles were hardened; canonical footer template propagated; shell regenerated to assets/style.shell-93fad06736.css with sw.js/cache manifest updated. Scheduled Genius refresh now exists via scripts/generate-genius-list.mjs and npm run genius:list; docs/GENIUS_LIST.md has been regenerated from current repo truth. Non-browser verification is green: build:check, csp-audit, propagate-nav syntax, JSON parse, diff whitespace, and local preview HTTP smoke.",
-  "nextMilestone": "Post-push GitHub Actions confirmation for the CI recovery wave: Lighthouse, Accessibility Audit, and E2E should be rechecked after publish. Founder actions outstanding: (1) revoke compromised classic PAT at github.com/settings/tokens. (2) Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to scoped CLOUDFLARE_API_TOKEN. (3) Create annual Stripe price IDs before annual checkout activation. Agent-doable next: confirm CI, rerun npm run genius:list after CI status changes, Social Dashboard bidirectional mirror (cross-repo), and nav rename decision Studio Pulse -> Forge Window if founder signs off.",
+  "currentFocus": "Session 88 closed: Genius/verification wave implemented against the S87 CI failures. E2E browser gates now run against local preview (scripts/local-preview-server.mjs at 127.0.0.1:4173) instead of Cloudflare-fronted production, removing the GitHub Actions managed-challenge failure class. Shared footer contrast, footer selector isolation, labeled-container ARIA roles, ranks list semantics, homepage skip target, leaderboard a11y test strict-mode, and the /vault-treasury/ route were hardened. Scheduled Genius refresh now exists via scripts/generate-genius-list.mjs and npm run genius:list; docs/GENIUS_LIST.md has been regenerated from current repo truth. Post-push GitHub Actions: E2E, Accessibility, Pages, Secret Lint, Sentry, Cache Purge, Minify, and Sitemap are green; Lighthouse is the only red gate.",
+  "nextMilestone": "Recover Lighthouse CI from real local-preview scores: homepage performance 0.55 vs 0.85, homepage SEO 0.93 vs 0.95, and /games/ performance 0.84 vs 0.85. Founder actions outstanding: (1) revoke compromised classic PAT at github.com/settings/tokens. (2) Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to scoped CLOUDFLARE_API_TOKEN. (3) Create annual Stripe price IDs before annual checkout activation. Agent-doable next: fix Lighthouse, rerun npm run genius:list after CI status changes, Social Dashboard bidirectional mirror (cross-repo), and nav rename decision Studio Pulse -> Forge Window if founder signs off.",
   "blockers": [
     "MANUAL: revoke compromised classic PAT at github.com/settings/tokens (exposure occurred in agent transcript during token extraction; workflow secret already rotated off it, revocation is pure cleanup)",
     "CF API token (scoped) lacks Workers KV Storage:Edit + Zone:Workers Routes:Edit — working around via CLOUDFLARE_EMAIL + CLOUDFLARE_API_KEY (Global API Key). Long-term: add those two scopes to the scoped token.",
-    "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only"
+    "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
+    "Lighthouse CI is red on real local-preview scores: homepage performance 0.55, homepage SEO 0.93, /games/ performance 0.84"
   ],
   "lastUpdated": "2026-04-17",
   "truthAuditStatus": "green",

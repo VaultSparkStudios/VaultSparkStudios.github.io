@@ -3,9 +3,9 @@
 Last updated: 2026-04-17 (Session 88 closeout)
 
 ## Where We Left Off (Session 88)
-- Shipped: 7 improvements across 4 groups — CI route recovery, accessibility hardening, shell/intelligence regeneration, and verification/memory closeout.
-- Tests: 7 passing non-browser/local checks (build:check, CSP audit, JS syntax, JSON parse, diff check, public-intelligence generation, HTTP smoke) · browser delta pending in GitHub Actions.
-- Deploy: pending — commit/push from closeout triggers Pages + GitHub Actions.
+- Shipped: 10 improvements across 4 groups — CI route recovery, accessibility hardening, shell/intelligence regeneration, and verification/memory closeout.
+- Tests: local non-browser checks passed; post-push GitHub Actions now show E2E, Accessibility, Pages, Secret Lint, Sentry, Cache Purge, Minify, and Sitemap green. Lighthouse is the only red gate.
+- Deploy: pushed to `main`; latest closeout state is committed.
 
 ## Session Intent: Session 88
 Implement all Genius Hit List items at the highest/optimal quality. Practical scope for this session focused on the highest-impact unblocked item from current repo truth: recover the S87 release gates by fixing CI route selection and shared accessibility regressions.
@@ -14,10 +14,11 @@ Implement all Genius Hit List items at the highest/optimal quality. Practical sc
 - **Implemented CI recovery wave:** `.github/workflows/e2e.yml` now runs required browser gates against `scripts/local-preview-server.mjs` on `127.0.0.1:4173` instead of Cloudflare-fronted production, removing the "Just a moment..." managed-challenge failure class from compliance/games/full E2E tests.
 - **Implemented workflow hygiene:** E2E jobs now install from the repo contract with `npm install --no-audit --no-fund`; they no longer run `npm init -y` inside CI.
 - **Implemented a11y hardening:** shared footer has explicit dark/light backgrounds and light-mode contrast overrides; footer status spans now carry stable classes from `scripts/propagate-nav.mjs`; labeled non-semantic containers on homepage/games/community/leaderboards/members/ranks/Vault Wall got appropriate `role` attributes.
+- **Implemented CI hotfix hardening:** footer status legend classes were isolated from game-status selectors; footer `content-visibility` was removed so axe evaluates the real dark footer surface; ranks cards now satisfy `role=list`; homepage skip target is `#main-content`; leaderboard table test no longer fails strict mode; `/vault-treasury/` now has a stable page instead of a missing route/redirect during axe scan.
 - **Regenerated shell:** new stylesheet fingerprint `assets/style.shell-93fad06736.css`; `assets/shell-manifest.json`, `sw.js`, and HTML references updated by `scripts/build-shell-assets.mjs`.
 - **Implemented scheduled Genius refresh:** added `scripts/generate-genius-list.mjs`, exposed it as `npm run genius:list`, and regenerated `docs/GENIUS_LIST.md` from current repo truth instead of the stale Session 75 artifact.
 - **Verification completed locally:** `npm run build:check` clean; `node scripts/csp-audit.mjs` clean on 98 HTML files; `node --check scripts/propagate-nav.mjs` clean; local preview HTTP smoke returns 200 for `/`, `/games/`, `/community/`, `/leaderboards/`.
-- **Verification gap:** local Playwright browser tests hang in this sandbox before useful output, even for a single focused test. Post-push GitHub Actions will be the authoritative browser signal for this CI-routing fix.
+- **Post-push CI state:** E2E green (`24573098187`), Accessibility green (`24573098151`), Pages green, and support workflows green. Lighthouse red (`24573098159`) on real local-preview scores: homepage performance `0.55` vs `0.85`, homepage SEO `0.93` vs `0.95`, `/games/` performance `0.84` vs `0.85`.
 
 ## Human Action Required
 - [ ] **Revoke compromised classic PAT** — open https://github.com/settings/tokens and revoke the old classic PAT exposed during the earlier secret-extraction incident. The workflow secret is already rotated off it; this closes exposure risk.
@@ -26,8 +27,8 @@ Implement all Genius Hit List items at the highest/optimal quality. Practical sc
 
 ## Next Session Load
 - Start with `context/LATEST_HANDOFF.md`, then `context/TASK_BOARD.md`, then `context/SELF_IMPROVEMENT_LOOP.md` rolling header, then `docs/GENIUS_LIST.md`.
-- First agent task: check the post-push GitHub Actions runs for Lighthouse, Accessibility Audit, and E2E. If green, update `PROJECT_STATUS.json`; if red, use the actual artifact/log page instead of production challenge-page assumptions.
-- Second agent task: either implement the Social Dashboard bidirectional mirror or decide/execute the Studio Pulse -> Forge Window nav label change if the founder gives brand sign-off.
+- First agent task: recover Lighthouse thresholds using the real local-preview reports, starting with homepage performance/SEO and the `/games/` 0.01 performance miss. Do not chase Cloudflare challenge-page assumptions; that failure class is resolved.
+- Second agent task: rerun `npm run genius:list` after Lighthouse recovery so the Genius List reflects the final CI posture, then either implement the Social Dashboard bidirectional mirror or decide/execute the Studio Pulse -> Forge Window nav label change if the founder gives brand sign-off.
 
 ---
 
