@@ -100,7 +100,9 @@ test.describe('Accessibility — manual checks', () => {
 
   test('Leaderboard table has aria-label', async ({ page }) => {
     await page.goto('/leaderboards/');
-    await expect(page.locator('.lb-table[aria-label]')).toBeVisible();
+    const labeledTables = page.locator('.lb-table[aria-label]');
+    expect(await labeledTables.count()).toBeGreaterThan(0);
+    await expect(labeledTables.first()).toBeVisible();
   });
 
   test('CSS color variables meet WCAG AA contrast ratio (4.5:1)', async ({ page }) => {
