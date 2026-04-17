@@ -1508,12 +1508,12 @@ body.light-mode .footer-bottom a:hover {
 body.light-mode .vault-status-legend {
   border-color: rgba(22, 32, 51, 0.10) !important;
 }
-body.light-mode .vault-status-legend .status-sparked,
-body.light-mode .vault-status-legend .status-forge,
-body.light-mode .vault-status-legend .status-sealed {
+body.light-mode .vault-status-legend .legend-status-sparked,
+body.light-mode .vault-status-legend .legend-status-forge,
+body.light-mode .vault-status-legend .legend-status-sealed {
   color: var(--gold) !important;
 }
-body.light-mode .vault-status-legend .status-vaulted {
+body.light-mode .vault-status-legend .legend-status-vaulted {
   color: var(--dim) !important;
 }
 body.light-mode .divider,
@@ -2466,12 +2466,6 @@ body.light-mode .fan-art-vote { color: var(--text); }
     width: 100% !important;
     text-align: center;
   }
-}
-
-/* ─── Performance: content-visibility for below-fold sections ── */
-.site-footer {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 400px;
 }
 
 /* ══════════════════════════════════════════════════════════════
