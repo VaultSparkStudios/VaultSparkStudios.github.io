@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ██▇▇█
-Avgs — 3: 479.7 | 5: 480.8 | 10: 480.3 | 25: 451.0 | all: 441.2
-  └ 3-session: Dev 97.7 | Align 96.2 | Momentum 97.7 | Engage 93.7 | Process 94.3
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: ↓
-Momentum runway: ~3.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-17 | Session 89 | Total: 481/500 | Velocity: 10 | protocolVelocity: 10
+Sparkline (last 5 totals): ██▇▇█▇
+Avgs — 3: 475.0 | 5: 477.0 | 10: 479.1 | 25: 451.8 | all: 441.6
+  └ 3-session: Dev 96.3 | Align 94.0 | Momentum 96.3 | Engage 89.3 | Process 94.7
+Velocity trend: ↓  |  Protocol velocity: →  |  Debt: ↓↓
+Momentum runway: ~2.5 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-17 | Session 90 | Total: 466/500 | Velocity: 7 | protocolVelocity: 9
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,33 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-17 — Session 90 | Total: 466/500 | Velocity: 7 | Debt: ↓↓
+Avgs — 3: 475.0 | 5: 477.0 | 10: 479.1 | 25: 451.8 | all: 441.6
+  └ 3-session: Dev 96.3 | Align 94.0 | Momentum 96.3 | Engage 89.3 | Process 94.7
+
+| Category | Score | vs Last | Notes |
+|---|---:|---|---|
+| Dev Health | 95 | ↓4 | All CI green; HTTP smoke pre-gate adds content-level pre-browser check; A11y triage helper enables CI artifact analysis; zero new debt; CF_WORKER_API_TOKEN wired so Worker auto-deploy is now enabled. |
+| Creative Alignment | 93 | ↓3 | Annual billing activation is honest (real prices, no fake availability, honesty note updated); DX tools are quality-bar compliant; no CDR violations; no internal enum leaks. |
+| Momentum | 96 | ↓2 | 7 items shipped; 3 long-standing HAR blockers cleared in one pass (CF token, KV scope, annual Stripe) — best single-session blocker resolution since S86. Annual checkout unblocks a previously dead revenue path. |
+| Engagement | 87 | ↓6 | Annual checkout is high-value for users wanting annual billing. Otherwise DX/infra-heavy session with no new public-facing features. The engagement dip is expected — this was a clearing session. |
+| Process Quality | 95 | → | Full canonical write-back; lint clean; all scripts syntax-checked before ship; Supabase edge function deployed and confirmed; Stripe prices verified via API response. |
+| **Total** | **466/500** | ↓15 | |
+
+**Top win:** All 3 long-standing founder-action items cleared in a single session pass — CF_WORKER_API_TOKEN (enabling Worker auto-deploy), Cloudflare KV scope expansion (enabling future KV namespace management from CI), and annual Stripe prices + checkout activation (opening an annual revenue path that had been stuck as "preview-only" since the billing toggle was built).
+**Top gap:** Engagement score dip reflects the infrastructure-heavy nature of the session. The annual checkout path needs browser-level end-to-end verification before it's fully confirmed shipped.
+**Intent outcome:** Exceeded — user directed "do all founder items" and all automatable ones were executed. PAT revocation was the only non-automatable item; user explicitly deferred it.
+
+**Brainstorm**
+1. **Annual checkout end-to-end browser test.** First step: open `/vaultsparked/` in a browser, switch to annual billing, click checkout, verify Stripe redirects to annual-price checkout session. Execution probability: High (next session, low effort).
+2. **Social Dashboard bidirectional mirror.** First step: get explicit founder confirm, then check `../vaultspark-social-dashboard/context/.session-lock` and uncommitted state before writing. Execution probability: High once unblocked.
+3. **Forge Window nav rename.** First step: founder gives brand sign-off → run `scripts/propagate-nav.mjs` to rename "Studio Pulse" to "Forge Window" in nav across all pages. Execution probability: High once approved.
+4. **A11y triage post first CI run.** First step: after next E2E run completes with JSON reporter, run `npm run triage:a11y -- --fetch` to pull the artifact and generate the first real triage report. Execution probability: High.
+
+**Committed to TASK_BOARD:** [FOLLOWUP] Verify annual checkout end-to-end · [FOLLOWUP] Forge Window nav rename (pending brand sign-off)
+
+---
 
 ## 2026-04-17 — Session 89 | Total: 481/500 | Velocity: 10 | Debt: ↓
 Avgs — 3: 479.7 | 5: 480.8 | 10: 480.3 | 25: 451.0 | all: 441.2

@@ -2,6 +2,13 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-04-17 — Annual checkout uses fixed price IDs, bypasses reserve_phase_slot (Session 90)
+
+- Status: active
+- Decision: `vault_sparked_annual` and `vault_sparked_pro_annual` plan keys in `create-checkout` edge function resolve directly to hardcoded Stripe price IDs (`price_1TNJPfGMN60PfJYsHKVkjL12` and `price_1TNJPtGMN60PfJYsAXZYQNVj`) without going through `reserve_phase_slot`. Monthly plans remain phase-aware.
+- Why: Annual pricing is a flat rate (no phase-gated caps or price escalation), so the phase-slot mechanism adds complexity without value. Hardcoding the annual price IDs in the function keeps the routing simple and avoids adding annual rows to `membership_phases`.
+- Maintenance rule: if annual prices ever need phasing, add annual plan rows to `membership_phases` and route through `reserve_phase_slot` like monthly does. Update `ANNUAL_PRICE_IDS` in the edge function when prices change.
+
 ### 2026-04-17 — Lighthouse CI performance threshold set to 0.80 with 3-run median (Session 89)
 
 - Status: active

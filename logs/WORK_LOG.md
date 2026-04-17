@@ -1,5 +1,27 @@
 # Work Log
 
+## 2026-04-17 — Session 90 (DX tooling + founder-action sweep)
+
+**Intent:** Directed /go → DX sprint, then "do all founder items with elevated access." **Intent: exceeded** — all automatable founder items cleared plus 3 DX quality items shipped.
+
+**Velocity: 7 items.** Commits: `8385c12` (triage helper + PW JSON reporter), `75f8d6d` (HTTP smoke pre-gate), `0afb5e5` (CI-aware Genius List + smoke pre-gate), `3bf3cfb` (annual checkout activation).
+
+**DX sprint:**
+- A11y artifact triage helper (`scripts/triage-a11y.mjs`) — parses Playwright axe JSON + Lighthouse LHR JSON, maps to CSS/template owners, `npm run triage:a11y`.
+- Playwright JSON reporter added to `playwright.config.js` — `playwright-report/results.json` now in CI artifact.
+- HTTP smoke pre-gate in CI (`e2e.yml`) — `node scripts/smoke-http.mjs` runs after `wait-on`, before browser tests, in both compliance + e2e jobs.
+- CI-aware Genius List generator — reads `ciHealth.allGreen`, suppresses stale monitoring items, adapts Best Immediate Move.
+
+**Founder-action sweep:**
+- `CF_WORKER_API_TOKEN` set as GitHub Actions secret from `cloudflare.env` — Worker auto-deploy now enabled.
+- Cloudflare `vaultspark-deploy` token expanded via API — `Workers KV Storage Write` added to account policy.
+- Annual Stripe prices created: $44.99/yr (VaultSparked `price_1TNJPfGMN60PfJYsHKVkjL12`) + $269.99/yr (Eternal `price_1TNJPtGMN60PfJYsAXZYQNVj`).
+- Annual checkout activated: `create-checkout` edge function + `billing-toggle.js` wired; deployed to Supabase.
+
+**PAT revocation:** user explicitly deferred — left as open item.
+
+---
+
 ## 2026-04-17 — Session 89 (CI recovery + trust layer + DX tooling)
 
 **Intent:** Recover Lighthouse CI gates from `0.56` (perf) + `0.93` (SEO). **Intent: exceeded** — full CI recovery plus 9 additional items shipped.

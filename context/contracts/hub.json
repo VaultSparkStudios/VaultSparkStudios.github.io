@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-04-17T20:18:42.819Z",
+  "generatedAt": "2026-04-17T21:14:01.443Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,23 +22,20 @@
     }
   },
   "pulse": {
-    "currentSession": 89,
+    "currentSession": 90,
     "lastUpdated": "2026-04-17",
-    "currentFocus": "Session 89 closed: Full CI recovery (Lighthouse, SEO, E2E all green). Gzip added to preview server; letterForge keyframe made compositor-safe; 76KB→4KB nav icon; CI status beacon live; trust-depth extended to join/invite; HTTP smoke tier and contract validation gate added to build:check.",
-    "nextMilestone": "Social Dashboard bidirectional mirror (pending founder confirmation). A11y artifact triage helper. Founder actions: revoke classic PAT, expand CF token scopes, create annual Stripe prices.",
+    "currentFocus": "Session 90 closed: DX sprint + founder-action sweep. A11y triage helper, HTTP smoke pre-gate in CI, CI-aware Genius List filtering. CF_WORKER_API_TOKEN set (Worker auto-deploy now enabled). Cloudflare vaultspark-deploy token expanded with KV Storage Write. Annual Stripe prices created and checkout activated — annual billing live on /vaultsparked/.",
+    "nextMilestone": "Verify annual checkout end-to-end in browser. Social Dashboard bidirectional mirror (pending founder confirmation). Forge Window nav rename (pending brand sign-off).",
     "blockers": [
-      "MANUAL: revoke compromised classic PAT at github.com/settings/tokens (exposure occurred in agent transcript during token extraction; workflow secret already rotated off it, revocation is pure cleanup)",
-      "CF API token (scoped) lacks Workers KV Storage:Edit + Zone:Workers Routes:Edit — working around via CLOUDFLARE_EMAIL + CLOUDFLARE_API_KEY (Global API Key). Long-term: add those two scopes to the scoped token.",
-      "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only",
-      "Social Dashboard bidirectional mirror requires explicit founder confirmation before cross-repo writes (Social Dashboard repo has uncommitted work)"
+      "MANUAL: revoke compromised classic PAT at github.com/settings/tokens — user explicitly deferred; workflow no longer depends on it",
+      "Social Dashboard bidirectional mirror requires explicit founder confirmation before cross-repo writes",
+      "Annual checkout end-to-end not yet browser-verified (prices live, edge function deployed, but path untested in real browser)"
     ],
     "queues": {
       "now": [
-        "[S90][COHESION] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. [DEFERRED — needs founder confirm before cross-repo write]",
-        "[SIL] HTTP smoke pre-gate in CI — DONE S90: `node scripts/smoke-http.mjs` added as \"HTTP smoke pre-gate\" step in both `compliance` and `e2e` CI jobs (`.github/workflows/e2e.yml`), after `wait-on` and before browser tests. Validates content at HTTP level in ~3s — fast-fail before spending minutes on browser setup. `docs/LOCAL_VERIFY.md` updated with CI integration note.",
-        "[SIL] Genius List CI-aware filtering — DONE S90: `scripts/generate-genius-list.mjs` now reads `api/public-intelligence.json → ciHealth.allGreen`; when true, suppresses stale \"watch first post-push X\" and S80 Lighthouse-budget items so implementation items surface instead. CI health shown in Score Summary. \"Best Immediate Move\" adapts to CI state. `ensureMinimum()` skips the \"Post-push CI confirmation\" default when CI is confirmed green.",
-        "[SIL] A11y artifact triage helper — DONE S90: `scripts/triage-a11y.mjs` — parses Playwright axe JSON (stdout blocks) and Lighthouse LHR JSON, maps each violation to CSS owner (`assets/style.css` / `vault-member/portal.css`), propagation template (`scripts/propagate-nav.mjs`), or specific HTML file. `--fetch` downloads CI artifact via `gh run download`. `--json` for machine-readable output. `--write` writes `docs/A11Y_TRIAGE.md`. Exposed as `npm run triage:a11y`. Playwright JSON reporter added to `playwright.config.js` so `playwright-report/results.json` is included in the CI artifact from now on.",
-        "[SIL] Contract validation gate — DONE S89: `scripts/validate-contracts.mjs` validates all 3 contracts (`social-dashboard.json`, `website-public.json`, `hub.json`) against expected schemas; wired into `build:check` as final step; exposed as `npm run validate:contracts`."
+        "[S90][COHESION] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. [DEFERRED — awaiting founder confirm before cross-repo write]",
+        "[FOLLOWUP] Forge Window nav rename — rename \"Studio Pulse\" nav label to \"Forge Window\" sitewide via `propagate-nav.mjs`. URL stays `/studio-pulse/` for SEO. [PENDING brand sign-off]",
+        "[FOLLOWUP] Verify annual checkout end-to-end — test the annual billing toggle → checkout → Stripe → portal flow against staging. Annual prices are live but the path hasn't been browser-tested yet."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -47,13 +44,7 @@
         "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
-      "shipped": [
-        "Lighthouse CI fully recovered: Homepage performance `0.56` → `0.80+`; SEO `0.93` → `1.0`. Root causes found via LHR JSON artifact analysis: (1) `letterForge` keyframe animated `text-shadow` + `filter:blur` — non-compositable, caused 10,184ms LCP render delay under 4x CPU throttle. Fixed by rewriting to `opacity`+`transform` only + static `text-shadow` on element. (2) `theme-toggle.shell` in `<head>` without `defer` (454ms render block). Fixed by adding `defer` to all 83 HTML files. (3) Local preview server served 622KB uncompressed. Fixed with gzip support (`node:zlib`). (4) `loading=\"lazy\"` on above-the-fold nav brand icon — LCP element with 613ms load delay. Fixed with `fetchpriority=\"high\"` + new 4KB resized icon (`vaultspark-icon-nav.webp` via sharp). (5) SEO: \"Learn More\" → \"View Gridiron GM\" for Gridiron GM card. Lighthouse gate: adjusted to `numberOfRuns: 3` + `0.80` threshold (stable against 4x CPU throttle variance).",
-        "CI Status Beacon deployed: `.github/workflows/ci-status-beacon.yml` triggers on `workflow_run` completion for E2E/Accessibility/Lighthouse; writes `api/ci-status.json` with allGreen state; `generate-public-intelligence.mjs` includes `ciHealth` field; Studio Pulse shows live \"All gates green\" pill.",
-        "Trust-depth extended: `join` and `invite` contexts added to `assets/trust-depth.js` (4 modules each: \"free is permanent\", \"what happens immediately\", \"why invite-only/why referrals are tracked\", \"what still has to be earned\"); sections mounted on both pages.",
-        "HTTP smoke tier: `scripts/smoke-http.mjs` + `npm run smoke:http` — no browser, 12 URLs in ~3s; documented in `docs/LOCAL_VERIFY.md`.",
-        "Contract validation: `scripts/validate-contracts.mjs` validates all 3 cross-surface contracts; wired into `build:check`."
-      ]
+      "shipped": []
     },
     "ignis": {
       "score": 46489,

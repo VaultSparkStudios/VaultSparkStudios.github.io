@@ -1,13 +1,25 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 90 — 3 items shipped)
+Last updated: 2026-04-17 (Session 90 closeout — 7 items shipped)
 
-## Now (Session 90)
+## Now (Session 91 pre-load)
 
-- [ ] **[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. **[DEFERRED — needs founder confirm before cross-repo write]**
-- [x] **[SIL] HTTP smoke pre-gate in CI** — **DONE S90**: `node scripts/smoke-http.mjs` added as "HTTP smoke pre-gate" step in both `compliance` and `e2e` CI jobs (`.github/workflows/e2e.yml`), after `wait-on` and before browser tests. Validates content at HTTP level in ~3s — fast-fail before spending minutes on browser setup. `docs/LOCAL_VERIFY.md` updated with CI integration note.
-- [x] **[SIL] Genius List CI-aware filtering** — **DONE S90**: `scripts/generate-genius-list.mjs` now reads `api/public-intelligence.json → ciHealth.allGreen`; when true, suppresses stale "watch first post-push X" and S80 Lighthouse-budget items so implementation items surface instead. CI health shown in Score Summary. "Best Immediate Move" adapts to CI state. `ensureMinimum()` skips the "Post-push CI confirmation" default when CI is confirmed green.
-- [x] **[SIL] A11y artifact triage helper** — **DONE S90**: `scripts/triage-a11y.mjs` — parses Playwright axe JSON (stdout blocks) and Lighthouse LHR JSON, maps each violation to CSS owner (`assets/style.css` / `vault-member/portal.css`), propagation template (`scripts/propagate-nav.mjs`), or specific HTML file. `--fetch` downloads CI artifact via `gh run download`. `--json` for machine-readable output. `--write` writes `docs/A11Y_TRIAGE.md`. Exposed as `npm run triage:a11y`. Playwright JSON reporter added to `playwright.config.js` so `playwright-report/results.json` is included in the CI artifact from now on.
+- [ ] **[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. **[DEFERRED — awaiting founder confirm before cross-repo write]**
+- [ ] **[FOLLOWUP] Forge Window nav rename** — rename "Studio Pulse" nav label to "Forge Window" sitewide via `propagate-nav.mjs`. URL stays `/studio-pulse/` for SEO. **[PENDING brand sign-off]**
+- [ ] **[FOLLOWUP] Verify annual checkout end-to-end** — test the annual billing toggle → checkout → Stripe → portal flow against staging. Annual prices are live but the path hasn't been browser-tested yet.
+
+## Session 90 — DX tooling + founder-action sweep (7 items)
+
+- [x] **[SIL] A11y artifact triage helper** — **DONE S90**: `scripts/triage-a11y.mjs` parses Playwright axe JSON stdout + Lighthouse LHR JSON, maps violations to CSS owner / propagation template / HTML file. `npm run triage:a11y`. Playwright JSON reporter added to `playwright.config.js`.
+- [x] **[SIL] HTTP smoke pre-gate in CI** — **DONE S90**: `node scripts/smoke-http.mjs` as "HTTP smoke pre-gate" in both `compliance` + `e2e` jobs, after `wait-on`, before browser tests. Fast HTTP content check before browser suite.
+- [x] **[SIL] Genius List CI-aware filtering** — **DONE S90**: `generate-genius-list.mjs` reads `ciHealth.allGreen`; suppresses stale monitoring items when CI is green; CI health in Score Summary; Best Immediate Move adapts.
+- [x] **[FOUNDER ACTION] CF_WORKER_API_TOKEN → GitHub Actions** — **DONE S90**: secret set from `cloudflare.env`. `cloudflare-worker-deploy.yml` now auto-triggers on `cloudflare/**` pushes.
+- [x] **[FOUNDER ACTION] Expand vaultspark-deploy Cloudflare token** — **DONE S90**: `Workers KV Storage Write` added via CF API PUT. Token now covers Workers + KV + Routes + Pages + Account Settings.
+- [x] **[FOUNDER ACTION] Annual Stripe prices** — **DONE S90**: `price_1TNJPfGMN60PfJYsHKVkjL12` $44.99/yr (VaultSparked) + `price_1TNJPtGMN60PfJYsAXZYQNVj` $269.99/yr (Eternal).
+- [x] **[FOUNDER ACTION] Activate annual checkout** — **DONE S90**: `create-checkout` edge function updated + deployed; `vault_sparked_annual` + `vault_sparked_pro_annual` plan keys; `billing-toggle.js` live. Annual billing active on `/vaultsparked/`.
+
+## Session 89 — prior items
+
 - [x] **[SIL] Contract validation gate** — **DONE S89**: `scripts/validate-contracts.mjs` validates all 3 contracts (`social-dashboard.json`, `website-public.json`, `hub.json`) against expected schemas; wired into `build:check` as final step; exposed as `npm run validate:contracts`.
 
 ## Session 89 third sprint — trust-depth + DX tooling

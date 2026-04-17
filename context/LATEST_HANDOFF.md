@@ -1,6 +1,36 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 89 closeout)
+Last updated: 2026-04-17 (Session 90 closeout)
+
+## Where We Left Off (Session 90)
+- Shipped: 7 items — A11y triage helper, HTTP smoke pre-gate in CI, CI-aware Genius List filtering, CF_WORKER_API_TOKEN secret set, Cloudflare token scopes expanded, annual Stripe prices created ($44.99/yr + $269.99/yr), annual checkout activated and deployed.
+- Tests: All CI green at closeout — E2E ✓, Accessibility ✓, Lighthouse ✓, Pages ✓.
+- Deploy: pushed to `main`; all context files updated.
+
+## Session Intent: Session 90
+User ran /go → DX sprint; then directed "do all founder items with elevated access." Executed all automatable founder items: CF_WORKER_API_TOKEN to GitHub Actions, Cloudflare vaultspark-deploy token expanded (KV Storage Write added), annual Stripe prices created and wired into checkout edge function. Annual billing is now live on /vaultsparked/. PAT revocation left open — user decision.
+
+## Where We Left Off (Session 90 — detail)
+- **A11y artifact triage helper shipped:** `scripts/triage-a11y.mjs` parses Playwright axe JSON stdout and Lighthouse LHR JSON artifacts; maps each violation to CSS file owner (`assets/style.css` / `vault-member/portal.css`) or propagation template (`scripts/propagate-nav.mjs`) or specific HTML file (URL → `PAGE_MAP` lookup). `--fetch` downloads `playwright-a11y-report` CI artifact via `gh run download`. `--json` / `--write` modes. `npm run triage:a11y`. Playwright JSON reporter added to `playwright.config.js` so `playwright-report/results.json` ships in CI artifact automatically.
+- **HTTP smoke pre-gate in CI:** `node scripts/smoke-http.mjs` added as "HTTP smoke pre-gate" in both `compliance` and `e2e` CI jobs after `wait-on` connectivity and before browser tests. Validates 12 URLs at HTTP/content level in ~3s — content-level failure aborts browser suite fast.
+- **CI-aware Genius List:** `scripts/generate-genius-list.mjs` reads `api/public-intelligence.json → ciHealth.allGreen`; when true, stale "watch first post-push" items and the S80 Lighthouse-budget carry-forward are suppressed; "Post-push CI confirmation" default skipped; Best Immediate Move adapts; CI health shown in Score Summary.
+- **CF_WORKER_API_TOKEN set:** sourced from `cloudflare.env`, piped to `gh secret set CF_WORKER_API_TOKEN --repo VaultSparkStudios/VaultSparkStudios.github.io`. `cloudflare-worker-deploy.yml` now auto-triggers on `cloudflare/**` pushes.
+- **Cloudflare vaultspark-deploy token expanded:** `Workers KV Storage Write` (`f7f0eda5697f475c90846e879bab8666`) added to Policy 0 (account-scope) via PUT `/user/tokens/6bd058b09354c74ed69c0e252d53cf9f` using Global API Key. Token now has: Pages Write + Workers KV Storage Write + Workers Scripts Write + Account Settings Read (account) + Workers Routes Write (zone).
+- **Annual Stripe prices created:** `price_1TNJPfGMN60PfJYsHKVkjL12` VaultSparked Annual $44.99/yr on `prod_UHC4Smps63CDXf`; `price_1TNJPtGMN60PfJYsAXZYQNVj` VaultSparked Eternal Annual $269.99/yr on `prod_UHC4OJfIFguB4V`. Created via Stripe API with `metadata.plan_key`.
+- **Annual checkout activated:** `create-checkout/index.ts` updated — added `ANNUAL_PRICE_IDS` map + `vault_sparked_annual`/`vault_sparked_pro_annual` SUCCESS_URLS; annual plans bypass `reserve_phase_slot` and use fixed price IDs; `billing-toggle.js` `ANNUAL_PLAN_KEYS.sparked = 'vault_sparked_annual'` + `.pro = 'vault_sparked_pro_annual'`; honesty note updated. Edge function deployed via `supabase functions deploy create-checkout`.
+
+## Human Action Required
+- [ ] **Revoke compromised classic PAT** — user explicitly deferred; leaving as open item for reference only.
+- [ ] **Verify annual checkout end-to-end** — test annual billing toggle → checkout → Stripe → portal flow in a real browser against staging before treating as fully shipped.
+- [ ] **Confirm Social Dashboard mirror** — repo has uncommitted work; need explicit OK before cross-repo writes.
+- [ ] **Forge Window nav rename** — awaiting brand sign-off before sitewide propagation.
+
+## Next Session Load
+- Start with `context/LATEST_HANDOFF.md`, then `context/TASK_BOARD.md`, then `context/SELF_IMPROVEMENT_LOOP.md` rolling header, then `docs/GENIUS_LIST.md`.
+- First agent task: Verify annual checkout end-to-end (staging browser test) OR Social Dashboard mirror if founder confirms.
+- Second agent task: Forge Window nav rename if brand sign-off is given.
+
+---
 
 ## Where We Left Off (Session 89)
 - Shipped: 10 items across 3 `/go` sprints — CI recovery (4 perf/SEO fixes), Lighthouse CI hardening (3-run median, 0.80 threshold), CI status beacon + ciHealth intelligence, trust-depth extended to join/invite, HTTP smoke tier, contract validation gate.
