@@ -56,5 +56,5 @@ module.exports = defineConfig({
     { name: 'firefox',  use: { browserName: 'firefox'  } },
     { name: 'webkit',   use: { browserName: 'webkit'   } },
   ],
-  reporter: [['list'], ['html', { open: 'never' }]],
+  reporter: [['list'], ['html', { open: 'never' }], ['json', { outputFile: 'playwright-report/results.json' }]],
 });

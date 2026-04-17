@@ -1,11 +1,11 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 89 closeout — 10 items shipped, all CI green)
+Last updated: 2026-04-17 (Session 90 — A11y triage helper shipped)
 
-## Now (Session 90 pre-load)
+## Now (Session 90)
 
 - [ ] **[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. **[DEFERRED — needs founder confirm before cross-repo write]**
-- [ ] **[SIL] A11y artifact triage helper** — script that parses axe/Lighthouse CI JSON artifacts and maps failures to shared CSS/template owners. S89 brainstorm item.
+- [x] **[SIL] A11y artifact triage helper** — **DONE S90**: `scripts/triage-a11y.mjs` — parses Playwright axe JSON (stdout blocks) and Lighthouse LHR JSON, maps each violation to CSS owner (`assets/style.css` / `vault-member/portal.css`), propagation template (`scripts/propagate-nav.mjs`), or specific HTML file. `--fetch` downloads CI artifact via `gh run download`. `--json` for machine-readable output. `--write` writes `docs/A11Y_TRIAGE.md`. Exposed as `npm run triage:a11y`. Playwright JSON reporter added to `playwright.config.js` so `playwright-report/results.json` is included in the CI artifact from now on.
 - [x] **[SIL] Contract validation gate** — **DONE S89**: `scripts/validate-contracts.mjs` validates all 3 contracts (`social-dashboard.json`, `website-public.json`, `hub.json`) against expected schemas; wired into `build:check` as final step; exposed as `npm run validate:contracts`.
 
 ## Session 89 third sprint — trust-depth + DX tooling
