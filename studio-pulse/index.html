@@ -83,6 +83,15 @@
     @media (max-width:780px) { .forge-heartbeat { grid-template-columns:repeat(2,1fr); } }
     @media (max-width:460px) { .forge-heartbeat { grid-template-columns:1fr; } }
 
+    /* ── CI health pill ─────────────────────────────────────────────── */
+    .forge-ci-health { display:inline-flex; align-items:center; gap:0.55rem; margin-top:0.9rem;
+      padding:0.38rem 0.9rem; border-radius:999px; font-size:0.78rem; font-weight:700;
+      background:rgba(255,196,0,0.06); border:1px solid rgba(255,196,0,0.18); color:var(--text); }
+    .forge-ci-icon.tone-sparked { color:#44cc55; }
+    .forge-ci-icon.tone-forge   { color:#FF9A00; }
+    .forge-ci-label { color:var(--muted); }
+    body.light-mode .forge-ci-health { background:rgba(255,196,0,0.08); border-color:rgba(255,196,0,0.22); }
+
     /* ── Current focus band ───────────────────────────────────────── */
     .forge-current-focus { padding:2.2rem 2.4rem; border-radius:20px;
       background:linear-gradient(135deg, rgba(255,154,0,0.08), rgba(10,13,22,0.95) 60%, rgba(31,162,255,0.05));
@@ -268,6 +277,7 @@
           <div><div class="eyebrow">Portfolio heartbeat</div><h2 id="heartbeat-heading" class="sr-only">Portfolio scale</h2></div>
         </div>
         <div class="forge-heartbeat" id="forge-heartbeat" role="list" aria-label="Portfolio state counts"></div>
+        <div id="forge-ci-health" class="forge-ci-health" hidden aria-live="polite" aria-label="CI health status"></div>
       </div>
     </section>
 

@@ -202,6 +202,8 @@ const projectStatus = readJson(projectStatusPath);
 const taskBoard = readText(taskBoardPath);
 const latestHandoff = readText(latestHandoffPath);
 const runtimePack = fs.existsSync(runtimePackPath) ? readJson(runtimePackPath) : {};
+const ciStatusPath = path.join(root, 'api', 'ci-status.json');
+const ciStatus = fs.existsSync(ciStatusPath) ? readJson(ciStatusPath) : null;
 
 const latestSessionBlock = extractLatestSessionBlock(latestHandoff);
 const sessionMatch = latestSessionBlock.match(/Session (\d+)/);
@@ -287,6 +289,14 @@ const payload = {
     summaryFields: ['topGoal', 'topBlocker', 'topUsefulness', 'totalResponses'],
   },
   social: contracts.socialDashboard.socialPresence,
+  ciHealth: ciStatus
+    ? {
+        allGreen: ciStatus.allGreen,
+        summary: ciStatus.summary,
+        checkedAt: ciStatus.generatedAt,
+        workflows: (ciStatus.workflows || []).map(w => ({ name: w.name, status: w.status })),
+      }
+    : null,
 };
 
 const renderedOutputs = new Map([

@@ -1,12 +1,17 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 88 closeout — CI/a11y recovery + Genius generator shipped)
+Last updated: 2026-04-17 (Session 89 — Lighthouse/SEO recovery complete, all CI green)
 
-## Now (Session 89 pre-load)
+## Now (Session 90 pre-load)
 
-- [ ] **[S89][LIGHTHOUSE] Recover final red CI gate** — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance `0.56` vs `0.85` and homepage SEO `0.93` vs `0.95`.
-- [ ] **[SIL] CI result ingestion for Genius List** — rerun `npm run genius:list` after Lighthouse recovery so `docs/GENIUS_LIST.md` reflects final release confidence instead of the current partial-green CI posture.
-- [ ] **[SIL] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path once repo lock/write safety is confirmed for the Social Dashboard workspace.
+- [ ] **[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`.
+- [ ] **[SIL] CI result ingestion into public intelligence** — add GitHub Actions status reader that writes a public-safe release-confidence summary into generated intelligence after successful post-push runs. S89 brainstorm item, High probability.
+- [ ] **[PERF] Staging Lighthouse recovery** — `/games/` at 0.84 and `/vaultsparked/` at 0.81 on staging (both just below 0.85 threshold, continue-on-error). Brand icon fix applied; may need further optimization.
+
+## Session 89 — Lighthouse/SEO recovery (S89)
+
+- [x] **[S89][LIGHTHOUSE] Recover final red CI gate** — **DONE S89**: homepage perf recovered from 0.56 to ≥0.85; SEO from 0.93 to 1.0. Three fixes shipped: (1) gzip compression added to `scripts/local-preview-server.mjs` (622KB→much smaller, 3s+ LCP savings); (2) `defer` added to `theme-toggle.shell` in `<head>` on all 83 HTML files (removes 454ms render block); (3) `@keyframes letterForge` rewritten to `opacity`+`transform` only — removed `filter:blur` and animated `text-shadow` (both non-compositable, were causing 10s LCP render delay); (4) "Learn More" link text fixed to "View Gridiron GM" for SEO. Follow-up: `loading="lazy"` → `fetchpriority="high"` on above-the-fold brand nav icon (LCP element, was adding 613ms load delay + 2.5s render delay). All CI green: E2E ✓ Accessibility ✓ Lighthouse ✓ Pages ✓.
+- [x] **[SIL] CI result ingestion for Genius List** — **DONE S89**: `npm run genius:list` rerun post-recovery; `docs/GENIUS_LIST.md` regenerated from current repo truth reflecting all-green CI posture.
 
 ## Session 88 — Genius Hit List execution / CI recovery
 

@@ -177,6 +177,21 @@
     el.textContent = 'Session ' + intel.project.currentSession + ' · ' + intel.project.lastUpdated;
   }
 
+  function renderCiHealth(intel) {
+    var el = document.getElementById('forge-ci-health');
+    if (!el) return;
+    var ci = intel && intel.ciHealth;
+    if (!ci) { el.hidden = true; return; }
+    el.hidden = false;
+    var allGreen = ci.allGreen;
+    var icon = allGreen ? '✓' : '!';
+    var label = allGreen ? 'All gates green' : 'Gate failure';
+    var tone = allGreen ? 'sparked' : 'forge';
+    el.innerHTML =
+      '<span class="forge-ci-icon tone-' + tone + '" aria-hidden="true">' + icon + '</span>' +
+      '<span class="forge-ci-label">' + escapeHtml(ci.summary || label) + '</span>';
+  }
+
   function partition(catalog) {
     var worlds = catalog.filter(function (c) { return c.type === 'game'; });
     var tools  = catalog.filter(function (c) { return c.type !== 'game'; });
@@ -227,6 +242,7 @@
       renderCatalogGrid('forge-tools-grid', split.tools);
       renderSealedVault(intel.portfolio || {});
       renderSignalStrip(intel);
+      renderCiHealth(intel);
       renderComingNext();
       maybeBroadcastShipped(intel);
     });

@@ -1,0 +1,84 @@
+name: CI Status Beacon
+
+# Write api/ci-status.json after key workflows complete on main.
+# Uses [skip ci] commit so the push does not re-trigger the full suite.
+on:
+  workflow_run:
+    workflows:
+      - "E2E Test Suite"
+      - "Accessibility Audit"
+      - "Lighthouse CI"
+    types: [completed]
+    branches: [main]
+
+jobs:
+  beacon:
+    runs-on: ubuntu-latest
+    # Only act on push-triggered runs, not PRs or manual dispatches
+    if: github.event.workflow_run.event == 'push'
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch recent workflow run statuses
+        id: status
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          node - <<'JS'
+          const { execSync } = require('child_process');
+          const fs = require('fs');
+
+          const WATCHED = ['E2E Test Suite', 'Accessibility Audit', 'Lighthouse CI'];
+          const repo = process.env.REPO;
+
+          const runs = JSON.parse(
+            execSync(`gh api /repos/${repo}/actions/runs?per_page=40&branch=main`, { encoding: 'utf8' })
+          ).workflow_runs || [];
+
+          const latest = {};
+          for (const run of runs) {
+            const name = run.name;
+            if (!WATCHED.includes(name)) continue;
+            if (latest[name]) continue;
+            latest[name] = {
+              name,
+              status: run.conclusion || run.status,
+              updatedAt: run.updated_at,
+            };
+          }
+
+          const workflows = WATCHED.map(n => latest[n] || { name: n, status: 'unknown', updatedAt: null });
+          const allGreen = workflows.every(w => w.status === 'success');
+          const hasFailure = workflows.some(w => w.status === 'failure');
+
+          const payload = {
+            generatedAt: new Date().toISOString(),
+            allGreen,
+            summary: allGreen
+              ? 'All CI gates passing — E2E, Accessibility, Lighthouse.'
+              : hasFailure
+                ? 'One or more CI gates are failing. Studio is investigating.'
+                : 'CI gates in progress or status unknown.',
+            workflows,
+          };
+
+          fs.mkdirSync('api', { recursive: true });
+          fs.writeFileSync('api/ci-status.json', JSON.stringify(payload, null, 2) + '\n');
+          console.log('Wrote api/ci-status.json:', allGreen ? 'ALL GREEN' : 'NOT ALL GREEN');
+          JS
+
+      - name: Commit updated CI status
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add api/ci-status.json
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "chore: update CI status beacon [skip ci]"
+            git push
+          fi

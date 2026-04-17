@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-04-17T16:25:49.562Z",
+  "generatedAt": "2026-04-17T17:17:04.381Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
@@ -25,9 +25,9 @@
   },
   "pulse": {
     "now": [
-      "[S89][LIGHTHOUSE] Recover final red CI gate — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance `0.56` vs `0.85` and homepage SEO `0.93` vs `0.95`.",
-      "[SIL] CI result ingestion for Genius List — rerun `npm run genius:list` after Lighthouse recovery so `docs/GENIUS_LIST.md` reflects final release confidence instead of the current partial-green CI posture.",
-      "[SIL] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path once repo lock/write safety is confirmed for the Social Dashboard workspace."
+      "[S90][COHESION] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`.",
+      "[SIL] CI result ingestion into public intelligence — add GitHub Actions status reader that writes a public-safe release-confidence summary into generated intelligence after successful post-push runs. S89 brainstorm item, High probability.",
+      "[PERF] Staging Lighthouse recovery — `/games/` at 0.84 and `/vaultsparked/` at 0.81 on staging (both just below 0.85 threshold, continue-on-error). Brand icon fix applied; may need further optimization."
     ],
     "next": [
       "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -471,6 +471,25 @@
         "url": "https://sora.chatgpt.com/profile/vaultsparkstudios",
         "apiSupport": "stub",
         "description": "AI-generated game cinematics and trailers"
+      }
+    ]
+  },
+  "ciHealth": {
+    "allGreen": true,
+    "summary": "All CI gates passing — E2E, Accessibility, Lighthouse.",
+    "checkedAt": "2026-04-17T17:09:00Z",
+    "workflows": [
+      {
+        "name": "E2E Test Suite",
+        "status": "success"
+      },
+      {
+        "name": "Accessibility Audit",
+        "status": "success"
+      },
+      {
+        "name": "Lighthouse CI",
+        "status": "success"
       }
     ]
   }
