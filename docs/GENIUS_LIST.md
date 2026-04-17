@@ -6,7 +6,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **89/100**
+- Overall opportunity pressure: **88/100**
 - Health: **yellow**
 - Current SIL: **478/500**
 - Current focus: Session 88 closed: Genius/verification wave implemented against the S87 CI failures. E2E browser gates now run against local preview (scripts/local-preview-server.mjs at 127.0.0.1:4173) instead of Cloudflare-fronted production, removing the GitHub Actions managed-challenge failure class. Shared footer contrast, footer selector isolation, labeled-container ARIA roles, ranks list semantics, homepage skip target, leaderboard a11y test strict-mode, and the /vault-treasury/ route were hardened. Scheduled Genius refresh now exists via scripts/generate-genius-list.mjs and npm run genius:list; docs/GENIUS_LIST.md has been regenerated from current repo truth. Post-push GitHub Actions: E2E, Accessibility, Pages, Secret Lint, Sentry, Cache Purge, Minify, and Sitemap are green; Lighthouse is the only red gate.
@@ -21,30 +21,30 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] CI result ingestion for Genius List
-Final score: **98**
-[SIL] CI result ingestion for Genius List — rerun npm run genius:list after Lighthouse recovery so docs/GENIUS_LIST.md reflects final release confidence instead of the current partial-green CI posture.
-Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 2. [VERIFY] Post-push CI confirmation
+#### 1. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [VERIFY] Recover final red CI gate
-Final score: **95**
-[S89][LIGHTHOUSE] Recover final red CI gate — post-push Actions confirm E2E and Accessibility are green; Lighthouse is the remaining red gate on real local-preview scores: homepage performance 0.56 vs 0.85 and homepage SEO 0.93 vs 0.95.
+#### 2. [VERIFY] CI result ingestion into public intelligence
+Final score: **94**
+[SIL] CI result ingestion into public intelligence — add GitHub Actions status reader that writes a public-safe release-confidence summary into generated intelligence after successful post-push runs. S89 brainstorm item, High probability.
+Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 3. [VERIFY] Staging Lighthouse recovery
+Final score: **93**
+[PERF] Staging Lighthouse recovery — /games/ at 0.84 and /vaultsparked/ at 0.81 on staging (both just below 0.85 threshold, continue-on-error). Brand icon fix applied; may need further optimization.
 Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 #### 4. [COHESION] Social Dashboard bidirectional mirror
-Final score: **87**
-[SIL] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path once repo lock/write safety is confirmed for the Social Dashboard workspace.
+Final score: **89**
+[S90][COHESION] Social Dashboard bidirectional mirror — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at ../vaultspark-social-dashboard.
 Why it matters: Shared bridge work compounds across Website, Studio Hub, and Social Dashboard instead of improving one page in isolation.
 
 First command: `node scripts/generate-public-intelligence.mjs`
@@ -109,9 +109,9 @@ First command: `node scripts/lint-repo.mjs`
 
 ## Recommended Build Order
 
-1. CI result ingestion for Genius List
-2. Post-push CI confirmation
-3. Recover final red CI gate
+1. Post-push CI confirmation
+2. CI result ingestion into public intelligence
+3. Staging Lighthouse recovery
 4. Social Dashboard bidirectional mirror
 5. Watch first post-push Lighthouse + playwright-axe runs
 6. Watch first post-push Lighthouse run

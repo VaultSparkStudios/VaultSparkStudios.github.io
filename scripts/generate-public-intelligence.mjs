@@ -173,6 +173,9 @@ function normalizeForCheck(value) {
     const normalized = {};
     for (const [key, child] of Object.entries(value)) {
       if (key === 'generatedAt') continue;
+      // ciHealth is updated by the CI beacon workflow independently; exclude from
+      // drift check so beacon commits don't falsely fail build:check
+      if (key === 'ciHealth') continue;
       normalized[key] = normalizeForCheck(child);
     }
     return normalized;
