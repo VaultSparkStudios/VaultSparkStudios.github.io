@@ -5,7 +5,6 @@ workers_dev = true
 
 [env.production]
 workers_dev = true
-# Zone route (requires Zone:Workers Routes:Edit on API token — founder can add later):
-# routes = [
-#   { pattern = "vaultsparkstudios.com/_og/*", zone_name = "vaultsparkstudios.com" }
-# ]
+routes = [
+  { pattern = "vaultsparkstudios.com/_og/*", zone_name = "vaultsparkstudios.com" }
+]

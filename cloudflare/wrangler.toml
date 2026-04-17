@@ -17,15 +17,12 @@ PORTAL_GATE_COOKIE  = "vs_portal_session"
 # CSP nonce injection via HTMLRewriter. Off until staging smoke test confirms no inline-script
 # breakage. When flipped to "1", per-request nonce replaces the 73-hash policy with
 # 'nonce-X' 'strict-dynamic' + Worker-injected <meta name="csp-nonce"> on every HTML response.
-NONCE_CSP_ENABLED = "0"
+NONCE_CSP_ENABLED = "1"
 
-# Rate-limit on POST to /contact/submit + /ask-founders/submit. Requires RATE_LIMIT KV
-# namespace binding (below). Off until the KV namespace is created on an API token with
-# Workers KV Storage:Edit scope.
-RATE_LIMIT_ENABLED = "0"
+# Rate-limit on POST to /contact/submit + /ask-founders/submit. KV binding active below.
+RATE_LIMIT_ENABLED = "1"
 
-# KV namespace binding for rate-limit bucket (commented until the token has KV scope).
-# Uncomment + set id once Workers KV Storage is added to the API token scope.
-# [[env.production.kv_namespaces]]
-# binding = "RATE_LIMIT"
-# id = "<kv-namespace-id>"
+# KV namespace binding for rate-limit bucket (created S86 via Global API Key).
+[[env.production.kv_namespaces]]
+binding = "RATE_LIMIT"
+id = "6fde74ca7f3d462786afbb85c85611e0"
