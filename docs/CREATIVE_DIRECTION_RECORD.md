@@ -8,6 +8,10 @@ Boundary:
 
 ## Entries
 
+### 2026-04-17 — S86 activation addendum — CDR reviewed, no new creative direction
+
+Following the first S86 closeout, founder directed "complete all 4" (runtime unlocks) and then "complete the follow ups" (post-activation cleanup). These were execution directives on already-agreed scope, not creative-direction inputs. No new entry warranted. CDR reviewed — no new entries for this addendum.
+
 ### 2026-04-17 — Genius-level innovation brief: make this the best website in history (S86)
 
 - Category: Soul / Ambition / Feature density

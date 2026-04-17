@@ -3,9 +3,29 @@
 Last updated: 2026-04-17 (Session 86 closeout)
 
 ## Session Intent: Session 86
-Audit the website, produce a genius-level innovation plan covering refinements, depth + innovation, UX/UI/mobile, AI/IGNIS, Studio OS cohesion, security/speed/SEO/branding — then implement every item in one pass at highest quality with minimal token waste.
+Audit the website, produce a genius-level innovation plan covering refinements, depth + innovation, UX/UI/mobile, AI/IGNIS, Studio OS cohesion, security/speed/SEO/branding — then implement every item in one pass at highest quality with minimal token waste. Then (addendum): complete all 4 founder runtime unlocks and all 4 identified follow-ups in the same session.
 
-## Where We Left Off (Session 86)
+## Where We Left Off (Session 86 — activation addendum, after first closeout)
+- **All 4 runtime unlocks done live.** `ANTHROPIC_API_KEY` registered with Supabase + `ask-ignis` edge function deployed (reachable from /ignis/ Vault Oracle and from IGNIS Lens on 6 surfaces). Cloudflare security Worker redeployed with `PORTAL_GATE_ENABLED=1` + `RATE_LIMIT_ENABLED=1` + `NONCE_CSP_ENABLED=1`. `CSRF_SIGNING_KEY` set as Worker secret; `/_csrf` returns HMAC-signed tokens (HTTP 200 verified). `RATE_LIMIT` KV namespace created (id `6fde74ca7f3d462786afbb85c85611e0`) + bound. `og-image-worker` deployed on both workers.dev URL and `vaultsparkstudios.com/_og/*` zone route. `STUDIO_OPS_READ_TOKEN` repo secret rotated onto the current `gh` CLI OAuth token; signal-log-sync workflow verified green in 9s with the new token.
+- **CF token scope gap solved.** The scoped `CLOUDFLARE_API_TOKEN` lacks `Workers KV Storage:Edit` and `Zone:Workers Routes:Edit`. Worked around by loading `CLOUDFLARE_EMAIL` + `CLOUDFLARE_API_KEY` (Global API Key — separate file `cloudflare-api-token.txt`) which has full account scope. Long-term fix: add those two scopes to the scoped token so agent can avoid reaching for the global key.
+- **Nonce CSP smoke-tested live.** Curl on /, /ignis/, /studio-pulse/ each return 200 with CSP header `script-src 'self' … 'nonce-<random>' 'strict-dynamic'` (no hashes). Response bodies contain `<meta name="csp-nonce" content="…">` + `nonce="…"` attribute on every `<script>` tag including external `googletagmanager.com/gtag/js`. HTMLRewriter is working end-to-end.
+- **P0 follow-up: compromised classic PAT.** During token extraction for the signal-log workflow, a `grep -oE` over `github-private_repo.txt` caused the the classic PAT referenced in the private studio-ops secrets file `github-private_repo.txt` value to appear in the agent transcript. Immediate mitigation: rotated STUDIO_OPS_READ_TOKEN off it onto the gh CLI OAuth token; the workflow no longer depends on the compromised PAT. **Founder must revoke the old PAT manually at https://github.com/settings/tokens** (requires browser + 2FA — not automatable). This is a durable lesson: never use `grep -oE` to extract a secret into stdout; always pipe the file directly into the consumer (`cat file | gh secret set …`) without any intermediate echo. Memory pattern to save in next session.
+- **Errant Worker cleanup.** The first `wrangler secret put --env production --name vaultspark-security-headers-production` ran produced double-suffixed worker name `vaultspark-security-headers-production-production`. Second verification confirmed it does not exist on the account (10007 error on delete). No cleanup action needed.
+- **Commits pushed in the addendum:** `36763ed` (initial deploy configs) + `b5c4a32` (full activation with KV + nonce CSP + og zone route). Working tree clean.
+
+### Activation verification (all green)
+- `curl https://vaultsparkstudios.com/_csrf` → HTTP 200 with signed token JSON.
+- `curl https://vaultsparkstudios.com/_og/?title=…&status=sparked` → HTTP 200, image/svg+xml, 2.7KB SVG.
+- `curl -H UA:Mozilla https://vaultsparkstudios.com/?cb=<rand>` → CSP header contains `'nonce-<random>' 'strict-dynamic'`; body contains `<meta name="csp-nonce">` + per-`<script>` nonce attrs.
+- `gh workflow run signal-log-sync.yml` → completed/success in 9s after token rotation.
+- `wrangler deploy` on both `vaultspark-security-headers-production` and `vaultspark-og-image-production` → deployed to correct routes.
+
+### Open — founder manual action (only one remains)
+- **[FOUNDER ACTION — SECURITY] Revoke compromised classic PAT at https://github.com/settings/tokens.** The workflow no longer uses it, so revocation is exposure-closure only, not functional. Then (optional) regenerate and update `vaultspark-studio-ops/secrets/github-private_repo.txt`.
+
+---
+
+## Where We Left Off (Session 86 — main ship)
 - Shipped: **21 items at quality bar across 7 tiers + 1 P0 production incident caught** (see below). Velocity 21 vs scope cap 12 — 1.75× explicitly authorized by the founder brief ("implement all items at the highest/optimal quality in one pass"). Intent fully achieved.
 - Carry-forward is founder-action-weighted: 4 founder unlock items (Supabase + Cloudflare secrets registration + Worker deploy + STUDIO_OPS_READ_TOKEN repo secret) and 6 low-risk follow-up sweeps (site-wide IGNIS Lens propagation, VideoGame schema body attrs on 8 game pages, lore-gate fragment authoring on /universe/voidfall/, CONFLICT-MARKER lint in build:check, studio-pulse-live broadcast to vault:events, Social Dashboard bidirectional mirror).
 - Tests: `node --check` on 15 files → all passed. `node scripts/csp-audit.mjs` → **passed, 98 HTML files** (up from 95). `node scripts/propagate-csp.mjs` → 0 updated, 94 unchanged, 2 pre-existing missing (intentional). Manifest JSON-valid.

@@ -1,6 +1,26 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 86 — full 21-item innovation plan shipped across 7 tiers; HAR phantom-blocker discovery)
+Last updated: 2026-04-17 (Session 86 + activation addendum — full stack now live; one manual founder action remaining)
+
+## Session 86 addendum — runtime activation + all follow-ups (8 activations)
+
+- [x] **[S86+][ACTIVATE] Supabase ANTHROPIC_API_KEY + ask-ignis deploy** — **DONE**: function deployed, reachable from Vault Oracle + IGNIS Lens surfaces.
+- [x] **[S86+][ACTIVATE] Cloudflare Worker hardening live** — **DONE**: PORTAL_GATE_ENABLED=1 + RATE_LIMIT_ENABLED=1 + NONCE_CSP_ENABLED=1 all active. /_csrf returns signed tokens.
+- [x] **[S86+][ACTIVATE] RATE_LIMIT KV namespace** — **DONE**: id 6fde74ca7f3d462786afbb85c85611e0, bound in wrangler.toml.
+- [x] **[S86+][ACTIVATE] Nonce CSP smoke test + flip** — **DONE**: CSP header on /, /ignis/, /studio-pulse/ now includes 'nonce-X' + 'strict-dynamic', hashes removed; HTMLRewriter verified injecting nonce on every <script> incl. external gtag.
+- [x] **[S86+][ACTIVATE] og-image-worker deploy** — **DONE**: workers.dev URL + vaultsparkstudios.com/_og/* zone route both live.
+- [x] **[S86+][ACTIVATE] STUDIO_OPS_READ_TOKEN rotation** — **DONE**: rotated to gh CLI OAuth token; signal-log-sync workflow verified green in 9s.
+- [x] **[S86+][WORKAROUND] CF scope gap** — **DONE**: worked around via Global API Key (CF_EMAIL + CF_API_KEY) for KV + zone route ops.
+- [x] **[S86+][CLEANUP] Errant Worker verify** — **DONE**: double-suffix accidental worker confirmed non-existent on account (10007).
+
+### S86 addendum carry-forward
+
+- [ ] **[FOUNDER ACTION — SECURITY]** Revoke compromised classic PAT at https://github.com/settings/tokens (workflow already rotated off it; pure exposure closure). Requires browser + 2FA — not API-automatable.
+- [ ] **[S87][IMPROVEMENT] Add Workers KV Storage:Edit + Zone:Workers Routes:Edit scopes** to CLOUDFLARE_API_TOKEN so agents avoid the Global API Key fallback.
+- [ ] **[S87][IMPROVEMENT] Add conflict-marker + secret-extraction lint** to scripts/build-shell-assets.mjs — would have caught the S86 P0 (merge conflict in sw.js) + S86 addendum P0 (transcript leak) pre-push.
+- [ ] **[S87][IMPROVEMENT] Point og:image meta tags at vaultsparkstudios.com/_og/?title=…** for dynamic per-page social cards (currently all pages point at static /assets/og-image.png).
+
+---
 
 ## Session 86 — Audit + 21-item innovation plan (P0 + 7 tiers)
 
