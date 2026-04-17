@@ -36,7 +36,7 @@ Why it matters: Shared bridge work compounds across Website, Studio Hub, and Soc
 First command: `node scripts/generate-public-intelligence.mjs`
 
 #### 3. [VERIFY] Watch first post-push Lighthouse + playwright-axe runs
-Final score: **87**
+Final score: **88**
 [SIL] Watch first post-push Lighthouse + playwright-axe runs — heavier pulse page + animated gradients; verify tightened S82/S83 budgets still hold.
 Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
 
@@ -77,32 +77,32 @@ Final score: **86**
 Decide whether navigation should say Studio Pulse or Forge Window while preserving /studio-pulse/ for SEO.
 Why it matters: The page experience changed; navigation language needs founder sign-off before public vocabulary changes.
 
-#### 5. [VERIFY] A11y artifact triage helper
-Final score: **85**
-[SIL] A11y artifact triage helper — script that parses axe/Lighthouse CI JSON artifacts and maps failures to shared CSS/template owners. S89 brainstorm item.
-Why it matters: Release confidence is the highest leverage surface because red gates turn every later improvement into uncertain work.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-### LATER
-
-#### 1. [SECURITY] Add CF_WORKER_API_TOKEN secret to GitHub repo → Settings → Secrets → Actions. Needs Workers Scripts: Edit + Zone: Read permissions.
+#### 5. [SECURITY] Add CF_WORKER_API_TOKEN secret to GitHub repo → Settings → Secrets → Actions. Needs Workers Scripts: Edit + Zone: Read permissions.
 Final score: **84**
 [CF-WORKER-TOKEN] Add CF_WORKER_API_TOKEN secret to GitHub repo → Settings → Secrets → Actions. Needs Workers Scripts: Edit + Zone: Read permissions.
 Why it matters: Security cleanup lowers operational risk without changing public promises or membership logic.
 
 First command: `node scripts/lint-repo.mjs`
 
-#### 2. [SECURITY] Cloudflare WAF rule (CN/RU/HK)
+### LATER
+
+#### 1. [SECURITY] Cloudflare WAF rule (CN/RU/HK)
 Final score: **84**
 Cloudflare WAF rule (CN/RU/HK) — JS Challenge firewall rule; requires API token with Zone / Firewall Services / Edit + Zone / Zone / Read; or Studio Owner can create in dashboard [human action / provide token]
 Why it matters: Security cleanup lowers operational risk without changing public promises or membership logic.
 
 First command: `node scripts/lint-repo.mjs`
 
-#### 3. [SECURITY] Add CF_WORKER_API_TOKEN to GitHub Actions secrets so Worker deploys stop depending on local Wrangler auth.
+#### 2. [SECURITY] Add CF_WORKER_API_TOKEN to GitHub Actions secrets so Worker deploys stop depending on local Wrangler auth.
 Final score: **84**
 [CF-WORKER-TOKEN] Add CF_WORKER_API_TOKEN to GitHub Actions secrets so Worker deploys stop depending on local Wrangler auth.
+Why it matters: Security cleanup lowers operational risk without changing public promises or membership logic.
+
+First command: `node scripts/lint-repo.mjs`
+
+#### 3. [SECURITY] Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
+Final score: **84**
+[WAF] Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
 Why it matters: Security cleanup lowers operational risk without changing public promises or membership logic.
 
 First command: `node scripts/lint-repo.mjs`
@@ -117,10 +117,10 @@ First command: `node scripts/lint-repo.mjs`
 6. Lighthouse budget tightening in CI
 7. Web push test
 8. Forge Window naming decision
-9. A11y artifact triage helper
-10. Add CF_WORKER_API_TOKEN secret to GitHub repo → Settings → Secrets → Actions. Needs Workers Scripts: Edit + Zone: Read permissions.
-11. Cloudflare WAF rule (CN/RU/HK)
-12. Add CF_WORKER_API_TOKEN to GitHub Actions secrets so Worker deploys stop depending on local Wrangler auth.
+9. Add CF_WORKER_API_TOKEN secret to GitHub repo → Settings → Secrets → Actions. Needs Workers Scripts: Edit + Zone: Read permissions.
+10. Cloudflare WAF rule (CN/RU/HK)
+11. Add CF_WORKER_API_TOKEN to GitHub Actions secrets so Worker deploys stop depending on local Wrangler auth.
+12. Confirm Cloudflare WAF JS Challenge rule for CN/RU/HK is active in dashboard (or provide API token)
 
 ## Best Immediate Move
 
