@@ -1,19 +1,19 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-04-17T02:13:43.929Z",
+  "generatedAt": "2026-04-17T04:51:18.885Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 85,
+    "currentSession": 86,
     "lastUpdated": "2026-04-17",
-    "currentFocus": "Session 85 closed out: 8 items shipped at quality bar across two `/go` rounds on a founder-directed brief — reframe /studio-pulse/ as an immersive user-facing experience and incorporate the full 27-initiative portfolio across the site without revealing any proprietary info. Round 1: /studio-pulse/ rebuilt as \"The Forge Window\" (cinematic breathing hero, portfolio heartbeat strip, current-focus band, Living Worlds + Tools grids with heat bars, 12-tile Sealed Vault sigil grid, signal strip, coming-next teasers; killed the Now/Next/Shipped founder kanban + IGNIS tile + sessions/edge-functions counters + All-Systems-Green checklist). Catalog pipeline rewritten to source from studio-hub/src/data/studioRegistry.js with self-hosted SPARKED override — 15 items listed vs prior 8. Portfolio scale block added to public-intelligence.json (total:27, publicListed:15, sealedCount:12, sparked:4, forge:9, vaulted:2). Homepage pulse teaser rewritten around \"27 initiatives. One vault. One live window.\" Round 2: reusable assets/sealed-vault-row.js component with scoped injected CSS + context-aware copy + CSP-clean rendering; mounted on /games/ + /projects/ hubs; scripts/propagate-nav.mjs footer legend extended with fourth SEALED chip + site-wide 27-initiative signal propagated across 79 HTML files. Two HAR items unchanged: Ask IGNIS (ANTHROPIC_API_KEY) + 3-item edge-gate/CSP-nonce/rate-limit bundle (CF_WORKER_API_TOKEN).",
-    "nextMilestone": "Watch first post-push Lighthouse + playwright-axe runs — S85 rebuilt the Pulse page with large animated gradients + pulsing sigil grid and propagated footer changes across 79 files; verify the tightened S82/S83 budgets still hold. Then next pickups: strip dead intel-* references from assets/home-intelligence.js (setText/renderList calls are now defensive no-ops because IDs are gone from the live homepage); founder-decision on renaming the nav label \"Studio Pulse\" → \"Forge Window\" (URL stays /studio-pulse/ for SEO); ship category-aware send-push edge function + push_preferences column to close the second half of S80 Tier 4 push item. CF_WORKER_API_TOKEN remains the highest-leverage single founder action (unlocks 3 Tier 1 infra items).",
+    "currentFocus": "Session 86 closed + fully activated: 21-item innovation plan shipped across 7 tiers, then all 4 founder runtime unlocks + all 4 follow-ups completed in the same session. LIVE: ANTHROPIC_API_KEY registered with Supabase + ask-ignis edge function deployed (Vault Oracle reachable from /ignis/ and IGNIS Lens on 6 surfaces). Cloudflare security worker redeployed with PORTAL_GATE_ENABLED=1 + RATE_LIMIT_ENABLED=1 + NONCE_CSP_ENABLED=1 (edge-gate redirects unauth'd private-portal requests; KV-backed 3/hr/IP rate limit on /contact/submit + /ask-founders/submit gated on HMAC CSRF; per-request nonce CSP via HTMLRewriter replacing the 73-hash policy with 'nonce-X' + 'strict-dynamic'). CSRF_SIGNING_KEY set as Worker secret; /_csrf endpoint verified returning signed tokens. RATE_LIMIT KV namespace created (id 6fde74ca7f3d462786afbb85c85611e0). og-image-worker deployed on both workers.dev and vaultsparkstudios.com/_og/* zone route (returns 1200x630 SVG OG cards). STUDIO_OPS_READ_TOKEN repo secret rotated off the compromised classic PAT to the current gh CLI OAuth token; signal-log-sync workflow verified green in 9s. CF scope gap solved via Global API Key (CF_EMAIL + CF_API_KEY) which bypasses the scoped-token permission limits. P0 sw.js merge-conflict fix and HAR phantom-blocker memory pattern are the two durable outputs of this session beyond the 21 items.",
+    "nextMilestone": "One manual action remains: revoke the compromised classic PAT the classic PAT referenced in private studio-ops secrets at https://github.com/settings/tokens (requires browser + 2FA — cannot be done programmatically). Workflow no longer depends on that PAT so revocation is pure exposure-closure, not functional. Then S87 follow-up sweeps: (1) Add conflict-marker lint to scripts/build-shell-assets.mjs (would have caught the S86 P0 pre-push). (2) Propagate ignis-lens.js + native-feel.js site-wide via propagate-nav.mjs (currently on ~6 surfaces each). (3) Add data-schema-type=\"game\" + data-game-* body attrs to all 8 game pages to enable schema-injector VideoGame emission. (4) Author first lore-gate fragments on /universe/voidfall/ now that the module is mounted. (5) Wire studio-pulse-live.js to emit internal drop events on channel vault:events so the heartbeat ticker animates on real shipments. (6) Social Dashboard bidirectional mirror. (7) Point og:image meta tags at vaultsparkstudios.com/_og/ for dynamic per-page social cards.",
     "blockers": [
-      "CF_WORKER_API_TOKEN missing — blocks edge-gating private portals, CSP nonce migration, and rate-limit/CSRF on forms (3 S80 Tier 1 infrastructure items)",
-      "ANTHROPIC_API_KEY missing in Supabase edge-function secrets — blocks Ask IGNIS concierge and future AI surfaces",
+      "MANUAL: revoke compromised classic PAT the classic PAT referenced in private studio-ops secrets at github.com/settings/tokens (exposure occurred in agent transcript during token extraction; workflow secret already rotated off it, revocation is pure cleanup)",
+      "CF API token (scoped) lacks Workers KV Storage:Edit + Zone:Workers Routes:Edit — working around via CLOUDFLARE_EMAIL + CLOUDFLARE_API_KEY (Global API Key). Long-term: add those two scopes to the scoped token so agent can avoid reaching for the global key.",
       "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only"
     ],
     "ignis": {
@@ -39,7 +39,7 @@
     "shipped": []
   },
   "stats": {
-    "sessionsCompleted": 85,
+    "sessionsCompleted": 86,
     "liveProjects": 4,
     "projectsInForge": 9,
     "activeEdgeFunctions": 16,

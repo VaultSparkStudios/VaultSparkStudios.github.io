@@ -23,9 +23,12 @@
     var feedback = intel && intel.feedback && intel.feedback.localSummary ? intel.feedback.localSummary : null;
     var topBlocker = feedback && feedback.topBlocker ? feedback.topBlocker : null;
     var topGoal = feedback && feedback.topGoal ? feedback.topGoal : null;
+    // Voice rule (memory/feedback_voice_leak_patrol.md): never render internal enums/keys as user text.
+    // `topBlocker.label` is a human-authored label from the feedback schema — safe to display.
+    // Counts are displayed directly because "N of you said X" is honest and understandable.
     var blockerCopy = topBlocker
-      ? '"' + topBlocker.label + '" is currently the strongest browser-local friction signal, with ' + topBlocker.count + ' ' + pluralize(topBlocker.count, 'response', 'responses') + ' pointing to it.'
-      : 'No blocker pattern has won yet, so this layer is still leading with inferred hesitation instead of a dominant local feedback pattern.';
+      ? '"' + topBlocker.label + '" is what visitors are flagging most often — ' + topBlocker.count + ' ' + pluralize(topBlocker.count, 'person said it', 'people said it') + '.'
+      : 'Nothing is blocking most visitors yet. If something\'s in your way, the feedback box below is how it gets addressed.';
 
     var contexts = {
       home: [
@@ -43,15 +46,15 @@
           label: 'If You Came For Worlds',
           title: 'Games and lore can lead the decision.',
           copy: state.intent === 'lore'
-            ? 'Your best next move is world affinity first: universe pages, dispatches, and the classified archive should build conviction before any upgrade ask.'
-            : 'If the reason you are here is gameplay, follow the game pages and universe layer first. The membership system is designed to compound that interest, not replace it.'
+            ? 'Start with the lore. Universe pages, transmissions, and the archive are the natural entry point — membership can wait until the worlds earn it.'
+            : 'If you\'re here for the games, start with the games. Membership is built to deepen that interest, not replace it.'
         },
         {
           label: 'What Happens Next',
           title: 'The system should keep handing you forward.',
           copy: topGoal && topGoal.key === 'track_progress'
-            ? 'Progress visibility is the strongest local goal right now, so Studio Pulse, changelog, and the shared network surfaces are the next proof layer after the homepage.'
-            : 'After the first click, the route should stay coherent: identity, worldbuilding, live proof, and paid support now point into each other instead of acting like separate microsites.'
+            ? 'If you want to track what the studio is actually shipping, Studio Pulse and the changelog are where that lives — updated the day things land.'
+            : 'After the first click, the site stays coherent. Identity, worlds, live proof, and paid support all point into each other instead of acting like separate microsites.'
         },
         {
           label: 'What Still Needs To Be Earned',
@@ -79,11 +82,11 @@
           label: 'When Paid Depth Matters',
           title: 'Upgrade only when support and access begin to matter more than curiosity.',
           copy: state.membership_temperature === 'warm' || state.membership_temperature === 'hot'
-            ? 'You are already showing warming membership intent, so the real decision is no longer "should I join?" but whether the support and priority benefits now feel justified.'
-            : 'If you are still in curiosity mode, stay there. Paid depth should follow conviction, not pressure.'
+            ? 'It looks like you\'re already past "is this worth it?" — the real question now is whether the support + priority tiers match how deep you want to go.'
+            : 'If you\'re still just curious, stay there. Paid depth should follow conviction, not pressure.'
         },
         {
-          label: 'Current Friction',
+          label: 'What People Are Saying',
           title: 'The strongest hesitation is visible instead of hidden.',
           copy: blockerCopy
         }
@@ -98,7 +101,7 @@
           label: 'What Changes After Upgrade',
           title: 'The account you already created keeps compounding.',
           copy: state.membership_temperature === 'hot'
-            ? 'Your interest is already reading hot. The remaining decision is whether Sparked or Eternal better matches how directly you want to back the studio and how much priority/depth you want attached to the same account.'
+            ? 'You already seem sure. The only remaining question is whether Sparked or Eternal better matches how directly you want to back the studio.'
             : 'The safest sequence still applies: create the free identity first, confirm the portal and proof surfaces feel real, then upgrade the same account later without losing continuity.'
         },
         {
@@ -110,8 +113,8 @@
           label: 'If You Are Hesitating',
           title: 'Price caution is healthy, not disqualifying.',
           copy: topBlocker && topBlocker.key === 'price_unsure'
-            ? 'Price uncertainty is the strongest current blocker, which usually means the next missing ingredient is stronger proof of outcomes, access, and consistency rather than a louder checkout push.'
-            : 'If you are unsure about paying, keep the lower-risk sequence: identity, public proof, then paid support only once the system feels earned.'
+            ? 'Pricing is what most visitors are weighing right now. That\'s fair — the answer is more proof (shipped work, portal depth, member outcomes), not a louder checkout button.'
+            : 'If you\'re unsure about paying, keep the lower-risk sequence: identity first, public proof next, paid support only once the vault feels earned.'
         },
         {
           label: 'Founder Promise',
@@ -128,21 +131,28 @@
     var context = inferContext(root);
     var state = window.VSIntentState ? window.VSIntentState.getState() : {};
     var modules = buildModules(context, state, intel);
+    // User-facing section copy — speaks TO the reader, not ABOUT the layer.
     var titles = {
-      home: 'Answer the quiet questions before asking for commitment.',
-      membership: 'Make the identity layer feel clear before asking for upgrade intent.',
-      vaultsparked: 'Reduce payment hesitation with honest proof and next-step clarity.'
+      home: 'Before we ask for anything, here\'s what\'s real.',
+      membership: 'Here\'s what membership actually is, in plain terms.',
+      vaultsparked: 'Here\'s what you get for paying, without the push.'
     };
     var copies = {
-      home: 'This layer explains what is already real, what the safest first move is, and what proof still needs to be earned.',
-      membership: 'The goal here is clarity: what membership means, what free already unlocks, when paid depth matters, and what hesitation pattern is currently strongest.',
-      vaultsparked: 'This layer exists to answer what the paid tiers are for, what changes after upgrade, where the honest guardrails are, and how to decide without pressure.'
+      home: 'What\'s already live. What the safest first step is. What still has to be earned.',
+      membership: 'What membership means. What free already unlocks. When paid depth actually matters.',
+      vaultsparked: 'What the paid tiers are for. What changes after upgrade. The honest guardrails. How to decide without pressure.'
+    };
+    // Kicker was "Trust Depth" — internal taxonomy. Now user-facing.
+    var kickers = {
+      home: 'Ground truth',
+      membership: 'Membership, clearly',
+      vaultsparked: 'The paid tier, clearly'
     };
 
     root.innerHTML =
       '<div class="trust-depth-shell">' +
         '<div class="trust-depth-head">' +
-          '<p class="trust-depth-kicker">Trust Depth</p>' +
+          '<p class="trust-depth-kicker">' + (kickers[context] || kickers.home) + '</p>' +
           '<h3 class="trust-depth-title">' + (titles[context] || titles.home) + '</h3>' +
           '<p class="trust-depth-copy">' + (copies[context] || copies.home) + '</p>' +
         '</div>' +

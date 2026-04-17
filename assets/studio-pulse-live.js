@@ -183,6 +183,38 @@
     return { worlds: worlds, tools: tools };
   }
 
+  // Broadcast a `vault_event` to the Supabase Realtime channel `vault:events` when
+  // we detect the top "shipped" entry has changed since last visit. Other clients
+  // viewing /studio-pulse/ will see the vault-heartbeat ticker animate.
+  // No-op when supabase isn't initialized, offline, or the entry hasn't changed.
+  function maybeBroadcastShipped(intel) {
+    try {
+      if (!intel || !intel.pulse || !Array.isArray(intel.pulse.shipped) || !intel.pulse.shipped.length) return;
+      var top = String(intel.pulse.shipped[0] || '').trim();
+      if (!top) return;
+      var lastSeen = null;
+      try { lastSeen = localStorage.getItem('vs_pulse_last_shipped'); } catch (_e) {}
+      if (lastSeen === top) return;
+      try { localStorage.setItem('vs_pulse_last_shipped', top); } catch (_e) {}
+      // Don't broadcast on first-ever visit — the initial read shouldn't ping other clients.
+      if (lastSeen == null) return;
+      var supabase = (window.VSPublic && window.VSPublic._sb) || window.supabase || null;
+      if (!supabase || !supabase.channel) return;
+      var ch = supabase.channel('vault:events');
+      ch.subscribe(function (status) {
+        if (status !== 'SUBSCRIBED') return;
+        ch.send({
+          type: 'broadcast',
+          event: 'vault_event',
+          payload: { type: 'drop_shipped', title: top, ts: new Date().toISOString() }
+        }).finally(function () {
+          // Tidy — don't leave the producer channel open.
+          try { ch.unsubscribe(); } catch (_e) {}
+        });
+      });
+    } catch (_e) { /* silent — producer must never throw */ }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     if (!window.VSPublicIntel) return;
     window.VSPublicIntel.get().then(function (intel) {
@@ -196,6 +228,7 @@
       renderSealedVault(intel.portfolio || {});
       renderSignalStrip(intel);
       renderComingNext();
+      maybeBroadcastShipped(intel);
     });
   });
 })();

@@ -73,11 +73,12 @@
   function applyHesitationConfig(mode, state) {
     if (!state.hesitation_signal) return null;
 
+    // Voice rule (memory/feedback_voice_leak_patrol.md): notes speak TO the user, not ABOUT the signals.
     if (state.hesitation_signal === 'need_proof' && mode === 'membership') {
       return {
         href: '/studio-pulse/',
         label: 'See Live Proof First',
-        note: 'Your latest friction signal says you need more proof before committing. Read the live operating surface, then come back to pricing.'
+        note: 'Fair — you want proof before committing. Here\'s what the studio is actually shipping right now.'
       };
     }
 
@@ -85,7 +86,7 @@
       return {
         href: '/membership/',
         label: 'See How Membership Works',
-        note: 'The current signal says the path is not clear enough yet. Start with the identity layer explainer before creating the account.'
+        note: 'No rush. Here\'s what membership actually is and what the free tier unlocks before you create an account.'
       };
     }
 
@@ -93,7 +94,7 @@
       return {
         href: '/games/',
         label: 'See The Live Games First',
-        note: 'The current hesitation signal is product depth. Follow the playable surfaces first, then come back if the worlds earn deeper support.'
+        note: 'Play first. Membership makes more sense after a world earns it.'
       };
     }
 
@@ -101,7 +102,7 @@
       return {
         href: '/vault-member/#register',
         label: 'Start Free Before Paying',
-        note: 'The price signal is still cold. The safest path is free identity, then paid depth only if the vault keeps proving itself.'
+        note: 'Start with the free identity. Upgrade later only if the vault keeps proving itself.'
       };
     }
 
@@ -164,7 +165,7 @@
         applyConfig(element, {
           href: '/vaultsparked/#pricing',
           label: 'See Live Pricing',
-          note: 'You have already shown membership intent. The fastest next step is comparing the live tiers.'
+          note: 'Ready when you are. Here\'s the live tier comparison.'
         });
         var hesitationConfig = applyHesitationConfig(mode, state);
         if (hesitationConfig) applyConfig(element, hesitationConfig);
