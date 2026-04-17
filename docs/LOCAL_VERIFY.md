@@ -1,6 +1,6 @@
 # Local Verify Contract
 
-Last updated: 2026-04-17
+Last updated: 2026-04-17 (S90 — HTTP smoke pre-gate wired into CI)
 
 `scripts/run-local-browser-verify.mjs` is the supported browser-check entrypoint for unshipped work in this repo. It always:
 
@@ -28,6 +28,7 @@ Last updated: 2026-04-17
   - Use when Playwright fails to spawn or hangs. Covers: `/`, `/games/`, `/community/`, `/leaderboards/`, `/membership/`, `/vaultsparked/`, `/ranks/`, `/studio-pulse/`, `/vault-wall/`, `/api/public-intelligence.json`, `/manifest.json`, `/sw.js`.
   - Does NOT validate CSS, JS execution, screenshots, interactive behaviour, or a11y.
   - Prerequisite: start `scripts/local-preview-server.mjs` first.
+  - **CI integration:** `npm run smoke:http` runs automatically as "HTTP smoke pre-gate" in both the compliance and e2e jobs (`.github/workflows/e2e.yml`), after `wait-on` connectivity and before browser tests. A content-level failure here aborts the browser suite fast.
 - `intelligence`
   - Use when the session mainly touched homepage shell, trust/telemetry/pathway surfaces, or other public-intelligence modules.
   - Current scope: `computed-styles`, `homepage-hero-regression`, `intelligence-surfaces`, `micro-feedback`, `vaultsparked-csp`.
