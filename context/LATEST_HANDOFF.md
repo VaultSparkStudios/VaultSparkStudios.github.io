@@ -1,8 +1,39 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 83 closeout)
+Last updated: 2026-04-16 (Session 84 closeout)
 
-## Session Intent: Session 83
+## Session Intent: Session 84
+Ship unblocked S80 Tier 2/3/4 items at quality bar across as many `/go` rounds as scope cap permits.
+
+## Where We Left Off (Session 84)
+- Shipped: **7 items at quality bar** across two `/go` rounds — (round 1) offline page redesign, investor logAction GDPR consent, /social/ dashboard page, personalized returning-visitor homepage band; (round 2) Studio nav dropdown propagated across 79 HTML files, dynamic hero spotlight, PWA push opt-in surface on /studio-pulse/ + /vault-wall/ + /changelog/.
+- Deferred: ETERNAL tier vocabulary (CANON decision — escalation only per CLAUDE.md); Studio Time Machine (scope overflow); 2 HAR-blocked items unchanged (Ask IGNIS on ANTHROPIC_API_KEY; 3-item edge-gate/CSP-nonce/rate-limit bundle on CF_WORKER_API_TOKEN).
+- Tests: `npm run build:check` → passed (shell + public intelligence synced after regen); `node scripts/csp-audit.mjs` → passed (95 HTML files, up from 94 — /social/ added); `node --check` on all 5 new JS assets → passed; `node scripts/propagate-csp.mjs` → 1 updated (canonical CSP applied to /social/); `node scripts/propagate-nav.mjs` → 79 HTML files updated cleanly.
+- Deploy: pending — manual commit + push from this closeout (closeout-autopilot script is not installed in this repo).
+
+### Shipped
+- **Offline page redesign** (`offline.html`, `assets/error-pages.js`) — inline-SVG vault-lock sigil with dashed-orbit pulse + gold/blue radial vignette + giant Georgia "SEALED" wordmark + gold "Signal Lost" eyebrow + aria-live `#offline-net-status` pill that flips to "Signal restored — reopening the vault" via `navigator.onLine` on `online` event with a 900ms reload grace. `prefers-reduced-motion` guards on pulse + dot; full light-mode override.
+- **Investor action logging consent (GDPR)** (`assets/investor-auth.js`, new `assets/investor-consent-toggle.js`, `investor-portal/profile/index.html`) — `VSInvestorAuth.logAction()` is a no-op until `vs_inv_activity_consent === 'granted'`. First-login consent banner auto-renders once; profile-page toggle lets investors change their mind anytime. New `getConsent()` + `setConsent()` API + `investor:consent-change` event. External consent-toggle script so the profile page's hashed inline-script CSP registry stays untouched. Legal basis (GDPR Art. 6(1)(a)) + audit-trail retention disclosed on the toggle card.
+- **`/social/` dashboard page** (new `social/index.html`, new `assets/social-dashboard.js`) — `/social/` consumes `public-intelligence.json.social` and renders: four-stat channel-footprint summary, featured channels (top 5), honest three-tier grouping (Live presence / Limited presence / Reserved handles — claimed handles aren't faked as active). Offline fallback points at `/contact/`, GitHub, subreddit only. propagate-csp injected the canonical CSP automatically.
+- **Personalized returning-visitor homepage band** (new `assets/home-personalized.js`, `index.html`) — layered on `VSIntentState`. Renders a welcome-back band between hero and social-proof strip for returning / logged-in / pathway-active / membership-intent visitors. Copy branches on `journey_stage` (pricing → VaultSparked, considering → membership-value, activation → finish-joining, member → vault portal, exploring → studio-pulse) and `world_affinity` (links back to last world). Dismissable (session-scoped). GA4 `personalized_welcome_shown`. Honest empty state for fresh anonymous visitors.
+- **Studio nav dropdown propagated** (`scripts/propagate-nav.mjs`, 79 HTML files) — flat "Studio" link replaced with a dropdown: *About · Studio Pulse · IGNIS · Vault Pipeline · Changelog · Press Kit · Social · Signal Log*. Makes `/social/` and `/press/` first-class primary-nav destinations.
+- **Dynamic hero spotlight** (new `assets/home-dynamic-hero.js`, `index.html`) — subtle gold pill between hero sub-copy and CTAs: "🔥 Most-played right now: <game> <progress%> →" for the highest-progress SPARKED title, falling back to "⚒️ Hottest in the forge: <game> <progress%> →" for the highest-progress FORGE title when nothing is sparked. Reads `public-intelligence.catalog`; routes correctly for `/games/` vs `/universe/`. Renders nothing when intelligence is down (honest empty state).
+- **PWA push opt-in surface** (new `assets/push-prompt.js`, mount divs on `studio-pulse/`, `vault-wall/`, `changelog/`, `#push` anchor added to `vault-member/index.html`) — blue pill appears only when: logged-in Supabase session + push supported + not already subscribed + not dismissed. Deep-links to canonical `#push` toggle in portal. Self-contained CSS injected once; respects light-mode; suppresses on `Notification.permission === 'denied'`.
+
+### Verification
+- `node --check` on `error-pages.js`, `investor-auth.js`, `investor-consent-toggle.js`, `social-dashboard.js`, `home-personalized.js`, `home-dynamic-hero.js`, `push-prompt.js` → **all passed**
+- `npm run build:check` → **passed** (shell + public intelligence synced after `npm run build` regen)
+- `node scripts/csp-audit.mjs` → **passed** (95 HTML files; was 94)
+- `node scripts/propagate-csp.mjs` → 1 updated (/social/ ← canonical CSP)
+- `node scripts/propagate-nav.mjs` → 79 updated, 6 skipped (portal + game-runtime + error pages)
+
+### Open carry-forward
+- **First post-push Lighthouse + playwright-axe runs** (S82 + S83 combined, now also tests S84's nav propagation across 79 files) — iterate once if budgets short.
+- **Server-side push category routing** — client-side opt-in is shipped; `send-push` edge function still needs category semantics (SPARKED drops vs leaderboard overtakes) to fully close S80 Tier 4 push item.
+- **HAR-blocked items unchanged** — CF_WORKER_API_TOKEN still gates 3 Tier 1 security items; ANTHROPIC_API_KEY still gates Ask IGNIS.
+- **ETERNAL tier vocabulary** — CANON decision, requires Studio Owner. Escalation-only per CLAUDE.md.
+
+## Prior Session Intent: Session 83
 Sync the 10-item S83 Genius Hit List into TASK_BOARD + memory and implement every unblocked item at highest/optimal quality.
 
 ## Where We Left Off (Session 83)

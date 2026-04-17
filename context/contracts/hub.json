@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-04-16T23:45:15.946Z",
+  "generatedAt": "2026-04-17T00:26:54.716Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,12 +22,13 @@
     }
   },
   "pulse": {
-    "currentSession": 83,
-    "lastUpdated": "2026-04-16",
-    "currentFocus": "Session 82 closed out: 6 Genius Hit List items shipped at quality bar. CI root-cause fix migrated Lighthouse + playwright-axe to scripts/local-preview-server.mjs on 127.0.0.1:4173 — Cloudflare WAF was serving managed-challenge HTML to GitHub Actions runner IPs (that's why Lighthouse wait-on timed out and axe's --text/--bg contrast collapsed to NaN on 18 tests). Homepage noscript fallbacks + 4s JS-hydration-timeout toast completed the S80 Tier 1 partial. Hero-story contrast boosted (color var(--text), darker bg, gold strong, explicit light-mode dark-panel override). Lighthouse budgets tightened to Perf 0.85 / A11y 0.95 / BP 0.90 / SEO 0.95. will-change on forge-letter + forge-spark-burst. Keyboard-accessible mega-dropdowns via nav-toggle.js rewrite (aria-haspopup/expanded/controls, arrow-key cycling, ESC, focusout collapse); fingerprinted shell rebuilt (nav-toggle.shell-8a1b93790f.js, 76 HTML files updated).",
-    "nextMilestone": "Confirm post-push Lighthouse + playwright-axe runs are green with the new local-preview runtime and tightened budgets. If first Lighthouse run is red, iterate budget once rather than relaxing target. Then resume Tier 2 depth work: Ask IGNIS concierge, /membership/ testimonials, /social/ aggregation, Forge Feed. CF_WORKER_API_TOKEN is still the highest-leverage single blocker for Tier 1 infrastructure items.",
+    "currentSession": 85,
+    "lastUpdated": "2026-04-17",
+    "currentFocus": "Session 84 closed out: 7 S80 Tier 2/3/4 items shipped at quality bar across two `/go` rounds. Offline page redesigned (vault-forge aesthetic with SVG vault-lock sigil, Georgia SEALED wordmark, aria-live network pill). Investor action logging gated behind GDPR opt-in consent (first-login banner + profile-page toggle). /social/ dashboard page live — reads public-intelligence.social, groups handles honestly (Live / Limited / Reserved). Personalized returning-visitor welcome band on homepage reading VSIntentState (branches on journey_stage x world_affinity x trust_level). Studio nav dropdown propagated across 79 HTML files — /social/ + /press/ now first-class nav destinations. Dynamic hero spotlight between hero sub-copy and CTAs showing highest-progress SPARKED or FORGE title. PWA push opt-in prompt on /studio-pulse/ + /vault-wall/ + /changelog/ deep-linking to #push anchor in portal. Two items still HAR-deferred (unchanged from S83): Ask IGNIS (ANTHROPIC_API_KEY) + 3-item edge-gate/CSP-nonce/rate-limit bundle (CF_WORKER_API_TOKEN).",
+    "nextMilestone": "Watch first post-push Lighthouse + playwright-axe runs (now also exercising S84's 79-file nav propagation against the tightened budgets + dual-URL gate from S82/S83). Then next pickups: extract `public-intelligence.social` into the shared `website-public` contract for Studio Hub consumption (zero-risk cohesion win); ship category-aware send-push edge function + push_preferences column to close the second half of S80 Tier 4 push item. ETERNAL tier vocabulary remains a founder-only CANON decision. CF_WORKER_API_TOKEN still the highest-leverage single founder action (unlocks 3 Tier 1 items).",
     "blockers": [
-      "CF_WORKER_API_TOKEN missing — blocks edge-gating private portals, CSP nonce migration, and rate-limit/CSRF on forms (S80 Tier 1 infrastructure items)",
+      "CF_WORKER_API_TOKEN missing — blocks edge-gating private portals, CSP nonce migration, and rate-limit/CSRF on forms (3 S80 Tier 1 infrastructure items)",
+      "ANTHROPIC_API_KEY missing in Supabase edge-function secrets — blocks Ask IGNIS concierge and future AI surfaces",
       "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only"
     ],
     "queues": {
@@ -44,7 +45,14 @@
         "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
-      "shipped": []
+      "shipped": [
+        "Offline page redesign (`offline.html`, `assets/error-pages.js`) — inline-SVG vault-lock sigil with dashed-orbit pulse + gold/blue radial vignette + giant Georgia \"SEALED\" wordmark + gold \"Signal Lost\" eyebrow + aria-live `#offline-net-status` pill that flips to \"Signal restored — reopening the vault\" via `navigator.onLine` on `online` event with a 900ms reload grace. `prefers-reduced-motion` guards on pulse + dot; full light-mode override.",
+        "Investor action logging consent (GDPR) (`assets/investor-auth.js`, new `assets/investor-consent-toggle.js`, `investor-portal/profile/index.html`) — `VSInvestorAuth.logAction()` is a no-op until `vs_inv_activity_consent === 'granted'`. First-login consent banner auto-renders once; profile-page toggle lets investors change their mind anytime. New `getConsent()` + `setConsent()` API + `investor:consent-change` event. External consent-toggle script so the profile page's hashed inline-script CSP registry stays untouched. Legal basis (GDPR Art. 6(1)(a)) + audit-trail retention disclosed on the toggle card.",
+        "`/social/` dashboard page (new `social/index.html`, new `assets/social-dashboard.js`) — `/social/` consumes `public-intelligence.json.social` and renders: four-stat channel-footprint summary, featured channels (top 5), honest three-tier grouping (Live presence / Limited presence / Reserved handles — claimed handles aren't faked as active). Offline fallback points at `/contact/`, GitHub, subreddit only. propagate-csp injected the canonical CSP automatically.",
+        "Personalized returning-visitor homepage band (new `assets/home-personalized.js`, `index.html`) — layered on `VSIntentState`. Renders a welcome-back band between hero and social-proof strip for returning / logged-in / pathway-active / membership-intent visitors. Copy branches on `journey_stage` (pricing → VaultSparked, considering → membership-value, activation → finish-joining, member → vault portal, exploring → studio-pulse) and `world_affinity` (links back to last world). Dismissable (session-scoped). GA4 `personalized_welcome_shown`. Honest empty state for fresh anonymous visitors.",
+        "Studio nav dropdown propagated (`scripts/propagate-nav.mjs`, 79 HTML files) — flat \"Studio\" link replaced with a dropdown: *About · Studio Pulse · IGNIS · Vault Pipeline · Changelog · Press Kit · Social · Signal Log*. Makes `/social/` and `/press/` first-class primary-nav destinations.",
+        "Dynamic hero spotlight (new `assets/home-dynamic-hero.js`, `index.html`) — subtle gold pill between hero sub-copy and CTAs: \"🔥 Most-played right now: <game> <progress%> →\" for the highest-progress SPARKED title, falling back to \"⚒️ Hottest in the forge: <game> <progress%> →\" for the highest-progress FORGE title when nothing is sparked. Reads `public-intelligence.catalog`; routes correctly for `/games/` vs `/universe/`. Renders nothing when intelligence is down (honest empty state)."
+      ]
     },
     "ignis": {
       "score": 46489,

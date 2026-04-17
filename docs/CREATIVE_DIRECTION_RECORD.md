@@ -8,6 +8,10 @@ Boundary:
 
 ## Entries
 
+### 2026-04-17 — Session 84 closeout CDR review
+
+CDR reviewed — no new entries this session. S84 was pure execution of the S80 Tier 2/3/4 backlog: 7 items shipped at quality bar with no new creative direction given by the Studio Owner beyond the two standalone `/go` commands. Honest-voice and no-fabrication posture was preserved in-kind across every new surface (/social/ honest grouping, personalized welcome honest empty state, push prompt eligibility gating, dynamic hero honest empty state, offline "sealed" framing). No canon-affecting decisions; ETERNAL tier vocabulary was correctly held as escalation-only per CLAUDE.md.
+
 ### 2026-04-16 — Website shell must be hardened to the practical "100/100" standard, not just patched (S77)
 
 - Category: Reliability / QA / Delivery Quality

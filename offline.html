@@ -11,8 +11,8 @@
     gtag('config', 'G-RSGLPP4KDZ');
   </script>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>You're Offline — VaultSpark Studios</title>
-  <meta name="description" content="No connection detected. The vault will be waiting when you're back online." />
+  <title>Vault Sealed — VaultSpark Studios</title>
+  <meta name="description" content="The vault is sealed while your connection is down. Your progress is safe — it'll open again when the signal returns." />
   <meta name="robots" content="noindex, nofollow" />
   <meta name="theme-color" content="#000000" />
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'sha256-bL/8PICYU8gGT1wjuRN/P7+s+lryCt+83wHP4RfhYKg=' https://fjnpzjjyhnpmunfoycrp.supabase.co https://cdn.jsdelivr.net https://www.googletagmanager.com https://browser.sentry-cdn.com; style-src 'self' 'unsafe-inline'; img-src 'self' https: data:; connect-src 'self' https://fjnpzjjyhnpmunfoycrp.supabase.co https://api.github.com https://www.google-analytics.com https://o4511104924909568.ingest.us.sentry.io https://api.convertkit.com https://api.web3forms.com; font-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
@@ -30,52 +30,199 @@
 
   <style>
     .offline-page { min-height: 100vh; display: flex; flex-direction: column; }
-    .offline-hero {
+    .offline-main {
       flex: 1;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      text-align: center;
       padding: 4rem 1.5rem;
-      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
     }
-    .offline-code {
-      font-size: clamp(5rem, 18vw, 10rem);
-      font-weight: 900;
-      line-height: 1;
-      color: rgba(255,255,255,0.04);
-      letter-spacing: -0.04em;
+    .offline-main::before {
+      content: "";
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 50% 38%, rgba(255,196,0,0.08), transparent 48%),
+        radial-gradient(circle at 50% 95%, rgba(31,162,255,0.04), transparent 45%),
+        radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55) 100%);
+      pointer-events: none;
+    }
+    .offline-bg-word {
       position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(8rem, 22vw, 18rem);
+      font-weight: 700;
+      letter-spacing: -0.05em;
+      color: rgba(255,255,255,0.025);
       pointer-events: none;
       user-select: none;
+      line-height: 1;
+      white-space: nowrap;
       z-index: 0;
     }
-    .offline-icon { font-size: 3rem; margin-bottom: 0.5rem; }
-    .offline-title {
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      color: var(--text);
+    .offline-inner {
       position: relative;
       z-index: 1;
+      text-align: center;
+      max-width: 560px;
+    }
+    .offline-sigil {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,196,0,0.18) 0%, rgba(255,196,0,0.02) 70%);
+      border: 1px solid rgba(255,196,0,0.25);
+      box-shadow: 0 0 32px rgba(255,196,0,0.15), inset 0 0 20px rgba(255,196,0,0.05);
+      position: relative;
+    }
+    .offline-sigil svg { width: 34px; height: 34px; display: block; }
+    .offline-sigil::after {
+      content: "";
+      position: absolute; inset: -8px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255,196,0,0.18);
+      animation: offline-pulse 4s ease-in-out infinite;
+    }
+    @keyframes offline-pulse {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.08); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .offline-sigil::after { animation: none; }
+    }
+    .offline-code {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--gold);
+      margin-bottom: 0.9rem;
+      display: block;
+    }
+    .offline-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 5.5vw, 3.4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      margin-bottom: 1.1rem;
     }
     .offline-sub {
       font-size: 1rem;
       color: var(--muted);
-      max-width: 38ch;
       line-height: 1.65;
-      position: relative;
-      z-index: 1;
+      margin: 0 auto 1.8rem;
+      max-width: 44ch;
+    }
+    .offline-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.95rem;
+      background: rgba(255,196,0,0.05);
+      border: 1px solid rgba(255,196,0,0.18);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.8rem;
+    }
+    .offline-status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 10px rgba(255,196,0,0.6);
+      animation: offline-dot 1.6s ease-in-out infinite;
+    }
+    @keyframes offline-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .offline-status-dot { animation: none; }
     }
     .offline-actions {
       display: flex;
-      gap: 0.75rem;
-      flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
-      position: relative;
-      z-index: 1;
-      margin-top: 0.5rem;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .offline-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.85rem 1.8rem;
+      background: linear-gradient(135deg, #FFC400 0%, #FF7A00 100%);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.94rem;
+      border: 0;
+      border-radius: 999px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      box-shadow: 0 4px 20px rgba(255,196,0,0.3);
+      font-family: inherit;
+    }
+    .offline-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(255,196,0,0.45);
+    }
+    .offline-btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.85rem 1.6rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.75);
+      font-weight: 600;
+      font-size: 0.94rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: border-color 0.18s, background 0.18s, color 0.18s;
+    }
+    .offline-btn-ghost:hover {
+      border-color: rgba(255,255,255,0.25);
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+    }
+    .offline-note {
+      margin-top: 2.2rem;
+      font-size: 0.82rem;
+      color: var(--dim);
+    }
+
+    body.light-mode .offline-bg-word { color: rgba(10,13,22,0.05); }
+    body.light-mode .offline-main::before {
+      background:
+        radial-gradient(circle at 50% 38%, rgba(255,196,0,0.1), transparent 48%),
+        radial-gradient(ellipse at center, transparent 30%, rgba(246,239,229,0.4) 100%);
+    }
+    body.light-mode .offline-btn-ghost {
+      background: rgba(10,13,22,0.04);
+      border-color: rgba(10,13,22,0.12);
+      color: rgba(10,13,22,0.78);
+    }
+    body.light-mode .offline-btn-ghost:hover {
+      border-color: rgba(10,13,22,0.22);
+      background: rgba(10,13,22,0.08);
+      color: #0a0d16;
+    }
+
+    @media (max-width: 480px) {
+      .offline-actions { flex-direction: column; align-items: stretch; }
+      .offline-btn-primary, .offline-btn-ghost { text-align: center; justify-content: center; }
     }
   </style>
 <script src="/assets/analytics.js" defer></script>
@@ -92,14 +239,32 @@
     </div>
   </nav>
 
-  <main class="offline-hero" aria-labelledby="offline-heading">
-    <div class="offline-code" aria-hidden="true">✗</div>
-    <div class="offline-icon" aria-hidden="true">📡</div>
-    <h1 class="offline-title" id="offline-heading">You're Offline</h1>
-    <p class="offline-sub">No connection detected. The vault will be right here when you're back online — your progress is safe.</p>
-    <div class="offline-actions">
-      <button type="button" class="button try-again-btn">Try Again</button>
-      <a href="/" class="button-secondary" style="padding:0.7rem 1.4rem;">Back to Home</a>
+  <main class="offline-main" aria-labelledby="offline-heading">
+    <div class="offline-bg-word" aria-hidden="true">SEALED</div>
+    <div class="offline-inner">
+      <div class="offline-sigil" aria-hidden="true">
+        <svg viewBox="0 0 32 32" fill="none" stroke="#FFC400" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="7" y="13" width="18" height="14" rx="2"></rect>
+          <path d="M11 13V9a5 5 0 0 1 10 0v4"></path>
+          <circle cx="16" cy="20" r="1.6" fill="#FFC400"></circle>
+          <path d="M16 21.6v2.4"></path>
+        </svg>
+      </div>
+      <span class="offline-code">Signal Lost</span>
+      <h1 class="offline-title" id="offline-heading">The vault<br />is sealed.</h1>
+      <p class="offline-sub">
+        Your connection dropped, so the vault sealed itself shut. Your progress is safe —
+        the lock opens again the moment the signal returns.
+      </p>
+      <div class="offline-status" role="status" aria-live="polite" id="offline-net-status">
+        <span class="offline-status-dot" aria-hidden="true"></span>
+        <span id="offline-net-label">Waiting for signal</span>
+      </div>
+      <div class="offline-actions">
+        <button type="button" class="offline-btn-primary try-again-btn">Try the vault again</button>
+        <a href="/" class="offline-btn-ghost">Back to the surface</a>
+      </div>
+      <p class="offline-note">Cached surfaces you visited recently may still open while offline.</p>
     </div>
   </main>
 
@@ -108,4 +273,3 @@
 
 </body>
 </html>
-

@@ -1,6 +1,30 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-16 (Session 83 — 10-item Genius Hit List)
+Last updated: 2026-04-16 (Session 84 — 7 S80 Tier 2/3/4 items shipped across 2 `/go` rounds)
+
+## Session 84 — S80 Tier 2/3/4 execution (7 shipped)
+
+### Round 1 (4 items)
+
+- [x] **[S84][UX] Offline page redesign** — **DONE S84**: vault-forge aesthetic (inline SVG vault-lock sigil, dashed orbit, gold/blue vignette, Georgia "SEALED" wordmark, aria-live network-status pill, light-mode overrides). `error-pages.js` listens to both `online` + `offline`, 900ms reload grace. Closes S80 Tier 3 offline gap.
+- [x] **[S84][COMPLIANCE] Investor action logging consent (GDPR)** — **DONE S84**: `VSInvestorAuth.logAction()` is a no-op until `vs_inv_activity_consent=granted` via first-login banner or new profile-page toggle. External `investor-consent-toggle.js` keeps profile page's CSP hash registry intact. Legal basis disclosed (GDPR Art. 6(1)(a)). Closes S80 Tier 3 compliance item.
+- [x] **[S84][COHESION] /social/ dashboard page** — **DONE S84**: public presence map at `/social/` reading `public-intelligence.social`. Four-stat summary, featured channels, honest three-tier grouping (Live / Limited / Reserved). Offline fallback references contact/GitHub/subreddit only — nothing fabricated. Closes S80 Tier 2 cohesion item.
+- [x] **[S84][INNOVATION] Personalized returning-member homepage** — **DONE S84**: `home-personalized.js` renders welcome-back band for returning/logged-in/pathway-active visitors. Copy branches on `journey_stage × world_affinity × trust_level`. Dismissable (session scope). Honest empty state for fresh anon visitors. Closes S80 Tier 4 innovation item.
+
+### Round 2 (3 items)
+
+- [x] **[S84][COHESION] Studio nav dropdown (79 HTML files)** — **DONE S84**: `propagate-nav.mjs` turned flat "Studio" link into a dropdown: About · Studio Pulse · IGNIS · Vault Pipeline · Changelog · Press Kit · Social · Signal Log. `/social/` + `/press/` now first-class primary-nav destinations.
+- [x] **[S84][INNOVATION] Dynamic hero spotlight** — **DONE S84**: `home-dynamic-hero.js` renders a subtle gold pill between hero sub-copy and CTAs showing highest-progress SPARKED title (fallback: highest-progress FORGE title). Routes correctly for /games/ vs /universe/. Honest empty state when intelligence is down. Closes S80 Tier 4 innovation item.
+- [x] **[S84][FEATURE] PWA push opt-in surface** — **DONE S84**: `push-prompt.js` renders a blue pill on `/studio-pulse/`, `/vault-wall/`, `/changelog/` for eligible visitors only (logged in + push supported + not subscribed + not dismissed). Deep-links to new `#push` anchor on portal toggle. Self-contained CSS; suppressed on permission denied. Closes half of S80 Tier 4 push item (server-side category routing still separate scope).
+
+### S84 carry-forward
+
+- [ ] **[SIL] Watch first post-push Lighthouse run** — S82+S83+S84 combined pressure on tightened budgets + new local-preview + staging dual-URL gate. Iterate once if red.
+- [ ] **[SIL] Watch first post-push playwright-axe run** — local-preview migration path.
+- [ ] **[SIL] Push broadcast category server-side coverage** — S80 Tier 4 push item's client-side opt-in surface is shipped; server-side category routing (SPARKED drops vs leaderboard overtakes via `send-push` edge fn) remains a follow-up.
+
+---
+
 
 ## Session 83 — Genius Hit List (10 items, 8 unblocked + 2 HAR)
 
@@ -76,7 +100,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [ ] **[S80][COHESION] Unified cross-portal shell** — shared header/sidebar/nav skin across `/vault-member/`, `/investor-portal/`, `/studio-hub/`. Shared design tokens + auth-state pill.
 - [ ] **[S80][FEATURE] Member "Forge Feed"** — live activity stream on `/vault-wall/` (shipped work, journal posts, leaderboard shifts, new FORGE games).
 - [ ] **[S80][CONVERSION] Testimonials on /membership/** — member quotes, playtime stats, rank distribution visual. Biggest conversion lift available.
-- [ ] **[S80][COHESION] `/social/` dashboard page** — live aggregation of GitHub / Bluesky / Reddit / YouTube / Discord activity. Doubles as press asset.
+- [x] **[S80][COHESION] `/social/` dashboard page** — **DONE S84**: `/social/` live with summary + featured + Live/Limited/Reserved tiers reading public-intelligence.social. Honest grouping; no fake activity.
 - [ ] **[S80][FEATURE] Leaderboard schema + seasons + rivals** — JSON-LD, season countdowns, "nearest rival" callout. Retention hook.
 - [ ] **[S80][BRAND] Resolve ETERNAL tier vocabulary** — either fold into SPARKED or document as 4th canonical state (CANON decision).
 
@@ -87,19 +111,19 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **[S80][SEO] Sitemap changefreq segmentation** — journal entries `never`, game catalog `daily`, legal pages `yearly`; add `datePublished` to VideoGame JSON-LD; journal entries → `schema:Article`.
 - [ ] **[S80][BRAND] Typography unify** — Georgia serif for H1/H2 across journal + games + studio (currently drifts to sans).
 - [ ] **[S80][UX] Tablet breakpoint (768–1024px)** — membership tiers (2-col) + investor KPI grid (2-col).
-- [ ] **[S80][UX] Offline page redesign** — vault/forge aesthetic (vignette + gold accent), replace generic 📡.
-- [ ] **[S80][COMPLIANCE] Investor action logging consent** — explicit checkbox before enabling `investorAuth.logAction()` calls (GDPR).
+- [x] **[S80][UX] Offline page redesign** — **DONE S84**: vault-forge aesthetic with SVG vault-lock sigil, Georgia SEALED wordmark, aria-live network pill.
+- [x] **[S80][COMPLIANCE] Investor action logging consent** — **DONE S84**: explicit opt-in banner + profile toggle; `logAction()` is no-op until granted. GDPR Art. 6(1)(a) disclosed.
 - [x] **[S80][SEO] robots.txt cleanup** — remove misleading "Cloudflare AI Labyrinth" comment.
 
 ### Tier 4 — Innovation moonshots
 
 - [ ] **[SIL] Ask IGNIS concierge** — Claude-powered public chat widget answering "which game?" / "what's new?" / "what's Vault?". Rate-limited via existing Supabase edge function pattern; uses public-intelligence.json as context. High probability (1-session scope).
 - [ ] **[SIL] Unified cross-portal shell** — extract shared header/sidebar design tokens into `assets/portal-shell.css`, consume across `/vault-member/`, `/investor-portal/`, `/studio-hub/`. Pure design refactor, no auth changes.
-- [ ] **[S80][INNOVATION] Dynamic hero** — swap to most-active game's art + live session count.
-- [ ] **[S80][INNOVATION] Personalized returning-member homepage** — based on last-played game, unread journal, rank progress.
+- [x] **[S80][INNOVATION] Dynamic hero** — **DONE S84**: `home-dynamic-hero.js` reads catalog + renders most-active-game spotlight between hero sub-copy and CTAs.
+- [x] **[S80][INNOVATION] Personalized returning-member homepage** — **DONE S84**: `home-personalized.js` reads VSIntentState + branches on journey_stage × world_affinity × trust_level.
 - [ ] **[S80][INNOVATION] Studio Time Machine** — scrub changelog visually to see studio evolution month-by-month.
 - [ ] **[S80][AI] Investor AI Q&A** — Claude + retrieval over approved investor docs. Replaces half the "Ask the Founders" queue.
-- [ ] **[S80][FEATURE] PWA push for SPARKED drops + leaderboard overtakes** — opt-in, Vault-members only.
+- [~] **[S80][FEATURE] PWA push for SPARKED drops + leaderboard overtakes** — **PARTIAL S84**: client-side opt-in surface shipped on /studio-pulse/ + /vault-wall/ + /changelog/ (eligible-visitors only, honest gating). Server-side category routing for SPARKED-drops vs leaderboard-overtakes broadcasts still pending in `send-push` edge function.
 
 ---
 

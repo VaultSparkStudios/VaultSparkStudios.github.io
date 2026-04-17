@@ -1,5 +1,27 @@
 # Work Log
 
+## 2026-04-16 — Session 84 (S80 Tier 2/3/4 — 7 shipped across 2 `/go` rounds)
+
+- offline.html (rewritten): vault-forge aesthetic — inline-SVG vault-lock sigil with dashed-orbit pulse, gold+blue radial vignette, Georgia "SEALED" wordmark (clamp 8rem-18rem), aria-live `#offline-net-status` pill, light-mode overrides. Replaces generic 📡 + "You're Offline" with "The vault is sealed." + Signal Lost eyebrow. prefers-reduced-motion guards on pulse + dot.
+- assets/error-pages.js (extended): offline branch now listens to both `online` + `offline`, reads `navigator.onLine`, updates label in #offline-net-label, and reloads with 900ms grace when signal returns rather than instant refresh.
+- assets/investor-auth.js (extended): logAction() is no-op until hasLoggingConsent() — gated on vs_inv_activity_consent localStorage key. First-login banner (renderConsentBanner) auto-shows when consent unset. getConsent()/setConsent() API + investor:consent-change event.
+- assets/investor-consent-toggle.js (new): external script that renders the profile-page consent card (keeps hashed inline-script CSP on profile page untouched). Reads current state, renders Keep/Turn-On or Turn-Off/Keep-Off buttons, discloses GDPR Art. 6(1)(a) legal basis + audit-trail retention.
+- investor-portal/profile/index.html: linked investor-consent-toggle.js (defer), added #inv-consent-toggle mount before Recent Activity block.
+- social/index.html (new): public social-presence dashboard at /social/. Mirrors press-page shell structure; hero + four-stat summary + featured channels + Live/Limited/Reserved grouped tile grids + "Last synced" generated-at stamp. Honest offline fallback section.
+- assets/social-dashboard.js (new): fetches /api/public-intelligence.json, renders summary + featured + three-tier groups. Per-platform glyphs + colours. Honest empty state + offline block.
+- assets/home-personalized.js (new): reads VSIntentState and renders #home-personalized-welcome band for returning/logged-in/pathway-active/intent-active visitors. Copy branches on journey_stage (pricing→vaultsparked, considering→membership-value, activation→finish joining, member→vault portal, exploring→studio-pulse) × world_affinity (links to last world). Dismissable via vs_home_return_dismissed sessionStorage. GA4 personalized_welcome_shown.
+- index.html: added #home-personalized-welcome mount between hero section and #vault-proof; +80 lines of CSS for .home-return-band (+ light-mode overrides); wired /assets/home-personalized.js (defer).
+- scripts/propagate-nav.mjs (edited): flat Studio nav link → dropdown (About · Studio Pulse · IGNIS · Vault Pipeline · Changelog · Press Kit · Social · Signal Log). Ran node scripts/propagate-nav.mjs — 79 HTML files updated.
+- assets/home-dynamic-hero.js (new): reads public-intelligence.catalog; renders gold pill between hero sub-copy and CTAs. Preference order: highest-progress SPARKED → highest-progress FORGE. Routes /games/<slug>/ vs /universe/<slug>/. GA4 home_dynamic_spotlight_shown + _click.
+- index.html: added #home-dynamic-spotlight mount before .hero-actions; +40 lines CSS (.home-spotlight suite); wired home-dynamic-hero.js (defer).
+- assets/push-prompt.js (new): standalone opt-in surface. Checks Supabase session token directly (fallback when VSIntentState absent) + PushManager support + existing subscription + Notification.permission + vs_push_prompt_dismissed. Injects self-contained styles once. Dismiss button persists to localStorage. Deep-link to /vault-member/#push.
+- studio-pulse/index.html + vault-wall/index.html + changelog/index.html: added #vs-push-prompt-root mount at top of <main>; linked push-prompt.js (defer).
+- vault-member/index.html: added id="push" to the Enable Push Notifications block so the deep-link from push-prompt lands correctly.
+- scripts/propagate-csp.mjs: 1 updated (social/index.html ← canonical CSP).
+- scripts/build-shell-assets.mjs: regenerated — shell hashes unchanged (1b62491f6c-14e2419e21-8a1b93790f-0995bd7945). Public intelligence regenerated cleanly.
+- Verification: build:check ✓; csp-audit ✓ (95 files, up from 94); node --check on all 7 new/changed JS assets ✓; propagate-nav 79/85 updated cleanly.
+- Memory: no new pattern-level entries (individual items, no recurring cross-item pattern worth saving).
+
 ## 2026-04-16 — Session 83 (10-item Genius Hit List — 8 shipped, 2 HAR-deferred)
 
 - assets/portal-shell.css (new): shared portal design tokens (surface, border, accent, shadow, focus-ring) + primitive classes (.portal-card, .portal-pill, .portal-stat, .portal-section-title, .portal-divider, .portal-grid-2/3/4/auto) + canonical tablet breakpoint. Linked from /vault-member/, /investor-portal/, /studio-hub/.

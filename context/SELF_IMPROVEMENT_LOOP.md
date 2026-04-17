@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ██▇▇█
-Avgs — 3: 478.7 | 5: 478.4 | 10: 452.3 | 25: 436.8 | all: 438.2
-  └ 3-session: Dev 95.7 | Align 93.3 | Momentum 95.7 | Engage 93.3 | Process 99.0
-Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
+Sparkline (last 5 totals): █▇▇██
+Avgs — 3: 478.0 | 5: 478.4 | 10: 455.1 | 25: 438.2 | all: 439.8
+  └ 3-session: Dev 96.3 | Align 93.0 | Momentum 95.7 | Engage 94.0 | Process 98.7
+Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
 Momentum runway: ~4.0 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-16 | Session 83 | Total: 478/500 | Velocity: 8 | protocolVelocity: 8
+Last session: 2026-04-16 | Session 84 | Total: 479/500 | Velocity: 7 | protocolVelocity: 7
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,33 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-16 — Session 84 | Total: 479/500 | Velocity: 7 | Debt: →
+Avgs — 3: 478.0 | 5: 478.4 | 10: 455.1 | 25: 438.2 | all: 439.8
+  └ 3-session: Dev 96.3 | Align 93.0 | Momentum 95.7 | Engage 94.0 | Process 98.7
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 96 | ↓1 | 7 items across 2 `/go` rounds with zero new debt; all new JS syntax-checked; build:check + csp-audit green (95 files, +1 from new /social/). Investor consent path uses external script to avoid CSP hash churn on profile page. Slight hold-back: nav change propagated across 79 HTML files in one commit — blast radius is correct but visible, and first post-push will test it under the S82/S83 dual-URL Lighthouse gate for the first time. |
+| Creative Alignment | 93 | → | Honest-voice fidelity on every new surface: `/social/` labels reserved handles as reserved (doesn't fake activity); dynamic hero renders nothing when intelligence is down; personalized welcome shows nothing for fresh anonymous visitors; push prompt suppresses on permission denial; offline page says "sealed" instead of "error." Investor GDPR consent is a trust-forward move that matches the studio's no-dark-patterns posture. No new creative direction — pure execution of the S80 backlog. |
+| Momentum | 96 | ↑1 | 7 items shipped in one session across 2 `/go` rounds, 0 new blockers, intent fully achieved. Velocity 7 (down from S83's 8) but each item was a full feature, not a polish pass. 3 S80 items + 1 Tier 3 + 1 Tier 4 + 2 Tier 2 all closed. ETERNAL + Studio Time Machine legitimately out-of-scope (CANON decision + scope cap), not skipped. |
+| Engagement | 95 | ↑1 | Three new public-facing surfaces (/social/, dynamic hero spotlight, push opt-in prompt) + one portal surface (investor GDPR consent) + discoverability upgrade (nav dropdown makes /social/ + /press/ reachable in two clicks from anywhere). Personalized welcome band is the first surface that actually changes based on returning vs new — a genuine engagement delta. |
+| Process Quality | 98 | ↓1 | Canonical write-back in order; memory untouched (no new pattern worth saving); propagate-csp + propagate-nav + build:check discipline preserved. Docked: closeout-autopilot script is not installed in this repo, so §3.7-§3.9 (state vector / doctor / entropy / genome / pre-push secrets scan) run as manual steps — fallback acceptable per protocol but not automated. |
+| **Total** | **479/500** | ↑1 | |
+
+**Top win:** Two `/go` rounds in one session without quality drift. Round 1 shipped 4 items at full depth (new page, new JS, new consent infra, new homepage layer); Round 2 added 3 more (nav rewrite, dynamic hero, push opt-in surface) without breaking the shell or CSP. The /social/ page is particularly strong — it consumes the already-generated public-intelligence contract without inventing new state, and groups handles honestly (reserved vs live) instead of padding the surface area.
+
+**Top gap:** Server-side push broadcast category routing. S84 closes half of S80 Tier 4 push item by shipping the client-side opt-in prompt on three content pages + anchor on the portal toggle, but `send-push` edge function still sends single-category broadcasts. Full category routing (SPARKED drops vs leaderboard overtakes) is a separate server-side sprint item that needs Supabase edge-function work + a `push_preferences` column.
+
+**Intent outcome:** Achieved — 7 items at quality bar spanning 4 of 4 open S80 Tier 2/3/4 categories (cohesion, innovation, compliance, feature). 2 HAR-blocked items unchanged; ETERNAL vocab correctly escalated-not-implemented per CLAUDE.md CANON rule.
+
+**Brainstorm** *(2 items — next-sprint candidates)*
+1. **Extend `public-intelligence.json.social` into the shared `website-public` contract + Studio Hub consumer** — right now the /social/ page is the only consumer of the social payload. Making it part of the shared contract lets Studio Hub + social-dashboard render the same presence map. Probability: **High** — zero runtime risk, pure contract extraction.
+2. **Ship category-aware `send-push` edge function + `push_preferences` Supabase column** — closes the second half of S80 Tier 4 push item. Backend path: add `push_preferences` JSONB column to `vault_members`, update `send-push` to filter by category, update `toggle-push` UI in portal to expose per-category checkboxes. Probability: **Medium** — three coupled changes across client + RPC + edge function.
+
+**Committed to TASK_BOARD:** 3 S84 carry-forward `[SIL]` items (Lighthouse + playwright-axe watch, push category server-side follow-up); all 2 HAR-deferred items unchanged.
+
+---
 
 ## 2026-04-16 — Session 83 | Total: 478/500 | Velocity: 8 | Debt: →
 Avgs — 3: 478.7 | 5: 478.4 | 10: 452.3 | 25: 436.8 | all: 438.2

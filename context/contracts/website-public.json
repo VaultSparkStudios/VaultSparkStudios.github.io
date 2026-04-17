@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-04-16T23:45:15.946Z",
+  "generatedAt": "2026-04-17T00:26:54.716Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 83,
-    "currentFocus": "Session 82 closed out: 6 Genius Hit List items shipped at quality bar. CI root-cause fix migrated Lighthouse + playwright-axe to scripts/local-preview-server.mjs on 127.0.0.1:4173 — Cloudflare WAF was serving managed-challenge HTML to GitHub Actions runner IPs (that's why Lighthouse wait-on timed out and axe's --text/--bg contrast collapsed to NaN on 18 tests). Homepage noscript fallbacks + 4s JS-hydration-timeout toast completed the S80 Tier 1 partial. Hero-story contrast boosted (color var(--text), darker bg, gold strong, explicit light-mode dark-panel override). Lighthouse budgets tightened to Perf 0.85 / A11y 0.95 / BP 0.90 / SEO 0.95. will-change on forge-letter + forge-spark-burst. Keyboard-accessible mega-dropdowns via nav-toggle.js rewrite (aria-haspopup/expanded/controls, arrow-key cycling, ESC, focusout collapse); fingerprinted shell rebuilt (nav-toggle.shell-8a1b93790f.js, 76 HTML files updated).",
-    "nextMilestone": "Confirm post-push Lighthouse + playwright-axe runs are green with the new local-preview runtime and tightened budgets. If first Lighthouse run is red, iterate budget once rather than relaxing target. Then resume Tier 2 depth work: Ask IGNIS concierge, /membership/ testimonials, /social/ aggregation, Forge Feed. CF_WORKER_API_TOKEN is still the highest-leverage single blocker for Tier 1 infrastructure items.",
+    "currentSession": 85,
+    "currentFocus": "Session 84 closed out: 7 S80 Tier 2/3/4 items shipped at quality bar across two `/go` rounds. Offline page redesigned (vault-forge aesthetic with SVG vault-lock sigil, Georgia SEALED wordmark, aria-live network pill). Investor action logging gated behind GDPR opt-in consent (first-login banner + profile-page toggle). /social/ dashboard page live — reads public-intelligence.social, groups handles honestly (Live / Limited / Reserved). Personalized returning-visitor welcome band on homepage reading VSIntentState (branches on journey_stage x world_affinity x trust_level). Studio nav dropdown propagated across 79 HTML files — /social/ + /press/ now first-class nav destinations. Dynamic hero spotlight between hero sub-copy and CTAs showing highest-progress SPARKED or FORGE title. PWA push opt-in prompt on /studio-pulse/ + /vault-wall/ + /changelog/ deep-linking to #push anchor in portal. Two items still HAR-deferred (unchanged from S83): Ask IGNIS (ANTHROPIC_API_KEY) + 3-item edge-gate/CSP-nonce/rate-limit bundle (CF_WORKER_API_TOKEN).",
+    "nextMilestone": "Watch first post-push Lighthouse + playwright-axe runs (now also exercising S84's 79-file nav propagation against the tightened budgets + dual-URL gate from S82/S83). Then next pickups: extract `public-intelligence.social` into the shared `website-public` contract for Studio Hub consumption (zero-risk cohesion win); ship category-aware send-push edge function + push_preferences column to close the second half of S80 Tier 4 push item. ETERNAL tier vocabulary remains a founder-only CANON decision. CF_WORKER_API_TOKEN still the highest-leverage single founder action (unlocks 3 Tier 1 items).",
     "pulseKeys": [
       "now",
       "next",

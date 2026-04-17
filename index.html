@@ -238,6 +238,114 @@
     }
     body.light-mode .hero-story strong { color: #FFC400; }
 
+    /* Dynamic hero spotlight — inline badge between sub copy and CTAs */
+    .home-spotlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.45rem 0.95rem 0.45rem 0.8rem;
+      margin: 0.6rem 0 0.2rem;
+      border-radius: 999px;
+      background: rgba(255,196,0,0.05);
+      border: 1px solid rgba(255,196,0,0.2);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: background 0.18s, border-color 0.18s, transform 0.18s;
+    }
+    .home-spotlight:hover {
+      background: rgba(255,196,0,0.08);
+      border-color: rgba(255,196,0,0.36);
+      transform: translateY(-1px);
+    }
+    .home-spotlight-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .home-spotlight-name { font-weight: 700; color: var(--text); }
+    .home-spotlight-progress {
+      font-variant-numeric: tabular-nums;
+      font-size: 0.78rem;
+      color: var(--muted);
+      padding: 0.15rem 0.5rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+    }
+    .home-spotlight-caret { color: var(--gold); font-weight: 700; }
+    body.light-mode .home-spotlight-progress {
+      border-color: rgba(10,13,22,0.18);
+    }
+
+    /* Personalized welcome-back band (hydrates only for returning visitors) */
+    .home-return-band {
+      border-top: 1px solid rgba(255,196,0,0.14);
+      border-bottom: 1px solid rgba(255,196,0,0.14);
+      background: linear-gradient(90deg, rgba(255,196,0,0.05), rgba(31,162,255,0.04));
+      padding: 0.9rem 0;
+    }
+    .home-return-inner {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .home-return-eyebrow {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .home-return-line {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .home-return-line a { color: var(--gold); }
+    .home-return-line strong { color: var(--text); font-weight: 700; }
+    .home-return-actions { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+    .home-return-cta {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #FFC400, #FF7A00);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.86rem;
+      text-decoration: none;
+      transition: transform 0.18s, box-shadow 0.18s;
+      box-shadow: 0 4px 16px rgba(255,196,0,0.22);
+    }
+    .home-return-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(255,196,0,0.32); }
+    .home-return-dismiss {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: color 0.18s, border-color 0.18s;
+    }
+    .home-return-dismiss:hover { color: var(--text); border-color: rgba(255,255,255,0.28); }
+    body.light-mode .home-return-dismiss {
+      border-color: rgba(10,13,22,0.16);
+      color: rgba(10,13,22,0.7);
+    }
+    body.light-mode .home-return-dismiss:hover { color: #0a0d16; border-color: rgba(10,13,22,0.3); }
+    @media (max-width: 640px) {
+      .home-return-inner { flex-direction: column; align-items: flex-start; }
+    }
+
     /* ── Forge Spark Burst — ignition point that blooms then fades ── */
     .forge-spark-burst {
       position: absolute;
@@ -849,8 +957,7 @@
         <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/promogrind/">PromoGrind</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">Canon</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/ideaforge/">IdeaForge</a></div></div>
         <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/">About Membership</a><a href="/vaultsparked/">Choose Your Tier</a><a href="/membership-value/">Value Breakdown</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#FFC400;">Member Area</span><a href="/vault-member/">Vault Portal</a><a href="/vault-wall/">Vault Wall</a><a href="/invite/">Refer a Friend</a></div></div>
         <a href="/universe/">Universe</a>
-        <a href="/studio/">Studio</a>
-        <a href="/journal/">Signal Log</a>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/studio-pulse/">Studio Pulse</a><a href="/ignis/">IGNIS</a><a href="/roadmap/">Vault Pipeline</a><a href="/changelog/">Changelog</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/social/">Social</a><a href="/journal/">Signal Log</a></div></div>
         <a href="/contact/">Contact</a>
 
         <div class="mobile-nav-footer">
@@ -912,6 +1019,9 @@
           One vault — yours to enter.
         </p>
 
+        <!-- 4b. Dynamic spotlight (JS-only; honest empty state when intelligence is down) -->
+        <div id="home-dynamic-spotlight" class="hero-reveal" style="--reveal-delay:1.74s" aria-live="polite"></div>
+
         <!-- 5. CTAs -->
         <div class="hero-actions hero-reveal" style="--reveal-delay:1.8s">
           <a class="button" href="/games/" data-track-event="home_hero_games_click">Explore Our Games</a>
@@ -948,6 +1058,9 @@
         </div>
       </div>
     </section>
+
+    <!-- ── Personalized welcome-back band (JS only for returning visitors) ─── -->
+    <div id="home-personalized-welcome" aria-live="polite"></div>
 
     <!-- ── Social Proof Strip ───────────────────────────── -->
     <section id="vault-proof" data-reveal="fade-up" aria-label="Vault community stats" aria-live="polite" aria-atomic="false" style="padding:2rem 0;border-top:1px solid rgba(255,255,255,0.06);background:linear-gradient(90deg,rgba(31,162,255,0.02),transparent 50%,rgba(255,196,0,0.02));">
@@ -1901,6 +2014,8 @@
   <script src="/assets/micro-feedback.js" defer></script>
   <script src="/assets/recent-ships.js" defer></script>
   <script src="/assets/home-intelligence.js" defer></script>
+  <script src="/assets/home-personalized.js" defer></script>
+  <script src="/assets/home-dynamic-hero.js" defer></script>
   <script src="/assets/cookie-consent.js" defer></script>
   <script src="/assets/pwa-install.js" defer></script>
   <script src="/assets/nav-toggle.shell-8a1b93790f.js" defer></script>
