@@ -1,5 +1,26 @@
 # Work Log
 
+## 2026-04-18 — Session 92 addendum (Studio OS runtime scripts)
+
+**Intent:** "get those scripts in it now." **Intent: achieved** — local Studio OS runtime scripts are installed and validated.
+
+**Velocity: 1 runtime pack.** Added `scripts/ops.mjs`, `scripts/ops/index.mjs`, start/closeout/security/maintenance runtime scripts, and supporting `scripts/lib/*.mjs` helpers. The local command surface intentionally exposes only 21 commands that exist in this repo.
+
+**Runtime fixes:**
+- `scan-secrets` is side-effect-free by default; `portfolio/ACCESS_LEDGER.ndjson` logging is opt-in via `STUDIO_ACCESS_LEDGER=1`.
+- `scan-secrets --all` allowlists generated CSP/npm integrity hashes and public Supabase publishable/anon credentials while still scanning source for real secret patterns.
+- `render-startup-brief.mjs --stdout` now renders without writing `docs/STARTUP_BRIEF.md`, matching the dispatcher help text.
+- `run-doctor.mjs` now treats this repo's green `GENOME_HISTORY.json` and v3.3 prompts correctly; portfolio-derived checks remain advisory.
+
+**Verification:**
+- `npm run build:check` passed
+- `node scripts/csp-audit.mjs` passed
+- `node scripts/scan-secrets.mjs --all --json` passed with 0 findings
+- `node scripts/ops.mjs doctor --json` passed overall with 0 blocking failures
+- Exact command smoke tests passed for session-mode JSON, startup-brief stdout, closeout-summary dry-run JSON, blocker-preflight JSON, check-secrets audit JSON, and context-meter JSON
+
+---
+
 ## 2026-04-17 — Session 90 (DX tooling + founder-action sweep)
 
 **Intent:** Directed /go → DX sprint, then "do all founder items with elevated access." **Intent: exceeded** — all automatable founder items cleared plus 3 DX quality items shipped.

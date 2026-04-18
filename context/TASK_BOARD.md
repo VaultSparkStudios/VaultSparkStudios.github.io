@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-04-17 (Session 91 closeout — membership value cleanup shipped)
+Last updated: 2026-04-18 (Session 92 addendum — Studio OS runtime scripts installed)
 
 ## Now (Session 91 pre-load)
 
@@ -11,6 +11,10 @@ Last updated: 2026-04-17 (Session 91 closeout — membership value cleanup shipp
 ## Session 91 — membership value public cleanup
 
 - [x] **[S91][PUBLIC-COPY] Membership value page public-safe cleanup** — **DONE S91**: `/membership-value/` no longer shows "Proposed pricing innovations" or internal pricing/revenue rationale; section now presents live annual options. Eternal/Elite membership copy and entitlement configs no longer include Founder video updates. `/vaultsparked/` Eternal beta-build copy no longer says "internal development builds." Verification: `npm run build:check`, `npm run smoke:http`, `node scripts/csp-audit.mjs`, and touched JS syntax checks passed.
+
+## Session 92 addendum — Studio OS runtime scripts
+
+- [x] **[S92][STUDIO-OS] Install local runtime script pack** — **DONE S92**: added the website-local `scripts/ops.mjs` dispatcher plus protocol-required start/closeout runtime scripts and supporting libs. `ops.mjs help` now exposes a truthful 21-command surface for session, closeout, security, and maintenance commands present in this repo. `scan-secrets` is side-effect-free by default and repo-aware for generated hashes/public Supabase client tokens. Verification: `npm run build:check`, `node scripts/csp-audit.mjs`, `node scripts/scan-secrets.mjs --all --json`, `node scripts/ops.mjs doctor --json`, and exact command smoke tests passed.
 
 ## Session 90 — DX tooling + founder-action sweep (7 items)
 

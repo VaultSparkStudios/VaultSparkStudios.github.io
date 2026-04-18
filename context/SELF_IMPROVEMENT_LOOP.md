@@ -35,6 +35,18 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 
 ## Entries (append-only below this line)
 
+## 2026-04-18 — Session 92 addendum | Runtime tooling restore
+
+**Outcome:** Closed the S91 process gap by installing the website-local Studio OS runtime script pack: `scripts/ops.mjs`, start/closeout command scripts, supporting libs, and a truthful 21-command local registry.
+
+**Quality note:** `scan-secrets` was adjusted for this public website repo so repo-wide scans stay clean on generated CSP/npm hashes and public Supabase client credentials while remaining side-effect-free by default. `doctor` now reports no blocking local failures; remaining failures are advisory portfolio-derived checks.
+
+**Verification:** `npm run build:check`, `node scripts/csp-audit.mjs`, `node scripts/scan-secrets.mjs --all --json`, `node scripts/ops.mjs doctor --json`, and exact start/closeout command smoke tests passed.
+
+**Committed to TASK_BOARD:** [S92][STUDIO-OS] Install local runtime script pack
+
+---
+
 ## 2026-04-17 — Session 91 | Total: 470/500 | Velocity: 1 | Debt: →
 Avgs — 3: 472.3 | 5: 474.2 | 10: 478.1 | 25: 456.6 | all: 442.2
   └ 3-session: Dev 96.7 | Align 95.3 | Momentum 94.7 | Engage 90.7 | Process 95.0
