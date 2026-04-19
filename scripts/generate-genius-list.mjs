@@ -4,6 +4,7 @@ import { join } from 'node:path';
 
 const root = process.cwd();
 const outPath = join(root, 'docs', 'GENIUS_LIST.md');
+const args = new Set(process.argv.slice(2));
 
 function read(relativePath, fallback = '') {
   const fullPath = join(root, relativePath);
@@ -37,6 +38,97 @@ function isStaleMonitoringItem(task) {
   );
 }
 
+function hasDoneEvidence(taskBoard, pattern) {
+  return taskBoard
+    .split(/\r?\n/)
+    .some((line) => /^- \[x\]/i.test(line) && pattern.test(line));
+}
+
+function isResolvedCarryForward(task, taskBoard) {
+  const lower = task.toLowerCase();
+
+  if (
+    lower.includes('cf_worker_api_token') &&
+    hasDoneEvidence(taskBoard, /CF_WORKER_API_TOKEN[\s\S]*DONE/i)
+  ) {
+    return true;
+  }
+
+  if (
+    (/annual stripe price|annual stripe checkout routing|annual stripe activation|annual placeholder|yearly price ids/i.test(task)) &&
+    hasDoneEvidence(taskBoard, /Annual Stripe prices[\s\S]*DONE|Activate annual checkout[\s\S]*DONE/i)
+  ) {
+    return true;
+  }
+
+  if (
+    /ask ignis.*concierge|claude-powered public chat widget/i.test(task) &&
+    hasDoneEvidence(taskBoard, /Ask IGNIS edge function[\s\S]*DONE/i)
+  ) {
+    return true;
+  }
+
+  if (
+    /extend proof\/depth beyond the three core pages/i.test(task) &&
+    hasDoneEvidence(taskBoard, /Extend proof\/depth to join\/invite[\s\S]*DONE/i)
+  ) {
+    return true;
+  }
+
+  if (
+    /genius hit list as scheduled audit/i.test(task) &&
+    hasDoneEvidence(taskBoard, /Genius Hit List scheduled audit generator[\s\S]*DONE/i)
+  ) {
+    return true;
+  }
+
+  if (
+    /extend gravity onto the \/games\/ and \/universe\/ hubs/i.test(task) &&
+    hasDoneEvidence(taskBoard, /Extend gravity onto the `?\/games\/`? and `?\/universe\/`? hubs[\s\S]*DONE/i)
+  ) {
+    return true;
+  }
+
+  if (
+    /strip dead intel-\* references in home-intelligence\.js/i.test(task) &&
+    hasDoneEvidence(taskBoard, /Strip dead intel-\* refs in home-intelligence\.js[\s\S]*DONE/i)
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
+function canonicalTaskKey(task) {
+  const lower = task.toLowerCase();
+
+  if (/forge window|studio pulse/.test(lower) && /rename|nav|decision|founder decision/.test(lower)) {
+    return 'forge-window-nav-naming';
+  }
+
+  if (/cloudflare waf|waf js challenge|cn\/ru\/hk/.test(lower)) {
+    return 'cloudflare-waf-cn-ru-hk';
+  }
+
+  if (/revoke compromised classic pat|github\.com\/settings\/tokens/.test(lower)) {
+    return 'revoke-compromised-classic-pat';
+  }
+
+  if (/cf_worker_api_token|workers kv storage:edit|zone:workers routes:edit|cloudflare_api_token/.test(lower)) {
+    return 'cloudflare-worker-token-scope';
+  }
+
+  if (/annual stripe checkout routing|verify annual checkout end-to-end|annual billing toggle/.test(lower)) {
+    return 'annual-checkout-route-verification';
+  }
+
+  return task
+    .replace(/\[[^\]]+\]/g, '')
+    .replace(/\s+—.*$/, '')
+    .toLowerCase()
+    .trim();
+}
+
 function openTasks(taskBoard, { ciGreen = false } = {}) {
   const seen = new Set();
   return taskBoard
@@ -46,11 +138,8 @@ function openTasks(taskBoard, { ciGreen = false } = {}) {
     .filter(Boolean)
     .filter((task) => {
       if (ciGreen && isStaleMonitoringItem(task)) return false;
-      const key = task
-        .replace(/\[[^\]]+\]/g, '')
-        .replace(/\s+—.*$/, '')
-        .toLowerCase()
-        .trim();
+      if (isResolvedCarryForward(task, taskBoard)) return false;
+      const key = canonicalTaskKey(task);
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
@@ -214,4 +303,21 @@ items.map((item, index) => `${index + 1}. ${item.title}`).join('\n') +
   : `Finish the top VERIFY item first, then rerun this generator so the list reflects the newly cleared gate.\n`);
 
 writeFileSync(outPath, body, 'utf8');
-console.log(`Wrote ${outPath}`);
+if (args.has('--json')) {
+  console.log(JSON.stringify({
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    project: status.name || 'VaultSparkStudios.github.io',
+    source: 'deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md',
+    ignisSource: 'fallback',
+    scoreSummary: {
+      overallOpportunityPressure: avg,
+      health: status.health || 'unknown',
+      silScore: status.silScore || null,
+      ciHealth: ciGreen ? 'all-green' : 'check gh run list'
+    },
+    items
+  }, null, 2));
+} else {
+  console.log(`Wrote ${outPath}`);
+}

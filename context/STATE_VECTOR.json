@@ -1,44 +1,44 @@
 {
   "vectorVersion": "1.0",
-  "generatedAt": "2026-04-17",
-  "generatedAtMs": 1776409768304,
-  "session": 89,
-  "vectorHash": "b9faed2ac261c0a8",
-  "silTotal": 478,
-  "silAvg3": 479.3,
-  "velocity": 7,
-  "debt": "↓",
-  "runway": "~0.4 sessions",
+  "generatedAt": "2026-04-18",
+  "generatedAtMs": 1776505861977,
+  "session": 92,
+  "vectorHash": "8f91a6858a867910",
+  "silTotal": 486,
+  "silAvg3": 474,
+  "velocity": 8,
+  "debt": "→",
+  "runway": "~0.6 sessions",
   "intentRate": "100% (last 5)",
   "openNow": 3,
-  "openNext": 4,
+  "openNext": 3,
   "openBlocked": 0,
   "topNow": [
-    "**[S89][VERIFY] Confirm post-push CI recovery** — check GitHub Actions for Light",
-    "**[SIL] CI result ingestion for Genius List** — rerun `npm run genius:list` afte",
-    "**[SIL] Social Dashboard bidirectional mirror** — implement the cross-repo norma"
+    "**[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-",
+    "**[FOLLOWUP] Forge Window nav rename** — rename \"Studio Pulse\" nav label to \"For",
+    "**[FOLLOWUP] Verify annual checkout end-to-end** — test the annual billing toggl"
   ],
   "topNext": [
     "**[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages** — carry ",
-    "**[GENIUS][COHESION] Extend gravity onto the `/games/` and `/universe/` hubs** —",
-    "**[OPS] Annual Stripe activation once keys exist** — replace the annual placehol"
+    "**[OPS] Annual Stripe activation once keys exist** — replace the annual placehol",
+    "**[OPS] CF Worker automation unblock** — add `CF_WORKER_API_TOKEN` so Worker dep"
   ],
   "health": "green",
   "truthStatus": "green",
   "genome": null,
   "ignisScore": 46489,
   "ignisGrade": "FORGE",
-  "ignisAgeDays": 2,
+  "ignisAgeDays": 3,
   "name": "VaultSparkStudios.github.io",
   "slug": "vaultsparkstudios-website",
   "type": "website",
   "lifecycle": "deployed",
-  "nextMilestone": "Post-push GitHub Actions confirmation for the CI recovery wave: Lighthouse, Accessibility Audit, and E2E should be rechecked after publish. Founder actions outstanding: (1) revoke compromised classic PAT at github.com/settings/tokens. (2) Add Workers KV Storage:Edit + Zone:Workers Routes:Edit to scoped CLOUDFLARE_API_TOKEN. (3) Create annual Stripe price IDs before annual checkout activation. Agent-doable next: confirm CI, rerun npm run genius:list after CI status changes, Social Dashboard bidirectional mirror (cross-repo), and nav rename decision Studio Pulse -> Forge Window if founder signs off.",
-  "currentFocus": "Session 88 closed: Genius/verification wave implemented against the S87 CI failures. E2E browser gates now run against local preview (scripts/local-preview-server.mjs at 127.0.0.1:4173) instead of Cloudflare-fronted production, removing the GitHub Actions managed-challenge failure class. Shared footer contrast and labeled-container ARIA roles were hardened; canonical footer template propagated; shell regenerated to assets/style.shell-93fad06736.css with sw.js/cache manifest updated. Scheduled Genius refresh now exists via scripts/generate-genius-list.mjs and npm run genius:list; docs/GENIUS_LIST.md has been regenerated from current repo truth. Non-browser verification is green: build:check, csp-audit, propagate-nav syntax, JSON parse, diff whitespace, and local preview HTTP smoke.",
-  "lastShipped": "7 improvements across 4 groups — CI route recovery, accessibility hardening, shell/intelligence regeneration, and verification/memory closeout.",
+  "nextMilestone": "Verify annual checkout end-to-end in browser; confirm Social Dashboard producer-side mirror before cross-repo writes; decide Forge Window nav wording before propagation.",
+  "currentFocus": "Session 92 /go pass complete: local website improvements shipped across Genius List quality, contract verification, cross-surface cohesion, push intelligence, and changelog UX. Remaining top items are browser, founder, canon, credential, or cross-repo gated.",
+  "lastShipped": "8 improvements across quality/intelligence, cohesion, UX, and notification infrastructure — annual checkout contract guard, push contract guard + category routing, Social Dashboard normalized activity contract on the website side, games/universe pathways, Studio Time Machine, public copy correction, Genius List stale suppression/dedupe, and task-board carry-forward cleanup.",
   "blockers": [
-    "MANUAL: revoke compromised classic PAT at github.com/settings/tokens (exposure occurred in agent transcript during token extraction; workflow secret already rotated off it, revocation is pure cleanup)",
-    "CF API token (scoped) lacks Workers KV Storage:Edit + Zone:Workers Routes:Edit — working around via CLOUDFLARE_EMAIL + CLOUDFLARE_API_KEY (Global API Key). Long-term: add those two scopes to the scoped token.",
-    "Annual Stripe plan keys still do not exist, so annual checkout remains an honest preview only"
+    "MANUAL: revoke compromised classic PAT at github.com/settings/tokens — user explicitly deferred; workflow no longer depends on it",
+    "Social Dashboard bidirectional mirror requires explicit founder confirmation before cross-repo writes",
+    "Annual checkout end-to-end not yet browser-verified (contract guard passes, prices live, edge function deployed, but path untested in real browser)"
   ]
 }

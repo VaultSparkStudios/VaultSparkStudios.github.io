@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇█▇▇
-Avgs — 3: 472.3 | 5: 474.2 | 10: 478.1 | 25: 456.6 | all: 442.2
-  └ 3-session: Dev 96.7 | Align 95.3 | Momentum 94.7 | Engage 90.7 | Process 95.0
-Velocity trend: ↓  |  Protocol velocity: →  |  Debt: →
-Momentum runway: ~0.5 sessions  |  Intent rate: 100% (last 5)
-Last session: 2026-04-17 | Session 91 | Total: 470/500 | Velocity: 1 | protocolVelocity: 8
+Sparkline (last 5 totals): ▇█▇▇█
+Avgs — 3: 474.0 | 5: 476.2 | 10: 479.0 | 25: 459.2 | all: 443.0
+  └ 3-session: Dev 96.7 | Align 96.3 | Momentum 95.3 | Engage 91.7 | Process 94.0
+Velocity trend: ↑  |  Protocol velocity: ↑  |  Debt: →
+Momentum runway: ~0.6 sessions  |  Intent rate: 100% (last 5)
+Last session: 2026-04-18 | Session 92 | Total: 486/500 | Velocity: 8 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -34,6 +34,31 @@ Rate 0–100 per category at each closeout. Max total: **500**.
 ---
 
 ## Entries (append-only below this line)
+
+## 2026-04-18 — Session 92 | Total: 486/500 | Velocity: 8 | Debt: →
+Avgs — 3: 474.0 | 5: 476.2 | 10: 479.0 | 25: 459.2 | all: 443.0
+  └ 3-session: Dev 96.7 | Align 96.3 | Momentum 95.3 | Engage 91.7 | Process 94.0
+
+| Category | Score | vs Last | Notes |
+|---|---:|---|---|
+| Dev Health | 99 | ↑3 | `build:check`, CSP audit, HTTP smoke, annual checkout contract, push contract, changelog Time Machine verifier, and secret scan all passed. Added durable guards instead of one-off manual confidence. |
+| Creative Alignment | 97 | → | Work stayed public-safe: annual copy reflects live truth, changelog UX deepens public transparency, and normalized activity contracts expose schema without private Social Dashboard data. |
+| Momentum | 98 | ↑8 | Eight local items shipped and several stale carry-forward rows retired, leaving the Genius List focused on actual gated work. |
+| Engagement | 93 | ↑1 | Studio Time Machine improves visitor exploration, pathways improve hub handoff, and category-routed push makes member notifications more meaningful once browser receipt is verified. |
+| Process Quality | 99 | ↑4 | Generator/cache/list drift fixed, contracts validated, task board cleaned, and closeout write-back refreshed after the `/go` pass. |
+| **Total** | **486/500** | ↑16 | |
+
+**Top win:** The ranked Genius List now reflects reality: stale S80/S86/S92 carry-forwards are suppressed or retired, while the remaining top items are correctly marked browser, founder, canon, credential, or cross-repo gated.
+**Top gap:** Browser automation was still unreliable in this sandbox, so annual checkout and real push receipt remain browser/staging verification items despite strong static contracts.
+**Intent outcome:** Achieved — the audit plan was turned into implemented local improvements, and gated items were narrowed to the actions that genuinely need browser access, founder confirmation, credentials, or another repo.
+
+**Brainstorm**
+1. **Browser verification harness for paid paths.** First step: add a staging-only Playwright spec that stops at Stripe redirect and asserts the annual plan key/price metadata without completing payment. Execution probability: High.
+2. **Social Dashboard producer mirror.** First step: after founder confirms cross-repo writes, check the Social Dashboard lock and implement the producer side of `normalizedActivity`. Execution probability: High once unblocked.
+3. **Push receipt lab script.** First step: document a local manual browser recipe that subscribes, fires a synthetic supported category payload, and records expected notification behavior. Execution probability: Medium.
+4. **Genius stale-row ratchet.** First step: add a verifier that fails if an unchecked task has matching later DONE evidence, preventing duplicate ghosts from re-entering the queue. Execution probability: Medium.
+
+**Committed to TASK_BOARD:** [S80][INNOVATION] Studio Time Machine · [S80][FEATURE] PWA push for SPARKED drops + leaderboard overtakes · [FOLLOWUP] Strip dead intel-* references · S92 carry-forward cleanup rows
 
 ## 2026-04-18 — Session 92 addendum | Runtime tooling restore
 

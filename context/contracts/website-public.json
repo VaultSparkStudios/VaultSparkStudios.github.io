@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-04-18T00:34:29.607Z",
+  "generatedAt": "2026-04-18T09:51:00.512Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 91,
-    "currentFocus": "Session 92 addendum: local Studio OS runtime scripts installed. The website repo now has scripts/ops.mjs plus protocol-required start/closeout scripts for session mode, secrets audit, blocker preflight, startup brief, closeout summary/autopilot, state vector, entropy, doctor, and secret scanning.",
-    "nextMilestone": "Verify annual checkout end-to-end in browser. Social Dashboard bidirectional mirror (pending founder confirmation). Forge Window nav rename (pending brand sign-off).",
+    "currentSession": 92,
+    "currentFocus": "Session 92 /go pass complete: local website improvements shipped across Genius List quality, contract verification, cross-surface cohesion, push intelligence, and changelog UX. Remaining top items are browser, founder, canon, credential, or cross-repo gated.",
+    "nextMilestone": "Verify annual checkout end-to-end in browser; confirm Social Dashboard producer-side mirror before cross-repo writes; decide Forge Window nav wording before propagation.",
     "pulseKeys": [
       "now",
       "next",
@@ -81,6 +81,33 @@
       "/invite/",
       "/studio-pulse/"
     ]
+  },
+  "normalizedActivity": {
+    "schemaVersion": "1.0",
+    "mode": "public-safe-normalized-feed",
+    "source": "website-public-contract",
+    "producer": "social-dashboard",
+    "feedEndpoint": null,
+    "status": "contract-ready",
+    "privacy": "No private account identifiers, raw analytics, tokens, revenue figures, or internal operator notes.",
+    "fields": [
+      "id",
+      "source",
+      "type",
+      "title",
+      "url",
+      "occurredAt",
+      "projectId",
+      "weight"
+    ],
+    "acceptedTypes": [
+      "social_post",
+      "github_release",
+      "public_ship",
+      "community_signal",
+      "campaign_update"
+    ],
+    "latest": []
   },
   "socialPresence": {
     "summary": {
@@ -154,7 +181,8 @@
       "consumes": [
         "listingMetadata",
         "socialPresence",
-        "funnelSignals"
+        "funnelSignals",
+        "normalizedActivity"
       ]
     }
   }

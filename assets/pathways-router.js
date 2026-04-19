@@ -56,6 +56,8 @@
     vaultsparked: ['supporter', 'member', 'player', 'investor'],
     join: ['member', 'player', 'supporter'],
     invite: ['member', 'supporter', 'player'],
+    games: ['player', 'member', 'lore', 'supporter'],
+    universe: ['lore', 'player', 'member', 'supporter'],
     studio: ['investor', 'supporter', 'lore'],
   };
 
@@ -81,6 +83,8 @@
     if (path.indexOf('/vaultsparked') === 0) return 'vaultsparked';
     if (path.indexOf('/join') === 0) return 'join';
     if (path.indexOf('/invite') === 0) return 'invite';
+    if (path.indexOf('/games') === 0) return 'games';
+    if (path.indexOf('/universe') === 0) return 'universe';
     if (path.indexOf('/studio') === 0 || path.indexOf('/studio-pulse') === 0) return 'studio';
     return 'home';
   }

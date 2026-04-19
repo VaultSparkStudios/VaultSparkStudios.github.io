@@ -109,7 +109,7 @@
         {
           label: 'Pricing Honesty',
           title: 'The paid layer is trying to earn trust by telling the truth.',
-          copy: 'Monthly paths are live now. Annual pricing stays visible because it is part of the intended shape, but the site keeps annual checkout honestly blocked until the real yearly plans exist instead of faking urgency.'
+          copy: 'Monthly and annual paths are live now. Annual support uses fixed yearly pricing, and the safer first move is still the same: create the free identity first, then upgrade only when the vault feels earned.'
         },
         {
           label: 'If You Are Hesitating',

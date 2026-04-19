@@ -55,6 +55,7 @@ function validateSocialDashboard(contract, failures) {
   assertField(failures, contract, 'socialPresence', 'object', ctx);
   assertField(failures, contract, 'funnelSignals', 'object', ctx);
   assertField(failures, contract, 'feedbackSignals', 'object', ctx);
+  assertField(failures, contract, 'normalizedActivity', 'object', ctx);
 
   // bridge sub-fields
   const bridge = contract.bridge || {};
@@ -83,6 +84,15 @@ function validateSocialDashboard(contract, failures) {
   assertField(failures, fb, 'mode', 'string', `${ctx}.feedbackSignals`);
   assertField(failures, fb, 'summaryFields', 'array', `${ctx}.feedbackSignals`);
 
+  // normalizedActivity sub-fields
+  const activity = contract.normalizedActivity || {};
+  assertField(failures, activity, 'schemaVersion', 'string', `${ctx}.normalizedActivity`);
+  assertField(failures, activity, 'mode', 'string', `${ctx}.normalizedActivity`);
+  assertField(failures, activity, 'fields', 'array', `${ctx}.normalizedActivity`);
+  assertField(failures, activity, 'acceptedTypes', 'array', `${ctx}.normalizedActivity`);
+  assertField(failures, activity, 'latest', 'array', `${ctx}.normalizedActivity`);
+  assert(failures, (activity.fields || []).includes('occurredAt'), `${ctx}.normalizedActivity.fields: must include occurredAt`);
+
   // consumer must match expected value
   assert(failures, contract.consumer === 'social-dashboard', `${ctx}.consumer: expected "social-dashboard", got "${contract.consumer}"`);
 }
@@ -94,6 +104,7 @@ function validateWebsitePublic(contract, failures) {
   assertField(failures, contract, 'listingMetadata', 'object', ctx);
   assertField(failures, contract, 'bridges', 'object', ctx);
   assertField(failures, contract, 'surfaces', 'object', ctx);
+  assertField(failures, contract, 'normalizedActivity', 'object', ctx);
   // surfaces entries are arrays of {label, url, path} objects
   const surfaces = contract.surfaces || {};
   assertField(failures, surfaces, 'production', 'array', `${ctx}.surfaces`);
@@ -110,6 +121,7 @@ function validateHub(contract, failures) {
   assertField(failures, contract, 'pulse', 'object', ctx);
   assertField(failures, contract, 'socialPresence', 'object', ctx);
   assertField(failures, contract, 'feedbackSignals', 'object', ctx);
+  assertField(failures, contract, 'normalizedActivity', 'object', ctx);
   assert(failures, contract.consumer === 'studio-hub', `${ctx}.consumer: expected "studio-hub", got "${contract.consumer}"`);
   assertField(failures, contract.pulse || {}, 'queues', 'object', `${ctx}.pulse`);
   assertField(failures, (contract.pulse || {}).queues || {}, 'now', 'array', `${ctx}.pulse.queues`);

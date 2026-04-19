@@ -61,6 +61,18 @@ export async function buildPublicContracts(runtimePack, projectStatus, pulse, ca
   const featuredAccounts = selectFeaturedAccounts(SOCIAL_ACCOUNTS);
   const websiteProject = PROJECTS.find((project) => project.id === 'website') || null;
   const socialDashboardProject = PROJECTS.find((project) => project.id === 'social-dashboard') || null;
+  const normalizedActivity = {
+    schemaVersion: '1.0',
+    mode: 'public-safe-normalized-feed',
+    source: 'website-public-contract',
+    producer: 'social-dashboard',
+    feedEndpoint: null,
+    status: 'contract-ready',
+    privacy: 'No private account identifiers, raw analytics, tokens, revenue figures, or internal operator notes.',
+    fields: ['id', 'source', 'type', 'title', 'url', 'occurredAt', 'projectId', 'weight'],
+    acceptedTypes: ['social_post', 'github_release', 'public_ship', 'community_signal', 'campaign_update'],
+    latest: [],
+  };
 
   const websitePublic = {
     schemaVersion: '1.0',
@@ -101,6 +113,7 @@ export async function buildPublicContracts(runtimePack, projectStatus, pulse, ca
       outputFields: ['topGoal', 'topBlocker', 'topUsefulness', 'totalResponses'],
       surfaces: ['/', '/membership/', '/vaultsparked/', '/join/', '/invite/', '/studio-pulse/'],
     },
+    normalizedActivity,
     socialPresence: {
       summary: socialSummary,
       featuredAccounts,
@@ -114,7 +127,7 @@ export async function buildPublicContracts(runtimePack, projectStatus, pulse, ca
       socialDashboard: {
         enabled: Boolean(integrations.socialDashboard?.enabled),
         mode: integrations.socialDashboard?.mode || null,
-        consumes: ['listingMetadata', 'socialPresence', 'funnelSignals'],
+        consumes: ['listingMetadata', 'socialPresence', 'funnelSignals', 'normalizedActivity'],
       },
     },
   };
@@ -164,6 +177,7 @@ export async function buildPublicContracts(runtimePack, projectStatus, pulse, ca
       summary: socialSummary,
       featuredAccounts,
     },
+    normalizedActivity,
     feedbackSignals: {
       mode: 'browser-local-public-safe',
       source: '/api/public-intelligence.json',
@@ -216,6 +230,7 @@ export async function buildPublicContracts(runtimePack, projectStatus, pulse, ca
       mode: 'browser-local-public-safe',
       summaryFields: ['topGoal', 'topBlocker', 'topUsefulness', 'totalResponses'],
     },
+    normalizedActivity,
   };
 
   return { websitePublic, hub, socialDashboard };

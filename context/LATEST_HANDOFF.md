@@ -1,6 +1,37 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-04-18 (Session 92 addendum)
+Last updated: 2026-04-18 (Session 92 /go + closeout)
+
+## Where We Left Off (Session 92)
+- Shipped: 8 improvements across quality/intelligence, cohesion, UX, and notification infrastructure — annual checkout contract guard, push contract guard + category routing, Social Dashboard normalized activity contract on the website side, games/universe pathways, Studio Time Machine, public copy correction, Genius List stale suppression/dedupe, and task-board carry-forward cleanup.
+- Tests: `npm run build:check` ✓, `npm run smoke:http` ✓ (12/12), `node scripts/csp-audit.mjs` ✓ (98 HTML files), `node scripts/scan-secrets.mjs --all --json` ✓ (0 findings), `npm run verify:annual-checkout` ✓, `npm run verify:push-contract` ✓, `npm run verify:changelog-time-machine` ✓.
+- Deploy: pending commit/push.
+
+## Session Intent: Session 92
+User asked for a full website audit/plan, then `/go`, then closeout. Outcome: Achieved for all local, non-gated implementation work. Remaining top items are browser, founder, canon, credential, or cross-repo gated.
+
+## What Changed
+- **Genius List made useful again:** `scripts/generate-genius-list.mjs` now emits valid `--json`, suppresses stale resolved carry-forwards, and canonicalizes duplicate founder-gated variants. `docs/GENIUS_LIST.md` now points at real remaining work instead of old S80/S86 ghosts.
+- **Annual checkout contract guard:** `scripts/verify-annual-checkout-contract.mjs` verifies annual UI plan keys, annual Stripe price IDs, success URLs, and public annual copy; wired into `build:check`.
+- **Push intelligence upgraded:** `send-push` now routes classified-file, SPARKED drop, leaderboard overtake, and challenge notification categories; `scripts/verify-push-contract.mjs` verifies the portal opt-in, service worker receipt path, stale cleanup, category routing, and public prompt wiring.
+- **Website-side Social Dashboard contract:** `website-public`, `hub`, and `social-dashboard` contracts now expose `normalizedActivity` as a public-safe normalized feed shape. Producer-side Social Dashboard work remains gated until founder confirms cross-repo writes.
+- **Pathways extended to collection hubs:** `/games/` and `/universe/` now mount the pathways router so collection pages hand off into player/member/lore/supporter paths instead of dead-ending.
+- **Studio Time Machine shipped:** `/changelog/` now has a responsive scrubber that indexes existing changelog phases, highlights selected eras, and jumps to the selected session.
+- **Public copy corrected:** `assets/trust-depth.js` no longer says annual checkout is unavailable now that annual prices and routing exist.
+
+## Human Action Required
+- [ ] **Revoke compromised classic PAT** — user explicitly deferred; workflow no longer depends on it.
+- [ ] **Verify annual checkout end-to-end** — contract guard passes, but the annual billing toggle → checkout → Stripe → portal flow still needs a real-browser/staging confirmation.
+- [ ] **Verify real web push receipt** — contract guard passes, but a real browser/device should subscribe, trigger a classified file or category notification, and confirm receipt.
+- [ ] **Confirm Social Dashboard mirror** — website-side contract is ready; producer-side repo write requires explicit founder confirmation and lock check.
+- [ ] **Forge Window nav rename** — awaiting brand sign-off before sitewide propagation.
+
+## Next Session Load
+- Start with `node scripts/ops.mjs fast-start --stdout` or `node scripts/ops.mjs startup-brief --stdout`, then read only task-specific files.
+- First agent task: Verify annual checkout end-to-end in browser, or run Social Dashboard producer-side mirror if founder confirms cross-repo writes.
+- Second agent task: Real browser web-push receipt test, then Forge Window nav rename if brand sign-off is given.
+
+---
 
 ## Where We Left Off (Session 92 addendum)
 - Shipped: local Studio OS runtime scripts are now installed in this website repo. `scripts/ops.mjs` dispatches a truthful 21-command website-local surface, and the protocol-required start/closeout scripts now exist locally.

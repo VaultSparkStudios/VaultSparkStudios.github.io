@@ -846,3 +846,15 @@ Public-safe note:
 - Softened `/vaultsparked/` Eternal beta-build wording from internal development language to public-facing experimental-build language.
 - Verification: `npm run build:check`, `npm run smoke:http`, `node scripts/csp-audit.mjs`, and syntax checks for touched membership runtime files passed.
 - SIL: 470/500 · Velocity: 1 · Debt: →
+
+## 2026-04-18 — Session 92
+
+- Executed the audit/Genius `/go` pass for the website and implemented all local, non-gated items left after the audit.
+- Added static contract guards for annual checkout and web push; wired both into `build:check`.
+- Upgraded `send-push` with category routing for classified files, SPARKED drops, leaderboard overtakes, and challenge notifications.
+- Added the website-side `normalizedActivity` contract for Social Dashboard/Hub/website public intelligence.
+- Extended pathways onto `/games/` and `/universe/` collection hubs.
+- Added the `/changelog/` Studio Time Machine scrubber and a verifier for it.
+- Hardened the Genius List generator so it emits JSON correctly, suppresses stale resolved carry-forwards, and dedupes repeated founder-gated variants.
+- Verification: `npm run build:check`, `npm run smoke:http`, `node scripts/csp-audit.mjs`, `node scripts/scan-secrets.mjs --all --json`, `npm run verify:annual-checkout`, `npm run verify:push-contract`, and `npm run verify:changelog-time-machine` passed.
+- SIL: 486/500 · Velocity: 8 · Debt: →

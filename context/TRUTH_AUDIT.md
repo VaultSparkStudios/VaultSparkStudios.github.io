@@ -2,7 +2,7 @@
 # Truth Audit
 
 Overall status: green
-Last reviewed: 2026-04-17 (S89 closeout)
+Last reviewed: 2026-04-18 (S92 closeout)
 Public-safe summary:
 - public-facing copy should stay aligned with actual live behavior
 - pricing, availability, and access messaging should not over-promise
@@ -59,3 +59,8 @@ Public-safe summary:
 - Verification truth changed in Session 88: non-browser gates passed locally (`build:check`, CSP audit on 98 HTML files, JS syntax, JSON parse, diff whitespace, and HTTP preview smoke), while local Playwright browser execution remains blocked by sandbox hangs; post-push GitHub Actions is the authoritative browser signal.
 - Post-push verification truth changed in Session 88: E2E and Accessibility now pass in GitHub Actions against the local preview artifact; Lighthouse is the only red gate, failing on real thresholds rather than Cloudflare challenge HTML (homepage performance `0.56`, homepage SEO `0.93`).
 - Session 91 truth changed: `/membership-value/` no longer contains internal pricing-strategy/proposal language and now describes live annual billing options publicly; Eternal/Elite membership surfaces no longer promise Founder video updates; `pro_founder_video` was removed from the shared membership entitlement config.
+- Session 92 truth changed: annual checkout is locally contract-verified via `scripts/verify-annual-checkout-contract.mjs`, but still needs real-browser/staging checkout verification before being considered browser-confirmed.
+- Session 92 truth changed: `send-push` now routes classified-file, SPARKED drop, leaderboard overtake, and challenge notification categories; real notification receipt still needs browser/device verification.
+- Session 92 truth changed: website, Hub, and Social Dashboard contracts now expose a public-safe `normalizedActivity` schema/payload stub on the website side; producer-side Social Dashboard mirroring remains cross-repo gated.
+- Session 92 truth changed: `/games/` and `/universe/` now mount the pathways router, and `/changelog/` now includes the Studio Time Machine scrubber.
+- Session 92 truth changed: `scripts/generate-genius-list.mjs` now emits valid JSON and filters/dedupes stale carry-forwards, so `docs/GENIUS_LIST.md` reflects current gated work rather than older duplicate rows.

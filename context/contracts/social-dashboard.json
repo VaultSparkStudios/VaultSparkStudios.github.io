@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-04-18T00:34:29.607Z",
+  "generatedAt": "2026-04-18T09:51:00.512Z",
   "consumer": "social-dashboard",
   "listingMetadata": {
     "socialDescription": "Studio website and Vault Member portal. Auth, rank system, points economy, classified lore, Discord role sync, Stripe subscriptions, admin panel.",
@@ -225,5 +225,32 @@
       "topUsefulness",
       "totalResponses"
     ]
+  },
+  "normalizedActivity": {
+    "schemaVersion": "1.0",
+    "mode": "public-safe-normalized-feed",
+    "source": "website-public-contract",
+    "producer": "social-dashboard",
+    "feedEndpoint": null,
+    "status": "contract-ready",
+    "privacy": "No private account identifiers, raw analytics, tokens, revenue figures, or internal operator notes.",
+    "fields": [
+      "id",
+      "source",
+      "type",
+      "title",
+      "url",
+      "occurredAt",
+      "projectId",
+      "weight"
+    ],
+    "acceptedTypes": [
+      "social_post",
+      "github_release",
+      "public_ship",
+      "community_signal",
+      "campaign_update"
+    ],
+    "latest": []
   }
 }

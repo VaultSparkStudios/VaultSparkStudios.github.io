@@ -303,3 +303,10 @@ Public-safe decisions retained in this repo:
 - Decision: `.github/workflows/e2e.yml` compliance and full E2E browser gates now start `scripts/local-preview-server.mjs` and test `http://127.0.0.1:4173/` instead of `https://vaultsparkstudios.com`.
 - Why: GitHub-hosted runners can receive Cloudflare managed-challenge HTML from the production domain, which makes E2E failures describe the challenge page rather than the shipped repo artifact. S88 extends the S82 local-preview decision from Lighthouse/axe to the E2E workflow.
 - Maintenance rule: post-push GitHub Actions is still the authoritative browser signal for the workflow change, but the target should remain the local artifact unless a future staging gate is explicitly added.
+
+### 2026-04-18 — S92: Website owns the public normalized activity contract, Social Dashboard owns production
+
+- Status: active
+- Decision: the website repo may define and validate the public-safe `normalizedActivity` contract shape shared by Website, Studio Hub, and Social Dashboard, but it should not fabricate activity rows or write producer logic into the Social Dashboard without explicit founder confirmation and a cross-repo lock check.
+- Why: this lets the website, Hub, and Social Dashboard agree on a schema now while preserving cross-repo write safety and avoiding fake social/activity data.
+- Maintenance rule: `scripts/generate-public-intelligence.mjs` and `scripts/validate-contracts.mjs` must stay in sync with the `normalizedActivity` contract; producer-side changes belong in the Social Dashboard repo after confirmation.

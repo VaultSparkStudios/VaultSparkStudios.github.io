@@ -4,9 +4,9 @@ Last updated: 2026-04-18 (Session 92 addendum — Studio OS runtime scripts inst
 
 ## Now (Session 91 pre-load)
 
-- [ ] **[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. **[DEFERRED — awaiting founder confirm before cross-repo write]**
+- [ ] **[S90][COHESION] Social Dashboard bidirectional mirror** — implement the cross-repo normalized activity feed mirror path. Requires cross-repo write confirmation. Social Dashboard repo present locally at `../vaultspark-social-dashboard`. **[DEFERRED — awaiting founder confirm before cross-repo write]** — **S92 website-side partial:** `website-public`, `hub`, and `social-dashboard` contracts now expose `normalizedActivity` schema/empty payload; producer-side Social Dashboard write remains gated.
 - [ ] **[FOLLOWUP] Forge Window nav rename** — rename "Studio Pulse" nav label to "Forge Window" sitewide via `propagate-nav.mjs`. URL stays `/studio-pulse/` for SEO. **[PENDING brand sign-off]**
-- [ ] **[FOLLOWUP] Verify annual checkout end-to-end** — test the annual billing toggle → checkout → Stripe → portal flow against staging. Annual prices are live but the path hasn't been browser-tested yet.
+- [ ] **[FOLLOWUP] Verify annual checkout end-to-end** — test the annual billing toggle → checkout → Stripe → portal flow against staging. Annual prices are live but the path hasn't been browser-tested yet. **S92 local guard:** `npm run verify:annual-checkout` now verifies annual UI plan keys, edge price IDs, success URLs, and public copy; browser Stripe redirect remains open.
 
 ## Session 91 — membership value public cleanup
 
@@ -185,7 +185,7 @@ Audit baseline 87/100. Full plan + scoring in `memory/project_audit_s86.md`. P0 
 ### S85 carry-forward
 
 - [ ] **[SIL] Watch first post-push Lighthouse + playwright-axe runs** — heavier pulse page + animated gradients; verify tightened S82/S83 budgets still hold.
-- [ ] **[FOLLOWUP] Strip dead intel-* references in home-intelligence.js** — IDs no longer on homepage; defensive setText/renderList calls now no-op. Low-risk cleanup sweep.
+- [x] **[FOLLOWUP] Strip dead intel-* references in home-intelligence.js** — **DONE S92**: duplicate carry-forward retired; `assets/home-intelligence.js` no longer contains the old `intel-*` bindings, and the Genius List generator now suppresses this stale item when S86 done evidence is present.
 - [ ] **[FOLLOWUP] Founder decision: rename nav "Studio Pulse" → "Forge Window"** — URL stays `/studio-pulse/` for SEO; needs brand sign-off.
 - [ ] **[FOLLOWUP] Names for sealed initiatives (12 remaining)** — when a sealed project gets a public name + vault status, it auto-promotes from the sealed count to a named catalog tile.
 
@@ -210,7 +210,7 @@ Audit baseline 87/100. Full plan + scoring in `memory/project_audit_s86.md`. P0 
 
 - [ ] **[SIL] Watch first post-push Lighthouse run** — S82+S83+S84 combined pressure on tightened budgets + new local-preview + staging dual-URL gate. Iterate once if red.
 - [ ] **[SIL] Watch first post-push playwright-axe run** — local-preview migration path.
-- [ ] **[SIL] Push broadcast category server-side coverage** — S80 Tier 4 push item's client-side opt-in surface is shipped; server-side category routing (SPARKED drops vs leaderboard overtakes via `send-push` edge fn) remains a follow-up.
+- [x] **[SIL] Push broadcast category server-side coverage** — **DONE S92**: `send-push` now routes classified-file, SPARKED drop, leaderboard overtake, and challenge notification payloads server-side, with unsupported categories skipped safely. `npm run verify:push-contract` covers the category contract.
 
 ---
 
@@ -263,7 +263,7 @@ Ranked by impact × unblockedness. Scope override approved by Studio Owner: impl
 - [x] **[S81][CI] playwright-axe lockfile fix** — `npm ci` → `npm install --no-audit --no-fund` because `package-lock.json` is gitignored by repo convention.
 - [x] **[S81][CI] Lighthouse wait-on ceiling raised** — 120s → 360s with 10s polling; prior timeout was racing GitHub Pages deploy time.
 - [x] **[S81][INFRA] Retire `sw-version.yml` on-push trigger** — S77 fingerprinted shell pipeline is now the single owner of `sw.js` CACHE_NAME. Workflow kept as `workflow_dispatch`-only with a deprecation note until confirmed unused for ≥ 5 sessions.
-- [ ] **[SIL] S86 sweep — delete retired `sw-version.yml`** — if no one has re-enabled it manually by S86, `rm .github/workflows/sw-version.yml` and remove the in-file deprecation header.
+- [x] **[SIL] S86 sweep — delete retired `sw-version.yml`** — **DONE S92 carry-forward cleanup**: workflow is absent and S86 also records the delete as complete; stale open duplicate retired.
 
 ---
 
@@ -287,19 +287,19 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **[S80][AI] IGNIS narrative surface** — explainer tooltip on every IGNIS mention; link to new `/ignis/` explainer page framing IGNIS as studio transparency signal (not opaque "cognition score").
 - [ ] **[S80][AI] "Ask IGNIS" public concierge** — Claude-powered chat widget via Supabase edge function answering "which game?" / "what's new?" / "what's Vault?". Rate-limit + prompt cache. Signature AI moment.
 - [ ] **[S80][COHESION] Unified cross-portal shell** — shared header/sidebar/nav skin across `/vault-member/`, `/investor-portal/`, `/studio-hub/`. Shared design tokens + auth-state pill.
-- [ ] **[S80][FEATURE] Member "Forge Feed"** — live activity stream on `/vault-wall/` (shipped work, journal posts, leaderboard shifts, new FORGE games).
-- [ ] **[S80][CONVERSION] Testimonials on /membership/** — member quotes, playtime stats, rank distribution visual. Biggest conversion lift available.
+- [x] **[S80][FEATURE] Member "Forge Feed"** — **DONE S92 carry-forward cleanup**: S83 shipped `assets/forge-feed.js` on `/vault-wall/`; stale open duplicate retired.
+- [x] **[S80][CONVERSION] Testimonials on /membership/** — **DONE S92 carry-forward cleanup**: S83 shipped `data/member-voices.json`, `assets/member-voices.js`, Honest Voices, live vault outcomes, and rank distribution; stale open duplicate retired.
 - [x] **[S80][COHESION] `/social/` dashboard page** — **DONE S84**: `/social/` live with summary + featured + Live/Limited/Reserved tiers reading public-intelligence.social. Honest grouping; no fake activity.
-- [ ] **[S80][FEATURE] Leaderboard schema + seasons + rivals** — JSON-LD, season countdowns, "nearest rival" callout. Retention hook.
+- [x] **[S80][FEATURE] Leaderboard schema + seasons + rivals** — **DONE S92 carry-forward cleanup**: S83 shipped ItemList JSON-LD, `data/seasons.json`, and `assets/seasons-rivals.js`; stale open duplicate retired.
 - [ ] **[S80][BRAND] Resolve ETERNAL tier vocabulary** — either fold into SPARKED or document as 4th canonical state (CANON decision).
 
 ### Tier 3 — Performance, SEO, polish
 
 - [ ] **[S80][PERF] Lighthouse budget tightening in CI** — Performance ≥0.85, A11y ≥0.95, Best Practices ≥0.90, SEO ≥0.95.
-- [ ] **[S80][PERF] Animation optimization** — `will-change: transform` on forge-letter + forge-spark-burst; poster frame on DreadSpike video.
+- [x] **[S80][PERF] Animation optimization** — **DONE S92 carry-forward cleanup**: S82 added `will-change: transform, opacity` on `.forge-letter` and `.forge-spark-burst`; DreadSpike uses static poster images, so the video poster-frame requirement is moot.
 - [x] **[S80][SEO] Sitemap changefreq segmentation** — journal entries `never`, game catalog `daily`, legal pages `yearly`; add `datePublished` to VideoGame JSON-LD; journal entries → `schema:Article`.
-- [ ] **[S80][BRAND] Typography unify** — Georgia serif for H1/H2 across journal + games + studio (currently drifts to sans).
-- [ ] **[S80][UX] Tablet breakpoint (768–1024px)** — membership tiers (2-col) + investor KPI grid (2-col).
+- [x] **[S80][BRAND] Typography unify** — **DONE S92 carry-forward cleanup**: S83 made Georgia serif + -0.02em letter spacing canonical for h1/h2 in `assets/style.css`; stale open duplicate retired.
+- [x] **[S80][UX] Tablet breakpoint (768–1024px)** — **DONE S92 carry-forward cleanup**: S83 shipped the tablet breakpoint pass for membership tier grids, investor KPI strips, and shared portal grids; stale open duplicate retired.
 - [x] **[S80][UX] Offline page redesign** — **DONE S84**: vault-forge aesthetic with SVG vault-lock sigil, Georgia SEALED wordmark, aria-live network pill.
 - [x] **[S80][COMPLIANCE] Investor action logging consent** — **DONE S84**: explicit opt-in banner + profile toggle; `logAction()` is no-op until granted. GDPR Art. 6(1)(a) disclosed.
 - [x] **[S80][SEO] robots.txt cleanup** — remove misleading "Cloudflare AI Labyrinth" comment.
@@ -310,9 +310,9 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [ ] **[SIL] Unified cross-portal shell** — extract shared header/sidebar design tokens into `assets/portal-shell.css`, consume across `/vault-member/`, `/investor-portal/`, `/studio-hub/`. Pure design refactor, no auth changes.
 - [x] **[S80][INNOVATION] Dynamic hero** — **DONE S84**: `home-dynamic-hero.js` reads catalog + renders most-active-game spotlight between hero sub-copy and CTAs.
 - [x] **[S80][INNOVATION] Personalized returning-member homepage** — **DONE S84**: `home-personalized.js` reads VSIntentState + branches on journey_stage × world_affinity × trust_level.
-- [ ] **[S80][INNOVATION] Studio Time Machine** — scrub changelog visually to see studio evolution month-by-month.
+- [x] **[S80][INNOVATION] Studio Time Machine** — **DONE S92**: `/changelog/` now has a responsive Studio Time Machine scrubber that indexes existing changelog phases, highlights selected eras, and jumps to the chosen session. Verification: `npm run verify:changelog-time-machine`.
 - [ ] **[S80][AI] Investor AI Q&A** — Claude + retrieval over approved investor docs. Replaces half the "Ask the Founders" queue.
-- [~] **[S80][FEATURE] PWA push for SPARKED drops + leaderboard overtakes** — **PARTIAL S84**: client-side opt-in surface shipped on /studio-pulse/ + /vault-wall/ + /changelog/ (eligible-visitors only, honest gating). Server-side category routing for SPARKED-drops vs leaderboard-overtakes broadcasts still pending in `send-push` edge function.
+- [x] **[S80][FEATURE] PWA push for SPARKED drops + leaderboard overtakes** — **DONE S92**: client opt-in surface already shipped; `send-push` now routes SPARKED drop and leaderboard overtake payloads server-side, with contract coverage in `npm run verify:push-contract`.
 
 ---
 
@@ -410,7 +410,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 
 - [x] **[SIL:2⛔] Genius Hit List as scheduled audit** — **DONE S88**: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.
 - [ ] **[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages** — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.
-- [ ] **[GENIUS][COHESION] Extend gravity onto the `/games/` and `/universe/` hubs** — the per-world pages now hand off properly, but the main collection hubs can still become stronger route orchestrators.
+- [x] **[GENIUS][COHESION] Extend gravity onto the `/games/` and `/universe/` hubs** — **DONE S92**: `/games/` and `/universe/` now mount `pathways-router.js` with context-specific four-card intent routing before their existing related rails; `pathways-router.js` understands `games` and `universe` contexts. Verification: `npm run build:check`, `npm run smoke:http`, `node scripts/csp-audit.mjs`, and `node --check assets/pathways-router.js`.
 - [ ] **[OPS] Annual Stripe activation once keys exist** — replace the annual placeholder path only after the real Stripe annual plan keys are created.
 - [ ] **[OPS] CF Worker automation unblock** — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth.
 
@@ -418,7 +418,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 
 - [x] **[SIL:2⛔] IGNIS Rescore** — refreshed 2026-04-15 via local IGNIS CLI fallback; current score `46,489 FORGE` and the startup stale-IGNIS flag is cleared.
 - [ ] **[AUDIT] Conversion funnel instrumentation + feedback states** — **partial Session 74**: pathway memory and smarter CTA notes now sharpen intent, but deeper stage reporting and broader submit feedback still need completion.
-- [ ] **[AUDIT] Premium proof/depth pass on conversion pages** — **partial Session 74**: pathways, related rails, and annual honesty now improve trust and navigation, but testimonials/member outcomes/objection handling are still open.
+- [x] **[AUDIT] Premium proof/depth pass on conversion pages** — **DONE S92 carry-forward cleanup**: pathways, related rails, annual honesty, testimonials/member voices, live outcomes, rank distribution, and trust-depth objection handling are all now shipped; stale partial row retired.
 - [ ] **[SIL] Annual Stripe checkout routing** — implementation is scaffolded and honest, but still HAR-blocked until the Studio Owner creates the annual Stripe plan keys.
 - [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read). S69 proved the manual Wrangler fallback works, but automatic Worker CSP sync is still blocked without this secret.
 
@@ -523,7 +523,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 ## Now (S67 runway pre-load)
 
 - [x] **[SIL:2⛔] IGNIS Rescore** — resolved in S73; score refreshed to `46,489 FORGE`.
-- [ ] **[SIL:1] Closeout-commit gate** — moved to S68 runway above.
+- [x] **[SIL:1] Closeout-commit gate** — **DONE S92 carry-forward cleanup**: `prompts/closeout.md`, `docs/SESSION_PROTOCOL.md`, and `scripts/closeout-autopilot.mjs` enforce diff preview plus human confirmation before commit/push.
 - [ ] **[SIL:1] Genius Hit List as scheduled audit** — moved to S68 runway above.
 - [ ] **[SIL] Annual Stripe checkout routing** — HAR-blocked; Studio Owner creates $44.99/yr + $269.99/yr Stripe prices first. Exempt from [SIL:N] increment until HAR cleared.
 - [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read).
@@ -569,7 +569,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **Voidfall teaser → full page** — expanded with Transmission Archive (3 fragments), The Signal world-building, Known Entities (3 entities), Saga meta grid; CSS added (S47)
 - [x] **Sentry release tagging** — `.github/workflows/sentry-release.yml` created; tags each main push as a Sentry release; requires SENTRY_AUTH_TOKEN, SENTRY_ORG, SENTRY_PROJECT repo secrets/vars (human action to configure, S47)
 - [ ] **`/vaultsparked/` Phase 2** — open Phase 2 when Phase 1 fills (subscriber_cap)
-- [ ] **Web push test** — subscribe in portal, upload classified file, verify notification received
+- [ ] **Web push test** — subscribe in portal, upload classified file, verify notification received. **S92 local guard:** `npm run verify:push-contract` now verifies portal opt-in, service worker receipt, `send-push` edge route, stale subscription cleanup, and public prompt wiring; real browser notification receipt remains open.
 
 ---
 
