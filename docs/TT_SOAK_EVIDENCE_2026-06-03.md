@@ -4,7 +4,7 @@
 # Trusted Types Soak Evidence
 
 > Read autonomously via the `cloudflare.studio` token (CANON-019 elevated probe).
-> Namespace: RATE_LIMIT (`6fde74ca7f3d462786afbb85c85611e0`) · window: last 60 days · probed: 2026-06-03
+> Namespace: RATE_LIMIT (`6fde74ca7f3d462786afbb85c85611e0`) · window: last 30 days · probed: 2026-06-03
 
 ## Verdict
 

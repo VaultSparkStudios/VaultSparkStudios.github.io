@@ -245,6 +245,17 @@ function run() {
       return true;
     });
 
+    // S172: generated image-placeholder artifacts. data/lqip-map.json holds
+    // base64 WebP `data:image/webp;base64,...` fragments that trip AWS-key /
+    // CF-token regexes (92 [low] false positives on every regeneration). The
+    // file is produced by build-lqip-map.mjs from repo images — it cannot
+    // contain credential material. Findings inside base64 image data URIs in
+    // that one generated file are suppressed; everything else still scans.
+    // File-level: lqip-map.json's schema is strictly {"<image path>": "data:image/...;base64,..."}
+    // (see build-lqip-map.mjs) — snippet truncation can hide the data-URI prefix
+    // on long lines, so the per-line test misses. Suppress the whole generated file.
+    findings = findings.filter(f => f.file.replace(/\\/g, '/') !== 'data/lqip-map.json');
+
     // Optional Studio Ops telemetry. Keep scans side-effect-free in this repo by default.
     if (process.env.STUDIO_ACCESS_LEDGER === '1') {
       try {

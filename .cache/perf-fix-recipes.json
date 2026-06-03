@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.1",
+  "generatedAt": "2026-06-03T22:58:18.569Z",
+  "window": 3,
+  "entries": [
+    {
+      "route": "/",
+      "profile": "desktop",
+      "lcpMed": 13060,
+      "clsMed": 0.002,
+      "budget": {
+        "lcp": 2500,
+        "cls": 0.1
+      },
+      "reasons": [
+        "LCP 13060ms > 2500ms"
+      ],
+      "recipes": [
+        {
+          "class": "LCP-blocking",
+          "severity": "high",
+          "candidates": [
+            "LCP is 422% over budget — likely render-blocking. Verify critical CSS shell includes / viewport-1 selectors.",
+            "Inspect deferred scripts: check assets/home-idle-loader.js for accidentally-eager loads.",
+            "Run `node scripts/measure-page-performance.mjs --routes=/ --profiles=desktop` and capture the resource waterfall."
+          ]
+        }
+      ],
+      "forensics": {
+        "available": false,
+        "reason": "no good→bad transition in history window (route may be persistently over budget or under-sampled)"
+      }
+    }
+  ]
+}

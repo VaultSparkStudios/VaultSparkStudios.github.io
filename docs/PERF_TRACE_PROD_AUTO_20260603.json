@@ -1,0 +1,346 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-06-03T22:57:55.276Z",
+  "traceMode": "cold",
+  "baseUrl": "https://vaultsparkstudios.com",
+  "profiles": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "theme": "dark",
+      "lcpBudget": 2400,
+      "inpBudget": 300
+    }
+  ],
+  "batchSize": 1,
+  "freeDiskMb": 1204448,
+  "deployParity": {
+    "skipped": false,
+    "ok": true,
+    "source": "https://vaultsparkstudios.com/",
+    "status": 200,
+    "manifestVersion": "7082b9235c-b970c26bd9-96581b1d55-0995bd7945-47589e32e5",
+    "expected": [
+      "assets/ambient.shell-47589e32e5.js",
+      "assets/nav-toggle.shell-96581b1d55.js",
+      "assets/shell-health.shell-0995bd7945.js",
+      "assets/style.shell-7082b9235c.css",
+      "assets/theme-toggle.shell-b970c26bd9.js"
+    ],
+    "actual": [
+      "assets/ambient.shell-47589e32e5.js",
+      "assets/nav-toggle.shell-96581b1d55.js",
+      "assets/shell-health.shell-0995bd7945.js",
+      "assets/style.shell-7082b9235c.css",
+      "assets/theme-toggle.shell-b970c26bd9.js"
+    ],
+    "missing": [],
+    "unexpected": []
+  },
+  "routes": [
+    {
+      "profile": "desktop",
+      "viewport": {
+        "width": 1366,
+        "height": 900
+      },
+      "theme": "dark",
+      "lcpBudget": 2400,
+      "inpBudget": 300,
+      "route": "/studio-pulse/",
+      "status": 200,
+      "lcp": 516,
+      "fcp": 516,
+      "cls": 0.0601,
+      "inp": 64,
+      "interactions": [
+        {
+          "name": "pointerover",
+          "duration": 64,
+          "startTime": 3084,
+          "target": "theme-picker-label"
+        },
+        {
+          "name": "pointerenter",
+          "duration": 64,
+          "startTime": 3084,
+          "target": ""
+        },
+        {
+          "name": "pointerenter",
+          "duration": 64,
+          "startTime": 3084,
+          "target": "dark-mode"
+        },
+        {
+          "name": "pointerenter",
+          "duration": 64,
+          "startTime": 3084,
+          "target": "dark-mode"
+        },
+        {
+          "name": "pointerenter",
+          "duration": 64,
+          "startTime": 3084,
+          "target": "site-header"
+        },
+        {
+          "name": "pointerenter",
+          "duration": 64,
+          "startTime": 3084,
+          "target": "container nav"
+        },
+        {
+          "name": "pointerenter",
+          "duration": 64,
+          "startTime": 3084,
+          "target": "nav-right"
+        },
+        {
+          "name": "pointerenter",
+          "duration": 64,
+          "startTime": 3084,
+          "target": "theme-picker open"
+        }
+      ],
+      "clsSources": [
+        {
+          "value": 0.059,
+          "startTime": 546,
+          "sources": [
+            {
+              "tag": "SECTION",
+              "id": "",
+              "className": "vsx-bcf5a6b73e",
+              "text": "Portfolio heartbeatPortfolio scale"
+            },
+            {
+              "tag": "SECTION",
+              "id": "current-focus",
+              "className": "vsx-bcf5a6b73e",
+              "text": "Currently in the forge Right now in the forge Reading the live session… The forg"
+            }
+          ]
+        },
+        {
+          "value": 0.0009,
+          "startTime": 621,
+          "sources": [
+            {
+              "tag": "A",
+              "id": "",
+              "className": "button button-sm",
+              "text": "Join The Vault"
+            },
+            {
+              "tag": "DIV",
+              "id": "theme-picker",
+              "className": "theme-picker",
+              "text": "Dark▼Choose ThemeDarkLightAmbientWarmCoolLavaHigh Contrast"
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "className": "nav-signin",
+              "text": "Sign In"
+            },
+            {
+              "tag": "A",
+              "id": "",
+              "className": "nav-icon-link",
+              "text": ""
+            }
+          ]
+        },
+        {
+          "value": 0.0002,
+          "startTime": 669,
+          "sources": [
+            {
+              "id": "",
+              "className": "",
+              "text": "About the studio"
+            }
+          ]
+        }
+      ],
+      "lcpEntries": [
+        {
+          "startTime": 516,
+          "size": 91540,
+          "tag": "H1",
+          "id": "pulse-heading",
+          "className": "forge-h1",
+          "src": "",
+          "text": "The ForgeWindow."
+        }
+      ],
+      "domContentLoaded": 506,
+      "load": 848,
+      "ttfb": 162,
+      "transferSize": 15328,
+      "styleLinks": [
+        {
+          "href": "../assets/style.shell-7082b9235c.css",
+          "media": "all",
+          "asyncCss": true
+        }
+      ],
+      "resources": [
+        {
+          "name": "/assets/style.shell-7082b9235c.css",
+          "initiatorType": "link",
+          "duration": 78,
+          "transferSize": 34640,
+          "encodedBodySize": 34340
+        },
+        {
+          "name": "/assets/theme-toggle.shell-b970c26bd9.js",
+          "initiatorType": "script",
+          "duration": 84,
+          "transferSize": 4970,
+          "encodedBodySize": 4670
+        },
+        {
+          "name": "/assets/pwa-nav.js",
+          "initiatorType": "script",
+          "duration": 85,
+          "transferSize": 1083,
+          "encodedBodySize": 783
+        },
+        {
+          "name": "/assets/analytics.js",
+          "initiatorType": "script",
+          "duration": 89,
+          "transferSize": 1656,
+          "encodedBodySize": 1356
+        },
+        {
+          "name": "/assets/cookie-consent.js",
+          "initiatorType": "script",
+          "duration": 89,
+          "transferSize": 1008,
+          "encodedBodySize": 708
+        },
+        {
+          "name": "/assets/vaultspark-icon-nav.webp",
+          "initiatorType": "img",
+          "duration": 50,
+          "transferSize": 4306,
+          "encodedBodySize": 4006
+        },
+        {
+          "name": "/assets/nav-toggle.shell-96581b1d55.js",
+          "initiatorType": "script",
+          "duration": 96,
+          "transferSize": 2439,
+          "encodedBodySize": 2139
+        },
+        {
+          "name": "/assets/sentry-init.js",
+          "initiatorType": "script",
+          "duration": 91,
+          "transferSize": 790,
+          "encodedBodySize": 490
+        },
+        {
+          "name": "/assets/supabase-client.js",
+          "initiatorType": "script",
+          "duration": 116,
+          "transferSize": 2110,
+          "encodedBodySize": 1810
+        },
+        {
+          "name": "/assets/public-intelligence.js",
+          "initiatorType": "script",
+          "duration": 93,
+          "transferSize": 1360,
+          "encodedBodySize": 1060
+        },
+        {
+          "name": "/assets/intent-state.js",
+          "initiatorType": "script",
+          "duration": 112,
+          "transferSize": 2425,
+          "encodedBodySize": 2125
+        },
+        {
+          "name": "/assets/push-prompt.js",
+          "initiatorType": "script",
+          "duration": 117,
+          "transferSize": 2449,
+          "encodedBodySize": 2149
+        },
+        {
+          "name": "/assets/network-spine.js",
+          "initiatorType": "script",
+          "duration": 117,
+          "transferSize": 2121,
+          "encodedBodySize": 1821
+        },
+        {
+          "name": "/assets/micro-feedback.js",
+          "initiatorType": "script",
+          "duration": 97,
+          "transferSize": 5108,
+          "encodedBodySize": 4808
+        },
+        {
+          "name": "/assets/schema-injector.js",
+          "initiatorType": "script",
+          "duration": 111,
+          "transferSize": 3282,
+          "encodedBodySize": 2982
+        },
+        {
+          "name": "/assets/studio-living.js",
+          "initiatorType": "script",
+          "duration": 113,
+          "transferSize": 4357,
+          "encodedBodySize": 4057
+        },
+        {
+          "name": "/assets/vault-heartbeat.js",
+          "initiatorType": "script",
+          "duration": 121,
+          "transferSize": 2885,
+          "encodedBodySize": 2585
+        },
+        {
+          "name": "/assets/ambient.shell-47589e32e5.js",
+          "initiatorType": "script",
+          "duration": 108,
+          "transferSize": 41345,
+          "encodedBodySize": 41045
+        },
+        {
+          "name": "/assets/studio-pulse-live.js",
+          "initiatorType": "script",
+          "duration": 120,
+          "transferSize": 4737,
+          "encodedBodySize": 4437
+        },
+        {
+          "name": "/assets/social-icons.svg#i-youtube",
+          "initiatorType": "other",
+          "duration": 98,
+          "transferSize": 4322,
+          "encodedBodySize": 4022
+        }
+      ],
+      "navigationWaitUntil": "domcontentloaded",
+      "navigationError": "",
+      "pageErrors": []
+    }
+  ],
+  "stylesheetShell": [
+    {
+      "route": "/studio-pulse/",
+      "htmlPath": "studio-pulse\\index.html",
+      "violations": []
+    }
+  ]
+}

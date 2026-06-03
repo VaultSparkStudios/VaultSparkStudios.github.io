@@ -1,0 +1,80 @@
+{
+  "drainedAt": "2026-06-03T21:29:13.182Z",
+  "slug": "vaultsparkstudios-website",
+  "count": 3,
+  "cargo": [
+    {
+      "id": "01JQ7IQO3R75B29307FCDC46BF",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-03T20:29:36.251Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 1,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-03T20:29:36.196Z"
+      }
+    },
+    {
+      "id": "01JQ7ISQ21E88096FE19000673",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-03T20:30:43.777Z",
+      "payload": {
+        "sessionId": "152",
+        "headline": "Session closed.",
+        "bullets": [
+          "(no shipped items recorded this session)"
+        ],
+        "synopsis": "",
+        "generatedAt": "2026-06-03T20:30:43.708Z"
+      }
+    },
+    {
+      "id": "01JQ7ISQQSE3024EEDE875C63A",
+      "type": "pattern-share",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-03T20:30:44.572Z",
+      "payload": {
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:infra",
+          "outcome:good"
+        ],
+        "context": "studio-ops",
+        "solution": "closeout completed cleanly"
+      }
+    }
+  ],
+  "sigFailures": [
+    {
+      "id": "01JPM3ODST22BBBD3C4DB1FEB4",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-03T21:29:13.176Z"
+    },
+    {
+      "id": "01JPM40RJC0FF446AB55AAD18D",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-03T21:29:13.178Z"
+    },
+    {
+      "id": "01JQ7IHRB203462A9CEB553339",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-03T21:29:13.179Z"
+    }
+  ]
+}

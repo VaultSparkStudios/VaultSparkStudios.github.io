@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-05-28T04:17:34.946Z",
+  "generatedAt": "2026-06-03T22:57:47.015Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "none",
+  "source": "data\\rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,7 +10,217 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 0,
+  "totalSamples": 42,
   "sufficientRoutes": 0,
-  "routes": {}
+  "routes": {
+    "/": {
+      "samples": 18,
+      "sufficient": false,
+      "p75": {
+        "lcp": 17824,
+        "cls": 0.1037,
+        "inp": 2624,
+        "fcp": 15364,
+        "ttfb": 1620
+      }
+    },
+    "/games/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 7420,
+        "cls": 0,
+        "inp": 72,
+        "fcp": 7420,
+        "ttfb": 126
+      }
+    },
+    "/games/call-of-doodie/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 592,
+        "cls": 0.0009,
+        "inp": 432,
+        "fcp": 592,
+        "ttfb": 68
+      }
+    },
+    "/games/gridiron-gm-play/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 440,
+        "cls": 0.4082,
+        "inp": 0,
+        "fcp": 440,
+        "ttfb": 11
+      }
+    },
+    "/games/gridiron-gm/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 1756,
+        "cls": 0.0006,
+        "inp": 48,
+        "fcp": 1756,
+        "ttfb": 574
+      }
+    },
+    "/games/vaultfront/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 956,
+        "cls": 0.2538,
+        "inp": 104,
+        "fcp": 956,
+        "ttfb": 3
+      }
+    },
+    "/games/vaultspark-football-gm/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 592,
+        "cls": 0,
+        "inp": 48,
+        "fcp": 353,
+        "ttfb": 0
+      }
+    },
+    "/ignis/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 400,
+        "cls": 0,
+        "inp": 48,
+        "fcp": 400,
+        "ttfb": 87
+      }
+    },
+    "/journal/studio-os-public/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 476,
+        "cls": 0.0145,
+        "inp": 0,
+        "fcp": 476,
+        "ttfb": 25
+      }
+    },
+    "/leaderboards/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 716,
+        "cls": 0,
+        "inp": 208,
+        "fcp": 716,
+        "ttfb": 415
+      }
+    },
+    "/oracle/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 876,
+        "cls": 0.0223,
+        "inp": 384,
+        "fcp": 484,
+        "ttfb": 105
+      }
+    },
+    "/projects/promogrind/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 548,
+        "cls": 0.0009,
+        "inp": 240,
+        "fcp": 548,
+        "ttfb": 63
+      }
+    },
+    "/projects/statvault/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 1824,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 1824,
+        "ttfb": 150
+      }
+    },
+    "/projects/the-living-protocol/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 864,
+        "cls": 0,
+        "inp": 128,
+        "fcp": 864,
+        "ttfb": 57
+      }
+    },
+    "/security/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 1888,
+        "cls": 0.0153,
+        "inp": 104,
+        "fcp": 1888,
+        "ttfb": 1644
+      }
+    },
+    "/studio-pulse/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 800,
+        "cls": 0.0736,
+        "inp": 160,
+        "fcp": 800,
+        "ttfb": 87
+      }
+    },
+    "/universe/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 392,
+        "cls": 0.0535,
+        "inp": 208,
+        "fcp": 392,
+        "ttfb": 94
+      }
+    },
+    "/universe/voidfall/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 360,
+        "cls": 0.0026,
+        "inp": 176,
+        "fcp": 360,
+        "ttfb": 86
+      }
+    },
+    "/vault/tombstones/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 952,
+        "cls": 0.0409,
+        "inp": 240,
+        "fcp": 952,
+        "ttfb": 92
+      }
+    }
+  }
 }

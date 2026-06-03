@@ -1,6 +1,6 @@
 # VaultSparkStudios.github.io
 
-> Session 165 continuation verified the completed Session 164 goal-chain (/start -> /audit -> /implement -> /closeout). Fresh 4-item audit (docs/AUDIT_2026-05-26, Priority 150.6); 4 shipped end-to-end. Current-state proof: first build:check caught stale generated public-intelligence artifacts, then npm run build refreshed deterministic outputs and npm run build:check passed end-to-end. CENTERPIECE remains the lazy command-palette split — assets/command-palette.js no longer parses inside the always-loaded ambient bundle; assets/command-palette-loader.js injects it only after Cmd/Ctrl+K/mobile search intent. Regression guard: report-ambient-coverage --check fails if the heavy palette returns to AMBIENT_SOURCES. Decision-loop upgrade: scripts/build-nav-sheet-stats.mjs writes public-safe api/nav-sheet-stats.json from allowlisted RUM ux events with readiness.defaultSwapReady; current source none, 0 opens, ready=false. RUM summary still has 0 samples, so perf-budget --source=rum remains synthetic-advisory; TT-enforce remains held until KV soak visibility.
+> Session 171 resumed an interrupted start/audit/implement/closeout goal-chain and shipped 3/3 items from docs/AUDIT_2026-05-28-S171.{md,json}: long-tail visual proof pack (Playwright+sharp capture + manifest verifier, 6/6 desktop+mobile screenshots green and wired into build:check), RUM export-path diagnostics (.cache/rum-export-diagnostics.json, non-blocking self-explaining gate), and runway-truth cleanup. Verification: npm run build and npm run build:check passed end-to-end; crawl covered 108 HTML files with 0 status failures and 0 blocking-script findings.
 
 ## Identity
 - Slug: vaultsparkstudios-website
@@ -12,10 +12,10 @@
 - Staging: https://website.staging.vaultsparkstudios.com
 
 ## Current focus
-Session 165 continuation verified the completed Session 164 goal-chain (/start -> /audit -> /implement -> /closeout). Fresh 4-item audit (docs/AUDIT_2026-05-26, Priority 150.6); 4 shipped end-to-end
+Session 171 resumed an interrupted start/audit/implement/closeout goal-chain and shipped 3/3 items from docs/AUDIT_2026-05-28-S171.{md,json}: long-tail visual proof pack (Playwright+sharp capture + manifest verifier, 6/6 desktop+mobile screenshots green and wired into build:check), RUM export-path diagnostics (.cache/rum-export-diagnostics.json, non-blocking self-explaining gate), and runway-truth cleanup. Verification: npm run build and npm run build:check passed end-to-end; crawl covered 108 HTML files with 0 status failures and 0 blocking-script findings.
 
 ## Next milestone
-S165 first moves: keep checking data/rum-summary.json until '/' has >=50 field samples, then flip check-perf-budget.mjs --source=rum to --strict and log DECISIONS; ship rum-anomaly-canary after ~1 week of field data. Use docs/AMBIENT_COVERAGE.md for the next careful ambient split candidate (account-chip.js 11.0KB, nav-sheet.js 9.2KB, exit-intent.js 8.4KB, visit-depth.js 7.2KB) only with behavior proof and a guard
+Next moves: unlock the production RUM sample export path so data/rum-summary.json stops reporting 0 field samples (diagnostics now name the exact gap); founder review of the new docs/visual-proof/longtail-s171 screenshots; resolve the 3 feature-bearing membership/vaultsparked orphan assets after founder confirmation.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/.

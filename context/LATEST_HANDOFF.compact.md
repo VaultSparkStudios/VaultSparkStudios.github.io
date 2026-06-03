@@ -1,36 +1,29 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 5d0b3d8ca9df -->
-<!-- generated-at: 2026-05-28T02:19:50.106Z -->
+<!-- source-hash: 202a8a80deb9 -->
+<!-- generated-at: 2026-06-03T21:02:12.167Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 170 SUMMARY
+SESSION 171 HANDOFF
 
-Session Number: 170
+Session Number: 171
 
-Shipped:
-- `/start → /audit → /implement → /closeout` pipeline executed; all 4 audit items shipped
-- New gates: `check-longtail-studio-posture.mjs` and `check-ai-disclosure-alignment.mjs` wired into build:check
-- Long-tail public posture reframed (projects/vorn/, /privacy/, /terms/, /faq/, journal/) as professional creative studio
-- Theme primitives deployed on vorn and privacy surfaces
-- `extract-inline-styles.mjs` upgraded with --check, --list-targets, --targets= modes
-- /privacy/ and /terms/ now distinguish local Ask IGNIS retrieval from model-backed gated features
-- Build verification: npm run build + npm run build:check passed; 108-page crawl 0 failures
+Shipped: 3/3 audit items — longtail-visual-proof-pack, rum-export-path-diagnostics, s171-runway-truth-cleanup. `scripts/capture-longtail-visual-proof.mjs` captured all 6 desktop/mobile screenshots + manifest.json for projects/vorn/, /privacy/, journal/community-enters-the-vault/. `scripts/check-longtail-visual-proof.mjs` verifies (6/6 green, wired into build:check). `scripts/check-rum-export-path.mjs` writes diagnostics.json and runs non-blocking in build:check. S168 legacy-intelligence carry closed with S169 evidence; GENIUS_LIST.md regenerated. npm run build and build:check both green end-to-end (108-page crawl, 0 failures).
 
-Current Intent:
-Complete long-tail immersion across detail/legal/support surfaces; finalize theme primitive adoption breadth
+Current Intent: Resume goal-chain into next audit cycle with captured visual proof and RUM diagnostics as foundation.
 
-Now Bucket (Top 3):
-- Long-tail copy immersion pass for remaining project detail, legal, support pages
-- Screenshot proof of primitive rhythm adoption across surfaces
-- Extract-inline-styles utility decision: supported maintenance tool vs. retire/hand-migrate
+Now Bucket (top 3):
+- Production RUM field-sample export (diagnostics now explicit on gap; blocks dormant RUM loop)
+- Founder confirmation on 3 feature-bearing membership/vaultsparked orphan assets (blocks delete/rewire decision)
+- Founder review of new longtail screenshots and theme-primitive adoption proof
 
-Blockers (Top 3):
-- 3 feature-bearing membership/vaultsparked orphan assets awaiting founder confirmation (delete vs. rewire)
-- RUM sample export remains empty; collection/export path unclear
-- Optional repo-local scripts (skill-profile.mjs, set-active-skill.mjs, credential-watch.mjs, ark.mjs, router.mjs, skill-trace-emit.mjs) remain unbuilt
+Blockers (top 3):
+- RUM sample export remains empty — diagnostics name exact gap; requires external RUM setup or mock-sample decision
+- 3 orphan membership/vaultsparked assets require founder sign-off before cleanup
+- Screenshot proof verification pending founder review
 
-Human-Blocked:
-- Orphan asset fate (age: 2+ sessions)
+Human-Blocked Items:
+- RUM field-sample export (age: 2+ sessions, diagnostic gate now in place)
+- 3 orphan asset delete/rewire decision (age: 2+ sessions, listed in S170/S171)
 
-Next: Continue long-tail immersion; resolve orphan asset blocking decision; document RUM export path.
+Session 172 pointer: Prioritize founder RUM decision and orphan-asset confirmation; audit blockers now explicit in scripts and diagnostics.

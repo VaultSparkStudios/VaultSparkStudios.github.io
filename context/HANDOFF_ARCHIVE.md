@@ -3637,3 +3637,22 @@ Founder said "complete all" after the stated `/audit then /implement then /close
 
 ### Genius finding (carry → S164)
 - The RUM→perf-budget loop is now **wired but dormant** — `--source=rum` falls back to synthetic advisory until ≥50 field samples accumulate on `/`. **S164 first move:** check `data/rum-summary.json`; once `/` is sufficient, flip `--strict`. This is the honest end of the synthetic-trace saga — field p75 will override the noisy cold-TTFB `/` number, not a guess.
+
+
+---
+<!-- archived: 2026-06-03 -->
+
+## Where We Left Off (Session 170)
+- `/start`: session lock written, preflight completed, context-meter CONTINUE, startup brief regenerated and validated. Missing optional repo-local scripts noted: `skill-profile.mjs`, `set-active-skill.mjs`, `credential-watch.mjs`, `ark.mjs`, `router.mjs`, `skill-trace-emit.mjs`.
+- `/audit`: wrote `docs/AUDIT_2026-05-28.{md,json}` with 4 ranked items: long-tail studio posture contract, inline-style extractor check mode, AI disclosure local-first alignment, and theme primitive long-tail adoption.
+- `/implement`: shipped 4/4 audit items. New gates: `scripts/check-longtail-studio-posture.mjs` and `scripts/check-ai-disclosure-alignment.mjs`, both wired into `npm run build:check`.
+- Long-tail public posture: `projects/vorn/`, `/privacy/`, `/terms/`, `/faq/`, and `journal/community-enters-the-vault/` now carry the professional creative studio framing. `projects/vorn/` and `/privacy/` also prove the new theme primitives on representative long-tail surfaces.
+- Maintenance upgrade: `scripts/extract-inline-styles.mjs` now supports `--check`, `--list-targets`, and `--targets=` validation; documented in `docs/STUDIO_THEME_EVOLUTION_SYSTEM.md`.
+- AI/legal truth: `/privacy/` and `/terms/` now distinguish local cited Ask IGNIS retrieval from model-backed gated features instead of claiming all Ask IGNIS prompts go to Anthropic.
+- Verification: `npm run build` passed; `npm run build:check` passed end-to-end, including the new gates and 108-page crawl with 0 status failures and 0 blocking-script findings.
+- Carry: screenshot proof for long-tail primitive rhythm; RUM sample export remains empty; 3 feature-bearing membership/vaultsparked orphan assets still require founder confirmation before delete/rewire.## Where We Left Off (Session 169)
+- Main wayfinding copy upgraded on home, `/studio/`, `/projects/`, `/games/`, `/universe/`, `/membership/`, and `/roadmap/` so the site presents VaultSpark as a professional creative studio with a connected portfolio, Studio OS, public momentum, identity layer, and release discipline.
+- Legacy intelligence inline-style debt removed from the S168 advisory baseline. The seven target pages now pass `check-intelligence-style-contract.mjs --strict`, and feedback/social/security runtime renderers now output class-based markup instead of inline styles.
+- New theme system: `docs/STUDIO_THEME_EVOLUTION_SYSTEM.md` documents posture and primitives; `assets/style.css` adds `.vs-immersive-band`, `.vs-section-kicker`, `.vs-signal-grid`, and `.vs-proof-note`; `scripts/check-studio-theme-evolution.mjs` is wired into `build:check`.
+- Verification: `npm run build` passed; `npm run build:check` passed end-to-end, including strict style/theme gates, SRI/CSP, JS budget, mobile contracts, page-script relevance, and 108-page crawl with 0 status failures and 0 blocking-script findings.
+- Carry: long-tail copy immersion pass for project detail/legal/support surfaces; decide whether `scripts/extract-inline-styles.mjs` becomes a supported maintenance utility or is replaced by hand-migrated classes; apply theme primitives more widely with screenshot proof.

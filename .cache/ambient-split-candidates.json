@@ -1,0 +1,130 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-06-03T22:58:28.400Z",
+  "generatedBy": "scripts/report-ambient-coverage.mjs",
+  "totalSources": 31,
+  "totalBytes": 137566,
+  "forbiddenAmbientSourcesPresent": [],
+  "candidates": [
+    {
+      "rank": 1,
+      "source": "assets/nav-sheet.js",
+      "sizeKb": 9.7,
+      "reasons": [
+        "query-param gated"
+      ],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Open the default route and the query-flagged route, then verify assets/nav-sheet.js is absent by default and present only after intent."
+    },
+    {
+      "rank": 2,
+      "source": "assets/exit-intent.js",
+      "sizeKb": 8.4,
+      "reasons": [
+        "session gated",
+        "capability gated"
+      ],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/exit-intent.js is lazy-loaded only after session state is known."
+    },
+    {
+      "rank": 3,
+      "source": "assets/visit-depth.js",
+      "sizeKb": 7.6,
+      "reasons": [
+        "session gated",
+        "capability gated"
+      ],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/visit-depth.js is lazy-loaded only after session state is known."
+    },
+    {
+      "rank": 4,
+      "source": "assets/presence-badge.js",
+      "sizeKb": 6.1,
+      "reasons": [
+        "session gated",
+        "capability gated"
+      ],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/presence-badge.js is lazy-loaded only after session state is known."
+    },
+    {
+      "rank": 5,
+      "source": "assets/vault-genome-strip.js",
+      "sizeKb": 5.8,
+      "reasons": [
+        "capability gated"
+      ],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/vault-genome-strip.js behind a conditional loader."
+    },
+    {
+      "rank": 6,
+      "source": "assets/favicon-pulse.js",
+      "sizeKb": 5.2,
+      "reasons": [
+        "session gated"
+      ],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/favicon-pulse.js is lazy-loaded only after session state is known."
+    },
+    {
+      "rank": 7,
+      "source": "assets/signed-in-state.js",
+      "sizeKb": 4.7,
+      "reasons": [
+        "session gated"
+      ],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/signed-in-state.js is lazy-loaded only after session state is known."
+    },
+    {
+      "rank": 8,
+      "source": "assets/adaptive-speculation.js",
+      "sizeKb": 4.6,
+      "reasons": [],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/adaptive-speculation.js behind a conditional loader."
+    },
+    {
+      "rank": 9,
+      "source": "assets/vault-rank-bar.js",
+      "sizeKb": 4.6,
+      "reasons": [
+        "session gated"
+      ],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/vault-rank-bar.js is lazy-loaded only after session state is known."
+    },
+    {
+      "rank": 10,
+      "source": "assets/vault-atlas.js",
+      "sizeKb": 4.4,
+      "reasons": [],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/vault-atlas.js behind a conditional loader."
+    },
+    {
+      "rank": 11,
+      "source": "assets/scroll-depth.js",
+      "sizeKb": 4.2,
+      "reasons": [
+        "session gated"
+      ],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/scroll-depth.js is lazy-loaded only after session state is known."
+    }
+  ]
+}
