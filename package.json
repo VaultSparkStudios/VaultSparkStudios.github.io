@@ -14,6 +14,7 @@
     "verify:local:extended": "node scripts/run-local-browser-verify.mjs --tier extended",
     "verify:perf:local": "node scripts/measure-page-performance.mjs --check",
     "verify:perf:matrix": "node scripts/measure-page-performance.mjs --check --matrix --out docs/PERF_TRACE_MATRIX_S143.json",
+    "rum:pull": "node scripts/fetch-rum-from-r2.mjs && node scripts/rollup-rum.mjs && node scripts/pull-rum-summary.mjs",
     "rum:rollup": "node scripts/rollup-rum.mjs",
     "rum:summary": "node scripts/pull-rum-summary.mjs",
     "verify:supply-chain": "node scripts/verify-supply-chain.mjs",

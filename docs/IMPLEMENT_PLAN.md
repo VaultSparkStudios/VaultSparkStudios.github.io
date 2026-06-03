@@ -1,20 +1,38 @@
-# Implement Plan — S171 Audit
+<!-- generated-by: /implement skill v1.0 -->
+<!-- generated-at: 2026-06-03 · session 172 -->
+<!-- source: docs/AUDIT_2026-06-03.json -->
 
-Source: `docs/AUDIT_2026-05-28-S171.{md,json}`
+# Implement Plan — S172
 
-## Sequence
+Optimal-efficiency sequencing of the 12-item S172 audit (raw Priority sum 281.0).
 
-1. `s171-runway-truth-cleanup` — close stale task-board truth first so generated lists stop re-promoting already-shipped work.
-2. `rum-export-path-diagnostics` — add a cheap diagnostic gate before expensive browser work.
-3. `longtail-visual-proof-pack` — capture and verify desktop/mobile screenshots after the proof scripts exist.
+## Wave 1 — RUM data spine (foundations; 🔥 first)
+1. **rum-r2-field-unlock** (#1, 40.0) — R2→local fetch script; the phantom-blocker kill
+2. **perf-truth-cascade** (#2, 34.2) — branch on sample count; flip or wire accrual
+
+## Wave 2 — credential probes (same secrets-gateway surface)
+3. **tt-soak-kv-probe** (#5, 26.6) — cfut_ KV read of tt: soak
+4. **ark-drain-restore** (#6, 25.3) — restore cargo transport; drain immediately
+
+## Wave 3 — perf intelligence (same perf-history surface)
+5. **perf-forensic-commit-correlator** (#3, 31.5) — suspect commits in fix recipes
+6. **closeout-prod-perf-sample** (#10, 12.7) — continuous accrual gate
+7. **field-health-public-badge** (#4, 28.0) — needs RUM summary shape from Wave 1
+
+## Wave 4 — forensics + protocol hygiene
+8. **membership-orphan-dossier** (#8, 24.0) — git forensics → founder decision doc
+9. **protocol-script-self-heal** (#7, 24.5) — classify + heal MODULE_NOT_FOUND drift
+
+## Wave 5 — polish + ops (token-cost last)
+10. **visual-proof-gallery** (#9, 19.0)
+11. **testing-surfaces-registration** (#11, 9.1)
+12. **ops-freshness-refresh** (#12, 6.1)
+
+Rationale: Wave 1 is foundational (3 downstream items feed on field data). Waves 2–3 group by shared code surface. Dossier and self-heal are independent and safe mid-pass. Polish and freshness land last when measurement is meaningful.
 
 ## Verification
 
-- `node scripts/check-rum-export-path.mjs --self-test`
-- `node scripts/check-rum-export-path.mjs --check`
-- `node scripts/capture-longtail-visual-proof.mjs`
-- `node scripts/check-longtail-visual-proof.mjs --self-test`
-- `node scripts/check-longtail-visual-proof.mjs`
-- `node scripts/generate-genius-list.mjs`
-- `npm run build`
-- `npm run build:check`
+- `node scripts/fetch-rum-from-r2.mjs --dry-run` then real pull + `npm run rum:summary`
+- `node scripts/check-perf-budget.mjs` (source branch verified)
+- `node scripts/check-protocol-scripts.mjs --info`
+- `npm run build` + `npm run build:check` end-to-end at pass completion

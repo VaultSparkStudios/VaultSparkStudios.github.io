@@ -1425,3 +1425,13 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **Why:** The staged secret scan was run against the actual commit payload and returned clean. The timeout matched the known Windows local hook path issue documented in S166/S167, so the bypass was limited to a verified clean payload.
 
 **Maintenance rule:** Continue preferring normal push. Use `--no-verify` only after a clean staged secret scan and a failed/timed-out normal push where remote verification confirms the commit has not landed.
+
+### 2026-06-03 — S172 — RUM R2 export was a phantom blocker; field loop is now agent-owned
+
+**Decision:** The "Founder action: production RUM export access" label on RUM-SAMPLE-UNLOCK was wrong — `cloudflare.r2` was READY the whole time. `scripts/fetch-rum-from-r2.mjs` (vanilla SigV4, no new deps) now pulls `rum/raw/dt=*/` rows from the `vaultspark-rum` bucket through the secrets gateway; `npm run rum:pull` chains fetch → rollup → summary. 110 production rows landed on first pull.
+
+**Why:** CANON-019 — the credential was present, the hop was simply never built. Worker writes were verified at `security-headers-worker.js:305`; `pull-rum-summary.mjs` only ever read local files.
+
+**Truth correction (supersedes the S161 "synthetic-trace artifact" framing):** field data shows `/` is genuinely slow for real visitors — 37 samples over 30d, median LCP ~5.8s, raw p75 ~10s, FCP≈LCP. The synthetic 13s cold trace was directionally right, not a pure artifact. The strict flip stays parked (<50 samples/route), but homepage LCP is a REAL field problem and goes back on the board as a P1 with field evidence attached.
+
+**Maintenance rule:** `npm run rum:pull` should run at session start or closeout so field history accrues continuously. Never re-label the RUM export founder-blocked; the script + credential path is the canonical export.
