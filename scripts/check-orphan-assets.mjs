@@ -46,6 +46,11 @@ const ARTIFACT = /(\.shell-[0-9a-f]+\.(js|css)$)|(^ambient\.bundle\.js$)|(\.min\
 // Self-contained or convention-loaded files that look unreferenced but aren't.
 const ALLOW_ABSENT = new Set([
   'sw.js', // service worker — registered by name in inline bootstraps, path-vary safe
+  // S172 membership-orphan-dossier: cross-project membership SDK with EXTERNAL
+  // consumers (PromoGrind loads /vault-sdk.js). This repo's reference graph
+  // can't see sibling repos — deleting it would break them in production.
+  // Provenance: docs/MEMBERSHIP_ORPHAN_DOSSIER_S172.md
+  'vault-sdk.js',
 ]);
 
 /**
