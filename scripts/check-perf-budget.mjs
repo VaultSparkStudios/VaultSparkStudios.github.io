@@ -316,8 +316,18 @@ if (SELF_TEST) {
     console.log(`  ${ok ? '✓' : '✗'} ${c.name} (expect ${c.expectStatus}, got ${got})`);
     ok ? pass++ : fail++;
   }
-  console.log(`\nself-test: ${pass + rp} passed, ${fail + rf} failed`);
-  process.exit((fail + rf) ? 1 : 0);
+  // S172: forensic correlator pure-function checks (injected fixtures, no git)
+  let forensicsPassed = 0, forensicsFailed = 0;
+  try {
+    const { selfTest } = await import('./lib/perf-forensics.mjs');
+    forensicsPassed = selfTest();
+    console.log(`  ✓ perf-forensics self-test (${forensicsPassed} checks)`);
+  } catch (err) {
+    forensicsFailed = 1;
+    console.log(`  ✗ perf-forensics self-test: ${err.message}`);
+  }
+  console.log(`\nself-test: ${pass + rp + forensicsPassed} passed, ${fail + rf + forensicsFailed} failed`);
+  process.exit((fail + rf + forensicsFailed) ? 1 : 0);
 }
 
 if (!fs.existsSync(HISTORY_PATH)) {
@@ -363,10 +373,24 @@ const insufficient = results.filter(r => r.status === 'insufficient');
 if (EMIT_RECIPES || overBudget.length) {
   const recipeEntries = overBudget.map(classifyAndRecommend);
   if (recipeEntries.length) {
+    // S172 perf-forensic-commit-correlator: name the suspect commits inside
+    // the last-good → first-bad window so the recipe starts the bisect for you.
+    try {
+      const { correlate } = await import('./lib/perf-forensics.mjs');
+      for (const entry of recipeEntries) {
+        const budget = PROFILE_BUDGET[entry.profile] || PROFILE_BUDGET.desktop;
+        entry.forensics = correlate({
+          history: rows,
+          route: entry.route,
+          profile: entry.profile,
+          lcpBudget: budget.lcp,
+        });
+      }
+    } catch { /* forensics is additive — recipes remain valid without it */ }
     const cacheDir = path.dirname(RECIPES_PATH);
     if (!fs.existsSync(cacheDir)) fs.mkdirSync(cacheDir, { recursive: true });
     const payload = {
-      schemaVersion: '1.0',
+      schemaVersion: '1.1',
       generatedAt: new Date().toISOString(),
       window: WINDOW,
       entries: recipeEntries,
