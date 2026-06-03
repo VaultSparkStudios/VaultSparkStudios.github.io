@@ -1,0 +1,372 @@
+/* IGNIS Project Block — S134
+   Per-project intelligence widget styling. Matches site's dark/dawn theme tokens.
+*/
+
+.ignis-project-block {
+  margin: 2rem 0;
+}
+
+.ignis-block-frame {
+  position: relative;
+  padding: 1.5rem 1.6rem 1.3rem;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255, 122, 0, 0.10), transparent 55%),
+    radial-gradient(circle at 95% 95%, rgba(255, 196, 0, 0.06), transparent 50%),
+    linear-gradient(140deg, rgba(13, 17, 28, 0.96), rgba(20, 14, 8, 0.96));
+  border: 1px solid rgba(255, 122, 0, 0.20);
+  box-shadow: 0 1px 0 rgba(255, 122, 0, 0.06) inset, 0 18px 40px -28px rgba(255, 122, 0, 0.35);
+  overflow: hidden;
+}
+
+.ignis-block-frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 80% 10%, rgba(255, 122, 0, 0.05), transparent 40%);
+  pointer-events: none;
+}
+
+.ignis-block-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.95rem;
+  position: relative;
+}
+
+.ignis-block-sigil {
+  font-size: 1.1rem;
+  color: #FF7A00;
+  filter: drop-shadow(0 0 6px rgba(255, 122, 0, 0.6));
+}
+
+.ignis-block-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #FFC400;
+}
+
+.ignis-block-pill {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.ignis-block-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dot, #888);
+  box-shadow: 0 0 6px var(--dot, #888);
+}
+
+.ignis-block-quote {
+  margin: 0 0 1.1rem;
+  padding: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: rgba(255, 245, 220, 0.94);
+  border: none;
+  position: relative;
+}
+
+.ignis-block-quote p {
+  margin: 0 0 0.45rem;
+}
+
+.ignis-block-quote footer {
+  font-family: inherit;
+  font-style: normal;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: #FFC400;
+  text-transform: uppercase;
+}
+
+.ignis-block-tone {
+  color: rgba(255, 196, 0, 0.65);
+  font-weight: 400;
+  text-transform: lowercase;
+  letter-spacing: 0;
+}
+
+.ignis-block-readout {
+  margin-bottom: 1rem;
+  padding: 0.9rem 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ignis-block-readout-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.65rem;
+}
+
+.ignis-block-readout-item strong {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.ignis-block-readout-item span {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.ignis-block-readout-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.ignis-block-footer {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(255, 122, 0, 0.10);
+}
+
+.ignis-block-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #FFC400;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.ignis-block-link:hover { color: #FF7A00; }
+
+.ignis-block-live {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(255, 122, 0, 0.10);
+  border: 1px solid rgba(255, 122, 0, 0.35);
+  color: #FFC400 !important;
+}
+.ignis-block-live:hover {
+  background: rgba(255, 122, 0, 0.18);
+  border-color: rgba(255, 122, 0, 0.55);
+}
+
+/* Evidence trail — shows the data IGNIS read to generate the voice quote. */
+.ignis-block-evidence {
+  margin: 0 0 1rem;
+  padding: 0;
+}
+.ignis-block-evidence > summary {
+  list-style: none;
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 196, 0, 0.7);
+  padding: 0.35rem 0;
+  border-bottom: 1px dashed rgba(255, 196, 0, 0.18);
+  transition: color 0.2s ease;
+  user-select: none;
+}
+.ignis-block-evidence > summary:hover { color: #FFC400; }
+.ignis-block-evidence > summary::-webkit-details-marker { display: none; }
+.ignis-block-evidence-hint { font-weight: 400; color: rgba(255, 255, 255, 0.4); }
+.ignis-block-evidence[open] > summary { color: #FFC400; }
+.ignis-block-evidence[open] .ignis-block-evidence-hint::before { content: 'hide evidence'; }
+.ignis-block-evidence[open] .ignis-block-evidence-hint { color: transparent; }
+.ignis-block-evidence[open] .ignis-block-evidence-hint::before { color: rgba(255, 255, 255, 0.4); position: absolute; }
+
+.ignis-evidence-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.8rem 0 0.4rem;
+}
+
+.ignis-evidence-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.28rem 0.6rem;
+  border-radius: 8px;
+  background: rgba(255, 196, 0, 0.06);
+  border: 1px solid rgba(255, 196, 0, 0.18);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 245, 220, 0.85);
+  letter-spacing: 0.01em;
+}
+.ignis-evidence-chip strong {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #FFC400;
+}
+.ignis-evidence-up    { border-color: rgba(90, 210, 141, 0.32); background: rgba(90, 210, 141, 0.06); }
+.ignis-evidence-up strong { color: #5ad28d; }
+.ignis-evidence-down  { border-color: rgba(255, 92, 92, 0.32);  background: rgba(255, 92, 92, 0.06); }
+.ignis-evidence-down strong { color: #ff5c5c; }
+.ignis-evidence-flat  { border-color: rgba(255, 255, 255, 0.14); background: rgba(255, 255, 255, 0.04); }
+.ignis-evidence-warn  { border-color: rgba(245, 176, 66, 0.35); background: rgba(245, 176, 66, 0.08); }
+.ignis-evidence-warn strong { color: #f5b042; }
+
+.ignis-evidence-sources {
+  margin: 0.4rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.02em;
+}
+.ignis-evidence-sources code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.65rem;
+  padding: 0.08rem 0.32rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 196, 0, 0.75);
+  margin-right: 0.3rem;
+}
+
+body.dawn-mode .ignis-evidence-chip,
+body.light-mode .ignis-evidence-chip { color: rgba(40, 20, 0, 0.88); }
+body.dawn-mode .ignis-evidence-sources,
+body.light-mode .ignis-evidence-sources { color: rgba(40, 20, 0, 0.55); }
+
+/* Dawn / light mode token overrides */
+body.dawn-mode .ignis-block-frame,
+body.light-mode .ignis-block-frame {
+  background:
+    radial-gradient(circle at 15% 0%, rgba(255, 122, 0, 0.10), transparent 55%),
+    radial-gradient(circle at 95% 95%, rgba(255, 196, 0, 0.08), transparent 50%),
+    linear-gradient(140deg, rgba(255, 252, 245, 0.96), rgba(255, 240, 215, 0.94));
+  border-color: rgba(255, 122, 0, 0.28);
+}
+body.dawn-mode .ignis-block-quote,
+body.light-mode .ignis-block-quote { color: rgba(40, 25, 10, 0.92); }
+body.dawn-mode .ignis-block-readout,
+body.light-mode .ignis-block-readout { background: rgba(0, 0, 0, 0.025); border-color: rgba(0, 0, 0, 0.07); }
+body.dawn-mode .ignis-block-readout-item span,
+body.light-mode .ignis-block-readout-item span { color: rgba(20, 10, 0, 0.88); }
+body.dawn-mode .ignis-block-readout-item strong,
+body.light-mode .ignis-block-readout-item strong { color: rgba(40, 20, 0, 0.6); }
+body.dawn-mode .ignis-block-readout-meta,
+body.light-mode .ignis-block-readout-meta { color: rgba(40, 20, 0, 0.55); }
+
+@media (max-width: 640px) {
+  .ignis-block-frame { padding: 1.2rem 1.1rem 1.05rem; border-radius: 14px; }
+  .ignis-block-pill { margin-left: 0; }
+  .ignis-block-quote { font-size: 0.98rem; }
+}
+
+/* ── S136: public-facing card redesign ───────────────────────────────────── */
+/* New surfaces overlap existing class names but the structure is simpler.
+   Older classes (.ignis-evidence-chip, .ignis-block-readout-meta, etc.) are
+   no longer rendered after S136 but the rules are kept so any cached pages
+   still display gracefully. */
+
+.ignis-block-frame {
+  border-color: rgba(255, 255, 255, 0.06);
+  border-left: 3px solid var(--status-accent, rgba(255, 196, 0, 0.4));
+}
+
+.ignis-block-header {
+  flex-wrap: wrap;
+  gap: 0.6rem 0.9rem;
+  align-items: baseline;
+  margin-bottom: 0.85rem;
+}
+
+.ignis-block-pill {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  padding: 0.28rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid;
+  flex-shrink: 0;
+}
+
+.ignis-block-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.55rem;
+  letter-spacing: -0.025em;
+  margin: 0;
+  color: var(--text, #fff);
+  flex: 1;
+  min-width: 0;
+}
+
+.ignis-block-focus {
+  margin: 1rem 0 0.6rem;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+  border-left: 2px solid var(--status-accent, rgba(255, 196, 0, 0.35));
+}
+
+.ignis-block-focus-label {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--status-accent, #FFC400);
+  margin-bottom: 0.35rem;
+}
+
+.ignis-block-focus p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--muted, #cbd5e1);
+}
+
+.ignis-block-meta {
+  margin-left: auto;
+  font-size: 0.78rem;
+  color: var(--dim, #8b96a8);
+  letter-spacing: 0.02em;
+}
+
+.ignis-block-footer {
+  align-items: center;
+  gap: 1rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Cached pages may still try to render these — keep them invisible. */
+.ignis-block-eyebrow,
+.ignis-block-sigil,
+.ignis-block-evidence,
+.ignis-block-readout-meta,
+.ignis-block-tone {
+  display: none !important;
+}

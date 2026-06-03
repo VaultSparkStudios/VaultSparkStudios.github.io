@@ -1,0 +1,67 @@
+project_id = "vaultsparkstudios.github.io"
+
+[auth]
+site_url = "https://vaultsparkstudios.com/"
+additional_redirect_urls = [
+  "https://vaultsparkstudios.com/vault-member/",
+  "https://vaultsparkstudios.com/vault-member/#reset",
+  "https://www.vaultsparkstudios.com/",
+  "https://www.vaultsparkstudios.com/vault-member/",
+  "http://localhost:5173/",
+  "http://localhost:5174/",
+  "https://vorn-web-sigma.vercel.app/reset-password",
+  "https://vorn.dev/reset-password",
+  "https://vorn-web-sigma.vercel.app/auth/callback",
+  "https://mindframe-web.vercel.app/",
+  "https://mindframe.vercel.app/**",
+  "https://usemindframe.com/**",
+  "https://joinvorn.com/auth/callback",
+  "https://joinvorn.com/**"
+]
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+enable_signup = true
+enable_anonymous_sign_ins = true
+enable_manual_linking = false
+minimum_password_length = 12
+password_requirements = "lower_upper_letters_digits_symbols"
+
+[auth.rate_limit]
+email_sent = 5
+sms_sent = 30
+anonymous_users = 30
+token_refresh = 150
+sign_in_sign_ups = 10
+token_verifications = 10
+web3 = 30
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+secure_password_change = true
+max_frequency = "1m0s"
+otp_length = 8
+otp_expiry = 3600
+
+# Captcha intentionally disabled.
+# [auth.captcha]
+# enabled = false
+
+# [auth.sessions] requires Supabase Pro plan
+# timebox = "720h"
+# inactivity_timeout = "168h"
+
+[auth.mfa]
+max_enrolled_factors = 10
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+[auth.mfa.phone]
+enroll_enabled = false
+verify_enabled = false
+otp_length = 6
+max_frequency = "5s"

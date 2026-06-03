@@ -1,0 +1,40 @@
+name: Regenerate OG Images
+
+on:
+  push:
+    paths:
+      - 'scripts/generate-og.mjs'
+      - 'scripts/package.json'
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: scripts/package.json
+
+      - name: Install dependencies
+        run: cd scripts && npm ci
+
+      - name: Generate OG images
+        run: cd scripts && node generate-og.mjs
+
+      - name: Commit generated images
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/og-*.png
+          if git diff --cached --quiet; then
+            echo "No OG image changes."
+          else
+            git commit -m "chore: regenerate OG images [skip ci]"
+            git push
+          fi

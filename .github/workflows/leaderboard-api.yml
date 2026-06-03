@@ -1,0 +1,33 @@
+name: Generate Leaderboard API
+
+on:
+  schedule:
+    - cron: '15 6 * * *'   # daily at 06:15 UTC
+  workflow_dispatch:
+
+jobs:
+  leaderboard:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate leaderboard JSON files
+        run: node scripts/generate-leaderboard-api.mjs
+
+      - name: Commit updated API files
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add api/leaderboard/v1/*.json
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: update leaderboard API data [skip ci]"
+            git push
+          else
+            echo "No changes to leaderboard data, skipping commit"
+          fi

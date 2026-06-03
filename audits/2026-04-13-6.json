@@ -1,0 +1,37 @@
+{
+  "session": 65,
+  "date": "2026-04-13",
+  "auditFile": "2026-04-13-6.json",
+  "silTotal": 448,
+  "silBreakdown": {
+    "devHealth": 92,
+    "creativeAlignment": 90,
+    "momentum": 87,
+    "engagement": 88,
+    "processQuality": 91
+  },
+  "velocity": 6,
+  "intentOutcome": "achieved",
+  "avgLast3": 438.7,
+  "avgLast5": 439.6,
+  "avgLast10": 432.1,
+  "sparkline": "▇▆▆▆▆",
+  "itemsShipped": [
+    "assets/style.css — --gold: #7a5c00 in body.light-mode {} (WCAG AA ~5:1 on cream); #FFC400 override for .countdown-classified",
+    "index.html — 3 signal section elements given CSS classes: signal-teaser-panel, signal-image-card, signal-classified-chip",
+    "assets/style.css — light-mode !important overrides for signal-teaser-panel / signal-image-card / signal-classified-chip",
+    "tests/vault-wall.spec.js — rewritten: #rank-dist-bar visible, #vw-podium visible, pageerror CSP listener, rank-dist-seg soft warn, auth-free route check",
+    "scripts/csp-hash-registry.json — CREATED; snapshots CSP content for vaultsparked/index.html, 404.html, offline.html",
+    "scripts/propagate-csp.mjs — --check-skipped flag added; checkSkipped() reads registry, diffs current CSP content, exits 1 on drift",
+    "membership/index.html — 5 sections tagged data-reveal=fade-up; scroll-reveal.js linked",
+    "press/index.html — 6 sections tagged data-reveal=fade-up; scroll-reveal.js linked"
+  ],
+  "harItems": [
+    "[CF-WORKER-TOKEN] Add secret to GitHub for Cloudflare Worker auto-deploy",
+    "[STRIPE-ANNUAL] Create $44.99/yr + $269.99/yr Stripe price IDs",
+    "[IGNIS] Rescore — 7d+ stale (mandatory at S66 start)"
+  ],
+  "topWin": "All 7 declared session items implemented and committed in one clean batch (63a4480) — gold WCAG AA fix, signal panel CSS class migration, vault wall spec automation (retires SIL:2 manual smoke), CSP drift detection infrastructure, scroll reveals on two high-conversion pages. Context recovery from mid-session compaction seamless.",
+  "topGap": "IGNIS 7+ days stale at closeout — will be mandatory rescore at S66 start",
+  "commit": "63a4480"
+}

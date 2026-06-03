@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-05-27",
+  "project": "VaultSparkStudios.github.io",
+  "slug": "vaultsparkstudios-website",
+  "type": "website",
+  "topLine": {
+    "totalItems": 4,
+    "combinedPriority": 147.9,
+    "top3": [
+      "generated-drift-preflight",
+      "rum-anomaly-canary",
+      "ambient-split-candidate-json"
+    ]
+  },
+  "items": [
+    {
+      "rank": 1,
+      "tier": "transformative",
+      "slug": "generated-drift-preflight",
+      "axis": "speed-organization-efficiency",
+      "effort": "45m",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 42.1,
+      "summary": "Add a fast preflight that runs only the drift-prone generated-output checks and tells the agent whether a full build refresh is needed before the expensive gate.",
+      "why": "Session 165 only caught stale public-intelligence artifacts inside the full build:check run. A targeted preflight catches the same class near session start and closeout, saving minutes and making generated truth failures obvious.",
+      "recipe": "Create scripts/check-generated-drift-preflight.mjs with self-test and --json modes, run public-intelligence/heartbeat/founder-presence/nav-sheet/llms generated checks, and wire it near the front of package.json build:check."
+    },
+    {
+      "rank": 2,
+      "tier": "transformative",
+      "slug": "rum-anomaly-canary",
+      "axis": "ai-intelligence-integration",
+      "effort": "1h",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 36.0,
+      "summary": "Add a week-over-week RUM canary that compares the latest field window to the previous field window and warns before the perf budget hard-fails.",
+      "why": "The RUM bridge is wired, but the next-order value is drift detection, not just pass/fail. A canary lets the site notice degrading field LCP/CLS while the strict flip is still waiting on sufficient samples.",
+      "recipe": "Create scripts/check-rum-anomaly-canary.mjs that reads data/rum-history.ndjson, compares latest and prior 7-day route windows, emits .cache/rum-anomaly-canary.json, supports --check/--self-test, and wire check mode into build:check as advisory."
+    },
+    {
+      "rank": 3,
+      "tier": "high",
+      "slug": "ambient-split-candidate-json",
+      "axis": "token-api-consumption-reduction",
+      "effort": "45m",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 33.7,
+      "summary": "Turn the ambient coverage Markdown into a machine-readable candidate list with proof commands and risk notes.",
+      "why": "The report already finds heavy guarded modules, but humans still have to re-read Markdown and infer the next move. A JSON candidate artifact lets future audits and agents choose the next split without burning context.",
+      "recipe": "Extend scripts/report-ambient-coverage.mjs to write .cache/ambient-split-candidates.json containing ranked guarded modules, recommended first proof step, and the forbidden-source guard status."
+    },
+    {
+      "rank": 4,
+      "tier": "high",
+      "slug": "ci-status-freshness-contract",
+      "axis": "security",
+      "effort": "30m",
+      "impact": 8,
+      "innovation": 7,
+      "priority": 36.1,
+      "summary": "Add a local contract that fails when the public CI status artifact is stale or malformed, so the site does not publish false operational confidence.",
+      "why": "api/ci-status.json is public-facing trust material. A freshness check keeps the brand anchor from showing old CI truth as current health.",
+      "recipe": "Create scripts/check-ci-status-freshness.mjs with --max-age-hours and --self-test, validate api/ci-status.json shape/freshness, and wire it into build:check with a practical freshness window."
+    }
+  ],
+  "executionLog": [
+    {
+      "slug": "generated-drift-preflight",
+      "status": "shipped",
+      "notes": "Added scripts/check-generated-drift-preflight.mjs and wired it first in build:check. It caught stale llms-full-shards after both initial audit work and public-oracle-feed refresh; final preflight green."
+    },
+    {
+      "slug": "ci-status-freshness-contract",
+      "status": "shipped",
+      "notes": "Added scripts/check-ci-status-freshness.mjs with self-test and 96h build gate. Adjusted summary contract to match the existing public artifact's string shape."
+    },
+    {
+      "slug": "rum-anomaly-canary",
+      "status": "shipped",
+      "notes": "Added scripts/check-rum-anomaly-canary.mjs. It compares latest vs previous RUM windows, emits .cache/rum-anomaly-canary.json, and passes check mode with empty history."
+    },
+    {
+      "slug": "ambient-split-candidate-json",
+      "status": "shipped",
+      "notes": "Extended scripts/report-ambient-coverage.mjs to emit .cache/ambient-split-candidates.json. Current artifact reports 11 guarded split candidates."
+    }
+  ]
+}

@@ -1,0 +1,290 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-05-27",
+  "project": "VaultSparkStudios.github.io",
+  "slug": "vaultsparkstudios-website",
+  "type": "website",
+  "topLine": {
+    "totalItems": 18,
+    "combinedPriority": 488.8,
+    "top3": [
+      "visitor-intent-flight-director",
+      "studio-nervous-system-page",
+      "ignis-answer-engine-local-first"
+    ]
+  },
+  "items": [
+    {
+      "rank": 1,
+      "tier": "transformative",
+      "slug": "visitor-intent-flight-director",
+      "axis": "ui-ux-user-experience",
+      "effort": "4h",
+      "impact": 10,
+      "innovation": 10,
+      "priority": 38.7,
+      "summary": "Turn the homepage and major hubs into an adaptive pathfinder that chooses the next best surface for a visitor based on local intent, route history, feedback signals, and public Studio OS state.",
+      "why": "The site already has adaptive CTAs, related rails, micro-feedback, and public intelligence, but they act as separate helpers. A single local-first flight director would make the site feel alive without server-side personalization or paid AI burn.",
+      "recipe": "Create assets/intent-flight-director.js and data/intent-graph.json, merge VSIntentState + micro-feedback summary + public-intelligence priorities + related-content maps, then render a compact next-step strip on /, /membership/, /games/, /universe/, /studio-pulse/, and /oracle/."
+    },
+    {
+      "rank": 2,
+      "tier": "transformative",
+      "slug": "studio-nervous-system-page",
+      "axis": "studio-os-cohesion",
+      "effort": "4h",
+      "impact": 10,
+      "innovation": 9,
+      "priority": 34.8,
+      "summary": "Add a public /nervous-system/ page that unifies Forge Window, Oracle, IGNIS ROI, feedback provenance, CI health, RUM health, social pulse, and project catalog into one legible operating surface.",
+      "why": "The site has many brilliant intelligence surfaces, but they are scattered across /studio-pulse/, /oracle/, /ignis/, /status/, /feedback/, and /social/. A nervous-system page becomes the signature differentiator: the studio's public operating brain, not another marketing page.",
+      "recipe": "Create /nervous-system/index.html backed by a generated api/nervous-system.json contract that composes api/public-intelligence.json, api/feedback-provenance.json, api/ci-status.json, api/ignis-roi.json, api/nav-sheet-stats.json, and social summary data."
+    },
+    {
+      "rank": 3,
+      "tier": "transformative",
+      "slug": "ignis-answer-engine-local-first",
+      "axis": "ai-intelligence-integration",
+      "effort": "4h",
+      "impact": 9,
+      "innovation": 10,
+      "priority": 34.8,
+      "summary": "Build an 'Ask IGNIS' public answer engine that uses local/static retrieval over llms shards, public intelligence feeds, audit summaries, rights pages, and sitemap data before any model call.",
+      "why": "Visitors should be able to ask what the studio is building, what changed, which game fits them, or how membership works. Local retrieval keeps the free tier cost-neutral and CANON-029 compliant while still feeling intelligent.",
+      "recipe": "Generate data/ignis-search-index.json from llms-full shards + public JSON feeds, add assets/ignis-answer-engine.js with deterministic ranking and citations, then expose it on /search/ and a compact /oracle/ panel; add BYOK-only model expansion later."
+    },
+    {
+      "rank": 4,
+      "tier": "transformative",
+      "slug": "feedback-operating-room",
+      "axis": "user-feedback-loop",
+      "effort": "3h",
+      "impact": 9,
+      "innovation": 9,
+      "priority": 33.4,
+      "summary": "Upgrade /feedback/ from shipped proof into a full public decision loop: asked, under review, planned, shipped, declined-with-reason, and needs-more-signal.",
+      "why": "The existing feedback provenance proves movement, but it does not show prioritization or closure. A transparent operating room would make members feel that their signals enter a real studio system, not a suggestion box.",
+      "recipe": "Create api/feedback-decision-board.json from aggregate/public-safe themes, extend /feedback/ with lane columns, and add a local vote chip per theme that stores only coarse local state and can later roll up through the existing Worker/RUM path."
+    },
+    {
+      "rank": 5,
+      "tier": "high",
+      "slug": "mobile-navigation-graduation-loop",
+      "axis": "mobile-responsiveness",
+      "effort": "2h",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 34.4,
+      "summary": "Move the bottom-sheet nav from founder/manual gating to a data-backed canary with route-level readiness, visual proofs, and automatic rollback criteria.",
+      "why": "The bottom sheet is already built and instrumented, but current stats show zero opens, so it cannot become default. A deliberate canary loop gives iPhone and Android visitors the better thumb-reach experience without repeating prior mobile nav regressions.",
+      "recipe": "Add navSheetCanaryPercent to api/nav-sheet-stats.json, teach nav-sheet.js to activate for a small deterministic local cohort on mobile, and add Playwright visual checks for iPhone SE, iPhone 15, Pixel, iPad Mini, and desktop drawer fallback."
+    },
+    {
+      "rank": 6,
+      "tier": "high",
+      "slug": "cross-tool-command-palette",
+      "axis": "navigation",
+      "effort": "3h",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 29.7,
+      "summary": "Evolve the lazy command palette into a cross-site action console with routes, membership actions, Studio OS surfaces, recent ships, social channels, and contextual commands.",
+      "why": "Command palette loading is now intent-paid, which makes it safe to deepen. A real action console compresses navigation complexity on desktop and gives power users a memorable Studio OS-shaped interface.",
+      "recipe": "Extend assets/command-palette.js to read data/intent-graph.json, api/public-intelligence.json, and api/feedback-provenance.json; add actions like 'open my portal', 'compare tiers', 'read latest ship', 'ask IGNIS', and 'copy press link'."
+    },
+    {
+      "rank": 7,
+      "tier": "high",
+      "slug": "account-chip-intent-lazy-split",
+      "axis": "speed-organization-efficiency",
+      "effort": "1h",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 32.0,
+      "summary": "Lazy-load account-chip.js after session readiness instead of carrying it in the ambient bundle for anonymous first paint.",
+      "why": ".cache/ambient-split-candidates.json ranks account-chip.js as the largest guarded split candidate. Most first-time visitors are anonymous, so shifting 11KB to session intent is a direct speed win with low conceptual risk.",
+      "recipe": "Create assets/account-chip-loader.js, remove account-chip.js from AMBIENT_SOURCES, inject it only after VSIdentity/VSSupabase session probe or a portal/account interaction, then add a regression gate like the command-palette split."
+    },
+    {
+      "rank": 8,
+      "tier": "high",
+      "slug": "public-social-dashboard-bridge",
+      "axis": "studio-os-cohesion",
+      "effort": "3h",
+      "impact": 8,
+      "innovation": 9,
+      "priority": 29.7,
+      "summary": "Turn /social/ into a live social dashboard bridge with channel roles, current campaign focus, recent public posts, and the next best follow action.",
+      "why": "/social/ currently lists channels, but it does not explain how each channel fits the studio machine. Connecting it to the Social Dashboard gives visitors and operators one shared map of outward signal.",
+      "recipe": "Generate api/social-dashboard-public.json from allowlisted Studio Ops/social-dashboard exports, render channel cards with role, cadence, latest safe post, and suggested action, then link it into /nervous-system/."
+    },
+    {
+      "rank": 9,
+      "tier": "high",
+      "slug": "vault-pathway-landing-pages",
+      "axis": "feature-depth-refinement",
+      "effort": "4h",
+      "impact": 8,
+      "innovation": 9,
+      "priority": 27.9,
+      "summary": "Add intent-specific pathway pages for Players, Supporters, Lore Followers, Builders, Press, and Investors, each generated from one shared pathway contract.",
+      "why": "The nav is rich but broad. Visitor intent pages would turn the same content into focused journeys, improving conversion and making the site easier to understand on mobile where menus are expensive.",
+      "recipe": "Create data/pathways.json plus /pathways/{players,supporters,lore,builders,press,investors}/ pages; each page reuses games, membership, Oracle, feedback, and social signals with a different ranking."
+    },
+    {
+      "rank": 10,
+      "tier": "high",
+      "slug": "studio-os-public-contract-health",
+      "axis": "security",
+      "effort": "2h",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 30.6,
+      "summary": "Add a public contract health gate that checks every public JSON endpoint for freshness, schema, public-safe vocabulary, and no internal/private leakage.",
+      "why": "The site now publishes many operating feeds. CI freshness is guarded, but the wider public JSON surface needs one trust contract so Studio OS integration does not leak operator language or stale truth.",
+      "recipe": "Create scripts/check-public-contract-health.mjs covering api/*.json, .well-known/*.json/txt, llms shards, and generated feeds; fail on stale generatedAt, internal terms, missing publicSafe markers, or schema drift."
+    },
+    {
+      "rank": 11,
+      "tier": "high",
+      "slug": "membership-economy-simulator",
+      "axis": "gamification-engagement-immersion",
+      "effort": "3h",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 26.4,
+      "summary": "Add an interactive rank and membership economy simulator that lets visitors see how play, referrals, feedback, and support move them through the 9-tier ladder.",
+      "why": "Membership is load-bearing, but the rank economy still requires trust before the visitor has an account. A simulator makes the system tangible and can reuse existing rank and tier data without touching production state.",
+      "recipe": "Create assets/rank-economy-simulator.js and data/rank-economy.json, mount it on /membership/ and /ranks/, and include no-auth local-only sliders for play sessions, referrals, challenge completions, and supporter depth."
+    },
+    {
+      "rank": 12,
+      "tier": "high",
+      "slug": "visual-system-debt-burn",
+      "axis": "ui-ux-user-experience",
+      "effort": "1d",
+      "impact": 8,
+      "innovation": 7,
+      "priority": 18.1,
+      "summary": "Extract repeated inline styles and one-off section patterns into shared surface primitives for Oracle, Forge Window, feedback, social, and homepage intelligence blocks.",
+      "why": "The site looks coherent, but key intelligence pages still carry many inline styles. Extracting them makes mobile/theming fixes cheaper and reduces the risk of one page drifting away from the design system.",
+      "recipe": "Create assets/intelligence-surfaces.css or fold primitives into assets/style.css, replace inline card/section/button styles on /oracle/, /feedback/, /social/, /studio-pulse/, and home, then add a lint rule for new public-page inline style growth."
+    },
+    {
+      "rank": 13,
+      "tier": "high",
+      "slug": "edge-personalized-shell-post-obelisk",
+      "axis": "feature-depth-refinement",
+      "effort": "1d",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 20.3,
+      "summary": "After Obelisk stabilizes session shape, move signed-in nav, membership state, and pathway hints into Worker HTMLRewriter shell personalization.",
+      "why": "Presence-first account recognition is already a decision, but it still arrives client-side. Edge shell personalization would remove anonymous CTA flash and make the brand anchor feel instant for members.",
+      "recipe": "Wait for Obelisk Phase 2 cookie/session contract, then add a Worker HTMLRewriter layer that stamps body data attrs and account shell hints without exposing secrets or weakening CSP."
+    },
+    {
+      "rank": 14,
+      "tier": "high",
+      "slug": "seo-entity-graph-expansion",
+      "axis": "seo-branding",
+      "effort": "2h",
+      "impact": 8,
+      "innovation": 7,
+      "priority": 26.8,
+      "summary": "Expand the entity graph into per-page canonical relationships, pathway breadcrumbs, author/editor metadata, and sameAs coverage for social channels.",
+      "why": "The site has AI-canonical pages and an entity graph, but search/AI answer engines reward explicit relationships. This improves discoverability without adding content bloat.",
+      "recipe": "Extend scripts/build-entity-graph.mjs to emit page-to-entity mappings, add breadcrumb JSON-LD for pathway pages, include social sameAs from propagate-nav data, and validate with a schema contract."
+    },
+    {
+      "rank": 15,
+      "tier": "high",
+      "slug": "rum-to-ux-decision-ledger",
+      "axis": "ai-intelligence-integration",
+      "effort": "2h",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 30.6,
+      "summary": "Create a UX decision ledger that turns RUM, nav-sheet stats, feedback themes, and route engagement into explicit implement-ready recommendations.",
+      "why": "The site now measures field vitals and some UX events, but it does not yet convert evidence into decisions. This is where IGNIS can become operationally useful instead of decorative.",
+      "recipe": "Create scripts/build-ux-decision-ledger.mjs that reads RUM summary, nav stats, feedback provenance, and route inventory, then writes api/ux-decision-ledger.json with decisions: hold, canary, graduate, rollback, or investigate."
+    },
+    {
+      "rank": 16,
+      "tier": "medium",
+      "slug": "progressive-web-app-polish",
+      "axis": "mobile-responsiveness",
+      "effort": "3h",
+      "impact": 7,
+      "innovation": 7,
+      "priority": 20.2,
+      "summary": "Polish the installed mobile/PWA path with offline navigation, recent pages, saved intent state, and portal resume shortcuts.",
+      "why": "The service worker exists and offline page exists, but installed mobile use can become a richer repeat-visit loop. This matters for membership retention more than first-visit marketing.",
+      "recipe": "Extend sw.js and offline.html to cache the last 5 public pages, expose 'resume where you left off', and add manifest shortcuts for Portal, Games, Forge Window, and Ask IGNIS."
+    },
+    {
+      "rank": 17,
+      "tier": "medium",
+      "slug": "public-security-trust-center",
+      "axis": "security",
+      "effort": "3h",
+      "impact": 7,
+      "innovation": 7,
+      "priority": 20.2,
+      "summary": "Upgrade /security/ into a public trust center with security headers, CSP posture, RUM privacy posture, Obelisk adoption state, data boundaries, and vulnerability reporting.",
+      "why": "Security is already treated seriously, but visitors and AI crawlers only see fragments. A trust center turns strong ops into brand trust and reduces repeated explanation work.",
+      "recipe": "Create api/security-posture.json from existing checks, render /security/ sections for headers, CSP, privacy-minimized telemetry, Obelisk posture, and reporting; link security.txt and rights/provenance."
+    },
+    {
+      "rank": 18,
+      "tier": "medium",
+      "slug": "nav-information-scent-audit-gate",
+      "axis": "navigation",
+      "effort": "2h",
+      "impact": 7,
+      "innovation": 7,
+      "priority": 23.4,
+      "summary": "Add a navigation information-scent checker that flags duplicate labels, vague routes, menu overload, missing related rails, and pages with no clear next action.",
+      "why": "Navigation has expanded with the studio. A structural gate keeps the site from slowly becoming a sitemap with a hero attached.",
+      "recipe": "Create scripts/check-navigation-scent.mjs to parse propagate-nav output, sitemap.xml, related-content maps, and CTA markers; warn on overloaded menu groups, orphan journeys, and duplicate route intent."
+    }
+  ],
+  "innovationReserve": [
+    "visitor-intent-flight-director",
+    "studio-nervous-system-page",
+    "ignis-answer-engine-local-first",
+    "feedback-operating-room",
+    "public-social-dashboard-bridge",
+    "vault-pathway-landing-pages",
+    "rum-to-ux-decision-ledger"
+  ],
+  "skipped": [
+    {
+      "slug": "rum-strict-flip",
+      "reason": "Still data-gated until '/' reaches at least 50 field samples in data/rum-summary.json."
+    },
+    {
+      "slug": "trusted-types-enforce",
+      "reason": "Still correctly gated on readable KV soak evidence plus device verification."
+    },
+    {
+      "slug": "delete-membership-orphans",
+      "reason": "Feature-bearing membership assets need founder decision before delete or rewire."
+    }
+  ],
+  "executionLog": {
+    "implementedAt": "2026-05-27",
+    "status": "implemented",
+    "summary": "Implemented the S167 audit plan with the member session persistence fix prioritized first. Local/static/site-owned items shipped; Obelisk-dependent edge personalization remains documented and gated.",
+    "verification": [
+      "npm run build",
+      "npm run build:check"
+    ],
+    "notes": [
+      "Signed-in members keep account state and account dropdown across refresh/navigation.",
+      "Signed-in members no longer receive anonymous become-a-member prompts.",
+      "Build check crawled 108 HTML files with 0 status failures and 0 blocking-script findings."
+    ]
+  }
+}

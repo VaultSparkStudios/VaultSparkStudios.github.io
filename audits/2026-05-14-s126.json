@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.3",
+  "date": "2026-05-14",
+  "session": 126,
+  "project": "vaultsparkstudios-website",
+  "rubricVersion": "3.0",
+  "totalScore": 981,
+  "totalMax": 1000,
+  "velocity": 11,
+  "categories": {
+    "devHealth": 99,
+    "creativeAlignment": 100,
+    "momentum": 97,
+    "engagement": 96,
+    "processQuality": 100,
+    "crossRepoCoherence": 96,
+    "securityPosture": 99,
+    "ecosystemIntegration": 97,
+    "capitalEfficiency": 99,
+    "automationCoverage": 98
+  },
+  "summary": "Turnstile root-cause #4 fixed (iframe reparent in S125's _surfaceWidget broke the cross-origin contentWindow/origin handshake → postMessage origin warnings + 'already rendered, rejected' on recovery). Rewrote assets/turnstile.js for lazy-render-in-slot; pure CSS toggles; fresh container on tab-switch/error/timeout. Cache-bust ?v=s126 on vault-member + investor-portal HTML. Then ran /audit (26 items · combined Priority 631.6 · docs/AUDIT_2026-05-13.md) + /implement first pass (docs/IMPLEMENT_PLAN.md). Pass 1 shipped: Speculation Rules sitewide, hover-prefetch ambient asset, SRI CI lint (1 missing SRI fixed), JS-budget CI lint (80 KB public / 120 KB portal), dispatch-voice TTS on /journal/dispatches/, mobile edge-swipe nav, forge-live hero tile (consumer-side of #2; reads /api/founder-presence.json), security.txt Expires refresh, 6 orphan shell-asset deletes. 8 DONE + 1 PARTIAL + 17 DEFERRED. Combined Priority shipped ≈ 192/631.6 (~30%). 4 commits live on origin/main.",
+  "shipped": [
+    "[BUG/P0] Turnstile root-cause #4 — iframe reparent fix (assets/turnstile.js lazy-render-in-slot)",
+    "[AUDIT/P0] docs/AUDIT_2026-05-13.md — 26 items, combined Priority 631.6, platform-weighted",
+    "[IMPLEMENT/P0] docs/IMPLEMENT_PLAN.md + first-pass 8 DONE + 1 PARTIAL",
+    "[#1 SPEED] Speculation Rules sitewide via propagate-nav.mjs",
+    "[#13 SPEED] assets/hover-prefetch.js — warms /api/* shards on 80ms hover-intent",
+    "[#19 SECURITY] scripts/check-sri.mjs CI lint — wired into build:check",
+    "[#25 SECURITY] .well-known/security.txt Expires rolled to 2027-05-13",
+    "[#8 SPEED] scripts/check-js-budget.mjs CI lint — 80 KB public / 120 KB portal",
+    "[#4 AI] assets/dispatch-voice.js — Web Speech API TTS on /journal/dispatches/",
+    "[#9 MOBILE] assets/edge-swipe-nav.js — left-edge swipe opens mobile nav",
+    "[#2 PARTIAL] Studio Living Mode consumer-side — hero-ticker.js now presence-aware",
+    "[#26 CLEANUP] 6 orphan style.shell-*.css hash variants deleted"
+  ],
+  "commits": [
+    "ae0ee23 fix(S126): Turnstile login broken by iframe reparent — render-in-slot, no DOM move",
+    "23380d4 feat(S126): sprint 1 — speculation rules + hover-prefetch + SRI lint + security.txt refresh",
+    "82d7e9c feat(S126): sprint 2+4+5 — js budget gate + voice dispatch + mobile edge-swipe nav",
+    "3b160f8 feat(S126): sprint 6 — forge-live hero tile + shell-asset cleanup + audit log"
+  ],
+  "deferred": {
+    "deployGated": ["#3 ignis-roi-loop", "#5 receipts-wall", "#15 anthropic-prompt-cache", "#22 avif-lqip-pipeline"],
+    "founderContentGated": ["#10 founder-voice-notes-eternal-tier", "#14 sealed-vault-countdown", "#23 founder-team-page"],
+    "infraRiskFounderGate": ["#6 passkey-cross-subdomain-auth", "#7 synthetic-auth-canary", "#20 vault-spark-id-universal-session"],
+    "innovationReserve": ["#12 ignis-conduit-proactive-narrator", "#17 universe-map-alt-homepage"],
+    "nextImplementPass": ["#11 cross-game-lore-gates", "#16 mode-aware-homepage", "#18 lighthouse-perf-restoration", "#21 public-slo-status-dashboard", "#24 tablet-portrait-touch-aa"]
+  },
+  "carries": [
+    "[S127][AUDIT-NEXT-PASS][P1] /implement next bounded tier (#11 + #16 + #18 + #21)",
+    "[S127→FOUNDER][SEC-CLASS-RETIRE][P0] STRONGLY RECOMMENDED — /implement #6 + #7 to retire Turnstile bug class entirely",
+    "[S127→CROSS-REPO][P3] studio-ops founder-presence-broadcast.mjs payload enrichment for Studio Living Mode fidelity",
+    "[S127→FOUNDER][VERIFY][P0] iPhone verify — S126 login + edge-swipe + dispatch-voice + speculation prerender",
+    "[S125→carry][PERF/P2] Lighthouse perf debt on / (failing every push since S120)",
+    "[S125→carry][CI/P1] Delete stale propagate-csp.mjs --dry-run step from E2E workflow",
+    "[S120→FOUNDER][KUDOS] Run supabase/kudos-migration.sql"
+  ],
+  "lessons": [
+    "Recurring bug classes need structural fixes. S120/S121/S122/S125/S126 are 5 different proximate causes of one symptom (login hang). Audit #6 (passkeys) + #7 (synthetic canary) retire the class entirely.",
+    "Iframe reparenting ≠ moving a div. Cross-origin iframes lose their parent contentWindow/origin handshake when their host node is appendChild'd elsewhere. Render into the destination from the start; never relocate.",
+    "Skill flow /audit → /implement → /closeout reduces decision overhead. One founder direction-burst, one ranked plan, bounded ship, ledger captures deferrals for next pass.",
+    "'exit 0 silent push failure' with 'cannot lock ref: is at X but expected Y' (X being our HEAD) is a server-side race meaning the prior push already landed — verify with git fetch + git log origin/main before retrying."
+  ]
+}

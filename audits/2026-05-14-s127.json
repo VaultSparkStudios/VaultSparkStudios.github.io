@@ -1,0 +1,64 @@
+{
+  "schemaVersion": "1.3",
+  "date": "2026-05-14",
+  "session": 127,
+  "slug": "vaultsparkstudios-website",
+  "label": "Studio-wide landing-page sanitization + consolidation",
+  "rubricVersion": "3.0",
+  "max": 1000,
+  "score": 905,
+  "categoriesV3": {
+    "devHealth": 95,
+    "creativeAlignment": 88,
+    "momentum": 92,
+    "engagement": 90,
+    "processQuality": 82,
+    "crossRepoCoherence": 95,
+    "securityPosture": 92,
+    "ecosystemIntegration": 93,
+    "capitalEfficiency": 95,
+    "automationCoverage": 83
+  },
+  "velocity": 11,
+  "protocolVelocity": 7,
+  "intentRate": 1.0,
+  "headline": "Studio-wide sanitization + consolidation — 11 items shipped. Inventory matrix · VaultFront single-canonical · 2 new public-IP pages · Worker Layer 0c edge 301s · sitewide CTA refresh · founder caught + corrected over-deletion mid-session. 90 files (+272/-3008 net).",
+  "deltas": {
+    "devHealth": -4,
+    "creativeAlignment": -12,
+    "momentum": -5,
+    "engagement": -6,
+    "processQuality": -18,
+    "crossRepoCoherence": -1,
+    "securityPosture": -7,
+    "ecosystemIntegration": -4,
+    "capitalEfficiency": -4,
+    "automationCoverage": -15
+  },
+  "highlights": [
+    "Inventory matrix via Explore subagent — 28 registry entries vs filesystem vs site",
+    "VaultFront single-canonical at /games/vaultfront/ (deleted /vaultfront/ root + /projects/vaultfront/)",
+    "2 new public-IP landing pages: /games/gridiron-gm-play/ (VAULTED) + /projects/seamline/ (FORGE)",
+    "Cloudflare Worker Layer 0c: edge 301s for /vaultfront/*, /projects/vaultfront/*, /gridiron-gm/*, /call-of-doodie/*",
+    "Sitewide CTA refresh: 6 hardcoded /call-of-doodie/ → callofdoodie.wtf",
+    "Signal Log internal contradiction fixed (Sparked page no longer has 'Notify when it opens' section)",
+    "/projects/ index rebuild: 0/7 → 5/6 hero stats; PromoGrind + Vorn promoted to Sparked with external CTAs",
+    "/games/ index rebuild: 2/5/1 → 2/4/2; added Gridiron GM Play card",
+    "Founder correction reversed: restored IdeaForge + StatVault + Signal Log + Vault Pipeline + Vault Member as PUBLIC products (operator-tool-vs-internal-audience distinction codified)",
+    "propagate-nav.mjs source updated; ran end-to-end across 83 HTML pages",
+    "Sitemap.xml + sitemap-page + search-index synced; removed obsolete /studio-hub/ from public sitemap"
+  ],
+  "lessons": [
+    "Internal-audience playtester ≠ internal-operator tool. The audience field in registry reflects playtester audience right now, not whether project is publicly disclosable. Default to keep+sanitize over delete.",
+    "Worker edge 301s > meta-refresh stubs for migrated games — preserves link equity, sub-100ms at edge. Keep stubs as defense-in-depth.",
+    "Heavy sanitization passes should stay in working tree until founder reviews diff. Commit only after explicit sign-off."
+  ],
+  "carry": [
+    "[S128→FOUNDER][WORKER-DEPLOY][P0] npx wrangler deploy to activate Layer 0c",
+    "[S128→FOUNDER][VERIFY][P0] iPhone verify post-deploy",
+    "[S128→DRIFT/P2] New drift gate: PROJECT_REGISTRY.json ↔ filesystem ↔ /projects/ ↔ /games/ ↔ sitemap.xml",
+    "[S128→CONTENT/P2] Sanitization review on 5 restored project pages",
+    "[S128→AUDIT-NEXT-PASS][P1] Carry from S126: /implement next tier from docs/AUDIT_2026-05-13.md",
+    "[S128→FOUNDER][SEC-CLASS-RETIRE][P0] Carry from S126: passkey + synthetic-canary"
+  ]
+}

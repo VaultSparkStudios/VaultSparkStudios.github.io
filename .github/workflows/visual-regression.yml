@@ -1,0 +1,75 @@
+name: Visual Regression (mobile)
+
+# S131 audit #4 — pixel-diff snapshots of 5 mobile surfaces × 3 viewports.
+# Runs on every PR that touches HTML/CSS/JS in /assets, /vault, /games, /membership,
+# /vault-member, or the root. Catches regressions like S130's brand cutoff +
+# dark drawer + IGNIS dot-on-scroll BEFORE the founder sees them.
+#
+# Baselines live under `tests/__snapshots__/visual-regression.spec.js-snapshots/`
+# and must be committed alongside any intentional UI change.
+#
+# To re-baseline locally:
+#   npx playwright test tests/visual-regression.spec.js --update-snapshots
+#
+# Baselines are captured against production by default. If the workflow ever
+# needs to diff against a preview deploy, set the VR_BASE_URL env in the job.
+#
+# ── Baseline capture (S134) ─────────────────────────────────────────────────
+# Local snapshots on Windows/macOS differ from Ubuntu runner pixels and are
+# NOT portable. Capture baselines against production on a Linux runner once,
+# then commit the resulting `tests/__snapshots__/` directory.
+#
+# After deploy, manually trigger:
+#   gh workflow run "Visual Regression (mobile)" -f base_url=https://vaultsparkstudios.com
+# Wait for the run to fail (no baselines yet), then download the snapshots
+# captured into the artifacts (test-results/) and commit them under
+# `tests/__snapshots__/visual-regression.spec.js-snapshots/`. The next PR run
+# will then compare against committed truth.
+
+on:
+  pull_request:
+    paths:
+      - 'assets/**'
+      - 'index.html'
+      - 'membership/**'
+      - 'vault-member/**'
+      - 'games/**'
+      - 'vault/**'
+      - 'tests/visual-regression.spec.js'
+      - 'tests/__snapshots__/**'
+      - '.github/workflows/visual-regression.yml'
+  # Allow ad-hoc manual runs (e.g. immediately after a deploy to refresh baseline).
+  workflow_dispatch:
+    inputs:
+      base_url:
+        description: 'Base URL to snapshot against (defaults to production)'
+        required: false
+        default: 'https://vaultsparkstudios.com'
+
+jobs:
+  snapshot:
+    name: Snapshot mobile surfaces
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium webkit
+      - name: Run visual-regression snapshots
+        env:
+          VR_BASE_URL: ${{ github.event.inputs.base_url || 'https://vaultsparkstudios.com' }}
+        run: npx playwright test tests/visual-regression.spec.js --reporter=line
+      - name: Upload diff report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-regression-diffs
+          path: |
+            test-results/
+            playwright-report/
+          retention-days: 14

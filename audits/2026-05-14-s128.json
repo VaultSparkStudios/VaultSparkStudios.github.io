@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.3",
+  "date": "2026-05-14",
+  "session": 128,
+  "project": "VaultSparkStudios.github.io",
+  "slug": "vaultsparkstudios-website",
+  "score": 942,
+  "maxScore": 1000,
+  "rubricVersion": "3.0",
+  "categories": {
+    "devHealth": 99,
+    "creativeAlignment": 96,
+    "momentum": 94,
+    "engagement": 97,
+    "processQuality": 99,
+    "crossRepoCoherence": 96,
+    "securityPosture": 93,
+    "ecosystemIntegration": 94,
+    "capitalEfficiency": 96,
+    "automationCoverage": 78
+  },
+  "velocity": 5,
+  "protocolVelocity": 9,
+  "debt": "down",
+  "intentOutcome": "achieved",
+  "summary": "Fixed Studio Pulse hydration/realtime, collapsed Signal Feedback into a bottom expandable button, added a Resources header dropdown through the canonical nav propagator, rebuilt shell assets, and verified with lint, build:check, diff check, and local browser smoke.",
+  "validation": [
+    "npm run lint:repo",
+    "npm run build:check",
+    "git diff --check",
+    "local Playwright smoke for /studio-pulse/ and /membership/"
+  ],
+  "next": [
+    "Add Studio Pulse script-order/runtime guard",
+    "Document collapsed micro-feedback default and page exceptions",
+    "Carry Worker deploy, iPhone verify, drift gate, restored-page review, passkey/canary, and audit next tier"
+  ]
+}

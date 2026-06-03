@@ -1,0 +1,78 @@
+name: Lighthouse CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Cloudflare's WAF returns managed-challenge HTML to GitHub Actions runner
+      # IPs, so pointing Lighthouse at https://vaultsparkstudios.com/ audits the
+      # challenge page (not the site) and wait-on times out. Running Lighthouse
+      # against a local preview server built from the same repo artifacts
+      # audits the real shipped HTML/CSS/JS without the WAF in the way.
+      - name: Start local preview server
+        run: |
+          node scripts/local-preview-server.mjs &
+          echo "PREVIEW_PID=$!" >> $GITHUB_ENV
+        env:
+          LOCAL_PREVIEW_HOST: 127.0.0.1
+          LOCAL_PREVIEW_PORT: '4173'
+
+      - name: Wait for local preview
+        run: npx --yes wait-on --timeout 30000 --interval 500 http://127.0.0.1:4173/
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            http://127.0.0.1:4173/
+            http://127.0.0.1:4173/games/
+            http://127.0.0.1:4173/community/
+            http://127.0.0.1:4173/leaderboards/
+            http://127.0.0.1:4173/journal/
+            http://127.0.0.1:4173/ranks/
+            http://127.0.0.1:4173/contact/
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      - name: Stop local preview
+        if: always()
+        run: |
+          if [ -n "${PREVIEW_PID:-}" ]; then kill "$PREVIEW_PID" || true; fi
+
+  # S83 — dual-URL gate. Staging is Hetzner-hosted (not Cloudflare-fronted),
+  # so runs cleanly from GitHub Actions IPs. Catches network-path regressions
+  # the local preview cannot see. Non-blocking: continue-on-error so a staging
+  # hiccup does not block a merge when local preview is green.
+  lighthouse-staging:
+    runs-on: ubuntu-latest
+    needs: lighthouse
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for staging reachability
+        run: npx --yes wait-on --timeout 120000 --interval 5000 https://website.staging.vaultsparkstudios.com/
+
+      - name: Run Lighthouse against staging
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            https://website.staging.vaultsparkstudios.com/
+            https://website.staging.vaultsparkstudios.com/games/
+            https://website.staging.vaultsparkstudios.com/membership/
+            https://website.staging.vaultsparkstudios.com/vaultsparked/
+            https://website.staging.vaultsparkstudios.com/vault-wall/
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true

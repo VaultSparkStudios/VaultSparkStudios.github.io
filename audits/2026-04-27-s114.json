@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "1.3",
+  "session": 114,
+  "date": "2026-04-27",
+  "slug": "vaultsparkstudios-website",
+  "name": "VaultSparkStudios.github.io",
+  "sil": {
+    "total": 494,
+    "max": 500,
+    "v3Total": 954,
+    "v3Max": 1000,
+    "velocity": 4,
+    "debt": "down",
+    "categories": {
+      "devHealth": 99,
+      "creativeAlignment": 98,
+      "momentum": 100,
+      "engagement": 90,
+      "processQuality": 102,
+      "crossRepoCoherence": 96,
+      "securityPosture": 95,
+      "ecosystemIntegration": 98,
+      "capitalEfficiency": 80,
+      "automationCoverage": 96
+    }
+  },
+  "intent": {
+    "stated": "Founder ran start → go → closeout. Autonomous /go sprint over the genius-list NOW block.",
+    "outcome": "achieved",
+    "notes": "All 4 unblocked NOW items shipped cleanly. Remaining items are cross-repo (publisher-side broadcast in studio-ops) or human-action (CF Email Routing scope, Eternal content seed, browser-verify pile)."
+  },
+  "shipped": [
+    "Restored S112 secrets-gateway sibling-fallback in scripts/lib/secrets.mjs + scripts/probe-capability.mjs + scripts/paste-credential.mjs (S113 commit had reverted it); check-secrets --audit recovered 0/41 → 21/41 caps READY; probe-capability --for claude.api HTTP 200",
+    "Built /journal/dispatches/ archive page reading rolling-30 narrative history from /api/vault-narrative-history.json",
+    "Extended scripts/generate-vault-narrative.mjs with appendHistory() (rolling 30, dedupes same-day) + writeRss() (RSS 2.0 to journal/dispatches/feed.xml)",
+    "Updated .github/workflows/vault-narrative.yml to commit api/vault-narrative-history.json + journal/dispatches/feed.xml alongside the existing api/vault-narrative.json",
+    "Added sitemap entry for /journal/dispatches/ at priority 0.85, daily changefreq",
+    "Founder-presence WebSocket consumer-side: assets/presence-badge.js subscribes to Supabase Realtime broadcast channel `founder-presence` when window.VSSupabase available; poll cadence 90s → 5min once subscribed; polling remains canonical fallback",
+    "CF Email Routing scope verified missing: probed both CLOUDFLARE_API_TOKEN and CLOUDFLARE_DNS_TOKEN against /zones/<id>/email/routing/rules (both 403 / authentication error)",
+    "Surfaced [CF-EMAIL-ROUTING-SCOPE] HAR row with explicit dashboard steps + Node verification probe; deduped two prior duplicate rows (S110 + S111) into a single canonical breadcrumb",
+    "Filed [S114][CROSS-REPO][P3] Publish founder-presence broadcast from studio-ops as the publisher-side follow-up",
+    "Regenerated derived snapshots at end of sprint (api/public-intelligence.json, api/heartbeat.json, api/founder-presence.json, context/contracts/*.json) to prevent closeout drift",
+    "Added two SIL-derived TASK_BOARD commits: gateway-readiness assertion in smoke-startup-scripts.mjs + HAR verification-probe template pass"
+  ],
+  "deferred": [
+    "Browser-verify pile (S96/S97/S98/S113/S114 surfaces) — single Playwright sweep recommended next session",
+    "Placeholder-domain email leaks in 7 forge-project compliance pages — better handled as dedicated cross-repo portfolio sweep",
+    "Seed real Eternal content (SEALED_REVEALS_JSON, ETERNAL_CREDITS_JSON) — needs founder-approved content payloads",
+    "Durable Eternal QA account + focused browser verify — needs production credential provisioning",
+    "Live Eternal positive-path verification — needs active vault_sparked_pro account in production",
+    "Publisher-side studio-ops broadcast for founder-presence — cross-repo write requires lock check + coordinated push"
+  ],
+  "blockers": [
+    "[CF-EMAIL-ROUTING-SCOPE] founder-only Cloudflare dashboard action (verified missing this session)",
+    "[WEB3FORMS] contact form browser test (long-running)",
+    "[WAF] CF WAF JS Challenge rule confirmation",
+    "[BEACON] beacon Gist creation"
+  ],
+  "verification": {
+    "buildCheck": "green",
+    "cspAudit": "100/100 HTML files",
+    "driftGates": "clean (portfolio-count + brand-assets + stale-open-tasks)",
+    "secretsScan": "0 findings on staged",
+    "doctor": "13/13 passing",
+    "checkSecrets": "21/41 caps READY (recovered from 0/41)",
+    "probeCapability": "claude.api HTTP 200"
+  }
+}

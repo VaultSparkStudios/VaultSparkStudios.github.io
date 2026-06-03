@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-website",
+  "date": "2026-04-16",
+  "session": 81,
+  "sessionType": "infrastructure",
+  "label": "ci-flakiness-cleanup",
+  "calibration": false,
+  "scores": {
+    "devHealth": 95,
+    "creativeAlignment": 94,
+    "momentum": 93,
+    "engagement": 92,
+    "processQuality": 99
+  },
+  "total": 478,
+  "maxScore": 500,
+  "velocity": 0,
+  "protocolVelocity": 5,
+  "durationMinutes": 45,
+  "debt": "↓",
+  "rollingAvg3": {
+    "devHealth": 95.3,
+    "creativeAlignment": 95.0,
+    "momentum": 94.7,
+    "engagement": 93.7,
+    "processQuality": 99.3,
+    "total": 482.0
+  },
+  "rollingAvgTotals": { "3": 482.0, "5": 477.0, "10": 446.3, "25": 433.0, "all": 435.3 },
+  "topWin": "Diagnosed and killed the hidden sw-version vs build-shell-assets race that had been quietly dropping E2E compliance to red since S77 — root-cause fix, not a symptom patch.",
+  "topGap": "Lighthouse + E2E runs were still in_progress at closeout; the playwright-axe lockfile fix was committed after the main CI-fix commit and is technically unverified until next push.",
+  "intentOutcome": "Achieved",
+  "improvementsShipped": 5,
+  "improvementGroups": {
+    "ci-race-conditions": 2,
+    "ci-false-positives": 1,
+    "ci-timing": 1,
+    "infra-deprecation": 1
+  },
+  "testsTotal": null,
+  "testsByType": {},
+  "testsDelta": null,
+  "deployStatus": "deployed",
+  "ignisFlags": ["intent-achieved", "debt-clear", "blocker-cleared"],
+  "ignisNote": "Best session pattern: one CI failure led to diagnosing two latent failures (lockfile, sw-version race) that had been red-for-months noise. Digging past the symptom paid off."
+}

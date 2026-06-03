@@ -1,0 +1,106 @@
+{
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-05-22",
+  "session": "S158",
+  "project": "vaultsparkstudios.github.io",
+  "projectType": "platform",
+  "axisWeights": {
+    "security": 2.0,
+    "speed": 2.0,
+    "ux": 1.5,
+    "feedbackLoop": 1.5,
+    "featureDepth": 1.0,
+    "innovation": 1.0,
+    "gamification": 1.0,
+    "ai": 1.0,
+    "tokenCost": 1.0
+  },
+  "topline": {
+    "totalItems": 6,
+    "combinedPriority": 449.7,
+    "shipped": 0,
+    "top3": [
+      "perf-budget-auto-fix-recipe",
+      "trusted-types-observability-page",
+      "carry-resolution-protocol-allowlist"
+    ]
+  },
+  "items": [
+    {
+      "rank": 1,
+      "slug": "perf-budget-auto-fix-recipe",
+      "tier": "🔥",
+      "axis": "speed",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 96.0,
+      "recipe": "Extend scripts/check-perf-budget.mjs to emit .cache/perf-fix-recipes.json keyed by (route × profile) when median LCP or CLS busts budget. Recipe = ranked candidate fixes by failure class: (LCP-blocking → 'audit critical-shell coverage + add fetchpriority=high to LCP image'; LCP-render → 'check idle-loader gates / drop forwards fill-mode on hero animation'; CLS-shift → 'audit reserved geometry in critical shell for route'). Wired into npm run build:check as advisory output. Foundation for autonomous fix loop S159+."
+    },
+    {
+      "rank": 2,
+      "slug": "trusted-types-observability-page",
+      "tier": "🔥",
+      "axis": "security",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 85.3,
+      "recipe": "Add /security/trusted-types/ public-safe page showing aggregate Trusted Types violation report counts by url-path-prefix + directive. Renders from /api/tt-summary.json (new generated artifact). For now, generate placeholder summary at build-time (zero samples until KV ring accumulates). New scripts/build-tt-summary.mjs reads optional CSV/JSON export from KV via Worker /v/tt-summary admin route (Bearer-gated) OR emits empty-but-valid shape. Page is dark, atmospheric, brand-consistent."
+    },
+    {
+      "rank": 3,
+      "slug": "carry-resolution-protocol-allowlist",
+      "tier": "⚡",
+      "axis": "processQuality",
+      "effortHours": 0.5,
+      "impact": 7,
+      "innovation": 4,
+      "priority": 70.0,
+      "recipe": "Resolve S158 carry [PROTOCOL-SCRIPTS] by adding scripts/check-obelisk-posture.mjs (reads context/OBELISK_ADOPTION.md if present, reports posture) + scripts/watch-registry-changes.mjs (no-op stub with TTL-respecting design hint). Both <40 lines. Remove the allowlist exception; verify check-protocol-scripts --info reports 0 missing."
+    },
+    {
+      "rank": 4,
+      "slug": "touch-target-audit-gate",
+      "tier": "⚡",
+      "axis": "ux",
+      "effortHours": 2,
+      "impact": 7,
+      "innovation": 6,
+      "priority": 67.5,
+      "recipe": "scripts/check-touch-targets.mjs parses assets/style.css and shell CSS for explicit width/height/min-* declarations on interactive selectors (a, button, .btn, [role=button], input[type=text|email|search|password], .tap-target). Fails when a selector's computed touch box drops below 44×44 inside @media (max-width:768px). Self-test 6 cases. Wired into build:check as advisory."
+    },
+    {
+      "rank": 5,
+      "slug": "preconnect-resource-hints",
+      "tier": "💡",
+      "axis": "speed",
+      "effortHours": 1,
+      "impact": 5,
+      "innovation": 4,
+      "priority": 50.4,
+      "recipe": "Audit critical-shell injection in scripts/build-shell-assets.mjs and ensure <link rel=preconnect crossorigin> exists for cdn.jsdelivr.net + supabase project URL on pages that use them. Add idempotent injection. Expected save ~80-200ms TLS+DNS on first-paint resource fetches."
+    },
+    {
+      "rank": 6,
+      "slug": "perf-history-csv-export",
+      "tier": "💡",
+      "axis": "tokenCost",
+      "effortHours": 1,
+      "impact": 5,
+      "innovation": 5,
+      "priority": 50.0,
+      "recipe": "scripts/export-perf-history.mjs --out docs/PERF_HISTORY.csv converts data/perf-history.ndjson into spreadsheet-friendly columns (timestamp, route, profile, lcp, cls, ttfb, fcp). Idempotent, deterministic ordering by ts asc. Enables offline analysis without re-running browser traces."
+    }
+  ],
+  "innovationReserve": [
+    "perf-budget-auto-fix-recipe",
+    "trusted-types-observability-page",
+    "touch-target-audit-gate"
+  ],
+  "skipped": [
+    "rum-r2-bucket — blocked on Cloudflare R2 provisioning (founder action / external)",
+    "visual-regression-baseline — needs Playwright pixel-snapshot infra; multi-session item",
+    "ai-crawler-narrative-enrichment — light value; defer until /llms-full.txt has multiple consumers"
+  ]
+}

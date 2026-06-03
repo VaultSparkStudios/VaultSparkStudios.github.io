@@ -1,0 +1,46 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-website",
+  "date": "2026-04-08",
+  "session": 52,
+  "sessionType": "implementation",
+  "label": "auth-fix-csp-theme-picker",
+  "calibration": false,
+  "scores": {
+    "devHealth": 82,
+    "creativeAlignment": 86,
+    "momentum": 87,
+    "engagement": 89,
+    "processQuality": 84
+  },
+  "total": 428,
+  "maxScore": 500,
+  "velocity": 4,
+  "protocolVelocity": 1,
+  "durationMinutes": 90,
+  "debt": "→",
+  "rollingAvg3": {
+    "devHealth": 85.3,
+    "creativeAlignment": 87.3,
+    "momentum": 87.7,
+    "engagement": 88.7,
+    "processQuality": 84.0,
+    "total": 432.7
+  },
+  "rollingAvgTotals": { "3": 432.7, "5": 431.8, "10": 422.4, "25": null, "all": 416.7 },
+  "topWin": "Diagnosed Cloudflare Worker CSP as root cause of completely non-functional portal login — identified from console logs and fixed in one targeted edit",
+  "topGap": "Tile picker required a follow-up border fix and 3 cache purges; should have pre-validated tile legibility against dark panel before shipping",
+  "intentOutcome": "Achieved",
+  "improvementsShipped": 5,
+  "improvementGroups": {
+    "auth": ["hash routing for auth tabs", "improved login error messages", "Cloudflare Worker CSP fix (unsafe-inline)"],
+    "ui": ["theme tile picker redesign", "tile border fix for dark tiles"],
+    "promogrind": ["sign-in CTA to #login", "Already a member? Sign in sidebar link"]
+  },
+  "testsTotal": null,
+  "testsByType": {},
+  "testsDelta": null,
+  "deployStatus": "deployed",
+  "ignisFlags": ["intent-achieved", "high-velocity", "blocker-cleared"],
+  "ignisNote": "Critical portal regression (CSP blocking all onclick handlers) was silently breaking login for an unknown duration; diagnosed purely from browser console output shared by user — a reminder to verify Worker CSP matches page meta CSP whenever the Worker is updated."
+}
