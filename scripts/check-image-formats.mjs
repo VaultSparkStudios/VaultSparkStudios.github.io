@@ -29,6 +29,9 @@ const THRESHOLD = 30 * 1024;
 const SKIP_DIRS = new Set([
   '.git', 'node_modules', '.cache', '.wrangler', 'dist', 'build',
   'coverage', 'test-results', 'playwright-report',
+  // S172: visual-proof galleries are local review surfaces (noindex, never
+  // deployed) — screenshot PNGs there don't need AVIF/WebP wrappers.
+  'visual-proof',
 ]);
 
 function* walk(dir, exts) {

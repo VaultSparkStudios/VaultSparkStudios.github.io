@@ -7,8 +7,12 @@
   "type": "website",
   "topline": {
     "totalItems": 12,
-    "combinedPriority": 281.0,
-    "top3": ["rum-r2-field-unlock", "perf-truth-cascade", "perf-forensic-commit-correlator"],
+    "combinedPriority": 281,
+    "top3": [
+      "rum-r2-field-unlock",
+      "perf-truth-cascade",
+      "perf-forensic-commit-correlator"
+    ],
     "headline": "The R2 credential that unlocks the entire RUM saga has been READY the whole time — one fetch script ends three data-gated blockers at once."
   },
   "items": [
@@ -20,7 +24,7 @@
       "effort": "2h",
       "impact": 10,
       "innovation": 8,
-      "priority": 40.0,
+      "priority": 40,
       "summary": "Build scripts/fetch-rum-from-r2.mjs — pull production RUM rows from the vaultspark-rum R2 bucket into data/rum-raw.ndjson via the READY cloudflare.r2 credential, then run rum:summary.",
       "why": "TASK_BOARD labels RUM-SAMPLE-UNLOCK '(Founder action: production RUM export access)' — but check-secrets shows cloudflare.r2 READY 4/4. This is a textbook CANON-019 phantom blocker: the Worker writes rum/raw/dt=<day>/<uuid>.json (security-headers-worker.js:305) and pull-rum-summary.mjs only ever reads LOCAL files — nobody ever built the R2→local hop. One script resolves the P1 blocker, and second-order it also feeds nav-sheet ux events toward MOBILE-SHEET-DEFAULT-SWAP readiness and seeds RUM-ANOMALY-CANARY. Three data-gated items share this single root cause.",
       "recipe": "Use S3-compat ListObjectsV2 + GetObject against the R2 endpoint with R2_ACCESS_KEY_ID/R2_SECRET_ACCESS_KEY via the secrets gateway (fallback: Cloudflare REST API with the cloudflare.studio cfut_ token). Write last-30-days objects to data/rum-raw.ndjson, run `npm run rum:summary`, report sample counts per route. Add `npm run rum:pull` script entry. No secrets in stdout (redact())."
@@ -59,7 +63,7 @@
       "effort": "2h",
       "impact": 7,
       "innovation": 8,
-      "priority": 28.0,
+      "priority": 28,
       "summary": "Public-safe /api/site-health.json (p75 LCP/CLS from real visits + sample count, no IDs) + a 'measured from real visits' proof strip on /studio-pulse/.",
       "why": "S169 made professional studio posture a sitewide contract — release discipline with public proof. Once field RUM flows (item 1), the site can prove its own speed with visitor-measured numbers instead of self-reported lab traces. A studio that publishes its real-user p75 is making a craft statement competitors can't fake. Gated behind a sample threshold so it never renders on thin data.",
       "recipe": "Renderer script build-site-health.mjs reads data/rum-summary.json, emits api/site-health.json only when samples>=50 per route (publicSafe:true, no UAs/IDs). Small studio-pulse panel hydrates from it with an honest 'awaiting field samples' fallback state. Wire renderer into npm run build."
@@ -111,7 +115,7 @@
       "effort": "2h",
       "impact": 8,
       "innovation": 6,
-      "priority": 24.0,
+      "priority": 24,
       "summary": "Forensic decision dossier for the 3 feature-bearing orphan assets (membership-interview.js, vault-sdk.js, vaultsparked-proof.js): when wired, which commit orphaned them, rewire-vs-retire recommendation each.",
       "why": "The founder gate (SOUL #2: never half-bake membership) is legitimate, but the decision is currently impossible to make quickly — nobody knows HOW these became orphans. S135 proved the propagator class of bug 'replaces but never injects' script tags; if git history shows these were accidentally severed by a propagation pass rather than deliberately retired, the right call is rewire and it's nearly free. The dossier converts a stale P1 into a 30-second founder yes/no with evidence attached.",
       "recipe": "Per asset: `git log --follow --oneline -- assets/<file>` + `git log -S '<file>' --oneline -- '*.html'` to find the wiring-removal commit and its intent; inventory exported features; write docs/MEMBERSHIP_ORPHAN_DOSSIER_S172.md with a recommendation table (rewire target page / retire + archive) and effort per option."
@@ -124,7 +128,7 @@
       "effort": "1h",
       "impact": 6,
       "innovation": 5,
-      "priority": 19.0,
+      "priority": 19,
       "summary": "Generate docs/visual-proof/index.html — a side-by-side desktop/mobile gallery rendered from manifest.json — so LONGTAIL-VISUAL-PROOF-REVIEW is one click instead of six file-opens.",
       "why": "The S171 proof pack is sitting unreviewed partly because reviewing it means opening 6 PNGs individually. A static gallery page (local-only, not deployed) with route labels, capture dates, and non-blank scores makes the founder review take 30 seconds — and every future capture run regenerates it for free. Review friction is the silent killer of proof packs.",
       "recipe": "Script render-visual-proof-gallery.mjs reads docs/visual-proof/*/manifest.json, emits a dark-theme index.html with desktop|mobile pairs per route + metadata chips. Hook into capture-longtail-visual-proof.mjs tail. Keep it out of the deploy surface (docs/ is not served)."
@@ -169,11 +173,97 @@
       "recipe": "Run `node ../vaultspark-studio-ops/scripts/ops.mjs rescore` for IGNIS; regenerate revenue signals via the studio-ops revenue script; confirm both flip to ✓ in a re-rendered brief."
     }
   ],
-  "innovationReserve": ["perf-forensic-commit-correlator", "rum-r2-field-unlock", "field-health-public-badge"],
-  "skipped": [
-    {"slug": "edge-personalization", "reason": "Obelisk Phase 2 gate is a real decision (S167 DECISIONS) — not rescheduled, respect canon."},
-    {"slug": "mobile-sheet-default-swap", "reason": "Data-gated by design (S164 DECISIONS); item 1 feeds its telemetry rather than forcing the flip."},
-    {"slug": "trusted-types-enforce", "reason": "Only the KV evidence probe (item 5) ships now; enforce still requires founder device verify per SOUL #3."}
+  "innovationReserve": [
+    "perf-forensic-commit-correlator",
+    "rum-r2-field-unlock",
+    "field-health-public-badge"
   ],
-  "executionLog": []
+  "skipped": [
+    {
+      "slug": "edge-personalization",
+      "reason": "Obelisk Phase 2 gate is a real decision (S167 DECISIONS) — not rescheduled, respect canon."
+    },
+    {
+      "slug": "mobile-sheet-default-swap",
+      "reason": "Data-gated by design (S164 DECISIONS); item 1 feeds its telemetry rather than forcing the flip."
+    },
+    {
+      "slug": "trusted-types-enforce",
+      "reason": "Only the KV evidence probe (item 5) ships now; enforce still requires founder device verify per SOUL #3."
+    }
+  ],
+  "executionLog": [
+    {
+      "slug": "rum-r2-field-unlock",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "perf-truth-cascade",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "perf-forensic-commit-correlator",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "field-health-public-badge",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "tt-soak-kv-probe",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "ark-drain-restore",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "protocol-script-self-heal",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "membership-orphan-dossier",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "visual-proof-gallery",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "closeout-prod-perf-sample",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "testing-surfaces-registration",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    },
+    {
+      "slug": "ops-freshness-refresh",
+      "status": "shipped",
+      "session": 172,
+      "date": "2026-06-03"
+    }
+  ]
 }

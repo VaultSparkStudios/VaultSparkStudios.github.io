@@ -58,6 +58,7 @@ export function buildPayload(summary, { minSamples = MIN_SAMPLES } = {}) {
   measured.sort((a, b) => b.samples - a.samples);
   return {
     schemaVersion: '1.0',
+    generatedAt: new Date().toISOString(),
     generatedBy: 'scripts/build-site-health.mjs',
     publicSafe: true,
     source: 'field-rum',

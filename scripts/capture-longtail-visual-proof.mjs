@@ -134,3 +134,10 @@ const manifest = {
 
 fs.writeFileSync(path.join(OUT_DIR, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);
 console.log(`long-tail visual proof captured: ${captures.length} screenshot(s) → ${path.relative(ROOT, OUT_DIR)}`);
+
+// S172 visual-proof-gallery: regenerate the review gallery after every capture
+// run so founder review stays one click.
+try {
+  const { spawnSync } = await import('node:child_process');
+  spawnSync(process.execPath, [path.join(ROOT, 'scripts', 'render-visual-proof-gallery.mjs')], { stdio: 'inherit', cwd: ROOT });
+} catch { /* gallery is additive — capture result stands without it */ }
