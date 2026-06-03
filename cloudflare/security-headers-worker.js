@@ -101,7 +101,17 @@ const RATE_LIMIT_MAX = 3;
 const RUM_MAX_BODY_BYTES = 4096;
 const TT_REPORT_MAX_BODY_BYTES = 8192;
 const TT_REPORT_SAMPLE_RATE = 0.005;
+// S172 tt-soak-kv-probe: 1-day TTL + 0.5% sampling + low traffic meant the
+// soak could never accumulate evidence (KV probe found zero tt:* keys while
+// the header was live). TTL is now env-tunable so the soak window can hold
+// reports long enough to be read; see TT_REPORT_TTL_SEC var in wrangler.toml.
 const TT_REPORT_TTL_SEC = 86400;
+function resolveTtReportTtl(env) {
+  const n = Number(env?.TT_REPORT_TTL_SEC);
+  // KV minimum TTL is 60s; cap at 90 days to bound storage.
+  if (!Number.isFinite(n) || n < 60) return TT_REPORT_TTL_SEC;
+  return Math.min(n, 90 * 86400);
+}
 const TT_REPORT_BUCKET_SIZE = 1000;
 const TT_REPORT_CSP = "require-trusted-types-for 'script'; report-to vs-tt";
 const TT_REPORTING_ENDPOINTS = 'vs-tt="/v/tt-report"';
@@ -372,9 +382,10 @@ async function handleTrustedTypesReport(request, env, ctx) {
   const current = Number(await env.RATE_LIMIT.get(counterKey)) || 0;
   const next = (current + 1) % TT_REPORT_BUCKET_SIZE;
   const key = `tt:${day}:${String(next).padStart(4, '0')}`;
+  const ttlSec = resolveTtReportTtl(env);
   ctx.waitUntil(Promise.all([
-    env.RATE_LIMIT.put(counterKey, String(next), { expirationTtl: TT_REPORT_TTL_SEC + 3600 }),
-    env.RATE_LIMIT.put(key, JSON.stringify(normalized), { expirationTtl: TT_REPORT_TTL_SEC }),
+    env.RATE_LIMIT.put(counterKey, String(next), { expirationTtl: ttlSec + 3600 }),
+    env.RATE_LIMIT.put(key, JSON.stringify(normalized), { expirationTtl: ttlSec }),
   ]));
   return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 }

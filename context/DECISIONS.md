@@ -1435,3 +1435,11 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **Truth correction (supersedes the S161 "synthetic-trace artifact" framing):** field data shows `/` is genuinely slow for real visitors — 37 samples over 30d, median LCP ~5.8s, raw p75 ~10s, FCP≈LCP. The synthetic 13s cold trace was directionally right, not a pure artifact. The strict flip stays parked (<50 samples/route), but homepage LCP is a REAL field problem and goes back on the board as a P1 with field evidence attached.
 
 **Maintenance rule:** `npm run rum:pull` should run at session start or closeout so field history accrues continuously. Never re-label the RUM export founder-blocked; the script + credential path is the canonical export.
+
+### 2026-06-03 — S172 — TT soak was structurally blind; now sampling 100% with 30-day retention, and the cookie banner sink is fixed
+
+**Decision:** The Trusted Types report-only soak (S156) could never produce evidence: 0.5% sampling × 1-day KV TTL × low traffic ≈ guaranteed-empty namespace. The Worker now reads `TT_REPORT_TTL_SEC` from env; production sets `TT_REPORT_SAMPLE_RATE="1"` + 30-day TTL for the soak window. Deployed (version 4f7dd69c) and verified live: headers intact, intake 204, site 200.
+
+**Why:** CANON-019 probe — the `cloudflare.kv` MISSING label was half-phantom: the deploy token has KV read scope (verified via wrangler); only the cfut_ studio token lacks it (error 10000, logged). First real probe surfaced a live violation: `assets/cookie-consent.js:14` innerHTML — fires on every first visit, the highest-volume TT sink on the site. Rebuilt the banner with DOM API.
+
+**Maintenance rule:** `node scripts/probe-tt-soak.mjs` reads the soak autonomously (deploy token first). Do NOT graduate to enforce until a multi-week 100%-sample soak shows ~0 violations after the cookie-consent fix propagates, plus founder device verify (SOUL #3). Revert sample rate/TTL to defaults after the enforce decision.

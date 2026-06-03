@@ -24,6 +24,15 @@ NONCE_CSP_ENABLED = "1"
 # Rate-limit on POST to /contact/submit + /ask-founders/submit. KV binding active below.
 RATE_LIMIT_ENABLED = "1"
 
+# S172 tt-soak-kv-probe: the original soak (0.5% sampling, 1-day TTL) could
+# never accumulate readable evidence at current traffic — the KV probe found
+# zero tt:* keys while the report-only header was live. For the soak window,
+# sample 100% of TT reports and hold them 30 days so probe-tt-soak.mjs can
+# read a real signal. Report-only intake only — does NOT change enforcement.
+# Revert both to defaults after the enforce decision lands.
+TT_REPORT_SAMPLE_RATE = "1"
+TT_REPORT_TTL_SEC     = "2592000"
+
 # Hub subdomain migration flag. When "1", the worker:
 #   1) serves auth + proxy for hub.vaultsparkstudios.com (requires HUB_* secrets)
 #   2) 301 redirects legacy /studio-hub/* to https://hub.vaultsparkstudios.com/*

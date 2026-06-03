@@ -11,20 +11,33 @@
   banner.setAttribute('aria-label', 'Cookie consent');
 
   // All styling lives in style.css (.vs-cookie-banner, .vs-cookie-inner, etc.)
-  banner.innerHTML =
-    '<div class="vs-cookie-banner">' +
-      '<div class="vs-cookie-inner">' +
-        '<p class="vs-cookie-text">' +
-          'We use analytics cookies to understand how visitors use this site. Essential cookies required for auth and session are always active. ' +
-          '<a href="/cookies/">Cookie Policy</a> · ' +
-          '<a href="/privacy/">Privacy Policy</a>' +
-        '</p>' +
-        '<div class="vs-cookie-actions">' +
-          '<button id="cookieDecline" class="vs-cookie-decline" aria-label="Decline analytics cookies">Decline Analytics</button>' +
-          '<button id="cookieAccept" class="vs-cookie-accept" aria-label="Accept analytics cookies">Accept Analytics</button>' +
-        '</div>' +
-      '</div>' +
-    '</div>';
+  // S172: built with DOM API instead of innerHTML — this was the highest-volume
+  // Trusted Types sink on the site (fires on every first visit; caught by the
+  // require-trusted-types-for report-only soak at cookie-consent.js:14).
+  function el(tag, props, children) {
+    var node = document.createElement(tag);
+    Object.keys(props || {}).forEach(function(k) {
+      if (k === 'className') node.className = props[k];
+      else if (k === 'text') node.textContent = props[k];
+      else node.setAttribute(k, props[k]);
+    });
+    (children || []).forEach(function(child) { node.appendChild(child); });
+    return node;
+  }
+
+  var text = el('p', { className: 'vs-cookie-text' }, [
+    document.createTextNode('We use analytics cookies to understand how visitors use this site. Essential cookies required for auth and session are always active. '),
+    el('a', { href: '/cookies/', text: 'Cookie Policy' }),
+    document.createTextNode(' · '),
+    el('a', { href: '/privacy/', text: 'Privacy Policy' })
+  ]);
+  var actions = el('div', { className: 'vs-cookie-actions' }, [
+    el('button', { id: 'cookieDecline', className: 'vs-cookie-decline', 'aria-label': 'Decline analytics cookies', text: 'Decline Analytics' }),
+    el('button', { id: 'cookieAccept', className: 'vs-cookie-accept', 'aria-label': 'Accept analytics cookies', text: 'Accept Analytics' })
+  ]);
+  banner.appendChild(el('div', { className: 'vs-cookie-banner' }, [
+    el('div', { className: 'vs-cookie-inner' }, [text, actions])
+  ]));
 
   document.body.appendChild(banner);
 
