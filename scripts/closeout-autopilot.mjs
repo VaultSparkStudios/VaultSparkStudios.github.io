@@ -211,6 +211,21 @@ for (const gen of derivedGenerators) {
   }
 }
 
+// ── Step 3d.5: gated production perf sample (S172 audit #10) ────────────────
+// One rotating route per closeout; disk + parity gated; never blocks closeout.
+header('Step 3d.5 · Production perf sample (gated, rotating)');
+{
+  const samplePath = path.join(PROJECT_ROOT, 'scripts', 'sample-prod-perf.mjs');
+  if (!fs.existsSync(samplePath)) {
+    console.log('(skip) scripts/sample-prod-perf.mjs not present');
+  } else if (DRY) {
+    console.log('(dry-run) would run: node scripts/sample-prod-perf.mjs');
+  } else {
+    const r = spawnSync(process.execPath, [samplePath], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 360000 });
+    if (r.status !== 0) console.warn('⚠ sample-prod-perf exited nonzero; continuing.');
+  }
+}
+
 // ── Step 3e: build:check pre-commit gate ─────────────────────────────────────
 // After derived outputs are regenerated, run the full build:check so any `--check`
 // drift (CSP hash, contracts, supabase schema, shell assets) fails the closeout

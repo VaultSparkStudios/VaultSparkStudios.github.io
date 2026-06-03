@@ -270,7 +270,43 @@
     } catch (_e) { /* silent — producer must never throw */ }
   }
 
+  // S172 field-health-public-badge — visitor-measured CWV proof strip.
+  // Honest by design: quotes p75 numbers only when api/site-health.json says
+  // fieldReady (>=50 real samples on a route); otherwise shows the
+  // accumulating state with the live sample count. DOM API only (no innerHTML
+  // — Trusted Types soak is active).
+  function renderFieldHealth() {
+    var strip = document.getElementById('field-health-strip');
+    if (!strip) return;
+    fetch('/api/site-health.json', { credentials: 'omit' })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (health) {
+        if (!health || health.publicSafe !== true) { strip.closest('section').hidden = true; return; }
+        while (strip.firstChild) strip.removeChild(strip.firstChild);
+        strip.removeAttribute('data-state');
+        var eyebrow = document.createElement('div');
+        eyebrow.className = 'eyebrow';
+        eyebrow.textContent = 'Measured from real visits';
+        strip.appendChild(eyebrow);
+        var line = document.createElement('p');
+        if (health.fieldReady && health.measured.length) {
+          var top = health.measured[0];
+          var lcpSec = top.p75.lcp != null ? (top.p75.lcp / 1000).toFixed(1) + 's' : '—';
+          line.textContent = 'p75 LCP ' + lcpSec + ' on ' + top.route + ' · ' + top.samples
+            + ' real visits over ' + health.windowDays + ' days. No lab numbers — this is what actual visitors experienced.';
+        } else {
+          line.textContent = 'Field telemetry is accumulating: ' + health.totalSamples
+            + ' real-visit sample(s) across ' + health.routesObserved
+            + ' routes so far. Visitor-measured vitals publish here once any route reaches '
+            + health.minSamples + ' samples — no lab substitutes.';
+        }
+        strip.appendChild(line);
+      })
+      .catch(function () { var sec = strip.closest('section'); if (sec) sec.hidden = true; });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
+    renderFieldHealth();
     if (!window.VSPublicIntel) return;
     window.VSPublicIntel.get().then(function (intel) {
       if (!intel) return;
