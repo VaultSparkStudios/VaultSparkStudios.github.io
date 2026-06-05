@@ -34,6 +34,11 @@ jobs:
       - name: Grade field verdicts (S174 field-verdict-engine)
         run: node scripts/compare-rum-windows.mjs --grade-receipts || echo "verdict engine not present or no boundary — skipping"
 
+      - name: Regression alerting (S175)
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: node scripts/send-regression-alert.mjs || echo "alerting skipped"
+
       - name: Commit accrued field history
         run: |
           git config user.name "github-actions[bot]"
