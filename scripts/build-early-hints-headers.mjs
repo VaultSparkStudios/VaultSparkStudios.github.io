@@ -30,7 +30,8 @@ const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets', 'shell-man
 // that every page needs. Ambient is the largest win on cold visits.
 const PRELOADS = [
   { key: 'style', as: 'style' },
-  { key: 'ambient', as: 'script' },
+  { key: 'ambientCore', as: 'script' },
+  { key: 'ambientFeature', as: 'script' },
   { key: 'themeToggle', as: 'script' },
   { key: 'navToggle', as: 'script' },
 ];

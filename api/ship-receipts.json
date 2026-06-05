@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-05T02:50:20.250Z",
+  "generatedAt": "2026-06-05T19:28:09.723Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -42,32 +42,32 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 5,
+      "feedbackSignals": 6,
       "shippedCommits": [
         {
-          "sha": "fde8d9da",
+          "sha": "699d25a8",
+          "summary": "HTML edge window 60s->300s + 103 Early Hints (S175 #2+#3)",
+          "ts": "2026-06-05T19:21:49.000Z"
+        },
+        {
+          "sha": "03118709",
+          "summary": "content-hash cache, drop the 1h TTL re-burn (S174 audit #6)",
+          "ts": "2026-06-05T03:19:31.000Z"
+        },
+        {
+          "sha": "ba388b73",
+          "summary": "drop junk audit-sample error dump from cache",
+          "ts": "2026-06-05T03:19:30.000Z"
+        },
+        {
+          "sha": "e3d61c28",
           "summary": "deploy-graded RUM verdicts + public provenance line (S174 audit #2)",
-          "ts": "2026-06-05T02:40:51.000Z"
+          "ts": "2026-06-05T03:19:30.000Z"
         },
         {
-          "sha": "4568e3d9",
+          "sha": "3d3d155c",
           "summary": "daily Actions cron accrues field RUM history (S174 audit #1)",
-          "ts": "2026-06-05T02:37:44.000Z"
-        },
-        {
-          "sha": "044a6705",
-          "summary": "visitor-measured proof loop",
-          "ts": "2026-06-03T23:01:24.000Z"
-        },
-        {
-          "sha": "28d7ad7a",
-          "summary": "suspect commits named in fix recipes",
-          "ts": "2026-06-03T23:01:24.000Z"
-        },
-        {
-          "sha": "20ff6614",
-          "summary": "agent-owned R2 RUM export ends the phantom blocker",
-          "ts": "2026-06-03T23:01:23.000Z"
+          "ts": "2026-06-05T03:19:30.000Z"
         }
       ],
       "proof": {
@@ -79,11 +79,24 @@
       },
       "fieldVerdict": {
         "boundary": "2026-06-05",
-        "label": "S173 homepage critical path (critical-CSS de-dupe + ambient split)",
+        "label": "S173 critical path + S175 origin migration to CF Pages",
         "verdict": "pending",
         "lcpDeltaPct": null,
         "confidence": null
       }
+    },
+    {
+      "theme": "frontdoor",
+      "label": "Front door",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "4f814515",
+          "summary": "verdict engine + canary 5%->25% on silence evidence (S174 audit #5)",
+          "ts": "2026-06-05T03:19:31.000Z"
+        }
+      ],
+      "proof": null
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-05T02:50:20.822Z",
+  "generatedAt": "2026-06-05T19:28:10.169Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -25,7 +25,7 @@
     {
       "key": "feedback",
       "label": "Feedback Themes",
-      "value": "3",
+      "value": "4",
       "href": "/feedback/"
     },
     {
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "Session 173 ran the full /start → /audit → /implement → /closeout goal-chain and shipped 14/14 audit items (Priority 344.1; expected impact 94/100). Homepage critical CSS is now generated-shell-only, local LCP autopsy is 324ms with timed visual proof, guarded ambient modules moved behind a predicate loader (base ambient 27 sources / 104.5KB), SW shell coherency is gated, RUM strictness is a sample ladder, TT soak evidence now shows 81 violations instead of false emptiness, membership interview intent feeds the rank proof loop, and staging parity is measured as yellow. Verification: npm run build + npm run build:check green end-to-end (108-page crawl, 0 failures).",
-  "nextMilestone": "S174: field-verify homepage LCP after deploy; continue rum:pull until / clears the 50-sample strict threshold (current ladder: 33 total samples, / needs 37 more); burn down TT violation sinks before any enforce canary; repair staging parity yellow; coordinate 3 Ark signature failures; founder yes/no remains only for deleting assets/vaultsparked-proof.js.",
+  "focus": "Self-feeding evidence loops: daily RUM autopull + deploy field-verdicts + TT forensics burndown + staging parity green",
+  "nextMilestone": "Field verdict readout for the S173 homepage deploy (needs >=5 post-deploy samples) + TT soak re-probe toward enforce canary",
   "pulse": {
     "now": [
       "Studio Pulse live data — the Forge Window now hydrates from the public intelligence feed again.",
@@ -55,12 +55,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Homepage critical path is now evidence-backed. Removed the duplicate page-local homepage critical CSS and added `scripts/check-home-critical-css-contract.mjs`; `scripts/analyze-home-lcp.mjs` records the latest local home LCP at 324ms with a named hero candidate; `docs/visual-proof/home-lcp-s173/` has four timed first-viewport frames.",
-      "Ambient first-load cost dropped without deleting behavior. `assets/ambient-loader.js` moves guarded nav/engagement modules behind predicates; base ambient is now 27 sources / 104.5KB. `scripts/check-sw-shell-coherency.mjs` guards service-worker shell rotation after `scripts/build-shell-assets.mjs` updates.",
-      "RUM strictness is now a ladder. `scripts/check-rum-strict-ladder.mjs` reports accumulating state instead of a binary flip; current evidence is 33 total samples and `/` still needs 37 more route samples for strict evaluation.",
-      "Trusted Types enforcement remains held for the right reason. `scripts/probe-tt-soak.mjs` now emits route enforce/rollback rows; `docs/TT_SOAK_EVIDENCE_2026-06-05.md` shows 81 violations in the 100%-sample soak, so the next work is sink burn-down, not enforcement.",
-      "Membership proof loop is wired locally. `assets/membership-proof-loop.js` connects interview intent to the rank economy simulator through `vs_membership_intent`; the founder-facing orphan decision is now `docs/MEMBERSHIP_ORPHAN_DECISION.md`.",
-      "Public ops artifacts gained sharper truth. New ship receipts, intelligence budget, Ark signature dossier, nav decision ETA, and staging parity health are generated. `api/staging-health.json` is yellow: prod/staging reachable, but sampled shell/header parity differs."
+      "The evidence loops feed themselves now. `.github/workflows/rum-pull.yml` (daily cron, R2 creds in Actions secrets) accrues field RUM history without sessions; `scripts/compare-rum-windows.mjs` auto-grades registered deploy boundaries — S173's boundary is registered and honestly PENDING (38 pre / 0 post). Speed receipts carry `fieldVerdict`; /studio-pulse/ shows the deploy verdict line.",
+      "TT forensics went from blind to surgical. The intake dropped every Reporting-API field (80/81 all-null rows); the Worker now parses all three wire shapes + the `sample` field (deployed f4c0d0c7). First clustering run overturned the audit's hypothesis: top sink was `journal/dispatches/`:364 innerHTML (30×), gtag was 1×. All clustered sinks burned down (DOM API rebuilds + 3 narrow TT policies); fresh home LCP trace 236ms. Re-probe after ~1 week soak: `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`.",
+      "Staging parity is GREEN 3/3 (CANON-007, first time). Three stacked defects: Caddy `try_files` missing `{path}index.html` (staging served the homepage for every subdirectory route), zero security headers (fixed via new `scripts/sync-staging-headers.mjs` over hetzner.ssh), and a parity compare that could never pass against per-request CSP nonces (now normalized).",
+      "Nav-sheet canary verdict: TELEMETRY-SILENT (0 ux events / 116 raw exports; intake live-verified). Acted on it — canary 5%→25%. Founder device verify still gates any default swap.",
+      "Protocol/token hygiene: 3 delegation shims healed (skill-profile, sample-codebase, render-audit-md — lib/ subpath support added); brief signals truthful (Tests 116/116, Context age 0d, Genome from history); compact-handoff content-hash cached (0 LLM tokens on unchanged handoffs).",
+      "Ark: dossier shipped upstream as `repo-question` cargo `01JQARTIQ4F428A7E440BFE7D6` (4 sig-failure IDs + the try_files patch suggestion for `setup-staging.sh`)."
     ]
   },
   "decisions": [
@@ -79,7 +79,7 @@
     {
       "surface": "feedback",
       "verdict": "investigate",
-      "evidence": "3 public-safe feedback themes",
+      "evidence": "4 public-safe feedback themes",
       "next": "Route top themes into feedback decision board lanes."
     }
   ],

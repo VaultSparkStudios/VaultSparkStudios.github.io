@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-05T02:50:20.561Z",
+  "generatedAt": "2026-06-05T19:28:09.977Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 39,
+  "totalSamples": 41,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
@@ -34,6 +34,21 @@
         "inp": 64,
         "fcp": 1216,
         "ttfb": 616
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/__rum_selftest",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -99,10 +114,10 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 4,
+      "samples": 5,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 45,
       "p75": {
         "lcp": 2804,
         "cls": 0.0839,

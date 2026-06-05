@@ -1,29 +1,31 @@
 #!/usr/bin/env node
 /**
- * scripts/build-ambient-bundle.mjs (S136 speed sprint)
+ * scripts/build-ambient-bundle.mjs (S136 speed sprint · S175 stable-core split)
  *
- * Concatenates the 18 ambient JS files that propagate-nav.mjs used to inject
- * as separate <script> tags on every public page into a single bundle at
- * `assets/ambient.bundle.js`. Each source script is wrapped in its own IIFE
- * so top-level variable declarations don't collide and side effects fire in
- * source order on a single parse pass.
+ * Concatenates the ambient JS files that propagate-nav.mjs used to inject
+ * as separate <script> tags on every public page. Each source script is
+ * wrapped in its own IIFE so top-level variable declarations don't collide
+ * and side effects fire in source order on a single parse pass.
  *
- * Why: before this script, every public page had 18 ambient <script src="…">
- * tags + 1 stylesheet + page-specific scripts → 50+ HTTP requests per page.
- * Even though they were `defer`red, the network round-trips + parse cost on
- * cold cache was the biggest TTI drag on the site.
+ * S175 stable-core split: ONE bundle became TWO —
+ *   assets/ambient-core.bundle.js     shell primitives that rarely change
+ *   assets/ambient-feature.bundle.js  engagement surfaces that change often
  *
- * After: one network request, one gzipped payload (~30 KB vs ~98 KB raw),
- * one parse. Propagator emits a single `<script src="/assets/ambient.bundle.<hash>.js" defer></script>`.
+ * Why the split: every ambient edit used to rotate the single bundle's hash,
+ * invalidating the cached bundle for EVERY visitor sitewide (the cold-cache
+ * cost documented since S160). With the split, a feature edit only rotates
+ * the small feature bundle; the core bundle's hash — and every visitor's
+ * cached copy — survives. Both load with `defer`, which guarantees execution
+ * order (core first), preserving the signed-in-state → account-chip contract.
  *
  * Wire-up:
  *   1. This script runs in `npm run build` and `npm run build:check`.
- *   2. `build-shell-assets.mjs` hashes the bundle output (cache-busting + SW pre-cache).
- *   3. `propagate-nav.mjs` injects exactly one script tag instead of 18.
+ *   2. `build-shell-assets.mjs` hashes both outputs (cache-busting + SW pre-cache).
+ *   3. `propagate-nav.mjs` injects two script tags (core, then feature).
  *
  * Run:
  *   node scripts/build-ambient-bundle.mjs            # build + write
- *   node scripts/build-ambient-bundle.mjs --check    # exit 1 if bundle drifts from sources
+ *   node scripts/build-ambient-bundle.mjs --check    # exit 1 if bundles drift from sources
  */
 import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
@@ -33,10 +35,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const checkMode = process.argv.includes('--check');
 
-// Ordered list — earlier scripts are parsed first. Order chosen to put
-// foundational features (theme/native-feel/scroll machinery) ahead of UI
-// widgets that may listen for the foundational events.
-const AMBIENT_SOURCES = [
+// CORE — shell primitives + session truth + loaders. Role-stable: these only
+// change for infrastructure reasons, so their hash (and every visitor's
+// cached copy) should survive ordinary feature sessions.
+// Ordering contract: signed-in-state precedes account-chip-loader.
+const AMBIENT_CORE_SOURCES = [
   'assets/native-feel.js',
   'assets/scroll-reveal.js',
   'assets/scroll-depth.js',
@@ -44,39 +47,51 @@ const AMBIENT_SOURCES = [
   'assets/signed-in-state.js',   // single auth query; must precede account-chip
   'assets/account-chip-loader.js',
   'assets/ambient-loader.js',
+  'assets/hover-prefetch.js',
+  'assets/edge-swipe-nav.js',
+  'assets/pointerdown-warm.js',
+  'assets/command-palette-loader.js',
+  'assets/adaptive-speculation.js',
+  'assets/rum-beacon.js',
+];
+
+// FEATURE — engagement/intelligence surfaces that audit sessions touch
+// routinely. Edits here rotate only this (smaller) bundle.
+const AMBIENT_FEATURE_SOURCES = [
   'assets/page-sigil.js',
   'assets/vault-atlas.js',
   'assets/vault-genome-strip.js',
   'assets/rank-orb.js',
   'assets/rate-page.js',
-  'assets/hover-prefetch.js',
-  'assets/edge-swipe-nav.js',
-  'assets/pointerdown-warm.js',
   'assets/ignis-lens.js',
-  'assets/command-palette-loader.js',
   'assets/intent-flight-director.js',
   'assets/ignis-answer-engine.js',
   'assets/feedback-decision-board.js',
   'assets/social-dashboard-public.js',
   'assets/rank-economy-simulator.js',
   'assets/security-posture.js',
-  'assets/adaptive-speculation.js',
-  'assets/rum-beacon.js',
   'assets/founder-presence-handle.js',
   'assets/vault-rank-bar.js',   // ambient rank progress bar for signed-in members
 ];
 
-const OUTPUT_PATH = join(ROOT, 'assets', 'ambient.bundle.js');
+// Combined view — kept for coverage tooling (report-ambient-coverage,
+// check-session-state-contract) that reasons about the full ambient set.
+const AMBIENT_SOURCES = [...AMBIENT_CORE_SOURCES, ...AMBIENT_FEATURE_SOURCES];
 
-function buildBundle() {
+const BUNDLES = [
+  { name: 'core', sources: AMBIENT_CORE_SOURCES, output: join(ROOT, 'assets', 'ambient-core.bundle.js') },
+  { name: 'feature', sources: AMBIENT_FEATURE_SOURCES, output: join(ROOT, 'assets', 'ambient-feature.bundle.js') },
+];
+
+function buildBundle(name, sources) {
   const parts = [
-    '/* VaultSpark ambient bundle — generated by scripts/build-ambient-bundle.mjs */',
-    '/* DO NOT EDIT — change source files in AMBIENT_SOURCES + re-run the build. */',
-    `/* Sources: ${AMBIENT_SOURCES.length} files, parsed in declared order. */`,
+    `/* VaultSpark ambient ${name} bundle — generated by scripts/build-ambient-bundle.mjs */`,
+    '/* DO NOT EDIT — change source files in the source lists + re-run the build. */',
+    `/* Sources: ${sources.length} files, parsed in declared order. */`,
     '',
   ];
 
-  for (const rel of AMBIENT_SOURCES) {
+  for (const rel of sources) {
     const full = join(ROOT, rel);
     if (!existsSync(full)) {
       console.error(`✘ Missing ambient source: ${rel}`);
@@ -84,8 +99,7 @@ function buildBundle() {
     }
     const src = readFileSync(full, 'utf-8');
     // Wrap each source in its own IIFE so top-level `const`/`let` declarations
-    // can't collide and `var` declarations don't leak to window. The wrapper
-    // forwards `window`, `document`, `console` for slight engine-hint help.
+    // can't collide and `var` declarations don't leak to window.
     parts.push(`/* ── ${rel} ──────────────────────────────────────────── */`);
     parts.push(';(function(window, document, console){');
     parts.push("'use strict';");
@@ -97,21 +111,19 @@ function buildBundle() {
   return parts.join('\n');
 }
 
-const bundle = buildBundle();
-
-if (checkMode) {
-  if (!existsSync(OUTPUT_PATH)) {
-    console.error(`✘ Bundle drift: ${OUTPUT_PATH} does not exist. Run \`node scripts/build-ambient-bundle.mjs\`.`);
-    process.exit(1);
+let drift = false;
+for (const b of BUNDLES) {
+  const bundle = buildBundle(b.name, b.sources);
+  if (checkMode) {
+    if (!existsSync(b.output) || readFileSync(b.output, 'utf-8') !== bundle) {
+      console.error(`✘ Bundle drift: ${b.output} is out of sync. Run \`node scripts/build-ambient-bundle.mjs\`.`);
+      drift = true;
+      continue;
+    }
+    console.log(`✓ Ambient ${b.name} bundle in sync (${b.sources.length} sources, ${(bundle.length / 1024).toFixed(1)} KB)`);
+  } else {
+    writeFileSync(b.output, bundle, 'utf-8');
+    console.log(`✓ Wrote ${b.output}  (${b.sources.length} sources, ${(bundle.length / 1024).toFixed(1)} KB)`);
   }
-  const onDisk = readFileSync(OUTPUT_PATH, 'utf-8');
-  if (onDisk !== bundle) {
-    console.error(`✘ Bundle drift: ${OUTPUT_PATH} is out of sync with sources. Run \`node scripts/build-ambient-bundle.mjs\`.`);
-    process.exit(1);
-  }
-  console.log(`✓ Ambient bundle in sync (${AMBIENT_SOURCES.length} sources, ${(bundle.length / 1024).toFixed(1)} KB)`);
-  process.exit(0);
 }
-
-writeFileSync(OUTPUT_PATH, bundle, 'utf-8');
-console.log(`✓ Wrote ${OUTPUT_PATH}  (${AMBIENT_SOURCES.length} sources, ${(bundle.length / 1024).toFixed(1)} KB)`);
+if (checkMode && drift) process.exit(1);

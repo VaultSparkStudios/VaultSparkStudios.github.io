@@ -17,14 +17,15 @@ const AMBIENT_FEATURES = [
 ];
 
 test.describe('Ambient bundle (S136) — single load + features alive', () => {
-  test('home page loads exactly one ambient.*.js script tag', async ({ page }) => {
+  test('home page loads exactly two ambient bundles (core + feature, S175 split)', async ({ page }) => {
     await page.goto('/', { waitUntil: 'domcontentloaded' });
     const scripts = await page.evaluate(() => {
       return Array.from(document.querySelectorAll('script[src*="ambient"]'))
         .map((s) => s.getAttribute('src') || '');
     });
-    expect(scripts.length).toBe(1);
-    expect(scripts[0]).toMatch(/^\/assets\/ambient(\.shell-[a-f0-9]+)?\.js$/);
+    expect(scripts.length).toBe(2);
+    expect(scripts[0]).toMatch(/^\/assets\/ambient-core(\.bundle|\.shell-[a-f0-9]+)\.js$/);
+    expect(scripts[1]).toMatch(/^\/assets\/ambient-feature(\.bundle|\.shell-[a-f0-9]+)\.js$/);
   });
 
   test('legacy per-page tags removed (no double-load)', async ({ page }) => {

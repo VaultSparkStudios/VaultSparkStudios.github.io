@@ -10,10 +10,12 @@ const SHELL_ASSETS = [
   { key: 'themeToggle', source: 'assets/theme-toggle.js', stem: 'theme-toggle.shell', attribute: 'src' },
   { key: 'navToggle', source: 'assets/nav-toggle.js', stem: 'nav-toggle.shell', attribute: 'src' },
   { key: 'shellHealth', source: 'assets/shell-health.js', stem: 'shell-health.shell', attribute: 'src' },
-  // S136 speed sprint: 18 ambient scripts concatenated into one hashed bundle.
-  // Built by scripts/build-ambient-bundle.mjs which runs before this script.
-  // Replaces the per-page 18-script-tag pattern with a single deferred load.
-  { key: 'ambient', source: 'assets/ambient.bundle.js', stem: 'ambient.shell', attribute: 'src' },
+  // S136 speed sprint: ambient scripts concatenated into hashed bundles.
+  // S175 stable-core split: core (rarely changes - hash survives feature
+  // sessions, visitors keep their cached copy) + feature (small, rotates
+  // freely). Both defer -> execution order preserved (core first).
+  { key: 'ambientCore', source: 'assets/ambient-core.bundle.js', stem: 'ambient-core.shell', attribute: 'src' },
+  { key: 'ambientFeature', source: 'assets/ambient-feature.bundle.js', stem: 'ambient-feature.shell', attribute: 'src' },
 ];
 
 const HTML_SKIP_DIRS = new Set([

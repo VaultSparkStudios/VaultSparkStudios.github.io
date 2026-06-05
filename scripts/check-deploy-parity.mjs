@@ -42,7 +42,7 @@ function expectedShellPaths(manifest) {
 
 function deployedShellPaths(html) {
   const paths = new Set();
-  const re = /(?:src|href)=["']([^"']*assets\/(?:style|theme-toggle|nav-toggle|shell-health|ambient)\.shell-[a-f0-9]{10}\.(?:css|js))["']/gi;
+  const re = /(?:src|href)=["']([^"']*assets\/(?:style|theme-toggle|nav-toggle|shell-health|ambient|ambient-core|ambient-feature)\.shell-[a-f0-9]{10}\.(?:css|js))["']/gi;
   let match;
   while ((match = re.exec(html))) {
     const url = match[1];

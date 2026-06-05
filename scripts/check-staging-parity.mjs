@@ -15,7 +15,7 @@ const STAGING = 'https://website.staging.vaultsparkstudios.com';
 const ROUTES = ['/', '/studio-pulse/', '/membership/'];
 
 function shellPaths(html) {
-  return [...String(html).matchAll(/assets\/(?:style|theme-toggle|nav-toggle|shell-health|ambient)\.shell-[a-f0-9]{10}\.(?:css|js)/g)]
+  return [...String(html).matchAll(/assets\/(?:style|theme-toggle|nav-toggle|shell-health|ambient|ambient-core|ambient-feature)\.shell-[a-f0-9]{10}\.(?:css|js)/g)]
     .map((m) => m[0])
     .sort();
 }

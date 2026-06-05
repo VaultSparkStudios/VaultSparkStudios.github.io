@@ -42,11 +42,16 @@ const FORBIDDEN_AMBIENT_SOURCES = new Map([
   ['assets/favicon-pulse.js', 'Use assets/ambient-loader.js so favicon pulse is loaded after visible-page checks.'],
 ]);
 
-/** Parse the AMBIENT_SOURCES array out of the builder (single source of truth). */
+/** Parse the ambient source arrays out of the builder (single source of truth).
+ *  S175 stable-core split: union of AMBIENT_CORE_SOURCES + AMBIENT_FEATURE_SOURCES. */
 function parseSources(builderText) {
-  const m = builderText.match(/AMBIENT_SOURCES\s*=\s*\[([\s\S]*?)\]/);
-  if (!m) return [];
-  return [...m[1].matchAll(/['"]([^'"]+\.js)['"]/g)].map((x) => x[1]);
+  const blocks = [...builderText.matchAll(/AMBIENT_(?:CORE_|FEATURE_)SOURCES\s*=\s*\[([\s\S]*?)\]/g)];
+  if (!blocks.length) {
+    const m = builderText.match(/AMBIENT_SOURCES\s*=\s*\[([\s\S]*?)\]/);
+    if (!m) return [];
+    return [...m[1].matchAll(/['"]([^'"]+\.js)['"]/g)].map((x) => x[1]);
+  }
+  return blocks.flatMap((b) => [...b[1].matchAll(/['"]([^'"]+\.js)['"]/g)].map((x) => x[1]));
 }
 
 // Patterns that signal a module gates its own work behind a runtime condition.

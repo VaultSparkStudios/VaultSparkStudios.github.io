@@ -277,7 +277,8 @@ function buildAmbientBlock(relPath) {
   // Result: 1 HTTP request instead of 18; ~30 KB gzipped vs ~98 KB raw on
   // the wire; single parse + execution context.
   const base = [
-    '<script src="/assets/ambient.bundle.js" defer></script>',
+    '<script src="/assets/ambient-core.bundle.js" defer></script>',
+    '<script src="/assets/ambient-feature.bundle.js" defer></script>',
   ];
   if (universe)    base.push('<script src="/assets/lore-gates.js" defer></script>');
   if (leaderRanks) base.push('<script src="/assets/studio-pulse-live.js" defer></script>');
@@ -457,3 +458,15 @@ for (const { full, rel } of files) {
 
 console.log(`\nDone. Updated: ${updated}, Skipped: ${skipped}`);
 if (DRY_RUN) console.log('(Dry run — no files were modified)');
+
+// S175: the nav template still carries inline style attributes; the strict
+// intelligence-style gate (S169) forbids them on key pages. Chain the
+// extractor so propagation can never re-introduce that debt class.
+if (!DRY_RUN) {
+  try {
+    const { execSync } = await import('node:child_process');
+    execSync(`${process.execPath} scripts/extract-inline-styles.mjs`, { stdio: 'inherit' });
+  } catch {
+    console.warn('extract-inline-styles pass failed — run it manually before build:check --strict');
+  }
+}
