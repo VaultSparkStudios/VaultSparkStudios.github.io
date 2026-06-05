@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-06-05T19:52:47.550Z",
+  "generatedBy": "scripts/build-geo-vitals.mjs",
+  "publicSafe": true,
+  "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
+  "minSamples": 3,
+  "countries": [
+    {
+      "country": "US",
+      "samples": 106,
+      "lcpP75": 1824,
+      "ttfbP75": 117,
+      "colos": [
+        "DEN",
+        "DFW",
+        "EWR",
+        "IAD",
+        "ORD",
+        "SEA",
+        "SJC"
+      ]
+    },
+    {
+      "country": "GB",
+      "samples": 3,
+      "lcpP75": 1756,
+      "ttfbP75": 574,
+      "colos": [
+        "LHR",
+        "MAN"
+      ]
+    },
+    {
+      "country": "other",
+      "samples": 6,
+      "lcpP75": 9960,
+      "ttfbP75": 1620,
+      "colos": [
+        "GRU",
+        "LAX",
+        "MRS",
+        "PRG",
+        "YVR"
+      ]
+    }
+  ]
+}

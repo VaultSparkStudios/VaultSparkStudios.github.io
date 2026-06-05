@@ -1,0 +1,113 @@
+#!/usr/bin/env node
+/**
+ * build-geo-vitals.mjs (S175 #8 · multi-geo vitals)
+ *
+ * The original audit recipe ("synthetic traces from US/EU/Asia GH runners")
+ * is not feasible free — GitHub hosted runners don't offer geo selection.
+ * Better: every RUM beacon already records cf.colo + cf.country, so REAL
+ * multi-geo performance data accrues from real visitors. This rolls raw RUM
+ * into per-country vitals so "slow only in Europe" problems surface without
+ * paid tooling.
+ *
+ * Privacy: aggregates only; countries below MIN_SAMPLES are bucketed into
+ * "other" so no single visit is identifiable.
+ *
+ * Output: api/geo-vitals.json
+ * Usage:  node scripts/build-geo-vitals.mjs [--check|--self-test]
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+import url from 'node:url';
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, '..');
+const RAW_DIR = path.join(ROOT, '.cache', 'rum-raw');
+const OUT = path.join(ROOT, 'api', 'geo-vitals.json');
+const CHECK = process.argv.includes('--check');
+const MIN_SAMPLES = 3;
+
+export function rollupGeo(rows) {
+  const byCountry = new Map();
+  for (const r of rows) {
+    if (!r || !r.cf?.country || r.route?.startsWith('/__')) continue;
+    const lcp = r.vitals?.lcp;
+    if (!Number.isFinite(lcp)) continue;
+    if (!byCountry.has(r.cf.country)) byCountry.set(r.cf.country, { lcps: [], ttfbs: [], colos: new Set() });
+    const c = byCountry.get(r.cf.country);
+    c.lcps.push(lcp);
+    if (Number.isFinite(r.vitals?.ttfb)) c.ttfbs.push(r.vitals.ttfb);
+    if (r.cf.colo) c.colos.add(r.cf.colo);
+  }
+  const p75 = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); return s[Math.min(s.length - 1, Math.floor(s.length * 0.75))]; };
+  const countries = [];
+  const other = { lcps: [], ttfbs: [], colos: new Set() };
+  for (const [country, c] of byCountry) {
+    if (c.lcps.length >= MIN_SAMPLES) {
+      countries.push({ country, samples: c.lcps.length, lcpP75: p75(c.lcps), ttfbP75: p75(c.ttfbs), colos: [...c.colos].sort() });
+    } else {
+      other.lcps.push(...c.lcps);
+      other.ttfbs.push(...c.ttfbs);
+      for (const colo of c.colos) other.colos.add(colo);
+    }
+  }
+  countries.sort((a, b) => b.samples - a.samples);
+  if (other.lcps.length) {
+    countries.push({ country: 'other', samples: other.lcps.length, lcpP75: p75(other.lcps), ttfbP75: p75(other.ttfbs), colos: [...other.colos].sort() });
+  }
+  return countries;
+}
+
+if (process.argv.includes('--self-test')) {
+  const rows = [
+    ...Array.from({ length: 4 }, (_, i) => ({ route: '/', vitals: { lcp: 1000 + i, ttfb: 100 }, cf: { country: 'US', colo: 'DFW' } })),
+    { route: '/', vitals: { lcp: 9000, ttfb: 900 }, cf: { country: 'DE', colo: 'FRA' } },
+    { route: '/__rum_selftest', vitals: { lcp: 1 }, cf: { country: 'US', colo: 'DFW' } },
+  ];
+  const g = rollupGeo(rows);
+  const checks = [
+    ['US quoted (>=3 samples)', g.some((c) => c.country === 'US' && c.samples === 4)],
+    ['DE bucketed into other', !g.some((c) => c.country === 'DE') && g.some((c) => c.country === 'other')],
+    ['selftest route excluded', g.find((c) => c.country === 'US').samples === 4],
+    ['p75 computed', Number.isFinite(g[0].lcpP75)],
+  ];
+  let pass = 0;
+  for (const [name, ok] of checks) { console.log(`  ${ok ? '✓' : '✗'} ${name}`); if (ok) pass++; }
+  console.log(`build-geo-vitals --self-test: ${pass}/${checks.length}`);
+  process.exit(pass === checks.length ? 0 : 1);
+}
+
+const rows = [];
+if (fs.existsSync(RAW_DIR)) {
+  for (const day of fs.readdirSync(RAW_DIR)) {
+    const dir = path.join(RAW_DIR, day);
+    if (!fs.statSync(dir).isDirectory()) continue;
+    for (const f of fs.readdirSync(dir)) {
+      try {
+        const j = JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8'));
+        rows.push(...(Array.isArray(j) ? j : [j]));
+      } catch { /* skip */ }
+    }
+  }
+}
+const payload = {
+  schemaVersion: '1.0',
+  generatedAt: new Date().toISOString(),
+  generatedBy: 'scripts/build-geo-vitals.mjs',
+  publicSafe: true,
+  note: 'Per-country field vitals from real visits. Countries under 3 samples are bucketed as "other".',
+  minSamples: MIN_SAMPLES,
+  countries: rollupGeo(rows),
+};
+
+if (CHECK) {
+  if (!fs.existsSync(OUT)) { console.error('build-geo-vitals --check: missing output'); process.exit(1); }
+  const cur = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+  if (JSON.stringify({ ...cur, generatedAt: '' }) !== JSON.stringify({ ...payload, generatedAt: '' })) {
+    console.error('build-geo-vitals --check: drift; run node scripts/build-geo-vitals.mjs');
+    process.exit(1);
+  }
+  console.log(`build-geo-vitals --check: ok (${payload.countries.length} bucket(s))`);
+  process.exit(0);
+}
+fs.writeFileSync(OUT, JSON.stringify(payload, null, 2) + '\n');
+console.log(`build-geo-vitals → api/geo-vitals.json (${payload.countries.map((c) => `${c.country}:${c.samples}`).join(' · ') || 'no rows yet'})`);
