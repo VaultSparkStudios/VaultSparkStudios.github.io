@@ -4618,3 +4618,6 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 3. **CANARY-POWER-CALCULATOR** — given route traffic from RUM history, compute the minimum canary % that yields a decision in N days, so canary levels are chosen by statistics instead of vibes. Medium probability.
 
 **Committed to TASK_BOARD:** [S175][PERF/P1] FIELD-VERDICT-READOUT · [S175][SECURITY/P1] TT-SOAK-RE-PROBE
+
+### S175 sprint addendum (same day — founder-directed speed arc via /implement)
+9/9 shipped (2 evidence-corrected): production origin → Cloudflare Pages (zero-downtime on attempt 2 after an honest 2-3min 522 + rollback on attempt 1) · HTML edge window ×5 · Early Hints · stable-core shell split (feature edits stop cold-caching every visitor) · gtag fully replaced by first-party RUM analytics (founder-approved) · regression email alerts · geo vitals from real field data (synthetic-matrix recipe declined honestly — GH runners can't pick geos) · /status/ live signals. Honest correction logged: three worker deploys had silently missed --env production. Push→prod now ~27s with auto-purge.

@@ -1,5 +1,22 @@
 # Task Board — VaultSparkStudios.github.io
 
+Last updated: 2026-06-05 (Session 175 — founder-directed speed arc: 9/9 shipped; origin on CF Pages, gtag gone, shell split, alerts wired)
+
+## Done (Session 175 — founder-directed speed arc: /implement now)
+
+- [x] **[S175][INFRA/P0] CF-PAGES-ORIGIN-MIGRATION — LIVE.** Production origin = Cloudflare Pages (founder-approved auto-flip). One 2-3min 522 on flip 1 (domain validation chicken-and-egg) — rolled back <3min, re-flipped clean; permanent Worker origin-failover added; GH Pages stays as warm rollback. Deploys: pages-deploy.yml (push→prod in ~27s + zone purge). **DONE S175**
+- [x] **[S175][PERF/P1] EDGE-HTML-CACHE + EARLY-HINTS — LIVE.** HTML edge window 60s→300s (deploy purge bounds staleness); zone early_hints=on + generated _headers preloads (drift-gated). **DONE S175**
+- [x] **[S175][ARCH/P1] SHELL-STABLE-CORE-SPLIT — DONE.** ambient-core (44KB, stable hash) + ambient-feature (62KB, rotates freely); feature edits no longer cold-cache every visitor; propagator now chains extract-inline-styles (nav template was re-introducing inline-style debt). **DONE S175**
+- [x] **[S175][ANALYTICS/P1] GTAG-REPLACED (founder-approved) — LIVE.** 97 pages stripped; first-party analytics from the unsampled RUM beacon (api/analytics-summary.json); CSP cleaned of GA origins. **DONE S175**
+- [x] **[S175][OBS/P2] REGRESSION-EMAIL-ALERTS + GEO-VITALS + /status/ LIVE SIGNALS — DONE.** Nightly alerting via Resend after rum:pull; per-country field vitals (US:106 GB:3); /status/ renders 6 generated signal tiles. **DONE S175**
+- [x] **[S175][PROCESS/P1] WORKER-DEPLOY-ENV-FIX (honest correction).** All worker deploys must use --env production; three S174/S175 deploys silently targeted the unused top-level worker — TT intake fix + failover + edge window only went live as 7c805a3f. **DONE S175**
+
+## Now (Session 176 runway — additions)
+
+- [ ] **[S176][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT.** The 2026-06-05 boundary now covers S173 critical path + S175 origin migration. Read data/field-verdicts.json once ≥5 post-deploy samples accrue; expect a real LCP drop from edge-origin TTFB.
+- [ ] **[S176][SECURITY/P1] TT-RE-PROBE-POST-ENV-FIX.** The intake fix only went live late 2026-06-05 (env-target miss) — restart the soak clock from then; re-probe ~2026-06-12.
+- [ ] **[S176][OBS/P3] GEO-VITALS-WATCH.** api/geo-vitals.json now exists; check whether non-US LCP confirms the origin migration win globally.
+
 Last updated: 2026-06-05 (Session 174 — goal-chain audit/implement: 10/10 shipped; self-feeding RUM loop, field verdicts, TT forensics + burndown, staging parity GREEN; build:check green)
 
 ## Done (Session 174 — goal-chain: /start → /audit → /implement → /closeout)
