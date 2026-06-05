@@ -1,35 +1,22 @@
 <!-- generated-by: /implement skill v1.0 -->
-<!-- generated-at: 2026-06-05 -->
-<!-- source: docs/AUDIT_2026-06-04.json -->
+<!-- generated-at: 2026-06-05 · session: 174 -->
+<!-- source: docs/AUDIT_2026-06-05.json -->
 
-# Implement Plan — AUDIT_2026-06-04
+# Implement Plan — AUDIT_2026-06-05
 
-## Sequenced Order
+Sequenced for optimal efficiency (Priority-per-hour, axis grouping, foundations first, token-cost last).
 
-1. `homepage-critical-css-de-dupe` — front-door perf foundation.
-2. `field-lcp-autopsy-lab` — proof artifact for real LCP candidate.
-3. `home-first-viewport-freeze-frame` — timed visual proof for the same surface.
-4. `sw-shell-precache-coherency-gate` — cache correctness before more shell work.
-5. `rum-strict-flip-ladder` — field-data graduation state.
-6. `ambient-loader-graph-split` — parse-cost reduction after shell gates.
-7. `membership-proof-loop` — product-depth loop while membership files are warm.
-8. `tt-enforce-route-ladder` — security evidence ladder after TT soak refresh.
-9. `feedback-to-ship-receipts` — reuse commit/feedback/proof artifacts.
-10. `ark-signature-failure-dossier` — cross-repo repair packet.
-11. `public-intelligence-budget-ledger` — cost-neutrality evidence.
-12. `nav-sheet-decision-accelerator` — adds ETA without flipping default.
-13. `founder-yesno-retire-vaultsparked-proof` — close founder decision to one receipt.
-14. `staging-parity-health-tile` — staging health artifact.
+| Seq | Slug | Audit # | Why this position |
+|---|---|---|---|
+| 1 | protocol-shim-completion | 8 | 30m foundation — heals the tooling every later item touches |
+| 2 | rum-autopull-ci | 1 | 🔥 foundation — evidence loop becomes self-feeding |
+| 3 | field-verdict-engine | 2 | 🔥 same RUM surface as #2; consumes its data |
+| 4 | tt-intake-forensics-fix | 3 | 🔥 security surface — worker intake first (forensics unblock) |
+| 5 | tt-gtag-policy-fix | 4 | 🔥 same security surface; burns the dominant sink |
+| 6 | staging-header-parity-fix | 7 | ops/edge surface adjacent to worker work |
+| 7 | nav-sheet-canary-readout | 5 | UX readout, standalone |
+| 8 | ark-sig-repair-ship | 9 | 30m ecosystem ship |
+| 9 | brief-signal-plumbing | 10 | process truth fix |
+| 10 | handoff-cache-ttl | 6 | token-cost LAST — measure after everything settles |
 
-## Verification Plan
-
-- `npm run build`
-- `node scripts/analyze-home-lcp.mjs`
-- `node scripts/capture-home-first-viewport-proof.mjs`
-- `node scripts/check-staging-parity.mjs`
-- `node scripts/probe-tt-soak.mjs --days=30`
-- `npm run build:check`
-
-## Result
-
-14/14 shipped. `npm run build:check` passed end-to-end on 2026-06-05: 108-page crawl, 0 status failures, 0 blocking-script findings.
+Gated/skipped: membership-proof-device-verify (founder device) · vaultsparked-proof delete (founder yes/no) · tt-enforce-canary + rum-strict-flip (canon ladders).

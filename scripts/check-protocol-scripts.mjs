@@ -34,8 +34,6 @@ const PROTOCOL_FILES = [
 // be shipped from the sibling vaultspark-studio-ops repo or live only in the
 // skill-runner context. Each entry must justify why absence is expected.
 const KNOWN_ABSENT_ALLOWLIST = {
-  'scripts/lib/skill-profile.mjs': 'medium-overlay resolver lives in studio-ops; per-project profiles propagated on demand',
-  'scripts/sample-codebase.mjs': 'audit sampler is studio-ops-side; LLM-driven survey runs without it',
   'scripts/audit-run.mjs': 'optional orchestrator; /audit can write sidecar + md directly',
   'scripts/ark.mjs': 'Studio Ark transport is studio-ops-side; receipts auto-drain when present',
   'scripts/router.mjs': 'plain-English intent router lives in studio-ops; /start tolerates absence',
@@ -57,10 +55,15 @@ const HEAL_AS_SHIM = {
   'scripts/build-skill-manifest.mjs': 'skill drift warning at /start (G10 S118)',
   'scripts/augment-startup-brief.mjs': 'LAST SESSION + SKILL HEALTH brief blocks (R-H5/12/15 S118)',
   'scripts/ark.mjs': 'Studio Ark transport (CANON-018) — drain at every /start',
+  // S174 protocol-shim-completion: the three scripts that MODULE_NOT_FOUND'd in S174
+  'scripts/lib/skill-profile.mjs': 'medium-overlay resolver — /start, /audit, /implement all call it first (S125+S126)',
+  'scripts/sample-codebase.mjs': 'token-budgeted audit codebase sampler (G3 S118) — /audit step 3',
+  'scripts/render-audit-md.mjs': 'audit md reverse-renderer from JSON sidecar (R-H14 S118) — /audit step 9',
 };
 const SIBLING_SCRIPTS = path.resolve(ROOT, '..', 'vaultspark-studio-ops', 'scripts');
 
-function shimSource(name, why) {
+function shimSource(name, why, depth = 1) {
+  const rootHops = Array(depth).fill('..').join("', '");
   return `#!/usr/bin/env node
 /**
  * ${name} — thin delegation shim (S172 protocol-script-self-heal)
@@ -78,8 +81,8 @@ import path from 'node:path';
 import url from 'node:url';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, '..');
-const SIBLING = path.resolve(ROOT, '..', 'vaultspark-studio-ops', 'scripts', '${name}');
+const ROOT = path.resolve(__dirname, '${rootHops}');
+const SIBLING = path.resolve(ROOT, '..', 'vaultspark-studio-ops', 'scripts', ...'${name}'.split('/'));
 
 if (!existsSync(SIBLING)) {
   console.log('${name} (shim): studio-ops sibling not reachable — skipping.');
@@ -94,10 +97,13 @@ if (args.includes('--heal')) {
   let healed = 0, skipped = 0, unavailable = 0;
   for (const [rel, why] of Object.entries(HEAL_AS_SHIM)) {
     const local = path.join(ROOT, rel);
-    const name = path.basename(rel);
+    // path inside scripts/ (supports lib/ subpaths — S174)
+    const name = rel.replace(/^scripts\//, '');
     if (fs.existsSync(local)) { skipped++; continue; }
-    if (!fs.existsSync(path.join(SIBLING_SCRIPTS, name))) { unavailable++; console.log(`  ~ ${rel}: not in sibling either — left absent`); continue; }
-    fs.writeFileSync(local, shimSource(name, why), 'utf8');
+    if (!fs.existsSync(path.join(SIBLING_SCRIPTS, ...name.split('/')))) { unavailable++; console.log(`  ~ ${rel}: not in sibling either — left absent`); continue; }
+    fs.mkdirSync(path.dirname(local), { recursive: true });
+    const depth = rel.split('/').length - 1; // hops from script file up to repo ROOT
+    fs.writeFileSync(local, shimSource(name, why, depth), 'utf8');
     console.log(`  ✓ healed ${rel} (delegation shim → studio-ops)`);
     healed++;
   }
