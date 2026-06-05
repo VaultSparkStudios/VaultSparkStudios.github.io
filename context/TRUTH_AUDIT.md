@@ -153,3 +153,10 @@ Public-safe summary:
 - Session 94 truth changed: `secrets/` is now in `.gitignore`. The `secrets/.access.log` runtime artifact was accidentally committed and immediately removed; the gitignore entry prevents recurrence.
 - Session 94 truth changed: `:focus-visible` gold outline ring is now a global CSS rule, and `:focus:not(:focus-visible)` suppresses the outline on click — keyboard accessibility is now consistent across all interactive elements without affecting mouse UX.
 - Session 154 truth changed: final GitHub closeout status is all-green in `api/ci-status.json` after E2E, Accessibility, Lighthouse, Secret Lint, Sentry Release, brief-format, sitemap, cache purge, and Pages passed on the pushed S154 repair state.
+- Session 173 truth changed: homepage critical CSS is generated-shell-only. `index.html` no longer owns a page-local `<style id="critical-css">`; `scripts/check-home-critical-css-contract.mjs` is the gate.
+- Session 173 truth changed: current local homepage LCP proof is reproducible through `scripts/analyze-home-lcp.mjs` and `scripts/capture-home-first-viewport-proof.mjs`; latest generated autopsy records 324ms LCP and the visual proof set lives in `docs/visual-proof/home-lcp-s173/`.
+- Session 173 truth changed: the base ambient bundle excludes guarded modules loaded by `assets/ambient-loader.js`; current ambient bundle is 27 sources / 104.5KB.
+- Session 173 truth changed: RUM strict promotion is ladder-gated by `scripts/check-rum-strict-ladder.mjs`; current state is accumulating with 33 total samples and `/` needing 37 more route samples.
+- Session 173 truth changed: TT enforce remains held by evidence, not caution alone. `docs/TT_SOAK_EVIDENCE_2026-06-05.md` shows 81 violations from the 100%-sample soak.
+- Session 173 truth changed: staging health is measured by `api/staging-health.json` and is currently yellow because prod/staging shell/header parity differs on sampled routes.
+- Session 173 truth changed: public intelligence surfaces remain cost-neutral; `api/intelligence-budget.json` and `docs/INTELLIGENCE_BUDGET_LEDGER.md` record zero paid runtime AI cost for the measured surfaces.

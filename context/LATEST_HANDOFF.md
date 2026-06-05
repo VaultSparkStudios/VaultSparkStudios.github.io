@@ -1,8 +1,20 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-03 (Session 172)
+Last updated: 2026-06-05 (Session 173)
 
-Session Intent: Full `/start → /audit → /implement → /closeout` goal-chain with a genius-level audit personalized to this project's live lists/flags/blockers. **Outcome: Achieved — 12/12 audit items shipped (Priority 281.0); build:check green end-to-end; Worker deployed + live-verified.**## Where We Left Off (Session 172)
+Session Intent: Full `/start → /audit → /implement → /closeout` goal-chain with genius-level, project-personalized audit/implementation and a short impact-scored closeout. **Outcome: Achieved — 14/14 audit items shipped (Priority 344.1); expected post-closeout impact score 94/100; `npm run build` and `npm run build:check` green end-to-end.**
+
+## Where We Left Off (Session 173)
+- **Homepage critical path is now evidence-backed.** Removed the duplicate page-local homepage critical CSS and added `scripts/check-home-critical-css-contract.mjs`; `scripts/analyze-home-lcp.mjs` records the latest local home LCP at 324ms with a named hero candidate; `docs/visual-proof/home-lcp-s173/` has four timed first-viewport frames.
+- **Ambient first-load cost dropped without deleting behavior.** `assets/ambient-loader.js` moves guarded nav/engagement modules behind predicates; base ambient is now 27 sources / 104.5KB. `scripts/check-sw-shell-coherency.mjs` guards service-worker shell rotation after `scripts/build-shell-assets.mjs` updates.
+- **RUM strictness is now a ladder.** `scripts/check-rum-strict-ladder.mjs` reports accumulating state instead of a binary flip; current evidence is 33 total samples and `/` still needs 37 more route samples for strict evaluation.
+- **Trusted Types enforcement remains held for the right reason.** `scripts/probe-tt-soak.mjs` now emits route enforce/rollback rows; `docs/TT_SOAK_EVIDENCE_2026-06-05.md` shows 81 violations in the 100%-sample soak, so the next work is sink burn-down, not enforcement.
+- **Membership proof loop is wired locally.** `assets/membership-proof-loop.js` connects interview intent to the rank economy simulator through `vs_membership_intent`; the founder-facing orphan decision is now `docs/MEMBERSHIP_ORPHAN_DECISION.md`.
+- **Public ops artifacts gained sharper truth.** New ship receipts, intelligence budget, Ark signature dossier, nav decision ETA, and staging parity health are generated. `api/staging-health.json` is yellow: prod/staging reachable, but sampled shell/header parity differs.
+- Verification: `npm run build` passed; `npm run build:check` passed, including ambient coverage, critical CSS contract, SW coherency, RUM ladder, LCP autopsy, visual proof, Ark dossier, staging parity, and the 108-page crawl with 0 status failures / 0 blocking-script findings.
+- Next session: field-verify homepage changes after deployment; keep `npm run rum:pull` running until `/` crosses the 50-sample floor; burn down TT violations before any enforce canary; repair staging parity yellow; coordinate Ark signature failures with studio-ops.
+
+## Where We Left Off (Session 172)
 - **Phantom blocker killed:** RUM-SAMPLE-UNLOCK ("Founder action: production RUM export access") was wrong — `cloudflare.r2` was READY. `scripts/fetch-rum-from-r2.mjs` (vanilla SigV4) pulled 110 production rows first try; `npm run rum:pull` chains the pipeline; export-path gate `empty` → `warming`.
 - **Field truth correction (supersedes S161 artifact framing):** `/` median LCP ~5.8s, raw p75 ~10s across 37 real visits (FCP≈LCP, TTFB p75 1.3s). Homepage LCP is REAL for field visitors → S173 P1 with evidence in `data/rum-summary.json` + DECISIONS.
 - **TT soak now readable + actually accumulating:** deploy token has KV scope (cfut_ doesn't — error 10000 logged). Soak was structurally blind (0.5% × 1d TTL ≈ guaranteed empty); Worker TTL env-tunable, prod at 100%/30d, deployed (4f7dd69c) + live-verified. First real report exposed `cookie-consent.js:14` innerHTML (fires on every first visit) — rebuilt with DOM API. Evidence: `docs/TT_SOAK_EVIDENCE_2026-06-03.md`.

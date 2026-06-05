@@ -2306,3 +2306,12 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
 - Membership orphan P1 diagnosed to closure (`docs/MEMBERSHIP_ORPHAN_DOSSIER_S172.md`): interview rewired, vault-sdk kept (external consumer), vaultsparked-proof retire pending one founder yes/no.
 - Also: visual-proof gallery (`docs/visual-proof/index.html` + auto-regen), rotating gated prod-perf sampler in closeout-autopilot, testingSurfaces[] registered, IGNIS re-scored, revenue signals fresh.
 - Verification: `npm install` restored missing sharp; `npm run build` + `npm run build:check` green end-to-end (118-page crawl, 0 failures).
+
+## 2026-06-05 — Session 173 (/start → /audit → /implement → /closeout goal-chain)
+
+- Ran the full goal-chain; `/audit` produced `docs/AUDIT_2026-06-04.{md,json}` with 14 project-specific items, combined Priority 344.1, and expected post-closeout impact score 94/100. `/implement` shipped 14/14.
+- Homepage critical path: removed duplicate page-local critical CSS, added `scripts/check-home-critical-css-contract.mjs`, `scripts/analyze-home-lcp.mjs`, and timed first-viewport proof capture under `docs/visual-proof/home-lcp-s173/`; latest local homepage LCP autopsy is 324ms.
+- Runtime/shell: moved guarded ambient features behind `assets/ambient-loader.js` (base ambient 27 sources / 104.5KB), fixed service-worker shell asset rotation, and added `scripts/check-sw-shell-coherency.mjs`.
+- Evidence ladders: added `scripts/check-rum-strict-ladder.mjs` (33 total samples; `/` needs 37 more route samples) and extended `scripts/probe-tt-soak.mjs`; fresh TT evidence shows 81 violations, so enforce remains held.
+- Membership/intelligence/ops: shipped interview-to-rank proof loop, ship receipts, intelligence budget ledger, Ark signature failure dossier, nav-sheet decision ETA, membership orphan decision doc, and staging parity health (`api/staging-health.json` yellow).
+- Verification: `npm run build` passed; `npm run build:check` passed end-to-end with 108-page crawl, 0 status failures, and 0 blocking-script findings.

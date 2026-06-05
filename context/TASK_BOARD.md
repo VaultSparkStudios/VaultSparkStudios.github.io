@@ -1,6 +1,32 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-03 (Session 172 — goal-chain audit/implement: 12/12 shipped; RUM phantom blocker killed, TT soak live, Ark restored; build:check green)
+Last updated: 2026-06-05 (Session 173 — goal-chain audit/implement: 14/14 shipped; homepage critical path, RUM ladder, TT evidence, staging parity; build:check green)
+
+## Done (Session 173 — goal-chain: /start → /audit → /implement → /closeout)
+
+- [x] **[S173][SPEED/P0] HOMEPAGE-CRITICAL-CSS-DE-DUPE — DONE.** Removed the page-local homepage critical CSS copy and added `scripts/check-home-critical-css-contract.mjs`; the homepage now has one generated shell critical-CSS source (`generatedShell=true`, `pageLocal=false`). **DONE S173**
+- [x] **[S173][PERF/P0] FIELD-LCP-AUTOPSY-LAB — DONE.** Added `scripts/analyze-home-lcp.mjs`; current local evidence writes `docs/PERF_HOME_LCP_AUTOPSY_2026-06-04.{json,html}` with homepage LCP at 324ms and a named hero candidate. **DONE S173**
+- [x] **[S173][UX/P1] HOME-FIRST-VIEWPORT-PROOF — DONE.** Added `scripts/capture-home-first-viewport-proof.mjs`; `docs/visual-proof/home-lcp-s173/` contains four timed frames and the proof gallery is regenerated. **DONE S173**
+- [x] **[S173][DATA/P1] RUM-STRICT-FLIP-LADDER — DONE.** Added `scripts/check-rum-strict-ladder.mjs`; current state is accumulating (33 total samples, `/` needs 37 more route samples before strict promotion). **DONE S173**
+- [x] **[S173][SHELL/P1] SERVICE-WORKER-SHELL-COHERENCY — DONE.** Fixed shell asset rotation in `scripts/build-shell-assets.mjs` and added `scripts/check-sw-shell-coherency.mjs`; the service worker now tracks 5 fingerprinted shell assets coherently. **DONE S173**
+- [x] **[S173][SPEED/P1] AMBIENT-PREDICATE-LOADER — DONE.** Added `assets/ambient-loader.js` and moved guarded nav/engagement modules out of base ambient; final ambient bundle is 27 sources / 104.5KB. **DONE S173**
+- [x] **[S173][MEMBERSHIP/P1] INTERVIEW-TO-RANK-PROOF-LOOP — DONE.** `assets/membership-proof-loop.js` connects interview intent to rank-economy simulator defaults via localStorage (`vs_membership_intent`), preserving local-only cost-neutral behavior. **DONE S173**
+- [x] **[S173][SECURITY/P1] TT-SOAK-ROUTE-LADDER — DONE.** `scripts/probe-tt-soak.mjs` now emits route enforce/rollback rows; fresh evidence shows 81 violations, so enforce remains held on evidence. **DONE S173**
+- [x] **[S173][OPS/P2] SHIP-RECEIPTS — DONE.** `scripts/build-ship-receipts.mjs` writes `api/ship-receipts.json` and `docs/SHIP_RECEIPTS.md` from implementation/audit evidence. **DONE S173**
+- [x] **[S173][ECOSYSTEM/P2] ARK-SIGNATURE-DOSSIER — DONE.** `scripts/build-ark-signature-dossier.mjs` publishes `docs/ARK_SIGNATURE_FAILURE_DOSSIER_2026-06-04.md` with 3 signature failures for repair. **DONE S173**
+- [x] **[S173][TOKENCOST/P2] INTELLIGENCE-BUDGET-LEDGER — DONE.** `scripts/build-intelligence-budget.mjs` writes public budget artifacts; current runtime intelligence surfaces remain zero paid runtime AI cost. **DONE S173**
+- [x] **[S173][UX/P2] NAV-DECISION-ETA — DONE.** `scripts/build-nav-sheet-stats.mjs` now includes remaining opens and decision ETA fields; current opens remain 0, so default swap stays unflipped. **DONE S173**
+- [x] **[S173][MEMBERSHIP/P2] ORPHAN-DELETE-DECISION-DOC — DONE.** `docs/MEMBERSHIP_ORPHAN_DECISION.md` compresses the `vaultsparked-proof.js` retire decision to one founder yes/no. **DONE S173**
+- [x] **[S173][OPS/P2] STAGING-PARITY-HEALTH — DONE.** `scripts/check-staging-parity.mjs` writes `api/staging-health.json`; current verdict is yellow, not unknown. **DONE S173**
+
+## Now (Session 174 runway)
+
+- [ ] **[S174][PERF/P1] HOMEPAGE-FIELD-LCP-FIELD-VERIFY.** Deploy/field-verify the critical-CSS de-dupe + ambient split. Run `npm run rum:pull`, compare `data/rum-summary.json`, then let `scripts/check-rum-strict-ladder.mjs` decide strict readiness instead of guessing from synthetic traces.
+- [ ] **[S174][DATA/P1] RUM-ACCRUAL-WATCH.** Current ladder: 33 total samples; `/` needs 37 more route samples for strict evaluation. Keep `npm run rum:pull` in start/closeout until the route clears the 50-sample floor.
+- [ ] **[S174][SECURITY/P1] TT-VIOLATION-BURNDOWN.** `docs/TT_SOAK_EVIDENCE_2026-06-05.md` shows 81 violations after the 100%-sample soak. Inspect the sink clusters, fix remaining DOM sinks, then rerun `node scripts/probe-tt-soak.mjs` before any enforce canary.
+- [ ] **[S174][OPS/P2] STAGING-PARITY-YELLOW-FIX.** `api/staging-health.json` is yellow: production and staging are reachable, but sampled shell/header parity differs. Repair staging drift before treating CANON-007 as green.
+- [ ] **[S174][ECOSYSTEM/P2] ARK-SIGNATURE-FAILURE-REPAIR.** Use `docs/ARK_SIGNATURE_FAILURE_DOSSIER_2026-06-04.md` to coordinate the 3 failed cargo signatures with studio-ops instead of leaving Ark health as background noise.
+- [ ] **[S174][UX/P2] MEMBERSHIP-PROOF-LOOP-DEVICE-VERIFY.** Verify the interview → rank-economy proof loop on a real mobile device; the agent path is implemented, but the membership promise deserves one tactile pass.
 
 ## Done (Session 172 — goal-chain: /start → /audit → /implement → /closeout)
 
@@ -15,17 +41,9 @@ Last updated: 2026-06-03 (Session 172 — goal-chain audit/implement: 12/12 ship
 - [x] **[S172][PERF/P2] CLOSEOUT-PROD-PERF-SAMPLE — DONE.** `sample-prod-perf.mjs` rotating gated sampler wired into closeout-autopilot Step 3d.5. Closes the S154 carry. **DONE S172**
 - [x] **[S172][OPS/P3] TESTING-SURFACES + FRESHNESS — DONE.** 6 testingSurfaces registered; IGNIS re-scored (2026-06-03); revenue signals ✓ FRESH. **DONE S172**
 
-## Now (Session 173 runway)
+## Human Action Required (S173-refreshed)
 
-- [ ] **[S173][PERF/P1] HOMEPAGE-FIELD-LCP-FIX.** Field truth supersedes the artifact theory: `/` median LCP ~5.8s, raw p75 ~10s across 37 real visits (FCP≈LCP, TTFB p75 1.3s). Diagnose render path for real-visitor conditions (cold cache + 4g). Forensics says infra/cache-state class — start with shell-hash rotation cadence + ambient bundle cold cost. Evidence: `data/rum-summary.json` + DECISIONS 2026-06-03.
-- [ ] **[S173][DATA/P2] RUM-ACCRUAL-WATCH.** Run `npm run rum:pull` each session; at ≥50 `/` samples flip `check-perf-budget --source=rum --strict` + log DECISIONS (resolves RUM-STRICT-FLIP + ABSOLUTE-LCP-ORIGIN-CEILING).
-- [ ] **[S173][SECURITY/P2] TT-SOAK-REPROBE.** ~1 week after 2026-06-03: `node scripts/probe-tt-soak.mjs` — with 100% sampling + cookie-consent fix live, expect near-0 violations; then founder device verify → enforce `/privacy/` only.
-- [ ] **[S172][UX/P2] LONGTAIL-VISUAL-PROOF-REVIEW.** Founder review — now one click: open `docs/visual-proof/index.html`. Promote the primitive rhythm to more long-tail surfaces if it reads well.
-
-## Human Action Required (S172-refreshed)
-
-- [ ] **Delete `assets/vaultsparked-proof.js`? (30-second yes/no).** Evidence-complete: superseded by live-proof.js which writes the same IDs + more; not loaded anywhere. Dossier: `docs/MEMBERSHIP_ORPHAN_DOSSIER_S172.md` §3.
-- [ ] **Verify membership interview on a real device.** `/membership/` → "Take 30-second interview" affordance should render (re-wired S172); confirm IGNIS onboarding-interview budget cap still active.
+- [ ] **Delete `assets/vaultsparked-proof.js`? (30-second yes/no).** Evidence-complete: superseded by `live-proof.js` which writes the same IDs + more; not loaded anywhere. Current founder-facing decision doc: `docs/MEMBERSHIP_ORPHAN_DECISION.md`.
 
 ## Done (Session 169 — sitewide studio posture + theme gates)
 

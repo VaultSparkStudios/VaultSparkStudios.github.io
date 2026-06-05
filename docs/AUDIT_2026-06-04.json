@@ -1,0 +1,243 @@
+{
+  "schemaVersion": "1.1",
+  "generatedBy": "/audit skill v1.0 (codex, S173)",
+  "generatedAt": "2026-06-04",
+  "project": "vaultsparkstudios-website",
+  "projectName": "VaultSparkStudios.github.io",
+  "type": "website",
+  "topline": {
+    "totalItems": 14,
+    "combinedPriority": 344.1,
+    "expectedPostCloseoutImpactScore": 94,
+    "top3": [
+      "homepage-critical-css-de-dupe",
+      "field-lcp-autopsy-lab",
+      "rum-strict-flip-ladder"
+    ],
+    "headline": "S172 turned the site from synthetic guessing to field truth. S173 should spend that truth aggressively: remove duplicated homepage critical CSS, explain the real visitor LCP path, and make the RUM gate graduate itself when enough samples arrive."
+  },
+  "items": [
+    {
+      "rank": 1,
+      "slug": "homepage-critical-css-de-dupe",
+      "tier": "fire",
+      "axis": "Speed/UX",
+      "effort": "2h",
+      "impact": 10,
+      "innovation": 8,
+      "priority": 40.0,
+      "summary": "Collapse the homepage's two competing critical CSS systems into one measured first-viewport contract.",
+      "why": "index.html currently ships a large page-local `#critical-css` block followed by the generated `data-vs-critical-shell` block, and both define hero/header/root primitives. The RUM profile says FCP is near LCP, so the first render path is the battlefield; duplicated critical CSS is an obvious, evidence-backed place to cut parse and cascade work before touching riskier product features.",
+      "recipe": "Create `scripts/check-home-critical-css-contract.mjs` to fail if `index.html` contains both `#critical-css` and `data-vs-critical-shell`; move the homepage-only first-viewport rules into the generated shell or an allowlisted home shell segment; run warm and cold `measure-page-performance` before/after and record field-target hypothesis in DECISIONS."
+    },
+    {
+      "rank": 2,
+      "slug": "field-lcp-autopsy-lab",
+      "tier": "fire",
+      "axis": "AI/Intelligence + Speed",
+      "effort": "2h",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 36.0,
+      "summary": "Build a local LCP autopsy artifact that names the actual homepage LCP candidate, render phase, CSS ancestry, and blocking resources.",
+      "why": "S172 corrected the story: `/` is genuinely slow for field visitors. The current recipes still speak in broad classes like infra/cache-state or ambient cold cost; the next leap is a forensic HTML report with the exact LCP element and why it paints late under cold-cache/4g conditions.",
+      "recipe": "Extend `scripts/measure-page-performance.mjs` or add `scripts/analyze-home-lcp.mjs` using Playwright trace + PerformanceObserver injection; output `docs/PERF_HOME_LCP_AUTOPSY_2026-06-04.json/html` with candidate selector, text/image dimensions, computed style ancestry, request waterfall, long tasks, and a ranked fix recipe."
+    },
+    {
+      "rank": 3,
+      "slug": "rum-strict-flip-ladder",
+      "tier": "fire",
+      "axis": "Speed/Data Truth",
+      "effort": "1h",
+      "impact": 9,
+      "innovation": 6,
+      "priority": 34.1,
+      "summary": "Replace the binary RUM strict flip with a staged ladder: accumulating, warning, route-strict, site-strict.",
+      "why": "`data/rum-summary.json` has 42 total samples and 18 on `/`, while the strict threshold is 50. The site should not wait passively; it should make the next state visible and automatically tighten from advisory to warning to blocking as confidence rises.",
+      "recipe": "Add `scripts/check-rum-strict-ladder.mjs`: <25 samples = accumulating, 25-49 = warning with projected flip date, >=50 = strict for that route, >=50 on top routes = site-strict candidate. Wire non-blocking into `build:check`, and log the state in `api/site-health.json`."
+    },
+    {
+      "rank": 4,
+      "slug": "sw-shell-precache-coherency-gate",
+      "tier": "high",
+      "axis": "Speed/Resilience",
+      "effort": "1h",
+      "impact": 8,
+      "innovation": 5,
+      "priority": 25.2,
+      "summary": "Guard service-worker shell precache against stale fingerprint drift.",
+      "why": "The service worker's `FINGERPRINTED_SHELL_ASSETS` references the current ambient shell, while `STATIC_ASSETS` still includes an older ambient shell path. Even if the install remains tolerant, stale precache entries make cold-cache field evidence harder to trust and can silently preserve old shell behavior.",
+      "recipe": "Add a check inside `build-shell-assets.mjs --check` or a new `scripts/check-sw-shell-coherency.mjs` that parses `sw.js`, compares `FINGERPRINTED_SHELL_ASSETS` against `STATIC_ASSETS`, and fails on old `style/theme/nav/shell-health/ambient.shell-*` entries."
+    },
+    {
+      "rank": 5,
+      "slug": "ambient-loader-graph-split",
+      "tier": "high",
+      "axis": "Speed/Token Cost",
+      "effort": "4h",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 24.8,
+      "summary": "Turn the ambient bundle from one guarded blob into a dependency graph with route, viewport, session, and intent loaders.",
+      "why": "The current ambient report shows 31 sources, 134.3KB raw, with 22 guarded modules and 94.3KB of conditional code still shipped to every page. S164 proved intent-paid loading works with command palette; now apply the pattern to nav-sheet, exit-intent, visit-depth, presence, favicon pulse, and rank-only surfaces without losing the single-shell discipline.",
+      "recipe": "Create `assets/ambient-loader.js` plus a generated manifest from `AMBIENT_SOURCES`; keep always-on primitives in the base bundle and lazy-load guarded modules by predicates. First split targets: `nav-sheet.js`, `exit-intent.js`, `visit-depth.js`, `presence-badge.js`, `favicon-pulse.js`; prove absent-by-default and behavior-on-trigger with Playwright."
+    },
+    {
+      "rank": 6,
+      "slug": "home-first-viewport-freeze-frame",
+      "tier": "high",
+      "axis": "UX/Visual Quality",
+      "effort": "2h",
+      "impact": 8,
+      "innovation": 6,
+      "priority": 24.0,
+      "summary": "Add a deterministic first-viewport screenshot and layout contract specifically for `/` under slow-network simulation.",
+      "why": "Long-tail visual proof is now strong, but the brand anchor's first viewport is where field LCP is failing. A frozen first-viewport proof turns 'homepage feels slow' into a visual diff: what is visible at 500ms, 1500ms, 2500ms, and after idle.",
+      "recipe": "Build `scripts/capture-home-first-viewport-proof.mjs` with Playwright network/CPU throttling and four timed screenshots; fail if hero wordmark, tagline, primary CTA, and nav are not visible by the target frame. Publish under `docs/visual-proof/home-lcp-s173/` and link from the gallery."
+    },
+    {
+      "rank": 7,
+      "slug": "tt-enforce-route-ladder",
+      "tier": "high",
+      "axis": "Security",
+      "effort": "2h",
+      "impact": 8,
+      "innovation": 6,
+      "priority": 24.0,
+      "summary": "Convert Trusted Types from one future cliff into a per-route enforce ladder with rollback receipts.",
+      "why": "S172 made the TT soak real and fixed the first high-volume sink. The current next step still says re-probe in about a week, then maybe enforce `/privacy/`; a route ladder makes this safer and faster by enforcing only routes with zero soak hits and a named rollback path.",
+      "recipe": "Extend `probe-tt-soak.mjs` to emit route-level readiness; add Worker config support for `TT_ENFORCE_ROUTES=/privacy/,/terms/`; require an intent receipt and `docs/TT_ENFORCE_ROLLBACK.md` before changing headers."
+    },
+    {
+      "rank": 8,
+      "slug": "membership-proof-loop",
+      "tier": "high",
+      "axis": "Feature Depth/Gamification",
+      "effort": "2h",
+      "impact": 8,
+      "innovation": 6,
+      "priority": 24.0,
+      "summary": "Turn the membership interview and rank economy into a closed proof loop: intent, simulated rank path, next challenge, and post-signup continuity.",
+      "why": "S172 rewired the membership interview and kept the rank economy simulator, but the user still experiences them as separate surfaces. Membership must feel real; the best conversion path is not another CTA, it is a visible personal trajectory that survives signup.",
+      "recipe": "Have the interview write a local `vs_membership_intent` profile, feed it into `rank-economy-simulator.js`, and render a 'first three sparks' plan on `/membership/` and `/vault-member/` after signup. Keep it local-only until Obelisk/Vault SSO posture allows server continuity."
+    },
+    {
+      "rank": 9,
+      "slug": "feedback-to-ship-receipts",
+      "tier": "high",
+      "axis": "User Feedback Loop",
+      "effort": "2h",
+      "impact": 7,
+      "innovation": 6,
+      "priority": 21.0,
+      "summary": "Upgrade the feedback decision board into public-safe ship receipts that connect themes to shipped pages, commits, and before/after proof.",
+      "why": "The repo already has feedback provenance, commit maps, visual proof, and a decision board. The next differentiator is closing the loop in public: 'you asked for trust/depth/mobile clarity; here is the shipped receipt.'",
+      "recipe": "Create `scripts/build-ship-receipts.mjs` joining `api/feedback-provenance.json`, `api/commit-map.json`, `docs/visual-proof/**/manifest.json`, and TASK_BOARD done items; render a receipts lane on `/feedback/insights/` with no raw feedback text."
+    },
+    {
+      "rank": 10,
+      "slug": "ark-signature-failure-dossier",
+      "tier": "high",
+      "axis": "Organization/Ecosystem",
+      "effort": "1h",
+      "impact": 7,
+      "innovation": 4,
+      "priority": 17.7,
+      "summary": "Convert the three Ark signature failures from upstream noise into a precise ecosystem repair packet.",
+      "why": "Ark is restored, but the first drain found three signature failures. If the studio-wide transport is how Obelisk, Hub, and canon replies move, signature failures are not harmless; they are silent cross-repo drift until diagnosed.",
+      "recipe": "Write `docs/ARK_SIGNATURE_FAILURE_DOSSIER_2026-06-04.md` from `.cache/ark-inbox.json`/drain logs with producer, cargo type, signature status, expected key, and recommended studio-ops fix; ship a `repo-question` or `content-acked` cargo back once repaired."
+    },
+    {
+      "rank": 11,
+      "slug": "public-intelligence-budget-ledger",
+      "tier": "medium",
+      "axis": "Token/API Cost",
+      "effort": "2h",
+      "impact": 6,
+      "innovation": 7,
+      "priority": 21.0,
+      "summary": "Publish a local build-time budget ledger for every public intelligence surface: bytes, requests, cached freshness, AI cost posture, and free-tier status.",
+      "why": "CANON-029 requires cost-neutral free tiers, and this repo now has many intelligence surfaces. A public-safe ledger keeps the site honest: which widgets are static, which are cached, which are local-only, and which must never drift into studio-paid per-user AI.",
+      "recipe": "Generate `api/intelligence-budget.json` and `docs/INTELLIGENCE_BUDGET_LEDGER.md` from package scripts and known data files; include measurement plan: bytes from build artifacts, request count from crawl, AI cost posture from `context/PROJECT_STATUS.json.freeTierCostStatus` and disclosure gates."
+    },
+    {
+      "rank": 12,
+      "slug": "nav-sheet-decision-accelerator",
+      "tier": "medium",
+      "axis": "UX/Feedback Loop",
+      "effort": "1h",
+      "impact": 6,
+      "innovation": 5,
+      "priority": 18.9,
+      "summary": "Accelerate the mobile-sheet default decision without cheating the data gate.",
+      "why": "`api/nav-sheet-stats.json` currently has too little signal, so the default swap remains correctly parked. The project can still learn faster by showing the canary more deliberately to mobile visitors who signal navigation intent.",
+      "recipe": "Increase exposure only for eligible mobile sessions after first nav open or search tap, keep deterministic assignment, and add a `decisionETA` field to `api/nav-sheet-stats.json`. Do not flip default until the existing thresholds pass."
+    },
+    {
+      "rank": 13,
+      "slug": "founder-yesno-retire-vaultsparked-proof",
+      "tier": "medium",
+      "axis": "Efficiency/Organization",
+      "effort": "30m",
+      "impact": 5,
+      "innovation": 3,
+      "priority": 11.4,
+      "summary": "Remove the last membership orphan only after converting the existing dossier into a one-line yes/no gate with rollback.",
+      "why": "S172 already proved `assets/vaultsparked-proof.js` is superseded by `live-proof.js`. The only remaining risk is deleting a feature-bearing-looking file without a founder-readable receipt.",
+      "recipe": "Add a short `docs/MEMBERSHIP_ORPHAN_DECISION.md` with delete/keep consequence and rollback command; after approval, delete `assets/vaultsparked-proof.js`, rerun `check-orphan-assets`, and update TASK_BOARD."
+    },
+    {
+      "rank": 14,
+      "slug": "staging-parity-health-tile",
+      "tier": "medium",
+      "axis": "Security/Release Ops",
+      "effort": "1h",
+      "impact": 5,
+      "innovation": 3,
+      "priority": 9.5,
+      "summary": "Promote staging from a static URL field to a checked parity tile in the public-safe ops surface.",
+      "why": "CANON-007 is satisfied, but `PROJECT_STATUS.json` still marks staging status as unknown. A SPARKED brand anchor should know whether staging serves the same shell, headers, and key pages as production before public deploy decisions.",
+      "recipe": "Add `scripts/check-staging-parity.mjs` comparing status, shell manifest hash, CSP/security headers, and three key pages between production and `website.staging.vaultsparkstudios.com`; write `api/staging-health.json` and update testingSurfaces status."
+    }
+  ],
+  "innovationReserve": [
+    "homepage-critical-css-de-dupe",
+    "field-lcp-autopsy-lab",
+    "ambient-loader-graph-split"
+  ],
+  "skipped": [
+    {
+      "slug": "edge-account-personalization",
+      "reason": "Still gated by the S167 Obelisk Phase 2 decision; do not bypass the auth/capability contract."
+    },
+    {
+      "slug": "trusted-types-global-enforce",
+      "reason": "Too broad for the current evidence; route ladder is safer."
+    },
+    {
+      "slug": "public-raw-feedback-digest",
+      "reason": "Violates public-safe constraints; use aggregate ship receipts instead."
+    }
+  ],
+  "execution": {
+    "status": "complete",
+    "completedAt": "2026-06-05",
+    "shipped": 14,
+    "deferred": 0,
+    "blocked": 0,
+    "verification": [
+      "npm run build",
+      "node scripts/analyze-home-lcp.mjs",
+      "node scripts/capture-home-first-viewport-proof.mjs",
+      "node scripts/check-staging-parity.mjs",
+      "node scripts/probe-tt-soak.mjs --days=30",
+      "npm run build:check"
+    ],
+    "notes": [
+      "Homepage local LCP autopsy on current shell reports 324ms on span.forge-letter.vsx-2c82527298.",
+      "Ambient bundle is now 27 sources / 104.5KB raw after moving five guarded modules behind assets/ambient-loader.js.",
+      "TT enforce ladder shipped, but enforcement remains held because fresh soak evidence found 81 violations across 3 counter days.",
+      "Staging parity artifact shipped with status yellow; sampled production/staging routes are reachable but shell/header parity differs."
+    ]
+  }
+}

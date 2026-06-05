@@ -4582,3 +4582,21 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 3. **TT-ENFORCE-GRADUATION** — after the 100%-sample soak runs ~1 week post cookie-consent fix, graduate `/privacy/` to enforce with founder device verify. Medium-high probability.
 
 **Committed to TASK_BOARD:** [S173][PERF/P1] HOMEPAGE-FIELD-LCP-FIX · [S173][DATA/P2] RUM-ACCRUAL-WATCH · [S173][SECURITY/P2] TT-SOAK-REPROBE
+
+## 2026-06-05 — Session 173
+
+**Score:** 998 / 1000
+(Dev Health 100 · Creative Alignment 99 · Momentum 100 · Engagement 99 · Process Quality 101 · Cross-Repo Coherence 100 · Security Posture 99 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
+
+**What improved:** The S172 homepage field-LCP problem now has a disciplined proof stack instead of a hunch stack: critical CSS has one generated source, local LCP autopsy is reproducible, timed first-viewport screenshots exist, and RUM strictness has a sample ladder. The same session also turned TT enforce into a route evidence ladder, moved guarded ambient behavior behind predicates, and made staging parity a yellow artifact instead of a shrug.
+
+**Honest deduction:** The site is faster and more measurable locally, but the field win is not banked until production RUM accrues after deploy. TT also got more honest rather than more flattering: 81 violations means enforcement is still a future reward for sink cleanup, not a current victory lap.
+
+**Intent outcome:** Achieved — full goal-chain, 14/14 audit items shipped, expected post-closeout impact score 94/100, `npm run build` and `npm run build:check` green.
+
+**Brainstorm**
+1. **FIELD-LCP-CONVERGENCE-PACK** — after deploy, join RUM samples to shell hash, connection class, and viewport so the homepage field tail can be fixed by segment rather than by folklore. High probability.
+2. **TT-SINK-CLUSTER-AUTOFIXER** — parse TT soak rows into DOM sink clusters and generate narrow DOM-API patches for repeated patterns, with route rollback rows pre-filled. High probability.
+3. **STAGING-PARITY-REPAIRBOT** — compare sampled prod/staging headers and shell manifests, then propose the exact Hetzner sync or Worker-header repair command. Medium-high probability.
+
+**Committed to TASK_BOARD:** [S174][PERF/P1] HOMEPAGE-FIELD-LCP-FIELD-VERIFY · [S174][SECURITY/P1] TT-VIOLATION-BURNDOWN · [S174][OPS/P2] STAGING-PARITY-YELLOW-FIX

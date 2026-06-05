@@ -95,10 +95,18 @@ function summarize(rows, { minOpens = 50 } = {}) {
     }
   }
   const closeDenominator = Math.max(1, totals.closes);
+  const remainingOpens = Math.max(0, minOpens - totals.opens);
+  const decisionETA = totals.opens >= minOpens
+    ? 'ready-for-evaluation'
+    : totals.opens === 0
+      ? `needs ${remainingOpens} mobile sheet open event(s)`
+      : `needs ${remainingOpens} more open event(s)`;
   const readiness = {
     minOpens,
     canaryPercent: 5,
     sufficient: totals.opens >= minOpens,
+    remainingOpens,
+    decisionETA,
     backdropCloseRate: Number((totals.backdropCloses / closeDenominator).toFixed(3)),
     dragCloseRate: Number((totals.dragCloses / closeDenominator).toFixed(3)),
     defaultSwapReady: totals.opens >= minOpens && (totals.backdropCloses / closeDenominator) <= 0.35,
@@ -121,6 +129,7 @@ if (SELF_TEST) {
     ['normalizes routes', !!sum.routes['/'] && !!sum.routes['/membership/']],
     ['ignores non-allowlisted ux', sum.totals.ignored === 1],
     ['readiness computes', sum.readiness.sufficient === true && sum.readiness.defaultSwapReady === false],
+    ['decision ETA exists', typeof sum.readiness.decisionETA === 'string'],
   ];
   let failed = 0;
   for (const [name, ok] of cases) {

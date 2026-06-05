@@ -40,11 +40,10 @@ const AMBIENT_SOURCES = [
   'assets/native-feel.js',
   'assets/scroll-reveal.js',
   'assets/scroll-depth.js',
-  'assets/visit-depth.js',
-  'assets/presence-badge.js',
   'assets/breadcrumb-render.js',
   'assets/signed-in-state.js',   // single auth query; must precede account-chip
   'assets/account-chip-loader.js',
+  'assets/ambient-loader.js',
   'assets/page-sigil.js',
   'assets/vault-atlas.js',
   'assets/vault-genome-strip.js',
@@ -53,7 +52,6 @@ const AMBIENT_SOURCES = [
   'assets/hover-prefetch.js',
   'assets/edge-swipe-nav.js',
   'assets/pointerdown-warm.js',
-  'assets/exit-intent.js',
   'assets/ignis-lens.js',
   'assets/command-palette-loader.js',
   'assets/intent-flight-director.js',
@@ -64,10 +62,8 @@ const AMBIENT_SOURCES = [
   'assets/security-posture.js',
   'assets/adaptive-speculation.js',
   'assets/rum-beacon.js',
-  'assets/favicon-pulse.js',
   'assets/founder-presence-handle.js',
   'assets/vault-rank-bar.js',   // ambient rank progress bar for signed-in members
-  'assets/nav-sheet.js',
 ];
 
 const OUTPUT_PATH = join(ROOT, 'assets', 'ambient.bundle.js');

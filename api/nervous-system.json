@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-03T22:57:47.346Z",
+  "generatedAt": "2026-06-05T02:01:57.701Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "Session 172 ran the full /start → /audit → /implement → /closeout goal-chain and shipped 12/12 audit items (Priority 281.0). Headline: the production RUM export labeled Founder-action since S163 was a CANON-019 phantom blocker — cloudflare.r2 was READY; scripts/fetch-rum-from-r2.mjs pulled 110 production rows on first run and npm run rum:pull now chains the field pipeline. TT soak made real (100% sampling/30d TTL, Worker deployed 4f7dd69c) and the first soak read exposed + fixed the cookie-consent innerHTML sink. Ark transport restored via delegation shim (3 cargo drained, oldest 164h). Membership orphan P1 diagnosed to one founder yes/no. Verification: build + build:check green end-to-end (118 pages); Worker live-verified.",
-  "nextMilestone": "S173: HOMEPAGE-FIELD-LCP-FIX — field data shows / median LCP ~5.8s for real visitors (supersedes the synthetic-artifact theory); plus rum:pull accrual toward the 50-sample strict flip, TT soak re-probe after ~1 week, and two 30-second founder items (vaultsparked-proof delete + membership interview device verify).",
+  "focus": "Session 173 ran the full /start → /audit → /implement → /closeout goal-chain and shipped 14/14 audit items (Priority 344.1; expected impact 94/100). Homepage critical CSS is now generated-shell-only, local LCP autopsy is 324ms with timed visual proof, guarded ambient modules moved behind a predicate loader (base ambient 27 sources / 104.5KB), SW shell coherency is gated, RUM strictness is a sample ladder, TT soak evidence now shows 81 violations instead of false emptiness, membership interview intent feeds the rank proof loop, and staging parity is measured as yellow. Verification: npm run build + npm run build:check green end-to-end (108-page crawl, 0 failures).",
+  "nextMilestone": "S174: field-verify homepage LCP after deploy; continue rum:pull until / clears the 50-sample strict threshold (current ladder: 33 total samples, / needs 37 more); burn down TT violation sinks before any enforce canary; repair staging parity yellow; coordinate 3 Ark signature failures; founder yes/no remains only for deleting assets/vaultsparked-proof.js.",
   "pulse": {
     "now": [
       "Studio Pulse live data — the Forge Window now hydrates from the public intelligence feed again.",
@@ -54,7 +54,14 @@
       "Expanded intent routing on games and universe hubs.",
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
-    "shipped": []
+    "shipped": [
+      "Homepage critical path is now evidence-backed. Removed the duplicate page-local homepage critical CSS and added `scripts/check-home-critical-css-contract.mjs`; `scripts/analyze-home-lcp.mjs` records the latest local home LCP at 324ms with a named hero candidate; `docs/visual-proof/home-lcp-s173/` has four timed first-viewport frames.",
+      "Ambient first-load cost dropped without deleting behavior. `assets/ambient-loader.js` moves guarded nav/engagement modules behind predicates; base ambient is now 27 sources / 104.5KB. `scripts/check-sw-shell-coherency.mjs` guards service-worker shell rotation after `scripts/build-shell-assets.mjs` updates.",
+      "RUM strictness is now a ladder. `scripts/check-rum-strict-ladder.mjs` reports accumulating state instead of a binary flip; current evidence is 33 total samples and `/` still needs 37 more route samples for strict evaluation.",
+      "Trusted Types enforcement remains held for the right reason. `scripts/probe-tt-soak.mjs` now emits route enforce/rollback rows; `docs/TT_SOAK_EVIDENCE_2026-06-05.md` shows 81 violations in the 100%-sample soak, so the next work is sink burn-down, not enforcement.",
+      "Membership proof loop is wired locally. `assets/membership-proof-loop.js` connects interview intent to the rank economy simulator through `vs_membership_intent`; the founder-facing orphan decision is now `docs/MEMBERSHIP_ORPHAN_DECISION.md`.",
+      "Public ops artifacts gained sharper truth. New ship receipts, intelligence budget, Ark signature dossier, nav decision ETA, and staging parity health are generated. `api/staging-health.json` is yellow: prod/staging reachable, but sampled shell/header parity differs."
+    ]
   },
   "decisions": [
     {
@@ -66,7 +73,7 @@
     {
       "surface": "performance",
       "verdict": "hold",
-      "evidence": "Home RUM samples=18",
+      "evidence": "Home RUM samples=13",
       "next": "Flip strict only after field p75 is sufficient and healthy."
     },
     {

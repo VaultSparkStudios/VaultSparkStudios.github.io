@@ -38,6 +38,10 @@ function flag(name, fallback) {
 
 const DAYS = Math.max(1, Number(flag('--days', 30)) || 30);
 const NAMESPACE_ID = flag('--namespace', '6fde74ca7f3d462786afbb85c85611e0');
+const ENFORCE_CANDIDATES = (flag('--routes', '/privacy/,/terms/') || '')
+  .split(',')
+  .map((route) => route.trim())
+  .filter(Boolean);
 
 const { getSecret, redact } = await import('./lib/secrets.mjs');
 
@@ -97,9 +101,23 @@ try {
   for (const k of reportKeys.slice(0, 5)) {
     try { samples.push({ key: k, body: JSON.parse(await cf(`/values/${encodeURIComponent(k)}`)) }); } catch {}
   }
+  const routeHits = {};
+  for (const sample of samples) {
+    const body = sample.body || {};
+    const blocked = String(body.blockedURI || body.blockedURL || body.url || body.documentURI || '');
+    let route = '/';
+    try { route = new URL(blocked).pathname || '/'; } catch {}
+    routeHits[route] = (routeHits[route] || 0) + 1;
+  }
 
   const totalViolations = Object.values(days).reduce((a, b) => a + (b || 0), 0);
   const daysWithData = Object.keys(days).length;
+  const routeReadiness = ENFORCE_CANDIDATES.map((route) => ({
+    route,
+    ready: daysWithData > 0 && totalViolations === 0 && !routeHits[route],
+    observedSampleHits: routeHits[route] || 0,
+    rollback: `Remove ${route} from TT_ENFORCE_ROUTES and redeploy cloudflare/security-headers-worker.js`,
+  }));
   const verdict = daysWithData === 0
     ? 'NO-DATA — soak counters absent in window; either zero violations ever recorded or report-only header not firing. Verify header on live route before enforcing.'
     : totalViolations === 0
@@ -133,6 +151,12 @@ try {
       '',
       samples.length ? `## Sample reports (${samples.length})` : '',
       ...samples.map((s) => `- \`${s.key}\` → ${JSON.stringify(s.body).slice(0, 300)}`),
+      '',
+      '## Route enforce ladder',
+      '',
+      '| Route | Ready | Observed sample hits | Rollback |',
+      '|---|:-:|---:|---|',
+      ...routeReadiness.map((r) => `| \`${r.route}\` | ${r.ready ? 'yes' : 'no'} | ${r.observedSampleHits} | ${r.rollback} |`),
       '',
       '---',
       '*Unblocks the evidence half of TRUSTED-TYPES-ENFORCE-CANARY (S164 audit #2). Founder device verify remains before enforce.*',

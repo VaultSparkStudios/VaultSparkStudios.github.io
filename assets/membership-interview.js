@@ -114,6 +114,22 @@
     return null;
   }
 
+  function saveIntent(tier, history, reply) {
+    try {
+      var answers = history.filter(function (item) { return item.role === 'user'; }).map(function (item) { return item.content; }).slice(-3);
+      localStorage.setItem('vs_membership_intent', JSON.stringify({
+        schemaVersion: '1.0',
+        source: 'membership-interview',
+        tier: tier && tier.name ? tier.name : 'Free',
+        href: tier && tier.href ? tier.href : '/vault-member/#register',
+        answers: answers,
+        summary: String(reply || '').slice(0, 240),
+        savedAt: new Date().toISOString()
+      }));
+      window.dispatchEvent(new CustomEvent('vs:membership-intent', { detail: { tier: tier && tier.name ? tier.name : 'Free' } }));
+    } catch (_) {}
+  }
+
   function renderProgress(card, turn) {
     var bar = '<div class="mem-interview-progress" aria-label="Interview progress">';
     for (var i = 0; i < MAX_TURNS; i++) {
@@ -157,6 +173,7 @@
 
     function renderFinal(reply) {
       var tier = detectTier(reply);
+      saveIntent(tier, history, reply);
       var ctaHtml = tier
         ? '<a class="mem-interview-final-cta" href="' + escape(tier.href) + '" data-track-event="interview_recommendation_click" data-track-label="' + escape(tier.name) + '">Open ' + escape(tier.name) + ' →</a>'
         : '<a class="mem-interview-final-cta" href="' + escape(fallbackHref) + '">See all tiers →</a>';

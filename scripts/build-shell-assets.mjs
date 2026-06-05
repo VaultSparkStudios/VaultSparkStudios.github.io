@@ -157,9 +157,10 @@ function updateServiceWorker(swSource, manifest) {
     const source = asset.source.replace(/\\/g, '/');
     const ext = path.extname(source);
     const basename = path.basename(source, ext).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const stemBasename = path.basename(asset.stem).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const replacement = `'/` + manifest.assets[asset.key].path.replace(/\\/g, '/') + `'`;
     const pattern = new RegExp(
-      `'/assets/${basename}(?:\\.shell-[a-f0-9]{10})?\\${ext}(?:\\?[^']*)?'`,
+      `'/assets/(?:${basename}(?:\\.shell-[a-f0-9]{10})?|${stemBasename}-[a-f0-9]{10})\\${ext}(?:\\?[^']*)?'`,
       'g'
     );
     next = next.replace(pattern, replacement);

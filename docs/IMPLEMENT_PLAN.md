@@ -1,38 +1,35 @@
 <!-- generated-by: /implement skill v1.0 -->
-<!-- generated-at: 2026-06-03 · session 172 -->
-<!-- source: docs/AUDIT_2026-06-03.json -->
+<!-- generated-at: 2026-06-05 -->
+<!-- source: docs/AUDIT_2026-06-04.json -->
 
-# Implement Plan — S172
+# Implement Plan — AUDIT_2026-06-04
 
-Optimal-efficiency sequencing of the 12-item S172 audit (raw Priority sum 281.0).
+## Sequenced Order
 
-## Wave 1 — RUM data spine (foundations; 🔥 first)
-1. **rum-r2-field-unlock** (#1, 40.0) — R2→local fetch script; the phantom-blocker kill
-2. **perf-truth-cascade** (#2, 34.2) — branch on sample count; flip or wire accrual
+1. `homepage-critical-css-de-dupe` — front-door perf foundation.
+2. `field-lcp-autopsy-lab` — proof artifact for real LCP candidate.
+3. `home-first-viewport-freeze-frame` — timed visual proof for the same surface.
+4. `sw-shell-precache-coherency-gate` — cache correctness before more shell work.
+5. `rum-strict-flip-ladder` — field-data graduation state.
+6. `ambient-loader-graph-split` — parse-cost reduction after shell gates.
+7. `membership-proof-loop` — product-depth loop while membership files are warm.
+8. `tt-enforce-route-ladder` — security evidence ladder after TT soak refresh.
+9. `feedback-to-ship-receipts` — reuse commit/feedback/proof artifacts.
+10. `ark-signature-failure-dossier` — cross-repo repair packet.
+11. `public-intelligence-budget-ledger` — cost-neutrality evidence.
+12. `nav-sheet-decision-accelerator` — adds ETA without flipping default.
+13. `founder-yesno-retire-vaultsparked-proof` — close founder decision to one receipt.
+14. `staging-parity-health-tile` — staging health artifact.
 
-## Wave 2 — credential probes (same secrets-gateway surface)
-3. **tt-soak-kv-probe** (#5, 26.6) — cfut_ KV read of tt: soak
-4. **ark-drain-restore** (#6, 25.3) — restore cargo transport; drain immediately
+## Verification Plan
 
-## Wave 3 — perf intelligence (same perf-history surface)
-5. **perf-forensic-commit-correlator** (#3, 31.5) — suspect commits in fix recipes
-6. **closeout-prod-perf-sample** (#10, 12.7) — continuous accrual gate
-7. **field-health-public-badge** (#4, 28.0) — needs RUM summary shape from Wave 1
+- `npm run build`
+- `node scripts/analyze-home-lcp.mjs`
+- `node scripts/capture-home-first-viewport-proof.mjs`
+- `node scripts/check-staging-parity.mjs`
+- `node scripts/probe-tt-soak.mjs --days=30`
+- `npm run build:check`
 
-## Wave 4 — forensics + protocol hygiene
-8. **membership-orphan-dossier** (#8, 24.0) — git forensics → founder decision doc
-9. **protocol-script-self-heal** (#7, 24.5) — classify + heal MODULE_NOT_FOUND drift
+## Result
 
-## Wave 5 — polish + ops (token-cost last)
-10. **visual-proof-gallery** (#9, 19.0)
-11. **testing-surfaces-registration** (#11, 9.1)
-12. **ops-freshness-refresh** (#12, 6.1)
-
-Rationale: Wave 1 is foundational (3 downstream items feed on field data). Waves 2–3 group by shared code surface. Dossier and self-heal are independent and safe mid-pass. Polish and freshness land last when measurement is meaningful.
-
-## Verification
-
-- `node scripts/fetch-rum-from-r2.mjs --dry-run` then real pull + `npm run rum:summary`
-- `node scripts/check-perf-budget.mjs` (source branch verified)
-- `node scripts/check-protocol-scripts.mjs --info`
-- `npm run build` + `npm run build:check` end-to-end at pass completion
+14/14 shipped. `npm run build:check` passed end-to-end on 2026-06-05: 108-page crawl, 0 status failures, 0 blocking-script findings.

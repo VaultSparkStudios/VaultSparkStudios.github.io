@@ -5,6 +5,7 @@
     '/assets/member-voices.js',
     '/assets/membership-live-tier.js',
     '/assets/rank-projector.js',
+    '/assets/membership-proof-loop.js',
     // S172 membership-orphan-dossier: re-wired — the AI tier-recommendation
     // interview lost its loader entry while its mount div stayed in
     // membership/index.html (accidental severance, not retirement).

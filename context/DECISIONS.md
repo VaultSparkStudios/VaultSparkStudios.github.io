@@ -1443,3 +1443,35 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **Why:** CANON-019 probe — the `cloudflare.kv` MISSING label was half-phantom: the deploy token has KV read scope (verified via wrangler); only the cfut_ studio token lacks it (error 10000, logged). First real probe surfaced a live violation: `assets/cookie-consent.js:14` innerHTML — fires on every first visit, the highest-volume TT sink on the site. Rebuilt the banner with DOM API.
 
 **Maintenance rule:** `node scripts/probe-tt-soak.mjs` reads the soak autonomously (deploy token first). Do NOT graduate to enforce until a multi-week 100%-sample soak shows ~0 violations after the cookie-consent fix propagates, plus founder device verify (SOUL #3). Revert sample rate/TTL to defaults after the enforce decision.
+
+### 2026-06-05 — S173 — Homepage critical CSS has one generated shell source
+
+**Decision:** The homepage must not carry a page-local duplicate of the generated critical CSS shell. `index.html` now relies on the generated shell critical CSS, and `scripts/check-home-critical-css-contract.mjs` enforces `generatedShell=true` and `pageLocal=false`.
+
+**Why:** S172 proved real visitors are paying a homepage LCP tax. Duplicated critical CSS made the first-viewport contract harder to reason about and easier to drift; one source gives the LCP autopsy and visual proof tools a cleaner target.
+
+**Maintenance rule:** Future homepage perf work should update the shell generator or shared style primitives, then let build propagation write the page. Do not reintroduce an ad hoc `<style id="critical-css">` block on `index.html`.
+
+### 2026-06-05 — S173 — RUM and TT promotions use ladders, not cliff flips
+
+**Decision:** `check-rum-strict-ladder` and the TT soak probe are the promotion gates for perf/security strictness. Current RUM state is accumulating (33 total samples; `/` needs 37 more route samples), and current TT state is hold (81 violations in `docs/TT_SOAK_EVIDENCE_2026-06-05.md`).
+
+**Why:** Both systems have already produced false confidence when the sample path was thin or structurally blind. Strict perf budgets and Trusted Types enforce are high-blast-radius changes; they should graduate from route-level evidence, not optimism.
+
+**Maintenance rule:** No `--strict` perf flip until the route clears the 50-sample floor. No Trusted Types enforce canary until the remaining sink clusters are fixed and the 100%-sample soak reads near-zero.
+
+### 2026-06-05 — S173 — Guarded ambient features load by predicate
+
+**Decision:** Guarded engagement/nav modules should not live in the base ambient bundle when a small predicate loader can preserve behavior. `assets/ambient-loader.js` now owns the conditional load path; base ambient remains for shell primitives and session truth.
+
+**Why:** The homepage field issue is partly a cold-path discipline problem. Moving five guarded modules out of the first parse path dropped the base ambient bundle to 27 sources / 104.5KB without deleting user-facing functionality.
+
+**Maintenance rule:** New ambient additions must either be true shell primitives or prove why they cannot be predicate-loaded. `report-ambient-coverage --check` remains the regression guard.
+
+### 2026-06-05 — S173 — Staging parity is measured yellow, not assumed green
+
+**Decision:** CANON-007 staging health now has a repo-local parity artifact. `scripts/check-staging-parity.mjs` writes `api/staging-health.json`; the current state is yellow because production and staging are reachable but sampled shell/header parity differs.
+
+**Why:** A reachable staging URL is not the same thing as a deploy-equivalent staging environment. The brand anchor needs staging to catch shell/header drift before production-facing changes are trusted.
+
+**Maintenance rule:** Treat staging as yellow until the parity report is green. Do not use staging status as launch confidence without refreshing `api/staging-health.json`.

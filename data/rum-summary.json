@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-03T22:57:47.015Z",
+  "generatedAt": "2026-06-05T02:01:56.981Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,18 +10,18 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 42,
+  "totalSamples": 33,
   "sufficientRoutes": 0,
   "routes": {
     "/": {
-      "samples": 18,
+      "samples": 13,
       "sufficient": false,
       "p75": {
-        "lcp": 17824,
-        "cls": 0.1037,
-        "inp": 2624,
-        "fcp": 15364,
-        "ttfb": 1620
+        "lcp": 11472,
+        "cls": 0.051,
+        "inp": 64,
+        "fcp": 1216,
+        "ttfb": 165
       }
     },
     "/games/": {
@@ -44,17 +44,6 @@
         "inp": 432,
         "fcp": 592,
         "ttfb": 68
-      }
-    },
-    "/games/gridiron-gm-play/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 440,
-        "cls": 0.4082,
-        "inp": 0,
-        "fcp": 440,
-        "ttfb": 11
       }
     },
     "/games/gridiron-gm/": {
@@ -112,17 +101,6 @@
         "ttfb": 25
       }
     },
-    "/leaderboards/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 716,
-        "cls": 0,
-        "inp": 208,
-        "fcp": 716,
-        "ttfb": 415
-      }
-    },
     "/oracle/": {
       "samples": 2,
       "sufficient": false,
@@ -143,17 +121,6 @@
         "inp": 240,
         "fcp": 548,
         "ttfb": 63
-      }
-    },
-    "/projects/statvault/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 1824,
-        "cls": 0.0005,
-        "inp": 0,
-        "fcp": 1824,
-        "ttfb": 150
       }
     },
     "/projects/the-living-protocol/": {
@@ -212,12 +179,12 @@
       }
     },
     "/vault/tombstones/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "p75": {
         "lcp": 952,
-        "cls": 0.0409,
-        "inp": 240,
+        "cls": 0,
+        "inp": 48,
         "fcp": 952,
         "ttfb": 92
       }

@@ -21,6 +21,22 @@
     var style = document.createElement('style');
     style.textContent = '.vs-rank-sim{display:grid;grid-template-columns:.85fr 1.15fr;gap:1rem;border:1px solid var(--line);border-radius:18px;padding:1.1rem;background:rgba(255,255,255,.035)}.vs-rank-sim h2{font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.4rem);margin:.4rem 0}.vs-rank-sim p,.vs-rank-sim__out{color:var(--muted)}.vs-rank-sim__controls{display:grid;gap:.75rem}.vs-rank-sim label{display:grid;gap:.35rem}.vs-rank-sim label span{font-weight:700}.vs-rank-sim input{width:100%}@media(max-width:780px){.vs-rank-sim{grid-template-columns:1fr}}';
     document.head.appendChild(style);
+    try {
+      var intent = JSON.parse(localStorage.getItem('vs_membership_intent') || 'null');
+      if (intent) {
+        var presets = {
+          playSessions: 3,
+          challengeCompletions: 2,
+          feedbackSignals: 1,
+          referrals: String(intent.tier || '').toLowerCase().indexOf('eternal') >= 0 ? 2 : 0,
+          supporterMonths: String(intent.tier || '').toLowerCase().indexOf('sparked') >= 0 ? 1 : 0
+        };
+        Object.keys(presets).forEach(function (key) {
+          var input = root.querySelector('[data-rank-action="' + key + '"]');
+          if (input) input.value = String(Math.min(Number(input.max || 10), presets[key]));
+        });
+      }
+    } catch (_) {}
     function update() {
       var points = 0;
       keys.forEach(function (key) {
