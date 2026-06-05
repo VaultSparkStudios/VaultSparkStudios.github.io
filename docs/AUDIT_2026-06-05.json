@@ -8,7 +8,11 @@
   "topline": {
     "totalItems": 10,
     "combinedPriority": 204.9,
-    "top3": ["rum-autopull-ci", "field-verdict-engine", "tt-intake-forensics-fix"]
+    "top3": [
+      "rum-autopull-ci",
+      "field-verdict-engine",
+      "tt-intake-forensics-fix"
+    ]
   },
   "items": [
     {
@@ -19,7 +23,7 @@
       "effort": "2h",
       "impact": 9,
       "innovation": 8,
-      "priority": 36.0,
+      "priority": 36,
       "summary": "Daily GitHub Actions cron accrues field RUM history passively so the strict ladder flips on evidence cadence, not founder-session cadence.",
       "why": "The strict perf ladder needs 36 more `/` route samples and accrual currently only happens when a founder session manually runs `npm run rum:pull`. At ~5 samples/day of organic traffic that is weeks of sessions babysitting a data pipe. A scheduled workflow makes the evidence loop self-feeding — the single highest-leverage unlock for the entire LCP saga.",
       "recipe": "Create `.github/workflows/rum-pull.yml` (daily cron) that runs `npm run rum:pull` and commits `data/rum-history.ndjson` + `data/rum-summary.json` + `.cache/rum-raw` deltas with [skip ci]. Set R2 read credentials as GitHub Actions secrets via `gh secret set` sourced from the secrets gateway (CANON-019 agent work — github.org and cloudflare.r2 are both READY)."
@@ -45,7 +49,7 @@
       "effort": "2h",
       "impact": 8,
       "innovation": 7,
-      "priority": 28.0,
+      "priority": 28,
       "summary": "Fix the Trusted Types intake parser dropping Reporting-API body fields (80/81 reports are all-null) and add sink clustering so burndown is evidence-driven.",
       "why": "The soak finally accumulates volume but the forensics are blind: nearly every KV row has null documentUri/sourceFile/lineNumber because the Worker intake only normalizes the legacy `csp-report` shape, not the Reporting API `{type, body:{...}}` shape modern Chrome sends. You cannot burn down sinks you cannot see — this fix multiplies the value of every future soak day.",
       "recipe": "In `cloudflare/security-headers-worker.js` intake handler, normalize both report shapes (`csp-report` wrapper, Reporting API array with `body.documentURL/sourceFile/lineNumber/sample`); add `scripts/analyze-tt-violations.mjs` clustering reports by sourceFile:line into a burndown table written to `docs/TT_BURNDOWN_<date>.md`; deploy worker and verify intake 204 + a parsed sample."
@@ -58,7 +62,7 @@
       "effort": "2h",
       "impact": 8,
       "innovation": 6,
-      "priority": 24.0,
+      "priority": 24,
       "summary": "Eliminate the dominant sitewide TT sink: the gtag idle-boot inline script's createElement('script').src assignment, via one narrow allowlisted policy.",
       "why": "The one parseable violation points at index.html line 15 col 126 — exactly the gtag boot snippet's `s.src=` TrustedScriptURL sink, which fires on every page view sitewide and plausibly accounts for the 78-violation day. Fixing this single sink class collapses most of the burndown in one move and is the gating item before any enforce canary.",
       "recipe": "Add a tiny head-level policy snippet (or extend the gtag boot IIFE) creating `trustedTypes.createPolicy('vs-loader', {createScriptURL: allowlist(googletagmanager.com, js.stripe.com, *.supabase.co)})` with graceful no-op when trustedTypes is absent; route the gtag `s.src` through it; propagate sitewide via the existing build propagation; rerun `node scripts/probe-tt-soak.mjs` after a soak interval."
@@ -97,7 +101,7 @@
       "effort": "2h",
       "impact": 7,
       "innovation": 4,
-      "priority": 14.0,
+      "priority": 14,
       "summary": "Turn CANON-007 staging parity green: deploy the current build to staging and close the security-header gap (headerParity false on 3/3 routes, shell stale on 2/3).",
       "why": "Staging is reachable but lies — it serves a pre-S173 shell on /studio-pulse/ and /membership/ and is missing the CSP/HSTS/XCTO/Referrer-Policy quartet everywhere, so it cannot catch the exact drift class it exists to catch. A yellow parity artifact that stays yellow forever trains everyone to ignore it.",
       "recipe": "First curl staging headers to confirm which of the 4 sampled headers diverge; sync the current build to the Hetzner staging origin (existing staging deploy path); add the security-header quartet at the staging edge (origin config or staging worker route); rerun `node scripts/check-staging-parity.mjs` and require green."
@@ -142,12 +146,78 @@
       "recipe": "Trace `render-startup-brief.mjs` reads for tests count, CURRENT_STATE `Last updated:` parse, and genome snapshot; fix the source format or the parser (whichever drifted); re-render and require all three signals to show real values."
     }
   ],
-  "innovationReserve": ["rum-autopull-ci", "field-verdict-engine"],
-  "skipped": [
-    {"slug": "membership-proof-device-verify", "reason": "Founder-gated — requires a real mobile device in hand (true human action)."},
-    {"slug": "vaultsparked-proof-delete", "reason": "Founder yes/no pending — evidence-complete, 30-second decision."},
-    {"slug": "tt-enforce-canary", "reason": "Canon-gated by S173 ladder decision — no enforce until sink burndown + near-zero soak."},
-    {"slug": "rum-strict-flip", "reason": "Canon-gated — `/` needs 36 more samples before the 50-sample floor clears."}
+  "innovationReserve": [
+    "rum-autopull-ci",
+    "field-verdict-engine"
   ],
-  "execution": []
+  "skipped": [
+    {
+      "slug": "membership-proof-device-verify",
+      "reason": "Founder-gated — requires a real mobile device in hand (true human action)."
+    },
+    {
+      "slug": "vaultsparked-proof-delete",
+      "reason": "Founder yes/no pending — evidence-complete, 30-second decision."
+    },
+    {
+      "slug": "tt-enforce-canary",
+      "reason": "Canon-gated by S173 ladder decision — no enforce until sink burndown + near-zero soak."
+    },
+    {
+      "slug": "rum-strict-flip",
+      "reason": "Canon-gated — `/` needs 36 more samples before the 50-sample floor clears."
+    }
+  ],
+  "execution": [
+    {
+      "slug": "rum-autopull-ci",
+      "status": "shipped",
+      "session": 174
+    },
+    {
+      "slug": "field-verdict-engine",
+      "status": "shipped",
+      "session": 174
+    },
+    {
+      "slug": "tt-intake-forensics-fix",
+      "status": "shipped",
+      "session": 174
+    },
+    {
+      "slug": "tt-gtag-policy-fix",
+      "status": "shipped",
+      "session": 174
+    },
+    {
+      "slug": "nav-sheet-canary-readout",
+      "status": "shipped",
+      "session": 174
+    },
+    {
+      "slug": "handoff-cache-ttl",
+      "status": "shipped",
+      "session": 174
+    },
+    {
+      "slug": "staging-header-parity-fix",
+      "status": "shipped",
+      "session": 174
+    },
+    {
+      "slug": "protocol-shim-completion",
+      "status": "shipped",
+      "session": 174
+    },
+    {
+      "slug": "ark-sig-repair-ship",
+      "status": "shipped",
+      "session": 174
+    },
+    {
+      "slug": "brief-signal-plumbing",
+      "status": "shipped",
+      "session": 174
+    }
+  ]
 }
