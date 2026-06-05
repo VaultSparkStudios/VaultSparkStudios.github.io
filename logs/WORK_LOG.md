@@ -2327,3 +2327,10 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
 - Protocol: 3 shims healed; brief signals truthful (116/116 gates); compact-handoff content-hash cache.
 - Ark cargo 01JQARTIQ4F428A7E440BFE7D6 → studio-ops (sig failures + try_files learning).
 - Verification: build + build:check green end-to-end (108 pages, 0 failures).
+
+## 2026-06-05 — Session 175 (founder-directed speed arc · /implement now)
+
+- Founder direction: "recommend a full improvement list to get closer to major-studio level and improve speed" → roadmap → /implement with two pre-approvals (DNS auto-flip when parity green · gtag full replacement).
+- 9/9 shipped, all live: CF Pages origin migration (522 incident on flip 1, rollback <3min, permanent Worker failover added, clean re-flip) · HTML edge window 60s→300s · 103 Early Hints + _headers · ambient core/feature shell split (12 touchpoints) · gtag removed from 97 pages + first-party analytics from RUM · regression email alerts (Resend, nightly) · geo-vitals from real field data (synthetic matrix declined — GH runners are US-only) · /status/ Live Signals.
+- Honest corrections: lcp-fast-path was already satisfied (system fonts, async CSS); worker deploys had been missing --env production (3 silently-dead deploys; live since 7c805a3f; TT soak clock restarted).
+- Deploy pipeline: push → production ~27s with auto-purge; verified live (split shell, no gtag, clean CSP, analytics JSON).

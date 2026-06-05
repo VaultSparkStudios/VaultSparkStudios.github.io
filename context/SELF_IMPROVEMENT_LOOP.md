@@ -9,11 +9,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 997.7 | 5: 997.4 | 10: 993 | 25: 979 | all: 962 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 99.0 | Momentum 100.0 | Engage 98.7 | Process 100.7
-Velocity trend: ↑ (S174: 10/10 audit items shipped; evidence loops automated)  |  Protocol velocity: ↑ (3 shims healed · brief signals truthful · handoff cache) |  Debt: → (TT enforce + field verdict pending data, not work)
-Momentum runway: ~4 sessions (field-verdict readout · TT re-probe · rum-autopull verify · nav-sheet 25% watch)  |  Intent rate: 100% (last 5)
-Last session: 2026-06-05 | Session 174 | Total: 997/1000 (v3.0) | Velocity: 10 | protocolVelocity: 3
+Avgs - 3: 996.7 | 5: 996.4 | 10: 994 | 25: 980 | all: 963 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 99.3 | Momentum 100.0 | Engage 98.0 | Process 99.7
+Velocity trend: ↑ (S175: 9/9 founder-directed speed arc, all live same-day)  |  Protocol velocity: ↑ (deploy-env trap closed · CDR file established) |  Debt: → (field verdict + TT re-probe are pending data, not work)
+Momentum runway: ~4 sessions (origin field-verdict readout · TT re-probe 06-12 · geo confirmation · nav-sheet 25% watch)  |  Intent rate: 100% (last 5)
+Last session: 2026-06-05 | Session 175 | Total: 995/1000 (v3.0) | Velocity: 9 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -4621,3 +4621,21 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 
 ### S175 sprint addendum (same day — founder-directed speed arc via /implement)
 9/9 shipped (2 evidence-corrected): production origin → Cloudflare Pages (zero-downtime on attempt 2 after an honest 2-3min 522 + rollback on attempt 1) · HTML edge window ×5 · Early Hints · stable-core shell split (feature edits stop cold-caching every visitor) · gtag fully replaced by first-party RUM analytics (founder-approved) · regression email alerts · geo vitals from real field data (synthetic-matrix recipe declined honestly — GH runners can't pick geos) · /status/ live signals. Honest correction logged: three worker deploys had silently missed --env production. Push→prod now ~27s with auto-purge.
+
+## 2026-06-05 — Session 175 (founder-directed speed arc · /implement now · 9/9 live) | Total: 995/1000 (v3.0) | Velocity: 9 | Debt: →
+
+**Score:** 995 / 1000
+(Dev Health 100 · Creative Alignment 100 · Momentum 100 · Engagement 98 · Process Quality 98 · Cross-Repo Coherence 99 · Security Posture 100 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
+
+**What improved:** The founder asked for major-studio speed and the site's most structural bottleneck — single-region origin — is gone the same day, with the cutover risk engineered down to a one-command rollback and a permanent Worker failover. The shell split ends the longest-running self-inflicted perf wound (every-session cache nuking, documented since S160). gtag removal is the rare item that improves speed, security, and privacy posture in one move because the RUM beacon already collected better data.
+
+**Honest deduction:** Process Quality 98 — the first DNS flip caused a real ~2-3 minute public outage (the validation chicken-and-egg was foreseeable), and three Worker deploys had silently targeted the wrong environment before being caught (the 'verified live' claims they invalidated are corrected in DECISIONS). Both failure classes now have structural guards (failover-by-construction; --env rule + deployments-list verification), which is why the deduction is small but real. Engagement 98 — the field verdict that will prove the speed win to visitors is still PENDING.
+
+**Intent outcome:** Achieved — 9/9 shipped and live-verified; founder approvals honored exactly (auto-flip, gtag replacement); push→prod 27s.
+
+**Brainstorm**
+1. **CUTOVER-PREFLIGHT-GATE** — a script that refuses DNS changes when the Pages domain isn't `active`, generalizing the 522 lesson into tooling. High probability.
+2. **DEPLOY-TARGET-ASSERTION** — post-deploy check comparing `wrangler deployments list` version against the just-printed version ID, failing loudly on env mismatch. High probability.
+3. **GEO-VERDICT-SPLIT** — extend compare-rum-windows to grade boundaries per-country once geo sample volume permits, so "faster in Europe specifically" becomes a provable claim. Medium probability.
+
+**Committed to TASK_BOARD:** [S176][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT · [S176][SECURITY/P1] TT-RE-PROBE-POST-ENV-FIX

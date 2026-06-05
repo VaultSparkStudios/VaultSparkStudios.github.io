@@ -1,8 +1,17 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-05 (Session 174)
+Last updated: 2026-06-05 (Session 175)
 
-Session Intent: Full `/start → /audit → /implement → /closeout` goal-chain with genius-level creative audit/implementation and a short impact-scored summary. **Outcome: Achieved — 10/10 audit items shipped (Priority 204.9); `npm run build` + `npm run build:check` green end-to-end; staging parity GREEN 3/3 for the first time; Worker deployed + live-verified.**
+Session Intent: Founder-directed speed/major-studio roadmap executed via `/implement now` (founder pre-approved DNS auto-flip + gtag removal). **Outcome: Achieved — 9/9 items shipped (2 evidence-corrected), all live; one honest 2-3min 522 incident on the first DNS flip, rolled back <3min and engineered around; push→prod now ~27s.**
+
+## Where We Left Off (Session 175)
+- **Production origin = Cloudflare Pages.** Edge-served HTML attacks the field TTFB bottleneck (p75 1.3s) structurally. GH Pages remains the warm rollback (restore 4 A records + www CNAME — verified working during the incident). `pages-deploy.yml` deploys every push in ~27s + purges the zone.
+- **Incident, honestly:** first flip 522'd ~2-3min (Pages domain must be `active` before DNS lands — chicken-and-egg). Rolled back fast; the security Worker now carries permanent `originFetch` failover (5xx → pages.dev), so future cutovers are zero-downtime by construction.
+- **Worker deploy trap fixed:** `[env.production]` holds the routes — bare `wrangler deploy` hits an unused top-level worker and *prints success*. Three deploys (TT intake fix, failover, edge window) were silently dead until `7c805a3f`. Rule in DECISIONS: always `--env production`, verify via `wrangler deployments list`. TT soak clock restarted late 06-05; re-probe ~06-12.
+- **Shell split shipped:** ambient-core 44KB (stable hash) + ambient-feature 62KB. Feature edits stop invalidating every visitor's cache. `propagate-nav.mjs` chains `extract-inline-styles.mjs` (nav template was re-seeding inline-style debt).
+- **gtag fully gone (founder-approved):** 97 pages stripped, CSP cleaned; first-party analytics from the unsampled RUM beacon → `api/analytics-summary.json`. Plus `api/geo-vitals.json` (real per-country vitals — US:106/GB:3), regression emails via Resend after nightly rum:pull, and `/status/` Live Signals tiles.
+- Verification: gate green (108 pages, 0 failures) · ambient integrity spec 4/4 · live prod serves split shell, no gtag, clean CSP, analytics JSON · pages-deploy 27s green.
+- Next session: read the 2026-06-05 field-verdict boundary (S173 critical path + S175 origin move) once ≥5 post-deploy samples/side land — expect IMPROVED · TT re-probe ~06-12 · geo-vitals check for non-US confirmation · founder: vaultsparked-proof yes/no + device verify.
 
 ## Where We Left Off (Session 174)
 - **The evidence loops feed themselves now.** `.github/workflows/rum-pull.yml` (daily cron, R2 creds in Actions secrets) accrues field RUM history without sessions; `scripts/compare-rum-windows.mjs` auto-grades registered deploy boundaries — S173's boundary is registered and honestly PENDING (38 pre / 0 post). Speed receipts carry `fieldVerdict`; /studio-pulse/ shows the deploy verdict line.

@@ -1,0 +1,81 @@
+{
+  "kind": "closeout",
+  "session": 175,
+  "date": "2026-06-05",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios.github.io",
+  "headline": "The founder asked for major-studio speed; by end of day the single-region origin was gone, the cache architecture stopped punishing deploys, and Google left the building.",
+  "silDelta": { "from": 997, "to": 995 },
+  "items": [
+    {
+      "id": 1,
+      "slug": "cf-pages-origin-migration",
+      "title": "Production origin → Cloudflare Pages (edge-served HTML)",
+      "axis": "Speed/Infra",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "Field data said TTFB was the homepage bottleneck and TTFB is mostly geography — so the geography changed. The first flip cost an honest 2-3 minute outage (domain validation chicken-and-egg), the rollback worked exactly as documented, and the Worker now carries permanent origin-failover so the next cutover anywhere in the studio is zero-downtime by construction.",
+      "evidence": "origin marker live on prod · parity byte-identical pre-flip · pages-deploy.yml push→prod 27s · rollback verified during incident"
+    },
+    {
+      "id": 2,
+      "slug": "shell-stable-core-split",
+      "title": "Ambient shell split: stable core + rotating feature layer",
+      "axis": "Speed/Architecture",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Since S160 every feature session has been silently taxing visitors by rotating one big bundle hash and nuking their cache. The 44KB core now survives ordinary sessions while the 62KB feature layer rotates freely — the propagator even learned to clean up after its own nav template, which had been quietly re-seeding inline-style debt.",
+      "evidence": "12 touchpoints updated · integrity spec 4/4 chromium · gate green 108 pages · live prod serves both bundles"
+    },
+    {
+      "id": 3,
+      "slug": "edge-analytics-replace-gtag",
+      "title": "gtag removed from 97 pages; analytics are first-party",
+      "axis": "Speed/Security/Privacy",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "The RUM beacon was already recording every page view with better fidelity than GA — gtag was a third-party origin, a CSP hole, and the last Trusted Types sink, all for duplicate data. One founder approval later the site is measurably lighter and the analytics answer lives in a public-safe JSON the studio owns.",
+      "evidence": "api/analytics-summary.json live (44 views/7d) · live homepage greps 0 for googletagmanager · CSP cleaned · 14 gtag() callers verified guarded"
+    },
+    {
+      "id": 4,
+      "slug": "worker-deploy-env-fix",
+      "title": "Worker deploy trap caught: --env production is mandatory",
+      "axis": "Process/Truth",
+      "projectImpact": 8,
+      "ecosystemImpact": 9,
+      "insight": "Three deploys today printed success while updating a worker nothing routes to — including S174's TT intake fix, whose 'live-verified' claim a 204 status could never actually prove. The correction is logged, the soak clock restarted honestly, and the verification rule changed: check the deployments list, never just an endpoint that the old version also answers.",
+      "evidence": "wrangler deployments list showed f4c0d0c7 at 100% despite 3 newer uploads · production now 7c805a3f+ · DECISIONS maintenance rule"
+    },
+    {
+      "id": 5,
+      "slug": "edge-html-cache-early-hints",
+      "title": "HTML edge window ×5 + 103 Early Hints",
+      "axis": "Speed",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "Deploy-time purging made the 60s nonce window pointlessly conservative — staleness is bounded by deploys now, not by the clock. Early Hints rides a generated _headers file that can never drift from the shell manifest because the same build writes both.",
+      "evidence": "HTML_NONCE_WINDOW_SEC 300 live · zone early_hints=on · _headers drift-gated in build:check"
+    },
+    {
+      "id": 6,
+      "slug": "regression-alerts-geo-vitals-status",
+      "title": "Regression emails + per-country vitals + /status/ live signals",
+      "axis": "Observability/Trust",
+      "projectImpact": 7,
+      "ecosystemImpact": 6,
+      "insight": "A regressed deploy now emails the founder the same night instead of waiting for a session to notice. The multi-geo recipe was corrected by evidence — GitHub runners can't pick geos, but real visitors already carry their geography, so the geo rollup quotes actual countries (US:106, GB:3) instead of synthetic guesses.",
+      "evidence": "send-regression-alert 4/4 self-test, wired into nightly rum-pull · api/geo-vitals.json live · /status/ renders 6 generated tiles"
+    }
+  ],
+  "followUps": [
+    "Read the 2026-06-05 field-verdict boundary (S173 critical path + S175 origin move) once ≥5 post-deploy samples/side land — the regression email stays silent if it worked",
+    "TT soak re-probe ~2026-06-12 (clock restarted at the env-fix)",
+    "Geo-vitals check: does non-US LCP confirm the origin win globally?",
+    "Nav-sheet 25% canary watch"
+  ],
+  "blockers": [
+    "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete, 30 seconds)",
+    "Founder device verify: membership proof loop + nav-sheet (real mobile device)"
+  ]
+}
