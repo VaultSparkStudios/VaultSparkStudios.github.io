@@ -174,10 +174,15 @@ function generateNonce() {
 }
 
 // S161: time-bucketed nonce — shared within 60s windows so HTML responses can
-// be edge-cached. Protects against injected inline scripts; a 60s window is
-// too short for a practical attack on a static site. Avoids per-request origin
-// fetches that would expose visitors to GitHub Pages slowness.
-const HTML_NONCE_WINDOW_SEC = 60;
+// be edge-cached. Protects against injected inline scripts; a short window is
+// too brief for a practical attack on a static site. Avoids per-request origin
+// fetches.
+// S175 edge-html-cache: widened 60s → 300s. Deploys now purge the zone cache
+// (pages-deploy.yml), so HTML staleness is bounded by deploys, not the window;
+// the wider window means 5× fewer origin round-trips per edge colo. The nonce
+// security argument is unchanged in kind — the site is static and Trusted
+// Types reporting watches injection sinks.
+const HTML_NONCE_WINDOW_SEC = 300;
 function generateWindowNonce() {
   const windowId = Math.floor(Date.now() / (HTML_NONCE_WINDOW_SEC * 1000));
   const raw = `vs_${windowId}_nonce`;
