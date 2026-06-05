@@ -20,9 +20,16 @@ function shellPaths(html) {
     .sort();
 }
 
+function normalizeCsp(csp) {
+  // S174: production injects a per-request CSP nonce; staging is a static
+  // origin that mirrors the policy without one. Strip nonce tokens so the
+  // comparison tests POLICY parity, not per-request randomness.
+  return String(csp).replace(/'nonce-[^']*'\s*/g, '').replace(/\s+/g, ' ').trim();
+}
+
 function securityHeaders(headers) {
   return {
-    csp: headers.get('content-security-policy') || '',
+    csp: normalizeCsp(headers.get('content-security-policy') || ''),
     hsts: headers.get('strict-transport-security') || '',
     xcto: headers.get('x-content-type-options') || '',
     referrer: headers.get('referrer-policy') || '',
