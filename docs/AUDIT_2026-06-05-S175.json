@@ -7,29 +7,198 @@
   "type": "website",
   "topline": {
     "totalItems": 9,
-    "combinedPriority": 230.0,
-    "top3": ["cf-pages-origin-migration", "edge-html-cache", "edge-analytics-replace-gtag"]
+    "combinedPriority": 230,
+    "top3": [
+      "cf-pages-origin-migration",
+      "edge-html-cache",
+      "edge-analytics-replace-gtag"
+    ]
   },
   "founderApprovals": {
     "dnsAutoFlip": "approved 2026-06-05 — auto-flip when parity green, one-command rollback",
     "gtagRemoval": "approved 2026-06-05 — replace fully with self-hosted edge analytics"
   },
   "items": [
-    {"rank": 1, "slug": "cf-pages-origin-migration", "tier": "fire", "axis": "Speed/Infra", "effort": "4h", "impact": 10, "innovation": 6, "priority": 23.2, "summary": "Migrate origin GitHub Pages → Cloudflare Pages; TTFB p75 1.3s is the field LCP bottleneck (FCP≈LCP).", "why": "GH Pages is a single-region origin; CF Pages serves static HTML from the edge. Single biggest LCP lever, free-tier.", "recipe": "wrangler pages project create + deploy git-tracked files; verify parity on preview URL (reuse check-staging-parity compare logic); attach custom domain / flip DNS via API; Worker security layer stays on zone routes."},
-    {"rank": 2, "slug": "edge-html-cache", "tier": "fire", "axis": "Speed/Infra", "effort": "2h", "impact": 9, "innovation": 6, "priority": 27.0, "summary": "Worker edge-caches HTML with stale-while-revalidate + auto-purge on deploy.", "why": "S161 proved −81% LCP once. Warm-edge HTML for every visitor.", "recipe": "Worker: cache.put HTML responses with SWR semantics; deploy workflows call zone purge (studio token has scope)."},
-    {"rank": 3, "slug": "early-hints-103", "tier": "zap", "axis": "Speed", "effort": "2h", "impact": 6, "innovation": 5, "priority": 15.0, "summary": "Enable 103 Early Hints: zone setting + Link preload headers for shell CSS/JS.", "why": "Browser fetches shell assets before HTML completes. Free, low risk.", "recipe": "PATCH zone setting early_hints=on; Worker adds Link: rel=preload headers for shell css/js."},
-    {"rank": 4, "slug": "shell-stable-core-split", "tier": "fire", "axis": "Speed/Architecture", "effort": "4h", "impact": 8, "innovation": 7, "priority": 21.7, "summary": "Split ambient into stable-core (rarely changes, stable hash) + volatile layer so deploys stop invalidating every visitor's cache.", "why": "Every ambient edit currently rotates the sitewide shell hash — the known cold-cache cost.", "recipe": "build-ambient-bundle emits two bundles split by git churn; propagate two script tags; SW precache + coherency gate updated."},
-    {"rank": 5, "slug": "lcp-fast-path", "tier": "zap", "axis": "Speed", "effort": "2h", "impact": 6, "innovation": 4, "priority": 12.0, "summary": "fetchpriority=high on hero LCP element + preload wordmark font subset + verify zero render-blocking.", "why": "Cheap polish that compounds with origin + cache wins.", "recipe": "Edit homepage hero, add preload links, rerun analyze-home-lcp."},
-    {"rank": 6, "slug": "edge-analytics-replace-gtag", "tier": "fire", "axis": "Speed/Security/Token-cost", "effort": "4h", "impact": 9, "innovation": 8, "priority": 26.1, "summary": "Self-hosted edge analytics in the Worker; remove gtag sitewide (founder-approved).", "why": "Kills a third-party origin on every page (DNS+connect+50KB), erases the last TT sink, removes GA CSP surface.", "recipe": "Worker /v/hit counter (KV daily aggregates, privacy-minimized, no cookies); tiny beacon in ambient; strip gtag inline from all pages via propagation; CSP cleanup; analytics rollup script + api/analytics-summary.json."},
-    {"rank": 7, "slug": "regression-email-alerts", "tier": "zap", "axis": "Observability", "effort": "3h", "impact": 7, "innovation": 6, "priority": 18.0, "summary": "Field-verdict regressed/anomaly canary → founder email via Resend.", "why": "Majors get paged; founder currently finds out next session.", "recipe": "scripts/send-regression-alert.mjs (resend.email capability) wired into rum-pull workflow after grading."},
-    {"rank": 8, "slug": "multi-geo-synthetic", "tier": "zap", "axis": "Observability", "effort": "3h", "impact": 6, "innovation": 6, "priority": 15.0, "summary": "Nightly synthetic traces from US/EU/Asia GH runners.", "why": "Catches geo-specific slowness majors catch with paid tooling.", "recipe": ".github/workflows/synthetic-geo.yml matrix; commits perf rows tagged by geo."},
-    {"rank": 9, "slug": "status-page", "tier": "bulb", "axis": "Trust/UX", "effort": "3h", "impact": 6, "innovation": 5, "priority": 13.0, "summary": "Public /status/ from existing artifacts (CI beacon, site-health, field verdicts, staging parity).", "why": "Honest uptime surface; majors pay Statuspage for this.", "recipe": "Static page + renderer reading api/*.json; nav/footer/sitemap wiring."}
+    {
+      "rank": 1,
+      "slug": "cf-pages-origin-migration",
+      "tier": "fire",
+      "axis": "Speed/Infra",
+      "effort": "4h",
+      "impact": 10,
+      "innovation": 6,
+      "priority": 23.2,
+      "summary": "Migrate origin GitHub Pages → Cloudflare Pages; TTFB p75 1.3s is the field LCP bottleneck (FCP≈LCP).",
+      "why": "GH Pages is a single-region origin; CF Pages serves static HTML from the edge. Single biggest LCP lever, free-tier.",
+      "recipe": "wrangler pages project create + deploy git-tracked files; verify parity on preview URL (reuse check-staging-parity compare logic); attach custom domain / flip DNS via API; Worker security layer stays on zone routes."
+    },
+    {
+      "rank": 2,
+      "slug": "edge-html-cache",
+      "tier": "fire",
+      "axis": "Speed/Infra",
+      "effort": "2h",
+      "impact": 9,
+      "innovation": 6,
+      "priority": 27,
+      "summary": "Worker edge-caches HTML with stale-while-revalidate + auto-purge on deploy.",
+      "why": "S161 proved −81% LCP once. Warm-edge HTML for every visitor.",
+      "recipe": "Worker: cache.put HTML responses with SWR semantics; deploy workflows call zone purge (studio token has scope)."
+    },
+    {
+      "rank": 3,
+      "slug": "early-hints-103",
+      "tier": "zap",
+      "axis": "Speed",
+      "effort": "2h",
+      "impact": 6,
+      "innovation": 5,
+      "priority": 15,
+      "summary": "Enable 103 Early Hints: zone setting + Link preload headers for shell CSS/JS.",
+      "why": "Browser fetches shell assets before HTML completes. Free, low risk.",
+      "recipe": "PATCH zone setting early_hints=on; Worker adds Link: rel=preload headers for shell css/js."
+    },
+    {
+      "rank": 4,
+      "slug": "shell-stable-core-split",
+      "tier": "fire",
+      "axis": "Speed/Architecture",
+      "effort": "4h",
+      "impact": 8,
+      "innovation": 7,
+      "priority": 21.7,
+      "summary": "Split ambient into stable-core (rarely changes, stable hash) + volatile layer so deploys stop invalidating every visitor's cache.",
+      "why": "Every ambient edit currently rotates the sitewide shell hash — the known cold-cache cost.",
+      "recipe": "build-ambient-bundle emits two bundles split by git churn; propagate two script tags; SW precache + coherency gate updated."
+    },
+    {
+      "rank": 5,
+      "slug": "lcp-fast-path",
+      "tier": "zap",
+      "axis": "Speed",
+      "effort": "2h",
+      "impact": 6,
+      "innovation": 4,
+      "priority": 12,
+      "summary": "fetchpriority=high on hero LCP element + preload wordmark font subset + verify zero render-blocking.",
+      "why": "Cheap polish that compounds with origin + cache wins.",
+      "recipe": "Edit homepage hero, add preload links, rerun analyze-home-lcp."
+    },
+    {
+      "rank": 6,
+      "slug": "edge-analytics-replace-gtag",
+      "tier": "fire",
+      "axis": "Speed/Security/Token-cost",
+      "effort": "4h",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 26.1,
+      "summary": "Self-hosted edge analytics in the Worker; remove gtag sitewide (founder-approved).",
+      "why": "Kills a third-party origin on every page (DNS+connect+50KB), erases the last TT sink, removes GA CSP surface.",
+      "recipe": "Worker /v/hit counter (KV daily aggregates, privacy-minimized, no cookies); tiny beacon in ambient; strip gtag inline from all pages via propagation; CSP cleanup; analytics rollup script + api/analytics-summary.json."
+    },
+    {
+      "rank": 7,
+      "slug": "regression-email-alerts",
+      "tier": "zap",
+      "axis": "Observability",
+      "effort": "3h",
+      "impact": 7,
+      "innovation": 6,
+      "priority": 18,
+      "summary": "Field-verdict regressed/anomaly canary → founder email via Resend.",
+      "why": "Majors get paged; founder currently finds out next session.",
+      "recipe": "scripts/send-regression-alert.mjs (resend.email capability) wired into rum-pull workflow after grading."
+    },
+    {
+      "rank": 8,
+      "slug": "multi-geo-synthetic",
+      "tier": "zap",
+      "axis": "Observability",
+      "effort": "3h",
+      "impact": 6,
+      "innovation": 6,
+      "priority": 15,
+      "summary": "Nightly synthetic traces from US/EU/Asia GH runners.",
+      "why": "Catches geo-specific slowness majors catch with paid tooling.",
+      "recipe": ".github/workflows/synthetic-geo.yml matrix; commits perf rows tagged by geo."
+    },
+    {
+      "rank": 9,
+      "slug": "status-page",
+      "tier": "bulb",
+      "axis": "Trust/UX",
+      "effort": "3h",
+      "impact": 6,
+      "innovation": 5,
+      "priority": 13,
+      "summary": "Public /status/ from existing artifacts (CI beacon, site-health, field verdicts, staging parity).",
+      "why": "Honest uptime surface; majors pay Statuspage for this.",
+      "recipe": "Static page + renderer reading api/*.json; nav/footer/sitemap wiring."
+    }
   ],
-  "innovationReserve": ["edge-analytics-replace-gtag"],
+  "innovationReserve": [
+    "edge-analytics-replace-gtag"
+  ],
   "skipped": [
-    {"slug": "failover-origin", "reason": "Deferred — origin migration changes the failure model first; revisit after CF Pages settles."},
-    {"slug": "i18n-foundation", "reason": "Tier 3 — own session."},
-    {"slug": "edge-personalization", "reason": "Obelisk Phase 2 gated."}
+    {
+      "slug": "failover-origin",
+      "reason": "Deferred — origin migration changes the failure model first; revisit after CF Pages settles."
+    },
+    {
+      "slug": "i18n-foundation",
+      "reason": "Tier 3 — own session."
+    },
+    {
+      "slug": "edge-personalization",
+      "reason": "Obelisk Phase 2 gated."
+    }
   ],
-  "execution": []
+  "execution": [
+    {
+      "slug": "cf-pages-origin-migration",
+      "status": "shipped",
+      "note": "origin live on CF Pages; 2-3min 522 incident on flip 1 (domain pending validation) - rolled back in <3min, re-flipped clean; permanent Worker origin-failover added; GH Pages = warm rollback"
+    },
+    {
+      "slug": "edge-html-cache",
+      "status": "shipped",
+      "note": "HTML edge window 60s->300s; deploy purge in pages-deploy.yml"
+    },
+    {
+      "slug": "early-hints-103",
+      "status": "shipped",
+      "note": "zone on + generated _headers Link preloads (drift-gated)"
+    },
+    {
+      "slug": "shell-stable-core-split",
+      "status": "shipped",
+      "note": "core 44KB stable + feature 62KB; 12 touchpoints; propagator now chains extract-inline-styles; integrity spec 4/4"
+    },
+    {
+      "slug": "lcp-fast-path",
+      "status": "already-satisfied",
+      "note": "async CSS swap + inline critical + system fonts already in place; text LCP 172ms local - no webfont to preload"
+    },
+    {
+      "slug": "edge-analytics-replace-gtag",
+      "status": "shipped",
+      "note": "97 pages stripped; analytics from unsampled RUM beacon; CSP cleaned; HONEST FIX: worker deploys were missing --env production all day - now live as 7c805a3f"
+    },
+    {
+      "slug": "regression-email-alerts",
+      "status": "shipped",
+      "note": "send-regression-alert.mjs 4/4 self-test; wired into nightly rum-pull; RESEND_API_KEY in Actions"
+    },
+    {
+      "slug": "multi-geo-synthetic",
+      "status": "shipped-as-corrected",
+      "note": "GH runners cannot pick geos (declined honestly); built build-geo-vitals.mjs from real RUM cf.country instead - US:106 GB:3 other:6 on first run"
+    },
+    {
+      "slug": "status-page",
+      "status": "shipped",
+      "note": "/status/ Live Signals tiles from 6 generated artifacts"
+    }
+  ]
 }
