@@ -1,0 +1,132 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-05-27",
+  "project": "VaultSparkStudios.github.io",
+  "slug": "vaultsparkstudios-website",
+  "type": "website",
+  "topLine": {
+    "totalItems": 5,
+    "combinedPriority": 165.4,
+    "top3": [
+      "real-signed-in-browser-proof",
+      "professional-studio-presence-pass",
+      "session-state-contract-gate"
+    ]
+  },
+  "items": [
+    {
+      "rank": 1,
+      "tier": "transformative",
+      "slug": "professional-studio-presence-pass",
+      "axis": "ui-ux-user-experience",
+      "effort": "1h",
+      "impact": 10,
+      "innovation": 7,
+      "priority": 36.8,
+      "summary": "Reposition the studio page away from solo-origin proof and toward a professional creative studio presence with a stronger operating model, portfolio framing, and collaboration posture.",
+      "why": "The founder direction is clear: as project sites become more refined and immersive, the brand anchor must stop reading like a one-person bet and start reading like the studio behind a serious portfolio.",
+      "recipe": "Rewrite studio/index.html metadata, origin copy, operating section, FAQ, collaboration CTA, and timeline blurbs; add a public content-posture gate that flags solo-bet framing on public HTML."
+    },
+    {
+      "rank": 2,
+      "tier": "transformative",
+      "slug": "real-signed-in-browser-proof",
+      "axis": "feature-depth-refinement",
+      "effort": "1h",
+      "impact": 10,
+      "innovation": 8,
+      "priority": 40.0,
+      "summary": "Prove the S167 signed-in member persistence fix with a real browser seed instead of relying on static inspection.",
+      "why": "The founder-reported bug was experiential: signed-in members refreshed or navigated and still saw anonymous membership prompts. The fix needs browser evidence that persisted Supabase storage stamps account truth before lazy account UI hydrates.",
+      "recipe": "Add a focused Playwright spec that seeds the Supabase localStorage session shape, verifies body/html data-vs-signed-in after reload/navigation, confirms account-chip.js lazy-loads, and confirms signed-out storage renders anonymous state."
+    },
+    {
+      "rank": 3,
+      "tier": "high",
+      "slug": "session-state-contract-gate",
+      "axis": "security",
+      "effort": "45m",
+      "impact": 9,
+      "innovation": 7,
+      "priority": 34.7,
+      "summary": "Add a deterministic build gate for the signed-in session contract so future ambient-bundle edits cannot silently break account continuity.",
+      "why": "The site now depends on an ordered relationship between signed-in-state.js, account-chip-loader.js, and the ambient bundle. A cheap static contract catches order drift, missing html/body attributes, or a lost vs:session-ready event before browser suites run.",
+      "recipe": "Create scripts/check-session-state-contract.mjs with self-test and normal modes, then wire it into npm run build:check after public contract checks."
+    },
+    {
+      "rank": 4,
+      "tier": "high",
+      "slug": "intelligence-style-contract-gate",
+      "axis": "ui-ux-user-experience",
+      "effort": "45m",
+      "impact": 8,
+      "innovation": 7,
+      "priority": 30.9,
+      "summary": "Turn the S167 visual-system caveat into a guard: intelligence surfaces must stay class-driven, themeable, and free of one-off inline styling.",
+      "why": "The newest public intelligence surfaces are powerful, but they span Oracle, feedback, social, security, nervous-system, and homepage modules. A style-contract gate keeps them from drifting into hard-to-theme inline fragments while a later screenshot pass can focus on polish.",
+      "recipe": "Create scripts/check-intelligence-style-contract.mjs covering core intelligence HTML and runtime assets, self-test it, and add it to build:check."
+    },
+    {
+      "rank": 5,
+      "tier": "high",
+      "slug": "audit-execution-ledger-s168",
+      "axis": "process-quality",
+      "effort": "30m",
+      "impact": 8,
+      "innovation": 6,
+      "priority": 23.0,
+      "summary": "Keep this sprint auditable by writing an implementation plan and execution log against a fresh S168 audit sidecar.",
+      "why": "This repo has several recent successful audit cycles. Continuing that pattern matters because the site is public, SPARKED, and full of generated contracts where human memory is not acceptable proof.",
+      "recipe": "Write docs/IMPLEMENT_PLAN.md from this audit, append execution results to docs/AUDIT_2026-05-27-S168.md/json, and include exact verification commands."
+    }
+  ],
+  "innovationReserve": [
+    "professional-studio-presence-pass",
+    "real-signed-in-browser-proof"
+  ],
+  "skipped": [
+    {
+      "slug": "edge-personalization-readiness",
+      "reason": "Correctly deferred by S167 decision until Obelisk Phase 2 declares a stable session cookie/capability contract."
+    },
+    {
+      "slug": "delete-membership-orphans",
+      "reason": "Feature-bearing membership/vaultsparked assets still need founder confirmation before delete or rewire."
+    },
+    {
+      "slug": "rum-strict-flip",
+      "reason": "Still data-gated until data/rum-summary.json has at least 50 field samples on /."
+    }
+  ],
+  "executionLog": {
+    "implementedAt": "2026-05-27",
+    "status": "implemented",
+    "summary": "Implemented the S168 audit with the founder-directed professional studio presence pass added mid-run, plus signed-in browser proof and new contract gates.",
+    "shipped": [
+      "professional-studio-presence-pass",
+      "real-signed-in-browser-proof",
+      "session-state-contract-gate",
+      "intelligence-style-contract-gate",
+      "audit-execution-ledger-s168"
+    ],
+    "verification": [
+      "node scripts/check-studio-content-posture.mjs --self-test",
+      "node scripts/check-studio-content-posture.mjs",
+      "node scripts/check-session-state-contract.mjs --self-test",
+      "node scripts/check-session-state-contract.mjs",
+      "node scripts/check-intelligence-style-contract.mjs --self-test",
+      "node scripts/check-intelligence-style-contract.mjs",
+      "npx playwright test tests/signed-in-member-state.spec.js --project=chromium --retries=0 --workers=1 --timeout=90000",
+      "npm run build",
+      "npm run build:check"
+    ],
+    "notes": [
+      "Rewrote /studio/ positioning from solo-origin proof toward professional studio operating model, portfolio, release standard, and collaboration posture.",
+      "Removed solo-bet phrasing from games/index.html, journal/vault-opened/index.html, and roadmap/index.html; posture gate now checks 117 public HTML files.",
+      "Signed-in browser proof passed 2/2 in Chromium against local preview.",
+      "Full build:check passed end-to-end, crawling 108 HTML files with 0 status failures and 0 blocking-script findings.",
+      "Intelligence style contract is advisory until the known inline-style debt is burned down."
+    ]
+  }
+}

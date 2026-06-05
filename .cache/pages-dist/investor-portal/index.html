@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Google tag (gtag.js) — S147 deferred to idle -->
+  <script>(function(){function boot(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-RSGLPP4KDZ');}if('requestIdleCallback' in window){requestIdleCallback(boot,{timeout:2000});}else{setTimeout(boot,1500);}})();</script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investor Dashboard | VaultSpark Studios</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="../assets/icon-32.png" />
+  <style data-vs-critical-shell>:root{--max:1200px;--nav-height:78px;--bg:#07080f;--bg-soft:#0c0e18;--text:#eef2ff;--muted:#a8b4d0;--dim:#6272a0;--gold:#ffc400;--page-bg:#07080f;--header-bg:rgba(7,8,16,.90);--header-border:rgba(255,255,255,.05);--radius:24px;--shadow:0 18px 60px rgba(0,0,0,.55);color-scheme:dark}*{box-sizing:border-box}body{margin:0;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--page-bg);line-height:1.55;overflow-x:clip}a{color:inherit;text-decoration:none}img,video{max-width:100%;display:block}h1,h2,h3,h4,h5,h6{margin:0;line-height:1.1}h1,h2{font-family:Georgia,"Times New Roman",serif;letter-spacing:0}p{margin:0}.container{width:min(calc(100% - 2rem),var(--max));margin:0 auto}.site-header{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--header-border);background:var(--header-bg)}.nav{min-height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0}.brand img{width:44px;height:44px;object-fit:contain}.brand>span{display:block;line-height:1.15;font-size:1rem;white-space:nowrap}.brand small{display:block;color:var(--muted);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;margin-top:.16rem}.nav-center{display:flex;align-items:center;gap:.15rem;flex:1;justify-content:center}.nav-center a{color:var(--muted);font-size:.91rem;font-weight:500;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-item{position:relative;display:flex;align-items:center}.nav-item>a{display:flex;align-items:center;gap:.3rem}.nav-dropdown{display:none}.nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;justify-content:flex-end;min-width:292px}.nav-right::after{content:"";display:block;flex:0 0 92px;height:34px;order:20}.nav-right:has(.theme-picker)::after{display:none}.theme-picker{position:relative;flex:0 0 92px}.theme-picker-btn{display:flex;align-items:center;gap:.42rem;padding:.38rem .64rem;min-height:44px;min-width:92px;border-radius:10px;border:1px solid var(--header-border);background:var(--header-bg);color:var(--text);font:600 .8rem/1 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap}.theme-picker-swatch{width:11px;height:11px;border-radius:50%;flex-shrink:0}.theme-picker-label{font-size:.78rem;font-weight:600}.theme-picker-arrow{font-size:.48rem;margin-left:.05rem}.theme-picker-dropdown{position:absolute;top:calc(100% + 8px);right:0;width:228px;opacity:0;visibility:hidden;pointer-events:none}.button,.button-secondary,.button-ghost{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:48px;padding:0 1.3rem;border-radius:999px;font-weight:700;font-size:.94rem;font-family:inherit;border:1px solid transparent;text-decoration:none;white-space:nowrap}.button-sm{min-height:44px;min-width:44px;padding:0 1rem;font-size:.86rem}.hamburger{display:none}.hero{position:relative;padding:6.5rem 0 4rem;overflow:clip}.hero::before{content:"";position:absolute;inset:0;pointer-events:none}.hero-center{position:relative;z-index:1;text-align:center}.hero-chamber{position:absolute;inset:0;pointer-events:none;z-index:0}.hero-glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px)}.hero-glow.blue{width:45vw;height:45vw;max-width:640px;max-height:640px;left:-10%;top:-20%}.hero-glow.orange{width:40vw;height:40vw;max-width:560px;max-height:560px;right:-8%;top:-10%}.hero-glow.gold{width:30vw;height:30vw;max-width:380px;max-height:380px;left:30%;top:40%}.forge-wordmark{margin:0;font-family:Georgia,"Times New Roman",serif;line-height:1;text-align:center}.forge-line{display:block}.forge-line-1{font-size:clamp(2.6rem,13vw,9rem);font-weight:700;letter-spacing:0}.forge-line-2{font-size:clamp(1.7rem,8.4vw,5.8rem);font-weight:400;letter-spacing:.1em;margin-top:.04em}.forge-letter{opacity:1}.hero-tagline{margin:.65rem 0 0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.45rem,3.2vw,2.6rem);line-height:1.1;letter-spacing:0;font-style:italic}.hero-sub{max-width:54ch;margin:0 auto;color:var(--muted);font-size:1.1rem;line-height:1.68}.hero-ticker{min-height:42px;display:flex;align-items:center;justify-content:center}section{padding:1.6rem 0 4.2rem}@media(max-width:980px){.nav-center{display:none}.hamburger{display:flex}.nav-right{min-width:0}.nav-right::after{display:none}.nav-right .nav-signin,.nav-right .button.button-sm,.nav-right .nav-icon-link{display:none}}@media(min-width:641px) and (max-width:980px){.container{padding-left:1.5rem;padding-right:1.5rem}}@media(max-width:768px){.brand small,.brand .brand-suffix{display:none}.brand>span{font-size:.85rem;letter-spacing:0}.brand{gap:.45rem}.brand img{width:32px;height:32px}}@media(max-width:640px){section{padding:1.4rem 0 3rem}.hero{padding:5rem 0 2.8rem}.theme-picker{display:none}.button:not(.nav-right .button),.button-secondary,.button-ghost{width:100%;justify-content:center}}@media(max-width:430px){.brand>span{font-size:.78rem;letter-spacing:0}.brand img{width:30px;height:30px}}</style>
+  <link rel="preload" href="../assets/style.shell-7082b9235c.css" as="style" data-vs-css-preload />
+  <link rel="stylesheet" href="../assets/style.shell-7082b9235c.css" media="print" data-vs-async-css />
+  <script>!function(){function a(){var s=document.querySelectorAll('link[data-vs-async-css][media="print"]');for(var i=0;i<s.length;i++)s[i].media='all'}'requestAnimationFrame'in window?requestAnimationFrame(a):setTimeout(a,0)}();</script>
+  <noscript><link rel="stylesheet" href="../assets/style.shell-7082b9235c.css" /></noscript>
+<link rel="stylesheet" href="../assets/portal-shell.css" />
+  <link rel="stylesheet" href="../assets/investor-theme.css" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js" integrity="sha384-tuevtT+97g9yLeuT/m52ejUJbc0hzsN6MPLiQEccySreiGjrcgk2tMBJR7/l6HGM" crossorigin="anonymous" defer></script>
+  <script src="../assets/supabase-client.js" defer></script>
+  <script src="../assets/investor-auth.js" defer></script>
+  <script src="../assets/investor-ui.js" defer></script>
+
+  <style>
+    .inv-dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .inv-latest-update-body {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.7;
+      display: none;
+    }
+
+    .inv-kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .inv-kpi-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .inv-kpi-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+
+    .inv-kpi-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+    }
+
+    .inv-kpi-value.loading {
+      display: inline-block;
+      width: 4rem;
+      height: 1.75rem;
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      animation: inv-pulse 1.4s ease-in-out infinite;
+    }
+
+    @keyframes inv-pulse {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.4; }
+    }
+
+    /* S83 tablet breakpoint — 2-col KPI strip + stacked sidebar at 768–1024 */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      .inv-dashboard-grid { grid-template-columns: 1fr; }
+      .inv-kpi-strip      { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 767px) {
+      .inv-dashboard-grid { grid-template-columns: 1fr; }
+      .inv-kpi-strip      { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 600px) {
+      .inv-kpi-strip { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .inv-kpi-strip { grid-template-columns: 1fr; }
+      .inv-kpi-card  { padding: 1rem; }
+    }
+
+    /* ─── KPI Sparklines ─── */
+    .inv-kpi-card {
+      position: relative;
+    }
+    .inv-sparkline-wrap {
+      margin-top: 0.6rem;
+    }
+    .inv-sparkline {
+      display: block;
+      width: 100%;
+      max-width: 140px;
+      height: 28px;
+      overflow: visible;
+    }
+    .inv-sparkline polyline {
+      fill: none;
+      stroke: rgba(31,162,255,0.7);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .inv-sparkline.trend-up polyline { stroke: rgba(16,185,129,0.75); }
+    .inv-sparkline.trend-down polyline { stroke: rgba(214,40,40,0.65); }
+    .inv-sparkline .spark-area {
+      fill: rgba(31,162,255,0.07);
+      stroke: none;
+    }
+    .inv-sparkline.trend-up .spark-area { fill: rgba(16,185,129,0.07); }
+    .inv-sparkline.trend-down .spark-area { fill: rgba(214,40,40,0.06); }
+    .inv-kpi-trend {
+      font-size: 0.72rem;
+      font-weight: 700;
+      margin-top: 0.2rem;
+      display: block;
+    }
+    .inv-kpi-trend.up   { color: #10B981; }
+    .inv-kpi-trend.down { color: #D62828; }
+    .inv-kpi-trend.flat { color: var(--dim); }
+
+    /* ─── Ask a Question ─── */
+    .inv-ask-card {
+      margin-top: 2rem;
+    }
+    .inv-ask-card textarea {
+      width: 100%;
+      box-sizing: border-box;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.93rem;
+      line-height: 1.6;
+      padding: 0.8rem 1rem;
+      resize: vertical;
+      min-height: 100px;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .inv-ask-card textarea:focus {
+      border-color: rgba(31,162,255,0.45);
+    }
+    .inv-ask-card textarea::placeholder { color: var(--dim); }
+    .inv-ask-form-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+    .inv-ask-note {
+      font-size: 0.8rem;
+      color: var(--dim);
+    }
+    .inv-ask-status {
+      font-size: 0.84rem;
+      margin-top: 0.5rem;
+      min-height: 1.2em;
+    }
+    .inv-ask-status.ok { color: #10B981; }
+    .inv-ask-status.err { color: #D62828; }
+  </style>
+
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+</head>
+<body class="investor-portal dark-mode" data-theme="dark">
+
+  <!-- Nav -->
+  <nav class="inv-nav">
+    <div class="container inv-nav-inner">
+      <div class="inv-nav-brand">
+        <img src="../assets/logo.png" alt="" style="height:22px; opacity:0.8;" />
+        <span><strong>VaultSpark</strong> Investor Portal</span>
+      </div>
+      <div class="inv-nav-links">
+        <a href="/investor-portal/" class="inv-nav-link active">Dashboard</a>
+        <a href="/investor-portal/updates/" class="inv-nav-link">Updates</a>
+        <a href="/investor-portal/documents/" class="inv-nav-link">Documents</a>
+        <a href="/investor-portal/message/" class="inv-nav-link">Message</a>
+        <a href="/investor-portal/profile/" class="inv-nav-link">Profile</a>
+      </div>
+      <div class="inv-nav-actions">
+        <span class="inv-nav-user" id="navUserName"></span>
+        <button class="inv-nav-mobile-toggle" id="mobileToggle" aria-label="Menu">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="2" y="5" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+            <rect x="2" y="9.25" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+            <rect x="2" y="13.5" width="16" height="1.5" rx="0.75" fill="currentColor"/>
+          </svg>
+        </button>
+        <button class="inv-btn inv-btn-ghost inv-btn-sm" id="signOutBtn">Sign out</button>
+      </div>
+    </div>
+  </nav>
+  <div class="inv-nav-mobile-menu" id="mobileMenu">
+    <a href="/investor-portal/" class="inv-nav-mobile-link active">Dashboard</a>
+    <a href="/investor-portal/updates/" class="inv-nav-mobile-link">Updates</a>
+    <a href="/investor-portal/documents/" class="inv-nav-mobile-link">Documents</a>
+    <a href="/investor-portal/message/" class="inv-nav-mobile-link">Message Studio</a>
+    <a href="/investor-portal/profile/" class="inv-nav-mobile-link">Profile</a>
+  </div>
+
+  <!-- Content -->
+  <div class="inv-page">
+    <div class="container">
+
+      <!-- Header -->
+      <div class="inv-header">
+        <h1 id="welcomeHeading">Investor Dashboard</h1>
+        <p id="welcomeSub">Loading your portfolio overview…</p>
+      </div>
+
+      <!-- Stat strip -->
+      <div class="inv-stat-strip" id="statStrip">
+        <div class="inv-card inv-skeleton inv-skeleton-card"></div>
+        <div class="inv-card inv-skeleton inv-skeleton-card"></div>
+        <div class="inv-card inv-skeleton inv-skeleton-card"></div>
+      </div>
+
+      <!-- Studio KPIs -->
+      <div class="inv-card" style="margin-bottom:2rem;">
+        <div class="inv-card-title" style="margin-bottom:1rem;">Studio KPIs</div>
+        <div class="inv-kpi-strip" id="kpiStrip">
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiMembers" aria-label="Loading"></span>
+            <span class="inv-kpi-label">Vault Members</span>
+            <div class="inv-sparkline-wrap" id="sparkMembers"></div>
+          </div>
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiSessions" aria-label="Loading"></span>
+            <span class="inv-kpi-label">Game Sessions (7 days)</span>
+            <div class="inv-sparkline-wrap" id="sparkSessions"></div>
+          </div>
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiChallenges" aria-label="Loading"></span>
+            <span class="inv-kpi-label">Active Challenges</span>
+            <div class="inv-sparkline-wrap" id="sparkChallenges"></div>
+          </div>
+          <div class="inv-kpi-card">
+            <span class="inv-kpi-value loading" id="kpiGrowth" aria-label="Loading"></span>
+            <span class="inv-kpi-label">New Members (7 days)</span>
+            <div class="inv-sparkline-wrap" id="sparkGrowth"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main grid -->
+      <div class="inv-dashboard-grid">
+
+        <!-- Left: latest update + recent docs -->
+        <div>
+          <h2 class="inv-section-title">Latest Update</h2>
+          <div id="latestUpdateArea">
+            <div class="inv-skeleton inv-skeleton-card"></div>
+          </div>
+
+          <h2 class="inv-section-title" style="margin-top:2rem;">Recent Documents</h2>
+          <div id="recentDocsArea">
+            <div class="inv-skeleton inv-skeleton-row"></div>
+            <div class="inv-skeleton inv-skeleton-row"></div>
+          </div>
+        </div>
+
+        <!-- Right: activity log + ask the founders -->
+        <div>
+          <h2 class="inv-section-title">Activity</h2>
+          <div class="inv-card">
+            <div id="activityArea">
+              <div class="inv-skeleton inv-skeleton-row"></div>
+              <div class="inv-skeleton inv-skeleton-row"></div>
+              <div class="inv-skeleton inv-skeleton-row"></div>
+            </div>
+          </div>
+
+          <h2 class="inv-section-title" style="margin-top:2rem;">Ask the Founders</h2>
+          <div class="inv-card inv-ask-card">
+            <p style="font-size:0.87rem;color:var(--muted);margin:0 0 0.85rem;line-height:1.55;">
+              Send a question directly to the founding team. We respond to all investor questions within 48 hours.
+            </p>
+            <form id="askForm">
+              <textarea id="askTextarea" aria-label="Question for the founding team" placeholder="What would you like to know?" maxlength="1000"></textarea>
+              <div class="inv-ask-form-row">
+                <span class="inv-ask-note">Max 1,000 characters</span>
+                <button class="inv-btn inv-btn-primary inv-btn-sm" id="askSubmitBtn" type="submit">
+                  Send Question
+                </button>
+              </div>
+              <div class="inv-ask-status" id="askStatus"></div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+    const UI = window.VSInvestorUI;
+    const sb = window.VSSupabase;
+
+    document.getElementById('signOutBtn').addEventListener('click', () => {
+      window.VSInvestorAuth.signOut();
+    });
+
+    window.addEventListener('investor:ready', async (e) => {
+      const profile = e.detail;
+      window._investorProfile = profile; // used by ask form
+
+      // Nav user name
+      document.getElementById('navUserName').textContent = profile.display_name;
+
+      // Welcome heading
+      const hour = new Date().getHours();
+      const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening';
+      document.getElementById('welcomeHeading').textContent =
+        `${greeting}, ${profile.display_name}`;
+      document.getElementById('welcomeSub').innerHTML =
+        `${UI.renderTierBadge(profile.tier)} &nbsp;·&nbsp; Investor Portal`;
+
+      // Stat strip
+      document.getElementById('statStrip').innerHTML = `
+        <div class="inv-card">
+          <div class="inv-card-title">Investment</div>
+          <div class="inv-stat-value">${UI.formatCurrency(profile.investment_amount)}</div>
+          <div class="inv-stat-label">Committed capital</div>
+        </div>
+        <div class="inv-card">
+          <div class="inv-card-title">Equity</div>
+          <div class="inv-stat-value">${UI.formatPercent(profile.equity_percentage)}</div>
+          <div class="inv-stat-label">Ownership stake</div>
+        </div>
+        <div class="inv-card">
+          <div class="inv-card-title">Since</div>
+          <div class="inv-stat-value" style="font-size:1.25rem;">
+            ${UI.formatDate(profile.investment_date || profile.onboarded_at)}
+          </div>
+          <div class="inv-stat-label">${profile.document_count} documents &nbsp;·&nbsp; ${profile.update_count} updates</div>
+        </div>`;
+
+      // Load latest update
+      loadLatestUpdate(profile);
+
+      // Load recent documents
+      loadRecentDocs();
+
+      // Load activity
+      loadActivity();
+
+      // Load studio KPIs
+      loadKPIs();
+
+      // Realtime: new updates
+      sb.channel('investor-updates-rt')
+        .on('postgres_changes', {
+          event: 'INSERT', schema: 'public', table: 'investor_updates'
+        }, (payload) => {
+          if (payload.new.is_published) loadLatestUpdate(profile);
+        })
+        .subscribe();
+    });
+
+    async function loadLatestUpdate(profile) {
+      const { data: updates } = await sb
+        .from('investor_updates')
+        .select('id, title, update_type, visibility_tier, published_at, body_html')
+        .eq('is_published', true)
+        .order('published_at', { ascending: false })
+        .limit(1);
+
+      const area = document.getElementById('latestUpdateArea');
+      if (!updates || updates.length === 0) {
+        area.innerHTML = '<div class="inv-empty">No updates published yet.</div>';
+        return;
+      }
+
+      const u = updates[0];
+      area.innerHTML = `
+        <div class="inv-update-row">
+          <div class="inv-update-row-meta">
+            ${UI.renderUpdateTypeBadge(u.update_type)}
+            <span class="inv-update-date">${UI.formatDateShort(u.published_at)}</span>
+          </div>
+          <div class="inv-update-row-title">${UI.escHtml(u.title)}</div>
+          <button type="button" class="inv-update-expand-btn" id="latestExpandBtn" aria-expanded="false">
+            Read update <span class="inv-chevron">›</span>
+          </button>
+          <div class="inv-update-body" id="latestUpdateBody" hidden></div>
+          <div style="margin-top:0.75rem;">
+            <a href="/investor-portal/updates/" class="inv-btn inv-btn-ghost inv-btn-sm">
+              All updates (${profile.update_count})
+            </a>
+          </div>
+        </div>`;
+
+      document.getElementById('latestExpandBtn').addEventListener('click', function () {
+        const body = document.getElementById('latestUpdateBody');
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        if (!expanded) {
+          body.innerHTML = u.body_html;
+          body.removeAttribute('hidden');
+          this.setAttribute('aria-expanded', 'true');
+          this.querySelector('.inv-chevron').style.transform = 'rotate(90deg)';
+          VSInvestorAuth.logAction('update_read', u.id, u.title);
+        } else {
+          body.setAttribute('hidden', '');
+          this.setAttribute('aria-expanded', 'false');
+          this.querySelector('.inv-chevron').style.transform = '';
+        }
+      });
+    }
+
+    async function loadRecentDocs() {
+      const { data: docs } = await sb
+        .from('investor_documents')
+        .select('id, title, document_type, version, uploaded_at, file_size_bytes, visibility_scope')
+        .eq('is_active', true)
+        .order('uploaded_at', { ascending: false })
+        .limit(4);
+
+      const area = document.getElementById('recentDocsArea');
+      if (!docs || docs.length === 0) {
+        area.innerHTML = '<div class="inv-empty">No documents available yet.</div>';
+        return;
+      }
+
+      area.innerHTML = `
+        <div class="inv-table-scroll">
+          <table class="inv-doc-table">
+            <thead>
+              <tr>
+                <th>Document</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>${docs.map(d => `
+              <tr class="inv-doc-row">
+                <td class="inv-doc-title">${UI.escHtml(d.title)}</td>
+                <td class="inv-doc-type">${UI.escHtml(UI.docTypeLabel(d.document_type))}</td>
+                <td class="inv-doc-date">${UI.formatDateShort(d.uploaded_at)}</td>
+                <td>
+                  <button class="inv-btn inv-btn-sm inv-btn-ghost inv-doc-download-btn"
+                          data-id="${UI.escHtml(d.id)}" data-title="${UI.escHtml(d.title)}">
+                    Open
+                  </button>
+                </td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:0.75rem; text-align:right;">
+          <a href="/investor-portal/documents/" class="inv-btn inv-btn-ghost inv-btn-sm">View all documents</a>
+        </div>`;
+
+      wireDocButtons(area);
+    }
+
+    async function loadActivity() {
+      const { data: events } = await sb
+        .from('investor_activity')
+        .select('action, target_label, created_at')
+        .order('created_at', { ascending: false })
+        .limit(8);
+
+      const area = document.getElementById('activityArea');
+      if (!events || events.length === 0) {
+        area.innerHTML = '<div class="inv-empty" style="padding:1rem 0;">No activity yet.</div>';
+        return;
+      }
+
+      area.innerHTML = events.map(e => UI.renderActivityRow(e)).join('');
+    }
+
+    async function loadKPIs() {
+      // Fetch KPIs (anon-readable tables)
+      const [membersRes, sessionsRes, challengesRes, growthRes] = await Promise.all([
+        VSSupabase.from('vault_members').select('id', { count: 'exact', head: true }),
+        VSSupabase.from('game_sessions').select('id', { count: 'exact', head: true })
+          .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()),
+        VSSupabase.from('challenges').select('id', { count: 'exact', head: true })
+          .eq('is_active', true),
+        VSSupabase.from('vault_members').select('id', { count: 'exact', head: true })
+          .gte('created_at', new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString())
+      ]);
+
+      const kpiMembers    = membersRes.count    ?? '—';
+      const kpiSessions   = sessionsRes.count   ?? '—';
+      const kpiChallenges = challengesRes.count ?? '—';
+      const kpiGrowth     = growthRes.count     ?? '—';
+
+      const fmtNum = (n) =>
+        typeof n === 'number'
+          ? n.toLocaleString('en-US')
+          : String(n);
+
+      const membersEl    = document.getElementById('kpiMembers');
+      const sessionsEl   = document.getElementById('kpiSessions');
+      const challengesEl = document.getElementById('kpiChallenges');
+      const growthEl     = document.getElementById('kpiGrowth');
+
+      if (membersEl) {
+        membersEl.classList.remove('loading');
+        membersEl.textContent = fmtNum(kpiMembers);
+      }
+      if (sessionsEl) {
+        sessionsEl.classList.remove('loading');
+        sessionsEl.textContent = fmtNum(kpiSessions);
+      }
+      if (challengesEl) {
+        challengesEl.classList.remove('loading');
+        challengesEl.textContent = fmtNum(kpiChallenges);
+      }
+      if (growthEl) {
+        growthEl.classList.remove('loading');
+        growthEl.textContent = fmtNum(kpiGrowth);
+      }
+
+      // Load sparklines async (non-blocking)
+      loadKPISparklines();
+    }
+
+    // ── KPI Sparklines ──────────────────────────────────────────────
+    function renderSparkline(containerId, values, trendClass) {
+      const el = document.getElementById(containerId);
+      if (!el || !values || values.length < 2) return;
+
+      const W = 140, H = 28, pad = 2;
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const range = max - min || 1;
+      const xStep = (W - pad * 2) / (values.length - 1);
+
+      const pts = values.map((v, i) => {
+        const x = pad + i * xStep;
+        const y = pad + (1 - (v - min) / range) * (H - pad * 2);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      });
+      const ptStr = pts.join(' ');
+
+      // Area path: go along line, then close bottom
+      const lastX = (pad + (values.length - 1) * xStep).toFixed(1);
+      const areaPath = `M ${pts[0]} L ${pts.join(' L ')} L ${lastX},${(H - pad).toFixed(1)} L ${pad},${(H - pad).toFixed(1)} Z`;
+
+      // Trend label
+      const first = values[0], last = values[values.length - 1];
+      let trendLabel = '', trendCls = 'flat';
+      if (last > first) {
+        const pct = first > 0 ? Math.round(((last - first) / first) * 100) : 0;
+        trendLabel = `+${pct}% (30d)`;
+        trendCls = 'up';
+      } else if (last < first) {
+        const pct = first > 0 ? Math.round(((first - last) / first) * 100) : 0;
+        trendLabel = `−${pct}% (30d)`;
+        trendCls = 'down';
+      } else {
+        trendLabel = 'Flat (30d)';
+      }
+
+      el.innerHTML = `
+        <svg class="inv-sparkline ${trendClass || trendCls}" viewBox="0 0 ${W} ${H}"
+             aria-hidden="true" preserveAspectRatio="none">
+          <path class="spark-area" d="${areaPath}" />
+          <polyline points="${ptStr}" />
+        </svg>
+        <span class="inv-kpi-trend ${trendCls}">${trendLabel}</span>`;
+    }
+
+    async function loadKPISparklines() {
+      try {
+        const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+
+        // Fetch member registrations over last 30 days (daily buckets)
+        const { data: memberRows } = await VSSupabase
+          .from('vault_members')
+          .select('created_at')
+          .gte('created_at', thirtyDaysAgo)
+          .order('created_at', { ascending: true });
+
+        if (memberRows && memberRows.length > 0) {
+          // Bucket by day (30 buckets)
+          const buckets = new Array(30).fill(0);
+          const now = Date.now();
+          memberRows.forEach(r => {
+            const daysAgo = Math.floor((now - new Date(r.created_at).getTime()) / (86400000));
+            const idx = 29 - Math.min(daysAgo, 29);
+            buckets[idx]++;
+          });
+          // Convert to cumulative (running total) for member sparkline
+          const cumulative = [];
+          let running = 0;
+          buckets.forEach(v => { running += v; cumulative.push(running); });
+          renderSparkline('sparkMembers', cumulative);
+          renderSparkline('sparkGrowth', buckets.slice(-14)); // last 14 days daily new
+        }
+
+        // Game sessions over last 30 days
+        const { data: sessionRows } = await VSSupabase
+          .from('game_sessions')
+          .select('created_at')
+          .gte('created_at', thirtyDaysAgo)
+          .order('created_at', { ascending: true });
+
+        if (sessionRows && sessionRows.length > 0) {
+          const buckets = new Array(30).fill(0);
+          const now = Date.now();
+          sessionRows.forEach(r => {
+            const daysAgo = Math.floor((now - new Date(r.created_at).getTime()) / (86400000));
+            const idx = 29 - Math.min(daysAgo, 29);
+            buckets[idx]++;
+          });
+          renderSparkline('sparkSessions', buckets);
+        }
+
+        // Challenges — just show flat line since it doesn't have time series
+        // Use a static placeholder showing current count as flat
+        const challengesEl = document.getElementById('kpiChallenges');
+        const n = parseInt(challengesEl?.textContent) || 0;
+        if (n > 0) {
+          renderSparkline('sparkChallenges', new Array(14).fill(n));
+        }
+
+      } catch (_) {
+        // Non-critical — sparklines are best-effort
+      }
+    }
+
+    function wireDocButtons(container) {
+      container.querySelectorAll('.inv-doc-download-btn').forEach(btn => {
+        btn.addEventListener('click', async function () {
+          const id    = this.dataset.id;
+          const title = this.dataset.title;
+          this.disabled = true;
+          this.textContent = '…';
+
+          const { data, error } = await sb.rpc('get_investor_document_url', {
+            p_document_id: id
+          });
+
+          this.disabled = false;
+          this.textContent = 'Open';
+
+          if (error || !data || data.error) {
+            UI.showToast('Could not open document. Please try again.', 'error');
+            return;
+          }
+
+          if (data.url) {
+            window.open(data.url, '_blank', 'noopener');
+            // Log access to investor_document_access table
+            try {
+              await sb.from('investor_document_access').insert({
+                document_id: id,
+                document_title: title,
+                investor_id: window._investorProfile?.id || null,
+                investor_name: window._investorProfile?.display_name || null
+              });
+            } catch (_) {}
+          } else {
+            UI.showToast('Document URL unavailable. Contact the studio.', 'error');
+          }
+        });
+      });
+    }
+
+    // ── Ask the Founders form ────────────────────────────────────────
+    document.getElementById('askForm')?.addEventListener('submit', submitFounderQuestion);
+
+    async function submitFounderQuestion() {
+      const textarea = document.getElementById('askTextarea');
+      const statusEl = document.getElementById('askStatus');
+      const submitBtn = document.getElementById('askSubmitBtn');
+      const question = textarea?.value?.trim();
+
+      if (!question) {
+        statusEl.textContent = 'Please enter a question.';
+        statusEl.className = 'inv-ask-status err';
+        return;
+      }
+      if (question.length > 1000) {
+        statusEl.textContent = 'Question is too long (max 1,000 characters).';
+        statusEl.className = 'inv-ask-status err';
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      statusEl.textContent = '';
+      statusEl.className = 'inv-ask-status';
+
+      try {
+        const { error } = await sb.from('founder_questions').insert({
+          question,
+          investor_id: window._investorProfile?.id ?? null,
+          investor_name: window._investorProfile?.display_name ?? null,
+        });
+
+        if (error) throw error;
+
+        textarea.value = '';
+        statusEl.textContent = 'Question sent. We\'ll reply within 48 hours.';
+        statusEl.className = 'inv-ask-status ok';
+        VSInvestorAuth.logAction('founder_question_sent', null, question.slice(0, 80));
+      } catch (_) {
+        statusEl.textContent = 'Failed to send. Please try again or use the Message page.';
+        statusEl.className = 'inv-ask-status err';
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Question';
+      }
+    }
+
+    document.getElementById('mobileToggle')?.addEventListener('click', () => {
+      document.getElementById('mobileMenu')?.classList.toggle('open');
+    });
+    });
+  </script>
+
+  <script src="/assets/sentry-init.js" defer></script>
+<script src="/assets/pwa-nav.js" defer></script>
+<script src="/assets/public-page-handlers.js" defer></script>
+<script src="/assets/native-feel.js" defer></script>
+<script src="/assets/ignis-lens.js" defer></script>
+<script src="/assets/schema-injector.js" defer></script>
+</body>
+</html>

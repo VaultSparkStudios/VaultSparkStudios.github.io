@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "1.3",
+  "date": "2026-05-22",
+  "session": 154,
+  "project": "vaultsparkstudios-website",
+  "status": "green",
+  "intent": "/start -> /audit -> /implement -> /closeout with genius-level execution",
+  "sil": {
+    "score": 999,
+    "max": 1000,
+    "velocity": 5
+  },
+  "shipped": [
+    "docs/AUDIT_2026-05-22.{md,json} 22-item platform audit",
+    "docs/PROD_LCP_DIAGNOSIS_S154.md production LCP diagnosis",
+    "assets/adaptive-speculation.js adaptive speculation rules",
+    "scripts/build-llms-full-shards.mjs canonical llms-full shards",
+    "assets/rum-beacon.js + /v/rum Worker RUM ingestion + scripts/rollup-rum.mjs",
+    "scripts/measure-page-performance.mjs mobile INP interaction budget gate",
+    "scripts/check-image-formats.mjs --strict AVIF picture-wrapper gate",
+    "post-push CI/a11y repair and final all-green GitHub closeout"
+  ],
+  "verification": [
+    "npm run build:check passed end-to-end",
+    "docs/PERF_TRACE_INP_S154.json measured / mobile INP 192ms / 200ms",
+    "check-js-budget: 92 pages within budget",
+    "check-image-formats --strict: 0 missing AVIF siblings, 0 unwrapped large rasters",
+    "api/ci-status.json allGreen: true after E2E, Accessibility, Lighthouse, Secret Lint, Sentry Release, brief-format, sitemap, cache purge, and Pages passed"
+  ],
+  "carryForward": [
+    "S155->PROD-LCP-FIX: apply the three quick-wins from docs/PROD_LCP_DIAGNOSIS_S154.md",
+    "S155->TRUSTED-TYPES: start report-only soak",
+    "S155->MOBILE-CONTRACT-7: safe-area-inset contract with CSS-block parser self-tests"
+  ]
+}

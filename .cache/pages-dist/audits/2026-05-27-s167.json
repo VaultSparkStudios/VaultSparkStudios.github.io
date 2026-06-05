@@ -1,0 +1,93 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-github-io",
+  "date": "2026-05-27",
+  "session": 167,
+  "sessionType": "audit-implementation-closeout",
+  "label": "S167 broad website audit implementation + signed-in member persistence",
+  "calibration": false,
+  "scores": {
+    "devHealth": 100,
+    "creativeAlignment": 99,
+    "momentum": 100,
+    "engagement": 99,
+    "processQuality": 100
+  },
+  "scoresV3": {
+    "devHealth": 100,
+    "creativeAlignment": 99,
+    "momentum": 100,
+    "engagement": 99,
+    "processQuality": 100,
+    "crossRepoCoherence": 99,
+    "securityPosture": 99,
+    "ecosystemIntegration": 100,
+    "capitalEfficiency": 100,
+    "automationCoverage": 99
+  },
+  "total": 995,
+  "maxScore": 1000,
+  "velocity": 18,
+  "protocolVelocity": 1,
+  "durationMinutes": 120,
+  "debt": "down",
+  "topWin": "Signed-in members now persist across refreshes and cross-site navigation, keep the account dropdown, and do not receive anonymous become-a-member prompts.",
+  "topGap": "Real signed-in browser proof with a seeded Supabase session and legacy intelligence-style extraction remain next-session follow-ups.",
+  "intentOutcome": "Achieved",
+  "improvementsShipped": 18,
+  "improvementGroups": {
+    "auth": [
+      "signed-in-member-persistence",
+      "account-chip-intent-lazy-split"
+    ],
+    "ux": [
+      "visitor-intent-flight-director",
+      "vault-pathway-landing-pages",
+      "mobile-navigation-canary"
+    ],
+    "intelligence": [
+      "local-first-ask-ignis",
+      "studio-nervous-system",
+      "ux-decision-ledger"
+    ],
+    "feedback": [
+      "feedback-decision-board",
+      "local-vote-chips"
+    ],
+    "security": [
+      "public-contract-health",
+      "security-posture-renderer"
+    ],
+    "navigation": [
+      "command-palette-depth",
+      "navigation-scent-gate"
+    ]
+  },
+  "deferred": [
+    {
+      "slug": "edge-personalized-shell-post-obelisk",
+      "reason": "Held until Obelisk Phase 2 stabilizes session cookie/capability shape."
+    },
+    {
+      "slug": "legacy-intelligence-style-consolidation",
+      "reason": "Requires a focused visual-system pass with screenshot proof to avoid high-churn regressions."
+    },
+    {
+      "slug": "real-signed-in-browser-proof",
+      "reason": "Queued as coverage follow-up using seeded local Supabase session shape."
+    }
+  ],
+  "verification": {
+    "build": "npm run build exit 0",
+    "buildCheck": "npm run build:check exit 0",
+    "crawl": "108 HTML files, 0 status failures, 0 blocking-script findings",
+    "json": "PROJECT_STATUS and S167 audit JSON parseable"
+  },
+  "ignisFlags": [
+    "intent-achieved",
+    "member-continuity-fixed",
+    "public-depth-expanded",
+    "cost-neutral-ai"
+  ],
+  "ignisNote": "S167 moved the public website from static brand surface toward operating system: local Ask IGNIS, Nervous System, pathways, feedback decisions, and member-aware session continuity all landed without new per-user spend."
+}

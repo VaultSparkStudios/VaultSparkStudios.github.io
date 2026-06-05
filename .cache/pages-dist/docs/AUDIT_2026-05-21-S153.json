@@ -1,0 +1,74 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-05-21",
+  "project": "vaultsparkstudios-website",
+  "type": "platform",
+  "items": [
+    {
+      "rank": 1,
+      "tier": "fire",
+      "slug": "protocol-script-presence-sentinel",
+      "axis": "Process · Token cost · Dev health",
+      "effort": "1h",
+      "impact": 9,
+      "innovation": 7,
+      "priority": 31.5,
+      "recipe": "Add scripts/check-protocol-scripts.mjs that enumerates every node-script path the Studio OS protocol documents (start.md, closeout.md, skills overlays) reference, then verifies presence locally. Known-absent entries get an explicit allowlist with rationale (e.g. router.mjs intentionally not in this repo) so future drift surfaces as a delta, not as silent MODULE_NOT_FOUND stderr swallowed by /dev/null. Wire as build:check info-only.",
+      "measurementPlan": "Before: /start fired 4 MODULE_NOT_FOUND stderr blobs (sample-codebase.mjs, audit-run.mjs, skill-profile.mjs, ark.mjs). After: sentinel surfaces all 4 with one-line reasons and zero phantom node stack traces.",
+      "status": "done"
+    },
+    {
+      "rank": 2,
+      "tier": "fire",
+      "slug": "prod-perf-history-tracker",
+      "axis": "Speed · AI/Intelligence · Process",
+      "effort": "1.5h",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 27.5,
+      "recipe": "Add scripts/append-perf-history.mjs that ingests every docs/PERF_TRACE_PROD_*.json into append-only data/perf-history.ndjson keyed by {ts, session, sha, route, profile, lcp, fcp, cls}. Second mode --detect-regressions flags any route whose median LCP rose >15% vs the prior 3-sample baseline, or whose CLS crossed 0.1. Adds longitudinal production-perf intelligence the doctor signals cannot today.",
+      "measurementPlan": "Backfill from PERF_TRACE_PROD_S147/S149/S150 traces, confirm ndjson is append-only, run --detect-regressions against the current corpus and validate the homepage CLS spike from S149→S150 is flagged.",
+      "status": "done"
+    },
+    {
+      "rank": 3,
+      "tier": "fire",
+      "slug": "closeout-postpush-ci-watchdog",
+      "axis": "Verify · Trust · Automation",
+      "effort": "1h",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 25,
+      "recipe": "S148 verified push landed; S153 verifies the workflows on that push actually passed. Add scripts/check-postpush-ci.mjs that, given a SHA (default HEAD), calls `gh api repos/{owner}/{repo}/actions/runs?head_sha={sha}` and reports name+conclusion for the top critical workflows (Cache Purge · Secret Lint · brief-format-check · Sentry Release · Deploy Cloudflare Worker · build:check). Surface in closeout-autopilot after the push-verification step.",
+      "measurementPlan": "Run against latest pushed SHA, confirm we get back conclusion=success for all 5 known-good workflows. Negative test against a synthetic SHA returns no_match without crashing.",
+      "status": "done"
+    },
+    {
+      "rank": 4,
+      "tier": "high",
+      "slug": "disk-headroom-safe-reclaim",
+      "axis": "Speed · Dev health · Automation",
+      "effort": "30m",
+      "impact": 9,
+      "innovation": 4,
+      "priority": 21.6,
+      "recipe": "Extend scripts/check-disk-headroom.mjs with --apply that deletes ONLY the four explicitly-allowlisted candidate paths (.cache, playwright-report, test-results, docs/mobile-audit). Require --yes for non-interactive; print bytes-freed and final freeMb. Wire `npm run reclaim:disk`. Closes the S152→S153 carry that has been blocking browser-heavy production-perf reruns.",
+      "measurementPlan": "Before: 37MB free, 204MB reclaimable. After --apply --yes: expected ≥200MB free; --json output reflects the new state.",
+      "status": "done"
+    },
+    {
+      "rank": 5,
+      "tier": "high",
+      "slug": "post-deploy-perf-rerun",
+      "axis": "Verify · Speed",
+      "effort": "30m",
+      "impact": 8,
+      "innovation": 3,
+      "priority": 16.6,
+      "recipe": "Once disk-headroom-safe-reclaim lands and frees ≥128MB, rerun production perf for / and /membership/ via `node scripts/measure-page-performance.mjs --check --base=https://vaultsparkstudios.com --allow-external --routes=/,/membership/ --profiles=desktop:1366x900:dark:2400 --out docs/PERF_TRACE_PROD_S153.json --min-disk-mb=128 --wait-until=domcontentloaded --observe-ms=2500`, then feed the trace into the new perf-history tracker. Closes the S151→S152→S153 post-deploy-perf carry chain.",
+      "measurementPlan": "PERF_TRACE_PROD_S153.json exists and is ingested into data/perf-history.ndjson; --detect-regressions reports any new regressions vs the S147/S149/S150 baseline.",
+      "status": "done"
+    }
+  ]
+}

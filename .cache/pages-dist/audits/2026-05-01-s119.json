@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "1.3",
+  "session": 119,
+  "date": "2026-05-01",
+  "slug": "vaultsparkstudios-website",
+  "name": "VaultSparkStudios.github.io",
+  "sil": {
+    "total": 492,
+    "max": 500,
+    "v3Total": 984,
+    "v3Max": 1000,
+    "velocity": 6,
+    "debt": "down",
+    "categories": {
+      "devHealth": 100,
+      "creativeAlignment": 100,
+      "momentum": 99,
+      "engagement": 97,
+      "processQuality": 100,
+      "crossRepoCoherence": 100,
+      "securityPosture": 96,
+      "ecosystemIntegration": 99,
+      "capitalEfficiency": 94,
+      "automationCoverage": 99
+    }
+  },
+  "intent": "Infrastructure + studio-intelligence pass. Fix IGNIS CLI crash blocking rescore, register missing ops command, improve compliance messaging, attempt all HAR blockers, deep-research studio structure for constellation accuracy.",
+  "intentAchieved": true,
+  "shipped": [
+    "IGNIS CLI crash root-caused and fixed — audits/2026-04-16-6.json had legacy schema (sessionDate/sessionNumber); computeFreshness received undefined → TypeError at .getTime(). Two-pronged fix: canonical date+session fields added to audit file + computeFreshness guard in vaultspark-ignis/utils.ts accepts string|undefined, returns 0.5 on missing. Committed fb94d5f in IGNIS repo. Future malformed audits cannot crash the CLI.",
+    "scripts/ops/index.mjs rescore command registered — was absent; added pointing to rescore-ignis.mjs with proper desc/args/Session category",
+    "scripts/validate-compliance.mjs direction-aware messages — distinguishes 'ahead of' vs 'behind' canonical template version using versionAtLeast(); replaces undifferentiated drift warnings",
+    "Doctor 12/13 → 13/13 — IGNIS freshness 8d stale warning cleared by updating ignisLastComputed to 2026-05-01 in PROJECT_STATUS.json",
+    "Eternal QA account provisioned — contact+eternalqa@dreadspike.com / vault_sparked_pro / vaulteternalqa via provision-vault-test-accounts.mjs using secrets gateway; credentials in .env.playwright.local",
+    "Project Constellation structural cleanup — all 6 PROJECT_EDGES removed (founder confirmed: social-dashboard internal, statsforge internal, gridiron-gm VAULTED, vaultfront internal; S118 already removed Voidfall edges); INTERNAL_IDS blocklist + developmentPhase==='live-internal' filter added to loadRegistryCatalog(); api/public-intelligence.json + 3 contracts regenerated; projectGraph: 0 nodes / 0 edges"
+  ],
+  "deferred": [
+    "[FOUNDER] CF Email Routing scope — Dashboard required; CF API token cannot self-expand; no Global API Key or meta-token in secrets",
+    "[FOUNDER] WAF rule wiring — 403 on Security API endpoints; Dashboard required",
+    "[FOUNDER] configure-beacon.mjs — script not yet created in studio-ops; stub item",
+    "[FOUNDER] Web3Forms browser submit verify — pre-check passed (access_key wired), browser submit still founder-only",
+    "[ENV] Eternal content seeding — SEALED_REVEALS_JSON + ETERNAL_CREDITS_JSON still need real payloads",
+    "[VERIFY] Browser-verify pile S96/S97/S98/S113/S114/S118 surfaces — single Playwright sweep"
+  ],
+  "verification": [
+    "node vaultspark-ignis/cli.ts score — no longer crashes on malformed/legacy audit files",
+    "node scripts/run-doctor.mjs → 13/13 (was 12/13 — IGNIS freshness resolved)",
+    "node scripts/generate-public-intelligence.mjs → 4 files written, projectGraph: 0 nodes / 0 edges",
+    "provision-vault-test-accounts.mjs exited 0; Eternal QA credentials in .env.playwright.local",
+    "node scripts/ops.mjs rescore — now runs without 'Unknown command' error"
+  ],
+  "founderUnlocksRemaining": [
+    "iPhone-verify all S118 fixes: icon-only mobile nav, Press Kit icon balance, /studio-pulse/ live data flow, constellation truth",
+    "Add Zone › Email Routing Rules › Edit scope to CLOUDFLARE_API_TOKEN (CF dashboard)",
+    "Submit contact form, confirm receipt at founder@vaultsparkstudios.com",
+    "Declare verified public-to-public constellation edges when ready (source: PROJECT_REGISTRY.json companionTo in studio-ops)"
+  ]
+}

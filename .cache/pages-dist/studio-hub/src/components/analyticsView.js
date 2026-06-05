@@ -1,0 +1,2825 @@
+// analyticsView.js — VaultSpark Analytics Hub
+// Replaces Google Analytics. 10 proprietary composite scores across game, web, GitHub, studio dimensions.
+
+import { PROJECTS } from "../data/studioRegistry.js";
+import { scoreProject, getGrade } from "../utils/projectScoring.js";
+import { fmt, timeAgo, daysSince, ciStatus, scoreColor, scoreGrade, safeGetJSON } from "../utils/helpers.js";
+import {
+  loadSviHistory, pushSviSnapshot, filterSviHistory,
+  computeMA, computeBollinger, computeTrendLine, bollingerBandwidth,
+} from "../utils/sviHistory.js";
+import { forecastScores, getOverallForecastAccuracy, monteCarloForecast } from "../utils/scoreForecast.js";
+import { deltaBadge } from "./hub/hubHelpers.js";
+import { getScoreAnomalies } from "./hub/morningBrief.js";
+import { computeWebsiteHealthScore, SITE_PAGES, SITE_URL } from "../data/websiteAnalytics.js";
+import { getTelemetrySummary } from "../utils/sessionTelemetry.js";
+
+// ── SVG helpers ───────────────────────────────────────────────────────────────
+function sparkline(values, { w = 200, h = 44, color = "var(--cyan)", fill = true } = {}) {
+  const clean = (values || []).filter((v) => v != null);
+  if (clean.length < 2) return `<span style="color:var(--muted);font-size:10px;">not enough data</span>`;
+  const mn = Math.min(...clean);
+  const mx = Math.max(...clean);
+  const range = mx - mn || 1;
+  const pts = clean.map((v, i) => {
+    const x = (i / (clean.length - 1)) * (w - 6) + 3;
+    const y = h - 4 - ((v - mn) / range) * (h - 8);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+  const last = pts.split(" ").pop().split(",");
+  const lx = parseFloat(last[0]);
+  const ly = parseFloat(last[1]);
+  const fillPoly = fill ? `<polygon points="3,${h} ${pts} ${lx},${h}" fill="${color}" opacity="0.12"/>` : "";
+  return `<svg width="${w}" height="${h}" style="display:block;overflow:visible" aria-hidden="true">
+    ${fillPoly}
+    <polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="${lx}" cy="${ly}" r="2.5" fill="${color}"/>
+  </svg>`;
+}
+
+function miniBar(value, max, color = "var(--cyan)", h = 6) {
+  const pct = Math.round(Math.min(100, Math.max(0, (value / (max || 1)) * 100)));
+  return `<div style="height:${h}px;background:var(--border);border-radius:3px;overflow:hidden;flex:1;">
+    <div style="height:100%;width:${pct}%;background:${color};border-radius:3px;transition:width 0.4s;"></div>
+  </div>`;
+}
+
+// ── Score tile ────────────────────────────────────────────────────────────────
+function scoreTile(label, value, { sub = "", note = "" } = {}) {
+  const pct   = value == null ? 0 : Math.round(Math.min(100, value));
+  const disp  = value == null ? "—" : Math.round(value);
+  const color = scoreColor(value);
+  const grade = scoreGrade(value);
+  return `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 16px;
+                min-width:110px;flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:4px;">
+      <div style="position:absolute;bottom:0;left:0;width:${pct}%;height:3px;background:${color};border-radius:0;"></div>
+      <div style="font-size:9px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;font-weight:600;">${label}</div>
+      <div style="display:flex;align-items:baseline;gap:7px;">
+        <span style="font-size:28px;font-weight:900;color:${color};line-height:1;font-variant-numeric:tabular-nums;">${disp}</span>
+        <span style="font-size:13px;font-weight:700;color:${color};opacity:0.7;">${grade}</span>
+      </div>
+      ${sub  ? `<div style="font-size:10px;color:var(--muted);">${sub}</div>` : ""}
+      ${note ? `<div style="font-size:9px;color:var(--muted);opacity:0.65;font-style:italic;">${note}</div>` : ""}
+    </div>`;
+}
+
+// ── Section wrapper ───────────────────────────────────────────────────────────
+function section(title, icon, content) {
+  return `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border);">
+        <span style="font-size:16px;">${icon}</span>
+        <span style="font-size:14px;font-weight:700;color:var(--text);">${title}</span>
+      </div>
+      ${content}
+    </div>`;
+}
+
+function kv(k, v, accent = "var(--cyan)") {
+  return `<div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+    <span style="font-size:11px;color:var(--muted);">${k}</span>
+    <span style="font-size:12px;font-weight:600;color:${accent};">${v}</span>
+  </div>`;
+}
+
+function statCard(label, value, sub = "") {
+  return `<div style="flex:1;min-width:110px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
+    <div style="font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">${label}</div>
+    <div style="font-size:24px;font-weight:900;color:var(--cyan);">${value}</div>
+    ${sub ? `<div style="font-size:10px;color:var(--muted);">${sub}</div>` : ""}
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// 10 PROPRIETARY COMPOSITE SCORES
+// ════════════════════════════════════════════════════════════════════════════
+
+// 1. Studio Vitality Index (SVI 0–100) — overall operational health
+function computeSVI(ghData, sbData, scoreHistory, alertCount) {
+  let score = 0;
+  const active = PROJECTS.filter((p) => p.status !== "archived");
+  const oneWeekAgo = Date.now() - 7 * 86400000;
+
+  // CI pass rate (0–25)
+  const withCI  = active.filter((p) => ghData[p.githubRepo]?.ciRuns?.length > 0);
+  const passing = withCI.filter((p) => ghData[p.githubRepo]?.ciRuns?.[0]?.conclusion === "success");
+  const ciPassRate = withCI.length > 0 ? passing.length / withCI.length : 0;
+  score += ciPassRate * 25;
+
+  // Weekly commits across portfolio (0–20)
+  let totalWeekCommits = 0;
+  for (const p of active) {
+    const commits = ghData[p.githubRepo]?.commits || [];
+    totalWeekCommits += commits.filter((c) => new Date(c.date).getTime() > oneWeekAgo).length;
+  }
+  const commitScore = Math.min(20, (totalWeekCommits / Math.max(1, active.length)) * 4);
+  score += commitScore;
+
+  // Member growth (0–15)
+  const mem = sbData?.members;
+  if (mem?.total > 0) {
+    score += Math.min(15, ((mem.newThisWeek || 0) / mem.total) * 500);
+  } else if (mem) {
+    score += 5;
+  }
+
+  // Score trend (0–20)
+  if (scoreHistory.length >= 3) {
+    const recent = scoreHistory.slice(-3).map((snap) => {
+      const vals = Object.values(snap.scores || {}).filter((v) => v != null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    });
+    const d1 = recent[2] - recent[1];
+    const d2 = recent[1] - recent[0];
+    if (d1 > 0 && d2 > 0) score += 20;
+    else if (d1 > 0)       score += 14;
+    else if (d1 >= 0)      score += 8;
+    else                   score += 2;
+  } else {
+    score += 10;
+  }
+
+  // Alert density (0–20)
+  score += Math.max(0, 20 - Math.min(20, (alertCount || 0) * 4));
+
+  const svi = Math.round(Math.min(100, Math.max(0, score)));
+
+  let trend = "→";
+  if (scoreHistory.length >= 2) {
+    const avg = (snap) => {
+      const vals = Object.values(snap.scores || {}).filter((v) => v != null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    };
+    const diff = avg(scoreHistory[scoreHistory.length - 1]) - avg(scoreHistory[scoreHistory.length - 2]);
+    trend = diff > 0.5 ? "↑" : diff < -0.5 ? "↓" : "→";
+  }
+
+  return { svi, trend, ciPassRate: Math.round(ciPassRate * 100), totalWeekCommits };
+}
+
+// ── SVI Chart SVG renderer (shared by initial render + _vsviDraw redraw) ──────
+function _sviDrawSvg(filtered) {
+  const W = 820, H = 280;
+  const ML = 44, MR = 64, MT = 14, MB = 24;
+  const CW = W - ML - MR;   // 712 — main chart width
+  const CH = 188;            // main chart height
+  const VH = 38;             // volume strip height
+  const VY = MT + CH + 10;  // volume strip y-start
+
+  const n = filtered.length;
+  if (n < 2) {
+    return `<text x="${W/2}" y="${H/2}" text-anchor="middle" font-size="12"
+      fill="rgba(149,163,183,0.45)">Open Analytics a few times to build history</text>`;
+  }
+
+  const sviVals = filtered.map(d => d.svi);
+  const volVals = filtered.map(d => d.weeklyCommits ?? 0);
+
+  const clamp  = v => Math.max(0, Math.min(100, v));
+  const xOf    = i => ML + (i / Math.max(1, n - 1)) * CW;
+  const yOf    = v => MT + (1 - clamp(v) / 100) * CH;
+
+  // Grade zone bands (background)
+  const zones = [
+    { min: 85, max: 100, fill: 'rgba(74,222,128,0.07)',  label: 'A+' },
+    { min: 70, max: 85,  fill: 'rgba(122,231,199,0.05)', label: 'A'  },
+    { min: 55, max: 70,  fill: 'rgba(105,179,255,0.04)', label: 'B+' },
+    { min: 35, max: 55,  fill: 'rgba(255,200,116,0.04)', label: 'B'  },
+    { min: 0,  max: 35,  fill: 'rgba(248,113,113,0.06)', label: 'C'  },
+  ];
+  const zoneBands = zones.map(z => {
+    const y1 = yOf(z.max), y2 = yOf(z.min);
+    return `<rect x="${ML}" y="${y1.toFixed(1)}" width="${CW}" height="${(y2 - y1).toFixed(1)}" fill="${z.fill}"/>
+      <text x="${W - MR + 5}" y="${((y1 + y2) / 2 + 4).toFixed(1)}" font-size="9" font-weight="700"
+        fill="rgba(149,163,183,0.4)">${z.label}</text>`;
+  }).join('');
+
+  // Horizontal grade separator dashes
+  const gradeLines = [85, 70, 55, 35].map(v => {
+    const y = yOf(v).toFixed(1);
+    return `<line x1="${ML}" y1="${y}" x2="${W - MR}" y2="${y}"
+      stroke="rgba(255,255,255,0.055)" stroke-width="1" stroke-dasharray="4,3"/>`;
+  }).join('');
+
+  // Technical indicators
+  const ma7   = computeMA(sviVals, 7);
+  const ma20  = computeMA(sviVals, 20);
+  const boll  = computeBollinger(sviVals, Math.min(20, n), 2);
+  const trend = computeTrendLine(sviVals);
+
+  // Bollinger band fill
+  const bUpper = boll.upper.map((v, i) => v != null ? [xOf(i), yOf(v)] : null).filter(Boolean);
+  const bLower = boll.lower.map((v, i) => v != null ? [xOf(i), yOf(v)] : null).filter(Boolean);
+  const bollFill = bUpper.length > 1
+    ? `<polygon points="${[...bUpper, ...[...bLower].reverse()].map(([x, y]) => `${x.toFixed(1)},${y.toFixed(1)}`).join(' ')}"
+        fill="rgba(105,179,255,0.07)" stroke="none"/>`
+    : '';
+
+  const pathLine = (vals, stroke, sw, dash = '', opacity = 1) => {
+    const pts = vals
+      .map((v, i) => v != null ? `${xOf(i).toFixed(1)},${yOf(v).toFixed(1)}` : null)
+      .filter(Boolean);
+    if (pts.length < 2) return '';
+    return `<polyline points="${pts.join(' ')}" fill="none" stroke="${stroke}" stroke-width="${sw}"
+      ${dash ? `stroke-dasharray="${dash}"` : ''} opacity="${opacity}" stroke-linecap="round" stroke-linejoin="round"/>`;
+  };
+
+  const bollLines = pathLine(boll.upper, '#69b3ff', 0.8, '3,2', 0.45)
+                  + pathLine(boll.lower, '#69b3ff', 0.8, '3,2', 0.45);
+  const ma7Line   = pathLine(ma7,  '#ffc874', 1.3, '', 0.75);
+  const ma20Line  = pathLine(ma20, '#69b3ff', 1.3, '', 0.75);
+
+  // Trend channel
+  let trendLine = '';
+  if (trend && Math.abs(trend.slope) > 0.05) {
+    const x1 = xOf(0).toFixed(1),     y1 = yOf(clamp(trend.trendPoints[0])).toFixed(1);
+    const x2 = xOf(n - 1).toFixed(1), y2 = yOf(clamp(trend.trendPoints[n - 1])).toFixed(1);
+    const tc  = trend.slope > 0 ? 'rgba(74,222,128,0.45)' : 'rgba(248,113,113,0.45)';
+    trendLine = `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}"
+      stroke="${tc}" stroke-width="1.8" stroke-dasharray="7,4"/>`;
+  }
+
+  // Gradient fill under main SVI line
+  const gradId  = 'svig';
+  const mainPts = sviVals.map((v, i) => `${xOf(i).toFixed(1)},${yOf(v).toFixed(1)}`);
+  const lastX   = xOf(n - 1).toFixed(1);
+  const curSvi  = sviVals[n - 1];
+  const dotColor = scoreColor(curSvi);
+
+  const gradDef = `<defs>
+    <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="${dotColor}" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="${dotColor}" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="svi-clip">
+      <rect x="${ML}" y="${MT}" width="${CW}" height="${CH}"/>
+    </clipPath>
+  </defs>`;
+
+  const fillPoly = `<polygon clip-path="url(#svi-clip)"
+    points="${ML},${MT + CH} ${mainPts.join(' ')} ${lastX},${MT + CH}"
+    fill="url(#${gradId})" stroke="none"/>`;
+  const mainLine = `<polyline clip-path="url(#svi-clip)" points="${mainPts.join(' ')}"
+    fill="none" stroke="${dotColor}" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>`;
+
+  // Current value endpoint dot + label
+  const curY = yOf(curSvi).toFixed(1);
+  const curDot = `
+    <circle cx="${lastX}" cy="${curY}" r="5" fill="${dotColor}" stroke="rgba(8,14,24,0.9)" stroke-width="2"/>
+    <rect x="${parseFloat(lastX) + 8}" y="${parseFloat(curY) - 10}" width="26" height="14" rx="3"
+      fill="${dotColor}" opacity="0.15"/>
+    <text x="${parseFloat(lastX) + 21}" y="${parseFloat(curY) + 1}" text-anchor="middle" font-size="10"
+      font-weight="800" fill="${dotColor}">${curSvi}</text>`;
+
+  // Y axis grid + labels
+  const yAxis = [0, 25, 50, 75, 100].map(v => {
+    const y = yOf(v).toFixed(1);
+    return `<line x1="${ML}" y1="${y}" x2="${W - MR}" y2="${y}"
+        stroke="rgba(255,255,255,0.035)" stroke-width="1"/>
+      <text x="${ML - 5}" y="${parseFloat(y) + 4}" text-anchor="end" font-size="9"
+        fill="rgba(149,163,183,0.4)">${v}</text>`;
+  }).join('');
+
+  // X axis date labels (~6 evenly spaced)
+  const labelCount = Math.min(6, n);
+  const xLabels = Array.from({ length: labelCount }, (_, i) => {
+    const idx = Math.round(i * (n - 1) / Math.max(1, labelCount - 1));
+    const d   = new Date(filtered[idx].ts);
+    const lbl = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return `<text x="${xOf(idx).toFixed(1)}" y="${MT + CH + MB - 2}" text-anchor="middle"
+      font-size="9" fill="rgba(149,163,183,0.4)">${lbl}</text>`;
+  }).join('');
+
+  // Volume bars
+  const maxVol  = Math.max(...volVals, 1);
+  const barW    = Math.max(2, (CW / n) * 0.72);
+  const volBars = volVals.map((v, i) => {
+    const bh = (v / maxVol) * VH;
+    const bx = (xOf(i) - barW / 2).toFixed(1);
+    const by = (VY + VH - bh).toFixed(1);
+    return `<rect x="${bx}" y="${by}" width="${barW.toFixed(1)}" height="${bh.toFixed(1)}"
+      fill="rgba(122,231,199,0.22)" rx="1"/>`;
+  }).join('');
+
+  // Chart border
+  const border = `<rect x="${ML}" y="${MT}" width="${CW}" height="${CH}"
+    fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>`;
+
+  return `${gradDef}
+    ${zoneBands}
+    ${yAxis}${gradeLines}
+    ${bollFill}${bollLines}
+    ${trendLine}
+    ${ma7Line}${ma20Line}
+    ${fillPoly}${mainLine}
+    ${curDot}
+    ${volBars}
+    <text x="${ML - 5}" y="${(VY + VH / 2 + 4).toFixed(1)}" text-anchor="end" font-size="8"
+      fill="rgba(149,163,183,0.3)">VOL</text>
+    ${xLabels}
+    ${border}`;
+}
+
+// ── Global interactive redraw for SVI chart timeframe buttons ─────────────────
+// Defined once at module load; safe to call via onclick attributes.
+window._vsviDraw = function (tf) {
+  const container = document.getElementById('svi-chart-container');
+  if (!container) return;
+
+  const raw = window.__vsviData || [];
+  const days = { '1W': 7, '1M': 30, '3M': 90, '6M': 180, '1Y': 365, 'ALL': null }[tf] ?? null;
+  const filtered = filterSviHistory(raw, days);
+
+  // Update SVG
+  const svg = document.getElementById('svi-chart-svg');
+  if (svg) svg.innerHTML = _sviDrawSvg(filtered);
+
+  // Update stats strip
+  const statsEl = document.getElementById('svi-stats-strip');
+  if (statsEl && filtered.length >= 2) {
+    const vals  = filtered.map(d => d.svi);
+    const ma7   = computeMA(vals, Math.min(7, vals.length));
+    const ma20  = computeMA(vals, Math.min(20, vals.length));
+    const boll  = computeBollinger(vals, Math.min(20, vals.length), 2);
+    const trend = computeTrendLine(vals);
+    const bw    = bollingerBandwidth(boll, vals.length - 1);
+    const last7 = ma7[vals.length - 1];
+    const last20 = ma20[vals.length - 1];
+    statsEl.innerHTML = _sviStatsHtml(vals[vals.length - 1], last7, last20, bw, trend, filtered.length);
+  }
+
+  // Update active button
+  container.querySelectorAll('.svi-tf-btn').forEach(btn => {
+    const active = btn.dataset.tf === tf;
+    btn.style.background  = active ? 'rgba(122,231,199,0.15)' : 'rgba(255,255,255,0.04)';
+    btn.style.color       = active ? 'var(--cyan)' : 'rgba(149,163,183,0.7)';
+    btn.style.borderColor = active ? 'rgba(122,231,199,0.35)' : 'rgba(255,255,255,0.08)';
+  });
+};
+
+// ── CSV export for SVI history ─────────────────────────────────────────────────
+// Generates a Blob from the full sviHistory array and triggers a download.
+window._vsviExportCSV = function () {
+  const raw = window.__vsviData || [];
+  if (!raw.length) return;
+
+  const header = 'date,timestamp,svi,trend,ciPassRate,weeklyCommits';
+  const rows = raw.map(d => {
+    const date = new Date(d.ts).toISOString().slice(0, 10);
+    return [
+      date,
+      d.ts,
+      d.svi ?? '',
+      d.trend ?? '',
+      d.ciPassRate ?? '',
+      d.weeklyCommits ?? '',
+    ].join(',');
+  });
+
+  const csv  = [header, ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = `svi-history-${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+function _sviStatsHtml(cur, ma7, ma20, bw, trend, pts) {
+  const fmt1 = v => v != null ? v.toFixed(1) : '—';
+  const trendDir = trend
+    ? (trend.slope > 0.05 ? `<span style="color:var(--green)">↗ Rising</span>`
+     : trend.slope < -0.05 ? `<span style="color:var(--red)">↘ Falling</span>`
+     : `<span style="color:var(--muted)">→ Flat</span>`)
+    : '<span style="color:var(--muted)">—</span>';
+  const r2Str = trend ? `R²&nbsp;${trend.r2.toFixed(2)}` : '';
+  return `
+    <span>MA7&nbsp;<strong style="color:#ffc874">${fmt1(ma7)}</strong></span>
+    <span>MA20&nbsp;<strong style="color:#69b3ff">${fmt1(ma20)}</strong></span>
+    ${bw != null ? `<span>BBW&nbsp;<strong style="color:rgba(149,163,183,0.8)">${fmt1(bw)}%</strong></span>` : ''}
+    <span>Trend&nbsp;${trendDir}${r2Str ? `&nbsp;<span style="color:var(--muted);font-size:9px;">(${r2Str})</span>` : ''}</span>
+    <span style="color:var(--muted)">${pts}&nbsp;pts</span>`;
+}
+
+// 2. Portfolio Balance Score (PBS 0–100) — score distribution evenness
+function computePBS(allScores) {
+  const vals = allScores.map((s) => s.total).filter((v) => v != null && v >= 0);
+  if (vals.length < 2) return { pbs: null, cv: null, lowestProject: null, highestProject: null };
+
+  const mean = vals.reduce((a, b) => a + b, 0) / vals.length;
+  const stdDev = Math.sqrt(vals.reduce((a, v) => a + Math.pow(v - mean, 2), 0) / vals.length);
+  const cv = mean > 0 ? stdDev / mean : 1;
+
+  let pbs;
+  if (cv < 0.10)      pbs = 95;
+  else if (cv < 0.15) pbs = 85;
+  else if (cv < 0.20) pbs = 75;
+  else if (cv < 0.25) pbs = 62;
+  else if (cv < 0.35) pbs = 48;
+  else if (cv < 0.50) pbs = 30;
+  else                pbs = 15;
+
+  if (vals.every((v) => v >= 35)) pbs = Math.min(100, pbs + 10);
+
+  const sorted = [...allScores].sort((a, b) => a.total - b.total);
+  return {
+    pbs: Math.round(pbs),
+    cv: cv.toFixed(2),
+    lowestProject: sorted[0]?.name,
+    lowestScore:   sorted[0]?.total,
+    highestProject: sorted[sorted.length - 1]?.name,
+    highestScore:   sorted[sorted.length - 1]?.total,
+    mean: Math.round(mean),
+    stdDev: Math.round(stdDev),
+  };
+}
+
+// 3. Release Cadence Rating (RCR 0–100) — shipping consistency
+function computeRCR(ghData) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  let pts = 0;
+  let activeReleasers = 0;
+  let daysSinceAny = Infinity;
+  const recentReleasers = [];
+
+  for (const p of active) {
+    const rel = ghData[p.githubRepo]?.latestRelease;
+    if (!rel?.publishedAt) continue;
+    const age = daysSince(rel.publishedAt);
+    daysSinceAny = Math.min(daysSinceAny, age);
+    if (age <= 7)       { pts += 3; activeReleasers++; recentReleasers.push(p.name); }
+    else if (age <= 30) { pts += 2; activeReleasers++; recentReleasers.push(p.name); }
+    else if (age <= 90) { pts += 1; }
+  }
+
+  if (pts === 0) return { rcr: 5, activeReleasers: 0, daysSinceAnyRelease: null, recentReleasers: [] };
+
+  let rcr = (pts / Math.max(1, active.length * 3)) * 80;
+  if (activeReleasers >= 3) rcr += 20;
+  else if (activeReleasers >= 2) rcr += 10;
+  if (daysSinceAny > 90) rcr = Math.max(0, rcr - 30);
+
+  return {
+    rcr: Math.round(Math.min(100, rcr)),
+    activeReleasers,
+    daysSinceAnyRelease: daysSinceAny === Infinity ? null : Math.round(daysSinceAny),
+    recentReleasers,
+  };
+}
+
+// 4. CI Reliability Score (CRS 0–100) — CI infrastructure health
+function computeCRS(ghData, scoreHistory) {
+  const active  = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  const withCI  = active.filter((p) => ghData[p.githubRepo]?.ciRuns?.length > 0);
+  const passing = withCI.filter((p) => ghData[p.githubRepo]?.ciRuns?.[0]?.conclusion === "success");
+  const failing = withCI.filter((p) => ghData[p.githubRepo]?.ciRuns?.[0]?.conclusion === "failure");
+
+  const passRate = withCI.length > 0 ? passing.length / withCI.length : 0;
+  const coverage = active.length > 0 ? withCI.length / active.length : 0;
+  let score = passRate * 40 + coverage * 30;
+
+  // Trend bonus
+  if (scoreHistory.length >= 3) {
+    const rates = scoreHistory.slice(-3).map((snap) => {
+      const ciVals = Object.values(snap.ci || {}).filter((v) => v != null);
+      return ciVals.length > 0 ? ciVals.filter((v) => v === "success").length / ciVals.length : null;
+    }).filter((v) => v != null);
+    if (rates.length >= 2) {
+      const d = rates[rates.length - 1] - rates[rates.length - 2];
+      if (d > 0.05) score += 20;
+      else if (d >= -0.05) score += 10;
+    }
+  }
+
+  // Green streak bonus
+  let streakBonus = 0;
+  for (const p of withCI) {
+    const runs = ghData[p.githubRepo]?.ciRuns || [];
+    if (runs.length >= 2 && runs.every((r) => r.conclusion === "success")) streakBonus++;
+  }
+  score += Math.min(10, streakBonus * 2);
+
+  return {
+    crs: Math.round(Math.min(100, Math.max(0, score))),
+    passRate: Math.round(passRate * 100),
+    ciCoverage: Math.round(coverage * 100),
+    failingRepos: failing.map((p) => p.name),
+    passingCount: passing.length,
+    totalWithCI:  withCI.length,
+    totalActive:  active.length,
+  };
+}
+
+// 5. Community Reach Score (CRS2 0–100) — cross-platform social footprint
+function computeCRS2(socialData) {
+  if (!socialData) return { crs2: 0, totalReach: 0, breakdown: {}, ytSubs: null, rdSubs: null, bskyFollowers: null, gmSalesCount: 0 };
+  let score = 0;
+  const breakdown = {};
+
+  const yt = socialData.youtube;
+  if (yt?.subscribers != null) {
+    const subs = yt.subscribers;
+    const ytPts = subs >= 100000 ? 30 : subs >= 10000 ? 20 : subs >= 1000 ? 12 : subs >= 100 ? 5 : 1;
+    score += ytPts;
+    breakdown.YouTube = ytPts;
+  }
+
+  const rd = socialData.reddit;
+  if (rd?.subscribers != null) {
+    const rdPts = rd.subscribers >= 5000 ? 20 : rd.subscribers >= 1000 ? 15 : rd.subscribers >= 500 ? 10 : rd.subscribers >= 100 ? 5 : 1;
+    score += rdPts;
+    breakdown.Reddit = rdPts;
+  }
+
+  const bsky = socialData.bluesky;
+  if (bsky?.followers != null) {
+    const bsPts = bsky.followers >= 1000 ? 15 : bsky.followers >= 500 ? 12 : bsky.followers >= 200 ? 7 : bsky.followers >= 50 ? 3 : 1;
+    score += bsPts;
+    breakdown.Bluesky = bsPts;
+  }
+
+  const gmSales = socialData.gumroadSales;
+  if (socialData.gumroad?.hasToken) {
+    const cnt = gmSales?.length || 0;
+    const gmPts = cnt >= 500 ? 20 : cnt >= 200 ? 15 : cnt >= 50 ? 10 : cnt >= 10 ? 5 : cnt > 0 ? 2 : 0;
+    score += gmPts;
+    breakdown.Gumroad = gmPts;
+  }
+
+  // Content freshness (0–15)
+  let fresh = 0;
+  const latestVid  = yt?.latestVideos?.[0]?.publishedAt;
+  const latestPost = bsky?.latestPosts?.[0]?.createdAt || rd?.latestPosts?.[0]?.createdAt;
+  if (latestVid  && daysSince(latestVid)  <= 7)  fresh += 8;
+  else if (latestVid  && daysSince(latestVid)  <= 30) fresh += 4;
+  if (latestPost && daysSince(latestPost) <= 7)  fresh += 7;
+  else if (latestPost && daysSince(latestPost) <= 30) fresh += 3;
+  score += fresh;
+  breakdown.Freshness = fresh;
+
+  const totalReach = (yt?.subscribers || 0) + (rd?.subscribers || 0) + (bsky?.followers || 0);
+  return {
+    crs2: Math.round(Math.min(100, Math.max(0, score))),
+    totalReach,
+    breakdown,
+    ytSubs:       yt?.subscribers ?? null,
+    rdSubs:       rd?.subscribers ?? null,
+    bskyFollowers: bsky?.followers ?? null,
+    gmSalesCount: gmSales?.length || 0,
+  };
+}
+
+// 6. Developer Throughput Index (DTI 0–100) — development velocity
+function computeDTI(ghData) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  const oneWeekAgo  = Date.now() - 7  * 86400000;
+  const twoWeeksAgo = Date.now() - 14 * 86400000;
+
+  let weeklyCommits = 0;
+  let activeDev     = 0;
+  let freshPRs      = 0;
+  let deployedInPeriod = 0;
+
+  for (const p of active) {
+    const rd = ghData[p.githubRepo];
+    if (!rd) continue;
+    const wk = (rd.commits || []).filter((c) => new Date(c.date).getTime() > oneWeekAgo).length;
+    weeklyCommits += wk;
+    if (wk > 0) activeDev++;
+    freshPRs += (rd.prs || []).filter((pr) => !pr.draft && new Date(pr.createdAt).getTime() > oneWeekAgo).length;
+    if ((rd.deployments || []).some((d) => new Date(d.createdAt).getTime() > twoWeeksAgo)) deployedInPeriod++;
+  }
+
+  const n = Math.max(1, active.length);
+  let score = 0;
+  score += Math.min(40, (weeklyCommits / n) * 8);  // avg commits/project * 8, capped 40
+  score += Math.min(25, freshPRs * 5);
+  score += (deployedInPeriod / n) * 20;
+  score += (activeDev / n) * 15;
+
+  return {
+    dti: Math.round(Math.min(100, Math.max(0, score))),
+    weeklyCommits,
+    activeDev,
+    freshPRs,
+    deployedInPeriod,
+    totalActive: active.length,
+  };
+}
+
+// 7. Studio OS Compliance Rate (SOCR 0–100)
+function computeSOCR() {
+  const active = PROJECTS.filter((p) => p.status !== "archived");
+  if (active.length === 0) return { socr: 0, compliant: 0, total: 0, nonCompliant: [] };
+
+  let wTotal = 0;
+  let wCompliant = 0;
+  const nonCompliant = [];
+
+  for (const p of active) {
+    const w = (p.status === "live" || p.status === "client-beta") ? 2 : 1;
+    wTotal += w;
+    if (p.studioOsApplied) wCompliant += w;
+    else nonCompliant.push(p);
+  }
+
+  return {
+    socr: Math.round((wCompliant / wTotal) * 100),
+    compliant: active.filter((p) => p.studioOsApplied).length,
+    total: active.length,
+    nonCompliant,
+  };
+}
+
+// 8. Engagement Concentration Index (ECI 0–100) — player engagement spread (inverted HHI)
+function computeECI(sbData) {
+  const sessions = sbData?.sessions;
+  if (!sessions) return { eci: null, topGame: null, topGameShare: null, gamesWithSessions: 0, totalSessions: 0 };
+
+  const entries = Object.entries(sessions).filter(([, v]) => (v?.week || 0) > 0);
+  const total   = entries.reduce((s, [, v]) => s + (v.week || 0), 0);
+  if (total === 0 || entries.length === 0) return { eci: null, topGame: null, topGameShare: null, gamesWithSessions: 0, totalSessions: 0 };
+  if (entries.length === 1) {
+    const proj = PROJECTS.find((p) => p.supabaseGameSlug === entries[0][0]);
+    return { eci: 20, topGame: proj?.name || entries[0][0], topGameShare: 100, gamesWithSessions: 1, totalSessions: total };
+  }
+
+  const shares = entries.map(([slug, v]) => ({ slug, share: v.week / total, week: v.week }));
+  const hhi    = shares.reduce((s, e) => s + Math.pow(e.share, 2), 0);
+  const eci    = Math.round((1 - hhi) * 100);
+  const top    = shares.sort((a, b) => b.share - a.share)[0];
+  const topProj = PROJECTS.find((p) => p.supabaseGameSlug === top.slug);
+
+  return { eci, topGame: topProj?.name || top.slug, topGameShare: Math.round(top.share * 100), gamesWithSessions: entries.length, totalSessions: total, shares };
+}
+
+// 9. Forecast Confidence Rating (FCR 0–100)
+function computeFCR() {
+  const acc = getOverallForecastAccuracy();
+  if (!acc || acc.total < 5) return { fcr: null, total: acc?.total || 0, correct: acc?.correct || 0 };
+  return { fcr: Math.round(acc.rate * 100), total: acc.total, correct: acc.correct };
+}
+
+// 10. Agent Activity Score (AAS 0–100)
+function computeAAS(beaconData, agentRequests, agentRunHistory, portfolioFreshness) {
+  let score = 0;
+
+  // Active beacon sessions (0–40)
+  const activeSessions = beaconData?.active?.length || 0;
+  score += Math.min(40, activeSessions * 20);
+
+  // Request queue (0–20) — healthy if 1–5
+  const pending = (agentRequests || []).length;
+  if (pending >= 1 && pending <= 5) score += 20;
+  else if (pending > 5 && pending <= 10) score += 10;
+  else if (pending > 10) score += 5;
+
+  // File freshness (0–25)
+  const freshEntries = Object.values(portfolioFreshness || {});
+  if (freshEntries.length > 0) {
+    const fresh = freshEntries.filter((e) => (e.daysOld || 0) <= 14).length;
+    score += (fresh / freshEntries.length) * 25;
+  }
+
+  // Run history (0–15)
+  score += Math.min(15, Object.keys(agentRunHistory || {}).length * 3);
+
+  const freshFileRatio = (() => {
+    const entries = Object.values(portfolioFreshness || {});
+    if (!entries.length) return null;
+    return Math.round((entries.filter((e) => (e.daysOld || 0) <= 14).length / entries.length) * 100);
+  })();
+
+  return {
+    aas: Math.round(Math.min(100, Math.max(0, score))),
+    activeSessions,
+    pendingRequests: pending,
+    freshFileRatio,
+    runHistoryProjects: Object.keys(agentRunHistory || {}).length,
+  };
+}
+
+// 11. Technical Debt Index (TDI 0–100) — code maintenance health
+function computeTDI(ghData, scoreHistory) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  let score = 100; // Start perfect, deduct for debt signals
+
+  let totalStale = 0, totalOpen = 0, totalStalePRs = 0, totalNoCI = 0;
+  const now = Date.now();
+  for (const p of active) {
+    const rd = ghData[p.githubRepo];
+    if (!rd) { totalNoCI++; continue; }
+    const lastCommit = rd.commits?.[0]?.date ? new Date(rd.commits[0].date).getTime() : 0;
+    if (now - lastCommit > 30 * 86400000) totalStale++;
+    totalOpen += rd.repo?.openIssues || 0;
+    totalStalePRs += (rd.prs || []).filter((pr) => (now - new Date(pr.createdAt).getTime()) > 14 * 86400000).length;
+    if (!rd.ciRuns?.length) totalNoCI++;
+    // Detect chore/deps freshness
+    const hasRecentDeps = (rd.commits || []).some((c) => /\b(deps?|chore|bump|upgrade)\b/i.test(c.message) && (now - new Date(c.date).getTime()) < 90 * 86400000);
+    if (!hasRecentDeps) score -= 3;
+  }
+
+  const n = Math.max(1, active.length);
+  score -= Math.min(25, (totalStale / n) * 40);         // stale repos penalty
+  score -= Math.min(20, (totalOpen / n) * 4);            // open issues penalty
+  score -= Math.min(15, totalStalePRs * 3);              // stale PRs penalty
+  score -= Math.min(15, (totalNoCI / n) * 30);           // no CI penalty
+
+  // Score stability bonus — if recent scores are improving, less debt
+  if (scoreHistory.length >= 3) {
+    const avgs = scoreHistory.slice(-3).map((snap) => {
+      const vals = Object.values(snap.scores || {}).filter((v) => v != null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    });
+    if (avgs[2] > avgs[1] && avgs[1] > avgs[0]) score += 10;
+  }
+
+  return {
+    tdi: Math.round(Math.min(100, Math.max(0, score))),
+    staleRepos: totalStale,
+    stalePRs: totalStalePRs,
+    avgIssuesPerRepo: (totalOpen / n).toFixed(1),
+    reposWithoutCI: totalNoCI,
+  };
+}
+
+// 12. Shipping Velocity Score (SVS 0–100) — how fast value reaches users
+function computeSVS(ghData) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  const now = Date.now();
+  let score = 0;
+  let avgLeadTimeDays = 0, countWithDeploys = 0;
+
+  for (const p of active) {
+    const rd = ghData[p.githubRepo];
+    if (!rd) continue;
+    const deploys = rd.deployments || [];
+    const rel = rd.latestRelease;
+    // Lead time: time from last commit to latest deploy
+    if (deploys.length > 0 && rd.commits?.length) {
+      const deployTime = new Date(deploys[0].createdAt).getTime();
+      const commitTime = new Date(rd.commits[0].date).getTime();
+      const leadMs = Math.abs(deployTime - commitTime);
+      avgLeadTimeDays += leadMs / 86400000;
+      countWithDeploys++;
+    }
+    // Release frequency bonus
+    if (rel?.publishedAt) {
+      const relAge = (now - new Date(rel.publishedAt).getTime()) / 86400000;
+      if (relAge < 7) score += 8;
+      else if (relAge < 14) score += 5;
+      else if (relAge < 30) score += 3;
+    }
+    // CI speed bonus
+    if (rd.ciRuns?.[0]?.conclusion === "success") score += 4;
+    // Active deployment pipeline
+    if (deploys.some((d) => (now - new Date(d.createdAt).getTime()) < 14 * 86400000)) score += 3;
+  }
+
+  const n = Math.max(1, active.length);
+  avgLeadTimeDays = countWithDeploys > 0 ? avgLeadTimeDays / countWithDeploys : null;
+
+  // Normalize score against project count
+  score = (score / n) * 10;
+  // Lead time bonus — fast lead time = high SVS
+  if (avgLeadTimeDays != null) {
+    if (avgLeadTimeDays < 1) score += 25;
+    else if (avgLeadTimeDays < 3) score += 18;
+    else if (avgLeadTimeDays < 7) score += 10;
+  }
+
+  return {
+    svs: Math.round(Math.min(100, Math.max(0, score))),
+    avgLeadTimeDays: avgLeadTimeDays != null ? avgLeadTimeDays.toFixed(1) : null,
+    projectsWithDeploys: countWithDeploys,
+    totalActive: active.length,
+  };
+}
+
+// 13. Innovation Pulse (IP 0–100) — new feature & experimentation signal
+function computeIP(ghData, scoreHistory) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  const now = Date.now();
+  const thirtyDaysAgo = now - 30 * 86400000;
+  let score = 0;
+  let featureCommits = 0, newBranches = 0, experimentSignals = 0;
+
+  for (const p of active) {
+    const rd = ghData[p.githubRepo];
+    if (!rd) continue;
+    // Feature commits (non-fix, non-chore)
+    const fc = (rd.commits || []).filter((c) => {
+      const msg = c.message?.toLowerCase() || "";
+      return new Date(c.date).getTime() > thirtyDaysAgo &&
+        !(/^(fix|chore|deps?|bump|merge|revert)\b/i.test(msg)) &&
+        (/\b(add|feat|new|implement|create|launch|introduce)\b/i.test(msg));
+    }).length;
+    featureCommits += fc;
+    // Non-draft PRs = feature work
+    const featurePRs = (rd.prs || []).filter((pr) => !pr.draft && /\b(feat|add|new|implement)\b/i.test(pr.title || "")).length;
+    experimentSignals += featurePRs;
+  }
+
+  const n = Math.max(1, active.length);
+  score += Math.min(40, (featureCommits / n) * 10);
+  score += Math.min(25, experimentSignals * 8);
+
+  // Project diversity — more different project types = higher innovation
+  const types = new Set(active.map((p) => p.type));
+  score += Math.min(15, types.size * 5);
+
+  // Score trajectory momentum — improving portfolio = innovating
+  if (scoreHistory.length >= 3) {
+    const recent = scoreHistory.slice(-3).map((snap) => {
+      const vals = Object.values(snap.scores || {}).filter((v) => v != null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    });
+    if (recent[2] > recent[0]) score += 20;
+    else if (recent[2] >= recent[0]) score += 10;
+  }
+
+  return {
+    ip: Math.round(Math.min(100, Math.max(0, score))),
+    featureCommits,
+    experimentSignals,
+    projectTypeDiversity: types.size,
+  };
+}
+
+// 14. Revenue Readiness Index (RRI 0–100) — monetization preparedness
+function computeRRI(ghData, socialData, sbData) {
+  let score = 0;
+  const active = PROJECTS.filter((p) => p.status !== "archived");
+
+  // Deployed projects (can generate value)
+  const deployed = active.filter((p) => p.deployedUrl);
+  score += Math.min(25, (deployed.length / Math.max(1, active.length)) * 35);
+
+  // Gumroad integration
+  const gm = socialData?.gumroad;
+  const gmSales = socialData?.gumroadSales || [];
+  if (gm?.hasToken) {
+    score += 10;
+    const activeProducts = (gm.products || []).filter((p) => p.published).length;
+    score += Math.min(10, activeProducts * 5);
+    if (gmSales.length > 0) score += Math.min(15, (gmSales.length / 10) * 15);
+  }
+
+  // Community size (audience = revenue potential)
+  const totalReach = (socialData?.youtube?.subscribers || 0) + (socialData?.reddit?.subscribers || 0) + (socialData?.bluesky?.followers || 0);
+  if (totalReach >= 10000) score += 20;
+  else if (totalReach >= 1000) score += 12;
+  else if (totalReach >= 100) score += 5;
+
+  // Member engagement (player base = potential customers)
+  const members = sbData?.members;
+  if (members?.total > 0) {
+    score += Math.min(10, (members.total / 100) * 10);
+  }
+
+  // Live projects with CI passing = production-ready
+  const liveWithCI = active.filter((p) =>
+    (p.status === "live" || p.status === "client-beta") &&
+    ghData[p.githubRepo]?.ciRuns?.[0]?.conclusion === "success"
+  );
+  score += Math.min(10, liveWithCI.length * 5);
+
+  return {
+    rri: Math.round(Math.min(100, Math.max(0, score))),
+    deployedCount: deployed.length,
+    totalProducts: gm?.products?.filter((p) => p.published)?.length || 0,
+    totalSales: gmSales.length,
+    totalReach,
+    liveWithCI: liveWithCI.length,
+  };
+}
+
+// 15. Resilience Score (RS 0–100) — how well the studio handles adversity
+function computeRS(ghData, scoreHistory, sbData) {
+  let score = 50; // Neutral baseline
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+
+  // Recovery signal: score bounced back after a dip
+  if (scoreHistory.length >= 4) {
+    const avgs = scoreHistory.slice(-4).map((snap) => {
+      const vals = Object.values(snap.scores || {}).filter((v) => v != null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+    });
+    const dipped = avgs[1] < avgs[0] || avgs[2] < avgs[1];
+    const recovered = avgs[3] > avgs[2];
+    if (dipped && recovered) score += 25; // bounced back from adversity
+    else if (!dipped) score += 15; // stable, no adversity
+    else if (dipped && !recovered) score -= 10; // still declining
+  }
+
+  // CI recovery: projects that had failing CI but now pass
+  let ciRecovered = 0;
+  for (const p of active) {
+    const runs = ghData[p.githubRepo]?.ciRuns || [];
+    if (runs.length >= 2 && runs[0].conclusion === "success" && runs[1].conclusion === "failure") ciRecovered++;
+  }
+  score += Math.min(15, ciRecovered * 8);
+
+  // Diversification: more active projects = more resilient
+  const activeWithCommits = active.filter((p) => {
+    const rd = ghData[p.githubRepo];
+    return rd?.commits?.[0] && (Date.now() - new Date(rd.commits[0].date).getTime()) < 30 * 86400000;
+  });
+  score += Math.min(10, (activeWithCommits.length / Math.max(1, active.length)) * 15);
+
+  return {
+    rs: Math.round(Math.min(100, Math.max(0, score))),
+    ciRecovered,
+    activeProjects: activeWithCommits.length,
+    totalActive: active.length,
+  };
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// RENDER SECTIONS
+// ════════════════════════════════════════════════════════════════════════════
+
+function renderCockpit(computed) {
+  const { svi, pbs, rcr, crs, crs2, dti, socr, eci, fcr, aas, tdi, svs, ip, rri, rs } = computed;
+  return `
+    <div style="margin-bottom:20px;">
+      <div style="font-size:10px;color:var(--muted);letter-spacing:0.1em;margin-bottom:10px;font-weight:600;">ANALYTICS COCKPIT — 15 PROPRIETARY RATINGS</div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;">
+        ${scoreTile("Studio Vitality",   svi.svi,   { sub: `Trend ${svi.trend}`,                          note: "Overall operational health" })}
+        ${scoreTile("Portfolio Balance", pbs.pbs,   { sub: pbs.pbs ? `CV ${pbs.cv}` : "insufficient data", note: "Score distribution evenness" })}
+        ${scoreTile("Release Cadence",   rcr.rcr,   { sub: `${rcr.activeReleasers} shipped last 30d`,      note: "Shipping consistency" })}
+        ${scoreTile("CI Reliability",    crs.crs,   { sub: `${crs.passRate}% pass · ${crs.ciCoverage}% coverage`, note: "CI infrastructure health" })}
+        ${scoreTile("Community Reach",   crs2.crs2, { sub: fmt(crs2.totalReach) + " total reach",          note: "Cross-platform social footprint" })}
+        ${scoreTile("Dev Throughput",    dti.dti,   { sub: `${dti.weeklyCommits} commits/wk`,              note: "Development velocity" })}
+        ${scoreTile("Studio OS Comply",  socr.socr, { sub: `${socr.compliant}/${socr.total} projects`,     note: "Operational maturity" })}
+        ${scoreTile("Engage Spread",     eci.eci,   { sub: eci.gamesWithSessions ? `${eci.gamesWithSessions} active games` : "no session data", note: "Player engagement distribution" })}
+        ${scoreTile("Forecast Conf.",    fcr.fcr,   { sub: fcr.fcr != null ? `${fcr.correct}/${fcr.total} correct` : `${fcr.total}/5 needed`, note: "Prediction accuracy" })}
+        ${scoreTile("Agent Activity",    aas.aas,   { sub: `${aas.activeSessions} live · ${aas.pendingRequests} queued`, note: "AI agent utilization" })}
+        ${scoreTile("Tech Debt",         tdi.tdi,   { sub: `${tdi.staleRepos} stale · ${tdi.stalePRs} stale PRs`, note: "Code maintenance health" })}
+        ${scoreTile("Ship Velocity",     svs.svs,   { sub: svs.avgLeadTimeDays ? `${svs.avgLeadTimeDays}d lead time` : "no deploy data", note: "Value delivery speed" })}
+        ${scoreTile("Innovation Pulse",  ip.ip,     { sub: `${ip.featureCommits} feature commits`,         note: "Experimentation & new features" })}
+        ${scoreTile("Revenue Ready",     rri.rri,   { sub: `${rri.totalProducts} products · ${rri.totalSales} sales`, note: "Monetization preparedness" })}
+        ${scoreTile("Resilience",        rs.rs,     { sub: `${rs.activeProjects}/${rs.totalActive} active`, note: "Adversity recovery strength" })}
+      </div>
+    </div>`;
+}
+
+// ─ 1. Studio Vitality Index — full stock-style historical chart ───────────────
+function renderSVIChart(svi, sviHistory) {
+  const trendLabel = svi.trend === '↑' ? 'Improving' : svi.trend === '↓' ? 'Declining' : 'Stable';
+  const trendColor = svi.trend === '↑' ? 'var(--green)' : svi.trend === '↓' ? 'var(--red)' : 'var(--cyan)';
+  const color      = scoreColor(svi.svi);
+  const grade      = scoreGrade(svi.svi);
+  const filtered   = filterSviHistory(sviHistory, null);
+
+  // Pre-compute stats for default (ALL) timeframe
+  const vals   = filtered.map(d => d.svi);
+  const ma7    = computeMA(vals, Math.min(7, vals.length));
+  const ma20   = computeMA(vals, Math.min(20, vals.length));
+  const boll   = computeBollinger(vals, Math.min(20, vals.length), 2);
+  const trend  = computeTrendLine(vals);
+  const bw     = bollingerBandwidth(boll, Math.max(0, vals.length - 1));
+  const last7  = ma7[vals.length - 1];
+  const last20 = ma20[vals.length - 1];
+
+  // Expose data for interactive redraws
+  window.__vsviData = sviHistory;
+
+  const timeframes = [
+    { tf: '1W', label: '1W' },
+    { tf: '1M', label: '1M' },
+    { tf: '3M', label: '3M' },
+    { tf: '6M', label: '6M' },
+    { tf: '1Y', label: '1Y' },
+    { tf: 'ALL', label: 'ALL' },
+  ];
+
+  const btnStyle = (active) => `
+    font-size:10px; font-weight:700; padding:3px 8px; border-radius:5px; cursor:pointer;
+    border:1px solid ${active ? 'rgba(122,231,199,0.35)' : 'rgba(255,255,255,0.08)'};
+    background:${active ? 'rgba(122,231,199,0.15)' : 'rgba(255,255,255,0.04)'};
+    color:${active ? 'var(--cyan)' : 'rgba(149,163,183,0.7)'};
+    transition:all 0.15s; letter-spacing:0.04em;`;
+
+  const tfButtons = timeframes.map(({ tf, label }) =>
+    `<button class="svi-tf-btn" data-tf="${tf}" style="${btnStyle(tf === 'ALL')}"
+      onclick="window._vsviDraw && window._vsviDraw('${tf}')">${label}</button>`
+  ).join('');
+
+  const legend = `
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+      <span style="font-size:9px;color:${color};display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="3"><line x1="0" y1="1.5" x2="20" y2="1.5" stroke="${color}" stroke-width="2.4"/></svg>SVI</span>
+      <span style="font-size:9px;color:#ffc874;display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="3"><line x1="0" y1="1.5" x2="20" y2="1.5" stroke="#ffc874" stroke-width="1.3"/></svg>MA7</span>
+      <span style="font-size:9px;color:#69b3ff;display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="3"><line x1="0" y1="1.5" x2="20" y2="1.5" stroke="#69b3ff" stroke-width="1.3"/></svg>MA20</span>
+      <span style="font-size:9px;color:rgba(105,179,255,0.6);display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="8"><polygon points="0,0 20,0 20,8 0,8" fill="rgba(105,179,255,0.07)"/><line x1="0" y1="0" x2="20" y2="0" stroke="#69b3ff" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.45"/><line x1="0" y1="8" x2="20" y2="8" stroke="#69b3ff" stroke-width="0.8" stroke-dasharray="3,2" opacity="0.45"/></svg>Bollinger</span>
+      <span style="font-size:9px;color:rgba(74,222,128,0.6);display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="3"><line x1="0" y1="1.5" x2="20" y2="1.5" stroke="rgba(74,222,128,0.5)" stroke-width="1.8" stroke-dasharray="5,3"/></svg>Trend</span>
+      <span style="font-size:9px;color:rgba(122,231,199,0.4);display:flex;align-items:center;gap:4px;">
+        <svg width="20" height="8"><rect x="0" y="0" width="20" height="8" fill="rgba(122,231,199,0.22)" rx="1"/></svg>Vol</span>
+    </div>`;
+
+  return `
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;" id="svi-chart-container">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border);">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:16px;">🏛</span>
+          <div>
+            <div style="font-size:14px;font-weight:700;color:var(--text);">Studio Vitality Index</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:1px;">Historical performance chart · ${sviHistory.length} data point${sviHistory.length !== 1 ? 's' : ''} collected</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+          <!-- Current SVI readout -->
+          <div style="text-align:center;">
+            <div style="font-size:52px;font-weight:900;color:${color};line-height:1;font-variant-numeric:tabular-nums;">${svi.svi}</div>
+            <div style="font-size:12px;color:${trendColor};font-weight:700;margin-top:2px;">${svi.trend} ${trendLabel}</div>
+            <div style="font-size:10px;color:var(--muted);">${grade} · out of 100</div>
+          </div>
+          <!-- Signal cards -->
+          <div style="display:flex;flex-direction:column;gap:5px;min-width:130px;">
+            ${kv('CI Pass Rate', svi.ciPassRate + '%', svi.ciPassRate >= 80 ? 'var(--green)' : svi.ciPassRate >= 50 ? 'var(--gold)' : 'var(--red)')}
+            ${kv('Commits This Week', String(svi.totalWeekCommits))}
+            ${kv('History Depth', sviHistory.length + ' pts')}
+          </div>
+        </div>
+      </div>
+
+      <!-- Timeframe + legend + export row -->
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+        <div style="display:flex;gap:4px;align-items:center;">
+          ${tfButtons}
+          <button onclick="window._vsviExportCSV && window._vsviExportCSV()"
+            style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;cursor:pointer;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);color:rgba(149,163,183,0.7);transition:all 0.15s;letter-spacing:0.04em;margin-left:6px;"
+            title="Download SVI history as CSV"
+            onmouseover="this.style.background='rgba(122,231,199,0.1)';this.style.color='var(--cyan)'"
+            onmouseout="this.style.background='rgba(255,255,255,0.04)';this.style.color='rgba(149,163,183,0.7)'">
+            ↓ CSV
+          </button>
+        </div>
+        ${legend}
+      </div>
+
+      <!-- Main chart SVG -->
+      <div style="overflow:hidden;border-radius:6px;background:rgba(8,14,24,0.35);border:1px solid rgba(255,255,255,0.04);">
+        <svg id="svi-chart-svg" viewBox="0 0 820 280" width="100%" style="display:block;max-height:280px;"
+          preserveAspectRatio="xMidYMid meet" aria-label="Studio Vitality Index chart">
+          ${_sviDrawSvg(filtered)}
+        </svg>
+      </div>
+
+      <!-- Technical indicators strip -->
+      <div id="svi-stats-strip" style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:11px;color:var(--muted);padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:6px;border:1px solid rgba(255,255,255,0.04);">
+        ${_sviStatsHtml(svi.svi, last7, last20, bw, trend, filtered.length)}
+      </div>
+    </div>`;
+}
+
+// ─ 2. Project Leaderboard + Portfolio Balance ─────────────────────────────────
+function renderLeaderboard(allScores, scorePrev, pbs) {
+  const sorted = [...allScores].sort((a, b) => b.total - a.total);
+  const rows = sorted.map((s, i) => {
+    const proj = PROJECTS.find((p) => p.id === s.id);
+    if (!proj) return "";
+    const prev = scorePrev[s.id];
+    const gradeInfo = getGrade(s.total);
+    const barPct = Math.round(Math.min(100, (s.total / 105) * 100));
+    const typeIcon = { game: "🎮", tool: "🔧", platform: "🌐", infrastructure: "🏗", app: "🌐" }[proj.type] || "";
+    const dev  = s.pillars?.development?.score ?? "—";
+    const eng  = s.pillars?.engagement?.score  ?? "—";
+    const mom  = s.pillars?.momentum?.score    ?? "—";
+    const risk = s.pillars?.risk?.score        ?? "—";
+    return `
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);cursor:pointer;" data-view="project:${proj.id}">
+        <td style="padding:7px 8px;font-size:11px;color:var(--muted);width:22px;">${i + 1}</td>
+        <td style="padding:7px 8px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${proj.color};flex-shrink:0;"></span>
+            <span style="font-size:12px;font-weight:600;">${typeIcon} ${proj.name}</span>
+          </div>
+        </td>
+        <td style="padding:7px 8px;width:140px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="flex:1;height:5px;background:var(--border);border-radius:3px;overflow:hidden;">
+              <div style="height:100%;width:${barPct}%;background:${proj.color};border-radius:3px;"></div>
+            </div>
+            <span style="font-size:12px;font-weight:700;color:${proj.color};min-width:26px;text-align:right;">${s.total}</span>
+          </div>
+        </td>
+        <td style="padding:7px 8px;font-size:11px;font-weight:700;color:${gradeInfo.color};width:30px;">${gradeInfo.grade}</td>
+        <td style="padding:7px 8px;width:56px;">${deltaBadge(s.total, prev)}</td>
+        <td style="padding:7px 8px;font-size:10px;color:var(--muted);">
+          D:${dev} E:${eng} M:${mom} R:${risk}
+        </td>
+      </tr>`;
+  }).join("");
+
+  const pbsColor = scoreColor(pbs.pbs);
+  return section("Project Leaderboard + Portfolio Balance", "🏆", `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      <div style="flex:1;min-width:150px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">PORTFOLIO BALANCE SCORE</div>
+        <div style="font-size:28px;font-weight:900;color:${pbsColor};">${pbs.pbs ?? "—"}</div>
+        ${pbs.pbs != null ? `
+          <div style="font-size:10px;color:var(--muted);margin-top:4px;">CV: ${pbs.cv} · σ: ${pbs.stdDev} pts</div>
+          <div style="font-size:10px;margin-top:4px;">
+            <span style="color:var(--green);">↑ ${pbs.highestProject} (${pbs.highestScore})</span>
+            <span style="margin:0 4px;color:var(--muted);">vs</span>
+            <span style="color:var(--red);">↓ ${pbs.lowestProject} (${pbs.lowestScore})</span>
+          </div>` : "<div style='font-size:10px;color:var(--muted);'>Insufficient data</div>"}
+      </div>
+      <div style="flex:1;min-width:150px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">PORTFOLIO AVERAGE</div>
+        <div style="font-size:28px;font-weight:900;color:var(--cyan);">${pbs.mean ?? "—"}</div>
+        <div style="font-size:10px;color:var(--muted);">${allScores.length} projects · max 130</div>
+      </div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;letter-spacing:0.06em;">#</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;letter-spacing:0.06em;">PROJECT</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;letter-spacing:0.06em;">SCORE</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;letter-spacing:0.06em;">GRD</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;letter-spacing:0.06em;">DELTA</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;letter-spacing:0.06em;">PILLARS D/E/M/R</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`);
+}
+
+// ─ 3. CI & Developer Throughput ──────────────────────────────────────────────
+function renderCI(crs, dti, ghData) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  const oneWeekAgo = Date.now() - 7 * 86400000;
+
+  const failingCallout = crs.failingRepos.length > 0 ? `
+    <div style="background:rgba(248,113,113,0.08);border:1px solid rgba(248,113,113,0.3);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px;">⚠ ${crs.failingRepos.length} repo${crs.failingRepos.length > 1 ? "s" : ""} failing CI</div>
+      ${crs.failingRepos.map((n) => `<div style="font-size:11px;color:var(--red);opacity:0.8;margin-top:3px;">· ${n}</div>`).join("")}
+    </div>` : "";
+
+  const ciRows = active.map((p) => {
+    const rd   = ghData[p.githubRepo];
+    const ci   = ciStatus(rd?.ciRuns);
+    const last = rd?.ciRuns?.[0];
+    const wkCommits = (rd?.commits || []).filter((c) => new Date(c.date).getTime() > oneWeekAgo).length;
+    const streak = (() => {
+      let s = 0;
+      for (const r of rd?.ciRuns || []) {
+        if (r.conclusion === "success") s++; else break;
+      }
+      return s;
+    })();
+    const dotColor = ci.cls === "passing" ? "var(--green)" : ci.cls === "failing" ? "var(--red)" : ci.cls === "running" ? "var(--yellow)" : "var(--muted)";
+    return `
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:6px 8px;">
+          <div style="display:flex;align-items:center;gap:5px;">
+            <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${p.color};"></span>
+            <span style="font-size:11px;">${p.name}</span>
+          </div>
+        </td>
+        <td style="padding:6px 8px;">
+          <span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:2px 7px;border-radius:4px;border:1px solid ${dotColor}40;background:rgba(255,255,255,0.04);">
+            <span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${dotColor};"></span>
+            ${ci.label}
+          </span>
+        </td>
+        <td style="padding:6px 8px;font-size:11px;color:var(--muted);">${streak > 0 ? streak + "✓" : "—"}</td>
+        <td style="padding:6px 8px;font-size:11px;color:var(--muted);">${last ? timeAgo(last.triggeredAt) : "—"}</td>
+        <td style="padding:6px 8px;font-size:11px;font-weight:600;color:${wkCommits > 0 ? "var(--cyan)" : "var(--muted)"};">${wkCommits}</td>
+        <td style="padding:6px 8px;font-size:11px;color:var(--muted);">${rd?.repo?.openIssues ?? "—"}</td>
+      </tr>`;
+  }).join("");
+
+  return section("CI Reliability + Developer Throughput", "🔬", `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      ${statCard("CI PASS RATE",      crs.passRate + "%",          `${crs.passingCount}/${crs.totalWithCI} repos`)}
+      ${statCard("CI COVERAGE",       crs.ciCoverage + "%",        `${crs.totalWithCI}/${crs.totalActive} active repos`)}
+      ${statCard("WEEKLY COMMITS",    String(dti.weeklyCommits),   `${dti.activeDev} active projects`)}
+      ${statCard("DEPLOYMENTS (14d)", String(dti.deployedInPeriod), `${dti.freshPRs} fresh PRs open`)}
+    </div>
+    ${failingCallout}
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;">
+        <thead><tr style="border-bottom:1px solid var(--border);">
+          <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">PROJECT</th>
+          <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">CI STATUS</th>
+          <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">STREAK</th>
+          <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">LAST RUN</th>
+          <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">WK COMMITS</th>
+          <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">ISSUES</th>
+        </tr></thead>
+        <tbody>${ciRows}</tbody>
+      </table>
+    </div>`);
+}
+
+// ─ 4. Release Cadence + PR Pipeline ──────────────────────────────────────────
+function renderRelease(rcr, ghData) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  const now = Date.now();
+  const ninetyAgo = now - 90 * 86400000;
+
+  const releases = active.flatMap((p) => {
+    const rel = ghData[p.githubRepo]?.latestRelease;
+    if (!rel?.publishedAt) return [];
+    const ts = new Date(rel.publishedAt).getTime();
+    if (ts < ninetyAgo) return [];
+    return [{ project: p, rel, age: Math.round((now - ts) / 86400000) }];
+  }).sort((a, b) => a.age - b.age);
+
+  const allPRs = active.flatMap((p) => {
+    const rd = ghData[p.githubRepo];
+    return (rd?.prs || []).map((pr) => ({
+      project: p, pr,
+      age: Math.round((now - new Date(pr.createdAt).getTime()) / 86400000),
+    }));
+  }).sort((a, b) => b.age - a.age);
+
+  const releaseRows = releases.map(({ project, rel, age }) => {
+    const ageColor = age <= 7 ? "var(--green)" : age <= 30 ? "var(--cyan)" : "var(--yellow)";
+    return `
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:6px 8px;">
+          <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${project.color};margin-right:5px;"></span>
+          <span style="font-size:11px;font-weight:600;">${project.name}</span>
+        </td>
+        <td style="padding:6px 8px;font-size:11px;font-family:monospace;color:var(--cyan);">${rel.tag}</td>
+        <td style="padding:6px 8px;font-size:11px;color:${ageColor};">${age}d ago</td>
+        <td style="padding:6px 8px;">
+          <a href="${rel.url}" target="_blank" rel="noopener" style="font-size:10px;color:var(--cyan);text-decoration:none;opacity:0.7;">↗ GitHub</a>
+        </td>
+      </tr>`;
+  }).join("");
+
+  const prRows = allPRs.slice(0, 15).map(({ project, pr, age }) => {
+    const ageColor = age <= 3 ? "var(--green)" : age <= 7 ? "var(--cyan)" : age <= 14 ? "var(--yellow)" : "var(--red)";
+    return `
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:5px 8px;">
+          <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${project.color};margin-right:4px;"></span>
+          <span style="font-size:10px;">${project.name}</span>
+        </td>
+        <td style="padding:5px 8px;font-size:10px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${pr.title}</td>
+        <td style="padding:5px 8px;font-size:10px;color:${ageColor};">${age}d</td>
+        <td style="padding:5px 8px;font-size:9px;color:var(--muted);">${pr.draft ? "Draft" : "Open"}</td>
+        <td style="padding:5px 8px;font-size:10px;color:var(--muted);">${pr.author}</td>
+      </tr>`;
+  }).join("");
+
+  return section("Release Cadence + PR Pipeline", "🚀", `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      ${statCard("RELEASE CADENCE", String(rcr.rcr), `${rcr.activeReleasers} shipped last 30d`)}
+      ${statCard("LAST RELEASE",    rcr.daysSinceAnyRelease != null ? rcr.daysSinceAnyRelease + "d" : "—", "days since any release")}
+      ${statCard("OPEN PRs",        String(allPRs.length), `${allPRs.filter((e) => e.pr.draft).length} drafts · ${allPRs.filter((e) => !e.pr.draft && e.age > 7).length} stale`)}
+    </div>
+    ${releases.length > 0 ? `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">RECENT RELEASES — LAST 90 DAYS</div>
+      <div style="overflow-x:auto;margin-bottom:20px;">
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">PROJECT</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">TAG</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">AGE</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">LINK</th>
+          </tr></thead>
+          <tbody>${releaseRows}</tbody>
+        </table>
+      </div>` : `<div style="font-size:11px;color:var(--muted);margin-bottom:16px;">No releases in the last 90 days.</div>`}
+    ${allPRs.length > 0 ? `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">PR PIPELINE (oldest first)</div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">PROJECT</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">TITLE</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">AGE</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">STATE</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">AUTHOR</th>
+          </tr></thead>
+          <tbody>${prRows}</tbody>
+        </table>
+      </div>` : ""}
+  `);
+}
+
+// ─ 5. Member & Game Engagement ────────────────────────────────────────────────
+function renderEngagement(eci, sbData) {
+  const sessions = sbData?.sessions || {};
+  const members  = sbData?.members;
+  const betaKeys = sbData?.betaKeys || {};
+  const economy  = sbData?.economy;
+  const gameProjects = PROJECTS.filter((p) => p.supabaseGameSlug);
+  const totalWeek = Object.values(sessions).reduce((a, v) => a + (v?.week || 0), 0);
+
+  const sessionBar = totalWeek > 0 ? `
+    <div style="margin-bottom:16px;">
+      <div style="font-size:10px;color:var(--muted);margin-bottom:6px;font-weight:600;letter-spacing:0.06em;">SESSION SHARE — THIS WEEK</div>
+      <div style="display:flex;height:20px;border-radius:6px;overflow:hidden;gap:1px;">
+        ${gameProjects.map((p) => {
+          const w = sessions[p.supabaseGameSlug]?.week || 0;
+          if (w === 0) return "";
+          const pct = Math.round((w / totalWeek) * 100);
+          return `<div style="background:${p.color};flex:${pct};display:flex;align-items:center;justify-content:center;min-width:28px;" title="${p.name}: ${pct}% (${w} sessions)">
+            <span style="font-size:9px;color:#000;font-weight:700;opacity:0.8;">${pct}%</span>
+          </div>`;
+        }).join("")}
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;">
+        ${gameProjects.filter((p) => sessions[p.supabaseGameSlug]?.week > 0).map((p) => `
+          <span style="font-size:9px;color:var(--muted);display:flex;align-items:center;gap:3px;">
+            <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${p.color};"></span>
+            ${p.name}
+          </span>`).join("")}
+      </div>
+    </div>` : "";
+
+  const sessionRows = gameProjects.map((p) => {
+    const s    = sessions[p.supabaseGameSlug];
+    const keys = betaKeys[p.supabaseGameSlug];
+    const wk   = s?.week ?? null;
+    const wkColor = wk == null ? "var(--muted)" : wk >= 100 ? "var(--green)" : wk >= 20 ? "var(--cyan)" : wk >= 5 ? "var(--yellow)" : "var(--muted)";
+    return `
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:6px 8px;">
+          <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${p.color};margin-right:5px;"></span>
+          <span style="font-size:11px;font-weight:600;">${p.name}</span>
+        </td>
+        <td style="padding:6px 8px;font-size:13px;font-weight:700;color:${wkColor};">${wk ?? "—"}</td>
+        <td style="padding:6px 8px;font-size:11px;color:var(--muted);">${s?.total != null ? fmt(s.total) : "—"}</td>
+        <td style="padding:6px 8px;font-size:10px;color:${keys?.available != null && keys.available <= 5 ? "var(--red)" : "var(--muted)"};">
+          ${keys ? `${keys.available}/${keys.total} avail` : "—"}
+        </td>
+      </tr>`;
+  }).join("");
+
+  const economyRows = economy?.byReason
+    ? Object.entries(economy.byReason).sort((a, b) => b[1] - a[1]).slice(0, 8)
+        .map(([r, t]) => kv(r, fmt(t) + " pts")).join("")
+    : "";
+
+  return section("Member & Game Engagement", "🎮", `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      <div style="flex:1;min-width:130px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">ENGAGE SPREAD (ECI)</div>
+        <div style="font-size:28px;font-weight:900;color:${scoreColor(eci.eci)};">${eci.eci ?? "—"}</div>
+        ${eci.eci != null ? `<div style="font-size:10px;color:var(--muted);">${eci.gamesWithSessions} games · top: ${eci.topGame} (${eci.topGameShare}%)</div>` : `<div style="font-size:10px;color:var(--muted);">no session data yet</div>`}
+      </div>
+      ${statCard("TOTAL MEMBERS",   members?.total != null ? fmt(members.total) : "—",  members ? `+${members.newThisWeek ?? "?"} this week` : "not connected")}
+      ${statCard("WEEKLY SESSIONS", totalWeek > 0 ? fmt(totalWeek) : "—", `${gameProjects.length} tracked games`)}
+    </div>
+    ${sessionBar}
+    ${gameProjects.length > 0 ? `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">GAME SESSION BREAKDOWN</div>
+      <div style="overflow-x:auto;margin-bottom:${economyRows ? "16px" : "0"};">
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">GAME</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">THIS WEEK</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">TOTAL</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">BETA KEYS</th>
+          </tr></thead>
+          <tbody>${sessionRows}</tbody>
+        </table>
+      </div>` : ""}
+    ${economyRows ? `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">POINT ECONOMY — TOP SOURCES</div>
+      <div style="background:rgba(255,255,255,0.02);border-radius:8px;padding:10px 14px;">
+        ${economyRows}
+        ${economy?.total != null ? kv("Total Points Issued", fmt(economy.total) + " pts", "var(--green)") : ""}
+      </div>` : ""}
+  `);
+}
+
+// ─ 6. Social Reach & Revenue ──────────────────────────────────────────────────
+function renderSocial(crs2, socialData) {
+  if (!socialData) {
+    return section("Social Reach & Revenue", "📡", `
+      <div style="font-size:12px;color:var(--muted);">Social data not loaded. Configure API keys in Settings → Credentials.</div>`);
+  }
+
+  const yt    = socialData.youtube;
+  const rd    = socialData.reddit;
+  const bsky  = socialData.bluesky;
+  const gm    = socialData.gumroad;
+  const gmSales = socialData.gumroadSales;
+
+  function platform(icon, name, primary, pLabel, secondary, sLabel, recent = "") {
+    return `
+      <div style="background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:14px;flex:1;min-width:170px;">
+        <div style="font-size:11px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+          <span>${icon}</span><span>${name}</span>
+        </div>
+        <div style="display:flex;gap:14px;margin-bottom:8px;">
+          <div>
+            <div style="font-size:22px;font-weight:800;color:var(--cyan);">${primary != null ? fmt(primary) : "—"}</div>
+            <div style="font-size:9px;color:var(--muted);">${pLabel}</div>
+          </div>
+          ${secondary != null ? `<div>
+            <div style="font-size:16px;font-weight:700;color:var(--text);">${fmt(secondary)}</div>
+            <div style="font-size:9px;color:var(--muted);">${sLabel}</div>
+          </div>` : ""}
+        </div>
+        ${recent}
+      </div>`;
+  }
+
+  function recentList(items) {
+    if (!items?.length) return "";
+    return items.slice(0, 3).map((item) => `
+      <div style="font-size:10px;color:var(--muted);padding:3px 0;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;gap:8px;">
+        <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${item.text || item.title || "—"}</span>
+        <span style="flex-shrink:0;">${item.date || ""}</span>
+      </div>`).join("");
+  }
+
+  const ytRecent = yt?.latestVideos?.slice(0, 3).map((v) => `
+    <div style="font-size:10px;color:var(--muted);padding:3px 0;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;gap:8px;">
+      <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v.title}</span>
+      <span style="flex-shrink:0;">${timeAgo(v.publishedAt)}</span>
+    </div>`).join("") || "";
+
+  const bskyRecent = bsky?.latestPosts?.slice(0, 3).map((p) => `
+    <div style="font-size:10px;color:var(--muted);padding:3px 0;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;gap:8px;">
+      <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${(p.text || "").substring(0, 55)}…</span>
+      <span style="flex-shrink:0;">${timeAgo(p.createdAt)}</span>
+    </div>`).join("") || "";
+
+  const rdRecent = rd?.latestPosts?.slice(0, 3).map((p) => `
+    <div style="font-size:10px;color:var(--muted);padding:3px 0;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;gap:8px;">
+      <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.title}</span>
+      <span style="flex-shrink:0;">↑${p.score}</span>
+    </div>`).join("") || "";
+
+  const salesTable = gmSales?.length > 0 ? `
+    <div style="font-size:10px;color:var(--muted);margin-top:14px;margin-bottom:6px;font-weight:600;letter-spacing:0.06em;">RECENT SALES</div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;">
+        <thead><tr style="border-bottom:1px solid var(--border);">
+          <th style="padding:4px 8px;font-size:9px;color:var(--muted);text-align:left;">PRODUCT</th>
+          <th style="padding:4px 8px;font-size:9px;color:var(--muted);text-align:left;">PRICE</th>
+          <th style="padding:4px 8px;font-size:9px;color:var(--muted);text-align:left;">DATE</th>
+        </tr></thead>
+        <tbody>
+          ${gmSales.slice(0, 10).map((s) => `
+            <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+              <td style="padding:4px 8px;font-size:10px;">${s.productName}</td>
+              <td style="padding:4px 8px;font-size:10px;color:var(--green);">$${s.price}</td>
+              <td style="padding:4px 8px;font-size:10px;color:var(--muted);">${timeAgo(s.createdAt)}</td>
+            </tr>`).join("")}
+        </tbody>
+      </table>
+    </div>` : "";
+
+  return section("Social Reach & Revenue", "📡", `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      <div style="flex:1;min-width:130px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">COMMUNITY REACH SCORE</div>
+        <div style="font-size:28px;font-weight:900;color:${scoreColor(crs2.crs2)};">${crs2.crs2}</div>
+        <div style="font-size:10px;color:var(--muted);">${fmt(crs2.totalReach)} total reach</div>
+      </div>
+      <div style="flex:2;min-width:200px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:9px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">SCORE BREAKDOWN</div>
+        ${Object.entries(crs2.breakdown || {}).map(([plat, pts]) => `
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+            <span style="font-size:10px;color:var(--muted);min-width:68px;">${plat}</span>
+            ${miniBar(pts, 30, "var(--cyan)")}
+            <span style="font-size:10px;font-weight:600;color:var(--cyan);min-width:22px;text-align:right;">${pts}</span>
+          </div>`).join("")}
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      ${yt   ? platform("▶", "YouTube",  yt.subscribers,  "subscribers", yt.totalViews, "total views", ytRecent)   : ""}
+      ${rd   ? platform("◉", "Reddit",   rd.subscribers,  "members",     rd.activeUsers,"online now",   rdRecent)   : ""}
+      ${bsky ? platform("☁", "Bluesky",  bsky.followers,  "followers",   bsky.posts,    "posts",        bskyRecent) : ""}
+      ${gm   ? platform("💰", "Gumroad", gmSales?.length || 0, "total sales", gm.products?.filter((p) => p.published).length || 0, "active products") : ""}
+    </div>
+    ${salesTable}
+  `);
+}
+
+// ─ 7. Score History & Forecast ────────────────────────────────────────────────
+function renderForecast(fcr, scoreHistory, ghData, scorePrev) {
+  if (scoreHistory.length < 2) {
+    return section("Score History & Forecast", "📈", `
+      <div style="font-size:12px;color:var(--muted);">Not enough history yet. The hub records a snapshot each session — come back after a few more sessions.</div>`);
+  }
+
+  const forecasts  = forecastScores(scoreHistory);
+  const monte      = monteCarloForecast(scoreHistory, 200);
+  const anomalies  = getScoreAnomalies(scoreHistory, ghData);
+
+  // Multi-line score history SVG
+  const chartW = 520;
+  const chartH = 130;
+  const snaps  = scoreHistory.slice(-20);
+  const snapCount = snaps.length;
+  const allVals = snaps.flatMap((s) => Object.values(s.scores || {}).filter((v) => v != null));
+  const minV = Math.min(...allVals, 0);
+  const maxV = Math.max(...allVals, 60);
+  const range = maxV - minV || 1;
+
+  const chartProjects = PROJECTS.filter((p) => snaps.some((s) => s.scores?.[p.id] != null)).slice(0, 12);
+  const gridLines = [20, 40, 60, 80].map((v) => {
+    const y = chartH - 10 - ((v - minV) / range) * (chartH - 20);
+    return `<line x1="10" y1="${y.toFixed(1)}" x2="${chartW - 10}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+      <text x="7" y="${(y + 3).toFixed(1)}" font-size="8" fill="rgba(255,255,255,0.25)" text-anchor="end">${v}</text>`;
+  }).join("");
+
+  const svgLines = chartProjects.map((p) => {
+    const pts = snaps.map((snap, i) => {
+      const v = snap.scores?.[p.id];
+      if (v == null) return null;
+      const x = (i / (snapCount - 1)) * (chartW - 20) + 10;
+      const y = chartH - 10 - ((v - minV) / range) * (chartH - 20);
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).filter(Boolean);
+    return pts.length >= 2 ? `<polyline points="${pts.join(" ")}" fill="none" stroke="${p.color}" stroke-width="1.5" opacity="0.75" stroke-linecap="round" stroke-linejoin="round"/>` : "";
+  }).join("");
+
+  const legend = chartProjects.map((p) => `
+    <span style="display:inline-flex;align-items:center;gap:4px;font-size:9px;color:var(--muted);margin-right:8px;margin-bottom:4px;">
+      <span style="display:inline-block;width:12px;height:2px;background:${p.color};"></span>${p.name}
+    </span>`).join("");
+
+  const anomalyCallout = anomalies.length > 0 ? `
+    <div style="background:rgba(251,191,36,0.07);border:1px solid rgba(251,191,36,0.25);border-radius:8px;padding:12px 14px;margin-bottom:14px;">
+      <div style="font-size:10px;font-weight:700;color:var(--yellow);margin-bottom:6px;">SCORE ANOMALIES DETECTED</div>
+      ${anomalies.slice(0, 5).map((a) => `<div style="font-size:10px;color:var(--yellow);opacity:0.85;margin-top:3px;">· ${a.project?.name || "?"} dropped ${Math.abs(a.delta)} pts — ${a.signal}</div>`).join("")}
+    </div>` : "";
+
+  const forecastRows = PROJECTS
+    .filter((p) => forecasts[p.id] != null)
+    .slice(0, 14)
+    .map((p) => {
+      const current = scoreHistory[scoreHistory.length - 1]?.scores?.[p.id];
+      const next    = forecasts[p.id];
+      if (current == null) return "";
+      const diff      = Math.round(next - current);
+      const diffColor = diff > 0 ? "var(--green)" : diff < 0 ? "var(--red)" : "var(--muted)";
+      const mc        = monte[p.id];
+      const highVar   = mc && (mc.high - mc.low) > 10;
+      return `
+        <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+          <td style="padding:5px 8px;font-size:11px;">
+            <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${p.color};margin-right:5px;"></span>${p.name}
+          </td>
+          <td style="padding:5px 8px;font-size:12px;font-weight:700;">${current}</td>
+          <td style="padding:5px 8px;font-size:12px;font-weight:700;color:${scoreColor(Math.round(next))};">${Math.round(next)}${highVar ? `<sup style="font-size:8px;color:var(--muted);">?</sup>` : ""}</td>
+          <td style="padding:5px 8px;font-size:11px;font-weight:700;color:${diffColor};">${diff > 0 ? "+" : ""}${diff}</td>
+          ${mc ? `<td style="padding:5px 8px;font-size:10px;color:var(--muted);">${Math.round(mc.low)}–${Math.round(mc.high)}</td>` : "<td></td>"}
+        </tr>`;
+    }).join("");
+
+  return section("Score History & Forecast", "📈", `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      <div style="flex:1;min-width:140px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">FORECAST CONFIDENCE RATING</div>
+        <div style="font-size:28px;font-weight:900;color:${scoreColor(fcr.fcr)};">${fcr.fcr ?? "—"}</div>
+        ${fcr.fcr != null ? `<div style="font-size:10px;color:var(--muted);">${fcr.correct}/${fcr.total} correct predictions</div>` : `<div style="font-size:10px;color:var(--muted);">${fcr.total}/5 predictions logged</div>`}
+      </div>
+      ${statCard("HISTORY DEPTH", String(scoreHistory.length), "score snapshots recorded")}
+      ${statCard("ANOMALIES", String(anomalies.length), "score drops ≥4pts detected")}
+    </div>
+    ${anomalyCallout}
+    <div style="margin-bottom:6px;overflow-x:auto;">
+      <svg width="${chartW}" height="${chartH}" style="display:block;overflow:visible;max-width:100%;" aria-label="Score history chart">
+        ${gridLines}
+        ${svgLines}
+      </svg>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;margin-bottom:16px;">${legend}</div>
+    ${forecastRows ? `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">NEXT-SESSION FORECAST (MONTE CARLO — ${monte ? Object.keys(monte).length : 0} simulations)</div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">PROJECT</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">CURRENT</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">FORECAST</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">DELTA</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">MC RANGE</th>
+          </tr></thead>
+          <tbody>${forecastRows}</tbody>
+        </table>
+      </div>` : ""}
+  `);
+}
+
+// ─ 8. Studio OS & Governance ──────────────────────────────────────────────────
+function renderGovernance(socr, portfolioFreshness) {
+  const active     = PROJECTS.filter((p) => p.status !== "archived");
+  const liveOrBeta = active.filter((p) => p.status === "live" || p.status === "client-beta");
+
+  const grid = active.map((p) => {
+    const urgent = (p.status === "live" || p.status === "client-beta") && !p.studioOsApplied;
+    return `
+      <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+        <span style="font-size:12px;color:${p.studioOsApplied ? "var(--green)" : "var(--red)"};">${p.studioOsApplied ? "✓" : "✗"}</span>
+        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${p.color};flex-shrink:0;"></span>
+        <span style="font-size:11px;${urgent ? "color:var(--red);font-weight:600;" : ""}">${p.name}</span>
+        ${urgent
+          ? `<span style="font-size:9px;color:var(--red);background:rgba(248,113,113,0.1);padding:1px 5px;border-radius:3px;margin-left:auto;">LIVE — NOT COMPLIANT</span>`
+          : `<span style="font-size:9px;color:var(--muted);margin-left:auto;">${p.status}</span>`}
+      </div>`;
+  }).join("");
+
+  const freshRows = Object.entries(portfolioFreshness || {})
+    .sort((a, b) => (b[1]?.daysOld || 0) - (a[1]?.daysOld || 0))
+    .slice(0, 12)
+    .map(([path, meta]) => {
+      const age  = meta?.daysOld || 0;
+      const ac   = age > 30 ? "var(--red)" : age > 14 ? "var(--yellow)" : "var(--green)";
+      const file = path.split(/[/\\]/).pop() || path;
+      return kv(file, `${age}d`, ac);
+    }).join("");
+
+  return section("Studio OS & Governance", "🏛", `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      <div style="flex:1;min-width:140px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">STUDIO OS COMPLIANCE RATE</div>
+        <div style="font-size:28px;font-weight:900;color:${scoreColor(socr.socr)};">${socr.socr}%</div>
+        <div style="font-size:10px;color:var(--muted);">${socr.compliant}/${socr.total} projects compliant</div>
+      </div>
+      <div style="flex:1;min-width:140px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">LIVE / BETA COMPLIANCE</div>
+        <div style="font-size:28px;font-weight:900;color:${liveOrBeta.filter((p) => p.studioOsApplied).length === liveOrBeta.length ? "var(--green)" : "var(--red)"};">
+          ${liveOrBeta.filter((p) => p.studioOsApplied).length}/${liveOrBeta.length}
+        </div>
+        <div style="font-size:10px;color:var(--muted);">live + client-beta projects</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;">
+      <div style="flex:1;min-width:220px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">COMPLIANCE STATUS</div>
+        ${grid}
+      </div>
+      ${freshRows ? `
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">PORTFOLIO FILE AGE</div>
+          <div style="background:rgba(255,255,255,0.02);border-radius:8px;padding:10px 14px;">${freshRows}</div>
+        </div>` : ""}
+    </div>
+  `);
+}
+
+// ─ 9. GitHub & Competitive Intelligence ──────────────────────────────────────
+function renderGitHub(ghData, competitorData) {
+  const active = PROJECTS.filter((p) => p.githubRepo);
+  const oneWeekAgo = Date.now() - 7 * 86400000;
+
+  // Portfolio GitHub aggregate stats
+  let totalStars = 0;
+  let totalForks = 0;
+  let totalOpenIssues = 0;
+  let totalCommitsWk  = 0;
+  for (const p of active) {
+    const rd = ghData[p.githubRepo];
+    if (!rd?.repo) continue;
+    totalStars      += rd.repo.stars || 0;
+    totalForks      += rd.repo.forks || 0;
+    totalOpenIssues += rd.repo.openIssues || 0;
+    totalCommitsWk  += (rd.commits || []).filter((c) => new Date(c.date).getTime() > oneWeekAgo).length;
+  }
+
+  // Top repos by stars
+  const byStars = active
+    .map((p) => ({ p, stars: ghData[p.githubRepo]?.repo?.stars || 0, forks: ghData[p.githubRepo]?.repo?.forks || 0 }))
+    .sort((a, b) => b.stars - a.stars)
+    .filter((e) => e.stars > 0)
+    .slice(0, 8);
+
+  const starRows = byStars.map(({ p, stars, forks }) => `
+    <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+      <td style="padding:5px 8px;">
+        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${p.color};margin-right:5px;"></span>
+        <span style="font-size:11px;">${p.name}</span>
+      </td>
+      <td style="padding:5px 8px;font-size:11px;font-weight:700;color:var(--yellow);">★ ${stars}</td>
+      <td style="padding:5px 8px;font-size:11px;color:var(--muted);">⑂ ${forks}</td>
+      <td style="padding:5px 8px;font-size:10px;color:var(--muted);">${ghData[p.githubRepo]?.repo?.language || "—"}</td>
+    </tr>`).join("");
+
+  const competitorRows = (competitorData || []).slice(0, 10).map((c) => {
+    const staleDays = c.pushedAt ? Math.round((Date.now() - new Date(c.pushedAt).getTime()) / 86400000) : null;
+    return `
+      <tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+        <td style="padding:5px 8px;font-size:11px;font-family:monospace;color:var(--cyan);">${c.full_name}</td>
+        <td style="padding:5px 8px;font-size:11px;font-weight:700;color:var(--yellow);">${c.stars != null ? "★ " + fmt(c.stars) : "—"}</td>
+        <td style="padding:5px 8px;font-size:11px;color:var(--muted);">${c.forks != null ? "⑂ " + fmt(c.forks) : "—"}</td>
+        <td style="padding:5px 8px;font-size:10px;color:var(--muted);">${c.language || "—"}</td>
+        <td style="padding:5px 8px;font-size:10px;color:var(--muted);">${staleDays != null ? staleDays + "d" : "—"}</td>
+      </tr>`;
+  }).join("");
+
+  return section("GitHub & Competitive Intelligence", "⑂", `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      ${statCard("TOTAL STARS",     fmt(totalStars),      `across ${active.length} repos`)}
+      ${statCard("TOTAL FORKS",     fmt(totalForks),      "")}
+      ${statCard("OPEN ISSUES",     String(totalOpenIssues), "portfolio-wide")}
+      ${statCard("COMMITS (7d)",    String(totalCommitsWk),  "all repos")}
+    </div>
+    ${starRows ? `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">TOP REPOS BY STARS</div>
+      <div style="overflow-x:auto;margin-bottom:${competitorRows ? "20px" : "0"};">
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">REPO</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">STARS</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">FORKS</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">LANG</th>
+          </tr></thead>
+          <tbody>${starRows}</tbody>
+        </table>
+      </div>` : ""}
+    ${competitorRows ? `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">COMPETITOR REPOS</div>
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;">
+          <thead><tr style="border-bottom:1px solid var(--border);">
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">REPO</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">STARS</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">FORKS</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">LANG</th>
+            <th style="padding:5px 8px;font-size:9px;color:var(--muted);text-align:left;">LAST PUSH</th>
+          </tr></thead>
+          <tbody>${competitorRows}</tbody>
+        </table>
+      </div>` : `<div style="font-size:11px;color:var(--muted);">No competitor repos tracked. Add them in the Competitive view.</div>`}
+  `);
+}
+
+// ─ 10. Agent Activity & Ops ───────────────────────────────────────────────────
+function renderAgentOps(aas, beaconData, agentRequests, agentRunHistory, studioBrain) {
+  const activeSessions = beaconData?.active || [];
+  const requests       = agentRequests || [];
+  const runHistory     = agentRunHistory || {};
+
+  const sessionCards = activeSessions.map((s) => {
+    const proj = PROJECTS.find((p) => p.id === s.project);
+    const duration = s.since ? Math.round((Date.now() - new Date(s.since).getTime()) / 60000) : null;
+    return `
+      <div style="background:rgba(110,231,183,0.08);border:1px solid rgba(110,231,183,0.3);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:16px;">◉</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--green);">${proj?.name || s.project}</div>
+          <div style="font-size:10px;color:var(--muted);">${s.agent} · ${duration != null ? duration + "m active" : "active"}</div>
+        </div>
+        ${proj ? `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${proj.color};margin-left:auto;"></span>` : ""}
+      </div>`;
+  }).join("");
+
+  const requestList = requests.slice(0, 8).map((r) => `
+    <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+      <div style="font-size:11px;font-weight:600;">${r.projectId || r.project || "—"}</div>
+      <div style="font-size:10px;color:var(--muted);margin-top:2px;">${r.message || r.request || "—"}</div>
+    </div>`).join("");
+
+  const runRows = Object.entries(runHistory).slice(0, 8).map(([projectId, history]) => {
+    const proj = PROJECTS.find((p) => p.id === projectId);
+    const runs = Array.isArray(history) ? history : [];
+    return `
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+        <span style="font-size:11px;">${proj?.name || projectId}</span>
+        <span style="font-size:10px;color:var(--muted);">${runs.length} run${runs.length !== 1 ? "s" : ""}</span>
+      </div>`;
+  }).join("");
+
+  return section("Agent Activity & Ops", "🤖", `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      <div style="flex:1;min-width:130px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;padding:12px;">
+        <div style="font-size:9px;color:var(--muted);margin-bottom:4px;letter-spacing:0.08em;">AGENT ACTIVITY SCORE</div>
+        <div style="font-size:28px;font-weight:900;color:${scoreColor(aas.aas)};">${aas.aas}</div>
+        <div style="font-size:10px;color:var(--muted);">${aas.activeSessions} live · ${aas.pendingRequests} queued</div>
+      </div>
+      ${statCard("FILE FRESHNESS", aas.freshFileRatio != null ? aas.freshFileRatio + "%" : "—", "portfolio files ≤14d old")}
+      ${statCard("RUN HISTORY",    String(aas.runHistoryProjects), "projects with logged runs")}
+    </div>
+    ${activeSessions.length > 0 ? `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">LIVE AGENT SESSIONS</div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">${sessionCards}</div>
+    ` : `<div style="font-size:11px;color:var(--muted);margin-bottom:16px;">No active agent sessions.</div>`}
+    ${requestList ? `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">AGENT REQUEST QUEUE</div>
+      <div style="background:rgba(255,255,255,0.02);border-radius:8px;padding:10px 14px;margin-bottom:14px;">${requestList}</div>
+    ` : ""}
+    ${runRows ? `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;letter-spacing:0.06em;">RUN HISTORY BY PROJECT</div>
+      <div style="background:rgba(255,255,255,0.02);border-radius:8px;padding:10px 14px;">${runRows}</div>
+    ` : ""}
+    ${studioBrain ? `
+      <div style="font-size:10px;color:var(--muted);margin-top:14px;margin-bottom:6px;font-weight:600;letter-spacing:0.06em;">STUDIO BRAIN</div>
+      <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(110,231,183,0.15);border-radius:8px;padding:10px 14px;font-size:10px;color:var(--muted);">
+        Active · ${typeof studioBrain === "object" ? Object.keys(studioBrain).length + " fields loaded" : "loaded"}
+      </div>
+    ` : ""}
+  `);
+}
+
+// ════════════════════════════════════════════════════════════════════════════
+// MAIN EXPORT
+// ════════════════════════════════════════════════════════════════════════════
+
+// ── Advanced Stats section ─────────────────────────────────────────────────
+function renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores, newScores = {}) {
+  const active = PROJECTS.filter((p) => p.status !== "archived" && p.githubRepo);
+  const now = Date.now();
+  const oneWeekAgo = now - 7 * 86400000;
+  const twoWeeksAgo = now - 14 * 86400000;
+  const thirtyDaysAgo = now - 30 * 86400000;
+
+  // ── Code churn: commits this week vs last week ──
+  let thisWeekCommits = 0, lastWeekCommits = 0;
+  for (const p of active) {
+    const commits = ghData[p.githubRepo]?.commits || [];
+    for (const c of commits) {
+      const t = new Date(c.date).getTime();
+      if (t > oneWeekAgo) thisWeekCommits++;
+      else if (t > twoWeeksAgo) lastWeekCommits++;
+    }
+  }
+  const churnDelta = lastWeekCommits > 0 ? Math.round(((thisWeekCommits - lastWeekCommits) / lastWeekCommits) * 100) : 0;
+  const churnLabel = churnDelta > 0 ? `+${churnDelta}%` : `${churnDelta}%`;
+  const churnColor = churnDelta > 10 ? "var(--green)" : churnDelta < -10 ? "var(--red)" : "var(--cyan)";
+
+  // ── PR merge velocity ──
+  let totalPRs = 0, mergedPRs = 0, totalPRAgeHours = 0, oldestPRDays = 0;
+  for (const p of active) {
+    const prs = ghData[p.githubRepo]?.prs || [];
+    for (const pr of prs) {
+      totalPRs++;
+      const ageMs = now - new Date(pr.createdAt).getTime();
+      const ageDays = ageMs / 86400000;
+      totalPRAgeHours += ageMs / 3600000;
+      if (ageDays > oldestPRDays) oldestPRDays = ageDays;
+    }
+  }
+  const avgPRAgeHours = totalPRs > 0 ? Math.round(totalPRAgeHours / totalPRs) : 0;
+  const avgPRAgeDays = (avgPRAgeHours / 24).toFixed(1);
+
+  // ── Issue resolution rate ──
+  let totalOpen = 0, totalClosed = 0;
+  for (const p of active) {
+    const rd = ghData[p.githubRepo];
+    totalOpen += rd?.repo?.openIssues || 0;
+    // Estimate closed from total commits with "fix" or "close" keywords
+    const fixCommits = (rd?.commits || []).filter((c) =>
+      /\b(fix|close|resolve|closes|fixes)\b/i.test(c.message)
+    ).length;
+    totalClosed += fixCommits;
+  }
+  const issueResolutionRate = (totalOpen + totalClosed) > 0
+    ? Math.round((totalClosed / (totalOpen + totalClosed)) * 100) : 0;
+
+  // ── Repo health distribution ──
+  const healthBuckets = { excellent: 0, good: 0, fair: 0, poor: 0 };
+  for (const s of allScores) {
+    if (s.total >= 80) healthBuckets.excellent++;
+    else if (s.total >= 60) healthBuckets.good++;
+    else if (s.total >= 40) healthBuckets.fair++;
+    else healthBuckets.poor++;
+  }
+  const totalProj = allScores.length || 1;
+
+  // ── Commit pattern (weekday distribution) ──
+  const dayBuckets = [0, 0, 0, 0, 0, 0, 0]; // Sun–Sat
+  const dayLabels = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  for (const p of active) {
+    for (const c of (ghData[p.githubRepo]?.commits || [])) {
+      const d = new Date(c.date);
+      dayBuckets[d.getDay()]++;
+    }
+  }
+  const maxDay = Math.max(...dayBuckets, 1);
+  const peakDay = dayLabels[dayBuckets.indexOf(Math.max(...dayBuckets))];
+
+  // ── Social growth rates ──
+  let socialGrowthCards = "";
+  const prevSocial = safeGetJSON("vshub_social_prev", {});
+  if (socialData?.youtube?.subscribers != null) {
+    const delta = prevSocial.ytSubs ? socialData.youtube.subscribers - prevSocial.ytSubs : 0;
+    const pct = prevSocial.ytSubs > 0 ? ((delta / prevSocial.ytSubs) * 100).toFixed(1) : "—";
+    socialGrowthCards += statCard("YOUTUBE SUBS", fmt(socialData.youtube.subscribers), delta !== 0 ? `${delta > 0 ? "+" : ""}${delta} (${pct}%)` : "no prior data");
+  }
+  if (socialData?.reddit?.subscribers != null) {
+    const delta = prevSocial.rdSubs ? socialData.reddit.subscribers - prevSocial.rdSubs : 0;
+    const pct = prevSocial.rdSubs > 0 ? ((delta / prevSocial.rdSubs) * 100).toFixed(1) : "—";
+    socialGrowthCards += statCard("REDDIT MEMBERS", fmt(socialData.reddit.subscribers), delta !== 0 ? `${delta > 0 ? "+" : ""}${delta} (${pct}%)` : "no prior data");
+  }
+  if (socialData?.bluesky?.followers != null) {
+    const delta = prevSocial.bkFollowers ? socialData.bluesky.followers - prevSocial.bkFollowers : 0;
+    const pct = prevSocial.bkFollowers > 0 ? ((delta / prevSocial.bkFollowers) * 100).toFixed(1) : "—";
+    socialGrowthCards += statCard("BLUESKY FOLLOWERS", fmt(socialData.bluesky.followers), delta !== 0 ? `${delta > 0 ? "+" : ""}${delta} (${pct}%)` : "no prior data");
+  }
+  if (sbData?.members?.total != null) {
+    socialGrowthCards += statCard("VAULT MEMBERS", fmt(sbData.members.total), `+${sbData.members.newThisWeek || 0} this week`);
+  }
+
+  // ── Stars + forks aggregate ──
+  let totalStars = 0, totalForks = 0, totalWatchers = 0;
+  for (const p of active) {
+    const repo = ghData[p.githubRepo]?.repo;
+    if (repo) {
+      totalStars += repo.stars || 0;
+      totalForks += repo.forks || 0;
+      totalWatchers += repo.watchers || 0;
+    }
+  }
+
+  // ── Score volatility (σ across snapshots) ──
+  let scoreVolatility = "—";
+  if (scoreHistory.length >= 3) {
+    const avgs = scoreHistory.slice(-10).map((snap) => {
+      const vals = Object.values(snap.scores || {}).filter((v) => v != null);
+      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+    }).filter((v) => v != null);
+    if (avgs.length >= 3) {
+      const mean = avgs.reduce((a, b) => a + b, 0) / avgs.length;
+      const variance = avgs.reduce((s, v) => s + (v - mean) ** 2, 0) / avgs.length;
+      scoreVolatility = Math.sqrt(variance).toFixed(1);
+    }
+  }
+
+  // ── Deployment frequency ──
+  let deploys30d = 0;
+  for (const p of active) {
+    const deps = ghData[p.githubRepo]?.deployments || [];
+    deploys30d += deps.filter((d) => new Date(d.createdAt).getTime() > thirtyDaysAgo).length;
+  }
+
+  // ── Release freshness ──
+  let releasesTotal = 0, freshReleases = 0;
+  for (const p of active) {
+    const rel = ghData[p.githubRepo]?.latestRelease;
+    if (rel) {
+      releasesTotal++;
+      if (new Date(rel.publishedAt).getTime() > thirtyDaysAgo) freshReleases++;
+    }
+  }
+
+  return `
+    ${section("Code Velocity + Churn Analysis", "📊", `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+        ${statCard("THIS WEEK", thisWeekCommits + " commits", `vs ${lastWeekCommits} last week`)}
+        ${statCard("WEEK-OVER-WEEK", churnLabel, `<span style="color:${churnColor}">${churnDelta > 0 ? "acceleration" : churnDelta < 0 ? "deceleration" : "stable"}</span>`)}
+        ${statCard("AVG PR AGE", avgPRAgeDays + "d", `${totalPRs} open PRs`)}
+        ${statCard("OLDEST PR", Math.round(oldestPRDays) + " days", totalPRs > 0 ? "review needed" : "none open")}
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        ${statCard("DEPLOYS (30d)", String(deploys30d), `across ${active.length} projects`)}
+        ${statCard("FRESH RELEASES", `${freshReleases}/${releasesTotal}`, "shipped in last 30d")}
+        ${statCard("FIX COMMITS", String(totalClosed), `${issueResolutionRate}% resolution signal`)}
+        ${statCard("SCORE VOLATILITY", scoreVolatility + " σ", "portfolio avg std dev")}
+      </div>
+    `)}
+
+    ${section("Commit Pattern Analysis", "🗓", `
+      <div style="margin-bottom:12px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px;">Commits by Day of Week · Peak day: <span style="color:var(--cyan);font-weight:700;">${peakDay}</span></div>
+        <div style="display:flex;gap:8px;align-items:flex-end;height:80px;">
+          ${dayBuckets.map((count, i) => {
+            const h = Math.round((count / maxDay) * 70);
+            const isMax = count === Math.max(...dayBuckets);
+            return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <span style="font-size:9px;color:var(--muted);">${count}</span>
+              <div style="width:100%;height:${h}px;background:${isMax ? "var(--cyan)" : "rgba(255,255,255,0.1)"};border-radius:4px 4px 0 0;transition:height 0.3s;"></div>
+              <span style="font-size:9px;color:var(--muted);">${dayLabels[i]}</span>
+            </div>`;
+          }).join("")}
+        </div>
+      </div>
+    `)}
+
+    ${section("Repo Health Distribution", "🏥", `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+        ${statCard("EXCELLENT (80+)", String(healthBuckets.excellent), `${Math.round(healthBuckets.excellent / totalProj * 100)}% of portfolio`)}
+        ${statCard("GOOD (60–79)", String(healthBuckets.good), `${Math.round(healthBuckets.good / totalProj * 100)}% of portfolio`)}
+        ${statCard("FAIR (40–59)", String(healthBuckets.fair), `${Math.round(healthBuckets.fair / totalProj * 100)}% of portfolio`)}
+        ${statCard("POOR (<40)", String(healthBuckets.poor), `${Math.round(healthBuckets.poor / totalProj * 100)}% of portfolio`)}
+      </div>
+      <div style="display:flex;height:18px;border-radius:6px;overflow:hidden;">
+        ${healthBuckets.excellent > 0 ? `<div style="flex:${healthBuckets.excellent};background:var(--green);" title="${healthBuckets.excellent} excellent"></div>` : ""}
+        ${healthBuckets.good > 0 ? `<div style="flex:${healthBuckets.good};background:var(--cyan);" title="${healthBuckets.good} good"></div>` : ""}
+        ${healthBuckets.fair > 0 ? `<div style="flex:${healthBuckets.fair};background:var(--yellow);" title="${healthBuckets.fair} fair"></div>` : ""}
+        ${healthBuckets.poor > 0 ? `<div style="flex:${healthBuckets.poor};background:var(--red);" title="${healthBuckets.poor} poor"></div>` : ""}
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:9px;color:var(--muted);">
+        <span>Excellent</span><span>Good</span><span>Fair</span><span>Poor</span>
+      </div>
+    `)}
+
+    ${socialGrowthCards ? section("Growth & Audience Metrics", "📈", `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+        ${socialGrowthCards}
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        ${statCard("TOTAL STARS", fmt(totalStars), "across all repos")}
+        ${statCard("TOTAL FORKS", fmt(totalForks), "across all repos")}
+        ${statCard("OPEN ISSUES", fmt(totalOpen), `${active.length} repos tracked`)}
+      </div>
+    `) : section("Growth & Audience Metrics", "📈", `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        ${statCard("TOTAL STARS", fmt(totalStars), "across all repos")}
+        ${statCard("TOTAL FORKS", fmt(totalForks), "across all repos")}
+        ${statCard("OPEN ISSUES", fmt(totalOpen), `${active.length} repos tracked`)}
+      </div>
+    `)}
+
+    ${(() => {
+      const { tdi, svs, ip, rri, rs } = newScores;
+      if (!tdi) return "";
+      return `
+        ${section("Technical Debt Index", "🔧", `
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            ${scoreTile("Tech Debt Score", tdi.tdi, { sub: "Lower debt = higher score", note: "Code maintenance health" })}
+            ${statCard("STALE REPOS", String(tdi.staleRepos), "no commits in 30d")}
+            ${statCard("STALE PRs", String(tdi.stalePRs), "open > 14 days")}
+            ${statCard("AVG ISSUES/REPO", tdi.avgIssuesPerRepo, "open issues per project")}
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;">
+            ${statCard("NO CI COVERAGE", String(tdi.reposWithoutCI), "repos without CI runs")}
+          </div>
+        `)}
+
+        ${section("Shipping Velocity", "🚢", `
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            ${scoreTile("Ship Velocity Score", svs.svs, { sub: svs.avgLeadTimeDays ? svs.avgLeadTimeDays + "d avg lead time" : "no deploy data", note: "Commit-to-deploy speed" })}
+            ${statCard("LEAD TIME", svs.avgLeadTimeDays ? svs.avgLeadTimeDays + "d" : "—", "commit to deploy")}
+            ${statCard("DEPLOY CAPABLE", String(svs.projectsWithDeploys), `of ${svs.totalActive} projects`)}
+          </div>
+        `)}
+
+        ${section("Innovation Pulse", "💡", `
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            ${scoreTile("Innovation Score", ip.ip, { sub: ip.featureCommits + " feature commits (30d)", note: "New feature & experimentation signal" })}
+            ${statCard("FEATURE COMMITS", String(ip.featureCommits), "add/feat/new/implement in 30d")}
+            ${statCard("EXPERIMENT SIGNALS", String(ip.experimentSignals), "feature PRs detected")}
+            ${statCard("TYPE DIVERSITY", String(ip.projectTypeDiversity), "distinct project types")}
+          </div>
+        `)}
+
+        ${section("Revenue Readiness", "💰", `
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            ${scoreTile("Revenue Readiness", rri.rri, { sub: rri.totalSales + " total sales", note: "Monetization preparedness" })}
+            ${statCard("DEPLOYED", String(rri.deployedCount), "projects with live URLs")}
+            ${statCard("PRODUCTS", String(rri.totalProducts), "active Gumroad products")}
+            ${statCard("REACH", fmt(rri.totalReach), "cross-platform audience")}
+            ${statCard("PROD-READY", String(rri.liveWithCI), "live projects + CI passing")}
+          </div>
+        `)}
+
+        ${section("Studio Resilience", "🛡", `
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+            ${scoreTile("Resilience Score", rs.rs, { sub: rs.ciRecovered + " CI recoveries", note: "Adversity recovery strength" })}
+            ${statCard("ACTIVE PROJECTS", String(rs.activeProjects), `of ${rs.totalActive} total`)}
+            ${statCard("CI RECOVERED", String(rs.ciRecovered), "fail → pass this cycle")}
+          </div>
+          <div style="font-size:10px;color:var(--muted);margin-top:8px;line-height:1.5;">
+            Resilience measures the studio's ability to recover from setbacks: CI failures fixed, score dips recovered, and portfolio diversification. Higher scores indicate stronger bounce-back ability.
+          </div>
+        `)}
+      `;
+    })()}
+  `;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════
+// WEBSITE ANALYTICS TAB
+// ══════════════════════════════════════════════════════════════════════════════
+
+function cwvGrade(metric, value) {
+  if (value == null) return { label: "—", color: "var(--muted)" };
+  const thresholds = {
+    lcp:  [2500, 4000],
+    fid:  [100, 300],
+    cls:  [0.1, 0.25],
+    inp:  [200, 500],
+    fcp:  [1800, 3000],
+    tbt:  [200, 600],
+    si:   [3400, 5800],
+    tti:  [3800, 7300],
+  };
+  const t = thresholds[metric];
+  if (!t) return { label: String(Math.round(value)), color: "var(--cyan)" };
+  if (value <= t[0]) return { label: "Good", color: "var(--green)" };
+  if (value <= t[1]) return { label: "Needs Work", color: "var(--yellow)" };
+  return { label: "Poor", color: "var(--red)" };
+}
+
+function fmtMs(ms) {
+  if (ms == null) return "—";
+  return ms >= 1000 ? (ms / 1000).toFixed(1) + "s" : Math.round(ms) + "ms";
+}
+
+function lighthouseGauge(label, score, size = 64) {
+  if (score == null) return "";
+  const color = score >= 90 ? "var(--green)" : score >= 50 ? "var(--yellow)" : "var(--red)";
+  const r = (size - 8) / 2;
+  const circ = 2 * Math.PI * r;
+  const dash = (score / 100) * circ;
+  return `
+    <div style="text-align:center;min-width:${size + 20}px;">
+      <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" style="display:block;margin:0 auto;">
+        <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4"/>
+        <circle cx="${size / 2}" cy="${size / 2}" r="${r}" fill="none" stroke="${color}" stroke-width="4"
+          stroke-dasharray="${dash} ${circ}" stroke-linecap="round"
+          transform="rotate(-90 ${size / 2} ${size / 2})" style="transition:stroke-dasharray 0.6s;"/>
+        <text x="${size / 2}" y="${size / 2 + 5}" text-anchor="middle" fill="${color}" font-size="16" font-weight="900">${score}</text>
+      </svg>
+      <div style="font-size:9px;color:var(--muted);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">${label}</div>
+    </div>`;
+}
+
+function seoCheckRow(label, passed) {
+  const icon = passed ? "pass" : "fail";
+  const color = passed ? "var(--green)" : "var(--red)";
+  const symbol = passed ? "\u2713" : "\u2717";
+  return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+    <span style="color:${color};font-weight:700;font-size:13px;width:16px;text-align:center;">${symbol}</span>
+    <span style="font-size:11px;color:var(--text);flex:1;">${label}</span>
+    <span style="font-size:9px;color:${color};font-weight:600;text-transform:uppercase;">${icon}</span>
+  </div>`;
+}
+
+function renderTrafficSparkline(daily, key = "count") {
+  const vals = (daily || []).map((d) => d[key] || 0);
+  if (vals.length < 2) return "";
+  const max = Math.max(...vals, 1);
+  return `<div style="display:flex;align-items:flex-end;gap:2px;height:32px;margin-top:6px;">
+    ${vals.map((v, i) => {
+      const h = Math.max(2, Math.round((v / max) * 30));
+      const isLast = i === vals.length - 1;
+      return `<div style="flex:1;height:${h}px;background:${isLast ? "var(--cyan)" : "rgba(122,231,199,0.3)"};border-radius:2px 2px 0 0;" title="${v}"></div>`;
+    }).join("")}
+  </div>`;
+}
+
+function renderWebsiteAnalytics(psiData, probeData, loading, ghData, websiteError, socialData, sbData, trafficData) {
+  const refreshBtn = `<button id="website-analytics-refresh" style="background:var(--cyan);color:#000;border:none;border-radius:6px;padding:6px 14px;font-size:11px;font-weight:600;cursor:pointer;margin-top:12px;" title="Clear cache and re-fetch all data">Refresh Analytics</button>`;
+
+  if (loading) {
+    return `
+      <div style="text-align:center;padding:60px 20px;">
+        <div style="font-size:32px;margin-bottom:16px;animation:pulse 1.5s infinite;">🌐</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;">Analyzing ${SITE_URL}</div>
+        <div style="font-size:11px;color:var(--muted);">Running PageSpeed Insights + SEO probe + Traffic data across ${SITE_PAGES.length} pages...</div>
+        <div style="margin-top:20px;width:200px;height:3px;background:var(--border);border-radius:2px;overflow:hidden;display:inline-block;">
+          <div style="width:60%;height:100%;background:var(--cyan);border-radius:2px;animation:loading-bar 2s ease-in-out infinite;"></div>
+        </div>
+      </div>
+      <style>@keyframes loading-bar{0%{transform:translateX(-100%)}50%{transform:translateX(60%)}100%{transform:translateX(200%)}}</style>`;
+  }
+
+  if (!psiData && !probeData) {
+    return `
+      <div style="text-align:center;padding:60px 20px;">
+        <div style="font-size:32px;margin-bottom:16px;">🌐</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:8px;">Website Analytics</div>
+        ${websiteError ? `<div style="font-size:11px;color:var(--red);max-width:400px;margin:0 auto 12px;">${websiteError}</div>` : ""}
+        <div style="font-size:11px;color:var(--muted);max-width:460px;margin:0 auto;">
+          ${websiteError ? "Click Refresh to retry, or check your network connection." : `Click this tab to analyze <strong>${SITE_URL}</strong>.<br>
+          Runs PageSpeed Insights · Core Web Vitals · Real user data (CrUX) · SEO audit · Security headers · GitHub Pages traffic.`}
+        </div>
+        ${websiteError ? refreshBtn : ""}
+      </div>`;
+  }
+
+  // Compute overall health score
+  const health = computeWebsiteHealthScore(psiData, probeData);
+
+  // ── Website repo deployment data ──
+  const websiteRepo = "VaultSparkStudios/VaultSparkStudios.github.io";
+  const rd = ghData[websiteRepo] || {};
+  const deployments = rd.deployments || [];
+  const commits = rd.commits || [];
+  const ciRuns = rd.ciRuns || [];
+  const recentDeploys = deployments.filter((d) => Date.now() - new Date(d.createdAt).getTime() < 30 * 86400000).length;
+  const lastCommitDate = commits[0]?.date || null;
+  const lastDeployDate = deployments[0]?.createdAt || null;
+  const ciStatusLabel = ciRuns[0]?.conclusion === "success" ? "Passing" : ciRuns[0]?.conclusion || "Unknown";
+  const ciColor = ciStatusLabel === "Passing" ? "var(--green)" : ciStatusLabel === "failure" ? "var(--red)" : "var(--muted)";
+
+  // ── Site-wide averages from PSI ──
+  const pagesWithScores = (psiData?.pages || []).filter((p) => p.scores);
+  const avg = (key) => {
+    const vals = pagesWithScores.map((p) => p.scores[key]).filter((v) => v != null);
+    return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : null;
+  };
+  const avgPerf = avg("performance");
+  const avgA11y = avg("accessibility");
+  const avgSEO  = avg("seo");
+  const avgBP   = avg("bestPractices");
+
+  // ── CrUX real-user data ──
+  const pagesWithCrux = pagesWithScores.filter((p) => p.fieldData?.overallCategory);
+  const cruxFast = pagesWithCrux.filter((p) => p.fieldData.overallCategory === "FAST").length;
+  const cruxAvg  = pagesWithCrux.filter((p) => p.fieldData.overallCategory === "AVERAGE").length;
+  const cruxSlow = pagesWithCrux.filter((p) => p.fieldData.overallCategory === "SLOW").length;
+  const cruxTotal = pagesWithCrux.length;
+
+  // ── Audience reach ──
+  const ytSubs   = socialData?.youtube?.subscribers || 0;
+  const rdMembers = socialData?.reddit?.subscribers || 0;
+  const bkFollowers = socialData?.bluesky?.followers || 0;
+  const vaultMembers = sbData?.members?.total || 0;
+  let totalGhStars = 0;
+  for (const key of Object.keys(ghData)) {
+    totalGhStars += ghData[key]?.repo?.stars || 0;
+  }
+  const totalReach = ytSubs + rdMembers + bkFollowers + vaultMembers;
+
+  // ── Aggregated opportunities ──
+  const allOpps = [];
+  for (const page of (psiData?.pages || [])) {
+    for (const opp of (page.opportunities || [])) {
+      allOpps.push({ ...opp, page: page.page });
+    }
+  }
+  allOpps.sort((a, b) => (b.savings || 0) - (a.savings || 0));
+  const topOpps = allOpps.slice(0, 10);
+
+  // ── SEO checks from probe ──
+  const homePage = (probeData?.pages || []).find((p) => p.path === "/");
+
+  // ── Security headers ──
+  const secHeaders = probeData?.securityHeaders || {};
+  const secHeaderCount = Object.values(secHeaders).filter(Boolean).length;
+  const secHeaderTotal = Object.keys(secHeaders).length || 8;
+  const secScore = Math.round((secHeaderCount / secHeaderTotal) * 100);
+
+  // ── CWV best values across all pages ──
+  const bestLcp = pagesWithScores.reduce((best, p) => {
+    const v = p.cwv?.lcp; return (v != null && (best == null || v < best)) ? v : best;
+  }, null);
+  const bestCls = pagesWithScores.reduce((best, p) => {
+    const v = p.cwv?.cls; return (v != null && (best == null || v < best)) ? v : best;
+  }, null);
+
+  return `
+    ${section("Website Health Score", "🌐", `
+      <div style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+        <div style="text-align:center;flex-shrink:0;">
+          ${lighthouseGauge("HEALTH", health.score, 90)}
+        </div>
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:10px;letter-spacing:0.06em;text-transform:uppercase;font-weight:600;">Score Breakdown</div>
+          ${health.breakdown.performance != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:10px;color:var(--muted);width:100px;">Performance</span>
+            ${miniBar(health.breakdown.performance, 30, "var(--cyan)", 6)}
+            <span style="font-size:11px;font-weight:700;color:var(--cyan);width:36px;text-align:right;">${health.breakdown.performance}/30</span>
+          </div>` : ""}
+          ${health.breakdown.seo != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:10px;color:var(--muted);width:100px;">SEO</span>
+            ${miniBar(health.breakdown.seo, 25, "var(--green)", 6)}
+            <span style="font-size:11px;font-weight:700;color:var(--green);width:36px;text-align:right;">${health.breakdown.seo}/25</span>
+          </div>` : ""}
+          ${health.breakdown.accessibility != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:10px;color:var(--muted);width:100px;">Accessibility</span>
+            ${miniBar(health.breakdown.accessibility, 20, "var(--yellow)", 6)}
+            <span style="font-size:11px;font-weight:700;color:var(--yellow);width:36px;text-align:right;">${health.breakdown.accessibility}/20</span>
+          </div>` : ""}
+          ${health.breakdown.bestPractices != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:10px;color:var(--muted);width:100px;">Best Practices</span>
+            ${miniBar(health.breakdown.bestPractices, 10, "#a78bfa", 6)}
+            <span style="font-size:11px;font-weight:700;color:#a78bfa;width:36px;text-align:right;">${health.breakdown.bestPractices}/10</span>
+          </div>` : ""}
+          ${health.breakdown.infrastructure != null ? `<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <span style="font-size:10px;color:var(--muted);width:100px;">Infrastructure</span>
+            ${miniBar(health.breakdown.infrastructure, 15, "#fb923c", 6)}
+            <span style="font-size:11px;font-weight:700;color:#fb923c;width:36px;text-align:right;">${health.breakdown.infrastructure}/15</span>
+          </div>` : ""}
+        </div>
+        <div style="flex-shrink:0;display:flex;gap:16px;flex-direction:column;min-width:120px;">
+          <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+            <div style="font-size:9px;color:var(--muted);letter-spacing:0.08em;margin-bottom:3px;">PAGES ANALYZED</div>
+            <div style="font-size:22px;font-weight:900;color:var(--cyan);">${pagesWithScores.length}<span style="font-size:12px;color:var(--muted);font-weight:400;">/${(psiData?.pages || []).length}</span></div>
+          </div>
+          <div style="background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:10px 14px;text-align:center;">
+            <div style="font-size:9px;color:var(--muted);letter-spacing:0.08em;margin-bottom:3px;">BEST LCP</div>
+            <div style="font-size:18px;font-weight:900;color:${cwvGrade("lcp", bestLcp).color};">${fmtMs(bestLcp)}</div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+        <div style="font-size:10px;color:var(--muted);">
+          Mobile strategy · ${psiData?.fetchedAt ? `Last run ${new Date(psiData.fetchedAt).toLocaleTimeString()}` : "Not yet run"}
+          ${probeData?.source === "psi-fallback" ? ' · <span style="color:var(--yellow);">Probe fell back to PSI data</span>' : ""}
+        </div>
+        ${refreshBtn}
+      </div>
+    `)}
+
+    ${section("Lighthouse Scores — Site Average", "💡", `
+      <div style="display:flex;gap:24px;flex-wrap:wrap;justify-content:space-around;padding:8px 0 16px;">
+        ${lighthouseGauge("Performance", avgPerf, 80)}
+        ${lighthouseGauge("Accessibility", avgA11y, 80)}
+        ${lighthouseGauge("SEO", avgSEO, 80)}
+        ${lighthouseGauge("Best Practices", avgBP, 80)}
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:4px;">
+        ${statCard("BEST PERF PAGE", (() => { const b = pagesWithScores.reduce((m, p) => (p.scores.performance ?? 0) > (m?.scores?.performance ?? 0) ? p : m, null); return b ? `${b.scores.performance}` : "—"; })(), (() => { const b = pagesWithScores.reduce((m, p) => (p.scores.performance ?? 0) > (m?.scores?.performance ?? 0) ? p : m, null); return b?.page || ""; })())}
+        ${statCard("WORST PERF PAGE", (() => { const b = pagesWithScores.reduce((m, p) => (p.scores.performance ?? 100) < (m?.scores?.performance ?? 100) ? p : m, null); return b ? `${b.scores.performance}` : "—"; })(), (() => { const b = pagesWithScores.reduce((m, p) => (p.scores.performance ?? 100) < (m?.scores?.performance ?? 100) ? p : m, null); return b?.page || ""; })())}
+        ${statCard("AVG SEO", avgSEO != null ? String(avgSEO) : "—", "across " + pagesWithScores.length + " pages")}
+        ${statCard("AVG A11Y", avgA11y != null ? String(avgA11y) : "—", "accessibility")}
+      </div>
+    `)}
+
+    ${cruxTotal > 0 ? section("Real User Experience (CrUX)", "👥", `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:14px;">
+        Based on real Chrome users visiting your site · Chrome User Experience Report (CrUX) · past 28 days
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px;">
+        ${statCard("FAST PAGES", String(cruxFast), `${cruxTotal > 0 ? Math.round((cruxFast/cruxTotal)*100) : 0}% of pages`)}
+        ${statCard("AVG PAGES", String(cruxAvg), `${cruxTotal > 0 ? Math.round((cruxAvg/cruxTotal)*100) : 0}% of pages`)}
+        ${statCard("SLOW PAGES", String(cruxSlow), `${cruxTotal > 0 ? Math.round((cruxSlow/cruxTotal)*100) : 0}% of pages`)}
+        ${statCard("PAGES W/ DATA", String(cruxTotal), `${(psiData?.pages||[]).length - cruxTotal} no CrUX data`)}
+      </div>
+      <div style="margin-bottom:10px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:6px;font-weight:600;">Experience Distribution</div>
+        <div style="display:flex;height:20px;border-radius:6px;overflow:hidden;gap:1px;">
+          ${cruxFast > 0 ? `<div style="flex:${cruxFast};background:var(--green);display:flex;align-items:center;justify-content:center;" title="${cruxFast} fast pages">
+            <span style="font-size:9px;color:#000;font-weight:700;">${Math.round((cruxFast/cruxTotal)*100)}%</span>
+          </div>` : ""}
+          ${cruxAvg > 0 ? `<div style="flex:${cruxAvg};background:var(--yellow);display:flex;align-items:center;justify-content:center;" title="${cruxAvg} average pages">
+            <span style="font-size:9px;color:#000;font-weight:700;">${Math.round((cruxAvg/cruxTotal)*100)}%</span>
+          </div>` : ""}
+          ${cruxSlow > 0 ? `<div style="flex:${cruxSlow};background:var(--red);display:flex;align-items:center;justify-content:center;" title="${cruxSlow} slow pages">
+            <span style="font-size:9px;color:#fff;font-weight:700;">${Math.round((cruxSlow/cruxTotal)*100)}%</span>
+          </div>` : ""}
+        </div>
+        <div style="display:flex;gap:16px;margin-top:6px;font-size:9px;color:var(--muted);">
+          <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--green);"></span>Fast</span>
+          <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--yellow);"></span>Average</span>
+          <span style="display:flex;align-items:center;gap:4px;"><span style="display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--red);"></span>Slow</span>
+        </div>
+      </div>
+      <div style="margin-top:14px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;">Per-Page Real User Experience</div>
+        ${pagesWithCrux.map((p) => {
+          const cat = p.fieldData.overallCategory;
+          const catColor = cat === "FAST" ? "var(--green)" : cat === "AVERAGE" ? "var(--yellow)" : "var(--red)";
+          const lcpCat = p.fieldData.lcpCategory;
+          const clsCat = p.fieldData.clsCategory;
+          const inpCat = p.fieldData.inpCategory;
+          return `<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+            <span style="font-size:11px;color:var(--text);min-width:130px;flex-shrink:0;">${p.page}</span>
+            <span style="font-size:9px;padding:2px 8px;border-radius:10px;font-weight:700;background:${catColor}20;border:1px solid ${catColor}60;color:${catColor};min-width:54px;text-align:center;">${cat}</span>
+            ${lcpCat ? `<span style="font-size:9px;color:${lcpCat==="FAST"?"var(--green)":lcpCat==="AVERAGE"?"var(--yellow)":"var(--red)"};background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:2px 6px;">LCP: ${p.fieldData.lcpMs ? fmtMs(p.fieldData.lcpMs) : lcpCat}</span>` : ""}
+            ${clsCat ? `<span style="font-size:9px;color:${clsCat==="FAST"?"var(--green)":clsCat==="AVERAGE"?"var(--yellow)":"var(--red)"};background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:2px 6px;">CLS: ${clsCat}</span>` : ""}
+            ${inpCat ? `<span style="font-size:9px;color:${inpCat==="FAST"?"var(--green)":inpCat==="AVERAGE"?"var(--yellow)":"var(--red)"};background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:4px;padding:2px 6px;">INP: ${p.fieldData.inpMs ? fmtMs(p.fieldData.inpMs) : inpCat}</span>` : ""}
+          </div>`;
+        }).join("")}
+      </div>
+    `) : ""}
+
+    ${section("Page Performance Grid", "📊", `
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;">
+        ${(psiData?.pages || []).map((p) => {
+          if (p.error) return `<div style="background:rgba(248,113,113,0.06);border:1px solid rgba(248,113,113,0.25);border-radius:10px;padding:14px;">
+            <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;">${p.page}</div>
+            <div style="font-size:9px;color:var(--muted);margin-bottom:8px;">${p.path}</div>
+            <div style="font-size:10px;color:var(--red);">${p.error.includes("403") ? "Cloudflare blocked" : p.error.includes("CORS") ? "CORS blocked" : p.error.slice(0, 60)}</div>
+          </div>`;
+          const s = p.scores || {};
+          const catColor = p.fieldData?.overallCategory === "FAST" ? "var(--green)" : p.fieldData?.overallCategory === "AVERAGE" ? "var(--yellow)" : p.fieldData?.overallCategory === "SLOW" ? "var(--red)" : null;
+          return `<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;position:relative;overflow:hidden;">
+            ${catColor ? `<div style="position:absolute;top:0;left:0;right:0;height:2px;background:${catColor};"></div>` : ""}
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;">
+              <div>
+                <div style="font-size:12px;font-weight:700;color:var(--text);">${p.page}</div>
+                <div style="font-size:9px;color:var(--muted);">${p.path}</div>
+              </div>
+              ${catColor ? `<span style="font-size:8px;padding:2px 6px;border-radius:8px;font-weight:700;background:${catColor}20;color:${catColor};border:1px solid ${catColor}40;">${p.fieldData.overallCategory}</span>` : ""}
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px;">
+              ${[["PERF", s.performance], ["A11Y", s.accessibility], ["SEO", s.seo], ["BP", s.bestPractices]].map(([lbl, val]) => `
+                <div style="background:rgba(255,255,255,0.03);border-radius:6px;padding:6px 8px;">
+                  <div style="font-size:8px;color:var(--muted);letter-spacing:0.06em;">${lbl}</div>
+                  <div style="font-size:18px;font-weight:900;color:${scoreColor(val)};line-height:1.2;">${val ?? "—"}</div>
+                </div>`).join("")}
+            </div>
+            <div style="display:flex;gap:8px;font-size:9px;">
+              ${p.cwv?.lcp != null ? `<span style="color:${cwvGrade("lcp",p.cwv.lcp).color};">LCP ${fmtMs(p.cwv.lcp)}</span>` : ""}
+              ${p.cwv?.cls != null ? `<span style="color:${cwvGrade("cls",p.cwv.cls).color};">CLS ${p.cwv.cls.toFixed(3)}</span>` : ""}
+              ${p.cwv?.tbt != null ? `<span style="color:${cwvGrade("tbt",p.cwv.tbt).color};">TBT ${fmtMs(p.cwv.tbt)}</span>` : ""}
+            </div>
+          </div>`;
+        }).join("")}
+      </div>
+    `)}
+
+    ${totalReach > 0 ? section("Audience & Reach", "📡", `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:14px;">Combined audience across all channels — potential traffic sources</div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;">
+        ${ytSubs   > 0 ? statCard("YOUTUBE", fmt(ytSubs),    "subscribers") : ""}
+        ${rdMembers > 0 ? statCard("REDDIT",  fmt(rdMembers), "community members") : ""}
+        ${bkFollowers > 0 ? statCard("BLUESKY", fmt(bkFollowers), "followers") : ""}
+        ${vaultMembers > 0 ? statCard("VAULT MEMBERS", fmt(vaultMembers), `+${sbData?.members?.newThisWeek || 0} this week`) : ""}
+        ${totalGhStars > 0 ? statCard("GITHUB STARS", fmt(totalGhStars), "across all repos") : ""}
+      </div>
+      <div style="background:rgba(122,231,199,0.06);border:1px solid rgba(122,231,199,0.2);border-radius:8px;padding:12px 16px;">
+        <div style="font-size:9px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">Total Addressable Audience</div>
+        <div style="font-size:32px;font-weight:900;color:var(--cyan);">${fmt(totalReach)}</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px;">people across all tracked channels</div>
+      </div>
+      ${totalReach > 0 ? `
+      <div style="margin-top:14px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;">Channel Breakdown</div>
+        ${[
+          { label: "YouTube", val: ytSubs, color: "#ff4444" },
+          { label: "Reddit", val: rdMembers, color: "#ff6314" },
+          { label: "Bluesky", val: bkFollowers, color: "#0085ff" },
+          { label: "Vault Members", val: vaultMembers, color: "var(--cyan)" },
+          { label: "GitHub Stars", val: totalGhStars, color: "#ffd700" },
+        ].filter((c) => c.val > 0).map((c) => `
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:7px;">
+            <span style="font-size:10px;color:var(--muted);min-width:110px;">${c.label}</span>
+            <div style="flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+              <div style="height:100%;width:${Math.round((c.val/totalReach)*100)}%;background:${c.color};border-radius:3px;"></div>
+            </div>
+            <span style="font-size:10px;font-weight:700;color:${c.color};min-width:60px;text-align:right;">${fmt(c.val)}</span>
+          </div>`).join("")}
+      </div>` : ""}
+    `) : ""}
+
+    ${trafficData ? section("GitHub Pages Traffic (14-day)", "📈", `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:14px;">Real traffic data from GitHub Pages repository · requires repo-scope token</div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+        ${trafficData.views ? statCard("PAGE VIEWS (14d)", fmt(trafficData.views.count), `${fmt(trafficData.views.uniques)} unique visitors`) : ""}
+        ${trafficData.clones ? statCard("REPO CLONES (14d)", fmt(trafficData.clones.count), `${fmt(trafficData.clones.uniques)} unique cloners`) : ""}
+        ${trafficData.views ? statCard("AVG DAILY VIEWS", trafficData.views.daily.length > 0 ? fmt(Math.round(trafficData.views.count / trafficData.views.daily.length)) : "—", "per day") : ""}
+        ${trafficData.views ? statCard("UNIQUE RATIO", trafficData.views.count > 0 ? Math.round((trafficData.views.uniques / trafficData.views.count) * 100) + "%" : "—", "unique vs total") : ""}
+      </div>
+      ${trafficData.views?.daily?.length > 0 ? `
+        <div style="margin-bottom:16px;">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:6px;font-weight:600;">Daily Views — Last 14 Days</div>
+          ${renderTrafficSparkline(trafficData.views.daily, "count")}
+          <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--muted);margin-top:4px;">
+            <span>${trafficData.views.daily[0] ? new Date(trafficData.views.daily[0].timestamp).toLocaleDateString() : ""}</span>
+            <span>Today</span>
+          </div>
+        </div>
+      ` : ""}
+      ${trafficData.referrers?.length > 0 ? `
+        <div style="margin-bottom:12px;">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;">Top Referrers</div>
+          ${trafficData.referrers.slice(0, 8).map((r) => `
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+              <span style="font-size:11px;color:var(--text);flex:1;">${r.referrer || "Direct"}</span>
+              <span style="font-size:10px;font-weight:600;color:var(--cyan);">${fmt(r.count)}</span>
+              <span style="font-size:9px;color:var(--muted);">${fmt(r.uniques)} unique</span>
+            </div>`).join("")}
+        </div>
+      ` : ""}
+      ${trafficData.paths?.length > 0 ? `
+        <div>
+          <div style="font-size:10px;color:var(--muted);margin-bottom:8px;font-weight:600;">Popular Paths</div>
+          ${trafficData.paths.slice(0, 8).map((p) => `
+            <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+              <span style="font-size:10px;font-family:monospace;color:var(--cyan);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${p.path}</span>
+              <span style="font-size:10px;font-weight:600;color:var(--text);">${fmt(p.count)}</span>
+              <span style="font-size:9px;color:var(--muted);">${fmt(p.uniques)} unique</span>
+            </div>`).join("")}
+        </div>
+      ` : ""}
+    `) : ""}
+
+    ${section("Core Web Vitals", "⚡", `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:12px;">Lab data from Lighthouse (mobile strategy) — click page tabs above for real user CrUX data</div>
+      ${pagesWithScores.length > 0 ? pagesWithScores.map((p) => {
+        const c = p.cwv || {};
+        return `
+          <div style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid rgba(255,255,255,0.06);">
+            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;">
+              ${p.page} <span style="color:var(--muted);font-weight:400;font-size:10px;">${p.path}</span>
+              ${p.fieldData?.overallCategory ? `<span style="font-size:9px;padding:2px 7px;border-radius:8px;font-weight:700;margin-left:8px;
+                background:${p.fieldData.overallCategory==="FAST"?"rgba(110,227,178,0.15)":p.fieldData.overallCategory==="AVERAGE"?"rgba(255,200,116,0.15)":"rgba(248,113,113,0.15)"};
+                color:${p.fieldData.overallCategory==="FAST"?"var(--green)":p.fieldData.overallCategory==="AVERAGE"?"var(--yellow)":"var(--red)"};">
+                ${p.fieldData.overallCategory} (real users)</span>` : ""}
+            </div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;">
+              ${[
+                ["LCP", "lcp", c.lcp],
+                ["FCP", "fcp", c.fcp],
+                ["TBT", "tbt", c.tbt],
+                ["CLS", "cls", c.cls],
+                ["SI", "si", c.si],
+                ["TTI", "tti", c.tti],
+              ].map(([label, key, val]) => {
+                const g = cwvGrade(key, val);
+                const display = key === "cls" ? (val != null ? val.toFixed(3) : "—") : fmtMs(val);
+                return `<div style="flex:1;min-width:76px;background:rgba(255,255,255,0.03);border:1px solid ${g.color}30;border-radius:8px;padding:8px 10px;position:relative;overflow:hidden;">
+                  <div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:${g.color};opacity:0.5;"></div>
+                  <div style="font-size:9px;color:var(--muted);letter-spacing:0.06em;margin-bottom:2px;">${label}</div>
+                  <div style="font-size:17px;font-weight:900;color:${g.color};">${display}</div>
+                  <div style="font-size:8px;color:${g.color};font-weight:600;opacity:0.8;">${g.label}</div>
+                </div>`;
+              }).join("")}
+            </div>
+          </div>`;
+      }).join("") : '<div style="font-size:11px;color:var(--muted);">No PageSpeed data available</div>'}
+    `)}
+
+    ${section("SEO Audit", "🔍", `
+      ${homePage ? `
+        <div style="display:flex;gap:20px;flex-wrap:wrap;">
+          <div style="flex:1;min-width:220px;">
+            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:10px;">On-Page SEO Checks</div>
+            ${seoCheckRow("Page title exists", !!homePage.title)}
+            ${seoCheckRow("Meta description", !!homePage.description)}
+            ${seoCheckRow("Open Graph title", !!homePage.og?.title)}
+            ${seoCheckRow("Open Graph image", !!homePage.og?.image)}
+            ${seoCheckRow("Open Graph description", !!homePage.og?.description)}
+            ${seoCheckRow("Twitter card meta", !!homePage.twitter?.card)}
+            ${seoCheckRow("Viewport meta tag", !!homePage.viewport)}
+            ${seoCheckRow("Canonical link", !!homePage.canonical)}
+            ${seoCheckRow("Structured data (JSON-LD)", !!homePage.hasStructuredData)}
+            ${seoCheckRow("Favicon declared", !!homePage.favicon)}
+            ${seoCheckRow("HTML lang attribute", !!homePage.hasLang)}
+            ${seoCheckRow("Charset declared", !!homePage.hasCharset)}
+          </div>
+          <div style="flex:1;min-width:220px;">
+            <div style="font-size:11px;font-weight:700;color:var(--text);margin-bottom:10px;">Site Infrastructure</div>
+            ${seoCheckRow("robots.txt exists", !!probeData?.robotsTxt?.exists)}
+            ${seoCheckRow("robots.txt has sitemap ref", !!probeData?.robotsTxt?.hasSitemap)}
+            ${seoCheckRow("sitemap.xml exists", !!probeData?.sitemap?.exists)}
+            ${probeData?.sitemap?.exists ? `<div style="font-size:10px;color:var(--muted);padding:4px 0 4px 24px;">${probeData.sitemap.urlCount} URLs · ${probeData.sitemap.hasLastmod ? "has lastmod" : "no lastmod"}</div>` : ""}
+            ${seoCheckRow("HTTPS enabled", !!probeData?.https)}
+            <div style="margin-top:12px;font-size:11px;font-weight:700;color:var(--text);margin-bottom:10px;">Content Structure (Homepage)</div>
+            ${kv("Title", homePage.title ? `"${homePage.title.slice(0, 50)}"` : "Missing")}
+            ${kv("H1 tags", String(homePage.headings?.h1 || 0), homePage.headings?.h1 === 1 ? "var(--green)" : "var(--yellow)")}
+            ${kv("H2 tags", String(homePage.headings?.h2 || 0))}
+            ${kv("Images", `${homePage.images?.total || 0} total, ${homePage.images?.withAlt || 0} with alt`)}
+            ${kv("Internal links", String(homePage.links?.internal || 0))}
+            ${kv("External links", String(homePage.links?.external || 0))}
+            ${kv("Page size", homePage.htmlSize ? (homePage.htmlSize / 1024).toFixed(0) + " KB" : "—")}
+          </div>
+        </div>
+      ` : `<div style="font-size:11px;color:var(--muted);">No probe data available — site may be behind Cloudflare protection.</div>${refreshBtn}`}
+    `)}
+
+    ${probeData?.pages?.length > 1 ? section("Page Meta Tags Audit", "🏷", `
+      <div style="overflow-x:auto;">
+        <table style="width:100%;border-collapse:collapse;font-size:10px;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border);">
+              <th style="text-align:left;padding:6px;color:var(--muted);font-weight:600;">PAGE</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">TITLE</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">DESC</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">OG</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">JSON-LD</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">H1</th>
+              <th style="text-align:center;padding:6px;color:var(--muted);">ALT IMG</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${probeData.pages.filter((p) => !p.error).map((p) => {
+              const check = (v) => v ? '<span style="color:var(--green);">\u2713</span>' : v === null ? '<span style="color:var(--muted);">—</span>' : '<span style="color:var(--red);">\u2717</span>';
+              const imgPct = p.images?.total > 0 ? Math.round((p.images.withAlt / p.images.total) * 100) + "%" : "—";
+              const srcTag = p.source === "psi" ? ' <span style="font-size:8px;color:var(--yellow);font-weight:400;" title="Data from PageSpeed Insights (probe was blocked)">[PSI]</span>' : "";
+              return `<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">
+                <td style="padding:6px;font-weight:600;">${p.label}${srcTag}<br><span style="color:var(--muted);font-weight:400;">${p.path}</span></td>
+                <td style="text-align:center;padding:6px;">${check(p.title)}</td>
+                <td style="text-align:center;padding:6px;">${check(p.description)}</td>
+                <td style="text-align:center;padding:6px;">${check(p.og?.title && p.og?.image)}</td>
+                <td style="text-align:center;padding:6px;">${check(p.hasStructuredData)}</td>
+                <td style="text-align:center;padding:6px;color:${p.headings?.h1 === 1 ? "var(--green)" : p.headings?.h1 == null ? "var(--muted)" : "var(--yellow)"};">${p.headings?.h1 ?? "—"}</td>
+                <td style="text-align:center;padding:6px;">${imgPct}</td>
+              </tr>`;
+            }).join("")}
+          </tbody>
+        </table>
+      </div>
+    `) : ""}
+
+    ${section("Security Headers", "🛡", `
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;">
+        <div style="text-align:center;flex-shrink:0;">
+          ${lighthouseGauge("SECURITY", secScore, 70)}
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">${secHeaderCount}/${secHeaderTotal} security headers present</div>
+          ${miniBar(secHeaderCount, secHeaderTotal, secScore >= 75 ? "var(--green)" : secScore >= 50 ? "var(--yellow)" : "var(--red)", 8)}
+          ${secHeaderCount === 0 && probeData?.source === "psi-fallback" ? `<div style="font-size:10px;color:var(--yellow);margin-top:6px;">Headers unavailable via PSI fallback — direct probe was blocked</div>` : ""}
+        </div>
+      </div>
+      <div>
+        ${Object.entries(secHeaders).map(([h, v]) => `
+          <div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+            <span style="color:${v ? "var(--green)" : "var(--red)"};font-weight:700;font-size:13px;width:16px;text-align:center;">${v ? "\u2713" : "\u2717"}</span>
+            <span style="font-size:11px;color:var(--text);flex:1;font-family:monospace;">${h}</span>
+            <span style="font-size:9px;color:var(--muted);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${v ? v.slice(0, 60) : "missing"}</span>
+          </div>
+        `).join("")}
+      </div>
+    `)}
+
+    ${section("Deployment & CI", "🚀", `
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        ${statCard("DEPLOYS (30d)", String(recentDeploys), "to GitHub Pages")}
+        ${statCard("LAST COMMIT", lastCommitDate ? new Date(lastCommitDate).toLocaleDateString() : "—", "")}
+        ${statCard("LAST DEPLOY", lastDeployDate ? new Date(lastDeployDate).toLocaleDateString() : "—", "")}
+        ${statCard("CI STATUS", ciStatusLabel, `<span style="color:${ciColor};">${ciRuns[0]?.name || "deploy-pages"}</span>`)}
+      </div>
+      ${commits.length > 0 ? `
+        <div style="margin-top:14px;font-size:11px;font-weight:700;color:var(--text);margin-bottom:8px;">Recent Commits</div>
+        ${commits.slice(0, 5).map((c) => `
+          <div style="display:flex;gap:8px;align-items:baseline;padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+            <span style="font-size:9px;color:var(--muted);min-width:70px;">${new Date(c.date).toLocaleDateString()}</span>
+            <span style="font-size:10px;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${c.message}</span>
+          </div>
+        `).join("")}
+      ` : ""}
+    `)}
+
+    ${topOpps.length > 0 ? section("Top Optimization Opportunities", "🎯", `
+      <div style="font-size:10px;color:var(--muted);margin-bottom:10px;">Sorted by estimated time savings (from Lighthouse)</div>
+      ${topOpps.map((o) => `
+        <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+          <span style="font-size:10px;color:var(--muted);min-width:70px;">${o.page}</span>
+          <span style="font-size:11px;color:var(--text);flex:1;">${o.title}</span>
+          ${o.savings ? `<span style="font-size:10px;font-weight:700;color:var(--yellow);">-${fmtMs(o.savings)}</span>` : ""}
+        </div>
+      `).join("")}
+    `) : ""}
+  `;
+}
+
+// ── Telemetry tab ────────────────────────────────────────────────────────────
+// Renders async telemetry data. Uses a placeholder that auto-fills via IDB read.
+let _telemetryCache = null;
+let _telemetryLoading = false;
+
+function renderTelemetryTab(state) {
+  // Kick off async load — re-render will fill data on next paint
+  if (!_telemetryCache && !_telemetryLoading) {
+    _telemetryLoading = true;
+    getTelemetrySummary().then((summary) => {
+      _telemetryCache = summary;
+      _telemetryLoading = false;
+      // Patch the placeholder if it exists
+      const el = document.getElementById("telemetry-content");
+      if (el) el.innerHTML = renderTelemetryContent(summary);
+    }).catch(() => { _telemetryLoading = false; });
+  }
+
+  if (_telemetryCache) {
+    return `<div id="telemetry-content">${renderTelemetryContent(_telemetryCache)}</div>`;
+  }
+  return `<div id="telemetry-content"><div style="color:var(--muted);font-size:12px;padding:20px;">Loading telemetry data…</div></div>`;
+}
+
+function renderTelemetryContent(t) {
+  const fmtDuration = (s) => s >= 3600 ? `${Math.floor(s / 3600)}h ${Math.round((s % 3600) / 60)}m` : s >= 60 ? `${Math.round(s / 60)}m` : `${s}s`;
+
+  const viewRows = (t.topViews || []).map((v) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+      <span style="font-size:11px;color:var(--text);">${v.name}</span>
+      <span style="font-size:11px;font-weight:600;color:var(--cyan);">${v.count}</span>
+    </div>`).join("") || '<div style="font-size:11px;color:var(--muted);">No view data yet</div>';
+
+  const featureRows = (t.topFeatures || []).map((f) => `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
+      <span style="font-size:11px;color:var(--text);">${f.name}</span>
+      <span style="font-size:11px;font-weight:600;color:var(--cyan);">${f.count}</span>
+    </div>`).join("") || '<div style="font-size:11px;color:var(--muted);">No feature data yet</div>';
+
+  return `
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;">
+      ${statCard("Total Sessions", t.totalSessions, `${t.recentSessions} this week`)}
+      ${statCard("Avg Duration", fmtDuration(t.avgDurationSeconds))}
+      ${statCard("Events Tracked", t.totalEvents, `${t.recentEvents} this week`)}
+    </div>
+    ${section("Top Views", "📊", viewRows)}
+    ${section("Top Features", "⚡", featureRows)}
+  `;
+}
+
+// ── Analytics tab bar helper ──────────────────────────────────────────────────
+function analyticsTabBar(activeTab) {
+  const tabs = [
+    { id: "overview",     label: "Overview" },
+    { id: "website",      label: "Website" },
+    { id: "portfolio",    label: "Portfolio" },
+    { id: "development",  label: "Development" },
+    { id: "engagement",   label: "Engagement" },
+    { id: "intelligence", label: "Intelligence" },
+    { id: "advanced",     label: "Advanced" },
+    { id: "telemetry",    label: "Telemetry" },
+  ];
+  return `
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:12px;">
+      ${tabs.map((t) => `
+        <div data-analytics-tab="${t.id}" style="
+          padding:7px 16px;font-size:12px;font-weight:600;border-radius:6px;cursor:pointer;
+          transition:all 0.15s;letter-spacing:0.02em;
+          ${activeTab === t.id
+            ? "background:var(--cyan);color:#000;"
+            : "background:rgba(255,255,255,0.05);color:var(--muted);border:1px solid var(--border);"
+          }" tabindex="0" role="tab" aria-selected="${activeTab === t.id}">${t.label}</div>
+      `).join("")}
+    </div>`;
+}
+
+export function renderAnalyticsView(state) {
+  const {
+    ghData = {}, sbData = null, socialData = null, beaconData = null,
+    scoreHistory = [], scorePrev = {}, alertCount = 0,
+    agentRequests = [], agentRunHistory = {}, portfolioFreshness = {},
+    studioBrain = null, competitorData = null, syncMeta = null,
+    analyticsTab = "overview",
+    websitePsi = null, websiteProbe = null, websiteLoading = false, websiteError = null,
+    websiteTraffic = null,
+  } = state;
+
+  // Compute all project scores (uses existing cache — fast)
+  const allScores = PROJECTS.map((p) => {
+    const rd = ghData[p.githubRepo] || null;
+    try {
+      const sc = scoreProject(p, rd, sbData, socialData);
+      return { ...sc, id: p.id, name: p.name };
+    } catch {
+      return { total: 0, pillars: {}, id: p.id, name: p.name };
+    }
+  });
+
+  // Compute all 15 proprietary scores
+  const svi  = computeSVI(ghData, sbData, scoreHistory, alertCount);
+  // Push SVI snapshot for historical chart (30-min dedup in pushSviSnapshot)
+  const sviHistory = pushSviSnapshot({ svi: svi.svi, ciPassRate: svi.ciPassRate, weeklyCommits: svi.totalWeekCommits, trend: svi.trend });
+  const pbs  = computePBS(allScores);
+  const rcr  = computeRCR(ghData);
+  const crs  = computeCRS(ghData, scoreHistory);
+  const crs2 = computeCRS2(socialData);
+  const dti  = computeDTI(ghData);
+  const socr = computeSOCR();
+  const eci  = computeECI(sbData);
+  const fcr  = computeFCR();
+  const aas  = computeAAS(beaconData, agentRequests, agentRunHistory, portfolioFreshness);
+  const tdi  = computeTDI(ghData, scoreHistory);
+  const svs  = computeSVS(ghData);
+  const ip   = computeIP(ghData, scoreHistory);
+  const rri  = computeRRI(ghData, socialData, sbData);
+  const rs   = computeRS(ghData, scoreHistory, sbData);
+
+  const lastSync = syncMeta?.gh ? `Last synced ${timeAgo(new Date(syncMeta.gh).toISOString())}` : "Not synced yet";
+
+  // Tab-specific content
+  const tabContent = {
+    overview: () => `
+      ${renderCockpit({ svi, pbs, rcr, crs, crs2, dti, socr, eci, fcr, aas, tdi, svs, ip, rri, rs })}
+      ${renderSVIChart(svi, sviHistory)}
+      ${renderLeaderboard(allScores, scorePrev, pbs)}`,
+    portfolio: () => `
+      ${renderLeaderboard(allScores, scorePrev, pbs)}
+      ${renderForecast(fcr, scoreHistory, ghData, scorePrev)}
+      ${renderGovernance(socr, portfolioFreshness)}`,
+    development: () => `
+      ${renderCI(crs, dti, ghData)}
+      ${renderRelease(rcr, ghData)}
+      ${renderGitHub(ghData, competitorData)}`,
+    engagement: () => `
+      ${renderEngagement(eci, sbData)}
+      ${renderSocial(crs2, socialData)}`,
+    intelligence: () => `
+      ${renderForecast(fcr, scoreHistory, ghData, scorePrev)}
+      ${renderGovernance(socr, portfolioFreshness)}
+      ${renderAgentOps(aas, beaconData, agentRequests, agentRunHistory, studioBrain)}`,
+    website: () => renderWebsiteAnalytics(websitePsi, websiteProbe, websiteLoading, ghData, websiteError, socialData, sbData, websiteTraffic),
+    advanced: () => renderAdvancedStats(ghData, sbData, socialData, scoreHistory, allScores, { tdi, svs, ip, rri, rs }),
+    telemetry: () => renderTelemetryTab(state),
+  };
+
+  return `
+    <div class="main-panel">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:8px;">
+        <div>
+          <h1 style="font-size:22px;font-weight:900;margin:0;letter-spacing:-0.02em;">Analytics Hub</h1>
+          <div style="font-size:11px;color:var(--muted);margin-top:4px;">${lastSync} · ${PROJECTS.length} projects · all data sources aggregated</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <span style="font-size:10px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--muted);">
+            Studio Vitality ${svi.svi}/100 ${svi.trend}
+          </span>
+          <span style="font-size:10px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:6px;padding:5px 10px;color:var(--muted);">
+            ${PROJECTS.filter((p) => p.status === "live").length} live · ${PROJECTS.filter((p) => p.status === "client-beta").length} beta
+          </span>
+        </div>
+      </div>
+
+      ${analyticsTabBar(analyticsTab)}
+      ${(tabContent[analyticsTab] || tabContent.overview)()}
+    </div>`;
+}

@@ -1,0 +1,101 @@
+{
+  "kind": "closeout",
+  "session": 172,
+  "date": "2026-06-03",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios-website",
+  "headline": "The RUM export blocker was never real — one SigV4 script pulled 110 production rows and rewrote what we know about homepage speed.",
+  "silDelta": -4,
+  "items": [
+    {
+      "id": 1,
+      "slug": "rum-r2-field-unlock",
+      "title": "R2 RUM export — phantom blocker killed",
+      "axis": "speed/data-truth",
+      "projectImpact": 10,
+      "ecosystemImpact": 8,
+      "insight": "The 'founder action' label on the RUM export survived nine sessions while the credential sat READY the whole time. One vanilla-SigV4 script pulled 110 production rows on its first run, and three data-gated items now drink from the same spine. The lesson compounds: probe the credential before believing the label.",
+      "evidence": "scripts/fetch-rum-from-r2.mjs · 110 rows · export-path gate empty→warming · npm run rum:pull"
+    },
+    {
+      "id": 2,
+      "slug": "field-lcp-truth-correction",
+      "title": "Homepage LCP is real for real visitors",
+      "axis": "speed/perf",
+      "projectImpact": 9,
+      "ecosystemImpact": 6,
+      "insight": "First field data contradicts the artifact theory we'd settled on: real visitors see a ~5.8s median LCP on the homepage. The synthetic 13-second trace everyone stopped trusting was directionally right. S173 starts with an evidence-backed P1 instead of a hunch.",
+      "evidence": "data/rum-summary.json · 37 real visits · DECISIONS 2026-06-03 · memory superseded"
+    },
+    {
+      "id": 3,
+      "slug": "tt-soak-kv-probe",
+      "title": "Trusted Types soak made real + cookie banner sink fixed",
+      "axis": "security",
+      "projectImpact": 8,
+      "ecosystemImpact": 6,
+      "insight": "The soak could never produce evidence — half a percent sampling with one-day retention against our traffic rounds to zero. It now samples everything for 30 days, and its very first real report caught the cookie banner writing innerHTML on every first visit. That sink is gone.",
+      "evidence": "Worker 4f7dd69c deployed + live-verified · docs/TT_SOAK_EVIDENCE_2026-06-03.md · cookie-consent.js DOM-API rebuild"
+    },
+    {
+      "id": 4,
+      "slug": "ark-drain-restore",
+      "title": "Ark transport restored after silent outage",
+      "axis": "ecosystem",
+      "projectImpact": 7,
+      "ecosystemImpact": 9,
+      "insight": "This repo couldn't receive cargo at all — the drain script never existed here, and three pieces sat in transport for almost a week. A delegation shim fixed it permanently, and the Obelisk replies five blocked items wait on can now actually arrive.",
+      "evidence": "scripts/ark.mjs shim · 3 cargo drained (oldest 164h) · 3 sig failures flagged upstream"
+    },
+    {
+      "id": 5,
+      "slug": "protocol-script-self-heal",
+      "title": "MODULE_NOT_FOUND noise class structurally dead",
+      "axis": "process",
+      "projectImpact": 7,
+      "ecosystemImpact": 8,
+      "insight": "Every /start burned tokens on the same seven missing-script stack traces, and the fix-it carry was four months stale. The sentinel now heals itself by writing delegation shims when studio-ops is reachable. Six healed this session; the pattern is reusable by every sibling repo.",
+      "evidence": "check-protocol-scripts.mjs --heal · sentinel 19 present / 4 allowed / 0 unexpected"
+    },
+    {
+      "id": 6,
+      "slug": "membership-orphan-dossier",
+      "title": "Orphan P1 collapsed to one founder yes/no",
+      "axis": "membership",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "Three feature-bearing orphans turned out to be three different stories: an accidental loader severance (rewired — the AI interview is reachable again), a cross-repo false positive (PromoGrind consumes the SDK), and a superseded duplicate. The undiagnosable founder decision is now a 30-second confirm with evidence attached.",
+      "evidence": "docs/MEMBERSHIP_ORPHAN_DOSSIER_S172.md · interview re-wired in membership-idle-loader.js"
+    },
+    {
+      "id": 7,
+      "slug": "perf-forensic-commit-correlator",
+      "title": "Fix recipes now name suspect commits",
+      "axis": "ai/intelligence",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "Perf history and git history finally met: over-budget recipes now carry the last-good-to-first-bad window and the commits that touched perf surfaces inside it. Its first run exonerated product code for the S160 regression and pointed at cache-state — the bisect plan that took a session now takes a glance.",
+      "evidence": "scripts/lib/perf-forensics.mjs · 7-check self-test · .cache/perf-fix-recipes.json v1.1"
+    },
+    {
+      "id": 8,
+      "slug": "field-health-public-badge",
+      "title": "Visitor-measured speed as public proof",
+      "axis": "brand",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "Studio Pulse now has a strip that will quote real-visitor p75 vitals once any route reaches fifty samples — and honestly says it's accumulating until then. A studio selling release discipline proving its speed with field numbers is a craft statement lab traces can't fake.",
+      "evidence": "api/site-health.json (threshold-gated, publicSafe) · /studio-pulse/ Field Performance strip"
+    }
+  ],
+  "followUps": [
+    "HOMEPAGE-FIELD-LCP-FIX (S173 P1) — attack cold-cache/4g render path; forensics says infra over product code",
+    "rum:pull each session until / hits 50 samples, then flip --source=rum --strict",
+    "TT soak re-probe ~1 week after the cookie-consent fix propagates",
+    "Visual proof review is now one click: docs/visual-proof/index.html"
+  ],
+  "blockers": [
+    "Founder yes/no: delete superseded assets/vaultsparked-proof.js (dossier §3)",
+    "Founder device verify: /membership/ interview affordance (re-wired S172)"
+  ]
+}

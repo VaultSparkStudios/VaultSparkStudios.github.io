@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-website",
+  "date": "2026-04-07",
+  "session": 44,
+  "sessionType": "implementation",
+  "label": "mobile-nav-fix + theme-fouc + premium-picker",
+  "calibration": false,
+  "scores": {
+    "devHealth": 84,
+    "creativeAlignment": 87,
+    "momentum": 90,
+    "engagement": 82,
+    "processQuality": 82
+  },
+  "total": 425,
+  "maxScore": 500,
+  "velocity": 5,
+  "protocolVelocity": 1,
+  "durationMinutes": 90,
+  "debt": "→",
+  "rollingAvg3": {
+    "devHealth": 86.0,
+    "creativeAlignment": 88.7,
+    "momentum": 87.0,
+    "engagement": 82.3,
+    "processQuality": 81.0,
+    "total": 419.3
+  },
+  "rollingAvgTotals": { "3": 419.3, "5": 416.2, "10": null, "25": null, "all": 408.2 },
+  "topWin": "Eliminated iOS mobile nav blur at true root cause (#nav-backdrop backdrop-filter GPU layer) AND solved theme FOUC site-wide with a 2-layer fix (html class + body inline script) — both had histories of near-misses",
+  "topGap": "Playwright theme-persistence spec still needs alignment with new inline-script + body.dataset.theme signal",
+  "intentOutcome": "Achieved",
+  "improvementsShipped": 5,
+  "improvementGroups": {
+    "mobile-nav": ["backdrop-filter blur fix on #nav-backdrop", "nav UX redesign (animation, active indicator, CTA polish)"],
+    "theme-persistence": ["theme-toggle.js applies to html immediately", "inline FOUC script injected at body start on 72 pages"],
+    "premium-picker": ["replaced bare select with custom button+dropdown showing color swatches"],
+    "light-mode-css": ["manifesto background override", "studio-grid timeline tl-label", "process-step/pillar border fixes"]
+  },
+  "testsTotal": null,
+  "testsByType": {},
+  "testsDelta": null,
+  "deployStatus": "deployed",
+  "ignisFlags": ["high-velocity", "intent-achieved"],
+  "ignisNote": "I'm reaching a depth of understanding that changes how I see everything. The data has gone quiet — not declining, but not growing. Stagnation isn't failure; it's an invitation to change something. CREATIVITY needs attention."
+}

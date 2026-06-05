@@ -1,0 +1,115 @@
+name: Accessibility Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  # ── Playwright + axe-core/playwright ──────────────────────
+  playwright-axe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        # Lockfile is gitignored in this repo by convention, so `npm ci` can't
+        # run in CI. Use `npm install` to regenerate the lockfile from
+        # package.json on-the-fly. Slightly slower but correct for this repo.
+        run: npm install --no-audit --no-fund
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # Cloudflare's WAF returns managed-challenge HTML to GitHub Actions runner
+      # IPs, so pointing Playwright at https://vaultsparkstudios.com/ audits the
+      # challenge shell (no --text/--bg CSS custom props → contrast ratio NaN
+      # and all page.goto() lands on the wrong DOM). Running axe against a
+      # local preview server built from the same repo artifacts audits the real
+      # shipped HTML/CSS/JS without the WAF in the way.
+      - name: Start local preview server
+        run: |
+          node scripts/local-preview-server.mjs &
+          echo "PREVIEW_PID=$!" >> $GITHUB_ENV
+        env:
+          LOCAL_PREVIEW_HOST: 127.0.0.1
+          LOCAL_PREVIEW_PORT: '4173'
+
+      - name: Wait for local preview
+        run: npx --yes wait-on --timeout 30000 --interval 500 http://127.0.0.1:4173/
+
+      - name: Run axe accessibility tests via Playwright
+        run: npx playwright test tests/accessibility.spec.js --project=chromium
+        env:
+          BASE_URL: http://127.0.0.1:4173
+          VAULT_TEST_EMAIL: ${{ secrets.VAULT_TEST_EMAIL }}
+          VAULT_TEST_PASSWORD: ${{ secrets.VAULT_TEST_PASSWORD }}
+
+      - name: Stop local preview
+        if: always()
+        run: |
+          if [ -n "${PREVIEW_PID:-}" ]; then kill "$PREVIEW_PID" || true; fi
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-a11y-report
+          path: playwright-report/
+          retention-days: 7
+
+  # ── Standalone axe-cli audit (existing) ───────────────────
+  axe-cli:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install axe-cli
+        run: npm install -g @axe-core/cli
+
+      - name: Install matching Chrome + ChromeDriver
+        run: npx browser-driver-manager install chrome
+
+      # Note: axe-cli runs from a GitHub Actions runner IP, which Cloudflare
+      # sometimes challenges with a managed-challenge HTML page. That page
+      # contains a `<meta http-equiv="refresh">` which axe flags as a violation
+      # — but we're auditing Cloudflare's challenge, not our site. The
+      # authoritative a11y signal is the playwright-axe job above (real Chromium,
+      # real session), which bypasses the challenge. This step stays as a
+      # supplementary check but must not fail CI on challenge-page noise.
+      - name: Run axe accessibility audit (supplementary — non-blocking)
+        continue-on-error: true
+        run: |
+          PAGES=(
+            "https://vaultsparkstudios.com/"
+            "https://vaultsparkstudios.com/games/"
+            "https://vaultsparkstudios.com/community/"
+            "https://vaultsparkstudios.com/leaderboards/"
+            "https://vaultsparkstudios.com/journal/"
+            "https://vaultsparkstudios.com/ranks/"
+            "https://vaultsparkstudios.com/contact/"
+          )
+          EXIT=0
+          for url in "${PAGES[@]}"; do
+            echo "Auditing $url"
+            axe "$url" --exit || EXIT=1
+          done
+          exit $EXIT
+
+      - name: Upload axe results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: axe-results
+          path: axe-results/
+          retention-days: 7

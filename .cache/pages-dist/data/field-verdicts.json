@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "1.0",
+  "boundaries": [
+    {
+      "id": "deploy-2026-06-05",
+      "date": "2026-06-05",
+      "label": "S173 homepage critical path (critical-CSS de-dupe + ambient split)",
+      "routes": {
+        "/": {
+          "pre": {
+            "samples": 38,
+            "lcpP75w": 9489
+          },
+          "post": {
+            "samples": 0,
+            "lcpP75w": null
+          },
+          "lcpDeltaPct": null,
+          "verdict": "pending",
+          "confidence": null
+        },
+        "/games/": {
+          "pre": {
+            "samples": 8,
+            "lcpP75w": 2000
+          },
+          "post": {
+            "samples": 0,
+            "lcpP75w": null
+          },
+          "lcpDeltaPct": null,
+          "verdict": "pending",
+          "confidence": null
+        },
+        "/games/vaultspark-football-gm/": {
+          "pre": {
+            "samples": 4,
+            "lcpP75w": 576
+          },
+          "post": {
+            "samples": 2,
+            "lcpP75w": 2804
+          },
+          "lcpDeltaPct": null,
+          "verdict": "pending",
+          "confidence": null
+        },
+        "/games/gridiron-gm/": {
+          "pre": {
+            "samples": 5,
+            "lcpP75w": 1294
+          },
+          "post": {
+            "samples": 0,
+            "lcpP75w": null
+          },
+          "lcpDeltaPct": null,
+          "verdict": "pending",
+          "confidence": null
+        }
+      },
+      "overall": "pending",
+      "gradedAt": "2026-06-05T10:16:58.169Z"
+    }
+  ],
+  "generatedAt": "2026-06-05T10:16:58.169Z",
+  "generatedBy": "scripts/compare-rum-windows.mjs"
+}

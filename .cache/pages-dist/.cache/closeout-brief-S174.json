@@ -1,0 +1,124 @@
+{
+  "kind": "closeout",
+  "session": 174,
+  "date": "2026-06-05",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios.github.io",
+  "headline": "The instruments S173 built now run without us — field evidence accrues on a cron, deploys grade themselves, and the TT soak finally reads its own reports.",
+  "silDelta": {
+    "from": 998,
+    "to": 997
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "rum-autopull-ci",
+      "title": "Daily Actions cron accrues field RUM history",
+      "axis": "Data/Automation",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "Field samples now land nightly without anyone opening a terminal. The 50-sample strict ladder flips on traffic cadence instead of founder-session cadence, which ends the rum:pull babysitting pattern for good.",
+      "evidence": ".github/workflows/rum-pull.yml · R2 creds set via gh secret set · first dispatch fires after push"
+    },
+    {
+      "id": 2,
+      "slug": "field-verdict-engine",
+      "title": "Deploys grade themselves against post-ship field data",
+      "axis": "Perf/Feature-depth",
+      "projectImpact": 9,
+      "ecosystemImpact": 8,
+      "insight": "Every registered deploy boundary becomes a falsifiable experiment: improved, regressed, neutral, or honestly pending with sample counts attached. The S173 homepage work is registered and waiting for its grade — no more squinting at two JSON files.",
+      "evidence": "compare-rum-windows.mjs 7/7 self-test · data/field-verdicts.json · public deploy-verdict line on /studio-pulse/"
+    },
+    {
+      "id": 3,
+      "slug": "tt-intake-forensics-fix",
+      "title": "TT intake parses Reporting-API reports; clustering names real sinks",
+      "axis": "Security",
+      "projectImpact": 9,
+      "ecosystemImpact": 6,
+      "insight": "80 of 81 stored reports were all-null because the intake never understood the array shape modern Chrome sends. The first real clustering run overturned our own audit hypothesis — the top sink was the dispatches page at 30 reports, not gtag at 1.",
+      "evidence": "Worker deployed f4c0d0c7, intake 204 live · analyze-tt-violations.mjs 5/5 · docs/TT_BURNDOWN_2026-06-05.md"
+    },
+    {
+      "id": 4,
+      "slug": "tt-top-sink-burndown",
+      "title": "All clustered TT sinks burned down, evidence-led",
+      "axis": "Security",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "Seven sink classes fell in one pass: DOM-API rebuilds where innerHTML carried content, narrow named policies where script loading needs TrustedScriptURL. The enforce canary now waits on soak propagation, not on unknown debt.",
+      "evidence": "dispatches/page-sigil/sealed-vault/palette-loader/nav-toggle DOM API · vs-speculation/vs-idle-loader/vs-ambient-loader policies · home LCP trace 236ms post-rotation"
+    },
+    {
+      "id": 5,
+      "slug": "staging-header-parity-fix",
+      "title": "CANON-007 staging parity GREEN 3/3 — first time ever",
+      "axis": "Ops/Security",
+      "projectImpact": 8,
+      "ecosystemImpact": 8,
+      "insight": "Staging was serving the homepage for every subdirectory route thanks to a try_files ordering bug, so every smoke test against it silently validated the wrong page. Three stacked defects fell and the fix recipe shipped upstream where the bug was born.",
+      "evidence": "check-staging-parity green 3/3 · sync-staging-headers.mjs over hetzner.ssh · try_files patch in Ark cargo"
+    },
+    {
+      "id": 6,
+      "slug": "nav-sheet-canary-readout",
+      "title": "Silent canary detected and raised 5%→25%",
+      "axis": "UX",
+      "projectImpact": 6,
+      "ecosystemImpact": 4,
+      "insight": "Thirty days at 5% produced exactly zero telemetry — verified as thin traffic, not a broken pipe. A canary that cannot produce signal is just risk with extra steps, so it now runs at 25% with the founder device verify still gating any swap.",
+      "evidence": "check-nav-sheet-canary.mjs 4/4 · data/nav-sheet-verdict.json telemetry-silent · intake live-tested ok:true"
+    },
+    {
+      "id": 7,
+      "slug": "protocol-shim-completion",
+      "title": "MODULE_NOT_FOUND class closed (3 shims, lib/ support)",
+      "axis": "Process",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "The three scripts that stack-traced during this very session's /start and /audit are now delegation shims to studio-ops, and the heal logic learned lib/ subpaths. The sentinel reads 19 present, 4 intentionally absent, 0 unexpected.",
+      "evidence": "check-protocol-scripts --heal: 3 healed · all three execute cleanly"
+    },
+    {
+      "id": 8,
+      "slug": "brief-signal-plumbing",
+      "title": "Startup brief signals truthful again",
+      "axis": "Process/Truth",
+      "projectImpact": 5,
+      "ecosystemImpact": 4,
+      "insight": "Tests showed ?/? because nothing ever wrote the fields; context age cried wolf with a parser miss. The brief is the only instrument panel a session gets at /start — it now reads 116/116 gates, 0d context age, and a real genome total.",
+      "evidence": "update-test-signal.mjs · renderer accepts '- Date:' headers · validate-brief-format conformant"
+    },
+    {
+      "id": 9,
+      "slug": "ark-sig-repair-ship",
+      "title": "Signature failures + staging bug shipped upstream",
+      "axis": "Ecosystem",
+      "projectImpact": 4,
+      "ecosystemImpact": 7,
+      "insight": "Four accumulated verification failures and the try_files defect both belong to studio-ops surfaces, so they went up as one repo-question cargo. The staging bug is seeded in setup-staging.sh and will reappear on every future staging box until patched there.",
+      "evidence": "cargo 01JQARTIQ4F428A7E440BFE7D6 · dossier rebuilt with 4 failure IDs"
+    },
+    {
+      "id": 10,
+      "slug": "handoff-cache-ttl",
+      "title": "compact-handoff content-hash cached",
+      "axis": "Token-cost",
+      "projectImpact": 4,
+      "ecosystemImpact": 5,
+      "insight": "An unchanged handoff no longer burns ~3K haiku tokens per session start just because an hour passed. The cache key was already the content hash — the TTL was the only thing forcing the re-summarize.",
+      "evidence": "second run: cached, 0 LLM tokens · 7d hard ceiling retained"
+    }
+  ],
+  "followUps": [
+    "Field-verdict readout once / has ≥5 post-deploy samples (rum-autopull feeds it nightly)",
+    "TT soak re-probe after ~1 week; near-zero clusters → enforce-canary decision",
+    "Verify first scheduled rum-pull.yml run committed field history",
+    "Nav-sheet 25% canary watch via check-nav-sheet-canary.mjs"
+  ],
+  "blockers": [
+    "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete, 30 seconds)",
+    "Founder device verify: membership proof loop + nav-sheet (real mobile device)"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-05-21",
+  "project": "vaultsparkstudios-website",
+  "type": "platform",
+  "items": [
+    {
+      "rank": 1,
+      "tier": "fire",
+      "slug": "external-perf-auto-parity-gate",
+      "axis": "Speed · Process · Automation",
+      "effort": "45m",
+      "impact": 9,
+      "innovation": 6,
+      "priority": 27.0,
+      "recipe": "Make the production/staging perf runner verify deploy parity automatically before launching browsers for external `--check --base=...` runs, with an explicit escape hatch for diagnostic runs.",
+      "measurementPlan": "Run deploy parity against production, syntax-check the perf runner, and verify low-disk failure still stops before browser launch with a clearer diagnostic.",
+      "status": "done",
+      "evidence": "`scripts/measure-page-performance.mjs` now includes automatic deploy parity for external `--check --base=...` runs unless `--skip-deploy-parity` is set. Production parity passed against https://vaultsparkstudios.com/ with all five shell fingerprints matching."
+    },
+    {
+      "rank": 2,
+      "tier": "high",
+      "slug": "compliance-drift-explainer",
+      "axis": "Process · UX · Cross-repo coherence",
+      "effort": "30m",
+      "impact": 8,
+      "innovation": 5,
+      "priority": 23.0,
+      "recipe": "Extend compliance velocity output with the current failing project names and issues so the 25/30 startup signal becomes directly actionable instead of a contextless score.",
+      "measurementPlan": "Run the compliance velocity checker in JSON mode and confirm failingProjects is populated without changing pass/fail semantics.",
+      "status": "done",
+      "evidence": "`scripts/track-compliance-velocity.mjs --json --no-write` now returns `failingProjects` for Vorn, Seamline, Obelisk, VEILOS, and Concurrent; persisted to `context/COMPLIANCE_HISTORY.json` and `docs/COMPLIANCE_HISTORY.md`."
+    },
+    {
+      "rank": 3,
+      "tier": "high",
+      "slug": "compliance-command-shim",
+      "axis": "Organization · Token cost · Process",
+      "effort": "15m",
+      "impact": 7,
+      "innovation": 4,
+      "priority": 19.0,
+      "recipe": "Add a `scripts/check-compliance-velocity.mjs` shim to the canonical tracker so agents/operators do not waste turns on a plausible but missing command name.",
+      "measurementPlan": "Run the shim with `--json --no-write` and compare it to the tracker output shape.",
+      "status": "done",
+      "evidence": "Added `scripts/check-compliance-velocity.mjs`; `node scripts/check-compliance-velocity.mjs --json --no-write` delegates successfully and returns the same enriched compliance payload."
+    },
+    {
+      "rank": 4,
+      "tier": "high",
+      "slug": "disk-headroom-diagnostic",
+      "axis": "Speed · Dev health · Automation",
+      "effort": "30m",
+      "impact": 8,
+      "innovation": 4,
+      "priority": 18.5,
+      "recipe": "Add a read-only disk-headroom diagnostic that reports free space and project-local generated cleanup candidates, then point perf preflight failures at it.",
+      "measurementPlan": "Run the diagnostic in JSON mode and confirm it exits nonzero under the current low-disk condition without deleting anything.",
+      "status": "done",
+      "evidence": "Added `scripts/check-disk-headroom.mjs` and `npm run verify:disk-headroom`; current proof reports 37MB free, 204MB reclaimable from generated project-local artifacts, and no deletion side effects."
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+name: Sentry Release
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  sentry-release:
+    name: Create Sentry Release
+    runs-on: ubuntu-latest
+    # Requires SENTRY_AUTH_TOKEN secret set in repo Settings
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create Sentry release
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: vaultspark-studios
+          SENTRY_PROJECT: "4511104933298176"
+        run: |
+          npx --yes @sentry/cli@latest releases new "${{ github.sha }}"
+          npx @sentry/cli releases set-commits "${{ github.sha }}" --auto --ignore-missing
+          npx @sentry/cli releases deploys "${{ github.sha }}" new -e production
+          npx @sentry/cli releases finalize "${{ github.sha }}"

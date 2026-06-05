@@ -1,0 +1,286 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-06-05T02:50:11.937Z",
+  "consumer": "studio-hub",
+  "listingMetadata": {
+    "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
+    "canonicalSummary": "Studio website and Vault Member portal. Auth, rank system, points economy, classified lore, Discord role sync, Stripe subscriptions, admin panel.",
+    "brandingLabel": "A VaultSpark Studios Network"
+  },
+  "bridge": {
+    "source": "context/contracts/website-public.json",
+    "mode": "private",
+    "websiteProject": {
+      "name": "Studio Website",
+      "repo": "VaultSparkStudios/VaultSparkStudios.github.io",
+      "deployedUrl": "https://vaultsparkstudios.com"
+    },
+    "socialDashboardProject": {
+      "name": "Social Dashboard",
+      "repo": "VaultSparkStudios/vaultspark-social-dashboard",
+      "deployedUrl": "https://app-social-dashboard.vaultsparkstudios.com"
+    }
+  },
+  "pulse": {
+    "currentSession": 173,
+    "lastUpdated": "2026-06-05",
+    "currentFocus": "Session 173 ran the full /start → /audit → /implement → /closeout goal-chain and shipped 14/14 audit items (Priority 344.1; expected impact 94/100). Homepage critical CSS is now generated-shell-only, local LCP autopsy is 324ms with timed visual proof, guarded ambient modules moved behind a predicate loader (base ambient 27 sources / 104.5KB), SW shell coherency is gated, RUM strictness is a sample ladder, TT soak evidence now shows 81 violations instead of false emptiness, membership interview intent feeds the rank proof loop, and staging parity is measured as yellow. Verification: npm run build + npm run build:check green end-to-end (108-page crawl, 0 failures).",
+    "nextMilestone": "S174: field-verify homepage LCP after deploy; continue rum:pull until / clears the 50-sample strict threshold (current ladder: 33 total samples, / needs 37 more); burn down TT violation sinks before any enforce canary; repair staging parity yellow; coordinate 3 Ark signature failures; founder yes/no remains only for deleting assets/vaultsparked-proof.js.",
+    "blockers": [],
+    "queues": {
+      "now": [
+        "[S174][PERF/P1] HOMEPAGE-FIELD-LCP-FIELD-VERIFY. Deploy/field-verify the critical-CSS de-dupe + ambient split. Run `npm run rum:pull`, compare `data/rum-summary.json`, then let `scripts/check-rum-strict-ladder.mjs` decide strict readiness instead of guessing from synthetic traces.",
+        "[S174][DATA/P1] RUM-ACCRUAL-WATCH. Current ladder: 33 total samples; `/` needs 37 more route samples for strict evaluation. Keep `npm run rum:pull` in start/closeout until the route clears the 50-sample floor.",
+        "[S174][SECURITY/P1] TT-VIOLATION-BURNDOWN. `docs/TT_SOAK_EVIDENCE_2026-06-05.md` shows 81 violations after the 100%-sample soak. Inspect the sink clusters, fix remaining DOM sinks, then rerun `node scripts/probe-tt-soak.mjs` before any enforce canary.",
+        "[S174][OPS/P2] STAGING-PARITY-YELLOW-FIX. `api/staging-health.json` is yellow: production and staging are reachable, but sampled shell/header parity differs. Repair staging drift before treating CANON-007 as green.",
+        "[S174][ECOSYSTEM/P2] ARK-SIGNATURE-FAILURE-REPAIR. Use `docs/ARK_SIGNATURE_FAILURE_DOSSIER_2026-06-04.md` to coordinate the 3 failed cargo signatures with studio-ops instead of leaving Ark health as background noise.",
+        "[S174][UX/P2] MEMBERSHIP-PROOF-LOOP-DEVICE-VERIFY. Verify the interview → rank-economy proof loop on a real mobile device; the agent path is implemented, but the membership promise deserves one tactile pass."
+      ],
+      "next": [
+        "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
+        "[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages — carry the stronger trust language into join/invite or other high-intent public entry routes if the next session stays conversion-focused.",
+        "[GENIUS][COHESION] Extend gravity onto the `/games/` and `/universe/` hubs — DONE S92: `/games/` and `/universe/` now mount `pathways-router.js` with context-specific four-card intent routing before their existing related rails; `pathways-router.js` understands `games` and `universe` contexts. Verification: `npm run build:check`, `npm run smoke:http`, `node scripts/csp-audit.mjs`, and `node --check assets/pathways-router.js`.",
+        "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
+        "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
+      ],
+      "shipped": [
+        "Homepage critical path is now evidence-backed. Removed the duplicate page-local homepage critical CSS and added `scripts/check-home-critical-css-contract.mjs`; `scripts/analyze-home-lcp.mjs` records the latest local home LCP at 324ms with a named hero candidate; `docs/visual-proof/home-lcp-s173/` has four timed first-viewport frames.",
+        "Ambient first-load cost dropped without deleting behavior. `assets/ambient-loader.js` moves guarded nav/engagement modules behind predicates; base ambient is now 27 sources / 104.5KB. `scripts/check-sw-shell-coherency.mjs` guards service-worker shell rotation after `scripts/build-shell-assets.mjs` updates.",
+        "RUM strictness is now a ladder. `scripts/check-rum-strict-ladder.mjs` reports accumulating state instead of a binary flip; current evidence is 33 total samples and `/` still needs 37 more route samples for strict evaluation.",
+        "Trusted Types enforcement remains held for the right reason. `scripts/probe-tt-soak.mjs` now emits route enforce/rollback rows; `docs/TT_SOAK_EVIDENCE_2026-06-05.md` shows 81 violations in the 100%-sample soak, so the next work is sink burn-down, not enforcement.",
+        "Membership proof loop is wired locally. `assets/membership-proof-loop.js` connects interview intent to the rank economy simulator through `vs_membership_intent`; the founder-facing orphan decision is now `docs/MEMBERSHIP_ORPHAN_DECISION.md`.",
+        "Public ops artifacts gained sharper truth. New ship receipts, intelligence budget, Ark signature dossier, nav decision ETA, and staging parity health are generated. `api/staging-health.json` is yellow: prod/staging reachable, but sampled shell/header parity differs."
+      ]
+    },
+    "ignis": {
+      "score": 40319,
+      "grade": "FORGE",
+      "lastComputed": "2026-06-05"
+    },
+    "stats": {
+      "liveCatalogItems": 3,
+      "forgeCatalogItems": 8,
+      "trackedSocialAccounts": 15
+    }
+  },
+  "socialPresence": {
+    "summary": {
+      "trackedAccounts": 15,
+      "liveApiAccounts": 6,
+      "limitedApiAccounts": 7,
+      "stubAccounts": 2
+    },
+    "featuredAccounts": [
+      {
+        "id": "youtube",
+        "platform": "YouTube",
+        "handle": "@VaultSparkStudios",
+        "url": "https://www.youtube.com/@VaultSparkStudios",
+        "apiSupport": "full",
+        "description": "Game trailers, devlogs, and studio updates",
+        "color": "#ff4444"
+      },
+      {
+        "id": "github",
+        "platform": "GitHub",
+        "handle": "@VaultSparkStudios",
+        "url": "https://github.com/VaultSparkStudios",
+        "apiSupport": "full",
+        "description": "Org repos, activity, and open source",
+        "color": "#f2f6fb"
+      },
+      {
+        "id": "reddit-community",
+        "platform": "Reddit",
+        "handle": "r/VaultSparkStudios",
+        "url": "https://www.reddit.com/r/VaultSparkStudios/",
+        "apiSupport": "full",
+        "description": "Community subreddit",
+        "color": "#ff6314"
+      },
+      {
+        "id": "x",
+        "platform": "X (Twitter)",
+        "handle": "@VaultSpark",
+        "url": "https://x.com/VaultSpark",
+        "apiSupport": "limited",
+        "description": "Studio announcements and updates",
+        "color": "#f2f6fb"
+      },
+      {
+        "id": "instagram",
+        "platform": "Instagram",
+        "handle": "@vaultsparkstudios",
+        "url": "https://www.instagram.com/vaultsparkstudios/",
+        "apiSupport": "limited",
+        "description": "Visual game art and studio moments",
+        "color": "#e1306c"
+      },
+      {
+        "id": "tiktok",
+        "platform": "TikTok",
+        "handle": "@vaultsparkstudios",
+        "url": "https://www.tiktok.com/@vaultsparkstudios",
+        "apiSupport": "limited",
+        "description": "Short-form game clips and devlogs",
+        "color": "#f2f6fb"
+      },
+      {
+        "id": "discord",
+        "platform": "Discord",
+        "handle": "VaultSpark Community",
+        "url": "https://discord.gg/bgR3mSB2",
+        "apiSupport": "limited",
+        "description": "Community server",
+        "color": "#5865f2"
+      },
+      {
+        "id": "bluesky",
+        "platform": "Bluesky",
+        "handle": "@vaultsparkstudios.bsky.social",
+        "url": "https://bsky.app/profile/vaultsparkstudios.bsky.social",
+        "apiSupport": "full",
+        "description": "Decentralized social updates",
+        "color": "#0085ff"
+      }
+    ]
+  },
+  "normalizedActivity": {
+    "schemaVersion": "1.0",
+    "mode": "public-safe-normalized-feed",
+    "source": "portfolio-events-ndjson",
+    "producer": "social-dashboard",
+    "feedEndpoint": "/api/public-intelligence.json",
+    "status": "live",
+    "privacy": "No private account identifiers, raw analytics, tokens, revenue figures, or internal operator notes.",
+    "fields": [
+      "id",
+      "source",
+      "type",
+      "title",
+      "url",
+      "occurredAt",
+      "projectId",
+      "weight"
+    ],
+    "acceptedTypes": [
+      "social_post",
+      "github_release",
+      "public_ship",
+      "community_signal",
+      "campaign_update"
+    ],
+    "latest": [
+      {
+        "id": "session-closed-website-2026-06-03t22-58-53-951z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-06-03T22:58:53.951Z",
+        "projectId": "website",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-the-living-protocol-2026-04-23t17-17-12-185z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "The Living Protocol shipped a fresh session closeout",
+        "url": "/projects/the-living-protocol/",
+        "occurredAt": "2026-04-23T17:17:12.185Z",
+        "projectId": "the-living-protocol",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-studio-ops-2026-04-23t16-57-41-762z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Ops shipped a fresh session closeout",
+        "url": "/studio-pulse/",
+        "occurredAt": "2026-04-23T16:57:41.762Z",
+        "projectId": "studio-ops",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-mindframe-2026-04-23t03-38-14-869z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "MindFrame shipped a fresh session closeout",
+        "url": "https://steadfast-determination-production.up.railway.app",
+        "occurredAt": "2026-04-23T03:38:14.869Z",
+        "projectId": "mindframe",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-website-2026-05-28t01-10-03-256z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-05-28T01:10:03.256Z",
+        "projectId": "website",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-website-2026-05-27t02-04-36-053z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-05-27T02:04:36.053Z",
+        "projectId": "website",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-website-2026-05-26t22-30-22-521z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-05-26T22:30:22.521Z",
+        "projectId": "website",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-website-2026-05-24t13-45-40-117z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-05-24T13:45:40.117Z",
+        "projectId": "website",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-website-2026-05-24t11-33-13-409z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-05-24T11:33:13.409Z",
+        "projectId": "website",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-website-2026-05-22t20-08-34-062z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-05-22T20:08:34.062Z",
+        "projectId": "website",
+        "weight": 100
+      }
+    ]
+  },
+  "feedbackSignals": {
+    "mode": "browser-local-public-safe",
+    "source": "/api/public-intelligence.json",
+    "summaryFields": [
+      "topGoal",
+      "topBlocker",
+      "topUsefulness",
+      "totalResponses"
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+name: Cloudflare Pages Deploy
+
+# S175 cf-pages-origin-migration — production origin is Cloudflare Pages.
+# Every push to main deploys the git-tracked tree (same snapshot rule as the
+# original migration). GitHub Pages keeps building in parallel as the warm
+# rollback origin (rollback = restore the 4 A records, see DECISIONS S175).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    # Skip beacon/data-only commits? No — data commits (RUM history) change
+    # served JSON artifacts, so every push deploys. Pages uploads are
+    # content-hashed; unchanged files cost nothing.
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Build clean dist (git-tracked files only)
+        run: |
+          mkdir -p /tmp/pages-dist
+          git archive HEAD | tar -x -C /tmp/pages-dist
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler@4 pages deploy /tmp/pages-dist --project-name vaultsparkstudios-website --branch main --commit-dirty=true
+
+      - name: Purge edge HTML cache
+        env:
+          CF_PURGE_TOKEN: ${{ secrets.CF_PURGE_TOKEN }}
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+        run: |
+          curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_ID}/purge_cache" \
+            -H "Authorization: Bearer ${CF_PURGE_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}' | head -c 200

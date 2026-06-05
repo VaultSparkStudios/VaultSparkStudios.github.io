@@ -1,0 +1,65 @@
+{
+  "name": "VaultSpark Studios",
+  "short_name": "VaultSpark",
+  "description": "Independent game studio forging cinematic worlds, sports simulations, and playable experiments. The vault is sparked.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "any",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "/assets/icon-32.png",  "sizes": "32x32",   "type": "image/png" },
+    { "src": "/assets/icon-64.png",  "sizes": "64x64",   "type": "image/png" },
+    { "src": "/assets/icon-128.png", "sizes": "128x128", "type": "image/png" },
+    { "src": "/assets/icon-256.png", "sizes": "256x256", "type": "image/png" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    { "src": "/assets/og-image.png", "sizes": "1200x630", "type": "image/png", "form_factor": "wide", "label": "VaultSpark Studios — game studio home" }
+  ],
+  "share_target": {
+    "action": "/share/",
+    "method": "GET",
+    "enctype": "application/x-www-form-urlencoded",
+    "params": { "title": "title", "text": "text", "url": "url" }
+  },
+  "shortcuts": [
+    {
+      "name": "Studio Pulse",
+      "short_name": "Pulse",
+      "url": "/studio-pulse/",
+      "description": "The Forge Window — live portfolio heartbeat",
+      "icons": [
+        { "src": "/assets/icon-128.png", "sizes": "128x128", "type": "image/png" }
+      ]
+    },
+    {
+      "name": "Vault Member",
+      "short_name": "Vault",
+      "url": "/vault-member/",
+      "description": "Open your member portal",
+      "icons": [
+        { "src": "/assets/icon-128.png", "sizes": "128x128", "type": "image/png" }
+      ]
+    },
+    {
+      "name": "Ask IGNIS",
+      "short_name": "IGNIS",
+      "url": "/search/#ask-ignis",
+      "description": "Ask the Vault Oracle a question",
+      "icons": [
+        { "src": "/assets/icon-128.png", "sizes": "128x128", "type": "image/png" }
+      ]
+    },
+    {
+      "name": "Games",
+      "short_name": "Games",
+      "url": "/games/",
+      "description": "Open playable VaultSpark worlds",
+      "icons": [
+        { "src": "/assets/icon-128.png", "sizes": "128x128", "type": "image/png" }
+      ]
+    }
+  ]
+}

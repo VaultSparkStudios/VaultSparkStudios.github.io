@@ -1513,3 +1513,15 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **Decision:** The 5% mobile nav-sheet canary produced zero telemetry in 30 days (116 raw export files, intake live-verified working). Raised default canary to 25% so the graduation decision can get data this quarter. Founder real-device verify remains the gate for any default swap (flag-gate pattern).
 
 **Why:** A canary that cannot statistically produce signal at current traffic is indistinguishable from no canary. Silence was the verdict of the new `check-nav-sheet-canary.mjs` readout — the alternative (parking the sheet) would discard S167 work without evidence either way.
+
+### 2026-06-05 — S175 — Production origin migrated GitHub Pages → Cloudflare Pages (founder-approved)
+
+**Decision:** `vaultsparkstudios.com` + `www` now resolve to the `vaultsparkstudios-website` Cloudflare Pages project (proxied CNAME → `vaultsparkstudios-website.pages.dev`). GitHub Pages keeps building on every push as the warm rollback origin. Deploys flow through `.github/workflows/pages-deploy.yml` (git-tracked tree only).
+
+**Why:** Field RUM showed TTFB p75 1.3s with FCP≈LCP — single-region origin latency was the homepage LCP bottleneck. CF Pages serves static HTML from the edge. Founder approved auto-flip-when-parity-green; parity was proven byte-identical after normalizing Worker-layer injections.
+
+**Incident (logged honestly):** First flip caused a ~2-3 minute 522 outage — the Pages custom domain was still `pending` validation when DNS landed (validation needs the DNS, the DNS 522s until validation: chicken-and-egg). Rolled back inside 3 minutes. Second attempt added origin-failover to the security Worker (5xx → retry against pages.dev directly), which carried the validation window with zero downtime and remains as permanent failover.
+
+**Rollback (one command class):** delete apex CNAME · restore A records 185.199.108/109/110/111.153 (proxied) · restore www CNAME → vaultsparkstudios.github.io. Verified working during the incident.
+
+**Maintenance rule:** Never flip DNS to a Pages custom domain that isn't `active` — or ensure the Worker failover is deployed first (it is, permanently). The `FALLBACK_ORIGIN` env var overrides the failover target.

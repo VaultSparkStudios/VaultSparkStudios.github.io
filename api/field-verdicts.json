@@ -4,7 +4,7 @@
     {
       "id": "deploy-2026-06-05",
       "date": "2026-06-05",
-      "label": "S173 homepage critical path (critical-CSS de-dupe + ambient split)",
+      "label": "S173 critical path + S175 origin migration to CF Pages",
       "routes": {
         "/": {
           "pre": {
@@ -38,7 +38,7 @@
             "lcpP75w": 576
           },
           "post": {
-            "samples": 1,
+            "samples": 2,
             "lcpP75w": 2804
           },
           "lcpDeltaPct": null,
@@ -60,10 +60,10 @@
         }
       },
       "overall": "pending",
-      "gradedAt": "2026-06-05T02:39:40.884Z"
+      "gradedAt": "2026-06-05T19:19:36.151Z"
     }
   ],
-  "generatedAt": "2026-06-05T02:39:40.884Z",
+  "generatedAt": "2026-06-05T19:19:36.151Z",
   "generatedBy": "scripts/compare-rum-windows.mjs",
   "publicSafe": true,
   "note": "Aggregated field-visit windows around deploys. No per-visit data."

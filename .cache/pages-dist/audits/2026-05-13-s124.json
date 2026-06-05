@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "1.3",
+  "date": "2026-05-13",
+  "session": 124,
+  "project": "vaultsparkstudios-website",
+  "rubricVersion": "3.0",
+  "totalScore": 974,
+  "totalMax": 1000,
+  "velocity": 4,
+  "categories": {
+    "devHealth": 98,
+    "creativeAlignment": 100,
+    "momentum": 96,
+    "engagement": 95,
+    "processQuality": 100,
+    "crossRepoCoherence": 98,
+    "securityPosture": 100,
+    "ecosystemIntegration": 96,
+    "capitalEfficiency": 95,
+    "automationCoverage": 96
+  },
+  "summary": "S123 sprint recovery + new /members/ a11y critical fix + S123 ask-surface regression smoke gate. Previous closeout had completed write-back but never committed/pushed — 125 dirty files recovered as b7922e1 (homepage revamp now live in prod). Triage of post-push CI: 1 new regression fixed (Accessibility on /members/, dropped role=list from member-grid tile layout), 2 pre-existing debt items named and deferred (Lighthouse perf 0.73<0.80 since S120, E2E stale propagate-csp step since S120). S123 regression-prevention smoke gate added to homepage-hero-regression.spec.js (asserts / lacks data-micro-feedback-root, dispatch-strip, home-personalized-welcome).",
+  "shipped": [
+    "[RECOVERY/P0] Recovered uncommitted S123 ship as b7922e1; rebased on 3 bot commits; pushed to main; Pages deploy green (#25821400117)",
+    "[VERIFY/P0] Post-push CI confirmation + triage matrix (new vs pre-existing) for 3 failed jobs",
+    "[BUG/P0] /members/ a11y critical — dropped role=list from members-grid; Accessibility Audit recovered failure → success",
+    "[SIL/TEST] S123 ask-surface regression smoke gate (genius #99) added to tests/homepage-hero-regression.spec.js",
+    "[CLEANUP] Deleted stray wrangler.jsonc (S122 experimental Worker-assets stub)"
+  ],
+  "commits": [
+    "b7922e1 feat(S123): homepage prove-first revamp — 10/10 sprint shipped",
+    "2724715 fix(S124): /members/ a11y critical + S123 ask-surface regression gate"
+  ],
+  "carries": [
+    "[S125/CI/P1] Delete stale propagate-csp.mjs --dry-run step from E2E workflow",
+    "[S125/PERF/P2] Lighthouse perf debt — / at 0.68-0.73 vs 0.80 threshold (failing since S120)",
+    "[S125/FOUNDER/P0] iPhone browser-verify homepage revamp + login flow",
+    "[S125/SIL/TEST/P3] buildCspWithNonce() gate (S122 carry)",
+    "[S124/SIL/CI/P2] Closeout autopilot post-push verification (assert HEAD==@{u})"
+  ]
+}

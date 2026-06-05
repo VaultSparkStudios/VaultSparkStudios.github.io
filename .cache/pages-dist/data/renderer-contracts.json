@@ -1,0 +1,61 @@
+{
+  "$schema": "Render contract — every page lists the script paths (in any order) that must appear in its <script src=...> set. The gate enforces presence; ordering is asserted only when listed in `order`.",
+  "generated": "2026-05-14 (S129)",
+  "contracts": [
+    {
+      "page": "index.html",
+      "requires": [
+        "/assets/home-idle-loader.js"
+      ],
+      "reason": "S151 idle loader owns below-the-fold homepage intelligence renderers: heartbeat, milestones, home intelligence, personalization, stats, IGNIS live, feedback, and showcase spine."
+    },
+    {
+      "page": "studio-pulse/index.html",
+      "requires": [
+        "@supabase/supabase-js",
+        "/assets/supabase-client.js",
+        "/assets/public-intelligence.js",
+        "/assets/studio-pulse-live.js"
+      ],
+      "order": [
+        "@supabase/supabase-js",
+        "/assets/supabase-client.js",
+        "/assets/studio-pulse-live.js"
+      ],
+      "reason": "S128 regression — renderer existed but was never loaded; realtime channels need Supabase UMD before client.js."
+    },
+    {
+      "page": "journal/dispatches/index.html",
+      "requires": [
+        "/assets/dispatch-voice.js"
+      ],
+      "reason": "S126 TTS surface — silently degrades to text-only if missing."
+    },
+    {
+      "page": "changelog/index.html",
+      "requires": [
+        "/assets/changelog-live.js"
+      ],
+      "reason": "Public-safe live feed; placeholders only without renderer."
+    },
+    {
+      "page": "membership/index.html",
+      "requires": [
+        "/assets/membership-idle-loader.js"
+      ],
+      "reason": "S150 idle loader owns below-the-fold membership renderers, including micro-feedback; absent means feedback/member-voice/rank widgets never hydrate."
+    },
+    {
+      "page": "vault-member/index.html",
+      "requires": [
+        "@supabase/supabase-js",
+        "/assets/supabase-client.js"
+      ],
+      "order": [
+        "@supabase/supabase-js",
+        "/assets/supabase-client.js"
+      ],
+      "reason": "Portal needs full Supabase SDK for realtime + auth."
+    }
+  ]
+}

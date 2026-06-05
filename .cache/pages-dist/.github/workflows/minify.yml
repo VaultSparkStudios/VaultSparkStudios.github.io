@@ -1,0 +1,72 @@
+name: Minify & Optimise on Push
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - 'assets/**.css'
+      - 'assets/**.js'
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm install -g html-minifier-terser clean-css-cli terser
+
+      - name: Report HTML file sizes
+        run: |
+          echo "=== HTML File Sizes ==="
+          find . -name "*.html" \
+            ! -path "./.git/*" \
+            ! -path "./studio-hub/*" \
+            ! -path "./.claude/*" \
+            -exec wc -c {} \; | sort -n | tail -20
+
+      - name: Check for oversized scripts
+        run: |
+          echo "=== JS Files over 50KB ==="
+          find ./assets -name "*.js" -size +50k -exec ls -lh {} \;
+
+      - name: Enforce HTML size budget
+        run: |
+          echo "=== Checking HTML size budgets ==="
+          FAIL=0
+          while IFS= read -r -d '' f; do
+            size=$(wc -c < "$f")
+            kb=$((size / 1024))
+            if [ "$kb" -gt 200 ]; then
+              echo "OVER BUDGET: $f is ${kb}KB (limit 200KB)"
+              FAIL=1
+            fi
+          done < <(find . -name "*.html" ! -path "./.git/*" ! -path "./.claude/*" ! -path "./studio-hub/*" -print0)
+          if [ "$FAIL" -eq 1 ]; then
+            echo "One or more HTML files exceed the 200KB budget. Consider extracting inline scripts."
+            exit 1
+          fi
+          echo "All HTML files within budget."
+
+      - name: CSS minification savings report
+        run: |
+          echo "=== CSS Minification Savings ==="
+          for f in assets/*.css; do
+            [ -f "$f" ] || continue
+            orig=$(wc -c < "$f")
+            min=$(cleancss "$f" | wc -c)
+            saving=$(( (orig - min) * 100 / orig ))
+            echo "$f: ${orig}B → ${min}B (saves ${saving}%)"
+          done
+
+      - name: JS minification savings report
+        run: |
+          echo "=== JS Minification Savings ==="
+          for f in assets/*.js vault-member/portal.js; do
+            [ -f "$f" ] || continue
+            orig=$(wc -c < "$f")
+            min=$(terser "$f" --compress --mangle 2>/dev/null | wc -c)
+            saving=$(( (orig - min) * 100 / orig ))
+            echo "$f: ${orig}B → ${min}B (saves ${saving}%)"
+          done

@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="dns-prefetch" href="https://js.stripe.com" />
+  <link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <!-- Google tag (gtag.js) — S147 deferred to idle -->
+  <script>(function(){function boot(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ';document.head.appendChild(s);window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','G-RSGLPP4KDZ');}if('requestIdleCallback' in window){requestIdleCallback(boot,{timeout:2000});}else{setTimeout(boot,1500);}})();</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Changelog — What We've Shipped | VaultSpark Studios</title>
+  <meta name="description" content="Every session. Every shipped feature. The vault's full build log — from S55 to present." />
+  <meta name="theme-color" content="#000000" />
+  <link rel="canonical" href="https://vaultsparkstudios.com/changelog/" />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Vault Changelog | VaultSpark Studios" />
+  <meta property="og:description" content="What we've shipped — phase by phase. Transparency from the studio." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://vaultsparkstudios.com/changelog/" />
+  <meta property="og:image" content="https://vaultsparkstudios.com/_og/?title=Vault+Changelog+%7C+VaultSpark+Studios&eyebrow=Changelog+%C2%B7+VaultSpark+Studios&status=sparked" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@VaultSparkStudios" />
+  <meta name="twitter:title" content="Vault Changelog | VaultSpark Studios" />
+  <meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-changelog.png" />
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://vaultsparkstudios.com/"},{"@type":"ListItem","position":2,"name":"Changelog","item":"https://vaultsparkstudios.com/changelog/"}]}
+  </script>
+  <link rel="icon" type="image/png" href="/assets/icon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/icon-256.png" />
+  <link rel="manifest" href="/manifest.json" />
+  <style data-vs-critical-shell>:root{--max:1200px;--nav-height:78px;--bg:#07080f;--bg-soft:#0c0e18;--text:#eef2ff;--muted:#a8b4d0;--dim:#6272a0;--gold:#ffc400;--page-bg:#07080f;--header-bg:rgba(7,8,16,.90);--header-border:rgba(255,255,255,.05);--radius:24px;--shadow:0 18px 60px rgba(0,0,0,.55);color-scheme:dark}*{box-sizing:border-box}body{margin:0;color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--page-bg);line-height:1.55;overflow-x:clip}a{color:inherit;text-decoration:none}img,video{max-width:100%;display:block}h1,h2,h3,h4,h5,h6{margin:0;line-height:1.1}h1,h2{font-family:Georgia,"Times New Roman",serif;letter-spacing:0}p{margin:0}.container{width:min(calc(100% - 2rem),var(--max));margin:0 auto}.site-header{position:sticky;top:0;z-index:100;border-bottom:1px solid var(--header-border);background:var(--header-bg)}.nav{min-height:var(--nav-height);display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{display:inline-flex;align-items:center;gap:.85rem;font-weight:700;flex-shrink:0}.brand img{width:44px;height:44px;object-fit:contain}.brand>span{display:block;line-height:1.15;font-size:1rem;white-space:nowrap}.brand small{display:block;color:var(--muted);font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;margin-top:.16rem}.nav-center{display:flex;align-items:center;gap:.15rem;flex:1;justify-content:center}.nav-center a{color:var(--muted);font-size:.91rem;font-weight:500;padding:.44rem .8rem;border-radius:8px;white-space:nowrap}.nav-item{position:relative;display:flex;align-items:center}.nav-item>a{display:flex;align-items:center;gap:.3rem}.nav-dropdown{display:none}.nav-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;justify-content:flex-end;min-width:292px}.nav-right::after{content:"";display:block;flex:0 0 92px;height:34px;order:20}.nav-right:has(.theme-picker)::after{display:none}.theme-picker{position:relative;flex:0 0 92px}.theme-picker-btn{display:flex;align-items:center;gap:.42rem;padding:.38rem .64rem;min-height:44px;min-width:92px;border-radius:10px;border:1px solid var(--header-border);background:var(--header-bg);color:var(--text);font:600 .8rem/1 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;white-space:nowrap}.theme-picker-swatch{width:11px;height:11px;border-radius:50%;flex-shrink:0}.theme-picker-label{font-size:.78rem;font-weight:600}.theme-picker-arrow{font-size:.48rem;margin-left:.05rem}.theme-picker-dropdown{position:absolute;top:calc(100% + 8px);right:0;width:228px;opacity:0;visibility:hidden;pointer-events:none}.button,.button-secondary,.button-ghost{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:48px;padding:0 1.3rem;border-radius:999px;font-weight:700;font-size:.94rem;font-family:inherit;border:1px solid transparent;text-decoration:none;white-space:nowrap}.button-sm{min-height:44px;min-width:44px;padding:0 1rem;font-size:.86rem}.hamburger{display:none}.hero{position:relative;padding:6.5rem 0 4rem;overflow:clip}.hero::before{content:"";position:absolute;inset:0;pointer-events:none}.hero-center{position:relative;z-index:1;text-align:center}.hero-chamber{position:absolute;inset:0;pointer-events:none;z-index:0}.hero-glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px)}.hero-glow.blue{width:45vw;height:45vw;max-width:640px;max-height:640px;left:-10%;top:-20%}.hero-glow.orange{width:40vw;height:40vw;max-width:560px;max-height:560px;right:-8%;top:-10%}.hero-glow.gold{width:30vw;height:30vw;max-width:380px;max-height:380px;left:30%;top:40%}.forge-wordmark{margin:0;font-family:Georgia,"Times New Roman",serif;line-height:1;text-align:center}.forge-line{display:block}.forge-line-1{font-size:clamp(2.6rem,13vw,9rem);font-weight:700;letter-spacing:0}.forge-line-2{font-size:clamp(1.7rem,8.4vw,5.8rem);font-weight:400;letter-spacing:.1em;margin-top:.04em}.forge-letter{opacity:1}.hero-tagline{margin:.65rem 0 0;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.45rem,3.2vw,2.6rem);line-height:1.1;letter-spacing:0;font-style:italic}.hero-sub{max-width:54ch;margin:0 auto;color:var(--muted);font-size:1.1rem;line-height:1.68}.hero-ticker{min-height:42px;display:flex;align-items:center;justify-content:center}section{padding:1.6rem 0 4.2rem}@media(max-width:980px){.nav-center{display:none}.hamburger{display:flex}.nav-right{min-width:0}.nav-right::after{display:none}.nav-right .nav-signin,.nav-right .button.button-sm,.nav-right .nav-icon-link{display:none}}@media(min-width:641px) and (max-width:980px){.container{padding-left:1.5rem;padding-right:1.5rem}}@media(max-width:768px){.brand small,.brand .brand-suffix{display:none}.brand>span{font-size:.85rem;letter-spacing:0}.brand{gap:.45rem}.brand img{width:32px;height:32px}}@media(max-width:640px){section{padding:1.4rem 0 3rem}.hero{padding:5rem 0 2.8rem}.theme-picker{display:none}.button:not(.nav-right .button),.button-secondary,.button-ghost{width:100%;justify-content:center}}@media(max-width:430px){.brand>span{font-size:.78rem;letter-spacing:0}.brand img{width:30px;height:30px}}</style>
+  <link rel="preload" href="/assets/style.shell-7082b9235c.css" as="style" data-vs-css-preload />
+  <link rel="stylesheet" href="/assets/style.shell-7082b9235c.css" media="print" data-vs-async-css />
+  <script>!function(){function a(){var s=document.querySelectorAll('link[data-vs-async-css][media="print"]');for(var i=0;i<s.length;i++)s[i].media='all'}'requestAnimationFrame'in window?requestAnimationFrame(a):setTimeout(a,0)}();</script>
+  <noscript><link rel="stylesheet" href="/assets/style.shell-7082b9235c.css" /></noscript>
+<style>
+    .cl-hero { padding:5rem 0 2.5rem; position:relative; }
+    .cl-hero::before { content:""; position:absolute; inset:0; pointer-events:none; background:radial-gradient(circle at 20% 40%, rgba(255,196,0,0.08), transparent 35%), radial-gradient(circle at 80% 60%, rgba(31,162,255,0.06), transparent 35%); }
+    .cl-hero .container { position:relative; z-index:1; }
+    .cl-hero h1 { font-family:Georgia,"Times New Roman",serif; font-size:clamp(2.4rem,5vw,4rem); font-weight:400; letter-spacing:-0.04em; line-height:1; margin:0.75rem 0; }
+    .cl-timeline { max-width:760px; margin:0 auto; padding:0 0 4rem; }
+    .cl-phase { position:relative; padding-left:2.5rem; margin-bottom:3rem; }
+    .cl-phase::before { content:""; position:absolute; left:0.5rem; top:0.9rem; bottom:-3rem; width:1px; background:rgba(255,255,255,0.08); }
+    .cl-phase:last-child::before { display:none; }
+    .cl-dot { position:absolute; left:0; top:0.75rem; width:1rem; height:1rem; border-radius:50%; background:rgba(255,196,0,0.2); border:2px solid rgba(255,196,0,0.5); }
+    .cl-phase-header { margin-bottom:0.75rem; }
+    .cl-phase-num { font-size:0.68rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; color:var(--gold); }
+    .cl-phase-date { font-size:0.68rem; color:var(--dim); margin-left:0.75rem; }
+    .cl-phase-title { font-family:Georgia,"Times New Roman",serif; font-size:1.35rem; font-weight:400; letter-spacing:-0.02em; margin:0.2rem 0 0; color:var(--text); }
+    .cl-items { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0.5rem; }
+    .cl-items li { font-size:0.88rem; color:var(--muted); padding-left:1.2rem; position:relative; line-height:1.6; }
+    .cl-items li::before { content:"→"; position:absolute; left:0; color:rgba(255,196,0,0.5); font-size:0.75rem; top:0.05em; }
+    .cl-phase[data-tm-active] .cl-dot { background:rgba(126,201,255,0.28); border-color:rgba(126,201,255,0.75); box-shadow:0 0 24px rgba(126,201,255,0.35); }
+    .cl-phase[data-tm-active] .cl-phase-title { color:#7EC9FF; }
+    .cl-sql-note { display:inline-block; margin-top:0.75rem; padding:0.35rem 0.75rem; background:rgba(31,162,255,0.08); border:1px solid rgba(31,162,255,0.2); border-radius:6px; font-size:0.78rem; color:#1FA2FF; }
+    .cl-time-machine { max-width:920px; margin:0 auto 3rem; padding:1.2rem; border:1px solid rgba(255,255,255,0.1); border-radius:8px; background:linear-gradient(135deg, rgba(255,255,255,0.045), rgba(126,201,255,0.055)); }
+    .tm-head { display:grid; gap:0.35rem; margin-bottom:1rem; }
+    .tm-head h2 { margin:0; font-family:Georgia,"Times New Roman",serif; font-size:clamp(1.6rem,3vw,2.4rem); font-weight:400; letter-spacing:-0.02em; }
+    .tm-head p { margin:0; color:var(--muted); line-height:1.55; }
+    .tm-controls { display:grid; grid-template-columns:auto 1fr auto; gap:0.75rem; align-items:center; }
+    .tm-range { width:100%; accent-color:#7EC9FF; }
+    .tm-step, .tm-chip { border:1px solid rgba(255,255,255,0.14); background:rgba(255,255,255,0.04); color:var(--text); border-radius:8px; font:inherit; font-size:0.82rem; font-weight:700; cursor:pointer; }
+    .tm-step { padding:0.55rem 0.9rem; }
+    .tm-chip { padding:0.42rem 0.7rem; }
+    .tm-step:hover, .tm-chip:hover, .tm-chip[aria-current] { border-color:rgba(126,201,255,0.6); color:#7EC9FF; }
+    .tm-readout { margin-top:0.9rem; padding:0.9rem; border-radius:8px; background:rgba(0,0,0,0.2); display:grid; gap:0.3rem; }
+    .tm-readout strong { color:#7EC9FF; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.08em; }
+    .tm-readout span, .tm-readout small { color:var(--dim); font-size:0.78rem; }
+    .tm-readout p { margin:0; color:var(--text); line-height:1.45; }
+    .tm-jumps { display:flex; flex-wrap:wrap; gap:0.45rem; margin-top:0.85rem; }
+    body.light-mode .cl-time-machine { background:rgba(255,255,255,0.78); border-color:rgba(20,28,52,0.12); }
+    body.light-mode .tm-step, body.light-mode .tm-chip { border-color:rgba(20,28,52,0.16); background:rgba(20,28,52,0.04); color:#1a1f2e; }
+    body.light-mode .tm-readout { background:rgba(20,28,52,0.04); }
+    @media(max-width:600px) { .cl-phase { padding-left:1.75rem; } .tm-controls { grid-template-columns:1fr 1fr; } .tm-range { grid-column:1 / -1; grid-row:1; } }
+    .cl-live-dot { display:inline-block; width:7px; height:7px; border-radius:50%; background:#10B981; box-shadow:0 0 10px #10B981; margin-right:0.45rem; vertical-align:middle; animation:cl-live-pulse 2.4s ease-in-out infinite; }
+    @keyframes cl-live-pulse { 0%,100% { opacity:0.55; } 50% { opacity:1; } }
+    @media (prefers-reduced-motion: reduce) { .cl-live-dot { animation:none; } }
+    .cl-phase--live .cl-dot { background:rgba(16,185,129,0.32); border-color:rgba(16,185,129,0.7); box-shadow:0 0 14px rgba(16,185,129,0.35); }
+    .cl-phase--live .cl-phase-num { color:#10B981; }
+  </style>
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin" />
+  <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+<script defer src="/assets/theme-toggle.shell-b970c26bd9.js"></script>
+<script src="/assets/analytics.js" defer></script>
+<script src="/assets/pwa-nav.js" defer></script>
+<script defer src="/assets/pwa-install.js"></script>
+<!-- vs-speculation:start -->
+  <script type="speculationrules">
+  {
+    "prerender": [
+      {
+        "where": {
+          "and": [
+            { "href_matches": "/*" },
+            { "not": { "href_matches": "/vault-member/*" } },
+            { "not": { "href_matches": "/investor-portal/*" } },
+            { "not": { "href_matches": "/admin/*" } },
+            { "not": { "href_matches": "/api/*" } },
+            { "not": { "href_matches": "/*/admin/*" } },
+            { "not": { "selector_matches": "[data-no-prerender]" } },
+            { "not": { "selector_matches": ".no-prerender" } }
+          ]
+        },
+        "eagerness": "moderate"
+      }
+    ],
+    "prefetch": [
+      { "where": { "href_matches": "/*" }, "eagerness": "conservative" }
+    ]
+  }
+  </script>
+  <!-- vs-speculation:end -->
+</head>
+<body class="dark-mode" data-theme="dark">
+<script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement,r);document.body.classList.remove.apply(document.body,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script>
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img fetchpriority="high" src="../assets/vaultspark-icon-nav.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span class="brand-wordmark">VaultSpark<span class="brand-suffix"> Studios</span><small>The vault is sparked</small></span>
+      </a>
+      <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
+        <a href="/">Home</a>
+        <div class="nav-item has-dropdown"><a href="/games/">Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/">Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#fbbf24;">🔥 Sparked</span><a href="/projects/vorn/">Vorn</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/signal-log/">Signal Log</a><a href="/projects/vault-pipeline/">Vault Pipeline</a><a href="/projects/vault-member/">Vault Member</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#f59e0b;">⚒️ In The Forge</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/ideaforge/">IdeaForge</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">Canon</a><a href="/projects/the-living-protocol/">The Living Protocol</a><a href="/projects/seamline/">Seamline</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/membership/">Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/">About Membership</a><a href="/vaultsparked/">Choose Your Tier</a><a href="/membership-value/">Value Breakdown</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#FFC400;">Portals</span><a href="/vault-portal/">Vault Portal &nbsp;<span style="opacity:0.6;font-size:0.78em;">(choose)</span></a><a href="/vault-member/">Vault Member</a><a href="/investor-portal/" style="color:#C9D2E0;">Investor Portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/vault-wall/">Vault Wall</a><a href="/ranks/">Vault Ranks</a><a href="/leaderboards/">Leaderboards</a><a href="/invite/">Refer a Friend</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/universe/">Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#D62828;">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label" style="color:#94a3b8;">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/studio/">Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label" style="color:#FFC400;">Live Intelligence</span><a href="/oracle/" style="color:#FFC400;font-weight:600;">⚡ Ecosystem Oracle</a><a href="/studio-pulse/">Forge Window</a><a href="/ignis/">IGNIS</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/studio/">About</a><a href="/roadmap/">Vault Pipeline</a><a href="/changelog/">Changelog</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/sitemap-page/">Resources <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Resources</span><a href="/faq/">FAQ</a><a href="/careers/">Careers</a><a href="/rights/">Technology &amp; Rights</a><a href="/accessibility/">Accessibility</a><a href="/security/">Security</a><a href="/sitemap-page/">Sitemap</a><a href="/contact/">Contact</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio Brand</span><a href="/brand/">Brand Kit</a><a href="/press/">Press Kit</a><div class="dropdown-divider"></div><span class="dropdown-label">The Vault</span><a href="/vault/tombstones/">Tombstones</a><div class="dropdown-divider"></div><span class="dropdown-label">Follow</span><a href="/social/">All Social Channels</a></div></div>
+
+        <div class="mobile-nav-footer">
+          <a class="mobile-nav-signin" href="/vault-member/#login">Sign In</a>
+          <a class="mobile-nav-join" href="/membership/">Membership</a>
+          <a class="mobile-nav-join" href="/vault-member/#register">Join The Vault</a>
+          <a class="mobile-nav-github" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer">GitHub</a>
+        </div>
+      </nav>
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div id="vs-push-prompt-root" class="container"></div>
+    <section class="cl-hero">
+      <div class="container">
+        <span class="eyebrow"><span class="cl-live-dot" aria-hidden="true"></span> Live feed · newest first</span>
+        <h1>Vault Changelog</h1>
+        <p style="color:var(--muted);font-size:1rem;max-width:58ch;line-height:1.65;margin-top:0.5rem;">A running log of what the studio has shipped — newest at the top, oldest at the bottom. Updated as the vault fires.</p>
+      </div>
+    </section>
+
+    <section style="padding:0 0 4rem;">
+      <div class="container">
+        <section class="cl-time-machine" data-time-machine aria-label="Studio Time Machine"></section>
+        <div class="cl-timeline">
+
+          <!-- S66 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S66</span><span class="cl-phase-date">2026-04-13</span>
+              <div class="cl-phase-title">Faster site, waitlist forms, public changelog</div>
+            </div>
+            <ul class="cl-items">
+              <li>Site-wide speed improvements — faster connection setup on key pages</li>
+              <li>Additional security hardening on error and offline pages</li>
+              <li>Scroll-reveal animations polished across studio, community, ranks, and roadmap pages</li>
+              <li>What's New portal enhancement — cleaner unread signals</li>
+              <li>Game Notify Me forms: "Be First to Play" email capture on VaultFront, Solara, MindFrame, The Exodus</li>
+              <li>Critical CSS hero inline — above-the-fold render unblocked</li>
+              <li>Achievement share cards — shareable PNG-style social cards for member milestones</li>
+              <li>Public changelog page launched at /changelog/</li>
+            </ul>
+          </article>
+
+          <!-- S65 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S65</span><span class="cl-phase-date">2026-04-13</span>
+              <div class="cl-phase-title">Readability pass, Signal Log launches, Vault Wall groundwork</div>
+            </div>
+            <ul class="cl-items">
+              <li>Site-wide readability pass — gold text contrast now passes accessibility standards on every page</li>
+              <li>Signal Log design standardised for reuse across the member portal</li>
+              <li>Vault Wall public identity page groundwork laid</li>
+              <li>Scroll-reveal polish added to membership and press pages</li>
+            </ul>
+          </article>
+
+          <!-- S64 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S64</span><span class="cl-phase-date">2026-04-13</span>
+              <div class="cl-phase-title">Homepage polish, rights page, live social proof</div>
+            </div>
+            <ul class="cl-items">
+              <li>Homepage stat counters fixed — correct numbers now display</li>
+              <li>Rights &amp; provenance page refreshed</li>
+              <li>Membership social proof strip went live</li>
+              <li>Site-wide scroll reveals enabled across every major section</li>
+              <li>Extended light-mode visual testing for design consistency</li>
+            </ul>
+          </article>
+
+          <!-- S63 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S63</span><span class="cl-phase-date">2026-04-13</span>
+              <div class="cl-phase-title">Light mode — complete overhaul</div>
+            </div>
+            <ul class="cl-items">
+              <li>Light mode rolled out across every page on the site</li>
+              <li>All panels, cards, badges, and inputs now display correctly in light mode</li>
+              <li>Full accessibility contrast pass in every light-mode state</li>
+            </ul>
+          </article>
+
+          <!-- S62 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S62</span><span class="cl-phase-date">2026-04-13</span>
+              <div class="cl-phase-title">Homepage Forge Ignition redesign</div>
+            </div>
+            <ul class="cl-items">
+              <li>Homepage hero redesigned with the letter-forge animation and vault-door layout</li>
+              <li>Forge ignition sequence adds cinematic first-impression impact</li>
+              <li>Animation is smooth and stable on every device</li>
+            </ul>
+          </article>
+
+          <!-- S61 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S61</span><span class="cl-phase-date">2026-04-12</span>
+              <div class="cl-phase-title">Member portal expansion, homepage hero refinement</div>
+            </div>
+            <ul class="cl-items">
+              <li>Studio-tier member portal panel added</li>
+              <li>Homepage hero centering fixed on every screen size</li>
+              <li>Member database upgrade shipped for richer ranking + referral tracking</li>
+            </ul>
+          </article>
+
+          <!-- S60 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S60</span><span class="cl-phase-date">2026-04-12</span>
+              <div class="cl-phase-title">VaultSparked page polish, homepage visual fixes</div>
+            </div>
+            <ul class="cl-items">
+              <li>VaultSparked page cleaned up — no console warnings</li>
+              <li>Homepage circular animation rendering bug fixed</li>
+            </ul>
+          </article>
+
+          <!-- S59 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S59</span><span class="cl-phase-date">2026-04-12</span>
+              <div class="cl-phase-title">Membership hub, tier model, site-wide navigation polish</div>
+            </div>
+            <ul class="cl-items">
+              <li>Membership page rebuilt as a full hub — tiers, perks, and calls to action in one place</li>
+              <li>Member tier model finalised with clear upgrade paths</li>
+              <li>Nav and footer polish propagated across every page on the site</li>
+              <li>VaultSparked overhaul — new design with tier comparison table</li>
+            </ul>
+          </article>
+
+          <!-- S55–S58 -->
+          <article class="cl-phase" data-reveal="fade-up">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">S55–S58</span><span class="cl-phase-date">2026-04-11</span>
+              <div class="cl-phase-title">Press Kit, Studio Pulse, Vault Wall, Invite, Social Proof</div>
+            </div>
+            <ul class="cl-items">
+              <li>Press kit page launched at /press/ with logos, studio bio, key facts, and press contact</li>
+              <li>Studio Pulse page at /studio-pulse/ with live dev session feed</li>
+              <li>Vault Wall launched — member name display on community wall</li>
+              <li>Invite/refer-a-friend page at /invite/ with referral code sharing</li>
+              <li>Social proof strip added to homepage — member count + community stats</li>
+              <li>Daily loop widget in the vault portal — streak + challenge nudges</li>
+              <li>Founding member badge — awarded to members who joined in Phase 1</li>
+              <li>Game conversion section added to unreleased game pages</li>
+            </ul>
+          </article>
+
+          <!-- Earlier sessions separator -->
+          <div style="text-align:center;padding:1.5rem 0 2rem;color:var(--dim);font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;">Earlier Sessions (March 2026)</div>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 44–49</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Social Graph, Treasury, Seasons &amp; Weekly Leaderboard</div>
+            </div>
+            <ul class="cl-items">
+              <li>Social graph: follow and unfollow any vault member — following count displayed on profiles</li>
+              <li>Activity feed: live signal updates filtered to members you follow</li>
+              <li>Vault Treasury: points economy with a rewards catalog members can redeem against</li>
+              <li>Seasons XP system: time-limited progression seasons with XP tracking and rank tiers</li>
+              <li>Weekly leaderboard tab: resets every Monday, highlights top XP earners for the current week</li>
+              <li>Demo infrastructure: game embed slots and placeholder sections added to all game pages</li>
+              <li>Homepage: Vault Live section for streaming dev sessions direct from the front page</li>
+              <li>Journal: "Coming From The Forge" sidebar showing planned upcoming dispatches</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 43</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Co-op Teams</div>
+            </div>
+            <ul class="cl-items">
+              <li>Co-op teams: create a team or join one with a 6-character invite code</li>
+              <li>Team points accumulate automatically as members earn XP</li>
+              <li>Team leaderboard tab on /leaderboards/ — ranked by total points with medal icons</li>
+              <li>Team panel in the vault: create, join, leave, or disband your team</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 40–42</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Fan Art System &amp; Community Badges</div>
+            </div>
+            <ul class="cl-items">
+              <li>Fan art submission: Vault Members can upload artwork (PNG/JPG/WebP) with title, description, and character tag</li>
+              <li>Fan art gallery on /community/ — browse approved submissions in a card grid</li>
+              <li>Fan art voting: heart/like buttons with live vote counts; Vault Members can toggle their vote</li>
+              <li>Fan art moderation queue in Vault Command for approved/rejected submissions</li>
+              <li>"Currently Playing" badge on public member profiles — shows active or last-played game</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 36–39</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Game scoring, play sessions, performance pass</div>
+            </div>
+            <ul class="cl-items">
+              <li>Game session recording: visiting a game page as a signed-in member logs a session (once per day)</li>
+              <li>Session milestone awards at 5, 10, and 25 sessions per game (25/50/100 pts)</li>
+              <li>Game scores now land directly on the vault leaderboard — live integration for every shipped game</li>
+              <li>DreadSpike hero imagery optimised for faster page loads</li>
+              <li>Portal startup is noticeably faster — fewer round-trips on load</li>
+              <li>Every page now gets its own branded share image when posted to social</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 33–35</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Quality checks, community events, studio transparency tools</div>
+            </div>
+            <ul class="cl-items">
+              <li>Automated performance + accessibility checks now run on every site update</li>
+              <li>Every deploy is scanned against public accessibility standards</li>
+              <li>Community event RSVPs with live attendance count</li>
+              <li>Invite code protection — spam-proof registration flow</li>
+              <li>Vault Command — member export and challenge analytics in the portal</li>
+              <li>Gift Points — members can now gift Vault Points to each other</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 29–32</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Dark Mode, Ratings &amp; Profile Themes</div>
+            </div>
+            <ul class="cl-items">
+              <li>Dark/light mode toggle: ☀/🌙 button on every public page, persists across sessions</li>
+              <li>Profile card themes: 5 rank-unlockable card backgrounds (Rift Blue, Void, Forge Fire, Sparked)</li>
+              <li>Game ratings: 5-star widget on every released game page, with ratings visible in search results</li>
+              <li>Journal view counts: each post now shows how many times it has been read</li>
+              <li>Auto-generated sitemap keeps search engines up-to-date on every update</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 25–28</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Game Hub, Offline Mode &amp; Member Tools</div>
+            </div>
+            <ul class="cl-items">
+              <li>Games hub: genre filter pills (Sports, Action, Strategy, MMORPG, Puzzle) alongside the existing status filter</li>
+              <li>Offline detection banner in the vault portal — shows when your connection drops</li>
+              <li>Member Spotlight panel: random top-20 member shown on each login</li>
+              <li>Rank Comparison panel: see your points gap to the next player above you on the leaderboard</li>
+              <li>Referral QR code: one click generates a QR code for your referral link</li>
+              <li>Login activity heatmap: 12-week GitHub-style grid in the Chronicle tab</li>
+              <li>Annual vault anniversary: awards 50 pts × years on your join date</li>
+              <li>Weekly XP recap banner: shows last week's total on Mondays (dismissible)</li>
+              <li>Vault Command: scheduled signal broadcasts — set a future date/time for studio updates</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 22–24</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">VaultSparked Page, Analytics &amp; Onboarding</div>
+            </div>
+            <ul class="cl-items">
+              <li>VaultSparked perks landing page: /vaultsparked/ with full pricing, perk grid, and comparison table</li>
+              <li>Custom 404 page: rank-themed with quick links and a CTA to join the vault</li>
+              <li>Investor portal: KPI sparklines with 30-day trend lines under each metric</li>
+              <li>Investor portal: "Ask a question" card — questions go directly to the founder</li>
+              <li>Lazy-load audit: loading="lazy" added to all non-critical images across 29 public pages</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 20–21</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Vault Command + Performance</div>
+            </div>
+            <ul class="cl-items">
+              <li>Vault Command: challenge analytics dashboard (completions per challenge, ranked by popularity)</li>
+              <li>Vault Command: member CSV export (one-click download of all members)</li>
+              <li>Challenges tab: collapsible completion history showing when each challenge was earned</li>
+              <li>Settings: password reset email trigger (no more digging for the forgot-password link)</li>
+              <li>Settings: GDPR data export (downloads your full data as JSON)</li>
+              <li>Settings: account deletion request flow</li>
+              <li>Faster API connections across every page</li>
+              <li>Public changelog page (you're reading it!)</li>
+              <li>Responsible-disclosure security contact published</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 17–19</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Game Pages + Lore Archive + Privacy</div>
+            </div>
+            <ul class="cl-items">
+              <li>Game pages: Vault Points callout added to Call of Doodie, Gridiron GM, and VaultSpark Football GM</li>
+              <li>Unreleased game pages: "Notify Me at Launch" wishlist section (Solara, MindFrame, Project Unknown, VaultFront)</li>
+              <li>Classified Archive: reading progress bar (X of N files read)</li>
+              <li>Classified Archive: live keyword search across all files</li>
+              <li>Classified Archive: bookmark files (🔖) with localStorage persistence and filter toggle</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 15–16</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Challenge Streaks, Community + Member Directory</div>
+            </div>
+            <ul class="cl-items">
+              <li>Challenge streaks: 🔥 badge shows your consecutive-day streak on the Challenges tab</li>
+              <li>Streak milestone bonuses: 7-day (+50 pts) and 30-day (+200 pts)</li>
+              <li>Challenge difficulty tiers: Easy / Medium / Hard / Legendary badges on every challenge card</li>
+              <li>First-completion micro-achievements: 1st, 5th, and 10th challenge each award bonus pts</li>
+              <li>Leaderboards: ⚡ Challenges tab (top members by completions) and 🔗 Recruiters tab (top referrers)</li>
+              <li>Community page: recently joined member chips and live community polls section</li>
+              <li>Member directory: new /members/ page with rank filter and search</li>
+              <li>Polls: 🗳️ Polls tab in the vault for voting on studio decisions</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 12–14</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Journal, PWA, Dashboard Upgrades</div>
+            </div>
+            <ul class="cl-items">
+              <li>Individual journal post pages with full search-engine optimisation, author bio, and reading time</li>
+              <li>Journal tag filtering (Studio OS / Games / Launch / Origin / Studio / Site)</li>
+              <li>Journal RSS feed updated to per-post canonical URLs</li>
+              <li>PWA install prompt — install the vault as a home screen app</li>
+              <li>Push notification opt-in with improved 📡 value-prop banner in Settings</li>
+              <li>Dashboard tab persistence — portal remembers your last active tab across sessions</li>
+              <li>"What's New" modal — shows unread Studio Pulse entries on login</li>
+              <li>Points breakdown modal — click "breakdown" on your Vault Points stat</li>
+              <li>Challenge completion modal — replaced XP chip with full slide-up panel</li>
+              <li>Onboarding tour now saved to your Vault profile</li>
+              <li>Points history chart — 30-day bar chart on the Chronicle tab (pure SVG, no dependencies)</li>
+            </ul>
+          </article>
+
+          <article class="cl-phase">
+            <div class="cl-dot" aria-hidden="true"></div>
+            <div class="cl-phase-header">
+              <span class="cl-phase-num">Phase 10–11</span><span class="cl-phase-date">March 2026</span>
+              <div class="cl-phase-title">Public Pages, SEO, Community Features</div>
+            </div>
+            <ul class="cl-items">
+              <li>New public pages: /leaderboards/, /community/, /journal/archive/, /ranks/, /member/, /status/, /search/</li>
+              <li>Daily login bonus + streak system (🔥 day counter, milestone bonuses at 7/30/60/100 days)</li>
+              <li>5-step onboarding tour for new vault members</li>
+              <li>In-portal notification center (🔔 bell, Studio Pulse realtime feed)</li>
+              <li>Challenge categories + filter pills</li>
+              <li>Seasonal challenges with countdown badges</li>
+              <li>Achievement progress bars</li>
+              <li>Social sharing of your member card</li>
+              <li>Referral landing page (/join/?ref= shows referrer rank)</li>
+              <li>Journal emoji reactions (🔥❤️🎮⚡)</li>
+              <li>Error reporting rolled out site-wide for faster bug fixes</li>
+              <li>Search engines now surface game pages with rich previews</li>
+              <li>Improved share cards across Twitter/X and link previews</li>
+              <li>Cookie consent banner (GDPR compliant)</li>
+              <li>Automated performance monitoring on every update</li>
+            </ul>
+          </article>
+
+        </div>
+
+        <div style="text-align:center;padding:2rem 0 3rem;border-top:1px solid rgba(255,255,255,0.06);">
+          <p style="color:var(--muted);font-size:0.9rem;margin-bottom:1rem;">Want to shape what gets built next?</p>
+          <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+            <a href="/vault-member/" class="button button-sm">Vote in Vault Polls</a>
+            <a href="/community/" class="button-secondary" style="padding:0.55rem 1.2rem;font-size:0.88rem;">Community Hub</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" aria-label="Site footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <strong>VaultSpark Studios</strong>
+          <p>Where worlds are built. Where stories ignite. The vault is sparked. ⚡</p>
+        </div>
+        <div class="footer-col">
+          <h4>Games</h4>
+          <a href="/games/">All Games</a>
+          <a href="/games/call-of-doodie/">Call Of Doodie</a>
+          <a href="/games/gridiron-gm/">Gridiron GM</a>
+          <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
+          <a href="/leaderboards/">Leaderboards</a>
+          <a href="/community/">Community Hub</a>
+        </div>
+        <div class="footer-col">
+          <h4>Studio</h4>
+          <a href="/">Home</a>
+          <a href="/studio/">About</a>
+          <a href="/studio-pulse/">Forge Window</a>
+          <a href="/ignis/">IGNIS</a>
+          <a href="/oracle/">Ecosystem Oracle</a>
+          <a href="/roadmap/">Vault Pipeline</a>
+          <a href="/changelog/">Changelog</a>
+          <a href="/journal/">Signal Log</a>
+          <a href="/press/">Press Kit</a>
+          <a href="/universe/">Universe</a>
+        </div>
+        <div class="footer-col">
+          <h4>Membership</h4>
+          <a href="/membership/">About Membership</a>
+          <a href="/vaultsparked/">Choose Your Tier</a>
+          <a href="/membership-value/">Value Breakdown</a>
+          <a href="/vault-member/">Vault Member</a>
+          <a href="/vault-wall/">Vault Wall</a>
+          <a href="/invite/">Refer a Friend</a>
+        </div>
+        <div class="footer-col">
+          <h4>Portals</h4>
+          <a href="/vault-portal/">Vault Portal</a>
+          <a href="/vault-member/">Vault Member</a>
+          <a href="/investor-portal/">Investor Portal</a>
+          <a href="/investor-portal/apply/">Investor Application</a>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="/faq/">FAQ</a>
+          <a href="/careers/">Careers</a>
+          <a href="/rights/">Technology &amp; Rights</a>
+          <a href="/accessibility/">Accessibility</a>
+          <a href="/security/">Security</a>
+          <a href="/sitemap-page/">Sitemap</a>
+          <a href="/contact/">Contact</a>
+        </div>
+      </div>
+      <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
+        <span class="footer-socials-label">Follow the Studio</span>
+        <div class="footer-socials">
+          <a class="footer-social" href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="YouTube" title="YouTube"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-youtube"/></svg></a>
+          <a class="footer-social" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="GitHub" title="GitHub"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-github"/></svg></a>
+          <a class="footer-social" href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Reddit" title="Reddit"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-reddit"/></svg></a>
+          <a class="footer-social" href="https://x.com/VaultSpark" target="_blank" rel="noreferrer me" aria-label="X" title="X"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-x"/></svg></a>
+          <a class="footer-social" href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer me" aria-label="Instagram" title="Instagram"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-instagram"/></svg></a>
+          <a class="footer-social" href="https://www.tiktok.com/@vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="TikTok" title="TikTok"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-tiktok"/></svg></a>
+          <a class="footer-social" href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer me" aria-label="Discord" title="Discord"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-discord"/></svg></a>
+          <a class="footer-social" href="https://bsky.app/profile/vaultsparkstudios.bsky.social" target="_blank" rel="noreferrer me" aria-label="Bluesky" title="Bluesky"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-bluesky"/></svg></a>
+          <a class="footer-social" href="https://www.threads.com/@vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="Threads" title="Threads"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-threads"/></svg></a>
+          <a class="footer-social" href="https://www.facebook.com/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Facebook" title="Facebook"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-facebook"/></svg></a>
+          <a class="footer-social" href="https://www.pinterest.com/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Pinterest" title="Pinterest"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-pinterest"/></svg></a>
+          <a class="footer-social" href="https://vaultsparkstudios.gumroad.com/" target="_blank" rel="noreferrer me" aria-label="Gumroad" title="Gumroad"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-gumroad"/></svg></a>
+          <a class="footer-social" href="https://suno.com/@VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="Suno" title="Suno"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-suno"/></svg></a>
+          <a class="footer-social" href="https://sora.chatgpt.com/profile/vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="Sora" title="Sora"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-sora"/></svg></a>
+        </div>
+        <a class="footer-socials-all" href="/social/">All channels &rarr;</a>
+      </div>
+      <div class="vault-status-legend" style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;padding:1rem 0;margin-top:1rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.75rem;font-weight:600;letter-spacing:0.04em;">
+        <span class="legend-status-sparked" style="color:#fbbf24;">🔥 SPARKED — Live</span>
+        <span class="legend-status-forge" style="color:#f59e0b;">⚒️ FORGE — Building</span>
+        <span class="legend-status-vaulted" style="color:#94a3b8;">🔒 VAULTED — Paused</span>
+        <span class="legend-status-sealed" style="color:#7EC9FF;">⬡ SEALED — Vault sealed</span>
+        <span style="margin-left:auto;color:var(--muted);font-weight:500;">27 initiatives under the vault banner · <a href="/studio-pulse/" style="color:var(--gold);">open Forge Window &rarr;</a></span>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 VaultSpark Studios LLC. All rights reserved. VaultSpark&trade; and VaultSpark Studios&trade; are trademarks of VaultSpark Studios LLC.</span>
+        <span><a href="/privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="/cookies/">Cookies</a> &nbsp;&middot;&nbsp; <a href="/terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="/data-deletion/">Data Deletion</a> &nbsp;&middot;&nbsp; <a href="/contact/">Contact</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/kit.js" defer></script>
+  <script src="/assets/cookie-consent.js" defer></script>
+  <script src="/assets/nav-toggle.shell-6d8a113585.js" defer></script>
+  <script src="/assets/push-prompt.js" defer></script>
+  <script src="/assets/vault-cta.js" defer></script>
+  <script src="/assets/public-intelligence.js" defer></script>
+  <script src="/assets/changelog-live.js" defer></script>
+  <script src="/assets/changelog-time-machine.js" defer></script>
+  <script src="/assets/changelog-reactions.js" defer></script>
+<script src="/assets/schema-injector.js" defer></script>
+  <!-- vs-ambient:start -->
+<script src="/assets/ambient.shell-3667694cc0.js" defer></script>
+<!-- vs-ambient:end -->
+</body>
+</html>
+
+
+

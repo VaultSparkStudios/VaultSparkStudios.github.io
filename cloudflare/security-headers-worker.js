@@ -490,6 +490,30 @@ function withSecurityHeaders(response, { ttl = 0, csp, extra, jsonSwr = false } 
 
 export default {
   async fetch(request, env, ctx) {
+    // S175 origin-failover (and zero-downtime origin cutover): if the primary
+    // origin 5xxs or the fetch throws, retry against the Cloudflare Pages
+    // deployment directly. During a DNS/custom-domain transition window the
+    // proxied origin can 522 while Pages validates — visitors never see it.
+    // Permanent benefit: pages.dev keeps serving even if the custom-domain
+    // layer breaks. GET/HEAD only (idempotent).
+    const FALLBACK_ORIGIN = env.FALLBACK_ORIGIN || 'https://vaultsparkstudios-website.pages.dev';
+    const originFetch = async (req) => {
+      let primary = null;
+      try { primary = await fetch(req); } catch (_e) { /* fall through */ }
+      const m = req.method || 'GET';
+      if (primary && (primary.status < 500 || (m !== 'GET' && m !== 'HEAD'))) return primary;
+      if (m !== 'GET' && m !== 'HEAD') return primary || new Response('origin unavailable', { status: 502 });
+      try {
+        const u = new URL(req.url);
+        const fb = await fetch(`${FALLBACK_ORIGIN}${u.pathname}${u.search}`, {
+          method: m,
+          headers: { accept: req.headers.get('accept') || '*/*', 'accept-encoding': req.headers.get('accept-encoding') || '' },
+          redirect: 'follow',
+        });
+        if (fb.status < 500) return fb;
+      } catch (_e) { /* keep primary */ }
+      return primary || new Response('origin unavailable', { status: 502 });
+    };
     const url = new URL(request.url);
     const method = request.method;
 
@@ -660,13 +684,13 @@ export default {
         );
       }
       // Attach remaining count for client visibility.
-      const upstream = await fetch(request);
+      const upstream = await originFetch(request);
       return withSecurityHeaders(upstream, { ttl: 0, csp: WORKER_CSP, extra: { 'X-RateLimit-Remaining': String(remaining) } });
     }
 
     // Pass non-GET/HEAD through with security headers only.
     if (method !== 'GET' && method !== 'HEAD') {
-      const passthrough = await fetch(request);
+      const passthrough = await originFetch(request);
       return withSecurityHeaders(passthrough, { ttl: 0, csp: WORKER_CSP });
     }
 
@@ -687,7 +711,7 @@ export default {
     }
 
     // --- Layer 5: Origin fetch + optional nonce injection on HTML ---
-    const upstream = await fetch(request);
+    const upstream = await originFetch(request);
     const contentType = upstream.headers.get('Content-Type') || '';
     const isHtml = contentType.includes('text/html');
 

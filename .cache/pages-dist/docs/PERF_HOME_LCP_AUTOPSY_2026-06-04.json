@@ -1,0 +1,544 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-06-05T02:52:28.986Z",
+  "generatedBy": "scripts/analyze-home-lcp.mjs",
+  "route": "/",
+  "baseUrl": "http://127.0.0.1:4173",
+  "lcp": {
+    "startTime": 236,
+    "size": 28372,
+    "url": "",
+    "selector": "span.forge-letter.vsx-f8aedff449",
+    "text": "A",
+    "rect": {
+      "x": 865.96875,
+      "y": 183,
+      "width": 103.4375,
+      "height": 144,
+      "top": 183,
+      "right": 969.40625,
+      "bottom": 327,
+      "left": 865.96875
+    }
+  },
+  "paint": {
+    "fcp": 236
+  },
+  "navigation": {
+    "domContentLoaded": 361.7999999821186,
+    "load": 10135.09999999404
+  },
+  "resources": [
+    {
+      "name": "https://fjnpzjjyhnpmunfoycrp.supabase.co/rest/v1/vault_members?select=id",
+      "startTime": 56.89999997615814,
+      "duration": 10886,
+      "transferSize": 0,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "https://fjnpzjjyhnpmunfoycrp.supabase.co/rest/v1/vault_members?select=points",
+      "startTime": 57.39999997615814,
+      "duration": 10885.800000011921,
+      "transferSize": 0,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "https://fjnpzjjyhnpmunfoycrp.supabase.co/rest/v1/challenge_submissions?select=id",
+      "startTime": 57.19999998807907,
+      "duration": 10885.300000011921,
+      "transferSize": 0,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "https://fjnpzjjyhnpmunfoycrp.supabase.co/rest/v1/vault_members?select=id&is_sparked=eq.true",
+      "startTime": 57.099999994039536,
+      "duration": 10879.90000000596,
+      "transferSize": 0,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "https://fjnpzjjyhnpmunfoycrp.supabase.co/rest/v1/challenge_submissions?select=created_at&order=created_at.desc&limit=30",
+      "startTime": 189.69999998807907,
+      "duration": 10753.90000000596,
+      "transferSize": 0,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "https://fjnpzjjyhnpmunfoycrp.supabase.co/rest/v1/game_sessions?select=game_slug%2Cplayed_at&order=played_at.desc&limit=30",
+      "startTime": 189.7999999821186,
+      "duration": 10753.700000017881,
+      "transferSize": 0,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "https://fjnpzjjyhnpmunfoycrp.supabase.co/rest/v1/vault_members?select=created_at&order=created_at.desc&limit=30",
+      "startTime": 189.5,
+      "duration": 10748.09999999404,
+      "transferSize": 0,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js",
+      "startTime": 190.2999999821186,
+      "duration": 9745,
+      "transferSize": 0,
+      "initiatorType": "script"
+    },
+    {
+      "name": "https://www.googletagmanager.com/gtag/js?id=G-RSGLPP4KDZ",
+      "startTime": 574,
+      "duration": 9496.699999988079,
+      "transferSize": 0,
+      "initiatorType": "script"
+    },
+    {
+      "name": "https://www.google-analytics.com/g/collect?v=2&tid=G-RSGLPP4KDZ&gtm=45je6631v9247199338za200zd9247199338&_p=1780627936398&gcd=13l3l3l3l1l1&npa=0&dma=0&are=1&cid=2012839301.1780627946&frm=0&pscdl=noapi&rcb=9&sr=1366x900&uaa=x86&uab=64&uafvl=Not%253AA-Brand%3B99.0.0.0%7CHeadlessChrome%3B145.0.7632.6%7CChromium%3B145.0.7632.6&uam=&uamb=0&uap=Windows&uapv=19.0.0&uaw=0&ul=en-us&_s=1&tag_exp=0~115938465~115938468~118228215~119027224&sid=1780627945&sct=1&seg=0&dl=http%3A%2F%2F127.0.0.1%2F&dt=VaultSpark%20Studios%20%E2%80%94%20Games%2C%20Tools%2C%20Worlds%2C%20and%20Studio%20Intelligence&en=page_view&_fv=1&_nsi=1&_ss=1&_ee=1&tfd=10131",
+      "startTime": 10133.59999999404,
+      "duration": 156.69999998807907,
+      "transferSize": 0,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/assets/ambient.shell-3667694cc0.js",
+      "startTime": 22.399999976158142,
+      "duration": 63.80000001192093,
+      "transferSize": 31525,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/schema-injector.js",
+      "startTime": 22.399999976158142,
+      "duration": 61.30000001192093,
+      "transferSize": 3262,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/home-idle-loader.js",
+      "startTime": 22.299999982118607,
+      "duration": 61.099999994039536,
+      "transferSize": 950,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/games/",
+      "startTime": 27.899999976158142,
+      "duration": 60.5,
+      "transferSize": 16037,
+      "initiatorType": "link"
+    },
+    {
+      "name": "/vault-member/",
+      "startTime": 27.799999982118607,
+      "duration": 58.30000001192093,
+      "transferSize": 27525,
+      "initiatorType": "link"
+    },
+    {
+      "name": "/api/founder-presence.json",
+      "startTime": 27.799999982118607,
+      "duration": 55.80000001192093,
+      "transferSize": 436,
+      "initiatorType": "link"
+    },
+    {
+      "name": "/assets/sentry-init.js",
+      "startTime": 22.299999982118607,
+      "duration": 54.30000001192093,
+      "transferSize": 794,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/vault-pulse.js",
+      "startTime": 22.19999998807907,
+      "duration": 53.80000001192093,
+      "transferSize": 3160,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/vault-cta.js",
+      "startTime": 22.19999998807907,
+      "duration": 53.19999998807907,
+      "transferSize": 1991,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/pwa-install.js",
+      "startTime": 22.099999994039536,
+      "duration": 53.099999994039536,
+      "transferSize": 2011,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/nav-toggle.shell-6d8a113585.js",
+      "startTime": 22.19999998807907,
+      "duration": 52.69999998807907,
+      "transferSize": 2443,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/vault-resonance.js",
+      "startTime": 22.19999998807907,
+      "duration": 52.19999998807907,
+      "transferSize": 2448,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/social-icons.svg#i-github",
+      "startTime": 34.599999994039536,
+      "duration": 49.79999998211861,
+      "transferSize": 4229,
+      "initiatorType": "other"
+    },
+    {
+      "name": "/assets/cookie-consent.js",
+      "startTime": 22.099999994039536,
+      "duration": 48,
+      "transferSize": 1316,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/hero-ticker.js",
+      "startTime": 22.099999994039536,
+      "duration": 47.69999998807907,
+      "transferSize": 2061,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/ignis-tour.js",
+      "startTime": 22.099999994039536,
+      "duration": 47.19999998807907,
+      "transferSize": 3862,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/home-dynamic-hero.js",
+      "startTime": 22.099999994039536,
+      "duration": 46.900000005960464,
+      "transferSize": 1788,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/recent-ships.js",
+      "startTime": 22.099999994039536,
+      "duration": 46.29999998211861,
+      "transferSize": 1702,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/funnel-tracking.js",
+      "startTime": 22.099999994039536,
+      "duration": 40.29999998211861,
+      "transferSize": 1253,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/hydration-timeout.js",
+      "startTime": 22,
+      "duration": 40,
+      "transferSize": 1714,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/related-content.js",
+      "startTime": 21.899999976158142,
+      "duration": 39.900000005960464,
+      "transferSize": 3644,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/pathways-router.js",
+      "startTime": 21.899999976158142,
+      "duration": 38.70000001788139,
+      "transferSize": 3225,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/adaptive-cta.js",
+      "startTime": 21.899999976158142,
+      "duration": 37.400000005960464,
+      "transferSize": 2268,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/trust-depth.js",
+      "startTime": 21.899999976158142,
+      "duration": 32.70000001788139,
+      "transferSize": 4925,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/live-proof.js",
+      "startTime": 21.899999976158142,
+      "duration": 30.80000001192093,
+      "transferSize": 1971,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/intent-state.js",
+      "startTime": 21.899999976158142,
+      "duration": 29.5,
+      "transferSize": 2419,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/kit.js",
+      "startTime": 21.799999982118607,
+      "duration": 29.200000017881393,
+      "transferSize": 2970,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/public-intelligence.js",
+      "startTime": 21.799999982118607,
+      "duration": 28.900000005960464,
+      "transferSize": 1356,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/kit-fallback.js",
+      "startTime": 21.799999982118607,
+      "duration": 25.700000017881393,
+      "transferSize": 474,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/shell-health.shell-0995bd7945.js",
+      "startTime": 21.599999994039536,
+      "duration": 22.19999998807907,
+      "transferSize": 1337,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/pwa-nav.js",
+      "startTime": 21.599999994039536,
+      "duration": 19.599999994039536,
+      "transferSize": 1093,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/api/heartbeat.json",
+      "startTime": 27.799999982118607,
+      "duration": 19.30000001192093,
+      "transferSize": 785,
+      "initiatorType": "link"
+    },
+    {
+      "name": "/assets/analytics.js",
+      "startTime": 21.599999994039536,
+      "duration": 19.299999982118607,
+      "transferSize": 1657,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/style.shell-7082b9235c.css",
+      "startTime": 42.79999998211861,
+      "duration": 18.400000005960464,
+      "transferSize": 33759,
+      "initiatorType": "link"
+    },
+    {
+      "name": "/assets/theme-toggle.shell-b970c26bd9.js",
+      "startTime": 21.5,
+      "duration": 17.5,
+      "transferSize": 4921,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/style.shell-7082b9235c.css",
+      "startTime": 21.299999982118607,
+      "duration": 13.800000011920929,
+      "transferSize": 33759,
+      "initiatorType": "link"
+    },
+    {
+      "name": "/assets/micro-feedback.js",
+      "startTime": 575.5,
+      "duration": 13.199999988079071,
+      "transferSize": 5066,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/showcase-spine.js",
+      "startTime": 575.5999999940395,
+      "duration": 12.900000005960464,
+      "transferSize": 2173,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/api/public-intelligence.json",
+      "startTime": 57.79999998211861,
+      "duration": 12.200000017881393,
+      "transferSize": 6928,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/assets/ignis-live.js",
+      "startTime": 575.3999999761581,
+      "duration": 8,
+      "transferSize": 1156,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/home-intelligence.js",
+      "startTime": 575,
+      "duration": 7.5999999940395355,
+      "transferSize": 2067,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/home-personalized.js",
+      "startTime": 575.0999999940395,
+      "duration": 7.5999999940395355,
+      "transferSize": 3097,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/heartbeat.js",
+      "startTime": 574.5999999940395,
+      "duration": 7.299999982118607,
+      "transferSize": 3155,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/studio-stats.js",
+      "startTime": 575.2999999821186,
+      "duration": 6.700000017881393,
+      "transferSize": 674,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/supabase-public.js",
+      "startTime": 21.599999994039536,
+      "duration": 6.699999988079071,
+      "transferSize": 1468,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/studio-milestones.js",
+      "startTime": 574.7999999821186,
+      "duration": 6.5999999940395355,
+      "transferSize": 1807,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/vaultspark-icon-nav.webp",
+      "startTime": 21.399999976158142,
+      "duration": 6.4000000059604645,
+      "transferSize": 4306,
+      "initiatorType": "link"
+    },
+    {
+      "name": "/api/heartbeat.json",
+      "startTime": 616.5999999940395,
+      "duration": 6,
+      "transferSize": 785,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/api/public-intelligence.json",
+      "startTime": 616.5,
+      "duration": 5.899999976158142,
+      "transferSize": 6928,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/data/intent-graph.json",
+      "startTime": 197.7999999821186,
+      "duration": 5.0999999940395355,
+      "transferSize": 1475,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/api/public-intelligence.json",
+      "startTime": 198,
+      "duration": 5.0999999940395355,
+      "transferSize": 6928,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/assets/presence-badge.js",
+      "startTime": 673.7999999821186,
+      "duration": 5,
+      "transferSize": 2921,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/assets/favicon-pulse.js",
+      "startTime": 674.1999999880791,
+      "duration": 4.800000011920929,
+      "transferSize": 2593,
+      "initiatorType": "script"
+    },
+    {
+      "name": "/api/heartbeat.json",
+      "startTime": 586.7999999821186,
+      "duration": 4.700000017881393,
+      "transferSize": 785,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/api/public-intelligence.json",
+      "startTime": 703.3999999761581,
+      "duration": 4.600000023841858,
+      "transferSize": 6928,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/api/public-intelligence.json",
+      "startTime": 674.5999999940395,
+      "duration": 4.5,
+      "transferSize": 6928,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/api/ignis-conduit.json",
+      "startTime": 468.39999997615814,
+      "duration": 3.9000000059604645,
+      "transferSize": 809,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/api/founder-presence.json",
+      "startTime": 186.69999998807907,
+      "duration": 3.800000011920929,
+      "transferSize": 436,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/api/founder-presence.json",
+      "startTime": 704.1999999880791,
+      "duration": 3.4000000059604645,
+      "transferSize": 436,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/api/founder-presence.json",
+      "startTime": 681.2999999821186,
+      "duration": 3.0999999940395355,
+      "transferSize": 436,
+      "initiatorType": "fetch"
+    },
+    {
+      "name": "/api/founder-presence.json",
+      "startTime": 704.6999999880791,
+      "duration": 3.0999999940395355,
+      "transferSize": 436,
+      "initiatorType": "fetch"
+    }
+  ],
+  "longTasks": [
+    {
+      "startTime": 60.19999998807907,
+      "duration": 120
+    },
+    {
+      "startTime": 192,
+      "duration": 169
+    },
+    {
+      "startTime": 380.09999999403954,
+      "duration": 87
+    }
+  ]
+}

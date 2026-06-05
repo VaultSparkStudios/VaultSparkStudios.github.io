@@ -1,0 +1,203 @@
+{
+  "schemaVersion": "1.3",
+  "slug": "vaultsparkstudios-website",
+  "name": "VaultSparkStudios.github.io",
+  "type": "website",
+  "lifecycle": "deployed",
+  "audience": "public-live",
+  "freeTierCostStatus": "cost-neutral",
+  "status": "live",
+  "health": "green",
+  "owner": "VaultSpark Studios",
+  "localPath": null,
+  "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
+  "liveUrl": "https://vaultsparkstudios.com/",
+  "currentFocus": "Self-feeding evidence loops: daily RUM autopull + deploy field-verdicts + TT forensics burndown + staging parity green",
+  "nextMilestone": "Field verdict readout for the S173 homepage deploy (needs >=5 post-deploy samples) + TT soak re-probe toward enforce canary",
+  "blockers": [
+    "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
+    "Founder device verify: membership proof loop + nav-sheet"
+  ],
+  "lastUpdated": "2026-06-05",
+  "currentSession": 174,
+  "truthAuditStatus": "green",
+  "truthAuditLastRun": "2026-05-25",
+  "silScore": 997,
+  "silAvg3": 997.7,
+  "silVelocity": 10,
+  "silDebt": "→",
+  "silLastSession": 174,
+  "stagingUrl": "https://website.staging.vaultsparkstudios.com",
+  "stagingType": "hetzner",
+  "testingSurfaces": [
+    {
+      "type": "production",
+      "url": "https://vaultsparkstudios.com/",
+      "status": "green"
+    },
+    {
+      "type": "staging",
+      "url": "https://website.staging.vaultsparkstudios.com/",
+      "status": "yellow"
+    },
+    {
+      "type": "custom",
+      "url": "https://vaultsparkstudios.com/?nav=sheet",
+      "status": "yellow"
+    },
+    {
+      "type": "custom",
+      "url": "https://vaultsparkstudios.com/studio-pulse/",
+      "status": "green"
+    },
+    {
+      "type": "tests",
+      "command": "npm run build:check",
+      "status": "green"
+    },
+    {
+      "type": "local",
+      "command": "npm run verify:local",
+      "status": "green"
+    }
+  ],
+  "vaultStatus": "SPARKED",
+  "ignisScore": 40319,
+  "ignisScoreDelta": 0,
+  "ignisGrade": "FORGE",
+  "ignisLastComputed": "2026-06-05",
+  "entropyScore": 0.212,
+  "entropyLastComputed": "2026-05-28",
+  "sessionMode": "founder",
+  "sessionModeAutoShiftedAt": "2026-04-21T00:00:00.000Z",
+  "silRubricVersion": "3.0",
+  "silMax": 1000,
+  "silScoreLegacy500": 476,
+  "silCategoriesV3": {
+    "devHealth": 100,
+    "creativeAlignment": 99,
+    "momentum": 100,
+    "engagement": 99,
+    "processQuality": 101,
+    "crossRepoCoherence": 100,
+    "securityPosture": 99,
+    "ecosystemIntegration": 100,
+    "capitalEfficiency": 100,
+    "automationCoverage": 100
+  },
+  "silScoreV3MigratedAt": "2026-04-21",
+  "doctorScore": {
+    "date": "2026-05-26",
+    "passing": 12,
+    "warning": 1,
+    "failing": 0,
+    "blockingFailing": 0,
+    "advisoryFailing": 0,
+    "total": 13,
+    "score": 92,
+    "checks": [
+      {
+        "id": "manifest",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "validate",
+        "pass": true,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "canon",
+        "pass": true,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "compliance-velocity",
+        "pass": true,
+        "warn": true,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "sanitize",
+        "pass": true,
+        "warn": false,
+        "driftClass": "portfolio-outdated",
+        "blocking": false
+      },
+      {
+        "id": "launch",
+        "pass": true,
+        "warn": false,
+        "driftClass": "expected-external",
+        "blocking": false
+      },
+      {
+        "id": "feedback",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "entropy",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "revenue",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "sibling-locks",
+        "pass": false,
+        "warn": true,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "ignis",
+        "pass": true,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
+      },
+      {
+        "id": "genome",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      },
+      {
+        "id": "prompt-ver",
+        "pass": true,
+        "warn": false,
+        "driftClass": "local-broken",
+        "blocking": false
+      }
+    ]
+  },
+  "modelTier": "T3_opus",
+  "modelTierDefault": "opus",
+  "modelTierCtxLimit": 1000000,
+  "modelPlanMode": false,
+  "modelPlanModeSlash": null,
+  "silScoreReconciledAt": "2026-05-18",
+  "silScoreReconciledFrom": 978,
+  "testsTotal": 116,
+  "testsPassing": 116,
+  "testsLastRun": "2026-06-05",
+  "testsLabel": "build:check gates"
+}

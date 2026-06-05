@@ -1,0 +1,41 @@
+name: Generate Vault Narrative
+
+on:
+  schedule:
+    - cron: '0 13 * * *'  # daily at 13:00 UTC (~9am ET)
+  workflow_dispatch:
+
+jobs:
+  narrative:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Refresh public intelligence snapshot
+        run: node scripts/generate-public-intelligence.mjs
+
+      - name: Generate vault-narrative.json
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ secrets.ANTHROPIC_MODEL || '' }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/generate-vault-narrative.mjs
+
+      - name: Commit updated narrative
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add api/vault-narrative.json api/vault-narrative-history.json journal/dispatches/feed.xml
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: refresh vault narrative [skip ci]"
+            git push
+          else
+            echo "Vault narrative unchanged, skipping commit"
+          fi

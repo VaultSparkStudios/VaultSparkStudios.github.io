@@ -1,0 +1,21 @@
+{
+  "$schema": "Baseline for scripts/check-portfolio-coherence.mjs. Anything listed here is intentionally accepted; net-new drift will be flagged.",
+  "generated": "2026-05-14 (S129)",
+  "slugAliases": {
+    "living-protocol": "the-living-protocol"
+  },
+  "allowedOrphans": [
+    "signal-log",
+    "vault-member",
+    "vault-pipeline",
+    "project-unknown",
+    "ideaforge",
+    "statvault"
+  ],
+  "knownMissing": [],
+  "notes": [
+    "slugAliases: registry uses 'living-protocol', on-site uses 'the-living-protocol' for SEO/legibility.",
+    "allowedOrphans: public-safe meta-pages that don't have dedicated registry entries (per S127 founder correction — these surfaces are public, not internal). project-unknown is the sealed-vault placeholder.",
+    "knownMissing: registry slugs intentionally without on-site dirs (e.g., domains hosted elsewhere)."
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-05-21",
+  "project": "vaultsparkstudios-website",
+  "type": "platform",
+  "items": [
+    {
+      "rank": 1,
+      "tier": "fire",
+      "slug": "journal-archive-as-feed",
+      "axis": "Speed · UX · Organization",
+      "effort": "2h",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 32.0,
+      "recipe": "Keep the first three dispatches inline for SEO/no-JS, move the rest to /data/journal-feed.json, render them with one /assets/journal-feed.js template, and reload reaction counts after dynamic render.",
+      "status": "done",
+      "evidence": "scripts/defer-gtag.mjs broadened and run; five variant pages now use the S147 deferred idle bootstrap."
+    },
+    {
+      "rank": 2,
+      "tier": "high",
+      "slug": "gtag-variant-defer-sweep",
+      "axis": "Speed · Analytics hygiene",
+      "effort": "45m",
+      "impact": 8,
+      "innovation": 6,
+      "priority": 32.0,
+      "recipe": "Broaden scripts/defer-gtag.mjs to match commentless/spacing variants, run it, and prove no eager gtag bootstrap remains on the five variant pages.",
+      "status": "done",
+      "evidence": "journal/index.html keeps 3 static entries; data/journal-feed.json has 7 posts; assets/journal-feed.js renders them and calls window.loadJournalReactions; scripts/verify-journal-feed.mjs is wired into build:check."
+    },
+    {
+      "rank": 3,
+      "tier": "high",
+      "slug": "live-perf-proof",
+      "axis": "Speed · Process",
+      "effort": "1h",
+      "impact": 8,
+      "innovation": 5,
+      "priority": 25.6,
+      "recipe": "Run the production/staging performance measurement path where available, write current deployed evidence into docs/PERF_TRACE_PROD_S149.* artifacts, and compare against the local S143 matrix.",
+      "status": "done",
+      "evidence": "docs/PERF_TRACE_PROD_S149.{json,md} and docs/PERF_TRACE_LOCAL_JOURNAL_S149.{json,md} captured. Production proof found follow-up budget misses on / and /membership/."
+    },
+    {
+      "rank": 4,
+      "tier": "idea",
+      "slug": "s149-execution-ledger",
+      "axis": "Process · Token cost",
+      "effort": "30m",
+      "impact": 6,
+      "innovation": 6,
+      "priority": 36.0,
+      "recipe": "Write an S149-suffixed audit + JSON sidecar, update docs/IMPLEMENT_PLAN.md, and record per-item execution results so future /implement runs are idempotent.",
+      "status": "done",
+      "evidence": "docs/AUDIT_2026-05-21-S149.{md,json} and docs/IMPLEMENT_PLAN.md refreshed with S149 execution evidence."
+    }
+  ]
+}
