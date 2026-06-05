@@ -342,7 +342,70 @@
       </div>
     </section>
 
+    <!-- S175 status-page: live operational signals from generated artifacts -->
+    <section aria-labelledby="live-signals-heading">
+      <div class="container">
+        <span class="eyebrow">Live &nbsp;·&nbsp; Operational signals</span>
+        <h2 id="live-signals-heading" style="font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.2rem);margin:.4rem 0 1rem;">Measured, not promised</h2>
+        <p style="color:var(--muted);max-width:62ch;margin-bottom:1.5rem;">Every tile below is generated from the same instruments the studio runs on — CI gates, real-visitor vitals, deploy field verdicts, staging parity, and first-party traffic. No hand-set statuses.</p>
+        <div id="liveSignalsGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.85rem;"></div>
+      </div>
+    </section>
+
   </main>
+
+  <script>
+  (function () {
+    // S175 live-signals tiles — DOM API only (Trusted Types soak is active).
+    var grid = document.getElementById('liveSignalsGrid');
+    if (!grid) return;
+    function tile(label, value, detail, tone) {
+      var card = document.createElement('div');
+      card.style.cssText = 'padding:1rem 1.2rem;border-radius:12px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);';
+      var l = document.createElement('div');
+      l.style.cssText = 'font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:.35rem;';
+      l.textContent = label;
+      var v = document.createElement('div');
+      v.style.cssText = 'font-size:1.18rem;font-weight:700;color:' + (tone === 'good' ? '#3ecf8e' : tone === 'warn' ? '#ffc400' : tone === 'bad' ? '#ff6b6b' : 'var(--text)') + ';';
+      v.textContent = value;
+      card.appendChild(l); card.appendChild(v);
+      if (detail) {
+        var d = document.createElement('div');
+        d.style.cssText = 'font-size:.8rem;color:var(--muted);margin-top:.3rem;';
+        d.textContent = detail;
+        card.appendChild(d);
+      }
+      grid.appendChild(card);
+    }
+    function get(u) { return fetch(u, { credentials: 'omit' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
+    get('/api/ci-status.json').then(function (d) {
+      if (!d) return;
+      tile('CI gates', d.allGreen ? 'All green' : 'Attention', (d.workflows || []).map(function (w) { return w.name.split(' ')[0]; }).join(' · '), d.allGreen ? 'good' : 'warn');
+    });
+    get('/api/site-health.json').then(function (d) {
+      if (!d || d.publicSafe !== true) return;
+      tile('Field vitals', d.fieldReady ? 'Measuring' : 'Accumulating', d.totalSamples + ' real-visit samples / ' + d.windowDays + 'd', d.fieldReady ? 'good' : 'warn');
+    });
+    get('/api/field-verdicts.json').then(function (d) {
+      if (!d || !d.boundaries || !d.boundaries.length) return;
+      var b = d.boundaries[d.boundaries.length - 1];
+      tile('Latest deploy verdict', b.overall.toUpperCase(), b.date + ' · graded by real visitors', b.overall === 'improved' ? 'good' : b.overall === 'regressed' ? 'bad' : 'warn');
+    });
+    get('/api/staging-health.json').then(function (d) {
+      if (!d) return;
+      tile('Staging parity', d.status.toUpperCase(), (d.routes || []).length + ' routes sampled (CANON-007)', d.status === 'green' ? 'good' : 'warn');
+    });
+    get('/api/analytics-summary.json').then(function (d) {
+      if (!d || d.publicSafe !== true) return;
+      tile('Traffic (first-party)', d.views7 + ' views / 7d', 'No cookies · no third parties', 'neutral');
+    });
+    get('/api/geo-vitals.json').then(function (d) {
+      if (!d || !d.countries || !d.countries.length) return;
+      var top = d.countries[0];
+      tile('Field reach', d.countries.length + ' region bucket(s)', 'top: ' + top.country + ' · LCP p75 ' + (top.lcpP75 / 1000).toFixed(1) + 's', 'neutral');
+    });
+  })();
+  </script>
 
   <script>
   (function () {
