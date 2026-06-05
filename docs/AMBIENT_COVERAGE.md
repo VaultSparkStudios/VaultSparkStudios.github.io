@@ -8,9 +8,9 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **27**  ·  Total: **100.1 KB** (raw)
-- Guarded (conditional): **18** modules · **59.3 KB** — split candidates
-- Always-on: **9** modules · **40.8 KB**
+- Sources: **27**  ·  Total: **101.9 KB** (raw)
+- Guarded (conditional): **18** modules · **61.0 KB** — split candidates
+- Always-on: **9** modules · **40.9 KB**
 
 ## By size (split candidates flagged)
 
@@ -20,24 +20,24 @@
 | `rate-page.js` | 6.6 KB | always | — |
 | `vault-genome-strip.js` | 5.8 KB | 🔶 guarded | capability gated |
 | `intent-flight-director.js` | 5.5 KB | always | — |
+| `adaptive-speculation.js` | 5.2 KB | 🔶 guarded | — |
 | `ignis-lens.js` | 5.0 KB | always | — |
 | `breadcrumb-render.js` | 4.7 KB | always | — |
 | `signed-in-state.js` | 4.7 KB | 🔶 guarded | session gated |
-| `adaptive-speculation.js` | 4.6 KB | 🔶 guarded | — |
 | `vault-rank-bar.js` | 4.6 KB | 🔶 guarded | session gated |
 | `ignis-answer-engine.js` | 4.4 KB | always | — |
 | `vault-atlas.js` | 4.4 KB | 🔶 guarded | — |
+| `page-sigil.js` | 4.4 KB | 🔶 guarded | — |
 | `scroll-depth.js` | 4.2 KB | 🔶 guarded | session gated |
 | `rank-economy-simulator.js` | 3.9 KB | always | — |
-| `page-sigil.js` | 3.9 KB | 🔶 guarded | — |
 | `edge-swipe-nav.js` | 3.8 KB | 🔶 guarded | capability gated |
 | `native-feel.js` | 3.3 KB | 🔶 guarded | viewport gated, capability gated |
 | `hover-prefetch.js` | 3.3 KB | 🔶 guarded | viewport gated, session gated, capability gated |
 | `feedback-decision-board.js` | 3.2 KB | 🔶 guarded | viewport gated |
-| `command-palette-loader.js` | 2.8 KB | always | — |
+| `command-palette-loader.js` | 3.0 KB | always | — |
+| `ambient-loader.js` | 2.6 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
 | `pointerdown-warm.js` | 2.4 KB | 🔶 guarded | — |
 | `rum-beacon.js` | 2.1 KB | 🔶 guarded | — |
-| `ambient-loader.js` | 2.1 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
 | `account-chip-loader.js` | 2.0 KB | 🔶 guarded | session gated |
 | `founder-presence-handle.js` | 2.0 KB | 🔶 guarded | — |
 | `social-dashboard-public.js` | 1.6 KB | 🔶 guarded | element-presence gated |

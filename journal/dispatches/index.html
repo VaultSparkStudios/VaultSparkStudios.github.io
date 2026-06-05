@@ -320,7 +320,7 @@
   </footer>
 
   <script src="/assets/kit.js" defer></script>
-  <script src="/assets/nav-toggle.shell-96581b1d55.js" defer></script>
+  <script src="/assets/nav-toggle.shell-6d8a113585.js" defer></script>
   <script>
     (function () {
       'use strict';
@@ -353,7 +353,15 @@
       }
 
       function render(entries) {
-        listEl.innerHTML = '';
+        // S174 TT burndown: DOM API instead of innerHTML — this was the
+        // highest-volume Trusted Types sink on the site (30 sampled reports).
+        while (listEl.firstChild) listEl.removeChild(listEl.firstChild);
+        function div(cls, text) {
+          var node = document.createElement('div');
+          node.className = cls;
+          node.textContent = text;
+          return node;
+        }
         for (var i = 0; i < entries.length; i++) {
           var e = entries[i];
           var dayKey = (e.generatedAt || '').slice(0, 10);
@@ -361,12 +369,10 @@
           card.className = 'disp-card';
           card.setAttribute('role', 'listitem');
           card.id = dayKey;
-          card.innerHTML =
-            '<div class="disp-card__date">' + escape(fmtDate(e.generatedAt)) + '</div>' +
-            '<div class="disp-card__body">' + escape(e.dispatch) + '</div>' +
-            '<div class="disp-card__meta">' + escape(fmtAge(e.generatedAt)) +
-              (e.sourceSession ? ' · session ' + escape(String(e.sourceSession)) : '') +
-            '</div>';
+          card.appendChild(div('disp-card__date', fmtDate(e.generatedAt)));
+          card.appendChild(div('disp-card__body', e.dispatch));
+          var meta = fmtAge(e.generatedAt) + (e.sourceSession ? ' · session ' + String(e.sourceSession) : '');
+          card.appendChild(div('disp-card__meta', meta));
           listEl.appendChild(card);
         }
       }
@@ -390,7 +396,7 @@
     })();
   </script>
   <!-- vs-ambient:start -->
-<script src="/assets/ambient.shell-fcf7617e68.js" defer></script>
+<script src="/assets/ambient.shell-3667694cc0.js" defer></script>
 <!-- vs-ambient:end -->
 </body>
 </html>

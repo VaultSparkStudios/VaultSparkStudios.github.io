@@ -7,9 +7,10 @@ Ark drain is restored, but signature failures mean some cross-repo cargo cannot 
 
 | Cargo id | Producer | Type | Error | Observed |
 |---|---|---|---|---|
-| `01JPM3ODST22BBBD3C4DB1FEB4` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-03T21:29:13.176Z |
-| `01JPM40RJC0FF446AB55AAD18D` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-03T21:29:13.178Z |
-| `01JQ7IHRB203462A9CEB553339` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-03T21:29:13.179Z |
+| `01JQ7IHRB203462A9CEB553339` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-05T02:25:28.383Z |
+| `01JQ7NMS6UC09DAC5A1F480EC7` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-05T02:25:28.386Z |
+| `01JQ81DUUGAB4D9AAFCA86A4C8` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-05T02:25:28.388Z |
+| `01JQAM72190FE3E53A1B0BD420` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-05T02:25:28.389Z |
 
 ## Recommended Studio-Ops Repair
 

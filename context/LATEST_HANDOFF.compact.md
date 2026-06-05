@@ -1,29 +1,37 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 202a8a80deb9 -->
-<!-- generated-at: 2026-06-03T21:02:12.167Z -->
+<!-- source-hash: 5ab6d5ed53cd -->
+<!-- generated-at: 2026-06-05T02:23:54.498Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 171 HANDOFF
+Session 173 Handoff — VaultSparkStudios.github.io
 
-Session Number: 171
+SESSION INFO
+Session 173 intent: Full `/start → /audit → /implement → /closeout` goal-chain with project-personalized audit/implementation and impact-scored closeout. Outcome: ACHIEVED — 14/14 audit items shipped (Priority 344.1); post-closeout impact score 94/100; npm run build and npm run build:check green end-to-end.
 
-Shipped: 3/3 audit items — longtail-visual-proof-pack, rum-export-path-diagnostics, s171-runway-truth-cleanup. `scripts/capture-longtail-visual-proof.mjs` captured all 6 desktop/mobile screenshots + manifest.json for projects/vorn/, /privacy/, journal/community-enters-the-vault/. `scripts/check-longtail-visual-proof.mjs` verifies (6/6 green, wired into build:check). `scripts/check-rum-export-path.mjs` writes diagnostics.json and runs non-blocking in build:check. S168 legacy-intelligence carry closed with S169 evidence; GENIUS_LIST.md regenerated. npm run build and build:check both green end-to-end (108-page crawl, 0 failures).
+SHIPPED THIS SESSION
+Homepage critical path is evidence-backed. Removed duplicate page-local critical CSS; added scripts/check-home-critical-css-contract.mjs and scripts/analyze-home-lcp.mjs (current local LCP 324ms with named hero candidate). Four timed first-viewport frames in docs/visual-proof/home-lcp-s173/.
+Ambient first-load cost dropped to 27 sources / 104.5KB without deleting behavior. assets/ambient-loader.js moves guarded nav/engagement modules behind predicates. scripts/check-sw-shell-coherency.mjs guards service-worker shell rotation.
+RUM strictness is now a ladder (scripts/check-rum-strict-ladder.mjs). Current evidence: 33 samples; `/` needs 37 more route samples for strict evaluation.
+Trusted Types enforcement held for right reason. scripts/probe-tt-soak.mjs now emits route enforce/rollback rows. docs/TT_SOAK_EVIDENCE_2026-06-05.md shows 81 violations in 100%-sample soak; next work is sink burn-down, not enforcement.
+Membership proof loop wired locally. assets/membership-proof-loop.js connects interview intent to rank economy simulator. docs/MEMBERSHIP_ORPHAN_DECISION.md ready for founder decision.
+Public ops artifacts gained sharper truth: ship receipts, intelligence budget, Ark signature dossier, nav decision ETA, staging parity health generated. api/staging-health.json yellow (prod/staging reachable; sampled shell/header parity differs).
 
-Current Intent: Resume goal-chain into next audit cycle with captured visual proof and RUM diagnostics as foundation.
+CURRENT INTENT
+Field-verify homepage changes after deployment. Keep npm run rum:pull running until `/` crosses 50-sample floor. Burn down TT violations before enforce canary. Repair staging parity yellow. Coordinate Ark signature failures with studio-ops.
 
-Now Bucket (top 3):
-- Production RUM field-sample export (diagnostics now explicit on gap; blocks dormant RUM loop)
-- Founder confirmation on 3 feature-bearing membership/vaultsparked orphan assets (blocks delete/rewire decision)
-- Founder review of new longtail screenshots and theme-primitive adoption proof
+NOW BUCKET (TOP 3)
+1. HOMEPAGE-FIELD-LCP-FIX (P1, evidence-backed): Real field LCP ~5.8s median, p75 ~10s across 37 visits. Deploy S173 changes and monitor.
+2. RUM sample accrual: `/` needs 37 more samples to unlock strict RUM evaluation. Keep npm run rum:pull running; current floor 50 samples.
+3. TT violations burn-down: 81 violations in current soak. Prioritize sink burn before any enforce canary.
 
-Blockers (top 3):
-- RUM sample export remains empty — diagnostics name exact gap; requires external RUM setup or mock-sample decision
-- 3 orphan membership/vaultsparked assets require founder sign-off before cleanup
-- Screenshot proof verification pending founder review
+BLOCKERS (TOP 3)
+1. Staging parity health yellow (api/staging-health.json): prod/staging reachable but sampled shell/header parity differs. Needs repair before high-confidence canary.
+2. Ark signature failures (3 flagged for studio-ops): CANON-022 surface issue. Blocking full ops workflow confidence.
+3. Founder decision pending: vaultsparked-proof delete yes/no; membership interview device verify.
 
-Human-Blocked Items:
-- RUM field-sample export (age: 2+ sessions, diagnostic gate now in place)
-- 3 orphan asset delete/rewire decision (age: 2+ sessions, listed in S170/S171)
+HUMAN-BLOCKED ITEMS
+Production RUM field-sample export (from S171/S172 carry): diagnostics now explicit; blocking strict RUM floor unlock.
 
-Session 172 pointer: Prioritize founder RUM decision and orphan-asset confirmation; audit blockers now explicit in scripts and diagnostics.
+NEXT SESSION
+Deploy S173 homepage critical-path changes; resume field LCP verification + RUM accrual toward 50-sample unlock; begin TT violation sink burn-down; await founder membership/proof decisions.

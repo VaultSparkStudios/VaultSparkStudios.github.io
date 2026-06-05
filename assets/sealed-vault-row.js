@@ -102,7 +102,12 @@
     else if (d < 14) label = 'next reveal in ~' + d + ' days';
     else if (d < 60) label = 'next reveal in ~' + Math.round(d / 7) + ' weeks';
     else label = 'next reveal in ~' + Math.round(d / 30) + ' months';
-    return '<span class="vs-sealed-countdown" title="' + iso + '">' + label + '</span>';
+    // S174 TT burndown: return a node, not an HTML string.
+    var span = document.createElement('span');
+    span.className = 'vs-sealed-countdown';
+    span.title = iso;
+    span.textContent = label;
+    return span;
   }
 
   function render(root, portfolio) {
@@ -115,16 +120,37 @@
 
     var wrap = document.createElement('div');
     wrap.className = 'vs-sealed-row';
-    wrap.innerHTML =
-      '<div class="vs-sealed-eyebrow">Vault Sealed</div>' +
-      '<h2>' + copy.heading + '</h2>' +
-      '<p class="vs-sealed-caption">' + copy.body + '</p>' +
-      '<div class="vs-sealed-grid" aria-hidden="true"></div>' +
-      (chip ? '<div>' + chip + '</div>' : '') +
-      '<p class="vs-sealed-foot">When a seal breaks, <a href="/membership/">Vault Members hear first</a>. See everything live in <a href="/studio-pulse/">Studio Pulse</a>.</p>';
-    var grid = wrap.querySelector('.vs-sealed-grid');
+    // S174 TT burndown: DOM API instead of innerHTML.
+    function el(tag, cls, text) {
+      var node = document.createElement(tag);
+      if (cls) node.className = cls;
+      if (text) node.textContent = text;
+      return node;
+    }
+    wrap.appendChild(el('div', 'vs-sealed-eyebrow', 'Vault Sealed'));
+    wrap.appendChild(el('h2', null, copy.heading));
+    wrap.appendChild(el('p', 'vs-sealed-caption', copy.body));
+    var grid = el('div', 'vs-sealed-grid');
+    grid.setAttribute('aria-hidden', 'true');
+    wrap.appendChild(grid);
+    if (chip) {
+      var chipWrap = document.createElement('div');
+      chipWrap.appendChild(chip);
+      wrap.appendChild(chipWrap);
+    }
+    var foot = el('p', 'vs-sealed-foot');
+    foot.appendChild(document.createTextNode('When a seal breaks, '));
+    var memberLink = el('a', null, 'Vault Members hear first');
+    memberLink.href = '/membership/';
+    foot.appendChild(memberLink);
+    foot.appendChild(document.createTextNode('. See everything live in '));
+    var pulseLink = el('a', null, 'Studio Pulse');
+    pulseLink.href = '/studio-pulse/';
+    foot.appendChild(pulseLink);
+    foot.appendChild(document.createTextNode('.'));
+    wrap.appendChild(foot);
     for (var i = 0; i < count; i += 1) grid.appendChild(buildTile(i));
-    root.innerHTML = '';
+    while (root.firstChild) root.removeChild(root.firstChild);
     root.appendChild(wrap);
   }
 

@@ -62,7 +62,11 @@
     btn.className = 'vs-palette-loader-trigger';
     btn.setAttribute('data-vs-palette-loader-trigger', 'true');
     btn.setAttribute('aria-label', 'Open search palette');
-    btn.innerHTML = '⌕ <span>Search</span>';
+    // S174 TT burndown: DOM API instead of innerHTML.
+    btn.appendChild(document.createTextNode('⌕ '));
+    var btnLabel = document.createElement('span');
+    btnLabel.textContent = 'Search';
+    btn.appendChild(btnLabel);
     btn.addEventListener('click', openPalette);
     document.body.appendChild(btn);
   }

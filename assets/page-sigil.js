@@ -42,14 +42,28 @@
     const fillRatio = Math.max(0.12, 1 - Math.min(days, 90) / 90);
     const circumference = 2 * Math.PI * 11; // r=11
     const dash = circumference * fillRatio;
-    wrap.innerHTML = `
-      <svg viewBox="0 0 28 28" width="28" height="28" aria-hidden="true">
-        <circle cx="14" cy="14" r="11" fill="none" stroke="${color}33" stroke-width="2"/>
-        <circle cx="14" cy="14" r="11" fill="none" stroke="${color}" stroke-width="2"
-                stroke-dasharray="${dash.toFixed(1)} ${circumference.toFixed(1)}"
-                stroke-linecap="round" transform="rotate(-90 14 14)"/>
-        <circle cx="14" cy="14" r="2.4" fill="${color}"/>
-      </svg>`;
+    // S174 TT burndown: SVG via createElementNS instead of innerHTML.
+    const SVG_NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(SVG_NS, 'svg');
+    svg.setAttribute('viewBox', '0 0 28 28');
+    svg.setAttribute('width', '28');
+    svg.setAttribute('height', '28');
+    svg.setAttribute('aria-hidden', 'true');
+    const circle = (attrs) => {
+      const c = document.createElementNS(SVG_NS, 'circle');
+      c.setAttribute('cx', '14');
+      c.setAttribute('cy', '14');
+      for (const [k, v] of Object.entries(attrs)) c.setAttribute(k, v);
+      return c;
+    };
+    svg.appendChild(circle({ r: '11', fill: 'none', stroke: `${color}33`, 'stroke-width': '2' }));
+    svg.appendChild(circle({
+      r: '11', fill: 'none', stroke: color, 'stroke-width': '2',
+      'stroke-dasharray': `${dash.toFixed(1)} ${circumference.toFixed(1)}`,
+      'stroke-linecap': 'round', transform: 'rotate(-90 14 14)',
+    }));
+    svg.appendChild(circle({ r: '2.4', fill: color }));
+    wrap.appendChild(svg);
     document.body.appendChild(wrap);
   }
 

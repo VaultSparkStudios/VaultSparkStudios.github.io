@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-05T02:06:58.070Z",
+  "generatedAt": "2026-06-05T02:51:57.505Z",
   "generatedBy": "scripts/report-ambient-coverage.mjs",
   "totalSources": 27,
-  "totalBytes": 102484,
+  "totalBytes": 104353,
   "forbiddenAmbientSourcesPresent": [],
   "candidates": [
     {
@@ -19,6 +19,15 @@
     },
     {
       "rank": 2,
+      "source": "assets/adaptive-speculation.js",
+      "sizeKb": 5.2,
+      "reasons": [],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/adaptive-speculation.js behind a conditional loader."
+    },
+    {
+      "rank": 3,
       "source": "assets/signed-in-state.js",
       "sizeKb": 4.7,
       "reasons": [
@@ -27,15 +36,6 @@
       "forbiddenAmbient": false,
       "risk": "low",
       "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/signed-in-state.js is lazy-loaded only after session state is known."
-    },
-    {
-      "rank": 3,
-      "source": "assets/adaptive-speculation.js",
-      "sizeKb": 4.6,
-      "reasons": [],
-      "forbiddenAmbient": false,
-      "risk": "low",
-      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/adaptive-speculation.js behind a conditional loader."
     },
     {
       "rank": 4,
@@ -59,6 +59,15 @@
     },
     {
       "rank": 6,
+      "source": "assets/page-sigil.js",
+      "sizeKb": 4.4,
+      "reasons": [],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/page-sigil.js behind a conditional loader."
+    },
+    {
+      "rank": 7,
       "source": "assets/scroll-depth.js",
       "sizeKb": 4.2,
       "reasons": [

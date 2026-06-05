@@ -1,39 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-05T02:01:57.281Z",
+  "generatedAt": "2026-06-05T02:50:20.561Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 33,
+  "totalSamples": 39,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
     "route": "/",
-    "samples": 13,
+    "samples": 14,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 37,
+    "remaining": 36,
     "p75": {
       "lcp": 11472,
       "cls": 0.051,
       "inp": 64,
       "fcp": 1216,
-      "ttfb": 165
+      "ttfb": 616
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 13,
+      "samples": 14,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 37,
+      "remaining": 36,
       "p75": {
         "lcp": 11472,
         "cls": 0.051,
         "inp": 64,
         "fcp": 1216,
-        "ttfb": 165
+        "ttfb": 616
       },
       "overBudget": false
     },
@@ -69,14 +69,14 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 1,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 47,
       "p75": {
         "lcp": 1756,
-        "cls": 0.0006,
-        "inp": 48,
+        "cls": 0.1318,
+        "inp": 448,
         "fcp": 1756,
         "ttfb": 574
       },
@@ -99,16 +99,16 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 1,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 46,
       "p75": {
-        "lcp": 592,
-        "cls": 0,
-        "inp": 48,
-        "fcp": 353,
-        "ttfb": 0
+        "lcp": 2804,
+        "cls": 0.0839,
+        "inp": 872,
+        "fcp": 2804,
+        "ttfb": 133
       },
       "overBudget": false
     },

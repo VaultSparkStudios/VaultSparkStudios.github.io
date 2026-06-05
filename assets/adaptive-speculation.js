@@ -23,6 +23,19 @@
   if (!('HTMLScriptElement' in window)) return;
   if (document.querySelector('script[data-vs-adaptive-speculation]')) return;
 
+  // S174 TT burndown: speculationrules JSON written into a <script> element is
+  // a TrustedScript sink. Narrow policy — only this module's locally-built
+  // JSON ever flows through it. Graceful no-op when trustedTypes is absent.
+  let ttPolicy = null;
+  try {
+    if (window.trustedTypes && window.trustedTypes.createPolicy) {
+      ttPolicy = window.trustedTypes.createPolicy('vs-speculation', {
+        createScript: (s) => s,
+      });
+    }
+  } catch (_e) { /* duplicate policy name or restricted — fall through */ }
+  const asScript = (s) => (ttPolicy ? ttPolicy.createScript(s) : s);
+
   // Read network / device signals (all defensive — every API may be absent).
   const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection || {};
   const effectiveType = conn.effectiveType || '4g';
@@ -44,7 +57,7 @@
           if (el && el.dataset.tier !== 'conservative') {
             const rules = JSON.parse(el.textContent);
             delete rules.prerender;
-            el.textContent = JSON.stringify(rules);
+            el.textContent = asScript(JSON.stringify(rules));
             el.dataset.tier = 'low-battery';
           }
         }
@@ -110,6 +123,6 @@
   s.dataset.vsAdaptiveSpeculation = '';
   s.dataset.tier = tier;
   s.dataset.signals = JSON.stringify({ effectiveType: effectiveType, saveData: saveData, downlink: downlink, deviceMemory: deviceMemory, reducedMotion: reducedMotion });
-  s.textContent = JSON.stringify(rules);
+  s.textContent = asScript(JSON.stringify(rules));
   document.head.appendChild(s);
 })();

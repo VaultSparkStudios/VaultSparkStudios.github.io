@@ -38,11 +38,22 @@
     }
   ];
 
+  // S174 TT burndown (proactive): same TrustedScriptURL sink class as
+  // home-idle-loader — fix before it starts reporting. Same-origin only.
+  let ttPolicy = null;
+  try {
+    if (window.trustedTypes && window.trustedTypes.createPolicy) {
+      ttPolicy = window.trustedTypes.createPolicy('vs-ambient-loader', {
+        createScriptURL: function (u) { return u.indexOf('/assets/') === 0 ? u : ''; },
+      });
+    }
+  } catch (_e) { /* duplicate policy name or restricted — fall through */ }
+
   function load(src) {
     if (loaded.has(src) || document.querySelector('script[src="' + src + '"]')) return;
     loaded.add(src);
     const script = document.createElement('script');
-    script.src = src;
+    script.src = ttPolicy ? ttPolicy.createScriptURL(src) : src;
     script.defer = true;
     script.dataset.vsAmbientLoaded = 'true';
     document.head.appendChild(script);

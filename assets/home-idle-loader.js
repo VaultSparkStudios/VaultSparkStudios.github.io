@@ -10,10 +10,21 @@
     '/assets/showcase-spine.js',
   ];
 
+  // S174 TT burndown: script.src is a TrustedScriptURL sink. Narrow policy
+  // that only passes same-origin /assets/ paths. No-op when TT is absent.
+  let ttPolicy = null;
+  try {
+    if (window.trustedTypes && window.trustedTypes.createPolicy) {
+      ttPolicy = window.trustedTypes.createPolicy('vs-idle-loader', {
+        createScriptURL: (u) => (u.startsWith('/assets/') ? u : ''),
+      });
+    }
+  } catch (_e) { /* duplicate policy name or restricted — fall through */ }
+
   function loadScript(src) {
     if (document.querySelector(`script[src="${src}"]`)) return;
     const script = document.createElement('script');
-    script.src = src;
+    script.src = ttPolicy ? ttPolicy.createScriptURL(src) : src;
     script.defer = true;
     script.dataset.homeIdle = 'true';
     document.body.appendChild(script);
