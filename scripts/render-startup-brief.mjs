@@ -327,7 +327,10 @@ function taskLabel(item, maxLen = 54) {
 // ── Derived values ─────────────────────────────────────────────────────────────
 const today          = new Date().toISOString().slice(0, 10);
 const currentSession = (status.currentSession || 62) + 1;
-const ctxUpdated     = csmd.match(/^Last updated:\s*(\d{4}-\d{2}-\d{2})/m)?.[1] ?? null;
+// S174 brief-signal-plumbing: CURRENT_STATE switched to "- Date: YYYY-MM-DD"
+// snapshot headers; accept both so context age stops crying wolf with "?d".
+const ctxUpdated     = csmd.match(/^Last updated:\s*(\d{4}-\d{2}-\d{2})/m)?.[1]
+  ?? csmd.match(/^- Date:\s*(\d{4}-\d{2}-\d{2})/m)?.[1] ?? null;
 const ctxAge         = ctxUpdated ? daysBetween(ctxUpdated, today) : '?';
 const scopeCap       = velocity > 0 ? Math.floor(velocity * 1.5) : null;
 
@@ -803,7 +806,7 @@ const lines = [
   row(`✓  Headroom      ${meterRemainingPct}% remaining · ~${estimatedItemsFit} large item(s) fit`),
   row(`${sigCtx}  Context age   ${ctxAge}d`),
   row(`${sigIgnis}  IGNIS         ${status.ignisScore ?? '?'} ${status.ignisGrade || ''}  ·  ${ignisAge}d old`),
-  row(`${sigTruth}  Truth         ${truthStatus}  ·  Genome: ${status.truthGenome || '?'}`),
+  row(`${sigTruth}  Truth         ${truthStatus}  ·  Genome: ${status.truthGenome || (genSnaps.length ? `${genSnaps[genSnaps.length - 1].total}/25` : '?')}`),
   row(`${sigCompliance}  Compliance   ${complianceDetail}`),
   row(`${sigGenome}  Genome dims   ${genomeDetail}`),
   row(`${sigEntropy}  Entropy       ${entropyLabel}`),

@@ -52,18 +52,18 @@
 
 ╔══ WHERE WE LEFT OFF  ·  Session 173 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
-║  Tests:    ? passing  ·  Deploy: N/A                             ║
+║  Tests:    116 passing  ·  Deploy: N/A                           ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ⚠  Tests         ?/? passing                                    ║
+║  ✓  Tests         116/116 passing (2026-06-05)                   ║
 ║  ✓  Velocity      3 →  ·  Debt: →                                ║
 ║  ⚠  Runway        ~3 sessions (RUM sample unlock · membership a  ║
 ║  ✓  Headroom      68% remaining · ~6 large item(s) fit           ║
-║  ⛔  Context age   ?d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         40319 FORGE  ·  0d old                         ║
-║  ✓  Truth         green  ·  Genome: ?                            ║
-║  ✓  Compliance   32/32 (100%) → ▄▆▆█████                         ║
+║  ✓  Truth         green  ·  Genome: 0/25                         ║
+║  ✓  Compliance   32/32 (100%) → ▆▆██████                         ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.212  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -109,32 +109,6 @@
 ║        STAGING-PARITY-YELLOW-FIX. api/staging-health.json is ye  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
-
-
-<!-- skill-augment:start -->
-
-╔══ SKILL HEALTH ══════════════════════════════════════════════╗
-║  Skills ? · Commands ? · Issues ? · Warnings ?               ║
-║  Cost ledger: no skill runs recorded yet                     ║
-╚══════════════════════════════════════════════════════════════╝
-╔══ ARK STATUS ════════════════════════════════════════════════╗
-║  Inbox: 3 cargo drained at 02:25Z · ⚠ 4 sig fails            ║
-║  Harbor: no report yet                                       ║
-║  CANON-018 transport · docs/STUDIO_ARK.md                    ║
-╚══════════════════════════════════════════════════════════════╝
-╔══ ARK PRIORITY (rank-zero) ══════════════════════════════════╗
-║  🛰 pattern-share    skill-outcome                           ║
-║  🛰 pattern-share    skill-outcome                           ║
-║  Auto-promoted above genius list (priority ≥0.7)             ║
-╚══════════════════════════════════════════════════════════════╝
-╔══ ROUTER SUGGESTS ═══════════════════════════════════════════╗
-║  1. /app-release-gate     conf=0.45  fits app · SPARKED-sta  ║
-║  2. /audit                conf=0.45  fits app · SPARKED-sta  ║
-║  3. /security-check       conf=0.45  fits app · SPARKED-sta  ║
-║  Run: node scripts/router.mjs suggest --explain              ║
-╚══════════════════════════════════════════════════════════════╝
-
-<!-- skill-augment:end -->
 
 ```
 
