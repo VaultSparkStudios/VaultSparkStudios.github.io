@@ -103,7 +103,7 @@ function summarize(rows, { minOpens = 50 } = {}) {
       : `needs ${remainingOpens} more open event(s)`;
   const readiness = {
     minOpens,
-    canaryPercent: 5,
+    canaryPercent: 25,
     sufficient: totals.opens >= minOpens,
     remainingOpens,
     decisionETA,

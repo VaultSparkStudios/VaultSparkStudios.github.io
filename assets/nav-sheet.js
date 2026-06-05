@@ -35,7 +35,10 @@
       }
       if (localStorage.getItem('vs-nav-style') === 'sheet') return true;
       if (!window.matchMedia || !window.matchMedia('(max-width: 768px)').matches) return false;
-      var canary = Number(document.documentElement.getAttribute('data-nav-sheet-canary') || 5);
+      // S174 canary-readout: 30d at 5% produced ZERO telemetry (intake verified
+      // working - traffic is just thin). Raised to 25% so the graduation
+      // decision gets data; founder device verify still gates the default swap.
+      var canary = Number(document.documentElement.getAttribute('data-nav-sheet-canary') || 25);
       if (canary <= 0) return false;
       var key = localStorage.getItem('vs-nav-canary-key');
       if (!key) {
