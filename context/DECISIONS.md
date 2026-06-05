@@ -1483,3 +1483,33 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **Why:** The staged secret scan was run against the actual closeout payload and returned clean. The failure matched the known Windows local hook timeout class documented in S166/S167/S169/S170, so the bypass was limited to a verified payload after remote non-delivery was confirmed.
 
 **Maintenance rule:** Continue preferring normal push. Use `--no-verify` only after a clean staged secret scan and a failed/timed-out normal push where remote verification confirms the commit has not landed.
+
+### 2026-06-05 — S174 — Evidence loops must be self-feeding, not session-fed
+
+**Decision:** Field-evidence accrual and deploy verification are now automated surfaces: `rum-pull.yml` (daily Actions cron) owns RUM accrual, and `compare-rum-windows.mjs` owns deploy grading via registered boundaries in `data/field-verdicts.json`. Manual "run rum:pull and squint at JSON" verification is retired.
+
+**Why:** The strict ladder needs 50 samples/route and organic traffic is thin; gating that on founder sessions made evidence cadence a human bottleneck. A deploy whose effect is graded by subsequent field data (improved/regressed/neutral with confidence tiers, 5+ samples per side) turns every perf ship into a falsifiable experiment.
+
+**Maintenance rule:** Register every perf-relevant deploy as a boundary (`node scripts/compare-rum-windows.mjs --boundary YYYY-MM-DD --label "..."`). Never quote a verdict whose confidence tier is below medium in public surfaces; the public line renders PENDING honestly.
+
+### 2026-06-05 — S174 — TT burndown is forensics-led; the audit hypothesis was wrong and that's the system working
+
+**Decision:** Trusted Types sink fixes are driven by `analyze-tt-violations.mjs` clusters, not by code reading. The S174 audit guessed the gtag boot was the dominant sink; real KV forensics showed `journal/dispatches/`:364 innerHTML at 30× and gtag at 1×. The fix wave followed the evidence (dispatches, idle-loader, page-sigil, palette-loader, speculation, nav-toggle, ambient-loader) and deferred gtag with a recipe.
+
+**Why:** The intake had been silently dropping Reporting-API body fields (80/81 all-null), so all prior burndown reasoning ran on a single sample. Narrow per-module TT policies (`vs-speculation`, `vs-idle-loader`, `vs-ambient-loader` — same-origin/createScript-only) keep enforcement viable without a blanket permissive policy.
+
+**Maintenance rule:** No enforce canary until a fresh 100%-sample soak post-burndown reads near-zero clusters. New dynamic script loaders must use a narrow named TT policy from day one.
+
+### 2026-06-05 — S174 — Staging serves real pages now; parity yellow was three stacked defects
+
+**Decision:** CANON-007 staging parity is green and must stay green. Root causes fixed: Caddy `try_files` order (subdirectory routes served the homepage), missing security-header quartet (now mirrored from prod via `scripts/sync-staging-headers.mjs`, CSP nonce stripped), and a parity comparison that was structurally unpassable against per-request nonces (now normalized).
+
+**Why:** A staging environment that returns 200 with the wrong page body is worse than a down staging — every smoke test against it silently validated the homepage. The try_files lesson was shipped to studio-ops (cargo 01JQARTIQ4F428A7E440BFE7D6) because `setup-staging.sh` is their surface and seeds the same defect into future staging boxes.
+
+**Maintenance rule:** `check-staging-parity.mjs` runs in build:check; when prod CSP changes, parity goes yellow and `node scripts/sync-staging-headers.mjs` is the one-command fix.
+
+### 2026-06-05 — S174 — Nav-sheet canary raised to 25% on silence evidence
+
+**Decision:** The 5% mobile nav-sheet canary produced zero telemetry in 30 days (116 raw export files, intake live-verified working). Raised default canary to 25% so the graduation decision can get data this quarter. Founder real-device verify remains the gate for any default swap (flag-gate pattern).
+
+**Why:** A canary that cannot statistically produce signal at current traffic is indistinguishable from no canary. Silence was the verdict of the new `check-nav-sheet-canary.mjs` readout — the alternative (parking the sheet) would discard S167 work without evidence either way.

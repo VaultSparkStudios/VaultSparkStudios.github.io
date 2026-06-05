@@ -9,11 +9,11 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 997.7 | 5: 996.6 | 10: 992 | 25: 977 | all: 961 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 99.3 | Momentum 100.0 | Engage 99.0 | Process 100.0
-Velocity trend: → (S171: resumed interrupted goal-chain; 3/3 audit items shipped)  |  Protocol velocity: → |  Debt: → (no new debt; RUM gap now self-diagnosing)
-Momentum runway: ~3 sessions (RUM sample unlock · membership asset orphan decision · founder visual-proof review)  |  Intent rate: 100% (last 5)
-Last session: 2026-05-28 | Session 171 | Total: 998/1000 (v3.0) | Velocity: 3 | protocolVelocity: 0
+Avgs - 3: 997.7 | 5: 997.4 | 10: 993 | 25: 979 | all: 962 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 99.0 | Momentum 100.0 | Engage 98.7 | Process 100.7
+Velocity trend: ↑ (S174: 10/10 audit items shipped; evidence loops automated)  |  Protocol velocity: ↑ (3 shims healed · brief signals truthful · handoff cache) |  Debt: → (TT enforce + field verdict pending data, not work)
+Momentum runway: ~4 sessions (field-verdict readout · TT re-probe · rum-autopull verify · nav-sheet 25% watch)  |  Intent rate: 100% (last 5)
+Last session: 2026-06-05 | Session 174 | Total: 997/1000 (v3.0) | Velocity: 10 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
@@ -4600,3 +4600,21 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 3. **STAGING-PARITY-REPAIRBOT** — compare sampled prod/staging headers and shell manifests, then propose the exact Hetzner sync or Worker-header repair command. Medium-high probability.
 
 **Committed to TASK_BOARD:** [S174][PERF/P1] HOMEPAGE-FIELD-LCP-FIELD-VERIFY · [S174][SECURITY/P1] TT-VIOLATION-BURNDOWN · [S174][OPS/P2] STAGING-PARITY-YELLOW-FIX
+
+## 2026-06-05 — Session 174 (/start → /audit → /implement → /closeout · self-feeding evidence loops · 10/10) | Total: 997/1000 (v3.0) | Velocity: 10 | Debt: →
+
+**Score:** 997 / 1000
+(Dev Health 100 · Creative Alignment 99 · Momentum 100 · Engagement 98 · Process Quality 101 · Cross-Repo Coherence 100 · Security Posture 100 · Ecosystem Integration 99 · Capital Efficiency 100 · Automation Coverage 100)
+
+**What improved:** S173's instruments now run without anyone watching them. Field RUM accrues on a daily cron; deploys grade themselves against post-ship field windows; the TT soak can finally read its own reports — and the first real read overturned the audit's own hypothesis (dispatches innerHTML 30×, not gtag 1×), which is exactly what a forensics layer is for. Staging parity went green for the first time after three stacked defects fell (the try_files homepage-for-every-route bug is the kind that silently poisons all staging smoke tests). Two of S173's three brainstorm items (TT-SINK-CLUSTER-AUTOFIXER, STAGING-PARITY-REPAIRBOT) shipped as real tools this session.
+
+**Honest deduction:** Engagement 98 — the nav-sheet canary is silent and the field verdict is PENDING; the engagement surfaces are instrumented but not yet fed. Ecosystem 99 — Ark signature failures remain open upstream (cargo shipped, no reply yet). Nothing this session banked a field-visible perf win; that bank run happens when the post-deploy samples land.
+
+**Intent outcome:** Achieved — full goal-chain, 10/10 audit items shipped (Priority 204.9), build + build:check green, Worker deployed + live-verified, staging green.
+
+**Brainstorm**
+1. **FIELD-VERDICT-AUTOPSY-JOIN** — when a boundary grades `regressed`, auto-invoke `lib/perf-forensics.mjs` and attach `suspectCommits[]` to the verdict JSON so the public artifact carries the private diagnosis. High probability.
+2. **TT-ENFORCE-LADDER-AUTOPILOT** — once a soak window reads zero clusters, auto-draft the `TT_ENFORCE_ROUTES` wrangler change + intent receipt + rollback doc as an unapplied PR for founder one-click. Medium-high probability.
+3. **CANARY-POWER-CALCULATOR** — given route traffic from RUM history, compute the minimum canary % that yields a decision in N days, so canary levels are chosen by statistics instead of vibes. Medium probability.
+
+**Committed to TASK_BOARD:** [S175][PERF/P1] FIELD-VERDICT-READOUT · [S175][SECURITY/P1] TT-SOAK-RE-PROBE

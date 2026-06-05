@@ -1,22 +1,22 @@
 {
   "vectorVersion": "1.0",
-  "generatedAt": "2026-05-28",
-  "generatedAtMs": 1779942693707,
-  "session": 171,
-  "vectorHash": "811585321236a221",
-  "silTotal": 998,
-  "silAvg3": 998,
-  "velocity": 3,
+  "generatedAt": "2026-06-05",
+  "generatedAtMs": 1780629422400,
+  "session": 174,
+  "vectorHash": "c670237e641d77eb",
+  "silTotal": 997,
+  "silAvg3": 997.7,
+  "velocity": 10,
   "debt": "→",
-  "runway": "~3 sessions (RUM sample unlock · membership asset orphan decision · founder visual-proof review)",
+  "runway": "~4 sessions (field-verdict readout · TT re-probe · rum-autopull verify · nav-sheet 25% watch)",
   "intentRate": "100% (last 5)",
-  "openNow": 3,
+  "openNow": 5,
   "openNext": 3,
   "openBlocked": 0,
   "topNow": [
-    "**[S172][DATA/P1] RUM-SAMPLE-UNLOCK.** Diagnostics now name the exact gap (no lo",
-    "**[S172][MEMBERSHIP/P1] MEMBERSHIP-ASSET-ORPHAN-DECISION.** Rewire or retire the",
-    "**[S172][UX/P2] LONGTAIL-VISUAL-PROOF-REVIEW.** Founder review of the new `docs/"
+    "**[S175][PERF/P1] FIELD-VERDICT-READOUT.** rum-autopull-ci accrues nightly; once",
+    "**[S175][SECURITY/P1] TT-SOAK-RE-PROBE.** The S174 sink burndown needs ~1 week o",
+    "**[S175][DATA/P2] RUM-AUTOPULL-VERIFY.** Confirm the first scheduled `rum-pull.y"
   ],
   "topNext": [
     "**[GENIUS][CONVERSION] Extend proof/depth beyond the three core pages** — carry ",
@@ -26,15 +26,18 @@
   "health": "green",
   "truthStatus": "green",
   "genome": null,
-  "ignisScore": 47604,
+  "ignisScore": 40319,
   "ignisGrade": "FORGE",
-  "ignisAgeDays": 7,
+  "ignisAgeDays": 0,
   "name": "VaultSparkStudios.github.io",
   "slug": "vaultsparkstudios-website",
   "type": "website",
   "lifecycle": "deployed",
-  "nextMilestone": "Next moves: unlock the production RUM sample export path so data/rum-summary.json stops reporting 0 field samples (diagnostics now name the exact gap); founder review of the new docs/visual-proof/longtail-s171 screenshots; resolve the 3 feature-bearing membership/vaultsparked orphan assets after founder confirmation.",
-  "currentFocus": "Session 171 resumed an interrupted start/audit/implement/closeout goal-chain and shipped 3/3 items from docs/AUDIT_2026-05-28-S171.{md,json}: long-tail visual proof pack (Playwright+sharp capture + manifest verifier, 6/6 desktop+mobile screenshots green and wired into build:check), RUM export-path diagnostics (.cache/rum-export-diagnostics.json, non-blocking self-explaining gate), and runway-truth cleanup. Verification: npm run build and npm run build:check passed end-to-end; crawl covered 108 HTML files with 0 status failures and 0 blocking-script findings.",
-  "lastShipped": "3/3 S171 audit items — `longtail-visual-proof-pack`, `rum-export-path-diagnostics`, `s171-runway-truth-cleanup`.",
-  "blockers": []
+  "nextMilestone": "Field verdict readout for the S173 homepage deploy (needs >=5 post-deploy samples) + TT soak re-probe toward enforce canary",
+  "currentFocus": "Self-feeding evidence loops: daily RUM autopull + deploy field-verdicts + TT forensics burndown + staging parity green",
+  "lastShipped": "see LATEST_HANDOFF.md",
+  "blockers": [
+    "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
+    "Founder device verify: membership proof loop + nav-sheet"
+  ]
 }

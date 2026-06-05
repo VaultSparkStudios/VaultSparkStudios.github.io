@@ -2315,3 +2315,15 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
 - Evidence ladders: added `scripts/check-rum-strict-ladder.mjs` (33 total samples; `/` needs 37 more route samples) and extended `scripts/probe-tt-soak.mjs`; fresh TT evidence shows 81 violations, so enforce remains held.
 - Membership/intelligence/ops: shipped interview-to-rank proof loop, ship receipts, intelligence budget ledger, Ark signature failure dossier, nav-sheet decision ETA, membership orphan decision doc, and staging parity health (`api/staging-health.json` yellow).
 - Verification: `npm run build` passed; `npm run build:check` passed end-to-end with 108-page crawl, 0 status failures, and 0 blocking-script findings.
+
+## 2026-06-05 — Session 174 (goal-chain: /start → /audit → /implement → /closeout)
+
+- Shipped 10/10 audit items (`docs/AUDIT_2026-06-05.{md,json}`, Priority 204.9). Theme: make S173's instruments self-feeding.
+- rum-autopull-ci: daily Actions cron + R2 secrets via gh; field history accrues without sessions.
+- field-verdict-engine: compare-rum-windows.mjs grades deploys from field windows; S173 boundary registered (PENDING 38/0); receipts carry fieldVerdict; public deploy-verdict line on /studio-pulse/.
+- TT: intake parsed Reporting-API arrays as all-null (80/81 rows) — fixed + deployed (f4c0d0c7); analyze-tt-violations.mjs clustered real sinks; audit hypothesis (gtag) overturned by evidence (dispatches:364 ×30); all clustered sinks burned down; home LCP trace 236ms post-rotation.
+- Staging parity GREEN 3/3 first time: try_files {path}index.html fix + sync-staging-headers.mjs (hetzner.ssh) + nonce-normalized compare; prod+staging edge caches purged (studio token has purge scope).
+- nav-sheet canary: TELEMETRY-SILENT verdict → raised 5%→25%.
+- Protocol: 3 shims healed; brief signals truthful (116/116 gates); compact-handoff content-hash cache.
+- Ark cargo 01JQARTIQ4F428A7E440BFE7D6 → studio-ops (sig failures + try_files learning).
+- Verification: build + build:check green end-to-end (108 pages, 0 failures).

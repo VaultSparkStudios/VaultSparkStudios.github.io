@@ -1,6 +1,24 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-05 (Session 173 — goal-chain audit/implement: 14/14 shipped; homepage critical path, RUM ladder, TT evidence, staging parity; build:check green)
+Last updated: 2026-06-05 (Session 174 — goal-chain audit/implement: 10/10 shipped; self-feeding RUM loop, field verdicts, TT forensics + burndown, staging parity GREEN; build:check green)
+
+## Done (Session 174 — goal-chain: /start → /audit → /implement → /closeout)
+
+- [x] **[S174][DATA/P1] RUM-AUTOPULL-CI — DONE.** `.github/workflows/rum-pull.yml` daily cron; R2 creds set as Actions secrets via `gh secret set`. Field history accrues without sessions. Closes the "keep rum:pull running" babysitting pattern. **DONE S174**
+- [x] **[S174][PERF/P1] FIELD-VERDICT-ENGINE — DONE.** `compare-rum-windows.mjs` (7/7 self-test) grades deploys from pre/post field windows; S173 boundary registered (PENDING, 38 pre / 0 post); speed receipts carry `fieldVerdict`; /studio-pulse/ renders the deploy verdict. Supersedes manual HOMEPAGE-FIELD-LCP-FIELD-VERIFY — the engine decides when samples arrive. **DONE S174**
+- [x] **[S174][SECURITY/P1] TT-INTAKE-FORENSICS + SINK-BURNDOWN — DONE.** Intake parsed all-null on Reporting-API shape (80/81 rows); Worker normalizes 3 wire shapes + captures `sample` (deployed f4c0d0c7). `analyze-tt-violations.mjs` named the REAL sinks (dispatches:364 ×30, not gtag ×1); all clustered sinks fixed (DOM API + 3 narrow TT policies). Burndown: `docs/TT_BURNDOWN_2026-06-05.md`. **DONE S174**
+- [x] **[S174][OPS/P2] STAGING-PARITY — GREEN 3/3 (first time).** try_files served homepage for every subdir route (!); `sync-staging-headers.mjs` mirrors prod header quartet via hetzner.ssh; parity compare nonce-normalized. **DONE S174**
+- [x] **[S174][UX/P2] NAV-SHEET-CANARY-READOUT — DONE.** Verdict TELEMETRY-SILENT (0 events / 116 raw files, intake verified); canary raised 5%→25%. Founder device verify still gates the default swap. **DONE S174**
+- [x] **[S174][ECOSYSTEM/P2] ARK-SIGNATURE-FAILURE-REPAIR — SHIPPED UPSTREAM.** Cargo `01JQARTIQ4F428A7E440BFE7D6` (repo-question → studio-ops) with dossier + 4 failing IDs + the try_files learning for `setup-staging.sh`. Their surface per CANON-022; await reply. **DONE S174 (agent side)**
+- [x] **[S174][PROCESS/P3] PROTOCOL-SHIM-COMPLETION + BRIEF-SIGNAL-PLUMBING + HANDOFF-CACHE — DONE.** 3 shims healed (lib/ subpath); Tests 116/116 / Context-age 0d / Genome truthful in brief; compact-handoff content-hash cached (0 tokens on unchanged). **DONE S174**
+
+## Now (Session 175 runway)
+
+- [ ] **[S175][PERF/P1] FIELD-VERDICT-READOUT.** rum-autopull-ci accrues nightly; once `/` has ≥5 post-deploy samples, `data/field-verdicts.json` grades the S173 homepage work. Read the verdict, then act (celebrate or regress-hunt with `lib/perf-forensics.mjs`).
+- [ ] **[S175][SECURITY/P1] TT-SOAK-RE-PROBE.** The S174 sink burndown needs ~1 week of 100%-sample soak to propagate. Run `node scripts/probe-tt-soak.mjs` + `node scripts/analyze-tt-violations.mjs`; expect near-zero new clusters. If clean → enforce-canary decision (founder device verify gate per SOUL #3).
+- [ ] **[S175][DATA/P2] RUM-AUTOPULL-VERIFY.** Confirm the first scheduled `rum-pull.yml` run committed field history (Actions tab or `git log --author=github-actions`). First dispatch after push is the smoke test.
+- [ ] **[S175][UX/P2] NAV-SHEET-25PCT-WATCH.** With the canary at 25%, `check-nav-sheet-canary.mjs` should flip from telemetry-silent within 1-2 weeks of mobile traffic. Re-run at /start.
+- [ ] **[S175][ECOSYSTEM/P3] ARK-REPLY-CHECK.** Drain inbox for studio-ops reply to cargo `01JQARTIQ4F428A7E440BFE7D6` (sig failures + try_files patch).
 
 ## Done (Session 173 — goal-chain: /start → /audit → /implement → /closeout)
 
@@ -19,14 +37,14 @@ Last updated: 2026-06-05 (Session 173 — goal-chain audit/implement: 14/14 ship
 - [x] **[S173][MEMBERSHIP/P2] ORPHAN-DELETE-DECISION-DOC — DONE.** `docs/MEMBERSHIP_ORPHAN_DECISION.md` compresses the `vaultsparked-proof.js` retire decision to one founder yes/no. **DONE S173**
 - [x] **[S173][OPS/P2] STAGING-PARITY-HEALTH — DONE.** `scripts/check-staging-parity.mjs` writes `api/staging-health.json`; current verdict is yellow, not unknown. **DONE S173**
 
-## Now (Session 174 runway)
+## Now (Session 174 runway — resolved in S174 except founder-gated)
 
-- [ ] **[S174][PERF/P1] HOMEPAGE-FIELD-LCP-FIELD-VERIFY.** Deploy/field-verify the critical-CSS de-dupe + ambient split. Run `npm run rum:pull`, compare `data/rum-summary.json`, then let `scripts/check-rum-strict-ladder.mjs` decide strict readiness instead of guessing from synthetic traces.
-- [ ] **[S174][DATA/P1] RUM-ACCRUAL-WATCH.** Current ladder: 33 total samples; `/` needs 37 more route samples for strict evaluation. Keep `npm run rum:pull` in start/closeout until the route clears the 50-sample floor.
-- [ ] **[S174][SECURITY/P1] TT-VIOLATION-BURNDOWN.** `docs/TT_SOAK_EVIDENCE_2026-06-05.md` shows 81 violations after the 100%-sample soak. Inspect the sink clusters, fix remaining DOM sinks, then rerun `node scripts/probe-tt-soak.mjs` before any enforce canary.
-- [ ] **[S174][OPS/P2] STAGING-PARITY-YELLOW-FIX.** `api/staging-health.json` is yellow: production and staging are reachable, but sampled shell/header parity differs. Repair staging drift before treating CANON-007 as green.
-- [ ] **[S174][ECOSYSTEM/P2] ARK-SIGNATURE-FAILURE-REPAIR.** Use `docs/ARK_SIGNATURE_FAILURE_DOSSIER_2026-06-04.md` to coordinate the 3 failed cargo signatures with studio-ops instead of leaving Ark health as background noise.
-- [ ] **[S174][UX/P2] MEMBERSHIP-PROOF-LOOP-DEVICE-VERIFY.** Verify the interview → rank-economy proof loop on a real mobile device; the agent path is implemented, but the membership promise deserves one tactile pass.
+- [x] **[S174][PERF/P1] HOMEPAGE-FIELD-LCP-FIELD-VERIFY — SUPERSEDED by FIELD-VERDICT-ENGINE (S174).** The verdict engine grades the deploy automatically as samples accrue; readout is S175 P1.
+- [x] **[S174][DATA/P1] RUM-ACCRUAL-WATCH — AUTOMATED (rum-autopull-ci).** Daily Actions cron replaces session babysitting. **DONE S174**
+- [x] **[S174][SECURITY/P1] TT-VIOLATION-BURNDOWN — DONE S174.** Intake forensics fixed + all clustered sinks burned down; re-probe after soak interval is S175.
+- [x] **[S174][OPS/P2] STAGING-PARITY-YELLOW-FIX — DONE S174, GREEN 3/3.**
+- [x] **[S174][ECOSYSTEM/P2] ARK-SIGNATURE-FAILURE-REPAIR — shipped upstream as cargo 01JQARTIQ4F428A7E440BFE7D6.**
+- [ ] **[S174][UX/P2] MEMBERSHIP-PROOF-LOOP-DEVICE-VERIFY.** Founder-gated: verify the interview → rank-economy proof loop on a real mobile device.
 
 ## Done (Session 172 — goal-chain: /start → /audit → /implement → /closeout)
 

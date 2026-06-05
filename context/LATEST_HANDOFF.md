@@ -1,8 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-05 (Session 173)
+Last updated: 2026-06-05 (Session 174)
 
-Session Intent: Full `/start → /audit → /implement → /closeout` goal-chain with genius-level, project-personalized audit/implementation and a short impact-scored closeout. **Outcome: Achieved — 14/14 audit items shipped (Priority 344.1); expected post-closeout impact score 94/100; `npm run build` and `npm run build:check` green end-to-end.**
+Session Intent: Full `/start → /audit → /implement → /closeout` goal-chain with genius-level creative audit/implementation and a short impact-scored summary. **Outcome: Achieved — 10/10 audit items shipped (Priority 204.9); `npm run build` + `npm run build:check` green end-to-end; staging parity GREEN 3/3 for the first time; Worker deployed + live-verified.**
+
+## Where We Left Off (Session 174)
+- **The evidence loops feed themselves now.** `.github/workflows/rum-pull.yml` (daily cron, R2 creds in Actions secrets) accrues field RUM history without sessions; `scripts/compare-rum-windows.mjs` auto-grades registered deploy boundaries — S173's boundary is registered and honestly PENDING (38 pre / 0 post). Speed receipts carry `fieldVerdict`; /studio-pulse/ shows the deploy verdict line.
+- **TT forensics went from blind to surgical.** The intake dropped every Reporting-API field (80/81 all-null rows); the Worker now parses all three wire shapes + the `sample` field (deployed f4c0d0c7). First clustering run overturned the audit's hypothesis: top sink was `journal/dispatches/`:364 innerHTML (30×), gtag was 1×. All clustered sinks burned down (DOM API rebuilds + 3 narrow TT policies); fresh home LCP trace 236ms. Re-probe after ~1 week soak: `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`.
+- **Staging parity is GREEN 3/3 (CANON-007, first time).** Three stacked defects: Caddy `try_files` missing `{path}index.html` (staging served the homepage for every subdirectory route), zero security headers (fixed via new `scripts/sync-staging-headers.mjs` over hetzner.ssh), and a parity compare that could never pass against per-request CSP nonces (now normalized).
+- **Nav-sheet canary verdict: TELEMETRY-SILENT** (0 ux events / 116 raw exports; intake live-verified). Acted on it — canary 5%→25%. Founder device verify still gates any default swap.
+- **Protocol/token hygiene:** 3 delegation shims healed (skill-profile, sample-codebase, render-audit-md — lib/ subpath support added); brief signals truthful (Tests 116/116, Context age 0d, Genome from history); compact-handoff content-hash cached (0 LLM tokens on unchanged handoffs).
+- **Ark:** dossier shipped upstream as `repo-question` cargo `01JQARTIQ4F428A7E440BFE7D6` (4 sig-failure IDs + the try_files patch suggestion for `setup-staging.sh`).
+- Verification: `npm run build` + `npm run build:check` green (108-page crawl, 0 failures); Worker intake 204 live; staging parity green; all 10 audit items have self-tests or live verification.
+- Next session: read the field verdict once post-deploy samples land · TT soak re-probe (~1 week) · verify first scheduled rum-pull run committed · nav-sheet 25% watch · founder: vaultsparked-proof delete yes/no + membership device verify.
 
 ## Where We Left Off (Session 173)
 - **Homepage critical path is now evidence-backed.** Removed the duplicate page-local homepage critical CSS and added `scripts/check-home-critical-css-contract.mjs`; `scripts/analyze-home-lcp.mjs` records the latest local home LCP at 324ms with a named hero candidate; `docs/visual-proof/home-lcp-s173/` has four timed first-viewport frames.
