@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-05T02:50:20.404Z",
+  "generatedAt": "2026-06-05T03:22:12.404Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data\\rum-history.ndjson",
+  "source": "data/rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,7 +10,7 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 39,
+  "totalSamples": 40,
   "sufficientRoutes": 0,
   "routes": {
     "/": {
@@ -22,6 +22,17 @@
         "inp": 64,
         "fcp": 1216,
         "ttfb": 616
+      }
+    },
+    "/__rum_selftest": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       }
     },
     "/games/": {
