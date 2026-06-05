@@ -301,8 +301,37 @@
             + health.minSamples + ' samples — no lab substitutes.';
         }
         strip.appendChild(line);
+        renderFieldVerdicts(strip);
       })
       .catch(function () { var sec = strip.closest('section'); if (sec) sec.hidden = true; });
+  }
+
+  // S174 field-verdict-engine — deploy-annotated field verdicts. Each deploy
+  // boundary is graded by what real visitors measured afterward: improved,
+  // regressed, neutral, or honestly pending while samples accrue.
+  function renderFieldVerdicts(strip) {
+    fetch('/api/field-verdicts.json', { credentials: 'omit' })
+      .then(function (res) { return res.ok ? res.json() : null; })
+      .then(function (doc) {
+        if (!doc || doc.publicSafe !== true || !doc.boundaries || !doc.boundaries.length) return;
+        var b = doc.boundaries[doc.boundaries.length - 1];
+        var home = b.routes && b.routes['/'];
+        var line = document.createElement('p');
+        line.className = 'field-verdict-line';
+        if (home && b.overall && b.overall !== 'pending') {
+          var arrow = b.overall === 'improved' ? '↓ faster' : b.overall === 'regressed' ? '↑ slower' : '→ steady';
+          line.textContent = 'Deploy ' + b.date + ' (' + b.label + '): homepage LCP ' + arrow
+            + ' ' + Math.abs(home.lcpDeltaPct) + '% since ship · ' + home.pre.samples + ' visits before / '
+            + home.post.samples + ' after · ' + home.confidence + ' confidence. Verdicts come from real visitors, not lab runs.';
+        } else {
+          var pre = home && home.pre ? home.pre.samples : 0;
+          var post = home && home.post ? home.post.samples : 0;
+          line.textContent = 'Deploy ' + b.date + ' (' + b.label + '): field verdict pending — '
+            + pre + ' visit(s) before / ' + post + ' after. Real visitors grade this deploy as samples accrue.';
+        }
+        strip.appendChild(line);
+      })
+      .catch(function () { /* verdict line is additive — never break the strip */ });
   }
 
   document.addEventListener('DOMContentLoaded', function () {

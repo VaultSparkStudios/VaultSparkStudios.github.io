@@ -16,8 +16,19 @@ function readJson(rel, fallback) {
   try { return JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8')); } catch { return fallback; }
 }
 
-export function buildReceipts({ feedback, commitMap, visualSets }) {
+export function buildReceipts({ feedback, commitMap, visualSets, fieldVerdicts }) {
   const commitsBySha = new Map((commitMap.entries || []).map((entry) => [entry.sha, entry]));
+  // S174 field-verdict-engine: speed-theme receipts carry the latest
+  // deploy-boundary field verdict so "we shipped speed work" is graded by
+  // real visitors, not by us.
+  const latestBoundary = (fieldVerdicts?.boundaries || []).slice(-1)[0] || null;
+  const fieldVerdict = latestBoundary ? {
+    boundary: latestBoundary.date,
+    label: latestBoundary.label,
+    verdict: latestBoundary.overall,
+    lcpDeltaPct: latestBoundary.routes?.['/']?.lcpDeltaPct ?? null,
+    confidence: latestBoundary.routes?.['/']?.confidence ?? null,
+  } : null;
   return {
     schemaVersion: '1.0',
     generatedAt: new Date().toISOString(),
@@ -40,6 +51,7 @@ export function buildReceipts({ feedback, commitMap, visualSets }) {
           ts: commit.ts,
         })),
         proof: proof ? { set: proof.name, captures: proof.captureCount, routes: proof.routes } : null,
+        fieldVerdict: theme.key === 'speed' ? fieldVerdict : undefined,
       };
     }),
   };
@@ -85,11 +97,14 @@ if (SELF_TEST) {
     feedback: { themes: [{ key: 'speed', label: 'Speed', count: 2, commits: [{ sha: 'abc' }] }] },
     commitMap: { entries: [{ sha: 'abc', summary: 'fast', ts: 'today' }] },
     visualSets: [{ name: 'home-lcp-s173', routes: ['/'], captureCount: 4 }],
+    fieldVerdicts: { boundaries: [{ date: '2026-06-05', label: 'S173', overall: 'improved', routes: { '/': { lcpDeltaPct: -23.4, confidence: 'medium' } } }] },
   });
   const cases = [
     ['receipt created', payload.receipts.length === 1],
     ['commit joined', payload.receipts[0].shippedCommits[0].summary === 'fast'],
     ['proof joined', payload.receipts[0].proof?.set === 'home-lcp-s173'],
+    ['field verdict joined on speed', payload.receipts[0].fieldVerdict?.verdict === 'improved'],
+    ['field delta carried', payload.receipts[0].fieldVerdict?.lcpDeltaPct === -23.4],
   ];
   let failed = 0;
   for (const [name, ok] of cases) {
@@ -104,6 +119,7 @@ const payload = buildReceipts({
   feedback: readJson('api/feedback-provenance.json', { themes: [] }),
   commitMap: readJson('api/commit-map.json', { entries: [] }),
   visualSets: loadVisualSets(),
+  fieldVerdicts: readJson('data/field-verdicts.json', null),
 });
 if (CHECK) {
   if (!fs.existsSync(OUT) || !fs.existsSync(DOC)) {
