@@ -94,7 +94,6 @@ const SCRIPT_HASHES = [
 const THIRD_PARTY_SCRIPT_SOURCES = [
   'https://fjnpzjjyhnpmunfoycrp.supabase.co',
   'https://cdn.jsdelivr.net',
-  'https://www.googletagmanager.com',
   'https://browser.sentry-cdn.com',
   'https://challenges.cloudflare.com',
   'https://static.cloudflareinsights.com',
@@ -104,7 +103,6 @@ const BASE_CONNECT_SOURCES = [
   "'self'",
   'https://fjnpzjjyhnpmunfoycrp.supabase.co',
   'https://api.github.com',
-  'https://www.google-analytics.com',
   'https://o4511104924909568.ingest.us.sentry.io',
   'https://api.convertkit.com',
   'https://api.web3forms.com',

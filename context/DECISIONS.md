@@ -1525,3 +1525,19 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **Rollback (one command class):** delete apex CNAME · restore A records 185.199.108/109/110/111.153 (proxied) · restore www CNAME → vaultsparkstudios.github.io. Verified working during the incident.
 
 **Maintenance rule:** Never flip DNS to a Pages custom domain that isn't `active` — or ensure the Worker failover is deployed first (it is, permanently). The `FALLBACK_ORIGIN` env var overrides the failover target.
+
+### 2026-06-05 — S175 — gtag fully replaced by first-party RUM-derived analytics (founder-approved)
+
+**Decision:** Google Analytics is removed from all public pages (97 pages stripped: boot script + preconnect/dns-prefetch hints; CSP entries for googletagmanager/google-analytics removed). `scripts/build-analytics-summary.mjs` derives complete page-view analytics from the RUM beacon (which fires unsampled on every view) into public-safe `api/analytics-summary.json`. All 14 in-page `gtag()` event callers are guarded and no-op safely.
+
+**Why:** A third-party origin (DNS + connect + ~50KB) on every page load, for traffic volumes the existing first-party beacon already measures. Removal also eliminates the last known Trusted Types sink and shrinks the CSP surface. Founder approved full replacement over parallel-run.
+
+**Maintenance rule:** Analytics questions are answered from `api/analytics-summary.json` (rebuilt in `npm run build`). GA history remains viewable in Google's console but stops accruing 2026-06-05.
+
+### 2026-06-05 — S175 — Worker deploys MUST target --env production (today's deploys silently missed)
+
+**Decision:** All `wrangler deploy` for the security-headers Worker must pass `--env production` — the routes live under `[env.production]`; a bare deploy updates only the unused top-level workers.dev target.
+
+**Why (honest correction):** Three S174/S175 deploys (TT intake fix, origin failover, edge-window widening) ran without the flag and were NOT live until 7c805a3f landed on the production env. This also corrects two earlier claims: the TT intake fix was verified by endpoint response (204) which the old version also returned — version was never proven; and the "failover carried the second DNS flip" credit was wrong — the failover wasn't live yet; the second flip simply hit a short validation window. The failover IS live now.
+
+**Maintenance rule:** Deploy command is `npx wrangler deploy -c cloudflare/wrangler.toml --env production`. Verification after deploy must check `wrangler deployments list` (or a version-distinguishing behavior), never just an endpoint status code the prior version also produced.
