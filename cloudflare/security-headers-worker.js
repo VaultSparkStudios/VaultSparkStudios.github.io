@@ -338,14 +338,20 @@ function cleanReportText(value, max = 160) {
   return typeof value === 'string' ? value.replace(/\s+/g, ' ').trim().slice(0, max) : null;
 }
 
-function normalizeTrustedTypesReport(raw, request) {
-  const body = raw?.body && typeof raw.body === 'object' ? raw.body : raw;
+function normalizeOneTrustedTypesReport(entry, request) {
+  // S174 tt-intake-forensics-fix: handle all three wire shapes —
+  //   1. Reporting API entry: { type: 'csp-violation', url, body: {...} }  (modern Chrome via report-to)
+  //   2. Legacy wrapper:      { 'csp-report': {...} }                       (report-uri)
+  //   3. Bare report object:  { documentURL, blockedURL, ... }
+  // Before this fix, shape 1 fell through to the bare branch with the OUTER
+  // envelope, so every field read null and forensics was blind (80/81 rows).
+  const body = entry?.body && typeof entry.body === 'object' ? entry.body : entry;
   const report = body?.['csp-report'] || body?.['content-security-policy-report'] || body || {};
   return {
-    schemaVersion: '1.0',
+    schemaVersion: '1.1',
     ts: new Date().toISOString(),
     type: 'trusted-types-report-only',
-    documentUri: stripQuery(report['document-uri'] || report.documentURL || report.url),
+    documentUri: stripQuery(report['document-uri'] || report.documentURL || report.url || entry?.url),
     referrer: stripQuery(report.referrer),
     blockedUri: stripQuery(report['blocked-uri'] || report.blockedURL),
     sourceFile: stripQuery(report['source-file'] || report.sourceFile),
@@ -355,11 +361,23 @@ function normalizeTrustedTypesReport(raw, request) {
     effectiveDirective: cleanReportText(report['effective-directive'] || report.effectiveDirective, 120),
     disposition: cleanReportText(report.disposition, 40),
     originalPolicy: cleanReportText(report['original-policy'] || report.originalPolicy, 240),
+    // The sink sample is the single most useful forensic field — a truncated
+    // snippet of what was passed to the sink. Privacy-minimized to 120 chars.
+    sample: cleanReportText(report.sample, 120),
     cf: {
       colo: request.cf?.colo || null,
       country: request.cf?.country || null,
     },
   };
+}
+
+function normalizeTrustedTypesReports(raw, request) {
+  // Reporting API batches reports as an array; legacy report-uri posts one
+  // object. Normalize to a bounded list either way.
+  const entries = Array.isArray(raw) ? raw.slice(0, 5) : [raw];
+  return entries
+    .filter((e) => e && typeof e === 'object')
+    .map((e) => normalizeOneTrustedTypesReport(e, request));
 }
 
 async function handleTrustedTypesReport(request, env, ctx) {
@@ -376,17 +394,21 @@ async function handleTrustedTypesReport(request, env, ctx) {
   try { raw = await request.json(); } catch { return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } }); }
   if (!env.RATE_LIMIT) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 
-  const normalized = normalizeTrustedTypesReport(raw, request);
-  const day = normalized.ts.slice(0, 10);
+  const reports = normalizeTrustedTypesReports(raw, request);
+  if (!reports.length) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+  const day = reports[0].ts.slice(0, 10);
   const counterKey = `tt:${day}:counter`;
   const current = Number(await env.RATE_LIMIT.get(counterKey)) || 0;
-  const next = (current + 1) % TT_REPORT_BUCKET_SIZE;
-  const key = `tt:${day}:${String(next).padStart(4, '0')}`;
   const ttlSec = resolveTtReportTtl(env);
-  ctx.waitUntil(Promise.all([
-    env.RATE_LIMIT.put(counterKey, String(next), { expirationTtl: ttlSec + 3600 }),
-    env.RATE_LIMIT.put(key, JSON.stringify(normalized), { expirationTtl: ttlSec }),
-  ]));
+  const puts = [];
+  let next = current;
+  for (const normalized of reports) {
+    next = (next + 1) % TT_REPORT_BUCKET_SIZE;
+    const key = `tt:${day}:${String(next).padStart(4, '0')}`;
+    puts.push(env.RATE_LIMIT.put(key, JSON.stringify(normalized), { expirationTtl: ttlSec }));
+  }
+  puts.push(env.RATE_LIMIT.put(counterKey, String(next), { expirationTtl: ttlSec + 3600 }));
+  ctx.waitUntil(Promise.all(puts));
   return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
 }
 
