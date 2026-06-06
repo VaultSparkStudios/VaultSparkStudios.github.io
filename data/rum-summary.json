@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-05T19:47:50.695Z",
+  "generatedAt": "2026-06-06T08:47:06.051Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data\\rum-history.ndjson",
+  "source": "data/rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,7 +10,7 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 41,
+  "totalSamples": 42,
   "sufficientRoutes": 0,
   "routes": {
     "/": {
@@ -110,6 +110,17 @@
         "inp": 0,
         "fcp": 476,
         "ttfb": 25
+      }
+    },
+    "/membership/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 440,
+        "cls": 0.3132,
+        "inp": 0,
+        "fcp": 440,
+        "ttfb": 15
       }
     },
     "/oracle/": {
