@@ -12,21 +12,21 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Origin on Cloudflare Pages + split shell + first-party analytics live; awaiting field verdict on the speed arc",
-  "nextMilestone": "Field-verdict readout for the 2026-06-05 boundary (S173 critical path + S175 origin migration) + TT re-probe ~06-12",
+  "currentFocus": "Uptime probe rewritten to measure real availability (CF edge bot-challenge != outage); Worker hardened against origin hang; awaiting field verdict on the speed arc",
+  "nextMilestone": "Confirm next uptime-probe run green on new code + field-verdict readout (S173 critical path + S175 origin migration) + TT re-probe ~06-12",
   "blockers": [
     "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
     "Founder device verify: membership proof loop + nav-sheet"
   ],
   "lastUpdated": "2026-06-07",
-  "currentSession": 175,
+  "currentSession": 177,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-05-25",
-  "silScore": 997,
-  "silAvg3": 996.7,
+  "silScore": 998,
+  "silAvg3": 997.3,
   "silVelocity": 9,
   "silDebt": "→",
-  "silLastSession": 175,
+  "silLastSession": 177,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -80,7 +80,7 @@
     "engagement": 99,
     "processQuality": 100,
     "crossRepoCoherence": 100,
-    "securityPosture": 99,
+    "securityPosture": 100,
     "ecosystemIntegration": 100,
     "capitalEfficiency": 100,
     "automationCoverage": 100
@@ -198,6 +198,6 @@
   "silScoreReconciledFrom": 978,
   "testsTotal": 116,
   "testsPassing": 116,
-  "testsLastRun": "2026-06-05",
+  "testsLastRun": "2026-06-07",
   "testsLabel": "build:check gates"
 }

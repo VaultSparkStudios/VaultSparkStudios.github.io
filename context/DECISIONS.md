@@ -2,6 +2,20 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-07 — S177 — Production HTML nav is bot-challenged at the CF edge; a datacenter 403/hang is NOT an outage
+
+**Diagnosis:** S176's first-party uptime probe failed on its first and only cron run and emailed the founder "5 routes failing." It was a false alarm. Live forensics (curl + `wrangler tail` + the Cloudflare Pages API) proved: the Pages origin (`vaultsparkstudios-website.pages.dev`) serves every route 200; the security Worker is alive (scanner-UA and JSON requests reach it and return 403/200 respectively); but a browser-UA `Accept: text/html` request from a datacenter IP **never reaches the Worker** — it is intercepted at the Cloudflare edge by a bot/managed challenge. Real residential browsers solve the JS clearance transparently; curl/headless/GitHub-Actions cannot, so they hang or 403. **The site was up for real users the whole time.**
+
+**Decision (diagnostic canon):** A 403 or hang on production HTML navigation from a datacenter/CI/curl client is the **expected** edge bot-challenge, not a site outage. Never declare `vaultsparkstudios.com` down on that signal alone. Verify true availability with the two signals a datacenter client *can* read honestly: (1) the **Pages origin** for HTML content (`vaultsparkstudios-website.pages.dev{route}`, unchallenged), and (2) a **JSON path on the production domain** (`/api/*.json`, not challenged) for the DNS+CF+Worker chain. The `curl/[0-9]` 403 from the Worker's own scanner shield is also expected and correct.
+
+**Fixes shipped:**
+- `scripts/probe-uptime.mjs` rewritten (schemaVersion 2.0) to measure real availability: alerts only on origin-content failure or production JSON liveness failure; the custom-domain HTML status is kept as a non-alerting informational field. Run dropped from 4m14s to ~2s. Self-test 10/10.
+- `cloudflare/security-headers-worker.js` `originFetch` hardened: the primary (and fallback) idempotent origin fetch now carries `AbortSignal.timeout(8s)`, so an origin **hang** (the most common real outage, and the shape behind S176's DR layer) fast-fails into the existing pages.dev failover → DR cache instead of blocking the Worker. S176's failover only fired on a clean 5xx. Deployed `--env production` (version `bb9a734d`).
+
+**Out of scope (founder/zone-gated):** loosening the bot-challenge for unverified crawlers is a zone security-posture call and the available API token lacks zone-settings scope. Verified bots (Googlebot/Twitterbot/Discordbot) are CF-allowlisted by default, so SEO/social impact is expected to be minimal; the probe fix removes the only confirmed victim (our own CI).
+
+**Maintenance rule:** Keep the probe's two-signal model. Do not "fix" the probe by making it fetch production HTML and alert on non-200 — that reintroduces the false-alarm. If a future Worker bug could break only custom-domain HTML processing, cover it pre-deploy via `build:check` + ambient-integrity specs, not via the CI uptime probe (which cannot pass the challenge).
+
 ### 2026-05-28 — S171 — Visual proof gates block; data-availability diagnostics never block
 
 **Decision:** The two new S171 gates carry deliberately opposite postures in `build:check`. `check-longtail-visual-proof.mjs` is **blocking** — once screenshots are committed, a missing/blank/erroring/under-sized capture or a non-200 route should fail the build, because the proof artifact is under our control and a broken one is a real regression. `check-rum-export-path.mjs` is **non-blocking** (always exits 0) — an empty RUM field history is an expected, founder/production-gated state, not a build failure; the value is the self-explaining `.cache/rum-export-diagnostics.json` with a concrete `nextAction`, not a red build.

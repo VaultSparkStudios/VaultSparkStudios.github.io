@@ -514,18 +514,29 @@ export default {
     };
     const isHtmlNavRequest = (req) =>
       (req.headers.get('accept') || '').includes('text/html');
+    // S177 origin-hang hardening: S176's failover only fired on a clean 5xx, but
+    // the most common real outage is an origin that *hangs* (no status at all —
+    // the shape the founder saw on 2026-06-07). An unbounded `fetch(req)` would
+    // block the Worker until the edge wall-clock limit. Bounding the idempotent
+    // primary + fallback fetches turns a hang into a fast failover → pages.dev →
+    // DR cache. POSTs keep their original behavior (no abort → no double-submit).
+    const ORIGIN_FETCH_TIMEOUT_MS = 8000;
     const originFetch = async (req) => {
-      let primary = null;
-      try { primary = await fetch(req); } catch (_e) { /* fall through */ }
       const m = req.method || 'GET';
-      if (primary && (primary.status < 500 || (m !== 'GET' && m !== 'HEAD'))) return primary;
-      if (m !== 'GET' && m !== 'HEAD') return primary || new Response('origin unavailable', { status: 502 });
+      const idempotent = m === 'GET' || m === 'HEAD';
+      let primary = null;
+      try {
+        primary = await fetch(req, idempotent ? { signal: AbortSignal.timeout(ORIGIN_FETCH_TIMEOUT_MS) } : {});
+      } catch (_e) { /* timeout or network error → fall through to failover */ }
+      if (primary && (primary.status < 500 || !idempotent)) return primary;
+      if (!idempotent) return primary || new Response('origin unavailable', { status: 502 });
       try {
         const u = new URL(req.url);
         const fb = await fetch(`${FALLBACK_ORIGIN}${u.pathname}${u.search}`, {
           method: m,
           headers: { accept: req.headers.get('accept') || '*/*', 'accept-encoding': req.headers.get('accept-encoding') || '' },
           redirect: 'follow',
+          signal: AbortSignal.timeout(ORIGIN_FETCH_TIMEOUT_MS),
         });
         if (fb.status < 500) return fb;
       } catch (_e) { /* keep primary */ }

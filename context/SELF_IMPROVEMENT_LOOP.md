@@ -9,15 +9,32 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 996.7 | 5: 996.4 | 10: 994 | 25: 980 | all: 963 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 99.3 | Momentum 100.0 | Engage 98.0 | Process 99.7
-Velocity trend: ↑ (S175: 9/9 founder-directed speed arc, all live same-day)  |  Protocol velocity: ↑ (deploy-env trap closed · CDR file established) |  Debt: → (field verdict + TT re-probe are pending data, not work)
-Momentum runway: ~4 sessions (origin field-verdict readout · TT re-probe 06-12 · geo confirmation · nav-sheet 25% watch)  |  Intent rate: 100% (last 5)
-Last session: 2026-06-05 | Session 175 | Total: 995/1000 (v3.0) | Velocity: 9 | protocolVelocity: 2
+Avgs - 3: 997.3 | 5: 996.6 | 10: 994 | 25: 981 | all: 963 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 99.0 | Momentum 100.0 | Engage 99.0 | Process 100.0
+Velocity trend: → (S177: 2/2 — a focused P0 root-cause + fix, not a wide audit)  |  Protocol velocity: ↑ (false-positive monitor caught + corrected; diagnostic captured as canon) |  Debt: → (field verdict + TT re-probe are pending data, not work)
+Momentum runway: ~4 sessions (uptime-probe green confirm · origin field-verdict readout · TT re-probe 06-12 · geo confirmation)  |  Intent rate: 100% (last 5)
+Last session: 2026-06-07 | Session 177 | Total: 998/1000 (v3.0) | Velocity: 2 | protocolVelocity: 1
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-07 — Session 177 (/start → /audit → /implement → /closeout · uptime-probe false-alarm root-cause + real-availability rewrite + Worker origin-hang hardening) | Total: 998/1000 (v3.0) | Velocity: 2 | Debt: →
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 100 | `npm run build:check` green end-to-end (108-page crawl, 0 failures); worker syntax-checked + deployed `--env production` and live-verified post-deploy. |
+| Creative Alignment | 99 | Turned a one-line "verify the probe" into the right work: a monitor that pages the founder with phantom outages is a trust liability, and the fix makes the status surface honest. |
+| Momentum | 100 | Diagnosed → fixed → deployed → documented in one pass; no loose ends, deferred items are genuinely evidence-gated. |
+| Engagement | 99 | The founder stops getting false 3am pages; the diagnostic is now legible (DECISIONS + memory) so nobody re-burns a session on it. |
+| Process Quality | 100 | Refused to assume "site down" from a datacenter signal — used `wrangler tail` + CF Pages API to get ground truth before acting, then captured the lesson as canon. |
+| Cross-Repo Coherence | 100 | Stayed inside the website repo; no sibling writes or Ark bypasses. |
+| Security Posture | 100 | Worker origin-fetch hardened (bounded timeout → graceful failover); scanner shield confirmed intact; no secrets in prompts (gateway-resolved CF token, redacted). |
+| Ecosystem Integration | 100 | Brand-anchor observability is now trustworthy — a pattern other repos' first-party probes should copy (origin + liveness two-signal, not bot-gauntlet). |
+| Capital Efficiency | 100 | Free-build first-party monitor fixed in place (no uptimerobot spend); probe run 4m14s → ~2s saves Actions minutes. |
+| Automation Coverage | 100 | Self-test 10/10 covers the new classifier; the probe now actually detects real outages instead of 100%-false-positive. |
+
+**Brainstorm / next:** (1) Confirm the next scheduled `uptime-probe.yml` run goes green on the S177 code + exercise a forced-failure email path. (2) Consider wiring `api/uptime.json` into `/status/` as a server-measured tile (the page already does live client-side checks; the server probe adds an unattended history). (3) The bot-challenge blocks unverified crawlers too — if social-unfurl/SEO coverage ever shows gaps, a WAF skip-rule for verified monitors is the founder-gated lever (needs zone-settings token scope). Committed to TASK_BOARD S178: uptime-probe green confirm.
 
 ## 2026-05-28 — Session 171 (/start → /audit → /implement → /closeout · resumed · long-tail visual proof + RUM diagnostics) | Total: 998/1000 (v3.0) | Velocity: 3 | Debt: →
 

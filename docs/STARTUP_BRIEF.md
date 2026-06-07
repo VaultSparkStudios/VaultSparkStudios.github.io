@@ -59,7 +59,7 @@
 ║  ✓  Tests         116/116 passing (2026-06-05)                   ║
 ║  ✓  Velocity      9 ↑  ·  Debt: →                                ║
 ║  ⚠  Runway        ~4 sessions (origin field-verdict readout · T  ║
-║  ✓  Headroom      67% remaining · ~6 large item(s) fit           ║
+║  ✓  Headroom      0% remaining · ~0 large item(s) fit            ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         40319 FORGE  ·  2d old                         ║
 ║  ✓  Truth         green  ·  Genome: 0/25                         ║

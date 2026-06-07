@@ -1,6 +1,19 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-07 (Session 176 — goal-chain: 9/9 shipped; founder-console bug arc, cumulative-extractor root-cause fix, Worker DR layer, TT default-policy bridge, first-party uptime)
+Last updated: 2026-06-07 (Session 177 — goal-chain: uptime-probe false-alarm root-cause + real-availability rewrite + Worker origin-hang hardening; build:check green; worker deployed --env production)
+
+## Done (Session 177 — goal-chain: /start → /audit → /implement → /closeout · 2/2)
+
+- [x] **[S177][OBS/P0] UPTIME-PROBE-REAL-AVAILABILITY — DONE.** S176 probe was DOA: its first cron run false-paged the founder. Root cause = CF edge bot-challenge on prod HTML nav (datacenter/CI clients hang/403 before the Worker; real browsers pass). Rewrote `scripts/probe-uptime.mjs` (schemaVersion 2.0) to a two-signal model — Pages-origin content + prod JSON liveness; custom-domain HTML is non-alerting informational; alerts only on real failure. Run 4m14s→~2s, self-test 10/10. DECISIONS 2026-06-07 + memory captured. **DONE S177**
+- [x] **[S177][RESILIENCE/P1] WORKER-ORIGIN-HANG-FAILOVER — DONE.** `originFetch` primary+fallback idempotent fetch now bounded by `AbortSignal.timeout(8s)`; an origin hang fast-fails into S176's pages.dev failover → DR cache (S176 only caught clean 5xx). Deployed --env production v`bb9a734d`; post-deploy verified scanner-403 + JSON-200 + probe overall=up. **DONE S177**
+
+## Now (Session 178 runway)
+
+- [ ] **[S178][SECURITY/P1] TT-ENFORCE-REPROBE.** Soak clock restarted 2026-06-05; S176 burned down founder-named sinks via the default-policy bridge. Re-probe ~2026-06-12: `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; if clean → enforce-flip decision (founder device verify per SOUL #3).
+- [ ] **[S178][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT.** `/` field verdict still PENDING. Once ≥5 post-deploy samples/side accrue, read `data/field-verdicts.json`; expect a real LCP drop from edge-origin TTFB.
+- [ ] **[S178][OBS/P2] UPTIME-PROBE-GREEN-CONFIRM.** Confirm the next scheduled `uptime-probe.yml` run (now on the S177 two-signal code) goes green and that a forced-failure path still emails. First green run is the verify.
+- [ ] **[S178][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
+- [ ] **[S178][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
 
 ## Done (Session 176 — goal-chain: /start → /audit → /implement → /closeout · 9/9)
 

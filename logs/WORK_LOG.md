@@ -1,5 +1,16 @@
 # Work Log
 
+## 2026-06-07 — Session 177 (goal-chain: uptime-probe false-alarm root-cause + real-availability rewrite + Worker origin-hang hardening)
+
+- Founder durable `/goal`: `/start → /audit → /implement → /closeout`, genius-level/creative, post-closeout impact score; analyze where a prior pass left off if cut off. Repo was clean (last commit = S176 closeout) → not cut off → ran the full loop.
+- `/start`: session lock written, mode detector (FOUNDER heuristic — overridden to BUILDER for this-project scope), context-meter CONTINUE, startup brief rendered + validated (SIL 995, signals green except runway ⚠). Brief's genius list was dominated by S176 `[VERIFY]` items.
+- `/audit`: top item `UPTIME-PROBE-VERIFY` → CI showed `uptime-probe.yml` had run exactly once (its first cron) and FAILED, emailing the founder "5 routes failing." Live forensics: curl (scanner-UA → Worker 403; browser-UA HTML → hang; JSON → 200), `wrangler tail` (browser-UA HTML request NEVER reaches the Worker — intercepted at the CF edge), CF Pages API (deploy `171c7bd0` success, Pages origin serves 200). Verdict: prod HTML nav is edge-bot-challenged; datacenter/CI clients can't pass; **the site was up.** Wrote `docs/AUDIT_2026-06-07-S177.md`.
+- `/implement`:
+  - `scripts/probe-uptime.mjs` rewritten (schemaVersion 2.0): two-signal model — Pages-origin content + production JSON liveness; custom-domain HTML kept non-alerting informational; alerts only on real failure; exit 0 only on `up`. Self-test 10/10; live dry-run `overall=up` in ~2s (was 4m14s).
+  - `cloudflare/security-headers-worker.js` `originFetch` hardened: `AbortSignal.timeout(8s)` on idempotent primary + fallback so an origin hang fast-fails into the pages.dev failover → DR cache (S176 only caught clean 5xx). Deployed `--env production` v`bb9a734d`; post-deploy verified scanner-403 + JSON-200 + probe overall=up.
+  - `npm run build:check`: settled two generated-artifact drifts (llms-full-shards, oracle ecosystem-state); full gate green (108 pages, 0 failures).
+- `/closeout`: DECISIONS 2026-06-07 (diagnostic canon + maintenance rule), two agent-memory files + index, CURRENT_STATE / TASK_BOARD / LATEST_HANDOFF / PROJECT_STATUS (session 177, SIL 998, securityPosture 99→100) / SIL loop + this log written back; commit + push.
+
 ## 2026-05-28 — Session 171 (goal-chain resume: long-tail visual proof + RUM export diagnostics + runway truth)
 
 - Founder reissued the durable `/goal`: `/start → /audit → /implement → /closeout` with genius-level creative thinking and a post-closeout impact score, noting the prior pass was cut off mid-process and asking to complete `/start` and analyze where it left off.
