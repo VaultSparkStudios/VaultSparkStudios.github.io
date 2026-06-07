@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-05",
+  "generatedAt": "2026-06-07",
   "generatedBy": "scripts/build-commit-map.mjs",
   "source": "git log (local, noise-filtered)",
   "kind": "commit-map",
@@ -7,6 +7,86 @@
   "note": "Recent moves in the forge. Automated bookkeeping filtered out.",
   "count": 24,
   "entries": [
+    {
+      "sha": "329ec537",
+      "ts": "2026-06-05T21:42:54.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "drop terminal scratch captures from tracking + gitignore the class"
+    },
+    {
+      "sha": "15b126fe",
+      "ts": "2026-06-05T21:41:34.000Z",
+      "type": "chore",
+      "scope": "closeout",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "S175 write-back — CURRENT_STATE, HANDOFF, WORK_LOG, CDR (new), SIL 995/1000, TRUTH_AUDIT, impact brief"
+    },
+    {
+      "sha": "966b4377",
+      "ts": "2026-06-05T19:59:47.000Z",
+      "type": "chore",
+      "scope": "s175",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "task board + SIL sprint addendum for speed arc"
+    },
+    {
+      "sha": "970d143a",
+      "ts": "2026-06-05T19:56:02.000Z",
+      "type": "docs",
+      "scope": "audit",
+      "breaking": false,
+      "move": "Documented",
+      "tone": "muted",
+      "summary": "S175 execution log - 9/9 (2 evidence-corrected)"
+    },
+    {
+      "sha": "611d4bcf",
+      "ts": "2026-06-05T19:55:33.000Z",
+      "type": "feat",
+      "scope": "status-page",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "/status/ gains Live Signals tiles from generated artifacts (S175 #9)"
+    },
+    {
+      "sha": "38ff9a89",
+      "ts": "2026-06-05T19:52:59.000Z",
+      "type": "feat",
+      "scope": "geo-vitals",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "per-country field vitals from real RUM (S175 #8, recipe corrected)"
+    },
+    {
+      "sha": "6cc84697",
+      "ts": "2026-06-05T19:51:32.000Z",
+      "type": "feat",
+      "scope": "regression-email-alerts",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "field regressions email the founder nightly (S175 #7)"
+    },
+    {
+      "sha": "b93979f4",
+      "ts": "2026-06-05T19:49:41.000Z",
+      "type": "feat",
+      "scope": "edge-analytics-replace-gtag",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "first-party analytics from RUM, gtag removed sitewide (S175 #5)"
+    },
     {
       "sha": "b1057000",
       "ts": "2026-06-05T19:40:54.000Z",
@@ -166,86 +246,6 @@
       "move": "Tended",
       "tone": "muted",
       "summary": "Document S173 push recovery"
-    },
-    {
-      "sha": "f97023bf",
-      "ts": "2026-06-05T02:08:13.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "Ship S173 evidence ladders and closeout"
-    },
-    {
-      "sha": "4dd70c8d",
-      "ts": "2026-06-03T23:01:24.000Z",
-      "type": "chore",
-      "scope": "S172",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "Session 172 ran the full /start → /audit → /implement → /clo"
-    },
-    {
-      "sha": "207c980a",
-      "ts": "2026-06-03T23:01:24.000Z",
-      "type": "feat",
-      "scope": "wave5 + execution-log",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "gallery, testing surfaces, freshness, 12/12 audit closed"
-    },
-    {
-      "sha": "7e96afc2",
-      "ts": "2026-06-03T23:01:24.000Z",
-      "type": "feat",
-      "scope": "protocol-script-self-heal",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "--heal writes delegation shims, 6 healed"
-    },
-    {
-      "sha": "61d540f2",
-      "ts": "2026-06-03T23:01:24.000Z",
-      "type": "feat",
-      "scope": "membership-orphan-dossier",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "3 orphans diagnosed, P1 collapses to one yes/no"
-    },
-    {
-      "sha": "044a6705",
-      "ts": "2026-06-03T23:01:24.000Z",
-      "type": "feat",
-      "scope": "field-health-badge + prod-perf-sample",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "visitor-measured proof loop"
-    },
-    {
-      "sha": "28d7ad7a",
-      "ts": "2026-06-03T23:01:24.000Z",
-      "type": "feat",
-      "scope": "perf-forensic-commit-correlator",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "suspect commits named in fix recipes"
-    },
-    {
-      "sha": "447d40ee",
-      "ts": "2026-06-03T23:01:24.000Z",
-      "type": "feat",
-      "scope": "ark-drain-restore",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "delegate shim restores Ark transport"
     }
   ]
 }

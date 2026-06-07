@@ -1,13 +1,72 @@
 {
-  "drainedAt": "2026-06-05T02:25:28.391Z",
+  "drainedAt": "2026-06-07T17:50:10.067Z",
   "slug": "vaultsparkstudios-website",
-  "count": 3,
+  "count": 5,
   "cargo": [
     {
-      "id": "01JQ7P2FTO9BE38E8084298A02",
+      "id": "01JQCI7RRN52215C7B9CB0B604",
+      "type": "port-online",
+      "from": "vaultspark-studio-ops",
+      "shippedAt": "2026-06-05T18:55:29.655Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "agent": "test",
+        "sessionId": "RT"
+      }
+    },
+    {
+      "id": "01JQCKSGDLD20B7E918FB0EEFB",
       "type": "session-outcome",
       "from": "studio-ops",
-      "shippedAt": "2026-06-03T22:18:41.464Z",
+      "shippedAt": "2026-06-05T19:41:43.222Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 3,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-05T19:41:43.129Z"
+      }
+    },
+    {
+      "id": "01JQCR9J7O261ADDD3B5B06CE4",
+      "type": "session-impact-summary",
+      "from": "veilos",
+      "shippedAt": "2026-06-05T21:33:43.544Z",
+      "payload": {
+        "session": "S28",
+        "commit": "e475699",
+        "sil": 999,
+        "repo": "veilos",
+        "date": "2026-06-05",
+        "velocity": 8,
+        "headline": "Audit read live production, caught the ungated triage endpoint, gated it, and taught the organism to propose its own lessons from visitor feedback. 8/8 shipped, 207/207 tests. Deploy pending carries the security gate."
+      }
+    },
+    {
+      "id": "01JQCSE8SPB0728D62AA1F7FCD",
+      "type": "repo-question",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-05T21:53:45.369Z",
+      "payload": {
+        "question": "SIL data integrity: processQuality=101 (valid range 0..100) · silScore=995 but sum(categories)=998 — recompute silScore from categories (silScore := sum(silCategoriesV3), clamp 0..100) via write-project-status --fix at next session.",
+        "source": "sil-ingest-check",
+        "hashes": [
+          "7b16682dc5be",
+          "1fbca379b79e"
+        ]
+      }
+    },
+    {
+      "id": "01JQCUL27B1B812404D5EF99A2",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-05T22:32:25.067Z",
       "payload": {
         "slug": "vaultspark-studio-ops",
         "medium": "infrastructure",
@@ -19,43 +78,7 @@
         "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
         "shippedFiles": 4,
         "vaultStatus": "sparked",
-        "ts": "2026-06-03T22:18:40.675Z"
-      }
-    },
-    {
-      "id": "01JQ7P6HRIA2E9A71F4EFA7A9C",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-03T22:20:54.514Z",
-      "payload": {
-        "sessionId": "153",
-        "headline": "Big sprint — 10 ships: founder-identity leaks zeroed portfolio-wide, the Ark gained a real work-assignment lane, and three silently-drifting tool pairs were collapsed into single policy sources.",
-        "bullets": [
-          "CANON-028 sweep went 211 violations → 1 (the last sits in a locked repo). The real fix: both identity scanners now share one allowlist lib instead of drifting copies — 152 of the 'violations' were the scanner flagging its own report.",
-          "The Ark can now assign work: dispatch + dispatch-ack cargo with acceptance tracking, plus session-handoff batons for cross-repo follow-ups. Four CANON-029 cost-discipline assignments are live (hashmark, mindframe, ideaforge, promogrind).",
-          "Ark v2 reliability landed: exponential-backoff retries, dead-letter queue, and a real alarm channel (email today, Sentry auto-upgrade when the token lands).",
-          "IGNIS portfolio scores went from 13 days stale to fresh across all 33 projects — and the closeout now rescores touched repos automatically (the old 'wiring' only existed in a docstring).",
-          "Every /start was failing its own brief-size validator deterministically; budget re-baselined to match deliberately-shipped surface. Repair mode can no longer overwrite real context files with templates.",
-          "353 protocol-script files propagated to ~25 repos; locked repos now auto-queue instead of being silently dropped. Seamline identity fix pushed; Ouren + SparkRaid registered."
-        ],
-        "synopsis": "A full /go sprint that kept finding the same disease: paired tools whose policies drifted apart. Three shared libs now hold the single source of truth for identity scanning, protocol propagation, and brief budgets. Next session opens with 9 escalated [SIL:2⛔] items and 3 failing doctor probes.",
-        "generatedAt": "2026-06-03T22:08:56.350Z"
-      }
-    },
-    {
-      "id": "01JQ7P6LJ3F72FA039A8274E40",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-03T22:20:58.339Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
+        "ts": "2026-06-05T22:32:24.980Z"
       }
     }
   ],
@@ -65,28 +88,84 @@
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-05T02:25:28.383Z"
+      "ts": "2026-06-07T17:50:10.047Z"
     },
     {
       "id": "01JQ7NMS6UC09DAC5A1F480EC7",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-05T02:25:28.386Z"
+      "ts": "2026-06-07T17:50:10.050Z"
     },
     {
       "id": "01JQ81DUUGAB4D9AAFCA86A4C8",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-05T02:25:28.388Z"
+      "ts": "2026-06-07T17:50:10.052Z"
     },
     {
       "id": "01JQAM72190FE3E53A1B0BD420",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-05T02:25:28.389Z"
+      "ts": "2026-06-07T17:50:10.053Z"
+    },
+    {
+      "id": "01JQCICHT84D1C93ABFA2815B5",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-07T17:50:10.054Z"
+    },
+    {
+      "id": "01JQCJJ6UJ58823FD3FA2F87F9",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-07T17:50:10.055Z"
+    },
+    {
+      "id": "01JQCJTVLQ6F05216E5DEF7C2A",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-07T17:50:10.056Z"
+    },
+    {
+      "id": "01JQCRN04845C357EFA1432730",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-07T17:50:10.058Z"
+    },
+    {
+      "id": "01JQCRSC077D12D04C9643D8A5",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-07T17:50:10.059Z"
+    },
+    {
+      "id": "01JQCSJ3GAF0C1159B2E93303E",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-07T17:50:10.060Z"
+    },
+    {
+      "id": "01JQCTOARQA66B83C9C4C5A111",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-07T17:50:10.061Z"
+    },
+    {
+      "id": "01JQCU0K94E50C7AFDEDB892E1",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-07T17:50:10.062Z"
     }
   ]
 }

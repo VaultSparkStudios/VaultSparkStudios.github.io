@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-05T19:47:43.150Z",
+  "generatedAt": "2026-06-07T18:18:20.714Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,21 +22,19 @@
     }
   },
   "pulse": {
-    "currentSession": 174,
+    "currentSession": 175,
     "lastUpdated": "2026-06-05",
-    "currentFocus": "Self-feeding evidence loops: daily RUM autopull + deploy field-verdicts + TT forensics burndown + staging parity green",
-    "nextMilestone": "Field verdict readout for the S173 homepage deploy (needs >=5 post-deploy samples) + TT soak re-probe toward enforce canary",
+    "currentFocus": "Origin on Cloudflare Pages + split shell + first-party analytics live; awaiting field verdict on the speed arc",
+    "nextMilestone": "Field-verdict readout for the 2026-06-05 boundary (S173 critical path + S175 origin migration) + TT re-probe ~06-12",
     "blockers": [
       "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
       "Founder device verify: membership proof loop + nav-sheet"
     ],
     "queues": {
       "now": [
-        "[S175][PERF/P1] FIELD-VERDICT-READOUT. rum-autopull-ci accrues nightly; once `/` has ≥5 post-deploy samples, `data/field-verdicts.json` grades the S173 homepage work. Read the verdict, then act (celebrate or regress-hunt with `lib/perf-forensics.mjs`).",
-        "[S175][SECURITY/P1] TT-SOAK-RE-PROBE. The S174 sink burndown needs ~1 week of 100%-sample soak to propagate. Run `node scripts/probe-tt-soak.mjs` + `node scripts/analyze-tt-violations.mjs`; expect near-zero new clusters. If clean → enforce-canary decision (founder device verify gate per SOUL #3).",
-        "[S175][DATA/P2] RUM-AUTOPULL-VERIFY. Confirm the first scheduled `rum-pull.yml` run committed field history (Actions tab or `git log --author=github-actions`). First dispatch after push is the smoke test.",
-        "[S175][UX/P2] NAV-SHEET-25PCT-WATCH. With the canary at 25%, `check-nav-sheet-canary.mjs` should flip from telemetry-silent within 1-2 weeks of mobile traffic. Re-run at /start.",
-        "[S175][ECOSYSTEM/P3] ARK-REPLY-CHECK. Drain inbox for studio-ops reply to cargo `01JQARTIQ4F428A7E440BFE7D6` (sig failures + try_files patch)."
+        "[S176][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT. The 2026-06-05 boundary now covers S173 critical path + S175 origin migration. Read data/field-verdicts.json once ≥5 post-deploy samples accrue; expect a real LCP drop from edge-origin TTFB.",
+        "[S176][SECURITY/P1] TT-RE-PROBE-POST-ENV-FIX. The intake fix only went live late 2026-06-05 (env-target miss) — restart the soak clock from then; re-probe ~2026-06-12.",
+        "[S176][OBS/P3] GEO-VITALS-WATCH. api/geo-vitals.json now exists; check whether non-US LCP confirms the origin migration win globally."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -46,12 +44,12 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "The evidence loops feed themselves now. `.github/workflows/rum-pull.yml` (daily cron, R2 creds in Actions secrets) accrues field RUM history without sessions; `scripts/compare-rum-windows.mjs` auto-grades registered deploy boundaries — S173's boundary is registered and honestly PENDING (38 pre / 0 post). Speed receipts carry `fieldVerdict`; /studio-pulse/ shows the deploy verdict line.",
-        "TT forensics went from blind to surgical. The intake dropped every Reporting-API field (80/81 all-null rows); the Worker now parses all three wire shapes + the `sample` field (deployed f4c0d0c7). First clustering run overturned the audit's hypothesis: top sink was `journal/dispatches/`:364 innerHTML (30×), gtag was 1×. All clustered sinks burned down (DOM API rebuilds + 3 narrow TT policies); fresh home LCP trace 236ms. Re-probe after ~1 week soak: `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`.",
-        "Staging parity is GREEN 3/3 (CANON-007, first time). Three stacked defects: Caddy `try_files` missing `{path}index.html` (staging served the homepage for every subdirectory route), zero security headers (fixed via new `scripts/sync-staging-headers.mjs` over hetzner.ssh), and a parity compare that could never pass against per-request CSP nonces (now normalized).",
-        "Nav-sheet canary verdict: TELEMETRY-SILENT (0 ux events / 116 raw exports; intake live-verified). Acted on it — canary 5%→25%. Founder device verify still gates any default swap.",
-        "Protocol/token hygiene: 3 delegation shims healed (skill-profile, sample-codebase, render-audit-md — lib/ subpath support added); brief signals truthful (Tests 116/116, Context age 0d, Genome from history); compact-handoff content-hash cached (0 LLM tokens on unchanged handoffs).",
-        "Ark: dossier shipped upstream as `repo-question` cargo `01JQARTIQ4F428A7E440BFE7D6` (4 sig-failure IDs + the try_files patch suggestion for `setup-staging.sh`)."
+        "Production origin = Cloudflare Pages. Edge-served HTML attacks the field TTFB bottleneck (p75 1.3s) structurally. GH Pages remains the warm rollback (restore 4 A records + www CNAME — verified working during the incident). `pages-deploy.yml` deploys every push in ~27s + purges the zone.",
+        "Incident, honestly: first flip 522'd ~2-3min (Pages domain must be `active` before DNS lands — chicken-and-egg). Rolled back fast; the security Worker now carries permanent `originFetch` failover (5xx → pages.dev), so future cutovers are zero-downtime by construction.",
+        "Worker deploy trap fixed: `[env.production]` holds the routes — bare `wrangler deploy` hits an unused top-level worker and *prints success*. Three deploys (TT intake fix, failover, edge window) were silently dead until `7c805a3f`. Rule in DECISIONS: always `--env production`, verify via `wrangler deployments list`. TT soak clock restarted late 06-05; re-probe ~06-12.",
+        "Shell split shipped: ambient-core 44KB (stable hash) + ambient-feature 62KB. Feature edits stop invalidating every visitor's cache. `propagate-nav.mjs` chains `extract-inline-styles.mjs` (nav template was re-seeding inline-style debt).",
+        "gtag fully gone (founder-approved): 97 pages stripped, CSP cleaned; first-party analytics from the unsampled RUM beacon → `api/analytics-summary.json`. Plus `api/geo-vitals.json` (real per-country vitals — US:106/GB:3), regression emails via Resend after nightly rum:pull, and `/status/` Live Signals tiles.",
+        "Verification: gate green (108 pages, 0 failures) · ambient integrity spec 4/4 · live prod serves split shell, no gtag, clean CSP, analytics JSON · pages-deploy 27s green."
       ]
     },
     "ignis": {

@@ -72,6 +72,41 @@ function stripPreviousBlock(css) {
   return `${css.slice(0, start).trimEnd()}\n${css.slice(end + END.length).trimStart()}`.trimEnd();
 }
 
+// S176 regression fix: extraction is CUMULATIVE. The HTML keeps its vsx-
+// classes forever after rewrite, so previously extracted rules must survive
+// every future run. Before S176 the block was rebuilt from only the current
+// run's finds — one run after the HTML was rewritten, 241/253 rules were
+// silently deleted while every page still referenced them (visible symptom:
+// the retired now-playing bar lost its display:none and rendered "Loading…").
+function seedFromExistingBlock(css, styles) {
+  const start = css.indexOf(START);
+  const end = css.indexOf(END);
+  if (start === -1 || end === -1 || end < start) return;
+  const block = css.slice(start + START.length, end);
+  for (const m of block.matchAll(/\.(vsx-[a-f0-9]{10})\{([^}]*)\}/g)) {
+    styles.set(m[1], m[2]);
+  }
+}
+
+// Prune safety valve: a rule may only be dropped when its class appears in
+// no HTML file anywhere in the repo (not just the extraction targets).
+function collectReferencedClasses() {
+  const referenced = new Set();
+  const walk = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (entry.name.startsWith('.') || entry.name === 'node_modules') continue;
+      const abs = path.join(dir, entry.name);
+      if (entry.isDirectory()) walk(abs);
+      else if (entry.name.endsWith('.html')) {
+        const text = fs.readFileSync(abs, 'utf8');
+        for (const m of text.matchAll(/vsx-[a-f0-9]{10}/g)) referenced.add(m[0]);
+      }
+    }
+  };
+  walk(ROOT);
+  return referenced;
+}
+
 const styles = new Map();
 let changed = 0;
 const targets = selectedTargets();
@@ -80,6 +115,9 @@ if (LIST_TARGETS) {
   console.log(DEFAULT_TARGETS.join('\n'));
   process.exit(0);
 }
+
+const currentCss = fs.readFileSync(STYLE_PATH, 'utf8');
+seedFromExistingBlock(currentCss, styles); // cumulative: prior rules survive
 
 for (const rel of targets) {
   const abs = path.join(ROOT, rel);
@@ -91,15 +129,31 @@ for (const rel of targets) {
   }
 }
 
+// Drop only rules whose class is referenced by no HTML file in the repo.
+const referenced = collectReferencedClasses();
+let pruned = 0;
+for (const className of Array.from(styles.keys())) {
+  if (!referenced.has(className)) {
+    styles.delete(className);
+    pruned += 1;
+  }
+}
+
 const extractedCss = Array.from(styles.entries())
   .sort(([a], [b]) => a.localeCompare(b))
   .map(([className, declarations]) => `.${className}{${declarations}}`)
   .join('\n');
 
-const currentCss = fs.readFileSync(STYLE_PATH, 'utf8');
 const nextCss = `${stripPreviousBlock(currentCss)}\n\n${START}\n${extractedCss}\n${END}\n`;
-const cssChanged = styles.size > 0 && nextCss !== currentCss;
-if (!CHECK) fs.writeFileSync(STYLE_PATH, nextCss);
+const cssChanged = nextCss !== currentCss;
+if (!CHECK && cssChanged) fs.writeFileSync(STYLE_PATH, nextCss);
+
+// Coverage invariant: every referenced vsx class must have a rule after this run.
+const uncovered = Array.from(referenced).filter((c) => !styles.has(c));
+if (uncovered.length) {
+  console.error(`✗ ${uncovered.length} vsx class(es) referenced in HTML but missing a rule (e.g. ${uncovered.slice(0, 3).join(', ')}) — recover from a prior shell css or re-extract.`);
+  process.exitCode = 1;
+}
 
 if (CHECK) {
   if (changed || cssChanged) {
@@ -108,5 +162,5 @@ if (CHECK) {
   }
   console.log(`inline style extraction ok (${targets.length} targets)`);
 } else {
-  console.log(`extracted inline styles from ${changed} file${changed === 1 ? '' : 's'} into ${styles.size} classes`);
+  console.log(`extracted inline styles from ${changed} file${changed === 1 ? '' : 's'} into ${styles.size} classes (cumulative · pruned ${pruned} unreferenced)`);
 }

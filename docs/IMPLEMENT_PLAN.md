@@ -1,19 +1,16 @@
 <!-- generated-by: /implement skill v1.0 -->
-<!-- generated-at: 2026-06-05 · session: 175 -->
-<!-- source: docs/AUDIT_2026-06-05-S175.json (founder-directed speed arc) -->
+<!-- generated-at: 2026-06-07 · audit: docs/AUDIT_2026-06-07.json -->
 
-# Implement Plan — Speed Arc (S175)
+# Implement Plan — Session 176
 
-Founder approvals on file: DNS auto-flip when parity green · gtag full replacement.
+Sequenced for optimal efficiency (Priority/hour), not raw priority.
 
-| Seq | Slug | Why this position |
+| Wave | Items | Rationale |
 |---|---|---|
-| 1 | cf-pages-origin-migration | Foundation — biggest TTFB/LCP lever; everything downstream benefits |
-| 2 | edge-html-cache | Same Worker surface; compounds with new origin |
-| 3 | early-hints-103 | Same zone/Worker surface, tiny |
-| 4 | shell-stable-core-split | Build surface; ends deploy-time cache nuking before the analytics sitewide edit rotates hashes once more |
-| 5 | edge-analytics-replace-gtag | Sitewide page edit + Worker; benefits from #4 (last big rotation) |
-| 6 | lcp-fast-path | Page polish after the dust settles |
-| 7 | regression-email-alerts | Observability; uses field-verdict engine |
-| 8 | multi-geo-synthetic | Observability; standalone workflow |
-| 9 | status-page | Trust surface; reads artifacts produced above |
+| 1 | now-playing-orphan-kill → placeholder-sentinel-gate | Founder-visible bug first; the structural gate ships while the bug class is in context (fix + prevention in one batch) |
+| 2 | field-verdict-refresh-readout | 30m data readout; informs whether Wave 3 edge work has a regression to chase |
+| 3 | worker-stale-on-5xx → preload-prune | Same edge surface, single `wrangler deploy --env production` + one `_headers` regen batch |
+| 4 | tt-sink-burndown-wave2 | Biggest single item (2h); six named sinks, one shell-bundle rebuild |
+| 5 | uptime-probe-firstparty → rum-pull-conflict-guard → sil-integrity-clamp | Process/observability tail; Ark reply closes the studio-ops loop |
+
+Skipped (evidence/founder-gated): tt-enforce-flip (soak to 06-12) · nav-sheet-default-swap (founder device verify) · vaultsparked-proof-delete (founder yes/no pending).

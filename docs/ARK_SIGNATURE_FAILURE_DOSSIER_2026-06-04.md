@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ark-signature-dossier.mjs -->
-<!-- generated-at: 2026-06-05 -->
+<!-- generated-at: 2026-06-07 -->
 
 # Ark Signature Failure Dossier
 
@@ -7,10 +7,18 @@ Ark drain is restored, but signature failures mean some cross-repo cargo cannot 
 
 | Cargo id | Producer | Type | Error | Observed |
 |---|---|---|---|---|
-| `01JQ7IHRB203462A9CEB553339` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-05T02:25:28.383Z |
-| `01JQ7NMS6UC09DAC5A1F480EC7` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-05T02:25:28.386Z |
-| `01JQ81DUUGAB4D9AAFCA86A4C8` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-05T02:25:28.388Z |
-| `01JQAM72190FE3E53A1B0BD420` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-05T02:25:28.389Z |
+| `01JQ7IHRB203462A9CEB553339` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.047Z |
+| `01JQ7NMS6UC09DAC5A1F480EC7` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.050Z |
+| `01JQ81DUUGAB4D9AAFCA86A4C8` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.052Z |
+| `01JQAM72190FE3E53A1B0BD420` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.053Z |
+| `01JQCICHT84D1C93ABFA2815B5` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.054Z |
+| `01JQCJJ6UJ58823FD3FA2F87F9` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.055Z |
+| `01JQCJTVLQ6F05216E5DEF7C2A` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.056Z |
+| `01JQCRN04845C357EFA1432730` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.058Z |
+| `01JQCRSC077D12D04C9643D8A5` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.059Z |
+| `01JQCSJ3GAF0C1159B2E93303E` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.060Z |
+| `01JQCTOARQA66B83C9C4C5A111` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.061Z |
+| `01JQCU0K94E50C7AFDEDB892E1` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-07T17:50:10.062Z |
 
 ## Recommended Studio-Ops Repair
 

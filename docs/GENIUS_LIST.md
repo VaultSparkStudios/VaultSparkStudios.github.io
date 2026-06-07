@@ -1,6 +1,6 @@
 # Genius Hit List — Session 175
 
-Generated: 2026-06-05
+Generated: 2026-06-07
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
@@ -8,7 +8,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **86/100**
 - Health: **green**
-- Current SIL: **995/500**
+- Current SIL: **997/500**
 - CI health: **check gh run list**
 - Current focus: Origin on Cloudflare Pages + split shell + first-party analytics live; awaiting field verdict on the speed arc
 

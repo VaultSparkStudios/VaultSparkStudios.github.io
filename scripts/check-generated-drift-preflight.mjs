@@ -19,23 +19,38 @@ const SELF_TEST = args.includes('--self-test');
 const CHECKS = [
   { id: 'public-intelligence', command: ['node', 'scripts/generate-public-intelligence.mjs', '--check'], fix: 'node scripts/generate-public-intelligence.mjs' },
   { id: 'heartbeat', command: ['node', 'scripts/generate-heartbeat.mjs', '--check'], fix: 'node scripts/generate-heartbeat.mjs' },
-  { id: 'founder-presence', command: ['node', 'scripts/generate-founder-presence.mjs', '--check'], fix: 'node scripts/generate-founder-presence.mjs' },
+  // autofix: presence mirrors LIVE session-lock state — its "drift" is time
+  // passing (live flips as locks age past MAX_AGE_MIN mid-gate), never an
+  // authoring error. Self-heal instead of failing long sessions (S176).
+  { id: 'founder-presence', command: ['node', 'scripts/generate-founder-presence.mjs', '--check'], fix: 'node scripts/generate-founder-presence.mjs', autofix: true },
   { id: 'rum-summary', command: ['node', 'scripts/pull-rum-summary.mjs', '--check'], fix: 'node scripts/pull-rum-summary.mjs' },
   { id: 'nav-sheet-stats', command: ['node', 'scripts/build-nav-sheet-stats.mjs', '--check'], fix: 'node scripts/build-nav-sheet-stats.mjs' },
   { id: 'llms-full-shards', command: ['node', 'scripts/build-llms-full-shards.mjs', '--check'], fix: 'node scripts/build-llms-full-shards.mjs' },
 ];
 
 function runCheck(check) {
-  const result = spawnSync(check.command[0], check.command.slice(1), {
+  let result = spawnSync(check.command[0], check.command.slice(1), {
     cwd: ROOT,
     encoding: 'utf8',
     windowsHide: true,
   });
+  let healed = false;
+  if (result.status !== 0 && check.autofix) {
+    const fixParts = check.fix.split(' ');
+    spawnSync(fixParts[0], fixParts.slice(1), { cwd: ROOT, encoding: 'utf8', windowsHide: true });
+    result = spawnSync(check.command[0], check.command.slice(1), {
+      cwd: ROOT,
+      encoding: 'utf8',
+      windowsHide: true,
+    });
+    healed = result.status === 0;
+  }
   return {
     id: check.id,
     ok: result.status === 0,
     status: result.status,
     fix: check.fix,
+    healed,
     stdout: (result.stdout || '').trim().split('\n').slice(-3).join('\n'),
     stderr: (result.stderr || '').trim().split('\n').slice(-3).join('\n'),
   };
@@ -47,7 +62,7 @@ function summarize(results) {
     schemaVersion: '1.0',
     generatedAt: new Date().toISOString(),
     ok: stale.length === 0,
-    checks: results.map(({ id, ok, status, fix }) => ({ id, ok, status, fix })),
+    checks: results.map(({ id, ok, status, fix, healed }) => ({ id, ok, status, fix, healed: healed || false })),
     stale: stale.map((r) => ({ id: r.id, fix: r.fix, stderr: r.stderr || r.stdout })),
     recommendation: stale.length ? 'run npm run build, then rerun npm run build:check' : 'generated artifacts are current',
   };
@@ -83,7 +98,7 @@ if (JSON_MODE) {
   console.log('generated-drift-preflight');
   console.log('──────────────────────────────────────────────');
   for (const result of report.checks) {
-    console.log(`  ${result.ok ? 'ok' : 'drift'} ${result.id}`);
+    console.log(`  ${result.ok ? (result.healed ? 'healed' : 'ok') : 'drift'} ${result.id}`);
   }
   console.log(`\n${report.ok ? 'ok' : 'drift'}: ${report.recommendation}`);
   if (report.stale.length) {

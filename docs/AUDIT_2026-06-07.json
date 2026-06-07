@@ -1,0 +1,163 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit (S176 goal-chain — founder live-console evidence + post-migration field readouts)",
+  "generatedAt": "2026-06-07",
+  "project": "vaultsparkstudios.github.io",
+  "projectName": "VaultSpark Studios Website",
+  "type": "website",
+  "topline": {
+    "totalItems": 9,
+    "combinedPriority": 232.4,
+    "top3": [
+      "now-playing-orphan-kill",
+      "worker-stale-on-5xx",
+      "placeholder-sentinel-gate"
+    ]
+  },
+  "founderEvidence": {
+    "report": "2026-06-07 live dev-console dump: stuck 'Loading…' top-left (homepage), TrustedHTML/TrustedScriptURL report-only violations at named lines, transient 503 on /games/ + /vault-member/, 84 unused-preload warnings, founder-presence fetch failures during a network flap.",
+    "verified": "Agent probes 2026-06-07: all routes 200 with browser UA (curl-UA gets CF 403 challenge — expected); #nowPlayingText has NO renderer anywhere in repo history; TT sinks confirmed at theme-toggle.js:394, trust-depth.js:207, related-content.js:256, recent-ships.js:42+88, ambient-feature:447+927, sentry-init.js:4; _headers preloads 5 shell assets on /* including late-loading scripts."
+  },
+  "items": [
+    {
+      "rank": 1,
+      "slug": "now-playing-orphan-kill",
+      "tier": "fire",
+      "axis": "UX",
+      "effort": "30m",
+      "impact": 9,
+      "innovation": 3,
+      "priority": 20.4,
+      "summary": "Founder-visible bug: #nowPlayingBar renders 'Loading…' forever top-left on the homepage — the renderer does not exist anywhere in repo history.",
+      "why": "A permanently-broken widget on the brand anchor's homepage erodes trust on first paint — visitors read 'Loading…' as 'this site is broken'. Conversion outcome: removes the first visual defect a prospective Vault member sees. Subtractive fix: the Studio Spine strip already carries live-status duty.",
+      "recipe": "Delete the now-playing-bar div from index.html (lines ~1021-1026), remove its CSS rule + the vsx-086d2b9242 extracted class if orphaned, re-run build:check, verify homepage renders clean."
+    },
+    {
+      "rank": 2,
+      "slug": "worker-stale-on-5xx",
+      "tier": "fire",
+      "axis": "Speed/Resilience",
+      "effort": "1h",
+      "impact": 8,
+      "innovation": 7,
+      "priority": 35.4,
+      "summary": "Founder saw 503s reach the browser on /games/ + /vault-member/ — the S175 originFetch failover gives up when BOTH origins 5xx; add edge-cache stale-serving as last resort.",
+      "why": "The failover covers single-origin failure but a Pages platform blip takes out both primary and pages.dev simultaneously. Serving the last-known-good HTML from the edge cache turns a visible outage into invisible staleness. Info-finding outcome: every route keeps answering during platform incidents.",
+      "recipe": "In originFetch (security-headers-worker.js:505), on double-failure for GET, try caches.default.match(request) before returning 502; on every healthy HTML 200 pass, ctx.waitUntil a cache.put copy keyed for disaster-recovery. Deploy with --env production (S175 lesson). Add a contract note in tests."
+    },
+    {
+      "rank": 3,
+      "slug": "placeholder-sentinel-gate",
+      "tier": "fire",
+      "axis": "Process/UX",
+      "effort": "1h",
+      "impact": 7,
+      "innovation": 8,
+      "priority": 35.4,
+      "summary": "Structural gate: fail build:check when any HTML ships literal loading-placeholder text ('Loading…', 'Loading...') in an element whose id/class no shipped JS references.",
+      "why": "The now-playing bug survived 170+ sessions because nothing watches for placeholder-forever states — the exact class memory says to gate structurally, not patch individually. Innovation 8: build-time dead-placeholder detection cross-referencing JS renderer reachability is something no static-site pipeline does. Conversion outcome: no visitor ever sees a permanently-dead widget again.",
+      "recipe": "New scripts/check-placeholder-orphans.mjs: scan *.html for loading-placeholder text nodes, extract host element id/class, grep all shipped .js (including shell bundles' source list) for references; unreferenced → exit 1 with file:line. Self-test with a fixture. Wire into build:check."
+    },
+    {
+      "rank": 4,
+      "slug": "field-verdict-refresh-readout",
+      "tier": "fire",
+      "axis": "Product/Data",
+      "effort": "30m",
+      "impact": 8,
+      "innovation": 5,
+      "priority": 30.3,
+      "summary": "CI has accrued RUM through 2026-06-07 (44 samples) but data/field-verdicts.json still shows post:0 — regenerate verdicts and read the origin-migration grade; fold in geo-vitals.",
+      "why": "This is the S176 P1 runway item: the entire S175 speed arc is ungraded until the verdict engine sees post-deploy samples. Info-finding outcome: founder learns whether the CF Pages migration actually moved field LCP (pre-migration p75 was 9489ms on /).",
+      "recipe": "node scripts/pull-rum-summary.mjs (or rum:pull chain) → node scripts/compare-rum-windows.mjs → read data/field-verdicts.json verdicts + api/geo-vitals.json non-US rows; record verdict in CURRENT_STATE + speed receipts."
+    },
+    {
+      "rank": 5,
+      "slug": "tt-sink-burndown-wave2",
+      "tier": "high",
+      "axis": "Security",
+      "effort": "2h",
+      "impact": 9,
+      "innovation": 6,
+      "priority": 27.0,
+      "summary": "Founder console names the surviving TT sinks with exact lines — fix all six files (innerHTML → safe DOM or shared policy; sentry-init needs createScriptURL) so the enforce ladder can flip after the 06-12 soak.",
+      "why": "The S174 burndown fixed clustered sinks but the founder's console proves six callers still violate report-only TT. Burning these down now means the 2026-06-12 re-probe (soak clock restarted by the env-fix) can return near-zero and unlock enforcement. Security outcome: DOM-XSS injection surface goes to zero on enforce.",
+      "recipe": "theme-toggle.js:394 arrow.innerHTML='&#9660;' → textContent='▼'; recent-ships.js:42/88, trust-depth.js:207, related-content.js:256 → route through new assets/tt-policy.js (trustedTypes.createPolicy('vs-dom', {createHTML})) with non-TT-browser fallback; sentry-init.js script.src → createScriptURL via same policy; add policy name to TT_REPORT_CSP allowlist later when enforcing. Rebuild shell bundles."
+    },
+    {
+      "rank": 6,
+      "slug": "uptime-probe-firstparty",
+      "tier": "high",
+      "axis": "Observability",
+      "effort": "1h",
+      "impact": 7,
+      "innovation": 5,
+      "priority": 22.2,
+      "summary": "First-party availability monitoring: GH Actions cron probes 6 key routes with a browser UA, writes api/uptime.json, and emails via the existing Resend alert path on failure.",
+      "why": "The founder's 503s were invisible to us — failed page loads never beacon RUM, and the uptimerobot credential is MISSING (free-build bias says build it first-party). Info-finding outcome: founder learns about outages from email, not from being the canary.",
+      "recipe": "New .github/workflows/uptime-probe.yml (cron */30) → scripts/probe-uptime.mjs hits /, /games/, /vault-member/, /membership/, /api/founder-presence.json, /status/ with browser UA; writes api/uptime.json {route,status,ms,ts}; on any non-200 calls send-regression-alert.mjs path with uptime subject. Stay-in-free-band: Actions cron + Resend free tier."
+    },
+    {
+      "rank": 7,
+      "slug": "preload-prune",
+      "tier": "high",
+      "axis": "Speed",
+      "effort": "30m",
+      "impact": 7,
+      "innovation": 4,
+      "priority": 21.2,
+      "summary": "84 unused-preload warnings: _headers preloads 5 shell assets on every page including late-loading scripts — prune to critical-path only (style + ambient-core).",
+      "why": "Preloading deferred scripts wastes visitor bandwidth on every page view, competes with the LCP image for connection priority, and sprays console warnings that mask real signals. Speed outcome: critical-path bytes drop and LCP fetch priority improves sitewide.",
+      "recipe": "In scripts/build-early-hints-headers.mjs, restrict PRELOADS to render-blocking assets (shell CSS + ambient-core); drop ambient-feature/theme-toggle/nav-toggle (they load deferred). Regenerate _headers, redeploy, verify warnings gone."
+    },
+    {
+      "rank": 8,
+      "slug": "rum-pull-conflict-guard",
+      "tier": "nice",
+      "axis": "Process",
+      "effort": "30m",
+      "impact": 5,
+      "innovation": 5,
+      "priority": 18.9,
+      "summary": "Local rum:pull and the nightly CI accrual now race — this session opened with a UU merge conflict on data/rum-summary.json. Make local pull CI-aware.",
+      "why": "Every future session that runs rum:pull locally while CI commits nightly will hit the same conflict, costing founder attention on a generated file. Process outcome: generated-data conflicts become structurally impossible.",
+      "recipe": "pull-rum-summary.mjs: before writing, check git log -1 --format=%cI -- data/rum-summary.json; if a github-actions commit is <24h fresh, skip the local rewrite (print 'CI-fresh, skipping') unless --force. Document in script header."
+    },
+    {
+      "rank": 9,
+      "slug": "sil-integrity-clamp",
+      "tier": "nice",
+      "axis": "Process/Ecosystem",
+      "effort": "1h",
+      "impact": 6,
+      "innovation": 4,
+      "priority": 15.2,
+      "summary": "Answer the studio-ops Ark repo-question: SIL entries carry processQuality=101 (valid range 0-100) and silScore=995 ≠ sum(categories)=998 — clamp at write-time and reconcile.",
+      "why": "Cross-repo SIL aggregation chokes on out-of-range categories, and a score that disagrees with its own components undermines the studio's primary truth metric. Ecosystem outcome: studio-ops dashboards read this repo's SIL without sanitization shims.",
+      "recipe": "Find the SIL writer (closeout path) and clamp every category to 0-100 + recompute total from categories; fix the two historical 101 entries (S173/S174) in SELF_IMPROVEMENT_LOOP.md; ship content-acked + answer cargo back to studio-ops via ark.mjs."
+    }
+  ],
+  "innovationReserve": [
+    "placeholder-sentinel-gate",
+    "worker-stale-on-5xx"
+  ],
+  "skipped": [
+    {
+      "slug": "tt-enforce-flip",
+      "reason": "Evidence-gated — soak clock restarted 2026-06-05 by the env-target fix; re-probe ~2026-06-12 per runway. Wave-2 sink fixes (item 5) are the prep."
+    },
+    {
+      "slug": "nav-sheet-default-swap",
+      "reason": "Founder device verify still gates it (SOUL #3); canary at 25% remains telemetry-watch only."
+    },
+    {
+      "slug": "vaultsparked-proof-delete",
+      "reason": "Founder unlock pending — 30-second yes/no in docs/MEMBERSHIP_ORPHAN_DECISION.md; not agent-deletable (founder-gated decision, not a phantom blocker)."
+    },
+    {
+      "slug": "error-beacon-client",
+      "reason": "Next wave — window.onerror + resource-failure beacon piggybacked on RUM endpoint; uptime-probe (item 6) covers the availability half this session."
+    }
+  ],
+  "execution": []
+}

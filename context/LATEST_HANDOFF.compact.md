@@ -1,37 +1,36 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 5ab6d5ed53cd -->
-<!-- generated-at: 2026-06-05T02:23:54.498Z -->
+<!-- source-hash: 4538ae36283f -->
+<!-- generated-at: 2026-06-07T17:49:59.409Z -->
 
 # LATEST_HANDOFF (compact)
 
-Session 173 Handoff — VaultSparkStudios.github.io
+# Handoff Summary — VaultSparkStudios.github.io — Session 175
 
-SESSION INFO
-Session 173 intent: Full `/start → /audit → /implement → /closeout` goal-chain with project-personalized audit/implementation and impact-scored closeout. Outcome: ACHIEVED — 14/14 audit items shipped (Priority 344.1); post-closeout impact score 94/100; npm run build and npm run build:check green end-to-end.
+Session: 175 | Shipped: 9/9 items (DNS auto-flip, gtag removal, shell split, worker failover, analytics pipeline). All live; one 522 incident (2-3min, rolled back <3min, engineered around).
 
-SHIPPED THIS SESSION
-Homepage critical path is evidence-backed. Removed duplicate page-local critical CSS; added scripts/check-home-critical-css-contract.mjs and scripts/analyze-home-lcp.mjs (current local LCP 324ms with named hero candidate). Four timed first-viewport frames in docs/visual-proof/home-lcp-s173/.
-Ambient first-load cost dropped to 27 sources / 104.5KB without deleting behavior. assets/ambient-loader.js moves guarded nav/engagement modules behind predicates. scripts/check-sw-shell-coherency.mjs guards service-worker shell rotation.
-RUM strictness is now a ladder (scripts/check-rum-strict-ladder.mjs). Current evidence: 33 samples; `/` needs 37 more route samples for strict evaluation.
-Trusted Types enforcement held for right reason. scripts/probe-tt-soak.mjs now emits route enforce/rollback rows. docs/TT_SOAK_EVIDENCE_2026-06-05.md shows 81 violations in 100%-sample soak; next work is sink burn-down, not enforcement.
-Membership proof loop wired locally. assets/membership-proof-loop.js connects interview intent to rank economy simulator. docs/MEMBERSHIP_ORPHAN_DECISION.md ready for founder decision.
-Public ops artifacts gained sharper truth: ship receipts, intelligence budget, Ark signature dossier, nav decision ETA, staging parity health generated. api/staging-health.json yellow (prod/staging reachable; sampled shell/header parity differs).
+Current Intent: Monitor field verdict post-deploy (≥5 samples expected ~06-12); verify analytics pipeline + geo-vitals; founder device-confirms nav-sheet + vaultsparked-proof decision.
 
-CURRENT INTENT
-Field-verify homepage changes after deployment. Keep npm run rum:pull running until `/` crosses 50-sample floor. Burn down TT violations before enforce canary. Repair staging parity yellow. Coordinate Ark signature failures with studio-ops.
+Now (Top 3)
+- Re-probe TT soak violations ~06-12 (current 81 violations from 100%-sample soak; blocked on ~1 week soak clock)
+- Collect field RUM samples post-deploy to read speed improvement boundary (S173 critical path + S175 origin move; expect ≥5 post-deploy samples)
+- Founder: device-verify nav-sheet swap + confirm vaultsparked-proof deletion (membership orphan) + membership interview on target device
 
-NOW BUCKET (TOP 3)
-1. HOMEPAGE-FIELD-LCP-FIX (P1, evidence-backed): Real field LCP ~5.8s median, p75 ~10s across 37 visits. Deploy S173 changes and monitor.
-2. RUM sample accrual: `/` needs 37 more samples to unlock strict RUM evaluation. Keep npm run rum:pull running; current floor 50 samples.
-3. TT violations burn-down: 81 violations in current soak. Prioritize sink burn before any enforce canary.
+Blockers (Top 3)
+- TT soak re-probe gated on calendar (~1 week from 06-05, so ~06-12)
+- Field verdict boundary gated on post-deploy RUM samples (currently 0 post-deploy; 38 pre-deploy exist)
+- Founder device verification not yet started (nav-sheet canary at 25%, membership orphan decision pending yes/no)
 
-BLOCKERS (TOP 3)
-1. Staging parity health yellow (api/staging-health.json): prod/staging reachable but sampled shell/header parity differs. Needs repair before high-confidence canary.
-2. Ark signature failures (3 flagged for studio-ops): CANON-022 surface issue. Blocking full ops workflow confidence.
-3. Founder decision pending: vaultsparked-proof delete yes/no; membership interview device verify.
+Human-Blocked Items
+- vaultsparked-proof delete decision (age: ~3 sessions, S172 carry) — waiting founder yes/no
+- membership interview device verify (age: ~2 sessions, S172 carry) — waiting founder action
 
-HUMAN-BLOCKED ITEMS
-Production RUM field-sample export (from S171/S172 carry): diagnostics now explicit; blocking strict RUM floor unlock.
+Key State
+- Prod origin: Cloudflare Pages (TTFB p75 1.3s); GH Pages warm rollback verified. Push→prod now 27s.
+- Worker carries permanent `originFetch` failover (5xx → pages.dev), zero-downtime future cutovers.
+- Shell split shipped: ambient-core 44KB + ambient-feature 62KB; feature edits no longer invalidate full cache.
+- gtag fully removed (97 pages); unsampled RUM beacon → `api/analytics-summary.json` + `api/geo-vitals.json`.
+- TT violations down to 81 (from 364); sinks (innerHTML rebuilds + 3 policies) burned; home LCP now 236ms local.
+- Staging parity green 3/3 (Caddy try_files, security headers, CSP nonce normalization fixed).
+- RUM pipeline: daily `rum-pull.yml` cron accrues field history; `compare-rum-windows.mjs` auto-grades deploy boundaries.
 
-NEXT SESSION
-Deploy S173 homepage critical-path changes; resume field LCP verification + RUM accrual toward 50-sample unlock; begin TT violation sink burn-down; await founder membership/proof decisions.
+Next session pointer: read field-verdict boundary once post-deploy samples (≥5) land; re-probe TT soak ~06-12; watch geo-vitals non-US confirmation; close founder action blockers (vaultsparked-proof + nav-sheet device verify).

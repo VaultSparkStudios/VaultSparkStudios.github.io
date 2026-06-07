@@ -1,39 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-05T19:47:50.885Z",
+  "generatedAt": "2026-06-07T18:18:41.660Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 41,
+  "totalSamples": 44,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
     "route": "/",
-    "samples": 14,
+    "samples": 16,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 36,
+    "remaining": 34,
     "p75": {
       "lcp": 11472,
-      "cls": 0.051,
-      "inp": 64,
-      "fcp": 1216,
-      "ttfb": 616
+      "cls": 0.1151,
+      "inp": 96,
+      "fcp": 1588,
+      "ttfb": 1214
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 14,
+      "samples": 16,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 36,
+      "remaining": 34,
       "p75": {
         "lcp": 11472,
-        "cls": 0.051,
-        "inp": 64,
-        "fcp": 1216,
-        "ttfb": 616
+        "cls": 0.1151,
+        "inp": 96,
+        "fcp": 1588,
+        "ttfb": 1214
       },
       "overBudget": false
     },
@@ -64,21 +64,6 @@
         "inp": 72,
         "fcp": 7420,
         "ttfb": 126
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/games/call-of-doodie/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 592,
-        "cls": 0.0009,
-        "inp": 432,
-        "fcp": 592,
-        "ttfb": 68
       },
       "overBudget": false
     },
@@ -114,16 +99,16 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 5,
+      "samples": 7,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 45,
+      "remaining": 43,
       "p75": {
-        "lcp": 2804,
-        "cls": 0.0839,
-        "inp": 872,
-        "fcp": 2804,
-        "ttfb": 133
+        "lcp": 592,
+        "cls": 0.0287,
+        "inp": 96,
+        "fcp": 532,
+        "ttfb": 44
       },
       "overBudget": false
     },
@@ -143,17 +128,32 @@
       "overBudget": false
     },
     {
-      "route": "/journal/studio-os-public/",
+      "route": "/leaderboards/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 476,
-        "cls": 0.0145,
+        "lcp": 428,
+        "cls": 0.0564,
         "inp": 0,
-        "fcp": 476,
-        "ttfb": 25
+        "fcp": 428,
+        "ttfb": 9
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/membership/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 440,
+        "cls": 0.3132,
+        "inp": 0,
+        "fcp": 440,
+        "ttfb": 15
       },
       "overBudget": false
     },
@@ -173,32 +173,17 @@
       "overBudget": false
     },
     {
-      "route": "/projects/promogrind/",
+      "route": "/roadmap/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 548,
-        "cls": 0.0009,
-        "inp": 240,
-        "fcp": 548,
-        "ttfb": 63
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/projects/the-living-protocol/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 864,
-        "cls": 0,
-        "inp": 128,
-        "fcp": 864,
-        "ttfb": 57
+        "lcp": 296,
+        "cls": 0.0138,
+        "inp": 0,
+        "fcp": 296,
+        "ttfb": 8
       },
       "overBudget": false
     },

@@ -26,14 +26,15 @@ const CHECK = process.argv.includes('--check');
 
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'assets', 'shell-manifest.json'), 'utf8'));
 
-// Preload order matters: render-blocking CSS first, then the deferred shell JS
-// that every page needs. Ambient is the largest win on cold visits.
+// S176 prune: preload ONLY render-critical assets. Preloading deferred shell
+// JS (ambient-feature, theme-toggle, nav-toggle) competed with the LCP fetch
+// for connection priority and sprayed ~84 unused-preload console warnings per
+// founder's 2026-06-07 report — those scripts load late by design, so hinting
+// them early wastes every visitor's bandwidth. Critical path = shell CSS
+// (render-blocking) + ambient-core (stable hash, needed at first interaction).
 const PRELOADS = [
   { key: 'style', as: 'style' },
   { key: 'ambientCore', as: 'script' },
-  { key: 'ambientFeature', as: 'script' },
-  { key: 'themeToggle', as: 'script' },
-  { key: 'navToggle', as: 'script' },
 ];
 
 const lines = ['# generated-by: scripts/build-early-hints-headers.mjs — do not hand-edit', '/*'];
