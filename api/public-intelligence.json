@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-07T19:56:26.172Z",
+  "generatedAt": "2026-06-07T23:06:12.894Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 176,
+    "currentSession": 177,
     "lastUpdated": "2026-06-07",
-    "currentFocus": "Origin on Cloudflare Pages + split shell + first-party analytics live; awaiting field verdict on the speed arc",
-    "nextMilestone": "Field-verdict readout for the 2026-06-05 boundary (S173 critical path + S175 origin migration) + TT re-probe ~06-12",
+    "currentFocus": "Uptime probe rewritten to measure real availability (CF edge bot-challenge != outage); Worker hardened against origin hang; awaiting field verdict on the speed arc",
+    "nextMilestone": "Confirm next uptime-probe run green on new code + field-verdict readout (S173 critical path + S175 origin migration) + TT re-probe ~06-12",
     "ignis": {
       "score": 40319,
       "grade": "FORGE",
@@ -29,12 +29,11 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "The \"Loading…\" bug was a pipeline bug, not a widget bug. `extract-inline-styles.mjs` rebuilt its style.css block from only the current run's finds — one run after the HTML kept its `vsx-` classes, 241/253 rules vanished while every page still referenced them. The retired now-playing bar losing `display:none` was the visible tip; the hero letters + 124 homepage utilities were uncovered too. The extractor is now cumulative + coverage-invariant (recovered 252 rules → shell `850d887c62`, 330/330 sitewide coverage); the dead `#nowPlayingBar` is deleted; and `check-placeholder-orphans.mjs` (in build:check) makes any future placeholder-forever a build failure.",
-      "Browser-level 503s are now invisible to visitors. S175's failover only covered single-origin failure; the Worker now keeps a 7-day disaster-recovery HTML copy and serves it stale on double-5xx (deployed --env production bf71b2db, prod 200 verified). The S175 `--env production` lesson held — single clean deploy.",
-      "TT burndown wave 2 + observability. Default-policy migration bridge (`assets/tt-default-policy.js`, first in ambient-core, allowlist-pinned createScriptURL) covers ~167 legacy sinks at one chokepoint; 6 founder-named sinks fixed directly. First-party uptime probe (`probe-uptime.mjs` + `uptime-probe.yml` */30, Resend) replaces the MISSING uptimerobot credential. `_headers` preloads pruned 5→2.",
-      "Process hygiene that bit this session, fixed. `pull-rum-summary.mjs` now skips local rewrite when CI committed the summary <24h ago (the UU conflict that opened /start). SIL integrity reconciled (S173/S174 processQuality 101→100; 998→997 / 997→996) + new `check-sil-integrity.mjs` gate + Ark reply to studio-ops.",
-      "Self-healing drift-preflight: founder-presence is now autofix — its \"drift\" is just time passing during a long gate (live-state mirror), never an authoring error.",
-      "Verification: `npm run build:check` green every wave (108-page crawl, 0 failures); Worker live-verified 200."
+      "The \"site is down\" alarm was a false alarm — and the lesson is now canon. S176's first-party uptime probe failed on its first cron run and emailed \"5 routes failing.\" Live forensics (curl + `wrangler tail` + CF Pages API) proved `vaultsparkstudios.com` HTML navigation is bot-challenged at the Cloudflare edge: datacenter/CI/curl clients are intercepted *before the Worker* (hang/403); real residential browsers solve the JS clearance and get 200. The Pages origin serves 200, the Worker is alive (scanner + JSON requests reach it), deploy `171c7bd0` is healthy. The site was up the whole time. Captured in DECISIONS 2026-06-07 + agent memory so the next agent doesn't burn a session re-diagnosing it.",
+      "Probe rewritten to measure real availability, not bot-gauntlet-passing. `scripts/probe-uptime.mjs` (schemaVersion 2.0): two honest signals a datacenter client can read — Pages-origin content availability (unchallenged) + a production JSON liveness path (DNS+CF+Worker chain). The custom-domain HTML status is kept as a *non-alerting informational* field. Alerts fire only on real origin/liveness failure. Run 4m14s → ~2s; self-test 10/10; exit 0 only on `up`.",
+      "Worker hardened against the more common real outage — an origin hang. `originFetch` now bounds the idempotent primary + fallback fetch with `AbortSignal.timeout(8s)`. S176's DR/failover only fired on a clean 5xx; a hang would block the Worker until the edge wall-clock limit. Now a hang fast-fails into the pages.dev failover → DR cache. Deployed `--env production` (version `bb9a734d`, the S175 lesson held — single clean deploy); post-deploy verified scanner-403 + JSON-200 + probe `overall=up`.",
+      "Verification: `npm run build:check` green end-to-end (108-page crawl, 0 failures); generated artifacts (llms-full-shards, oracle ecosystem-state) re-settled.",
+      "Next session (S178): TT enforce re-probe ~06-12 · origin-migration field verdict once ≥5 post-deploy samples/side · confirm the next uptime-probe run goes green on the new code · geo-vitals non-US · founder: vaultsparked-proof yes/no + nav-sheet device verify."
     ]
   },
   "consumerChangelog": [
@@ -125,7 +124,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 176,
+    "sessionsCompleted": 177,
     "liveProjects": 3,
     "projectsInForge": 8,
     "activeEdgeFunctions": 16,
@@ -146,12 +145,12 @@
       "engagement": 99,
       "process": 100,
       "coherence": 100,
-      "security": 99,
+      "security": 100,
       "ecosystem": 100,
       "capital": 100,
       "automation": 100,
-      "total": 997,
-      "updatedSession": 175
+      "total": 998,
+      "updatedSession": 177
     },
     "sealedNextRevealAt": null
   },
@@ -692,7 +691,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-06-05T21:49:02.157Z",
+    "checkedAt": "2026-06-07T20:21:08.384Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -704,7 +703,7 @@
       },
       {
         "name": "Lighthouse CI",
-        "status": "failure"
+        "status": "success"
       }
     ]
   }
