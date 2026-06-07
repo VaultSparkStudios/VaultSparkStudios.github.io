@@ -1,10 +1,23 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-07T18:18:40.076Z",
+  "generatedAt": "2026-06-07T19:07:36.655Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
   "receipts": [
+    {
+      "theme": "worlds",
+      "label": "Worlds",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "b74b0e7e",
+          "summary": "cumulative inline-style extraction — recover 241 wiped vsx rules + kill dead now-playing bar + placeholder-orphan gat…",
+          "ts": "2026-06-07T18:24:42.000Z"
+        }
+      ],
+      "proof": null
+    },
     {
       "theme": "transparency",
       "label": "Transparency",
@@ -24,6 +37,11 @@
       "feedbackSignals": 6,
       "shippedCommits": [
         {
+          "sha": "c7aba2c2",
+          "summary": "disaster-recovery edge cache — serve last-known-good HTML when both origins 5xx (S176 #2)",
+          "ts": "2026-06-07T18:48:03.000Z"
+        },
+        {
           "sha": "966b4377",
           "summary": "task board + SIL sprint addendum for speed arc",
           "ts": "2026-06-05T19:59:47.000Z"
@@ -42,11 +60,6 @@
           "sha": "699d25a8",
           "summary": "HTML edge window 60s->300s + 103 Early Hints (S175 #2+#3)",
           "ts": "2026-06-05T19:21:49.000Z"
-        },
-        {
-          "sha": "03118709",
-          "summary": "content-hash cache, drop the 1h TTL re-burn (S174 audit #6)",
-          "ts": "2026-06-05T03:19:31.000Z"
         }
       ],
       "proof": {

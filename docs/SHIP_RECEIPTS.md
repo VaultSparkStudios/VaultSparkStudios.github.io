@@ -7,6 +7,7 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
+| Worlds | 1 | b74b0e7e cumulative inline-style extraction — recover 241 wiped vsx rules + kill dead now-playing bar + placeholder-orphan gat… | pending |
 | Transparency | 1 | 611d4bcf /status/ gains Live Signals tiles from generated artifacts (S175 #9) | pending |
-| Speed | 6 | 966b4377 task board + SIL sprint addendum for speed arc<br>38ff9a89 per-country field vitals from real RUM (S175 #8, recipe corrected)<br>b93979f4 first-party analytics from RUM, gtag removed sitewide (S175 #5)<br>699d25a8 HTML edge window 60s->300s + 103 Early Hints (S175 #2+#3)<br>03118709 content-hash cache, drop the 1h TTL re-burn (S174 audit #6) | home-lcp-s173 (4) |
+| Speed | 6 | c7aba2c2 disaster-recovery edge cache — serve last-known-good HTML when both origins 5xx (S176 #2)<br>966b4377 task board + SIL sprint addendum for speed arc<br>38ff9a89 per-country field vitals from real RUM (S175 #8, recipe corrected)<br>b93979f4 first-party analytics from RUM, gtag removed sitewide (S175 #5)<br>699d25a8 HTML edge window 60s->300s + 103 Early Hints (S175 #2+#3) | home-lcp-s173 (4) |
 | Front door | 1 | 4f814515 verdict engine + canary 5%->25% on silence evidence (S174 audit #5) | pending |

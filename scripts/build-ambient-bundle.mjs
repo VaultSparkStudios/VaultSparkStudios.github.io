@@ -40,6 +40,7 @@ const checkMode = process.argv.includes('--check');
 // cached copy) should survive ordinary feature sessions.
 // Ordering contract: signed-in-state precedes account-chip-loader.
 const AMBIENT_CORE_SOURCES = [
+  'assets/tt-default-policy.js', // TT migration bridge — MUST precede every sink (S176)
   'assets/native-feel.js',
   'assets/scroll-reveal.js',
   'assets/scroll-depth.js',

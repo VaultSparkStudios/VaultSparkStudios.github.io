@@ -1,6 +1,19 @@
 (function (window) {
   'use strict';
 
+  // TT-safe HTML (S176): this module executes before ambient-core installs
+  // the default policy, so it routes through the shared lazy 'vs-dom' policy.
+  function vsHtml(s) {
+    try {
+      if (window.trustedTypes && window.trustedTypes.createPolicy) {
+        window.__vsDomPolicy = window.__vsDomPolicy ||
+          window.trustedTypes.createPolicy('vs-dom', { createHTML: function (h) { return h; } });
+        return window.__vsDomPolicy.createHTML(s);
+      }
+    } catch (_e) { /* policy exists or TT unavailable */ }
+    return s;
+  }
+
   function pluralize(count, singular, plural) {
     return count === 1 ? singular : plural;
   }
@@ -204,7 +217,7 @@
       invite: 'Before you share'
     };
 
-    root.innerHTML =
+    root.innerHTML = vsHtml(
       '<div class="trust-depth-shell">' +
         '<div class="trust-depth-head">' +
           '<p class="trust-depth-kicker">' + (kickers[context] || kickers.home) + '</p>' +
@@ -220,7 +233,7 @@
             '</article>';
           }).join('') +
         '</div>' +
-      '</div>';
+      '</div>');
 
     if (window.VSIntentState) {
       window.VSIntentState.noteExposure('trust_depth_' + context);

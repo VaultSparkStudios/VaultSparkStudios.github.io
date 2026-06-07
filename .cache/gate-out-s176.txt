@@ -6,7 +6,7 @@ generated-drift-preflight
 ──────────────────────────────────────────────
   ok public-intelligence
   ok heartbeat
-  healed founder-presence
+  ok founder-presence
   ok rum-summary
   ok nav-sheet-stats
   ok llms-full-shards
@@ -15,7 +15,7 @@ ok: generated artifacts are current
 ci-status-freshness
 ──────────────────────────────────────────────
   Generated: 2026-06-05T21:49:02.157Z
-  Age:       44.57h / 96h
+  Age:       45.31h / 96h
 
 ok: public CI status artifact is fresh and shaped correctly
 rum-anomaly-canary
@@ -24,7 +24,7 @@ rum-anomaly-canary
   Anomalies: 0
 
 ok: no week-over-week field anomaly detected
-✓ Ambient core bundle in sync (13 sources, 44.4 KB)
+✓ Ambient core bundle in sync (14 sources, 46.7 KB)
 ✓ Ambient feature bundle in sync (14 sources, 62.0 KB)
 rollup-rum --self-test: OK
   ✓  scripts/lib/brief-blocks.mjs                 
@@ -77,13 +77,14 @@ S98 scripts smoke test
   ✓ lib/load-registry exports loadRegistry() with { registry, path } shape
 
 ✓ all S98 scripts smoke-tested cleanly
-Found 3 orphan shell assets not in shell-manifest.json:
+Found 4 orphan shell assets not in shell-manifest.json:
   - assets/nav-toggle.shell-96581b1d55.js
   - assets/style.shell-15a4cd7162.css
   - assets/style.shell-7082b9235c.css
+  - assets/theme-toggle.shell-b970c26bd9.js
 
 If these are confirmed unused, remove with:
-  git rm assets/nav-toggle.shell-96581b1d55.js assets/style.shell-15a4cd7162.css assets/style.shell-7082b9235c.css
+  git rm assets/nav-toggle.shell-96581b1d55.js assets/style.shell-15a4cd7162.css assets/style.shell-7082b9235c.css assets/theme-toggle.shell-b970c26bd9.js
   ✓ referenced html script found
   ✓ referenced mjs import found
   ✓ bundled asset found
@@ -95,8 +96,8 @@ If these are confirmed unused, remove with:
 self-test: 7 passed, 0 failed
 check-orphan-assets
 ──────────────────────────────────────────────
-  Candidates scanned: 364 (assets/*.js + scripts/*.mjs)
-  Corpus files:       502
+  Candidates scanned: 365 (assets/*.js + scripts/*.mjs)
+  Corpus files:       505
   Asset orphans:      1  (browser-shipped — actionable)
   Script orphans:     44  (advisory — may be manual/cross-repo tools)
 
@@ -107,7 +108,7 @@ check-orphan-assets
   (membership/portal) needs founder confirmation per SOUL non-negotiable #2.
 
 (advisory mode — not blocking)
-lint-repo: clean (1140 text files scanned)
+lint-repo: clean (1126 text files scanned)
 validate-module-imports: clean (313 files scanned)
   ✓  context/contracts/social-dashboard.json
   ✓  context/contracts/website-public.json
@@ -130,7 +131,7 @@ validate-module-imports: clean (313 files scanned)
   ✓ bulk insert array extracts keys from first object
 
 self-test: 14 passed, 0 failed
-validate-supabase-queries · scanned 163 files · 202 query chains
+validate-supabase-queries · scanned 166 files · 204 query chains
 
   ⚠ 19 unknown table call(s) — not in contract, skipped:
      - ignis_spend_today  (1 call)
@@ -410,7 +411,7 @@ build-forge-feed --check: ok (24 items)
   ✓ analyze returns bytes + shape
 
 self-test: 6 passed, 0 failed
-report-ambient-coverage --check: ok (27 sources, 18 guarded, 7 candidates)
+report-ambient-coverage --check: ok (28 sources, 19 guarded, 7 candidates)
   ✓ membership commit → conversion
   ✓ LCP commit → speed
   ✓ oracle commit → transparency
@@ -421,7 +422,7 @@ report-ambient-coverage --check: ok (27 sources, 18 guarded, 7 candidates)
   ✓ empty themes excluded
 
 self-test: 8 passed, 0 failed
-build-feedback-provenance --check: ok (3 themes)
+build-feedback-provenance --check: ok (4 themes)
   ok receipt created
   ok commit joined
   ok proof joined
@@ -429,7 +430,7 @@ build-feedback-provenance --check: ok (3 themes)
   ok field delta carried
 
 self-test: 5 passed, 0 failed
-build-ship-receipts --check: ok (3 receipt(s))
+build-ship-receipts --check: ok (4 receipt(s))
   ✓ block contains markers
   ✓ block wraps lib in script
   ✓ replaceBlock swaps existing block
@@ -455,7 +456,7 @@ build-ignis-search-index --check: ok (31 docs)
   ok measurement plan present
 
 self-test: 3 passed, 0 failed
-build-intelligence-budget --check: ok (7 surface(s), 54.6KB)
+build-intelligence-budget --check: ok (7 surface(s), 55.5KB)
   ok renders route
   ok escapes selector
   ok summarizes report

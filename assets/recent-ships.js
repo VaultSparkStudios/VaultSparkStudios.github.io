@@ -1,6 +1,19 @@
 (function () {
   'use strict';
 
+  // TT-safe HTML (S176): executes before ambient-core installs the default
+  // policy — routes through the shared lazy 'vs-dom' policy.
+  function vsHtml(s) {
+    try {
+      if (window.trustedTypes && window.trustedTypes.createPolicy) {
+        window.__vsDomPolicy = window.__vsDomPolicy ||
+          window.trustedTypes.createPolicy('vs-dom', { createHTML: function (h) { return h; } });
+        return window.__vsDomPolicy.createHTML(s);
+      }
+    } catch (_e) { /* policy exists or TT unavailable */ }
+    return s;
+  }
+
   function escapeHtml(value) {
     return String(value)
       .replace(/&/g, '&amp;')
@@ -39,7 +52,7 @@
   }
 
   function renderEntries(container, entries) {
-    container.innerHTML = entries.map(function (entry) {
+    container.innerHTML = vsHtml(entries.map(function (entry) {
       return (
         '<article class="recent-ship-card">' +
           '<div class="recent-ship-meta">' + escapeHtml(entry.date) + '</div>' +
@@ -49,7 +62,7 @@
           '</ul>' +
         '</article>'
       );
-    }).join('');
+    }).join(''));
   }
 
   function loadFromIntel(intel) {
@@ -85,12 +98,12 @@
   }
 
   function renderFallback(container) {
-    container.innerHTML =
+    container.innerHTML = vsHtml(
       '<article class="recent-ship-card">' +
         '<div class="recent-ship-meta">Active development</div>' +
         '<h3 class="recent-ship-title">The studio is shipping</h3>' +
         '<ul class="recent-ship-list"><li>See the full release history in the changelog.</li></ul>' +
-      '</article>';
+      '</article>');
   }
 
   document.addEventListener('DOMContentLoaded', function () {

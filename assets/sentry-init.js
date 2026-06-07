@@ -1,7 +1,20 @@
 /* sentry-init.js — shared Sentry initialization */
 (function () {
+  // Narrow TT policy (S176, S174 convention): pinned to the Sentry CDN —
+  // anything else returns null and stays a visible violation.
+  var SENTRY_SRC = 'https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js';
+  var ttPolicy = null;
+  try {
+    if (window.trustedTypes && window.trustedTypes.createPolicy) {
+      ttPolicy = window.trustedTypes.createPolicy('vs-sentry', {
+        createScriptURL: function (url) {
+          return url.indexOf('https://browser.sentry-cdn.com/') === 0 ? url : null;
+        }
+      });
+    }
+  } catch (_e) { /* TT unavailable or policy exists */ }
   var script = document.createElement('script');
-  script.src = 'https://browser.sentry-cdn.com/7.99.0/bundle.tracing.min.js';
+  script.src = ttPolicy ? ttPolicy.createScriptURL(SENTRY_SRC) : SENTRY_SRC;
   script.crossOrigin = 'anonymous';
   script.integrity = 'sha384-99tnmieVgWXT2BprlMVVbNCeKOFoMo/QxtacuHrPmcGNvTkcUylAofrsDfCFOsxB';
   script.async = true;

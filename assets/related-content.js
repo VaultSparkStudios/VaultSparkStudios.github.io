@@ -1,6 +1,19 @@
 (function (window) {
   'use strict';
 
+  // TT-safe HTML (S176): executes before ambient-core installs the default
+  // policy — routes through the shared lazy 'vs-dom' policy.
+  function vsHtml(s) {
+    try {
+      if (window.trustedTypes && window.trustedTypes.createPolicy) {
+        window.__vsDomPolicy = window.__vsDomPolicy ||
+          window.trustedTypes.createPolicy('vs-dom', { createHTML: function (h) { return h; } });
+        return window.__vsDomPolicy.createHTML(s);
+      }
+    } catch (_e) { /* policy exists or TT unavailable */ }
+    return s;
+  }
+
   var ITEMS = {
     membership: {
       eyebrow: 'Membership',
@@ -253,7 +266,7 @@
     var items = itemsForContext(context, limit, state);
     var heading = HEADINGS[context] || HEADINGS.home;
 
-    root.innerHTML =
+    root.innerHTML = vsHtml(
       '<div class="related-rail-shell">' +
         '<div class="related-rail-head">' +
           '<p class="related-rail-kicker">Keep Moving</p>' +
@@ -272,7 +285,7 @@
             );
           }).join('') +
         '</div>' +
-      '</div>';
+      '</div>');
 
     if (window.VSIntentState) {
       window.VSIntentState.noteExposure('related_rail_' + context);
