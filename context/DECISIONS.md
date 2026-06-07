@@ -1541,3 +1541,27 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **Why (honest correction):** Three S174/S175 deploys (TT intake fix, origin failover, edge-window widening) ran without the flag and were NOT live until 7c805a3f landed on the production env. This also corrects two earlier claims: the TT intake fix was verified by endpoint response (204) which the old version also returned — version was never proven; and the "failover carried the second DNS flip" credit was wrong — the failover wasn't live yet; the second flip simply hit a short validation window. The failover IS live now.
 
 **Maintenance rule:** Deploy command is `npx wrangler deploy -c cloudflare/wrangler.toml --env production`. Verification after deploy must check `wrangler deployments list` (or a version-distinguishing behavior), never just an endpoint status code the prior version also produced.
+
+### 2026-06-07 — S176 — Inline-style extraction is CUMULATIVE (root cause of the "Loading…" bug)
+
+**Decision:** `extract-inline-styles.mjs` seeds its style.css block from the existing block on every run, prunes only classes referenced by no HTML anywhere in the repo, and enforces a coverage invariant (every referenced `vsx-` class must have a rule after the run, or exit 1).
+
+**Why:** The old extractor rebuilt the block from only the current run's finds. Because the HTML keeps its `vsx-` classes permanently after the first rewrite, any subsequent run (e.g. one where no inline styles were found to re-extract) deleted 241/253 previously-extracted rules while every page still referenced them. The founder-visible symptom was the retired now-playing bar losing `display:none` and rendering "Loading…" forever; the silent damage was hero letters + 124 more homepage utility classes losing their styles. This is the canonical "fix the generator at the ledger level, never hand-maintain an exception list" pattern.
+
+**Maintenance rule:** Never make the extracted CSS block a function of a single run's finds. The coverage invariant is the durable guard — if it ever fails, recover rules from a prior shell css snapshot rather than re-extracting blind.
+
+### 2026-06-07 — S176 — Worker disaster-recovery cache: serve stale HTML on double-origin 5xx
+
+**Decision:** The security Worker refreshes a 7-day disaster-recovery HTML copy (own cache key, independent of the rotating nonce-window key) on every healthy 200 HTML pass, and serves it (`X-VS-Disaster-Recovery: stale`, `Cache-Control: no-store`) for HTML navigation GETs when both the primary origin AND the pages.dev fallback 5xx.
+
+**Why:** S175's `originFetch` failover handles single-origin failure, but a Cloudflare Pages platform blip takes out primary and pages.dev together — the founder saw the resulting 503s reach the browser on /games/ + /vault-member/. Visible staleness during a platform incident is strictly better than a visible outage. Non-HTML and non-GET requests are unaffected (correctness over availability for mutations).
+
+**Maintenance rule:** Deployed `--env production` (bf71b2db). The DR copy is best-effort; it does not replace fixing a sustained origin outage — the uptime probe (S176) pages the founder so the incident is known.
+
+### 2026-06-07 — S176 — Trusted Types: default-policy migration bridge over per-sink patching
+
+**Decision:** Adopt a TT **default policy** (`assets/tt-default-policy.js`, first source in ambient-core) as the migration bridge for ~167 legacy innerHTML sinks, rather than patching every sink before flipping enforce. `createScriptURL` is allowlist-pinned (same-origin + sentry-cdn + challenges.cloudflare.com → anything else returns null and stays a visible violation); `createHTML`/`createScript` pass through (all rendered HTML is build-generated or `escapeHtml`-wrapped first-party data). New code continues to use NARROW named policies (the S174 convention); legacy migrates over time.
+
+**Why:** Per-sink patching of 167 call sites across ~50 modules would stall the enforce ladder for months. The default policy is the W3C-documented migration path: one audited chokepoint today, safe enforce-flip later, observability preserved on the only sink that matters for injection (script URLs).
+
+**Maintenance rule:** Never widen the `createScriptURL` allowlist without a logged reason. Modules that execute before ambient-core (trust-depth, related-content, recent-ships, sentry-init) carry their own narrow policy since the default isn't installed yet at their load time.

@@ -1,6 +1,25 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-05 (Session 175 — founder-directed speed arc: 9/9 shipped; origin on CF Pages, gtag gone, shell split, alerts wired)
+Last updated: 2026-06-07 (Session 176 — goal-chain: 9/9 shipped; founder-console bug arc, cumulative-extractor root-cause fix, Worker DR layer, TT default-policy bridge, first-party uptime)
+
+## Done (Session 176 — goal-chain: /start → /audit → /implement → /closeout · 9/9)
+
+- [x] **[S176][UX/P0] NOW-PLAYING-ORPHAN-KILL + EXTRACTOR ROOT-CAUSE — DONE.** Founder-reported "Loading…" stuck top-left root-caused to `extract-inline-styles.mjs` wiping 241/253 vsx rules on rebuild. Extractor now cumulative + coverage-invariant; 252 rules recovered into style.css; dead `#nowPlayingBar` deleted; shell `850d887c62` (330/330 vsx coverage). **DONE S176**
+- [x] **[S176][PROCESS/P0] PLACEHOLDER-SENTINEL-GATE — DONE.** `scripts/check-placeholder-orphans.mjs` (ancestor-chain aware, 6/6 self-test) fails build:check on any "Loading…" with no JS renderer. Placeholder-forever is now structurally impossible. **DONE S176**
+- [x] **[S176][RESILIENCE/P1] WORKER-STALE-ON-5XX — DONE.** Founder saw browser 503s; Worker now serves 7-day disaster-recovery HTML on double-origin 5xx (`X-VS-Disaster-Recovery: stale`). Deployed --env production bf71b2db, prod verified 200. **DONE S176**
+- [x] **[S176][SECURITY/P1] TT-SINK-BURNDOWN-WAVE2 — DONE.** `assets/tt-default-policy.js` default-policy migration bridge (covers ~167 legacy sinks) + 6 named-sink fixes (theme-toggle/trust-depth/related-content/recent-ships/sentry-init). Preps 06-12 enforce re-probe. **DONE S176**
+- [x] **[S176][OBS/P1] UPTIME-PROBE-FIRSTPARTY — DONE.** `scripts/probe-uptime.mjs` + `.github/workflows/uptime-probe.yml` (*/30, browser UA, retry-once, 6h dedup, Resend alert). Free-build replacement for MISSING uptimerobot. 6/6 self-test. **DONE S176**
+- [x] **[S176][SPEED/P2] PRELOAD-PRUNE — DONE.** `_headers` preloads 5→2 (style + ambient-core); killed ~84 unused-preload warnings + LCP fetch contention. **DONE S176**
+- [x] **[S176][DATA/P1] FIELD-VERDICT-REFRESH — DONE (readout).** Verdicts regenerated from CI RUM; `/` PENDING (38 pre / 3 post, need 5+/side); geo US:107 GB:3. **DONE S176**
+- [x] **[S176][PROCESS/P2] RUM-PULL-CONFLICT-GUARD — DONE.** `pull-rum-summary.mjs` skips local rewrite when github-actions committed <24h ago (--force overrides). Ends the generated-file UU-conflict pattern. **DONE S176**
+- [x] **[S176][ECOSYSTEM/P2] SIL-INTEGRITY-CLAMP — DONE.** S173/S174 processQuality 101→100 fixed + totals recomputed (998→997, 997→996); `check-sil-integrity.mjs` gate; answered studio-ops repo-question via Ark (id 01JQHOLTTF798F4CE28B793898). **DONE S176**
+
+## Now (Session 177 runway)
+
+- [ ] **[S177][SECURITY/P1] TT-ENFORCE-REPROBE.** Soak clock restarted 2026-06-05 (env-fix) and S176 burned down the founder-named sinks via the default-policy bridge. Re-probe ~2026-06-12: `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; expect near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
+- [ ] **[S177][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT.** `/` field verdict still PENDING (3 post-deploy samples). Once ≥5/side accrue, read `data/field-verdicts.json` — expect a real LCP drop from edge-origin TTFB. Celebrate or regress-hunt with `lib/perf-forensics.mjs`.
+- [ ] **[S177][OBS/P2] UPTIME-PROBE-VERIFY.** Confirm the first `uptime-probe.yml` scheduled run executed cleanly (Actions tab) and that a forced failure path emails correctly. First dispatch is the smoke test.
+- [ ] **[S177][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` exists (US:107 GB:3); check whether non-US LCP confirms the origin-migration win globally once samples grow.
 
 ## Done (Session 175 — founder-directed speed arc: /implement now)
 

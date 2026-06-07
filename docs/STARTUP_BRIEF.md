@@ -32,7 +32,7 @@
 ║                                                                  ║
 ║    995/1000   ███████████████████████░   100%                    ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 9↑                          ║
-║    Last active: 2d  ·  Last closeout: 2d  ·  (active = newest o  ║
+║    Last active: 0d  ·  Last closeout: 2d  ·  (active = newest o  ║
 ║    Trend  ▄▂█▇▄  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -60,10 +60,10 @@
 ║  ✓  Velocity      9 ↑  ·  Debt: →                                ║
 ║  ⚠  Runway        ~4 sessions (origin field-verdict readout · T  ║
 ║  ✓  Headroom      67% remaining · ~6 large item(s) fit           ║
-║  ✓  Context age   2d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         40319 FORGE  ·  2d old                         ║
 ║  ✓  Truth         green  ·  Genome: 0/25                         ║
-║  ✓  Compliance   32/32 (100%) → ▆▆██████                         ║
+║  ✓  Compliance   32/32 (100%) → ▆███████                         ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.212  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -93,53 +93,22 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   99  [SECURITY]     TT-RE-PROBE-POST-ENV-FIX. The intake fix o  ║
-║        TT-RE-PROBE-POST-ENV-FIX. The intake fix only went live   ║
-║                                                                  ║
-║   96  [PRODUCT]      ORIGIN-MIGRATION-FIELD-VERDICT. The 2026-0  ║
-║        ORIGIN-MIGRATION-FIELD-VERDICT. The 2026-06-05 boundary   ║
+║  100  [VERIFY]       TT-ENFORCE-REPROBE. Soak clock restarted 2  ║
+║        TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   91  [VERIFY]       FIELD-VERDICT-READOUT. rum-autopull-ci acc  ║
-║        FIELD-VERDICT-READOUT. rum-autopull-ci accrues nightly;   ║
+║   94  [VERIFY]       UPTIME-PROBE-VERIFY. Confirm the first upt  ║
+║        UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml   ║
 ║                                                                  ║
-║   90  [PRODUCT]      GEO-VITALS-WATCH. api/geo-vitals.json now   ║
-║        GEO-VITALS-WATCH. api/geo-vitals.json now exists; check   ║
+║   93  [PRODUCT]      ORIGIN-MIGRATION-FIELD-VERDICT. / field ve  ║
+║        ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PE  ║
+║                                                                  ║
+║   87  [PRODUCT]      GEO-VITALS-WATCH. api/geo-vitals.json exis  ║
+║        GEO-VITALS-WATCH. api/geo-vitals.json exists (US:107 GB:  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
-
-
-<!-- skill-augment:start -->
-
-╔══ SKILL HEALTH ══════════════════════════════════════════════╗
-║  Skills ? · Commands ? · Issues ? · Warnings ?               ║
-║  Cost ledger: no skill runs recorded yet                     ║
-╚══════════════════════════════════════════════════════════════╝
-╔══ DOCTOR OWNERSHIP ══════════════════════════════════════════╗
-║  1 agent-fixable · 1 sibling-cadence · 0 founder             ║
-║  ▶ sibling-locks: unclassified — add to scripts/lib/doctor-  ║
-║  ◌ sibling: compliance-velocity                              ║
-╚══════════════════════════════════════════════════════════════╝
-╔══ ARK STATUS ════════════════════════════════════════════════╗
-║  Inbox: 5 cargo drained at 17:50Z · ⚠ 12 sig fails           ║
-║  Harbor: no report yet                                       ║
-║  CANON-018 transport · docs/STUDIO_ARK.md                    ║
-╚══════════════════════════════════════════════════════════════╝
-╔══ ARK PRIORITY (rank-zero) ══════════════════════════════════╗
-║  🛰 pattern-share    skill-outcome                           ║
-║  🛰 pattern-share    skill-outcome                           ║
-║  Auto-promoted above genius list (priority ≥0.7)             ║
-╚══════════════════════════════════════════════════════════════╝
-╔══ ROUTER SUGGESTS ═══════════════════════════════════════════╗
-║  1. /app-release-gate     conf=0.45  fits app · SPARKED-sta  ║
-║  2. /audit                conf=0.45  fits app · SPARKED-sta  ║
-║  3. /security-check       conf=0.45  fits app · SPARKED-sta  ║
-║  Run: node scripts/router.mjs suggest --explain              ║
-╚══════════════════════════════════════════════════════════════╝
-
-<!-- skill-augment:end -->
 
 ```
 

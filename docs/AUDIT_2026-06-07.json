@@ -79,7 +79,7 @@
       "effort": "2h",
       "impact": 9,
       "innovation": 6,
-      "priority": 27.0,
+      "priority": 27,
       "summary": "Founder console names the surviving TT sinks with exact lines — fix all six files (innerHTML → safe DOM or shared policy; sentry-init needs createScriptURL) so the enforce ladder can flip after the 06-12 soak.",
       "why": "The S174 burndown fixed clustered sinks but the founder's console proves six callers still violate report-only TT. Burning these down now means the 2026-06-12 re-probe (soak clock restarted by the env-fix) can return near-zero and unlock enforcement. Security outcome: DOM-XSS injection surface goes to zero on enforce.",
       "recipe": "theme-toggle.js:394 arrow.innerHTML='&#9660;' → textContent='▼'; recent-ships.js:42/88, trust-depth.js:207, related-content.js:256 → route through new assets/tt-policy.js (trustedTypes.createPolicy('vs-dom', {createHTML})) with non-TT-browser fallback; sentry-init.js script.src → createScriptURL via same policy; add policy name to TT_REPORT_CSP allowlist later when enforcing. Rebuild shell bundles."
@@ -159,5 +159,51 @@
       "reason": "Next wave — window.onerror + resource-failure beacon piggybacked on RUM endpoint; uptime-probe (item 6) covers the availability half this session."
     }
   ],
-  "execution": []
+  "execution": [
+    {
+      "slug": "now-playing-orphan-kill",
+      "status": "shipped",
+      "note": "dead #nowPlayingBar deleted; root cause was extractor wiping 241 vsx rules"
+    },
+    {
+      "slug": "placeholder-sentinel-gate",
+      "status": "shipped",
+      "note": "check-placeholder-orphans.mjs ancestor-chain aware, 6/6, in build:check"
+    },
+    {
+      "slug": "field-verdict-refresh-readout",
+      "status": "shipped",
+      "note": "verdicts regenerated; / still PENDING (38 pre/3 post, need 5+); geo US:107 GB:3"
+    },
+    {
+      "slug": "worker-stale-on-5xx",
+      "status": "shipped",
+      "note": "DR edge cache; deployed --env production bf71b2db; prod verified 200"
+    },
+    {
+      "slug": "tt-sink-burndown-wave2",
+      "status": "shipped",
+      "note": "default-policy bridge + 6 named sinks; preps 06-12 soak re-probe"
+    },
+    {
+      "slug": "uptime-probe-firstparty",
+      "status": "shipped",
+      "note": "probe-uptime.mjs + uptime-probe.yml */30; 6/6; RESEND secret present"
+    },
+    {
+      "slug": "preload-prune",
+      "status": "shipped",
+      "note": "_headers 5->2 preloads (style + ambient-core)"
+    },
+    {
+      "slug": "rum-pull-conflict-guard",
+      "status": "shipped",
+      "note": "CI-fresh skip <24h; --force override; 12/12"
+    },
+    {
+      "slug": "sil-integrity-clamp",
+      "status": "shipped",
+      "note": "S173/S174 101->100 fixed; check-sil-integrity.mjs gate; Ark reply shipped"
+    }
+  ]
 }

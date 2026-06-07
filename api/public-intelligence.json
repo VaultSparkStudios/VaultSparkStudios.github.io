@@ -1,14 +1,14 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-07T19:07:28.337Z",
+  "generatedAt": "2026-06-07T19:56:26.172Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 175,
-    "lastUpdated": "2026-06-05",
+    "currentSession": 176,
+    "lastUpdated": "2026-06-07",
     "currentFocus": "Origin on Cloudflare Pages + split shell + first-party analytics live; awaiting field verdict on the speed arc",
     "nextMilestone": "Field-verdict readout for the 2026-06-05 boundary (S173 critical path + S175 origin migration) + TT re-probe ~06-12",
     "ignis": {
@@ -29,12 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Production origin = Cloudflare Pages. Edge-served HTML attacks the field TTFB bottleneck (p75 1.3s) structurally. GH Pages remains the warm rollback (restore 4 A records + www CNAME — verified working during the incident). `pages-deploy.yml` deploys every push in ~27s + purges the zone.",
-      "Incident, honestly: first flip 522'd ~2-3min (Pages domain must be `active` before DNS lands — chicken-and-egg). Rolled back fast; the security Worker now carries permanent `originFetch` failover (5xx → pages.dev), so future cutovers are zero-downtime by construction.",
-      "Worker deploy trap fixed: `[env.production]` holds the routes — bare `wrangler deploy` hits an unused top-level worker and *prints success*. Three deploys (TT intake fix, failover, edge window) were silently dead until `7c805a3f`. Rule in DECISIONS: always `--env production`, verify via `wrangler deployments list`. TT soak clock restarted late 06-05; re-probe ~06-12.",
-      "Shell split shipped: ambient-core 44KB (stable hash) + ambient-feature 62KB. Feature edits stop invalidating every visitor's cache. `propagate-nav.mjs` chains `extract-inline-styles.mjs` (nav template was re-seeding inline-style debt).",
-      "gtag fully gone (founder-approved): 97 pages stripped, CSP cleaned; first-party analytics from the unsampled RUM beacon → `api/analytics-summary.json`. Plus `api/geo-vitals.json` (real per-country vitals — US:106/GB:3), regression emails via Resend after nightly rum:pull, and `/status/` Live Signals tiles.",
-      "Verification: gate green (108 pages, 0 failures) · ambient integrity spec 4/4 · live prod serves split shell, no gtag, clean CSP, analytics JSON · pages-deploy 27s green."
+      "The \"Loading…\" bug was a pipeline bug, not a widget bug. `extract-inline-styles.mjs` rebuilt its style.css block from only the current run's finds — one run after the HTML kept its `vsx-` classes, 241/253 rules vanished while every page still referenced them. The retired now-playing bar losing `display:none` was the visible tip; the hero letters + 124 homepage utilities were uncovered too. The extractor is now cumulative + coverage-invariant (recovered 252 rules → shell `850d887c62`, 330/330 sitewide coverage); the dead `#nowPlayingBar` is deleted; and `check-placeholder-orphans.mjs` (in build:check) makes any future placeholder-forever a build failure.",
+      "Browser-level 503s are now invisible to visitors. S175's failover only covered single-origin failure; the Worker now keeps a 7-day disaster-recovery HTML copy and serves it stale on double-5xx (deployed --env production bf71b2db, prod 200 verified). The S175 `--env production` lesson held — single clean deploy.",
+      "TT burndown wave 2 + observability. Default-policy migration bridge (`assets/tt-default-policy.js`, first in ambient-core, allowlist-pinned createScriptURL) covers ~167 legacy sinks at one chokepoint; 6 founder-named sinks fixed directly. First-party uptime probe (`probe-uptime.mjs` + `uptime-probe.yml` */30, Resend) replaces the MISSING uptimerobot credential. `_headers` preloads pruned 5→2.",
+      "Process hygiene that bit this session, fixed. `pull-rum-summary.mjs` now skips local rewrite when CI committed the summary <24h ago (the UU conflict that opened /start). SIL integrity reconciled (S173/S174 processQuality 101→100; 998→997 / 997→996) + new `check-sil-integrity.mjs` gate + Ark reply to studio-ops.",
+      "Self-healing drift-preflight: founder-presence is now autofix — its \"drift\" is just time passing during a long gate (live-state mirror), never an authoring error.",
+      "Verification: `npm run build:check` green every wave (108-page crawl, 0 failures); Worker live-verified 200."
     ]
   },
   "consumerChangelog": [
@@ -125,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 175,
+    "sessionsCompleted": 176,
     "liveProjects": 3,
     "projectsInForge": 8,
     "activeEdgeFunctions": 16,

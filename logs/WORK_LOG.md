@@ -2334,3 +2334,19 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
 - 9/9 shipped, all live: CF Pages origin migration (522 incident on flip 1, rollback <3min, permanent Worker failover added, clean re-flip) · HTML edge window 60s→300s · 103 Early Hints + _headers · ambient core/feature shell split (12 touchpoints) · gtag removed from 97 pages + first-party analytics from RUM · regression email alerts (Resend, nightly) · geo-vitals from real field data (synthetic matrix declined — GH runners are US-only) · /status/ Live Signals.
 - Honest corrections: lcp-fast-path was already satisfied (system fonts, async CSS); worker deploys had been missing --env production (3 silently-dead deploys; live since 7c805a3f; TT soak clock restarted).
 - Deploy pipeline: push → production ~27s with auto-purge; verified live (split shell, no gtag, clean CSP, analytics JSON).
+
+## 2026-06-07 — Session 176 (goal-chain · /start → /audit → /implement → /closeout · founder-console bug arc)
+
+- Goal: full goal-chain with genius-level/creative execution + post-closeout impact score. Founder dropped a live dev-console dump mid-session (stuck "Loading…", report-only TT violations, transient 503s, 84 unused-preload warnings) — folded into the audit as P0 evidence.
+- 9/9 audit items shipped (docs/AUDIT_2026-06-07.json, combined Priority 232.4):
+  1. NOW-PLAYING-ORPHAN-KILL — root cause was extract-inline-styles.mjs wiping 241/253 vsx rules on rebuild; extractor made cumulative + coverage-invariant, 252 rules recovered, dead bar deleted (shell 850d887c62, 330/330 coverage).
+  2. PLACEHOLDER-SENTINEL-GATE — check-placeholder-orphans.mjs (ancestor-chain aware, 6/6) in build:check.
+  3. WORKER-STALE-ON-5XX — 7-day DR HTML cache served on double-origin 5xx; deployed --env production bf71b2db, prod 200 verified.
+  4. TT-SINK-BURNDOWN-WAVE2 — tt-default-policy.js migration bridge (covers ~167 sinks) + 6 named-sink fixes.
+  5. UPTIME-PROBE-FIRSTPARTY — probe-uptime.mjs + uptime-probe.yml */30 (browser UA, retry-once, 6h dedup, Resend); free-build replacement for MISSING uptimerobot. 6/6.
+  6. PRELOAD-PRUNE — _headers 5→2 preloads.
+  7. FIELD-VERDICT-REFRESH — verdicts regenerated; / PENDING (38 pre/3 post); geo US:107 GB:3.
+  8. RUM-PULL-CONFLICT-GUARD — local pull skips when CI committed <24h ago (--force overrides).
+  9. SIL-INTEGRITY-CLAMP — S173/S174 processQuality 101→100, totals recomputed; check-sil-integrity.mjs gate; Ark reply to studio-ops (id 01JQHOLTTF798F4CE28B793898).
+- Bonus: founder-presence drift-preflight made autofix (self-heals live-state flap during long gates).
+- 3 commits; build:check green every wave (108 pages, 0 failures); Worker deploy live-verified.
