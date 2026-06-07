@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-06T08:47:06.051Z",
+  "generatedAt": "2026-06-07T09:38:56.597Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data/rum-history.ndjson",
   "windowDays": 7,
@@ -10,18 +10,18 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 42,
+  "totalSamples": 44,
   "sufficientRoutes": 0,
   "routes": {
     "/": {
-      "samples": 14,
+      "samples": 16,
       "sufficient": false,
       "p75": {
         "lcp": 11472,
-        "cls": 0.051,
-        "inp": 64,
-        "fcp": 1216,
-        "ttfb": 616
+        "cls": 0.1151,
+        "inp": 96,
+        "fcp": 1588,
+        "ttfb": 1214
       }
     },
     "/__rum_selftest": {
@@ -44,17 +44,6 @@
         "inp": 72,
         "fcp": 7420,
         "ttfb": 126
-      }
-    },
-    "/games/call-of-doodie/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 592,
-        "cls": 0.0009,
-        "inp": 432,
-        "fcp": 592,
-        "ttfb": 68
       }
     },
     "/games/gridiron-gm/": {
@@ -80,14 +69,14 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 5,
+      "samples": 7,
       "sufficient": false,
       "p75": {
-        "lcp": 2804,
-        "cls": 0.0839,
-        "inp": 872,
-        "fcp": 2804,
-        "ttfb": 133
+        "lcp": 592,
+        "cls": 0.0287,
+        "inp": 96,
+        "fcp": 532,
+        "ttfb": 44
       }
     },
     "/ignis/": {
@@ -101,15 +90,15 @@
         "ttfb": 87
       }
     },
-    "/journal/studio-os-public/": {
+    "/leaderboards/": {
       "samples": 1,
       "sufficient": false,
       "p75": {
-        "lcp": 476,
-        "cls": 0.0145,
+        "lcp": 428,
+        "cls": 0.0564,
         "inp": 0,
-        "fcp": 476,
-        "ttfb": 25
+        "fcp": 428,
+        "ttfb": 9
       }
     },
     "/membership/": {
@@ -134,26 +123,15 @@
         "ttfb": 105
       }
     },
-    "/projects/promogrind/": {
+    "/roadmap/": {
       "samples": 1,
       "sufficient": false,
       "p75": {
-        "lcp": 548,
-        "cls": 0.0009,
-        "inp": 240,
-        "fcp": 548,
-        "ttfb": 63
-      }
-    },
-    "/projects/the-living-protocol/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 864,
-        "cls": 0,
-        "inp": 128,
-        "fcp": 864,
-        "ttfb": 57
+        "lcp": 296,
+        "cls": 0.0138,
+        "inp": 0,
+        "fcp": 296,
+        "ttfb": 8
       }
     },
     "/security/": {
