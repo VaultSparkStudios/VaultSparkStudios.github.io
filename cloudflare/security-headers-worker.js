@@ -502,6 +502,18 @@ export default {
     // Permanent benefit: pages.dev keeps serving even if the custom-domain
     // layer breaks. GET/HEAD only (idempotent).
     const FALLBACK_ORIGIN = env.FALLBACK_ORIGIN || 'https://vaultsparkstudios-website.pages.dev';
+    // S176 disaster-recovery layer: when BOTH origins 5xx (platform-wide Pages
+    // blip — founder saw 503s reach the browser on 2026-06-07), serve the
+    // last-known-good HTML copy from the edge cache instead of failing. DR
+    // copies are stored under a dedicated cache key (independent of the
+    // rotating nonce-window key, which expires every HTML_NONCE_WINDOW_SEC)
+    // with a 7-day retention. Visible staleness beats a visible outage.
+    const drKeyFor = (reqUrl) => {
+      const u = new URL(reqUrl);
+      return new Request(`${u.origin}${u.pathname}?_vsdr=1`);
+    };
+    const isHtmlNavRequest = (req) =>
+      (req.headers.get('accept') || '').includes('text/html');
     const originFetch = async (req) => {
       let primary = null;
       try { primary = await fetch(req); } catch (_e) { /* fall through */ }
@@ -517,6 +529,18 @@ export default {
         });
         if (fb.status < 500) return fb;
       } catch (_e) { /* keep primary */ }
+      // Last resort: stale HTML from the disaster-recovery cache.
+      if (isHtmlNavRequest(req)) {
+        try {
+          const dr = await caches.default.match(drKeyFor(req.url));
+          if (dr) {
+            const stale = new Response(dr.body, dr);
+            stale.headers.set('X-VS-Disaster-Recovery', 'stale');
+            stale.headers.set('Cache-Control', 'no-store');
+            return stale;
+          }
+        } catch (_e) { /* fall through to error */ }
+      }
       return primary || new Response('origin unavailable', { status: 502 });
     };
     const url = new URL(request.url);
@@ -744,6 +768,15 @@ export default {
         ctx.waitUntil(cache.put(htmlCacheKey, finalResponse.clone()));
       } else if ((ttl > 0 || jsonSwr) && !(isHtml && nonceModeOn)) {
         ctx.waitUntil(cache.put(request, finalResponse.clone()));
+      }
+      // S176: refresh the disaster-recovery copy on every healthy HTML pass.
+      // Stored with 7-day retention under its own key so it outlives the
+      // rotating nonce-window entries and stays servable through an outage.
+      if (isHtml) {
+        const drCopy = finalResponse.clone();
+        const dr = new Response(drCopy.body, drCopy);
+        dr.headers.set('Cache-Control', 'public, max-age=604800');
+        ctx.waitUntil(cache.put(drKeyFor(request.url), dr));
       }
     }
 
