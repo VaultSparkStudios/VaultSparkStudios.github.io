@@ -4585,8 +4585,8 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 
 ## 2026-06-05 — Session 173
 
-**Score:** 998 / 1000
-(Dev Health 100 · Creative Alignment 99 · Momentum 100 · Engagement 99 · Process Quality 101 · Cross-Repo Coherence 100 · Security Posture 99 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
+**Score:** 997 / 1000 <!-- S176 integrity fix: Process Quality clamped 101→100 (valid range 0–100); total recomputed from categories per studio-ops repo-question -->
+(Dev Health 100 · Creative Alignment 99 · Momentum 100 · Engagement 99 · Process Quality 100 · Cross-Repo Coherence 100 · Security Posture 99 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
 
 **What improved:** The S172 homepage field-LCP problem now has a disciplined proof stack instead of a hunch stack: critical CSS has one generated source, local LCP autopsy is reproducible, timed first-viewport screenshots exist, and RUM strictness has a sample ladder. The same session also turned TT enforce into a route evidence ladder, moved guarded ambient behavior behind predicates, and made staging parity a yellow artifact instead of a shrug.
 
@@ -4601,10 +4601,10 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 
 **Committed to TASK_BOARD:** [S174][PERF/P1] HOMEPAGE-FIELD-LCP-FIELD-VERIFY · [S174][SECURITY/P1] TT-VIOLATION-BURNDOWN · [S174][OPS/P2] STAGING-PARITY-YELLOW-FIX
 
-## 2026-06-05 — Session 174 (/start → /audit → /implement → /closeout · self-feeding evidence loops · 10/10) | Total: 997/1000 (v3.0) | Velocity: 10 | Debt: →
+## 2026-06-05 — Session 174 (/start → /audit → /implement → /closeout · self-feeding evidence loops · 10/10) | Total: 996/1000 (v3.0) | Velocity: 10 | Debt: →
 
-**Score:** 997 / 1000
-(Dev Health 100 · Creative Alignment 99 · Momentum 100 · Engagement 98 · Process Quality 101 · Cross-Repo Coherence 100 · Security Posture 100 · Ecosystem Integration 99 · Capital Efficiency 100 · Automation Coverage 100)
+**Score:** 996 / 1000 <!-- S176 integrity fix: Process Quality clamped 101→100 (valid range 0–100); total recomputed from categories per studio-ops repo-question -->
+(Dev Health 100 · Creative Alignment 99 · Momentum 100 · Engagement 98 · Process Quality 100 · Cross-Repo Coherence 100 · Security Posture 100 · Ecosystem Integration 99 · Capital Efficiency 100 · Automation Coverage 100)
 
 **What improved:** S173's instruments now run without anyone watching them. Field RUM accrues on a daily cron; deploys grade themselves against post-ship field windows; the TT soak can finally read its own reports — and the first real read overturned the audit's own hypothesis (dispatches innerHTML 30×, not gtag 1×), which is exactly what a forensics layer is for. Staging parity went green for the first time after three stacked defects fell (the try_files homepage-for-every-route bug is the kind that silently poisons all staging smoke tests). Two of S173's three brainstorm items (TT-SINK-CLUSTER-AUTOFIXER, STAGING-PARITY-REPAIRBOT) shipped as real tools this session.
 

@@ -245,6 +245,24 @@ if (CHECK) {
   }
 }
 
+// S176 conflict guard: the nightly rum-pull.yml cron commits this file from
+// CI — a local rewrite while a CI commit is in flight produced a UU merge
+// conflict on a generated file (S176 /start). When the last commit touching
+// the summary is a fresh github-actions one, skip the local rewrite unless
+// --force is passed.
+if (!args.includes('--force')) {
+  try {
+    const { execSync } = await import('node:child_process');
+    const log = execSync('git log -1 --format=%cI|%an -- data/rum-summary.json', { cwd: ROOT, encoding: 'utf8' }).trim();
+    const [iso, author] = log.split('|');
+    const ageH = (Date.now() - Date.parse(iso)) / 36e5;
+    if (/github-actions/i.test(author || '') && ageH < 24) {
+      console.log(`pull-rum-summary: CI-fresh (committed by ${author} ${ageH.toFixed(1)}h ago) — skipping local rewrite. Use --force to override.`);
+      process.exit(0);
+    }
+  } catch { /* not a git checkout or no history — proceed */ }
+}
+
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, `${JSON.stringify(summary, null, 2)}\n`);
 console.log(`pull-rum-summary → ${path.relative(ROOT, OUT)}`);

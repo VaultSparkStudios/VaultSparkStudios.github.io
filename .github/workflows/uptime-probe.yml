@@ -1,0 +1,37 @@
+# uptime-probe.yml (S176 #6 · uptime-probe-firstparty)
+#
+# First-party availability monitoring — every 30 minutes, probe key routes
+# with a browser UA and email the founder via Resend on any non-200.
+# Free-build bias (CANON-017): replaces the MISSING uptimerobot credential
+# with Actions cron + existing Resend capability. api/uptime.json is probe
+# output only (not committed — /status/ reads it from the artifact of the
+# deployed site after the next deploy; alerting is the primary channel).
+name: uptime-probe
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Restore alert-dedup cache
+        uses: actions/cache@v4
+        with:
+          path: .cache/uptime-alerts-sent.json
+          key: uptime-alerts-${{ github.run_id }}
+          restore-keys: uptime-alerts-
+      - name: Probe routes
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+        run: node scripts/probe-uptime.mjs
