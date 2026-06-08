@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'cloudflare/**'
+      - 'config/csp-policy.mjs' # Worker imports WORKER_CSP from here — edits must redeploy
       - 'scripts/smoke-live.mjs'
       - '.github/workflows/cloudflare-worker-deploy.yml'
 
