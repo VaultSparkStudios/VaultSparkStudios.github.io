@@ -35,6 +35,17 @@
         return document.visibilityState === 'visible';
       },
       idle: true
+    },
+    {
+      // Returning-visitor momentum digest. Loads once a prior visit is recorded
+      // (it sets its own baseline on first run, then shows on the next visit);
+      // the script re-checks eligibility and bails honestly when <2 ships landed.
+      src: '/assets/returning-visitor-digest.js',
+      when: function () {
+        try { return parseInt(localStorage.getItem('vs_visit_count') || '0', 10) >= 1; }
+        catch (_) { return false; }
+      },
+      idle: true
     }
   ];
 
