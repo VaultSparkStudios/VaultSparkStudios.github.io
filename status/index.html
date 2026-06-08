@@ -404,6 +404,16 @@
       var top = d.countries[0];
       tile('Field reach', d.countries.length + ' region bucket(s)', 'top: ' + top.country + ' · LCP p75 ' + (top.lcpP75 / 1000).toFixed(1) + 's', 'neutral');
     });
+    // S178 — biggest measured win: auto-publishes a confirmed deploy verdict
+    // (e.g. the origin-migration LCP drop) the moment field evidence lands. Stays
+    // dark while every verdict is pending — the machine never overstates.
+    get('/api/field-win.json').then(function (d) {
+      if (!d || d.publicSafe !== true || !d.hasConfirmed || !d.topWin) return;
+      var w = d.topWin;
+      if (w.verdict !== 'improved') return;
+      tile('Biggest measured win', Math.abs(w.lcpDeltaPct) + '% faster',
+        w.route + ' LCP · ' + (w.postSamples || '?') + ' real visits since ' + w.boundary, 'good');
+    });
     // S178 — first-party uptime: availability tile + live incident history,
     // measured by our own probe (api/uptime.json), not a third-party badge.
     get('/api/uptime.json').then(function (d) {
