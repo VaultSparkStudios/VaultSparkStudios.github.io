@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-08 (Session 180 — continuation goal-chain: /start → /audit → /implement → /closeout · 2/2 focused frontier audit; build:check green; shipped AI manifest discovery header + ambient split wave 3)
+Last updated: 2026-06-08 (Session 181 — goal-chain in progress: /start → /audit → /implement → /closeout · audit frontier: AI discovery health + task-board runway hygiene)
 
 ## Done (Session 180 — continuation goal-chain: /start → /audit → /implement → /closeout · 2/2)
 
@@ -23,12 +23,16 @@ Last updated: 2026-06-08 (Session 180 — continuation goal-chain: /start → /a
 - [x] **[S178][SPEED/P2] AMBIENT-GENOME-STRIP-SPLIT — DONE.** `vault-genome-strip.js` moved to predicate loading; feature bundle 28→27 sources; predicate mirrors skip rules; shell rotated + pages re-propagated; coverage + placement gates green. **DONE S178**
 - [x] **[S178][TOKEN/P3] TASKBOARD-ARCHIVE-ROTATION — DONE.** `rotate-taskboard.mjs` archived sessions <176 to `context/archive/TASK_BOARD_ARCHIVE.md` (nothing deleted); board 365KB→130KB (−63%); import-safe; session-window `--check-size` advisory in build:check. self-test 7/7. **DONE S178**
 
-## Now (Session 180 runway)
+## Now (Session 181 runway)
 
+- [x] **[S181][AI/P1] AI-SPINE-PUBLIC-HEALTH — DONE.** Published `api/ai-discovery-health.json` from the same validators as the AI-spine gate; `/status/` now shows a live "AI discovery spine" tile; `build` + `build:check` are wired. Focused gates green. **DONE S181**
+- [x] **[S181][PROCESS/P2] TASKBOARD-RUNWAY-HYGIENE — DONE.** `check-stale-open-tasks.mjs` now flags duplicate active `Now` and `Human Action Required` sections; board consolidated into one S181 runway and one current founder-action block. Gate green. **DONE S181**
 - [ ] **[S180][SECURITY/P1] TT-ENFORCE-REPROBE.** Now due (~2026-06-12): `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
 - [ ] **[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP.** `/` field verdict still PENDING (≥5/side not yet accrued; signal −83%). Once it confirms, `api/field-win.json` flips `hasConfirmed:true` and the /status/ "Biggest measured win" tile auto-lights — confirm it renders, then celebrate or regress-hunt with `lib/perf-forensics.mjs`.
 - [ ] **[S180][OBS/P2] UPTIME-PUBLISH-VERIFY.** Confirm the first commit-worthy `uptime-probe.yml` run committed `api/uptime.json` + a history row (Actions tab / `git log --author=github-actions`), and that `/status/` shows a real availability %. First low-churn commit is the smoke test.
 - [ ] **[S180][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
+- [ ] **[S181→NEXT][PROOF/P2] STATUS-PROOF-INDEX.** Consider merging AI discovery, uptime, field wins, staging, and public contracts into one public-safe `/api/status-proof.json` manifest so `/status/` fetches one proof surface.
+- [ ] **[S181→NEXT][PROCESS/P2] TASKBOARD-AUTO-CONSOLIDATOR.** Add a safe `--apply` mode to rename older active runway/founder-action headings to historical form after closeout while preserving content.
 - [x] **[S180][SIL] AI-DISCOVERY-SPINE-WAVE2 — DONE.** Header discovery shipped via generated `_headers` (`rel=alternate`, `application/json`) and is now enforced by `check-ai-discovery-spine.mjs`. Follow-up deferred: optional HTML `<link>` discovery if we want belt-and-suspenders.
 - [x] **[S180][SIL] AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP — DONE (wave scoped).** Mapped remaining feature scripts by real route/hook guard; split two proven route/hook-scoped engines. vault-atlas, rank-orb, rate-page, founder-presence-handle, page-sigil, vault-rank-bar, and ignis-lens remain ambient because their guards are sitewide/session/pathway-level rather than single-surface. Follow-up: the coverage report still lists 7 candidates for future proof-driven passes.
 - [ ] **[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
@@ -49,24 +53,22 @@ Last updated: 2026-06-08 (Session 180 — continuation goal-chain: /start → /a
 - [x] **[S176][DATA/P1] FIELD-VERDICT-REFRESH — DONE (readout).** Verdicts regenerated from CI RUM; `/` PENDING (38 pre / 3 post, need 5+/side); geo US:107 GB:3. **DONE S176**
 - [x] **[S176][PROCESS/P2] RUM-PULL-CONFLICT-GUARD — DONE.** `pull-rum-summary.mjs` skips local rewrite when github-actions committed <24h ago (--force overrides). Ends the generated-file UU-conflict pattern. **DONE S176**
 - [x] **[S176][ECOSYSTEM/P2] SIL-INTEGRITY-CLAMP — DONE.** S173/S174 processQuality 101→100 fixed + totals recomputed (998→997, 997→996); `check-sil-integrity.mjs` gate; answered studio-ops repo-question via Ark (id 01JQHOLTTF798F4CE28B793898). **DONE S176**
-## Now (Session 177 runway)
+## Historical Runway (Session 177)
 
 - [ ] **[S177][SECURITY/P1] TT-ENFORCE-REPROBE.** Soak clock restarted 2026-06-05 (env-fix) and S176 burned down the founder-named sinks via the default-policy bridge. Re-probe ~2026-06-12: `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; expect near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
 - [ ] **[S177][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT.** `/` field verdict still PENDING (3 post-deploy samples). Once ≥5/side accrue, read `data/field-verdicts.json` — expect a real LCP drop from edge-origin TTFB. Celebrate or regress-hunt with `lib/perf-forensics.mjs`.
 - [ ] **[S177][OBS/P2] UPTIME-PROBE-VERIFY.** Confirm the first `uptime-probe.yml` scheduled run executed cleanly (Actions tab) and that a forced failure path emails correctly. First dispatch is the smoke test.
 - [ ] **[S177][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` exists (US:107 GB:3); check whether non-US LCP confirms the origin-migration win globally once samples grow.
-## Now (Session 176 runway — additions)
+## Historical Runway (Session 176 additions)
 
 - [ ] **[S176][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT.** The 2026-06-05 boundary now covers S173 critical path + S175 origin migration. Read data/field-verdicts.json once ≥5 post-deploy samples accrue; expect a real LCP drop from edge-origin TTFB.
 - [ ] **[S176][SECURITY/P1] TT-RE-PROBE-POST-ENV-FIX.** The intake fix only went live late 2026-06-05 (env-target miss) — restart the soak clock from then; re-probe ~2026-06-12.
 - [ ] **[S176][OBS/P3] GEO-VITALS-WATCH.** api/geo-vitals.json now exists; check whether non-US LCP confirms the origin migration win globally.
 
 Last updated: 2026-06-05 (Session 174 — goal-chain audit/implement: 10/10 shipped; self-feeding RUM loop, field verdicts, TT forensics + burndown, staging parity GREEN; build:check green)
-## Human Action Required (S173-refreshed)
-
-- [ ] **Delete `assets/vaultsparked-proof.js`? (30-second yes/no).** Evidence-complete: superseded by `live-proof.js` which writes the same IDs + more; not loaded anywhere. Current founder-facing decision doc: `docs/MEMBERSHIP_ORPHAN_DECISION.md`.
 ## Human Action Required
 
+- [ ] **Delete `assets/vaultsparked-proof.js`? (30-second yes/no).** Evidence-complete: superseded by `live-proof.js` which writes the same IDs + more; not loaded anywhere. Current founder-facing decision doc: `docs/MEMBERSHIP_ORPHAN_DECISION.md`.
 - [ ] **3 membership/vaultsparked asset orphans — founder-confirm before delete.** `check-orphan-assets.mjs` flags `assets/membership-interview.js` (AI onboarding flow), `assets/vault-sdk.js` (entitlements), `assets/vaultsparked-proof.js` — all lost their page wiring but are feature-bearing. Per SOUL #2 (never half-bake membership), confirm whether to re-wire or delete. Not auto-deleted in S163.
 - [ ] **[S164→MOBILE-SHEET-DEFAULT-SWAP]** — data-gated: `nav-sheet.js` telemetry (S163) + `api/nav-sheet-stats.json` rollup (S164) are live. Current artifact has 0 opens / `defaultSwapReady:false`; when it shows ≥50 opens + healthy close mix, flip default for `(max-width: 768px)` + log DECISIONS.
 ## Previous (Session 141 — Oracle upstream sanitizer gate)
@@ -728,7 +730,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [ ] **Web push test** — subscribe in portal, upload classified file, verify notification received. **S92 local guard:** `npm run verify:push-contract` now verifies portal opt-in, service worker receipt, `send-push` edge route, stale subscription cleanup, and public prompt wiring; real browser notification receipt remains open.
 
 ---
-## Human Action Required
+## Historical Human Action Required
 
 - [x] **[DB] `register_open` migration** — phase56 applied live (S48): `referred_by` column, `p_ref_by` param, milestones updated ✅
 - [x] **[Sentry] Configure release workflow** — `SENTRY_AUTH_TOKEN` secret set; org/project hardcoded in workflow; CI passing (S48) ✅

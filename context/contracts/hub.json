@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T17:58:12.518Z",
+  "generatedAt": "2026-06-08T18:43:06.225Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,23 +22,24 @@
     }
   },
   "pulse": {
-    "currentSession": 180,
+    "currentSession": 181,
     "lastUpdated": "2026-06-08",
-    "currentFocus": "AI-discovery spine wave 2 shipped — /agents.json now appears in generated response headers and is gate-enforced; ambient-split wave 3 moved route/hook-scoped pathfinder + static Ask IGNIS engines behind predicates (feature bundle 45.4KB→35.2KB); build:check green",
-    "nextMilestone": "Run TT enforce re-probe (~2026-06-12 due) + confirm api/field-win.json flips hasConfirmed once / accrues enough post-deploy samples + verify first low-churn uptime-publish commit",
+    "currentFocus": "S181 shipped AI discovery public health + runway hygiene — api/ai-discovery-health.json is healthy and shown on /status/; task-board gate now enforces one active Now and one current Human Action Required block; build:check green",
+    "nextMilestone": "Run TT enforce re-probe (~2026-06-12 due) + confirm api/field-win.json flips hasConfirmed once / accrues enough post-deploy samples + verify first low-churn uptime-publish commit + watch Lighthouse CI after push",
     "blockers": [
       "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
       "Founder device verify: membership proof loop + nav-sheet"
     ],
     "queues": {
       "now": [
+        "[S181][AI/P1] AI-SPINE-PUBLIC-HEALTH — DONE. Published `api/ai-discovery-health.json` from the same validators as the AI-spine gate; `/status/` now shows a live \"AI discovery spine\" tile; `build` + `build:check` are wired. Focused gates green. DONE S181",
+        "[S181][PROCESS/P2] TASKBOARD-RUNWAY-HYGIENE — DONE. `check-stale-open-tasks.mjs` now flags duplicate active `Now` and `Human Action Required` sections; board consolidated into one S181 runway and one current founder-action block. Gate green. DONE S181",
         "[S180][SECURITY/P1] TT-ENFORCE-REPROBE. Now due (~2026-06-12): `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).",
         "[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. `/` field verdict still PENDING (≥5/side not yet accrued; signal −83%). Once it confirms, `api/field-win.json` flips `hasConfirmed:true` and the /status/ \"Biggest measured win\" tile auto-lights — confirm it renders, then celebrate or regress-hunt with `lib/perf-forensics.mjs`.",
         "[S180][OBS/P2] UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy `uptime-probe.yml` run committed `api/uptime.json` + a history row (Actions tab / `git log --author=github-actions`), and that `/status/` shows a real availability %. First low-churn commit is the smoke test.",
         "[S180][OBS/P3] GEO-VITALS-WATCH. `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.",
-        "[S180][SIL] AI-DISCOVERY-SPINE-WAVE2 — DONE. Header discovery shipped via generated `_headers` (`rel=alternate`, `application/json`) and is now enforced by `check-ai-discovery-spine.mjs`. Follow-up deferred: optional HTML `<link>` discovery if we want belt-and-suspenders.",
-        "[S180][SIL] AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP — DONE (wave scoped). Mapped remaining feature scripts by real route/hook guard; split two proven route/hook-scoped engines. vault-atlas, rank-orb, rate-page, founder-presence-handle, page-sigil, vault-rank-bar, and ignis-lens remain ambient because their guards are sitewide/session/pathway-level rather than single-surface. Follow-up: the coverage report still lists 7 candidates for future proof-driven passes.",
-        "[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify."
+        "[S181→NEXT][PROOF/P2] STATUS-PROOF-INDEX. Consider merging AI discovery, uptime, field wins, staging, and public contracts into one public-safe `/api/status-proof.json` manifest so `/status/` fetches one proof surface.",
+        "[S181→NEXT][PROCESS/P2] TASKBOARD-AUTO-CONSOLIDATOR. Add a safe `--apply` mode to rename older active runway/founder-action headings to historical form after closeout while preserving content."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -48,12 +49,12 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "Shipped: 2 focused improvements — AI manifest discovery header + ambient-split wave 3.",
-        "Tests: focused gates passed (`check-ai-discovery-spine --self-test`, `check-ai-discovery-spine`, ambient coverage, ambient placement, bundle drift, SW coherency), then `npm run build:check` passed end-to-end (108-page crawl · 0 status failures · 0 blocking-script findings).",
-        "AI discovery is now push-based. `/agents.json` already existed from S179; S180 made it discoverable from generated response headers (`Link: </agents.json>; rel=alternate; type=\"application/json\"`) and added a gate so that header cannot disappear without failing the AI-spine check.",
-        "Cold JS got smaller again. `intent-flight-director.js` and `ignis-answer-engine.js` now load only on their real routes/hooks through `ambient-loader`; the feature bundle dropped 45.4KB→35.2KB. Conversion/info-finding routes keep the pathfinder and static Ask IGNIS behavior; other pages stop parsing them.",
-        "Honest notes: `api/field-win.json` is still honest-dark with 0 confirmed wins; RUM has 35 samples and `/` needs 40 more before strict field quoting. TT enforce still waits on the evidence-led re-probe around 2026-06-12. Founder yes/no items remain: `assets/vaultsparked-proof.js` delete and nav-sheet real-device verification.",
-        "Next session: TT re-probe · field-win/geo-vitals evidence confirmation · uptime low-churn commit verification · optional HTML `<link>` manifest discovery · proof-driven ambient candidate pass if the remaining 7 candidates can be tied to route/hook evidence."
+        "Shipped: 2 focused improvements — AI discovery public health + task-board runway hygiene.",
+        "Tests: focused gates passed (`build-ai-discovery-health --self-test`, `build-ai-discovery-health --check`, `check-stale-open-tasks --self-test`, `check-stale-open-tasks --check`, `check-ai-discovery-spine --self-test`, `check-ai-discovery-spine`), then `npm run build` and `npm run build:check` passed end-to-end (108-page crawl · 0 status failures · 0 blocking-script findings).",
+        "AI discovery is now publicly legible. `scripts/build-ai-discovery-health.mjs` publishes `api/ai-discovery-health.json` from the same validators as the AI-spine gate. Current artifact is `healthy`: 13 public projects, 8 manifest shards, 8 llms shards, header discovery on, no dead internal URLs. `/status/` now renders an \"AI discovery spine\" tile from that artifact.",
+        "The board is harder to confuse. `check-stale-open-tasks.mjs` now flags duplicate active `Now` sections and duplicate current `Human Action Required` blocks. `TASK_BOARD.md` has one S181 runway and one current founder-action section; older runway/founder sections are preserved as historical instead of being left active.",
+        "Honest notes: mobile Lighthouse >=90 is covered by `.github/workflows/lighthouse.yml` after push; there is no repo-local Lighthouse command without downloading tooling, so local verification used the repo's crawl/build contracts. The known advisory signals remain: `assets/vaultsparked-proof.js` is still founder yes/no; `api/field-win.json` is honest-dark until post samples confirm; TT enforce waits for the ~2026-06-12 re-probe.",
+        "Next session: watch post-push Lighthouse/CI; run TT re-probe when due; verify first low-churn uptime publish commit; check field-win/geo-vitals evidence; optionally address the now-explicit board-size advisory with `rotate-taskboard.mjs` if the founder wants more token savings."
       ]
     },
     "ignis": {

@@ -2396,3 +2396,12 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
   1. `ai-manifest-discovery-header` — generated `_headers` now exposes `/agents.json` with `rel=alternate` + `application/json`; `agents.json` declares `discovery.manifest`; `check-ai-discovery-spine.mjs` enforces the header.
   2. `ambient-split-wave3` — `intent-flight-director.js` and `ignis-answer-engine.js` moved to route/hook predicate loading; ambient-feature bundle 45.4KB→35.2KB.
 - Verification: focused AI/ambient gates green; `npm run build` refreshed generated outputs; `npm run build:check` exit 0 end-to-end (108-page crawl, 0 status failures, 0 blocking-script findings).
+
+## Session 181 — 2026-06-08 — continuation goal-chain: /start → /audit → /implement → /closeout (2/2 fresh frontier audit)
+
+- Intent: continue the durable `/start → /audit → /implement → /closeout` goal from current evidence; do not re-run already-shipped S179/S180 audit items.
+- Audit: wrote `docs/AUDIT_2026-06-08-S181.{json,md}` with 2 agent-attemptable items, Priority 42.4.
+- Shipped 2/2:
+  1. `ai-spine-public-health` — added `scripts/build-ai-discovery-health.mjs`, published `api/ai-discovery-health.json`, wired `build`/`build:check`, and surfaced an "AI discovery spine" tile on `/status/`.
+  2. `taskboard-runway-hygiene` — extended `check-stale-open-tasks.mjs` to detect duplicate active `Now` and current `Human Action Required` sections; consolidated the board into one S181 runway and one current founder-action block.
+- Verification: focused gates green; `npm run build` exit 0; `npm run build:check` exit 0 end-to-end (108-page crawl, 0 status failures, 0 blocking-script findings). Lighthouse mobile >=90 remains CI-owned via `.github/workflows/lighthouse.yml`; no repo-local runner exists without downloading tooling.

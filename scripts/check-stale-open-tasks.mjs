@@ -128,6 +128,36 @@ function findStaleOpens(taskBoardText, currentSession) {
   return stale;
 }
 
+function findRunwayHygieneIssues(taskBoardText) {
+  const lines = taskBoardText.split(/\r?\n/);
+  const issues = [];
+  const headings = lines
+    .map((line, index) => ({ line, index: index + 1 }))
+    .filter((h) => /^##\s+/.test(h.line));
+
+  const firstPrevious = headings.find((h) => /^##\s+Previous\b/i.test(h.line));
+  const activeEndLine = firstPrevious ? firstPrevious.index : lines.length + 1;
+  const activeNow = headings.filter((h) => h.index < activeEndLine && /^##\s+Now\b/i.test(h.line));
+  if (activeNow.length > 1) {
+    issues.push({
+      type: 'multiple-active-now',
+      message: `multiple active Now runway sections before first Previous block (${activeNow.length})`,
+      lines: activeNow.map((h) => h.index),
+    });
+  }
+
+  const humanAction = headings.filter((h) => /^##\s+Human Action Required\b/i.test(h.line));
+  if (humanAction.length > 1) {
+    issues.push({
+      type: 'multiple-human-action',
+      message: `multiple Human Action Required sections (${humanAction.length})`,
+      lines: humanAction.map((h) => h.index),
+    });
+  }
+
+  return issues;
+}
+
 function runSelfTest() {
   const fixture = [
     '## Now (Session 50)',
@@ -152,7 +182,31 @@ function runSelfTest() {
     console.error(`self-test FAIL: overlap ${m.overlap} below threshold ${OVERLAP_THRESHOLD}`);
     return false;
   }
-  console.log(`stale-open-tasks · self-test passed · 1 synthetic match (overlap ${(m.overlap * 100).toFixed(0)}%)`);
+  const messyRunway = [
+    '## Now (Session 50)',
+    '## Now (Session 49)',
+    '## Previous',
+    '## Human Action Required',
+    '## Human Action Required',
+  ].join('\n');
+  const issues = findRunwayHygieneIssues(messyRunway);
+  if (!issues.some((i) => i.type === 'multiple-active-now') || !issues.some((i) => i.type === 'multiple-human-action')) {
+    console.error('self-test FAIL: runway hygiene did not flag duplicate active sections');
+    return false;
+  }
+  const cleanRunway = [
+    '## Now (Session 50)',
+    '## Previous',
+    '## Historical Runway (Session 49)',
+    '## Human Action Required',
+    '## Historical Founder Actions',
+  ].join('\n');
+  const cleanIssues = findRunwayHygieneIssues(cleanRunway);
+  if (cleanIssues.length !== 0) {
+    console.error(`self-test FAIL: clean runway produced ${cleanIssues.length} issue(s)`);
+    return false;
+  }
+  console.log(`stale-open-tasks · self-test passed · stale match + runway hygiene (overlap ${(m.overlap * 100).toFixed(0)}%)`);
   return true;
 }
 
@@ -169,32 +223,44 @@ if (!fs.existsSync(taskBoardPath)) {
 const taskBoard = fs.readFileSync(taskBoardPath, 'utf8');
 const currentSession = getCurrentSession();
 const stale = findStaleOpens(taskBoard, currentSession);
+const runwayIssues = findRunwayHygieneIssues(taskBoard);
 
 if (jsonMode) {
   console.log(JSON.stringify({
-    ok: stale.length === 0,
+    ok: stale.length === 0 && runwayIssues.length === 0,
     currentSession,
     freshnessWindow: FRESHNESS_WINDOW,
     overlapThreshold: OVERLAP_THRESHOLD,
     matches: stale,
+    runwayIssues,
   }, null, 2));
-  process.exit(checkMode && stale.length > 0 ? 1 : 0);
+  process.exit(checkMode && (stale.length > 0 || runwayIssues.length > 0) ? 1 : 0);
 }
 
-if (stale.length === 0) {
+if (stale.length === 0 && runwayIssues.length === 0) {
   console.log(`stale-open-tasks · clean (window: last ${FRESHNESS_WINDOW} sessions, current: S${currentSession})`);
   process.exit(0);
 }
 
-console.error(`stale-open-tasks · ${stale.length} open task(s) appear satisfied by recent DONE entries:`);
-for (const s of stale) {
-  console.error(`  • OPEN:  ${s.openTitle}`);
-  console.error(`    DONE: ${s.doneTitle} (S${s.doneSession}, overlap ${(s.overlap * 100).toFixed(0)}%)`);
-  console.error(`    → flip the open [ ] to [x] referencing S${s.doneSession}, or rephrase if scope actually differs.`);
+if (stale.length) {
+  console.error(`stale-open-tasks · ${stale.length} open task(s) appear satisfied by recent DONE entries:`);
+  for (const s of stale) {
+    console.error(`  • OPEN:  ${s.openTitle}`);
+    console.error(`    DONE: ${s.doneTitle} (S${s.doneSession}, overlap ${(s.overlap * 100).toFixed(0)}%)`);
+    console.error(`    → flip the open [ ] to [x] referencing S${s.doneSession}, or rephrase if scope actually differs.`);
+  }
+  console.error('');
+  console.error('These items keep re-surfacing in the genius list because generate-genius-list.mjs::isRecentlyDone');
+  console.error('only suppresses defaults, not TASK_BOARD-sourced opens. Flipping the original entry breaks the loop.');
 }
-console.error('');
-console.error('These items keep re-surfacing in the genius list because generate-genius-list.mjs::isRecentlyDone');
-console.error('only suppresses defaults, not TASK_BOARD-sourced opens. Flipping the original entry breaks the loop.');
+
+if (runwayIssues.length) {
+  console.error(`taskboard-runway-hygiene · ${runwayIssues.length} active runway issue(s):`);
+  for (const issue of runwayIssues) {
+    console.error(`  • ${issue.message} at line(s): ${issue.lines.join(', ')}`);
+  }
+  console.error('    → keep one active Now runway and one Human Action Required block; rename older sections as Historical/Previous.');
+}
 
 if (checkMode) process.exit(1);
 process.exit(0);

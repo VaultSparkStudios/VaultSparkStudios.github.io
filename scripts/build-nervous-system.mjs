@@ -18,8 +18,19 @@ function publicText(value) {
     .replace(/\bHuman Action Required\b/gi, 'manual confirmation')
     .replace(/\bFounder Action Required\b/gi, 'manual confirmation')
     .replace(/\bfounder action\b/gi, 'manual confirmation')
+    .replace(/\bfounder-action\b/gi, 'manual confirmation')
+    .replace(/\binternal\/private\b/gi, 'studio-side')
     .replace(/\bAPI key\b/gi, 'capability')
     .replace(/\bsecret\b/gi, 'capability');
+}
+
+function publicValue(value) {
+  if (Array.isArray(value)) return value.map(publicValue);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.entries(value).map(([key, val]) => [key, publicValue(val)]));
+  }
+  if (typeof value === 'string') return publicText(value);
+  return value;
 }
 
 function build() {
@@ -45,8 +56,8 @@ function build() {
     ],
     focus: publicText(intel?.project?.currentFocus || ''),
     nextMilestone: publicText(intel?.project?.nextMilestone || ''),
-    pulse: intel?.pulse || {},
-    decisions: ux?.decisions || [],
+    pulse: publicValue(intel?.pulse || {}),
+    decisions: publicValue(ux?.decisions || []),
     sources: [
       '/api/public-intelligence.json',
       '/api/feedback-provenance.json',

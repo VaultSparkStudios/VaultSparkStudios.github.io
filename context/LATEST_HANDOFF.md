@@ -1,8 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-08 (Session 180)
+Last updated: 2026-06-08 (Session 181)
 
-Session Intent: Continue active durable goal-chain `/start → /audit → /implement → /closeout` with genius-level/creative execution, personalized to this site's current flags/blockers. **Outcome: Achieved for Session 180 — 2/2 focused frontier audit items shipped (Priority 47.7), `npm run build:check` exit 0 (108 pages, 0 failures), AI manifest discovery and ambient split wave 3 landed.**
+Session Intent: Continue active durable goal-chain `/start → /audit → /implement → /closeout` with genius-level/creative execution, personalized to this site's current flags/blockers. **Outcome: Achieved for Session 181 — 2/2 fresh audit items shipped (Priority 42.4), `npm run build:check` exit 0 (108 pages, 0 failures), AI discovery public health + task-board runway hygiene landed.**
+
+## Where We Left Off (Session 181)
+- Shipped: 2 focused improvements — AI discovery public health + task-board runway hygiene.
+- Tests: focused gates passed (`build-ai-discovery-health --self-test`, `build-ai-discovery-health --check`, `check-stale-open-tasks --self-test`, `check-stale-open-tasks --check`, `check-ai-discovery-spine --self-test`, `check-ai-discovery-spine`), then `npm run build` and `npm run build:check` passed end-to-end (108-page crawl · 0 status failures · 0 blocking-script findings).
+- **AI discovery is now publicly legible.** `scripts/build-ai-discovery-health.mjs` publishes `api/ai-discovery-health.json` from the same validators as the AI-spine gate. Current artifact is `healthy`: 13 public projects, 8 manifest shards, 8 llms shards, header discovery on, no dead internal URLs. `/status/` now renders an "AI discovery spine" tile from that artifact.
+- **The board is harder to confuse.** `check-stale-open-tasks.mjs` now flags duplicate active `Now` sections and duplicate current `Human Action Required` blocks. `TASK_BOARD.md` has one S181 runway and one current founder-action section; older runway/founder sections are preserved as historical instead of being left active.
+- Honest notes: mobile Lighthouse >=90 is covered by `.github/workflows/lighthouse.yml` after push; there is no repo-local Lighthouse command without downloading tooling, so local verification used the repo's crawl/build contracts. The known advisory signals remain: `assets/vaultsparked-proof.js` is still founder yes/no; `api/field-win.json` is honest-dark until post samples confirm; TT enforce waits for the ~2026-06-12 re-probe.
+- Next session: watch post-push Lighthouse/CI; run TT re-probe when due; verify first low-churn uptime publish commit; check field-win/geo-vitals evidence; optionally address the now-explicit board-size advisory with `rotate-taskboard.mjs` if the founder wants more token savings.
+
+<details><summary>Where We Left Off (Session 180)</summary>
 
 ## Where We Left Off (Session 180)
 - Shipped: 2 focused improvements — AI manifest discovery header + ambient-split wave 3.
@@ -11,6 +21,8 @@ Session Intent: Continue active durable goal-chain `/start → /audit → /imple
 - **Cold JS got smaller again.** `intent-flight-director.js` and `ignis-answer-engine.js` now load only on their real routes/hooks through `ambient-loader`; the feature bundle dropped 45.4KB→35.2KB. Conversion/info-finding routes keep the pathfinder and static Ask IGNIS behavior; other pages stop parsing them.
 - Honest notes: `api/field-win.json` is still honest-dark with 0 confirmed wins; RUM has 35 samples and `/` needs 40 more before strict field quoting. TT enforce still waits on the evidence-led re-probe around 2026-06-12. Founder yes/no items remain: `assets/vaultsparked-proof.js` delete and nav-sheet real-device verification.
 - Next session: TT re-probe · field-win/geo-vitals evidence confirmation · uptime low-churn commit verification · optional HTML `<link>` manifest discovery · proof-driven ambient candidate pass if the remaining 7 candidates can be tied to route/hook evidence.
+
+</details>
 
 <details><summary>Where We Left Off (Session 179)</summary>
 

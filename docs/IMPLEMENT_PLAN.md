@@ -1,13 +1,18 @@
-<!-- generated-by: /implement skill v1.0 -->
-<!-- generated-at: 2026-06-08 · Session 180 · audit: docs/AUDIT_2026-06-08-S180.json (2 items) -->
+# Implement Plan — Session 181
 
-# Implement Plan — Session 180
+Source: `docs/AUDIT_2026-06-08-S181.{json,md}`
 
-Sequenced for optimal Priority-per-hour (not raw descending Priority).
+## Wave 1 — Public Proof
 
-| Order | Slug | Tier | Axis | Effort | Why this slot |
-|---|---|---|---|---|---|
-| 1 | **ai-manifest-discovery-header** | fire | AI/SEO | 45m | Foundation first: makes S179's `/agents.json` discoverable from response headers and adds a gate so it cannot drift dark. |
-| 2 | **ambient-split-wave3** | high | Speed/UX | 1h | Same code surface as S179's split work; move two proven route/hook-scoped engines out of the always-parsed feature bundle, then rebuild shell assets once. |
+1. `ai-spine-public-health`
+   - Add `scripts/build-ai-discovery-health.mjs`.
+   - Publish `api/ai-discovery-health.json`.
+   - Surface it on `/status/`.
+   - Wire generator and check into `package.json`.
 
-**Quality gates (per item):** website success bar — each item names the conversion or info-finding outcome; new gates ship with `--self-test`; focused gates green before closeout; `npm run build:check` green end-to-end before final closeout.
+## Wave 2 — Runway Hygiene
+
+2. `taskboard-runway-hygiene`
+   - Extend `scripts/check-stale-open-tasks.mjs` with runway hygiene detection.
+   - Consolidate current runway/founder-action board sections.
+   - Verify the gate remains green in `build:check`.

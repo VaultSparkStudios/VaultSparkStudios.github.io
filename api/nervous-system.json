@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T17:58:24.733Z",
+  "generatedAt": "2026-06-08T18:43:18.864Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "AI-discovery spine wave 2 shipped — /agents.json now appears in generated response headers and is gate-enforced; ambient-split wave 3 moved route/hook-scoped pathfinder + static Ask IGNIS engines behind predicates (feature bundle 45.4KB→35.2KB); build:check green",
-  "nextMilestone": "Run TT enforce re-probe (~2026-06-12 due) + confirm api/field-win.json flips hasConfirmed once / accrues enough post-deploy samples + verify first low-churn uptime-publish commit",
+  "focus": "S181 shipped AI discovery public health + runway hygiene — api/ai-discovery-health.json is healthy and shown on /status/; task-board gate now enforces one active Now and one current manual confirmation block; build:check green",
+  "nextMilestone": "Run TT enforce re-probe (~2026-06-12 due) + confirm api/field-win.json flips hasConfirmed once / accrues enough post-deploy samples + verify first low-churn uptime-publish commit + watch Lighthouse CI after push",
   "pulse": {
     "now": [
       "Studio Pulse live data — the Forge Window now hydrates from the public intelligence feed again.",
@@ -55,12 +55,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: 2 focused improvements — AI manifest discovery header + ambient-split wave 3.",
-      "Tests: focused gates passed (`check-ai-discovery-spine --self-test`, `check-ai-discovery-spine`, ambient coverage, ambient placement, bundle drift, SW coherency), then `npm run build:check` passed end-to-end (108-page crawl · 0 status failures · 0 blocking-script findings).",
-      "AI discovery is now push-based. `/agents.json` already existed from S179; S180 made it discoverable from generated response headers (`Link: </agents.json>; rel=alternate; type=\"application/json\"`) and added a gate so that header cannot disappear without failing the AI-spine check.",
-      "Cold JS got smaller again. `intent-flight-director.js` and `ignis-answer-engine.js` now load only on their real routes/hooks through `ambient-loader`; the feature bundle dropped 45.4KB→35.2KB. Conversion/info-finding routes keep the pathfinder and static Ask IGNIS behavior; other pages stop parsing them.",
-      "Honest notes: `api/field-win.json` is still honest-dark with 0 confirmed wins; RUM has 35 samples and `/` needs 40 more before strict field quoting. TT enforce still waits on the evidence-led re-probe around 2026-06-12. Founder yes/no items remain: `assets/vaultsparked-proof.js` delete and nav-sheet real-device verification.",
-      "Next session: TT re-probe · field-win/geo-vitals evidence confirmation · uptime low-churn commit verification · optional HTML `<link>` manifest discovery · proof-driven ambient candidate pass if the remaining 7 candidates can be tied to route/hook evidence."
+      "Shipped: 2 focused improvements — AI discovery public health + task-board runway hygiene.",
+      "Tests: focused gates passed (`build-ai-discovery-health --self-test`, `build-ai-discovery-health --check`, `check-stale-open-tasks --self-test`, `check-stale-open-tasks --check`, `check-ai-discovery-spine --self-test`, `check-ai-discovery-spine`), then `npm run build` and `npm run build:check` passed end-to-end (108-page crawl · 0 status failures · 0 blocking-script findings).",
+      "AI discovery is now publicly legible. `scripts/build-ai-discovery-health.mjs` publishes `api/ai-discovery-health.json` from the same validators as the AI-spine gate. Current artifact is `healthy`: 13 public projects, 8 manifest shards, 8 llms shards, header discovery on, no dead internal URLs. `/status/` now renders an \"AI discovery spine\" tile from that artifact.",
+      "The board is harder to confuse. `check-stale-open-tasks.mjs` now flags duplicate active `Now` sections and duplicate current `manual confirmation` blocks. `TASK_BOARD.md` has one S181 runway and one current manual confirmation section; older runway/founder sections are preserved as historical instead of being left active.",
+      "Honest notes: mobile Lighthouse >=90 is covered by `.github/workflows/lighthouse.yml` after push; there is no repo-local Lighthouse command without downloading tooling, so local verification used the repo's crawl/build contracts. The known advisory signals remain: `assets/vaultsparked-proof.js` is still founder yes/no; `api/field-win.json` is honest-dark until post samples confirm; TT enforce waits for the ~2026-06-12 re-probe.",
+      "Next session: watch post-push Lighthouse/CI; run TT re-probe when due; verify first low-churn uptime publish commit; check field-win/geo-vitals evidence; optionally address the now-explicit board-size advisory with `rotate-taskboard.mjs` if the founder wants more token savings."
     ]
   },
   "decisions": [

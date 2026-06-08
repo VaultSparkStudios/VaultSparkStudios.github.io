@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-06-08",
+  "session": 181,
+  "project": "vaultsparkstudios-website",
+  "projectName": "VaultSparkStudios.github.io",
+  "type": "website",
+  "topline": {
+    "totalItems": 2,
+    "combinedPriority": 42.4,
+    "top3": ["ai-spine-public-health", "taskboard-runway-hygiene"],
+    "axisWeights": { "ux": 2.5, "speed": 2, "featureDepth": 1.5 },
+    "note": "Session 179-180 shipped the AI discovery spine and header discovery. Session 181 should make that machine-readable posture visible on the public status surface and reduce recurring task-board noise that keeps founder attention pointed at duplicated or stale human-action rows."
+  },
+  "founderEvidence": "Startup S181 surfaced a clean build posture but still showed skill-manifest drift and repeated human-action/task-board noise. Code read showed /status/ already renders generated proof tiles from api/*.json, while the AI spine is currently only checked by a build gate and not surfaced as a public-safe health artifact. TASK_BOARD.md also contains duplicate Human Action Required sections and stale older Now sections, making the founder-facing runway harder to scan despite the current work being evidence-gated.",
+  "items": [
+    {
+      "rank": 1,
+      "slug": "ai-spine-public-health",
+      "tier": "fire",
+      "axis": "AI/SEO/FeatureDepth",
+      "effort": "1h",
+      "impact": 8,
+      "innovation": 7,
+      "priority": 23.7,
+      "summary": "The AI-discovery spine is structurally correct, but only the build system can see that. A public-safe health artifact lets visitors, agents, and the status page verify that agents.json, llms.txt, shards, sitemap, and header discovery are alive together.",
+      "why": "Info-finding outcome: an agentic crawler or technically-minded visitor can see that the studio's machine-readable discovery surface is current and internally consistent without reverse-engineering the build gate. Conversion outcome: the status page proves operational discipline instead of asking people to trust a hidden check.",
+      "recipe": "Add scripts/build-ai-discovery-health.mjs that reuses the AI-spine validators to write api/ai-discovery-health.json with public-safe counts and status. Wire it into npm run build and build:check, add a /status/ live-signals tile, and include self-test coverage for healthy and broken spine cases."
+    },
+    {
+      "rank": 2,
+      "slug": "taskboard-runway-hygiene",
+      "tier": "high",
+      "axis": "Process/TokenCost/UX",
+      "effort": "45m",
+      "impact": 7,
+      "innovation": 5,
+      "priority": 18.7,
+      "summary": "The task board is compacted, but duplicate Human Action Required sections and stale runway headings still leak into startup attention. That burns review time and makes real founder-gated decisions look noisier than they are.",
+      "why": "Info-finding outcome: the next agent sees one current runway and one clear founder-action block instead of reconciling repeated sections by hand. Token-cost outcome: startup and audit reads spend fewer tokens parsing stale board surface, and the existing stale-open-task gate grows into a fuller runway hygiene guard.",
+      "recipe": "Extend scripts/check-stale-open-tasks.mjs with a runway hygiene check that flags multiple Human Action Required headings and multiple open Now runway sections unless explicitly archived. Fix the current board into one S181 runway and one founder-action block, then keep the gate in build:check."
+    }
+  ],
+  "innovationReserve": [],
+  "skipped": [
+    "TT enforce flip — skipped because the soak re-probe is due around 2026-06-12 and must remain evidence-led.",
+    "Origin field-win celebration — skipped because / field verdict still needs enough post samples before public celebration.",
+    "vaultsparked-proof.js deletion — skipped because the explicit founder yes/no remains open."
+  ],
+  "executionLog": [
+    {
+      "slug": "ai-spine-public-health",
+      "result": "SHIPPED",
+      "evidence": "Added build-ai-discovery-health.mjs, generated api/ai-discovery-health.json (healthy, 13 public projects), wired build/build:check, and added the /status/ live-signals tile."
+    },
+    {
+      "slug": "taskboard-runway-hygiene",
+      "result": "SHIPPED",
+      "evidence": "check-stale-open-tasks.mjs now flags duplicate active Now and Human Action Required sections; TASK_BOARD now has one active S181 runway and one current founder-action block; gate passes."
+    }
+  ]
+}

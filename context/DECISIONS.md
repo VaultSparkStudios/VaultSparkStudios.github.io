@@ -2,6 +2,22 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-08 — S181 — AI discovery health is a public status proof, not only a hidden gate
+
+**Decision:** Publish `api/ai-discovery-health.json` from the same validators that power `check-ai-discovery-spine.mjs`, and render it on `/status/` as an "AI discovery spine" live-signal tile.
+
+**Why:** S179/S180 made `/agents.json` correct and discoverable, but only builders could see that contract. A public-safe health artifact lets agents, crawlers, and technical visitors verify the machine-readable surface from the status page without reading repo scripts.
+
+**Maintenance rule:** Keep `build-ai-discovery-health.mjs` downstream of the canonical AI-spine validators. If the spine contract changes, update the validator first, then the public health payload.
+
+### 2026-06-08 — S181 — Active task-board runway must be singular
+
+**Decision:** `check-stale-open-tasks.mjs` now also guards board runway hygiene: one active `Now` section before the first `Previous` block and one current `Human Action Required` section. Older content should be preserved as `Historical ...`, not left active.
+
+**Why:** Duplicate active runway and founder-action sections made startup and audit reads spend tokens reconciling stale surface area. The board is a source of founder attention; repeated active headings create fake urgency even when the underlying content is old.
+
+**Maintenance rule:** Closeout should leave one active runway and one current founder-action block. If older sections must remain for recordkeeping, rename them historical or archive them.
+
 ### 2026-06-08 — S179 — Ship `/agents.json` as the AI-discovery spine, kept honest by a consistency gate
 
 **Decision:** Deliver `/agents.json` (CANON-011 sitemap standard) as the canonical AI-agent discovery manifest, generated from `ecosystem-state.json` by `build-agents-json.mjs` and held consistent with `.well-known/llms.txt` by `check-ai-discovery-spine.mjs`. The manifest lists canonical machine-readable surfaces (sitemap, llms.txt, llms-full, entity-graph), the primary CTA (`/membership/`), policies, automation disclosure, and the public project list with citable shard URLs.

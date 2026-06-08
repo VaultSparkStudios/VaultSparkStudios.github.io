@@ -390,6 +390,13 @@
       if (!d || d.publicSafe !== true) return;
       tile('Field vitals', d.fieldReady ? 'Measuring' : 'Accumulating', d.totalSamples + ' real-visit samples / ' + d.windowDays + 'd', d.fieldReady ? 'good' : 'warn');
     });
+    get('/api/ai-discovery-health.json').then(function (d) {
+      if (!d || d.publicSafe !== true) return;
+      var count = d.counts || {};
+      tile('AI discovery spine', d.status === 'healthy' ? 'Healthy' : 'Attention',
+        (count.publicProjects || 0) + ' projects · ' + (count.llmsShards || 0) + ' shards · header ' + (d.checks && d.checks.discoveryHeader ? 'on' : 'missing'),
+        d.status === 'healthy' ? 'good' : 'warn');
+    });
     get('/api/field-verdicts.json').then(function (d) {
       if (!d || !d.boundaries || !d.boundaries.length) return;
       var b = d.boundaries[d.boundaries.length - 1];
@@ -699,7 +706,6 @@
 <!-- vs-ambient:end -->
 </body>
 </html>
-
 
 
 
