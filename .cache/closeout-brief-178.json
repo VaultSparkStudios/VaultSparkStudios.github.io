@@ -1,0 +1,79 @@
+{
+  "session": 178,
+  "date": "2026-06-08",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios-website",
+  "headline": "Six fresh frontier items shipped — the studio's own instruments now publish their evidence (uptime, field-wins) instead of measuring into the void.",
+  "silDelta": "+1 (998 → 999)",
+  "items": [
+    {
+      "id": "S178-1",
+      "slug": "uptime-publish-loop",
+      "title": "First-party uptime now publishes to /status/",
+      "axis": "Observability",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "The probe went green on its first real run but was throwing the result away — the workflow never committed it and the status tile sat empty. Now it commits a 30-day availability rollup low-churn and /status/ shows a number the studio measured itself, not a third-party badge.",
+      "evidence": "check-uptime-contract 7/7 · first scheduled run green 40s @ 01:39Z · api/uptime.json + data/uptime-history.ndjson live"
+    },
+    {
+      "id": "S178-2",
+      "slug": "uptime-alert-path-proof",
+      "title": "The alarm proves itself without paging the founder",
+      "axis": "Observability",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "An alert path you've never seen fire is an act of faith. A --simulate-failure mode now runs the full down-to-email path and prints the exact message it would send, so the founder has evidence the alarm works without a 3am false page.",
+      "evidence": "probe-uptime --simulate-failure PASS · self-test 14/14 · module made import-safe"
+    },
+    {
+      "id": "S178-3",
+      "slug": "field-win-auto-publish",
+      "title": "The measurement machine publishes its own wins",
+      "axis": "Speed/Data",
+      "projectImpact": 8,
+      "ecosystemImpact": 7,
+      "insight": "The RUM loop already graded the origin migration at a -83% homepage LCP drop, but that win was buried in a JSON file. A new publisher surfaces confirmed verdicts only — so the proof tile auto-lights the moment the evidence is statistically honest and stays dark until then.",
+      "evidence": "build-field-win-proof 6/6 · api/field-win.json (honest-dark, 0 confirmed today) · /status/ tile wired"
+    },
+    {
+      "id": "S178-4",
+      "slug": "returning-visitor-digest",
+      "title": "Returning visitors finally see momentum",
+      "axis": "UX/Conversion",
+      "projectImpact": 8,
+      "ecosystemImpact": 5,
+      "insight": "A returning prospect used to get the same cold homepage as a first-timer, with no sign anything had moved. A dismissible 'since your last visit, N things shipped' strip — seeded from the public Forge Ledger and a local baseline — gives them a concrete reason to look again.",
+      "evidence": "offline Playwright proof 3/3 · idle-loaded via ambient predicate · cost-neutral (localStorage + static JSON)"
+    },
+    {
+      "id": "S178-5",
+      "slug": "ambient-genome-strip-split",
+      "title": "Genome strip off the cold-cache path",
+      "axis": "Speed",
+      "projectImpact": 5,
+      "ecosystemImpact": 4,
+      "insight": "Every first paint was paying to download the studio-health strip whether or not it rendered. Moving it behind the predicate loader trims the always-loaded ambient bundle, attacking the same first-paint metric the origin migration targets.",
+      "evidence": "feature bundle 28→27 sources · coverage + placement gates green · shell re-propagated"
+    },
+    {
+      "id": "S178-6",
+      "slug": "taskboard-archive-rotation",
+      "title": "TASK_BOARD shrunk 365KB → 130KB",
+      "axis": "TokenCost",
+      "projectImpact": 6,
+      "ecosystemImpact": 6,
+      "insight": "Fifteen sessions of completed work had buried the live board, taxing every on-demand read. A rotator archives everything older than the last three sessions — nothing deleted — so the working board stays lean and future sessions read cheaper.",
+      "evidence": "365KB→130KB (-63%) · self-test 7/7 · session-window --check-size advisory in build:check · import-safe"
+    }
+  ],
+  "followUps": [
+    "Confirm api/field-win.json flips hasConfirmed once / accrues ≥5 post-deploy samples — first end-to-end proof of the self-publishing loop",
+    "Verify the first low-churn uptime-probe.yml commit lands api/uptime.json + a history row and /status/ shows a real %",
+    "TT enforce re-probe now due (~2026-06-12)"
+  ],
+  "blockers": [
+    "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
+    "Founder device verify: membership proof loop + nav-sheet"
+  ]
+}

@@ -2361,3 +2361,16 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
   9. SIL-INTEGRITY-CLAMP — S173/S174 processQuality 101→100, totals recomputed; check-sil-integrity.mjs gate; Ark reply to studio-ops (id 01JQHOLTTF798F4CE28B793898).
 - Bonus: founder-presence drift-preflight made autofix (self-heals live-state flap during long gates).
 - 3 commits; build:check green every wave (108 pages, 0 failures); Worker deploy live-verified.
+
+## Session 178 — 2026-06-08 — goal-chain: /start → /audit → /implement → /closeout (6/6 fresh frontier audit)
+- Intent: full goal-chain, genius/creative, personalized to this project's lists/flags/blockers, + impact score. Outcome: achieved.
+- Audit `docs/AUDIT_2026-06-08.{md,json}` — 6 items, Priority 159.5. Deliberately skipped evidence-gated carries (TT soak due ~06-12; / field verdict pending 3/5) and opened new agent-attemptable work.
+- Shipped 6/6 (5 commits):
+  1. UPTIME-PUBLISH-LOOP — probe writes api/uptime.json + data/uptime-history.ndjson (30d rollup); uptime-probe.yml commits low-churn [skip ci]; /status/ availability tile + live incidents; check-uptime-contract gate 7/7. Resolved UPTIME-PROBE-GREEN-CONFIRM (first scheduled run green 40s @ 01:39Z).
+  2. UPTIME-ALERT-PATH-PROOF — probe --simulate-failure proves down→email without paging founder; module import-safe; self-test 14/14.
+  3. FIELD-WIN-AUTO-PUBLISH — build-field-win-proof.mjs → api/field-win.json (confirmed only); /status/ "Biggest measured win" tile auto-lights on the −83% origin verdict, honest-dark while pending. 6/6.
+  4. RETURNING-VISITOR-DIGEST — assets/returning-visitor-digest.js momentum strip from Forge Ledger + localStorage baseline; idle via ambient-loader; offline Playwright 3/3.
+  5. AMBIENT-GENOME-STRIP-SPLIT — vault-genome-strip.js → predicate loading; 28→27 ambient sources; shell re-propagated; gates green.
+  6. TASKBOARD-ARCHIVE-ROTATION — rotate-taskboard.mjs; TASK_BOARD 365KB→130KB (−63%); import-safe; --check-size drift advisory in build:check. 7/7.
+- Cross-cutting: both probe + rotator made import-safe after the same import-side-effect class bit each (importing fired live probe / live rotation).
+- Verification: build:check exit 0 (108 pages, 0 failures); 3 new self-tests + offline digest spec all green.

@@ -104,5 +104,15 @@
     "geo-vitals non-US deepening — GB:3 samples; gated on organic non-US traffic, not agent-attemptable.",
     "vaultsparked-proof.js delete + nav-sheet device swap — the two genuine founder yes/no items; evidence already assembled."
   ],
-  "execution": { "executionLog": [] }
+  "execution": {
+    "executionLog": [
+      { "slug": "uptime-publish-loop", "status": "shipped", "commit": "707f85f3", "note": "probe writes api/uptime.json + data/uptime-history.ndjson w/ 30d rollup; workflow commits low-churn; /status/ tile live; check-uptime-contract gate 7/7 in build:check. Also resolved the open UPTIME-PROBE-GREEN-CONFIRM carry (first scheduled run on new code went green 40s @ 2026-06-08T01:39Z)." },
+      { "slug": "uptime-alert-path-proof", "status": "shipped", "commit": "707f85f3", "note": "probe --simulate-failure proves the down->email path without paging founder (PASS); module made import-safe; self-test 14/14." },
+      { "slug": "field-win-auto-publish", "status": "shipped", "commit": "a783c7c6", "note": "build-field-win-proof.mjs -> api/field-win.json (confirmed verdicts only); /status/ 'Biggest measured win' tile auto-lights when origin-migration LCP verdict confirms; honest-dark now (0 confirmed). self-test 6/6." },
+      { "slug": "returning-visitor-digest", "status": "shipped", "commit": "7aefd598", "note": "assets/returning-visitor-digest.js momentum strip from Forge Ledger + localStorage baseline; idle via ambient-loader; offline Playwright proof 3/3." },
+      { "slug": "ambient-genome-strip-split", "status": "shipped", "commit": "c9f0703d", "note": "vault-genome-strip.js moved to predicate loading; feature bundle 28->27 sources; coverage + placement gates green; shell rotated + pages re-propagated." },
+      { "slug": "taskboard-archive-rotation", "status": "shipped", "commit": "29647407", "note": "rotate-taskboard.mjs archived sessions <176; TASK_BOARD 365KB->130KB (-63%); import-safe; --check-size drift advisory in build:check; self-test 7/7." }
+    ],
+    "summary": { "shipped": 6, "deferred": 0, "blocked": 0, "combinedPriority": 159.5, "gate": "npm run build:check exit 0 (108 pages, 0 failures)" }
+  }
 }

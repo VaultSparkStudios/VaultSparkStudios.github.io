@@ -1579,3 +1579,19 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **Why:** Per-sink patching of 167 call sites across ~50 modules would stall the enforce ladder for months. The default policy is the W3C-documented migration path: one audited chokepoint today, safe enforce-flip later, observability preserved on the only sink that matters for injection (script URLs).
 
 **Maintenance rule:** Never widen the `createScriptURL` allowlist without a logged reason. Modules that execute before ambient-core (trust-depth, related-content, recent-ships, sentry-init) carry their own narrow policy since the default isn't installed yet at their load time.
+
+### 2026-06-08 — S178 — Self-published status data is committed low-churn, and status publishers stay honest-dark while pending
+
+**Decision:** First-party operational signals (uptime, deploy field-wins) are PUBLISHED to `api/*.json` + committed by their workflow, not left to die in the CI runner. Two rules keep this clean: (1) **low-churn commits** — `uptime-probe.yml` commits `api/uptime.json` + `data/uptime-history.ndjson` only when the probe flags a commit-worthy change (new hour bucket, state change, or incident), `[skip ci]`, so a healthy site does not spam git despite a */30 cron; (2) **honest-dark publishing** — `build-field-win-proof.mjs` emits only *confirmed* verdicts (improved/regressed/neutral) and the `/status/` tile renders nothing while a verdict is `pending`. The machine never overstates; it waits for its own evidence.
+
+**Why:** The S176/S177 probe earned trust but its green signal was invisible (workflow comment literally said "not committed"). A status page that hand-sets "No incidents in 90 days" is theatre; one fed by the probe's own rollup is proof. Publishing only confirmed verdicts prevents the −83% origin-migration LCP win (real, but n=3) from being announced before it's statistically honest.
+
+**Maintenance rule:** Status publishers must default to silent/dark on insufficient evidence and only commit when state is worth recording. Never widen what counts as "confirmed" to make a tile light up sooner.
+
+### 2026-06-08 — S178 — Side-effecting Node scripts that export logic must gate execution on direct invocation
+
+**Decision:** Any script that both `export`s functions AND performs side effects at module top level (a network probe, a destructive file rotation, a CLI `--self-test` dispatch) must guard those effects with `const RUN_DIRECT = import.meta.main ?? process.argv[1]?.endsWith('<file>.mjs')` and run them only `if (RUN_DIRECT)`. Importers get the pure exports with zero side effects.
+
+**Why:** Caught twice in one session. `check-uptime-contract.mjs` imports `probe-uptime.mjs` for `rollup()` — the import fired a real live uptime probe (and could have emailed) and, worse, the imported module's `--self-test` dispatch hijacked the gate's own `--self-test`. The taskboard rotator had the same shape: importing it to compare sizes silently rotated the real board. Top-level side effects make a module unsafe to compose.
+
+**Maintenance rule:** New `.mjs` scripts that export logic for reuse get the `RUN_DIRECT` guard from the start. CLI flag dispatches (`--self-test`, `--simulate-failure`) are gated too, not just the main body, so a parent passing its own flags can't trigger the child's.

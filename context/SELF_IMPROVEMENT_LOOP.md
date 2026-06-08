@@ -9,15 +9,32 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 997.3 | 5: 996.6 | 10: 994 | 25: 981 | all: 963 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 99.0 | Momentum 100.0 | Engage 99.0 | Process 100.0
-Velocity trend: → (S177: 2/2 — a focused P0 root-cause + fix, not a wide audit)  |  Protocol velocity: ↑ (false-positive monitor caught + corrected; diagnostic captured as canon) |  Debt: → (field verdict + TT re-probe are pending data, not work)
-Momentum runway: ~4 sessions (uptime-probe green confirm · origin field-verdict readout · TT re-probe 06-12 · geo confirmation)  |  Intent rate: 100% (last 5)
-Last session: 2026-06-07 | Session 177 | Total: 998/1000 (v3.0) | Velocity: 2 | protocolVelocity: 1
+Avgs - 3: 998.3 | 5: 997.4 | 10: 994.5 | 25: 982 | all: 963 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 99.3 | Momentum 100.0 | Engage 99.0 | Process 100.0
+Velocity trend: ↑ (S178: 6/6 — wide fresh frontier audit; S177 was a focused 2/2)  |  Protocol velocity: ↑ (import-safety class fixed + logged; honest-dark publishing canon) |  Debt: → (field verdict + TT re-probe are pending data, not work)
+Momentum runway: ~4 sessions (field-win lights-up readout · uptime-publish verify · TT re-probe 06-12 due · geo confirmation)  |  Intent rate: 100% (last 5)
+Last session: 2026-06-08 | Session 178 | Total: 999/1000 (v3.0) | Velocity: 6 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-08 — Session 178 (/start → /audit → /implement → /closeout · 6/6 fresh frontier audit: uptime publish-loop + field-win auto-publish + returning-visitor digest + ambient split + taskboard rotation) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: →
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 100 | `npm run build:check` exit 0 end-to-end (108-page crawl, 0 failures); three new gates self-test green (uptime-contract 7/7, field-win 6/6, rotate 7/7) + offline Playwright digest spec 3/3. |
+| Creative Alignment | 100 | Refused to re-list blocked verify-carries; opened six new agent-attemptable items, each naming a conversion/info-finding outcome. The field-win auto-publisher and returning-visitor momentum strip are on-brand transparency-as-marketing, not feature padding. |
+| Momentum | 100 | 6/6 shipped, no partials; closed an open carry (green-confirm) and self-fed S177's own brainstorm item (#2: wire api/uptime.json into /status/). |
+| Engagement | 99 | Visitors gain a self-measured availability % + a returning-visitor digest; the field-win tile is built but still dark (pending samples) — value latent until the verdict confirms. |
+| Process Quality | 100 | Caught two import-side-effect bugs (probe + rotator fired live work on import) and fixed the whole class with a RUN_DIRECT guard + a logged decision; honest-dark publishing baked in. |
+| Cross-Repo Coherence | 100 | Website repo only; no sibling writes or Ark bypasses. |
+| Security Posture | 100 | TT enforce correctly held until the 06-12 re-probe; all new DOM is DOM-API/TT-safe; alert path proven via `--simulate-failure` without paging; no secrets in prompts. |
+| Ecosystem Integration | 100 | Reusable fleet patterns: import-safe side-effecting scripts, low-churn self-publishing status workflows, honest-dark verdict tiles. |
+| Capital Efficiency | 100 | Entirely free-tier/cost-neutral; token-cost win (TASK_BOARD 365KB→130KB, −63%); low-churn `[skip ci]` commits avoid Actions spam. |
+| Automation Coverage | 100 | Three new self-tested gates wired into build:check; the uptime alarm is now self-testable; the field-win loop publishes without a session. |
+
+**Brainstorm / next:** (1) Once `/` accrues ≥5 post-deploy samples, confirm `api/field-win.json` flips `hasConfirmed:true` and the /status/ tile lights up with the −83% LCP win — first end-to-end proof of the self-publishing loop. (2) Verify the first low-churn `uptime-probe.yml` commit lands `api/uptime.json` + a history row and `/status/` shows a real %. (3) TT enforce re-probe is now due (~06-12). (4) Extend the import-safe `RUN_DIRECT` guard audit across other export+side-effect scripts in `scripts/` (a quick lint could catch the class). Committed to TASK_BOARD S179: TT-enforce-reprobe + field-win-lights-up + uptime-publish-verify.
 
 ## 2026-06-07 — Session 177 (/start → /audit → /implement → /closeout · uptime-probe false-alarm root-cause + real-availability rewrite + Worker origin-hang hardening) | Total: 998/1000 (v3.0) | Velocity: 2 | Debt: →
 

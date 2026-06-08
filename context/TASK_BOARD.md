@@ -1,18 +1,29 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-07 (Session 177 — goal-chain: uptime-probe false-alarm root-cause + real-availability rewrite + Worker origin-hang hardening; build:check green; worker deployed --env production)
+Last updated: 2026-06-08 (Session 178 — goal-chain: /start → /audit → /implement → /closeout · 6/6 fresh frontier audit; build:check green; TASK_BOARD rotated 365KB→130KB)
+
+## Done (Session 178 — goal-chain: /start → /audit → /implement → /closeout · 6/6)
+
+- [x] **[S178][OBS/P0] UPTIME-PUBLISH-LOOP — DONE.** Probe went green but `api/uptime.json` died in the CI runner; `/status/` uptime tile was unfed. `probe-uptime.mjs` now writes `api/uptime.json` (live + 30d rollup) + appends `data/uptime-history.ndjson`; `uptime-probe.yml` commits low-churn (`[skip ci]`, only on hour/state/incident); `/status/` renders self-measured availability % + live incidents; `check-uptime-contract.mjs` gate 7/7 in build:check. Resolves UPTIME-PROBE-GREEN-CONFIRM (first scheduled run on new code green 40s @ 06-08 01:39Z). **DONE S178**
+- [x] **[S178][OBS/P1] UPTIME-ALERT-PATH-PROOF — DONE.** `probe-uptime.mjs --simulate-failure` proves the down→email path without paging founder (PASS). Module made import-safe (live probe + CLI dispatches gated on direct invocation) after a real import-side-effect bug. self-test 14/14. **DONE S178**
+- [x] **[S178][PERF/P1] FIELD-WIN-AUTO-PUBLISH — DONE.** `build-field-win-proof.mjs` → `api/field-win.json` (confirmed verdicts only, never pending); `/status/` "Biggest measured win" tile auto-lights when origin-migration LCP (1588 vs 9489, −83%) confirms, honest-dark while pending (0 today). self-test 6/6; in build + build:check. **DONE S178**
+- [x] **[S178][UX/P1] RETURNING-VISITOR-DIGEST — DONE.** `assets/returning-visitor-digest.js` momentum strip from Forge Ledger + localStorage baseline; ≥2-ship threshold; idle via ambient-loader on returning-visitor predicate; DOM-API/TT-safe; cost-neutral. Offline Playwright proof 3/3. **DONE S178**
+- [x] **[S178][SPEED/P2] AMBIENT-GENOME-STRIP-SPLIT — DONE.** `vault-genome-strip.js` moved to predicate loading; feature bundle 28→27 sources; predicate mirrors skip rules; shell rotated + pages re-propagated; coverage + placement gates green. **DONE S178**
+- [x] **[S178][TOKEN/P3] TASKBOARD-ARCHIVE-ROTATION — DONE.** `rotate-taskboard.mjs` archived sessions <176 to `context/archive/TASK_BOARD_ARCHIVE.md` (nothing deleted); board 365KB→130KB (−63%); import-safe; session-window `--check-size` advisory in build:check. self-test 7/7. **DONE S178**
+
+## Now (Session 179 runway)
+
+- [ ] **[S179][SECURITY/P1] TT-ENFORCE-REPROBE.** Now due (~2026-06-12): `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
+- [ ] **[S179][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP.** `/` field verdict still PENDING (3/5 post samples; signal −83%). Once ≥5/side accrue, `api/field-win.json` flips `hasConfirmed:true` and the /status/ "Biggest measured win" tile auto-lights — confirm it renders, then celebrate or regress-hunt with `lib/perf-forensics.mjs`.
+- [ ] **[S179][OBS/P2] UPTIME-PUBLISH-VERIFY.** Confirm the first commit-worthy `uptime-probe.yml` run committed `api/uptime.json` + a history row (Actions tab / `git log --author=github-actions`), and that `/status/` shows a real availability %. First low-churn commit is the smoke test.
+- [ ] **[S179][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
+- [ ] **[S179][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
 
 ## Done (Session 177 — goal-chain: /start → /audit → /implement → /closeout · 2/2)
 
 - [x] **[S177][OBS/P0] UPTIME-PROBE-REAL-AVAILABILITY — DONE.** S176 probe was DOA: its first cron run false-paged the founder. Root cause = CF edge bot-challenge on prod HTML nav (datacenter/CI clients hang/403 before the Worker; real browsers pass). Rewrote `scripts/probe-uptime.mjs` (schemaVersion 2.0) to a two-signal model — Pages-origin content + prod JSON liveness; custom-domain HTML is non-alerting informational; alerts only on real failure. Run 4m14s→~2s, self-test 10/10. DECISIONS 2026-06-07 + memory captured. **DONE S177**
 - [x] **[S177][RESILIENCE/P1] WORKER-ORIGIN-HANG-FAILOVER — DONE.** `originFetch` primary+fallback idempotent fetch now bounded by `AbortSignal.timeout(8s)`; an origin hang fast-fails into S176's pages.dev failover → DR cache (S176 only caught clean 5xx). Deployed --env production v`bb9a734d`; post-deploy verified scanner-403 + JSON-200 + probe overall=up. **DONE S177**
-## Now (Session 178 runway)
 
-- [ ] **[S178][SECURITY/P1] TT-ENFORCE-REPROBE.** Soak clock restarted 2026-06-05; S176 burned down founder-named sinks via the default-policy bridge. Re-probe ~2026-06-12: `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; if clean → enforce-flip decision (founder device verify per SOUL #3).
-- [ ] **[S178][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT.** `/` field verdict still PENDING. Once ≥5 post-deploy samples/side accrue, read `data/field-verdicts.json`; expect a real LCP drop from edge-origin TTFB.
-- [ ] **[S178][OBS/P2] UPTIME-PROBE-GREEN-CONFIRM.** Confirm the next scheduled `uptime-probe.yml` run (now on the S177 two-signal code) goes green and that a forced-failure path still emails. First green run is the verify.
-- [ ] **[S178][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
-- [ ] **[S178][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
 ## Done (Session 176 — goal-chain: /start → /audit → /implement → /closeout · 9/9)
 
 - [x] **[S176][UX/P0] NOW-PLAYING-ORPHAN-KILL + EXTRACTOR ROOT-CAUSE — DONE.** Founder-reported "Loading…" stuck top-left root-caused to `extract-inline-styles.mjs` wiping 241/253 vsx rules on rebuild. Extractor now cumulative + coverage-invariant; 252 rules recovered into style.css; dead `#nowPlayingBar` deleted; shell `850d887c62` (330/330 vsx coverage). **DONE S176**
