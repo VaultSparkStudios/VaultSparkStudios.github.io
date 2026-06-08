@@ -1,18 +1,30 @@
 #!/usr/bin/env node
 /**
- * smoke-live.mjs — post-deploy liveness gate.
+ * smoke-live.mjs — post-deploy liveness gate (CI-safe).
  *
- * Catches the failure class behind the 2026-06-08 outage: a Worker that deploys
- * "successfully" but hangs / self-loops / serves nothing. A green deploy is NOT
- * proof the site is up — this probe is. Fetches real navigation routes with a
- * full browser header set (so the Worker scanner-block doesn't 403 us), asserts
- * 200 + a non-trivial body + a known marker, and retries through edge-propagation
- * before failing. Exit non-zero on any failure so CI goes RED (and notifies).
+ * Guards the failure class behind the 2026-06-08 outage: a Worker that deploys
+ * "successfully" but hangs / self-loops and serves nothing, while CI stays green.
+ *
+ * CI runs from a datacenter IP, where Cloudflare bot-challenges prod HTML *nav*
+ * requests with a fast 403 *before they reach the Worker* (see probe-uptime.mjs).
+ * So an HTML-200 assertion would false-fail on every CI run. Instead this gate
+ * uses two signals that ARE reliable from a datacenter, matching the proven
+ * uptime probe:
+ *
+ *   1. CONTENT  — fetch the unchallenged Pages origin (*.pages.dev). A 200 + a
+ *      known marker proves the deploy/build actually serves the site.
+ *   2. EDGE     — fetch the production custom domain. The Worker self-loop made
+ *      this HANG (no response). A FAST response means the DNS→CF→Worker chain is
+ *      alive — even a bot-challenge 403 counts as alive. Only a hang/timeout or a
+ *      5xx fails the gate. This is the symptom that distinguishes "down" from the
+ *      benign bot-challenge.
+ *
+ * Exit non-zero on failure so CI goes RED (→ GitHub notifies) instead of
+ * green-while-down.
  *
  * Usage:
- *   node scripts/smoke-live.mjs                       # default base + routes
- *   node scripts/smoke-live.mjs --base=https://vaultsparkstudios.com
- *   node scripts/smoke-live.mjs --routes=/,/membership/ --marker=VaultSpark
+ *   node scripts/smoke-live.mjs
+ *   node scripts/smoke-live.mjs --origin=https://...pages.dev --prod=https://vaultsparkstudios.com
  *   node scripts/smoke-live.mjs --self-test
  */
 
@@ -22,12 +34,14 @@ const flag = (name, dflt) => {
   return hit ? hit.slice(name.length + 1) : dflt;
 };
 
-const BASE = flag('--base', 'https://vaultsparkstudios.com').replace(/\/$/, '');
-const ROUTES = flag('--routes', '/,/membership/,/games/').split(',').filter(Boolean);
+const ORIGIN = flag('--origin', 'https://vaultsparkstudios-website.pages.dev').replace(/\/$/, '');
+const PROD = flag('--prod', flag('--base', 'https://vaultsparkstudios.com')).replace(/\/$/, '');
+const CONTENT_ROUTES = flag('--content-routes', '/,/membership/').split(',').filter(Boolean);
+const EDGE_ROUTES = flag('--edge-routes', '/,/api/founder-presence.json').split(',').filter(Boolean);
 const MARKER = flag('--marker', 'VaultSpark');
 const MIN_BYTES = Number(flag('--min-bytes', '1000'));
-const PER_REQ_TIMEOUT_MS = Number(flag('--timeout-ms', '15000'));
-const MAX_ATTEMPTS = Number(flag('--attempts', '5'));
+const TIMEOUT_MS = Number(flag('--timeout-ms', '12000'));
+const MAX_ATTEMPTS = Number(flag('--attempts', '4'));
 const BACKOFF_MS = Number(flag('--backoff-ms', '4000'));
 const SELF_TEST = args.includes('--self-test');
 
@@ -39,37 +53,50 @@ const BROWSER_HEADERS = {
   'Sec-Fetch-Dest': 'document',
   'Sec-Fetch-Mode': 'navigate',
   'Sec-Fetch-Site': 'none',
-  'Upgrade-Insecure-Requests': '1',
 };
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function probeOnce(url) {
-  const ctrl = new AbortController();
-  const t = setTimeout(() => ctrl.abort(), PER_REQ_TIMEOUT_MS);
+async function fetchOnce(url, wantBody) {
   const started = Date.now();
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), TIMEOUT_MS);
   try {
     const res = await fetch(url, { headers: BROWSER_HEADERS, redirect: 'follow', signal: ctrl.signal });
-    const body = await res.text();
-    const ms = Date.now() - started;
-    if (res.status !== 200) return { ok: false, reason: `HTTP ${res.status}`, ms };
-    if (body.length < MIN_BYTES) return { ok: false, reason: `body ${body.length}B < ${MIN_BYTES}B`, ms };
-    if (MARKER && !body.includes(MARKER)) return { ok: false, reason: `marker "${MARKER}" absent`, ms };
-    return { ok: true, reason: `200 ${body.length}B`, ms };
+    const body = wantBody ? await res.text() : '';
+    return { status: res.status, bytes: body.length, body, ms: Date.now() - started };
   } catch (e) {
-    return { ok: false, reason: e.name === 'AbortError' ? `hang >${PER_REQ_TIMEOUT_MS}ms` : e.message, ms: Date.now() - started };
+    return { status: 0, bytes: 0, body: '', ms: Date.now() - started, error: e.name === 'AbortError' ? `hang >${TIMEOUT_MS}ms` : e.message };
   } finally {
     clearTimeout(t);
   }
 }
 
-async function probeWithRetry(url) {
+// CONTENT: strict — 200 + non-trivial body + marker.
+function judgeContent(r) {
+  if (r.status !== 200) return { ok: false, reason: r.error || `HTTP ${r.status}` };
+  if (r.bytes < MIN_BYTES) return { ok: false, reason: `body ${r.bytes}B < ${MIN_BYTES}B` };
+  if (MARKER && !r.body.includes(MARKER)) return { ok: false, reason: `marker "${MARKER}" absent` };
+  return { ok: true, reason: `200 ${r.bytes}B` };
+}
+
+// EDGE: alive iff it RESPONDED fast with status < 500. Hang (0) / 5xx = down.
+// A bot-challenge 403 is "alive" — the edge answered. This is the self-loop guard.
+function judgeEdge(r) {
+  if (r.status === 0) return { ok: false, reason: r.error || 'no response' };
+  if (r.status >= 500) return { ok: false, reason: `HTTP ${r.status}` };
+  return { ok: true, reason: `edge alive (HTTP ${r.status})` };
+}
+
+async function checkWithRetry(label, url, judge, wantBody) {
   let last;
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    last = await probeOnce(url);
+    const r = await fetchOnce(url, wantBody);
+    last = judge(r);
+    last.ms = r.ms;
     if (last.ok) return { ...last, attempts: attempt };
     if (attempt < MAX_ATTEMPTS) {
-      console.log(`  · ${url} attempt ${attempt}/${MAX_ATTEMPTS} failed (${last.reason}) — retrying in ${BACKOFF_MS}ms`);
+      console.log(`  · ${label} ${url} attempt ${attempt}/${MAX_ATTEMPTS} failed (${last.reason}) — retry in ${BACKOFF_MS}ms`);
       await sleep(BACKOFF_MS);
     }
   }
@@ -78,42 +105,48 @@ async function probeWithRetry(url) {
 
 async function main() {
   if (SELF_TEST) return selfTest();
-  console.log(`smoke-live: ${BASE} — routes [${ROUTES.join(', ')}] marker "${MARKER}"`);
+  console.log(`smoke-live: content=${ORIGIN} edge=${PROD} marker="${MARKER}"`);
   const results = [];
-  for (const route of ROUTES) {
-    const url = `${BASE}${route}`;
-    const r = await probeWithRetry(url);
-    console.log(`  ${r.ok ? '✅' : '❌'} ${route} — ${r.reason} (${r.ms}ms, ${r.attempts} attempt${r.attempts > 1 ? 's' : ''})`);
-    results.push({ route, ...r });
+
+  for (const route of CONTENT_ROUTES) {
+    const r = await checkWithRetry('content', `${ORIGIN}${route}`, judgeContent, true);
+    console.log(`  ${r.ok ? '✅' : '❌'} content ${route} — ${r.reason} (${r.ms}ms, ${r.attempts}x)`);
+    results.push({ kind: 'content', route, ...r });
   }
+  for (const route of EDGE_ROUTES) {
+    const r = await checkWithRetry('edge', `${PROD}${route}`, judgeEdge, false);
+    console.log(`  ${r.ok ? '✅' : '❌'} edge ${route} — ${r.reason} (${r.ms}ms, ${r.attempts}x)`);
+    results.push({ kind: 'edge', route, ...r });
+  }
+
   const failed = results.filter((r) => !r.ok);
   if (failed.length) {
-    console.error(`\nsmoke-live FAILED: ${failed.length}/${results.length} route(s) unhealthy — ${failed.map((f) => f.route).join(', ')}`);
+    console.error(`\nsmoke-live FAILED: ${failed.map((f) => `${f.kind}${f.route} (${f.reason})`).join(', ')}`);
     process.exit(1);
   }
-  console.log(`\nsmoke-live PASSED: ${results.length}/${results.length} routes healthy`);
+  console.log(`\nsmoke-live PASSED: ${results.length}/${results.length} signals healthy`);
 }
 
-// --- self-test: validates assertion logic without network -------------------
+// --- self-test: validates judge logic without network ----------------------
 function selfTest() {
-  const cases = [
-    { body: `<title>VaultSpark</title>${'x'.repeat(2000)}`, status: 200, expectOk: true },
-    { body: 'short', status: 200, expectOk: false },
-    { body: `${'x'.repeat(2000)}no-marker`, status: 200, expectOk: false },
-    { body: `<title>VaultSpark</title>${'x'.repeat(2000)}`, status: 503, expectOk: false },
+  const big = 'x'.repeat(2000);
+  const contentCases = [
+    { r: { status: 200, bytes: 2000, body: `VaultSpark${big}` }, ok: true },
+    { r: { status: 200, bytes: 5, body: 'tiny' }, ok: false },
+    { r: { status: 200, bytes: 2000, body: big }, ok: false }, // no marker
+    { r: { status: 0, error: 'hang' }, ok: false },
   ];
-  let pass = 0;
-  for (const [i, c] of cases.entries()) {
-    const ok = c.status === 200 && c.body.length >= MIN_BYTES && (!MARKER || c.body.includes(MARKER));
-    const good = ok === c.expectOk;
-    console.log(`  ${good ? 'PASS' : 'FAIL'} case ${i + 1}: expected ok=${c.expectOk}, got ok=${ok}`);
-    if (good) pass++;
-  }
-  console.log(`self-test: ${pass}/${cases.length} passed`);
-  process.exit(pass === cases.length ? 0 : 1);
+  const edgeCases = [
+    { r: { status: 200 }, ok: true },
+    { r: { status: 403 }, ok: true }, // bot-challenge = edge alive
+    { r: { status: 503 }, ok: false },
+    { r: { status: 0, error: 'hang >12000ms' }, ok: false }, // the self-loop symptom
+  ];
+  let pass = 0, total = 0;
+  for (const [i, c] of contentCases.entries()) { total++; const got = judgeContent(c.r).ok; const good = got === c.ok; if (good) pass++; console.log(`  ${good ? 'PASS' : 'FAIL'} content case ${i + 1}: expected ${c.ok}, got ${got}`); }
+  for (const [i, c] of edgeCases.entries()) { total++; const got = judgeEdge(c.r).ok; const good = got === c.ok; if (good) pass++; console.log(`  ${good ? 'PASS' : 'FAIL'} edge case ${i + 1}: expected ${c.ok}, got ${got}`); }
+  console.log(`self-test: ${pass}/${total} passed`);
+  process.exit(pass === total ? 0 : 1);
 }
 
-main().catch((e) => {
-  console.error('smoke-live crashed:', e);
-  process.exit(1);
-});
+main().catch((e) => { console.error('smoke-live crashed:', e); process.exit(1); });
