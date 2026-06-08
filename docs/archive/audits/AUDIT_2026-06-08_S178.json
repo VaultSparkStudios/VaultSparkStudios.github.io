@@ -1,0 +1,118 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-06-08",
+  "project": "vaultsparkstudios-website",
+  "projectName": "VaultSparkStudios.github.io",
+  "type": "website",
+  "topline": {
+    "totalItems": 6,
+    "combinedPriority": 159.5,
+    "top3": ["uptime-publish-loop", "field-win-auto-publish", "returning-visitor-digest"],
+    "axisWeights": { "ux": 2.5, "speed": 2, "featureDepth": 1.5 },
+    "note": "Mature site at SIL 998/1000 whose open carries are all evidence-gated verifies. This audit deliberately opens NEW agent-attemptable frontier work that does not wait on accruing samples or the TT soak clock. Every item names a conversion or info-finding outcome (overlay successBar) and respects live canon (TT held until 06-12, origin migration done, gtag gone, cost-neutral free tier, public-safe)."
+  },
+  "founderEvidence": "Live state read at session start: uptime-probe.yml first scheduled run on the new 2.0 code went GREEN (40s, 2026-06-08T01:39Z) — but api/uptime.json is absent from the repo (probe output dies in the CI runner; /status/ has an 'Uptime · History' eyebrow at line 325 with nothing feeding it). field-verdicts.json holds a real /-route post-deploy LCP signal of 1588ms vs 9489ms pre (-83%) sitting at verdict=pending on 3/5 post samples. TASK_BOARD.md is 356KB and CURRENT_STATE.md is ~82K tokens — every on-demand read pays for sessions of accumulated Done sections. ambient-split-candidates ranks vault-genome-strip.js (5.8KB, capability-gated) as the #1 cold-cache subtraction target.",
+  "items": [
+    {
+      "rank": 1,
+      "slug": "uptime-publish-loop",
+      "tier": "fire",
+      "axis": "Observability/FeatureDepth",
+      "effort": "2h",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 36.0,
+      "summary": "The first-party uptime probe measures availability every 30 min and just went green on its first real scheduled run — but api/uptime.json is never committed or served, so the data dies in the CI runner and the /status/ 'Uptime · History' tile has nothing to render.",
+      "why": "S176 built a probe to replace the missing uptimerobot credential, and S177 made it measure real availability instead of the CF bot-gauntlet — but its output is alert-only and ephemeral, so the green signal is invisible to everyone. Info-finding outcome: visitors and the founder see a real, self-measured uptime percentage instead of a third-party badge or nothing. This also closes the open UPTIME-PROBE-GREEN-CONFIRM carry by making greenness publicly legible.",
+      "recipe": "Make uptime-probe.yml commit a rolling api/uptime.json (latest summary) + append to data/uptime-history.ndjson (cap ~30d); guard the commit so a failed probe still alerts but does not poison history. Render a live uptime % + last-N sparkline into the existing /status/ 'Uptime · History' tile (status/index.html:325) from api/uptime.json. Add a check-uptime-contract.mjs gate to build:check."
+    },
+    {
+      "rank": 2,
+      "slug": "field-win-auto-publish",
+      "tier": "fire",
+      "axis": "Speed/Data",
+      "effort": "2h",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 32.0,
+      "summary": "field-verdicts.json already holds a -83% homepage LCP win (1588ms post vs 9489ms pre from the CF Pages origin migration) that will flip pending->improved within ~2 more samples — but nothing publishes a confirmed verdict; it waits for a human to notice.",
+      "why": "S174 made the RUM loop self-feeding and S175 moved the origin to the edge; the measurement machine now grades deploys, but the wins stay buried in a JSON file. Conversion/transparency outcome: when a verdict is CONFIRMED, the site auto-surfaces 'homepage got N% faster for real visitors, measured from M field samples' as proof-as-marketing — extending the existing 'measured from real visits' strip. The machine should publish its own wins, not depend on session cadence.",
+      "recipe": "Add scripts/build-field-win-proof.mjs reading data/field-verdicts.json, emitting api/field-win.json containing ONLY verdicts whose status is improved/regressed with confidence (never pending). Render a 'Biggest measured win' proof tile on /studio-pulse/ (or the /status/ Live Signals strip) gated to show only confirmed deltas with sample count. Wire into npm run build + a freshness gate."
+    },
+    {
+      "rank": 3,
+      "slug": "returning-visitor-digest",
+      "tier": "fire",
+      "axis": "UX/Conversion",
+      "effort": "3h",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 31.0,
+      "summary": "Returning visitors get the same cold homepage as first-timers, even though the site already tracks vs_visit_count and publishes ship-receipts.json + commit-map.json (the Forge Ledger) — there is no 'here is what changed since you were here' moment.",
+      "why": "The studio's whole posture is momentum and transparency, yet a returning prospective member sees no evidence that anything moved since their last visit. Conversion/retention outcome: a small, dismissible 'N things shipped since you were here' strip seeded from ship-receipts filtered against a localStorage last-visit timestamp gives returning visitors a concrete reason to re-engage. Cost-neutral (localStorage + already-generated static JSON; no per-user studio cost), public-safe (ship receipts are already public).",
+      "recipe": "Add assets/returning-visitor-digest.js: on load, read vs_last_visit_ts from localStorage; fetch api/ship-receipts.json; if 2+ receipts are newer than last visit AND visit_count>1, render a compact dismissible strip ('Since your last visit: 3 ships') linking to /studio-pulse/. Stamp vs_last_visit_ts on dismiss/navigate. Wire behind the ambient predicate loader (assets/ambient-loader.js), not base ambient. Add a focused Playwright smoke."
+    },
+    {
+      "rank": 4,
+      "slug": "uptime-alert-path-proof",
+      "tier": "high",
+      "axis": "Observability/Security",
+      "effort": "1h",
+      "impact": 7,
+      "innovation": 6,
+      "priority": 26.5,
+      "summary": "The new probe's alert path (Resend email + 6h dedup) has never fired on a genuine failure, and you cannot verify it in production without actually paging the founder — so 'does the alarm work?' is currently an act of faith.",
+      "why": "A monitor whose alert path is unproven is only half a monitor; S176's probe earned trust on the up path but the down path is untested. Info-finding outcome: the founder gets evidence the alarm works without a false page. Adds a --simulate-failure --dry-run mode that runs the full alert-format + dedup decision against a synthetic 'down' summary and prints the exact email it would send, plus a self-test assertion that a down signal triggers the send branch.",
+      "recipe": "Extend scripts/probe-uptime.mjs with --simulate-failure (injects an origin-down signal) and --dry-run (formats + logs the alert, skips Resend send + skips writing the dedup ledger). Add a self-test case asserting shouldAlert===true on the synthetic down. Document the one-liner in the uptime-probe.yml comment block."
+    },
+    {
+      "rank": 5,
+      "slug": "taskboard-archive-rotation",
+      "tier": "high",
+      "axis": "TokenCost/Efficiency",
+      "effort": "1h",
+      "impact": 6,
+      "innovation": 5,
+      "priority": 18.9,
+      "summary": "context/TASK_BOARD.md is 356KB and CURRENT_STATE.md ~82K tokens; both are on-demand reads that now carry many sessions of accumulated Done blocks, so any session that opens them pays a large, growing token tax for mostly-historical content.",
+      "why": "The board's live signal (Now/Next + the current 1-2 Done sets) is buried under ~15 sessions of completed work. Token-cost outcome: a one-time rotation + a closeout rule keeps the live board lean so every future /start and on-demand read is cheaper. Measurement: TASK_BOARD.md 356KB -> target <50KB; verified via file size pre/post and a board-size gate.",
+      "recipe": "Add scripts/rotate-taskboard.mjs that moves Done sections older than the last 2 sessions into context/archive/TASK_BOARD_ARCHIVE.md (append, dated), preserving Now/Next/current Done. Run once now; add an advisory board-size check to build:check (warn >80KB). Same pattern optional for CURRENT_STATE snapshot tail."
+    },
+    {
+      "rank": 6,
+      "slug": "ambient-genome-strip-split",
+      "tier": "high",
+      "axis": "Speed",
+      "effort": "1h",
+      "impact": 6,
+      "innovation": 4,
+      "priority": 15.1,
+      "summary": "vault-genome-strip.js (5.8KB, capability-gated) is the #1 ambient-split candidate but still ships in the always-loaded ambient bundle, so every cold visitor downloads a feature most never trigger.",
+      "why": "On a mature codebase subtraction compounds, and the ambient bundle is the one asset every first paint pays for. Speed outcome: moving the genome strip behind the existing predicate loader trims the cold-cache ambient payload, improving the metric the origin migration already targets (first-paint TTFB->LCP). Lowest-risk perf win on the board.",
+      "recipe": "Move assets/vault-genome-strip.js out of AMBIENT_SOURCES and load it via assets/ambient-loader.js on its existing capability predicate. Add a focused Playwright smoke proving the strip still renders when its trigger is present and is absent on first load. Let report-ambient-coverage --check enforce it does not return to base ambient."
+    }
+  ],
+  "innovationReserve": [
+    "uptime-publish-loop",
+    "field-win-auto-publish",
+    "returning-visitor-digest"
+  ],
+  "skipped": [
+    "TT-enforce-flip — correctly held: soak clock restarted 2026-06-05, re-probe due ~2026-06-12 (today is 2026-06-08). Not yet evidence-complete; respecting DECISIONS S173 ladder.",
+    "origin-migration-field-verdict — genuinely pending at 3/5 post samples; cannot be forced. Item #2 (field-win-auto-publish) builds the publishing machine so it lands the moment samples arrive.",
+    "geo-vitals non-US deepening — GB:3 samples; gated on organic non-US traffic, not agent-attemptable.",
+    "vaultsparked-proof.js delete + nav-sheet device swap — the two genuine founder yes/no items; evidence already assembled."
+  ],
+  "execution": {
+    "executionLog": [
+      { "slug": "uptime-publish-loop", "status": "shipped", "commit": "707f85f3", "note": "probe writes api/uptime.json + data/uptime-history.ndjson w/ 30d rollup; workflow commits low-churn; /status/ tile live; check-uptime-contract gate 7/7 in build:check. Also resolved the open UPTIME-PROBE-GREEN-CONFIRM carry (first scheduled run on new code went green 40s @ 2026-06-08T01:39Z)." },
+      { "slug": "uptime-alert-path-proof", "status": "shipped", "commit": "707f85f3", "note": "probe --simulate-failure proves the down->email path without paging founder (PASS); module made import-safe; self-test 14/14." },
+      { "slug": "field-win-auto-publish", "status": "shipped", "commit": "a783c7c6", "note": "build-field-win-proof.mjs -> api/field-win.json (confirmed verdicts only); /status/ 'Biggest measured win' tile auto-lights when origin-migration LCP verdict confirms; honest-dark now (0 confirmed). self-test 6/6." },
+      { "slug": "returning-visitor-digest", "status": "shipped", "commit": "7aefd598", "note": "assets/returning-visitor-digest.js momentum strip from Forge Ledger + localStorage baseline; idle via ambient-loader; offline Playwright proof 3/3." },
+      { "slug": "ambient-genome-strip-split", "status": "shipped", "commit": "c9f0703d", "note": "vault-genome-strip.js moved to predicate loading; feature bundle 28->27 sources; coverage + placement gates green; shell rotated + pages re-propagated." },
+      { "slug": "taskboard-archive-rotation", "status": "shipped", "commit": "29647407", "note": "rotate-taskboard.mjs archived sessions <176; TASK_BOARD 365KB->130KB (-63%); import-safe; --check-size drift advisory in build:check; self-test 7/7." }
+    ],
+    "summary": { "shipped": 6, "deferred": 0, "blocked": 0, "combinedPriority": 159.5, "gate": "npm run build:check exit 0 (108 pages, 0 failures)" }
+  }
+}

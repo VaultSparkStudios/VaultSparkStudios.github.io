@@ -1,8 +1,19 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-08 (Session 178)
+Last updated: 2026-06-08 (Session 179)
 
-Session Intent: Full goal-chain `/start → /audit → /implement → /closeout` with genius-level/creative execution, personalized to this project's lists/items/flags/blockers, + post-closeout impact score. **Outcome: Achieved — 6/6 fresh frontier audit items shipped (Priority 159.5), build:check exit 0 (108 pages, 0 failures), 3 new self-tests + an offline Playwright spec green. The audit deliberately skipped evidence-gated carries and opened new agent-attemptable work instead of re-listing blocked verifies.**
+Session Intent: Full goal-chain `/start → /audit → /implement → /closeout` with genius-level/creative execution; if cut off mid-work, analyze + continue. **Outcome: Achieved — not cut off (S178 closed clean), so ran the full loop. 4/4 fresh frontier audit items shipped (Priority 75.4), build:check exit 0 (108 pages, 0 failures), 2 new self-tested gates. Open carries were again all evidence-gated verifies, so the audit opened new agent-attemptable work.**
+
+## Where We Left Off (Session 179)
+- Shipped: 4 improvements across 4 groups — AI-discovery (`/agents.json` + spine gate), SEO (meta-description floor gate), a11y (nav `aria-current`), speed (ambient-split wave 2). Plus a build refresh.
+- Tests: build:check green end-to-end (108-page crawl · 0 status failures · 0 blocking-script findings) · 2 new self-tested gates (ai-discovery-spine 10/10, meta-desc 8/8).
+- Deploy: pending (committed to main; GitHub Pages auto-deploys on push — push happens in autopilot).
+- **The studio now ships `/agents.json`.** CANON-011's sitemap standard names it and `build-llms-full-shards.mjs` advertised the pairing, but it was never delivered. `build-agents-json.mjs` generates it from `ecosystem-state.json`; `check-ai-discovery-spine.mjs` (10-case self-test) keeps it consistent with llms.txt. Building the gate surfaced + fixed pre-existing phantom shards in llms.txt and a stale call-of-doodie URL — the AI spine is now honest end-to-end.
+- **Item 2 was honestly re-scoped.** The audit's "17 missing meta descriptions" came from a buggy `grep -Lq`; every indexable page already has one. The real, durable deliverable is the floor gate (hard-fail missing/empty) — and building it caught + fixed an apostrophe-truncation bug in my own parser.
+- **A11y + speed:** nav active link now announces `aria-current="page"` (was 0 occurrences) across 90 pages; 4 route-scoped widgets left the always-parsed feature bundle for predicate loading, dropping it 58.7KB→45.4KB (−23%) with byte-identical behavior.
+- Next session (S180): TT enforce re-probe now due (~06-12) · confirm field-win lights up + uptime publish committed a real history row · geo-vitals non-US · 2 SIL items (AI-spine wave2 discovery header, ambient wave3 + dead-widget sweep) · founder: vaultsparked-proof yes/no + nav-sheet device verify.
+
+<details><summary>Where We Left Off (Session 178)</summary>
 
 ## Where We Left Off (Session 178)
 - **The first-party uptime probe now publishes — it was measuring availability and throwing it away.** At /start the probe's first scheduled run on S177's two-signal code came back green (40s @ 01:39Z), but `api/uptime.json` was never committed and `/status/`'s "Uptime · History" tile had nothing to render. The probe now writes `api/uptime.json` (live + 30-day `rollup`) and appends `data/uptime-history.ndjson`; `uptime-probe.yml` commits them low-churn (only on a new hour / state-change / incident, `[skip ci]`); `/status/` shows a self-measured availability % + live incidents; `check-uptime-contract.mjs` (7/7) guards the contract. This closed the open green-confirm carry by making greenness legible.
@@ -12,6 +23,8 @@ Session Intent: Full goal-chain `/start → /audit → /implement → /closeout`
 - **Two efficiency wins:** `vault-genome-strip.js` left the always-loaded feature bundle for predicate loading (28→27 ambient sources, shell re-propagated), and `rotate-taskboard.mjs` shrank `TASK_BOARD.md` 365KB → 130KB (−63%) by archiving sessions older than the last 3 — every future read is cheaper.
 - Verification: `npm run build:check` exit 0 end-to-end (108 pages, 0 failures); new self-tests green (uptime-contract 7/7, field-win 6/6, rotate 7/7); digest spec 3/3.
 - Next session (S179): TT enforce re-probe now due (~06-12) · confirm `api/field-win.json` lights up + the uptime publish committed a real history row · geo-vitals non-US · founder: vaultsparked-proof yes/no + nav-sheet device verify.
+
+</details>
 
 ## Where We Left Off (Session 177)
 - **The "site is down" alarm was a false alarm — and the lesson is now canon.** S176's first-party uptime probe failed on its first cron run and emailed "5 routes failing." Live forensics (curl + `wrangler tail` + CF Pages API) proved `vaultsparkstudios.com` **HTML navigation is bot-challenged at the Cloudflare edge**: datacenter/CI/curl clients are intercepted *before the Worker* (hang/403); real residential browsers solve the JS clearance and get 200. The Pages origin serves 200, the Worker is alive (scanner + JSON requests reach it), deploy `171c7bd0` is healthy. **The site was up the whole time.** Captured in DECISIONS 2026-06-07 + agent memory so the next agent doesn't burn a session re-diagnosing it.

@@ -1,6 +1,13 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-08 (Session 178 — goal-chain: /start → /audit → /implement → /closeout · 6/6 fresh frontier audit; build:check green; TASK_BOARD rotated 365KB→130KB)
+Last updated: 2026-06-08 (Session 179 — goal-chain: /start → /audit → /implement → /closeout · 4/4 fresh frontier audit; build:check green; shipped /agents.json + AI-discovery spine gate)
+
+## Done (Session 179 — goal-chain: /start → /audit → /implement → /closeout · 4/4)
+
+- [x] **[S179][AI/P0] AGENTS-JSON-SPINE — DONE.** `/agents.json` (CANON-011) was never shipped though `build-llms-full-shards.mjs` advertised the pairing. New `build-agents-json.mjs` generates it from `ecosystem-state.json` (canonical surfaces, primary CTA, policies, automation disclosure, 13 public projects + citable shards); new `check-ai-discovery-spine.mjs` gate (10-case self-test) enforces agents.json ⨯ llms.txt shard-set equality + no dead internal URLs. Surfaced + fixed pre-existing phantom shards in llms.txt + stale call-of-doodie URL. robots.txt points agents at it. **DONE S179** (commit `f57c3853`)
+- [x] **[S179][SEO/P1] META-DESC-BACKFILL-GATE — DONE (re-scoped).** Audit's "17 missing pages" was a false premise (buggy `grep -Lq`) — every indexable page already has a description. Real deliverable = floor gate `check-meta-descriptions.mjs` (hard-fail missing/empty, advisory length, skips noindex/internal). Caught + fixed an apostrophe-truncation bug in its own parser; 8-case self-test; 86 pass / 0 errors. **DONE S179** (commit `910e4826`)
+- [x] **[S179][A11Y/P2] NAV-ARIA-CURRENT — DONE.** Nav active link marked with CSS `.active` only (`aria-current` = 0). `activeAttr()` helper in `propagate-nav.mjs` emits `aria-current="page"` + class together; re-propagated 90 pages. CSP/extraction/coherency green; dropdown styles byte-identical. **DONE S179** (commit `c0caf313`)
+- [x] **[S179][SPEED/P2] AMBIENT-SPLIT-WAVE2 — DONE.** 4 route-scoped widgets (social-dashboard-public→/social, security-posture→/security, feedback-decision-board→/feedback, rank-economy-simulator→/membership|/ranks) moved to `ambient-loader` predicate loading; predicate mirrors each mount guard so behavior is identical. Feature bundle 58.7KB→45.4KB (−23%). vault-atlas NOT split (sitewide Resources dropdown). Coverage/placement/sw-coherency green. **DONE S179** (commit `8710f830`)
 
 ## Done (Session 178 — goal-chain: /start → /audit → /implement → /closeout · 6/6)
 
@@ -11,13 +18,15 @@ Last updated: 2026-06-08 (Session 178 — goal-chain: /start → /audit → /imp
 - [x] **[S178][SPEED/P2] AMBIENT-GENOME-STRIP-SPLIT — DONE.** `vault-genome-strip.js` moved to predicate loading; feature bundle 28→27 sources; predicate mirrors skip rules; shell rotated + pages re-propagated; coverage + placement gates green. **DONE S178**
 - [x] **[S178][TOKEN/P3] TASKBOARD-ARCHIVE-ROTATION — DONE.** `rotate-taskboard.mjs` archived sessions <176 to `context/archive/TASK_BOARD_ARCHIVE.md` (nothing deleted); board 365KB→130KB (−63%); import-safe; session-window `--check-size` advisory in build:check. self-test 7/7. **DONE S178**
 
-## Now (Session 179 runway)
+## Now (Session 180 runway)
 
-- [ ] **[S179][SECURITY/P1] TT-ENFORCE-REPROBE.** Now due (~2026-06-12): `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
-- [ ] **[S179][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP.** `/` field verdict still PENDING (3/5 post samples; signal −83%). Once ≥5/side accrue, `api/field-win.json` flips `hasConfirmed:true` and the /status/ "Biggest measured win" tile auto-lights — confirm it renders, then celebrate or regress-hunt with `lib/perf-forensics.mjs`.
-- [ ] **[S179][OBS/P2] UPTIME-PUBLISH-VERIFY.** Confirm the first commit-worthy `uptime-probe.yml` run committed `api/uptime.json` + a history row (Actions tab / `git log --author=github-actions`), and that `/status/` shows a real availability %. First low-churn commit is the smoke test.
-- [ ] **[S179][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
-- [ ] **[S179][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
+- [ ] **[S180][SECURITY/P1] TT-ENFORCE-REPROBE.** Now due (~2026-06-12): `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
+- [ ] **[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP.** `/` field verdict still PENDING (≥5/side not yet accrued; signal −83%). Once it confirms, `api/field-win.json` flips `hasConfirmed:true` and the /status/ "Biggest measured win" tile auto-lights — confirm it renders, then celebrate or regress-hunt with `lib/perf-forensics.mjs`.
+- [ ] **[S180][OBS/P2] UPTIME-PUBLISH-VERIFY.** Confirm the first commit-worthy `uptime-probe.yml` run committed `api/uptime.json` + a history row (Actions tab / `git log --author=github-actions`), and that `/status/` shows a real availability %. First low-churn commit is the smoke test.
+- [ ] **[S180][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
+- [ ] **[S180][SIL] AI-DISCOVERY-SPINE-WAVE2.** Extend the spine: emit `agents.json` into the sitemap/`_headers` cache policy and add a `Link: rel="ai-manifest"` style header (or `<link>` discovery) so agents find `/agents.json` without guessing; consider an `llms-full.txt` "How to cite" line that references the manifest. First step: check whether GitHub Pages/Worker can set a discovery header for `/agents.json`.
+- [ ] **[S180][SIL] AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP.** vault-atlas binds the Resources dropdown sitewide (correctly ambient), but audit the remaining feature-bundle scripts (page-sigil, rate-page, intent-flight-director, ignis-answer-engine) for single-surface mounts; also investigate whether any feature widget's mount hook exists nowhere (true dead weight, removable). First step: map each remaining feature script's real DOM/path guard like S179 did.
+- [ ] **[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
 
 ## Done (Session 177 — goal-chain: /start → /audit → /implement → /closeout · 2/2)
 

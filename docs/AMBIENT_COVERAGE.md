@@ -8,9 +8,9 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **27**  ·  Total: **99.3 KB** (raw)
-- Guarded (conditional): **18** modules · **58.4 KB** — split candidates
-- Always-on: **9** modules · **40.9 KB**
+- Sources: **23**  ·  Total: **90.7 KB** (raw)
+- Guarded (conditional): **15** modules · **53.7 KB** — split candidates
+- Always-on: **8** modules · **37.0 KB**
 
 ## By size (split candidates flagged)
 
@@ -20,6 +20,7 @@
 | `rate-page.js` | 6.6 KB | always | — |
 | `intent-flight-director.js` | 5.5 KB | always | — |
 | `adaptive-speculation.js` | 5.2 KB | 🔶 guarded | — |
+| `ambient-loader.js` | 5.1 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
 | `ignis-lens.js` | 5.0 KB | always | — |
 | `breadcrumb-render.js` | 4.7 KB | always | — |
 | `signed-in-state.js` | 4.7 KB | 🔶 guarded | session gated |
@@ -28,20 +29,15 @@
 | `vault-atlas.js` | 4.4 KB | 🔶 guarded | — |
 | `page-sigil.js` | 4.4 KB | 🔶 guarded | — |
 | `scroll-depth.js` | 4.2 KB | 🔶 guarded | session gated |
-| `rank-economy-simulator.js` | 3.9 KB | always | — |
 | `edge-swipe-nav.js` | 3.8 KB | 🔶 guarded | capability gated |
-| `ambient-loader.js` | 3.7 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
 | `native-feel.js` | 3.3 KB | 🔶 guarded | viewport gated, capability gated |
 | `hover-prefetch.js` | 3.3 KB | 🔶 guarded | viewport gated, session gated, capability gated |
-| `feedback-decision-board.js` | 3.2 KB | 🔶 guarded | viewport gated |
 | `command-palette-loader.js` | 3.0 KB | always | — |
 | `pointerdown-warm.js` | 2.4 KB | 🔶 guarded | — |
 | `tt-default-policy.js` | 2.1 KB | 🔶 guarded | — |
 | `rum-beacon.js` | 2.1 KB | 🔶 guarded | — |
 | `account-chip-loader.js` | 2.0 KB | 🔶 guarded | session gated |
 | `founder-presence-handle.js` | 2.0 KB | 🔶 guarded | — |
-| `social-dashboard-public.js` | 1.6 KB | 🔶 guarded | element-presence gated |
-| `security-posture.js` | 1.3 KB | 🔶 guarded | element-presence gated |
 | `scroll-reveal.js` | 0.8 KB | always | — |
 
 ## Read

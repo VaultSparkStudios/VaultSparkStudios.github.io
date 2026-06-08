@@ -2,6 +2,18 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-08 — S179 — Ship `/agents.json` as the AI-discovery spine, kept honest by a consistency gate
+
+**Decision:** Deliver `/agents.json` (CANON-011 sitemap standard) as the canonical AI-agent discovery manifest, generated from `ecosystem-state.json` by `build-agents-json.mjs` and held consistent with `.well-known/llms.txt` by `check-ai-discovery-spine.mjs`. The manifest lists canonical machine-readable surfaces (sitemap, llms.txt, llms-full, entity-graph), the primary CTA (`/membership/`), policies, automation disclosure, and the public project list with citable shard URLs.
+
+**Rationale:** `build-llms-full-shards.mjs` already advertised the pairing with `/agents.json`, but it was never delivered — the AI spine was half-built. Pairing the manifest with the existing llms surfaces makes the site maximally LLM-citable, consistent with the studio's existing posture (llms.txt already ships; robots.txt blocks *training* crawlers but the manifest serves *citation* accuracy, the same role llms.txt plays). Public-safe: contact uses the public `studio@` address, never a personal email.
+
+**Integrity guard (why a gate, not just a generator):** the spine can silently drift as projects flip status. The gate enforces agents.json ⨯ llms.txt shard-set equality and no dead internal URLs. Building it immediately surfaced pre-existing **phantom shards** — `llms.txt` advertised `/projects/{concurrent,ouren,sparkraid}/llms-full.txt` for pure-forge projects that have no page and no shard — plus a stale `call-of-doodie` URL. Both generators now advertise only resolvable URLs, so the AI spine is honest end-to-end.
+
+### 2026-06-08 — S179 — Ambient feature scripts are split by proven single-surface mount, never by guess
+
+**Decision:** A feature-bundle script is moved to `ambient-loader` predicate loading only when its real mount guard is proven single-surface (≤2 routes), and the predicate must mirror that guard exactly (pathname OR explicit data-hook) so behavior is identical. A script whose mount cannot be bounded stays in the bundle (e.g. vault-atlas, which binds the sitewide Resources dropdown). Wave 2 split social-dashboard-public, security-posture, feedback-decision-board, rank-economy-simulator (feature bundle −23%). Mirrors the S178 genome-strip split; honors "no forced split on a 999 site."
+
 ### 2026-06-07 — S177 — Production HTML nav is bot-challenged at the CF edge; a datacenter 403/hang is NOT an outage
 
 **Diagnosis:** S176's first-party uptime probe failed on its first and only cron run and emailed the founder "5 routes failing." It was a false alarm. Live forensics (curl + `wrangler tail` + the Cloudflare Pages API) proved: the Pages origin (`vaultsparkstudios-website.pages.dev`) serves every route 200; the security Worker is alive (scanner-UA and JSON requests reach it and return 403/200 respectively); but a browser-UA `Accept: text/html` request from a datacenter IP **never reaches the Worker** — it is intercepted at the Cloudflare edge by a bot/managed challenge. Real residential browsers solve the JS clearance transparently; curl/headless/GitHub-Actions cannot, so they hang or 403. **The site was up for real users the whole time.**

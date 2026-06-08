@@ -9,15 +9,42 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 998.3 | 5: 997.4 | 10: 994.5 | 25: 982 | all: 963 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 99.3 | Momentum 100.0 | Engage 99.0 | Process 100.0
-Velocity trend: ↑ (S178: 6/6 — wide fresh frontier audit; S177 was a focused 2/2)  |  Protocol velocity: ↑ (import-safety class fixed + logged; honest-dark publishing canon) |  Debt: → (field verdict + TT re-probe are pending data, not work)
-Momentum runway: ~4 sessions (field-win lights-up readout · uptime-publish verify · TT re-probe 06-12 due · geo confirmation)  |  Intent rate: 100% (last 5)
-Last session: 2026-06-08 | Session 178 | Total: 999/1000 (v3.0) | Velocity: 6 | protocolVelocity: 2
+Avgs - 3: 998.7 | 5: 998.0 | 10: 995.1 | 25: 982.7 | all: 963 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.0 | Process 100.0
+Velocity trend: → (S179: 4/4 fresh frontier audit; S178 6/6, S177 2/2 — averaging ~4)  |  Protocol velocity: ↑ (shipped /agents.json CANON-011 spine + spine-consistency gate; ambient-split-by-proven-mount canon) |  Debt: → (field verdict + TT re-probe are pending data, not work)
+Momentum runway: ~4 sessions (most Now items are evidence-gated verifies — TT re-probe 06-12 due · field-win lights-up · uptime-publish verify · geo — not work)  |  Intent rate: 100% (last 5)
+Last session: 2026-06-08 | Session 179 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-08 — Session 179 (/start → /audit → /implement → /closeout · 4/4 fresh frontier audit: /agents.json AI-discovery spine + meta-description floor gate + nav aria-current + ambient-split wave 2) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: →
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 100 | `npm run build:check` exit 0 end-to-end (108-page crawl, 0 failures, 0 blocking-script findings); 2 new gates self-test green (ai-discovery-spine 10/10, meta-desc 8/8). |
+| Creative Alignment | 100 | Respected live canon hard: culled the hero-CTA-split because the single-CTA hero is a logged S123 prove-first decision; delivered CANON-011's long-named `/agents.json`. Re-scoped item 2 honestly when its premise proved false rather than inventing busywork. |
+| Momentum | 100 | 4/4 shipped, no partials; each item names a conversion/info-finding outcome; opened 2 SIL follow-ups (AI-spine discovery header, ambient wave 3 + dead-widget sweep). |
+| Engagement | 99 | `/agents.json` + `aria-current` improve AI + assistive discovery now; the meta-description floor gate is preventive (value latent until it stops a future regression). |
+| Process Quality | 100 | Caught + fixed two of my own bugs (apostrophe-truncation in the meta-desc parser; the spine gate surfaced pre-existing phantom shards + a stale URL I then fixed). Verified the Explore subagent's claims before acting — culled 4 false/conflicting ideas. Both new generators import-safe. |
+| Cross-Repo Coherence | 100 | Website repo only; no sibling writes or Ark bypasses. |
+| Security Posture | 100 | `/agents.json` is public-safe (studio@ contact, never a personal email); robots.txt AI-training blocks + `/.well-known/` disallow respected; CSP audit clean (119 files, 0 issues); no secrets in prompts. |
+| Ecosystem Integration | 100 | `/agents.json` + the spine-consistency gate is a reusable CANON-011 exemplar the fleet can adopt; ambient-split-by-proven-mount is a portable pattern. |
+| Capital Efficiency | 100 | Entirely free-tier/cost-neutral; speed win (feature bundle −23% parse on every cold load). |
+| Automation Coverage | 100 | 2 new self-tested gates wired into build:check; `agents.json` regenerates in `npm run build`; the spine can no longer silently drift. |
+
+**Top win:** Shipped `/agents.json` — the canonical AI-discovery manifest CANON-011 named but no one had delivered — and the gate that keeps it honest immediately paid for itself by surfacing pre-existing phantom shards in llms.txt.
+**Top gap:** Item 2's audit premise was wrong (a buggy grep); a tighter audit-time verification would have scoped it as "gate only" from the start instead of discovering it mid-implement.
+**Intent outcome:** Achieved — not cut off (S178 closed clean); ran the full /start→/audit→/implement→/closeout loop, 4/4 shipped, build:check green.
+
+**Brainstorm**
+1. Add a discovery header/`<link>` for `/agents.json` (so agents find it without guessing) + a cite-line in llms.txt referencing the manifest. → check GitHub Pages/Worker header support. Probability: High.
+2. Ambient-split wave 3 + dead-widget sweep — map remaining feature-bundle scripts' real guards; flag any whose mount hook exists nowhere as removable dead weight. → repeat the S179 guard-mapping. Probability: High.
+3. A build:check "ideal length" pass that trims the 10 over-long meta descriptions (201-258 chars) to Google's ~155 truncation point — real SERP-snippet win, but touches marketing copy. → measure truncation impact first. Probability: Medium.
+4. Promote `/agents.json` into the studio website scaffold catalog so every public project ships one. → Ark cargo to studio-ops. Probability: Medium.
+
+**Committed to TASK_BOARD:** [SIL] AI-DISCOVERY-SPINE-WAVE2 (discovery header) · [SIL] AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP
 
 ## 2026-06-08 — Session 178 (/start → /audit → /implement → /closeout · 6/6 fresh frontier audit: uptime publish-loop + field-win auto-publish + returning-visitor digest + ambient split + taskboard rotation) | Total: 999/1000 (v3.0) | Velocity: 6 | Debt: →
 

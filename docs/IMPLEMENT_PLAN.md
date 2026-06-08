@@ -1,16 +1,15 @@
 <!-- generated-by: /implement skill v1.0 -->
-<!-- generated-at: 2026-06-07 · audit: docs/AUDIT_2026-06-07.json -->
+<!-- generated-at: 2026-06-08 · Session 179 · audit: docs/AUDIT_2026-06-08.json (4 items) -->
 
-# Implement Plan — Session 176
+# Implement Plan — Session 179
 
-Sequenced for optimal efficiency (Priority/hour), not raw priority.
+Sequenced for optimal Priority-per-hour (not raw descending Priority).
 
-| Wave | Items | Rationale |
-|---|---|---|
-| 1 | now-playing-orphan-kill → placeholder-sentinel-gate | Founder-visible bug first; the structural gate ships while the bug class is in context (fix + prevention in one batch) |
-| 2 | field-verdict-refresh-readout | 30m data readout; informs whether Wave 3 edge work has a regression to chase |
-| 3 | worker-stale-on-5xx → preload-prune | Same edge surface, single `wrangler deploy --env production` + one `_headers` regen batch |
-| 4 | tt-sink-burndown-wave2 | Biggest single item (2h); six named sinks, one shell-bundle rebuild |
-| 5 | uptime-probe-firstparty → rum-pull-conflict-guard → sil-integrity-clamp | Process/observability tail; Ark reply closes the studio-ops loop |
+| Order | Slug | Tier | Axis | Effort | Why this slot |
+|---|---|---|---|---|---|
+| 1 | **agents-json-spine** | 🔥 | AI/SEO | 3h | Highest priority; foundational AI-discovery spine; new generator + contract gate. Ship first for momentum. |
+| 2 | **meta-desc-backfill-gate** | 🔥 | SEO/UX | 2h | Adjacent surface to #1 (another `check-*.mjs` gate + build:check wiring) → context reuse. |
+| 3 | **nav-aria-current** | ⚡ | UX/A11y | 1h | Touches `propagate-nav.mjs` + sitewide re-propagation; run propagation once after this. |
+| 4 | **ambient-split-wave2** | ⚡ | Speed | 2h | Conditional/riskiest; isolated to ambient build + loader; verify-then-split, last. |
 
-Skipped (evidence/founder-gated): tt-enforce-flip (soak to 06-12) · nav-sheet-default-swap (founder device verify) · vaultsparked-proof-delete (founder yes/no pending).
+**Quality gates (per item):** website success bar — page changes hold Lighthouse mobile ≥90; new gates ship with `--self-test`; `npm run build:check` green end-to-end before closeout.

@@ -1,5 +1,18 @@
 # Work Log
 
+## 2026-06-08 — Session 179 (goal-chain: /agents.json AI-discovery spine + meta-description floor gate + nav aria-current + ambient-split wave 2)
+
+- Founder durable `/goal`: `/start → /audit → /implement → /closeout`, genius-level/creative, post-closeout impact score; analyze + continue if cut off. Repo was clean (last commit = S178 closeout) → not cut off → ran the full loop.
+- `/start`: session lock written, mode detector (FOUNDER heuristic, this-project scope), context-meter CONTINUE (1% used), startup brief rendered + validated (SIL 999, signals green except runway ⚠). Genius list dominated by evidence-gated `[VERIFY]` carries (TT reprobe ~06-12, field-win/uptime publish verifies) — none actionable now.
+- `/audit`: confirmed the gates are genuinely pending (uptime.json not yet committed by the workflow, field-win 0 confirmed, TT not due). Surveyed the site (Explore subagent) then verified every claim — culling 4 ideas that conflicted with canon or were already done (hero-CTA-split vs S123 prove-first; breadcrumbs already complete; FAQPage already present; rum-beacon defer would break measurement). Wrote `docs/AUDIT_2026-06-08.{json,md}` — 4 fresh items, Priority 75.4.
+- `/implement` (optimal order):
+  - **agents-json-spine**: `build-agents-json.mjs` → `/agents.json` from `ecosystem-state.json` (canonical surfaces, CTA, policies, automation disclosure, 13 public projects + citable shards); `check-ai-discovery-spine.mjs` gate (10-case self-test) enforces agents.json ⨯ llms.txt shard-set equality + no dead internal URLs. The gate caught 4 real dead links → fixed by making both generators advertise only resolvable URLs (also removed pre-existing phantom shards from llms.txt's index). robots.txt points agents at the manifest. Wired into build + build:check. Commit `f57c3853`.
+  - **meta-desc-backfill-gate**: re-scoped — the audit's "17 missing pages" was a buggy-grep artifact; every indexable page already has a description. Shipped the floor gate `check-meta-descriptions.mjs` (hard-fail missing/empty, advisory length, skips noindex/internal). Caught + fixed an apostrophe-truncation bug in the gate's own parser (`[^"']*` stopped at `VaultSpark's`); 8-case self-test. Commit `910e4826`.
+  - **nav-aria-current**: `activeAttr()` helper in `propagate-nav.mjs` emits `aria-current="page"` with the active class; re-propagated 90 pages; extract-inline-styles ran clean (252 classes, no vsx wipe — the post-hook failure was a Windows spawn quirk). Commit `c0caf313`.
+  - **ambient-split-wave2**: proved 4 feature-bundle widgets are single-surface (their mount hooks exist in no page/injector; they self-mount by pathname), moved them to `ambient-loader` predicate loading. Feature bundle 58.7KB→45.4KB (−23%). vault-atlas left in (sitewide Resources dropdown). Commit `8710f830`.
+- Verification: `npm run build:check` exit 0 end-to-end (108 pages, 0 failures, 0 blocking-script findings); 2 new self-tested gates green; build refresh committed (`f7309c23`).
+- `/closeout`: full write-back; SIL 999/1000 (v3.0); intent Achieved.
+
 ## 2026-06-07 — Session 177 (goal-chain: uptime-probe false-alarm root-cause + real-availability rewrite + Worker origin-hang hardening)
 
 - Founder durable `/goal`: `/start → /audit → /implement → /closeout`, genius-level/creative, post-closeout impact score; analyze where a prior pass left off if cut off. Repo was clean (last commit = S176 closeout) → not cut off → ran the full loop.
