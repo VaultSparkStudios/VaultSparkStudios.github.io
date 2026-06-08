@@ -7,8 +7,8 @@
   "projectName": "VaultSpark Studios Website",
   "type": "public-live website",
   "topline": {
-    "totalItems": 22,
-    "combinedPriority": 390.2,
+    "totalItems": 23,
+    "combinedPriority": 407.7,
     "top3": ["feedback-loop-closure", "anon-ignis-trial", "worker-auto-rollback"],
     "theme": "Two frontiers. (1) Reliability: today's full outage proved ~100 content/SEO gates were structurally blind to live availability — harden the edge deploy path so a bad Worker auto-recovers and is tested before it can hang prod. (2) Funnel: the site has a spectacular paid-member economy (ranks, points, streaks, IGNIS, Oracle) bolted to a beautiful anonymous brochure, with almost nothing bridging them — extend each member mechanic one step earlier into the anonymous funnel where conversion actually happens."
   },
@@ -101,7 +101,11 @@
     { "rank": 22, "slug": "brand-png-cleanup", "tier": "nice", "axis": "performance", "effort": "1h", "impact": 5, "innovation": 2, "priority": 6.3,
       "summary": "4 brand PNGs (~7 MB; 1.78-1.87 MB each) in assets/brand/ are referenced by zero HTML pages — unserved binary in the deployed artifact and git history.",
       "why": "Repo + artifact weight with no consumer; needs a quick founder check on whether they're /brand/ downloadables.",
-      "recipe": "Confirm intent: if /brand/ downloadables, convert to WebP/AVIF + keep one hi-res; else remove. Evidence: logo-cinematic-dark.png, logo-primary-white.png, logo-primary-black.png (0 HTML refs)." }
+      "recipe": "Confirm intent: if /brand/ downloadables, convert to WebP/AVIF + keep one hi-res; else remove. Evidence: logo-cinematic-dark.png, logo-primary-white.png, logo-primary-black.png (0 HTML refs)." },
+    { "rank": 23, "slug": "nondeterministic-check-gates", "tier": "high", "axis": "reliability", "effort": "2h", "impact": 7, "innovation": 5, "priority": 17.5,
+      "summary": "build:check cannot go green locally: at least one --check gate (build-ignis-search-index) reports 'stale' IMMEDIATELY after npm run build regenerated it, because the generator embeds non-deterministic data (timestamp/live state). sanitize-public-oracle-feed drifts the same way. (By priority this sits ~#12; added late after direct verification.)",
+      "why": "A build gate that is randomly red trains the team to ignore build:check — which is part of why a real availability failure's signal was missed despite ~100 gates. An unreliable green/red signal is worse than fewer gates.",
+      "recipe": "Make the generators deterministic in --check mode (strip/round timestamps, sort keys, freeze live-data inputs) OR split data-refresh artifacts out of the drift-checked set so only stable artifacts gate. Verify: run npm run build then build:check twice with no commit between — must stay green. Evidence: build-ignis-search-index --check stale post-build; sanitize-public-oracle-feed.mjs drift." }
   ],
   "innovationReserve": ["feedback-loop-closure", "anon-ignis-trial", "pre-signup-rank-climb", "cross-session-visit-memory", "pre-account-daily-streak"],
   "skipped": [
