@@ -60,6 +60,44 @@
         catch (_) { return false; }
       },
       idle: true
+    },
+    {
+      // S179 ambient-split wave 2 — route-scoped widgets that self-mount on a
+      // single surface. Each predicate mirrors the script's own mount guard, so
+      // behavior is identical; they just no longer parse on the ~95% of pages
+      // where they would bail. Also honor an explicit data-hook if a page ever
+      // places one off-route (preserves the scripts' second mount path).
+      src: '/assets/social-dashboard-public.js',
+      when: function () {
+        return (location.pathname || '/').indexOf('/social') === 0 ||
+          !!document.querySelector('[data-social-dashboard-public]');
+      },
+      idle: true
+    },
+    {
+      src: '/assets/security-posture.js',
+      when: function () {
+        return (location.pathname || '/').indexOf('/security') === 0 ||
+          !!document.querySelector('[data-security-posture]');
+      },
+      idle: true
+    },
+    {
+      src: '/assets/feedback-decision-board.js',
+      when: function () {
+        return (location.pathname || '/').indexOf('/feedback') === 0 ||
+          !!document.querySelector('[data-feedback-decision-board]');
+      },
+      idle: true
+    },
+    {
+      src: '/assets/rank-economy-simulator.js',
+      when: function () {
+        var p = location.pathname || '/';
+        return p.indexOf('/membership') === 0 || p.indexOf('/ranks') === 0 ||
+          !!document.querySelector('[data-rank-economy]');
+      },
+      idle: true
     }
   ];
 

@@ -68,10 +68,11 @@ const AMBIENT_FEATURE_SOURCES = [
   'assets/ignis-lens.js',
   'assets/intent-flight-director.js',
   'assets/ignis-answer-engine.js',
-  'assets/feedback-decision-board.js',
-  'assets/social-dashboard-public.js',
-  'assets/rank-economy-simulator.js',
-  'assets/security-posture.js',
+  // feedback-decision-board / social-dashboard-public / rank-economy-simulator /
+  // security-posture moved to predicate loading (assets/ambient-loader.js) — S179
+  // ambient-split wave 2. Each self-mounts only on its own route (/feedback,
+  // /social, /membership|/ranks, /security), so it parsed on every cold load just
+  // to bail. The predicate mirrors each script's exact mount condition.
   'assets/founder-presence-handle.js',
   'assets/vault-rank-bar.js',   // ambient rank progress bar for signed-in members
 ];
