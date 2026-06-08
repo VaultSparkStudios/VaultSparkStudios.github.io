@@ -29,10 +29,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
+      # package-lock.json is gitignored in this repo, so `npm ci` / npm cache are
+      # unavailable. `npm install` resolves wrangler from package.json devDeps.
       - name: Install deps (pins wrangler via package.json)
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       # Single source of truth: `npm run deploy` == the same command developers
       # run locally (`wrangler deploy --env production --config cloudflare/...`).
