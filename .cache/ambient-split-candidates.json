@@ -1,24 +1,15 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T06:32:24.309Z",
+  "generatedAt": "2026-06-08T17:59:17.252Z",
   "generatedBy": "scripts/report-ambient-coverage.mjs",
-  "totalSources": 23,
-  "totalBytes": 92890,
+  "totalSources": 21,
+  "totalBytes": 83513,
   "forbiddenAmbientSourcesPresent": [],
   "candidates": [
     {
       "rank": 1,
-      "source": "assets/adaptive-speculation.js",
-      "sizeKb": 5.2,
-      "reasons": [],
-      "forbiddenAmbient": false,
-      "risk": "low",
-      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/adaptive-speculation.js behind a conditional loader."
-    },
-    {
-      "rank": 2,
       "source": "assets/ambient-loader.js",
-      "sizeKb": 5.1,
+      "sizeKb": 5.9,
       "reasons": [
         "query-param gated",
         "viewport gated",
@@ -27,6 +18,15 @@
       "forbiddenAmbient": false,
       "risk": "low",
       "firstProofStep": "Run npx playwright test with desktop and mobile viewports, then verify assets/ambient-loader.js only loads where its viewport condition is true."
+    },
+    {
+      "rank": 2,
+      "source": "assets/adaptive-speculation.js",
+      "sizeKb": 5.2,
+      "reasons": [],
+      "forbiddenAmbient": false,
+      "risk": "low",
+      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/adaptive-speculation.js behind a conditional loader."
     },
     {
       "rank": 3,

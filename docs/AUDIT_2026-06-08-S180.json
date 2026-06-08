@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-06-08",
+  "session": 180,
+  "project": "vaultsparkstudios-website",
+  "projectName": "VaultSparkStudios.github.io",
+  "type": "website",
+  "topline": {
+    "totalItems": 2,
+    "combinedPriority": 47.7,
+    "top3": ["ai-manifest-discovery-header", "ambient-split-wave3"],
+    "axisWeights": { "ux": 2.5, "speed": 2, "featureDepth": 1.5 },
+    "note": "Session 179 shipped the missing /agents.json spine and a 23% ambient feature-bundle reduction. Session 180 therefore targets the next frontier, not a redesign: make the AI manifest discoverable without guessing, and keep subtracting route-only JavaScript from the universal cold path. Both items name an info-finding or conversion outcome and wait on no founder action."
+  },
+  "founderEvidence": "Current TASK_BOARD Now items are mostly evidence-gated verifies: TT re-probe, field-win confirmation, uptime-publish verification, geo-vitals watch, plus two SIL items: AI-DISCOVERY-SPINE-WAVE2 and AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP. Code read showed /agents.json exists but _headers exposed only style/core preloads, so agents still had to know the manifest path or find robots.txt. Ambient read showed intent-flight-director.js only runs on six exact routes and ignis-answer-engine.js only mounts on [data-ask-ignis] or /search|/oracle, yet both still lived in the always-parsed feature bundle.",
+  "items": [
+    {
+      "rank": 1,
+      "slug": "ai-manifest-discovery-header",
+      "tier": "fire",
+      "axis": "AI/SEO/FeatureDepth",
+      "effort": "45m",
+      "impact": 8,
+      "innovation": 7,
+      "priority": 24.9,
+      "summary": "The new /agents.json is correct, but discovery still depends on a crawler guessing the URL or reading robots.txt. Generated HTTP Link discovery makes the AI-agent manifest a first-class public surface.",
+      "why": "Info-finding outcome: agentic crawlers can discover the studio manifest from the first response headers and then move to sitemap, llms.txt, shards, policy, and project entries without guesswork. The durable win is structural: the AI-spine gate now fails if the generated header disappears, so the manifest cannot quietly become dark matter again.",
+      "recipe": "Add a generated _headers Link entry for /agents.json with rel=alternate and application/json type; add discovery.manifest to agents.json; extend check-ai-discovery-spine.mjs self-test and live validation to require the header. Rebuild agents.json, _headers, shell references, then run the AI-spine gates."
+    },
+    {
+      "rank": 2,
+      "slug": "ambient-split-wave3",
+      "tier": "high",
+      "axis": "Speed/UX",
+      "effort": "1h",
+      "impact": 7,
+      "innovation": 5,
+      "priority": 22.8,
+      "summary": "Two remaining feature-bundle scripts are route-scoped but still parse on every public page: the pathfinder and static Ask IGNIS retrieval engine. They are useful conversion and info-finding surfaces, but only on the routes where they can mount.",
+      "why": "Speed outcome: every cold visitor pays less JavaScript parse cost before interaction while the pathfinder and Ask IGNIS still load where they create user value. Conversion/info-finding outcome: the membership, games, universe, pulse, oracle, search, and explicit Ask IGNIS surfaces keep their intended guidance without making legal, brand, journal, or project pages parse irrelevant engines.",
+      "recipe": "Move intent-flight-director.js and ignis-answer-engine.js out of AMBIENT_FEATURE_SOURCES. Add ambient-loader predicates that mirror each script's exact route/hook guard, rebuild ambient bundles and hashed shell assets, then run ambient coverage, placement, bundle drift, and shell coherency gates."
+    }
+  ],
+  "innovationReserve": ["ai-manifest-discovery-header"],
+  "skipped": [
+    "TT enforce flip — skipped because the soak re-probe is due around 2026-06-12 and must be evidence-led.",
+    "field-win celebration tile — skipped because api/field-win.json is intentionally honest-dark until >=5 post-deploy samples confirm.",
+    "vaultsparked-proof.js deletion — skipped because the TASK_BOARD carries an explicit founder yes/no despite evidence being complete."
+  ],
+  "executionLog": [
+    {
+      "slug": "ai-manifest-discovery-header",
+      "result": "SHIPPED",
+      "evidence": "agents.json now declares discovery.manifest; generated _headers has Link: </agents.json>; rel=alternate; type=\"application/json\"; check-ai-discovery-spine --self-test and live gate passed."
+    },
+    {
+      "slug": "ambient-split-wave3",
+      "result": "SHIPPED",
+      "evidence": "intent-flight-director.js and ignis-answer-engine.js moved to ambient-loader predicates; ambient-feature bundle 45.4KB -> 35.2KB; report-ambient-coverage, check-ambient-placement, build-ambient-bundle --check, and check-sw-shell-coherency passed."
+    }
+  ]
+}

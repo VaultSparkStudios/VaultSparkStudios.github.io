@@ -1,6 +1,11 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-08 (Session 179 — goal-chain: /start → /audit → /implement → /closeout · 4/4 fresh frontier audit; build:check green; shipped /agents.json + AI-discovery spine gate)
+Last updated: 2026-06-08 (Session 180 — continuation goal-chain: /start → /audit → /implement → /closeout · 2/2 focused frontier audit; build:check green; shipped AI manifest discovery header + ambient split wave 3)
+
+## Done (Session 180 — continuation goal-chain: /start → /audit → /implement → /closeout · 2/2)
+
+- [x] **[S180][AI/P1] AI-MANIFEST-DISCOVERY-HEADER — DONE.** S179 shipped `/agents.json`, but agents still had to guess the URL or read robots.txt. `build-agents-json.mjs` now declares `discovery.manifest`; generated `_headers` now exposes `Link: </agents.json>; rel=alternate; type="application/json"`; `check-ai-discovery-spine.mjs` self-test + live gate now enforce the header. **DONE S180** (`npm run build:check` green)
+- [x] **[S180][SPEED/P2] AMBIENT-SPLIT-WAVE3 — DONE.** `intent-flight-director.js` (six exact info-finding routes) and `ignis-answer-engine.js` (`[data-ask-ignis]` + `/search|/oracle`) moved from the always-parsed feature bundle into predicate loading. Feature bundle 45.4KB→35.2KB while conversion/info-finding surfaces keep their behavior. Coverage, placement, shell coherency, and full build:check green. **DONE S180**
 
 ## Done (Session 179 — goal-chain: /start → /audit → /implement → /closeout · 4/4)
 
@@ -24,8 +29,8 @@ Last updated: 2026-06-08 (Session 179 — goal-chain: /start → /audit → /imp
 - [ ] **[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP.** `/` field verdict still PENDING (≥5/side not yet accrued; signal −83%). Once it confirms, `api/field-win.json` flips `hasConfirmed:true` and the /status/ "Biggest measured win" tile auto-lights — confirm it renders, then celebrate or regress-hunt with `lib/perf-forensics.mjs`.
 - [ ] **[S180][OBS/P2] UPTIME-PUBLISH-VERIFY.** Confirm the first commit-worthy `uptime-probe.yml` run committed `api/uptime.json` + a history row (Actions tab / `git log --author=github-actions`), and that `/status/` shows a real availability %. First low-churn commit is the smoke test.
 - [ ] **[S180][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
-- [ ] **[S180][SIL] AI-DISCOVERY-SPINE-WAVE2.** Extend the spine: emit `agents.json` into the sitemap/`_headers` cache policy and add a `Link: rel="ai-manifest"` style header (or `<link>` discovery) so agents find `/agents.json` without guessing; consider an `llms-full.txt` "How to cite" line that references the manifest. First step: check whether GitHub Pages/Worker can set a discovery header for `/agents.json`.
-- [ ] **[S180][SIL] AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP.** vault-atlas binds the Resources dropdown sitewide (correctly ambient), but audit the remaining feature-bundle scripts (page-sigil, rate-page, intent-flight-director, ignis-answer-engine) for single-surface mounts; also investigate whether any feature widget's mount hook exists nowhere (true dead weight, removable). First step: map each remaining feature script's real DOM/path guard like S179 did.
+- [x] **[S180][SIL] AI-DISCOVERY-SPINE-WAVE2 — DONE.** Header discovery shipped via generated `_headers` (`rel=alternate`, `application/json`) and is now enforced by `check-ai-discovery-spine.mjs`. Follow-up deferred: optional HTML `<link>` discovery if we want belt-and-suspenders.
+- [x] **[S180][SIL] AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP — DONE (wave scoped).** Mapped remaining feature scripts by real route/hook guard; split two proven route/hook-scoped engines. vault-atlas, rank-orb, rate-page, founder-presence-handle, page-sigil, vault-rank-bar, and ignis-lens remain ambient because their guards are sitewide/session/pathway-level rather than single-surface. Follow-up: the coverage report still lists 7 candidates for future proof-driven passes.
 - [ ] **[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
 
 ## Done (Session 177 — goal-chain: /start → /audit → /implement → /closeout · 2/2)

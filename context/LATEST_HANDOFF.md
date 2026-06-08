@@ -1,8 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-08 (Session 179)
+Last updated: 2026-06-08 (Session 180)
 
-Session Intent: Full goal-chain `/start → /audit → /implement → /closeout` with genius-level/creative execution; if cut off mid-work, analyze + continue. **Outcome: Achieved — not cut off (S178 closed clean), so ran the full loop. 4/4 fresh frontier audit items shipped (Priority 75.4), build:check exit 0 (108 pages, 0 failures), 2 new self-tested gates. Open carries were again all evidence-gated verifies, so the audit opened new agent-attemptable work.**
+Session Intent: Continue active durable goal-chain `/start → /audit → /implement → /closeout` with genius-level/creative execution, personalized to this site's current flags/blockers. **Outcome: Achieved for Session 180 — 2/2 focused frontier audit items shipped (Priority 47.7), `npm run build:check` exit 0 (108 pages, 0 failures), AI manifest discovery and ambient split wave 3 landed.**
+
+## Where We Left Off (Session 180)
+- Shipped: 2 focused improvements — AI manifest discovery header + ambient-split wave 3.
+- Tests: focused gates passed (`check-ai-discovery-spine --self-test`, `check-ai-discovery-spine`, ambient coverage, ambient placement, bundle drift, SW coherency), then `npm run build:check` passed end-to-end (108-page crawl · 0 status failures · 0 blocking-script findings).
+- **AI discovery is now push-based.** `/agents.json` already existed from S179; S180 made it discoverable from generated response headers (`Link: </agents.json>; rel=alternate; type="application/json"`) and added a gate so that header cannot disappear without failing the AI-spine check.
+- **Cold JS got smaller again.** `intent-flight-director.js` and `ignis-answer-engine.js` now load only on their real routes/hooks through `ambient-loader`; the feature bundle dropped 45.4KB→35.2KB. Conversion/info-finding routes keep the pathfinder and static Ask IGNIS behavior; other pages stop parsing them.
+- Honest notes: `api/field-win.json` is still honest-dark with 0 confirmed wins; RUM has 35 samples and `/` needs 40 more before strict field quoting. TT enforce still waits on the evidence-led re-probe around 2026-06-12. Founder yes/no items remain: `assets/vaultsparked-proof.js` delete and nav-sheet real-device verification.
+- Next session: TT re-probe · field-win/geo-vitals evidence confirmation · uptime low-churn commit verification · optional HTML `<link>` manifest discovery · proof-driven ambient candidate pass if the remaining 7 candidates can be tied to route/hook evidence.
+
+<details><summary>Where We Left Off (Session 179)</summary>
 
 ## Where We Left Off (Session 179)
 - Shipped: 4 improvements across 4 groups — AI-discovery (`/agents.json` + spine gate), SEO (meta-description floor gate), a11y (nav `aria-current`), speed (ambient-split wave 2). Plus a build refresh.
@@ -12,6 +22,8 @@ Session Intent: Full goal-chain `/start → /audit → /implement → /closeout`
 - **Item 2 was honestly re-scoped.** The audit's "17 missing meta descriptions" came from a buggy `grep -Lq`; every indexable page already has one. The real, durable deliverable is the floor gate (hard-fail missing/empty) — and building it caught + fixed an apostrophe-truncation bug in my own parser.
 - **A11y + speed:** nav active link now announces `aria-current="page"` (was 0 occurrences) across 90 pages; 4 route-scoped widgets left the always-parsed feature bundle for predicate loading, dropping it 58.7KB→45.4KB (−23%) with byte-identical behavior.
 - Next session (S180): TT enforce re-probe now due (~06-12) · confirm field-win lights up + uptime publish committed a real history row · geo-vitals non-US · 2 SIL items (AI-spine wave2 discovery header, ambient wave3 + dead-widget sweep) · founder: vaultsparked-proof yes/no + nav-sheet device verify.
+
+</details>
 
 <details><summary>Where We Left Off (Session 178)</summary>
 

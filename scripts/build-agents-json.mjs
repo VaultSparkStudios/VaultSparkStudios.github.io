@@ -83,6 +83,7 @@ export function buildManifest(state) {
       accessibility: `${SITE}/accessibility/`,
     },
     discovery: {
+      manifest: `${SITE}/agents.json`,
       sitemap: `${SITE}/sitemap.xml`,
       robots: `${SITE}/robots.txt`,
       llmsTxt: `${SITE}/.well-known/llms.txt`,

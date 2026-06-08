@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T06:29:54.780Z",
+  "generatedAt": "2026-06-08T17:58:12.518Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,21 +22,23 @@
     }
   },
   "pulse": {
-    "currentSession": 178,
+    "currentSession": 180,
     "lastUpdated": "2026-06-08",
-    "currentFocus": "First-party uptime + deploy field-wins now self-publish to /status/ (honest-dark while pending); returning-visitor momentum digest live; awaiting the field verdict to light up the −83% origin-migration LCP win",
-    "nextMilestone": "Confirm api/field-win.json flips hasConfirmed once ≥5 /-route post-deploy samples accrue + first low-churn uptime-publish commit lands + TT re-probe (~06-12, now due)",
+    "currentFocus": "AI-discovery spine wave 2 shipped — /agents.json now appears in generated response headers and is gate-enforced; ambient-split wave 3 moved route/hook-scoped pathfinder + static Ask IGNIS engines behind predicates (feature bundle 45.4KB→35.2KB); build:check green",
+    "nextMilestone": "Run TT enforce re-probe (~2026-06-12 due) + confirm api/field-win.json flips hasConfirmed once / accrues enough post-deploy samples + verify first low-churn uptime-publish commit",
     "blockers": [
       "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
       "Founder device verify: membership proof loop + nav-sheet"
     ],
     "queues": {
       "now": [
-        "[S179][SECURITY/P1] TT-ENFORCE-REPROBE. Now due (~2026-06-12): `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).",
-        "[S179][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. `/` field verdict still PENDING (3/5 post samples; signal −83%). Once ≥5/side accrue, `api/field-win.json` flips `hasConfirmed:true` and the /status/ \"Biggest measured win\" tile auto-lights — confirm it renders, then celebrate or regress-hunt with `lib/perf-forensics.mjs`.",
-        "[S179][OBS/P2] UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy `uptime-probe.yml` run committed `api/uptime.json` + a history row (Actions tab / `git log --author=github-actions`), and that `/status/` shows a real availability %. First low-churn commit is the smoke test.",
-        "[S179][OBS/P3] GEO-VITALS-WATCH. `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.",
-        "[S179][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify."
+        "[S180][SECURITY/P1] TT-ENFORCE-REPROBE. Now due (~2026-06-12): `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).",
+        "[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. `/` field verdict still PENDING (≥5/side not yet accrued; signal −83%). Once it confirms, `api/field-win.json` flips `hasConfirmed:true` and the /status/ \"Biggest measured win\" tile auto-lights — confirm it renders, then celebrate or regress-hunt with `lib/perf-forensics.mjs`.",
+        "[S180][OBS/P2] UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy `uptime-probe.yml` run committed `api/uptime.json` + a history row (Actions tab / `git log --author=github-actions`), and that `/status/` shows a real availability %. First low-churn commit is the smoke test.",
+        "[S180][OBS/P3] GEO-VITALS-WATCH. `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.",
+        "[S180][SIL] AI-DISCOVERY-SPINE-WAVE2 — DONE. Header discovery shipped via generated `_headers` (`rel=alternate`, `application/json`) and is now enforced by `check-ai-discovery-spine.mjs`. Follow-up deferred: optional HTML `<link>` discovery if we want belt-and-suspenders.",
+        "[S180][SIL] AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP — DONE (wave scoped). Mapped remaining feature scripts by real route/hook guard; split two proven route/hook-scoped engines. vault-atlas, rank-orb, rate-page, founder-presence-handle, page-sigil, vault-rank-bar, and ignis-lens remain ambient because their guards are sitewide/session/pathway-level rather than single-surface. Follow-up: the coverage report still lists 7 candidates for future proof-driven passes.",
+        "[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -46,7 +48,12 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "The first-party uptime probe now publishes — it was measuring availability and throwing it away. At /start the probe's first scheduled run on S177's two-signal code came back green (40s @ 01:39"
+        "Shipped: 2 focused improvements — AI manifest discovery header + ambient-split wave 3.",
+        "Tests: focused gates passed (`check-ai-discovery-spine --self-test`, `check-ai-discovery-spine`, ambient coverage, ambient placement, bundle drift, SW coherency), then `npm run build:check` passed end-to-end (108-page crawl · 0 status failures · 0 blocking-script findings).",
+        "AI discovery is now push-based. `/agents.json` already existed from S179; S180 made it discoverable from generated response headers (`Link: </agents.json>; rel=alternate; type=\"application/json\"`) and added a gate so that header cannot disappear without failing the AI-spine check.",
+        "Cold JS got smaller again. `intent-flight-director.js` and `ignis-answer-engine.js` now load only on their real routes/hooks through `ambient-loader`; the feature bundle dropped 45.4KB→35.2KB. Conversion/info-finding routes keep the pathfinder and static Ask IGNIS behavior; other pages stop parsing them.",
+        "Honest notes: `api/field-win.json` is still honest-dark with 0 confirmed wins; RUM has 35 samples and `/` needs 40 more before strict field quoting. TT enforce still waits on the evidence-led re-probe around 2026-06-12. Founder yes/no items remain: `assets/vaultsparked-proof.js` delete and nav-sheet real-device verification.",
+        "Next session: TT re-probe · field-win/geo-vitals evidence confirmation · uptime low-churn commit verification · optional HTML `<link>` manifest discovery · proof-driven ambient candidate pass if the remaining 7 candidates can be tied to route/hook evidence."
       ]
     },
     "ignis": {

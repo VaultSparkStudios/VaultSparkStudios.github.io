@@ -66,8 +66,8 @@ const AMBIENT_FEATURE_SOURCES = [
   'assets/rank-orb.js',
   'assets/rate-page.js',
   'assets/ignis-lens.js',
-  'assets/intent-flight-director.js',
-  'assets/ignis-answer-engine.js',
+  // intent-flight-director and ignis-answer-engine moved to predicate loading
+  // in S180. Both are route/hook scoped but previously parsed on every page.
   // feedback-decision-board / social-dashboard-public / rank-economy-simulator /
   // security-posture moved to predicate loading (assets/ambient-loader.js) — S179
   // ambient-split wave 2. Each self-mounts only on its own route (/feedback,

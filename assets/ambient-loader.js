@@ -98,6 +98,26 @@
           !!document.querySelector('[data-rank-economy]');
       },
       idle: true
+    },
+    {
+      // S180 ambient-split wave 3 — the pathfinder only runs on these exact
+      // information-finding routes, so keep it off every other cold page.
+      src: '/assets/intent-flight-director.js',
+      when: function () {
+        var p = location.pathname || '/';
+        return ['/', '/membership/', '/games/', '/universe/', '/studio-pulse/', '/oracle/'].indexOf(p) !== -1;
+      },
+      idle: true
+    },
+    {
+      // Static Ask IGNIS retrieval mounts on explicit hooks plus /search|/oracle.
+      src: '/assets/ignis-answer-engine.js',
+      when: function () {
+        var p = location.pathname || '/';
+        return !!document.querySelector('[data-ask-ignis]') ||
+          p.indexOf('/search') === 0 || p.indexOf('/oracle') === 0;
+      },
+      idle: true
     }
   ];
 

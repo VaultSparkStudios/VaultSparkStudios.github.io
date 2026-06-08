@@ -1,15 +1,13 @@
 <!-- generated-by: /implement skill v1.0 -->
-<!-- generated-at: 2026-06-08 · Session 179 · audit: docs/AUDIT_2026-06-08.json (4 items) -->
+<!-- generated-at: 2026-06-08 · Session 180 · audit: docs/AUDIT_2026-06-08-S180.json (2 items) -->
 
-# Implement Plan — Session 179
+# Implement Plan — Session 180
 
 Sequenced for optimal Priority-per-hour (not raw descending Priority).
 
 | Order | Slug | Tier | Axis | Effort | Why this slot |
 |---|---|---|---|---|---|
-| 1 | **agents-json-spine** | 🔥 | AI/SEO | 3h | Highest priority; foundational AI-discovery spine; new generator + contract gate. Ship first for momentum. |
-| 2 | **meta-desc-backfill-gate** | 🔥 | SEO/UX | 2h | Adjacent surface to #1 (another `check-*.mjs` gate + build:check wiring) → context reuse. |
-| 3 | **nav-aria-current** | ⚡ | UX/A11y | 1h | Touches `propagate-nav.mjs` + sitewide re-propagation; run propagation once after this. |
-| 4 | **ambient-split-wave2** | ⚡ | Speed | 2h | Conditional/riskiest; isolated to ambient build + loader; verify-then-split, last. |
+| 1 | **ai-manifest-discovery-header** | fire | AI/SEO | 45m | Foundation first: makes S179's `/agents.json` discoverable from response headers and adds a gate so it cannot drift dark. |
+| 2 | **ambient-split-wave3** | high | Speed/UX | 1h | Same code surface as S179's split work; move two proven route/hook-scoped engines out of the always-parsed feature bundle, then rebuild shell assets once. |
 
-**Quality gates (per item):** website success bar — page changes hold Lighthouse mobile ≥90; new gates ship with `--self-test`; `npm run build:check` green end-to-end before closeout.
+**Quality gates (per item):** website success bar — each item names the conversion or info-finding outcome; new gates ship with `--self-test`; focused gates green before closeout; `npm run build:check` green end-to-end before final closeout.

@@ -4718,3 +4718,21 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 3. **TT-DEFAULT-POLICY-COVERAGE-REPORT** — instrument the default policy to count (not block) per-sink invocations into a beacon, producing a ranked migration list so named-policy adoption is data-driven before the enforce flip. Medium probability.
 
 **Committed to TASK_BOARD:** [S177][SECURITY/P1] TT-ENFORCE-REPROBE · [S177][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT · [S177][OBS/P2] UPTIME-PROBE-VERIFY
+
+## 2026-06-08 — Session 180 (/start → /audit → /implement → /closeout continuation · 2/2) | Total: 999/1000 (v3.0) | Velocity: 2 | Debt: →
+
+**Score:** 999 / 1000
+(Dev Health 100 · Creative Alignment 100 · Momentum 100 · Engagement 99 · Process Quality 100 · Cross-Repo Coherence 100 · Security Posture 100 · Ecosystem Integration 100 · Capital Efficiency 100 · Automation Coverage 100)
+
+**What improved:** S179's `/agents.json` is no longer a well-kept secret: generated response headers now point crawlers at it, and the AI-spine gate treats that discoverability as part of the contract. The cold path got smaller again too: two route/hook-scoped engines moved out of the universal feature bundle, dropping it 45.4KB→35.2KB without deleting the pathfinder or static Ask IGNIS where they actually help visitors.
+
+**Honest deduction:** Engagement stays 99 because the field-win tile is still honest-dark and the nav-sheet/vaultsparked-proof decisions remain founder/device gated. Velocity is 2 because this was a focused continuation pass, not a broad sprint; quality stayed high because full `build:check` is green.
+
+**Intent outcome:** Achieved — full continuation goal-chain, 2/2 audit items shipped, `npm run build:check` green end-to-end.
+
+**Brainstorm**
+1. **MANIFEST-LINK-BELT-SUSPENDERS** — add an HTML `<link rel="alternate" type="application/json" href="/agents.json">` in the propagated head only if it does not bloat pages or duplicate header semantics. Medium probability.
+2. **AMBIENT-CANDIDATE-LEDGER** — turn `.cache/ambient-split-candidates.json` into a public/internal ledger with reason codes: sitewide, route-scoped, hook-scoped, or keep. High probability.
+3. **FIELD-WIN-READINESS-NUDGE** — when `/` is within 10 samples of confirmation, surface a closeout/startup hint so the agent knows to verify the tile next instead of re-auditing blindly. Medium-high probability.
+
+**Committed to TASK_BOARD:** [S180][AI/P1] AI-MANIFEST-DISCOVERY-HEADER · [S180][SPEED/P2] AMBIENT-SPLIT-WAVE3

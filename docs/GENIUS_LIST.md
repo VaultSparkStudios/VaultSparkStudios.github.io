@@ -1,4 +1,4 @@
-# Genius Hit List — Session 179
+# Genius Hit List — Session 180
 
 Generated: 2026-06-08
 Project: `VaultSparkStudios.github.io`
@@ -10,7 +10,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 - Health: **green**
 - Current SIL: **999/500**
 - CI health: **check gh run list**
-- Current focus: AI-discovery spine shipped — /agents.json (CANON-011) now pairs with llms.txt, kept honest by a consistency gate; meta-description floor gate + nav aria-current + ambient-split wave 2 (feature bundle −23%) landed; open carries remain evidence-gated verifies
+- Current focus: AI-discovery spine wave 2 shipped — /agents.json now appears in generated response headers and is gate-enforced; ambient-split wave 3 moved route/hook-scoped pathfinder + static Ask IGNIS engines behind predicates (feature bundle 45.4KB→35.2KB); build:check green
 
 ## Strategic Read
 
@@ -62,45 +62,45 @@ Why it matters: The URL stays stable for search, but the public vocabulary shoul
 
 First command: `node scripts/propagate-nav.mjs`
 
-#### 3. [PRODUCT] AI-DISCOVERY-SPINE-WAVE2. Extend the spine: emit agents.json into the…
-Final score: **84**
-[S180][SIL] AI-DISCOVERY-SPINE-WAVE2. Extend the spine: emit agents.json into the sitemap/_headers cache policy and add a Link: rel="ai-manifest" style header (or <link> discovery) so agents find /agents.json without guessing; consider an llms-full.txt "How to cite" line that references the manifest. First step: check whether GitHub Pages/Worker can set a discovery header for /agents.json.
-Why it matters: AI-DISCOVERY-SPINE-WAVE2. Extend the spine: emit agents.json into the  is open, local, and unblocked — can ship this session.
-
-#### 4. [INTELLIGENCE] AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP. vault-atlas binds the Resour…
-Final score: **84**
-[S180][SIL] AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP. vault-atlas binds the Resources dropdown sitewide (correctly ambient), but audit the remaining feature-bundle scripts (page-sigil, rate-page, intent-flight-director, ignis-answer-engine) for single-surface mounts; also investigate whether any feature widget's mount hook exists nowhere (true dead weight, removable). First step: map each remaining feature script's real DOM/path guard like S179 did.
-Why it matters: AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP. vault-atlas binds the Resourc keeps the ranked audit current so later sessions don't iterate on stale signal.
-
-First command: `node scripts/generate-genius-list.mjs`
-
-#### 5. [VERIFY] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device v…
-Final score: **74**
+#### 3. [VERIFY] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device v…
+Final score: **80**
 [S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.
 Why it matters: vaultsparked-proof.js delete (evidence-complete) + nav-sheet device ve shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check`
 
-### LATER
-
-#### 1. [VERIFY] TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S17…
-Final score: **72**
+#### 4. [VERIFY] TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S17…
+Final score: **78**
 [S177][SECURITY/P1] TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S176 burned down the founder-named sinks via the default-policy bridge. Re-probe ~2026-06-12: node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs; expect near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
-Why it matters: TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S176 was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
+Why it matters: TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S176 was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [PRODUCT] ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PENDING (3 post…
-Final score: **72**
+#### 5. [PRODUCT] ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PENDING (3 post…
+Final score: **78**
 [S177][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PENDING (3 post-deploy samples). Once ≥5/side accrue, read data/field-verdicts.json — expect a real LCP drop from edge-origin TTFB. Celebrate or regress-hunt with lib/perf-forensics.mjs.
 Why it matters: ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PENDING (3 post- is open, local, and unblocked — can ship this session.
 
-#### 3. [VERIFY] UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run…
-Final score: **66**
+### LATER
+
+#### 1. [VERIFY] UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run…
+Final score: **72**
 [S177][OBS/P2] UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run executed cleanly (Actions tab) and that a forced failure path emails correctly. First dispatch is the smoke test.
-Why it matters: UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run  was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
+Why it matters: UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run  was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 2. [PRODUCT] GEO-VITALS-WATCH. api/geo-vitals.json exists (US:107 GB:3); check whe…
+Final score: **72**
+[S177][OBS/P3] GEO-VITALS-WATCH. api/geo-vitals.json exists (US:107 GB:3); check whether non-US LCP confirms the origin-migration win globally once samples grow.
+Why it matters: GEO-VITALS-WATCH. api/geo-vitals.json exists (US:107 GB:3); check whet is open, local, and unblocked — can ship this session.
+
+#### 3. [SECURITY] TT-RE-PROBE-POST-ENV-FIX. The intake fix only went live late 2026-06-…
+Final score: **72**
+[S176][SECURITY/P1] TT-RE-PROBE-POST-ENV-FIX. The intake fix only went live late 2026-06-05 (env-target miss) — restart the soak clock from then; re-probe ~2026-06-12.
+Why it matters: TT-RE-PROBE-POST-ENV-FIX. The intake fix only went live late 2026-06-0 lowers operational risk and is entirely local — no external dependencies block it.
+
+First command: `node scripts/lint-repo.mjs`
 
 ## Recommended Build Order
 
@@ -110,12 +110,12 @@ First command: `npm run build:check && node scripts/csp-audit.mjs`
 4. ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict…
 5. GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP…
 6. Forge Window naming propagation
-7. AI-DISCOVERY-SPINE-WAVE2. Extend the spine: emit agents.json into the…
-8. AMBIENT-SPLIT-WAVE3 + DEAD-WIDGET-SWEEP. vault-atlas binds the Resour…
-9. vaultsparked-proof.js delete (evidence-complete) + nav-sheet device v…
-10. TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S17…
-11. ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PENDING (3 post…
-12. UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run…
+7. vaultsparked-proof.js delete (evidence-complete) + nav-sheet device v…
+8. TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S17…
+9. ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PENDING (3 post…
+10. UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run…
+11. GEO-VITALS-WATCH. api/geo-vitals.json exists (US:107 GB:3); check whe…
+12. TT-RE-PROBE-POST-ENV-FIX. The intake fix only went live late 2026-06-…
 
 ## Best Immediate Move
 

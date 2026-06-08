@@ -80,6 +80,7 @@ export function validateSpine(manifest, llmsTxt, fileExists, dirExists) {
     manifest.policies && manifest.policies.terms,
     manifest.policies && manifest.policies.accessibility,
     manifest.discovery && manifest.discovery.sitemap,
+    manifest.discovery && manifest.discovery.manifest,
     manifest.discovery && manifest.discovery.robots,
     manifest.discovery && manifest.discovery.llmsTxt,
     manifest.discovery && manifest.discovery.llmsFull,
@@ -113,6 +114,14 @@ export function validateSpine(manifest, llmsTxt, fileExists, dirExists) {
   return errors;
 }
 
+export function validateDiscoveryHeader(headersText) {
+  const errors = [];
+  if (!/Link:\s*<\s*\/agents\.json\s*>\s*;\s*rel=alternate\s*;\s*type=["']application\/json["']/i.test(headersText || '')) {
+    errors.push('_headers missing discoverable /agents.json Link header');
+  }
+  return errors;
+}
+
 function selfTest() {
   let fail = 0;
   const ok = (cond, msg) => { if (!cond) { console.error('  ✗ ' + msg); fail++; } else { console.log('  ✓ ' + msg); } };
@@ -135,6 +144,8 @@ function selfTest() {
   };
   const allExist = () => true;
   ok(validateSpine(goodManifest, goodLlms, allExist, allExist).length === 0, 'clean spine → no errors');
+  ok(validateDiscoveryHeader('Link: </agents.json>; rel=alternate; type="application/json"; title="VaultSpark AI agent discovery manifest"').length === 0, 'agents.json discovery header accepted');
+  ok(validateDiscoveryHeader('Link: </x>; rel=preload').some(e => /missing discoverable/.test(e)), 'missing agents.json discovery header flagged');
 
   // siteUrlToPath mapping
   ok(siteUrlToPath(`${SITE}/`) === 'index.html', 'root maps to index.html');
@@ -191,6 +202,8 @@ function main() {
   const fileExists = (rel) => existsSync(join(ROOT, rel));
   const dirExists = (rel) => existsSync(join(ROOT, rel));
   const errors = validateSpine(manifest, llmsTxt, fileExists, dirExists);
+  const headersPath = join(ROOT, '_headers');
+  if (existsSync(headersPath)) errors.push(...validateDiscoveryHeader(readFileSync(headersPath, 'utf8')));
 
   if (errors.length) {
     console.error(`[ai-spine] ${errors.length} spine inconsistency(ies):`);

@@ -2387,3 +2387,12 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
   6. TASKBOARD-ARCHIVE-ROTATION — rotate-taskboard.mjs; TASK_BOARD 365KB→130KB (−63%); import-safe; --check-size drift advisory in build:check. 7/7.
 - Cross-cutting: both probe + rotator made import-safe after the same import-side-effect class bit each (importing fired live probe / live rotation).
 - Verification: build:check exit 0 (108 pages, 0 failures); 3 new self-tests + offline digest spec all green.
+
+## Session 180 — 2026-06-08 — continuation goal-chain: /start → /audit → /implement → /closeout (2/2 focused frontier audit)
+
+- Intent: continue the active durable goal after S179; run the full Studio chain from current evidence and personalize to current website flags.
+- Audit: wrote `docs/AUDIT_2026-06-08-S180.{json,md}` with 2 agent-attemptable items, Priority 47.7. Skipped TT enforce, field-win celebration, and `vaultsparked-proof.js` deletion because each is evidence- or founder-gated.
+- Shipped 2/2:
+  1. `ai-manifest-discovery-header` — generated `_headers` now exposes `/agents.json` with `rel=alternate` + `application/json`; `agents.json` declares `discovery.manifest`; `check-ai-discovery-spine.mjs` enforces the header.
+  2. `ambient-split-wave3` — `intent-flight-director.js` and `ignis-answer-engine.js` moved to route/hook predicate loading; ambient-feature bundle 45.4KB→35.2KB.
+- Verification: focused AI/ambient gates green; `npm run build` refreshed generated outputs; `npm run build:check` exit 0 end-to-end (108-page crawl, 0 status failures, 0 blocking-script findings).

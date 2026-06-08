@@ -38,6 +38,7 @@ const PRELOADS = [
 ];
 
 const lines = ['# generated-by: scripts/build-early-hints-headers.mjs — do not hand-edit', '/*'];
+lines.push('  Link: </agents.json>; rel=alternate; type="application/json"; title="VaultSpark AI agent discovery manifest"');
 for (const p of PRELOADS) {
   const asset = manifest.assets[p.key];
   if (!asset) continue;
