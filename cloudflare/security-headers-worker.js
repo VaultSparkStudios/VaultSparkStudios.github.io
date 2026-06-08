@@ -502,6 +502,22 @@ export default {
     // Permanent benefit: pages.dev keeps serving even if the custom-domain
     // layer breaks. GET/HEAD only (idempotent).
     const FALLBACK_ORIGIN = env.FALLBACK_ORIGIN || 'https://vaultsparkstudios-website.pages.dev';
+    // S179 self-loop fix: this Worker owns the `vaultsparkstudios.com/*` route, so
+    // `fetch(request)` re-enters the same route instead of hitting an origin. After
+    // the S175 Pages migration the apex has no separate backing origin, so the
+    // primary fetch hung with zero bytes (founder saw "site not loading" 2026-06-08
+    // — full outage, not a CF bot-challenge). The Worker must fetch the Pages origin
+    // by hostname, never its own apex. PRIMARY_ORIGIN defaults to the Pages deploy;
+    // override via env only if a non-looping proxied origin is ever reintroduced.
+    const PRIMARY_ORIGIN = env.PRIMARY_ORIGIN || FALLBACK_ORIGIN;
+    const toOrigin = (req, base) => {
+      const u = new URL(req.url);
+      const t = new URL(base);
+      u.protocol = t.protocol;
+      u.hostname = t.hostname;
+      u.port = t.port;
+      return new Request(u.toString(), req);
+    };
     // S176 disaster-recovery layer: when BOTH origins 5xx (platform-wide Pages
     // blip — founder saw 503s reach the browser on 2026-06-07), serve the
     // last-known-good HTML copy from the edge cache instead of failing. DR
@@ -526,7 +542,7 @@ export default {
       const idempotent = m === 'GET' || m === 'HEAD';
       let primary = null;
       try {
-        primary = await fetch(req, idempotent ? { signal: AbortSignal.timeout(ORIGIN_FETCH_TIMEOUT_MS) } : {});
+        primary = await fetch(toOrigin(req, PRIMARY_ORIGIN), idempotent ? { signal: AbortSignal.timeout(ORIGIN_FETCH_TIMEOUT_MS) } : {});
       } catch (_e) { /* timeout or network error → fall through to failover */ }
       if (primary && (primary.status < 500 || !idempotent)) return primary;
       if (!idempotent) return primary || new Response('origin unavailable', { status: 502 });
