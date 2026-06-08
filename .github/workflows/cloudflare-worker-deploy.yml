@@ -28,7 +28,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22' # wrangler v4 requires Node >= 22
 
       # package-lock.json is gitignored in this repo, so `npm ci` / npm cache are
       # unavailable. `npm install` resolves wrangler from package.json devDeps.
