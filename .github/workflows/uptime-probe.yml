@@ -1,11 +1,16 @@
 # uptime-probe.yml (S176 #6 · uptime-probe-firstparty)
 #
 # First-party availability monitoring — every 30 minutes, probe key routes
-# with a browser UA and email the founder via Resend on any non-200.
+# with a browser UA and email the founder via Resend on any real failure.
 # Free-build bias (CANON-017): replaces the MISSING uptimerobot credential
-# with Actions cron + existing Resend capability. api/uptime.json is probe
-# output only (not committed — /status/ reads it from the artifact of the
-# deployed site after the next deploy; alerting is the primary channel).
+# with Actions cron + existing Resend capability.
+#
+# S178 — the probe now PUBLISHES, not just alerts. It writes api/uptime.json
+# (live summary + 30-day rollup) and appends data/uptime-history.ndjson, and
+# the commit step below pushes them so /status/ renders a real availability
+# number. Low-churn by design: the probe only records (and sets .cache/
+# uptime-commit=1) on a new hour bucket, a state change, or an incident — a
+# healthy site inside the same hour produces no row and no commit.
 name: uptime-probe
 
 on:
@@ -14,7 +19,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   probe:
@@ -32,6 +37,23 @@ jobs:
           key: uptime-alerts-${{ github.run_id }}
           restore-keys: uptime-alerts-
       - name: Probe routes
+        id: probe
+        continue-on-error: true   # a real outage exits non-zero; we still want to record + commit it
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: node scripts/probe-uptime.mjs
+      - name: Publish uptime status
+        if: always()
+        run: |
+          if [ "$(cat .cache/uptime-commit 2>/dev/null)" != "1" ]; then
+            echo "No commit-worthy change (healthy, same hour) — skipping."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add api/uptime.json data/uptime-history.ndjson
+          if git diff --cached --quiet; then
+            echo "Nothing staged."; exit 0
+          fi
+          git commit -m "chore(uptime): publish availability status [skip ci]"
+          git push

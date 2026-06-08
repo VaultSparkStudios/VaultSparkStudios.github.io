@@ -324,9 +324,9 @@
       <div class="container">
         <span class="eyebrow">Uptime &nbsp;·&nbsp; History</span>
         <h2 id="incident-heading">Incident History</h2>
-        <div class="incident-empty">
+        <div class="incident-empty" id="incidentLive">
           <div class="incident-empty-dot"></div>
-          No incidents in the past 90 days.
+          Measured by our own probe every 30 minutes.
         </div>
       </div>
     </section>
@@ -403,6 +403,31 @@
       if (!d || !d.countries || !d.countries.length) return;
       var top = d.countries[0];
       tile('Field reach', d.countries.length + ' region bucket(s)', 'top: ' + top.country + ' · LCP p75 ' + (top.lcpP75 / 1000).toFixed(1) + 's', 'neutral');
+    });
+    // S178 — first-party uptime: availability tile + live incident history,
+    // measured by our own probe (api/uptime.json), not a third-party badge.
+    get('/api/uptime.json').then(function (d) {
+      if (!d || !d.rollup) return;
+      var r = d.rollup;
+      var liveNow = d.overall === 'up';
+      var pct = (r.upPct === null || r.upPct === undefined) ? '—' : r.upPct + '%';
+      tile('Availability (self-measured)', pct,
+        r.checks + ' checks · live: ' + (d.overall || 'unknown'),
+        r.upPct === null ? 'neutral' : r.upPct >= 99.9 ? 'good' : r.upPct >= 99 ? 'warn' : 'bad');
+      // Render the incident history block from the same source.
+      var inc = document.getElementById('incidentLive');
+      if (inc) {
+        while (inc.firstChild) inc.removeChild(inc.firstChild);
+        var dot = document.createElement('div');
+        var none = !r.lastIncidentAt;
+        dot.className = 'incident-empty-dot';
+        if (!none) dot.style.background = '#ffc400';
+        inc.appendChild(dot);
+        inc.appendChild(document.createTextNode(none
+          ? 'No incidents recorded by the first-party probe.'
+          : 'Last incident: ' + r.lastIncidentState + ' at ' + new Date(r.lastIncidentAt).toUTCString() + ' (auto-recovered).'));
+        inc.className = 'incident-empty';
+      }
     });
   })();
   </script>

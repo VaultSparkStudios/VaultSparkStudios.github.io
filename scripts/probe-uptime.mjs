@@ -48,7 +48,10 @@ import url from 'node:url';
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'api', 'uptime.json');
+const HISTORY = path.join(ROOT, 'data', 'uptime-history.ndjson');
+const COMMIT_FLAG = path.join(ROOT, '.cache', 'uptime-commit');
 const SENT = path.join(ROOT, '.cache', 'uptime-alerts-sent.json');
+const HISTORY_CAP = 1488; // ~31 days of hourly rows + incident rows
 const DRY = process.argv.includes('--dry-run');
 const TO = 'founder@vaultsparkstudios.com';
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36 VSUptimeProbe/2.0';
@@ -119,6 +122,23 @@ export function summarize(routes, liveness) {
   };
 }
 
+// Rolling availability stats from the committed history (unit-tested). `up` is the
+// only green state; degraded/edge-degraded/down all count against availability so
+// the public number never overstates. Drives the /status/ uptime tile.
+export function rollup(rows) {
+  const checks = rows.length;
+  if (!checks) return { checks: 0, upPct: null, lastIncidentAt: null, lastIncidentState: null };
+  const up = rows.filter((r) => r.overall === 'up').length;
+  const incidents = rows.filter((r) => r.overall !== 'up');
+  const last = incidents[incidents.length - 1] || null;
+  return {
+    checks,
+    upPct: Math.round((up / checks) * 1000) / 10,
+    lastIncidentAt: last ? last.t || null : null,
+    lastIncidentState: last ? last.overall : null,
+  };
+}
+
 // Real, page-worthy failures only: a content route that is down, or edge liveness down.
 // The informational edge-HTML challenge state is deliberately excluded.
 export function dueAlerts(routes, liveness, sent, now = Date.now()) {
@@ -131,6 +151,22 @@ export function dueAlerts(routes, liveness, sent, now = Date.now()) {
   return signals.filter((s) => now - (sent[s.key] || 0) >= ALERT_WINDOW_MS);
 }
 
+// Pure formatting (unit-tested) — turn due signals into the exact email we'd send.
+// Exposed so the alert path can be proven (`--simulate-failure`) without sending.
+export function formatAlert(due, now = new Date()) {
+  const lines = due.map((d) => `  ${d.label} → ${d.status === 0 ? `FETCH FAIL (${d.error || 'no response'})` : `HTTP ${d.status}`} after ${d.ms}ms`);
+  return {
+    from: 'VaultSpark Sentinel <sentinel@vaultsparkstudios.com>',
+    to: [TO],
+    subject: `Uptime: ${due.length} real failure(s) on vaultsparkstudios.com`,
+    text:
+      `First-party uptime probe — REAL failures (${now.toISOString()}):\n\n${lines.join('\n')}\n\n` +
+      `These are content-origin or edge-liveness failures, not the expected bot-challenge on HTML nav.\n` +
+      `Dashboard: ${PROD}/status/\n` +
+      `Worker DR layer serves stale HTML on double-5xx — check wrangler tail if sustained.`,
+  };
+}
+
 async function sendAlert(due) {
   let key = null;
   try {
@@ -139,22 +175,38 @@ async function sendAlert(due) {
   } catch { /* gateway unavailable */ }
   if (!key) key = process.env.RESEND_API_KEY || null;
   if (!key) { console.error('  ⚠ RESEND_API_KEY unavailable — alert not sent'); return false; }
-  const lines = due.map((d) => `  ${d.label} → ${d.status === 0 ? `FETCH FAIL (${d.error || 'no response'})` : `HTTP ${d.status}`} after ${d.ms}ms`);
   const res = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json' },
-    body: JSON.stringify({
-      from: 'VaultSpark Sentinel <sentinel@vaultsparkstudios.com>',
-      to: [TO],
-      subject: `Uptime: ${due.length} real failure(s) on vaultsparkstudios.com`,
-      text:
-        `First-party uptime probe — REAL failures (${new Date().toISOString()}):\n\n${lines.join('\n')}\n\n` +
-        `These are content-origin or edge-liveness failures, not the expected bot-challenge on HTML nav.\n` +
-        `Dashboard: ${PROD}/status/\n` +
-        `Worker DR layer serves stale HTML on double-5xx — check wrangler tail if sustained.`,
-    }),
+    body: JSON.stringify(formatAlert(due)),
   });
   return res.ok;
+}
+
+// --simulate-failure: prove the alert path end-to-end without paging the founder.
+// Injects a synthetic outage (one content route down + edge liveness down), runs
+// the real dueAlerts gate + formatAlert, and prints the exact email that WOULD
+// send. Never sends, never writes the dedup ledger. The down path becomes evidence
+// instead of an act of faith.
+export function simulateFailure() {
+  const routes = [
+    { route: '/', status: 200, ms: 110, ok: true, edge: { status: 0, ms: 50, note: 'edge-challenged' } },
+    { route: '/games/', status: 503, ms: 90, ok: false, origin: { error: 'HTTP 503' }, edge: { status: 0, ms: 50, note: 'edge-challenged' } },
+  ];
+  const liveness = { endpoint: LIVENESS_PATH, status: 0, ms: 12000, ok: false, error: 'timeout' };
+  const summary = summarize(routes, liveness);
+  const due = dueAlerts(routes, liveness, {}, Date.now());
+  const email = formatAlert(due);
+  console.log('── SIMULATED FAILURE (no email sent) ─────────────────────────');
+  console.log(`overall: ${summary.overall}`);
+  console.log(`due signals: ${due.length}`);
+  console.log(`subject: ${email.subject}`);
+  console.log(`to: ${email.to.join(', ')}\n`);
+  console.log(email.text);
+  console.log('──────────────────────────────────────────────────────────────');
+  const ok = due.length === 2 && summary.overall !== 'up' && /503/.test(email.text);
+  console.log(`alert-path proof: ${ok ? 'PASS' : 'FAIL'} — ${summary.overall} state produced ${due.length} due signal(s) + a formatted email`);
+  process.exit(ok ? 0 : 1);
 }
 
 function selfTest() {
@@ -179,6 +231,10 @@ function selfTest() {
     ['no alert when everything healthy (challenge excluded)', dueAlerts(allUp, liveOk, {}, now).length === 0],
     ['alert deduped inside 6h window', dueAlerts(oneDown, liveOk, { 'origin:/games/:503': now - 1000 }, now).length === 0],
     ['alert re-fires after window', dueAlerts(oneDown, liveOk, { 'origin:/games/:503': now - ALERT_WINDOW_MS - 1 }, now).length === 1],
+    ['formatAlert builds subject + body from due signals', (() => { const e = formatAlert(dueAlerts(oneDown, liveBad, {}, now)); return e.to[0] === TO && /failure/.test(e.subject) && /503/.test(e.text); })()],
+    ['rollup computes uptime % from history rows', (() => { const r = rollup([{ overall: 'up' }, { overall: 'up' }, { overall: 'degraded' }, { overall: 'up' }]); return r.checks === 4 && r.upPct === 75; })()],
+    ['rollup is 100% with no incidents', rollup([{ overall: 'up' }, { overall: 'up' }]).upPct === 100],
+    ['rollup handles empty history', rollup([]).checks === 0 && rollup([]).upPct === null],
   ];
   let pass = 0;
   for (const [name, ok] of cases) { if (ok) pass += 1; else console.error(`  ✗ ${name}`); }
@@ -186,8 +242,15 @@ function selfTest() {
   process.exit(pass === cases.length ? 0 : 1);
 }
 
-if (process.argv.includes('--self-test')) selfTest();
+// Importable: CLI dispatches + the live probe only run when this file is executed
+// directly, so gates/tests can `import { summarize, rollup, formatAlert }` (even
+// while passing their OWN --self-test flag) without firing the probe's self-test,
+// a real network probe, or an alert. Node 24 exposes import.meta.main.
+const RUN_DIRECT = import.meta.main ?? process.argv[1]?.endsWith('probe-uptime.mjs');
+if (RUN_DIRECT && process.argv.includes('--self-test')) selfTest();
+if (RUN_DIRECT && process.argv.includes('--simulate-failure')) simulateFailure();
 
+if (RUN_DIRECT) {
 // Live probe ---------------------------------------------------------------
 const routeResults = [];
 for (const route of ROUTES) {
@@ -211,14 +274,50 @@ for (const r of routeResults) {
 }
 console.log(`  ${liveness.ok ? '✓' : '✗'} liveness ${liveness.endpoint} ${liveness.status} ${liveness.ms}ms`);
 
+// History: append a compact row so /status/ can show a real availability number.
+// Low-churn rule — only record (and therefore commit) when something worth showing
+// changed: a new hour bucket, a state change, or any non-`up` incident. A healthy
+// site inside the same hour produces no new row, so the cron does not spam git.
+const prevHistory = (() => {
+  try { return fs.readFileSync(HISTORY, 'utf8').split('\n').filter(Boolean).map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean); }
+  catch { return []; }
+})();
+const last = prevHistory[prevHistory.length - 1] || null;
+const hourBucket = summary.generatedAt.slice(0, 13); // YYYY-MM-DDTHH
+const newHourBucket = !last || (last.t || '').slice(0, 13) !== hourBucket;
+const stateChanged = !last || last.overall !== summary.overall;
+const isIncident = summary.overall !== 'up';
+const shouldRecord = newHourBucket || stateChanged || isIncident;
+
+let history = prevHistory;
+if (shouldRecord) {
+  const row = {
+    t: summary.generatedAt,
+    overall: summary.overall,
+    livenessMs: liveness.ms,
+    down: routeResults.filter((r) => !r.ok).length,
+  };
+  history = [...prevHistory, row].slice(-HISTORY_CAP);
+}
+summary.rollup = rollup(history);
+
 if (DRY) {
-  console.log(`dry-run · overall=${summary.overall}`);
+  console.log(`dry-run · overall=${summary.overall} · upPct(30d)=${summary.rollup.upPct ?? 'n/a'} · record=${shouldRecord}`);
   process.exit(0);
 }
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, JSON.stringify(summary, null, 2) + '\n');
-console.log(`probe-uptime → api/uptime.json (overall=${summary.overall})`);
+console.log(`probe-uptime → api/uptime.json (overall=${summary.overall} · upPct30d=${summary.rollup.upPct ?? 'n/a'})`);
+
+if (shouldRecord) {
+  fs.mkdirSync(path.dirname(HISTORY), { recursive: true });
+  fs.writeFileSync(HISTORY, history.map((r) => JSON.stringify(r)).join('\n') + '\n');
+  console.log(`  + history row (${history.length} total) — commit-worthy`);
+}
+// Signal to the workflow whether a commit is worthwhile (keeps git history clean).
+fs.mkdirSync(path.dirname(COMMIT_FLAG), { recursive: true });
+fs.writeFileSync(COMMIT_FLAG, shouldRecord ? '1' : '0');
 
 const sent = (() => { try { return JSON.parse(fs.readFileSync(SENT, 'utf8')); } catch { return {}; } })();
 const due = dueAlerts(routeResults, liveness, sent);
@@ -236,3 +335,4 @@ if (due.length) {
 // failures (content route or prod-chain). The bot-challenge can never reach here
 // because it is informational and excluded from `overall`.
 process.exit(summary.overall === 'up' ? 0 : 1);
+}
