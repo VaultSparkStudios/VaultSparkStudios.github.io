@@ -8,8 +8,78 @@
   "count": 24,
   "entries": [
     {
-      "sha": "7aefd598",
-      "ts": "2026-06-08T04:38:51.000Z",
+      "sha": "8710f830",
+      "ts": "2026-06-08T06:28:50.000Z",
+      "type": "perf",
+      "scope": "ambient",
+      "breaking": false,
+      "move": "Sped up",
+      "tone": "perf",
+      "summary": "S179 — split 4 route-scoped widgets out of the feature bundle (ambient-split-wave2 #4)"
+    },
+    {
+      "sha": "c0caf313",
+      "ts": "2026-06-08T06:17:25.000Z",
+      "type": "feat",
+      "scope": "a11y",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "S179 — nav active link announces aria-current=page (nav-aria-current #3)"
+    },
+    {
+      "sha": "910e4826",
+      "ts": "2026-06-08T06:12:07.000Z",
+      "type": "feat",
+      "scope": "seo",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "S179 — meta-description floor gate (meta-desc-backfill-gate #2)"
+    },
+    {
+      "sha": "f57c3853",
+      "ts": "2026-06-08T06:02:25.000Z",
+      "type": "feat",
+      "scope": "ai-discovery",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "S179 — ship /agents.json + spine consistency gate (agents-json-spine #1)"
+    },
+    {
+      "sha": "e47a81d9",
+      "ts": "2026-06-08T05:07:56.000Z",
+      "type": "chore",
+      "scope": "closeout",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "S178 — goal-chain write-back (6/6 audit shipped · SIL 999)"
+    },
+    {
+      "sha": "d8484cae",
+      "ts": "2026-06-08T05:07:55.000Z",
+      "type": "perf",
+      "scope": "tokens",
+      "breaking": false,
+      "move": "Sped up",
+      "tone": "perf",
+      "summary": "S178 — rotate stale TASK_BOARD sessions to archive (taskboard-archive-rotation #5)"
+    },
+    {
+      "sha": "802ca377",
+      "ts": "2026-06-08T05:07:55.000Z",
+      "type": "perf",
+      "scope": "ambient",
+      "breaking": false,
+      "move": "Sped up",
+      "tone": "perf",
+      "summary": "S178 — split vault-genome-strip out of the feature bundle (ambient-genome-strip-split #6)"
+    },
+    {
+      "sha": "9f787990",
+      "ts": "2026-06-08T05:07:55.000Z",
       "type": "feat",
       "scope": "ux",
       "breaking": false,
@@ -18,8 +88,8 @@
       "summary": "S178 — returning-visitor momentum digest (returning-visitor-digest #3)"
     },
     {
-      "sha": "a783c7c6",
-      "ts": "2026-06-08T04:32:25.000Z",
+      "sha": "69ba92f1",
+      "ts": "2026-06-08T05:07:55.000Z",
       "type": "feat",
       "scope": "intelligence",
       "breaking": false,
@@ -28,8 +98,8 @@
       "summary": "S178 — auto-publish confirmed field-win proof (field-win-auto-publish #2)"
     },
     {
-      "sha": "707f85f3",
-      "ts": "2026-06-08T04:29:49.000Z",
+      "sha": "50e08615",
+      "ts": "2026-06-08T05:07:54.000Z",
       "type": "feat",
       "scope": "observability",
       "breaking": false,
@@ -176,76 +246,6 @@
       "move": "Shipped",
       "tone": "sparked",
       "summary": "per-country field vitals from real RUM (S175 #8, recipe corrected)"
-    },
-    {
-      "sha": "6cc84697",
-      "ts": "2026-06-05T19:51:32.000Z",
-      "type": "feat",
-      "scope": "regression-email-alerts",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "field regressions email the founder nightly (S175 #7)"
-    },
-    {
-      "sha": "b93979f4",
-      "ts": "2026-06-05T19:49:41.000Z",
-      "type": "feat",
-      "scope": "edge-analytics-replace-gtag",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "first-party analytics from RUM, gtag removed sitewide (S175 #5)"
-    },
-    {
-      "sha": "b1057000",
-      "ts": "2026-06-05T19:40:54.000Z",
-      "type": "feat",
-      "scope": "shell-stable-core-split",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "ambient split into core (44KB, stable hash) + feature (62KB, rotates freely) (S175 #4)"
-    },
-    {
-      "sha": "699d25a8",
-      "ts": "2026-06-05T19:21:49.000Z",
-      "type": "feat",
-      "scope": "edge-html-cache+early-hints",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "HTML edge window 60s->300s + 103 Early Hints (S175 #2+#3)"
-    },
-    {
-      "sha": "1f5abde0",
-      "ts": "2026-06-05T19:19:37.000Z",
-      "type": "feat",
-      "scope": "cf-pages-origin-migration",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "production origin -> Cloudflare Pages, zero-downtime cutover + permanent Worker failover (S175 #1)"
-    },
-    {
-      "sha": "ccafb8ff",
-      "ts": "2026-06-05T03:19:31.000Z",
-      "type": "chore",
-      "scope": "closeout",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "S174 write-back — CURRENT_STATE, TASK_BOARD, HANDOFF, WORK_LOG, DECISIONS, SIL 997/1000, TRUTH_AUDIT, audit JSON, imp…"
-    },
-    {
-      "sha": "975de88b",
-      "ts": "2026-06-05T03:19:31.000Z",
-      "type": "docs",
-      "scope": "audit",
-      "breaking": false,
-      "move": "Documented",
-      "tone": "muted",
-      "summary": "S174 execution log — 10/10 shipped, Priority 204.9"
     }
   ]
 }

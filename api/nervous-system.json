@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T04:40:53.337Z",
+  "generatedAt": "2026-06-08T06:30:21.013Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -25,7 +25,7 @@
     {
       "key": "feedback",
       "label": "Feedback Themes",
-      "value": "3",
+      "value": "4",
       "href": "/feedback/"
     },
     {
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "Uptime probe rewritten to measure real availability (CF edge bot-challenge != outage); Worker hardened against origin hang; awaiting field verdict on the speed arc",
-  "nextMilestone": "Confirm next uptime-probe run green on new code + field-verdict readout (S173 critical path + S175 origin migration) + TT re-probe ~06-12",
+  "focus": "First-party uptime + deploy field-wins now self-publish to /status/ (honest-dark while pending); returning-visitor momentum digest live; awaiting the field verdict to light up the −83% origin-migration LCP win",
+  "nextMilestone": "Confirm api/field-win.json flips hasConfirmed once ≥5 /-route post-deploy samples accrue + first low-churn uptime-publish commit lands + TT re-probe (~06-12, now due)",
   "pulse": {
     "now": [
       "Studio Pulse live data — the Forge Window now hydrates from the public intelligence feed again.",
@@ -55,11 +55,7 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "The \"site is down\" alarm was a false alarm — and the lesson is now canon. S176's first-party uptime probe failed on its first cron run and emailed \"5 routes failing.\" Live forensics (curl + `wrangler tail` + CF Pages API) proved `vaultsparkstudios.com` HTML navigation is bot-challenged at the Cloudflare edge: datacenter/CI/curl clients are intercepted *before the Worker* (hang/403); real residential browsers solve the JS clearance and get 200. The Pages origin serves 200, the Worker is alive (scanner + JSON requests reach it), deploy `171c7bd0` is healthy. The site was up the whole time. Captured in DECISIONS 2026-06-07 + agent memory so the next agent doesn't burn a session re-diagnosing it.",
-      "Probe rewritten to measure real availability, not bot-gauntlet-passing. `scripts/probe-uptime.mjs` (schemaVersion 2.0): two honest signals a datacenter client can read — Pages-origin content availability (unchallenged) + a production JSON liveness path (DNS+CF+Worker chain). The custom-domain HTML status is kept as a *non-alerting informational* field. Alerts fire only on real origin/liveness failure. Run 4m14s → ~2s; self-test 10/10; exit 0 only on `up`.",
-      "Worker hardened against the more common real outage — an origin hang. `originFetch` now bounds the idempotent primary + fallback fetch with `AbortSignal.timeout(8s)`. S176's DR/failover only fired on a clean 5xx; a hang would block the Worker until the edge wall-clock limit. Now a hang fast-fails into the pages.dev failover → DR cache. Deployed `--env production` (version `bb9a734d`, the S175 lesson held — single clean deploy); post-deploy verified scanner-403 + JSON-200 + probe `overall=up`.",
-      "Verification: `npm run build:check` green end-to-end (108-page crawl, 0 failures); generated artifacts (llms-full-shards, oracle ecosystem-state) re-settled.",
-      "Next session (S178): TT enforce re-probe ~06-12 · origin-migration field verdict once ≥5 post-deploy samples/side · confirm the next uptime-probe run goes green on the new code · geo-vitals non-US · founder: vaultsparked-proof yes/no + nav-sheet device verify."
+      "The first-party uptime probe now publishes — it was measuring availability and throwing it away. At /start the probe's first scheduled run on S177's two-signal code came back green (40s @ 01:39"
     ]
   },
   "decisions": [
@@ -78,7 +74,7 @@
     {
       "surface": "feedback",
       "verdict": "investigate",
-      "evidence": "3 public-safe feedback themes",
+      "evidence": "4 public-safe feedback themes",
       "next": "Route top themes into feedback decision board lanes."
     }
   ],

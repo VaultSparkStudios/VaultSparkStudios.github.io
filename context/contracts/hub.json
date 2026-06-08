@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T04:40:41.085Z",
+  "generatedAt": "2026-06-08T06:29:54.780Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,21 +22,21 @@
     }
   },
   "pulse": {
-    "currentSession": 177,
-    "lastUpdated": "2026-06-07",
-    "currentFocus": "Uptime probe rewritten to measure real availability (CF edge bot-challenge != outage); Worker hardened against origin hang; awaiting field verdict on the speed arc",
-    "nextMilestone": "Confirm next uptime-probe run green on new code + field-verdict readout (S173 critical path + S175 origin migration) + TT re-probe ~06-12",
+    "currentSession": 178,
+    "lastUpdated": "2026-06-08",
+    "currentFocus": "First-party uptime + deploy field-wins now self-publish to /status/ (honest-dark while pending); returning-visitor momentum digest live; awaiting the field verdict to light up the −83% origin-migration LCP win",
+    "nextMilestone": "Confirm api/field-win.json flips hasConfirmed once ≥5 /-route post-deploy samples accrue + first low-churn uptime-publish commit lands + TT re-probe (~06-12, now due)",
     "blockers": [
       "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
       "Founder device verify: membership proof loop + nav-sheet"
     ],
     "queues": {
       "now": [
-        "[S178][SECURITY/P1] TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05; S176 burned down founder-named sinks via the default-policy bridge. Re-probe ~2026-06-12: `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; if clean → enforce-flip decision (founder device verify per SOUL #3).",
-        "[S178][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT. `/` field verdict still PENDING. Once ≥5 post-deploy samples/side accrue, read `data/field-verdicts.json`; expect a real LCP drop from edge-origin TTFB.",
-        "[S178][OBS/P2] UPTIME-PROBE-GREEN-CONFIRM. Confirm the next scheduled `uptime-probe.yml` run (now on the S177 two-signal code) goes green and that a forced-failure path still emails. First green run is the verify.",
-        "[S178][OBS/P3] GEO-VITALS-WATCH. `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.",
-        "[S178][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify."
+        "[S179][SECURITY/P1] TT-ENFORCE-REPROBE. Now due (~2026-06-12): `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).",
+        "[S179][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. `/` field verdict still PENDING (3/5 post samples; signal −83%). Once ≥5/side accrue, `api/field-win.json` flips `hasConfirmed:true` and the /status/ \"Biggest measured win\" tile auto-lights — confirm it renders, then celebrate or regress-hunt with `lib/perf-forensics.mjs`.",
+        "[S179][OBS/P2] UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy `uptime-probe.yml` run committed `api/uptime.json` + a history row (Actions tab / `git log --author=github-actions`), and that `/status/` shows a real availability %. First low-churn commit is the smoke test.",
+        "[S179][OBS/P3] GEO-VITALS-WATCH. `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.",
+        "[S179][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -46,11 +46,7 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "The \"site is down\" alarm was a false alarm — and the lesson is now canon. S176's first-party uptime probe failed on its first cron run and emailed \"5 routes failing.\" Live forensics (curl + `wrangler tail` + CF Pages API) proved `vaultsparkstudios.com` HTML navigation is bot-challenged at the Cloudflare edge: datacenter/CI/curl clients are intercepted *before the Worker* (hang/403); real residential browsers solve the JS clearance and get 200. The Pages origin serves 200, the Worker is alive (scanner + JSON requests reach it), deploy `171c7bd0` is healthy. The site was up the whole time. Captured in DECISIONS 2026-06-07 + agent memory so the next agent doesn't burn a session re-diagnosing it.",
-        "Probe rewritten to measure real availability, not bot-gauntlet-passing. `scripts/probe-uptime.mjs` (schemaVersion 2.0): two honest signals a datacenter client can read — Pages-origin content availability (unchallenged) + a production JSON liveness path (DNS+CF+Worker chain). The custom-domain HTML status is kept as a *non-alerting informational* field. Alerts fire only on real origin/liveness failure. Run 4m14s → ~2s; self-test 10/10; exit 0 only on `up`.",
-        "Worker hardened against the more common real outage — an origin hang. `originFetch` now bounds the idempotent primary + fallback fetch with `AbortSignal.timeout(8s)`. S176's DR/failover only fired on a clean 5xx; a hang would block the Worker until the edge wall-clock limit. Now a hang fast-fails into the pages.dev failover → DR cache. Deployed `--env production` (version `bb9a734d`, the S175 lesson held — single clean deploy); post-deploy verified scanner-403 + JSON-200 + probe `overall=up`.",
-        "Verification: `npm run build:check` green end-to-end (108-page crawl, 0 failures); generated artifacts (llms-full-shards, oracle ecosystem-state) re-settled.",
-        "Next session (S178): TT enforce re-probe ~06-12 · origin-migration field verdict once ≥5 post-deploy samples/side · confirm the next uptime-probe run goes green on the new code · geo-vitals non-US · founder: vaultsparked-proof yes/no + nav-sheet device verify."
+        "The first-party uptime probe now publishes — it was measuring availability and throwing it away. At /start the probe's first scheduled run on S177's two-signal code came back green (40s @ 01:39"
       ]
     },
     "ignis": {
