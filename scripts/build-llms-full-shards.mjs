@@ -97,6 +97,11 @@ function indexFor(projects) {
   for (const p of projects) {
     if (!p.slug || p.audience === 'internal') continue;
     const route = routeFor(p);
+    // Only advertise a shard the writer will actually emit — a shard is written
+    // only when its on-site route dir exists. Skip phantom shards (pure-forge
+    // projects with no on-site page) so the index has no dead links.
+    const dir = join(ROOT, route.replace(/^\//, '').replace(/\/$/, ''));
+    if (!existsSync(dir)) continue;
     lines.push(`- [${p.name}](${SITE}${route}llms-full.txt) — ${p.medium || 'project'} · ${p.vaultStatus || 'unknown'}`);
   }
   lines.push('');
