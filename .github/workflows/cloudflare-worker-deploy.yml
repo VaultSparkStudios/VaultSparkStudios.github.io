@@ -5,6 +5,13 @@ on:
     branches: [main]
     paths:
       - 'cloudflare/**'
+      - 'scripts/smoke-live.mjs'
+      - '.github/workflows/cloudflare-worker-deploy.yml'
+
+# Avoid overlapping deploys racing the same Worker route.
+concurrency:
+  group: worker-deploy-production
+  cancel-in-progress: false
 
 jobs:
   deploy-worker:
@@ -22,9 +29,23 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
-      - name: Deploy Worker via Wrangler
-        working-directory: cloudflare
-        run: npx wrangler@3 deploy --env production
+      - name: Install deps (pins wrangler via package.json)
+        run: npm ci
+
+      # Single source of truth: `npm run deploy` == the same command developers
+      # run locally (`wrangler deploy --env production --config cloudflare/...`).
+      # Never inline a bare `wrangler deploy` here — without --env production it
+      # pushes a routeless Worker that silently never updates the live route.
+      - name: Deploy Worker (npm run deploy)
+        run: npm run deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKER_API_TOKEN }}
+
+      # A green deploy is NOT proof the site is up. This gate fetches real nav
+      # routes through the live edge and fails the job (RED → GitHub notifies)
+      # if the Worker hangs / self-loops / serves nothing — the exact failure
+      # that took the apex down on 2026-06-08 while the deploy reported success.
+      - name: Post-deploy liveness gate
+        run: node scripts/smoke-live.mjs --base=https://vaultsparkstudios.com

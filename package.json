@@ -39,6 +39,7 @@
     "triage:a11y": "node scripts/triage-a11y.mjs",
     "deploy": "wrangler deploy --env production --config cloudflare/wrangler.toml",
     "deploy:bare": "wrangler deploy --config cloudflare/wrangler.toml",
+    "smoke:live": "node scripts/smoke-live.mjs",
     "preview": "wrangler dev --config cloudflare/wrangler.toml"
   },
   "devDependencies": {
