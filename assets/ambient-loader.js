@@ -37,6 +37,20 @@
       idle: true
     },
     {
+      // Studio-health genome strip — top-of-page SIL mini-bars. Off the cold-cache
+      // path (S178 split); skips the same surfaces the script itself does, so it
+      // never even fetches on portals/admin/api or [data-no-strip] pages.
+      src: '/assets/vault-genome-strip.js',
+      when: function () {
+        var p = location.pathname || '/';
+        if (/^\/(vault-member|investor-portal|admin|api)\//.test(p)) return false;
+        if (document.documentElement.hasAttribute('data-no-strip')) return false;
+        if (document.body && document.body.hasAttribute('data-no-strip')) return false;
+        return true;
+      },
+      idle: true
+    },
+    {
       // Returning-visitor momentum digest. Loads once a prior visit is recorded
       // (it sets its own baseline on first run, then shows on the next visit);
       // the script re-checks eligibility and bails honestly when <2 ships landed.

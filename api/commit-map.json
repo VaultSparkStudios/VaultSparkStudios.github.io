@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-07",
+  "generatedAt": "2026-06-08",
   "generatedBy": "scripts/build-commit-map.mjs",
   "source": "git log (local, noise-filtered)",
   "kind": "commit-map",
@@ -7,6 +7,76 @@
   "note": "Recent moves in the forge. Automated bookkeeping filtered out.",
   "count": 24,
   "entries": [
+    {
+      "sha": "7aefd598",
+      "ts": "2026-06-08T04:38:51.000Z",
+      "type": "feat",
+      "scope": "ux",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "S178 — returning-visitor momentum digest (returning-visitor-digest #3)"
+    },
+    {
+      "sha": "a783c7c6",
+      "ts": "2026-06-08T04:32:25.000Z",
+      "type": "feat",
+      "scope": "intelligence",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "S178 — auto-publish confirmed field-win proof (field-win-auto-publish #2)"
+    },
+    {
+      "sha": "707f85f3",
+      "ts": "2026-06-08T04:29:49.000Z",
+      "type": "feat",
+      "scope": "observability",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "S178 — first-party uptime now publishes (api/uptime.json + history + /status tile) and proves its own alarm"
+    },
+    {
+      "sha": "de1c7ebd",
+      "ts": "2026-06-07T23:07:52.000Z",
+      "type": "chore",
+      "scope": "closeout",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "settle public-intelligence artifacts after CI-bot rebase (S177)"
+    },
+    {
+      "sha": "c3ca2d05",
+      "ts": "2026-06-07T23:02:39.000Z",
+      "type": "feat",
+      "scope": "observability+resilience",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "S177 — uptime probe measures real availability, not CF bot-gauntlet + Worker origin-hang failover"
+    },
+    {
+      "sha": "fca975c8",
+      "ts": "2026-06-07T20:08:45.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "untrack S176 terminal scratch captures (absolute-path leak) + broaden .cache scratch gitignore"
+    },
+    {
+      "sha": "192a211e",
+      "ts": "2026-06-07T19:57:29.000Z",
+      "type": "chore",
+      "scope": "closeout",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "S176 write-back — CURRENT_STATE, TASK_BOARD, HANDOFF, WORK_LOG, DECISIONS (3), SIL 997, CDR, impact brief + settled g…"
+    },
     {
       "sha": "a5f74b6a",
       "ts": "2026-06-07T19:31:28.000Z",
@@ -176,76 +246,6 @@
       "move": "Documented",
       "tone": "muted",
       "summary": "S174 execution log — 10/10 shipped, Priority 204.9"
-    },
-    {
-      "sha": "03118709",
-      "ts": "2026-06-05T03:19:31.000Z",
-      "type": "perf",
-      "scope": "handoff-cache-ttl",
-      "breaking": false,
-      "move": "Sped up",
-      "tone": "perf",
-      "summary": "content-hash cache, drop the 1h TTL re-burn (S174 audit #6)"
-    },
-    {
-      "sha": "77998e5a",
-      "ts": "2026-06-05T03:19:31.000Z",
-      "type": "fix",
-      "scope": "brief-signal-plumbing",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "Tests/Context-age/Genome signals truthful again (S174 audit #10)"
-    },
-    {
-      "sha": "4f814515",
-      "ts": "2026-06-05T03:19:31.000Z",
-      "type": "feat",
-      "scope": "nav-sheet-canary-readout",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "verdict engine + canary 5%->25% on silence evidence (S174 audit #5)"
-    },
-    {
-      "sha": "5501574a",
-      "ts": "2026-06-05T03:19:30.000Z",
-      "type": "fix",
-      "scope": "staging-parity",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "CANON-007 parity green - root-caused 3 stacked defects (S174 audit #7)"
-    },
-    {
-      "sha": "ba388b73",
-      "ts": "2026-06-05T03:19:30.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "drop junk audit-sample error dump from cache"
-    },
-    {
-      "sha": "aeee1e06",
-      "ts": "2026-06-05T03:19:30.000Z",
-      "type": "fix",
-      "scope": "tt-sink-burndown",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "burn down all clustered TT sinks, evidence-corrected scope (S174 audit #4)"
-    },
-    {
-      "sha": "fceac910",
-      "ts": "2026-06-05T03:19:30.000Z",
-      "type": "fix",
-      "scope": "tt-intake-forensics",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "parse Reporting-API array shape + sink clustering (S174 audit #3)"
     }
   ]
 }

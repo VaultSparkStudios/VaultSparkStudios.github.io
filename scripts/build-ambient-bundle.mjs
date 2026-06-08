@@ -61,7 +61,8 @@ const AMBIENT_CORE_SOURCES = [
 const AMBIENT_FEATURE_SOURCES = [
   'assets/page-sigil.js',
   'assets/vault-atlas.js',
-  'assets/vault-genome-strip.js',
+  // vault-genome-strip.js moved to predicate loading (assets/ambient-loader.js)
+  // S178 — #1 ambient split candidate; capability-gated, off the cold-cache path.
   'assets/rank-orb.js',
   'assets/rate-page.js',
   'assets/ignis-lens.js',

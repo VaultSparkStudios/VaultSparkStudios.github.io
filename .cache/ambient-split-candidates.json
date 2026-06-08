@@ -1,24 +1,13 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-07T22:32:30.284Z",
+  "generatedAt": "2026-06-08T04:41:14.857Z",
   "generatedBy": "scripts/report-ambient-coverage.mjs",
-  "totalSources": 28,
-  "totalBytes": 106497,
+  "totalSources": 27,
+  "totalBytes": 101679,
   "forbiddenAmbientSourcesPresent": [],
   "candidates": [
     {
       "rank": 1,
-      "source": "assets/vault-genome-strip.js",
-      "sizeKb": 5.8,
-      "reasons": [
-        "capability gated"
-      ],
-      "forbiddenAmbient": false,
-      "risk": "low",
-      "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/vault-genome-strip.js behind a conditional loader."
-    },
-    {
-      "rank": 2,
       "source": "assets/adaptive-speculation.js",
       "sizeKb": 5.2,
       "reasons": [],
@@ -27,7 +16,7 @@
       "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/adaptive-speculation.js behind a conditional loader."
     },
     {
-      "rank": 3,
+      "rank": 2,
       "source": "assets/signed-in-state.js",
       "sizeKb": 4.7,
       "reasons": [
@@ -38,7 +27,7 @@
       "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/signed-in-state.js is lazy-loaded only after session state is known."
     },
     {
-      "rank": 4,
+      "rank": 3,
       "source": "assets/vault-rank-bar.js",
       "sizeKb": 4.6,
       "reasons": [
@@ -49,7 +38,7 @@
       "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/vault-rank-bar.js is lazy-loaded only after session state is known."
     },
     {
-      "rank": 5,
+      "rank": 4,
       "source": "assets/vault-atlas.js",
       "sizeKb": 4.4,
       "reasons": [],
@@ -58,7 +47,7 @@
       "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/vault-atlas.js behind a conditional loader."
     },
     {
-      "rank": 6,
+      "rank": 5,
       "source": "assets/page-sigil.js",
       "sizeKb": 4.4,
       "reasons": [],
@@ -67,7 +56,7 @@
       "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/page-sigil.js behind a conditional loader."
     },
     {
-      "rank": 7,
+      "rank": 6,
       "source": "assets/scroll-depth.js",
       "sizeKb": 4.2,
       "reasons": [

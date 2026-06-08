@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-07",
+  "generatedAt": "2026-06-08",
   "generatedBy": "scripts/build-feedback-provenance.mjs",
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 4,
+  "themeCount": 3,
   "themes": [
     {
       "key": "worlds",
@@ -23,8 +23,15 @@
     {
       "key": "transparency",
       "label": "Transparency",
-      "count": 1,
+      "count": 2,
       "commits": [
+        {
+          "sha": "707f85f3",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "S178 — first-party uptime now publishes (api/uptime.json + history + /status tile) and proves its own alarm",
+          "ts": "2026-06-08T04:29:49.000Z"
+        },
         {
           "sha": "611d4bcf",
           "move": "Shipped",
@@ -39,6 +46,13 @@
       "label": "Speed",
       "count": 6,
       "commits": [
+        {
+          "sha": "fca975c8",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "untrack S176 terminal scratch captures (absolute-path leak) + broaden .cache scratch gitignore",
+          "ts": "2026-06-07T20:08:45.000Z"
+        },
         {
           "sha": "a5f74b6a",
           "move": "Shipped",
@@ -73,27 +87,6 @@
           "tone": "sparked",
           "summary": "first-party analytics from RUM, gtag removed sitewide (S175 #5)",
           "ts": "2026-06-05T19:49:41.000Z"
-        },
-        {
-          "sha": "699d25a8",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "HTML edge window 60s->300s + 103 Early Hints (S175 #2+#3)",
-          "ts": "2026-06-05T19:21:49.000Z"
-        }
-      ]
-    },
-    {
-      "key": "frontdoor",
-      "label": "Front door",
-      "count": 1,
-      "commits": [
-        {
-          "sha": "4f814515",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "verdict engine + canary 5%->25% on silence evidence (S174 audit #5)",
-          "ts": "2026-06-05T03:19:31.000Z"
         }
       ]
     }
