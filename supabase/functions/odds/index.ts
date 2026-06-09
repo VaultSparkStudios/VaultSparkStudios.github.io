@@ -17,12 +17,29 @@ import { getActivePlanKey, hasEntitlement } from '../_shared/membershipAccess.ts
 const ODDS_API_KEY = Deno.env.get('ODDS_API_KEY') ?? '';
 const ODDS_BASE    = 'https://api.the-odds-api.com/v4';
 
-const CORS = {
-  'Access-Control-Allow-Origin':  '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+// S182 audit (odds-cors-pin): this function fronts a metered paid Odds API key,
+// so a wildcard CORS let any site drive it with a leaked member JWT. Pin via an
+// env allowlist. Set `ODDS_ALLOWED_ORIGINS` (comma-separated, e.g. the PromoGrind
+// app origin) to activate strict pinning. Defaults to '*' when unset so the live
+// tool is never broken by a deploy before the env is configured. The JWT +
+// entitlement check below remains the primary control; CORS is defense-in-depth.
+const ODDS_ALLOWED_ORIGINS = (Deno.env.get('ODDS_ALLOWED_ORIGINS') ?? '*')
+  .split(',').map((s) => s.trim()).filter(Boolean);
+function corsOrigin(origin: string | null): string {
+  if (ODDS_ALLOWED_ORIGINS.includes('*')) return '*';
+  if (origin && ODDS_ALLOWED_ORIGINS.includes(origin)) return origin;
+  return ODDS_ALLOWED_ORIGINS[0] ?? 'null';
+}
+function buildCors(origin: string | null) {
+  return {
+    'Access-Control-Allow-Origin':  corsOrigin(origin),
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Vary': 'Origin',
+  };
+}
 
 serve(async (req: Request) => {
+  const CORS = buildCors(req.headers.get('Origin'));
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: CORS });
   }

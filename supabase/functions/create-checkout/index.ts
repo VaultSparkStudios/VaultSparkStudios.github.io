@@ -164,7 +164,8 @@ serve(async (req: Request) => {
     return json({ url: session.url }, cors);
 
   } catch (err) {
-    return json({ error: String(err) }, cors, 500);
+    console.error('create-checkout error:', err);
+    return json({ error: 'Internal error' }, cors, 500);
   }
 });
 

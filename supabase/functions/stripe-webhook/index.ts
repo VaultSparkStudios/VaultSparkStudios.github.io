@@ -37,7 +37,7 @@ serve(async (req: Request) => {
     event = await stripe.webhooks.constructEventAsync(body, signature, WEBHOOK_SECRET);
   } catch (err) {
     console.error('Webhook signature verification failed:', err);
-    return new Response(`Webhook error: ${err}`, { status: 400 });
+    return new Response('Webhook signature verification failed', { status: 400 });
   }
 
   const supabase = createClient(
@@ -268,6 +268,6 @@ serve(async (req: Request) => {
 
   } catch (err) {
     console.error('Handler error:', err);
-    return new Response(`Handler error: ${err}`, { status: 500 });
+    return new Response('Internal error', { status: 500 });
   }
 });
