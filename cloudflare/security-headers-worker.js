@@ -246,6 +246,22 @@ async function checkRateLimit(env, ip, path) {
   return { allowed: true, remaining: RATE_LIMIT_MAX - current - 1 };
 }
 
+// Dedicated limiter for the unauthenticated /v/rum beacon (S182 audit). Generous
+// enough for real multi-page browsing (~1 beacon/route), tight enough to stop a
+// flood from inflating R2 write/storage cost OR poisoning the field dataset that
+// drives the perf-budget gates. Per IP. Fails OPEN if KV is unavailable so a KV
+// blip never silently drops real vitals.
+const RUM_RL_WINDOW_SEC = 60;
+const RUM_RL_MAX = 60;
+async function checkRumRateLimit(env, ip) {
+  if (!env.RATE_LIMIT || !ip) return true;
+  const key = `rl:rum:${ip}:${Math.floor(Date.now() / (RUM_RL_WINDOW_SEC * 1000))}`;
+  const current = Number(await env.RATE_LIMIT.get(key)) || 0;
+  if (current >= RUM_RL_MAX) return false;
+  await env.RATE_LIMIT.put(key, String(current + 1), { expirationTtl: RUM_RL_WINDOW_SEC + 60 });
+  return true;
+}
+
 // ---------------------------------------------------------------------------
 // Real-user vitals ingestion (R2-backed, no personal identifiers)
 // ---------------------------------------------------------------------------
@@ -287,6 +303,10 @@ async function handleRumIngest(request, env, ctx) {
   if (request.method !== 'POST') return corsRumResponse(JSON.stringify({ ok: false, error: 'method_not_allowed' }), { status: 405 });
   const len = Number(request.headers.get('Content-Length') || 0);
   if (len > RUM_MAX_BODY_BYTES) return corsRumResponse(JSON.stringify({ ok: false, error: 'payload_too_large' }), { status: 413 });
+  const ip = request.headers.get('CF-Connecting-IP') || '';
+  if (!(await checkRumRateLimit(env, ip))) {
+    return corsRumResponse(JSON.stringify({ ok: false, error: 'rate_limited' }), { status: 429 });
+  }
   let raw;
   try { raw = await request.json(); } catch { return corsRumResponse(JSON.stringify({ ok: false, error: 'bad_json' }), { status: 400 }); }
   const vitals = raw && typeof raw.vitals === 'object' ? raw.vitals : {};

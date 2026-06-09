@@ -38,6 +38,11 @@ const ORIGIN = flag('--origin', 'https://vaultsparkstudios-website.pages.dev').r
 const PROD = flag('--prod', flag('--base', 'https://vaultsparkstudios.com')).replace(/\/$/, '');
 const CONTENT_ROUTES = flag('--content-routes', '/,/membership/').split(',').filter(Boolean);
 const EDGE_ROUTES = flag('--edge-routes', '/,/api/founder-presence.json').split(',').filter(Boolean);
+// JSON artifacts checked against the ORIGIN (Pages) for *validity*, not just a 200.
+// CI runs from a datacenter so the prod edge bot-challenges JSON paths (403) too —
+// we can't assert edge content from CI, but we CAN catch a deploy that shipped
+// malformed JSON (a broken generator) which the HTML-marker check would miss.
+const JSON_ROUTES = flag('--json-routes', '/api/founder-presence.json,/api/site-health.json').split(',').filter(Boolean);
 const MARKER = flag('--marker', 'VaultSpark');
 const MIN_BYTES = Number(flag('--min-bytes', '1000'));
 const TIMEOUT_MS = Number(flag('--timeout-ms', '12000'));
@@ -80,6 +85,18 @@ function judgeContent(r) {
   return { ok: true, reason: `200 ${r.bytes}B` };
 }
 
+// JSON (origin): 200 + parseable, non-empty object. Catches a deploy that ships
+// malformed/empty JSON artifacts — invisible to the HTML marker check.
+function judgeJson(r) {
+  if (r.status !== 200) return { ok: false, reason: r.error || `HTTP ${r.status}` };
+  let obj;
+  try { obj = JSON.parse(r.body); } catch { return { ok: false, reason: 'unparseable JSON' }; }
+  if (!obj || typeof obj !== 'object') return { ok: false, reason: 'not a JSON object' };
+  const keys = Array.isArray(obj) ? obj.length : Object.keys(obj).length;
+  if (keys === 0) return { ok: false, reason: 'empty JSON' };
+  return { ok: true, reason: `200 valid JSON (${keys} keys)` };
+}
+
 // EDGE: alive iff it RESPONDED fast with status < 500. Hang (0) / 5xx = down.
 // A bot-challenge 403 is "alive" — the edge answered. This is the self-loop guard.
 function judgeEdge(r) {
@@ -113,6 +130,11 @@ async function main() {
     console.log(`  ${r.ok ? '✅' : '❌'} content ${route} — ${r.reason} (${r.ms}ms, ${r.attempts}x)`);
     results.push({ kind: 'content', route, ...r });
   }
+  for (const route of JSON_ROUTES) {
+    const r = await checkWithRetry('json', `${ORIGIN}${route}`, judgeJson, true);
+    console.log(`  ${r.ok ? '✅' : '❌'} json ${route} — ${r.reason} (${r.ms}ms, ${r.attempts}x)`);
+    results.push({ kind: 'json', route, ...r });
+  }
   for (const route of EDGE_ROUTES) {
     const r = await checkWithRetry('edge', `${PROD}${route}`, judgeEdge, false);
     console.log(`  ${r.ok ? '✅' : '❌'} edge ${route} — ${r.reason} (${r.ms}ms, ${r.attempts}x)`);
@@ -142,8 +164,15 @@ function selfTest() {
     { r: { status: 503 }, ok: false },
     { r: { status: 0, error: 'hang >12000ms' }, ok: false }, // the self-loop symptom
   ];
+  const jsonCases = [
+    { r: { status: 200, body: '{"presence":"online","ts":1}' }, ok: true },
+    { r: { status: 200, body: '{}' }, ok: false }, // empty object
+    { r: { status: 200, body: 'not json' }, ok: false },
+    { r: { status: 404, body: '{}' }, ok: false },
+  ];
   let pass = 0, total = 0;
   for (const [i, c] of contentCases.entries()) { total++; const got = judgeContent(c.r).ok; const good = got === c.ok; if (good) pass++; console.log(`  ${good ? 'PASS' : 'FAIL'} content case ${i + 1}: expected ${c.ok}, got ${got}`); }
+  for (const [i, c] of jsonCases.entries()) { total++; const got = judgeJson(c.r).ok; const good = got === c.ok; if (good) pass++; console.log(`  ${good ? 'PASS' : 'FAIL'} json case ${i + 1}: expected ${c.ok}, got ${got}`); }
   for (const [i, c] of edgeCases.entries()) { total++; const got = judgeEdge(c.r).ok; const good = got === c.ok; if (good) pass++; console.log(`  ${good ? 'PASS' : 'FAIL'} edge case ${i + 1}: expected ${c.ok}, got ${got}`); }
   console.log(`self-test: ${pass}/${total} passed`);
   process.exit(pass === total ? 0 : 1);
