@@ -1,8 +1,8 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T18:43:15.626Z",
+  "generatedAt": "2026-06-09T10:03:42.403Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
-  "source": "data\\rum-history.ndjson",
+  "source": "data/rum-history.ndjson",
   "windowDays": 7,
   "minSamples": 50,
   "fieldBudget": {
@@ -10,18 +10,18 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 35,
+  "totalSamples": 55,
   "sufficientRoutes": 0,
   "routes": {
     "/": {
-      "samples": 10,
+      "samples": 16,
       "sufficient": false,
       "p75": {
-        "lcp": 1588,
+        "lcp": 1792,
         "cls": 0.051,
         "inp": 96,
         "fcp": 1588,
-        "ttfb": 1214
+        "ttfb": 616
       }
     },
     "/__rum_selftest": {
@@ -36,7 +36,7 @@
       }
     },
     "/games/": {
-      "samples": 2,
+      "samples": 5,
       "sufficient": false,
       "p75": {
         "lcp": 7420,
@@ -47,7 +47,7 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 2,
+      "samples": 3,
       "sufficient": false,
       "p75": {
         "lcp": 1388,
@@ -69,14 +69,14 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 6,
+      "samples": 12,
       "sufficient": false,
       "p75": {
-        "lcp": 532,
+        "lcp": 560,
         "cls": 0.0287,
         "inp": 96,
-        "fcp": 532,
-        "ttfb": 44
+        "fcp": 560,
+        "ttfb": 114
       }
     },
     "/ignis/": {
@@ -112,15 +112,26 @@
         "ttfb": 15
       }
     },
-    "/oracle/": {
+    "/nervous-system/": {
       "samples": 2,
       "sufficient": false,
       "p75": {
-        "lcp": 876,
+        "lcp": 520,
+        "cls": 0.0857,
+        "inp": 152,
+        "fcp": 520,
+        "ttfb": 172
+      }
+    },
+    "/oracle/": {
+      "samples": 3,
+      "sufficient": false,
+      "p75": {
+        "lcp": 1140,
         "cls": 0.0223,
-        "inp": 384,
-        "fcp": 484,
-        "ttfb": 105
+        "inp": 552,
+        "fcp": 1140,
+        "ttfb": 194
       }
     },
     "/roadmap/": {
@@ -154,6 +165,17 @@
         "inp": 160,
         "fcp": 800,
         "ttfb": 87
+      }
+    },
+    "/terms/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 264,
+        "cls": 0.0145,
+        "inp": 0,
+        "fcp": 264,
+        "ttfb": 25
       }
     },
     "/universe/": {
