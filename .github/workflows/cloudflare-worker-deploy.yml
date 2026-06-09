@@ -60,7 +60,9 @@ jobs:
       # itself succeeded (a failed deploy changed nothing to roll back).
       - name: Auto-rollback on failed liveness
         if: failure() && steps.deploy.outcome == 'success'
-        run: npx wrangler rollback --env production --config cloudflare/wrangler.toml --yes --message "auto-rollback: post-deploy liveness gate failed (run ${{ github.run_id }})"
+        run: >-
+          npx wrangler rollback --env production --config cloudflare/wrangler.toml --yes
+          --message "auto-rollback - liveness gate failed (run ${{ github.run_id }})"
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CF_WORKER_API_TOKEN }}
 
