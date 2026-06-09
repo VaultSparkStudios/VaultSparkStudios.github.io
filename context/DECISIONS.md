@@ -2,6 +2,14 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-08 — S182 — A green deploy is not proof the site is up; the Worker must never fetch its own route
+
+The production outage proved two things. (1) **The Worker must fetch its origin by hostname (the Pages `*.pages.dev`), never re-fetch its own apex route** — once the apex has no separate backing origin, `fetch(request)` self-loops. `originFetch` now rewrites to `PRIMARY_ORIGIN`. (2) **The deploy contract is now deploy → liveness gate → auto-rollback**, not just deploy. `cloudflare-worker-deploy.yml` runs `smoke-live.mjs` after `npm run deploy` and auto-reverts on failure. A deploy that reports success is no longer trusted as proof of availability — `smoke-live` (Pages content + edge-alive, bot-challenge-tolerant) is. Corollary: `package.json deploy` defaults to `--env production` so the routed Worker can't silently go stale.
+
+### 2026-06-08 — S182 — Non-breaking-by-default for config-gated security fixes; escalation-gated product items deferred
+
+`odds` CORS pinning ships as an env allowlist that **defaults to permissive** so a deploy can't break the externally-hosted PromoGrind tool before `ODDS_ALLOWED_ORIGINS` is configured (the JWT+entitlement check remains the primary control). The S182 audit's highest-value *product* items (anonymous Ask IGNIS trial, Eternal price-lock scarcity, the funnel-bridge UX cluster) were **deliberately deferred, not shipped blind** — they cross CLAUDE.md escalation gates (subscription pricing, studio-paid LLM cost / CANON-029) or are net-new UX warranting design + founder real-device review per the flag-gate-high-risk pattern.
+
 ### 2026-06-08 — S181 — AI discovery health is a public status proof, not only a hidden gate
 
 **Decision:** Publish `api/ai-discovery-health.json` from the same validators that power `check-ai-discovery-spine.mjs`, and render it on `/status/` as an "AI discovery spine" live-signal tile.

@@ -12,21 +12,21 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S181 shipped AI discovery public health + runway hygiene — api/ai-discovery-health.json is healthy and shown on /status/; task-board gate now enforces one active Now and one current Human Action Required block; build:check green",
-  "nextMilestone": "Run TT enforce re-probe (~2026-06-12 due) + confirm api/field-win.json flips hasConfirmed once / accrues enough post-deploy samples + verify first low-churn uptime-publish commit + watch Lighthouse CI after push",
+  "currentFocus": "S182 recovered a real production outage (Worker apex self-loop after Pages migration) — fixed by by-hostname origin fetch + a post-deploy liveness gate + auto-rollback; site healthy (6/6 smoke). Then full 9-axis audit (23 items) + /implement shipped 7 (reliability + maintainability). build:check is NOT green locally (non-deterministic --check gates, audit #23).",
+  "nextMilestone": "Deploy the committed edge-fn security fixes (supabase functions deploy create-checkout stripe-webhook assign-discord-role odds) + add Worker unit tests (audit #14) + make the non-deterministic build:check gates deterministic (audit #23) so the green/red signal is trustworthy again",
   "blockers": [
     "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
     "Founder device verify: membership proof loop + nav-sheet"
   ],
-  "lastUpdated": "2026-06-08",
-  "currentSession": 181,
+  "lastUpdated": "2026-06-09",
+  "currentSession": 182,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-06-08",
-  "silScore": 999,
-  "silAvg3": 998.7,
-  "silVelocity": 4,
-  "silDebt": "→",
-  "silLastSession": 181,
+  "silScore": 950,
+  "silAvg3": 982.7,
+  "silVelocity": 7,
+  "silDebt": "↓",
+  "silLastSession": 182,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -53,7 +53,7 @@
     {
       "type": "tests",
       "command": "npm run build:check",
-      "status": "green"
+      "status": "yellow"
     },
     {
       "type": "local",
@@ -74,16 +74,16 @@
   "silMax": 1000,
   "silScoreLegacy500": 476,
   "silCategoriesV3": {
-    "devHealth": 100,
-    "creativeAlignment": 100,
-    "momentum": 100,
-    "engagement": 99,
-    "processQuality": 100,
+    "devHealth": 88,
+    "creativeAlignment": 98,
+    "momentum": 96,
+    "engagement": 95,
+    "processQuality": 90,
     "crossRepoCoherence": 100,
-    "securityPosture": 100,
-    "ecosystemIntegration": 100,
-    "capitalEfficiency": 100,
-    "automationCoverage": 100
+    "securityPosture": 98,
+    "ecosystemIntegration": 95,
+    "capitalEfficiency": 98,
+    "automationCoverage": 92
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {

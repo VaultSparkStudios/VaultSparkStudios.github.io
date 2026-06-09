@@ -8,16 +8,35 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████
-Avgs - 3: 998.7 | 5: 998.0 | 10: 995.1 | 25: 982.7 | all: 963 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 100.0 | Momentum 100.0 | Engage 99.0 | Process 100.0
-Velocity trend: → (S179: 4/4 fresh frontier audit; S178 6/6, S177 2/2 — averaging ~4)  |  Protocol velocity: ↑ (shipped /agents.json CANON-011 spine + spine-consistency gate; ambient-split-by-proven-mount canon) |  Debt: → (field verdict + TT re-probe are pending data, not work)
-Momentum runway: ~4 sessions (most Now items are evidence-gated verifies — TT re-probe 06-12 due · field-win lights-up · uptime-publish verify · geo — not work)  |  Intent rate: 100% (last 5)
-Last session: 2026-06-08 | Session 179 | Total: 999/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
+Sparkline (last 5 totals): ████▇
+Avgs - 3: 982.7 | 5: 989.2 | 10: 989.6 | 25: 980.0 | all: 962 (v3.0 /1000)
+  └ 3-session: Dev 96.0 | Align 99.3 | Momentum 98.7 | Engage 97.7 | Process 96.7
+Velocity trend: ↑ (S182: 7 shipped under an unplanned outage; S179 4/4, S178 6/6 — strong)  |  Protocol velocity: ↑ (deploy contract now deploy→liveness-gate→auto-rollback; by-hostname origin fetch) |  Debt: ↓ (−1.18 MB dead bundles, −8 dead scripts; but build:check non-determinism is open, audit #23)
+Momentum runway: ~16 deferred audit items (real work, not just verifies) — top: feedback-loop-closure, worker-unit-tests, non-datacenter uptime probe, nondeterministic-check-gates  |  Intent rate: 100% (last 5)
+Last session: 2026-06-08 | Session 182 | Total: 950/1000 (v3.0) | Velocity: 7 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-08 — Session 182 (production outage fix → full 9-axis audit → /implement 7/23) | Total: 950/1000 (v3.0) | Velocity: 7 | Debt: ↓
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 88 | Recovered a real full outage; site verified 6/6 smoke; Worker deploys green. Dinged honestly: `build:check` is NOT green locally — non-deterministic `--check` gates (ignis-search-index, oracle feed) drift the instant `npm run build` runs (logged as audit #23, not papered over with live-data churn). |
+| Creative Alignment | 98 | Respected escalation gates hard — deferred pricing (Eternal lock) + studio-paid-LLM (anon IGNIS) items rather than ship blind; odds CORS ships non-breaking-by-default. |
+| Momentum | 96 | Outage→fix→audit(23)→implement(7) in one session; every shipped item names a reliability/cost outcome; 16 deferred items recorded with reasons in IMPLEMENT_PLAN. |
+| Engagement | 95 | The work serves the most important UX of all — the site being up. Auto-rollback + liveness gate turn a silent outage into a self-healing, founder-notified event. |
+| Process Quality | 90 | Verified every sub-agent claim before acting — caught 3 false positives (pathways "dead link", the orphan-checker's dangerous git-rm-of-live-files, dead-script refs). Dinged: shipped a broken workflow once (inline-colon YAML → 0s fail) and initially mis-diagnosed CI-deploy staleness before correcting on evidence. |
+| Cross-Repo Coherence | 100 | Website repo only; no sibling writes or Ark bypasses. |
+| Security Posture | 98 | Redacted edge-fn error leakage, per-IP rate-limit on `/v/rum` (R2 cost + data-poison defense), env-driven odds CORS; secret + supply-chain scans clean; no secrets in prompts (CF token resolved via gateway). |
+| Ecosystem Integration | 95 | `smoke-live` + auto-rollback + corpus-aware orphan gate are reusable fleet patterns; self-loop + workflow-YAML lessons captured as shareable memories. |
+| Capital Efficiency | 98 | All free-tier; −1.18 MB dead bundles, −8 dead scripts; `/v/rum` limiter caps R2 write cost; no new spend. |
+| Automation Coverage | 92 | New post-deploy liveness gate + auto-rollback + JSON smoke assertions + corpus-aware orphan gate. Dinged: the non-deterministic `build:check` gates remain unfixed (deferred). |
+
+**Top win:** Turned a full production outage into a self-healing deploy path — by-hostname origin fetch (no self-loop), a CI-safe liveness gate that can't false-pass on a bot-challenge, and auto-rollback to last-known-good. The site can't silently go dark on a bad deploy again.
+**Top gap:** `build:check` can't go green locally because of non-deterministic `--check` gates — a randomly-red signal is part of why this outage's risk went unnoticed across ~100 gates; it's audit #23 but unshipped.
+**Intent outcome:** Achieved beyond intent — the session opened on an unplanned outage and still completed the full diagnose→fix→audit→implement→closeout arc.
 
 ## 2026-06-08 — Session 179 (/start → /audit → /implement → /closeout · 4/4 fresh frontier audit: /agents.json AI-discovery spine + meta-description floor gate + nav aria-current + ambient-split wave 2) | Total: 999/1000 (v3.0) | Velocity: 4 | Debt: →
 

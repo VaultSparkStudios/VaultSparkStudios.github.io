@@ -1,8 +1,18 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-08 (Session 181)
+Last updated: 2026-06-08 (Session 182)
 
-Session Intent: Continue active durable goal-chain `/start → /audit → /implement → /closeout` with genius-level/creative execution, personalized to this site's current flags/blockers. **Outcome: Achieved for Session 181 — 2/2 fresh audit items shipped (Priority 42.4), `npm run build:check` exit 0 (108 pages, 0 failures), AI discovery public health + task-board runway hygiene landed.**
+Session Intent: Unplanned — opened on a founder-reported production outage. **Outcome: site restored + recurrence closed, then full 9-axis audit (23 items) + /implement shipped 7. Site healthy (6/6 smoke), Worker deploys green; `build:check` not green locally (non-deterministic gates, audit #23).**
+
+## Where We Left Off (Session 182)
+- **Recovered a full production outage.** Apex hung (0 bytes) while `pages.dev` origin was healthy — the Worker fetched its own apex route post-Pages-migration and self-looped. Fixed: `originFetch` rewrites the primary fetch to the Pages origin by hostname (`PRIMARY_ORIGIN`); deployed via `--env production` (the prior bare `wrangler deploy` never updated the routed Worker); added `scripts/smoke-live.mjs` post-deploy liveness gate + auto-rollback to last-known-good. Site verified 6/6 smoke.
+- **Full audit:** `docs/AUDIT_2026-06-08-S182.{json,md}` — 23 items, combined Priority 407.7, via 3 sub-agents. Two frontiers: (1) reliability blind spots the ~100 gates missed; (2) a rich paid-member economy with almost nothing bridging it to the anonymous funnel. Supply-chain + secret scans clean.
+- **/implement shipped 7/23:** auto-rollback · smoke JSON-validity assertion · `/v/rum` per-IP rate-limit (live) · edge-fn error redaction · odds env-CORS · −1.18 MB dead ambient bundles + corpus-aware orphan gate (fixed a false positive that flagged 18-20-page-referenced hashes for `git rm`) · −8 dead scripts.
+- **Needs your action:** `supabase functions deploy create-checkout stripe-webhook assign-discord-role odds` to make the edge-fn security fixes live; set `ODDS_ALLOWED_ORIGINS` to the PromoGrind origin to activate strict CORS.
+- **Honest caveat:** `build:check` is not green locally — non-deterministic `--check` gates (ignis-search-index, oracle feed) drift the instant `npm run build` runs. Logged as audit #23; not chased with live-data churn.
+- **Next session:** deploy the edge-fn fixes; add Worker unit tests (#14); make the non-deterministic gates deterministic (#23) so the green/red signal is trustworthy; consider a non-datacenter uptime probe (#10). Then the funnel cluster (feedback-loop-closure #1) when ready for product work.
+
+<details><summary>Where We Left Off (Session 181)</summary>
 
 ## Where We Left Off (Session 181)
 - Shipped: 2 focused improvements — AI discovery public health + task-board runway hygiene.
@@ -11,6 +21,8 @@ Session Intent: Continue active durable goal-chain `/start → /audit → /imple
 - **The board is harder to confuse.** `check-stale-open-tasks.mjs` now flags duplicate active `Now` sections and duplicate current `Human Action Required` blocks. `TASK_BOARD.md` has one S181 runway and one current founder-action section; older runway/founder sections are preserved as historical instead of being left active.
 - Honest notes: mobile Lighthouse >=90 is covered by `.github/workflows/lighthouse.yml` after push; there is no repo-local Lighthouse command without downloading tooling, so local verification used the repo's crawl/build contracts. The known advisory signals remain: `assets/vaultsparked-proof.js` is still founder yes/no; `api/field-win.json` is honest-dark until post samples confirm; TT enforce waits for the ~2026-06-12 re-probe.
 - Next session: watch post-push Lighthouse/CI; run TT re-probe when due; verify first low-churn uptime publish commit; check field-win/geo-vitals evidence; optionally address the now-explicit board-size advisory with `rotate-taskboard.mjs` if the founder wants more token savings.
+
+</details>
 
 <details><summary>Where We Left Off (Session 180)</summary>
 

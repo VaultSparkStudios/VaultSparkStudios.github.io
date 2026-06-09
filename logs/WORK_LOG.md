@@ -1,5 +1,13 @@
 # Work Log
 
+## 2026-06-08 — Session 182 (production outage fix → full 9-axis audit → /implement 7/23)
+
+- Founder: "Why is my website not loading?" → it was genuinely down (apex hung, 0 bytes; `pages.dev` origin healthy). Diagnosed the Cloudflare Worker self-loop (fetched its own apex route, no backing origin post-S175-Pages-migration). Fixed: `originFetch` rewrites primary fetch to the Pages origin by hostname (`PRIMARY_ORIGIN`); deployed via `--env production` (prior bare `wrangler deploy` never updated the routed Worker); added `scripts/smoke-live.mjs` post-deploy liveness gate (CI-safe two-signal: Pages content + edge-alive, tolerates datacenter bot-challenge 403). Site restored, 6/6 smoke.
+- Founder: "fix all" → fixed `package.json deploy` flag, committed + pushed, repo↔prod back in sync.
+- Founder: "do full website audit and analysis" → 3 sub-agents (security/reliability, perf/maintainability, UX/funnel) → `docs/AUDIT_2026-06-08-S182.{json,md}` (23 items, Priority 407.7). Supply-chain + secret scans clean. Shipped 3 incidental fixes (build:check llms drift, CSP deploy-trigger gap, dead link) + found build:check non-determinism (#23).
+- Founder: "/implement" → 7/23 shipped (Wave 1 reliability ×5, Wave 2 maintainability ×2). One YAML iteration (inline colon in auto-rollback `run:` → 0s workflow-file failure → block scalar). Two edge-fn items need `supabase functions deploy`. Deferred 16 (pricing/cost escalation, net-new UX needing design review, build-pipeline risk).
+- Memories: `feedback_worker_apex_self_loop_outage`, `feedback_validate_workflow_yaml_before_push`.
+
 ## 2026-06-08 — Session 179 (goal-chain: /agents.json AI-discovery spine + meta-description floor gate + nav aria-current + ambient-split wave 2)
 
 - Founder durable `/goal`: `/start → /audit → /implement → /closeout`, genius-level/creative, post-closeout impact score; analyze + continue if cut off. Repo was clean (last commit = S178 closeout) → not cut off → ran the full loop.

@@ -1,6 +1,17 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-08 (Session 181 — goal-chain in progress: /start → /audit → /implement → /closeout · audit frontier: AI discovery health + task-board runway hygiene)
+Last updated: 2026-06-08 (Session 182 — production outage fix + full 9-axis audit + /implement 7/23)
+
+## Done (Session 182 — outage fix → /audit → /implement · 7 items shipped)
+
+- [x] **[S182][REL/P0] PROD-OUTAGE-WORKER-SELF-LOOP — DONE.** Site was fully down (apex hung, zero bytes). Worker fetched its own apex route post-Pages-migration → self-loop. Fix: `originFetch` rewrites primary fetch to Pages origin by hostname; `package.json deploy` defaults `--env production`; new `smoke-live.mjs` post-deploy liveness gate. Site verified 6/6 smoke. **DONE S182**
+- [x] **[S182][REL/P0] WORKER-AUTO-ROLLBACK — DONE.** `cloudflare-worker-deploy.yml` auto-reverts (`wrangler rollback --yes`) + re-smokes when deploy succeeds but liveness fails. Deployed green (CI run 27177181660). **DONE S182**
+- [x] **[S182][REL/P1] SMOKE-LIVE-JSON-ASSERT — DONE.** `smoke-live.mjs` validates JSON artifacts vs Pages origin (catches malformed JSON). self-test 12/12. **DONE S182**
+- [x] **[S182][SEC/P1] RUM-BEACON-RATE-LIMIT — DONE (live).** `/v/rum` per-IP 60/min, fails open. **DONE S182**
+- [x] **[S182][SEC/P2] EDGE-FN-ERROR-REDACTION — DONE (needs `supabase functions deploy`).** Redacted raw errors in create-checkout, stripe-webhook, assign-discord-role. **DONE S182**
+- [x] **[S182][SEC/P2] ODDS-CORS-PIN — PARTIAL (needs config + deploy).** Wildcard→env allowlist `ODDS_ALLOWED_ORIGINS`; defaults `*` until set. **DONE S182 (activation pending)**
+- [x] **[S182][MAINT/P1] AMBIENT-ORPHAN-SWEEP — DONE.** −1.18 MB dead bundles; orphan checker now corpus-aware (fixed false-positive that flagged 18-20-page-referenced hashes for `git rm`). **DONE S182**
+- [x] **[S182][MAINT/P2] DEAD-SCRIPT-REMOVAL — DONE.** Removed 8 spent one-shot scripts; import+lint clean. **DONE S182**
 
 ## Done (Session 180 — continuation goal-chain: /start → /audit → /implement → /closeout · 2/2)
 
@@ -23,8 +34,12 @@ Last updated: 2026-06-08 (Session 181 — goal-chain in progress: /start → /au
 - [x] **[S178][SPEED/P2] AMBIENT-GENOME-STRIP-SPLIT — DONE.** `vault-genome-strip.js` moved to predicate loading; feature bundle 28→27 sources; predicate mirrors skip rules; shell rotated + pages re-propagated; coverage + placement gates green. **DONE S178**
 - [x] **[S178][TOKEN/P3] TASKBOARD-ARCHIVE-ROTATION — DONE.** `rotate-taskboard.mjs` archived sessions <176 to `context/archive/TASK_BOARD_ARCHIVE.md` (nothing deleted); board 365KB→130KB (−63%); import-safe; session-window `--check-size` advisory in build:check. self-test 7/7. **DONE S178**
 
-## Now (Session 181 runway)
+## Now (Session 182 runway)
 
+- [ ] **[S182][REL/P1] DEPLOY-EDGE-FN-SECURITY-FIXES.** `supabase functions deploy create-checkout stripe-webhook assign-discord-role odds` to make the S182 error-redaction + CORS fixes live (committed but not yet deployed; no CI deploy exists for edge fns).
+- [ ] **[S182][REL/P1] WORKER-UNIT-TESTS.** Audit #14: the ~800-line Worker has zero unit coverage. Add `tests/worker.unit.spec.js` (Miniflare): assert `toOrigin` never yields the apex host, a hanging primary fails over within 8s, CSRF verify rejects tampered/expired tokens.
+- [ ] **[S182][MAINT/P1] NONDETERMINISTIC-CHECK-GATES.** Audit #23: make `build-ignis-search-index` + `sanitize-public-oracle-feed` deterministic in `--check` (strip/round timestamps, freeze live inputs) so `build:check` can actually go green locally. Verify: build then build:check twice, no commit between.
+- [ ] **[S182][REL/P2] NON-DATACENTER-UPTIME-PROBE.** Audit #10: add a CF Cron / external browser monitor from a non-datacenter egress that asserts apex 200 + marker (current probes are all bot-challenged from datacenter and blind to the real failure shape).
 - [x] **[S181][AI/P1] AI-SPINE-PUBLIC-HEALTH — DONE.** Published `api/ai-discovery-health.json` from the same validators as the AI-spine gate; `/status/` now shows a live "AI discovery spine" tile; `build` + `build:check` are wired. Focused gates green. **DONE S181**
 - [x] **[S181][PROCESS/P2] TASKBOARD-RUNWAY-HYGIENE — DONE.** `check-stale-open-tasks.mjs` now flags duplicate active `Now` and `Human Action Required` sections; board consolidated into one S181 runway and one current founder-action block. Gate green. **DONE S181**
 - [ ] **[S180][SECURITY/P1] TT-ENFORCE-REPROBE.** Now due (~2026-06-12): `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
