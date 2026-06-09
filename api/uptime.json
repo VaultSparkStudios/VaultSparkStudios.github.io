@@ -1,99 +1,99 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-06-09T22:06:17.447Z",
+  "generatedAt": "2026-06-09T23:51:18.674Z",
   "generatedBy": "scripts/probe-uptime.mjs",
   "overall": "up",
   "liveness": {
     "endpoint": "/api/founder-presence.json",
     "status": 200,
-    "ms": 90,
+    "ms": 83,
     "ok": true
   },
   "routes": [
     {
       "route": "/",
       "status": 200,
-      "ms": 327,
+      "ms": 290,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 327,
+        "ms": 290,
         "ok": true
       },
       "edge": {
         "status": 403,
-        "ms": 68,
+        "ms": 80,
         "note": "edge-challenged-or-down (informational; real browsers pass)"
       }
     },
     {
       "route": "/games/",
       "status": 200,
-      "ms": 37,
+      "ms": 520,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 37,
+        "ms": 520,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 191,
+        "ms": 125,
         "note": "served"
       }
     },
     {
       "route": "/vault-member/",
       "status": 200,
-      "ms": 49,
+      "ms": 30,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 49,
+        "ms": 30,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 68,
+        "ms": 57,
         "note": "served"
       }
     },
     {
       "route": "/membership/",
       "status": 200,
-      "ms": 45,
+      "ms": 25,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 45,
+        "ms": 25,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 54,
+        "ms": 47,
         "note": "served"
       }
     },
     {
       "route": "/status/",
       "status": 200,
-      "ms": 86,
+      "ms": 33,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 86,
+        "ms": 33,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 53,
+        "ms": 56,
         "note": "served"
       }
     }
   ],
   "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; the per-route `edge` field is informational only. Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path on the production domain).",
   "rollup": {
-    "checks": 15,
+    "checks": 16,
     "upPct": 100,
     "lastIncidentAt": null,
     "lastIncidentState": null
