@@ -59,7 +59,7 @@
         title: 'Read the operating surface before the funnel.',
         copy: 'Your signal reads analytical, not impulsive. Start with the studio pulse and bridge surfaces, then circle back into membership or product once confidence rises.',
         href: '/studio-pulse/',
-        cta: 'Open the Forge Window'
+        cta: 'Open the Studio Pulse'
       };
     }
 

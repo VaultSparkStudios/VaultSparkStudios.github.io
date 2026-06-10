@@ -1,39 +1,39 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 94a290501f0c -->
-<!-- generated-at: 2026-06-10T14:01:40.945Z -->
+<!-- source-hash: 46e4ed09e151 -->
+<!-- generated-at: 2026-06-10T17:49:46.576Z -->
 
 # LATEST_HANDOFF (compact)
 
-# Handoff — VaultSparkStudios.github.io (Session 182)
+# HANDOFF — Session 184
 
-**Session:** 182 | **Status:** Production outage recovered + 9-axis audit complete (23 items, Priority 407.7)
+**Session:** 184 | **Status:** /start→/audit→/implement→/closeout COMPLETE, 6/6 shipped, build:check green
 
-## What Shipped
-- Auto-rollback on deploy + smoke JSON-validity assertion
-- `/v/rum` per-IP rate-limit (live)
-- Edge-fn error redaction + CORS env-gating
-- Ambient bundle cleanup: −1.18 MB dead code + orphan-gate corpus-aware fix
-- 7/23 audit items shipped; `/implement` route live
+## Shipped This Session
+- status-proof-index (10-feed self-grading, 8→1 fetches)
+- workflow-rebase-race-guard (7 workflows hardened)
+- tt-enforce-reprobe (AMBER readiness doc)
+- dr-cache-smoke (4 failover tests, 21/21 passing)
+- ambient-candidate-ledger (21 sources, 4 split candidates)
+- field-win-tile-verify
+
+## Root Cause Win
+Deploy-strand issue: CF Pages skips `[skip ci]` tips. Closeout autopilot's reconcile commit was always tip → every closeout stranded its own deploy. **Fix deployed:** `scripts/check-deploy-tip.mjs` + empty-deploy-trigger guard in closeout autopilot. This closeout exercises the fix.
 
 ## Current Intent
-Deploy edge-fn security fixes (create-checkout, stripe-webhook, assign-discord-role, odds); harden non-deterministic build gates (#23).
+Verify prod (`vaultsparkstudios-website.pages.dev`) after push lands: confirm `field-win.json` `hasConfirmed:true` + /status/ tile lights + `/api/status-proof.json` live (trust 90%).
 
-## Now Bucket (Top 3)
-1. Deploy `supabase functions deploy` batch + set `ODDS_ALLOWED_ORIGINS` PromoGrind origin (strict CORS activation)
-2. Make `build:check` deterministic (ignis-search-index, oracle feed non-deterministic drift; audit #23)
-3. Add Worker unit tests (#14) to close reliability blind spots
+## Now Blockers (Top 3)
+- Verify deploy lands on prod + field-win tile + status-proof API live
+- Founder decision: richer-IGNIS-layer (public-safe boundary call)
+- TT enforce-FLIP reprobe due ~06-12 + device verify pending
 
-## Blockers (Top 3)
-1. `build:check` not green locally — non-deterministic `--check` gates drift on each `npm run build` run (gates pass live)
-2. Rich paid-member economy has no funnel bridge to anonymous users (product work pending)
-3. ~100 ambient gates missed reliability blind spots (audit scope vs. gates coverage gap)
+## Human-Blocked Carries (Evidence/Founder-Gated)
+- richer-IGNIS-layer decision
+- vaultsparked-proof.js delete
+- nav-sheet device verify
+- GEO-VITALS-WATCH (data-gated)
 
-## Human-Blocked Items
-- `assets/vaultsparked-proof.js` delete decision (founder call)
-- Nav-sheet real-device verification (founder call)
-- Non-datacenter uptime probe (#10) scoping (founder decision on infra)
+## Tests & Validation
+21/21 worker.unit · build:check EXIT 0 end-to-end (108/108 pages) · 28/28 apex-HTML probe.
 
-## Honest Notes
-Site verified 6/6 smoke post-recovery. Worker deploys green. Supply-chain + secret scans clean. Audit captured 23 items across 3 sub-agents; 16 remain post-Session-182. Next frontier: close funnel-economy gap + eliminate non-determinism in build gates.
-
-Next session: deploy edge-fn batch, confirm `ODDS_ALLOWED_ORIGINS` live, determinism sprint on gates #23 + funnel cluster scoping.
+**Next:** Post-push, validate prod deploy + field-win + status-proof live; then decide IGNIS layer + TT reprobe.

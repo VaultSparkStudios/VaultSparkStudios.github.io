@@ -35,9 +35,9 @@
       eyebrow: 'Investor Path',
       title: 'I need the operating picture first',
       summary: 'Review the studio signal, operating posture, and gated investor surface before asking for deeper access.',
-      proof: 'Best first stop: the Forge Window and investor access.',
+      proof: 'Best first stop: the Studio Pulse and investor access.',
       href: '/studio-pulse/',
-      cta: 'Open the Forge Window',
+      cta: 'Open the Studio Pulse',
     },
     lore: {
       key: 'lore',
@@ -132,7 +132,7 @@
       if (state.hesitation_signal === 'need_proof' && item.key === 'investor') {
         next.title = 'I need proof before I commit';
         next.summary = 'Start with live operating signals, current focus, shipped work, and confidence surfaces before any deeper ask.';
-        next.proof = 'Best first stop: the Forge Window and recent shipped signals.';
+        next.proof = 'Best first stop: the Studio Pulse and recent shipped signals.';
         next.cta = 'See Proof First';
       }
 
@@ -146,7 +146,7 @@
       if (feedback && feedback.topGoal && feedback.topGoal.key === 'track_progress' && item.key === 'investor') {
         next.title = 'I want to track what is actually shipping';
         next.summary = 'Use the operating path first. Pulse, changelog, and network surfaces now form one visibility layer.';
-        next.proof = 'Best first stop: the Forge Window, changelog, and network spine.';
+        next.proof = 'Best first stop: the Studio Pulse, changelog, and network spine.';
         next.cta = 'Track Progress';
       }
 

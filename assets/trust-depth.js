@@ -68,7 +68,7 @@
           label: 'What Happens Next',
           title: 'The system should keep handing you forward.',
           copy: topGoal && topGoal.key === 'track_progress'
-            ? 'If you want to track what the studio is actually shipping, the Forge Window and the changelog are where that lives — updated the day things land.'
+            ? 'If you want to track what the studio is actually shipping, the Studio Pulse and the changelog are where that lives — updated the day things land.'
             : 'After the first click, the site stays coherent. Identity, worlds, live proof, and paid support all point into each other instead of acting like separate microsites.'
         },
         {

@@ -190,7 +190,7 @@
     } else if (context === 'membership') {
       title = 'What would help this membership layer feel clearer or stronger?';
     } else if (context === 'pulse') {
-      title = 'What operating signal would make the Forge Window more useful?';
+      title = 'What operating signal would make the Studio Pulse more useful?';
     } else if (state.intent === 'lore') {
       title = 'What would deepen the world signal for you?';
     }

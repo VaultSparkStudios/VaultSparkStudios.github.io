@@ -1,7 +1,33 @@
-<!-- generated-by: /implement skill v1.0 -->
-<!-- source: docs/AUDIT_2026-06-08-S182.json (23 items) -->
+<!-- generated-by: /implement skill v1.0 (S185) -->
+<!-- source: docs/AUDIT_2026-06-10.json itemsS185 (12 items) -->
 
-# Implement Plan — S182 Audit
+# Implement Plan — S185 Audit (2026-06-10)
+
+## Wave Plan (S185)
+
+| Wave | Slug | Axis | Effort | Priority | Why this order |
+|---|---|---|---|---|---|
+| 1a | ark-deploy-strand-pattern-share | ecosystem | 30m | 36.4 | Pure Ark cargo — zero code change, immediate fleet impact |
+| 1b | status-proof-in-agents-json | featureDepth | 1h | 33.2 | Single build-script add; zero page changes |
+| 1c | forge-window-naming | ux | 1h | 39.6 | propagate-nav.mjs pass; batches with 1b |
+| 1d | command-palette-query-cache | speed | 1h | 45.6 | Single-file JS edit; localStorage only |
+| 2a | returning-visitor-achievement-nudge | ux | 2h | 61.3 | Extends existing digest.js |
+| 2b | oracle-query-learning-loop | ai | 2h | 24.0 | New script; establishes oracle-insights.json before oracle-proactive uses it |
+| 3a | oracle-proactive-contextual | ux | 4h | 69.8 | Top-priority; depends on ignis-answer-engine.js context |
+| 3b | vault-kinesis-ship-pulse | ux | 4h | 61.0 | New asset; shares ambient-loader pattern with 3a |
+| 4a | tt-named-policy-wave | security | 4h | 24.4 | Security; independent; fixes blocking TT sinks |
+| 4b | ambient-split-wave4 | speed | 2h | 24.0 | Extends ambient-loader; same context as 3b |
+| 4c | geo-vitals-sample-accelerator | speed | 2h | 35.0 | probe-uptime.mjs extension |
+| 5 | progressive-membership-unlock | gamification | 8h | 48.2 | Largest; deferred if context budget exhausted |
+
+## Success bar
+- Any page change: Lighthouse Performance ≥90 on mobile (or note exception)
+- `npm run build:check` green after each wave
+- No new console errors
+
+---
+
+# Previous Plan — S182 Audit
 
 Sequenced for optimal efficiency (Priority/hour), not raw Priority. Reliability
 cluster leads (founder's post-outage priority); auto-rollback ships first so it

@@ -90,6 +90,7 @@ export function buildManifest(state) {
       llmsFull: `${SITE}/.well-known/llms-full.txt`,
       entityGraph: `${SITE}/.well-known/entity-graph.json`,
       search: `${SITE}/search/`,
+      statusProof: `${SITE}/api/status-proof.json`,
     },
     primaryCta: {
       label: 'Become a Vault Member — free',

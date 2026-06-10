@@ -8,7 +8,7 @@
       title: 'Journey telemetry unavailable',
       body: 'Live signals didn\'t load. Repo-truth metrics are published at',
       links: [
-        { href: '/studio-pulse/', label: 'Forge Window' },
+        { href: '/studio-pulse/', label: 'Studio Pulse' },
         { href: '/ignis/', label: 'IGNIS' }
       ]
     },
@@ -34,7 +34,7 @@
       body: 'Jump into the network directly at',
       links: [
         { href: '/studio-hub/', label: 'Studio Hub' },
-        { href: '/studio-pulse/', label: 'Forge Window' },
+        { href: '/studio-pulse/', label: 'Studio Pulse' },
         { href: 'https://github.com/VaultSparkStudios', label: 'GitHub' }
       ]
     },
