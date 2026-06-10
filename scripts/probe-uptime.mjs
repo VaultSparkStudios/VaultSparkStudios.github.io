@@ -53,6 +53,8 @@ const COMMIT_FLAG = path.join(ROOT, '.cache', 'uptime-commit');
 const SENT = path.join(ROOT, '.cache', 'uptime-alerts-sent.json');
 const HISTORY_CAP = 1488; // ~31 days of hourly rows + incident rows
 const DRY = process.argv.includes('--dry-run');
+const COLO_PROBE = process.argv.includes('--colo-probe');
+const COLO_SUPPLEMENT = path.join(ROOT, '.cache', 'probe-colo-supplement.ndjson');
 const TO = 'founder@vaultsparkstudios.com';
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36 VSUptimeProbe/2.0';
 const ALERT_WINDOW_MS = 6 * 60 * 60 * 1000;
@@ -333,6 +335,28 @@ function selfTest() {
 const RUN_DIRECT = import.meta.main ?? process.argv[1]?.endsWith('probe-uptime.mjs');
 if (RUN_DIRECT && process.argv.includes('--self-test')) selfTest();
 if (RUN_DIRECT && process.argv.includes('--simulate-failure')) simulateFailure();
+
+// Colo probe — measure TTFB from this runner to the CF edge; record colo + country
+// so build-geo-vitals.mjs can supplement thin EU samples.
+if (RUN_DIRECT && COLO_PROBE) {
+  const CF_TRACE = 'https://speed.cloudflare.com/cdn-cgi/trace';
+  const t0 = Date.now();
+  try {
+    const res = await fetch(CF_TRACE, { signal: AbortSignal.timeout(8000) });
+    const ttfb = Date.now() - t0;
+    const text = await res.text();
+    const colo = (text.match(/colo=([A-Z]+)/) || [])[1] || 'UNK';
+    const loc = (text.match(/loc=([A-Z]+)/) || [])[1] || 'US';
+    const row = JSON.stringify({ ts: new Date().toISOString(), colo, country: loc, ttfb, source: 'colo-probe', synthetic: true });
+    fs.mkdirSync(path.dirname(COLO_SUPPLEMENT), { recursive: true });
+    const prev = fs.existsSync(COLO_SUPPLEMENT) ? fs.readFileSync(COLO_SUPPLEMENT, 'utf8').split('\n').filter(Boolean).slice(-48) : [];
+    fs.writeFileSync(COLO_SUPPLEMENT, [...prev, row].join('\n') + '\n');
+    console.log(`colo-probe: colo=${colo} country=${loc} ttfb=${ttfb}ms → .cache/probe-colo-supplement.ndjson`);
+  } catch (e) {
+    console.error('colo-probe failed:', e.message);
+  }
+  process.exit(0);
+}
 
 if (RUN_DIRECT) {
 // Live probe ---------------------------------------------------------------
