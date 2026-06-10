@@ -63,9 +63,9 @@ const AMBIENT_FEATURE_SOURCES = [
   'assets/vault-atlas.js',
   // vault-genome-strip.js moved to predicate loading (assets/ambient-loader.js)
   // S178 — #1 ambient split candidate; capability-gated, off the cold-cache path.
-  'assets/rank-orb.js',
-  'assets/rate-page.js',
-  'assets/ignis-lens.js',
+  // rank-orb / rate-page / ignis-lens / vault-rank-bar moved to predicate loading
+  // S185 ambient-split wave 4. Each parsed on every cold load just to bail on
+  // portal/admin/non-game pages; predicates mirror each script's own mount guard.
   // intent-flight-director and ignis-answer-engine moved to predicate loading
   // in S180. Both are route/hook scoped but previously parsed on every page.
   // feedback-decision-board / social-dashboard-public / rank-economy-simulator /
@@ -74,7 +74,6 @@ const AMBIENT_FEATURE_SOURCES = [
   // /social, /membership|/ranks, /security), so it parsed on every cold load just
   // to bail. The predicate mirrors each script's exact mount condition.
   'assets/founder-presence-handle.js',
-  'assets/vault-rank-bar.js',   // ambient rank progress bar for signed-in members
 ];
 
 // Combined view — kept for coverage tooling (report-ambient-coverage,

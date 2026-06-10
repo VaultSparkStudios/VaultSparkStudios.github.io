@@ -763,6 +763,55 @@
       idle: true
     },
     {
+      // S185 ambient-split wave 4 — 4 scripts extracted from feature bundle.
+      // ignis-lens: Ask IGNIS floating pill — game/project/universe pages only.
+      src: '/assets/ignis-lens.js',
+      when: function () {
+        var p = location.pathname || '/';
+        if (document.querySelector('[data-vault-oracle]')) return false;
+        return /^\/(games|projects|universe|ignis|search)/.test(p);
+      },
+      idle: true
+    },
+    {
+      // rank-orb: member rank progress orb in nav — non-portal, non-admin pages.
+      src: '/assets/rank-orb.js',
+      when: function () {
+        var p = location.pathname || '/';
+        return !/^\/(vault-member|investor-portal|admin|api)\//.test(p);
+      },
+      idle: true
+    },
+    {
+      // rate-page: emoji feedback widget — content pages, skip portals/admin/api.
+      src: '/assets/rate-page.js',
+      when: function () {
+        var p = location.pathname || '/';
+        return !/^\/(vault-member|investor-portal|admin|api)\//.test(p);
+      },
+      idle: true
+    },
+    {
+      // vault-rank-bar: 2px rank progress bar at viewport bottom — signed-in only.
+      src: '/assets/vault-rank-bar.js',
+      when: function () {
+        try {
+          return !!(document.body && document.body.hasAttribute('data-vs-signed-in')) ||
+            !!(window.sessionStorage && sessionStorage.getItem('vs_session_ready'));
+        } catch (_) { return false; }
+      },
+      idle: true
+    },
+    {
+      // Vault Kinesis — SVG ship-pulse waveform on Studio Pulse page.
+      src: '/assets/vault-kinesis.js',
+      when: function () {
+        var p = location.pathname || '/';
+        return p.indexOf('/studio-pulse') === 0;
+      },
+      idle: true
+    },
+    {
       // Static Ask IGNIS retrieval mounts on explicit hooks plus /search|/oracle.
       src: '/assets/ignis-answer-engine.js',
       when: function () {
