@@ -481,4 +481,37 @@ if (!DRY) {
       }
     }
   } catch (e) { console.log(`  ⚠ Reconcile skipped: ${e.message}`); }
+
+  // S184 deploy-strand guard. Cloudflare Pages builds ONLY the pushed tip
+  // commit and SKIPS any tip whose message contains [skip ci]. The reconcile
+  // commit above is [skip ci], so it strands the substantive closeout deploy
+  // beneath it — observed S184: the S183 closeout's confirmed field-win.json
+  // (+~20 api/*.json) never deployed; prod stayed frozen at the prior build.
+  // Fix: if the pushed tip is [skip ci], land an EMPTY non-skip-ci commit so
+  // Pages builds. It touches no files, so path-filtered GitHub Actions ignore
+  // it, but CF Pages picks it up and deploys everything beneath.
+  if (!SKIP_PUSH) {
+    try {
+      const SKIP_RE = /\[(?:skip ci|ci skip|skip-ci|ci-skip)\]/i;
+      const tipMsg = sh('git log -1 --format=%s').out.trim();
+      if (SKIP_RE.test(tipMsg)) {
+        console.log('\n── Deploy-strand guard ──────────────────────────────────');
+        console.log(`  ⚠ Tip is [skip ci]: "${tipMsg}" — CF Pages would skip this build.`);
+        const ec = sh('git commit --allow-empty -m "chore(deploy): trigger CF Pages build (closeout tip was [skip ci])"');
+        if (ec.code === 0) {
+          const ep = sh('git push');
+          if (ep.code === 0) {
+            sh('git fetch origin --quiet');
+            const branch = sh('git rev-parse --abbrev-ref HEAD').out.trim() || 'main';
+            const ahead = parseInt(sh(`git rev-list origin/${branch}..HEAD --count`).out.trim(), 10) || 0;
+            console.log(ahead > 0
+              ? `  ⛔ Deploy-trigger push verification FAILED — ${ahead} commit(s) still local. Run \`git push\` manually.`
+              : '  ✓ Empty deploy-trigger pushed — CF Pages will now build the closeout.');
+          } else {
+            console.log('  ⚠ Deploy-trigger push failed — run `git push` manually to deploy.');
+          }
+        }
+      }
+    } catch (e) { console.log(`  ⚠ Deploy-strand guard skipped: ${e.message}`); }
+  }
 }
