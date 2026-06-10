@@ -83,7 +83,105 @@
     roots.forEach(mount);
   }
 
+  var INSIGHTS_URL = '/api/oracle-insights.json';
+  var insightsPromise = null;
+  function loadInsights() {
+    if (!insightsPromise) {
+      insightsPromise = fetch(INSIGHTS_URL, { cache: 'default' }).then(function (r) { return r.json(); }).catch(function () { return { clusters: [] }; });
+    }
+    return insightsPromise;
+  }
+
+  function findCluster(hints, query) {
+    var q = String(query || '').toLowerCase();
+    var clusters = hints.clusters || [];
+    var best = null, bestScore = 0;
+    for (var i = 0; i < clusters.length; i++) {
+      var c = clusters[i];
+      var tokens = c.tokens || [];
+      var score = tokens.filter(function (t) { return q.indexOf(t) !== -1; }).length;
+      if (score > bestScore) { bestScore = score; best = c; }
+    }
+    return bestScore > 0 ? best : (clusters[0] || null);
+  }
+
+  function showHint(el, hint) {
+    if (el.querySelector('.vs-ignis-proactive')) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'vs-ignis-proactive';
+    wrap.style.cssText = 'margin-top:.65rem;padding:.5rem .75rem;border-radius:10px;background:rgba(155,140,255,0.07);border:1px solid rgba(155,140,255,0.18);font-size:.8rem;color:#c4bcff;display:flex;align-items:center;gap:.5rem;';
+    var label = document.createElement('span');
+    label.style.cssText = 'flex:0 0 auto;font-weight:700;color:#9b8cff;';
+    label.textContent = 'IGNIS:';
+    wrap.appendChild(label);
+    if (hint && hint.topDocs && hint.topDocs.length) {
+      var doc = hint.topDocs[0];
+      var link = document.createElement('a');
+      link.href = esc(doc.url || '/');
+      link.textContent = doc.title || 'Related page';
+      link.style.cssText = 'color:#c4bcff;text-decoration:underline;text-decoration-color:rgba(155,140,255,0.4);flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+      wrap.appendChild(link);
+    } else {
+      var msg = document.createElement('span');
+      msg.textContent = 'Ask me about this project';
+      msg.style.cssText = 'flex:1 1 auto;';
+      wrap.appendChild(msg);
+    }
+    var close = document.createElement('button');
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Dismiss IGNIS hint');
+    close.textContent = '×';
+    close.style.cssText = 'flex:0 0 auto;background:none;border:none;color:#9b8cff;font-size:1rem;cursor:pointer;padding:0;line-height:1;';
+    close.addEventListener('click', function () { if (wrap.parentNode) wrap.parentNode.removeChild(wrap); });
+    wrap.appendChild(close);
+    el.appendChild(wrap);
+  }
+
+  function watchHints() {
+    if (!('IntersectionObserver' in window)) return;
+    var timers = new WeakMap();
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var el = entry.target;
+        if (entry.isIntersecting) {
+          if (!timers.has(el)) {
+            var tid = setTimeout(function () {
+              timers.delete(el);
+              var hintQuery = el.dataset.ignisHint || '';
+              loadInsights().then(function (insights) {
+                var cluster = findCluster(insights, hintQuery);
+                showHint(el, cluster);
+              });
+            }, 20000);
+            timers.set(el, tid);
+          }
+        } else {
+          if (timers.has(el)) { clearTimeout(timers.get(el)); timers.delete(el); }
+        }
+      });
+    }, { threshold: 0.4 });
+
+    function scanAndObserve() {
+      var hinted = Array.prototype.slice.call(document.querySelectorAll('[data-ignis-hint]'));
+      hinted.forEach(function (el) { observer.observe(el); });
+    }
+
+    scanAndObserve();
+    // Re-scan after dynamic cards render (oracle page async)
+    setTimeout(scanAndObserve, 2000);
+  }
+
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
-  window.VSIgnisAnswer = { loadIndex: loadIndex, answer: answer };
+
+  // Proactive hints — oracle and search pages only.
+  (function () {
+    var path = location.pathname;
+    if (path.indexOf('/oracle') === 0 || path.indexOf('/search') === 0) {
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watchHints);
+      else watchHints();
+    }
+  }());
+
+  window.VSIgnisAnswer = { loadIndex: loadIndex, answer: answer, loadInsights: loadInsights };
 })();

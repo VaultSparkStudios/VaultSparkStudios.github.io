@@ -571,6 +571,7 @@
         card.dataset.health = String(e.health || 'unknown').toLowerCase();
         card.dataset.status = String(e.vaultStatus || '').toLowerCase();
         card.dataset.fresh = (Number.isFinite(e.staleDays) && e.staleDays <= 7) ? '1' : '0';
+        card.dataset.ignisHint = e.name + ' project ' + (e.currentFocus || e.vaultStatus || '');
         card.innerHTML = `
           <div class="ignis-project-block"
                data-project="${e.name.replace(/"/g, '&quot;')}"
