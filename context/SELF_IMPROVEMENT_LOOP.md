@@ -4792,3 +4792,21 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 3. **LIGHTHOUSE-LOCAL-SHIM** — wrap the CI Lighthouse setup in a local script that starts `local-preview-server` and runs the same config when dependencies are already present, skipping with a clear message otherwise. Medium probability.
 
 **Committed to TASK_BOARD:** STATUS-PROOF-INDEX · TASKBOARD-AUTO-CONSOLIDATOR
+
+## 2026-06-10 — Session 184 (/start → /audit → /implement → /closeout goal-chain · 6/6 + deploy-strand root-cause) | Total: 995/1000 (v3.0) | Velocity: 6 | Debt: ↓
+
+**Score:** 995 / 1000
+(Dev Health 100 · Creative Alignment 99 · Momentum 100 · Engagement 99 · Process Quality 100 · Cross-Repo Coherence 99 · Security Posture 100 · Ecosystem Integration 98 · Capital Efficiency 100 · Automation Coverage 100)
+
+**What improved:** The site's flagship "measured deploy win" finally goes live — but the real win was learning WHY it was dark. A confirmed proof sitting in `origin/main` with a correct renderer still showed `false` on prod, and the cause was structural: Cloudflare Pages skips `[skip ci]` tips, and every closeout ended on the autopilot's `[skip ci]` reconcile commit, so each session quietly stranded its own deploy. That one fix (`check-deploy-tip.mjs` + autopilot guard) retroactively un-freezes a pipeline that had been failing silently for multiple sessions. On top of it, `/status/` became a single self-grading proof manifest instead of ten blind fetches, the DR-cache is now proven rather than assumed, and the TT soak got an honest AMBER reprobe instead of a hopeful flip.
+
+**Honest deduction:** Engagement 99 — the now-lit field-win tile and the new freshness tile need real-device confirmation next session (the deploy lands at this closeout's push). Ecosystem 98 — the deploy-strand bug almost certainly affects other CF-Pages siblings, but I logged it rather than Ark-broadcasting the pattern this session. Cross-Repo 99 — the football-gm TT sink is flagged for Ark cargo, not yet shipped.
+
+**Intent outcome:** Achieved — full goal-chain, 6/6 audit items shipped, `npm run build:check` green end-to-end (108/108 pages, 0 failures), plus a high-leverage root-cause fix the audit didn't predict.
+
+**Brainstorm**
+1. **ARK-DEPLOY-STRAND-PATTERN-SHARE** — broadcast the `[skip ci]`-tip CF-Pages strand finding + the `check-deploy-tip.mjs` guard to all CF-Pages sibling repos via Ark `pattern-share`. High probability — likely a fleet-wide silent bug.
+2. **STATUS-PROOF-IN-AGENTS-JSON** — cross-link `/api/status-proof.json` from `/agents.json` + `/.well-known/llms.txt` so AI agents discover the single-fetch trust surface without scraping `/status/`. Medium-high.
+3. **TT-NAMED-POLICY-WAVE** — migrate the 4 first-party TT sinks (home-idle-loader, schema-injector, 2× ambient.shell) off the default catch-all to named policies, then reprobe toward a clean GREEN enforce-flip. Medium.
+
+**Committed to TASK_BOARD:** [S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE · [S184][SECURITY/P2] TT-NAMED-POLICY-WAVE

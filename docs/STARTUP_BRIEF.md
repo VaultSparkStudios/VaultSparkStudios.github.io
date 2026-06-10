@@ -95,20 +95,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      UPTIME-PROBE-REBASE-BEFORE-PUSH. uptime-pr  ║
-║        UPTIME-PROBE-REBASE-BEFORE-PUSH. uptime-probe.yml (and l  ║
+║   99  [SECURITY]     TT-ENFORCE-REPROBE                          ║
+║        TT-ENFORCE-REPROBE lowers operational risk and is entire  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   89  [COHESION]     STATUS-PROOF-INDEX. Merge AI discovery, up  ║
-║        STATUS-PROOF-INDEX. Merge AI discovery, uptime, field wi  ║
+║   90  [PRODUCT]      GEO-VITALS-WATCH. api/geo-vitals.json (US:  ║
+║        GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); che  ║
 ║                                                                  ║
-║   87  [VERIFY]       TT-ENFORCE-REPROBE. Due ~2026-06-12: node   ║
-║        TT-ENFORCE-REPROBE. Due ~2026-06-12: was flagged 3 sessi  ║
+║   90  [SECURITY]     TT-NAMED-POLICY-WAVE. Migrate the 4 first-  ║
+║        TT-NAMED-POLICY-WAVE. Migrate the 4 first-party TT sinks  ║
 ║                                                                  ║
-║   87  [PRODUCT]      ORIGIN-MIGRATION-FIELD-VERDICT. / field ve  ║
-║        ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PE  ║
+║   86  [BRAND]        Forge Window naming propagation             ║
+║        The URL stays stable for search, but the public vocabula  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

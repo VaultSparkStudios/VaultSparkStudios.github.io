@@ -1,0 +1,40 @@
+{
+  "session": 184,
+  "date": "2026-06-10",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios-github-io",
+  "headline": "Shipped all 6 audit items and root-caused a recurring silent failure where every closeout stranded its own Cloudflare Pages deploy.",
+  "silDelta": "+27 (968 → 995)",
+  "items": [
+    { "id": "S184-1", "slug": "deploy-strand-fix", "title": "CF Pages [skip ci]-tip deploy-strand fix", "axis": "reliability",
+      "projectImpact": 9, "ecosystemImpact": 8,
+      "insight": "The /status/ measured-win tile was dark on prod even though the data was confirmed and the renderer correct — Pages skips [skip ci] tips, and the closeout autopilot's reconcile commit was always the tip, so every session quietly stranded its own deploy. One guard retroactively un-freezes a pipeline that had been failing in silence for multiple sessions. It almost certainly affects other Pages-hosted sibling repos too.",
+      "evidence": "check-deploy-tip.mjs 7/7 self-test + closeout-autopilot empty-deploy-trigger guard; prod was serving hasConfirmed:false against a confirmed origin/main." },
+    { "id": "S184-2", "slug": "status-proof-index", "title": "Self-grading proof manifest (8 fetches → 1)", "axis": "speed",
+      "projectImpact": 7, "ecosystemImpact": 6,
+      "insight": "Ten blind proof fetches on /status/ became one manifest that grades its own freshness — each signal carries its age and a stale flag, with a top-level trust score. A visitor or an AI agent can now verify the studio's entire live posture in a single request instead of stitching ten files together.",
+      "evidence": "build-status-proof.mjs → api/status-proof.json (trust 90%, 10/10 feeds); getProof shim + freshness tile + rel=alternate link; wired into build:check." },
+    { "id": "S184-3", "slug": "dr-cache-smoke", "title": "Proven Worker disaster-recovery failover", "axis": "reliability",
+      "projectImpact": 6, "ecosystemImpact": 4,
+      "insight": "The double-5xx DR cache that serves stale HTML during an outage was asserted in code but never exercised. Four hermetic tests now prove it degrades gracefully — including the hang case — so a regression fails CI instead of surfacing during the next real outage.",
+      "evidence": "21/21 worker.unit.spec passing; injected fetchImpl/cachesImpl, zero network." },
+    { "id": "S184-4", "slug": "workflow-rebase-race-guard", "title": "Rebase guard on 7 self-committing workflows", "axis": "speed",
+      "projectImpact": 5, "ecosystemImpact": 4,
+      "insight": "The P0 carry blamed one workflow, but seven push without rebasing first and can all lose the same race. Fixing the class instead of the instance stops the benign-but-trust-eroding CI failures at the source.",
+      "evidence": "git pull --rebase --autostash before push in all 7; every YAML validated." },
+    { "id": "S184-5", "slug": "tt-enforce-reprobe", "title": "Honest AMBER Trusted-Types reprobe", "axis": "security",
+      "projectImpact": 6, "ecosystemImpact": 3,
+      "insight": "Security posture is only real when it's measured on a cadence. The reprobe came back AMBER — 148 violations still present — so the enforce flip was deferred with a named burn-down plan rather than flipped on hope. The default-policy bridge keeps the site working in the meantime.",
+      "evidence": "docs/TT_ENFORCE_READINESS_2026-06-10.md; top sink journal/dispatches:364 is ~20% of volume." },
+    { "id": "S184-6", "slug": "ambient-candidate-ledger", "title": "Committed reason-coded ambient ledger", "axis": "maintainability",
+      "projectImpact": 5, "ecosystemImpact": 3,
+      "insight": "Every ambient-split wave re-litigated which engine belongs in the cold path from a volatile cache. A committed ledger derived from the live bundle arrays makes the next wave a lookup, not an investigation, and surfaces four split-candidates with their gates.",
+      "evidence": "build-ambient-ledger.mjs → docs/AMBIENT_LEDGER.md (21 sources, 4 candidates); build:check drift gate." }
+  ],
+  "followUps": [
+    "Verify prod (pages.dev): field-win tile lights + /api/status-proof.json live",
+    "Ark-broadcast the deploy-strand pattern to CF-Pages siblings (likely fleet-wide)",
+    "TT named-policy wave on 4 first-party sinks → clean GREEN enforce-flip"
+  ],
+  "blockers": []
+}

@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-10T17:22:38.445Z",
+  "generatedAt": "2026-06-10T17:33:47.300Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 183,
+    "currentSession": 184,
     "lastUpdated": "2026-06-10",
-    "currentFocus": "S183 ran the full S182 genius list (6 shipped) + resolved a founder P0: /oracle/ not refreshing (gitignored local-only feed 404ing on prod + a daily workflow that regenerated the public feed but never committed it) — Oracle now renders the deployed public-safe /api/public-intelligence.json, verified live. Edge-fn security fixes deployed (verify_jwt pinned in config first). build:check now GREEN end-to-end locally (Ark-dossier determinism fix). Worker unit tests + apex-HTML failure-shape probe shipped.",
-    "nextMilestone": "Harden self-committing scheduled workflows with git pull --rebase before push (uptime-probe lost a race this session); decide on deploying the richer Oracle IGNIS layer (public-safe boundary); then STATUS-PROOF-INDEX + TT-enforce re-probe (~06-12).",
+    "currentFocus": "S184 shipped 6/6 audit items + root-caused the [skip ci]-tip CF Pages deploy-strand (confirmed field-win + status-proof manifest now deploy on this push)",
+    "nextMilestone": "Verify on prod (pages.dev): field-win tile lights + /api/status-proof.json live; then TT named-policy wave toward enforce-flip + Ark-share the deploy-strand pattern",
     "ignis": {
       "score": 40319,
       "grade": "FORGE",
@@ -28,14 +28,7 @@
       "Expanded intent routing on games and universe hubs.",
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
-    "shipped": [
-      "Founder P0 — `/oracle/` not refreshing — FIXED + verified live. Two compounding bugs: (1) Oracle fetched `/ignis/output/*.json`, which is gitignored (local-only, aggregates sibling repos incl. sealed) → 404s on prod for all 4 files; (2) `vault-narrative.yml` regenerated `api/public-intelligence.json` daily but never staged it → prod frozen at Jun 8. Fix: Oracle falls back to the deployed public-safe `/api/public-intelligence.json` (11 projects + sealed-as-count, no new exposure); workflow now commits the feed daily. Verified on Pages origin (feed `generatedAt` today, 11 projects, page ships the fallback).",
-      "Edge-fn security fixes DEPLOYED (you approved). Pinned `verify_jwt` per-function in `config.toml` first (live Management-API read: create-checkout/stripe-webhook=false, assign-discord-role/odds=true) so a plain redeploy can never silently break Stripe webhooks; post-deploy verify confirmed all four preserved.",
-      "`build:check` is green end-to-end locally now (was \"impossible\" per S182). Real culprit: the Ark dossier `--check` re-rendered from volatile `.cache/ark-inbox.json` → drift after every drain. Fixed to validate structure. The two scripts S182 blamed were already deterministic.",
-      "Worker unit tests: outage-critical logic extracted to `cloudflare/worker-lib.mjs` (single source), 17 `node:test` cases in `build:check`. Apex-HTML probe: `classifyEdge()` now pages on the S179 Worker-HTML-only outage shape while bot-challenges stay quiet (28/28). CI: Investor KPI 401 fixed (stale repo secret refreshed, verified green); dead `signal-log-sync` retired. Taskboard: `rotate-taskboard --apply` reclassifies stale bare headings (6 done).",
-      "Carries (evidence-gated / founder): TT-enforce due ~06-12 (+ device verify); `/` field-verdict needs RUM samples; deploy the richer Oracle IGNIS layer is a public-safe-boundary decision; `uptime-probe.yml` should rebase-before-push (lost a race with my commit this session — transient, self-heals).",
-      "Next session: harden self-committing workflows with rebase-before-push (#follow-up); decide on the richer Oracle layer; STATUS-PROOF-INDEX; then TT-enforce re-probe when due."
-    ]
+    "shipped": []
   },
   "consumerChangelog": [
     {
@@ -125,7 +118,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 183,
+    "sessionsCompleted": 184,
     "liveProjects": 3,
     "projectsInForge": 8,
     "activeEdgeFunctions": 16,

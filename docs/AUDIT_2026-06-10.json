@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0 (S184 goal-chain)",
+  "generatedAt": "2026-06-10",
+  "session": 184,
+  "project": "vaultsparkstudios-github-io",
+  "projectName": "VaultSparkStudios.github.io",
+  "type": "website",
+  "topline": {
+    "totalItems": 6,
+    "combinedPriority": 154.9,
+    "top3": [
+      "status-proof-index",
+      "tt-enforce-reprobe",
+      "workflow-rebase-race-guard"
+    ],
+    "theme": "A 968-999 SIL brand-anchor site has no slack in features — the leverage is in proof consolidation and reliability hygiene. Two threads: (1) the site emits ~30 public proof JSONs but /status/ hand-fetches 10 of them with zero freshness contract — merge them into ONE self-grading trust manifest that an AI agent can verify in a single fetch. (2) Three reliability surfaces are asserted but unproven or racing — the Worker DR-cache, the TT default-policy enforce-readiness, and 7 self-committing workflows that push without rebase. Close the gap between 'we built it' and 'it is proven and won't fight itself.' Note: field-win.json has now CONFIRMED (hasConfirmed:true) — the board's ORIGIN-MIGRATION carry is stale and reconciles to DONE this session."
+  },
+  "founderEvidence": "Goal-chain /start -> /audit -> /implement -> /closeout with explicit ask: genius-level creative thinking, personalized to THIS project's real lists/flags/blockers. Personalization anchors: TASK_BOARD 'Now (S183 runway)' open carries; S180/S181 brainstorm backlog (STATUS-PROOF-INDEX, AMBIENT-CANDIDATE-LEDGER, DR-CACHE-SMOKE); live evidence that /status/ fetches 10 /api/*.json files, field-win.json is now confirmed, and 7 workflows lack rebase. Founder-gated items (RICHER-IGNIS-LAYER decision, vaultsparked-proof.js delete, nav-sheet device verify, TT enforce-FLIP per SOUL #3) are explicitly OUT of agent scope and listed as skipped/blocked.",
+  "items": [
+    {
+      "rank": 1,
+      "slug": "status-proof-index",
+      "tier": "fire",
+      "axis": "speed",
+      "effort": "3h",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 31,
+      "summary": "The site publishes ~30 public proof JSONs, and /status/ hand-fetches 10 of them on every load with no freshness contract. Merge the proof-relevant feeds into one CI-generated /api/status-proof.json and have /status/ read a single surface.",
+      "why": "Ten parallel fetches collapse to one RTT, and the manifest becomes a trust instrument instead of a directory of files. Self-grading is the genius layer: each embedded proof carries its source generatedAt plus a computed staleness flag, and the manifest exposes a top-level worstStale + trustScore, so /status/ can render a per-signal freshness clock (green/amber/red) that no studio site does. Info-finding outcome: a visitor or AI agent verifies the studio's entire live posture in one fetch.",
+      "recipe": "Add scripts/build-status-proof.mjs that reads api/{uptime,field-win,ai-discovery-health,ci-status,site-health,staging-health,geo-vitals,field-verdicts,public-status,security-posture}.json, stamps each with freshnessSeconds + stale boolean (vs its own generatedAt), computes top-level worstStale/trustScore, writes api/status-proof.json (publicSafe:true, sealed-vault respected). Wire into the existing proof-generation workflow + build:check drift gate; point status/index.html at the single file with graceful per-key fallback. Add a <link rel='alternate' type='application/json' href='/api/status-proof.json'> + /agents.json cross-link so agents discover it."
+    },
+    {
+      "rank": 2,
+      "slug": "tt-enforce-reprobe",
+      "tier": "fire",
+      "axis": "security",
+      "effort": "1h",
+      "impact": 8,
+      "innovation": 6,
+      "priority": 30.3,
+      "summary": "TT-ENFORCE-REPROBE is due ~2026-06-12 (two days out). Run the Trusted-Types soak probe + violation analyzer now; if the S176 default-policy bridge shows near-zero new clusters, write a dated enforce-readiness verdict so the founder-device flip is a one-line yes/no instead of a re-investigation.",
+      "why": "Security posture is only real when it is measured on a cadence, not assumed between sessions. Doing the probe + analysis now (the agent-attemptable 90%) leaves only the SOUL #3 device-verified enforce-flip for the founder. Info-finding outcome: a committed readiness doc tells the next session exactly whether enforcement is safe.",
+      "recipe": "Run: node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs. Capture the cluster count + top sinks into docs/TT_ENFORCE_READINESS_2026-06-10.md with a clear GREEN/AMBER verdict and the exact flip command. Do NOT flip enforcement (founder-device gated per SOUL #3) — update the TASK_BOARD carry with the dated probe result."
+    },
+    {
+      "rank": 3,
+      "slug": "workflow-rebase-race-guard",
+      "tier": "fire",
+      "axis": "speed",
+      "effort": "1h",
+      "impact": 8,
+      "innovation": 5,
+      "priority": 25.2,
+      "summary": "The P0 carry blamed uptime-probe.yml, but 7 self-committing scheduled workflows push without 'git pull --rebase' first, so any of them can lose a race when a human/agent push lands in the same window. Generalize the fix to the whole class.",
+      "why": "Avoidable CI failure noise that self-heals but erodes trust in the green dashboard and can drop a generated artifact for a cycle. Fixing the class (not the one observed instance) is the durable move. Info-finding outcome: scheduled proof refreshes stop failing on benign races.",
+      "recipe": "In each of the 7 NO-REBASE workflows (ci-status-beacon, leaderboard-api, member-seo, og-images, rum-pull, uptime-probe, vault-narrative), add 'git pull --rebase --autostash origin main' immediately before the push step (guard with || true only where a detached/no-op state is expected). Validate every edited YAML with: npx --yes js-yaml <file> >/dev/null (per the validate-workflow-yaml memory) before committing."
+    },
+    {
+      "rank": 4,
+      "slug": "dr-cache-smoke",
+      "tier": "high",
+      "axis": "security",
+      "effort": "2h",
+      "impact": 7,
+      "innovation": 7,
+      "priority": 24.5,
+      "summary": "The Worker disaster-recovery cache (serves stale HTML on a double-5xx, emits X-VS-Disaster-Recovery: stale) is asserted in worker-lib.mjs but never exercised by a test. Add a smoke test that forces the double-5xx path and asserts the DR header.",
+      "why": "An untested failover is a hope, not a guarantee — the only time you find out it's broken is during the outage it was built for. A deterministic test promotes the DR layer from 'assumed' to 'proven' and guards against silent regression. Info-finding outcome: CI proves the site degrades gracefully instead of hanging.",
+      "recipe": "Add tests/dr-cache.spec.js (Node/worker-harness style matching existing cloudflare tests) that stubs originFetch to return two consecutive 5xx, invokes the worker-lib handler, and asserts response is the cached body + header X-VS-Disaster-Recovery: stale. Wire into the test suite run by build:check. Reference: cloudflare/worker-lib.mjs (X-VS-Disaster-Recovery)."
+    },
+    {
+      "rank": 5,
+      "slug": "ambient-candidate-ledger",
+      "tier": "high",
+      "axis": "speed",
+      "effort": "1h",
+      "impact": 6,
+      "innovation": 6,
+      "priority": 22.7,
+      "summary": "Ambient-bundle split decisions live in a volatile .cache/ambient-split-candidates.json with no committed rationale. Promote it to a reason-coded ledger (sitewide / route-scoped / hook-scoped / keep) so future split waves are data-driven, not re-derived.",
+      "why": "Each ambient-split wave currently re-litigates which engines belong in the cold path; a committed ledger with reason codes makes the next wave a lookup, not an investigation, and documents why each engine is where it is. Info-finding outcome: the cold-path budget has an auditable provenance trail.",
+      "recipe": "Add scripts/build-ambient-ledger.mjs that reads the candidate cache + current ambient block composition and writes docs/AMBIENT_LEDGER.md (or context/ambient-ledger.json) with {asset, placement, reasonCode, lastReviewed}. Seed reason codes from the existing S147/S180 split decisions. Optionally gate drift in build:check."
+    },
+    {
+      "rank": 6,
+      "slug": "field-win-tile-verify-reconcile",
+      "tier": "high",
+      "axis": "feedback",
+      "effort": "30m",
+      "impact": 7,
+      "innovation": 4,
+      "priority": 21.2,
+      "summary": "api/field-win.json flipped to hasConfirmed:true (confirmedCount:1, '/' win @ 2026-06-05) but the TASK_BOARD ORIGIN-MIGRATION-FIELD-VERDICT carry still says 'PENDING, no samples.' Verify the /status/ 'Biggest measured win' tile now lights, then reconcile the stale carry to DONE.",
+      "why": "This is the exact honest-deduction holding Engagement at 99 across S180/S181 — the field-win tile was honest-dark because nothing had confirmed. It has now confirmed, so the truth surface should light and the board should stop re-surfacing a resolved item. Info-finding outcome: the site's flagship 'measured deploy win' proof goes live and the runway shrinks by one phantom carry.",
+      "recipe": "Confirm status/index.html renders topWin from field-win.json (route '/', boundary 2026-06-05) and the tile is no longer dark. If the renderer still gates on the old PENDING shape, fix the conditional. Update TASK_BOARD: mark ORIGIN-MIGRATION-FIELD-VERDICT DONE with the confirmed verdict; keep GEO-VITALS-WATCH open (global samples still thin: US:107 GB:3)."
+    }
+  ],
+  "innovationReserve": [
+    "status-proof-index",
+    "dr-cache-smoke"
+  ],
+  "skipped": [
+    {
+      "slug": "richer-ignis-layer-public-safe",
+      "reason": "FOUNDER-GATED — deploying aggregated cross-project/sealed IGNIS intelligence needs a public-safe-boundary decision the agent cannot make unilaterally (CANON public-safe). Stays a founder call."
+    },
+    {
+      "slug": "tt-enforce-flip",
+      "reason": "FOUNDER-DEVICE-GATED per SOUL #3 — the enforcement flip itself requires founder real-device verification. The agent does the reprobe + readiness doc (item #2); the flip is not agent scope."
+    },
+    {
+      "slug": "vaultsparked-proof-delete",
+      "reason": "FOUNDER yes/no — evidence-complete deletion candidate but a 30-second founder confirmation, not agent-attemptable without explicit go."
+    },
+    {
+      "slug": "nav-sheet-device-verify",
+      "reason": "FOUNDER-DEVICE — mobile bottom-sheet default-swap needs real-device verification before graduating the flag (flag-gated UX swap pattern)."
+    },
+    {
+      "slug": "geo-vitals-watch",
+      "reason": "OBSERVATIONAL / DATA-GATED — non-US LCP confirmation needs more samples to accrue (US:107 GB:3); nothing to ship until the data grows. Left open as a watch, not an action."
+    }
+  ],
+  "executionLog": [
+    {
+      "slug": "workflow-rebase-race-guard",
+      "status": "SHIPPED",
+      "commit": "cc9b434d",
+      "note": "git pull --rebase --autostash added to 7 self-committing workflows; all YAML valid."
+    },
+    {
+      "slug": "field-win-tile-verify-reconcile",
+      "status": "SHIPPED+UPGRADED",
+      "commit": "deploy-strand",
+      "note": "Renderer already correct + data confirmed; root-caused prod-stale tile to [skip ci] closeout tip stranding CF Pages deploy. Built check-deploy-tip.mjs (7/7) + closeout-autopilot guard. Tile lights on this push."
+    },
+    {
+      "slug": "status-proof-index",
+      "status": "SHIPPED",
+      "commit": "status-proof",
+      "note": "build-status-proof.mjs bundles 10 feeds into self-grading api/status-proof.json; /status/ 8 fetches->1 via getProof; freshness tile + discovery link; wired build + build:check."
+    },
+    {
+      "slug": "tt-enforce-reprobe",
+      "status": "SHIPPED",
+      "commit": "tt-reprobe",
+      "note": "Reprobe ran: AMBER (148 violations/30d). Readiness doc written; flip deferred (founder-device, SOUL #3). Carry stays open w/ dated evidence."
+    },
+    {
+      "slug": "dr-cache-smoke",
+      "status": "SHIPPED",
+      "commit": "dr-cache",
+      "note": "4 DR failover tests appended to worker.unit.spec; 21/21 passing; wired in build:check."
+    },
+    {
+      "slug": "ambient-candidate-ledger",
+      "status": "SHIPPED",
+      "commit": "ambient-ledger",
+      "note": "build-ambient-ledger.mjs: 21 sources classified, 4 split-candidates; docs/AMBIENT_LEDGER.md + context/ambient-ledger.json; wired build + build:check."
+    },
+    {
+      "slug": "_validation",
+      "status": "GREEN",
+      "note": "npm run build:check EXIT 0 end-to-end (108/108 pages crawl clean, 0 failures). Also regenerated ~30 stale committed artifacts the S183 [skip ci] closeout had left drifted."
+    }
+  ]
+}

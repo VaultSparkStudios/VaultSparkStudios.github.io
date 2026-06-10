@@ -3768,3 +3768,19 @@ Founder said "complete all" after the stated `/audit then /implement then /close
 - **gtag fully gone (founder-approved):** 97 pages stripped, CSP cleaned; first-party analytics from the unsampled RUM beacon → `api/analytics-summary.json`. Plus `api/geo-vitals.json` (real per-country vitals — US:106/GB:3), regression emails via Resend after nightly rum:pull, and `/status/` Live Signals tiles.
 - Verification: gate green (108 pages, 0 failures) · ambient integrity spec 4/4 · live prod serves split shell, no gtag, clean CSP, analytics JSON · pages-deploy 27s green.
 - Next session: read the 2026-06-05 field-verdict boundary (S173 critical path + S175 origin move) once ≥5 post-deploy samples/side land — expect IMPROVED · TT re-probe ~06-12 · geo-vitals check for non-US confirmation · founder: vaultsparked-proof yes/no + device verify.
+
+
+---
+<!-- archived: 2026-06-10 -->
+
+## Where We Left Off (Session 182)
+- **Recovered a full production outage.** Apex hung (0 bytes) while `pages.dev` origin was healthy — the Worker fetched its own apex route post-Pages-migration and self-looped. Fixed: `originFetch` rewrites the primary fetch to the Pages origin by hostname (`PRIMARY_ORIGIN`); deployed via `--env production` (the prior bare `wrangler deploy` never updated the routed Worker); added `scripts/smoke-live.mjs` post-deploy liveness gate + auto-rollback to last-known-good. Site verified 6/6 smoke.
+- **Full audit:** `docs/AUDIT_2026-06-08-S182.{json,md}` — 23 items, combined Priority 407.7, via 3 sub-agents. Two frontiers: (1) reliability blind spots the ~100 gates missed; (2) a rich paid-member economy with almost nothing bridging it to the anonymous funnel. Supply-chain + secret scans clean.
+- **/implement shipped 7/23:** auto-rollback · smoke JSON-validity assertion · `/v/rum` per-IP rate-limit (live) · edge-fn error redaction · odds env-CORS · −1.18 MB dead ambient bundles + corpus-aware orphan gate (fixed a false positive that flagged 18-20-page-referenced hashes for `git rm`) · −8 dead scripts.
+- **Needs your action:** `supabase functions deploy create-checkout stripe-webhook assign-discord-role odds` to make the edge-fn security fixes live; set `ODDS_ALLOWED_ORIGINS` to the PromoGrind origin to activate strict CORS.
+- **Honest caveat:** `build:check` is not green locally — non-deterministic `--check` gates (ignis-search-index, oracle feed) drift the instant `npm run build` runs. Logged as audit #23; not chased with live-data churn.
+- **Next session:** deploy the edge-fn fixes; add Worker unit tests (#14); make the non-deterministic gates deterministic (#23) so the green/red signal is trustworthy; consider a non-datacenter uptime probe (#10). Then the funnel cluster (feedback-loop-closure #1) when ready for product work.
+
+</details>
+
+<details><summary>Where We Left Off (Session 181)</summary>

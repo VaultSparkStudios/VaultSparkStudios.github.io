@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-10T17:22:38.445Z",
+  "generatedAt": "2026-06-10T17:33:47.299Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,24 +22,21 @@
     }
   },
   "pulse": {
-    "currentSession": 183,
+    "currentSession": 184,
     "lastUpdated": "2026-06-10",
-    "currentFocus": "S183 ran the full S182 genius list (6 shipped) + resolved a founder P0: /oracle/ not refreshing (gitignored local-only feed 404ing on prod + a daily workflow that regenerated the public feed but never committed it) — Oracle now renders the deployed public-safe /api/public-intelligence.json, verified live. Edge-fn security fixes deployed (verify_jwt pinned in config first). build:check now GREEN end-to-end locally (Ark-dossier determinism fix). Worker unit tests + apex-HTML failure-shape probe shipped.",
-    "nextMilestone": "Harden self-committing scheduled workflows with git pull --rebase before push (uptime-probe lost a race this session); decide on deploying the richer Oracle IGNIS layer (public-safe boundary); then STATUS-PROOF-INDEX + TT-enforce re-probe (~06-12).",
-    "blockers": [
-      "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
-      "Founder device verify: membership proof loop + nav-sheet",
-      "Founder decision: deploy richer Oracle IGNIS layer (per-project voices/velocity/cognition) — needs public-safe-boundary call on exposing cross-project/sealed intelligence"
-    ],
+    "currentFocus": "S184 shipped 6/6 audit items + root-caused the [skip ci]-tip CF Pages deploy-strand (confirmed field-win + status-proof manifest now deploy on this push)",
+    "nextMilestone": "Verify on prod (pages.dev): field-win tile lights + /api/status-proof.json live; then TT named-policy wave toward enforce-flip + Ark-share the deploy-strand pattern",
+    "blockers": [],
     "queues": {
       "now": [
-        "[S183][P0/FOLLOW-UP] UPTIME-PROBE-REBASE-BEFORE-PUSH. `uptime-probe.yml` (and likely other self-committing scheduled workflows) push without `git pull --rebase` first, so they lose a race when a human/agent push lands in the same window (observed S183: one `uptime-probe` run failed on `failed to push some refs`). Add `git pull --rebase --autostash` before the push in the publish step. Self-heals each cycle but is avoidable noise.",
+        "[S183][P0/FOLLOW-UP] UPTIME-PROBE-REBASE-BEFORE-PUSH — DONE S184. Generalized the fix to the whole class: `git pull --rebase --autostash origin main` added before the push in all 7 self-committing workflows (ci-status-beacon, leaderboard-api, member-seo, og-images, rum-pull, uptime-probe, vault-narrative), not just uptime-probe. All YAML validated.",
         "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed via `/api/public-intelligence.json`, but the richer layer (per-project IGNIS voices, ecosystem-velocity chart, cognition aggregate score) still sources from the gitignored local-only `/ignis/output/*`. Deploying it needs a public-safe decision (what cross-project/sealed intelligence is exposable) + a sanitized deploy path + a refresh mechanism (generation is local-only — reads all sibling repos). Founder call.",
-        "[S180][SECURITY/P1] TT-ENFORCE-REPROBE. Due ~2026-06-12: `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).",
-        "[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT. `/` field verdict still PENDING (≥5/side not accrued; `api/field-win.json` `hasConfirmed:false`, no samples). Once it confirms, the /status/ \"Biggest measured win\" tile auto-lights — confirm it renders, then celebrate or regress-hunt.",
-        "[S181→NEXT][PROOF/P2] STATUS-PROOF-INDEX. Merge AI discovery, uptime, field wins, staging, and public contracts into one public-safe `/api/status-proof.json` manifest so `/status/` fetches one proof surface.",
+        "[S180→S184][SECURITY/P1] TT-ENFORCE-REPROBE — REPROBED S184, verdict AMBER. Ran probe + analyzer 2026-06-10: 148 violations/30d still present (not the clean GREEN a flip needs). Top sinks: `journal/dispatches:364` (×30, recurring), `home-idle-loader.js:16`, football-gm `appCore.js` (cross-repo), `schema-injector.js:23`, `ambient.shell`. Burn-down plan + flip command in `docs/TT_ENFORCE_READINESS_2026-06-10.md`. Flip stays founder-device gated (SOUL #3). Carry stays OPEN — next step is named-policy migration of the 4 first-party sinks + an Ark cargo to football-gm.",
+        "[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT — CONFIRMED + DONE S184. `api/field-win.json` now `hasConfirmed:true` (confirmedCount 1): `/` improved −46.1% LCP (p75 9489→5117ms) across the 2026-06-05 S173+S175 boundary, medium confidence. The /status/ \"Biggest measured win\" tile is data-driven and lights on this push. Root-caused why prod stayed dark: the S183 `[skip ci]` closeout tip stranded the CF Pages deploy — fixed by the new deploy-strand guard (see below). Remaining global watch tracked by GEO-VITALS-WATCH.",
+        "[S181→NEXT][PROOF/P2] STATUS-PROOF-INDEX — DONE S184. `scripts/build-status-proof.mjs` bundles 10 public proof feeds into a self-grading `/api/status-proof.json` (each proof carries its own freshness + a top-level trustScore/worstStale). `/status/` collapses 8 fetches → 1 shared manifest fetch (individual-file fallback preserved), renders a new \"Proof freshness\" tile, and exposes a `<link rel=alternate>` for agents. Wired into build + build:check drift gate.",
+        "[S184][DEPLOY/P0] DEPLOY-STRAND GUARD — DONE S184 (new, surfaced this session). CF Pages builds only the pushed tip and skips `[skip ci]` tips, so every closeout ending in the autopilot's `[skip ci]` reconcile commit silently stranded the substantive deploy (S183→S184: confirmed field-win + ~20 api/*.json never went live). `scripts/check-deploy-tip.mjs` (7/7 self-test) + `closeout-autopilot.mjs` now push an empty non-skip-ci commit when the tip is `[skip ci]` so Pages builds.",
         "[S180][OBS/P3] GEO-VITALS-WATCH. `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.",
-        "[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify."
+        "[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE. Broadcast the `[skip ci]`-tip CF-Pages deploy-strand finding + `scripts/check-deploy-tip.mjs` guard to all CF-Pages sibling repos via Ark `pattern-share` — likely a fleet-wide silent bug. (`node scripts/ark.mjs ship --type pattern-share --to '*' ...`)"
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -48,14 +45,7 @@
         "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
-      "shipped": [
-        "Founder P0 — `/oracle/` not refreshing — FIXED + verified live. Two compounding bugs: (1) Oracle fetched `/ignis/output/*.json`, which is gitignored (local-only, aggregates sibling repos incl. sealed) → 404s on prod for all 4 files; (2) `vault-narrative.yml` regenerated `api/public-intelligence.json` daily but never staged it → prod frozen at Jun 8. Fix: Oracle falls back to the deployed public-safe `/api/public-intelligence.json` (11 projects + sealed-as-count, no new exposure); workflow now commits the feed daily. Verified on Pages origin (feed `generatedAt` today, 11 projects, page ships the fallback).",
-        "Edge-fn security fixes DEPLOYED (you approved). Pinned `verify_jwt` per-function in `config.toml` first (live Management-API read: create-checkout/stripe-webhook=false, assign-discord-role/odds=true) so a plain redeploy can never silently break Stripe webhooks; post-deploy verify confirmed all four preserved.",
-        "`build:check` is green end-to-end locally now (was \"impossible\" per S182). Real culprit: the Ark dossier `--check` re-rendered from volatile `.cache/ark-inbox.json` → drift after every drain. Fixed to validate structure. The two scripts S182 blamed were already deterministic.",
-        "Worker unit tests: outage-critical logic extracted to `cloudflare/worker-lib.mjs` (single source), 17 `node:test` cases in `build:check`. Apex-HTML probe: `classifyEdge()` now pages on the S179 Worker-HTML-only outage shape while bot-challenges stay quiet (28/28). CI: Investor KPI 401 fixed (stale repo secret refreshed, verified green); dead `signal-log-sync` retired. Taskboard: `rotate-taskboard --apply` reclassifies stale bare headings (6 done).",
-        "Carries (evidence-gated / founder): TT-enforce due ~06-12 (+ device verify); `/` field-verdict needs RUM samples; deploy the richer Oracle IGNIS layer is a public-safe-boundary decision; `uptime-probe.yml` should rebase-before-push (lost a race with my commit this session — transient, self-heals).",
-        "Next session: harden self-committing workflows with rebase-before-push (#follow-up); decide on the richer Oracle layer; STATUS-PROOF-INDEX; then TT-enforce re-probe when due."
-      ]
+      "shipped": []
     },
     "ignis": {
       "score": 40319,
