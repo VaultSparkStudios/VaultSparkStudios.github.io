@@ -12,6 +12,8 @@
   <title>System Status | VaultSpark Studios</title>
   <meta name="description" content="Real-time status of VaultSpark Studios services — Vault, games, and infrastructure." />
   <link rel="canonical" href="https://vaultsparkstudios.com/status/" />
+  <!-- S184 — single-fetch, self-grading proof manifest for agents + humans -->
+  <link rel="alternate" type="application/json" href="/api/status-proof.json" title="VaultSpark Studios live proof manifest" />
   <meta name="robots" content="index, follow" />
   <meta property="og:title" content="Studio Status | VaultSpark Studios" />
   <meta property="og:description" content="Real-time status of VaultSpark Studios services — Vault, games, and infrastructure." />
@@ -382,27 +384,54 @@
       grid.appendChild(card);
     }
     function get(u) { return fetch(u, { credentials: 'omit' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); }
-    get('/api/ci-status.json').then(function (d) {
+    // S184 — unified proof manifest. Bundled feeds resolve from ONE fetch of
+    // /api/status-proof.json (each proof carries its own freshness); falls back
+    // to the individual file if the manifest is unavailable. Collapses ~8
+    // parallel fetches into one shared request.
+    var __pm = null, __pmTried = false;
+    function loadProofManifest() {
+      if (__pmTried) return Promise.resolve(__pm);
+      __pmTried = true;
+      return get('/api/status-proof.json').then(function (m) { __pm = (m && m.proofs) ? m : null; return __pm; });
+    }
+    function getProof(u) {
+      var key = u.replace('/api/', '').replace('.json', '');
+      return loadProofManifest().then(function (m) {
+        if (m && m.proofs && m.proofs[key] && m.proofs[key].present && m.proofs[key].data) return m.proofs[key].data;
+        return get(u);
+      });
+    }
+    // Proof-freshness clock — the manifest grading itself, visible. Green when
+    // every signal is fresh; amber when one is stale. Honest by construction.
+    loadProofManifest().then(function (m) {
+      if (!m || !m.summary) return;
+      var s = m.summary, w = s.worstStale;
+      var oldestH = w && w.ageSeconds != null ? Math.round(w.ageSeconds / 3600) : null;
+      tile('Proof freshness', s.trustScore + '% fresh',
+        s.fresh + '/' + s.present + ' signals current' + (s.stale ? ' · ' + s.stale + ' stale' : '') + (w ? ' · oldest: ' + w.key + ' ' + oldestH + 'h' : ''),
+        s.trustScore >= 100 ? 'good' : s.trustScore >= 80 ? 'warn' : 'bad');
+    });
+    getProof('/api/ci-status.json').then(function (d) {
       if (!d) return;
       tile('CI gates', d.allGreen ? 'All green' : 'Attention', (d.workflows || []).map(function (w) { return w.name.split(' ')[0]; }).join(' · '), d.allGreen ? 'good' : 'warn');
     });
-    get('/api/site-health.json').then(function (d) {
+    getProof('/api/site-health.json').then(function (d) {
       if (!d || d.publicSafe !== true) return;
       tile('Field vitals', d.fieldReady ? 'Measuring' : 'Accumulating', d.totalSamples + ' real-visit samples / ' + d.windowDays + 'd', d.fieldReady ? 'good' : 'warn');
     });
-    get('/api/ai-discovery-health.json').then(function (d) {
+    getProof('/api/ai-discovery-health.json').then(function (d) {
       if (!d || d.publicSafe !== true) return;
       var count = d.counts || {};
       tile('AI discovery spine', d.status === 'healthy' ? 'Healthy' : 'Attention',
         (count.publicProjects || 0) + ' projects · ' + (count.llmsShards || 0) + ' shards · header ' + (d.checks && d.checks.discoveryHeader ? 'on' : 'missing'),
         d.status === 'healthy' ? 'good' : 'warn');
     });
-    get('/api/field-verdicts.json').then(function (d) {
+    getProof('/api/field-verdicts.json').then(function (d) {
       if (!d || !d.boundaries || !d.boundaries.length) return;
       var b = d.boundaries[d.boundaries.length - 1];
       tile('Latest deploy verdict', b.overall.toUpperCase(), b.date + ' · graded by real visitors', b.overall === 'improved' ? 'good' : b.overall === 'regressed' ? 'bad' : 'warn');
     });
-    get('/api/staging-health.json').then(function (d) {
+    getProof('/api/staging-health.json').then(function (d) {
       if (!d) return;
       tile('Staging parity', d.status.toUpperCase(), (d.routes || []).length + ' routes sampled (CANON-007)', d.status === 'green' ? 'good' : 'warn');
     });
@@ -410,7 +439,7 @@
       if (!d || d.publicSafe !== true) return;
       tile('Traffic (first-party)', d.views7 + ' views / 7d', 'No cookies · no third parties', 'neutral');
     });
-    get('/api/geo-vitals.json').then(function (d) {
+    getProof('/api/geo-vitals.json').then(function (d) {
       if (!d || !d.countries || !d.countries.length) return;
       var top = d.countries[0];
       tile('Field reach', d.countries.length + ' region bucket(s)', 'top: ' + top.country + ' · LCP p75 ' + (top.lcpP75 / 1000).toFixed(1) + 's', 'neutral');
@@ -418,7 +447,7 @@
     // S178 — biggest measured win: auto-publishes a confirmed deploy verdict
     // (e.g. the origin-migration LCP drop) the moment field evidence lands. Stays
     // dark while every verdict is pending — the machine never overstates.
-    get('/api/field-win.json').then(function (d) {
+    getProof('/api/field-win.json').then(function (d) {
       if (!d || d.publicSafe !== true || !d.hasConfirmed || !d.topWin) return;
       var w = d.topWin;
       if (w.verdict !== 'improved') return;
@@ -427,7 +456,7 @@
     });
     // S178 — first-party uptime: availability tile + live incident history,
     // measured by our own probe (api/uptime.json), not a third-party badge.
-    get('/api/uptime.json').then(function (d) {
+    getProof('/api/uptime.json').then(function (d) {
       if (!d || !d.rollup) return;
       var r = d.rollup;
       var liveNow = d.overall === 'up';

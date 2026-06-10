@@ -1,0 +1,568 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "scripts/build-status-proof.mjs",
+  "generatedAt": "2026-06-10T17:13:21.941Z",
+  "publicSafe": true,
+  "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
+  "summary": {
+    "feeds": 10,
+    "present": 10,
+    "fresh": 9,
+    "stale": 1,
+    "trustScore": 90,
+    "worstStale": {
+      "key": "public-status",
+      "ageSeconds": 1703602,
+      "generatedAt": "2026-05-22T00:00:00.000Z"
+    }
+  },
+  "proofs": {
+    "uptime": {
+      "present": true,
+      "source": "/api/uptime.json",
+      "generatedAt": "2026-06-10T11:52:14.326Z",
+      "freshnessSeconds": 19268,
+      "staleAfterH": 2,
+      "stale": true,
+      "data": {
+        "schemaVersion": "2.0",
+        "generatedAt": "2026-06-10T11:52:14.326Z",
+        "generatedBy": "scripts/probe-uptime.mjs",
+        "overall": "up",
+        "liveness": {
+          "endpoint": "/api/founder-presence.json",
+          "status": 200,
+          "ms": 116,
+          "ok": true
+        },
+        "routes": [
+          {
+            "route": "/",
+            "status": 200,
+            "ms": 153,
+            "ok": true,
+            "origin": {
+              "status": 200,
+              "ms": 153,
+              "ok": true
+            },
+            "edge": {
+              "status": 403,
+              "ms": 70,
+              "note": "edge-challenged-or-down (informational; real browsers pass)"
+            }
+          },
+          {
+            "route": "/games/",
+            "status": 200,
+            "ms": 34,
+            "ok": true,
+            "origin": {
+              "status": 200,
+              "ms": 34,
+              "ok": true
+            },
+            "edge": {
+              "status": 200,
+              "ms": 204,
+              "note": "served"
+            }
+          },
+          {
+            "route": "/vault-member/",
+            "status": 200,
+            "ms": 33,
+            "ok": true,
+            "origin": {
+              "status": 200,
+              "ms": 33,
+              "ok": true
+            },
+            "edge": {
+              "status": 200,
+              "ms": 93,
+              "note": "served"
+            }
+          },
+          {
+            "route": "/membership/",
+            "status": 200,
+            "ms": 41,
+            "ok": true,
+            "origin": {
+              "status": 200,
+              "ms": 41,
+              "ok": true
+            },
+            "edge": {
+              "status": 200,
+              "ms": 75,
+              "note": "served"
+            }
+          },
+          {
+            "route": "/status/",
+            "status": 200,
+            "ms": 36,
+            "ok": true,
+            "origin": {
+              "status": 200,
+              "ms": 36,
+              "ok": true
+            },
+            "edge": {
+              "status": 200,
+              "ms": 73,
+              "note": "served"
+            }
+          }
+        ],
+        "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; the per-route `edge` field is informational only. Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path on the production domain).",
+        "rollup": {
+          "checks": 19,
+          "upPct": 100,
+          "lastIncidentAt": null,
+          "lastIncidentState": null
+        }
+      }
+    },
+    "field-win": {
+      "present": true,
+      "source": "/api/field-win.json",
+      "generatedAt": "2026-06-10T16:44:37.391Z",
+      "freshnessSeconds": 1725,
+      "staleAfterH": 48,
+      "stale": false,
+      "data": {
+        "schemaVersion": "1.0",
+        "generatedBy": "scripts/build-field-win-proof.mjs",
+        "publicSafe": true,
+        "note": "Confirmed deploy verdicts from real-visitor field windows. Only improved/regressed/neutral (never pending) are published. No per-visit data.",
+        "hasConfirmed": true,
+        "confirmedCount": 1,
+        "topWin": {
+          "route": "/",
+          "boundary": "2026-06-05",
+          "label": "S173 critical path + S175 origin migration to CF Pages",
+          "verdict": "improved",
+          "lcpDeltaPct": -46.1,
+          "confidence": "medium",
+          "preSamples": 38,
+          "postSamples": 10,
+          "preLcpP75": 9489,
+          "postLcpP75": 5117
+        },
+        "confirmed": [
+          {
+            "route": "/",
+            "boundary": "2026-06-05",
+            "label": "S173 critical path + S175 origin migration to CF Pages",
+            "verdict": "improved",
+            "lcpDeltaPct": -46.1,
+            "confidence": "medium",
+            "preSamples": 38,
+            "postSamples": 10,
+            "preLcpP75": 9489,
+            "postLcpP75": 5117
+          }
+        ],
+        "generatedAt": "2026-06-10T16:44:37.391Z"
+      }
+    },
+    "ai-discovery-health": {
+      "present": true,
+      "source": "/api/ai-discovery-health.json",
+      "generatedAt": "2026-06-10T16:44:38.137Z",
+      "freshnessSeconds": 1724,
+      "staleAfterH": 48,
+      "stale": false,
+      "data": {
+        "schemaVersion": "1.0",
+        "generatedAt": "2026-06-10T16:44:38.137Z",
+        "generatedBy": "scripts/build-ai-discovery-health.mjs",
+        "publicSafe": true,
+        "status": "healthy",
+        "checks": {
+          "manifestValid": true,
+          "shardSetsAligned": true,
+          "discoveryHeader": true,
+          "noDeadInternalUrls": true
+        },
+        "counts": {
+          "publicProjects": 13,
+          "manifestShards": 8,
+          "llmsShards": 8,
+          "fixedSurfaces": 13
+        },
+        "discovery": {
+          "manifest": "https://vaultsparkstudios.com/agents.json",
+          "llmsTxt": "https://vaultsparkstudios.com/.well-known/llms.txt",
+          "sitemap": "https://vaultsparkstudios.com/sitemap.xml",
+          "entityGraph": "https://vaultsparkstudios.com/.well-known/entity-graph.json"
+        },
+        "errors": []
+      }
+    },
+    "ci-status": {
+      "present": true,
+      "source": "/api/ci-status.json",
+      "generatedAt": "2026-06-10T15:39:57.773Z",
+      "freshnessSeconds": 5604,
+      "staleAfterH": 96,
+      "stale": false,
+      "data": {
+        "generatedAt": "2026-06-10T15:39:57.773Z",
+        "allGreen": false,
+        "summary": "One or more CI gates are failing. Studio is investigating.",
+        "workflows": [
+          {
+            "name": "E2E Test Suite",
+            "status": "failure",
+            "updatedAt": "2026-06-10T15:33:27Z"
+          },
+          {
+            "name": "Accessibility Audit",
+            "status": "success",
+            "updatedAt": "2026-06-10T15:33:53Z"
+          },
+          {
+            "name": "Lighthouse CI",
+            "status": "success",
+            "updatedAt": "2026-06-10T15:39:45Z"
+          }
+        ]
+      }
+    },
+    "site-health": {
+      "present": true,
+      "source": "/api/site-health.json",
+      "generatedAt": "2026-06-10T16:44:37.677Z",
+      "freshnessSeconds": 1724,
+      "staleAfterH": 48,
+      "stale": false,
+      "data": {
+        "schemaVersion": "1.0",
+        "generatedAt": "2026-06-10T16:44:37.677Z",
+        "generatedBy": "scripts/build-site-health.mjs",
+        "publicSafe": true,
+        "source": "field-rum",
+        "windowDays": 7,
+        "totalSamples": 46,
+        "routesObserved": 14,
+        "minSamples": 50,
+        "fieldReady": false,
+        "measured": []
+      }
+    },
+    "staging-health": {
+      "present": true,
+      "source": "/api/staging-health.json",
+      "generatedAt": "2026-06-05T19:11:57.942Z",
+      "freshnessSeconds": 424884,
+      "staleAfterH": 168,
+      "stale": false,
+      "data": {
+        "schemaVersion": "1.0",
+        "generatedAt": "2026-06-05T19:11:57.942Z",
+        "generatedBy": "scripts/check-staging-parity.mjs",
+        "publicSafe": true,
+        "production": "https://vaultsparkstudios.com",
+        "staging": "https://website.staging.vaultsparkstudios.com",
+        "status": "green",
+        "routes": [
+          {
+            "route": "/",
+            "prodStatus": 200,
+            "stagingStatus": 200,
+            "statusParity": true,
+            "shellParity": true,
+            "prodShell": [
+              "assets/ambient.shell-3667694cc0.js",
+              "assets/nav-toggle.shell-6d8a113585.js",
+              "assets/shell-health.shell-0995bd7945.js",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/theme-toggle.shell-b970c26bd9.js"
+            ],
+            "stagingShell": [
+              "assets/ambient.shell-3667694cc0.js",
+              "assets/nav-toggle.shell-6d8a113585.js",
+              "assets/shell-health.shell-0995bd7945.js",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/theme-toggle.shell-b970c26bd9.js"
+            ],
+            "headerParity": true
+          },
+          {
+            "route": "/studio-pulse/",
+            "prodStatus": 200,
+            "stagingStatus": 200,
+            "statusParity": true,
+            "shellParity": true,
+            "prodShell": [
+              "assets/ambient.shell-3667694cc0.js",
+              "assets/nav-toggle.shell-6d8a113585.js",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/theme-toggle.shell-b970c26bd9.js"
+            ],
+            "stagingShell": [
+              "assets/ambient.shell-3667694cc0.js",
+              "assets/nav-toggle.shell-6d8a113585.js",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/theme-toggle.shell-b970c26bd9.js"
+            ],
+            "headerParity": true
+          },
+          {
+            "route": "/membership/",
+            "prodStatus": 200,
+            "stagingStatus": 200,
+            "statusParity": true,
+            "shellParity": true,
+            "prodShell": [
+              "assets/ambient.shell-3667694cc0.js",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/theme-toggle.shell-b970c26bd9.js"
+            ],
+            "stagingShell": [
+              "assets/ambient.shell-3667694cc0.js",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/style.shell-7082b9235c.css",
+              "assets/theme-toggle.shell-b970c26bd9.js"
+            ],
+            "headerParity": true
+          }
+        ]
+      }
+    },
+    "geo-vitals": {
+      "present": true,
+      "source": "/api/geo-vitals.json",
+      "generatedAt": "2026-06-10T16:44:37.629Z",
+      "freshnessSeconds": 1724,
+      "staleAfterH": 48,
+      "stale": false,
+      "data": {
+        "schemaVersion": "1.0",
+        "generatedAt": "2026-06-10T16:44:37.629Z",
+        "generatedBy": "scripts/build-geo-vitals.mjs",
+        "publicSafe": true,
+        "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
+        "minSamples": 3,
+        "countries": [
+          {
+            "country": "US",
+            "samples": 107,
+            "lcpP75": 1824,
+            "ttfbP75": 117,
+            "colos": [
+              "BOS",
+              "DEN",
+              "DFW",
+              "EWR",
+              "IAD",
+              "ORD",
+              "SEA",
+              "SJC"
+            ]
+          },
+          {
+            "country": "GB",
+            "samples": 3,
+            "lcpP75": 1756,
+            "ttfbP75": 574,
+            "colos": [
+              "LHR",
+              "MAN"
+            ]
+          },
+          {
+            "country": "other",
+            "samples": 6,
+            "lcpP75": 9960,
+            "ttfbP75": 1620,
+            "colos": [
+              "GRU",
+              "LAX",
+              "MRS",
+              "PRG",
+              "YVR"
+            ]
+          }
+        ]
+      }
+    },
+    "field-verdicts": {
+      "present": true,
+      "source": "/api/field-verdicts.json",
+      "generatedAt": "2026-06-07T18:25:10.430Z",
+      "freshnessSeconds": 254892,
+      "staleAfterH": 72,
+      "stale": false,
+      "data": {
+        "schemaVersion": "1.0",
+        "boundaries": [
+          {
+            "id": "deploy-2026-06-05",
+            "date": "2026-06-05",
+            "label": "S173 critical path + S175 origin migration to CF Pages",
+            "routes": {
+              "/": {
+                "pre": {
+                  "samples": 38,
+                  "lcpP75w": 9489
+                },
+                "post": {
+                  "samples": 3,
+                  "lcpP75w": 1588
+                },
+                "lcpDeltaPct": null,
+                "verdict": "pending",
+                "confidence": null
+              },
+              "/games/": {
+                "pre": {
+                  "samples": 8,
+                  "lcpP75w": 2000
+                },
+                "post": {
+                  "samples": 0,
+                  "lcpP75w": null
+                },
+                "lcpDeltaPct": null,
+                "verdict": "pending",
+                "confidence": null
+              },
+              "/games/vaultspark-football-gm/": {
+                "pre": {
+                  "samples": 4,
+                  "lcpP75w": 576
+                },
+                "post": {
+                  "samples": 4,
+                  "lcpP75w": 1479
+                },
+                "lcpDeltaPct": null,
+                "verdict": "pending",
+                "confidence": null
+              },
+              "/games/gridiron-gm/": {
+                "pre": {
+                  "samples": 5,
+                  "lcpP75w": 1294
+                },
+                "post": {
+                  "samples": 0,
+                  "lcpP75w": null
+                },
+                "lcpDeltaPct": null,
+                "verdict": "pending",
+                "confidence": null
+              }
+            },
+            "overall": "pending",
+            "gradedAt": "2026-06-07T18:25:10.430Z"
+          }
+        ],
+        "generatedAt": "2026-06-07T18:25:10.430Z",
+        "generatedBy": "scripts/compare-rum-windows.mjs",
+        "publicSafe": true,
+        "note": "Aggregated field-visit windows around deploys. No per-visit data."
+      }
+    },
+    "public-status": {
+      "present": true,
+      "source": "/api/public-status.json",
+      "generatedAt": "2026-05-22T00:00:00.000Z",
+      "freshnessSeconds": 1703602,
+      "staleAfterH": 720,
+      "stale": false,
+      "data": {
+        "generatedAt": "2026-05-22",
+        "source": "vaultsparkstudios.com worker proxy of hub.vaultsparkstudios.com/public-status (seed until Hub Worker /public-status endpoint is wired)",
+        "studio": {
+          "reposOnline": 28,
+          "activeSessions": 1,
+          "lastArkBroadcastAt": "2026-05-22T22:00:00Z",
+          "ignisHeartbeatAt": "2026-05-22T22:15:00Z",
+          "lastShippedSession": "S160"
+        },
+        "nervousSystem": [
+          {
+            "label": "Repos online",
+            "value": 28
+          },
+          {
+            "label": "Sessions active now",
+            "value": 1
+          },
+          {
+            "label": "IGNIS heartbeat",
+            "value": "live"
+          },
+          {
+            "label": "Last Ark broadcast",
+            "value": "minutes ago"
+          }
+        ]
+      }
+    },
+    "security-posture": {
+      "present": true,
+      "source": "/api/security-posture.json",
+      "generatedAt": "2026-05-27T00:00:00.000Z",
+      "freshnessSeconds": 1271602,
+      "staleAfterH": 720,
+      "stale": false,
+      "data": {
+        "schemaVersion": "1.0",
+        "generatedAt": "2026-05-27T00:00:00.000Z",
+        "generatedBy": "manual-seed:/implement-S167",
+        "publicSafe": true,
+        "posture": "active",
+        "controls": [
+          {
+            "label": "Security headers",
+            "status": "active",
+            "detail": "Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, referrer policy, and related browser hardening."
+          },
+          {
+            "label": "CSP discipline",
+            "status": "active",
+            "detail": "Static CSP audit and hash propagation are part of build verification."
+          },
+          {
+            "label": "RUM privacy",
+            "status": "active",
+            "detail": "RUM is route-level and privacy-minimized; no user IDs, query strings, or free text are stored."
+          },
+          {
+            "label": "Supply-chain scan",
+            "status": "active",
+            "detail": "CANON-023 supply-chain verification runs in build:check."
+          },
+          {
+            "label": "Obelisk adoption",
+            "status": "phase-0-declared",
+            "detail": "Identity wrapper exists; passkey-first migration waits on Obelisk Phase 2."
+          },
+          {
+            "label": "Responsible disclosure",
+            "status": "active",
+            "detail": "Reports route to founder@vaultsparkstudios.com with the security.txt policy."
+          }
+        ]
+      }
+    }
+  }
+}
