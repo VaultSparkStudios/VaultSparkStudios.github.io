@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-10T14:32:23.288Z",
+  "generatedAt": "2026-06-10T16:47:02.874Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,24 +22,24 @@
     }
   },
   "pulse": {
-    "currentSession": 182,
+    "currentSession": 183,
     "lastUpdated": "2026-06-10",
-    "currentFocus": "S182 recovered a real production outage (Worker apex self-loop after Pages migration) — fixed by by-hostname origin fetch + a post-deploy liveness gate + auto-rollback; site healthy (6/6 smoke). Then full 9-axis audit (23 items) + /implement shipped 7 (reliability + maintainability). build:check is NOT green locally (non-deterministic --check gates, audit #23).",
-    "nextMilestone": "Deploy the committed edge-fn security fixes (supabase functions deploy create-checkout stripe-webhook assign-discord-role odds) + add Worker unit tests (audit #14) + make the non-deterministic build:check gates deterministic (audit #23) so the green/red signal is trustworthy again",
+    "currentFocus": "S183 ran the full S182 genius list (6 shipped) + resolved a founder P0: /oracle/ not refreshing (gitignored local-only feed 404ing on prod + a daily workflow that regenerated the public feed but never committed it) — Oracle now renders the deployed public-safe /api/public-intelligence.json, verified live. Edge-fn security fixes deployed (verify_jwt pinned in config first). build:check now GREEN end-to-end locally (Ark-dossier determinism fix). Worker unit tests + apex-HTML failure-shape probe shipped.",
+    "nextMilestone": "Harden self-committing scheduled workflows with git pull --rebase before push (uptime-probe lost a race this session); decide on deploying the richer Oracle IGNIS layer (public-safe boundary); then STATUS-PROOF-INDEX + TT-enforce re-probe (~06-12).",
     "blockers": [
       "Founder yes/no: delete assets/vaultsparked-proof.js (evidence-complete)",
-      "Founder device verify: membership proof loop + nav-sheet"
+      "Founder device verify: membership proof loop + nav-sheet",
+      "Founder decision: deploy richer Oracle IGNIS layer (per-project voices/velocity/cognition) — needs public-safe-boundary call on exposing cross-project/sealed intelligence"
     ],
     "queues": {
       "now": [
-        "[S182][REL/P1] DEPLOY-EDGE-FN-SECURITY-FIXES. `supabase functions deploy create-checkout stripe-webhook assign-discord-role odds` to make the S182 error-redaction + CORS fixes live (committed but not yet deployed; no CI deploy exists for edge fns).",
-        "[S182][REL/P1] WORKER-UNIT-TESTS. Audit #14: the ~800-line Worker has zero unit coverage. Add `tests/worker.unit.spec.js` (Miniflare): assert `toOrigin` never yields the apex host, a hanging primary fails over within 8s, CSRF verify rejects tampered/expired tokens.",
-        "[S182][MAINT/P1] NONDETERMINISTIC-CHECK-GATES. Audit #23: make `build-ignis-search-index` + `sanitize-public-oracle-feed` deterministic in `--check` (strip/round timestamps, freeze live inputs) so `build:check` can actually go green locally. Verify: build then build:check twice, no commit between.",
-        "[S182][REL/P2] NON-DATACENTER-UPTIME-PROBE. Audit #10: add a CF Cron / external browser monitor from a non-datacenter egress that asserts apex 200 + marker (current probes are all bot-challenged from datacenter and blind to the real failure shape).",
-        "[S181][AI/P1] AI-SPINE-PUBLIC-HEALTH — DONE. Published `api/ai-discovery-health.json` from the same validators as the AI-spine gate; `/status/` now shows a live \"AI discovery spine\" tile; `build` + `build:check` are wired. Focused gates green. DONE S181",
-        "[S181][PROCESS/P2] TASKBOARD-RUNWAY-HYGIENE — DONE. `check-stale-open-tasks.mjs` now flags duplicate active `Now` and `Human Action Required` sections; board consolidated into one S181 runway and one current founder-action block. Gate green. DONE S181",
-        "[S180][SECURITY/P1] TT-ENFORCE-REPROBE. Now due (~2026-06-12): `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).",
-        "[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. `/` field verdict still PENDING (≥5/side not yet accrued; signal −83%). Once it confirms, `api/field-win.json` flips `hasConfirmed:true` and the /status/ \"Biggest measured win\" tile auto-lights — confirm it renders, then celebrate or regress-hunt with `lib/perf-forensics.mjs`."
+        "[S183][P0/FOLLOW-UP] UPTIME-PROBE-REBASE-BEFORE-PUSH. `uptime-probe.yml` (and likely other self-committing scheduled workflows) push without `git pull --rebase` first, so they lose a race when a human/agent push lands in the same window (observed S183: one `uptime-probe` run failed on `failed to push some refs`). Add `git pull --rebase --autostash` before the push in the publish step. Self-heals each cycle but is avoidable noise.",
+        "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed via `/api/public-intelligence.json`, but the richer layer (per-project IGNIS voices, ecosystem-velocity chart, cognition aggregate score) still sources from the gitignored local-only `/ignis/output/*`. Deploying it needs a public-safe decision (what cross-project/sealed intelligence is exposable) + a sanitized deploy path + a refresh mechanism (generation is local-only — reads all sibling repos). Founder call.",
+        "[S180][SECURITY/P1] TT-ENFORCE-REPROBE. Due ~2026-06-12: `node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs`; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).",
+        "[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT. `/` field verdict still PENDING (≥5/side not accrued; `api/field-win.json` `hasConfirmed:false`, no samples). Once it confirms, the /status/ \"Biggest measured win\" tile auto-lights — confirm it renders, then celebrate or regress-hunt.",
+        "[S181→NEXT][PROOF/P2] STATUS-PROOF-INDEX. Merge AI discovery, uptime, field wins, staging, and public contracts into one public-safe `/api/status-proof.json` manifest so `/status/` fetches one proof surface.",
+        "[S180][OBS/P3] GEO-VITALS-WATCH. `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.",
+        "[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -49,12 +49,12 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "Recovered a full production outage. Apex hung (0 bytes) while `pages.dev` origin was healthy — the Worker fetched its own apex route post-Pages-migration and self-looped. Fixed: `originFetch` rewrites the primary fetch to the Pages origin by hostname (`PRIMARY_ORIGIN`); deployed via `--env production` (the prior bare `wrangler deploy` never updated the routed Worker); added `scripts/smoke-live.mjs` post-deploy liveness gate + auto-rollback to last-known-good. Site verified 6/6 smoke.",
-        "Full audit: `docs/AUDIT_2026-06-08-S182.{json,md}` — 23 items, combined Priority 407.7, via 3 sub-agents. Two frontiers: (1) reliability blind spots the ~100 gates missed; (2) a rich paid-member economy with almost nothing bridging it to the anonymous funnel. Supply-chain + secret scans clean.",
-        "/implement shipped 7/23: auto-rollback · smoke JSON-validity assertion · `/v/rum` per-IP rate-limit (live) · edge-fn error redaction · odds env-CORS · −1.18 MB dead ambient bundles + corpus-aware orphan gate (fixed a false positive that flagged 18-20-page-referenced hashes for `git rm`) · −8 dead scripts.",
-        "Needs your action: `supabase functions deploy create-checkout stripe-webhook assign-discord-role odds` to make the edge-fn security fixes live; set `ODDS_ALLOWED_ORIGINS` to the PromoGrind origin to activate strict CORS.",
-        "Honest caveat: `build:check` is not green locally — non-deterministic `--check` gates (ignis-search-index, oracle feed) drift the instant `npm run build` runs. Logged as audit #23; not chased with live-data churn.",
-        "Next session: deploy the edge-fn fixes; add Worker unit tests (#14); make the non-deterministic gates deterministic (#23) so the green/red signal is trustworthy; consider a non-datacenter uptime probe (#10). Then the funnel cluster (feedback-loop-closure #1) when ready for product work."
+        "Founder P0 — `/oracle/` not refreshing — FIXED + verified live. Two compounding bugs: (1) Oracle fetched `/ignis/output/*.json`, which is gitignored (local-only, aggregates sibling repos incl. sealed) → 404s on prod for all 4 files; (2) `vault-narrative.yml` regenerated `api/public-intelligence.json` daily but never staged it → prod frozen at Jun 8. Fix: Oracle falls back to the deployed public-safe `/api/public-intelligence.json` (11 projects + sealed-as-count, no new exposure); workflow now commits the feed daily. Verified on Pages origin (feed `generatedAt` today, 11 projects, page ships the fallback).",
+        "Edge-fn security fixes DEPLOYED (you approved). Pinned `verify_jwt` per-function in `config.toml` first (live Management-API read: create-checkout/stripe-webhook=false, assign-discord-role/odds=true) so a plain redeploy can never silently break Stripe webhooks; post-deploy verify confirmed all four preserved.",
+        "`build:check` is green end-to-end locally now (was \"impossible\" per S182). Real culprit: the Ark dossier `--check` re-rendered from volatile `.cache/ark-inbox.json` → drift after every drain. Fixed to validate structure. The two scripts S182 blamed were already deterministic.",
+        "Worker unit tests: outage-critical logic extracted to `cloudflare/worker-lib.mjs` (single source), 17 `node:test` cases in `build:check`. Apex-HTML probe: `classifyEdge()` now pages on the S179 Worker-HTML-only outage shape while bot-challenges stay quiet (28/28). CI: Investor KPI 401 fixed (stale repo secret refreshed, verified green); dead `signal-log-sync` retired. Taskboard: `rotate-taskboard --apply` reclassifies stale bare headings (6 done).",
+        "Carries (evidence-gated / founder): TT-enforce due ~06-12 (+ device verify); `/` field-verdict needs RUM samples; deploy the richer Oracle IGNIS layer is a public-safe-boundary decision; `uptime-probe.yml` should rebase-before-push (lost a race with my commit this session — transient, self-heals).",
+        "Next session: harden self-committing workflows with rebase-before-push (#follow-up); decide on the richer Oracle layer; STATUS-PROOF-INDEX; then TT-enforce re-probe when due."
       ]
     },
     "ignis": {

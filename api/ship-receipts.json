@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-10T14:32:29.723Z",
+  "generatedAt": "2026-06-10T16:44:37.343Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,8 +8,13 @@
     {
       "theme": "transparency",
       "label": "Transparency",
-      "feedbackSignals": 1,
+      "feedbackSignals": 2,
       "shippedCommits": [
+        {
+          "sha": "c836221d",
+          "summary": "live Oracle feed, green build:check, worker unit tests, apex-HTML probe",
+          "ts": "2026-06-10T15:31:22.000Z"
+        },
         {
           "sha": "f78a94a9",
           "summary": "publish ai discovery health",
@@ -52,7 +57,7 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 5,
+      "feedbackSignals": 4,
       "shippedCommits": [
         {
           "sha": "9952f249",
@@ -73,11 +78,6 @@
           "sha": "b0d473f9",
           "summary": "S179 — split 4 route-scoped widgets out of the feature bundle (ambient-split-wave2 #4)",
           "ts": "2026-06-08T06:49:35.000Z"
-        },
-        {
-          "sha": "d8484cae",
-          "summary": "S178 — rotate stale TASK_BOARD sessions to archive (taskboard-archive-rotation #5)",
-          "ts": "2026-06-08T05:07:55.000Z"
         }
       ],
       "proof": {
@@ -90,9 +90,9 @@
       "fieldVerdict": {
         "boundary": "2026-06-05",
         "label": "S173 critical path + S175 origin migration to CF Pages",
-        "verdict": "pending",
-        "lcpDeltaPct": null,
-        "confidence": null
+        "verdict": "improved",
+        "lcpDeltaPct": -46.1,
+        "confidence": "medium"
       }
     }
   ]

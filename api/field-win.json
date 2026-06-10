@@ -3,9 +3,33 @@
   "generatedBy": "scripts/build-field-win-proof.mjs",
   "publicSafe": true,
   "note": "Confirmed deploy verdicts from real-visitor field windows. Only improved/regressed/neutral (never pending) are published. No per-visit data.",
-  "hasConfirmed": false,
-  "confirmedCount": 0,
-  "topWin": null,
-  "confirmed": [],
-  "generatedAt": "2026-06-10T14:32:29.788Z"
+  "hasConfirmed": true,
+  "confirmedCount": 1,
+  "topWin": {
+    "route": "/",
+    "boundary": "2026-06-05",
+    "label": "S173 critical path + S175 origin migration to CF Pages",
+    "verdict": "improved",
+    "lcpDeltaPct": -46.1,
+    "confidence": "medium",
+    "preSamples": 38,
+    "postSamples": 10,
+    "preLcpP75": 9489,
+    "postLcpP75": 5117
+  },
+  "confirmed": [
+    {
+      "route": "/",
+      "boundary": "2026-06-05",
+      "label": "S173 critical path + S175 origin migration to CF Pages",
+      "verdict": "improved",
+      "lcpDeltaPct": -46.1,
+      "confidence": "medium",
+      "preSamples": 38,
+      "postSamples": 10,
+      "preLcpP75": 9489,
+      "postLcpP75": 5117
+    }
+  ],
+  "generatedAt": "2026-06-10T16:44:37.391Z"
 }

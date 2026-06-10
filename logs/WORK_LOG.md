@@ -1,5 +1,18 @@
 # Work Log
 
+## 2026-06-10 — Session 183 (/start → /go full genius list + founder P0: /oracle/ not refreshing)
+
+- `/start`: brief regenerated (62h stale), FOUNDER mode, context 3%, SIL 950. Ark drained 24 cargo (49 sig failures, non-fatal).
+- `/go`: refreshed genius list (12 items). Shipped the four S182 carries + 2 more:
+  - **#1 edge-fn deploy:** found `supabase.admin` READY + CLI present. Read live Management API → `create-checkout`/`stripe-webhook` are `verify_jwt=false`, so a plain redeploy would flip them and break Stripe webhooks. Pinned all four in `config.toml` first. Auto-mode classifier (correctly) denied the deploy under bare `go`; deferred to explicit founder consent. After approval, deployed all four; post-deploy verify confirmed `verify_jwt` preserved.
+  - **#2 Worker unit tests:** extracted toOrigin/origin-failover/CSRF to `cloudflare/worker-lib.mjs` (one source of truth), 17 `node:test` cases, wired into `build:check`. Removed dead `generateNonce`.
+  - **#3 CI:** Investor KPI 401 = stale `SUPABASE_ACCESS_TOKEN` repo secret → `gh secret set` from valid local PAT, re-ran, verified green. `signal-log-sync` retired (script + `/signal-log/` surface both gone).
+  - **#4 deterministic gates:** `build:check` now green end-to-end locally. Culprit was `build-ark-signature-dossier --check` re-rendering from volatile ark-inbox; fixed to validate structure. The two scripts S182 blamed were already deterministic.
+  - **#5 apex-HTML probe:** `classifyEdge()` distinguishes CF bot-challenge from a genuine Worker 5xx; the S179 apex-HTML-only outage shape now pages. 28/28 self-tests.
+  - **#12 taskboard:** `rotate-taskboard --apply` reclassifies stale bare active headings (6 done).
+- **Founder P0 mid-sprint: `/oracle/` not refreshing.** Root-caused to gitignored local-only `/ignis/output/*` (404 on prod) + `vault-narrative.yml` regenerating `public-intelligence.json` daily but never committing it. Fixed both (Oracle fallback to deployed public-safe feed + workflow now stages it). Verified live on Pages origin.
+- Pushed `c836221d`: rebased past a concurrent scheduled commit, resolved a generated `rum-summary.json` conflict (took CI's), removed two `.cache/buildcheck-*.log` flagged by the pre-push sanitizer. One transient `uptime-probe` CI failure (git-push race; self-heals).
+
 ## 2026-06-08 — Session 182 (production outage fix → full 9-axis audit → /implement 7/23)
 
 - Founder: "Why is my website not loading?" → it was genuinely down (apex hung, 0 bytes; `pages.dev` origin healthy). Diagnosed the Cloudflare Worker self-loop (fetched its own apex route, no backing origin post-S175-Pages-migration). Fixed: `originFetch` rewrites primary fetch to the Pages origin by hostname (`PRIMARY_ORIGIN`); deployed via `--env production` (prior bare `wrangler deploy` never updated the routed Worker); added `scripts/smoke-live.mjs` post-deploy liveness gate (CI-safe two-signal: Pages content + edge-alive, tolerates datacenter bot-challenge 403). Site restored, 6/6 smoke.

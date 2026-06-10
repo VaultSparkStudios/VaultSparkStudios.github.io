@@ -2,6 +2,14 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-10 — S183 — Public surfaces render the public-safe deployed feed, never the gitignored IGNIS aggregate
+
+Decision: `/oracle/` (and any public surface) sources portfolio data from the deployed, public-safe `/api/public-intelligence.json` — not from `/ignis/output/*.json`, which is gitignored (local-only, aggregates every sibling repo including sealed projects) and therefore 404s on prod. The raw IGNIS aggregate stays private by design; only the curated public feed (public-listed projects + sealed-as-count) deploys. Corollary fix: any workflow that regenerates a deployed artifact MUST stage it in the same commit — `vault-narrative.yml` was regenerating `public-intelligence.json` daily but never `git add`-ing it, silently freezing the feed. Deferred (founder call): whether to deploy the richer IGNIS layer (per-project voices, velocity, cognition score) requires a public-safe-boundary decision on exposing cross-project/sealed intelligence + a sanitized deploy path + a refresh mechanism (generation is local-only — reads all sibling repos).
+
+### 2026-06-10 — S183 — Edge-function `verify_jwt` posture is pinned in config.toml, not left to deploy-command flags
+
+Decision: per-function `verify_jwt` is declared in `supabase/config.toml` (`create-checkout`/`stripe-webhook`=false because they authenticate in-code via Stripe signature / guest checkout; `assign-discord-role`/`odds`=true). Rationale: `supabase functions deploy <name>` SETS `verify_jwt` on each deploy — it does not preserve the live value — so a plain redeploy of a function whose live setting was established by a one-off `--no-verify-jwt` flag would silently flip it and break the endpoint (Stripe webhooks would start 401ing at the gateway). Pinning in version-controlled config makes the security posture deterministic and removes the footgun permanently. Values were read live from the Management API before pinning; post-deploy verification confirmed all four preserved.
+
 ### 2026-06-08 — S182 — A green deploy is not proof the site is up; the Worker must never fetch its own route
 
 The production outage proved two things. (1) **The Worker must fetch its origin by hostname (the Pages `*.pages.dev`), never re-fetch its own apex route** — once the apex has no separate backing origin, `fetch(request)` self-loops. `originFetch` now rewrites to `PRIMARY_ORIGIN`. (2) **The deploy contract is now deploy → liveness gate → auto-rollback**, not just deploy. `cloudflare-worker-deploy.yml` runs `smoke-live.mjs` after `npm run deploy` and auto-reverts on failure. A deploy that reports success is no longer trusted as proof of availability — `smoke-live` (Pages content + edge-alive, bot-challenge-tolerant) is. Corollary: `package.json deploy` defaults to `--env production` so the routed Worker can't silently go stale.

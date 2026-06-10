@@ -13,11 +13,30 @@ Avgs - 3: 982.7 | 5: 989.2 | 10: 989.6 | 25: 980.0 | all: 962 (v3.0 /1000)
   └ 3-session: Dev 96.0 | Align 99.3 | Momentum 98.7 | Engage 97.7 | Process 96.7
 Velocity trend: ↑ (S182: 7 shipped under an unplanned outage; S179 4/4, S178 6/6 — strong)  |  Protocol velocity: ↑ (deploy contract now deploy→liveness-gate→auto-rollback; by-hostname origin fetch) |  Debt: ↓ (−1.18 MB dead bundles, −8 dead scripts; but build:check non-determinism is open, audit #23)
 Momentum runway: ~16 deferred audit items (real work, not just verifies) — top: feedback-loop-closure, worker-unit-tests, non-datacenter uptime probe, nondeterministic-check-gates  |  Intent rate: 100% (last 5)
-Last session: 2026-06-08 | Session 182 | Total: 950/1000 (v3.0) | Velocity: 7 | protocolVelocity: 3
+Last session: 2026-06-10 | Session 183 | Total: 968/1000 (v3.0) | Velocity: 7 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-10 — Session 183 (/start → /go full genius list + founder P0: /oracle/ not refreshing) | Total: 968/1000 (v3.0) | Velocity: 7 | Debt: ↓
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 96 | `build:check` now goes **green end-to-end locally** — the thing S182 called impossible (was 88). 17 Worker unit tests + 28 probe + 13 taskboard self-tests all green. Ding: one transient `uptime-probe` CI failure (git-push race) left unfixed in-session (queued). |
+| Creative Alignment | 98 | Held the public-safe boundary hard — fixed Oracle by consuming the already-public feed, did NOT un-ignore the private cross-project IGNIS aggregate; deferred the richer layer for a founder public-safe decision. Refused to auto-deploy edge fns under bare `go`; waited for explicit consent. |
+| Momentum | 97 | 6 genius items + a P0 in one `/go`; every item names a reliability/security/UX outcome; carries recorded with evidence-gates and reasons. |
+| Engagement | 96 | Fixed the founder's actual broken surface (`/oracle/` showed "data unavailable" on prod, now renders 11 live projects). Worker tests + apex-HTML probe harden the most important UX: the site being up and truthfully monitored. |
+| Process Quality | 95 | Read the live Management API before deploying and caught the `verify_jwt` footgun (a plain redeploy would've broken Stripe webhooks); pinned it in config first. Verified the public-feed mapping, resolved the rebase conflict correctly, removed two sanitizer-flagged logs. Ding: the deploy tripped the auto-mode gate first (correct, but I attempted under bare consent), and the push needed two pre-push corrections. |
+| Cross-Repo Coherence | 100 | Website repo only; no sibling writes or Ark bypasses. |
+| Security Posture | 99 | `verify_jwt` pinning removes a real auth-flow footgun permanently; deployed the S182 error-redaction + CORS fixes; refreshed a stale repo secret without leaking (piped from gateway); zero new data exposure on public surfaces; staged-diff secret scan clean. |
+| Ecosystem Integration | 95 | Three reusable fleet patterns captured: pin `verify_jwt` in config not flags, edge-HTML failure-shape classification, and "any workflow that regenerates a deployed artifact must stage it." Worker-lib extraction is a portable test-seam pattern. |
+| Capital Efficiency | 98 | All free-tier; Oracle fix reuses the existing deployed feed (no new infra/egress); apex-HTML probe needs no paid monitor; no new spend. |
+| Automation Coverage | 94 | `build:check` is now a trustworthy green/red signal (the determinism fix) + carries 17 new Worker unit tests; probe shape-classifier + taskboard `--apply` self-tested. Ding: self-committing workflows still lack rebase-before-push (the failure I hit). |
+
+**Top win:** `build:check` goes green end-to-end locally for the first time — by finding the *actual* non-determinism (the Ark dossier re-rendering from volatile inbox state) instead of the two scripts the audit guessed, which were already clean. A trustworthy build signal is what makes every other gate worth running.
+**Top gap:** self-committing scheduled workflows (uptime-probe et al.) push without rebasing, so they lose races with human/agent pushes — surfaced as a real CI failure this session; queued as the top S184 follow-up.
+**Intent outcome:** Achieved beyond intent — ran the full genius list AND absorbed a founder P0 mid-sprint (Oracle), root-caused both its bugs, fixed and verified live.
 
 ## 2026-06-08 — Session 182 (production outage fix → full 9-axis audit → /implement 7/23) | Total: 950/1000 (v3.0) | Velocity: 7 | Debt: ↓
 

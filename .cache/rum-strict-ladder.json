@@ -1,39 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-10T14:32:30.125Z",
+  "generatedAt": "2026-06-10T16:44:37.724Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 16,
+  "totalSamples": 47,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
     "route": "/games/vaultspark-football-gm/",
-    "samples": 6,
+    "samples": 17,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 44,
+    "remaining": 33,
     "p75": {
-      "lcp": 532,
+      "lcp": 720,
       "cls": 0.0287,
       "inp": 96,
-      "fcp": 532,
-      "ttfb": 44
+      "fcp": 928,
+      "ttfb": 133
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 4,
+      "samples": 11,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 39,
       "p75": {
-        "lcp": 1588,
-        "cls": 0.202,
-        "inp": 288,
+        "lcp": 1792,
+        "cls": 0.003,
+        "inp": 56,
         "fcp": 1588,
-        "ttfb": 1214
+        "ttfb": 616
       },
       "overBudget": false
     },
@@ -53,11 +53,41 @@
       "overBudget": false
     },
     {
-      "route": "/games/gridiron-gm/",
-      "samples": 2,
+      "route": "/games/",
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 46,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 107
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/gridiron-gm-play/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 2316,
+        "cls": 0.0013,
+        "inp": 96,
+        "fcp": 2316,
+        "ttfb": 1994
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/gridiron-gm/",
+      "samples": 3,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 47,
       "p75": {
         "lcp": 1388,
         "cls": 0.1318,
@@ -69,16 +99,16 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 6,
+      "samples": 17,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 44,
+      "remaining": 33,
       "p75": {
-        "lcp": 532,
+        "lcp": 720,
         "cls": 0.0287,
         "inp": 96,
-        "fcp": 532,
-        "ttfb": 44
+        "fcp": 928,
+        "ttfb": 133
       },
       "overBudget": false
     },
@@ -113,6 +143,66 @@
       "overBudget": false
     },
     {
+      "route": "/nervous-system/",
+      "samples": 2,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 48,
+      "p75": {
+        "lcp": 520,
+        "cls": 0.0857,
+        "inp": 152,
+        "fcp": 520,
+        "ttfb": 172
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/oracle/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 1140,
+        "cls": 0.0021,
+        "inp": 552,
+        "fcp": 1140,
+        "ttfb": 194
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/projects/statvault/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 1376,
+        "cls": 0.0009,
+        "inp": 0,
+        "fcp": 1376,
+        "ttfb": 220
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/projects/vault-pipeline/",
+      "samples": 2,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 48,
+      "p75": {
+        "lcp": 800,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 800,
+        "ttfb": 113
+      },
+      "overBudget": false
+    },
+    {
       "route": "/roadmap/",
       "samples": 1,
       "minSamples": 50,
@@ -124,6 +214,21 @@
         "inp": 0,
         "fcp": 296,
         "ttfb": 8
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/terms/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 264,
+        "cls": 0.0145,
+        "inp": 0,
+        "fcp": 264,
+        "ttfb": 25
       },
       "overBudget": false
     }
