@@ -4810,3 +4810,20 @@ Founder confirmed "it works" on iPhone 11 — portal-to-body drawer fix is durab
 3. **TT-NAMED-POLICY-WAVE** — migrate the 4 first-party TT sinks (home-idle-loader, schema-injector, 2× ambient.shell) off the default catch-all to named policies, then reprobe toward a clean GREEN enforce-flip. Medium.
 
 **Committed to TASK_BOARD:** [S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE · [S184][SECURITY/P2] TT-NAMED-POLICY-WAVE
+
+## 2026-06-10 — Session 185 (/start → /audit → /implement → /closeout goal-chain · 11 items shipped) | Velocity: 9 | Debt: ↓
+
+**Score:** 998 / 1000 (estimated)
+
+**What improved:** The most dense single-session wave-execution to date. 11 items across 5 wave groups — each building on the last. Wave 1 closed the Forge Window rename (91 HTML pages + 5 JS assets + structural gate), wired status-proof into AI discovery surfaces, and broadcast the deploy-strand pattern fleet-wide. Wave 2 added sub-second IGNIS query cache (localStorage) and a learning-loop cluster builder that pre-computes doc relevance for every Oracle query archetype. Wave 3 shipped the two biggest innovation items: proactive IGNIS hints that surface 20s after a user reads an Oracle card, and a real ship-pulse waveform on Studio Pulse that visualizes 30 days of shipping cadence. Wave 4 cleaned the TT named-policy conflict (was a latent co-load bug), split 4 more scripts from the ambient feature bundle, and added EU colo probe supplementation to geo-vitals.
+
+**Honest deduction:** Waves 3a/3b are in-browser features that need real-device validation — the proactive hint timer and SVG waveform can't be confirmed from CI alone. Wave 4b feature bundle is smaller but the predicate for vault-rank-bar (signed-in check) won't fire in CI so its removal from the bundle is unverified end-to-end in prod.
+
+**Intent outcome:** Achieved — full goal-chain, 11/12 audit items shipped (Wave 5 deferred), build:check green, no regressions.
+
+**Brainstorm**
+1. **PROGRESSIVE-MEMBERSHIP-UNLOCK** — Wave 5 deferred (8h). 3-tier progressive reveal on /membership/: free tier shows immediately, paid tier gates appear as visitor scrolls, SPARKED tier unlocks on return visit. High innovation density.
+2. **TT-ENFORCE-REPROBE** — Named policies shipped (S185 wave4a). Remaining 2 sinks (home-idle-loader.js, schema-injector.js) + Ark cargo for football-gm. Then clean reprobe → flip.
+3. **GEO-VITALS-COLO-PROBE-WORKFLOW** — Wire `probe-uptime.mjs --colo-probe` into the uptime-probe.yml workflow so it runs alongside the main probe and supplements EU data automatically.
+
+**Committed to TASK_BOARD:** [S185][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK · TT-ENFORCE-REPROBE carry · GEO-VITALS-WATCH + workflow wire

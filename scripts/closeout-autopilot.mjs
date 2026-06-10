@@ -226,6 +226,31 @@ header('Step 3d.5 · Production perf sample (gated, rotating)');
   }
 }
 
+// ── Step 3d.7: Refresh derived-on-derived artifacts after contract regen ──────
+// Step 3d regenerates contracts (public-intelligence, heartbeat, etc.) which:
+//   1. May dirty ignis/output/ecosystem-state.json (oracle sanitizer touches it)
+//   2. Changes content that llms-full-shards index (reads ecosystem-state.json)
+//   3. May cause ambient-ledger structural drift
+// ORDER matters: oracle sanitizer first (writes ecosystem-state.json), then shards
+// (reads ecosystem-state.json), then ledger. This ensures build:check --check passes.
+{
+  const oracleScript = path.join(PROJECT_ROOT, 'scripts', 'sanitize-public-oracle-feed.mjs');
+  if (fs.existsSync(oracleScript) && !DRY) {
+    const r = spawnSync(process.execPath, [oracleScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
+    if (r.status !== 0) console.warn('⚠ sanitize-public-oracle-feed exited nonzero; continuing.');
+  }
+  const shardsScript = path.join(PROJECT_ROOT, 'scripts', 'build-llms-full-shards.mjs');
+  if (fs.existsSync(shardsScript) && !DRY) {
+    const r = spawnSync(process.execPath, [shardsScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 60000 });
+    if (r.status !== 0) console.warn('⚠ build-llms-full-shards exited nonzero; continuing.');
+  }
+  const ledgerScript = path.join(PROJECT_ROOT, 'scripts', 'build-ambient-ledger.mjs');
+  if (fs.existsSync(ledgerScript) && !DRY) {
+    const r = spawnSync(process.execPath, [ledgerScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
+    if (r.status !== 0) console.warn('⚠ build-ambient-ledger exited nonzero; continuing.');
+  }
+}
+
 // ── Step 3e: build:check pre-commit gate ─────────────────────────────────────
 // After derived outputs are regenerated, run the full build:check so any `--check`
 // drift (CSP hash, contracts, supabase schema, shell assets) fails the closeout

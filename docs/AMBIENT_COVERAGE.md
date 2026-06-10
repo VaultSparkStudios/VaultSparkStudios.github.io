@@ -8,22 +8,18 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **21**  ·  Total: **81.6 KB** (raw)
-- Guarded (conditional): **15** modules · **54.5 KB** — split candidates
-- Always-on: **6** modules · **27.1 KB**
+- Sources: **17**  ·  Total: **60.1 KB** (raw)
+- Guarded (conditional): **14** modules · **51.6 KB** — split candidates
+- Always-on: **3** modules · **8.5 KB**
 
 ## By size (split candidates flagged)
 
 | Source | Size | Shape | Why conditional |
 |---|--:|:-:|---|
-| `rank-orb.js` | 7.0 KB | always | — |
-| `rate-page.js` | 6.6 KB | always | — |
-| `ambient-loader.js` | 5.9 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
+| `ambient-loader.js` | 7.6 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
 | `adaptive-speculation.js` | 5.2 KB | 🔶 guarded | — |
-| `ignis-lens.js` | 5.0 KB | always | — |
 | `breadcrumb-render.js` | 4.7 KB | always | — |
 | `signed-in-state.js` | 4.7 KB | 🔶 guarded | session gated |
-| `vault-rank-bar.js` | 4.6 KB | 🔶 guarded | session gated |
 | `vault-atlas.js` | 4.4 KB | 🔶 guarded | — |
 | `page-sigil.js` | 4.4 KB | 🔶 guarded | — |
 | `scroll-depth.js` | 4.2 KB | 🔶 guarded | session gated |

@@ -75,7 +75,7 @@ function buildClusters(queries, index) {
     clusters.push({ key: clusterKey, query: q, tier, tokens: tokens.slice(0, 4), topDocs });
   }
 
-  return { generatedAt: new Date().toISOString(), clusters };
+  return { schemaVersion: '1.0', generatedAt: new Date().toISOString(), publicSafe: true, clusters };
 }
 
 const queries = readJson(QUERIES_SRC);

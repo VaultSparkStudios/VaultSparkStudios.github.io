@@ -1,6 +1,6 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-08 (Session 182 — production outage fix + full 9-axis audit + /implement 7/23)
+Last updated: 2026-06-10 (Session 185 — /start → /audit → /implement · 11 items shipped)
 
 ## Done (Session 182 — outage fix → /audit → /implement · 7 items shipped)
 
@@ -44,8 +44,13 @@ Last updated: 2026-06-08 (Session 182 — production outage fix + full 9-axis au
 - [x] **[S184][DEPLOY/P0] DEPLOY-STRAND GUARD — DONE S184 (new, surfaced this session).** CF Pages builds only the pushed tip and skips `[skip ci]` tips, so every closeout ending in the autopilot's `[skip ci]` reconcile commit silently stranded the substantive deploy (S183→S184: confirmed field-win + ~20 api/*.json never went live). `scripts/check-deploy-tip.mjs` (7/7 self-test) + `closeout-autopilot.mjs` now push an empty non-skip-ci commit when the tip is `[skip ci]` so Pages builds.
 - [ ] **[S180][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
 - [ ] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE.** Broadcast the `[skip ci]`-tip CF-Pages deploy-strand finding + `scripts/check-deploy-tip.mjs` guard to all CF-Pages sibling repos via Ark `pattern-share` — likely a fleet-wide silent bug. (`node scripts/ark.mjs ship --type pattern-share --to '*' ...`)
-- [ ] **[S184][SECURITY/P2] TT-NAMED-POLICY-WAVE.** Migrate the 4 first-party TT sinks (home-idle-loader.js:16, schema-injector.js:23, ambient.shell:337/367) off the default catch-all policy to named Trusted-Types policies, then reprobe toward a clean GREEN enforce-flip. Ship football-gm `appCore.js` sinks as Ark cargo (CANON-018). See `docs/TT_ENFORCE_READINESS_2026-06-10.md`.
-- [ ] **[S184][AI/P3] STATUS-PROOF-IN-AGENTS-JSON.** Cross-link `/api/status-proof.json` from `/agents.json` + `/.well-known/llms.txt` so agents discover the single-fetch trust manifest without scraping `/status/`.
+- [x] **[S185][SECURITY/P2] TT-NAMED-POLICY-WAVE — DONE S185.** Renamed `vs-dom` → file-specific: recent-ships→`vs-recent-ships`, related-content→`vs-related-content`, trust-depth→`vs-trust-depth`, ignis-answer-engine→`vs-ignis-answer`. New `scripts/lint-tt-policies.mjs` gate (build:check). Eliminates TT re-registration TypeError on co-load. **DONE S185**
+- [x] **[S185][AI/P3] STATUS-PROOF-IN-AGENTS-JSON — DONE S185.** `statusProof` URL added to agents.json discovery block + llms.txt "Operational trust" section added. **DONE S185**
+- [ ] **[S185][SECURITY/P1] TT-ENFORCE-REPROBE.** home-idle-loader.js:16 + schema-injector.js:23 + ambient.shell still use default policy. Named-policy wave done (S185); remaining: those 2 first-party sinks + Ark cargo to football-gm for appCore.js sinks. Then reprobe for flip. Founder-device gated (SOUL #3).
+- [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Founder call needed.
+- [ ] **[S180][OBS/P3] GEO-VITALS-WATCH.** Colo probe added (S185 wave4c); trigger in GH Actions workflow still needed.
+- [ ] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE.** Done S185 wave1a — broadcast via ark.mjs. ✓
+- [ ] **[S185][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK.** Deferred (8h, Wave 5). Next session.
 - [ ] **[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
 
 ## Done (Session 183 — /start → /go full genius list + founder P0 Oracle fix)

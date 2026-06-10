@@ -5,7 +5,7 @@
  * Structural guard for Session 151:
  * - homepage below-fold intelligence is owned by home-idle-loader.js
  * - deploy parity checker keeps live perf proof honest
- * - public links to /studio-pulse/ label the product as Forge Window
+ * - public links to /studio-pulse/ label the product as Studio Pulse (S185 rename)
  */
 
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
@@ -86,15 +86,15 @@ function collectFailures({ homeHtml, paritySource, htmlFiles }) {
   for (const { rel, html } of htmlFiles) {
     const labels = anchorTextForHref(html, '/studio-pulse/');
     for (const label of labels) {
-      if (/Studio Pulse/i.test(label)) {
-        failures.push(`${rel}: stale /studio-pulse/ link label "${label}"`);
+      if (/Forge Window/i.test(label)) {
+        failures.push(`${rel}: stale /studio-pulse/ link label "${label}" (renamed to Studio Pulse)`);
       }
     }
   }
 
   const pulse = htmlFiles.find((file) => file.rel === 'studio-pulse/index.html');
-  if (pulse && !/<title>Forge Window — VaultSpark Studios<\/title>/.test(pulse.html)) {
-    failures.push('studio-pulse/index.html: title must use Forge Window');
+  if (pulse && !/<title>Studio Pulse — VaultSpark Studios<\/title>/.test(pulse.html)) {
+    failures.push('studio-pulse/index.html: title must use Studio Pulse');
   }
 
   return failures;
@@ -105,16 +105,16 @@ function runSelfTest() {
     homeHtml: '<script src="/assets/home-idle-loader.js" defer></script>',
     paritySource: 'function expectedShellPaths(){} function deployedShellPaths(){} "--self-test"',
     htmlFiles: [
-      { rel: 'index.html', html: '<a href="/studio-pulse/">Forge Window</a>' },
-      { rel: 'studio-pulse/index.html', html: '<title>Forge Window — VaultSpark Studios</title><a href="/studio-pulse/">Forge Window</a>' },
+      { rel: 'index.html', html: '<a href="/studio-pulse/">Studio Pulse</a>' },
+      { rel: 'studio-pulse/index.html', html: '<title>Studio Pulse — VaultSpark Studios</title><a href="/studio-pulse/">Studio Pulse</a>' },
     ],
   });
   const bad = collectFailures({
     homeHtml: '<script src="/assets/heartbeat.js" defer></script>',
     paritySource: 'missing',
     htmlFiles: [
-      { rel: 'index.html', html: '<a href="/studio-pulse/">Studio Pulse</a>' },
-      { rel: 'studio-pulse/index.html', html: '<title>Studio Pulse — VaultSpark Studios</title>' },
+      { rel: 'index.html', html: '<a href="/studio-pulse/">Forge Window</a>' },
+      { rel: 'studio-pulse/index.html', html: '<title>Forge Window — VaultSpark Studios</title>' },
     ],
   });
 

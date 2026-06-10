@@ -5,7 +5,7 @@
 > CORE/FEATURE bundle arrays + coverage candidate cache — NOT hand-maintained.
 > Regenerate: `node scripts/build-ambient-ledger.mjs`.
 
-**21 sources** · 14 core · 7 feature · **4 split-candidate(s)**
+**17 sources** · 14 core · 3 feature · **3 split-candidate(s)**
 
 | Source | Bundle | Reason code | Size | Gates | Risk |
 |---|---|---|--:|---|---|
@@ -16,7 +16,7 @@
 | `assets/breadcrumb-render.js` | core | sitewide-core | — | — | — |
 | `assets/signed-in-state.js` | core | split-candidate | 4.7kb | session gated | low |
 | `assets/account-chip-loader.js` | core | sitewide-core | — | — | — |
-| `assets/ambient-loader.js` | core | split-candidate | 5.9kb | query-param gated, viewport gated, session gated | low |
+| `assets/ambient-loader.js` | core | split-candidate | 7.6kb | query-param gated, viewport gated, session gated | low |
 | `assets/hover-prefetch.js` | core | sitewide-core | — | — | — |
 | `assets/edge-swipe-nav.js` | core | sitewide-core | — | — | — |
 | `assets/pointerdown-warm.js` | core | sitewide-core | — | — | — |
@@ -25,10 +25,6 @@
 | `assets/rum-beacon.js` | core | sitewide-core | — | — | — |
 | `assets/page-sigil.js` | feature | feature-bundle | 4.4kb | — | low |
 | `assets/vault-atlas.js` | feature | feature-bundle | 4.4kb | — | low |
-| `assets/rank-orb.js` | feature | feature-bundle | — | — | — |
-| `assets/rate-page.js` | feature | feature-bundle | — | — | — |
-| `assets/ignis-lens.js` | feature | feature-bundle | — | — | — |
 | `assets/founder-presence-handle.js` | feature | feature-bundle | — | — | — |
-| `assets/vault-rank-bar.js` | feature | split-candidate | 4.6kb | session gated | low |
 
 **Reason codes** — `sitewide-core`: shell primitive, must parse every page · `feature-bundle`: rotating engagement/intelligence surface · `split-candidate`: coverage flagged it gated → move to predicate loading next wave.

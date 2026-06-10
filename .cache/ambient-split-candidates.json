@@ -1,15 +1,15 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-10T17:34:18.357Z",
+  "generatedAt": "2026-06-10T23:26:21.521Z",
   "generatedBy": "scripts/report-ambient-coverage.mjs",
-  "totalSources": 21,
-  "totalBytes": 83513,
+  "totalSources": 17,
+  "totalBytes": 61535,
   "forbiddenAmbientSourcesPresent": [],
   "candidates": [
     {
       "rank": 1,
       "source": "assets/ambient-loader.js",
-      "sizeKb": 5.9,
+      "sizeKb": 7.6,
       "reasons": [
         "query-param gated",
         "viewport gated",
@@ -41,17 +41,6 @@
     },
     {
       "rank": 4,
-      "source": "assets/vault-rank-bar.js",
-      "sizeKb": 4.6,
-      "reasons": [
-        "session gated"
-      ],
-      "forbiddenAmbient": false,
-      "risk": "low",
-      "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/vault-rank-bar.js is lazy-loaded only after session state is known."
-    },
-    {
-      "rank": 5,
       "source": "assets/vault-atlas.js",
       "sizeKb": 4.4,
       "reasons": [],
@@ -60,7 +49,7 @@
       "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/vault-atlas.js behind a conditional loader."
     },
     {
-      "rank": 6,
+      "rank": 5,
       "source": "assets/page-sigil.js",
       "sizeKb": 4.4,
       "reasons": [],
@@ -69,7 +58,7 @@
       "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/page-sigil.js behind a conditional loader."
     },
     {
-      "rank": 7,
+      "rank": 6,
       "source": "assets/scroll-depth.js",
       "sizeKb": 4.2,
       "reasons": [
