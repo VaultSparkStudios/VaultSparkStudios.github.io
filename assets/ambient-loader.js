@@ -110,6 +110,15 @@
       idle: true
     },
     {
+      // Vault Kinesis — SVG ship-pulse waveform on Studio Pulse page.
+      src: '/assets/vault-kinesis.js',
+      when: function () {
+        var p = location.pathname || '/';
+        return p.indexOf('/studio-pulse') === 0;
+      },
+      idle: true
+    },
+    {
       // Static Ask IGNIS retrieval mounts on explicit hooks plus /search|/oracle.
       src: '/assets/ignis-answer-engine.js',
       when: function () {
