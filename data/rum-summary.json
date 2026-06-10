@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-09T10:03:42.403Z",
+  "generatedAt": "2026-06-10T10:34:02.270Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data/rum-history.ndjson",
   "windowDays": 7,
@@ -10,16 +10,16 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 55,
+  "totalSamples": 47,
   "sufficientRoutes": 0,
   "routes": {
     "/": {
-      "samples": 16,
+      "samples": 11,
       "sufficient": false,
       "p75": {
         "lcp": 1792,
-        "cls": 0.051,
-        "inp": 96,
+        "cls": 0.003,
+        "inp": 56,
         "fcp": 1588,
         "ttfb": 616
       }
@@ -36,14 +36,25 @@
       }
     },
     "/games/": {
-      "samples": 5,
+      "samples": 4,
       "sufficient": false,
       "p75": {
-        "lcp": 7420,
+        "lcp": 0,
         "cls": 0,
-        "inp": 72,
-        "fcp": 7420,
-        "ttfb": 126
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 107
+      }
+    },
+    "/games/gridiron-gm-play/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 2316,
+        "cls": 0.0013,
+        "inp": 96,
+        "fcp": 2316,
+        "ttfb": 1994
       }
     },
     "/games/gridiron-gm/": {
@@ -57,37 +68,15 @@
         "ttfb": 437
       }
     },
-    "/games/vaultfront/": {
-      "samples": 2,
-      "sufficient": false,
-      "p75": {
-        "lcp": 956,
-        "cls": 0.2538,
-        "inp": 104,
-        "fcp": 956,
-        "ttfb": 3
-      }
-    },
     "/games/vaultspark-football-gm/": {
-      "samples": 12,
+      "samples": 17,
       "sufficient": false,
       "p75": {
-        "lcp": 560,
+        "lcp": 720,
         "cls": 0.0287,
         "inp": 96,
-        "fcp": 560,
-        "ttfb": 114
-      }
-    },
-    "/ignis/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 400,
-        "cls": 0,
-        "inp": 48,
-        "fcp": 400,
-        "ttfb": 87
+        "fcp": 928,
+        "ttfb": 133
       }
     },
     "/leaderboards/": {
@@ -124,14 +113,36 @@
       }
     },
     "/oracle/": {
-      "samples": 3,
+      "samples": 1,
       "sufficient": false,
       "p75": {
         "lcp": 1140,
-        "cls": 0.0223,
+        "cls": 0.0021,
         "inp": 552,
         "fcp": 1140,
         "ttfb": 194
+      }
+    },
+    "/projects/statvault/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 1376,
+        "cls": 0.0009,
+        "inp": 0,
+        "fcp": 1376,
+        "ttfb": 220
+      }
+    },
+    "/projects/vault-pipeline/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 800,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 800,
+        "ttfb": 113
       }
     },
     "/roadmap/": {
@@ -145,28 +156,6 @@
         "ttfb": 8
       }
     },
-    "/security/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 1052,
-        "cls": 0,
-        "inp": 48,
-        "fcp": 1052,
-        "ttfb": 93
-      }
-    },
-    "/studio-pulse/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 800,
-        "cls": 0.0736,
-        "inp": 160,
-        "fcp": 800,
-        "ttfb": 87
-      }
-    },
     "/terms/": {
       "samples": 1,
       "sufficient": false,
@@ -176,39 +165,6 @@
         "inp": 0,
         "fcp": 264,
         "ttfb": 25
-      }
-    },
-    "/universe/": {
-      "samples": 2,
-      "sufficient": false,
-      "p75": {
-        "lcp": 392,
-        "cls": 0.0535,
-        "inp": 208,
-        "fcp": 392,
-        "ttfb": 94
-      }
-    },
-    "/universe/voidfall/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 360,
-        "cls": 0.0026,
-        "inp": 176,
-        "fcp": 360,
-        "ttfb": 86
-      }
-    },
-    "/vault/tombstones/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 952,
-        "cls": 0,
-        "inp": 48,
-        "fcp": 952,
-        "ttfb": 92
       }
     }
   }
