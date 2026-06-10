@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-08",
+  "generatedAt": "2026-06-10",
   "generatedBy": "scripts/build-commit-map.mjs",
   "source": "git log (local, noise-filtered)",
   "kind": "commit-map",
@@ -8,8 +8,148 @@
   "count": 24,
   "entries": [
     {
-      "sha": "fa74fbb4",
-      "ts": "2026-06-08T18:42:51.000Z",
+      "sha": "29d07729",
+      "ts": "2026-06-09T02:09:55.000Z",
+      "type": "chore",
+      "scope": "closeout",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "S182 write-back — outage fix + full audit + 7 implemented"
+    },
+    {
+      "sha": "9952f249",
+      "ts": "2026-06-09T01:25:23.000Z",
+      "type": "docs",
+      "scope": "implement",
+      "breaking": false,
+      "move": "Documented",
+      "tone": "muted",
+      "summary": "S182 execution log — 7 shipped, deferred set recorded"
+    },
+    {
+      "sha": "3d790907",
+      "ts": "2026-06-09T01:23:59.000Z",
+      "type": "chore",
+      "scope": "maintainability",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "S182 — remove 8 spent one-shot migration scripts"
+    },
+    {
+      "sha": "5fe8db0f",
+      "ts": "2026-06-09T01:20:11.000Z",
+      "type": "fix",
+      "scope": "maintainability",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "S182 — sweep 12 dead ambient bundles + corpus-aware orphan gate"
+    },
+    {
+      "sha": "f53714ed",
+      "ts": "2026-06-09T01:12:28.000Z",
+      "type": "feat",
+      "scope": "security",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "S182 wave 1 — redact edge-fn errors + env-driven odds CORS"
+    },
+    {
+      "sha": "fc9f4e4c",
+      "ts": "2026-06-09T01:05:26.000Z",
+      "type": "fix",
+      "scope": "ci",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "valid YAML for auto-rollback step (block scalar, no inline colon)"
+    },
+    {
+      "sha": "5d6efeb2",
+      "ts": "2026-06-09T00:59:47.000Z",
+      "type": "feat",
+      "scope": "reliability",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "S182 wave 1 — auto-rollback, JSON liveness assert, RUM rate-limit"
+    },
+    {
+      "sha": "6e3de92f",
+      "ts": "2026-06-08T21:42:45.000Z",
+      "type": "audit",
+      "scope": "S182",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "add finding #23 — non-deterministic build:check gates"
+    },
+    {
+      "sha": "63fd5058",
+      "ts": "2026-06-08T21:33:37.000Z",
+      "type": "audit",
+      "scope": "S182",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "post-outage full audit + 3 fixes (build-red, CSP deploy gap, dead link)"
+    },
+    {
+      "sha": "f4a9a891",
+      "ts": "2026-06-08T20:08:51.000Z",
+      "type": "ci",
+      "scope": "worker",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "make liveness gate CI-safe (two-signal: Pages content + edge alive)"
+    },
+    {
+      "sha": "33d5d7db",
+      "ts": "2026-06-08T20:01:40.000Z",
+      "type": "ci",
+      "scope": "worker",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "bump CI to Node 22 (wrangler v4 requirement)"
+    },
+    {
+      "sha": "964db76e",
+      "ts": "2026-06-08T20:00:11.000Z",
+      "type": "ci",
+      "scope": "worker",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "use npm install (lockfile is gitignored) instead of npm ci"
+    },
+    {
+      "sha": "5e73fe44",
+      "ts": "2026-06-08T19:57:47.000Z",
+      "type": "ci",
+      "scope": "worker",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "add post-deploy liveness gate + single-source deploy command"
+    },
+    {
+      "sha": "67e46e17",
+      "ts": "2026-06-08T19:46:18.000Z",
+      "type": "fix",
+      "scope": "worker",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "resolve apex self-loop outage — fetch Pages origin by host, not own route"
+    },
+    {
+      "sha": "f78a94a9",
+      "ts": "2026-06-08T18:46:21.000Z",
       "type": "feat",
       "scope": "status",
       "breaking": false,
@@ -106,146 +246,6 @@
       "move": "Sped up",
       "tone": "perf",
       "summary": "S178 — rotate stale TASK_BOARD sessions to archive (taskboard-archive-rotation #5)"
-    },
-    {
-      "sha": "802ca377",
-      "ts": "2026-06-08T05:07:55.000Z",
-      "type": "perf",
-      "scope": "ambient",
-      "breaking": false,
-      "move": "Sped up",
-      "tone": "perf",
-      "summary": "S178 — split vault-genome-strip out of the feature bundle (ambient-genome-strip-split #6)"
-    },
-    {
-      "sha": "9f787990",
-      "ts": "2026-06-08T05:07:55.000Z",
-      "type": "feat",
-      "scope": "ux",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "S178 — returning-visitor momentum digest (returning-visitor-digest #3)"
-    },
-    {
-      "sha": "69ba92f1",
-      "ts": "2026-06-08T05:07:55.000Z",
-      "type": "feat",
-      "scope": "intelligence",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "S178 — auto-publish confirmed field-win proof (field-win-auto-publish #2)"
-    },
-    {
-      "sha": "50e08615",
-      "ts": "2026-06-08T05:07:54.000Z",
-      "type": "feat",
-      "scope": "observability",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "S178 — first-party uptime now publishes (api/uptime.json + history + /status tile) and proves its own alarm"
-    },
-    {
-      "sha": "de1c7ebd",
-      "ts": "2026-06-07T23:07:52.000Z",
-      "type": "chore",
-      "scope": "closeout",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "settle public-intelligence artifacts after CI-bot rebase (S177)"
-    },
-    {
-      "sha": "c3ca2d05",
-      "ts": "2026-06-07T23:02:39.000Z",
-      "type": "feat",
-      "scope": "observability+resilience",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "S177 — uptime probe measures real availability, not CF bot-gauntlet + Worker origin-hang failover"
-    },
-    {
-      "sha": "fca975c8",
-      "ts": "2026-06-07T20:08:45.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "untrack S176 terminal scratch captures (absolute-path leak) + broaden .cache scratch gitignore"
-    },
-    {
-      "sha": "192a211e",
-      "ts": "2026-06-07T19:57:29.000Z",
-      "type": "chore",
-      "scope": "closeout",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "S176 write-back — CURRENT_STATE, TASK_BOARD, HANDOFF, WORK_LOG, DECISIONS (3), SIL 997, CDR, impact brief + settled g…"
-    },
-    {
-      "sha": "a5f74b6a",
-      "ts": "2026-06-07T19:31:28.000Z",
-      "type": "feat",
-      "scope": "observability+process",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "first-party uptime probe + RUM conflict guard + SIL integrity gate (S176 #6,#8,#9)"
-    },
-    {
-      "sha": "bc9c8f93",
-      "ts": "2026-06-07T19:09:02.000Z",
-      "type": "feat",
-      "scope": "tt-sink-burndown-wave2",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "default-policy migration bridge + 6 named-sink fixes (S176 #5)"
-    },
-    {
-      "sha": "c7aba2c2",
-      "ts": "2026-06-07T18:48:03.000Z",
-      "type": "feat",
-      "scope": "worker-stale-on-5xx",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "disaster-recovery edge cache — serve last-known-good HTML when both origins 5xx (S176 #2)"
-    },
-    {
-      "sha": "b74b0e7e",
-      "ts": "2026-06-07T18:24:42.000Z",
-      "type": "fix",
-      "scope": "shell-css",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "cumulative inline-style extraction — recover 241 wiped vsx rules + kill dead now-playing bar + placeholder-orphan gat…"
-    },
-    {
-      "sha": "329ec537",
-      "ts": "2026-06-05T21:42:54.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "drop terminal scratch captures from tracking + gitignore the class"
-    },
-    {
-      "sha": "15b126fe",
-      "ts": "2026-06-05T21:41:34.000Z",
-      "type": "chore",
-      "scope": "closeout",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "S175 write-back — CURRENT_STATE, HANDOFF, WORK_LOG, CDR (new), SIL 995/1000, TRUTH_AUDIT, impact brief"
     }
   ]
 }

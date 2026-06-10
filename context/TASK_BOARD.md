@@ -189,7 +189,7 @@ Last updated: 2026-06-05 (Session 174 — goal-chain audit/implement: 10/10 ship
 - [x] **[S98][REFINE] heartbeat honest empty state** — "forge is quiet" when pulses = 0.
 - [x] **[S98][REFINE] Escape key dismiss** — visit-depth + ignis-tour.
 - [x] **[S98][REFINE] Tour selector fix** — `#vault-membership` added to stop-2 selectors.
-## Now
+## Now (historical)
 
 - [x] **[S100][INFRA] `scripts/smoke-startup-scripts.mjs`** — validates import shape for all modules imported by `render-startup-brief.mjs`; wired into `build:check` so missing libs surface in CI before session start (was blind spot that caused S99 crash). Effort: S. **DONE S100**
 - [x] **[S100][INFRA] HAR staleness probe in `ops.mjs blocker-preflight`** — cross-references each `[HUMAN ACTION REQUIRED]` TASK_BOARD item against `check-secrets.mjs` output; flags items marked HAR for >3 sessions without a matching missing-secret as potentially-phantom. Automates the S99 phantom-blocker check. Effort: M. **DONE S100**
@@ -209,7 +209,7 @@ Last updated: 2026-06-05 (Session 174 — goal-chain audit/implement: 10/10 ship
 - [x] **[S97][CONTENT] Changelog as live feed, public-safe** — hero reframed with pulsing live dot + "newest first" copy; rewrote 8 internal-sounding phase titles + ~20 item lines to public-safe (dropped CSP registry, CI specifics, DB migration refs, Playwright, JSON-LD, Supabase round-trip, `.well-known` path, etc.). Expanded `CONSUMER_CHANGELOG` 3 → 8 entries. New `assets/changelog-live.js` prepends public-safe entries above legacy timeline with green accent. Time Machine re-inits via `vs:changelog-live-rendered` event.
 - [x] **[S97][RESILIENCE] Supabase 400 fallback** — `assets/live-proof.js` now checks per-result `.error`, falls back to `public-intelligence.json` aggregates when every REST call fails. Homepage no longer stuck on "—" when REST schema drifts.
 - [x] **[S97][MEMORY] S97 session memory written** — `project_s97_bugfix_pack.md` added; MEMORY.md index updated.
-## Now
+## Now (historical)
 
 - [x] **[S97→S105][FOLLOWUP] Browser-verify IGNIS + model fallback** — superseded by `/ignis-health/` canary shipped S105 which runs anon + authenticated probes on load and reports edge-function state + tier/quota. Browser verification surface is now always-on instead of one-off. **DONE S105 (reclassified)**
 - [ ] **[S97][FOLLOWUP] Browser-verify exit-intent timing** — load homepage, immediately move mouse to top without interacting — panel MUST NOT appear. Then scroll, click, or type, wait 25s, move mouse to top — panel SHOULD appear.
@@ -233,7 +233,7 @@ Last updated: 2026-06-05 (Session 174 — goal-chain audit/implement: 10/10 ship
 - [x] **[S95][MOBILE] Mobile audit + shared-stylesheet fix** — `tests/mobile-audit.spec.js` + `scripts/render-mobile-audit.mjs` probe 49 pages × 5 viewports (360 / 390 / 430 / 768 / 1024). Baseline: **2 P0 / 2 P1 / 2 P2** across 49 pages. Fix: mobile-safety block appended to `assets/style.css` — clamps `.feature-block/.side-panel/.stat-grid/.hero-art-actions`, collapses `.proj-body/.game-body` to single column at ≤640px, full-width wrapped buttons with 44px tap targets, `overflow-x:clip` on hero containers so orbs/glows can't escape, font floor of 15–16px on body. Full report at `docs/MOBILE_AUDIT_2026-04-21.md`.
 - [x] **[S95][SECURITY] CSP meta-tag cleanup** — `scripts/csp-meta-cleanup.mjs` swept 103 HTML files; removed `<meta http-equiv="X-Frame-Options">` (invalid in meta, must be HTTP header — Cloudflare Worker already sets it) and stripped `frame-ancestors 'self';` from every `<meta Content-Security-Policy>` (browsers ignore it in meta; Worker already sets via HTTP header). Eliminates 206 DevTools console warnings across the site.
 - [x] **[S95][MEMORY] Added `feedback_sibling_repo_truth.md`** — website agent must pull project copy from `development/<Project>/README.md`, never hand-write it. PromoGrind drift drove the rule.
-## Now
+## Now (historical)
 
 - [ ] **[S96][FOLLOWUP] Browser-verify S96 homepage reorder** — open `/` in browser, confirm section order: hero → vault-proof → **vault-membership** → studio-pulse-teaser → trust-depth → related-rail → milestones → recent-ships → dispatch → vault-signal → vault-forged → vault-tools → characters → vaulted → signal-log-teaser → social. Check mobile render of membership block at §2 (rank preview grid should reflow). Confirm no orphan `vault-live-*` render or console errors.
 - [ ] **[S96][FOLLOWUP] Browser-verify social icon sprite across themes** — confirm SVG brand marks render in dark/light/ambient/warm/cool/lava/high-contrast themes, footer + homepage `#social` + `/social/` tiles, mobile + desktop. `<use>` ref must resolve in offline/PWA cache too (check SW pre-cache).
@@ -608,7 +608,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read). S69 proved the manual Wrangler fallback works, but automatic Worker CSP sync is still blocked without this secret.
 
 ---
-## Now
+## Now (historical)
 
 - [x] **[SIL] robots.txt Cloudflare note** — added comment explaining Cloudflare AI Labyrinth injects directives at CDN edge (S46)
 - [x] **[SIL] prefers-reduced-motion guard** — global `@media (prefers-reduced-motion: reduce)` rule already present in style.css (line ~1464); disables all animations including nav-enter. Done.
@@ -620,7 +620,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [x] **[SIL] Referral attribution wire** — `p_ref_by: sessionStorage.getItem('vs_ref')` wired into all 3 `register_open` RPC calls in `portal-auth.js` + `portal.js` (S47); **requires DB migration**: add `p_ref_by` param to `register_open` Supabase function (human action — see below)
 
 ---
-## Now
+## Now (historical)
 
 - [x] **[S55] Theme picker bug fix** — `.theme-option { display:none }` legacy CSS rule was hiding all theme tiles; removed `theme-option` class from tile buttons in `theme-toggle.js:399`
 - [x] **[S55] Press kit page (`/press/`)** — full media kit with facts table, bio, logo grid, game catalog, press contact
@@ -705,7 +705,7 @@ Overall score: **77/100**. Full audit lives in `memory/project_master_audit_s80.
 - [ ] **[SIL:1] Genius Hit List as scheduled audit** — moved to S68 runway above.
 - [x] **[SIL] Annual Stripe checkout routing** — stale carry cleared; live annual IDs exist and contract verification passes.
 - [ ] **[CF-WORKER-TOKEN]** HAR — Add `CF_WORKER_API_TOKEN` secret to GitHub repo (Workers:Edit + Zone:Read).
-## Next
+## Next (historical)
 
 - [x] **[SIL] CSP propagation script** — `scripts/propagate-csp.mjs` created; single CSP_VALUE constant at top propagates to all HTML files via `node scripts/propagate-csp.mjs` (S47)
 - [x] **[SIL] Staging smoke test script** — `scripts/smoke-test.sh` created; 12 key URLs, exits non-zero on failure; enforces CANON-007 (S47)

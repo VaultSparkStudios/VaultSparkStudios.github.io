@@ -1,0 +1,25 @@
+{
+  "scannedFiles": 117,
+  "scannedLinks": 12737,
+  "findings": [
+    {
+      "severity": "MEDIUM",
+      "type": "dead-internal",
+      "page": "pathways/index.html",
+      "line": 180,
+      "href": "/pathways/${p.slug}/",
+      "text": "${p.title}${p.headline}${p.description}",
+      "note": "Internal path \"/pathways/${p.slug}\" doesn't resolve to a known page."
+    }
+  ],
+  "truthGaps": [
+    {
+      "severity": "HIGH",
+      "type": "missing-canonical-url",
+      "page": "projects/seamline",
+      "canonicalUrl": "https://seamline.now",
+      "note": "Page does not link to canonical live URL \"https://seamline.now\""
+    }
+  ],
+  "generatedAt": "2026-06-08T21:32:37.244Z"
+}

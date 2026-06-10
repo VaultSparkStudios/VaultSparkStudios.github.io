@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T18:43:18.864Z",
+  "generatedAt": "2026-06-10T14:32:30.278Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -25,7 +25,7 @@
     {
       "key": "feedback",
       "label": "Feedback Themes",
-      "value": "4",
+      "value": "3",
       "href": "/feedback/"
     },
     {
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "S181 shipped AI discovery public health + runway hygiene — api/ai-discovery-health.json is healthy and shown on /status/; task-board gate now enforces one active Now and one current manual confirmation block; build:check green",
-  "nextMilestone": "Run TT enforce re-probe (~2026-06-12 due) + confirm api/field-win.json flips hasConfirmed once / accrues enough post-deploy samples + verify first low-churn uptime-publish commit + watch Lighthouse CI after push",
+  "focus": "S182 recovered a real production outage (Worker apex self-loop after Pages migration) — fixed by by-hostname origin fetch + a post-deploy liveness gate + auto-rollback; site healthy (6/6 smoke). Then full 9-axis audit (23 items) + /implement shipped 7 (reliability + maintainability). build:check is NOT green locally (non-deterministic --check gates, audit #23).",
+  "nextMilestone": "Deploy the committed edge-fn security fixes (supabase functions deploy create-checkout stripe-webhook assign-discord-role odds) + add Worker unit tests (audit #14) + make the non-deterministic build:check gates deterministic (audit #23) so the green/red signal is trustworthy again",
   "pulse": {
     "now": [
       "Studio Pulse live data — the Forge Window now hydrates from the public intelligence feed again.",
@@ -55,12 +55,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped: 2 focused improvements — AI discovery public health + task-board runway hygiene.",
-      "Tests: focused gates passed (`build-ai-discovery-health --self-test`, `build-ai-discovery-health --check`, `check-stale-open-tasks --self-test`, `check-stale-open-tasks --check`, `check-ai-discovery-spine --self-test`, `check-ai-discovery-spine`), then `npm run build` and `npm run build:check` passed end-to-end (108-page crawl · 0 status failures · 0 blocking-script findings).",
-      "AI discovery is now publicly legible. `scripts/build-ai-discovery-health.mjs` publishes `api/ai-discovery-health.json` from the same validators as the AI-spine gate. Current artifact is `healthy`: 13 public projects, 8 manifest shards, 8 llms shards, header discovery on, no dead internal URLs. `/status/` now renders an \"AI discovery spine\" tile from that artifact.",
-      "The board is harder to confuse. `check-stale-open-tasks.mjs` now flags duplicate active `Now` sections and duplicate current `manual confirmation` blocks. `TASK_BOARD.md` has one S181 runway and one current manual confirmation section; older runway/founder sections are preserved as historical instead of being left active.",
-      "Honest notes: mobile Lighthouse >=90 is covered by `.github/workflows/lighthouse.yml` after push; there is no repo-local Lighthouse command without downloading tooling, so local verification used the repo's crawl/build contracts. The known advisory signals remain: `assets/vaultsparked-proof.js` is still founder yes/no; `api/field-win.json` is honest-dark until post samples confirm; TT enforce waits for the ~2026-06-12 re-probe.",
-      "Next session: watch post-push Lighthouse/CI; run TT re-probe when due; verify first low-churn uptime publish commit; check field-win/geo-vitals evidence; optionally address the now-explicit board-size advisory with `rotate-taskboard.mjs` if the founder wants more token savings."
+      "Recovered a full production outage. Apex hung (0 bytes) while `pages.dev` origin was healthy — the Worker fetched its own apex route post-Pages-migration and self-looped. Fixed: `originFetch` rewrites the primary fetch to the Pages origin by hostname (`PRIMARY_ORIGIN`); deployed via `--env production` (the prior bare `wrangler deploy` never updated the routed Worker); added `scripts/smoke-live.mjs` post-deploy liveness gate + auto-rollback to last-known-good. Site verified 6/6 smoke.",
+      "Full audit: `docs/AUDIT_2026-06-08-S182.{json,md}` — 23 items, combined Priority 407.7, via 3 sub-agents. Two frontiers: (1) reliability blind spots the ~100 gates missed; (2) a rich paid-member economy with almost nothing bridging it to the anonymous funnel. Supply-chain + capability scans clean.",
+      "/implement shipped 7/23: auto-rollback · smoke JSON-validity assertion · `/v/rum` per-IP rate-limit (live) · edge-fn error redaction · odds env-CORS · −1.18 MB dead ambient bundles + corpus-aware orphan gate (fixed a false positive that flagged 18-20-page-referenced hashes for `git rm`) · −8 dead scripts.",
+      "Needs your action: `supabase functions deploy create-checkout stripe-webhook assign-discord-role odds` to make the edge-fn security fixes live; set `ODDS_ALLOWED_ORIGINS` to the PromoGrind origin to activate strict CORS.",
+      "Honest caveat: `build:check` is not green locally — non-deterministic `--check` gates (ignis-search-index, oracle feed) drift the instant `npm run build` runs. Logged as audit #23; not chased with live-data churn.",
+      "Next session: deploy the edge-fn fixes; add Worker unit tests (#14); make the non-deterministic gates deterministic (#23) so the green/red signal is trustworthy; consider a non-datacenter uptime probe (#10). Then the funnel cluster (feedback-loop-closure #1) when ready for product work."
     ]
   },
   "decisions": [
@@ -73,13 +73,13 @@
     {
       "surface": "performance",
       "verdict": "hold",
-      "evidence": "Home RUM samples=10",
+      "evidence": "Home RUM samples=4",
       "next": "Flip strict only after field p75 is sufficient and healthy."
     },
     {
       "surface": "feedback",
       "verdict": "investigate",
-      "evidence": "4 public-safe feedback themes",
+      "evidence": "3 public-safe feedback themes",
       "next": "Route top themes into feedback decision board lanes."
     }
   ],

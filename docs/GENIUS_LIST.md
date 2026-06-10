@@ -1,16 +1,16 @@
-# Genius Hit List — Session 180
+# Genius Hit List — Session 182
 
-Generated: 2026-06-08
+Generated: 2026-06-10
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **84/100**
+- Overall opportunity pressure: **85/100**
 - Health: **green**
-- Current SIL: **999/500**
+- Current SIL: **950/500**
 - CI health: **check gh run list**
-- Current focus: AI-discovery spine wave 2 shipped — /agents.json now appears in generated response headers and is gate-enforced; ambient-split wave 3 moved route/hook-scoped pathfinder + static Ask IGNIS engines behind predicates (feature bundle 45.4KB→35.2KB); build:check green
+- Current focus: S182 recovered a real production outage (Worker apex self-loop after Pages migration) — fixed by by-hostname origin fetch + a post-deploy liveness gate + auto-rollback; site healthy (6/6 smoke). Then full 9-axis audit (23 items) + /implement shipped 7 (reliability + maintainability). build:check is NOT green locally (non-deterministic --check gates, audit #23).
 
 ## Strategic Read
 
@@ -22,38 +22,42 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [VERIFY] TT-ENFORCE-REPROBE. Now due (~2026-06-12): node scripts/probe-tt-soak…
+#### 1. [VERIFY] DEPLOY-EDGE-FN-SECURITY-FIXES. supabase functions deploy create-check…
 Final score: **100**
-[S180][SECURITY/P1] TT-ENFORCE-REPROBE. Now due (~2026-06-12): node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
-Why it matters: TT-ENFORCE-REPROBE. Now due (~2026-06-12): shipped last session — confirm it works in production before piling new work on top.
+[S182][REL/P1] DEPLOY-EDGE-FN-SECURITY-FIXES. supabase functions deploy create-checkout stripe-webhook assign-discord-role odds to make the S182 error-redaction + CORS fixes live (committed but not yet deployed; no CI deploy exists for edge fns).
+Why it matters: DEPLOY-EDGE-FN-SECURITY-FIXES. supabase functions deploy create-checko shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [VERIFY] Post-push CI confirmation
+#### 2. [INTELLIGENCE] WORKER-UNIT-TESTS. Audit #14: the ~800-line Worker has zero unit cove…
+Final score: **96**
+[S182][REL/P1] WORKER-UNIT-TESTS. Audit #14: the ~800-line Worker has zero unit coverage. Add tests/worker.unit.spec.js (Miniflare): assert toOrigin never yields the apex host, a hanging primary fails over within 8s, CSRF verify rejects tampered/expired tokens.
+Why it matters: WORKER-UNIT-TESTS. Audit #14: the ~800-line Worker has zero unit cover keeps the ranked audit current so later sessions don't iterate on stale signal.
+
+First command: `node scripts/generate-genius-list.mjs`
+
+#### 3. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [VERIFY] UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy uptime-probe.y…
-Final score: **94**
-[S180][OBS/P2] UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy uptime-probe.yml run committed api/uptime.json + a history row (Actions tab / git log --author=github-actions), and that /status/ shows a real availability %. First low-churn commit is the smoke test.
-Why it matters: UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy uptime-probe.ym shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 4. [PRODUCT] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict…
+#### 4. [INTELLIGENCE] NONDETERMINISTIC-CHECK-GATES. Audit #23: make build-ignis-search-inde…
 Final score: **93**
-[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict still PENDING (≥5/side not yet accrued; signal −83%). Once it confirms, api/field-win.json flips hasConfirmed:true and the /status/ "Biggest measured win" tile auto-lights — confirm it renders, then celebrate or regress-hunt with lib/perf-forensics.mjs.
-Why it matters: ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict  is open, local, and unblocked — can ship this session.
+[S182][MAINT/P1] NONDETERMINISTIC-CHECK-GATES. Audit #23: make build-ignis-search-index + sanitize-public-oracle-feed deterministic in --check (strip/round timestamps, freeze live inputs) so build:check can actually go green locally. Verify: build then build:check twice, no commit between.
+Why it matters: NONDETERMINISTIC-CHECK-GATES. Audit #23: make build-ignis-search-index keeps the ranked audit current so later sessions don't iterate on stale signal.
+
+First command: `node scripts/generate-genius-list.mjs`
 
 ### NEXT
 
-#### 1. [PRODUCT] GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP…
-Final score: **87**
-[S180][OBS/P3] GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
-Why it matters: GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP  is open, local, and unblocked — can ship this session.
+#### 1. [INTELLIGENCE] NON-DATACENTER-UPTIME-PROBE. Audit #10: add a CF Cron / external brow…
+Final score: **90**
+[S182][REL/P2] NON-DATACENTER-UPTIME-PROBE. Audit #10: add a CF Cron / external browser monitor from a non-datacenter egress that asserts apex 200 + marker (current probes are all bot-challenged from datacenter and blind to the real failure shape).
+Why it matters: NON-DATACENTER-UPTIME-PROBE. Audit #10: add a CF Cron / external brows keeps the ranked audit current so later sessions don't iterate on stale signal.
+
+First command: `node scripts/generate-genius-list.mjs`
 
 #### 2. [BRAND] Forge Window naming propagation
 Final score: **86**
@@ -62,60 +66,58 @@ Why it matters: The URL stays stable for search, but the public vocabulary shoul
 
 First command: `node scripts/propagate-nav.mjs`
 
-#### 3. [VERIFY] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device v…
-Final score: **80**
-[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.
-Why it matters: vaultsparked-proof.js delete (evidence-complete) + nav-sheet device ve shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check`
-
-#### 4. [VERIFY] TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S17…
-Final score: **78**
-[S177][SECURITY/P1] TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S176 burned down the founder-named sinks via the default-policy bridge. Re-probe ~2026-06-12: node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs; expect near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
-Why it matters: TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S176 was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
+#### 3. [VERIFY] TT-ENFORCE-REPROBE. Now due (~2026-06-12): node scripts/probe-tt-soak…
+Final score: **81**
+[S180][SECURITY/P1] TT-ENFORCE-REPROBE. Now due (~2026-06-12): node scripts/probe-tt-soak.mjs && node scripts/analyze-tt-violations.mjs; S176 default-policy bridge should show near-zero new clusters → if clean, enforce-flip decision (founder device verify per SOUL #3).
+Why it matters: TT-ENFORCE-REPROBE. Now due (~2026-06-12): was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 5. [PRODUCT] ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PENDING (3 post…
-Final score: **78**
-[S177][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PENDING (3 post-deploy samples). Once ≥5/side accrue, read data/field-verdicts.json — expect a real LCP drop from edge-origin TTFB. Celebrate or regress-hunt with lib/perf-forensics.mjs.
-Why it matters: ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PENDING (3 post- is open, local, and unblocked — can ship this session.
+#### 4. [PRODUCT] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict…
+Final score: **81**
+[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict still PENDING (≥5/side not yet accrued; signal −83%). Once it confirms, api/field-win.json flips hasConfirmed:true and the /status/ "Biggest measured win" tile auto-lights — confirm it renders, then celebrate or regress-hunt with lib/perf-forensics.mjs.
+Why it matters: ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict  is open, local, and unblocked — can ship this session.
+
+#### 5. [COHESION] STATUS-PROOF-INDEX. Consider merging AI discovery, uptime, field wins…
+Final score: **77**
+[S181→NEXT][PROOF/P2] STATUS-PROOF-INDEX. Consider merging AI discovery, uptime, field wins, staging, and public contracts into one public-safe /api/status-proof.json manifest so /status/ fetches one proof surface.
+Why it matters: STATUS-PROOF-INDEX. Consider merging AI discovery, uptime, field wins, is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
+
+First command: `node scripts/generate-public-intelligence.mjs`
 
 ### LATER
 
-#### 1. [VERIFY] UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run…
-Final score: **72**
-[S177][OBS/P2] UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run executed cleanly (Actions tab) and that a forced failure path emails correctly. First dispatch is the smoke test.
-Why it matters: UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run  was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
+#### 1. [VERIFY] UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy uptime-probe.y…
+Final score: **75**
+[S180][OBS/P2] UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy uptime-probe.yml run committed api/uptime.json + a history row (Actions tab / git log --author=github-actions), and that /status/ shows a real availability %. First low-churn commit is the smoke test.
+Why it matters: UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy uptime-probe.ym was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 2. [PRODUCT] GEO-VITALS-WATCH. api/geo-vitals.json exists (US:107 GB:3); check whe…
-Final score: **72**
-[S177][OBS/P3] GEO-VITALS-WATCH. api/geo-vitals.json exists (US:107 GB:3); check whether non-US LCP confirms the origin-migration win globally once samples grow.
-Why it matters: GEO-VITALS-WATCH. api/geo-vitals.json exists (US:107 GB:3); check whet is open, local, and unblocked — can ship this session.
+#### 2. [PRODUCT] GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP…
+Final score: **75**
+[S180][OBS/P3] GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
+Why it matters: GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP  is open, local, and unblocked — can ship this session.
 
-#### 3. [SECURITY] TT-RE-PROBE-POST-ENV-FIX. The intake fix only went live late 2026-06-…
-Final score: **72**
-[S176][SECURITY/P1] TT-RE-PROBE-POST-ENV-FIX. The intake fix only went live late 2026-06-05 (env-target miss) — restart the soak clock from then; re-probe ~2026-06-12.
-Why it matters: TT-RE-PROBE-POST-ENV-FIX. The intake fix only went live late 2026-06-0 lowers operational risk and is entirely local — no external dependencies block it.
-
-First command: `node scripts/lint-repo.mjs`
+#### 3. [PRODUCT] TASKBOARD-AUTO-CONSOLIDATOR. Add a safe --apply mode to rename older …
+Final score: **69**
+[S181→NEXT][PROCESS/P2] TASKBOARD-AUTO-CONSOLIDATOR. Add a safe --apply mode to rename older active runway/founder-action headings to historical form after closeout while preserving content.
+Why it matters: TASKBOARD-AUTO-CONSOLIDATOR. Add a safe --apply mode to rename older a is open, local, and unblocked — can ship this session.
 
 ## Recommended Build Order
 
-1. TT-ENFORCE-REPROBE. Now due (~2026-06-12): node scripts/probe-tt-soak…
-2. Post-push CI confirmation
-3. UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy uptime-probe.y…
-4. ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict…
-5. GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP…
+1. DEPLOY-EDGE-FN-SECURITY-FIXES. supabase functions deploy create-check…
+2. WORKER-UNIT-TESTS. Audit #14: the ~800-line Worker has zero unit cove…
+3. Post-push CI confirmation
+4. NONDETERMINISTIC-CHECK-GATES. Audit #23: make build-ignis-search-inde…
+5. NON-DATACENTER-UPTIME-PROBE. Audit #10: add a CF Cron / external brow…
 6. Forge Window naming propagation
-7. vaultsparked-proof.js delete (evidence-complete) + nav-sheet device v…
-8. TT-ENFORCE-REPROBE. Soak clock restarted 2026-06-05 (env-fix) and S17…
-9. ORIGIN-MIGRATION-FIELD-VERDICT. / field verdict still PENDING (3 post…
-10. UPTIME-PROBE-VERIFY. Confirm the first uptime-probe.yml scheduled run…
-11. GEO-VITALS-WATCH. api/geo-vitals.json exists (US:107 GB:3); check whe…
-12. TT-RE-PROBE-POST-ENV-FIX. The intake fix only went live late 2026-06-…
+7. TT-ENFORCE-REPROBE. Now due (~2026-06-12): node scripts/probe-tt-soak…
+8. ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict…
+9. STATUS-PROOF-INDEX. Consider merging AI discovery, uptime, field wins…
+10. UPTIME-PUBLISH-VERIFY. Confirm the first commit-worthy uptime-probe.y…
+11. GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP…
+12. TASKBOARD-AUTO-CONSOLIDATOR. Add a safe --apply mode to rename older …
 
 ## Best Immediate Move
 

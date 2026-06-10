@@ -86,6 +86,27 @@ async function probeOnce(target, accept, timeoutMs) {
   }
 }
 
+// S183 (audit #10) — edge HTML failure-shape probe. The plain edge probe only
+// recorded status; it could not tell a (harmless, expected) Cloudflare bot
+// challenge apart from a (page-worthy) Worker/origin error on the apex HTML
+// path — the exact blind spot that nearly hid the S179 self-loop outage. This
+// reads a small body snippet so classifyEdge() can disambiguate by content.
+async function probeEdgeHtml(target, timeoutMs) {
+  const t0 = Date.now();
+  try {
+    const res = await fetch(target, {
+      headers: { 'user-agent': UA, accept: 'text/html' },
+      redirect: 'follow',
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+    let body = '';
+    try { body = (await res.text()).slice(0, 4096); } catch { /* body unreadable */ }
+    return { status: res.status, ms: Date.now() - t0, body };
+  } catch (e) {
+    return { status: 0, ms: Date.now() - t0, body: '', error: String(e.message || e).slice(0, 120) };
+  }
+}
+
 // One retry on network-level failure (status 0) for the real signals — a flapping
 // local network must not page the founder; a real outage fails both attempts.
 async function probeReal(target, accept, timeoutMs) {
@@ -100,13 +121,49 @@ async function probeReal(target, accept, timeoutMs) {
 // status is informational and never affects `ok` or alerts.
 // ---------------------------------------------------------------------------
 
+// S183 (audit #10) — classify an edge-HTML response by SHAPE, not just status,
+// so a Cloudflare bot challenge (expected from CI; site is up) is never confused
+// with a real Worker/origin error on the apex HTML path (page-worthy). Cloudflare
+// challenges can themselves return 403 OR 503, so status alone is ambiguous —
+// the body markers are what disambiguate. Returns:
+//   'served'      — real VaultSpark HTML reached (definitively up)
+//   'challenged'  — CF bot/JS challenge interstitial (expected from datacenter)
+//   'error'       — a genuine 5xx from the Worker/origin (NOT a challenge)
+//   'unreachable' — no response (status 0): a CI challenge-hang or a real down;
+//                   ambiguous from datacenter, so treated as informational
+//   'other'       — anything else (e.g. 3xx/4xx that isn't a challenge)
+const CHALLENGE_MARKERS = /just a moment|cf[-_]chl|challenge[-_]platform|__cf_chl|cf-mitigated|attention required|enable javascript and cookies|cdn-cgi\/challenge/i;
+const VS_CONTENT_MARKERS = /vaultspark|vsx-|data-vs-|forge-letter|site-header/i;
+
+export function classifyEdge(status, body = '') {
+  if (status === 0) return 'unreachable';
+  if (CHALLENGE_MARKERS.test(body)) return 'challenged';
+  if (status === 403) return 'challenged';            // CF challenge with empty/unreadable body
+  if (status >= 500) return 'error';                  // real 5xx without challenge markers
+  if (status === 200) return VS_CONTENT_MARKERS.test(body) ? 'served' : 'challenged';
+  return 'other';
+}
+
+// True only for the narrow blind-spot the apex HTML probe exists to catch: the
+// edge HTML path returns a genuine error while origin content AND edge liveness
+// (the same Worker's JSON path) are both healthy — i.e. the Worker's HTML
+// processing alone is broken (the S179 shape). A challenge/unreachable never
+// trips this, so datacenter false-positives can't reach the founder.
+export function edgeHtmlBroken(routes, liveness) {
+  if (!liveness.ok) return false;                     // a dead prod chain is already 'edge-degraded'
+  if (routes.some((r) => !r.ok)) return false;        // content problems are already 'degraded'/'down'
+  return routes.some((r) => r.edge && r.edge.shape === 'error');
+}
+
 export function summarize(routes, liveness) {
   const contentDown = routes.filter((r) => !r.ok).length;
+  const htmlBroken = edgeHtmlBroken(routes, liveness);
   let overall;
   if (!liveness.ok && contentDown === routes.length) overall = 'down';
   else if (!liveness.ok) overall = 'edge-degraded';      // origin serves content, prod chain does not
   else if (contentDown === routes.length) overall = 'down';
   else if (contentDown > 0) overall = 'degraded';
+  else if (htmlBroken) overall = 'edge-degraded';        // S183: API+content alive, apex HTML 5xxing
   else overall = 'up';
   return {
     schemaVersion: '2.0',
@@ -117,8 +174,10 @@ export function summarize(routes, liveness) {
     routes,
     note:
       'Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; ' +
-      'the per-route `edge` field is informational only. Availability is judged by origin ' +
-      'content (Pages, unchallenged) + edge liveness (a JSON path on the production domain).',
+      'a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` ' +
+      'shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content ' +
+      '+ liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). ' +
+      'Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path).',
   };
 }
 
@@ -147,6 +206,16 @@ export function dueAlerts(routes, liveness, sent, now = Date.now()) {
   for (const r of routes) {
     if (r.ok) continue;
     signals.push({ key: `origin:${r.route}:${r.status}`, label: `content ${r.route}`, status: r.status, ms: r.ms, error: r.origin?.error });
+  }
+  // S183 (audit #10): the apex HTML path is broken (genuine 5xx, not a challenge)
+  // while content + liveness are healthy — the S179 self-loop shape that the
+  // origin/liveness signals alone could not see. Page on it.
+  if (edgeHtmlBroken(routes, liveness)) {
+    for (const r of routes) {
+      if (r.edge && r.edge.shape === 'error') {
+        signals.push({ key: `edge-html:${r.route}:${r.edge.status}`, label: `apex HTML ${r.route} (Worker HTML path)`, status: r.edge.status, ms: r.edge.ms, error: 'edge 5xx while content+liveness healthy' });
+      }
+    }
   }
   return signals.filter((s) => now - (sent[s.key] || 0) >= ALERT_WINDOW_MS);
 }
@@ -235,6 +304,21 @@ function selfTest() {
     ['rollup computes uptime % from history rows', (() => { const r = rollup([{ overall: 'up' }, { overall: 'up' }, { overall: 'degraded' }, { overall: 'up' }]); return r.checks === 4 && r.upPct === 75; })()],
     ['rollup is 100% with no incidents', rollup([{ overall: 'up' }, { overall: 'up' }]).upPct === 100],
     ['rollup handles empty history', rollup([]).checks === 0 && rollup([]).upPct === null],
+    // S183 (audit #10) — edge-shape classification + apex-HTML blind-spot.
+    ['classifyEdge: CF challenge body → challenged', classifyEdge(403, '<title>Just a moment...</title>') === 'challenged'],
+    ['classifyEdge: 503 with challenge body → challenged (not error)', classifyEdge(503, 'cf-mitigated challenge-platform') === 'challenged'],
+    ['classifyEdge: genuine 5xx without challenge → error', classifyEdge(502, 'origin unavailable') === 'error'],
+    ['classifyEdge: 200 with VaultSpark content → served', classifyEdge(200, '<header class="site-header">VaultSpark</header>') === 'served'],
+    ['classifyEdge: 200 without content markers → challenged (interstitial 200)', classifyEdge(200, '<html>nothing familiar</html>') === 'challenged'],
+    ['classifyEdge: no response → unreachable', classifyEdge(0, '') === 'unreachable'],
+    ['edgeHtmlBroken: true only when content+liveness ok but edge errors', edgeHtmlBroken([{ ok: true, edge: { shape: 'error' } }], liveOk) === true],
+    ['edgeHtmlBroken: false when edge merely challenged', edgeHtmlBroken([{ ok: true, edge: { shape: 'challenged' } }], liveOk) === false],
+    ['edgeHtmlBroken: false when liveness down (already edge-degraded)', edgeHtmlBroken([{ ok: true, edge: { shape: 'error' } }], liveBad) === false],
+    ['edgeHtmlBroken: false when content also down (already degraded)', edgeHtmlBroken([{ ok: false, edge: { shape: 'error' } }], liveOk) === false],
+    ['summarize: apex HTML error (content+liveness ok) → edge-degraded', summarize([{ route: '/', ok: true, edge: { shape: 'error' } }], liveOk).overall === 'edge-degraded'],
+    ['summarize: edge challenge alone stays up', summarize([up('/'), up('/games/')].map((r) => ({ ...r, edge: { shape: 'challenged' } })), liveOk).overall === 'up'],
+    ['dueAlerts: apex HTML error pages the founder', dueAlerts([{ route: '/', ok: true, edge: { shape: 'error', status: 502, ms: 90 } }], liveOk, {}, now).length === 1],
+    ['dueAlerts: apex HTML challenge never pages', dueAlerts([{ route: '/', ok: true, edge: { shape: 'challenged', status: 403, ms: 90 } }], liveOk, {}, now).length === 0],
   ];
   let pass = 0;
   for (const [name, ok] of cases) { if (ok) pass += 1; else console.error(`  ✗ ${name}`); }
@@ -255,12 +339,20 @@ if (RUN_DIRECT) {
 const routeResults = [];
 for (const route of ROUTES) {
   const origin = await probeReal(`${ORIGIN}${route}`, 'text/html', ORIGIN_TIMEOUT_MS);
-  // Informational only: the production-domain HTML request (bot-challenged from CI).
-  const edgeRaw = await probeOnce(`${PROD}${route}`, 'text/html', EDGE_INFO_TIMEOUT_MS);
+  // The production-domain HTML request, now shape-classified (S183 audit #10):
+  // challenge/unreachable stay informational; a genuine 5xx becomes page-worthy.
+  const edgeRaw = await probeEdgeHtml(`${PROD}${route}`, EDGE_INFO_TIMEOUT_MS);
+  const shape = classifyEdge(edgeRaw.status, edgeRaw.body);
   const edge = {
     status: edgeRaw.status,
     ms: edgeRaw.ms,
-    note: edgeRaw.ok ? 'served' : 'edge-challenged-or-down (informational; real browsers pass)',
+    shape,
+    note:
+      shape === 'served' ? 'served (real content reached)'
+      : shape === 'error' ? 'edge 5xx — genuine Worker/origin error (page-worthy)'
+      : shape === 'challenged' ? 'edge-challenged (informational; real browsers pass)'
+      : shape === 'unreachable' ? 'no response (challenge-hang or down; informational)'
+      : 'other (informational)',
   };
   routeResults.push({ route, status: origin.status, ms: origin.ms, ok: origin.ok, origin, edge });
 }

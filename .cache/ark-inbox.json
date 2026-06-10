@@ -1,24 +1,13 @@
 {
-  "drainedAt": "2026-06-07T17:50:10.067Z",
+  "drainedAt": "2026-06-10T14:01:45.304Z",
   "slug": "vaultsparkstudios-website",
-  "count": 5,
+  "count": 24,
   "cargo": [
     {
-      "id": "01JQCI7RRN52215C7B9CB0B604",
-      "type": "port-online",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-05T18:55:29.655Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "agent": "test",
-        "sessionId": "RT"
-      }
-    },
-    {
-      "id": "01JQCKSGDLD20B7E918FB0EEFB",
+      "id": "01JQI307N0416FFD9BB7C30988",
       "type": "session-outcome",
       "from": "studio-ops",
-      "shippedAt": "2026-06-05T19:41:43.222Z",
+      "shippedAt": "2026-06-07T22:24:37.600Z",
       "payload": {
         "slug": "vaultspark-studio-ops",
         "medium": "infrastructure",
@@ -28,45 +17,399 @@
         "delta": null,
         "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
         "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 3,
+        "shippedFiles": 7,
         "vaultStatus": "sparked",
-        "ts": "2026-06-05T19:41:43.129Z"
+        "ts": "2026-06-07T22:24:37.505Z"
       }
     },
     {
-      "id": "01JQCR9J7O261ADDD3B5B06CE4",
+      "id": "01JQI33JIA5B4A436387588EFE",
       "type": "session-impact-summary",
-      "from": "veilos",
-      "shippedAt": "2026-06-05T21:33:43.544Z",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-07T22:26:28.043Z",
       "payload": {
-        "session": "S28",
-        "commit": "e475699",
-        "sil": 999,
-        "repo": "veilos",
-        "date": "2026-06-05",
-        "velocity": 8,
-        "headline": "Audit read live production, caught the ungated triage endpoint, gated it, and taught the organism to propose its own lessons from visitor feedback. 8/8 shipped, 207/207 tests. Deploy pending carries the security gate."
+        "sessionId": "158",
+        "headline": "Session closed.",
+        "bullets": [
+          "(no shipped items recorded this session)"
+        ],
+        "synopsis": "",
+        "generatedAt": "2026-06-07T22:26:27.901Z"
       }
     },
     {
-      "id": "01JQCSE8SPB0728D62AA1F7FCD",
-      "type": "repo-question",
+      "id": "01JQI33L9FA71F2E5AF9160033",
+      "type": "pattern-share",
       "from": "studio-ops",
-      "shippedAt": "2026-06-05T21:53:45.369Z",
+      "shippedAt": "2026-06-07T22:26:29.807Z",
       "payload": {
-        "question": "SIL data integrity: processQuality=101 (valid range 0..100) · silScore=995 but sum(categories)=998 — recompute silScore from categories (silScore := sum(silCategoriesV3), clamp 0..100) via write-project-status --fix at next session.",
-        "source": "sil-ingest-check",
-        "hashes": [
-          "7b16682dc5be",
-          "1fbca379b79e"
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:infra",
+          "outcome:good"
+        ],
+        "context": "studio-ops",
+        "solution": "closeout completed cleanly"
+      }
+    },
+    {
+      "id": "01JQI5EP6JDE6E2C109A0AAD15",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-07T23:07:31.411Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 5,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-07T23:07:31.319Z"
+      }
+    },
+    {
+      "id": "01JQI5I4US81B3A2C9FCE4D3AE",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-07T23:09:21.756Z",
+      "payload": {
+        "sessionId": "159",
+        "headline": "Session closed.",
+        "bullets": [
+          "(no shipped items recorded this session)"
+        ],
+        "synopsis": "",
+        "generatedAt": "2026-06-07T23:09:21.637Z"
+      }
+    },
+    {
+      "id": "01JQI5I6C7DDE6BB6DA3CFBC8B",
+      "type": "pattern-share",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-07T23:09:23.207Z",
+      "payload": {
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:infra",
+          "outcome:good"
+        ],
+        "context": "studio-ops",
+        "solution": "closeout completed cleanly"
+      }
+    },
+    {
+      "id": "01JQI8H7F59354B30671FC8A44",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T00:01:17.285Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 2,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-08T00:01:17.212Z"
+      }
+    },
+    {
+      "id": "01JQI8IVG8047BE4BEAF3A0A34",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T00:02:14.664Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 2,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-08T00:02:14.577Z"
+      }
+    },
+    {
+      "id": "01JQIQ2JN23B5CDE13562E8CC3",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T05:07:52.674Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 2,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-08T05:07:52.552Z"
+      }
+    },
+    {
+      "id": "01JQIQ5RTVB0283C90E995863F",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T05:09:39.391Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 2,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-08T05:09:39.172Z"
+      }
+    },
+    {
+      "id": "01JQIQAANVA64C887AB71F2B10",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T05:12:05.631Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 2,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-08T05:12:05.507Z"
+      }
+    },
+    {
+      "id": "01JQJ01MNJ07A8FEEF4029D317",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T06:52:14.451Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 63,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-08T06:52:14.380Z"
+      }
+    },
+    {
+      "id": "01JQK60LS003F4BECE715A5843",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T17:55:46.688Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 1,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-08T17:55:46.441Z"
+      }
+    },
+    {
+      "id": "01JQK66ORV0EEBE85883E7C765",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T17:59:06.368Z",
+      "payload": {
+        "sessionId": "162",
+        "headline": "Session closed.",
+        "bullets": [
+          "(no shipped items recorded this session)"
+        ],
+        "synopsis": "",
+        "generatedAt": "2026-06-08T17:49:32.601Z"
+      }
+    },
+    {
+      "id": "01JQK66PPLA3C8DD9266BA881F",
+      "type": "pattern-share",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T17:59:07.317Z",
+      "payload": {
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:infra",
+          "outcome:good"
+        ],
+        "context": "studio-ops",
+        "solution": "closeout completed cleanly"
+      }
+    },
+    {
+      "id": "01JQKAC7EI8B333DA589886912",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T19:11:59.442Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 9,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-08T19:11:59.356Z"
+      }
+    },
+    {
+      "id": "01JQKAFKO088065A291E518BC2",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T19:13:51.360Z",
+      "payload": {
+        "sessionId": "162",
+        "headline": "Session closed.",
+        "bullets": [
+          "(no shipped items recorded this session)"
+        ],
+        "synopsis": "",
+        "generatedAt": "2026-06-08T17:49:32.601Z"
+      }
+    },
+    {
+      "id": "01JQKAFLFG3543764C88CAFE71",
+      "type": "pattern-share",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T19:13:52.112Z",
+      "payload": {
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:infra",
+          "outcome:good"
+        ],
+        "context": "studio-ops",
+        "solution": "closeout completed cleanly"
+      }
+    },
+    {
+      "id": "01JQKDS5FF1E68B926FC51F4DE",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T20:13:07.440Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 6,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-08T20:13:07.347Z"
+      }
+    },
+    {
+      "id": "01JQKG7JB3FB10B3D14CCD05DF",
+      "type": "canon-update",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-08T20:54:19.236Z",
+      "payload": {
+        "canon": [
+          "CANON-035",
+          "CANON-036"
+        ],
+        "titles": {
+          "CANON-035": "Project Brand Identity — design your own professional logo + favicon/site-icon + brand-assets kit; improve the logo over time",
+          "CANON-036": "Deploy Currency — production must not silently lag main; wire ci-on-push CD or deploy at closeout behind CI-green+staging+twin gates"
+        },
+        "action": "At your next /start, apply pending propagation. CANON-035: create context/BRAND_SYSTEM.md from the expanded template, design a real logo, derive your favicon from it, set registry brandIdentity. CANON-036: declare autoDeploy (ci-on-push|closeout|none) + deployCommand; never end a session with production silently behind main.",
+        "source": "studio-ops S164",
+        "docs": "docs/STUDIO_CANON.md"
+      }
+    },
+    {
+      "id": "01JQKIJS8RD14DFA39EBEE0C6F",
+      "type": "pattern-share",
+      "from": "obelisk",
+      "shippedAt": "2026-06-08T21:35:58.748Z",
+      "payload": {
+        "pattern": "unified-studio-login",
+        "context": "Login/create-account has been a recurring founder + user hurdle. Obelisk now ships ONE immersive visual template + ONE backend (Obelisk Gate IdP, live at obeliskgate.com) for every project, internal and external.",
+        "solution": "Federate to the Obelisk Gate. Wire in ~10 lines: drop the @vaultspark/obelisk-auth-kit client (window.ObeliskAuth), point data-obelisk-return at your callback, gate privileged actions with createRelyingParty().requireAuth(). Three embed modes: redirect / iframe / mount. Recipe: docs/RELYING_PARTY_INTEGRATION.md.",
+        "benefits": [
+          "passkey-first + conditional-UI autofill (one tap)",
+          "zero passwords",
+          "same Studio aesthetic everywhere",
+          "WCAG 2.2 AA + mobile-first",
+          "signed-receipt audit",
+          "post-quantum migration-ready"
+        ],
+        "rolloutOwner": "studio-ops (Propagator) — converge sweep per cohort",
+        "tags": [
+          "obelisk",
+          "auth",
+          "login",
+          "passkey",
+          "sso",
+          "studio-wide"
         ]
       }
     },
     {
-      "id": "01JQCUL27B1B812404D5EF99A2",
+      "id": "01JQKJSVGOD867BCC6FE746839",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-06-08T21:58:25.560Z",
+      "payload": {
+        "session": "Wave 51",
+        "repo": "obelisk",
+        "headline": "Unified Immersive Studio Login shipped — one immersive login/create-account experience + one backend (Obelisk Gate) for every project, internal + external + newly onboarded.",
+        "shipped": [
+          "packages/auth-kit/src/auth-experience.js (immersive renderer, 9 states, passkey conditional-UI, WCAG 2.2 AA, mobile-first)",
+          "packages/auth-kit/src/client.js (drop-in window.ObeliskAuth)",
+          "Gate /auth serves it by default",
+          "public/auth.html static artifact",
+          "docs/UNIFIED_STUDIO_LOGIN.md"
+        ],
+        "adopt": "Federate to obeliskgate.com; wire in ~10 lines via the drop-in client. Recipe: docs/RELYING_PARTY_INTEGRATION.md.",
+        "rolloutOwner": "studio-ops (Propagator) — converge sweep (handoff 01JQKIILIK)",
+        "tests": "915/915; check 350 files; SIL 994/1000",
+        "commit": "c5c36bb"
+      }
+    },
+    {
+      "id": "01JQN6QI7AD0F4598DC045FAC6",
       "type": "session-outcome",
       "from": "studio-ops",
-      "shippedAt": "2026-06-05T22:32:25.067Z",
+      "shippedAt": "2026-06-09T22:07:38.218Z",
       "payload": {
         "slug": "vaultspark-studio-ops",
         "medium": "infrastructure",
@@ -76,9 +419,28 @@
         "delta": null,
         "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
         "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 4,
+        "shippedFiles": 2,
         "vaultStatus": "sparked",
-        "ts": "2026-06-05T22:32:24.980Z"
+        "ts": "2026-06-09T22:07:38.119Z"
+      }
+    },
+    {
+      "id": "01JQN6STASC0BD2E4D681D8E7D",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-09T22:08:55.132Z",
+      "payload": {
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 2,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-09T22:08:55.035Z"
       }
     }
   ],
@@ -88,84 +450,343 @@
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.047Z"
+      "ts": "2026-06-10T14:01:45.289Z"
     },
     {
       "id": "01JQ7NMS6UC09DAC5A1F480EC7",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.050Z"
+      "ts": "2026-06-10T14:01:45.291Z"
     },
     {
       "id": "01JQ81DUUGAB4D9AAFCA86A4C8",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.052Z"
+      "ts": "2026-06-10T14:01:45.292Z"
     },
     {
       "id": "01JQAM72190FE3E53A1B0BD420",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.053Z"
+      "ts": "2026-06-10T14:01:45.292Z"
     },
     {
       "id": "01JQCICHT84D1C93ABFA2815B5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.054Z"
+      "ts": "2026-06-10T14:01:45.293Z"
     },
     {
       "id": "01JQCJJ6UJ58823FD3FA2F87F9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.055Z"
+      "ts": "2026-06-10T14:01:45.293Z"
     },
     {
       "id": "01JQCJTVLQ6F05216E5DEF7C2A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.056Z"
+      "ts": "2026-06-10T14:01:45.293Z"
     },
     {
       "id": "01JQCRN04845C357EFA1432730",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.058Z"
+      "ts": "2026-06-10T14:01:45.294Z"
     },
     {
       "id": "01JQCRSC077D12D04C9643D8A5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.059Z"
+      "ts": "2026-06-10T14:01:45.294Z"
     },
     {
       "id": "01JQCSJ3GAF0C1159B2E93303E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.060Z"
+      "ts": "2026-06-10T14:01:45.294Z"
     },
     {
       "id": "01JQCTOARQA66B83C9C4C5A111",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.061Z"
+      "ts": "2026-06-10T14:01:45.295Z"
     },
     {
       "id": "01JQCU0K94E50C7AFDEDB892E1",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-07T17:50:10.062Z"
+      "ts": "2026-06-10T14:01:45.295Z"
+    },
+    {
+      "id": "01JQHKD1SK31FF4CBFFF030142",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.295Z"
+    },
+    {
+      "id": "01JQHRBPCB6EBDEA3973B9843F",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.295Z"
+    },
+    {
+      "id": "01JQHSFN7J97F430D96B315278",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.295Z"
+    },
+    {
+      "id": "01JQI46EFVC8BD286B4FCDD822",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.296Z"
+    },
+    {
+      "id": "01JQI4D3FQ3BA52F6588E56947",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.296Z"
+    },
+    {
+      "id": "01JQI4OUTB96AD6C055DF11110",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.296Z"
+    },
+    {
+      "id": "01JQINBF618F4D2BF5FF602868",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.296Z"
+    },
+    {
+      "id": "01JQINKEL12608945FB7EEDCB4",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.297Z"
+    },
+    {
+      "id": "01JQIO628O3ED21389810C7039",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.297Z"
+    },
+    {
+      "id": "01JQIOHBFV01C7A92ADC94594F",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.297Z"
+    },
+    {
+      "id": "01JQISC3NC4181FD2AB28760B7",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.297Z"
+    },
+    {
+      "id": "01JQITQM23E02B74E40A549E93",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.298Z"
+    },
+    {
+      "id": "01JQIU9EMS5F82D26EB46C34BF",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.298Z"
+    },
+    {
+      "id": "01JQIV646P19B27D92EBD58BDC",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.298Z"
+    },
+    {
+      "id": "01JQK2NJMI222BE708E8FC5EDD",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.298Z"
+    },
+    {
+      "id": "01JQK2VB9S04C324A82EC8D819",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.298Z"
+    },
+    {
+      "id": "01JQK3QR7RAC8B1E0A42BEE8E6",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.299Z"
+    },
+    {
+      "id": "01JQK44U3C62E189F1F46A5E88",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.299Z"
+    },
+    {
+      "id": "01JQK4D6IO8D155D9737B18129",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.299Z"
+    },
+    {
+      "id": "01JQK4JCMQ42CBE29D52E43C65",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.299Z"
+    },
+    {
+      "id": "01JQK4UVUQ2DF2EAEA8D147CBC",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.299Z"
+    },
+    {
+      "id": "01JQK7LMEVF1CCF71CBD87994D",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.300Z"
+    },
+    {
+      "id": "01JQK7PQPU8647F73682F9F6A0",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.300Z"
+    },
+    {
+      "id": "01JQK8DPR033D60CB308D621AC",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.300Z"
+    },
+    {
+      "id": "01JQKRSKRGE3F6ACF397DD5F69",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.300Z"
+    },
+    {
+      "id": "01JQL2JG06557EF9A1AFEF274C",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.301Z"
+    },
+    {
+      "id": "01JQL2MV12F3FE0FACCCEAF6A9",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.301Z"
+    },
+    {
+      "id": "01JQL2T67S297B80EBA938FA0B",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.301Z"
+    },
+    {
+      "id": "01JQL31BJ4C2694F6FD68A8A16",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.301Z"
+    },
+    {
+      "id": "01JQN4BMP0FA0F8371A00CDC08",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.302Z"
+    },
+    {
+      "id": "01JQN4R7U49577021F5E104785",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.302Z"
+    },
+    {
+      "id": "01JQN4UJD42BAE2396CFF8A726",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.302Z"
+    },
+    {
+      "id": "01JQN5BHT914367ACCEE226576",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.302Z"
+    },
+    {
+      "id": "01JQN5KTML529E6ED06050EA3F",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.302Z"
+    },
+    {
+      "id": "01JQN67UL31A1BC544762D30F1",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.303Z"
+    },
+    {
+      "id": "01JQN6FN7V332DEF86CE4AC468",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.303Z"
+    },
+    {
+      "id": "01JQN6M6QC8AF4BFAE76938B0A",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-10T14:01:45.303Z"
     }
   ]
 }

@@ -405,6 +405,46 @@
         voices = voicesRes && voicesRes.ok ? await voicesRes.json() : null;
       }
 
+      // 2.5 Public-safe deployed fallback. The /ignis/output/* feed above is
+      // generated locally and is gitignored (it aggregates every sibling repo,
+      // sealed projects included), so it 404s on the live site — which is why
+      // the Oracle showed "data unavailable" in production. /api/public-intelligence.json
+      // ships with every build (CI-refreshed) and is sealed-vault-safe: public
+      // projects only, totals for the rest. Render it so prod always has live data.
+      if (!ecosystem && (!pulse || !pulse.entries)) {
+        try {
+          const pr = await fetch('/api/public-intelligence.json', { cache: 'no-cache' });
+          if (pr.ok) {
+            const pi = await pr.json();
+            const cat = Array.isArray(pi.catalog) ? pi.catalog : [];
+            if (cat.length) {
+              const healthFor = (s) => s === 'SPARKED' ? 'green' : s === 'FORGE' ? 'yellow' : 'unknown';
+              pulse = {
+                schemaVersion: pi.schemaVersion,
+                generatedAt: pi.generatedAt,
+                totalProjects: cat.length,
+                healthDistribution: {
+                  green: cat.filter(p => p.status === 'SPARKED').length,
+                  yellow: cat.filter(p => p.status === 'FORGE').length,
+                  red: cat.filter(p => p.status === 'VAULTED').length,
+                },
+                entries: cat.map(p => ({
+                  id: p.id,
+                  name: p.name,
+                  health: healthFor(p.status),
+                  vaultStatus: p.status,
+                  currentFocus: p.note || '',
+                  blockerCount: 0,
+                  lastUpdated: pi.generatedAt,
+                  staleDays: 0,
+                })),
+              };
+              voices = { schemaVersion: '1.0', voices: {} };
+            }
+          }
+        } catch {}
+      }
+
       // Normalize: if ecosystem-state is present, project it to the same shape
       // the rest of this script expects.
       if (ecosystem?.projects?.length) {
@@ -435,7 +475,7 @@
       }
 
       if (!pulse || !pulse.entries) {
-        EMPTY.textContent = 'Portfolio data unavailable. Run `node scripts/build-ecosystem-velocity.mjs` or the studio-ops aggregator.';
+        EMPTY.textContent = 'Live portfolio intelligence is regenerating — check back in a moment.';
         return;
       }
 

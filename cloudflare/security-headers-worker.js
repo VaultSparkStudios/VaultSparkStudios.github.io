@@ -25,6 +25,13 @@
 
 import { WORKER_CSP } from '../config/csp-policy.mjs';
 import { handleHubRequest, isHubRequest } from './hub-auth.js';
+import {
+  drKeyFor,
+  createOriginFetch,
+  issueCsrfToken,
+  verifyCsrfToken,
+  CSRF_TTL_MS,
+} from './worker-lib.mjs';
 
 // ---------------------------------------------------------------------------
 // Constants
@@ -167,12 +174,6 @@ function clampSampleRate(value) {
   return Math.min(Math.max(n, 0), 1);
 }
 
-function generateNonce() {
-  const bytes = new Uint8Array(16);
-  crypto.getRandomValues(bytes);
-  return btoa(String.fromCharCode(...bytes)).replace(/=+$/, '');
-}
-
 // S161: time-bucketed nonce — shared within 60s windows so HTML responses can
 // be edge-cached. Protects against injected inline scripts; a short window is
 // too brief for a practical attack on a static site. Avoids per-request origin
@@ -189,49 +190,9 @@ function generateWindowNonce() {
   return btoa(raw).slice(0, 24).replace(/[/+=]/g, '_');
 }
 
-async function hmacSign(key, data) {
-  const enc = new TextEncoder();
-  const cryptoKey = await crypto.subtle.importKey(
-    'raw', enc.encode(key), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign', 'verify']
-  );
-  const sig = await crypto.subtle.sign('HMAC', cryptoKey, enc.encode(data));
-  return btoa(String.fromCharCode(...new Uint8Array(sig))).replace(/=+$/, '');
-}
-
-async function hmacVerify(key, data, signature) {
-  const expected = await hmacSign(key, data);
-  // Constant-time-ish compare via length + char-by-char; sufficient for our threat model.
-  if (expected.length !== signature.length) return false;
-  let mismatch = 0;
-  for (let i = 0; i < expected.length; i++) {
-    mismatch |= expected.charCodeAt(i) ^ signature.charCodeAt(i);
-  }
-  return mismatch === 0;
-}
-
-// ---------------------------------------------------------------------------
-// CSRF nonce — issue + verify (signed `${ts}.${rand}.${hmac}`)
-// ---------------------------------------------------------------------------
-
-const CSRF_TTL_MS = 60 * 60 * 1000; // 1 hour
-
-async function issueCsrfToken(env) {
-  if (!env.CSRF_SIGNING_KEY) return null;
-  const ts = Date.now();
-  const rand = generateNonce();
-  const sig = await hmacSign(env.CSRF_SIGNING_KEY, `${ts}.${rand}`);
-  return `${ts}.${rand}.${sig}`;
-}
-
-async function verifyCsrfToken(env, token) {
-  if (!token || !env.CSRF_SIGNING_KEY) return false;
-  const parts = token.split('.');
-  if (parts.length !== 3) return false;
-  const [ts, rand, sig] = parts;
-  if (!ts || !rand || !sig) return false;
-  if (Date.now() - Number(ts) > CSRF_TTL_MS) return false;
-  return hmacVerify(env.CSRF_SIGNING_KEY, `${ts}.${rand}`, sig);
-}
+// CSRF nonce stack (issue + verify, HMAC sign/verify) is the single source of
+// truth in worker-lib.mjs — imported above so it can be unit-tested in isolation
+// (audit #14, S183). No inline copy here to prevent drift.
 
 // ---------------------------------------------------------------------------
 // Rate limit (KV-backed sliding window via fixed bucket)
@@ -530,66 +491,12 @@ export default {
     // by hostname, never its own apex. PRIMARY_ORIGIN defaults to the Pages deploy;
     // override via env only if a non-looping proxied origin is ever reintroduced.
     const PRIMARY_ORIGIN = env.PRIMARY_ORIGIN || FALLBACK_ORIGIN;
-    const toOrigin = (req, base) => {
-      const u = new URL(req.url);
-      const t = new URL(base);
-      u.protocol = t.protocol;
-      u.hostname = t.hostname;
-      u.port = t.port;
-      return new Request(u.toString(), req);
-    };
-    // S176 disaster-recovery layer: when BOTH origins 5xx (platform-wide Pages
-    // blip — founder saw 503s reach the browser on 2026-06-07), serve the
-    // last-known-good HTML copy from the edge cache instead of failing. DR
-    // copies are stored under a dedicated cache key (independent of the
-    // rotating nonce-window key, which expires every HTML_NONCE_WINDOW_SEC)
-    // with a 7-day retention. Visible staleness beats a visible outage.
-    const drKeyFor = (reqUrl) => {
-      const u = new URL(reqUrl);
-      return new Request(`${u.origin}${u.pathname}?_vsdr=1`);
-    };
-    const isHtmlNavRequest = (req) =>
-      (req.headers.get('accept') || '').includes('text/html');
-    // S177 origin-hang hardening: S176's failover only fired on a clean 5xx, but
-    // the most common real outage is an origin that *hangs* (no status at all —
-    // the shape the founder saw on 2026-06-07). An unbounded `fetch(req)` would
-    // block the Worker until the edge wall-clock limit. Bounding the idempotent
-    // primary + fallback fetches turns a hang into a fast failover → pages.dev →
-    // DR cache. POSTs keep their original behavior (no abort → no double-submit).
-    const ORIGIN_FETCH_TIMEOUT_MS = 8000;
-    const originFetch = async (req) => {
-      const m = req.method || 'GET';
-      const idempotent = m === 'GET' || m === 'HEAD';
-      let primary = null;
-      try {
-        primary = await fetch(toOrigin(req, PRIMARY_ORIGIN), idempotent ? { signal: AbortSignal.timeout(ORIGIN_FETCH_TIMEOUT_MS) } : {});
-      } catch (_e) { /* timeout or network error → fall through to failover */ }
-      if (primary && (primary.status < 500 || !idempotent)) return primary;
-      if (!idempotent) return primary || new Response('origin unavailable', { status: 502 });
-      try {
-        const u = new URL(req.url);
-        const fb = await fetch(`${FALLBACK_ORIGIN}${u.pathname}${u.search}`, {
-          method: m,
-          headers: { accept: req.headers.get('accept') || '*/*', 'accept-encoding': req.headers.get('accept-encoding') || '' },
-          redirect: 'follow',
-          signal: AbortSignal.timeout(ORIGIN_FETCH_TIMEOUT_MS),
-        });
-        if (fb.status < 500) return fb;
-      } catch (_e) { /* keep primary */ }
-      // Last resort: stale HTML from the disaster-recovery cache.
-      if (isHtmlNavRequest(req)) {
-        try {
-          const dr = await caches.default.match(drKeyFor(req.url));
-          if (dr) {
-            const stale = new Response(dr.body, dr);
-            stale.headers.set('X-VS-Disaster-Recovery', 'stale');
-            stale.headers.set('Cache-Control', 'no-store');
-            return stale;
-          }
-        } catch (_e) { /* fall through to error */ }
-      }
-      return primary || new Response('origin unavailable', { status: 502 });
-    };
+    // S176 disaster-recovery + S177 origin-hang hardening: the origin-fetch
+    // orchestration (time-bounded primary → pages.dev fallback → stale DR cache
+    // for HTML navs; POSTs keep no-abort behavior) lives in worker-lib.mjs so it
+    // is unit-tested in isolation (audit #14, S183). Behavior is unchanged —
+    // this call wires the live globals (fetch, caches) into the same logic.
+    const originFetch = createOriginFetch({ PRIMARY_ORIGIN, FALLBACK_ORIGIN });
     const url = new URL(request.url);
     const method = request.method;
 

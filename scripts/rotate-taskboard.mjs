@@ -53,6 +53,26 @@ export function parseBlocks(text) {
   return { preamble, blocks };
 }
 
+// S183 (#12 TASKBOARD-AUTO-CONSOLIDATOR) — reclassify stale active-intent
+// headings to historical form, preserving content. The live runway is ALWAYS
+// session-tagged (`## Now (Session 182 runway)`), so a BARE `## Now`/`## Next`/
+// `## Runway` heading is definitionally a leftover from an older session that
+// still reads as "current" and muddies the live signal (the board had three
+// such bare `## Now` blocks from sessions 95–98). This renames only those exact
+// bare headings — never a session-tagged or standing section (Human Action
+// Required, Founder Action), and never touches the content beneath them.
+const BARE_ACTIVE_HEADING = /^## (Now|Next|Runway)\s*$/;
+
+export function consolidateHeadings(text) {
+  let renamed = 0;
+  const out = text.split('\n').map((line) => {
+    const m = line.match(BARE_ACTIVE_HEADING);
+    if (m) { renamed += 1; return `## ${m[1]} (historical)`; }
+    return line;
+  }).join('\n');
+  return { text: out, renamed };
+}
+
 export function rotate(text, keepRecent = KEEP_RECENT) {
   const { preamble, blocks } = parseBlocks(text);
   const sessions = [...new Set(blocks.map((b) => b.session).filter((s) => s != null))].sort((a, b) => b - a);
@@ -92,6 +112,13 @@ function selfTest() {
     ['archives session 7', /Session 7/.test(r.archived) && !/Session 7/.test(r.kept)],
     ['keeps non-session block inline', /Reference \(not a session\)/.test(r.kept)],
     ['no-op when few sessions', rotate('## Done (Session 1 — x)\n- a\n', 3).movedCount === 0],
+    // S183 (#12) — consolidateHeadings reclassifies bare active headings only.
+    ['consolidate renames a bare ## Now', consolidateHeadings('## Now\n- x\n').text.startsWith('## Now (historical)')],
+    ['consolidate renames bare ## Next / ## Runway', (() => { const r = consolidateHeadings('## Next\n## Runway\n'); return r.renamed === 2 && /## Next \(historical\)/.test(r.text) && /## Runway \(historical\)/.test(r.text); })()],
+    ['consolidate leaves session-tagged ## Now (Session N runway) alone', consolidateHeadings('## Now (Session 182 runway)\n- x\n').renamed === 0],
+    ['consolidate leaves standing sections alone', consolidateHeadings('## Human Action Required\n## Founder Action\n').renamed === 0],
+    ['consolidate preserves content beneath', consolidateHeadings('## Now\n- keep me\n').text.includes('- keep me')],
+    ['consolidate is idempotent', (() => { const a = consolidateHeadings('## Now\n').text; return consolidateHeadings(a).renamed === 0; })()],
   ];
   let pass = 0;
   for (const [name, ok] of cases) { if (ok) pass += 1; else console.error(`  ✗ ${name}`); }
@@ -105,6 +132,24 @@ function selfTest() {
 const RUN_DIRECT = import.meta.main ?? process.argv[1]?.endsWith('rotate-taskboard.mjs');
 
 if (RUN_DIRECT && process.argv.includes('--self-test')) selfTest();
+
+if (RUN_DIRECT && process.argv.includes('--apply')) {
+  // Reclassify stale bare active-intent headings to historical form (S183 #12).
+  // Content-preserving and idempotent; --dry-run reports without writing.
+  const text = fs.readFileSync(BOARD, 'utf8');
+  const { text: next, renamed } = consolidateHeadings(text);
+  if (!renamed) {
+    console.log('rotate-taskboard --apply: no stale bare active headings to consolidate.');
+    process.exit(0);
+  }
+  if (process.argv.includes('--dry-run')) {
+    console.log(`rotate-taskboard --apply --dry-run: would reclassify ${renamed} bare active heading(s) → historical.`);
+    process.exit(0);
+  }
+  fs.writeFileSync(BOARD, next);
+  console.log(`rotate-taskboard --apply: reclassified ${renamed} bare active heading(s) → historical (content preserved).`);
+  process.exit(0);
+}
 
 if (RUN_DIRECT && process.argv.includes('--check-size')) {
   // True drift signal: stale sessions accumulating inline (independent of how

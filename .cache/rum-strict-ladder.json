@@ -1,37 +1,37 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T17:58:24.391Z",
+  "generatedAt": "2026-06-10T14:32:30.125Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 35,
+  "totalSamples": 16,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
-    "route": "/",
-    "samples": 10,
+    "route": "/games/vaultspark-football-gm/",
+    "samples": 6,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 40,
+    "remaining": 44,
     "p75": {
-      "lcp": 1588,
-      "cls": 0.051,
+      "lcp": 532,
+      "cls": 0.0287,
       "inp": 96,
-      "fcp": 1588,
-      "ttfb": 1214
+      "fcp": 532,
+      "ttfb": 44
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 10,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 40,
+      "remaining": 46,
       "p75": {
         "lcp": 1588,
-        "cls": 0.051,
-        "inp": 96,
+        "cls": 0.202,
+        "inp": 288,
         "fcp": 1588,
         "ttfb": 1214
       },
@@ -53,21 +53,6 @@
       "overBudget": false
     },
     {
-      "route": "/games/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 7420,
-        "cls": 0,
-        "inp": 72,
-        "fcp": 7420,
-        "ttfb": 126
-      },
-      "overBudget": false
-    },
-    {
       "route": "/games/gridiron-gm/",
       "samples": 2,
       "minSamples": 50,
@@ -83,21 +68,6 @@
       "overBudget": false
     },
     {
-      "route": "/games/vaultfront/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 956,
-        "cls": 0.2538,
-        "inp": 104,
-        "fcp": 956,
-        "ttfb": 3
-      },
-      "overBudget": false
-    },
-    {
       "route": "/games/vaultspark-football-gm/",
       "samples": 6,
       "minSamples": 50,
@@ -109,21 +79,6 @@
         "inp": 96,
         "fcp": 532,
         "ttfb": 44
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/ignis/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 400,
-        "cls": 0,
-        "inp": 48,
-        "fcp": 400,
-        "ttfb": 87
       },
       "overBudget": false
     },
@@ -158,21 +113,6 @@
       "overBudget": false
     },
     {
-      "route": "/oracle/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 876,
-        "cls": 0.0223,
-        "inp": 384,
-        "fcp": 484,
-        "ttfb": 105
-      },
-      "overBudget": false
-    },
-    {
       "route": "/roadmap/",
       "samples": 1,
       "minSamples": 50,
@@ -184,81 +124,6 @@
         "inp": 0,
         "fcp": 296,
         "ttfb": 8
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/security/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 1052,
-        "cls": 0,
-        "inp": 48,
-        "fcp": 1052,
-        "ttfb": 93
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/studio-pulse/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 800,
-        "cls": 0.0736,
-        "inp": 160,
-        "fcp": 800,
-        "ttfb": 87
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/universe/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 392,
-        "cls": 0.0535,
-        "inp": 208,
-        "fcp": 392,
-        "ttfb": 94
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/universe/voidfall/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 360,
-        "cls": 0.0026,
-        "inp": 176,
-        "fcp": 360,
-        "ttfb": 86
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/vault/tombstones/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 952,
-        "cls": 0,
-        "inp": 48,
-        "fcp": 952,
-        "ttfb": 92
       },
       "overBudget": false
     }

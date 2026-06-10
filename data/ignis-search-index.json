@@ -1,20 +1,20 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T18:43:19.659Z",
+  "generatedAt": "2026-06-10T14:32:30.327Z",
   "generatedBy": "scripts/build-ignis-search-index.mjs",
   "publicSafe": true,
   "documents": [
     {
       "title": "VaultSpark Studios public memory",
       "url": "/llms-full.txt",
-      "summary": "# VaultSparkStudios.github.io > AI-discovery spine wave 2 shipped — /agents.json now appears in generated response headers and is gate-enforced; ambient-split wave 3 moved route/hook-scoped pathfinder + static Ask IGNIS engines behind predi",
-      "body": "# VaultSparkStudios.github.io > AI-discovery spine wave 2 shipped — /agents.json now appears in generated response headers and is gate-enforced; ambient-split wave 3 moved route/hook-scoped pathfinder + static Ask IGNIS engines behind predicates (feature bundle 45.4KB→35.2KB); build:check green ## Identity - Slug: vaultsparkstudios-website - Medium: website - Audience: public-live - Vault status: SPARKED - Health: green - Live: https://vaultsparkstudios.com/ - Staging: https://website.staging.vaultsparkstudios.com ## Current focus AI-discovery spine wave 2 shipped — /agents.json now appears in generated response headers and is gate-enforced; ambient-split wave 3 moved route/hook-scoped pathf"
+      "summary": "# VaultSparkStudios.github.io > S182 recovered a real production outage (Worker apex self-loop after Pages migration) — fixed by by-hostname origin fetch + a post-deploy liveness gate + auto-rollback; site healthy (6/6 smoke). Then full 9-a",
+      "body": "# VaultSparkStudios.github.io > S182 recovered a real production outage (Worker apex self-loop after Pages migration) — fixed by by-hostname origin fetch + a post-deploy liveness gate + auto-rollback; site healthy (6/6 smoke). Then full 9-axis audit (23 items) + /implement shipped 7 (reliability + maintainability). build:check is NOT green locally (non-deterministic --check gates, audit #23). ## Identity - Slug: vaultsparkstudios-website - Medium: website - Audience: public-live - Vault status: SPARKED - Health: green - Live: https://vaultsparkstudios.com/ - Staging: https://website.staging.vaultsparkstudios.com ## Current focus S182 recovered a real production outage (Worker apex self-loop "
     },
     {
       "title": "Current studio focus",
       "url": "/studio-pulse/",
-      "summary": "S181 shipped AI discovery public health + runway hygiene — api/ai-discovery-health.json is healthy and shown on /status/; task-board gate now enforces one active Now and one current Human Action Required block; build:check green Run TT enfo",
-      "body": "S181 shipped AI discovery public health + runway hygiene — api/ai-discovery-health.json is healthy and shown on /status/; task-board gate now enforces one active Now and one current Human Action Required block; build:check green Run TT enforce re-probe (~2026-06-12 due) + confirm api/field-win.json flips hasConfirmed once / accrues enough post-deploy samples + verify first low-churn uptime-publish commit + watch Lighthouse CI after push"
+      "summary": "S182 recovered a real production outage (Worker apex self-loop after Pages migration) — fixed by by-hostname origin fetch + a post-deploy liveness gate + auto-rollback; site healthy (6/6 smoke). Then full 9-axis audit (23 items) + /implemen",
+      "body": "S182 recovered a real production outage (Worker apex self-loop after Pages migration) — fixed by by-hostname origin fetch + a post-deploy liveness gate + auto-rollback; site healthy (6/6 smoke). Then full 9-axis audit (23 items) + /implement shipped 7 (reliability + maintainability). build:check is NOT green locally (non-deterministic --check gates, audit #23). Deploy the committed edge-fn security fixes (supabase functions deploy create-checkout stripe-webhook assign-discord-role odds) + add Worker unit tests (audit #14) + make the non-deterministic build:check gates deterministic (audit #23) so the green/red signal is trustworthy again"
     },
     {
       "title": "Call of Doodie",
@@ -139,8 +139,8 @@
     {
       "title": "Feedback loop",
       "url": "/feedback/",
-      "summary": "[{\"key\":\"worlds\",\"label\":\"Worlds\",\"count\":1,\"commits\":[{\"sha\":\"b74b0e7e\",\"move\":\"Fixed\",\"tone\":\"fix\",\"summary\":\"cumulative inline-style extraction — recover 241 wiped vsx rules + kill dead now-playing bar + placeholder-orphan gat…\",\"ts\":\"20",
-      "body": "[{\"key\":\"worlds\",\"label\":\"Worlds\",\"count\":1,\"commits\":[{\"sha\":\"b74b0e7e\",\"move\":\"Fixed\",\"tone\":\"fix\",\"summary\":\"cumulative inline-style extraction — recover 241 wiped vsx rules + kill dead now-playing bar + placeholder-orphan gat…\",\"ts\":\"2026-06-07T18:24:42.000Z\"}]},{\"key\":\"transparency\",\"label\":\"Transparency\",\"count\":2,\"commits\":[{\"sha\":\"fa74fbb4\",\"move\":\"Shipped\",\"tone\":\"sparked\",\"summary\":\"publish ai discovery health\",\"ts\":\"2026-06-08T18:42:51.000Z\"},{\"sha\":\"50e08615\",\"move\":\"Shipped\",\"tone\":\"sparked\",\"summary\":\"S178 — first-party uptime now publishes (api/uptime.json + history + /status tile) and proves its own alarm\",\"ts\":\"2026-06-08T05:07:54.000Z\"}]},{\"key\":\"trust\",\"label\":\"Trust & leg"
+      "summary": "[{\"key\":\"transparency\",\"label\":\"Transparency\",\"count\":1,\"commits\":[{\"sha\":\"f78a94a9\",\"move\":\"Shipped\",\"tone\":\"sparked\",\"summary\":\"publish ai discovery health\",\"ts\":\"2026-06-08T18:46:21.000Z\"}]},{\"key\":\"trust\",\"label\":\"Trust & legal\",\"count\"",
+      "body": "[{\"key\":\"transparency\",\"label\":\"Transparency\",\"count\":1,\"commits\":[{\"sha\":\"f78a94a9\",\"move\":\"Shipped\",\"tone\":\"sparked\",\"summary\":\"publish ai discovery health\",\"ts\":\"2026-06-08T18:46:21.000Z\"}]},{\"key\":\"trust\",\"label\":\"Trust & legal\",\"count\":3,\"commits\":[{\"sha\":\"f53714ed\",\"move\":\"Shipped\",\"tone\":\"sparked\",\"summary\":\"S182 wave 1 — redact edge-fn errors + env-driven odds CORS\",\"ts\":\"2026-06-09T01:12:28.000Z\"},{\"sha\":\"63fd5058\",\"move\":\"Tended\",\"tone\":\"muted\",\"summary\":\"post-outage full audit + 3 fixes (build-red, CSP deploy gap, dead link)\",\"ts\":\"2026-06-08T21:33:37.000Z\"},{\"sha\":\"1124af99\",\"move\":\"Shipped\",\"tone\":\"sparked\",\"summary\":\"S179 — nav active link announces aria-current=page (nav-aria-"
     },
     {
       "title": "Security posture",

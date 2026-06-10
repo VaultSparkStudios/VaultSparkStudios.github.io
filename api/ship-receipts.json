@@ -1,37 +1,19 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-08T18:43:15.113Z",
+  "generatedAt": "2026-06-10T14:32:29.723Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
   "receipts": [
     {
-      "theme": "worlds",
-      "label": "Worlds",
+      "theme": "transparency",
+      "label": "Transparency",
       "feedbackSignals": 1,
       "shippedCommits": [
         {
-          "sha": "b74b0e7e",
-          "summary": "cumulative inline-style extraction — recover 241 wiped vsx rules + kill dead now-playing bar + placeholder-orphan gat…",
-          "ts": "2026-06-07T18:24:42.000Z"
-        }
-      ],
-      "proof": null
-    },
-    {
-      "theme": "transparency",
-      "label": "Transparency",
-      "feedbackSignals": 2,
-      "shippedCommits": [
-        {
-          "sha": "fa74fbb4",
+          "sha": "f78a94a9",
           "summary": "publish ai discovery health",
-          "ts": "2026-06-08T18:42:51.000Z"
-        },
-        {
-          "sha": "50e08615",
-          "summary": "S178 — first-party uptime now publishes (api/uptime.json + history + /status tile) and proves its own alarm",
-          "ts": "2026-06-08T05:07:54.000Z"
+          "ts": "2026-06-08T18:46:21.000Z"
         }
       ],
       "proof": null
@@ -39,8 +21,18 @@
     {
       "theme": "trust",
       "label": "Trust & legal",
-      "feedbackSignals": 1,
+      "feedbackSignals": 3,
       "shippedCommits": [
+        {
+          "sha": "f53714ed",
+          "summary": "S182 wave 1 — redact edge-fn errors + env-driven odds CORS",
+          "ts": "2026-06-09T01:12:28.000Z"
+        },
+        {
+          "sha": "63fd5058",
+          "summary": "post-outage full audit + 3 fixes (build-red, CSP deploy gap, dead link)",
+          "ts": "2026-06-08T21:33:37.000Z"
+        },
         {
           "sha": "1124af99",
           "summary": "S179 — nav active link announces aria-current=page (nav-aria-current #3)",
@@ -60,8 +52,23 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 6,
+      "feedbackSignals": 5,
       "shippedCommits": [
+        {
+          "sha": "9952f249",
+          "summary": "S182 execution log — 7 shipped, deferred set recorded",
+          "ts": "2026-06-09T01:25:23.000Z"
+        },
+        {
+          "sha": "5fe8db0f",
+          "summary": "S182 — sweep 12 dead ambient bundles + corpus-aware orphan gate",
+          "ts": "2026-06-09T01:20:11.000Z"
+        },
+        {
+          "sha": "5d6efeb2",
+          "summary": "S182 wave 1 — auto-rollback, JSON liveness assert, RUM rate-limit",
+          "ts": "2026-06-09T00:59:47.000Z"
+        },
         {
           "sha": "b0d473f9",
           "summary": "S179 — split 4 route-scoped widgets out of the feature bundle (ambient-split-wave2 #4)",
@@ -71,21 +78,6 @@
           "sha": "d8484cae",
           "summary": "S178 — rotate stale TASK_BOARD sessions to archive (taskboard-archive-rotation #5)",
           "ts": "2026-06-08T05:07:55.000Z"
-        },
-        {
-          "sha": "802ca377",
-          "summary": "S178 — split vault-genome-strip out of the feature bundle (ambient-genome-strip-split #6)",
-          "ts": "2026-06-08T05:07:55.000Z"
-        },
-        {
-          "sha": "fca975c8",
-          "summary": "untrack S176 terminal scratch captures (absolute-path leak) + broaden .cache scratch gitignore",
-          "ts": "2026-06-07T20:08:45.000Z"
-        },
-        {
-          "sha": "a5f74b6a",
-          "summary": "first-party uptime probe + RUM conflict guard + SIL integrity gate (S176 #6,#8,#9)",
-          "ts": "2026-06-07T19:31:28.000Z"
         }
       ],
       "proof": {

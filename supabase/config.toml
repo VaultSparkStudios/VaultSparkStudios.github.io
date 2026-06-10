@@ -65,3 +65,21 @@ enroll_enabled = false
 verify_enabled = false
 otp_length = 6
 max_frequency = "5s"
+
+# Edge-function JWT posture (pinned S183 — prevents a plain redeploy from
+# silently flipping verify_jwt and breaking in-code-authenticated endpoints).
+# Values mirror the live Management-API state read on 2026-06-10.
+# These two authenticate in-code (Stripe signature / guest checkout), so the
+# gateway must NOT pre-reject calls that carry no Supabase JWT.
+[functions.create-checkout]
+verify_jwt = false
+
+[functions.stripe-webhook]
+verify_jwt = false
+
+# These require a valid Supabase member JWT at the gateway.
+[functions.assign-discord-role]
+verify_jwt = true
+
+[functions.odds]
+verify_jwt = true

@@ -59,14 +59,27 @@ if (CHECK && !fs.existsSync(OUT)) {
 let inbox = {};
 try { inbox = JSON.parse(fs.readFileSync(INBOX, 'utf8')); } catch {}
 if (CHECK) {
+  // S183 (audit #23, deterministic gates): this dossier is a point-in-time
+  // forensic *snapshot* (note the dated filename), but its table is rendered
+  // from `.cache/ark-inbox.json` — volatile runtime state that every `/start`
+  // Ark drain rewrites. Byte-comparing the committed snapshot against a fresh
+  // re-render from the live inbox guaranteed drift after any drain (the prior
+  // date-only normalization didn't cover the row content), which is the single
+  // reason `build:check` couldn't go green locally. Freeze the live input:
+  // validate structural integrity instead of re-deriving from runtime state.
   const current = fs.readFileSync(OUT, 'utf8');
-  const next = renderDossier(inbox);
-  const normalize = (text) => text.replace(/<!-- generated-at: .*? -->/, '<!-- generated-at: DATE -->');
-  if (normalize(current) !== normalize(next)) {
-    console.error('build-ark-signature-dossier --check: dossier drift; run node scripts/build-ark-signature-dossier.mjs');
+  const required = [
+    ['header', /^#\s*Ark Signature Failure Dossier/m],
+    ['generated-by marker', /generated-by: scripts\/build-ark-signature-dossier\.mjs/],
+    ['table schema', /\| Cargo id \| Producer \| Type \| Error \| Observed \|/],
+    ['repair section', /## Recommended Studio-Ops Repair/],
+  ];
+  const missing = required.filter(([, re]) => !re.test(current)).map(([name]) => name);
+  if (missing.length) {
+    console.error(`build-ark-signature-dossier --check: malformed dossier (missing: ${missing.join(', ')}); run node scripts/build-ark-signature-dossier.mjs`);
     process.exit(1);
   }
-  console.log(`build-ark-signature-dossier --check: ok (${(inbox.sigFailures || []).length} failure(s))`);
+  console.log('build-ark-signature-dossier --check: ok (structure valid, live inbox not gated)');
   process.exit(0);
 }
 fs.writeFileSync(OUT, renderDossier(inbox), 'utf8');

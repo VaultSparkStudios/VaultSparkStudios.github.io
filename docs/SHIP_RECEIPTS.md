@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-06-08 -->
+<!-- generated-at: 2026-06-10 -->
 
 # Ship Receipts
 
@@ -7,7 +7,6 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Worlds | 1 | b74b0e7e cumulative inline-style extraction — recover 241 wiped vsx rules + kill dead now-playing bar + placeholder-orphan gat… | pending |
-| Transparency | 2 | fa74fbb4 publish ai discovery health<br>50e08615 S178 — first-party uptime now publishes (api/uptime.json + history + /status tile) and proves its own alarm | pending |
-| Trust & legal | 1 | 1124af99 S179 — nav active link announces aria-current=page (nav-aria-current #3) | longtail-s171 (6) |
-| Speed | 6 | b0d473f9 S179 — split 4 route-scoped widgets out of the feature bundle (ambient-split-wave2 #4)<br>d8484cae S178 — rotate stale TASK_BOARD sessions to archive (taskboard-archive-rotation #5)<br>802ca377 S178 — split vault-genome-strip out of the feature bundle (ambient-genome-strip-split #6)<br>fca975c8 untrack S176 terminal scratch captures (absolute-path leak) + broaden .cache scratch gitignore<br>a5f74b6a first-party uptime probe + RUM conflict guard + SIL integrity gate (S176 #6,#8,#9) | home-lcp-s173 (4) |
+| Transparency | 1 | f78a94a9 publish ai discovery health | pending |
+| Trust & legal | 3 | f53714ed S182 wave 1 — redact edge-fn errors + env-driven odds CORS<br>63fd5058 post-outage full audit + 3 fixes (build-red, CSP deploy gap, dead link)<br>1124af99 S179 — nav active link announces aria-current=page (nav-aria-current #3) | longtail-s171 (6) |
+| Speed | 5 | 9952f249 S182 execution log — 7 shipped, deferred set recorded<br>5fe8db0f S182 — sweep 12 dead ambient bundles + corpus-aware orphan gate<br>5d6efeb2 S182 wave 1 — auto-rollback, JSON liveness assert, RUM rate-limit<br>b0d473f9 S179 — split 4 route-scoped widgets out of the feature bundle (ambient-split-wave2 #4)<br>d8484cae S178 — rotate stale TASK_BOARD sessions to archive (taskboard-archive-rotation #5) | home-lcp-s173 (4) |

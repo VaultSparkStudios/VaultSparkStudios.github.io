@@ -18,6 +18,11 @@ jobs:
           node-version: '20'
 
       - name: Refresh public intelligence snapshot
+        # Feeds /oracle/, /studio-pulse/, and the homepage Studio Spine. The
+        # commit step below MUST stage api/public-intelligence.json or this
+        # daily regeneration is discarded and those surfaces go stale (the
+        # 2026-06-10 "Oracle not refreshing" report — the feed was rebuilt
+        # here every day but never committed).
         run: node scripts/generate-public-intelligence.mjs
 
       - name: Generate vault-narrative.json
@@ -32,7 +37,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add api/vault-narrative.json api/vault-narrative-history.json journal/dispatches/feed.xml
+          git add api/public-intelligence.json api/vault-narrative.json api/vault-narrative-history.json journal/dispatches/feed.xml
           if ! git diff --cached --quiet; then
             git commit -m "chore: refresh vault narrative [skip ci]"
             git push

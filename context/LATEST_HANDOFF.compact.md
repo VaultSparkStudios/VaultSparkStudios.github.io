@@ -1,36 +1,39 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 4538ae36283f -->
-<!-- generated-at: 2026-06-07T17:49:59.409Z -->
+<!-- source-hash: 94a290501f0c -->
+<!-- generated-at: 2026-06-10T14:01:40.945Z -->
 
 # LATEST_HANDOFF (compact)
 
-# Handoff Summary — VaultSparkStudios.github.io — Session 175
+# Handoff — VaultSparkStudios.github.io (Session 182)
 
-Session: 175 | Shipped: 9/9 items (DNS auto-flip, gtag removal, shell split, worker failover, analytics pipeline). All live; one 522 incident (2-3min, rolled back <3min, engineered around).
+**Session:** 182 | **Status:** Production outage recovered + 9-axis audit complete (23 items, Priority 407.7)
 
-Current Intent: Monitor field verdict post-deploy (≥5 samples expected ~06-12); verify analytics pipeline + geo-vitals; founder device-confirms nav-sheet + vaultsparked-proof decision.
+## What Shipped
+- Auto-rollback on deploy + smoke JSON-validity assertion
+- `/v/rum` per-IP rate-limit (live)
+- Edge-fn error redaction + CORS env-gating
+- Ambient bundle cleanup: −1.18 MB dead code + orphan-gate corpus-aware fix
+- 7/23 audit items shipped; `/implement` route live
 
-Now (Top 3)
-- Re-probe TT soak violations ~06-12 (current 81 violations from 100%-sample soak; blocked on ~1 week soak clock)
-- Collect field RUM samples post-deploy to read speed improvement boundary (S173 critical path + S175 origin move; expect ≥5 post-deploy samples)
-- Founder: device-verify nav-sheet swap + confirm vaultsparked-proof deletion (membership orphan) + membership interview on target device
+## Current Intent
+Deploy edge-fn security fixes (create-checkout, stripe-webhook, assign-discord-role, odds); harden non-deterministic build gates (#23).
 
-Blockers (Top 3)
-- TT soak re-probe gated on calendar (~1 week from 06-05, so ~06-12)
-- Field verdict boundary gated on post-deploy RUM samples (currently 0 post-deploy; 38 pre-deploy exist)
-- Founder device verification not yet started (nav-sheet canary at 25%, membership orphan decision pending yes/no)
+## Now Bucket (Top 3)
+1. Deploy `supabase functions deploy` batch + set `ODDS_ALLOWED_ORIGINS` PromoGrind origin (strict CORS activation)
+2. Make `build:check` deterministic (ignis-search-index, oracle feed non-deterministic drift; audit #23)
+3. Add Worker unit tests (#14) to close reliability blind spots
 
-Human-Blocked Items
-- vaultsparked-proof delete decision (age: ~3 sessions, S172 carry) — waiting founder yes/no
-- membership interview device verify (age: ~2 sessions, S172 carry) — waiting founder action
+## Blockers (Top 3)
+1. `build:check` not green locally — non-deterministic `--check` gates drift on each `npm run build` run (gates pass live)
+2. Rich paid-member economy has no funnel bridge to anonymous users (product work pending)
+3. ~100 ambient gates missed reliability blind spots (audit scope vs. gates coverage gap)
 
-Key State
-- Prod origin: Cloudflare Pages (TTFB p75 1.3s); GH Pages warm rollback verified. Push→prod now 27s.
-- Worker carries permanent `originFetch` failover (5xx → pages.dev), zero-downtime future cutovers.
-- Shell split shipped: ambient-core 44KB + ambient-feature 62KB; feature edits no longer invalidate full cache.
-- gtag fully removed (97 pages); unsampled RUM beacon → `api/analytics-summary.json` + `api/geo-vitals.json`.
-- TT violations down to 81 (from 364); sinks (innerHTML rebuilds + 3 policies) burned; home LCP now 236ms local.
-- Staging parity green 3/3 (Caddy try_files, security headers, CSP nonce normalization fixed).
-- RUM pipeline: daily `rum-pull.yml` cron accrues field history; `compare-rum-windows.mjs` auto-grades deploy boundaries.
+## Human-Blocked Items
+- `assets/vaultsparked-proof.js` delete decision (founder call)
+- Nav-sheet real-device verification (founder call)
+- Non-datacenter uptime probe (#10) scoping (founder decision on infra)
 
-Next session pointer: read field-verdict boundary once post-deploy samples (≥5) land; re-probe TT soak ~06-12; watch geo-vitals non-US confirmation; close founder action blockers (vaultsparked-proof + nav-sheet device verify).
+## Honest Notes
+Site verified 6/6 smoke post-recovery. Worker deploys green. Supply-chain + secret scans clean. Audit captured 23 items across 3 sub-agents; 16 remain post-Session-182. Next frontier: close funnel-economy gap + eliminate non-determinism in build gates.
+
+Next session: deploy edge-fn batch, confirm `ODDS_ALLOWED_ORIGINS` live, determinism sprint on gates #23 + funnel cluster scoping.
