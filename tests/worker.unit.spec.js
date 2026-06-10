@@ -203,3 +203,82 @@ test('verify rejects malformed tokens and missing keys', async () => {
   assert.equal(await verifyCsrfToken({}, 'a.b.c'), false, 'no signing key → reject');
   assert.equal(await issueCsrfToken({}), null, 'no signing key → no token issued');
 });
+
+// --- 4. Disaster-recovery cache (S184 dr-cache-smoke) ----------------------
+// The DR cache is the last line of defense: when BOTH the primary and the
+// fallback origin return 5xx (or hang), an HTML nav must be served stale HTML
+// from caches.default with the X-VS-Disaster-Recovery: stale header. An
+// untested failover is a hope, not a guarantee — these exercise the path so a
+// regression fails CI instead of an outage.
+
+const DR_PRIMARY = 'https://vaultsparkstudios.com';
+const DR_FALLBACK = 'https://vaultsparkstudios-website.pages.dev';
+
+function htmlNavRequest(pathQ = '/membership/') {
+  return new Request(`${DR_PRIMARY}${pathQ}`, { headers: { accept: 'text/html' } });
+}
+
+// caches.default stub holding one stale entry keyed by drKeyFor(url).
+function drCacheStub(url, body) {
+  const key = drKeyFor(url).url;
+  const stale = new Response(body, { status: 200, headers: { 'content-type': 'text/html' } });
+  return { default: { match: async (req) => (req.url === key ? stale.clone() : undefined) } };
+}
+
+test('DR cache serves stale HTML with the disaster-recovery header on a double-5xx', async () => {
+  const req = htmlNavRequest('/membership/');
+  let calls = 0;
+  const originFetch = createOriginFetch({
+    PRIMARY_ORIGIN: DR_PRIMARY,
+    FALLBACK_ORIGIN: DR_FALLBACK,
+    fetchImpl: async () => { calls++; return new Response('upstream boom', { status: 503 }); },
+    cachesImpl: drCacheStub(req.url, '<!doctype html><title>stale</title>'),
+  });
+  const res = await originFetch(req);
+  assert.equal(res.headers.get('X-VS-Disaster-Recovery'), 'stale', 'DR header must be set');
+  assert.equal(res.headers.get('Cache-Control'), 'no-store', 'stale response must not be re-cached');
+  assert.equal(await res.text(), '<!doctype html><title>stale</title>', 'stale body served');
+  assert.ok(calls >= 2, 'both primary and fallback were attempted before DR');
+});
+
+test('DR cache serves stale HTML when both origins HANG (not just 5xx)', async () => {
+  const req = htmlNavRequest('/');
+  const originFetch = createOriginFetch({
+    PRIMARY_ORIGIN: DR_PRIMARY,
+    FALLBACK_ORIGIN: DR_FALLBACK,
+    timeoutMs: 5,
+    // Reject as an aborted fetch would; failover must still reach the DR cache.
+    fetchImpl: () => Promise.reject(new Error('simulated hang/abort')),
+    cachesImpl: drCacheStub(req.url, '<!doctype html><title>home-stale</title>'),
+  });
+  const res = await originFetch(req);
+  assert.equal(res.headers.get('X-VS-Disaster-Recovery'), 'stale');
+  assert.equal(await res.text(), '<!doctype html><title>home-stale</title>');
+});
+
+test('DR cache miss on a double-5xx returns the upstream error, never a false 200', async () => {
+  const req = htmlNavRequest('/no-snapshot/');
+  const originFetch = createOriginFetch({
+    PRIMARY_ORIGIN: DR_PRIMARY,
+    FALLBACK_ORIGIN: DR_FALLBACK,
+    fetchImpl: async () => new Response('boom', { status: 502 }),
+    cachesImpl: { default: { match: async () => undefined } }, // nothing cached
+  });
+  const res = await originFetch(req);
+  assert.equal(res.headers.get('X-VS-Disaster-Recovery'), null, 'no DR header when nothing to serve');
+  assert.ok(res.status >= 500, 'honest upstream error, not a fabricated success');
+});
+
+test('DR cache is NOT consulted for non-HTML (asset/JSON) requests', async () => {
+  const req = new Request(`${DR_PRIMARY}/api/uptime.json`, { headers: { accept: 'application/json' } });
+  let matched = false;
+  const originFetch = createOriginFetch({
+    PRIMARY_ORIGIN: DR_PRIMARY,
+    FALLBACK_ORIGIN: DR_FALLBACK,
+    fetchImpl: async () => new Response('boom', { status: 503 }),
+    cachesImpl: { default: { match: async () => { matched = true; return undefined; } } },
+  });
+  const res = await originFetch(req);
+  assert.equal(matched, false, 'DR cache must only back HTML navs, not assets');
+  assert.ok(res.status >= 500);
+});
