@@ -9,8 +9,15 @@
     {
       "key": "transparency",
       "label": "Transparency",
-      "count": 2,
+      "count": 3,
       "commits": [
+        {
+          "sha": "d68b3076",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "unified self-grading proof manifest, 8 fetches -> 1",
+          "ts": "2026-06-10T17:14:37.000Z"
+        },
         {
           "sha": "c836221d",
           "move": "Fixed",
@@ -30,7 +37,7 @@
     {
       "key": "trust",
       "label": "Trust & legal",
-      "count": 3,
+      "count": 2,
       "commits": [
         {
           "sha": "f53714ed",
@@ -45,21 +52,28 @@
           "tone": "muted",
           "summary": "post-outage full audit + 3 fixes (build-red, CSP deploy gap, dead link)",
           "ts": "2026-06-08T21:33:37.000Z"
-        },
-        {
-          "sha": "1124af99",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "S179 — nav active link announces aria-current=page (nav-aria-current #3)",
-          "ts": "2026-06-08T06:49:35.000Z"
         }
       ]
     },
     {
       "key": "speed",
       "label": "Speed",
-      "count": 4,
+      "count": 5,
       "commits": [
+        {
+          "sha": "8b47be98",
+          "move": "Hardened",
+          "tone": "forge",
+          "summary": "prove Worker disaster-recovery failover, not assume it",
+          "ts": "2026-06-10T17:17:34.000Z"
+        },
+        {
+          "sha": "4716e0f7",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "S184 reprobe — verdict AMBER, flip deferred",
+          "ts": "2026-06-10T17:16:17.000Z"
+        },
         {
           "sha": "9952f249",
           "move": "Documented",
@@ -80,13 +94,6 @@
           "tone": "sparked",
           "summary": "S182 wave 1 — auto-rollback, JSON liveness assert, RUM rate-limit",
           "ts": "2026-06-09T00:59:47.000Z"
-        },
-        {
-          "sha": "b0d473f9",
-          "move": "Sped up",
-          "tone": "perf",
-          "summary": "S179 — split 4 route-scoped widgets out of the feature bundle (ambient-split-wave2 #4)",
-          "ts": "2026-06-08T06:49:35.000Z"
         }
       ]
     }

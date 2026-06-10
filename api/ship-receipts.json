@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-10T16:44:37.343Z",
+  "generatedAt": "2026-06-10T17:22:45.028Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,8 +8,13 @@
     {
       "theme": "transparency",
       "label": "Transparency",
-      "feedbackSignals": 2,
+      "feedbackSignals": 3,
       "shippedCommits": [
+        {
+          "sha": "d68b3076",
+          "summary": "unified self-grading proof manifest, 8 fetches -> 1",
+          "ts": "2026-06-10T17:14:37.000Z"
+        },
         {
           "sha": "c836221d",
           "summary": "live Oracle feed, green build:check, worker unit tests, apex-HTML probe",
@@ -26,7 +31,7 @@
     {
       "theme": "trust",
       "label": "Trust & legal",
-      "feedbackSignals": 3,
+      "feedbackSignals": 2,
       "shippedCommits": [
         {
           "sha": "f53714ed",
@@ -37,11 +42,6 @@
           "sha": "63fd5058",
           "summary": "post-outage full audit + 3 fixes (build-red, CSP deploy gap, dead link)",
           "ts": "2026-06-08T21:33:37.000Z"
-        },
-        {
-          "sha": "1124af99",
-          "summary": "S179 — nav active link announces aria-current=page (nav-aria-current #3)",
-          "ts": "2026-06-08T06:49:35.000Z"
         }
       ],
       "proof": {
@@ -57,8 +57,18 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 4,
+      "feedbackSignals": 5,
       "shippedCommits": [
+        {
+          "sha": "8b47be98",
+          "summary": "prove Worker disaster-recovery failover, not assume it",
+          "ts": "2026-06-10T17:17:34.000Z"
+        },
+        {
+          "sha": "4716e0f7",
+          "summary": "S184 reprobe — verdict AMBER, flip deferred",
+          "ts": "2026-06-10T17:16:17.000Z"
+        },
         {
           "sha": "9952f249",
           "summary": "S182 execution log — 7 shipped, deferred set recorded",
@@ -73,11 +83,6 @@
           "sha": "5d6efeb2",
           "summary": "S182 wave 1 — auto-rollback, JSON liveness assert, RUM rate-limit",
           "ts": "2026-06-09T00:59:47.000Z"
-        },
-        {
-          "sha": "b0d473f9",
-          "summary": "S179 — split 4 route-scoped widgets out of the feature bundle (ambient-split-wave2 #4)",
-          "ts": "2026-06-08T06:49:35.000Z"
         }
       ],
       "proof": {
