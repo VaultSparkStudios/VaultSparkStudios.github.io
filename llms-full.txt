@@ -1,6 +1,6 @@
 # VaultSparkStudios.github.io
 
-> S182 recovered a real production outage (Worker apex self-loop after Pages migration) — fixed by by-hostname origin fetch + a post-deploy liveness gate + auto-rollback; site healthy (6/6 smoke). Then full 9-axis audit (23 items) + /implement shipped 7 (reliability + maintainability). build:check is NOT green locally (non-deterministic --check gates, audit #23).
+> S183 ran the full S182 genius list (6 shipped) + resolved a founder P0: /oracle/ not refreshing (gitignored local-only feed 404ing on prod + a daily workflow that regenerated the public feed but never committed it) — Oracle now renders the deployed public-safe /api/public-intelligence.json, verified live. Edge-fn security fixes deployed (verify_jwt pinned in config first). build:check now GREEN end-to-end locally (Ark-dossier determinism fix). Worker unit tests + apex-HTML failure-shape probe shipped.
 
 ## Identity
 - Slug: vaultsparkstudios-website
@@ -12,10 +12,10 @@
 - Staging: https://website.staging.vaultsparkstudios.com
 
 ## Current focus
-S182 recovered a real production outage (Worker apex self-loop after Pages migration) — fixed by by-hostname origin fetch + a post-deploy liveness gate + auto-rollback; site healthy (6/6 smoke). Then full 9-axis audit (23 items) + /implement shipped 7 (reliability + maintainability)
+S183 ran the full S182 genius list (6 shipped) + resolved a founder P0: /oracle/ not refreshing (gitignored local-only feed 404ing on prod + a daily workflow that regenerated the public feed but never committed it) — Oracle now renders the deployed public-safe /api/public-intelligence.json, verified live. Edge-fn security fixes deployed (verify_jwt pinned in config first)
 
 ## Next milestone
-Deploy the committed edge-fn security fixes (supabase functions deploy create-checkout stripe-webhook assign-discord-role odds) + add Worker unit tests (audit #14) + make the non-deterministic build:check gates deterministic (audit #23) so the green/red signal is trustworthy again.
+Harden self-committing scheduled workflows with git pull --rebase before push (uptime-probe lost a race this session); decide on deploying the richer Oracle IGNIS layer (public-safe boundary); then STATUS-PROOF-INDEX + TT-enforce re-probe (~06-12).
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/.
