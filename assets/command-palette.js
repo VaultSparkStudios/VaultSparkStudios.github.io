@@ -27,6 +27,27 @@
   var INTEL_TTL_MS = 5 * 60 * 1000;
   var RECENT_KEY = 'vs_palette_recent_v1';
   var RECENT_MAX = 5;
+  var QUERY_CACHE_KEY_PREFIX = 'vs_ignis_q_';
+  var QUERY_CACHE_TTL_MS = 15 * 60 * 1000;
+
+  function queryHash(q) {
+    try { return btoa(q.toLowerCase().trim()).slice(0, 16); } catch (e) { return null; }
+  }
+  function readQueryCache(q) {
+    var k = queryHash(q);
+    if (!k) return null;
+    try {
+      var raw = window.localStorage.getItem(QUERY_CACHE_KEY_PREFIX + k);
+      if (!raw) return null;
+      var entry = JSON.parse(raw);
+      return (Date.now() - entry.ts < QUERY_CACHE_TTL_MS) ? entry : null;
+    } catch (e) { return null; }
+  }
+  function writeQueryCache(q, result) {
+    var k = queryHash(q);
+    if (!k) return;
+    try { window.localStorage.setItem(QUERY_CACHE_KEY_PREFIX + k, JSON.stringify({ ts: Date.now(), result: result })); } catch (e) {}
+  }
 
   function loadRecent() {
     try {
@@ -329,10 +350,28 @@
     }
   }
 
+  function renderIgnisResult(json, fromCache) {
+    var sources = (json.sources || []).slice(0, 3).map(function (s) {
+      return '<a class="vs-palette-ai__source" href="' + escape(s.href) + '">' + escape(s.title) + '</a>';
+    }).join('');
+    refs.ai.innerHTML = [
+      fromCache ? '<div class="vs-palette-ai__cached">↺ cached result</div>' : '',
+      '<div class="vs-palette-ai__synth">', escape(json.synthesis || ''), '</div>',
+      sources ? '<div class="vs-palette-ai__sources">' + sources + '</div>' : '',
+    ].join('');
+  }
+
   async function askIgnis() {
     var q = refs.input.value.trim();
     if (q.length < 3) return;
     refs.ai.hidden = false;
+
+    var cached = readQueryCache(q);
+    if (cached) {
+      renderIgnisResult(cached.result, true);
+      return;
+    }
+
     refs.ai.innerHTML = '<div class="vs-palette-ai__loading">IGNIS is searching the studio knowledge…</div>';
     try {
       var res = await fetch(SEARCH_FN_URL, {
@@ -346,15 +385,10 @@
       });
       var json = await res.json();
       if (!res.ok) throw new Error(json.error || 'search failed');
-      // Successful AI search → remember the query.
+      // Successful AI search → remember the query and cache the result.
       pushRecent(q);
-      var sources = (json.sources || []).slice(0, 3).map(function (s) {
-        return '<a class="vs-palette-ai__source" href="' + escape(s.href) + '">' + escape(s.title) + '</a>';
-      }).join('');
-      refs.ai.innerHTML = [
-        '<div class="vs-palette-ai__synth">', escape(json.synthesis || ''), '</div>',
-        sources ? '<div class="vs-palette-ai__sources">' + sources + '</div>' : '',
-      ].join('');
+      writeQueryCache(q, json);
+      renderIgnisResult(json, false);
     } catch (err) {
       refs.ai.innerHTML = '<div class="vs-palette-ai__loading">IGNIS could not synthesize this query right now.</div>';
     }
