@@ -1,16 +1,15 @@
 (function (window) {
   'use strict';
 
-  // TT-safe HTML (S176): this module executes before ambient-core installs
-  // the default policy, so it routes through the shared lazy 'vs-dom' policy.
+  // TT-safe HTML: named policy prevents conflict when co-loaded with other modules.
   function vsHtml(s) {
     try {
       if (window.trustedTypes && window.trustedTypes.createPolicy) {
-        window.__vsDomPolicy = window.__vsDomPolicy ||
-          window.trustedTypes.createPolicy('vs-dom', { createHTML: function (h) { return h; } });
-        return window.__vsDomPolicy.createHTML(s);
+        window.__vsTrustDepthPolicy = window.__vsTrustDepthPolicy ||
+          window.trustedTypes.createPolicy('vs-trust-depth', { createHTML: function (h) { return h; } });
+        return window.__vsTrustDepthPolicy.createHTML(s);
       }
-    } catch (_e) { /* policy exists or TT unavailable */ }
+    } catch (_e) {}
     return s;
   }
 

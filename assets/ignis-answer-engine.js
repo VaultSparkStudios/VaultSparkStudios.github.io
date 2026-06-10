@@ -2,6 +2,18 @@
 (function () {
   'use strict';
 
+  // TT-safe HTML: named policy for this module's innerHTML sinks.
+  var _ttPolicy = null;
+  function vsHtml(s) {
+    try {
+      if (window.trustedTypes && window.trustedTypes.createPolicy) {
+        _ttPolicy = _ttPolicy || window.trustedTypes.createPolicy('vs-ignis-answer', { createHTML: function (h) { return h; } });
+        return _ttPolicy.createHTML(s);
+      }
+    } catch (_e) {}
+    return s;
+  }
+
   var INDEX_URL = '/data/ignis-search-index.json';
   var indexPromise = null;
 
@@ -46,7 +58,7 @@
 
   function mount(root) {
     ensureStyles();
-    root.innerHTML = '<div class="vs-ask-ignis"><form><input name="q" placeholder="Ask IGNIS about games, membership, security, feedback, or recent ships…" autocomplete="off"><button type="submit">Ask IGNIS</button></form><div class="vs-ask-ignis__answer" aria-live="polite"></div></div>';
+    root.innerHTML = vsHtml('<div class="vs-ask-ignis"><form><input name="q" placeholder="Ask IGNIS about games, membership, security, feedback, or recent ships…" autocomplete="off"><button type="submit">Ask IGNIS</button></form><div class="vs-ask-ignis__answer" aria-live="polite"></div></div>');
     var form = root.querySelector('form');
     var out = root.querySelector('.vs-ask-ignis__answer');
     form.addEventListener('submit', function (event) {
@@ -57,12 +69,12 @@
       loadIndex().then(function (idx) {
         var result = answer(q, idx);
         if (!result) {
-          out.innerHTML = 'IGNIS did not find a strong public match yet. Try "membership", "latest ships", "security", "Oracle", or a game name.';
+          out.innerHTML = vsHtml('IGNIS did not find a strong public match yet. Try "membership", "latest ships", "security", "Oracle", or a game name.');
           return;
         }
-        out.innerHTML = '<strong>IGNIS read:</strong> ' + esc(result.text) + '<div class="vs-ask-ignis__sources">' + result.sources.map(function (src) {
+        out.innerHTML = vsHtml('<strong>IGNIS read:</strong> ' + esc(result.text) + '<div class="vs-ask-ignis__sources">' + result.sources.map(function (src) {
           return '<a href="' + esc(src.url || '/') + '">' + esc(src.title || src.url || 'source') + '</a>';
-        }).join('') + '</div>';
+        }).join('') + '</div>');
       });
     });
   }
