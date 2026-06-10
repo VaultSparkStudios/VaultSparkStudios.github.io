@@ -1,0 +1,191 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "scripts/build-ambient-ledger.mjs",
+  "generatedAt": "2026-06-10T17:18:40.673Z",
+  "summary": {
+    "total": 21,
+    "core": 14,
+    "feature": 7,
+    "splitCandidates": 4
+  },
+  "entries": [
+    {
+      "source": "assets/tt-default-policy.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/native-feel.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/scroll-reveal.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/scroll-depth.js",
+      "bundle": "core",
+      "reasonCode": "split-candidate",
+      "sizeKb": 4.2,
+      "gates": [
+        "session gated"
+      ],
+      "risk": "low"
+    },
+    {
+      "source": "assets/breadcrumb-render.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/signed-in-state.js",
+      "bundle": "core",
+      "reasonCode": "split-candidate",
+      "sizeKb": 4.7,
+      "gates": [
+        "session gated"
+      ],
+      "risk": "low"
+    },
+    {
+      "source": "assets/account-chip-loader.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/ambient-loader.js",
+      "bundle": "core",
+      "reasonCode": "split-candidate",
+      "sizeKb": 5.9,
+      "gates": [
+        "query-param gated",
+        "viewport gated",
+        "session gated"
+      ],
+      "risk": "low"
+    },
+    {
+      "source": "assets/hover-prefetch.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/edge-swipe-nav.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/pointerdown-warm.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/command-palette-loader.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/adaptive-speculation.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": 5.2,
+      "gates": [],
+      "risk": "low"
+    },
+    {
+      "source": "assets/rum-beacon.js",
+      "bundle": "core",
+      "reasonCode": "sitewide-core",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/page-sigil.js",
+      "bundle": "feature",
+      "reasonCode": "feature-bundle",
+      "sizeKb": 4.4,
+      "gates": [],
+      "risk": "low"
+    },
+    {
+      "source": "assets/vault-atlas.js",
+      "bundle": "feature",
+      "reasonCode": "feature-bundle",
+      "sizeKb": 4.4,
+      "gates": [],
+      "risk": "low"
+    },
+    {
+      "source": "assets/rank-orb.js",
+      "bundle": "feature",
+      "reasonCode": "feature-bundle",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/rate-page.js",
+      "bundle": "feature",
+      "reasonCode": "feature-bundle",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/ignis-lens.js",
+      "bundle": "feature",
+      "reasonCode": "feature-bundle",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/founder-presence-handle.js",
+      "bundle": "feature",
+      "reasonCode": "feature-bundle",
+      "sizeKb": null,
+      "gates": [],
+      "risk": null
+    },
+    {
+      "source": "assets/vault-rank-bar.js",
+      "bundle": "feature",
+      "reasonCode": "split-candidate",
+      "sizeKb": 4.6,
+      "gates": [
+        "session gated"
+      ],
+      "risk": "low"
+    }
+  ]
+}
