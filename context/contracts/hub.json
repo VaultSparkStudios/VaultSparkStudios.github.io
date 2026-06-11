@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-10T23:23:16.591Z",
+  "generatedAt": "2026-06-11T00:04:57.634Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 184,
-    "lastUpdated": "2026-06-10",
-    "currentFocus": "S185 shipped 11/12 audit items: studio-pulse rename (91 pages + gate), IGNIS query cache, oracle-query-learning-loop, oracle proactive hints, vault-kinesis waveform, TT named-policy wave (4 sinks + lint gate), ambient-split wave4 (4→predicate), geo-vitals colo probe",
-    "nextMilestone": "Wave 5: progressive-membership-unlock (8h). Verify proactive hints + waveform on prod device. Wire colo-probe into uptime workflow. TT reprobe after remaining 2 sinks fixed.",
+    "currentSession": 185,
+    "lastUpdated": "2026-06-11",
+    "currentFocus": "S185 closeout complete — 11/12 items shipped: studio-pulse rename, IGNIS query cache, oracle-query-learning-loop, oracle proactive hints, vault-kinesis waveform, TT named-policy wave, ambient-split wave4, geo-vitals colo probe. Durable closeout fixes: step3d.7 artifact ordering, propagate-nav inline→class, oracle schemaVersion.",
+    "nextMilestone": "Wave 5: progressive-membership-unlock (8h). Wire colo-probe into uptime-probe.yml GH Actions. TT reprobe after home-idle-loader.js:16 + schema-injector.js:23 fixed.",
     "blockers": [],
     "queues": {
       "now": [
@@ -36,7 +36,7 @@
         "[S181→NEXT][PROOF/P2] STATUS-PROOF-INDEX — DONE S184. `scripts/build-status-proof.mjs` bundles 10 public proof feeds into a self-grading `/api/status-proof.json` (each proof carries its own freshness + a top-level trustScore/worstStale). `/status/` collapses 8 fetches → 1 shared manifest fetch (individual-file fallback preserved), renders a new \"Proof freshness\" tile, and exposes a `<link rel=alternate>` for agents. Wired into build + build:check drift gate.",
         "[S184][DEPLOY/P0] DEPLOY-STRAND GUARD — DONE S184 (new, surfaced this session). CF Pages builds only the pushed tip and skips `[skip ci]` tips, so every closeout ending in the autopilot's `[skip ci]` reconcile commit silently stranded the substantive deploy (S183→S184: confirmed field-win + ~20 api/*.json never went live). `scripts/check-deploy-tip.mjs` (7/7 self-test) + `closeout-autopilot.mjs` now push an empty non-skip-ci commit when the tip is `[skip ci]` so Pages builds.",
         "[S180][OBS/P3] GEO-VITALS-WATCH. `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.",
-        "[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE. Broadcast the `[skip ci]`-tip CF-Pages deploy-strand finding + `scripts/check-deploy-tip.mjs` guard to all CF-Pages sibling repos via Ark `pattern-share` — likely a fleet-wide silent bug. (`node scripts/ark.mjs ship --type pattern-share --to '*' ...`)"
+        "[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE — DONE S185 wave1a. Broadcast the `[skip ci]`-tip CF-Pages deploy-strand finding + `scripts/check-deploy-tip.mjs` guard to all CF-Pages sibling repos via Ark `pattern-share`. ✓"
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",

@@ -1,16 +1,16 @@
 # Genius Hit List — Session 185
 
-Generated: 2026-06-10
+Generated: 2026-06-11
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
 ## Score Summary
 
-- Overall opportunity pressure: **82/100**
+- Overall opportunity pressure: **83/100**
 - Health: **green**
-- Current SIL: **950/500**
+- Current SIL: **943/500**
 - CI health: **check gh run list**
-- Current focus: S185 shipped 11/12 audit items: studio-pulse rename (91 pages + gate), IGNIS query cache, oracle-query-learning-loop, oracle proactive hints, vault-kinesis waveform, TT named-policy wave (4 sinks + lint gate), ambient-split wave4 (4→predicate), geo-vitals colo probe
+- Current focus: S185 closeout complete — 11/12 items shipped: studio-pulse rename, IGNIS query cache, oracle-query-learning-loop, oracle proactive hints, vault-kinesis waveform, TT named-policy wave, ambient-split wave4, geo-vitals colo probe. Durable closeout fixes: step3d.7 artifact ordering, propagate-nav inline→class, oracle schemaVersion.
 
 ## Strategic Read
 
@@ -36,33 +36,33 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP…
-Final score: **90**
-[S180][OBS/P3] GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
-Why it matters: GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP  is open, local, and unblocked — can ship this session.
-
-#### 4. [SECURITY] TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-injector.js:23 + …
-Final score: **90**
+#### 3. [SECURITY] TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-injector.js:23 + …
+Final score: **93**
 [S185][SECURITY/P1] TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-injector.js:23 + ambient.shell still use default policy. Named-policy wave done (S185); remaining: those 2 first-party sinks + Ark cargo to football-gm for appCore.js sinks. Then reprobe for flip. Founder-device gated (SOUL #3).
 Why it matters: TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-injector.js:23 + a lowers operational risk and is entirely local — no external dependencies block it.
 
 First command: `node scripts/lint-repo.mjs`
 
+#### 4. [PRODUCT] GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP…
+Final score: **90**
+[S180][OBS/P3] GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
+Why it matters: GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP  is open, local, and unblocked — can ship this session.
+
 ### NEXT
 
-#### 1. [BRAND] Forge Window naming propagation
+#### 1. [AI] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.
+Final score: **88**
+[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.
+Why it matters: RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed. must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.
+
+First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 2. [BRAND] Forge Window naming propagation
 Final score: **86**
 Finish propagating Forge Window language across generated copy and shared surfaces while preserving /studio-pulse/ for SEO.
 Why it matters: The URL stays stable for search, but the public vocabulary should stay coherent everywhere visitors see it.
 
 First command: `node scripts/propagate-nav.mjs`
-
-#### 2. [AI] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.
-Final score: **85**
-[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.
-Why it matters: RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed. must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.
-
-First command: `node scripts/generate-public-intelligence.mjs`
 
 #### 3. [BRAND] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed …
 Final score: **84**
@@ -70,31 +70,29 @@ Final score: **84**
 Why it matters: RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed v affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
 #### 4. [PRODUCT] GEO-VITALS-WATCH. Colo probe added (S185 wave4c); trigger in GH Actio…
-Final score: **78**
+Final score: **81**
 [S180][OBS/P3] GEO-VITALS-WATCH. Colo probe added (S185 wave4c); trigger in GH Actions workflow still needed.
 Why it matters: GEO-VITALS-WATCH. Colo probe added (S185 wave4c); trigger in GH Action is open, local, and unblocked — can ship this session.
 
-#### 5. [VERIFY] ARK-DEPLOY-STRAND-PATTERN-SHARE. Broadcast the [skip ci]-tip CF-Pages…
-Final score: **77**
-[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE. Broadcast the [skip ci]-tip CF-Pages deploy-strand finding + scripts/check-deploy-tip.mjs guard to all CF-Pages sibling repos via Ark pattern-share — likely a fleet-wide silent bug. (node scripts/ark.mjs ship --type pattern-share --to '*' ...)
-Why it matters: ARK-DEPLOY-STRAND-PATTERN-SHARE. Broadcast the [skip ci]-tip CF-Pages  shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-### LATER
-
-#### 1. [PRODUCT] PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8h, Wave 5). Next session.
-Final score: **72**
+#### 5. [PRODUCT] PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8h, Wave 5). Next session.
+Final score: **78**
 [S185][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8h, Wave 5). Next session.
 Why it matters: PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8h, Wave 5). Next session. is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] ARK-DEPLOY-STRAND-PATTERN-SHARE. Done S185 wave1a
-Final score: **63**
-[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE. Done S185 wave1a — broadcast via ark.mjs. ✓
-Why it matters: ARK-DEPLOY-STRAND-PATTERN-SHARE. Done S185 wave1a is open, local, and unblocked — can ship this session.
+### LATER
+
+#### 1. [PRODUCT] GEO-VITALS-COLO-PROBE-WORKFLOW. Wire probe-uptime.mjs --colo-probe in…
+Final score: **75**
+[S185][OBS/P2] GEO-VITALS-COLO-PROBE-WORKFLOW. Wire probe-uptime.mjs --colo-probe into uptime-probe.yml GH Actions workflow (wave4c shipped the probe code; workflow trigger still pending).
+Why it matters: GEO-VITALS-COLO-PROBE-WORKFLOW. Wire probe-uptime.mjs --colo-probe int is open, local, and unblocked — can ship this session.
+
+#### 2. [BRAND] IGNIS-HINT-CONVERSION-TRACKING. Oracle proactive hints fire but click…
+Final score: **69**
+[SIL] IGNIS-HINT-CONVERSION-TRACKING. Oracle proactive hints fire but clicks are unmeasured; add vs:ux event on hint-shown/dismissed mirroring nav-sheet telemetry pattern. First step: dispatchEvent(new CustomEvent('vs:ux', {detail:{type:'ignis-hint',action:'shown'},bubbles:true})) in showHint().
+Why it matters: IGNIS-HINT-CONVERSION-TRACKING. Oracle proactive hints fire but clicks affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
 #### 3. [PRODUCT] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict…
-Final score: **63**
+Final score: **60**
 [S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict still PENDING (≥5/side not yet accrued; signal −83%). Once it confirms, api/field-win.json flips hasConfirmed:true and the /status/ "Biggest measured win" tile auto-lights — confirm it renders, then celebrate or regress-hunt with lib/perf-forensics.mjs.
 Why it matters: ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict  is open, local, and unblocked — can ship this session.
 
@@ -102,15 +100,15 @@ Why it matters: ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field ve
 
 1. TT-ENFORCE-REPROBE
 2. Post-push CI confirmation
-3. GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP…
-4. TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-injector.js:23 + …
-5. Forge Window naming propagation
-6. RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.
+3. TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-injector.js:23 + …
+4. GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); check non-US LCP…
+5. RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call needed.
+6. Forge Window naming propagation
 7. RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed …
 8. GEO-VITALS-WATCH. Colo probe added (S185 wave4c); trigger in GH Actio…
-9. ARK-DEPLOY-STRAND-PATTERN-SHARE. Broadcast the [skip ci]-tip CF-Pages…
-10. PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8h, Wave 5). Next session.
-11. ARK-DEPLOY-STRAND-PATTERN-SHARE. Done S185 wave1a
+9. PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8h, Wave 5). Next session.
+10. GEO-VITALS-COLO-PROBE-WORKFLOW. Wire probe-uptime.mjs --colo-probe in…
+11. IGNIS-HINT-CONVERSION-TRACKING. Oracle proactive hints fire but click…
 12. ORIGIN-MIGRATION-FIELD-VERDICT + FIELD-WIN-LIGHTS-UP. / field verdict…
 
 ## Best Immediate Move

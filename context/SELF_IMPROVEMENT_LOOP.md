@@ -8,16 +8,43 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ████▇
-Avgs - 3: 982.7 | 5: 989.2 | 10: 989.6 | 25: 980.0 | all: 962 (v3.0 /1000)
-  └ 3-session: Dev 96.0 | Align 99.3 | Momentum 98.7 | Engage 97.7 | Process 96.7
-Velocity trend: ↑ (S182: 7 shipped under an unplanned outage; S179 4/4, S178 6/6 — strong)  |  Protocol velocity: ↑ (deploy contract now deploy→liveness-gate→auto-rollback; by-hostname origin fetch) |  Debt: ↓ (−1.18 MB dead bundles, −8 dead scripts; but build:check non-determinism is open, audit #23)
-Momentum runway: ~16 deferred audit items (real work, not just verifies) — top: feedback-loop-closure, worker-unit-tests, non-datacenter uptime probe, nondeterministic-check-gates  |  Intent rate: 100% (last 5)
-Last session: 2026-06-10 | Session 183 | Total: 968/1000 (v3.0) | Velocity: 7 | protocolVelocity: 2
+Sparkline (last 5 totals): ██▇█▇
+Avgs - 3: 953.7 | 5: 971.8 | 10: 986.1 | 25: 979.0 | all: 961 (v3.0 /1000)
+  └ 3-session: Dev 91.7 | Align 98.0 | Momentum 93.3 | Engage 95.3 | Process 89.0
+Velocity trend: ↑ (S185: 11 shipped across 5 waves; S183: 7; S182: 7 — sustained high)  |  Protocol velocity: ↑ (closeout-autopilot step3d.7 canonicalizes artifact ordering; inline→class eliminates TT contract collision class) |  Debt: → (propagate-nav inline→class reduces tech debt; TT 2 remaining first-party sinks still open)
+Momentum runway: 5 open Now items — PROGRESSIVE-MEMBERSHIP-UNLOCK (8h), TT-ENFORCE-REPROBE, GEO-VITALS-WORKFLOW-TRIGGER, RICHER-IGNIS-LAYER, vaultsparked-proof delete  |  Intent rate: 100% (last 5)
+Last session: 2026-06-10 | Session 185 | Total: 943/1000 (v3.0) | Velocity: 11 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-10 — Session 185 (/goal [/start → /audit → /implement → /closeout] · 11/12 shipped · compacted-resume) | Total: 943/1000 (v3.0) | Velocity: 11 | Debt: →
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 89 | `build:check` green after a 163-file fix commit that resolved the closeout structural fragility (inline→class + oracle schemaVersion + step3d.7 artifact ordering). All 10 wave commits clean. TT named policies correctly structured. Ding: the closeout required a continuation session (exit-13 from prior run + compacted context). |
+| Creative Alignment | 98 | Studio-pulse rename at 91-page scale; oracle proactive hints and vault-kinesis waveform add genuine immersive depth; oracle query learning loop deepens the intelligence layer. Public-safe boundary held — richer IGNIS layer correctly deferred to founder call. |
+| Momentum | 91 | 11/12 audit items shipped across 5 waves; 1 wave (PROGRESSIVE-MEMBERSHIP-UNLOCK) deferred (8h, Wave 5). GEO-VITALS workflow trigger still pending. Continuation session meant some warmup cost, but strong multi-wave execution. |
+| Engagement | 95 | Oracle proactive contextual hints (IntersectionObserver, 20s dwell) directly engage exploratory users; vault-kinesis waveform is visual delight on /studio-pulse/; IGNIS query cache personalizes search; membership nudge on 3rd+ visit converts returning visitors. |
+| Process Quality | 85 | The closeout required diagnosing and fixing three structural issues (inline style collision with TT contract, oracle schemaVersion missing, artifact ordering undefined). Root causes were all architectural gaps never previously defined — now permanently fixed. Ding: required continuation session; step3d.7 was a reactive fix to an ordering problem that should have been canonical from the start. |
+| Cross-Repo Coherence | 100 | Website repo only; Ark pattern-share correctly broadcast to fleet (`[skip ci]`-tip deploy-strand learning). |
+| Security Posture | 98 | TT named policies improve architecture; propagate-nav inline→class removes inline style= surface across 90 pages; oracle insights public-safe (schemaVersion: '1.0', publicSafe: true). No secrets exposed. |
+| Ecosystem Integration | 96 | Oracle proactive hints + query learning loop are portable engagement patterns. Studio-pulse 91-page scale-rename tooling. Ark fleet broadcast shipped. Ambient-split wave4 continues the proven perf pattern. |
+| Capital Efficiency | 98 | All free-tier. Ambient-split wave4 reduces cold-cache parse. Oracle insights are pre-computed (no runtime LLM cost). Geo-vitals colo probe is lightweight (reuses existing uptime probe infra). |
+| Automation Coverage | 93 | `lint-tt-policies.mjs` gate added; closeout-autopilot step3d.7 prevents the recurring artifact-ordering drift class permanently; `check-s151-contracts.mjs` updated for Studio Pulse rename; vocab gate added. Ding: geo-vitals workflow trigger still pending (manual run only). |
+
+**Top win:** Diagnosed and permanently fixed two classes of structural closeout fragility (inline style→class collision, artifact re-ordering) that had potential to cause recurring drift across all future sessions — the step3d.7 ordering fix alone will save multiple rounds of closeout thrash for every subsequent S185+ session.
+**Top gap:** The closeout required a continuation session due to exit-13 from the prior run — the root cause (likely a cross-repo `await import()` hang in the post-closeout insights block) should be investigated and guarded.
+**Intent outcome:** Achieved — 11/12 items shipped, build:check green, all commits pushed. Wave 5 deferred by scope, not failure.
+
+**Brainstorm**
+1. **Oracle proactive hint conversion tracking** — the hints fire but clicks are unmeasured; add a `vs:ux` event on hint-shown and hint-dismissed mirroring the nav-sheet telemetry pattern so the feature can be evidence-graded. First step: add `dispatchEvent(new CustomEvent('vs:ux', {detail:{type:'ignis-hint',action:'shown'}, bubbles:true}))` in `showHint()`. Probability: High.
+2. **Vault-kinesis dynamic waveform** — the SVG `<path>` waveform on /studio-pulse/ currently uses static SVG; wire it to fetch real commit velocity from `api/commit-map.json` and normalize to waveform amplitude (30-commit rolling window). First step: `assets/vault-kinesis.js` fetches commit-map.json on mount. Probability: Medium.
+3. **Closeout step3d.7 as a canonical module** — extract the oracle→shards→ledger build ordering into `scripts/lib/build-order.mjs` so any script can import it; prevents ordering drift if step3d.7 is ever edited. First step: extract the 3-step array and have closeout-autopilot import it. Probability: High.
+4. **Ambient-split wave5 candidates** — run `report-ambient-coverage.mjs` to check if feature bundle is still at ~35KB after wave4; may have more candidates in the 5KB–15KB range. First step: read `.cache/ambient-split-candidates.json` for updated ranking. Probability: High.
+
+**Committed to TASK_BOARD:** [SIL] IGNIS-HINT-CONVERSION-TRACKING · [SIL] CLOSEOUT-BUILD-ORDER-MODULE
 
 ## 2026-06-10 — Session 183 (/start → /go full genius list + founder P0: /oracle/ not refreshing) | Total: 968/1000 (v3.0) | Velocity: 7 | Debt: ↓
 

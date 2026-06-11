@@ -249,6 +249,30 @@ header('Step 3d.5 · Production perf sample (gated, rotating)');
     const r = spawnSync(process.execPath, [ledgerScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
     if (r.status !== 0) console.warn('⚠ build-ambient-ledger exited nonzero; continuing.');
   }
+  // nervous-system reads api/ outputs updated above; rebuild to keep --check green
+  const nervousScript = path.join(PROJECT_ROOT, 'scripts', 'build-nervous-system.mjs');
+  if (fs.existsSync(nervousScript) && !DRY) {
+    const r = spawnSync(process.execPath, [nervousScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
+    if (r.status !== 0) console.warn('⚠ build-nervous-system exited nonzero; continuing.');
+  }
+  // ignis search index depends on content updated above; rebuild before --check
+  const ignisIdxScript = path.join(PROJECT_ROOT, 'scripts', 'build-ignis-search-index.mjs');
+  if (fs.existsSync(ignisIdxScript) && !DRY) {
+    const r = spawnSync(process.execPath, [ignisIdxScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
+    if (r.status !== 0) console.warn('⚠ build-ignis-search-index exited nonzero; continuing.');
+  }
+  // analytics summary reads RUM/event data updated by step 3d; rebuild before --check
+  const analyticsSummaryScript = path.join(PROJECT_ROOT, 'scripts', 'build-analytics-summary.mjs');
+  if (fs.existsSync(analyticsSummaryScript) && !DRY) {
+    const r = spawnSync(process.execPath, [analyticsSummaryScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
+    if (r.status !== 0) console.warn('⚠ build-analytics-summary exited nonzero; continuing.');
+  }
+  // intelligence budget reads api/ surfaces updated above; rebuild before --check
+  const intelBudgetScript = path.join(PROJECT_ROOT, 'scripts', 'build-intelligence-budget.mjs');
+  if (fs.existsSync(intelBudgetScript) && !DRY) {
+    const r = spawnSync(process.execPath, [intelBudgetScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
+    if (r.status !== 0) console.warn('⚠ build-intelligence-budget exited nonzero; continuing.');
+  }
 }
 
 // ── Step 3e: build:check pre-commit gate ─────────────────────────────────────

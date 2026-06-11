@@ -2438,3 +2438,28 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
   1. `ai-spine-public-health` — added `scripts/build-ai-discovery-health.mjs`, published `api/ai-discovery-health.json`, wired `build`/`build:check`, and surfaced an "AI discovery spine" tile on `/status/`.
   2. `taskboard-runway-hygiene` — extended `check-stale-open-tasks.mjs` to detect duplicate active `Now` and current `Human Action Required` sections; consolidated the board into one S181 runway and one current founder-action block.
 - Verification: focused gates green; `npm run build` exit 0; `npm run build:check` exit 0 end-to-end (108-page crawl, 0 status failures, 0 blocking-script findings). Lighthouse mobile >=90 remains CI-owned via `.github/workflows/lighthouse.yml`; no repo-local runner exists without downloading tooling.
+
+## Session 185 — 2026-06-10 — /goal [/start → /audit → /implement → /closeout] · 11/12 items shipped · compacted-resume continuation
+
+- Intent: full goal-chain, genius/creative, personalized to live flags/blockers, + post-closeout impact score. Outcome: achieved (11/12; Wave 5 deferred).
+- Audit: `docs/AUDIT_2026-06-10-S185.{md,json}` (or sidecar — 12 items, full personalized wave plan).
+- Shipped 11 items across 5 waves:
+  1. STUDIO-PULSE-RENAME — `/studio-pulse/` publicly named "Studio Pulse" across 91 pages + nav; `check-s151-contracts.mjs` updated (Forge Window→Studio Pulse gate inverted); vocab gate added.
+  2. ARK-FLEET-BROADCAST — `[skip ci]`-tip CF-Pages deploy-strand pattern shared to `*` via Ark.
+  3. STATUS-PROOF-IN-AGENTS-JSON — `statusProof` URL added to `agents.json` discovery block + llms.txt.
+  4. IGNIS-QUERY-CACHE — command-palette IGNIS query results cached 15-min in localStorage.
+  5. ORACLE-QUERY-LEARNING-LOOP — `scripts/build-oracle-query-clusters.mjs` → `api/oracle-insights.json` (cluster + top-3-doc pre-computed relevance, schemaVersion 1.0).
+  6. RETURNING-VISITOR-MEMBERSHIP-NUDGE — returning-visitor-digest augmented with membership CTA on 3rd+ visit.
+  7. ORACLE-PROACTIVE-CONTEXTUAL-HINTS — `ignis-answer-engine.js` IntersectionObserver fires `showHint()` after 20s dwell on `[data-ignis-hint]` elements (CSS classes, no inline styles).
+  8. VAULT-KINESIS-SVG-WAVEFORM — SVG `<path>` ship-pulse waveform on `/studio-pulse/` reads real commit velocity from `api/commit-map.json`.
+  9. TT-NAMED-POLICY-WAVE — 4 modules renamed to file-specific TT policy names; `scripts/lint-tt-policies.mjs` gate wired into build:check.
+  10. AMBIENT-SPLIT-WAVE4 — `vault-rank-bar.js`, `vault-timeline.js`, `vault-atlas-engine.js`, `pro-leaderboard.js` moved to predicate loading.
+  11. GEO-VITALS-COLO-PROBE — `probe-uptime.mjs --colo-probe` adds secondary PoP latency check; `--supplement` mode adds to existing samples.
+- Durable closeout infrastructure fixes (permanent structural repairs):
+  - `closeout-autopilot.mjs` step 3d.7: oracle sanitizer → llms-full-shards → ambient-ledger in correct dependency order before build:check.
+  - `propagate-nav.mjs`: all inline `style=` attributes replaced with CSS classes (`dropdown-status-sparked` et al. in `assets/style.css`).
+  - `build-oracle-query-clusters.mjs`: adds `schemaVersion: '1.0', publicSafe: true` required by `check-public-contract-health.mjs`.
+  - `check-s151-contracts.mjs`: gate inverted for Studio Pulse rename.
+- SIL: 943/1000 (v3.0) · Velocity: 11 · Debt: →
+- Deferred (next session): PROGRESSIVE-MEMBERSHIP-UNLOCK (Wave 5, 8h) · GEO-VITALS-WORKFLOW-TRIGGER · TT-ENFORCE-FLIP · RICHER-IGNIS-LAYER-DECISION · vaultsparked-proof delete · nav-sheet device verify.
+- Verification: `build:check` EXIT 0 end-to-end (108/108 pages); all 10 S185 wave commits + closeout pushed to origin/main.

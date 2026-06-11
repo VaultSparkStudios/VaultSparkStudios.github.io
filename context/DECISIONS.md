@@ -2,6 +2,14 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-10 — S185 — propagate-nav.mjs must use CSS classes for nav status colors (never inline style=)
+
+Decision: all nav dropdown status label colors are delivered via CSS classes in `assets/style.css` (`.dropdown-status-sparked`, `.dropdown-status-forge`, `.dropdown-status-vaulted`, etc.), never via inline `style=` attributes. Rationale: `check-intelligence-style-contract --strict` enforces zero inline styles on 7 intelligence pages; `propagate-nav.mjs` regenerates nav HTML across all 90+ pages on every build, so an inline `style=` in the nav template causes every propagated page to fail the strict check. Moving colors to classes is the canonical pattern (S169 established class-based intelligence styles; S185 extends it to nav). The vault-status-legend base layout is also a CSS class for the same reason.
+
+### 2026-06-10 — S185 — Closeout artifact rebuild ordering is canonical: oracle sanitizer → llms-full-shards → ambient-ledger
+
+Decision: in `closeout-autopilot.mjs` step 3d.7 (and any future script that refreshes derived artifacts after a contract regen), the rebuild order is fixed: (1) `sanitize-public-oracle-feed.mjs` first — it writes `ignis/output/ecosystem-state.json`; (2) `build-llms-full-shards.mjs` second — it READS ecosystem-state.json; (3) `build-ambient-ledger.mjs` third — it reads from the project root. Running them out of order (shards before oracle sanitizer) produces stale shards that immediately fail build:check. This ordering is now documented in step 3d.7 comments and is the definitive source of truth; the next step is to extract it into `scripts/lib/build-order.mjs` (tracked as CLOSEOUT-BUILD-ORDER-MODULE in TASK_BOARD).
+
 ### 2026-06-10 — S183 — Public surfaces render the public-safe deployed feed, never the gitignored IGNIS aggregate
 
 Decision: `/oracle/` (and any public surface) sources portfolio data from the deployed, public-safe `/api/public-intelligence.json` — not from `/ignis/output/*.json`, which is gitignored (local-only, aggregates every sibling repo including sealed projects) and therefore 404s on prod. The raw IGNIS aggregate stays private by design; only the curated public feed (public-listed projects + sealed-as-count) deploys. Corollary fix: any workflow that regenerates a deployed artifact MUST stage it in the same commit — `vault-narrative.yml` was regenerating `public-intelligence.json` daily but never `git add`-ing it, silently freezing the feed. Deferred (founder call): whether to deploy the richer IGNIS layer (per-project voices, velocity, cognition score) requires a public-safe-boundary decision on exposing cross-project/sealed intelligence + a sanitized deploy path + a refresh mechanism (generation is local-only — reads all sibling repos).

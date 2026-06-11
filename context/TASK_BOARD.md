@@ -43,15 +43,18 @@ Last updated: 2026-06-10 (Session 185 — /start → /audit → /implement · 11
 - [x] **[S181→NEXT][PROOF/P2] STATUS-PROOF-INDEX — DONE S184.** `scripts/build-status-proof.mjs` bundles 10 public proof feeds into a self-grading `/api/status-proof.json` (each proof carries its own freshness + a top-level trustScore/worstStale). `/status/` collapses 8 fetches → 1 shared manifest fetch (individual-file fallback preserved), renders a new "Proof freshness" tile, and exposes a `<link rel=alternate>` for agents. Wired into build + build:check drift gate.
 - [x] **[S184][DEPLOY/P0] DEPLOY-STRAND GUARD — DONE S184 (new, surfaced this session).** CF Pages builds only the pushed tip and skips `[skip ci]` tips, so every closeout ending in the autopilot's `[skip ci]` reconcile commit silently stranded the substantive deploy (S183→S184: confirmed field-win + ~20 api/*.json never went live). `scripts/check-deploy-tip.mjs` (7/7 self-test) + `closeout-autopilot.mjs` now push an empty non-skip-ci commit when the tip is `[skip ci]` so Pages builds.
 - [ ] **[S180][OBS/P3] GEO-VITALS-WATCH.** `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.
-- [ ] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE.** Broadcast the `[skip ci]`-tip CF-Pages deploy-strand finding + `scripts/check-deploy-tip.mjs` guard to all CF-Pages sibling repos via Ark `pattern-share` — likely a fleet-wide silent bug. (`node scripts/ark.mjs ship --type pattern-share --to '*' ...`)
+- [x] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE — DONE S185 wave1a.** Broadcast the `[skip ci]`-tip CF-Pages deploy-strand finding + `scripts/check-deploy-tip.mjs` guard to all CF-Pages sibling repos via Ark `pattern-share`. ✓
 - [x] **[S185][SECURITY/P2] TT-NAMED-POLICY-WAVE — DONE S185.** Renamed `vs-dom` → file-specific: recent-ships→`vs-recent-ships`, related-content→`vs-related-content`, trust-depth→`vs-trust-depth`, ignis-answer-engine→`vs-ignis-answer`. New `scripts/lint-tt-policies.mjs` gate (build:check). Eliminates TT re-registration TypeError on co-load. **DONE S185**
 - [x] **[S185][AI/P3] STATUS-PROOF-IN-AGENTS-JSON — DONE S185.** `statusProof` URL added to agents.json discovery block + llms.txt "Operational trust" section added. **DONE S185**
 - [ ] **[S185][SECURITY/P1] TT-ENFORCE-REPROBE.** home-idle-loader.js:16 + schema-injector.js:23 + ambient.shell still use default policy. Named-policy wave done (S185); remaining: those 2 first-party sinks + Ark cargo to football-gm for appCore.js sinks. Then reprobe for flip. Founder-device gated (SOUL #3).
 - [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Founder call needed.
 - [ ] **[S180][OBS/P3] GEO-VITALS-WATCH.** Colo probe added (S185 wave4c); trigger in GH Actions workflow still needed.
-- [ ] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE.** Done S185 wave1a — broadcast via ark.mjs. ✓
+- [x] **[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE.** Done S185 wave1a — broadcast via ark.mjs. ✓
 - [ ] **[S185][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK.** Deferred (8h, Wave 5). Next session.
+- [ ] **[S185][OBS/P2] GEO-VITALS-COLO-PROBE-WORKFLOW.** Wire `probe-uptime.mjs --colo-probe` into `uptime-probe.yml` GH Actions workflow (wave4c shipped the probe code; workflow trigger still pending).
 - [ ] **[S180][FOUNDER] vaultsparked-proof.js delete (evidence-complete) + nav-sheet device verify.**
+- [ ] **[SIL] IGNIS-HINT-CONVERSION-TRACKING.** Oracle proactive hints fire but clicks are unmeasured; add `vs:ux` event on hint-shown/dismissed mirroring nav-sheet telemetry pattern. First step: `dispatchEvent(new CustomEvent('vs:ux', {detail:{type:'ignis-hint',action:'shown'},bubbles:true}))` in `showHint()`.
+- [ ] **[SIL] CLOSEOUT-BUILD-ORDER-MODULE.** Extract oracle→shards→ledger build ordering from closeout-autopilot step3d.7 into `scripts/lib/build-order.mjs` so it's canonical + importable. Prevents ordering drift if step3d.7 is edited.
 
 ## Done (Session 183 — /start → /go full genius list + founder P0 Oracle fix)
 
