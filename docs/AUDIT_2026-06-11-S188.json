@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "/audit skill v1.0 (goal-chain S188 · freshness-verified against ground truth)",
+  "generatedAt": "2026-06-11",
+  "session": 188,
+  "sessionPrev": 187,
+  "project": "vaultsparkstudios.github.io",
+  "projectName": "VaultSpark Studios",
+  "type": "website",
+  "axisWeights": { "ux": 2.5, "speed": 2, "featureDepth": 1.5 },
+  "topline": {
+    "lens": "Mature public studio site (SIL 957/1000) one session after the S187 conversion-surface push. This audit is deliberately small-bore and ground-truth-verified: every candidate was greped against the live repo + TASK_BOARD DONE before scoring (honoring the S186 lesson where 2/10 audit items were already shipped). The theme is FINISH THE FUNNEL THE LAST SESSION STARTED — S187 shipped a footer dispatch capture, a cross-game play-next router, an honest-traction strip, and a proof microline, but each landed on a single surface or shipped blind. This session widens the proven surfaces to the whole site and instruments the blind ones, plus closes a real silent-bug class (RUM beacons dropped because the name was never allowlisted).",
+    "competitiveFrame": "Carries forward the S187 competitive read: VaultSpark is OVER-built on infrastructure (machine-SEO, 172ms LCP, build-in-public transport, press kit) and was UNDER-built on the conversion/funnel surface. S187 closed the biggest gaps; S188 compounds them — a conversion surface that exists on one page is a prototype, not a funnel.",
+    "donotrebuild": ["machine-SEO (llms.txt/agents.json/entity-graph/JSON-LD)", "performance (CF Pages edge, ~172ms LCP)", "build-in-public transport (forge-ledger, studio-pulse, dispatches)", "press kit", "membership/identity spine"]
+  },
+  "items": [
+    {
+      "rank": 1,
+      "slug": "sitewide-footer-dispatch",
+      "tier": "fire",
+      "axis": "ux",
+      "effort": "0.5h",
+      "impact": 9,
+      "innovation": 5,
+      "priority": 34.1,
+      "summary": "S187 shipped the Studio Dispatch email capture — but the form markup lives only in index.html, while the script that wires it (assets/footer-dispatch.js) is ALREADY loaded on all ~115 pages via the ambient loader. So 114 pages run dead capture code with no form to bind to. The single owned-audience asset the studio captures at intent is present on exactly one route.",
+      "why": "An email funnel that exists on the homepage only is a funnel for people who already found the homepage — it misses the visitor who lands on a game page from a search result and bounces. Because the honest-dark script is already sitewide, this is a pure markup-lift: add the dispatch column to the propagate-nav footer template and re-propagate. Outcome: the owned-list capture surface goes from 1 page to every page, with zero new JS and zero new vendor.",
+      "recipe": "Lift the Studio Dispatch column (index.html lines 1874-1883: footer-col--dispatch + #footer-email-form + #footer-success) into buildFooter() in scripts/propagate-nav.mjs, placed before the closing footer-inner div. Run node scripts/propagate-nav.mjs to re-propagate to all pages (homepage's hand-placed column gets replaced by the canonical template one — single source). Verify the form renders on a non-home page and footer-dispatch.js binds to it."
+    },
+    {
+      "rank": 2,
+      "slug": "rum-allowlist-integrity-gate",
+      "tier": "fire",
+      "axis": "security",
+      "effort": "1.5h",
+      "impact": 7,
+      "innovation": 8,
+      "priority": 31.0,
+      "summary": "S186 lost a whole feature's telemetry to a silent bug: ignis-hint dispatched a vs:ux CustomEvent that no transport listened to, so every beacon was dropped. The real transport is a /v/rum sendBeacon gated by the Worker's RUM_UX_EVENTS allowlist — and there is NOTHING that keeps the emit call-sites in assets/*.js in sync with that allowlist. An emitted-but-unallowlisted name is silently discarded; an allowlisted-but-never-emitted name is dead config nobody notices.",
+      "why": "This is the bug that already bit the studio once and will again — instrumentation that looks shipped but measures nothing is worse than no instrumentation, because it manufactures false confidence in a conversion surface. A structural gate that diffs the two sets turns a silent runtime drop into a loud build-time failure. Outcome: no RUM event the team adds can ever be silently dropped or left dead, protecting every funnel measurement the last three sessions built.",
+      "recipe": "New scripts/check-rum-allowlist.mjs: parse RUM_UX_EVENTS from cloudflare/security-headers-worker.js; grep assets/*.js for emitUx('name')/sendBeacon('/v/rum'...) literal event names; report (a) emitted-but-not-allowlisted = ERROR (silent drop), (b) allowlisted-but-never-emitted = WARN (dead config). Include a --self-test with in-memory fixtures. Wire into build:check as advisory-then-strict."
+    },
+    {
+      "rank": 3,
+      "slug": "audit-freshness-in-plumbing",
+      "tier": "high",
+      "axis": "speed",
+      "effort": "0.5h",
+      "impact": 6,
+      "innovation": 6,
+      "priority": 22.7,
+      "summary": "S187 built scripts/check-audit-staleness.mjs to grep the corpus for prior art before an audit scores an item — and it works (it caught 3 already-done items when dogfooded). But it is invoked only by hand, so the next agent that skips that step repeats the S186 waste of auditing already-shipped work. The freshness check is a script, not yet a gate.",
+      "why": "A discipline that depends on the agent remembering to run it is a discipline that erodes — the only durable version is one the build enforces. Making freshness structural means every future audit in this repo inherits the prior-art check for free, regardless of which agent or skill produced it. Outcome: the 'already-done audit item' failure mode is closed at the plumbing level, not the habit level.",
+      "recipe": "Extend scripts/check-audit-staleness.mjs to auto-discover the newest docs/AUDIT_*.json, extract each item's distinctive phrase from its summary/recipe, and grep TASK_BOARD DONE + the asset corpus; emit an advisory warning listing any item whose phrase already appears as shipped. Add it to the build:check chain (advisory). Document the call as the canonical pre-score step at the top of the audit JSON's generatedBy provenance."
+    },
+    {
+      "rank": 4,
+      "slug": "proof-line-telemetry",
+      "tier": "high",
+      "axis": "feedbackLoop",
+      "effort": "0.5h",
+      "impact": 6,
+      "innovation": 4,
+      "priority": 18.2,
+      "summary": "The S186 proof-conversion microline (assets/proof-conversion-line.js) renders an earned-trust line on the vault-member register card — but it ships completely blind: there is no emitUx call anywhere in the file, so its impression and click-through are unmeasurable. We cannot tell whether the proof line lifts register-card conversion or is wallpaper.",
+      "why": "A conversion surface with no telemetry can never be tuned or killed — it just accretes. Adding two allowlisted RUM names (shown + click) makes the microline's lift observable in the same /v/rum stream as the rest of the funnel, so a future session can A/B or retire it on evidence. Outcome: the proof microline joins the measured funnel instead of being a faith-based UI element.",
+      "recipe": "In assets/proof-conversion-line.js add an emitUx helper (mirror footer-dispatch.js's sendBeacon to /v/rum) firing 'proof-line:shown' when the line mounts (only when a real fresh proof renders) and 'proof-line:click' on the CTA link. Add both names to RUM_UX_EVENTS in cloudflare/security-headers-worker.js with a privacy comment. The new rum-allowlist gate (rank 2) will then verify both ends stay in sync."
+    },
+    {
+      "rank": 5,
+      "slug": "flagship-product-storytelling",
+      "tier": "nice",
+      "axis": "ux",
+      "effort": "4h",
+      "impact": 7,
+      "innovation": 5,
+      "priority": 13.5,
+      "summary": "The top game detail pages read as catalog entries, not flagship pitches: hero + spec block + multiple competing links. The competitive leaders (one-product indie studios) give their flagship a narrative hero, one screenshot/loop, ONE primary CTA, and voice copy. With cross-game play-next now routing attention INTO these pages (S187), the pages they route into are the weak link.",
+      "why": "Routing more attention into a page that does not convert just moves the bounce downstream. A focused storytelling pass on the single most-trafficked flagship — narrative hero, one decisive CTA, SOUL-voice copy, kill the competing links — tests the pattern before spending design budget on key art. Outcome: the destination of the play-next funnel earns the click it now receives.",
+      "recipe": "Pick the highest-traffic live game detail page; restructure to narrative hero (one-line promise in SOUL voice) + single primary CTA (play / notify) + supporting proof, demote secondary links below the fold. No new key art (that is a founder/design commission — see blockedFounderGated). Ship one page as the template; defer the rest to a follow-up if time-bound."
+    },
+    {
+      "rank": 6,
+      "slug": "discord-to-nav",
+      "tier": "nice",
+      "axis": "engagement",
+      "effort": "1h",
+      "impact": 5,
+      "innovation": 3,
+      "priority": 9.5,
+      "summary": "Discord lives only as a footer-social icon (propagate-nav FOOTER_SOCIALS line 125) and Community Hub is a footer link. Community is the retention funnel a studio compounds on — but it is currently reachable only by users who scroll to the very bottom of a page.",
+      "why": "The cheapest retention surface a studio owns is its community, and burying it in the footer-social row signals it is an afterthought rather than a front door. Promoting Discord + Community Hub into the primary Studio nav dropdown puts the retention loop one click from every page. Outcome: the community funnel gets primary-nav prominence matching its retention value.",
+      "recipe": "Add a 'Community' label group to the Studio nav dropdown in scripts/propagate-nav.mjs (around line 93) with /community/ (Community Hub) and the Discord invite (target=_blank rel=noreferrer). Re-propagate. Keep the footer-social Discord icon — this adds a path, it does not move one."
+    },
+    {
+      "rank": 7,
+      "slug": "stale-board-hygiene",
+      "tier": "high",
+      "axis": "speed",
+      "effort": "0.33h",
+      "impact": 4,
+      "innovation": 2,
+      "priority": 6.5,
+      "summary": "The TASK_BOARD Human Action Required block and the startup brief's FOUNDER UNLOCKS both still ask the founder to 'Delete assets/vaultsparked-proof.js? (30-second yes/no)' — but that asset was already deleted in S186 (line 22 of the same board marks it DONE, and ls confirms it is gone). The founder is being asked to action a file that does not exist.",
+      "why": "A phantom founder-action erodes trust in the whole action queue — if one item is stale, the founder learns to second-guess all of them, which is exactly how a real action later gets ignored. Reconciling the board so the only remaining membership orphans (membership-interview.js + vault-sdk.js, both still present and feature-bearing) are stated accurately keeps the founder's queue honest. Outcome: a founder-action list with zero phantom entries.",
+      "recipe": "Edit context/TASK_BOARD.md Human Action Required: remove the vaultsparked-proof.js delete line (asset gone S186); correct the '3 membership/vaultsparked asset orphans' line to '2 orphans (membership-interview.js, vault-sdk.js)' since vaultsparked-proof.js no longer exists. Re-render the startup brief so FOUNDER UNLOCKS drops the phantom. Verify check-orphan-assets.mjs reflects 2, not 3."
+    }
+  ],
+  "innovationReserve": ["rum-allowlist-integrity-gate", "audit-freshness-in-plumbing"],
+  "blockedFounderGated": [
+    "forge-devlog-publish — journal/_drafts/forge-week-2026-06-11.md is generated and ready, but publishing studio-voice content is founder-review-gated (SOUL voice canon). Present the draft; do not auto-publish.",
+    "membership-orphan-decision — membership-interview.js (AI onboarding) + vault-sdk.js (entitlements) are feature-bearing but unwired. Per SOUL #2 (never half-bake membership), re-wire-or-delete is a founder call. stale-board-hygiene (rank 7) only corrects the count, it does not delete.",
+    "per-product-key-art — distinct flagship hero/capsule art is a design commission, not an agent code lift. flagship-product-storytelling (rank 5) ships the layout the art slots into."
+  ],
+  "skipped": [
+    "tt-enforce-flip — evidence-gated, reprobe ~2026-06-18 (today is 2026-06-11); SOUL #3 founder-device gated",
+    "wishlist-momentum-proof — BLOCKED on Supabase admin capability MISSING locally (needs count access)",
+    "progressive-membership-unlock — tracked 8h Now carry, not audit-novel",
+    "richer-ignis-layer — founder public-safe decision pending",
+    "rebuild machine-SEO / performance / press-kit — confirmed AHEAD of the field; do not touch"
+  ]
+}
