@@ -1,55 +1,32 @@
-<!-- generated-by: /implement skill v1.0 (S185) -->
-<!-- source: docs/AUDIT_2026-06-10.json itemsS185 (12 items) -->
+<!-- generated-by: /implement skill v1.0 -->
+<!-- generated-at: 2026-06-11 · session 187 · source: docs/AUDIT_2026-06-11-S187.json -->
 
-# Implement Plan — S185 Audit (2026-06-10)
+# Implement Plan — S187 (competitive-gap closure)
 
-## Wave Plan (S185)
+Sequenced for optimal efficiency, not raw priority. Backend (Supabase admin) is MISSING locally → table-creating parts are founder-gated and ship as client + migration SQL.
 
-| Wave | Slug | Axis | Effort | Priority | Why this order |
-|---|---|---|---|---|---|
-| 1a | ark-deploy-strand-pattern-share | ecosystem | 30m | 36.4 | Pure Ark cargo — zero code change, immediate fleet impact |
-| 1b | status-proof-in-agents-json | featureDepth | 1h | 33.2 | Single build-script add; zero page changes |
-| 1c | forge-window-naming | ux | 1h | 39.6 | propagate-nav.mjs pass; batches with 1b |
-| 1d | command-palette-query-cache | speed | 1h | 45.6 | Single-file JS edit; localStorage only |
-| 2a | returning-visitor-achievement-nudge | ux | 2h | 61.3 | Extends existing digest.js |
-| 2b | oracle-query-learning-loop | ai | 2h | 24.0 | New script; establishes oracle-insights.json before oracle-proactive uses it |
-| 3a | oracle-proactive-contextual | ux | 4h | 69.8 | Top-priority; depends on ignis-answer-engine.js context |
-| 3b | vault-kinesis-ship-pulse | ux | 4h | 61.0 | New asset; shares ambient-loader pattern with 3a |
-| 4a | tt-named-policy-wave | security | 4h | 24.4 | Security; independent; fixes blocking TT sinks |
-| 4b | ambient-split-wave4 | speed | 2h | 24.0 | Extends ambient-loader; same context as 3b |
-| 4c | geo-vitals-sample-accelerator | speed | 2h | 35.0 | probe-uptime.mjs extension |
-| 5 | progressive-membership-unlock | gamification | 8h | 48.2 | Largest; deferred if context budget exhausted |
+## Wave 0 — Dogfood the freshness guard (protects this very pass)
+1. **audit-freshness-precheck** — build `scripts/check-audit-staleness.mjs` + self-test, then RUN it against every remaining candidate before building. (Already caught: manifesto + compounding promise are largely shipped.)
 
-## Success bar
-- Any page change: Lighthouse Performance ≥90 on mobile (or note exception)
-- `npm run build:check` green after each wave
-- No new console errors
+## Wave 1 — Tooling / build-in-public voice (scripts surface, zero page-perf risk)
+2. **studio-soul-weekly-forge** — `scripts/draft-weekly-forge.mjs` (forge-ledger + TASK_BOARD DONE → SOUL-voiced draft) + build:check freshness gate + generate the overdue entry so journal/changelog are fresh again.
 
----
+## Wave 2 — Client honest-dark surfaces (idle-loaded, preserve 172ms LCP)
+3. **honest-traction-scoreboard** — new asset reads existing `api/public-intelligence.json`; honest-dark floor; homepage hook + loader register.
+4. **cross-game-play-next** — `data/game-affinity.json` + asset + loader register + game-page hooks; /v/rum `play-next:*`.
 
-# Previous Plan — S182 Audit
+## Wave 3 — Growth funnel (client now, backend founder-gated)
+5. **studio-dispatch-optin** — client opt-in component + `supabase/migrations` SQL for `studio_dispatch`; honest-dark until table exists → PARTIAL (founder applies migration).
 
-Sequenced for optimal efficiency (Priority/hour), not raw Priority. Reliability
-cluster leads (founder's post-outage priority); auto-rollback ships first so it
-protects the Worker changes that follow.
+## Wave 4 — Minor / hygiene
+6. **discord-community-promote** — promote existing Discord/Community from footer-social to a community CTA (confirmed footer-only).
+7. **ignis-oracle-naming-clarity** — cross-link /ignis dashboard → Oracle ask.
+8. **doctor-warning-clear** — clear stale sibling locks + advisory drift.
 
-## Wave 1 — Reliability (CI / Worker / edge functions)
-1. **worker-auto-rollback** (2h) — `if: failure()` rollback step after the smoke gate, only when deploy succeeded. Ships first.
-2. **smoke-live-content-assertion** (1h) — assert the un-challenged JSON edge route returns valid JSON + expected key, not merely `<500`.
-3. **rum-beacon-hardening** (2h) — rate-limit `/v/rum` by CF-Connecting-IP using the existing KV limiter.
-4. **odds-cors-pin** (1h) — pin `Access-Control-Allow-Origin` on the metered `odds` edge function.
-5. **edge-fn-error-redaction** (1h) — redact client-facing `String(err)` in checkout / webhook / discord functions.
+## Re-scoped (freshness-check caught as largely-done)
+- **product-first-hero-manifesto** → manifesto (`/studio/`) + compounding promise (`/membership/`) ALREADY shipped. Only residual: homepage hero CTA ordering — fold a light tweak into Wave 4 if warranted; do not rebuild.
 
-## Wave 2 — Maintainability quick wins
-6. **ambient-shell-orphan-sweep** (1h) — `git rm` unreferenced ambient shells + teach the orphan checker to catch them.
-7. **dead-script-archive** (1h) — archive confirmed one-shot codemods.
-
-## Deferred (with reasons — not blocked, deliberate)
-- **eternal-price-lock-scarcity** — touches subscription pricing copy → CLAUDE.md ESCALATE gate (public promises / pricing). Needs founder sign-off.
-- **anon-ignis-trial** — adds studio-paid LLM spend on the free tier → CANON-029 cost decision + founder sign-off.
-- **brand-png-cleanup** — needs founder decision (are the PNGs `/brand/` downloadables?).
-- **games-account-hook**, **pre-account-daily-streak** (1d each) — cross-domain / net-new product systems; deliberate design + flag-gating per project pattern.
-- **feedback-loop-closure**, **pre-signup-rank-climb**, **cross-session-visit-memory**, **homepage-progressive-disclosure**, **ignis-score-ship-forecast** — net-new UX features warranting design + founder real-device review (project's flag-gate-high-risk-UX pattern).
-- **worker-unit-tests** (4h) — right next reliability investment, but Miniflare/vitest scaffolding is large; do deliberately, not blind in this pass.
-- **non-datacenter-uptime-probe** (4h) — needs external monitor signup / CF Cron from a non-datacenter egress.
-- **nondeterministic-check-gates**, **buildcheck-parallel-selftest**, **rum-gate-collapse**, **edge-fail-open-hardening** — touch the build:check pipeline / generators; fiddly, higher regression risk; the env-vars half of fail-open is already version-controlled in wrangler.toml.
+## Deferred (honest)
+- **wishlist-momentum-proof** — needs Supabase count access (MISSING). Defer with dispatch backend.
+- **flagship-product-storytelling** — 4h design+copy; next session.
+- **steam-coming-soon-funnel**, **per-product-key-art** — founder-gated (commercial/design).

@@ -1,0 +1,172 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "/audit skill v1.0 (goal-chain S187 · competitive-intelligence merged)",
+  "generatedAt": "2026-06-11",
+  "session": 187,
+  "sessionPrev": 186,
+  "project": "vaultsparkstudios.github.io",
+  "projectName": "VaultSpark Studios",
+  "type": "website",
+  "axisWeights": { "ux": 2.5, "speed": 2, "featureDepth": 1.5 },
+  "topline": {
+    "lens": "Mature public studio site (SIL 956/1000) audited against top independent studios. The competitive read is decisive: VaultSpark has OVER-built studio infrastructure (devlog/changelog/feeds, world-class machine-SEO via llms.txt/agents.json/JSON-LD, 172ms LCP, membership spine, press kit) and UNDER-built the conversion surface (no owned email list, self-asserted-only proof, no launch funnels, announcement-style devlog with no human voice). Every item names a conversion or info-finding outcome.",
+    "competitiveFrame": "Benchmarked live against Supergiant + Klei + Landfall + Daniel Mullins (game studios), levels.io + Marc Lou + Tony Dinh + 37signals (indie-hacker multi-product brands), Panic + Active Theory (design-led craft). Strengths confirmed AHEAD of the field: machine-SEO, performance, build-in-public infra, press kit, identity spine — do NOT rebuild these. Gaps are presentation/funnel work layered on existing machinery.",
+    "donotrebuild": ["machine-SEO (llms.txt/agents.json/entity-graph/JSON-LD) — ahead of every studio researched", "performance (172ms LCP, CF Pages edge)", "build-in-public transport (forge-ledger feeds, studio-pulse, dispatches) — more than the leaders", "press kit", "membership/identity spine"]
+  },
+  "items": [
+    {
+      "rank": 1,
+      "slug": "studio-soul-weekly-forge",
+      "tier": "fire",
+      "axis": "ux",
+      "effort": "3h",
+      "impact": 9,
+      "innovation": 8,
+      "priority": 36.0,
+      "summary": "The build-in-public INFRASTRUCTURE is ahead of the field, but the human-voice surface is dead: journal essays stopped 2026-03-22 (~11 weeks) and changelog 2026-04-12 (~8 weeks) while 187 sessions shipped underneath. Worse, the existing journal entries are announcement-style ('Vault Opened', 'Nine Ranks') — the competitive read is unanimous that build-in-public converts only when it shows process, what broke, and real numbers (Mullins, Lou, Dinh, levels.io). Generate a recurring voice-preserving 'This week in the Forge' entry from the already-auto-generated forge-ledger + shipped TASK_BOARD items, and add a build:check freshness gate that flags any curated surface > 30d stale.",
+      "why": "A studio that auto-publishes commit telemetry but lets its human voice freeze for three months reads as a dead studio to the exact visitor whose trust converts — and the rarest, most-copyable pattern from the leaders is honest process narration, not press releases. The raw forge-ledger data already exists; this is a presentation + voice + cadence lift, not new infrastructure. Outcome: returning-visitor retention, organic SEO freshness on dated content, and the authenticity signal that actually moves indie audiences.",
+      "recipe": "scripts/draft-weekly-forge.mjs: read feed/forge-ledger.json + last N TASK_BOARD DONE blocks, emit a SOUL-voiced 'This week in the Forge' draft (shipped / what broke / the numbers) to journal/_drafts/ + a changelog stub. Add a freshness probe to build:check: advisory-fail when journal/ or changelog/ newest dated entry > 30d. Stay in studio voice (process + honest metrics, not marketing)."
+    },
+    {
+      "rank": 2,
+      "slug": "studio-dispatch-optin",
+      "tier": "fire",
+      "axis": "feedbackLoop",
+      "effort": "3h",
+      "impact": 10,
+      "innovation": 7,
+      "priority": 30.2,
+      "summary": "The #1 competitive gap. Email is the one audience asset a studio owns outright, and every indie-hacker leader treats the cross-product list as the compounding moat (Supergiant Blast, levels.io, Lou, Dinh). VaultSpark has full vault-member account signup (Resend monthly newsletter, members only) and per-game 'Notify Me at Launch' silos — but NO low-friction, non-gated studio-wide email capture. The journal/feeds have nowhere to send people.",
+      "why": "A visitor who likes one game but won't create an account is precisely the audience a dispatch list exists to hold, and forcing full membership as the only capture path drops them on the floor. Decoupling 'give us your email for studio dispatches' from 'create an account' — reusing the existing Resend infra, no new vendor — builds the owned cross-sell channel that announces every future launch into a warm list. Outcome: an owned, compounding audience asset captured at intent, before signup commitment.",
+      "recipe": "Add a single-field 'Studio Dispatch' email opt-in (double-opt-in) writing to a Supabase studio_dispatch table; surface in the footer + a journal/changelog subscribe block + via returning-visitor-digest on 2nd visit. Extend send-member-newsletter (Resend) to include dispatch subscribers; optional auto-grant of free Vault membership. Honor existing consent/GDPR pages. Stay on Resend (free-build bias) — Brevo MCP exists but adds a 2nd-vendor lock-in surface."
+    },
+    {
+      "rank": 3,
+      "slug": "honest-traction-scoreboard",
+      "tier": "fire",
+      "axis": "ux",
+      "effort": "2h",
+      "impact": 8,
+      "innovation": 7,
+      "priority": 28.0,
+      "summary": "VaultSpark's proof today is internal/self-asserted (IGNIS score, Studio Cognition, member counts) which reads as marketing, not validation. The leaders lead with EXTERNAL or HONEST proof: levels.io shows a revenue graph AND 'Failed 18%'; verified-MRR badges; press quotes. The homepage hero surfaces no aggregate traction number at all, despite the site computing the data (public-intelligence.json, Studio Pulse, Supabase counts, VAULTED/tombstone ratios).",
+      "why": "Honest external numbers beat polished internal dashboards because admitting what's paused or failed is itself the trust signal — and VaultSpark already tracks shipped-vs-sealed and real member/play counts. Surfacing ONE honest, dated aggregate (honest-dark below a floor, same pattern as proof-conversion-line) converts real traction into an at-a-glance credibility cue and reframes the studio's metrics from 'marketing' to 'receipts'. Outcome: conversion lift + info-finding — a first-time visitor instantly grasps the studio is real and honest.",
+      "recipe": "Render a dated honest-scoreboard strip on the homepage (and a compact hero chip): 'N games live - M plays this month - K in the vault - P sealed' from api/public-intelligence.json. Reuse the honest-dark floor (render nothing when thin). Where external proof exists (itch ratings, any coverage), add an 'as seen on' line. Replace some IGNIS-score real estate with verifiable proof."
+    },
+    {
+      "rank": 4,
+      "slug": "cross-game-play-next",
+      "tier": "fire",
+      "axis": "featureDepth",
+      "effort": "3h",
+      "impact": 8,
+      "innovation": 8,
+      "priority": 27.6,
+      "summary": "Games are presented as a portfolio grid with nothing routing a player from the title they just engaged to the next best one. A studio brand's structural advantage over a single-game site is re-spending attention across the catalog (Lou's whole thesis); VaultSpark currently lets that attention leave after one game.",
+      "why": "When someone finishes a browser session of Gridiron GM, the highest-value next action is a tailored nudge toward Call of Doodie or Solara — that is the economic point of housing many products under one studio. A small curated affinity map surfaced through the existing adaptive-cta path turns single-game visits into portfolio tours. Outcome: more plays-per-visitor and cross-product discovery, the core lever of a multi-product studio.",
+      "recipe": "Author data/game-affinity.json (per-title -> 2 recommended titles + one-line reason). Add a 'play next' card to game pages + post-session state via adaptive-cta; instrument with /v/rum allowlist names play-next:{shown,click}. Pair with the membership compounding promise (item product-first-hero-manifesto)."
+    },
+    {
+      "rank": 5,
+      "slug": "audit-freshness-precheck",
+      "tier": "high",
+      "axis": "process",
+      "effort": "1h",
+      "impact": 7,
+      "innovation": 6,
+      "priority": 26.5,
+      "summary": "Carry from S186 SIL. Twice (S163 feedback-provenance, S178 visit-nudge) an audit scored a candidate already shipped, wasting an implement pass. Build scripts/check-audit-staleness.mjs that takes slug/keywords and greps the corpus + TASK_BOARD DONE history, returning already-done | partial | fresh before any candidate is scored.",
+      "why": "On a 187-session codebase the single biggest audit failure mode is recommending work that already exists, and the durable fix is a deterministic pre-check rather than agent memory. Wiring it as audit step 5 protects audit integrity and cuts the tokens a wasted implement pass burns. Outcome: zero already-done items reach /implement; measurable token savings per cycle.",
+      "recipe": "scripts/check-audit-staleness.mjs --slug <s> --keywords a,b,c -> greps assets/ scripts/ supabase/ + TASK_BOARD '[x]' history; prints verdict + matched file:line; ships with a self-test. Call it before scoring in the /audit protocol."
+    },
+    {
+      "rank": 6,
+      "slug": "product-first-hero-manifesto",
+      "tier": "high",
+      "axis": "ux",
+      "effort": "2h",
+      "impact": 8,
+      "innovation": 6,
+      "priority": 24.0,
+      "summary": "Bundles three S-effort newcomer-clarity gaps. (a) Operator-flavored surfaces (/oracle/, /nervous-system/, /ignis/, 'Nine Ranks') risk first-visit bounce — the hero's primary CTA should be 'Play a game' / 'Explore products' with intelligence surfaces demoted to a secondary 'Inside the Studio' cluster. (b) No 30-second 'who we are' manifesto despite heavy lore — 37signals turns beliefs INTO the homepage; Panic communicates identity in one sentence. (c) The one-account-across-products compounding promise is never stated as a reason to join now.",
+      "why": "A newcomer needs an obvious jargon-light path to the product and a tight statement of identity that the lore supports rather than replaces; right now the operator vocabulary is the meal instead of the seasoning. A short /studio manifesto (one sentence + 3-5 beliefs + the why-a-studio-of-many-products thesis) plus a product-first hero and an explicit 'One Vault membership -> early access to every game and tool we ship, forever' converts existing assets into clarity. Outcome: lower first-visit bounce + a stated reason to join now.",
+      "recipe": "(1) Reorder homepage hero: primary CTA = play/explore products, surface /pathways/ role-routing earlier, demote Oracle/Nervous-System/IGNIS into an 'Inside the Studio' cluster. (2) Add a tight /studio/ manifesto page (1 sentence + 3-5 beliefs). (3) Add the compounding promise line to /membership/. All copy/IA — no new infra."
+    },
+    {
+      "rank": 7,
+      "slug": "discord-community-promote",
+      "tier": "high",
+      "axis": "engagement",
+      "effort": "1h",
+      "impact": 7,
+      "innovation": 5,
+      "priority": 22.1,
+      "summary": "A Discord link exists only in schema.org sameAs + footer. Every game leader treats community as the retention core (Klei's forums are their brand moat; Supergiant/Landfall push Discord hard). VaultSpark already has leaderboards/XP/ranks but no live community funnel surface.",
+      "why": "Community converts wishlists into players and players into advocates, and a footer-only link signals it isn't real. Promoting Discord to the nav + per-game pages and pairing /community/ with a live member-count CTA bridges the existing XP/leaderboard spine to a place people actually gather. Outcome: a retention + advocacy funnel surfaced where intent is highest.",
+      "recipe": "Add Discord to the primary nav + a per-game 'join the community' CTA; on /community/ render a live Discord member count (widget API or cached count to api/) with a prominent join button. Bridge ranks/leaderboards to the community CTA."
+    },
+    {
+      "rank": 8,
+      "slug": "wishlist-momentum-proof",
+      "tier": "high",
+      "axis": "engagement",
+      "effort": "1.5h",
+      "impact": 6,
+      "innovation": 6,
+      "priority": 19.9,
+      "summary": "Unreleased game pages have 'Notify Me at Launch' capture but show no momentum. Steam-era players are conditioned to wishlist counts; an aggregate 'N waiting' line turns private interest into visible pre-launch FOMO. (The full Steam-store funnel is a per-title founder commercial decision — see blockedFounderGated.)",
+      "why": "Pre-launch social proof compounds — each visible signup makes the next more likely — and the studio already collects the notify emails needed to compute the count. Rendering an honest aggregate (floor-gated so a thin list stays dark) converts existing capture into a momentum surface without any new data collection. Outcome: higher notify-signup conversion on unreleased titles.",
+      "recipe": "Aggregate notify-me counts per unreleased title (Supabase count query cached to a public api/ json); render 'N in the vault waiting for <title>' on the notify section using the honest-dark floor pattern."
+    },
+    {
+      "rank": 9,
+      "slug": "ignis-oracle-naming-clarity",
+      "tier": "high",
+      "axis": "ux",
+      "effort": "1.5h",
+      "impact": 6,
+      "innovation": 5,
+      "priority": 16.6,
+      "summary": "Expectation gap flagged by the competitive scan: a visitor expecting an interactive 'Ask IGNIS' AI lands on /ignis/, which is a Studio Cognition SCORE dashboard. The interactive ask DOES exist (the Oracle — ignis-answer-engine with seeded chips shipped S186, ask-ignis Supabase fn) but at /oracle/. Two surfaces, unclear which is 'ask'. This is a naming/cross-link clarity fix, not a rebuild.",
+      "why": "An interactive AI grounded in the studio's already-excellent llms-full.txt corpus is genuine whitespace no competitor has — but only if visitors find it; today the score dashboard intercepts the 'Ask IGNIS' expectation and the real interactive surface is under a different name. Clarifying which surface answers questions (and cross-linking the dashboard to the Oracle) realizes the differentiator already built. Outcome: the unique AI hook actually gets used instead of bouncing on an expectation mismatch.",
+      "recipe": "Verify /oracle/ is the live interactive ask (it is, post-S186). Add a clear cross-link + label: /ignis/ dashboard -> 'Ask the Oracle' CTA; ensure nav/hero points 'Ask IGNIS' intent at the interactive surface. No model/infra build — naming + routing only."
+    },
+    {
+      "rank": 10,
+      "slug": "flagship-product-storytelling",
+      "tier": "high",
+      "axis": "ux",
+      "effort": "4h",
+      "impact": 7,
+      "innovation": 6,
+      "priority": 16.2,
+      "summary": "/games/ and /projects/ are tile grids with thin detail pages; leaders make each product feel like a world (Supergiant taglines + dedicated pages, Panic's irreverent per-product voice). Storytelling drives wishlist/play intent more than spec-listing.",
+      "why": "Quality over breadth: upgrading the top 3-4 flagship detail pages (Call of Doodie, Gridiron GM, Vorn, Mindframe) with a hero narrative, screenshots/GIF, a single clear CTA, and personality-driven copy converts browsers into players far better than a uniform grid. The rest stay as grid. Outcome: higher click-through to play/notify on the titles that matter most.",
+      "recipe": "Pick the 3-4 flagships; for each add a narrative hero block + at least one screenshot/GIF + one unambiguous CTA (play / notify) + voice-driven copy sourced from the sibling repo README (no truth drift). Keep remaining titles as grid cards."
+    },
+    {
+      "rank": 11,
+      "slug": "doctor-warning-clear",
+      "tier": "idea",
+      "axis": "security",
+      "effort": "30m",
+      "impact": 4,
+      "innovation": 2,
+      "priority": 6.1,
+      "summary": "Doctor is 11/13: 2 stale sibling-repo session locks + 1 advisory drift. Cross-repo hygiene, not a site defect, but it keeps the health board honest.",
+      "why": "A persistent advisory trains the eye to ignore warnings — which is how a real one later gets missed. Clearing the stale sibling locks + the advisory drift restores a clean board. Outcome: trustworthy doctor signal at next /start.",
+      "recipe": "node scripts/ops.mjs doctor --explain; clear the 2 stale sibling locks via the documented lock-clear path; resolve the advisory drift (likely a template/version reconcile)."
+    }
+  ],
+  "innovationReserve": ["studio-soul-weekly-forge", "cross-game-play-next"],
+  "blockedFounderGated": [
+    "steam-coming-soon-funnel — GAP2 full form. Standing up Steam 'Coming Soon' + wishlist CTAs is a per-title COMMERCIAL decision (commercial intent, store account, review). Founder call. The browser-only momentum variant (wishlist-momentum-proof, rank 8) is the agent-shippable subset.",
+    "per-product-key-art — GAP11. Distinct hero/capsule art per flagship is a design/commission task, not an agent code lift. Founder/design decision. flagship-product-storytelling (rank 10) ships the layout that the art slots into."
+  ],
+  "skipped": [
+    "tt-enforce-flip — evidence-gated (reprobe ~2026-06-18, SOUL #3 founder-device gated)",
+    "progressive-membership-unlock — already a tracked Now carry (8h next-session anchor), not audit-novel",
+    "richer-ignis-layer — founder public-safe decision pending, not agent-actionable",
+    "rebuild machine-SEO / performance / press-kit / build-in-public transport — confirmed AHEAD of the field; do not touch"
+  ]
+}
