@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-11T04:36:19.684Z",
+  "generatedAt": "2026-06-11T22:39:45.589Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,17 +8,12 @@
     {
       "theme": "conversion",
       "label": "Conversion",
-      "feedbackSignals": 2,
+      "feedbackSignals": 1,
       "shippedCommits": [
         {
           "sha": "fdb136c8",
           "summary": "surface earned trust microline at the signup decision + drop dead asset",
           "ts": "2026-06-11T03:12:27.000Z"
-        },
-        {
-          "sha": "8349c3c6",
-          "summary": "membership nudge on 3rd+ visit in returning-visitor-digest",
-          "ts": "2026-06-11T00:06:14.000Z"
         }
       ],
       "proof": null
@@ -65,6 +60,50 @@
           "sha": "2a64ec73",
           "summary": "oracle proactive contextual hints (IntersectionObserver + 20s idle)",
           "ts": "2026-06-11T00:06:15.000Z"
+        }
+      ],
+      "proof": null
+    },
+    {
+      "theme": "speed",
+      "label": "Speed",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "4a8064a7",
+          "summary": "close the silent-drop bug class",
+          "ts": "2026-06-11T22:26:28.000Z"
+        }
+      ],
+      "proof": {
+        "set": "home-lcp-s173",
+        "captures": 4,
+        "routes": [
+          "/"
+        ]
+      },
+      "fieldVerdict": {
+        "boundary": "2026-06-05",
+        "label": "S173 critical path + S175 origin migration to CF Pages",
+        "verdict": "improved",
+        "lcpDeltaPct": -46.1,
+        "confidence": "medium"
+      }
+    },
+    {
+      "theme": "frontdoor",
+      "label": "Front door",
+      "feedbackSignals": 2,
+      "shippedCommits": [
+        {
+          "sha": "8c7b086c",
+          "summary": "widen the funnel S187 started",
+          "ts": "2026-06-11T22:17:35.000Z"
+        },
+        {
+          "sha": "09798337",
+          "summary": "activate sitewide footer email capture via existing Kit ESP",
+          "ts": "2026-06-11T04:41:25.000Z"
         }
       ],
       "proof": null
