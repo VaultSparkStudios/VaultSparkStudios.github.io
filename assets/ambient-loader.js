@@ -177,6 +177,17 @@
         return !!document.querySelector('[data-vs-proof-cta]');
       },
       idle: true
+    },
+    {
+      // S187: honest traction scoreboard — live, dated, externally-meaningful
+      // counts (live / in-forge / sealed / sessions-in-the-open) from the
+      // deployed public-intelligence feed. Mounts only on its hook; honest-dark
+      // below a breadth floor so it never fabricates momentum.
+      src: '/assets/honest-traction-scoreboard.js',
+      when: function () {
+        return !!document.querySelector('[data-vs-traction]');
+      },
+      idle: true
     }
   ];
 
