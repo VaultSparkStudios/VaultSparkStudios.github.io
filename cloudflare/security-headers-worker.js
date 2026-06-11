@@ -248,6 +248,10 @@ function cleanRumRoute(route) {
 // beacons that omit `ux` store null and behave exactly as before.
 const RUM_UX_EVENTS = new Set([
   'nav-sheet:open', 'nav-sheet:close', 'nav-sheet:drag-close', 'nav-sheet:backdrop-close',
+  // S186: Oracle funnel instrumentation — proactive-hint lifecycle + seeded
+  // empty-state chips. Names only, no IDs/free text (same privacy model).
+  'ignis-hint:shown', 'ignis-hint:dismissed', 'ignis-hint:click',
+  'oracle-chip:shown', 'oracle-chip:click',
 ]);
 function cleanRumUxEvent(value) {
   return typeof value === 'string' && RUM_UX_EVENTS.has(value) ? value : null;
