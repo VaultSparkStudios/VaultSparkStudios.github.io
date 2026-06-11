@@ -188,6 +188,20 @@
         return !!document.querySelector('[data-vs-traction]');
       },
       idle: true
+    },
+    {
+      // S187: cross-game "play next" — routes attention across the catalog so a
+      // game page (live or forge) never dead-ends. Game routes only; honest-dark
+      // when no playable recommendation exists.
+      src: '/assets/cross-game-play-next.js',
+      when: function () {
+        var p = location.pathname || '/';
+        if (/^\/games\/[^/]+\//.test(p)) return true;
+        // live games also live at the site root (/call-of-doodie/, /vaultspark-football-gm/)
+        return /^\/(call-of-doodie|vaultspark-football-gm|gridiron-gm)\//.test(p) ||
+          !!document.querySelector('[data-play-next]');
+      },
+      idle: true
     }
   ];
 

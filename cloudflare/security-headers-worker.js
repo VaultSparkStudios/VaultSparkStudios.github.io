@@ -252,6 +252,9 @@ const RUM_UX_EVENTS = new Set([
   // empty-state chips. Names only, no IDs/free text (same privacy model).
   'ignis-hint:shown', 'ignis-hint:dismissed', 'ignis-hint:click',
   'oracle-chip:shown', 'oracle-chip:click',
+  // S187: cross-game "play next" funnel — routing impressions + clicks. Names
+  // only, no IDs/free text (same privacy model).
+  'play-next:shown', 'play-next:click',
 ]);
 function cleanRumUxEvent(value) {
   return typeof value === 'string' && RUM_UX_EVENTS.has(value) ? value : null;

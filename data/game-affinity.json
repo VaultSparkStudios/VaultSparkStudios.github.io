@@ -1,0 +1,20 @@
+{
+  "_comment": "S187 cross-game routing. 'next' must point at a PLAYABLE (SPARKED) title — never route a player to a dead end. Forge titles fall through to _forgePlayNow. Slugs are matched against the first path segment (with or without a /games/ prefix). Keep in sync with portfolio status; check-portfolio-coherence guards drift.",
+  "live": {
+    "call-of-doodie": { "name": "Call of Doodie", "url": "/call-of-doodie/" },
+    "vaultspark-football-gm": { "name": "VaultSpark Football GM", "url": "/vaultspark-football-gm/" },
+    "football-gm": { "name": "VaultSpark Football GM", "url": "/vaultspark-football-gm/" }
+  },
+  "affinity": {
+    "call-of-doodie": { "next": "vaultspark-football-gm", "reason": "Done with the chaos? Run a franchise on the clipboard." },
+    "vaultspark-football-gm": { "next": "call-of-doodie", "reason": "Off the sideline — into the satire." },
+    "football-gm": { "next": "call-of-doodie", "reason": "Off the sideline — into the satire." },
+    "gridiron-gm": { "next": "vaultspark-football-gm", "reason": "The franchise sim, live and playable now." },
+    "solara": { "next": "call-of-doodie", "reason": "Solara is still in the forge — play what's live now." },
+    "voidfall": { "next": "call-of-doodie", "reason": "Voidfall is forging — here's what you can play today." },
+    "vaultfront": { "next": "vaultspark-football-gm", "reason": "Still in the forge — run a season instead." },
+    "the-exodus": { "next": "call-of-doodie", "reason": "Not out of the forge yet — play what is." },
+    "project-unknown": { "next": "call-of-doodie", "reason": "Sealed for now — here's what's live." }
+  },
+  "_forgePlayNow": ["call-of-doodie", "vaultspark-football-gm"]
+}
