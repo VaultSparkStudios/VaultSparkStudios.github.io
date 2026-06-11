@@ -1,5 +1,22 @@
 # Work Log
 
+## 2026-06-11 — Session 188 (/goal chain: /start → /audit → /implement → /closeout · 7/7 shipped)
+
+Ran the full /goal chain. Theme: finish the funnel S187 started + close the S186 silent-drop bug class. The audit was deliberately small-bore and **ground-truth-verified** — every candidate greped against the live repo + TASK_BOARD DONE before scoring (honoring the S186 2/10-already-done lesson). That discipline caught a phantom founder-action: `vaultsparked-proof.js` was deleted in S186, yet the Human Action queue + startup brief still asked the founder to delete it.
+
+**Shipped 7** (4 commits, build:check green end-to-end):
+1. **sitewide-footer-dispatch** — the S187 Studio Dispatch capture lived only in `index.html`, while `footer-dispatch.js` already loaded sitewide via the ambient loader (114 pages ran dead capture). Lifted the dispatch column into `propagate-nav buildFooter()`; re-propagated to 90 pages. (8c7b086c)
+2. **rum-allowlist-integrity-gate** — new `scripts/check-rum-allowlist.mjs` (7/7 self-test). Diffs `emit('name')` call-sites in `assets/*.js` (transport-gated on `/v/rum`) against the Worker `RUM_UX_EVENTS` allowlist: emitted-but-not-allowlisted = ERROR (the exact S186 bug where a beacon name was silently dropped at the edge), allowlisted-but-never-emitted = WARN. Handles dynamic prefixes (`emit('nav-sheet:' + cause)` covers `nav-sheet:close/drag-close/backdrop-close`). Wired into `build:check`. (4a8064a7)
+3. **proof-line-telemetry** — the S186 proof microline (`proof-conversion-line.js`) had no `emitUx` anywhere; added `proof-line:{shown,click}` beacons + allowlisted both in the Worker. The new gate now enforces they stay in sync. (4a8064a7)
+4. **audit-freshness-in-plumbing** — extended `check-audit-staleness.mjs` with a batch `--audit` mode (auto-discovers newest `AUDIT_*.json` by mtime, runs the prior-art check per item) + `keywordsForItem`/`newestAuditJson`/`auditBatch` exports (9/9 self-test). Wired `--self-test` into `build:check` so the freshness guard can't silently rot — freshness is now structural, not habit-dependent. (9197df4d)
+5. **stale-board-hygiene** — reconciled the phantom `vaultsparked-proof.js` founder-action + the "3 orphans" ask; `check-orphan-assets` now reports 0 actionable orphans (`membership-interview.js` + `vault-sdk.js` are referenced). Re-rendered the brief so FOUNDER UNLOCKS drops the phantom. (9197df4d)
+6. **flagship-product-storytelling** — cross-game play-next (S187) routes attention into call-of-doodie, but its hero was a bare title with the SOUL voice only in meta/share text. Added an additive, reversible hero promise line under the H1 (wrapped H1+promise in a heading div to preserve the flex layout) — no risky rebuild of a mature surface, per the flag-gate-UX-swaps learning. (9d01d298)
+7. **shell-reconcile** — the sitewide footer change drifted shell-stamped pages (`build-shell-assets --check` failed); `npm run build` rotated the shell hash + re-stamped 104 pages + regenerated public intelligence artifacts. `build:check` then green. (9d01d298)
+
+**Founder-gated (surfaced, not auto-shipped):** forge-devlog publish (`journal/_drafts/forge-week-2026-06-11.md` — SOUL-voice review), richer-IGNIS-layer public-safe decision.
+
+**Method note:** the `--audit` batch dogfooded on the S188 audit post-implement correctly flags the shipped items as already-done (their code/board entries now exist) — confirming the gate would catch a future re-litigation. Audit: `docs/AUDIT_2026-06-11-S188.{json,md}`.
+
 ## 2026-06-11 — Session 187 (/goal chain + competitive analysis of top independent studios · 5 shipped / 3 already-done / 2 deferred)
 
 Ran the full /goal chain plus a founder-requested competitive scan vs top independent studios (Supergiant/Klei/Landfall/Mullins · levels.io/Marc Lou/Tony Dinh/37signals · Panic/Active Theory). The scan reframed a 96%-SIL site: **ahead** on infrastructure (machine-SEO, perf, build-in-public transport, press kit, identity spine), **under-built** on conversion/funnel/proof. Both the audit AND the research were corrected against repo truth.

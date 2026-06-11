@@ -1,6 +1,16 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-11 (Session 186 — /start → /audit → /implement · 8 items shipped)
+Last updated: 2026-06-11 (Session 188 — /goal chain: /start → /audit → /implement → /closeout · 7/7 shipped)
+
+## Done (Session 188 — /goal chain · finish-the-funnel + close a silent-bug class · 7 shipped)
+
+- [x] **[S188][UX/P0] SITEWIDE-FOOTER-DISPATCH — DONE.** Studio Dispatch email capture was homepage-only while `footer-dispatch.js` already loaded on all ~115 pages (dead capture everywhere else). Lifted the dispatch column into `propagate-nav buildFooter()`; re-propagated to 90 pages. Capture surface 1 page → all. **DONE S188** (8c7b086c)
+- [x] **[S188][SECURITY/P0] RUM-ALLOWLIST-INTEGRITY-GATE — DONE.** New `scripts/check-rum-allowlist.mjs` (7/7 self-test) diffs `emit('name')` call-sites in `assets/*.js` against the Worker `RUM_UX_EVENTS` allowlist: emitted-but-not-allowlisted = ERROR (the S186 silent-drop bug), allowlisted-but-never-emitted = WARN. Handles dynamic prefixes (`emit('nav-sheet:' + cause)`). Wired into `build:check`. **DONE S188** (4a8064a7)
+- [x] **[S188][FEEDBACK/P1] PROOF-LINE-TELEMETRY — DONE.** The S186 proof microline (`proof-conversion-line.js`) shipped blind. Added allowlisted `proof-line:{shown,click}` beacons + extended the Worker allowlist; the new gate verifies both ends stay in sync. **DONE S188** (4a8064a7)
+- [x] **[S188][PROCESS/P1] AUDIT-FRESHNESS-IN-PLUMBING — DONE.** `check-audit-staleness.mjs` gains a batch `--audit` mode (auto-discovers newest `AUDIT_*.json`, runs prior-art check per item) + `keywordsForItem`/`newestAuditJson`/`auditBatch` exports (9/9 self-test). Wired `--self-test` into `build:check` so freshness can't silently rot. **DONE S188** (9197df4d)
+- [x] **[S188][MAINT/P2] STALE-BOARD-HYGIENE — DONE.** Human Action Required asked to delete `vaultsparked-proof.js` (gone since S186) + confirm 3 orphans — but `check-orphan-assets` now reports **0 actionable orphans**. Reconciled to one resolved note; re-rendered brief so FOUNDER UNLOCKS drops the phantom. **DONE S188** (9197df4d)
+- [x] **[S188][UX/P2] FLAGSHIP-PRODUCT-STORYTELLING — DONE (focused).** Cross-game play-next routes attention INTO call-of-doodie, but its hero was a bare title. Added an additive, reversible SOUL-voice promise line under the H1 (no risky rebuild of a mature surface, per flag-gate learning); single primary CTA preserved. **DONE S188** (9d01d298)
+- [x] **[S188][BUILD/P1] SHELL-RECONCILE — DONE.** Sitewide footer change drifted shell-stamped pages; `npm run build` rotated the shell hash + re-stamped 104 pages + regenerated public intelligence artifacts. `build:check` green. **DONE S188** (9d01d298)
 
 ## Done (Session 187 — /goal chain + competitive analysis · 5 shipped)
 
@@ -20,13 +30,11 @@ Last updated: 2026-06-11 (Session 186 — /start → /audit → /implement · 8 
 - [x] **[S186][TOKEN/P2] CLOSEOUT-BUILD-ORDER-MODULE — DONE.** `scripts/lib/build-order.mjs` (self-test 5/5, import-safe); step3d.7 refactored to import. Ordering can't silently drift. **DONE S186** (2867a0c5)
 - [x] **[S186][SPEED/P2] WINDOWS-%an-SHELL-BUG — DONE.** `pull-rum-summary.mjs` `--format=%cI|%an` had its `|` parsed as a cmd.exe pipe on Windows → `%an` broke every local build. Now `execFileSync` + `%n`. **DONE S186** (0a134ace)
 - [x] **[S186][MAINT/P3] VAULTSPARKED-PROOF-DELETE — DONE.** Confirmed 0 live refs (orphan checker 1→0); removed. **DONE S186** (36128a29)
-## Now (S187 runway — carries)
+## Now (S188 runway — carries)
 
-- [ ] **[S187][VERIFY/P0] Confirm on prod (S187 features):** honest-traction strip renders on `/studio/`; footer "Studio Dispatch" capture submits to ConvertKit (a real test subscriber lands); cross-game "play next" card renders on game pages; `play-next:*` + `studio-dispatch:subscribe` land in RUM. (Verify via pages.dev + a prod path, never assume push==deploy.)
-- [ ] **[S187][CONTENT/P1] Review + publish the forge devlog draft.** `journal/_drafts/forge-week-2026-06-11.md` is generated; founder reviews voice, then publish to `journal/` to clear the 81d-stale gate.
-- [ ] **[S187→][SIL] WIRE-FRESHNESS-INTO-AUDIT.** Add the `check-audit-staleness.mjs` call to the `/audit` skill protocol (step 5, before scoring) so every future audit auto-greps for prior art. First step: edit the audit skill body to invoke it per candidate.
-- [ ] **[S187→][SIL] SITEWIDE-FOOTER-DISPATCH.** Promote the homepage footer "Studio Dispatch" column into the `propagate-nav.mjs` footer template + re-propagate so capture is on all ~115 pages, not just home. First step: add the column to the footer block in propagate-nav.
-- [ ] **[S187][GROWTH/P2] DISCORD-TO-NAV.** Promote Discord + Community Hub from footer-social to primary nav (community is a retention funnel; currently footer-only). Needs a propagate-nav run.
+- [ ] **[S188][VERIFY/P0] Confirm S188 + S187 features on prod.** (a) Studio Dispatch footer form renders + submits on a NON-home page (e.g. `/faq/`, `/games/call-of-doodie/`) — a real test subscriber lands via Kit; (b) Discord + Community Hub show in the Studio nav dropdown sitewide; (c) `proof-line:{shown,click}` + `studio-dispatch:subscribe` + `play-next:*` land in `/v/rum`; (d) call-of-doodie hero promise line renders. Verify via pages.dev origin + a prod path — never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]). Shell hash rotated this session → confirm cold-cache load is healthy.
+- [ ] **[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft.** `journal/_drafts/forge-week-2026-06-11.md` is generated; founder reviews SOUL voice, then publish to `journal/` to clear the 81d-stale journal gate (build:check warns until then).
+- [ ] **[S188][SIL] RUM-DEAD-ALLOWLIST-SWEEP.** The new `check-rum-allowlist` gate currently passes with the `nav-sheet:` dynamic prefix covering its 4 entries. If a future RUM name is added to the Worker but never emitted, the gate WARNs (dead config) — periodically clear dead entries so the allowlist stays an honest map of live instrumentation.
 - [ ] **[S187][FEATURE/P2] WISHLIST-MOMENTUM-PROOF.** Aggregate "N waiting" on unreleased game notify sections. BLOCKED on Supabase admin (capability MISSING locally) — needs count access.
 - [ ] **[S187][UX/P2] FLAGSHIP-PRODUCT-STORYTELLING.** Upgrade top 3-4 flagship game detail pages (narrative hero + screenshot + single CTA + voice copy). 4h; next session.
 - [ ] **[S185→][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK.** Deferred (8h). Core visit-depth nudge already lives in `returning-visitor-digest.js` (S178); full multi-stage progressive disclosure is the build.

@@ -7,11 +7,21 @@
   "project": "vaultsparkstudios.github.io",
   "projectName": "VaultSpark Studios",
   "type": "website",
-  "axisWeights": { "ux": 2.5, "speed": 2, "featureDepth": 1.5 },
+  "axisWeights": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
   "topline": {
     "lens": "Mature public studio site (SIL 957/1000) one session after the S187 conversion-surface push. This audit is deliberately small-bore and ground-truth-verified: every candidate was greped against the live repo + TASK_BOARD DONE before scoring (honoring the S186 lesson where 2/10 audit items were already shipped). The theme is FINISH THE FUNNEL THE LAST SESSION STARTED — S187 shipped a footer dispatch capture, a cross-game play-next router, an honest-traction strip, and a proof microline, but each landed on a single surface or shipped blind. This session widens the proven surfaces to the whole site and instruments the blind ones, plus closes a real silent-bug class (RUM beacons dropped because the name was never allowlisted).",
     "competitiveFrame": "Carries forward the S187 competitive read: VaultSpark is OVER-built on infrastructure (machine-SEO, 172ms LCP, build-in-public transport, press kit) and was UNDER-built on the conversion/funnel surface. S187 closed the biggest gaps; S188 compounds them — a conversion surface that exists on one page is a prototype, not a funnel.",
-    "donotrebuild": ["machine-SEO (llms.txt/agents.json/entity-graph/JSON-LD)", "performance (CF Pages edge, ~172ms LCP)", "build-in-public transport (forge-ledger, studio-pulse, dispatches)", "press kit", "membership/identity spine"]
+    "donotrebuild": [
+      "machine-SEO (llms.txt/agents.json/entity-graph/JSON-LD)",
+      "performance (CF Pages edge, ~172ms LCP)",
+      "build-in-public transport (forge-ledger, studio-pulse, dispatches)",
+      "press kit",
+      "membership/identity spine"
+    ]
   },
   "items": [
     {
@@ -35,7 +45,7 @@
       "effort": "1.5h",
       "impact": 7,
       "innovation": 8,
-      "priority": 31.0,
+      "priority": 31,
       "summary": "S186 lost a whole feature's telemetry to a silent bug: ignis-hint dispatched a vs:ux CustomEvent that no transport listened to, so every beacon was dropped. The real transport is a /v/rum sendBeacon gated by the Worker's RUM_UX_EVENTS allowlist — and there is NOTHING that keeps the emit call-sites in assets/*.js in sync with that allowlist. An emitted-but-unallowlisted name is silently discarded; an allowlisted-but-never-emitted name is dead config nobody notices.",
       "why": "This is the bug that already bit the studio once and will again — instrumentation that looks shipped but measures nothing is worse than no instrumentation, because it manufactures false confidence in a conversion surface. A structural gate that diffs the two sets turns a silent runtime drop into a loud build-time failure. Outcome: no RUM event the team adds can ever be silently dropped or left dead, protecting every funnel measurement the last three sessions built.",
       "recipe": "New scripts/check-rum-allowlist.mjs: parse RUM_UX_EVENTS from cloudflare/security-headers-worker.js; grep assets/*.js for emitUx('name')/sendBeacon('/v/rum'...) literal event names; report (a) emitted-but-not-allowlisted = ERROR (silent drop), (b) allowlisted-but-never-emitted = WARN (dead config). Include a --self-test with in-memory fixtures. Wire into build:check as advisory-then-strict."
@@ -106,7 +116,10 @@
       "recipe": "Edit context/TASK_BOARD.md Human Action Required: remove the vaultsparked-proof.js delete line (asset gone S186); correct the '3 membership/vaultsparked asset orphans' line to '2 orphans (membership-interview.js, vault-sdk.js)' since vaultsparked-proof.js no longer exists. Re-render the startup brief so FOUNDER UNLOCKS drops the phantom. Verify check-orphan-assets.mjs reflects 2, not 3."
     }
   ],
-  "innovationReserve": ["rum-allowlist-integrity-gate", "audit-freshness-in-plumbing"],
+  "innovationReserve": [
+    "rum-allowlist-integrity-gate",
+    "audit-freshness-in-plumbing"
+  ],
   "blockedFounderGated": [
     "forge-devlog-publish — journal/_drafts/forge-week-2026-06-11.md is generated and ready, but publishing studio-voice content is founder-review-gated (SOUL voice canon). Present the draft; do not auto-publish.",
     "membership-orphan-decision — membership-interview.js (AI onboarding) + vault-sdk.js (entitlements) are feature-bearing but unwired. Per SOUL #2 (never half-bake membership), re-wire-or-delete is a founder call. stale-board-hygiene (rank 7) only corrects the count, it does not delete.",
@@ -118,5 +131,28 @@
     "progressive-membership-unlock — tracked 8h Now carry, not audit-novel",
     "richer-ignis-layer — founder public-safe decision pending",
     "rebuild machine-SEO / performance / press-kit — confirmed AHEAD of the field; do not touch"
-  ]
+  ],
+  "executionLog": {
+    "session": 188,
+    "ranAt": "2026-06-11",
+    "shipped": [
+      "sitewide-footer-dispatch",
+      "discord-to-nav",
+      "proof-line-telemetry",
+      "rum-allowlist-integrity-gate",
+      "audit-freshness-in-plumbing",
+      "stale-board-hygiene",
+      "flagship-product-storytelling"
+    ],
+    "blocked": [],
+    "deferred": [],
+    "commits": [
+      "8c7b086c",
+      "4a8064a7",
+      "9197df4d",
+      "9d01d298"
+    ],
+    "buildCheck": "green",
+    "note": "7/7 audit items shipped in one /implement pass. All freshness-verified against ground truth pre-score. Founder-gated items (forge-devlog publish, membership-orphan now 0 actionable) surfaced, not auto-shipped."
+  }
 }

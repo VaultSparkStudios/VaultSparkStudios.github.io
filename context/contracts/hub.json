@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-11T22:39:39.411Z",
+  "generatedAt": "2026-06-11T23:10:27.480Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,21 +22,21 @@
     }
   },
   "pulse": {
-    "currentSession": 187,
+    "currentSession": 188,
     "lastUpdated": "2026-06-11",
-    "currentFocus": "S187 goal-chain + competitive analysis of top independent studios. The scan reframed a 96%-SIL site: VaultSpark is AHEAD on infra (machine-SEO, perf, build-in-public transport, press kit) but UNDER-built on conversion/funnel/proof. Shipped 5: audit-freshness-precheck (deterministic already-done guard, caught 3 dupes), studio-soul-weekly-forge (ledger->stale-devlog drafter + freshness gate), honest-traction-scoreboard (live/forge/SEALED proof on /studio/), cross-game-play-next (catalog routing, never dead-ends), studio-dispatch-optin (activated dead footer email-capture via existing ConvertKit ESP — no new vendor).",
-    "nextMilestone": "Prod-verify the 5 client features render (honest-traction on /studio/, footer dispatch capture, play-next on game pages); review+publish the generated forge devlog draft; wishlist-momentum-proof (needs Supabase); discord-to-nav (propagate-nav run); flagship-product-storytelling.",
+    "currentFocus": "S188 goal-chain (/start -> /audit -> /implement -> /closeout): finish the funnel S187 started + close the S186 silent-drop bug class. Shipped 7/7, build:check green. sitewide-footer-dispatch (capture 1 page -> all 90 via propagate-nav), rum-allowlist-integrity-gate (check-rum-allowlist.mjs 7/7 — ERRORs on emitted-but-unallowlisted RUM names = the S186 silent edge-drop; wired into build:check), proof-line-telemetry (S186 microline was blind; added proof-line:{shown,click} beacons), audit-freshness-in-plumbing (staleness check is now a build:check gate, not a habit), stale-board-hygiene (reconciled the phantom vaultsparked-proof.js founder-action; 0 actionable orphans), flagship-product-storytelling (additive SOUL-voice hero promise on call-of-doodie, no mature-surface rebuild), shell-reconcile (hash rotated, 104 pages re-stamped).",
+    "nextMilestone": "Prod-verify S188 on pages.dev: footer Studio Dispatch renders + submits on a NON-home page, Discord/Community in nav sitewide, proof-line:* + studio-dispatch:subscribe + play-next:* land in /v/rum, call-of-doodie hero promise renders, cold-cache healthy post shell-hash rotation. Founder: review+publish the forge devlog draft (clears 81d journal-stale gate).",
     "blockers": [],
     "queues": {
       "now": [
-        "[S187][VERIFY/P0] Confirm on prod (S187 features): honest-traction strip renders on `/studio/`; footer \"Studio Dispatch\" capture submits to ConvertKit (a real test subscriber lands); cross-game \"play next\" card renders on game pages; `play-next:*` + `studio-dispatch:subscribe` land in RUM. (Verify via pages.dev + a prod path, never assume push==deploy.)",
-        "[S187][CONTENT/P1] Review + publish the forge devlog draft. `journal/_drafts/forge-week-2026-06-11.md` is generated; founder reviews voice, then publish to `journal/` to clear the 81d-stale gate.",
-        "[S187→][SIL] WIRE-FRESHNESS-INTO-AUDIT. Add the `check-audit-staleness.mjs` call to the `/audit` skill protocol (step 5, before scoring) so every future audit auto-greps for prior art. First step: edit the audit skill body to invoke it per candidate.",
-        "[S187→][SIL] SITEWIDE-FOOTER-DISPATCH. Promote the homepage footer \"Studio Dispatch\" column into the `propagate-nav.mjs` footer template + re-propagate so capture is on all ~115 pages, not just home. First step: add the column to the footer block in propagate-nav.",
-        "[S187][GROWTH/P2] DISCORD-TO-NAV. Promote Discord + Community Hub from footer-social to primary nav (community is a retention funnel; currently footer-only). Needs a propagate-nav run.",
+        "[S188][VERIFY/P0] Confirm S188 + S187 features on prod. (a) Studio Dispatch footer form renders + submits on a NON-home page (e.g. `/faq/`, `/games/call-of-doodie/`) — a real test subscriber lands via Kit; (b) Discord + Community Hub show in the Studio nav dropdown sitewide; (c) `proof-line:{shown,click}` + `studio-dispatch:subscribe` + `play-next:*` land in `/v/rum`; (d) call-of-doodie hero promise line renders. Verify via pages.dev origin + a prod path — never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]). Shell hash rotated this session → confirm cold-cache load is healthy.",
+        "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. `journal/_drafts/forge-week-2026-06-11.md` is generated; founder reviews SOUL voice, then publish to `journal/` to clear the 81d-stale journal gate (build:check warns until then).",
+        "[S188][SIL] RUM-DEAD-ALLOWLIST-SWEEP. The new `check-rum-allowlist` gate currently passes with the `nav-sheet:` dynamic prefix covering its 4 entries. If a future RUM name is added to the Worker but never emitted, the gate WARNs (dead config) — periodically clear dead entries so the allowlist stays an honest map of live instrumentation.",
         "[S187][FEATURE/P2] WISHLIST-MOMENTUM-PROOF. Aggregate \"N waiting\" on unreleased game notify sections. BLOCKED on Supabase admin (capability MISSING locally) — needs count access.",
         "[S187][UX/P2] FLAGSHIP-PRODUCT-STORYTELLING. Upgrade top 3-4 flagship game detail pages (narrative hero + screenshot + single CTA + voice copy). 4h; next session.",
-        "[S185→][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8h). Core visit-depth nudge already lives in `returning-visitor-digest.js` (S178); full multi-stage progressive disclosure is the build."
+        "[S185→][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8h). Core visit-depth nudge already lives in `returning-visitor-digest.js` (S178); full multi-stage progressive disclosure is the build.",
+        "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. First-party surface CLEAN. Remaining: football-gm `appCore.js` baton + pre-S185 samples to age out. Reprobe ~2026-06-18; flip stays SOUL #3 founder-device gated.",
+        "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure call for cross-project/sealed IGNIS intelligence."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",

@@ -1,0 +1,89 @@
+{
+  "kind": "closeout",
+  "session": 188,
+  "date": "2026-06-11",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios.github.io",
+  "headline": "Finished the funnel S187 prototyped and closed the S186 silent-telemetry bug class — 7/7 audit items, build:check green.",
+  "itemsHeader": "SHIPPED",
+  "items": [
+    {
+      "id": "S188-1",
+      "slug": "sitewide-footer-dispatch",
+      "title": "Studio Dispatch capture goes sitewide",
+      "axis": "ux",
+      "projectImpact": 8,
+      "ecosystemImpact": 3,
+      "insight": "The email opt-in S187 shipped only existed on the homepage, while the script that powers it already ran on every page — 114 pages of dead capture code with no form to bind to. Lifting one column into the footer template turned a homepage prototype into a real owned-audience funnel, with zero new JavaScript and no new vendor.",
+      "evidence": "propagate-nav re-propagated 90 pages; form verified rendering on /faq/; commit 8c7b086c"
+    },
+    {
+      "id": "S188-2",
+      "slug": "rum-allowlist-integrity-gate",
+      "title": "Build gate that can't let a beacon drop silently",
+      "axis": "security",
+      "projectImpact": 7,
+      "ecosystemImpact": 7,
+      "insight": "S186 lost a whole feature's telemetry because its event name was never added to the Worker allowlist, so every beacon died at the edge unnoticed. The new gate diffs emit call-sites against that allowlist at build time, so the failure that used to be invisible now stops a push — and the pattern travels to any sibling repo on the same transport.",
+      "evidence": "check-rum-allowlist.mjs 7/7 self-test, dynamic-prefix aware, wired into build:check; commit 4a8064a7"
+    },
+    {
+      "id": "S188-3",
+      "slug": "proof-line-telemetry",
+      "title": "The proof microline can finally be measured",
+      "axis": "feedbackLoop",
+      "projectImpact": 6,
+      "ecosystemImpact": 2,
+      "insight": "The earned-trust line on the register card had shipped with no instrumentation at all, so nobody could say whether it lifted signups or was decoration. Two allowlisted beacons put it in the same measured stream as the rest of the funnel, so a future session can tune or retire it on evidence instead of faith.",
+      "evidence": "proof-line:{shown,click} fire only on a real fresh proof; allowlisted + gate-verified; commit 4a8064a7"
+    },
+    {
+      "id": "S188-4",
+      "slug": "audit-freshness-in-plumbing",
+      "title": "Prior-art checking moves from habit to build gate",
+      "axis": "speed",
+      "projectImpact": 6,
+      "ecosystemImpact": 4,
+      "insight": "S187 built a tool to catch audit items that were already shipped, but it only ran when someone remembered to run it. Wiring its self-test into build:check and adding a one-command batch mode means every future audit in this repo inherits the prior-art check whether the agent remembers or not.",
+      "evidence": "check-audit-staleness.mjs +auditBatch/--audit, 9/9 self-test, --self-test in build:check; commit 9197df4d"
+    },
+    {
+      "id": "S188-5",
+      "slug": "stale-board-hygiene",
+      "title": "Killed a phantom founder-action",
+      "axis": "maintainability",
+      "projectImpact": 4,
+      "ecosystemImpact": 2,
+      "insight": "The founder was still being asked to delete a file that had been gone since S186, and to confirm orphans the checker no longer flags. A founder-action queue with a phantom in it teaches the founder to distrust the whole list, so reconciling it keeps the real asks credible.",
+      "evidence": "check-orphan-assets now 0 actionable; board + brief reconciled; commit 9197df4d"
+    },
+    {
+      "id": "S188-6",
+      "slug": "flagship-product-storytelling",
+      "title": "The play-next destination gets a voice",
+      "axis": "ux",
+      "projectImpact": 6,
+      "ecosystemImpact": 2,
+      "insight": "Cross-game routing now sends players into the call-of-doodie page, but its hero was a bare title with the studio's voice buried in meta text. An additive promise line under the headline gives the destination a reason to earn the click — done as a reversible insert, not a rebuild of a surface with real history.",
+      "evidence": "hero-art-promise added; single primary CTA preserved; commit 9d01d298"
+    },
+    {
+      "id": "S188-7",
+      "slug": "shell-reconcile",
+      "title": "Shell assets reconciled after the sitewide footer change",
+      "axis": "speed",
+      "projectImpact": 5,
+      "ecosystemImpact": 1,
+      "insight": "Changing the footer on every page legitimately drifted the shell-stamped HTML, which the build gate caught. A full build rotated the shell hash and re-stamped 104 pages so the deploy is internally consistent — the expected one-time cold-cache cost of a real sitewide change.",
+      "evidence": "npm run build reconcile; build:check green end-to-end; commit 9d01d298"
+    }
+  ],
+  "followUps": [
+    "Prod-verify S188 on pages.dev: footer dispatch on a non-home page, Discord/Community in nav, RUM events land, cold-cache healthy post hash-rotation",
+    "Ark pattern-share the rum-allowlist gate to /v/rum-style sibling repos",
+    "Founder: review + publish the forge devlog draft to clear the 81d journal-stale gate"
+  ],
+  "blockers": [],
+  "silDelta": 4,
+  "followUpsHeader": "NEXT"
+}

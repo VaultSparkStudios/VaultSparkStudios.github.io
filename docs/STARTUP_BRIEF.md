@@ -1,10 +1,10 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-11 (Session 187 closeout) -->
+<!-- generated-at: 2026-06-11 (Session 188 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 187 closeout · 2026-06-11.
+> **Fast-boot brief** — generated at Session 188 closeout · 2026-06-11.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -13,7 +13,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 188 · 2026-06-11 · FOUNDER MODE                         ║
+║  Session 189 · 2026-06-11 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -33,15 +33,15 @@
 ║    957/1000   ██████████████████████░░   96%                     ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 5↑                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▆▆▇▆▄  ↑  (last 5 sessions)                            ║
+║    Trend  ▆▇▆▄▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        93    █████████░  ███▇▇▇▇▇ →                ║
-║    Alignment         96    ██████████  ▇██▇▇▇▇▇ →                ║
-║    Momentum          94    █████████░  ███▇▇▇▇▇ →                ║
+║    Dev Health        95    ██████████  ██▇▇▇▇▇▇ ↑                ║
+║    Alignment         96    ██████████  ██▇▇▇▇▇▇ →                ║
+║    Momentum          96    ██████████  ██▇▇▇▇▇▇ ↑                ║
 ║    Engagement        94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      95    ██████████  ███▇▇▆▇▇ →                ║
+║    Process Qual      97    ██████████  ██▇▇▆▇▇▇ ↑                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security          98    ██████████  ········ →                ║
 ║    Ecosystem         95    ██████████  ········ →                ║
@@ -50,7 +50,7 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 187 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 188 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116 passing  ·  Deploy: N/A                           ║
 ╚════════════════════════════════════════════════════════════════╝
@@ -87,14 +87,14 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▆▇▆▄  5↑  (last 5 sessions)                        ║
+║  Velocity:   ▆▇▆▄▆  5↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
-║  Streak:     ✓ 1 consecutive achieved-intent session             ║
+║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Confirm on prod (S187 features): honest-tr  ║
-║        Confirm on prod (S187 features): honest-traction strip r  ║
+║  100  [VERIFY]       Confirm S188 + S187 features on prod. (a)   ║
+║        Confirm S188 + S187 features on prod. (a) Studio Dispatc  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
@@ -102,11 +102,11 @@
 ║   93  [BRAND]        Review + publish the forge devlog draft. j  ║
 ║        Review + publish the forge devlog draft. journal/_drafts  ║
 ║                                                                  ║
-║   93  [INTELLIGENCE]  WIRE-FRESHNESS-INTO-AUDIT. Add the check-  ║
-║        WIRE-FRESHNESS-INTO-AUDIT. Add the check-audit-staleness  ║
+║   90  [BRAND]        RUM-DEAD-ALLOWLIST-SWEEP. The new check-ru  ║
+║        RUM-DEAD-ALLOWLIST-SWEEP. The new check-rum-allowlist ga  ║
 ║                                                                  ║
-║   87  [BRAND]        SITEWIDE-FOOTER-DISPATCH. Promote the home  ║
-║        SITEWIDE-FOOTER-DISPATCH. Promote the homepage footer "S  ║
+║   86  [BRAND]        Forge Window naming propagation             ║
+║        The URL stays stable for search, but the public vocabula  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -114,5 +114,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 187 closeout · 2026-06-11*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 188 closeout · 2026-06-11*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
