@@ -1,6 +1,27 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-10 (Session 185 — /start → /audit → /implement · 11 items shipped)
+Last updated: 2026-06-11 (Session 186 — /start → /audit → /implement · 8 items shipped)
+
+## Done (Session 186 — /goal chain · proof↔conversion weld · 8 shipped)
+
+- [x] **[S186][UX/P0] PROOF-TO-CONVERSION-BRIDGE — DONE.** `proof-conversion-line.js` reads deployed `/api/status-proof.json`; honest-dark earned-trust microline on the vault-member register card (`data-vs-proof-cta`), only fresh+confirmed proofs. Sitewide shell rotated + re-propagated. **DONE S186** (commit 36128a29)
+- [x] **[S186][AI/P0] IGNIS-ANSWER-SEEDED-EMPTY-STATE — DONE.** 3 one-tap chips from real `oracle-insights.json` clusters (anonymous tier) kill the Oracle cold-start (was 0 organic queries). **DONE S186** (ec7ffbe1)
+- [x] **[S186][AI/P1] IGNIS-HINT-CONVERSION-TRACKING — DONE.** `emitUx` beacons allowlisted `/v/rum` names (the real transport; the suggested `vs:ux` CustomEvent was dead). Worker `RUM_UX_EVENTS` +5 names: `ignis-hint:{shown,dismissed,click}` + `oracle-chip:{shown,click}`. **DONE S186** (ec7ffbe1)
+- [x] **[S186][SECURITY/P1] TT-NAMED-POLICY-FINISH — DONE.** Verified all S184-listed first-party sinks already safe in current code; 79% of 30d violations predate the S185 named-wave (age out ~06-18). Ark baton to football-gm for `appCore.js` (id 01JQQ7PLCO). Fresh AMBER(improving) readiness doc. **DONE S186** (ce11ca5a)
+- [x] **[S186][OBS/P2] GEO-VITALS-COLO-PROBE-WORKFLOW — DONE.** `--colo-probe` wired into `uptime-probe.yml` w/ Actions-cache accumulation; geo publishes on hourly uptime cadence (low-churn). YAML validated. **DONE S186** (0a134ace)
+- [x] **[S186][TOKEN/P2] CLOSEOUT-BUILD-ORDER-MODULE — DONE.** `scripts/lib/build-order.mjs` (self-test 5/5, import-safe); step3d.7 refactored to import. Ordering can't silently drift. **DONE S186** (2867a0c5)
+- [x] **[S186][SPEED/P2] WINDOWS-%an-SHELL-BUG — DONE.** `pull-rum-summary.mjs` `--format=%cI|%an` had its `|` parsed as a cmd.exe pipe on Windows → `%an` broke every local build. Now `execFileSync` + `%n`. **DONE S186** (0a134ace)
+- [x] **[S186][MAINT/P3] VAULTSPARKED-PROOF-DELETE — DONE.** Confirmed 0 live refs (orphan checker 1→0); removed. **DONE S186** (36128a29)
+
+## Now (S186 runway — carries)
+
+- [ ] **[S185→S186][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK.** Deferred (8h, next-session anchor). Core visit-depth nudge already lives in `returning-visitor-digest.js` (S178, 3rd+ visit); full multi-stage progressive disclosure is the build.
+- [ ] **[S186][SECURITY/P1] TT-ENFORCE-REPROBE.** First-party surface CLEAN (S186). Remaining: football-gm `appCore.js` baton to land + pre-S185 violation samples to age out of the 30d window. **Reprobe ~2026-06-18**; flip stays SOUL #3 founder-device gated. Readiness: `docs/TT_ENFORCE_READINESS_2026-06-11.md`.
+- [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Founder public-safe exposure call for cross-project/sealed IGNIS intelligence.
+- [ ] **[S180][FOUNDER] nav-sheet device verify** (mobile bottom-sheet default-swap — real-device confirmation).
+- [ ] **[S186][VERIFY] Confirm on prod:** proof microline renders on `/vault-member/#register`; Oracle chips render on `/oracle/`; `oracle-chip:*`/`ignis-hint:*` land in RUM.
+- [ ] **[S186][SIL] AUDIT-FRESHNESS-PRE-CHECK.** Before scoring an audit candidate, grep the corpus for an existing implementation — S163 feedback-provenance + S178 visit-nudge were both already done when audited. First step: `scripts/check-audit-staleness.mjs` that takes a slug/keywords and flags "may already exist at <file>".
+- [ ] **[S186][SIL] PROOF-LINE-TELEMETRY.** The proof microline ships blind. Add an allowlisted `proof-line:shown` RUM event in `proof-conversion-line.js` (mirror the Oracle chip instrumentation) + extend `RUM_UX_EVENTS`, so its conversion lift is measurable.
 
 ## Done (Session 182 — outage fix → /audit → /implement · 7 items shipped)
 
@@ -34,7 +55,7 @@ Last updated: 2026-06-10 (Session 185 — /start → /audit → /implement · 11
 - [x] **[S178][SPEED/P2] AMBIENT-GENOME-STRIP-SPLIT — DONE.** `vault-genome-strip.js` moved to predicate loading; feature bundle 28→27 sources; predicate mirrors skip rules; shell rotated + pages re-propagated; coverage + placement gates green. **DONE S178**
 - [x] **[S178][TOKEN/P3] TASKBOARD-ARCHIVE-ROTATION — DONE.** `rotate-taskboard.mjs` archived sessions <176 to `context/archive/TASK_BOARD_ARCHIVE.md` (nothing deleted); board 365KB→130KB (−63%); import-safe; session-window `--check-size` advisory in build:check. self-test 7/7. **DONE S178**
 
-## Now (Session 183 runway)
+## Historical Runway (Session 183 — superseded by S186 Now)
 
 - [x] **[S183][P0/FOLLOW-UP] UPTIME-PROBE-REBASE-BEFORE-PUSH — DONE S184.** Generalized the fix to the whole class: `git pull --rebase --autostash origin main` added before the push in all **7** self-committing workflows (ci-status-beacon, leaderboard-api, member-seo, og-images, rum-pull, uptime-probe, vault-narrative), not just uptime-probe. All YAML validated.
 - [ ] **[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION.** Oracle's core feed is fixed via `/api/public-intelligence.json`, but the richer layer (per-project IGNIS voices, ecosystem-velocity chart, cognition aggregate score) still sources from the gitignored local-only `/ignis/output/*`. Deploying it needs a public-safe decision (what cross-project/sealed intelligence is exposable) + a sanitized deploy path + a refresh mechanism (generation is local-only — reads all sibling repos). Founder call.

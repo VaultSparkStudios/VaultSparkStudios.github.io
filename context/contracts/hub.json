@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-11T01:53:46.751Z",
+  "generatedAt": "2026-06-11T03:09:24.814Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,21 +22,20 @@
     }
   },
   "pulse": {
-    "currentSession": 185,
+    "currentSession": 186,
     "lastUpdated": "2026-06-11",
-    "currentFocus": "S185 closeout complete — 11/12 items shipped: studio-pulse rename, IGNIS query cache, oracle-query-learning-loop, oracle proactive hints, vault-kinesis waveform, TT named-policy wave, ambient-split wave4, geo-vitals colo probe. Durable closeout fixes: step3d.7 artifact ordering, propagate-nav inline→class, oracle schemaVersion.",
-    "nextMilestone": "Wave 5: progressive-membership-unlock (8h). Wire colo-probe into uptime-probe.yml GH Actions. TT reprobe after home-idle-loader.js:16 + schema-injector.js:23 fixed.",
+    "currentFocus": "S186 closeout complete — welded the proof loop to the conversion loop. 8 shipped: proof-to-conversion-bridge (status-proof.json → honest-dark trust line on register card), oracle seeded-empty-state chips (kills 0-organic-query cold start), ignis hint/chip RUM instrumentation, TT first-party-clean reprobe + football-gm Ark baton, geo-vitals colo workflow, build-order module, Windows %an build fix, dead-asset delete. #4 already-done (S163), #7 deferred (next-session anchor).",
+    "nextMilestone": "Prod-verify proof line + Oracle chips render; PROGRESSIVE-MEMBERSHIP-UNLOCK (8h); TT-ENFORCE reprobe ~2026-06-18 (after football-gm baton lands + pre-S185 samples age out); RICHER-IGNIS-LAYER founder decision.",
     "blockers": [],
     "queues": {
       "now": [
-        "[S183][P0/FOLLOW-UP] UPTIME-PROBE-REBASE-BEFORE-PUSH — DONE S184. Generalized the fix to the whole class: `git pull --rebase --autostash origin main` added before the push in all 7 self-committing workflows (ci-status-beacon, leaderboard-api, member-seo, og-images, rum-pull, uptime-probe, vault-narrative), not just uptime-probe. All YAML validated.",
-        "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Oracle's core feed is fixed via `/api/public-intelligence.json`, but the richer layer (per-project IGNIS voices, ecosystem-velocity chart, cognition aggregate score) still sources from the gitignored local-only `/ignis/output/*`. Deploying it needs a public-safe decision (what cross-project/sealed intelligence is exposable) + a sanitized deploy path + a refresh mechanism (generation is local-only — reads all sibling repos). Founder call.",
-        "[S180→S184][SECURITY/P1] TT-ENFORCE-REPROBE — REPROBED S184, verdict AMBER. Ran probe + analyzer 2026-06-10: 148 violations/30d still present (not the clean GREEN a flip needs). Top sinks: `journal/dispatches:364` (×30, recurring), `home-idle-loader.js:16`, football-gm `appCore.js` (cross-repo), `schema-injector.js:23`, `ambient.shell`. Burn-down plan + flip command in `docs/TT_ENFORCE_READINESS_2026-06-10.md`. Flip stays founder-device gated (SOUL #3). Carry stays OPEN — next step is named-policy migration of the 4 first-party sinks + an Ark cargo to football-gm.",
-        "[S180][PERF/P1] ORIGIN-MIGRATION-FIELD-VERDICT — CONFIRMED + DONE S184. `api/field-win.json` now `hasConfirmed:true` (confirmedCount 1): `/` improved −46.1% LCP (p75 9489→5117ms) across the 2026-06-05 S173+S175 boundary, medium confidence. The /status/ \"Biggest measured win\" tile is data-driven and lights on this push. Root-caused why prod stayed dark: the S183 `[skip ci]` closeout tip stranded the CF Pages deploy — fixed by the new deploy-strand guard (see below). Remaining global watch tracked by GEO-VITALS-WATCH.",
-        "[S181→NEXT][PROOF/P2] STATUS-PROOF-INDEX — DONE S184. `scripts/build-status-proof.mjs` bundles 10 public proof feeds into a self-grading `/api/status-proof.json` (each proof carries its own freshness + a top-level trustScore/worstStale). `/status/` collapses 8 fetches → 1 shared manifest fetch (individual-file fallback preserved), renders a new \"Proof freshness\" tile, and exposes a `<link rel=alternate>` for agents. Wired into build + build:check drift gate.",
-        "[S184][DEPLOY/P0] DEPLOY-STRAND GUARD — DONE S184 (new, surfaced this session). CF Pages builds only the pushed tip and skips `[skip ci]` tips, so every closeout ending in the autopilot's `[skip ci]` reconcile commit silently stranded the substantive deploy (S183→S184: confirmed field-win + ~20 api/*.json never went live). `scripts/check-deploy-tip.mjs` (7/7 self-test) + `closeout-autopilot.mjs` now push an empty non-skip-ci commit when the tip is `[skip ci]` so Pages builds.",
-        "[S180][OBS/P3] GEO-VITALS-WATCH. `api/geo-vitals.json` (US:107 GB:3); check non-US LCP confirms the origin-migration win globally as samples grow.",
-        "[S184][ECOSYSTEM/P1] ARK-DEPLOY-STRAND-PATTERN-SHARE — DONE S185 wave1a. Broadcast the `[skip ci]`-tip CF-Pages deploy-strand finding + `scripts/check-deploy-tip.mjs` guard to all CF-Pages sibling repos via Ark `pattern-share`. ✓"
+        "[S185→S186][UX/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8h, next-session anchor). Core visit-depth nudge already lives in `returning-visitor-digest.js` (S178, 3rd+ visit); full multi-stage progressive disclosure is the build.",
+        "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. First-party surface CLEAN (S186). Remaining: football-gm `appCore.js` baton to land + pre-S185 violation samples to age out of the 30d window. Reprobe ~2026-06-18; flip stays SOUL #3 founder-device gated. Readiness: `docs/TT_ENFORCE_READINESS_2026-06-11.md`.",
+        "[S183][ORACLE/FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-safe exposure call for cross-project/sealed IGNIS intelligence.",
+        "[S180][FOUNDER] nav-sheet device verify (mobile bottom-sheet default-swap — real-device confirmation).",
+        "[S186][VERIFY] Confirm on prod: proof microline renders on `/vault-member/#register`; Oracle chips render on `/oracle/`; `oracle-chip:*`/`ignis-hint:*` land in RUM.",
+        "[S186][SIL] AUDIT-FRESHNESS-PRE-CHECK. Before scoring an audit candidate, grep the corpus for an existing implementation — S163 feedback-provenance + S178 visit-nudge were both already done when audited. First step: `scripts/check-audit-staleness.mjs` that takes a slug/keywords and flags \"may already exist at <file>\".",
+        "[S186][SIL] PROOF-LINE-TELEMETRY. The proof microline ships blind. Add an allowlisted `proof-line:shown` RUM event in `proof-conversion-line.js` (mirror the Oracle chip instrumentation) + extend `RUM_UX_EVENTS`, so its conversion lift is measurable."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",

@@ -1,5 +1,20 @@
 # Work Log
 
+## 2026-06-11 — Session 186 (/goal chain · proof↔conversion weld · 8 shipped / 1 already-done / 1 deferred)
+
+Genius audit (10 items, Priority 211.1) personalized to live carries → implemented in 5 waves:
+- **proof-to-conversion-bridge** — `proof-conversion-line.js` reads deployed `/api/status-proof.json`; honest-dark earned-trust microline (−46% LCP / uptime) on the vault-member register card. Operational proof now lifts conversion at the decision point.
+- **ignis-answer-seeded-empty-state** — 3 one-tap chips from real `oracle-insights.json` clusters kill the Oracle cold-start (0 organic queries).
+- **ignis-hint-conversion-tracking** — `emitUx` → allowlisted `/v/rum` beacon names (real transport; the suggested `vs:ux` CustomEvent was dead). Worker `RUM_UX_EVENTS` +5 names.
+- **tt-named-policy-finish** — first-party surface verified CLEAN in current code; Ark baton to football-gm for cross-repo `appCore.js` (01JQQ7PLCO); fresh AMBER readiness doc. 79% of 30d violations age out ~06-18.
+- **geo-vitals-colo-workflow** — `--colo-probe` wired into `uptime-probe.yml` w/ Actions-cache accumulation, low-churn hourly publish; YAML validated.
+- **closeout-build-order-module** — `scripts/lib/build-order.mjs` (self-test 5/5, import-safe); step3d.7 imports it. Ordering can't drift.
+- **windows-%an-shell-bug** — real cross-platform defect: `pull-rum-summary.mjs` `--format=%cI|%an` parsed `|` as a cmd.exe pipe → `execFileSync` + `%n` fix.
+- **vaultsparked-proof-delete** — confirmed orphan (checker 1→0), removed.
+- **Honest non-ships:** #4 feedback-receipts already shipped S163 (feedback-provenance.js); #7 progressive-membership core already lives in returning-visitor-digest.js (S178) — full 8h build is next-session anchor.
+
+Tests: `build:check` EXIT 0 · worker.unit 21/21 · tt-policy-lint clean · build-order 5/5. Commits: ec7ffbe1, 36128a29, ce11ca5a, 0a134ace, 2867a0c5, 0a9f44ea.
+
 ## 2026-06-10 — Session 184 (/start → /audit → /implement → /closeout goal-chain · 6/6)
 
 Personalized audit (6 items, Priority 154.9) → implemented all 6 + root-caused a recurring silent deploy failure:

@@ -8,16 +8,39 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ██▇█▇
-Avgs - 3: 953.7 | 5: 971.8 | 10: 986.1 | 25: 979.0 | all: 961 (v3.0 /1000)
-  └ 3-session: Dev 91.7 | Align 98.0 | Momentum 93.3 | Engage 95.3 | Process 89.0
-Velocity trend: ↑ (S185: 11 shipped across 5 waves; S183: 7; S182: 7 — sustained high)  |  Protocol velocity: ↑ (closeout-autopilot step3d.7 canonicalizes artifact ordering; inline→class eliminates TT contract collision class) |  Debt: → (propagate-nav inline→class reduces tech debt; TT 2 remaining first-party sinks still open)
-Momentum runway: 5 open Now items — PROGRESSIVE-MEMBERSHIP-UNLOCK (8h), TT-ENFORCE-REPROBE, GEO-VITALS-WORKFLOW-TRIGGER, RICHER-IGNIS-LAYER, vaultsparked-proof delete  |  Intent rate: 100% (last 5)
-Last session: 2026-06-10 | Session 185 | Total: 943/1000 (v3.0) | Velocity: 11 | protocolVelocity: 3
+Sparkline (last 5 totals): █▇█▇█
+Avgs - 3: 947.3 | 5: 963.4 | 10: 982.0 | 25: 977.5 | all: 961 (v3.0 /1000)
+  └ 3-session: Dev 90.0 | Align 97.7 | Momentum 92.3 | Engage 95.0 | Process 90.3
+Velocity trend: ↑ (S186: 8 shipped + 2 honest triages in a clean single-session goal-chain; S185: 11; S183: 7 — sustained high)  |  Protocol velocity: ↑ (build-order.mjs canonicalizes step3d.7 ordering; %an cross-platform fix removes build friction) |  Debt: ↓ (dead asset removed, real Windows build bug fixed, ordering extracted to self-tested module)
+Momentum runway: 5 open Now items — PROGRESSIVE-MEMBERSHIP-UNLOCK (8h), TT-ENFORCE-REPROBE (~06-18), RICHER-IGNIS-LAYER, nav-sheet device verify, prod-verify  |  Intent rate: 100% (last 5)
+Last session: 2026-06-11 | Session 186 | Total: 956/1000 (v3.0) | Velocity: 8 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-11 — Session 186 (/goal [/start → /audit → /implement → /closeout] · 8 shipped / 1 already-done / 1 deferred) | Total: 956/1000 (v3.0) | Velocity: 8 | Debt: ↓
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 92 | 8 items shipped clean across 6 atomic commits; `build:check` EXIT 0; worker.unit 21/21; build-order self-test 5/5; tt-policy-lint clean. Fixed a real cross-platform build defect (`%an` cmd.exe pipe). Single clean session, no continuation needed. Small ding: 2 audit items turned out already-done (audit could have detected freshness). |
+| Creative Alignment | 97 | The proof↔conversion weld is a genuinely novel, on-brand move — surfacing the studio's own falsifiable SRE proof at the signup decision is something no peer site does, and it stays honest-dark (renders nothing when proof is stale). Public-safe boundary held (richer-IGNIS still founder-gated). |
+| Momentum | 93 | 8 shipped + 2 disciplined triages (verified-already-done / deferred-with-reason) in one clean goal-chain. No warmup/continuation cost this session. |
+| Engagement | 95 | Both top items attack the measured 0-organic-Oracle-query problem head-on: chips remove cold-start friction, the proof line adds decision-moment trust, and the funnel is now instrumented so next session can measure the lift it created. |
+| Process Quality | 93 | Repo-truth-over-chat-memory paid off three times: caught that the suggested `vs:ux` CustomEvent transport was dead (rewired to the real `/v/rum` beacon), that #4 was already shipped (S163), and that #5's first-party sinks were already safe. Verified before building every time. Cross-repo TT fix routed through Ark (CANON-018), not a direct sibling edit. |
+| Coherence | 100 | All changes consistent with established patterns (ambient-loader predicate registration, honest-dark publishing, named TT policies, low-churn workflow commits). |
+| Security | 98 | TT reprobe done honestly with a fresh dated verdict; Worker RUM allowlist extended conservatively (names only, no IDs/free-text); cross-repo sink handed off, not force-fixed. |
+| Ecosystem | 96 | Ark baton to football-gm with exact sink lines + the fix pattern — cross-repo coordination done the canonical way. |
+| Capital | 98 | Every change is cost-neutral (static CDN fetch / localStorage / fire-and-forget beacon / CI-cache). No new spend, no new SaaS. CANON-029 clean. |
+| Automation | 94 | geo-vitals colo probe now self-runs in CI; build-order extracted to a self-testing importable module; the `%an` fix removes recurring local-build friction. |
+
+**Brainstorm (next-session candidates):**
+1. **Audit-freshness pre-check** — before scoring a candidate, grep the corpus for an existing implementation (S163 feedback-provenance + S178 visit-nudge were both already done). A `scripts/check-audit-staleness.mjs` that flags "this slug may already exist at <file>" would have saved two analysis passes. → commit to TASK_BOARD.
+2. **Proof-line A/B telemetry** — the proof microline ships blind; add a `proof-line:shown` RUM event (allowlisted) so its conversion lift is measurable, mirroring the Oracle chip instrumentation. → commit to TASK_BOARD.
+3. **Oracle chip → query conversion rollup** — once `oracle-chip:*` events accrue, add a rollup to `analytics-summary` so the cold-start fix is provable.
+4. **TT enforce auto-reprobe cron** — schedule the soak+analyze on/after 06-18 so the flip-readiness verdict refreshes without a manual session.
+
+**Committed to TASK_BOARD:** items 1 (audit-freshness pre-check) + 2 (proof-line telemetry).
 
 ## 2026-06-10 — Session 185 (/goal [/start → /audit → /implement → /closeout] · 11/12 shipped · compacted-resume) | Total: 943/1000 (v3.0) | Velocity: 11 | Debt: →
 

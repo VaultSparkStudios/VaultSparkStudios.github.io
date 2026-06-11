@@ -30,18 +30,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    943/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 11↑                         ║
-║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest o  ║
-║    Trend  ▆▄▆▆▇  ↑  (last 5 sessions)                            ║
+║    956/1000   ██████████████████████░░   96%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 8↑                          ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
+║    Trend  ▄▆▆▇▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        89    █████████░  █████▇▇▇ ↓                ║
-║    Alignment         98    ██████████  █▇▇██▇▇▇ →                ║
-║    Momentum          91    █████████░  █████▇▇▇ ↓                ║
+║    Dev Health        92    █████████░  ████▇▇▇▇ ↑                ║
+║    Alignment         97    ██████████  ▇▇██▇▇▇▇ →                ║
+║    Momentum          93    █████████░  ████▇▇▇▇ →                ║
 ║    Engagement        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      85    █████████░  █████▇▇▆ ↓                ║
+║    Process Qual      93    █████████░  ████▇▇▆▇ ↑                ║
 ║    Coherence        100    ██████████  ········ →                ║
 ║    Security          98    ██████████  ········ →                ║
 ║    Ecosystem         95    ██████████  ········ →                ║
@@ -57,10 +57,10 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-08)                   ║
-║  ✓  Velocity      11 ↑  ·  Debt: →                               ║
+║  ✓  Velocity      8 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        5 open Now items — PROGRESSIVE-MEMBERSHIP-UNL  ║
 ║  ✓  Headroom      0% remaining · ~0 large item(s) fit            ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         40319 FORGE  ·  6d old                         ║
 ║  ✓  Truth         green  ·  Genome: 0/25                         ║
 ║  ✓  Compliance   32/32 (100%) → ████████                         ║
@@ -89,26 +89,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▄▆▆▇  11↑  (last 5 sessions)                       ║
+║  Velocity:   ▄▆▆▇▆  8↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
-║  Streak:     ✓ 4 consecutive achieved-intent sessions            ║
+║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   99  [SECURITY]     TT-ENFORCE-REPROBE                          ║
-║        TT-ENFORCE-REPROBE lowers operational risk and is entire  ║
+║   99  [SECURITY]     TT-ENFORCE-REPROBE. First-party surface CL  ║
+║        TT-ENFORCE-REPROBE. First-party surface CLEAN (S186). Re  ║
+║                                                                  ║
+║   96  [PRODUCT]      PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8  ║
+║        PROGRESSIVE-MEMBERSHIP-UNLOCK. Deferred (8h, next-sessio  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [SECURITY]     TT-ENFORCE-REPROBE. home-idle-loader.js:16  ║
-║        TT-ENFORCE-REPROBE. home-idle-loader.js:16 + schema-inje  ║
+║   94  [AI]           RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. F  ║
+║        RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder public-  ║
 ║                                                                  ║
-║   90  [PRODUCT]      GEO-VITALS-WATCH. api/geo-vitals.json (US:  ║
-║        GEO-VITALS-WATCH. api/geo-vitals.json (US:107 GB:3); che  ║
-║                                                                  ║
-║   88  [AI]           RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. F  ║
-║        RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION. Founder call ne  ║
+║   88  [VERIFY]       Confirm on prod: proof microline renders o  ║
+║        Confirm on prod: proof microline renders on /vault-membe  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
