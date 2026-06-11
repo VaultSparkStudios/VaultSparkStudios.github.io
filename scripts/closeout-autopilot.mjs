@@ -233,46 +233,11 @@ header('Step 3d.5 · Production perf sample (gated, rotating)');
 //   3. May cause ambient-ledger structural drift
 // ORDER matters: oracle sanitizer first (writes ecosystem-state.json), then shards
 // (reads ecosystem-state.json), then ledger. This ensures build:check --check passes.
+// S186: the ordering is now canonical in scripts/lib/build-order.mjs (self-tested)
+// so it can't drift if this step is edited.
 {
-  const oracleScript = path.join(PROJECT_ROOT, 'scripts', 'sanitize-public-oracle-feed.mjs');
-  if (fs.existsSync(oracleScript) && !DRY) {
-    const r = spawnSync(process.execPath, [oracleScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
-    if (r.status !== 0) console.warn('⚠ sanitize-public-oracle-feed exited nonzero; continuing.');
-  }
-  const shardsScript = path.join(PROJECT_ROOT, 'scripts', 'build-llms-full-shards.mjs');
-  if (fs.existsSync(shardsScript) && !DRY) {
-    const r = spawnSync(process.execPath, [shardsScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 60000 });
-    if (r.status !== 0) console.warn('⚠ build-llms-full-shards exited nonzero; continuing.');
-  }
-  const ledgerScript = path.join(PROJECT_ROOT, 'scripts', 'build-ambient-ledger.mjs');
-  if (fs.existsSync(ledgerScript) && !DRY) {
-    const r = spawnSync(process.execPath, [ledgerScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
-    if (r.status !== 0) console.warn('⚠ build-ambient-ledger exited nonzero; continuing.');
-  }
-  // nervous-system reads api/ outputs updated above; rebuild to keep --check green
-  const nervousScript = path.join(PROJECT_ROOT, 'scripts', 'build-nervous-system.mjs');
-  if (fs.existsSync(nervousScript) && !DRY) {
-    const r = spawnSync(process.execPath, [nervousScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
-    if (r.status !== 0) console.warn('⚠ build-nervous-system exited nonzero; continuing.');
-  }
-  // ignis search index depends on content updated above; rebuild before --check
-  const ignisIdxScript = path.join(PROJECT_ROOT, 'scripts', 'build-ignis-search-index.mjs');
-  if (fs.existsSync(ignisIdxScript) && !DRY) {
-    const r = spawnSync(process.execPath, [ignisIdxScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
-    if (r.status !== 0) console.warn('⚠ build-ignis-search-index exited nonzero; continuing.');
-  }
-  // analytics summary reads RUM/event data updated by step 3d; rebuild before --check
-  const analyticsSummaryScript = path.join(PROJECT_ROOT, 'scripts', 'build-analytics-summary.mjs');
-  if (fs.existsSync(analyticsSummaryScript) && !DRY) {
-    const r = spawnSync(process.execPath, [analyticsSummaryScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
-    if (r.status !== 0) console.warn('⚠ build-analytics-summary exited nonzero; continuing.');
-  }
-  // intelligence budget reads api/ surfaces updated above; rebuild before --check
-  const intelBudgetScript = path.join(PROJECT_ROOT, 'scripts', 'build-intelligence-budget.mjs');
-  if (fs.existsSync(intelBudgetScript) && !DRY) {
-    const r = spawnSync(process.execPath, [intelBudgetScript], { cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit', timeout: 30000 });
-    if (r.status !== 0) console.warn('⚠ build-intelligence-budget exited nonzero; continuing.');
-  }
+  const { runDerivedBuilds } = await import('./lib/build-order.mjs');
+  runDerivedBuilds({ root: PROJECT_ROOT, dry: DRY, log: console });
 }
 
 // ── Step 3e: build:check pre-commit gate ─────────────────────────────────────
