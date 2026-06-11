@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-11T01:53:51.973Z",
+  "generatedAt": "2026-06-11T04:36:19.684Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,12 +8,30 @@
     {
       "theme": "conversion",
       "label": "Conversion",
-      "feedbackSignals": 1,
+      "feedbackSignals": 2,
       "shippedCommits": [
+        {
+          "sha": "fdb136c8",
+          "summary": "surface earned trust microline at the signup decision + drop dead asset",
+          "ts": "2026-06-11T03:12:27.000Z"
+        },
         {
           "sha": "8349c3c6",
           "summary": "membership nudge on 3rd+ visit in returning-visitor-digest",
           "ts": "2026-06-11T00:06:14.000Z"
+        }
+      ],
+      "proof": null
+    },
+    {
+      "theme": "worlds",
+      "label": "Worlds",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "f4358fc6",
+          "summary": "route attention across the catalog, never dead-end",
+          "ts": "2026-06-11T04:21:19.000Z"
         }
       ],
       "proof": null
@@ -24,9 +42,9 @@
       "feedbackSignals": 6,
       "shippedCommits": [
         {
-          "sha": "ec7ffbe1",
+          "sha": "973679ef",
           "summary": "seed Oracle empty-state with real query-cluster chips + instrument hint/chip funnel",
-          "ts": "2026-06-11T01:48:09.000Z"
+          "ts": "2026-06-11T03:12:27.000Z"
         },
         {
           "sha": "809f7e35",
@@ -50,47 +68,6 @@
         }
       ],
       "proof": null
-    },
-    {
-      "theme": "speed",
-      "label": "Speed",
-      "feedbackSignals": 4,
-      "shippedCommits": [
-        {
-          "sha": "8b47be98",
-          "summary": "prove Worker disaster-recovery failover, not assume it",
-          "ts": "2026-06-10T17:17:34.000Z"
-        },
-        {
-          "sha": "4716e0f7",
-          "summary": "S184 reprobe — verdict AMBER, flip deferred",
-          "ts": "2026-06-10T17:16:17.000Z"
-        },
-        {
-          "sha": "9952f249",
-          "summary": "S182 execution log — 7 shipped, deferred set recorded",
-          "ts": "2026-06-09T01:25:23.000Z"
-        },
-        {
-          "sha": "5fe8db0f",
-          "summary": "S182 — sweep 12 dead ambient bundles + corpus-aware orphan gate",
-          "ts": "2026-06-09T01:20:11.000Z"
-        }
-      ],
-      "proof": {
-        "set": "home-lcp-s173",
-        "captures": 4,
-        "routes": [
-          "/"
-        ]
-      },
-      "fieldVerdict": {
-        "boundary": "2026-06-05",
-        "label": "S173 critical path + S175 origin migration to CF Pages",
-        "verdict": "improved",
-        "lcpDeltaPct": -46.1,
-        "confidence": "medium"
-      }
     }
   ]
 }

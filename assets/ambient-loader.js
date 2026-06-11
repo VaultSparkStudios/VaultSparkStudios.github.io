@@ -202,6 +202,16 @@
           !!document.querySelector('[data-play-next]');
       },
       idle: true
+    },
+    {
+      // S187: footer dispatch — activates the dead VaultKit.wireForm('footer-email-form')
+      // wiring through the EXISTING ConvertKit/Kit ESP (no new vendor). Mounts only
+      // where the footer form exists; honest-dark + honest-fail (no faked success).
+      src: '/assets/footer-dispatch.js',
+      when: function () {
+        return !!document.getElementById('footer-email-form');
+      },
+      idle: true
     }
   ];
 
