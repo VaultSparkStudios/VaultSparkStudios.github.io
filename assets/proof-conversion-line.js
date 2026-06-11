@@ -14,6 +14,17 @@
   // TT-safe: this module writes no untrusted HTML. The microline is built with
   // textContent + DOM nodes only, so no Trusted-Types policy is required.
 
+  // S188: the microline shipped blind. Beacon impressions + clicks through the
+  // same /v/rum allowlisted transport as the rest of the funnel (names only, no
+  // PII). The Worker's RUM_UX_EVENTS must list proof-line:{shown,click} or the
+  // beacon is silently dropped — the new check-rum-allowlist gate enforces that.
+  function emitUx(event) {
+    try {
+      var body = JSON.stringify({ route: location.pathname || '/', ux: event });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+    } catch (_e) {}
+  }
+
   function fmtPct(n) {
     var v = Math.round(Math.abs(Number(n)));
     return isFinite(v) ? v : null;
@@ -61,6 +72,7 @@
     link.className = 'vs-proof-line__link';
     link.href = '/status/';
     link.textContent = 'See the proof';
+    link.addEventListener('click', function () { emitUx('proof-line:click'); });
     line.appendChild(link);
     root.insertBefore(line, root.firstChild);
   }
@@ -84,6 +96,7 @@
         if (!signals.length) return;
         styles();
         roots.forEach(function (root) { render(root, signals); });
+        emitUx('proof-line:shown');
       })
       .catch(function () { /* feed unreachable → render nothing */ });
   }

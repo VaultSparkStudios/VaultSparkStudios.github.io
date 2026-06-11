@@ -258,6 +258,9 @@ const RUM_UX_EVENTS = new Set([
   // S187: studio dispatch — non-gated email-list subscribe event (no email/PII
   // in the beacon; the address goes only to the Web3Forms transport).
   'studio-dispatch:subscribe',
+  // S188: proof-to-conversion microline — impression + click-through on the
+  // register-card trust line (names only, no IDs/free text; same privacy model).
+  'proof-line:shown', 'proof-line:click',
 ]);
 function cleanRumUxEvent(value) {
   return typeof value === 'string' && RUM_UX_EVENTS.has(value) ? value : null;
