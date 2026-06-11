@@ -91,8 +91,7 @@ Last updated: 2026-06-11 (Session 186 — /start → /audit → /implement · 8 
 Last updated: 2026-06-05 (Session 174 — goal-chain audit/implement: 10/10 shipped; self-feeding RUM loop, field verdicts, TT forensics + burndown, staging parity GREEN; build:check green)
 ## Human Action Required
 
-- [ ] **Delete `assets/vaultsparked-proof.js`? (30-second yes/no).** Evidence-complete: superseded by `live-proof.js` which writes the same IDs + more; not loaded anywhere. Current founder-facing decision doc: `docs/MEMBERSHIP_ORPHAN_DECISION.md`.
-- [ ] **3 membership/vaultsparked asset orphans — founder-confirm before delete.** `check-orphan-assets.mjs` flags `assets/membership-interview.js` (AI onboarding flow), `assets/vault-sdk.js` (entitlements), `assets/vaultsparked-proof.js` — all lost their page wiring but are feature-bearing. Per SOUL #2 (never half-bake membership), confirm whether to re-wire or delete. Not auto-deleted in S163.
+- [x] **Membership/vaultsparked asset-orphan founder-action — RESOLVED S188 (was a phantom ask).** `vaultsparked-proof.js` was already deleted S186; `check-orphan-assets.mjs` now reports **0 actionable browser-asset orphans** (`membership-interview.js` + `vault-sdk.js` are referenced in the live corpus, not orphaned). The "delete vaultsparked-proof.js?" and "3 orphans to confirm" asks no longer have a target. No founder action required. (S188 stale-board-hygiene)
 - [ ] **[S164→MOBILE-SHEET-DEFAULT-SWAP]** — data-gated: `nav-sheet.js` telemetry (S163) + `api/nav-sheet-stats.json` rollup (S164) are live. Current artifact has 0 opens / `defaultSwapReady:false`; when it shows ≥50 opens + healthy close mix, flip default for `(max-width: 768px)` + log DECISIONS.
 ## Previous (Session 141 — Oracle upstream sanitizer gate)
 

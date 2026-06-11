@@ -78,8 +78,6 @@
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
 ║                                                                  ║
-║     6d · Delete `assets/vaultsparked-proof.js`? (30-second       ║
-║     8d · 3 membership/vaultsparked asset orphans                 ║
 ║     8d · [S164→MOBILE-SHEET-DEFAULT-SWAP]                        ║
 ╚════════════════════════════════════════════════════════════════╝
 

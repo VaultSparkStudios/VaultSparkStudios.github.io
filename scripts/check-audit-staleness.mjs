@@ -113,6 +113,44 @@ export function checkStaleness({ slug = '', keywords = [], root = '.' } = {}) {
   return { verdict, score: hits.length + doneHits.length * 3, hits, doneHits, stems, phrases };
 }
 
+// Distinctive keywords for an audit item: the concrete filenames its recipe/
+// summary names are the strongest "did this already ship" signal (a script or
+// asset that now exists in the corpus = shipped). Slug is added by checkStaleness.
+export function keywordsForItem(item) {
+  const blob = `${item.summary || ''} ${item.recipe || ''} ${item.why || ''}`;
+  const files = blob.match(/[\w/-]+\.(?:mjs|js|json|html|css)/g) || [];
+  return [...new Set(files.map((f) => f.toLowerCase()))];
+}
+
+// Find the newest docs/AUDIT_*.json by mtime (a -SNNN suffix sorts BEFORE the
+// bare date lexically, so name-sort is unreliable — use mtime).
+export function newestAuditJson(root = '.') {
+  const dir = join(root, 'docs');
+  let entries;
+  try { entries = readdirSync(dir); } catch { return null; }
+  const audits = entries
+    .filter((f) => /^AUDIT_.*\.json$/.test(f))
+    .map((f) => { const full = join(dir, f); return { full, f, mtime: statSync(full).mtimeMs }; })
+    .sort((a, b) => b.mtime - a.mtime);
+  return audits.length ? audits[0] : null;
+}
+
+// Batch pre-score guard: run the freshness check across every item in the newest
+// audit. Advisory by design — surfaces items already shipped so the next /audit
+// (or /implement) does not re-litigate them. Returns { file, results }.
+export function auditBatch(root = '.') {
+  const newest = newestAuditJson(root);
+  if (!newest) return { file: null, results: [] };
+  let parsed;
+  try { parsed = JSON.parse(readFileSync(newest.full, 'utf8')); } catch { return { file: newest.f, results: [] }; }
+  const items = Array.isArray(parsed.items) ? parsed.items : [];
+  const results = items.map((it) => ({
+    slug: it.slug,
+    ...checkStaleness({ slug: it.slug, keywords: keywordsForItem(it), root }),
+  }));
+  return { file: newest.f, results };
+}
+
 function fmt(res, slug) {
   const icon = res.verdict === 'already-done' ? '⛔' : res.verdict === 'partial' ? '⚠' : '✓';
   const out = [`${icon}  ${slug || '(no slug)'} — ${res.verdict.toUpperCase()}  (signal ${res.score})`];
@@ -144,6 +182,15 @@ function selfTest() {
   // 5. result shape stable
   const sh = checkStaleness({ slug: 'a-b-c' });
   check('shape', ['verdict', 'score', 'hits', 'doneHits'].every((k) => k in sh));
+  // 7. keyword extraction pulls filenames from an item's prose
+  const kw = keywordsForItem({ recipe: 'New scripts/check-rum-allowlist.mjs gate; edit index.html and assets/x.js' });
+  check('keywords extract filenames', kw.includes('scripts/check-rum-allowlist.mjs') && kw.includes('assets/x.js'));
+  // 8. newest-audit discovery returns a real file (this repo has audits)
+  const na = newestAuditJson('.');
+  check('newest audit discoverable', na && /^AUDIT_.*\.json$/.test(na.f));
+  // 9. batch returns one result per item with a verdict
+  const batch = auditBatch('.');
+  check('batch shape', Array.isArray(batch.results) && batch.results.every((r) => 'verdict' in r && 'slug' in r));
   console.log(`check-audit-staleness self-test: ${pass}/${pass + fail} passing`);
   return fail === 0;
 }
@@ -154,6 +201,24 @@ if (RUN_DIRECT) {
   const argv = process.argv.slice(2);
   if (argv.includes('--self-test')) {
     process.exit(selfTest() ? 0 : 1);
+  }
+  // Batch mode — the canonical pre-score step for /audit. Scans every item in the
+  // newest docs/AUDIT_*.json and surfaces any with prior art. Advisory: exit 0.
+  if (argv.includes('--audit')) {
+    const { file, results } = auditBatch('.');
+    if (!file) { console.log('✓ check-audit-staleness --audit: no AUDIT_*.json found'); process.exit(0); }
+    const flagged = results.filter((r) => r.verdict !== 'fresh');
+    if (argv.includes('--json')) { console.log(JSON.stringify({ file, results }, null, 2)); process.exit(0); }
+    console.log(`check-audit-staleness --audit · ${file} · ${results.length} item(s)`);
+    if (!flagged.length) { console.log('✓ all items fresh — no prior art detected'); process.exit(0); }
+    for (const r of flagged) {
+      const icon = r.verdict === 'already-done' ? '⛔' : '⚠';
+      console.log(`${icon}  ${r.slug} — ${r.verdict.toUpperCase()} (signal ${r.score})`);
+      r.doneHits.slice(0, 2).forEach((d) => console.log('     DONE: ' + d));
+      r.hits.slice(0, 2).forEach((h) => console.log(`     ${h.file}:${h.line} «${h.match}»`));
+    }
+    console.log('→ Advisory: verify each flagged item is a deepen/save, not a re-build, before scoring.');
+    process.exit(0);
   }
   const get = (flag) => { const i = argv.indexOf(flag); return i >= 0 ? argv[i + 1] : null; };
   const slug = get('--slug') || '';
