@@ -36,12 +36,24 @@ jobs:
           path: .cache/uptime-alerts-sent.json
           key: uptime-alerts-${{ github.run_id }}
           restore-keys: uptime-alerts-
+      - name: Restore colo-sample supplement
+        uses: actions/cache@v4
+        with:
+          # S186: accumulate synthetic colo TTFB samples across runs so a thin
+          # non-US sample set can confirm the origin-migration win globally,
+          # without committing api/geo-vitals.json every 30 min (low-churn).
+          path: .cache/probe-colo-supplement.ndjson
+          key: colo-supplement-${{ github.run_id }}
+          restore-keys: colo-supplement-
       - name: Probe routes
         id: probe
         continue-on-error: true   # a real outage exits non-zero; we still want to record + commit it
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
         run: node scripts/probe-uptime.mjs
+      - name: Colo probe (global edge sample)
+        continue-on-error: true   # a non-US sample failure must never fail the uptime job
+        run: node scripts/probe-uptime.mjs --colo-probe
       - name: Publish uptime status
         if: always()
         run: |
@@ -49,12 +61,13 @@ jobs:
             echo "No commit-worthy change (healthy, same hour) — skipping."
             exit 0
           fi
+          node scripts/build-geo-vitals.mjs || echo "geo-vitals rebuild skipped"
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add api/uptime.json data/uptime-history.ndjson
+          git add api/uptime.json data/uptime-history.ndjson api/geo-vitals.json
           if git diff --cached --quiet; then
             echo "Nothing staged."; exit 0
           fi
-          git commit -m "chore(uptime): publish availability status [skip ci]"
+          git commit -m "chore(uptime): publish availability + geo-vitals status [skip ci]"
           git pull --rebase --autostash origin main
           git push

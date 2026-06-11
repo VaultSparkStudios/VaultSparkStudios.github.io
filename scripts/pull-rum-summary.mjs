@@ -252,9 +252,12 @@ if (CHECK) {
 // --force is passed.
 if (!args.includes('--force')) {
   try {
-    const { execSync } = await import('node:child_process');
-    const log = execSync('git log -1 --format=%cI|%an -- data/rum-summary.json', { cwd: ROOT, encoding: 'utf8' }).trim();
-    const [iso, author] = log.split('|');
+    const { execFileSync } = await import('node:child_process');
+    // execFileSync bypasses the shell — the `|` separator in a --format string
+    // is otherwise interpreted as a pipe by Windows cmd.exe (breaks %an). Use
+    // git's own %n newline token as the separator.
+    const log = execFileSync('git', ['log', '-1', '--format=%cI%n%an', '--', 'data/rum-summary.json'], { cwd: ROOT, encoding: 'utf8' }).trim();
+    const [iso, author] = log.split(/\r?\n/);
     const ageH = (Date.now() - Date.parse(iso)) / 36e5;
     if (/github-actions/i.test(author || '') && ageH < 24) {
       console.log(`pull-rum-summary: CI-fresh (committed by ${author} ${ageH.toFixed(1)}h ago) — skipping local rewrite. Use --force to override.`);
