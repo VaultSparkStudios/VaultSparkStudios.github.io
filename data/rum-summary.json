@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-11T22:39:45.788Z",
+  "generatedAt": "2026-06-11T23:12:47.965Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,18 +10,18 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 42,
+  "totalSamples": 63,
   "sufficientRoutes": 0,
   "routes": {
     "/": {
-      "samples": 10,
+      "samples": 12,
       "sufficient": false,
       "p75": {
-        "lcp": 7436,
+        "lcp": 1792,
         "cls": 0.202,
         "inp": 288,
-        "fcp": 1792,
-        "ttfb": 1214
+        "fcp": 1588,
+        "ttfb": 488
       }
     },
     "/__rum_selftest": {
@@ -68,6 +68,17 @@
         "ttfb": 98
       }
     },
+    "/games/project-unknown/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 568,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 568,
+        "ttfb": 15
+      }
+    },
     "/games/vaultspark-football-gm/": {
       "samples": 15,
       "sufficient": false,
@@ -77,6 +88,17 @@
         "inp": 96,
         "fcp": 928,
         "ttfb": 44
+      }
+    },
+    "/ignis/roi/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 524,
+        "cls": 0.0093,
+        "inp": 160,
+        "fcp": 524,
+        "ttfb": 255
       }
     },
     "/leaderboards/": {
@@ -102,18 +124,18 @@
       }
     },
     "/nervous-system/": {
-      "samples": 2,
+      "samples": 10,
       "sufficient": false,
       "p75": {
         "lcp": 520,
         "cls": 0.0857,
-        "inp": 152,
+        "inp": 168,
         "fcp": 520,
         "ttfb": 172
       }
     },
     "/oracle/": {
-      "samples": 1,
+      "samples": 3,
       "sufficient": false,
       "p75": {
         "lcp": 1140,
@@ -121,6 +143,17 @@
         "inp": 552,
         "fcp": 1140,
         "ttfb": 194
+      }
+    },
+    "/pathways/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 476,
+        "cls": 0.0705,
+        "inp": 160,
+        "fcp": 476,
+        "ttfb": 226
       }
     },
     "/projects/statvault/": {
@@ -154,6 +187,50 @@
         "inp": 0,
         "fcp": 296,
         "ttfb": 8
+      }
+    },
+    "/sitemap-page/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 424,
+        "cls": 0.0006,
+        "inp": 200,
+        "fcp": 424,
+        "ttfb": 130
+      }
+    },
+    "/social/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 424,
+        "cls": 0.1673,
+        "inp": 176,
+        "fcp": 424,
+        "ttfb": 166
+      }
+    },
+    "/status/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 640,
+        "cls": 0.0092,
+        "inp": 320,
+        "fcp": 640,
+        "ttfb": 106
+      }
+    },
+    "/studio-pulse/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 656,
+        "cls": 0.0339,
+        "inp": 336,
+        "fcp": 656,
+        "ttfb": 254
       }
     },
     "/terms/": {

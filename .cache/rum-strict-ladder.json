@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-11T22:39:46.109Z",
+  "generatedAt": "2026-06-11T23:12:48.319Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 42,
+  "totalSamples": 63,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
@@ -24,16 +24,16 @@
   "routes": [
     {
       "route": "/",
-      "samples": 10,
+      "samples": 12,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 40,
+      "remaining": 38,
       "p75": {
-        "lcp": 7436,
+        "lcp": 1792,
         "cls": 0.202,
         "inp": 288,
-        "fcp": 1792,
-        "ttfb": 1214
+        "fcp": 1588,
+        "ttfb": 488
       },
       "overBudget": false
     },
@@ -98,6 +98,21 @@
       "overBudget": false
     },
     {
+      "route": "/games/project-unknown/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 568,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 568,
+        "ttfb": 15
+      },
+      "overBudget": false
+    },
+    {
       "route": "/games/vaultspark-football-gm/",
       "samples": 15,
       "minSamples": 50,
@@ -109,6 +124,21 @@
         "inp": 96,
         "fcp": 928,
         "ttfb": 44
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/ignis/roi/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 524,
+        "cls": 0.0093,
+        "inp": 160,
+        "fcp": 524,
+        "ttfb": 255
       },
       "overBudget": false
     },
@@ -144,14 +174,14 @@
     },
     {
       "route": "/nervous-system/",
-      "samples": 2,
+      "samples": 10,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 40,
       "p75": {
         "lcp": 520,
         "cls": 0.0857,
-        "inp": 152,
+        "inp": 168,
         "fcp": 520,
         "ttfb": 172
       },
@@ -159,16 +189,31 @@
     },
     {
       "route": "/oracle/",
-      "samples": 1,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 47,
       "p75": {
         "lcp": 1140,
         "cls": 0.0021,
         "inp": 552,
         "fcp": 1140,
         "ttfb": 194
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/pathways/",
+      "samples": 2,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 48,
+      "p75": {
+        "lcp": 476,
+        "cls": 0.0705,
+        "inp": 160,
+        "fcp": 476,
+        "ttfb": 226
       },
       "overBudget": false
     },
@@ -214,6 +259,66 @@
         "inp": 0,
         "fcp": 296,
         "ttfb": 8
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/sitemap-page/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 424,
+        "cls": 0.0006,
+        "inp": 200,
+        "fcp": 424,
+        "ttfb": 130
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/social/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 424,
+        "cls": 0.1673,
+        "inp": 176,
+        "fcp": 424,
+        "ttfb": 166
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/status/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 640,
+        "cls": 0.0092,
+        "inp": 320,
+        "fcp": 640,
+        "ttfb": 106
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/studio-pulse/",
+      "samples": 2,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 48,
+      "p75": {
+        "lcp": 656,
+        "cls": 0.0339,
+        "inp": 336,
+        "fcp": 656,
+        "ttfb": 254
       },
       "overBudget": false
     },
