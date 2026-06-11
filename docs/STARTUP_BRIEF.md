@@ -32,7 +32,7 @@
 ║                                                                  ║
 ║    943/1000   ██████████████████████░░   94%                     ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 11↑                         ║
-║    Last active: 1d  ·  Last closeout: 1d  ·  (active = newest o  ║
+║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest o  ║
 ║    Trend  ▆▄▆▆▇  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
@@ -59,7 +59,7 @@
 ║  ✓  Tests         116/116 passing (2026-06-08)                   ║
 ║  ✓  Velocity      11 ↑  ·  Debt: →                               ║
 ║  ✓  Runway        5 open Now items — PROGRESSIVE-MEMBERSHIP-UNL  ║
-║  ✓  Headroom      70% remaining · ~7 large item(s) fit           ║
+║  ✓  Headroom      0% remaining · ~0 large item(s) fit            ║
 ║  ✓  Context age   1d                                             ║
 ║  ✓  IGNIS         40319 FORGE  ·  6d old                         ║
 ║  ✓  Truth         green  ·  Genome: 0/25                         ║

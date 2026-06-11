@@ -167,6 +167,16 @@
           p.indexOf('/search') === 0 || p.indexOf('/oracle') === 0;
       },
       idle: true
+    },
+    {
+      // S186: proof-to-conversion bridge — earned trust microline at the signup
+      // decision point. Mounts only where the hook exists (the vault-member
+      // register card); honest-dark when no proof is fresh.
+      src: '/assets/proof-conversion-line.js',
+      when: function () {
+        return !!document.querySelector('[data-vs-proof-cta]');
+      },
+      idle: true
     }
   ];
 

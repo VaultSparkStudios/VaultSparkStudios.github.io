@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-10",
+  "generatedAt": "2026-06-11",
   "generatedBy": "scripts/build-commit-map.mjs",
   "source": "git log (local, noise-filtered)",
   "kind": "commit-map",
@@ -8,8 +8,38 @@
   "count": 24,
   "entries": [
     {
-      "sha": "c8747a3a",
-      "ts": "2026-06-10T21:25:16.000Z",
+      "sha": "ec7ffbe1",
+      "ts": "2026-06-11T01:48:09.000Z",
+      "type": "feat",
+      "scope": "s186-oracle",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "seed Oracle empty-state with real query-cluster chips + instrument hint/chip funnel"
+    },
+    {
+      "sha": "809f7e35",
+      "ts": "2026-06-11T00:06:15.000Z",
+      "type": "chore",
+      "scope": "S185",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "closeout write-backs + durable fixes: propagate-nav inline→class, oracle schemaVersion, step3d.7 artifact ordering"
+    },
+    {
+      "sha": "576fff25",
+      "ts": "2026-06-11T00:06:15.000Z",
+      "type": "fix",
+      "scope": "s185-closeout",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "nav inline→class, s151 contract update, oracle schemaVersion, closeout artifact ordering"
+    },
+    {
+      "sha": "bb8ec646",
+      "ts": "2026-06-11T00:06:15.000Z",
       "type": "feat",
       "scope": "s185-wave4c",
       "breaking": false,
@@ -18,8 +48,8 @@
       "summary": "geo-vitals sample accelerator — colo probe + supplement"
     },
     {
-      "sha": "b3b10401",
-      "ts": "2026-06-10T21:00:01.000Z",
+      "sha": "5fee3422",
+      "ts": "2026-06-11T00:06:15.000Z",
       "type": "feat",
       "scope": "s185-wave4b",
       "breaking": false,
@@ -28,8 +58,8 @@
       "summary": "ambient-split wave 4 — 4 scripts to predicate loading"
     },
     {
-      "sha": "df841891",
-      "ts": "2026-06-10T20:11:41.000Z",
+      "sha": "dab569c4",
+      "ts": "2026-06-11T00:06:15.000Z",
       "type": "feat",
       "scope": "s185-wave4a",
       "breaking": false,
@@ -38,8 +68,8 @@
       "summary": "TT named-policy wave — 4 modules renamed + lint gate"
     },
     {
-      "sha": "2646bc65",
-      "ts": "2026-06-10T19:14:58.000Z",
+      "sha": "2b67b8de",
+      "ts": "2026-06-11T00:06:15.000Z",
       "type": "feat",
       "scope": "s185-wave3b",
       "breaking": false,
@@ -48,8 +78,8 @@
       "summary": "vault-kinesis SVG ship-pulse waveform on /studio-pulse/"
     },
     {
-      "sha": "70db655f",
-      "ts": "2026-06-10T18:59:34.000Z",
+      "sha": "2a64ec73",
+      "ts": "2026-06-11T00:06:15.000Z",
       "type": "feat",
       "scope": "s185-wave3a",
       "breaking": false,
@@ -58,8 +88,8 @@
       "summary": "oracle proactive contextual hints (IntersectionObserver + 20s idle)"
     },
     {
-      "sha": "f0cc9705",
-      "ts": "2026-06-10T18:48:12.000Z",
+      "sha": "1a111a61",
+      "ts": "2026-06-11T00:06:14.000Z",
       "type": "feat",
       "scope": "s185-wave2b",
       "breaking": false,
@@ -68,8 +98,8 @@
       "summary": "oracle query learning loop — cluster builder + insights feed"
     },
     {
-      "sha": "c16895a6",
-      "ts": "2026-06-10T18:40:50.000Z",
+      "sha": "8349c3c6",
+      "ts": "2026-06-11T00:06:14.000Z",
       "type": "feat",
       "scope": "s185-wave2a",
       "breaking": false,
@@ -78,8 +108,8 @@
       "summary": "membership nudge on 3rd+ visit in returning-visitor-digest"
     },
     {
-      "sha": "ccdc7f98",
-      "ts": "2026-06-10T18:36:16.000Z",
+      "sha": "bf2c440b",
+      "ts": "2026-06-11T00:06:14.000Z",
       "type": "feat",
       "scope": "s185-wave1d",
       "breaking": false,
@@ -88,8 +118,8 @@
       "summary": "command-palette IGNIS query cache (15-min localStorage)"
     },
     {
-      "sha": "e5255523",
-      "ts": "2026-06-10T18:31:42.000Z",
+      "sha": "06dd0c7f",
+      "ts": "2026-06-11T00:06:14.000Z",
       "type": "feat",
       "scope": "s185-wave1",
       "breaking": false,
@@ -216,36 +246,6 @@
       "move": "Fixed",
       "tone": "fix",
       "summary": "S182 — sweep 12 dead ambient bundles + corpus-aware orphan gate"
-    },
-    {
-      "sha": "f53714ed",
-      "ts": "2026-06-09T01:12:28.000Z",
-      "type": "feat",
-      "scope": "security",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "S182 wave 1 — redact edge-fn errors + env-driven odds CORS"
-    },
-    {
-      "sha": "fc9f4e4c",
-      "ts": "2026-06-09T01:05:26.000Z",
-      "type": "fix",
-      "scope": "ci",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "valid YAML for auto-rollback step (block scalar, no inline colon)"
-    },
-    {
-      "sha": "5d6efeb2",
-      "ts": "2026-06-09T00:59:47.000Z",
-      "type": "feat",
-      "scope": "reliability",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "S182 wave 1 — auto-rollback, JSON liveness assert, RUM rate-limit"
     }
   ]
 }
