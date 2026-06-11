@@ -1015,3 +1015,55 @@ Rotated-out Done/Now session blocks. Newest rotations appended at the bottom. Ve
 - [x] **[GENIUS][CONVERSION] Premium proof/depth pass** — **DONE S79**: homepage, membership, and VaultSparked now expose stronger proof, objection handling, and next-step clarity through the upgraded shared trust-depth runtime.
 - [x] **[GENIUS][COHESION] World gravity system** — **DONE S79**: game and universe pages now render explicit gravity rails and world-affinity-aware handoffs into membership, support, changelog, and adjacent lore.
 - [x] **[SIL] Local verify documentation pass** — **DONE S79**: `docs/LOCAL_VERIFY.md` now makes the lower-worker local verify contract explicit and the intelligence-surface coverage now includes the new world-gravity routes.
+
+
+<!-- rotated 2026-06-11 · sessions < 183 · 6 block(s) -->
+
+## Done (Session 182 — outage fix → /audit → /implement · 7 items shipped)
+
+- [x] **[S182][REL/P0] PROD-OUTAGE-WORKER-SELF-LOOP — DONE.** Site was fully down (apex hung, zero bytes). Worker fetched its own apex route post-Pages-migration → self-loop. Fix: `originFetch` rewrites primary fetch to Pages origin by hostname; `package.json deploy` defaults `--env production`; new `smoke-live.mjs` post-deploy liveness gate. Site verified 6/6 smoke. **DONE S182**
+- [x] **[S182][REL/P0] WORKER-AUTO-ROLLBACK — DONE.** `cloudflare-worker-deploy.yml` auto-reverts (`wrangler rollback --yes`) + re-smokes when deploy succeeds but liveness fails. Deployed green (CI run 27177181660). **DONE S182**
+- [x] **[S182][REL/P1] SMOKE-LIVE-JSON-ASSERT — DONE.** `smoke-live.mjs` validates JSON artifacts vs Pages origin (catches malformed JSON). self-test 12/12. **DONE S182**
+- [x] **[S182][SEC/P1] RUM-BEACON-RATE-LIMIT — DONE (live).** `/v/rum` per-IP 60/min, fails open. **DONE S182**
+- [x] **[S182][SEC/P2] EDGE-FN-ERROR-REDACTION — DONE (needs `supabase functions deploy`).** Redacted raw errors in create-checkout, stripe-webhook, assign-discord-role. **DONE S182**
+- [x] **[S182][SEC/P2] ODDS-CORS-PIN — PARTIAL (needs config + deploy).** Wildcard→env allowlist `ODDS_ALLOWED_ORIGINS`; defaults `*` until set. **DONE S182 (activation pending)**
+- [x] **[S182][MAINT/P1] AMBIENT-ORPHAN-SWEEP — DONE.** −1.18 MB dead bundles; orphan checker now corpus-aware (fixed false-positive that flagged 18-20-page-referenced hashes for `git rm`). **DONE S182**
+- [x] **[S182][MAINT/P2] DEAD-SCRIPT-REMOVAL — DONE.** Removed 8 spent one-shot scripts; import+lint clean. **DONE S182**
+
+## Done (Session 180 — continuation goal-chain: /start → /audit → /implement → /closeout · 2/2)
+
+- [x] **[S180][AI/P1] AI-MANIFEST-DISCOVERY-HEADER — DONE.** S179 shipped `/agents.json`, but agents still had to guess the URL or read robots.txt. `build-agents-json.mjs` now declares `discovery.manifest`; generated `_headers` now exposes `Link: </agents.json>; rel=alternate; type="application/json"`; `check-ai-discovery-spine.mjs` self-test + live gate now enforce the header. **DONE S180** (`npm run build:check` green)
+- [x] **[S180][SPEED/P2] AMBIENT-SPLIT-WAVE3 — DONE.** `intent-flight-director.js` (six exact info-finding routes) and `ignis-answer-engine.js` (`[data-ask-ignis]` + `/search|/oracle`) moved from the always-parsed feature bundle into predicate loading. Feature bundle 45.4KB→35.2KB while conversion/info-finding surfaces keep their behavior. Coverage, placement, shell coherency, and full build:check green. **DONE S180**
+
+## Done (Session 179 — goal-chain: /start → /audit → /implement → /closeout · 4/4)
+
+- [x] **[S179][AI/P0] AGENTS-JSON-SPINE — DONE.** `/agents.json` (CANON-011) was never shipped though `build-llms-full-shards.mjs` advertised the pairing. New `build-agents-json.mjs` generates it from `ecosystem-state.json` (canonical surfaces, primary CTA, policies, automation disclosure, 13 public projects + citable shards); new `check-ai-discovery-spine.mjs` gate (10-case self-test) enforces agents.json ⨯ llms.txt shard-set equality + no dead internal URLs. Surfaced + fixed pre-existing phantom shards in llms.txt + stale call-of-doodie URL. robots.txt points agents at it. **DONE S179** (commit `f57c3853`)
+- [x] **[S179][SEO/P1] META-DESC-BACKFILL-GATE — DONE (re-scoped).** Audit's "17 missing pages" was a false premise (buggy `grep -Lq`) — every indexable page already has a description. Real deliverable = floor gate `check-meta-descriptions.mjs` (hard-fail missing/empty, advisory length, skips noindex/internal). Caught + fixed an apostrophe-truncation bug in its own parser; 8-case self-test; 86 pass / 0 errors. **DONE S179** (commit `910e4826`)
+- [x] **[S179][A11Y/P2] NAV-ARIA-CURRENT — DONE.** Nav active link marked with CSS `.active` only (`aria-current` = 0). `activeAttr()` helper in `propagate-nav.mjs` emits `aria-current="page"` + class together; re-propagated 90 pages. CSP/extraction/coherency green; dropdown styles byte-identical. **DONE S179** (commit `c0caf313`)
+- [x] **[S179][SPEED/P2] AMBIENT-SPLIT-WAVE2 — DONE.** 4 route-scoped widgets (social-dashboard-public→/social, security-posture→/security, feedback-decision-board→/feedback, rank-economy-simulator→/membership|/ranks) moved to `ambient-loader` predicate loading; predicate mirrors each mount guard so behavior is identical. Feature bundle 58.7KB→45.4KB (−23%). vault-atlas NOT split (sitewide Resources dropdown). Coverage/placement/sw-coherency green. **DONE S179** (commit `8710f830`)
+
+## Done (Session 178 — goal-chain: /start → /audit → /implement → /closeout · 6/6)
+
+- [x] **[S178][OBS/P0] UPTIME-PUBLISH-LOOP — DONE.** Probe went green but `api/uptime.json` died in the CI runner; `/status/` uptime tile was unfed. `probe-uptime.mjs` now writes `api/uptime.json` (live + 30d rollup) + appends `data/uptime-history.ndjson`; `uptime-probe.yml` commits low-churn (`[skip ci]`, only on hour/state/incident); `/status/` renders self-measured availability % + live incidents; `check-uptime-contract.mjs` gate 7/7 in build:check. Resolves UPTIME-PROBE-GREEN-CONFIRM (first scheduled run on new code green 40s @ 06-08 01:39Z). **DONE S178**
+- [x] **[S178][OBS/P1] UPTIME-ALERT-PATH-PROOF — DONE.** `probe-uptime.mjs --simulate-failure` proves the down→email path without paging founder (PASS). Module made import-safe (live probe + CLI dispatches gated on direct invocation) after a real import-side-effect bug. self-test 14/14. **DONE S178**
+- [x] **[S178][PERF/P1] FIELD-WIN-AUTO-PUBLISH — DONE.** `build-field-win-proof.mjs` → `api/field-win.json` (confirmed verdicts only, never pending); `/status/` "Biggest measured win" tile auto-lights when origin-migration LCP (1588 vs 9489, −83%) confirms, honest-dark while pending (0 today). self-test 6/6; in build + build:check. **DONE S178**
+- [x] **[S178][UX/P1] RETURNING-VISITOR-DIGEST — DONE.** `assets/returning-visitor-digest.js` momentum strip from Forge Ledger + localStorage baseline; ≥2-ship threshold; idle via ambient-loader on returning-visitor predicate; DOM-API/TT-safe; cost-neutral. Offline Playwright proof 3/3. **DONE S178**
+- [x] **[S178][SPEED/P2] AMBIENT-GENOME-STRIP-SPLIT — DONE.** `vault-genome-strip.js` moved to predicate loading; feature bundle 28→27 sources; predicate mirrors skip rules; shell rotated + pages re-propagated; coverage + placement gates green. **DONE S178**
+- [x] **[S178][TOKEN/P3] TASKBOARD-ARCHIVE-ROTATION — DONE.** `rotate-taskboard.mjs` archived sessions <176 to `context/archive/TASK_BOARD_ARCHIVE.md` (nothing deleted); board 365KB→130KB (−63%); import-safe; session-window `--check-size` advisory in build:check. self-test 7/7. **DONE S178**
+
+## Done (Session 177 — goal-chain: /start → /audit → /implement → /closeout · 2/2)
+
+- [x] **[S177][OBS/P0] UPTIME-PROBE-REAL-AVAILABILITY — DONE.** S176 probe was DOA: its first cron run false-paged the founder. Root cause = CF edge bot-challenge on prod HTML nav (datacenter/CI clients hang/403 before the Worker; real browsers pass). Rewrote `scripts/probe-uptime.mjs` (schemaVersion 2.0) to a two-signal model — Pages-origin content + prod JSON liveness; custom-domain HTML is non-alerting informational; alerts only on real failure. Run 4m14s→~2s, self-test 10/10. DECISIONS 2026-06-07 + memory captured. **DONE S177**
+- [x] **[S177][RESILIENCE/P1] WORKER-ORIGIN-HANG-FAILOVER — DONE.** `originFetch` primary+fallback idempotent fetch now bounded by `AbortSignal.timeout(8s)`; an origin hang fast-fails into S176's pages.dev failover → DR cache (S176 only caught clean 5xx). Deployed --env production v`bb9a734d`; post-deploy verified scanner-403 + JSON-200 + probe overall=up. **DONE S177**
+
+## Done (Session 176 — goal-chain: /start → /audit → /implement → /closeout · 9/9)
+
+- [x] **[S176][UX/P0] NOW-PLAYING-ORPHAN-KILL + EXTRACTOR ROOT-CAUSE — DONE.** Founder-reported "Loading…" stuck top-left root-caused to `extract-inline-styles.mjs` wiping 241/253 vsx rules on rebuild. Extractor now cumulative + coverage-invariant; 252 rules recovered into style.css; dead `#nowPlayingBar` deleted; shell `850d887c62` (330/330 vsx coverage). **DONE S176**
+- [x] **[S176][PROCESS/P0] PLACEHOLDER-SENTINEL-GATE — DONE.** `scripts/check-placeholder-orphans.mjs` (ancestor-chain aware, 6/6 self-test) fails build:check on any "Loading…" with no JS renderer. Placeholder-forever is now structurally impossible. **DONE S176**
+- [x] **[S176][RESILIENCE/P1] WORKER-STALE-ON-5XX — DONE.** Founder saw browser 503s; Worker now serves 7-day disaster-recovery HTML on double-origin 5xx (`X-VS-Disaster-Recovery: stale`). Deployed --env production bf71b2db, prod verified 200. **DONE S176**
+- [x] **[S176][SECURITY/P1] TT-SINK-BURNDOWN-WAVE2 — DONE.** `assets/tt-default-policy.js` default-policy migration bridge (covers ~167 legacy sinks) + 6 named-sink fixes (theme-toggle/trust-depth/related-content/recent-ships/sentry-init). Preps 06-12 enforce re-probe. **DONE S176**
+- [x] **[S176][OBS/P1] UPTIME-PROBE-FIRSTPARTY — DONE.** `scripts/probe-uptime.mjs` + `.github/workflows/uptime-probe.yml` (*/30, browser UA, retry-once, 6h dedup, Resend alert). Free-build replacement for MISSING uptimerobot. 6/6 self-test. **DONE S176**
+- [x] **[S176][SPEED/P2] PRELOAD-PRUNE — DONE.** `_headers` preloads 5→2 (style + ambient-core); killed ~84 unused-preload warnings + LCP fetch contention. **DONE S176**
+- [x] **[S176][DATA/P1] FIELD-VERDICT-REFRESH — DONE (readout).** Verdicts regenerated from CI RUM; `/` PENDING (38 pre / 3 post, need 5+/side); geo US:107 GB:3. **DONE S176**
+- [x] **[S176][PROCESS/P2] RUM-PULL-CONFLICT-GUARD — DONE.** `pull-rum-summary.mjs` skips local rewrite when github-actions committed <24h ago (--force overrides). Ends the generated-file UU-conflict pattern. **DONE S176**
+- [x] **[S176][ECOSYSTEM/P2] SIL-INTEGRITY-CLAMP — DONE.** S173/S174 processQuality 101→100 fixed + totals recomputed (998→997, 997→996); `check-sil-integrity.mjs` gate; answered studio-ops repo-question via Ark (id 01JQHOLTTF798F4CE28B793898). **DONE S176**

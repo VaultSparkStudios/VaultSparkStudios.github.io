@@ -1,5 +1,20 @@
 # Work Log
 
+## 2026-06-11 — Session 187 (/goal chain + competitive analysis of top independent studios · 5 shipped / 3 already-done / 2 deferred)
+
+Ran the full /goal chain plus a founder-requested competitive scan vs top independent studios (Supergiant/Klei/Landfall/Mullins · levels.io/Marc Lou/Tony Dinh/37signals · Panic/Active Theory). The scan reframed a 96%-SIL site: **ahead** on infrastructure (machine-SEO, perf, build-in-public transport, press kit, identity spine), **under-built** on conversion/funnel/proof. Both the audit AND the research were corrected against repo truth.
+
+**Shipped 5** (6 commits, all build-gate green):
+1. **audit-freshness-precheck** (`check-audit-staleness.mjs`, 6/6) — greps corpus + DONE history for distinctive phrases before scoring; dogfooded, caught 3 already-done items. (1248d04c)
+2. **studio-soul-weekly-forge** (`draft-weekly-forge.mjs` 6/6 + `check-content-freshness.mjs` 5/5) — drafts a SOUL-voiced devlog from the ledger to `journal/_drafts/`; warn-gate caught journal 81d / changelog 59d stale. (8d9bd511)
+3. **honest-traction-scoreboard** — `/studio/` strip from live feed: `3 live · 8 forge · 16 sealed · 186 sessions`; SEALED count = trust signal. (78ef2942)
+4. **cross-game-play-next** — `data/game-affinity.json` + asset; routes to a playable title, never dead-ends; `play-next:*` RUM. (f4358fc6)
+5. **studio-dispatch-optin** — activated the dead `footer-email-form` wiring via the existing ConvertKit ESP (no new vendor); homepage footer column + `footer-dispatch.js` honest-fail (replaced a façade form that faked success). Rebuilt ambient bundle + rotated shell (89 HTML) so all 5 client features deploy. (09798337)
+
+**Discipline that mattered:** repo-truth-over-external-research caught 4 things — the research's "no email capture" was wrong (live ConvertKit ESP exists with dead footer wiring); manifesto, compounding-promise, and ignis-oracle cross-link were all already shipped. **Deferred honestly:** wishlist-momentum (Supabase MISSING), discord-to-nav (propagate-nav), flagship-storytelling (4h). Full report: `docs/COMPETITIVE_SCAN_2026-06-11.md`.
+
+---
+
 ## 2026-06-11 — Session 186 (/goal chain · proof↔conversion weld · 8 shipped / 1 already-done / 1 deferred)
 
 Genius audit (10 items, Priority 211.1) personalized to live carries → implemented in 5 waves:

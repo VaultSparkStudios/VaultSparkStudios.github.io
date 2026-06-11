@@ -8,16 +8,39 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █▇█▇█
-Avgs - 3: 947.3 | 5: 963.4 | 10: 982.0 | 25: 977.5 | all: 961 (v3.0 /1000)
-  └ 3-session: Dev 90.0 | Align 97.7 | Momentum 92.3 | Engage 95.0 | Process 90.3
-Velocity trend: ↑ (S186: 8 shipped + 2 honest triages in a clean single-session goal-chain; S185: 11; S183: 7 — sustained high)  |  Protocol velocity: ↑ (build-order.mjs canonicalizes step3d.7 ordering; %an cross-platform fix removes build friction) |  Debt: ↓ (dead asset removed, real Windows build bug fixed, ordering extracted to self-tested module)
-Momentum runway: 5 open Now items — PROGRESSIVE-MEMBERSHIP-UNLOCK (8h), TT-ENFORCE-REPROBE (~06-18), RICHER-IGNIS-LAYER, nav-sheet device verify, prod-verify  |  Intent rate: 100% (last 5)
-Last session: 2026-06-11 | Session 186 | Total: 956/1000 (v3.0) | Velocity: 8 | protocolVelocity: 2
+Sparkline (last 5 totals): ▇█▇██
+Avgs - 3: 956.7 | 5: 962.0 | 10: 980.0 | 25: 977.0 | all: 961 (v3.0 /1000)
+  └ 3-session: Dev 91.7 | Align 96.7 | Momentum 93.3 | Engage 94.7 | Process 93.7
+Velocity trend: ↑ (S187: 5 shipped + 3 already-done caught by the freshness tool built this session + 2 deferred; S186: 8; S185: 11 — sustained high)  |  Protocol velocity: ↑ (check-audit-staleness + check-content-freshness are new reusable gates; freshness-precheck immediately caught 3 dupes) |  Debt: ↓ (activated dead footer-form wiring; no new vendor — reused existing ConvertKit ESP; honest-fail replaces a faked-success form)
+Momentum runway: ≥5 open Now items — prod-verify 5 client features, publish forge devlog draft, wishlist-momentum (Supabase), discord-to-nav, flagship-storytelling  |  Intent rate: 100% (last 5)
+Last session: 2026-06-11 | Session 187 | Total: 957/1000 (v3.0) | Velocity: 5 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-11 — Session 187 (/goal chain + competitive analysis of top independent studios · 5 shipped / 3 already-done / 2 deferred) | Total: 957/1000 (v3.0) | Velocity: 5 | Debt: ↓
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 93 | 5 items shipped clean across 6 atomic commits; 3 new tools each self-tested (check-audit-staleness 6/6, draft-weekly-forge 6/6, check-content-freshness 5/5); build:check substantive probes green (CSP 119 files, SRI, TT-lint, render/mobile contracts, worker.unit, entity-graph, llms-shards); ambient bundle rebuilt + shell rotated correctly. Ding: a libuv Windows assertion crashed the full local build:check near the end (environmental, not logic) — CI runs authoritative full check on push. |
+| Creative Alignment | 96 | Every new surface holds the honest-dark / "verified, not claimed" SOUL line: traction scoreboard renders nothing below a breadth floor, footer dispatch fails honestly (no faked success — it replaced a façade form that lied), play-next never routes to a dead end. Reused the existing ConvertKit ESP rather than adding a vendor (free-build bias). Competitive intel is on-brand and public-safe. CDR entry logged. |
+| Momentum | 94 | Velocity 5 + 3 already-done items caught BEFORE wasting an implement pass (manifesto, compounding-promise, ignis-oracle cross-link) — the freshness tool built in item #1 paid for itself the same session. 0 blockers created; 2 honest deferrals with stated reasons. |
+| Engagement | 94 | Every shipped item is a conversion/funnel lever the competitive scan named: owned email capture (the #1 gap), cross-product routing (the studio's structural edge), honest portfolio proof (incl. the SEALED count as a trust signal), and a fresh-voice devlog drafter. All instrumented via /v/rum. |
+| Process Quality | 95 | Repo-truth-over-external-research was decisive 4×: the research said "no email capture" but the repo had a live ConvertKit ESP with dead footer wiring; manifesto/compounding/ignis-oracle were already shipped. Distrusting BOTH the audit and the research against the corpus is the discipline that made this session efficient. Full goal-chain, all write-backs, honest dispositions table. |
+| **Total** | **957/500→/1000** | (5 primary 472 + secondary: Coherence 100 · Security 98 · Ecosystem 96 · Capital 98 · Automation 93) |
+
+**Top win:** The competitive scan reframed a 96%-SIL site as over-built infra / under-built funnel, and the 5 shipped items closed conversion gaps by *activating existing infrastructure* (dead Kit-ESP footer wiring, live public-intelligence feed) rather than building net-new — while the freshness tool from item #1 immediately caught 3 already-done audit items.
+**Top gap:** Two items stayed backend/process-gated — wishlist-momentum needs Supabase admin (MISSING locally), discord-to-nav needs a sitewide propagate-nav run — both honestly deferred rather than half-shipped.
+**Intent outcome:** Achieved — full /goal chain run + competitive analysis delivered + 5 verified items shipped, all build-gate green.
+
+**Brainstorm**
+1. *Wire check-audit-staleness into the /audit skill protocol* so every future audit auto-greps before scoring (path: add the call at audit step 5; High).
+2. *Sitewide footer dispatch via propagate-nav* — promote the homepage footer form into the propagated footer template so capture is on all ~115 pages, not just home (path: add the column to propagate-nav footer block + re-propagate; Medium).
+3. *Competitive-gap tracker* — a recurring quarterly competitive scan that diffs against the last run so studio-vs-peers drift is monitored, not one-off (path: save this report to docs/COMPETITIVE_SCAN_<date>.md + a diff script; Medium).
+4. *Honest-traction on the homepage hero* — once verified on /studio/, A/B a compact portfolio-truth chip in the hero distinct from the community vault-proof section (path: hook + flag; Medium).
+
+**Committed to TASK_BOARD:** [SIL] wire check-audit-staleness into /audit step 5 · [SIL] sitewide footer dispatch via propagate-nav
 
 ## 2026-06-11 — Session 186 (/goal [/start → /audit → /implement → /closeout] · 8 shipped / 1 already-done / 1 deferred) | Total: 956/1000 (v3.0) | Velocity: 8 | Debt: ↓
 

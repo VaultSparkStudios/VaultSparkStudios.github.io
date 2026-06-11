@@ -3808,3 +3808,16 @@ Session Intent: /start → /go the full S182 genius list + a founder P0 mid-spri
 - **Next session:** harden self-committing workflows with rebase-before-push (#follow-up); decide on the richer Oracle layer; STATUS-PROOF-INDEX; then TT-enforce re-probe when due.
 
 <details><summary>Where We Left Off (Session 182)</summary>
+
+---
+<!-- archived: 2026-06-11 -->
+
+## Where We Left Off — Session 185
+
+**Session Intent:** Run the full `/goal [/start → /audit → /implement → /closeout]` chain with genius-level, creative thinking; provide impact score post-closeout. **Achieved — 11/12 items shipped, build:check green, all S185 commits pushed.**
+
+- **Shipped 11 items across 5 waves:** studio-pulse rename (91 pages + gate + vocab gate) · ark fleet broadcast · STATUS-PROOF-IN-AGENTS-JSON · IGNIS query cache · oracle-query-learning-loop · returning-visitor membership nudge · oracle proactive contextual hints · vault-kinesis SVG waveform · TT named-policy wave (4 modules + lint gate) · ambient-split wave4 (4 scripts) · geo-vitals colo probe.
+- **Headline fix — closeout structural fragility root-caused + fixed:** Two durable closeout bugs eliminated: (1) `propagate-nav.mjs` was generating inline `style=` attributes that violated `check-intelligence-style-contract --strict` on 7 intelligence pages — fixed by moving all nav status colors to CSS classes in `style.css`; (2) closeout artifact re-ordering was undefined — `sanitize-public-oracle-feed` must run before `build-llms-full-shards` before `build-ambient-ledger` — now wired as `closeout-autopilot.mjs` step 3d.7. Both fixes prevent a recurring class of closeout drift.
+- **Deploy:** 10 S185 commits + post-commit reconcile + deploy-trigger pushed to `origin/main`.
+- **Tests:** `build:check` EXIT 0 end-to-end (108/108 pages).
+- **Deferred (next session):** PROGRESSIVE-MEMBERSHIP-UNLOCK (8h, Wave 5) · GEO-VITALS-WORKFLOW-TRIGGER (wire colo-probe into uptime-probe.yml) · TT-ENFORCE-FLIP (SOUL #3, after remaining 2 sinks fixed) · RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION (founder call) · vaultsparked-proof.js delete + nav-sheet device verify.
