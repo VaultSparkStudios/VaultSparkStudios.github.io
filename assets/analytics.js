@@ -59,6 +59,31 @@
     } catch (e) { return null; }
   }
 
+  // S194: classify the referrer hostname into one bounded acquisition channel.
+  // The one number a traffic-starved site never measured — which channel the
+  // trickle arrives through. Domain-classified only; the hostname itself never
+  // leaves the browser via this path (only the [a-z] bucket does).
+  function classifySource(host) {
+    if (!host) return 'direct';
+    var h = String(host).toLowerCase();
+    if (/(^|\.)(google|bing|duckduckgo|yahoo|ecosia|baidu|yandex|brave|startpage)\./.test(h) || h.indexOf('search') !== -1) return 'search';
+    if (/(^|\.)(twitter|x|t|facebook|fb|instagram|linkedin|reddit|youtube|youtu|tiktok|discord|mastodon|bsky|threads|news\.ycombinator|lobste)\./.test(h) || h === 't.co' || h === 'x.com') return 'social';
+    return 'referral';
+  }
+
+  // Emit the acquisition channel to the /v/rum funnel rollup once per session.
+  // Bounded `source:<bucket>` family (Worker prefixAllowlist, S194). Inherits the
+  // consent + DoNotTrack gating above (only reachable from track()).
+  function emitSourceOnce() {
+    try {
+      if (sessionStorage.getItem('vs_source_sent') === '1') return;
+      sessionStorage.setItem('vs_source_sent', '1');
+      var bucket = classifySource(getReferrer());
+      var body = JSON.stringify({ route: location.pathname || '/', ux: 'source:' + bucket });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+    } catch (e) {}
+  }
+
   function track() {
     var payload = {
       page_path:  location.pathname,
@@ -67,6 +92,8 @@
       session_id: getSessionId(),
       user_id:    getUserId(),
     };
+
+    emitSourceOnce();
 
     fetch(SB_URL + '/rest/v1/page_views', {
       method:    'POST',

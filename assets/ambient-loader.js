@@ -121,6 +121,18 @@
       idle: true
     },
     {
+      // S194: share-game — one-tap Web Share / clipboard control on game heroes.
+      // Game pages are the studio's prime viral surface; pairs with the OG-raster
+      // fix so each share carries a real card. Self-mounts on a .game-hero.
+      src: '/assets/share-game.js',
+      when: function () {
+        var p = location.pathname || '/';
+        return /^\/games\//.test(p) || p.indexOf('/vaultspark-football-gm') === 0 ||
+          !!document.querySelector('.game-hero, [data-share-game]');
+      },
+      idle: true
+    },
+    {
       // rank-orb: member rank progress orb in nav — non-portal, non-admin pages.
       src: '/assets/rank-orb.js',
       when: function () {

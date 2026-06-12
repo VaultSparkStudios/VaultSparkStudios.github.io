@@ -358,11 +358,26 @@ for (const { full, rel } of files) {
     ].join('\n  ');
     html = html.replace('<meta charset="UTF-8" />', '<meta charset="UTF-8" />\n  ' + hints);
   }
-  // Add GTM + Stripe prefetch hints if missing (performance: eliminates DNS lookup latency)
-  if (!html.includes('googletagmanager.com"')) {
+  // S194: gtag was removed site-wide (S147/S175) but the googletagmanager +
+  // google-analytics resource hints were left behind — dead TLS warm-ups to a
+  // tracker that never loads, plus a privacy-optics smell for a privacy-positioning
+  // studio. Strip them wherever they survive (js.stripe.com stays — Stripe checkout
+  // is real). Idempotent: a re-run over an already-clean page is a no-op.
+  html = html.replace(
+    /\n\s*<link rel="(?:preconnect|dns-prefetch)" href="https:\/\/www\.google(?:tagmanager|-analytics)\.com"[^>]*\/>/g,
+    ''
+  );
+  // Collapse historical duplicate js.stripe.com dns-prefetch lines (pre-existing
+  // debris from earlier injection passes) down to one.
+  html = html.replace(
+    /(<link rel="dns-prefetch" href="https:\/\/js\.stripe\.com" \/>)(\s*<link rel="dns-prefetch" href="https:\/\/js\.stripe\.com" \/>)+/g,
+    '$1'
+  );
+  // Add Stripe prefetch hint if missing (Stripe Checkout is a live revenue path).
+  if (!html.includes('js.stripe.com')) {
     html = html.replace(
-      /<link rel="preconnect" href="https:\/\/fjnpzjjyhnpmunfoycrp\.supabase\.co" \/>/,
-      '<link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />\n  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />\n  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />\n  <link rel="dns-prefetch" href="https://www.google-analytics.com" />\n  <link rel="dns-prefetch" href="https://js.stripe.com" />'
+      /<link rel="dns-prefetch" href="https:\/\/fjnpzjjyhnpmunfoycrp\.supabase\.co" \/>/,
+      '<link rel="dns-prefetch" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />\n  <link rel="dns-prefetch" href="https://js.stripe.com" />'
     );
   }
 

@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-06-12 — Session 194 (/goal chain · the two silent killers under the apparatus · 5/5 shipped · build:check EXIT 0)
+
+Ran the full /goal chain (start → audit → implement → closeout). The audit refused to add more measurement to a funnel everyone agreed was traffic-starved, and instead ground-truth-probed what was already there — surfacing two silent killers that 193 sessions never caught, both hidden by something that *looked* like it worked.
+
+**Killer 1 — the homepage's entire named-event funnel was a dead `gtag` no-op.** `funnel-tracking.js` `track()` emitted only through `gtag('event', …)`, but gtag was removed site-wide at S147/S175, so every `data-track-event` (31), `data-track-view` (13) and `data-funnel-form` (3) interaction — including S193's brand-new hero play-vs-explore CTAs — produced zero data. It hid because a parallel `/v/rum` beacon (`emitUx`) was built right next to it across S186-S192; the funnel tiles lit from the RUM path while this one flatlined. Rewired `track()` to `/v/rum` under a bounded `funnel:` family + Worker `prefixAllowlist` + `rollup-rum-ux` fold. Bonus: a privacy upgrade — the dead gtag path had been leaking internal intent enums to Google; the new path sends only the event name. Purged the dead googletagmanager/google-analytics resource hints left behind (~80 heads) too.
+
+**Killer 2 — 73 pages' primary `og:image` was a blank-on-every-platform SVG.** The `/_og/` worker returns `image/svg+xml`, and its own comment falsely claimed social platforms rasterize SVG fine — they reject it (security). Every shared VaultSpark link rendered a dead grey rectangle on a site whose growth thesis is "shared links convert." Repointed all 73 to static PNGs (24 already existed) + a `check-og-images.mjs` gate so a blank card can never silently return.
+
+Then made shares actually worth taking — `share-game.js` adds a one-tap Web Share button to every game hero (sequenced after the OG fix, so each share carries a real card), a `videogame-schema-gate` locks out the fabricated review stars S193 removed, and `acquisition-source-breakdown` finally buckets which channel the trickle arrives through. All three new dynamic RUM families got worker-unit coverage. `build:check` EXIT 0 end-to-end (115-page crawl). Audit: `docs/AUDIT_2026-06-12-S194.{json,md}`.
+
 ## 2026-06-12 — Session 193 (/goal chain REDIRECTED by 2 founder P0s · 4/6 audit shipped + Oracle/Ask-IGNIS fix + login triage)
 
 Ran the full /goal chain with a fresh, ground-truthed audit that broke the 7-session "polish the measurement apparatus" loop and aimed at the real bottleneck — first-visit conversion + discovery. Mid-session the founder dropped two P0 interrupts (a login-page console dump, then "Oracle still not loading + Ask IGNIS shows dev-code-looking info" + "get to 13/13"). Served all three.

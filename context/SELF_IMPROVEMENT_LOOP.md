@@ -8,16 +8,41 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █▇▇█▇
-Avgs - 3: 959.7 | 5: 962.4 | 10: 965.0 | 25: 973.0 | all: 961 (v3.0 /1000)
-  └ 3-session: Dev 93.7 | Align 97.3 | Momentum 93.7 | Engage 96.0 | Process 96.0
-Velocity trend: → (S193: 4/6 audit shipped + a multi-part Oracle/Ask-IGNIS founder P0 + login triage, 2 deferred-with-evidence; S192: 5; S191: 4) | Protocol velocity: ↑ (Ask-IGNIS voice-firewall + --self-test folded into --check; ignis-spend gateway fallback + honest-cache; oracle honest-dark degradation) | Debt: ↓ (killed a public AI voice-leak + 3 fabricated game ratings + a perpetual "unmeasured" brief gap; Oracle no longer reads as broken)
-Momentum runway: ≥6 open Now items — prod-verify S193 (Oracle panels hidden + Ask IGNIS clean prose), RICHER-IGNIS-LAYER decision (founder — now blocking a leaner Oracle), web-share-per-game + acquisition-source (deferred audit #2/#3), forge devlog publish (founder), TT reprobe ~06-18, staging box recovery | Intent rate: 100% (last 5, S193 achieved-with-redirect)
-Last session: 2026-06-12 | Session 193 | Total: 958/1000 (v3.0) | Velocity: 6 | protocolVelocity: 3
+Sparkline (last 5 totals): ▇▇█▇█
+Avgs - 3: 964.7 | 5: 963.6 | 10: 965.0 | 25: 972.0 | all: 962 (v3.0 /1000)
+  └ 3-session: Dev 95.0 | Align 98.0 | Momentum 94.7 | Engage 97.3 | Process 97.3
+Velocity trend: ↑ (S194: 5/5 audit shipped, full chain clean, no deferrals; S193: 4/6 + Oracle P0; S192: 5) | Protocol velocity: ↑ (3 new bounded RUM families + worker-unit coverage; 2 new gates folded into check-proof-surface with zero build:check length; emit+allowlist+rollup in one change) | Debt: ↓ (killed a dead conversion-funnel sink alive since S147 + 73 blank social cards + a privacy leak to Google)
+Momentum runway: ≥6 open Now items — prod-verify S194 (PNG share cards + share button + funnel beacon lands), funnel data measurement-watch, FUNNEL L3 (top-CTA tile + ambient.shell engagement rewire), OG L3 (per-title PNG rasterizer), forge devlog publish (founder), TT reprobe ~06-18, staging box recovery | Intent rate: 100% (last 5, S194 fully achieved)
+Last session: 2026-06-12 | Session 194 | Total: 971/1000 (v3.0) | Velocity: 5 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-12 — Session 194 (/goal chain · the two silent killers under the apparatus · 5/5 shipped · build:check EXIT 0) | Total: 971/1000 (v3.0) | Velocity: 5 | Debt: ↓
+Avgs — 3: 964.7 | 5: 963.6 | 10: 965.0 | 25: 972.0 | all: 962 (v3.0 /1000)
+  └ 3-session: Dev 95.0 | Align 98.0 | Momentum 94.7 | Engage 97.3 | Process 97.3
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 96 | ↑ | build:check EXIT 0 end-to-end (115-page crawl, 0 failures), 5/5 shipped, +2 worker tests, 2 new self-tested gates. |
+| Creative Alignment | 98 | → | Distribution/conversion serves the SOUL (free in-browser games, shared links); caught a false code comment by trusting reality over the comment. |
+| Momentum | 96 | ↑ | 5/5 shipped, full chain clean, zero deferrals. |
+| Engagement | 98 | ↑ | Fixed the two biggest silent conversion/distribution killers — dead funnel sink + blank share cards. |
+| Process Quality | 98 | ↑ | Ground-truth-before-scoring; emit+allowlist+rollup in one change; gates folded (no cmd.exe overflow); worker-unit coverage; full write-back. |
+| Coherence | 98 | → | |
+| Security | 97 | ↑ | Privacy upgrade (stopped leaking intent enums to Google); 3 bounded prefix families (charset+length) with worker-unit PII-drop tests; schema-honesty gate. |
+| Ecosystem | 95 | → | |
+| Capital | 98 | → | Cost-neutral; no new spend. |
+| Automation | 97 | ↑ | check-og-images + check-videogame-schema gates make two regressions structurally impossible; folded with zero build:check length cost. |
+| **Total** | **971/1000** | ↑ 13 | Exceptionally clean, high-impact session — two root-cause silent killers under the apparatus, full chain, EXIT 0. |
+
+**Top win:** Found that the homepage's entire named-event conversion funnel had been a dead `gtag` no-op since S147/S175 — every CTA, view and form interaction discarded for 8 sessions, masked by a parallel `/v/rum` beacon built right next to it. Rewired it to the live transport (also stopping a quiet leak of internal intent enums to Google), so the studio's own conversion data exists for the first time.
+
+**Brainstorm (next-session candidates):**
+1. **FUNNEL L3** — surface a "top funnel events" tile on `/status/` + rewire the still-dead `window.gtag`-guarded engagement events in `ambient.shell` (scroll_milestone, exit_intent, ignis_lens_opened, visit_depth_upsell) to `/v/rum`. Same dead-sink class, shell bundle. → committed to TASK_BOARD.
+2. **OG L3** — zero-dependency build-time SVG→PNG pre-rasterizer so the bespoke per-title `/_og/` design works as a real raster card. → committed to TASK_BOARD.
+3. **gtag-reference gate** — a `check-no-gtag.mjs` that fails build:check if any asset reaches for `gtag(`/`window.gtag` (the dead sink), so the S194 class can never reappear. Cheap structural guard.
 
 ## 2026-06-12 — Session 193 (/goal chain REDIRECTED by 2 founder P0s · 4/6 audit shipped + Oracle/Ask-IGNIS fix + login triage) | Total: 958/1000 (v3.0) | Velocity: 6 | Debt: ↓
 Avgs — 3: 959.7 | 5: 962.4 | 10: 965.0 | 25: 973.0 | all: 961 (v3.0 /1000)

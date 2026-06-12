@@ -313,3 +313,34 @@ test('makeRumUxCleaner: exact Set wins first, then bounded dynamic families, els
   assert.equal(clean('totally-unknown'), null, 'unknown name dropped (no silent free-text storage)');
   assert.equal(clean(null), null, 'non-string dropped');
 });
+
+test('S194: funnel + source families admit bounded names, reject free-text/PII', () => {
+  const clean = makeRumUxCleaner(new Set(), [
+    prefixAllowlist('funnel', { charset: /^[a-z0-9_]+$/, maxLen: 48 }),
+    prefixAllowlist('source', { charset: /^[a-z]+$/, maxLen: 16 }),
+  ]);
+  // funnel: underscores are the funnel-tracking.js naming convention.
+  assert.equal(clean('funnel:home_hero_play_click'), 'funnel:home_hero_play_click', 'hero CTA name admitted');
+  assert.equal(clean('funnel:interview_start_click'), 'funnel:interview_start_click', 'interview funnel name admitted');
+  assert.equal(clean('funnel:join_form_submit_started'), 'funnel:join_form_submit_started', 'form-stage name admitted');
+  assert.equal(clean('funnel:DROP TABLE users'), null, 'spaces/uppercase free-text dropped');
+  assert.equal(clean('funnel:' + 'x'.repeat(49)), null, 'over-48 suffix dropped');
+  assert.equal(clean('funnel:'), null, 'empty funnel suffix dropped');
+  // source: a single lowercase channel bucket — never a URL or hostname.
+  assert.equal(clean('source:search'), 'source:search', 'search channel admitted');
+  assert.equal(clean('source:direct'), 'source:direct', 'direct channel admitted');
+  assert.equal(clean('source:evil.com/track?u=1'), null, 'a referrer URL can never reach storage');
+  assert.equal(clean('source:Search'), null, 'uppercase rejected (canonicalize client-side)');
+});
+
+test('S194: share:<slug>:<outcome> admits bounded game shares, rejects free-text', () => {
+  const clean = makeRumUxCleaner(new Set(), [
+    prefixAllowlist('share', { charset: /^[a-z0-9-]+:[a-z]+$/, maxLen: 40 }),
+  ]);
+  assert.equal(clean('share:call-of-doodie:native'), 'share:call-of-doodie:native', 'slug:native admitted');
+  assert.equal(clean('share:gridiron-gm:copy'), 'share:gridiron-gm:copy', 'slug:copy admitted');
+  assert.equal(clean('share:solara:cancel'), 'share:solara:cancel', 'slug:cancel admitted');
+  assert.equal(clean('share:game:native:extra'), null, 'a third segment is rejected');
+  assert.equal(clean('share:Call Of Doodie:native'), null, 'spaces/uppercase free-text dropped');
+  assert.equal(clean('share:only-slug'), null, 'missing outcome segment dropped');
+});

@@ -1,12 +1,34 @@
 (function () {
   'use strict';
 
-  function track(eventName, payload) {
+  // S194: track() emitted ONLY through gtag('event', …) — but gtag was removed
+  // site-wide at S147/S175, so `typeof gtag === 'function'` was permanently false
+  // and EVERY data-track-event / data-track-view / data-funnel-form interaction
+  // was silently discarded. The whole named-event funnel was dead, masked by the
+  // parallel /v/rum beacon the S186-S192 work built next to it. Rewire to that
+  // live transport under a bounded `funnel:` family (allowlisted in the Worker via
+  // prefixAllowlist). Names only — no payload — so the internal intent enums the
+  // old gtag path leaked to Google (vault_trust, journey_stage, …) never leave the
+  // browser. The event NAME is the signal; the Worker stores nothing else.
+  function emitUx(name) {
     try {
-      if (typeof gtag === 'function') {
-        gtag('event', eventName, payload || {});
+      if (typeof name !== 'string' || !name) return;
+      // Bound the suffix to the Worker prefixAllowlist contract: [a-z0-9_], <=48.
+      var suffix = name.toLowerCase().replace(/[^a-z0-9_]+/g, '_').slice(0, 48);
+      if (!suffix) return;
+      var body = JSON.stringify({ route: window.location.pathname || '/', ux: 'funnel:' + suffix });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+      } else {
+        fetch('/v/rum', { method: 'POST', body: body, headers: { 'Content-Type': 'application/json' }, keepalive: true }).catch(function () {});
       }
     } catch (_) {}
+  }
+
+  // Public API unchanged (call-sites pass a payload; it is intentionally dropped
+  // at the sink for privacy — only the allowlisted event name is transmitted).
+  function track(eventName, _payload) {
+    emitUx(eventName);
   }
 
   window.VSFunnel = {

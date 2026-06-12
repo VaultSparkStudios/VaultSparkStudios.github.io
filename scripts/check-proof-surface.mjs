@@ -11,7 +11,8 @@
  *
  * Runs (in order): build-public-status self-test+check · build-security-posture
  * self-test+check · build-status-proof --check · check-proof-feed-generators
- * self-test+live (no bundled proof feed is a hand-seed).
+ * self-test+live (no bundled proof feed is a hand-seed) · check-og-images
+ * self-test+live (S194 — no crawler-facing share card is a blank SVG/missing PNG).
  */
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
@@ -30,6 +31,14 @@ const STEPS = [
   ['build-status-proof.mjs', ['--check']],
   ['check-proof-feed-generators.mjs', ['--self-test']],
   ['check-proof-feed-generators.mjs', []],
+  // S194: social-card integrity — an SVG/_og or missing-asset og:image renders a
+  // blank share card on every platform, a silent conversion leak on shared links.
+  ['check-og-images.mjs', ['--self-test']],
+  ['check-og-images.mjs', []],
+  // S194: schema honesty — no VideoGame page may carry a fabricated aggregateRating
+  // (S193 removed three; this keeps invented review stars from silently returning).
+  ['check-videogame-schema.mjs', ['--self-test']],
+  ['check-videogame-schema.mjs', []],
 ];
 
 let failed = 0;

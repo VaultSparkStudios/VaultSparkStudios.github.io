@@ -279,9 +279,21 @@ const RUM_UX_EVENTS = new Set([
 // dynamic instrumentation ships without loosening the global allowlist.
 //   - oracle-answer:helpful:<clusterId> / :unhelpful:<clusterId> (S192 #5) —
 //     per-cluster Ask IGNIS feedback; clusterId is [a-z0-9-], <=24 chars.
+//   - funnel:<name> (S194) — named-event conversion funnel (home_hero_play_click,
+//     interview_start_click, membership CTAs, *_engaged/*_submit_started forms).
+//     funnel-tracking.js was a dead gtag no-op until S194; rewired to /v/rum under
+//     this one bounded family so homepage-CTA + interview-funnel data finally lands
+//     without a 30-entry exact-Set. suffix is [a-z0-9_], <=48 chars.
+//   - source:<bucket> (S194) — acquisition channel (search/social/direct/referral),
+//     domain-classified client-side. Never a full URL; one bounded lowercase token.
 const RUM_UX_DYNAMIC = [
   prefixAllowlist('oracle-answer:helpful', { maxLen: 24 }),
   prefixAllowlist('oracle-answer:unhelpful', { maxLen: 24 }),
+  prefixAllowlist('funnel', { charset: /^[a-z0-9_]+$/, maxLen: 48 }),
+  prefixAllowlist('source', { charset: /^[a-z]+$/, maxLen: 16 }),
+  // S194: share:<gameSlug>:<outcome> — per-game share button (native|copy|cancel|
+  // error). Two bounded tokens: slug is [a-z0-9-], outcome is [a-z]. Names only.
+  prefixAllowlist('share', { charset: /^[a-z0-9-]+:[a-z]+$/, maxLen: 40 }),
 ];
 const cleanRumUxEvent = makeRumUxCleaner(RUM_UX_EVENTS, RUM_UX_DYNAMIC);
 

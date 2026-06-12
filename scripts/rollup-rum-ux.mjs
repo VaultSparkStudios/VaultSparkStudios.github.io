@@ -146,11 +146,47 @@ export function deriveSummary(historyRows) {
   const terminal = {};
   for (const name of TERMINAL) terminal[name] = events[name] || 0;
 
+  // S194: named-event funnel CTAs. funnel-tracking.js (rewired off the dead gtag
+  // sink) emits `funnel:<name>` for every data-track-event / -view / -funnel-form
+  // interaction. Surface them as a clean name→count map (prefix stripped) so the
+  // homepage hero play-vs-explore split and the membership/interview CTAs are
+  // readable without digging through the raw events map. Sorted for byte-stability.
+  const funnelCtas = {};
+  for (const [ev, n] of Object.entries(events)) {
+    if (ev.startsWith('funnel:')) funnelCtas[ev.slice('funnel:'.length)] = n;
+  }
+  const sortedFunnelCtas = {};
+  for (const k of Object.keys(funnelCtas).sort()) sortedFunnelCtas[k] = funnelCtas[k];
+
+  // S194: acquisition channel. `source:<bucket>` (search/social/direct/referral)
+  // is emitted once per session, domain-classified client-side — never a URL, no
+  // PII. The one number a traffic-starved site never measured: which channel the
+  // trickle arrives through. Honest-dark like the rest until minSamples.
+  const sources = {};
+  for (const [ev, n] of Object.entries(events)) {
+    if (ev.startsWith('source:')) sources[ev.slice('source:'.length)] = n;
+  }
+  const sortedSources = {};
+  for (const k of Object.keys(sources).sort()) sortedSources[k] = sources[k];
+
+  // S194: per-game share outcomes. `share:<slug>:<outcome>` from share-game.js —
+  // which game gets shared, and whether via native sheet or clipboard copy. The
+  // studio's prime viral surface, finally measured. Prefix stripped, sorted.
+  const shares = {};
+  for (const [ev, n] of Object.entries(events)) {
+    if (ev.startsWith('share:')) shares[ev.slice('share:'.length)] = n;
+  }
+  const sortedShares = {};
+  for (const k of Object.keys(shares).sort()) sortedShares[k] = shares[k];
+
   // Sort the events map for byte-stable output.
   const sortedEvents = {};
   for (const k of Object.keys(events).sort()) sortedEvents[k] = events[k];
 
   return {
+    funnelCtas: sortedFunnelCtas,
+    sources: sortedSources,
+    shares: sortedShares,
     schemaVersion: '1.0',
     // generatedAt mirrors asOf (latest history day) — deterministic, NOT wall-clock,
     // so --check byte-comparison never drifts. Satisfies the public-contract-health
@@ -335,8 +371,25 @@ function selfTest() {
   assert(writtenCluster.some((r) => r.clusterKey === 'what-new' && r.unhelpful === 3), 'per-cluster row written');
   assert(writtenCluster.some((r) => r.clusterKey === '*' && r.unhelpful === 3), 'global aggregate row written');
 
+  // S194: funnel CTA + acquisition-source aggregation (additive, prefix-stripped).
+  const s194Hist = [
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'funnel:home_hero_play_click', count: 7 },
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'funnel:home_hero_games_click', count: 2 },
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'source:search', count: 5 },
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'source:direct', count: 4 },
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'share:call-of-doodie:native', count: 3 },
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'share:call-of-doodie:copy', count: 1 },
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'proof-line:shown', count: 1 },
+  ];
+  const s194 = deriveSummary(s194Hist);
+  assert(s194.funnelCtas.home_hero_play_click === 7 && s194.funnelCtas.home_hero_games_click === 2, 'funnelCtas strips funnel: prefix and counts');
+  assert(s194.funnelCtas['proof-line:shown'] === undefined, 'funnelCtas excludes non-funnel events');
+  assert(s194.sources.search === 5 && s194.sources.direct === 4, 'sources strips source: prefix and counts');
+  assert(Object.keys(s194.funnelCtas).join(',') === 'home_hero_games_click,home_hero_play_click', 'funnelCtas keys sorted for byte-stability');
+  assert(s194.shares['call-of-doodie:native'] === 3 && s194.shares['call-of-doodie:copy'] === 1, 'shares strips share: prefix and counts per slug:outcome');
+
   fs.rmSync(dir, { recursive: true, force: true });
-  console.log('rollup-rum-ux --self-test: OK (19 assertions)');
+  console.log('rollup-rum-ux --self-test: OK (24 assertions)');
 }
 
 function assert(ok, msg) { if (!ok) { console.error('rollup-rum-ux --self-test FAIL:', msg); process.exit(1); } }

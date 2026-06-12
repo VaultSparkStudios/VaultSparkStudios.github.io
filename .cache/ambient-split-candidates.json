@@ -1,22 +1,22 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-12T19:16:45.393Z",
+  "generatedAt": "2026-06-12T21:39:38.066Z",
   "generatedBy": "scripts/report-ambient-coverage.mjs",
   "totalSources": 17,
-  "totalBytes": 63501,
+  "totalBytes": 64042,
   "forbiddenAmbientSourcesPresent": [],
   "candidates": [
     {
       "rank": 1,
       "source": "assets/ambient-loader.js",
-      "sizeKb": 9.5,
+      "sizeKb": 10,
       "reasons": [
         "query-param gated",
         "viewport gated",
         "session gated"
       ],
       "forbiddenAmbient": false,
-      "risk": "low",
+      "risk": "medium",
       "firstProofStep": "Run npx playwright test with desktop and mobile viewports, then verify assets/ambient-loader.js only loads where its viewport condition is true."
     },
     {

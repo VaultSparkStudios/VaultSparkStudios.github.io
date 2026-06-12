@@ -1,10 +1,10 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-12 (Session 191 closeout) -->
+<!-- generated-at: 2026-06-12 (Session 194 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 191 closeout · 2026-06-12.
+> **Fast-boot brief** — generated at Session 194 closeout · 2026-06-12.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -13,7 +13,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 192 · 2026-06-12 · FOUNDER MODE                         ║
+║  Session 195 · 2026-06-12 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -30,18 +30,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    958/1000   ██████████████████████░░   96%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6→                          ║
+║    971/1000   ███████████████████████░   97%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 5↑                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▄▇▄▄▆  →  (last 5 sessions)                            ║
+║    Trend  ▇▄▄▆▄  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Dev Health        96    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Alignment         98    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          92    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Engagement        97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Momentum          96    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Engagement        98    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Process Qual      98    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security          98    ██████████  ········ →                ║
 ║    Ecosystem         96    ██████████  ········ →                ║
@@ -50,15 +50,15 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 191 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 194 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116 passing  ·  Deploy: N/A                           ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-08)                   ║
-║  ✓  Velocity      6 →  ·  Debt: ↓                                ║
-║  ✓  Runway        ≥6 open Now items — prod-verify S193 (Oracle   ║
+║  ✓  Velocity      5 ↑  ·  Debt: ↓                                ║
+║  ✓  Runway        ≥6 open Now items — prod-verify S194 (PNG sha  ║
 ║  ✓  Headroom      0% remaining · ~0 large item(s) fit            ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         41975 FORGE  ·  0d old                         ║
@@ -87,26 +87,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▇▄▄▆  6→  (last 5 sessions)                        ║
+║  Velocity:   ▇▄▄▆▄  5↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
-║  Streak:     ✓ 3 consecutive achieved-intent sessions            ║
+║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [BRAND]        RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION     ║
-║        RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION affects public v  ║
+║   90  [PRODUCT]      FUNNEL L3                                   ║
+║        FUNNEL L3 is open, local, and unblocked — can ship this   ║
 ║                                                                  ║
-║   90  [INTELLIGENCE]  acquisition-source-breakdown (deferred fr  ║
-║        acquisition-source-breakdown (deferred from S193 audit #  ║
+║   88  [VERIFY]       Confirm S194 ships on prod after deploy. O  ║
+║        Confirm S194 ships on prod after deploy. On a real brows  ║
 ║                                                                  ║
-║   87  [INTELLIGENCE]  Confirm Oracle + Ask IGNIS fixes on prod   ║
-║        Confirm Oracle + Ask IGNIS fixes on prod after deploy. V  ║
+║   87  [PRODUCT]      OG L3                                       ║
+║        OG L3 is open, local, and unblocked — can ship this sess  ║
 ║                                                                  ║
-║   87  [SECURITY]     TT-ENFORCE-REPROBE. First-party surface CL  ║
-║        TT-ENFORCE-REPROBE. First-party surface CLEAN. Reprobe ~  ║
+║   86  [BRAND]        Forge Window naming propagation             ║
+║        The URL stays stable for search, but the public vocabula  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -114,5 +114,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 191 closeout · 2026-06-12*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 194 closeout · 2026-06-12*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
