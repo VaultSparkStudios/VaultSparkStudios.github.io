@@ -3904,3 +3904,19 @@ Session Intent: /start → /go the full S182 genius list + a founder P0 mid-spri
   - **cross-game-play-next** — `data/game-affinity.json` + asset route to a playable title, never dead-end; `play-next:*` RUM. (f4358fc6)
   - **studio-dispatch-optin** — activated the dead `footer-email-form` wiring via the existing ConvertKit ESP (no new vendor); homepage footer column + `footer-dispatch.js` honest-fail (replaced a façade form). Ambient bundle rebuilt + shell rotated (89 HTML). (09798337)
 - **Next session:** prod-verify the 5 client features; review+publish `journal/_drafts/forge-week-2026-06-11.md`; wire freshness-check into the /audit skill; sitewide footer dispatch (propagate-nav); discord-to-nav; wishlist-momentum (needs Supabase); flagship-storytelling.
+
+---
+<!-- archived: 2026-06-12 -->
+
+## Where We Left Off — Session 191
+- Shipped: 4 items across 3 groups — **a11y** (reduced-motion-animation-guard) · **AI discovery** (structured-citation-endpoint) · **proof-surface honesty** (trust-manifest-seed-rot-guard, funnel-proof-in-manifest). Plus 1 deferred-with-evidence (oracle-per-cluster-feedback).
+- Tests: 2 new self-tested generators (`build-public-status` 9/9, `build-citation` 9/9) + all 27 gates exercising this session's changes pass individually. `build:check` end-to-end blocked ONLY by a pre-existing untracked `obelisk-passport/` WIP dir (not mine, not pushed → CI green).
+- Deploy: **pending push.** New `api/citation.json` + refreshed `api/public-status.json` + `status-proof.json` (funnel feed) deploy via CF Pages on push. No Worker change this session.
+
+**Session Intent:** Run the full `/goal [/start → /audit → /implement → /closeout]` chain with genius-level creative thinking. **Achieved — full chain run; 4 audit items shipped + 1 disciplined evidence-deferral; gates green for all changes.**
+
+- **Theme:** Complete the proof surface + harden its honesty. The funnel is data-starved (1 event/30d) — a traffic problem, not a code problem — so the audit added no new measurement and instead closed real integration/freshness/WCAG gaps the S186-S190 apparatus left open.
+- **Honesty highlight:** caught a real determinism bug in my OWN new generator (embedded wall-clock `heartbeat.generatedAt`) via `build:check` before it shipped → fixed to derive from stable activity-derived `lastActivity`. Surfaced (didn't disturb) an untracked `obelisk-passport/` WIP dir that isn't mine.
+- **Carries:** S191 prod-verify · seed-rot follow-up (staging-health 92%, security-posture 54%) · oracle-per-cluster (deferred, needs bounded Worker prefix-rule) · forge devlog publish (founder) · TT reprobe ~06-18.
+
+---

@@ -1,20 +1,20 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-12T11:09:00.323Z",
+  "generatedAt": "2026-06-12T12:56:36.833Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 60,
+  "totalSamples": 68,
   "sufficientRoutes": 0,
   "siteState": "accumulating",
   "nextRoute": {
     "route": "/games/vaultspark-football-gm/",
-    "samples": 13,
+    "samples": 15,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 37,
+    "remaining": 35,
     "p75": {
       "lcp": 720,
-      "cls": 0.0013,
+      "cls": 0,
       "inp": 96,
       "fcp": 928,
       "ttfb": 435
@@ -24,16 +24,16 @@
   "routes": [
     {
       "route": "/",
-      "samples": 12,
+      "samples": 13,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 38,
+      "remaining": 37,
       "p75": {
         "lcp": 1792,
         "cls": 0.202,
         "inp": 288,
         "fcp": 1588,
-        "ttfb": 488
+        "ttfb": 768
       },
       "overBudget": false
     },
@@ -69,16 +69,16 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 1,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 47,
       "p75": {
-        "lcp": 260,
+        "lcp": 1540,
         "cls": 0.0005,
-        "inp": 80,
-        "fcp": 260,
-        "ttfb": 98
+        "inp": 232,
+        "fcp": 1540,
+        "ttfb": 950
       },
       "overBudget": false
     },
@@ -98,14 +98,29 @@
       "overBudget": false
     },
     {
-      "route": "/games/vaultspark-football-gm/",
-      "samples": 13,
+      "route": "/games/vaultfront/",
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 37,
+      "remaining": 48,
+      "p75": {
+        "lcp": 1204,
+        "cls": 0.0005,
+        "inp": 56,
+        "fcp": 1204,
+        "ttfb": 617
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/vaultspark-football-gm/",
+      "samples": 15,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 35,
       "p75": {
         "lcp": 720,
-        "cls": 0.0013,
+        "cls": 0,
         "inp": 96,
         "fcp": 928,
         "ttfb": 435
@@ -124,6 +139,21 @@
         "inp": 160,
         "fcp": 524,
         "ttfb": 255
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/journal/roadmap-goes-public/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 388,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 388,
+        "ttfb": 20
       },
       "overBudget": false
     },

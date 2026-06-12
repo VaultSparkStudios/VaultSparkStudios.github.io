@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-12T11:08:59.578Z",
+  "generatedAt": "2026-06-12T12:56:36.400Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,18 +10,18 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 60,
+  "totalSamples": 68,
   "sufficientRoutes": 0,
   "routes": {
     "/": {
-      "samples": 12,
+      "samples": 13,
       "sufficient": false,
       "p75": {
         "lcp": 1792,
         "cls": 0.202,
         "inp": 288,
         "fcp": 1588,
-        "ttfb": 488
+        "ttfb": 768
       }
     },
     "/games/": {
@@ -47,14 +47,14 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 1,
+      "samples": 3,
       "sufficient": false,
       "p75": {
-        "lcp": 260,
+        "lcp": 1540,
         "cls": 0.0005,
-        "inp": 80,
-        "fcp": 260,
-        "ttfb": 98
+        "inp": 232,
+        "fcp": 1540,
+        "ttfb": 950
       }
     },
     "/games/project-unknown/": {
@@ -68,12 +68,23 @@
         "ttfb": 15
       }
     },
+    "/games/vaultfront/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 1204,
+        "cls": 0.0005,
+        "inp": 56,
+        "fcp": 1204,
+        "ttfb": 617
+      }
+    },
     "/games/vaultspark-football-gm/": {
-      "samples": 13,
+      "samples": 15,
       "sufficient": false,
       "p75": {
         "lcp": 720,
-        "cls": 0.0013,
+        "cls": 0,
         "inp": 96,
         "fcp": 928,
         "ttfb": 435
@@ -88,6 +99,17 @@
         "inp": 160,
         "fcp": 524,
         "ttfb": 255
+      }
+    },
+    "/journal/roadmap-goes-public/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 388,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 388,
+        "ttfb": 20
       }
     },
     "/leaderboards/": {

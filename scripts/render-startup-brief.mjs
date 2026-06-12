@@ -511,12 +511,16 @@ try {
     ignisSpend = JSON.parse(fs.readFileSync(cachePath, 'utf8'));
   }
 } catch { /* non-fatal */ }
+const spendUnreachable = ignisSpend && (ignisSpend.status === 'gateway-unreachable' || ignisSpend.today_usd == null);
 const sigSpend = !ignisSpend ? '~'
+  : spendUnreachable ? '~'
   : ignisSpend.overall === 'capped' ? '⛔'
   : ignisSpend.overall === 'warn'   ? '⚠' : '✓';
-const spendDetail = ignisSpend
-  ? `$${ignisSpend.today_usd.toFixed(2)} / $${ignisSpend.cap_usd.toFixed(2)} (${ignisSpend.pct}%)`
-  : 'unmeasured — run: node scripts/check-ignis-spend.mjs';
+const spendDetail = !ignisSpend
+  ? 'unmeasured — run: node scripts/check-ignis-spend.mjs'
+  : spendUnreachable
+    ? `gateway-unreachable · last checked ${(ignisSpend.generatedAt || '').slice(0, 10)}`
+    : `$${ignisSpend.today_usd.toFixed(2)} / $${ignisSpend.cap_usd.toFixed(2)} (${ignisSpend.pct}%)`;
 
 // ── Doctor score ─────────────────────────────────────────────────────────────
 const doctorScore  = status.doctorScore ?? null;

@@ -442,6 +442,18 @@
 
     const { velocity, ecosystem } = await load();
 
+    // Honest-dark: every panel below is computed from the gitignored
+    // /ignis/output/* feed (404 on prod — it aggregates sealed sibling repos, so
+    // it can't ship publicly). When neither feed is reachable, hide these
+    // internal-only panels rather than leave a row of empty boxes that reads as
+    // "the Oracle isn't loading". The public portfolio feed + Ask IGNIS still
+    // render from deployed /api/* sources.
+    if (!velocity && !ecosystem) {
+      [insightsMount, heatmapMount, donutMount, moversMount, forecastsMount, comparisonMount, gravityMount]
+        .forEach((m) => { const sec = m && m.closest('section'); if (sec) sec.style.display = 'none'; });
+      return;
+    }
+
     if (insightsMount)  renderInsights(computeInsights(velocity, ecosystem), insightsMount);
     if (heatmapMount)   renderHeatmap(velocity, heatmapMount);
     if (donutMount)     renderLifecycleDonut(ecosystem, donutMount);

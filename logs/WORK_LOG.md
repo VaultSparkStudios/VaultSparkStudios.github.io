@@ -1,5 +1,28 @@
 # Work Log
 
+## 2026-06-12 — Session 193 (/goal chain REDIRECTED by 2 founder P0s · 4/6 audit shipped + Oracle/Ask-IGNIS fix + login triage)
+
+Ran the full /goal chain with a fresh, ground-truthed audit that broke the 7-session "polish the measurement apparatus" loop and aimed at the real bottleneck — first-visit conversion + discovery. Mid-session the founder dropped two P0 interrupts (a login-page console dump, then "Oracle still not loading + Ask IGNIS shows dev-code-looking info" + "get to 13/13"). Served all three.
+
+**Shipped 4 of 6 audit items:**
+1. **play-first-hero-cta** — homepage hero led with "Explore Our Games" since S123; promoted primary to "▶ Play Free — No Download" → `/games/call-of-doodie/`, "Explore Our Games" → ghost secondary. Single-primary preserved.
+2. **fabricated-rating-removal** (audit #4) — found `aggregateRating: 4.5/count:1` on 3 game pages with no review backend (Google spam risk + CANON-008); removed all 3 + added honest schema fields.
+3. **ignis-spend-measurement** (audit #5) — CANON-012 gateway fallback in `check-ignis-spend.mjs` (was reading `.env`, "unmeasured" forever) → now $0.00/$6.65 (0%) ok + honest-cache-on-failure.
+4. **doctor-snapshot-refresh** (audit #6) — refreshed 3-week-stale snapshot; 11/13, 2 non-green sibling-scoped.
+
+**Founder P0 — Oracle / Ask IGNIS (the deepest work):**
+- Ground-truthed: prod `/api/*.json` is 200 for real browsers (datacenter 403 = benign CF challenge); feeds fresh → the bug was page logic.
+- **Ask IGNIS voice-firewall:** `build-ignis-search-index.mjs` fed raw Studio-OS session jargon (llms-full/currentFocus) + literal `JSON.stringify(feedback/security)` into answer summaries. Rewrote with public-voice prose sources + `sanitize()` + a `--self-test` folded into `--check` (no new build:check segment); defense-in-depth `scrub()` in `ignis-answer-engine.js`.
+- **Oracle honest-dark degradation:** cognition hero + velocity chart + 7 `oracle-extra.js` panels were hard-wired to gitignored `/ignis/output/*` (404 prod) and stuck on "Loading…/—"; all now hide when their internal feed is absent.
+
+**Founder P0 — login console dump:** triaged to NOT a bug (translation extension noise + benign CF Privacy-Pass 401 + expected bad-credentials 400; Turnstile live + captcha wired).
+
+**Founder P0 — "13/13":** refused to game it; the 2 non-green probes are sibling-rooted (veilos + orphaned codex locks), CANON-018 forbids the cross-repo fix from here.
+
+**Deferred-with-evidence (2):** acquisition-source-breakdown + web-share-per-game (both touch the Worker RUM allowlist — S186 silent-drop class — and were bumped by the founder P0s).
+
+`build:check` green end-to-end except the pre-existing untracked `obelisk-passport/` WIP dir (not in git HEAD → CI green). Audit: `docs/AUDIT_2026-06-12-S193.{json,md}`.
+
 ## 2026-06-12 — Session 192 (/goal chain: /start → /audit → /implement → /closeout · 5/5 shipped · build:check EXIT 0)
 
 Ran the full /goal chain and FINISHED the S191 proof-surface-honesty arc. Ground-truth-verified before scoring: `security-posture.json` was the lone surviving `manual-seed:` feed; `staging-health.json` sat at 95% of its 168h seed-rot window; `worker.unit.spec.js` had zero RUM-sanitizer coverage; the oracle-answer emit was global-only while the rollup already parsed clusterKey. No new measurement (the funnel is data-starved — a traffic problem).

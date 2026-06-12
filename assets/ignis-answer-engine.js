@@ -50,6 +50,22 @@
     return indexPromise;
   }
 
+  // Voice firewall (defense-in-depth): the index is sanitized at build time
+  // (build-ignis-search-index.mjs + --self-test gate), but scrub here too so a
+  // stale/cached index can never surface Studio-OS session jargon to a visitor.
+  function scrub(s) {
+    return String(s || '')
+      .replace(/\bS\d{2,3}\b/g, '')
+      .replace(/goal[\s-]*chain/gi, '')
+      .replace(/\/(start|audit|implement|closeout|go)\b/gi, '')
+      .replace(/build:check/gi, 'automated checks')
+      .replace(/\d+\s+shipped\b/gi, '')
+      .replace(/deferred[\s-]*(?:with[\s-]*evidence)?/gi, '')
+      .replace(/[#>]+/g, ' ')
+      .replace(/\s{2,}/g, ' ')
+      .trim();
+  }
+
   function answer(query, index) {
     var qTokens = tokens(query);
     if (!qTokens.length) return null;
@@ -61,7 +77,7 @@
     if (!scored.length) return null;
     var top = scored[0].doc;
     return {
-      text: top.summary || top.body || ('IGNIS found the strongest public match in ' + top.title + '.'),
+      text: scrub(top.summary || top.body) || ('IGNIS found the strongest public match in ' + top.title + '.'),
       sources: scored.map(function (row) { return row.doc; })
     };
   }

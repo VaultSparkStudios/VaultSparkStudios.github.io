@@ -1,6 +1,19 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-12 (Session 192)
+Last updated: 2026-06-12 (Session 193)
+## Where We Left Off — Session 193
+- Shipped: 7 items across 4 groups — **conversion/UX** (play-first-hero-cta) · **AI/Oracle** (ask-ignis-voice-firewall, oracle-honest-dark-degradation) · **honesty/SEO** (fabricated-rating-removal on 3 game pages) · **observability/cost** (ignis-spend-measurement via gateway fallback, doctor-snapshot-refresh) · plus a login-console-dump triage (verdict: not a bug).
+- Tests: `build:check` green end-to-end EXCEPT the pre-existing untracked `obelisk-passport/` WIP dir (not in git HEAD → CI stays green). New voice-firewall `--self-test` folded into `build-ignis-search-index --check` (31 docs, 0 leaks); `check-rum-allowlist` in sync (20/15); 4 edited JS files `node --check` clean. No Worker change this session.
+- Deploy: **pending push.** index.html (hero), 3 game pages (schema), oracle/index.html + `assets/oracle-extra.js` + `assets/ignis-answer-engine.js` + regenerated `data/ignis-search-index.json` deploy via CF Pages on push. Shell re-stamped by `npm run build`.
+
+**Session Intent:** Run the full `/goal [/start → /audit → /implement → /closeout]` chain with genius-level creative thinking. **Achieved-with-redirect — full chain ran; 4/6 audit items shipped (2 deferred-with-evidence); session pivoted to 3 founder P0s mid-flight (Oracle/Ask-IGNIS fix, login console triage, honest 13/13 handling), all resolved.**
+
+- **Theme:** Break the 7-session measurement-polishing loop and attack the real bottleneck (first-visit conversion + discovery), then serve two founder P0 interrupts. The Oracle/Ask-IGNIS fix was the deepest work: a voice-firewall on the Ask IGNIS search-index generator (it had been answering visitors with raw Studio-OS session jargon + literal JSON dumps) + honest-dark degradation of every Oracle section wired to the gitignored internal feed.
+- **Honesty highlight:** refused to fake Doctor 13/13 — the 2 non-green probes are sibling-rooted (veilos + orphaned codex locks) and CANON-018 forbids the cross-repo writes to fix them from here; gaming the probe would violate the honesty canon. Also removed 3 fabricated game-page `aggregateRating`s rather than leave invented review stars live.
+
+## Human Action Required
+- [ ] **RICHER-IGNIS-LAYER public-safe decision** — the Oracle's cognition hero + velocity + 7 insight panels are now hidden on prod (they source sealed-project internal data). To make them live publicly you must decide what cross-project intelligence is public-safe + approve a sanitized public generator. Until then the Oracle is honestly leaner. (Founder-only: cross-project/sealed-data exposure call.)
+- [ ] **(Optional) Doctor 13/13** — needs action in OTHER repos: veilos launch-readiness (its repo says SPARKED but registry says `active` — fix the drift or set liveUrl) + 2 orphaned codex locks (auto-clear when Hashmark + vaultspark-football-gm next run /start). Not fixable from this website session per CANON-018.
 ## Where We Left Off — Session 192
 - Shipped: 5 items across 3 groups — **proof-surface honesty** (security-posture-live-derive, proof-feed-generator-gate, staging-health-self-refresh) · **edge security** (bounded-prefix-allowlist-primitive) · **AI feedback** (oracle-per-cluster-feedback-finish). Plus a mid-session build:check Windows-limit fix (proof-surface orchestrator).
 - Tests: 3 new/extended self-tested gates (`build-security-posture` 12/12, `check-proof-feed-generators` 12/12, `check-staging-parity` 6/6), `rollup-rum-ux` 19/19, `worker.unit` 23/23 (+2 RUM-sanitizer cases — first-ever coverage). **`build:check` EXIT 0 end-to-end** (108-page crawl, 0 failures) with the pre-existing untracked `obelisk-passport/` parked.
@@ -9,15 +22,3 @@ Last updated: 2026-06-12 (Session 192)
 **Session Intent:** Run the full `/goal [/start → /audit → /implement → /closeout]` chain with genius-level creative thinking. **Achieved — full chain run; 5/5 audit items shipped; build:check EXIT 0.**
 
 - **Theme:** Finish the S191 proof-surface-honesty arc. No new measurement (the funnel is data-starved — a traffic problem) — instead, replaced the last hand-seed with a live-derived generator, converted the seed-rot lesson into a permanent structural gate, and shipped the bounded-prefix primitive that safely unblocks dynamic instrumentation. Both seed-rot landmines cleared; `seedRisk` is now empty.
-## Where We Left Off — Session 191
-- Shipped: 4 items across 3 groups — **a11y** (reduced-motion-animation-guard) · **AI discovery** (structured-citation-endpoint) · **proof-surface honesty** (trust-manifest-seed-rot-guard, funnel-proof-in-manifest). Plus 1 deferred-with-evidence (oracle-per-cluster-feedback).
-- Tests: 2 new self-tested generators (`build-public-status` 9/9, `build-citation` 9/9) + all 27 gates exercising this session's changes pass individually. `build:check` end-to-end blocked ONLY by a pre-existing untracked `obelisk-passport/` WIP dir (not mine, not pushed → CI green).
-- Deploy: **pending push.** New `api/citation.json` + refreshed `api/public-status.json` + `status-proof.json` (funnel feed) deploy via CF Pages on push. No Worker change this session.
-
-**Session Intent:** Run the full `/goal [/start → /audit → /implement → /closeout]` chain with genius-level creative thinking. **Achieved — full chain run; 4 audit items shipped + 1 disciplined evidence-deferral; gates green for all changes.**
-
-- **Theme:** Complete the proof surface + harden its honesty. The funnel is data-starved (1 event/30d) — a traffic problem, not a code problem — so the audit added no new measurement and instead closed real integration/freshness/WCAG gaps the S186-S190 apparatus left open.
-- **Honesty highlight:** caught a real determinism bug in my OWN new generator (embedded wall-clock `heartbeat.generatedAt`) via `build:check` before it shipped → fixed to derive from stable activity-derived `lastActivity`. Surfaced (didn't disturb) an untracked `obelisk-passport/` WIP dir that isn't mine.
-- **Carries:** S191 prod-verify · seed-rot follow-up (staging-health 92%, security-posture 54%) · oracle-per-cluster (deferred, needs bounded Worker prefix-rule) · forge devlog publish (founder) · TT reprobe ~06-18.
-
----

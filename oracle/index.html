@@ -513,6 +513,13 @@
               <footer class="vsx-a1e7d83bd2">— IGNIS, reading the vault</footer>
             `;
           }
+        } else {
+          // Honest-dark: the IGNIS cognition aggregate is computed from the
+          // gitignored /ignis/output/* feed (404 on prod — it aggregates sealed
+          // sibling repos, so it can't ship). No public-safe /100,000 score
+          // exists, so hide the card rather than strand it on "Loading…/—".
+          const card = document.querySelector('.oracle-ignis-card');
+          if (card) card.style.display = 'none';
         }
       } catch (e) { /* non-fatal */ }
 
@@ -605,10 +612,16 @@
 
     // Studio Ecosystem Velocity chart
     (async function () {
+      // Honest-dark: the velocity series lives in the gitignored /ignis/output/*
+      // feed (404 on prod), and no public-safe time-series exists yet. Hide the
+      // whole section when there's no data rather than show a dead "—/—" + empty
+      // chart that reads as "broken / not loading". [[feedback_public_surface_deployed_feed_not_gitignored]]
+      const velSection = document.querySelector('section[aria-labelledby="oracle-velocity-heading"]');
+      const hideVel = () => { if (velSection) velSection.style.display = 'none'; };
       const res = await fetch('/ignis/output/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null);
-      if (!res || !res.ok) return;
+      if (!res || !res.ok) { hideVel(); return; }
       const data = await res.json();
-      if (!data?.series?.dates?.length) return;
+      if (!data?.series?.dates?.length) { hideVel(); return; }
 
       const { dates, commits, ignis, activeRepos } = data.series;
       const n = dates.length;

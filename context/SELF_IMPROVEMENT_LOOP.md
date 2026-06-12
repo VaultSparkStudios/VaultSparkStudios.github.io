@@ -8,16 +8,45 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇█▇█▇
-Avgs - 3: 957.7 | 5: 958.2 | 10: 966.0 | 25: 974.0 | all: 961 (v3.0 /1000)
-  └ 3-session: Dev 93.0 | Align 97.0 | Momentum 95.3 | Engage 95.0 | Process 94.7
-Velocity trend: → (S191: 4 shipped + 1 disciplined evidence-deferral; S190: 10; S189: 5 — small-bore frontier by design after the big S190 funnel-depth pass) | Protocol velocity: ↑ (build-public-status + build-citation are 2 new reusable, self-tested generators; seed-rot WARN added to status-proof) | Debt: ↓ (closed a real WCAG gap + a latent trustScore landmine; the seed-rot guard now surfaces the next two before they bite)
-Momentum runway: ≥5 open Now items — prod-verify S191 (citation.json + public-status freshness + funnel feed), seed-rot follow-up (staging-health 92% / security-posture 54%), oracle-per-cluster (deferred, needs bounded Worker prefix-rule), forge devlog publish (founder), TT reprobe ~06-18 | Intent rate: 100% (last 5)
-Last session: 2026-06-12 | Session 191 | Total: 956/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
+Sparkline (last 5 totals): █▇▇█▇
+Avgs - 3: 959.7 | 5: 962.4 | 10: 965.0 | 25: 973.0 | all: 961 (v3.0 /1000)
+  └ 3-session: Dev 93.7 | Align 97.3 | Momentum 93.7 | Engage 96.0 | Process 96.0
+Velocity trend: → (S193: 4/6 audit shipped + a multi-part Oracle/Ask-IGNIS founder P0 + login triage, 2 deferred-with-evidence; S192: 5; S191: 4) | Protocol velocity: ↑ (Ask-IGNIS voice-firewall + --self-test folded into --check; ignis-spend gateway fallback + honest-cache; oracle honest-dark degradation) | Debt: ↓ (killed a public AI voice-leak + 3 fabricated game ratings + a perpetual "unmeasured" brief gap; Oracle no longer reads as broken)
+Momentum runway: ≥6 open Now items — prod-verify S193 (Oracle panels hidden + Ask IGNIS clean prose), RICHER-IGNIS-LAYER decision (founder — now blocking a leaner Oracle), web-share-per-game + acquisition-source (deferred audit #2/#3), forge devlog publish (founder), TT reprobe ~06-18, staging box recovery | Intent rate: 100% (last 5, S193 achieved-with-redirect)
+Last session: 2026-06-12 | Session 193 | Total: 958/1000 (v3.0) | Velocity: 6 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-12 — Session 193 (/goal chain REDIRECTED by 2 founder P0s · 4/6 audit shipped + Oracle/Ask-IGNIS fix + login triage) | Total: 958/1000 (v3.0) | Velocity: 6 | Debt: ↓
+Avgs — 3: 959.7 | 5: 962.4 | 10: 965.0 | 25: 973.0 | all: 961 (v3.0 /1000)
+  └ 3-session: Dev 93.7 | Align 97.3 | Momentum 93.7 | Engage 96.0 | Process 96.0
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 94 | ↓ | Clean fixes, build:check green, new voice-firewall self-test; no Worker change. |
+| Creative Alignment | 98 | ↑ | Voice-firewall + honest-dark + play-first hero are deep SOUL honesty/identity work. |
+| Momentum | 92 | ↓ | 4/6 audit + big Oracle P0 + triage; 2 deferred-with-evidence lowers raw velocity. |
+| Engagement | 97 | ↑ | Fixed two public-facing surfaces the founder flagged (Oracle/Ask-IGNIS) + play-first CTA. |
+| Process Quality | 97 | ↑ | Refused to game 13/13; evidence-based deferrals; rigorous login triage; full write-back. |
+| Coherence | 98 | → | |
+| Security | 95 | → | Voice-leak firewall + 3 fabricated ratings removed; no Worker risk. |
+| Ecosystem | 94 | → | Surfaced veilos finding honestly without a CANON-018 cross-repo violation. |
+| Capital | 98 | → | IGNIS spend now measured ($0.00/$6.65, cost-neutral); no new spend. |
+| Automation | 95 | ↑ | Self-test folded into --check + honest-cache-on-failure + gateway fallback. |
+| **Total** | **958/1000** | ↓ 7 | Strong P0 response + honesty discipline; slight dip from 2 deferred audit items. |
+
+**Top win:** Killed the Ask IGNIS voice-leak that was answering visitors with raw Studio-OS session jargon + literal JSON dumps — the generator now sources public-voice prose, a `--self-test` guards it inside `--check`, and a client `scrub()` backs it up.
+**Top gap:** The Oracle's richest panels are now hidden (honest-dark) rather than populated — making them live needs the founder's deferred RICHER-IGNIS-LAYER public-safe decision; the leaner Oracle is honest but visibly thinner.
+**Intent outcome:** Achieved-with-redirect — full /goal chain ran; 4/6 audit items shipped + 3 founder P0s served (Oracle/Ask-IGNIS, login triage, honest 13/13); 2 audit items deferred-with-evidence.
+
+**Brainstorm**
+1. Public-safe Oracle generator — derive a sanitized `ecosystem-velocity` + per-project public voices from `commit-map` + `public-intelligence` so the hidden panels can light up without exposing sealed projects. Path: new `build-public-oracle.mjs` reusing the catalog + commit feeds. Probability: Medium (needs the founder public-safe-boundary decision first).
+2. Hero A/B signal — emit `home_hero_play_click` vs `home_hero_games_click` to `funnel-summary` so the play-first vs explore split is measurable. Path: both already have `data-track-event`; add them to the RUM allowlist + rollup. Probability: High.
+3. Schema validator gate — a `check-videogame-schema.mjs` that fails build if any game page reintroduces `aggregateRating` without a real review source. Path: grep VideoGame blocks in build:check. Probability: High.
+
+**Committed to TASK_BOARD:** [SIL] hero play-vs-explore CTR signal · [SIL] check-videogame-schema gate (no fabricated ratings)
 
 ## 2026-06-12 — Session 192 (/goal chain: /start → /audit → /implement → /closeout · 5/5 shipped · build:check EXIT 0) | Total: 965/1000 (v3.0) | Velocity: 5 | Debt: ↓
 Avgs — 3: 960.3 | 5: 959.4 | 10: 965.4 | 25: 973.0 | all: 961

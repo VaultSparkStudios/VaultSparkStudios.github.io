@@ -15,7 +15,7 @@
  */
 
 import process from 'node:process';
-import { readFileSync } from 'node:fs';
+import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const MODE = process.argv.includes('--json') ? 'json'
@@ -36,14 +36,42 @@ function loadEnv() {
 }
 
 const env = loadEnv();
-const SUPABASE_URL = process.env.SUPABASE_URL || env.SUPABASE_URL;
-const SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_SERVICE_ROLE_KEY;
+let SUPABASE_URL = process.env.SUPABASE_URL || env.SUPABASE_URL;
+let SERVICE_ROLE = process.env.SUPABASE_SERVICE_ROLE_KEY || env.SUPABASE_SERVICE_ROLE_KEY;
+
+// CANON-012: fall back to the Studio secrets gateway (supabase.admin) so a
+// missing local .env doesn't leave the brief perpetually "unmeasured".
+if (!SUPABASE_URL || !SERVICE_ROLE) {
+  try {
+    const { getSecret } = await import('./lib/secrets.mjs');
+    SUPABASE_URL = SUPABASE_URL || getSecret('SUPABASE_URL', 'supabase.admin');
+    SERVICE_ROLE = SERVICE_ROLE || getSecret('SUPABASE_SERVICE_ROLE_KEY', 'supabase.admin');
+  } catch { /* gateway unavailable — fail-soft below */ }
+}
 
 function fail(msg) {
+  // Honest-dark: always leave a cache snapshot so render-startup-brief shows an
+  // honest status ("gateway-unreachable · last checked …") instead of a
+  // perpetual "unmeasured — run: …" that misreports an unreachable gateway as
+  // never-measured.
+  try {
+    mkdirSync(resolve(process.cwd(), '.cache'), { recursive: true });
+    writeFileSync(
+      resolve(process.cwd(), '.cache', 'ignis-spend.json'),
+      JSON.stringify({
+        generatedAt: new Date().toISOString(),
+        status: 'gateway-unreachable',
+        reason: msg,
+        today_usd: null, cap_usd: null, pct: null,
+        overall: 'unmeasured',
+        by_function: [],
+      }, null, 2)
+    );
+  } catch { /* non-fatal */ }
   if (MODE === 'json') {
     console.log(JSON.stringify({ ok: false, error: msg, spend: null }));
   } else {
-    console.log('IGNIS spend  ?  (gateway unreachable)');
+    console.log(`IGNIS spend  ?  (gateway-unreachable: ${msg})`);
   }
   process.exit(0);
 }

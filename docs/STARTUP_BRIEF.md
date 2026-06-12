@@ -30,18 +30,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    956/1000   ██████████████████████░░   96%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 4→                          ║
+║    958/1000   ██████████████████████░░   96%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6→                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▆▄▇▄▄  →  (last 5 sessions)                            ║
+║    Trend  ▄▇▄▄▆  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
 ║    Dev Health        94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Alignment         97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          96    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Engagement        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      96    ██████████  ▆▇▇▇▇▇▇▇ →                ║
+║    Alignment         98    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Momentum          92    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Engagement        97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Process Qual      97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security          98    ██████████  ········ →                ║
 ║    Ecosystem         96    ██████████  ········ →                ║
@@ -57,8 +57,8 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-08)                   ║
-║  ✓  Velocity      4 →  ·  Debt: ↓                                ║
-║  ✓  Runway        ≥5 open Now items — prod-verify S191 (citatio  ║
+║  ✓  Velocity      6 →  ·  Debt: ↓                                ║
+║  ✓  Runway        ≥6 open Now items — prod-verify S193 (Oracle   ║
 ║  ✓  Headroom      0% remaining · ~0 large item(s) fit            ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         41975 FORGE  ·  0d old                         ║
@@ -71,8 +71,8 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ✓  Revenue sig.  2d old (2026-06-10)                            ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ⚠  Doctor        12/13 (92%)  ·  2026-05-26  ·  1 warning       ║
-║  ~  IGNIS spend   unmeasured — run: node scripts/check-ignis-sp  ║
+║  ⛔  Doctor        11/13 (85%)  ·  2026-06-12  ·  1 failing       ║
+║  ✓  IGNIS spend   $0.00 / $6.65 (0%)                             ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
@@ -87,26 +87,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▄▇▄▄  4→  (last 5 sessions)                        ║
+║  Velocity:   ▄▇▄▄▆  6→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
-║  Streak:     ✓ 2 consecutive achieved-intent sessions            ║
+║  Streak:     ✓ 3 consecutive achieved-intent sessions            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Confirm S192 features on prod after deploy  ║
-║        Confirm S192 features on prod after deploy. Verify via p  ║
-║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      STAGING BOX RECOVERY. The --refresh probe   ║
-║        STAGING BOX RECOVERY. The --refresh probe confirmed webs  ║
+║   93  [BRAND]        RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION     ║
+║        RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION affects public v  ║
 ║                                                                  ║
-║   93  [SECURITY]     TT-ENFORCE-REPROBE. First-party surface CL  ║
+║   90  [INTELLIGENCE]  acquisition-source-breakdown (deferred fr  ║
+║        acquisition-source-breakdown (deferred from S193 audit #  ║
+║                                                                  ║
+║   87  [INTELLIGENCE]  Confirm Oracle + Ask IGNIS fixes on prod   ║
+║        Confirm Oracle + Ask IGNIS fixes on prod after deploy. V  ║
+║                                                                  ║
+║   87  [SECURITY]     TT-ENFORCE-REPROBE. First-party surface CL  ║
 ║        TT-ENFORCE-REPROBE. First-party surface CLEAN. Reprobe ~  ║
-║                                                                  ║
-║   90  [BRAND]        Review + publish the forge devlog draft. R  ║
-║        Review + publish the forge devlog draft. Re-run affects   ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

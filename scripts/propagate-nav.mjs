@@ -21,7 +21,11 @@ const SKIP_DIRS = new Set([
   // Has its own design system + 29 duplicate pages of /projects/ + /games/ content.
   'products',
   // S135: internal monitoring/admin/redirect pages without sitewide nav by design.
-  'ignis-health', 'vault-treasury'
+  'ignis-health', 'vault-treasury',
+  // S193: untracked Obelisk-passport WIP (login/callback) — not in git HEAD, not
+  // part of the public shell yet. Exempt until finished + committed; remove this
+  // skip when it ships so nav-orphan guards it. (Mirrored in check-nav-orphans.)
+  'obelisk-passport'
 ]);
 
 // Standalone game runtimes (no standard nav) + utility pages (noindex)

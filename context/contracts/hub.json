@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-12T11:10:31.272Z",
+  "generatedAt": "2026-06-12T13:06:23.374Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,19 +22,21 @@
     }
   },
   "pulse": {
-    "currentSession": 192,
+    "currentSession": 193,
     "lastUpdated": "2026-06-12",
     "currentFocus": "S191 goal-chain (/start -> /audit -> /implement -> /closeout): complete the proof surface + harden its honesty. 4 shipped / 1 deferred-with-evidence, gates green for all changes. reduced-motion-animation-guard (WCAG 2.3.3 on honest-traction-scoreboard + vault-rank-bar), structured-citation-endpoint (api/citation.json via build-citation.mjs 9/9; agents.json + llms.txt discovery; CANON-008 license; honest-dark claims), trust-manifest-seed-rot-guard (build-public-status.mjs 9/9 replaces a rotting 2026-05-22 hand-seed; status-proof seed-rot WARN flagged staging-health 92% + security-posture 54%), funnel-proof-in-manifest (funnel-summary folded into status-proof as honestDarkOk feed). Deferred: oracle-per-cluster-feedback (Worker RUM_UX_EVENTS exact-match would drop dynamic keys; needs bounded prefix-rule first).",
     "nextMilestone": "Prod-verify S191 on pages.dev: api/citation.json 200 with 4 sourced claims, public-status asOf today, status-proof exposes funnel feed. Seed-rot follow-up: give staging-health + security-posture real generators. Founder: review + publish forge devlog. TT reprobe ~2026-06-18.",
     "blockers": [],
     "queues": {
       "now": [
-        "[S192][VERIFY/P1] Confirm S192 features on prod after deploy. Verify via pages.dev origin (never assume push==deploy): (a) `/api/security-posture.json` shows `generatedBy: scripts/build-security-posture.mjs` (not manual-seed) + asOf today + 6/6 verified controls each with an `evidence` link; (b) `/api/staging-health.json` shows a fresh `generatedAt` + honest `status` (`staging-unreachable` until the Hetzner box is back) — no longer the 2026-06-05 stale `green`; (c) `/api/status-proof.json` `summary.seedRisk` is `[]`; (d) `/api/ci-status.json` carries `generatedBy`; (e) a per-cluster `oracle-answer:helpful:<id>` beacon survives the edge (POST `/v/rum` with a bounded suffix → stored; an over-length/illegal suffix → dropped).",
-        "[S192→][OBS/P2] STAGING BOX RECOVERY. The `--refresh` probe confirmed `website.staging.vaultsparkstudios.com` (Hetzner) is genuinely DOWN — `staging-health` will honestly read `staging-unreachable` until it's restored. CANON-007 wants a live staging env; bring the box back (or document its intended state) so parity flips green again. Agent-attemptable via `hcloud`/SSH capability — preflight before labeling founder.",
-        "[S191→][FEATURE/P3·MEASURE] Per-cluster Oracle feedback — now LIVE, awaiting signal. The full pipeline shipped S192 (edge bounded-prefix family + frontend per-cluster emit + rollup per-(clusterKey,day) rows). It is data-starved like the rest of the funnel; once chip traffic accrues, `data/oracle-feedback.ndjson` will carry per-cluster rows and `build-oracle-query-clusters.mjs` will down-weight the clusters that miss. No code action — this is a measurement-watch item.",
+        "[S193][VERIFY/P0] Confirm Oracle + Ask IGNIS fixes on prod after deploy. Verify on a real browser (datacenter curl 403s = benign CF challenge): (a) `/oracle/` no longer shows \"Loading…/—\" stuck panels — the IGNIS Cognition hero, velocity chart, and the 7 lower panels are HIDDEN (honest-dark), while the project portfolio list renders live; (b) Ask IGNIS (type \"security\" / \"feedback\" / \"membership\") returns clean prose — NOT `S191 goal-chain (/start → /audit…)` or `[{\"theme\":...}]` JSON; (c) the shell re-stamped so cold-cache load is healthy. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).",
+        "[S193→][AI/P2·FOUNDER] RICHER-IGNIS-LAYER-PUBLIC-SAFE-DECISION — now blocking a visibly thinner Oracle. The cognition hero + velocity + 7 insight panels are hidden on prod because they source the gitignored `/ignis/output/*` (sealed-project data). To make them LIVE publicly, either (a) decide what cross-project intelligence is public-safe + build a sanitized public generator (like `public-intelligence.json` but with velocity series + per-project public voices), or (b) accept the leaner Oracle. Founder call.",
+        "[S193→][GROWTH/P1] web-share-per-game (deferred from S193 audit #3). New `assets/share-game.js` (Web Share + clipboard fallback) on the 10 game pages, SOUL-voice copy + OG image; allowlist a bounded `share:<game>:<outcome>` RUM prefix family (use the S192 `prefixAllowlist` primitive) + keep in `rollup-rum-ux`. Pattern proven on `/oracle/` (line 519). Touches Worker allowlist → wire emit+allowlist+rollup in one change (S189 rule).",
+        "[S193→][AI/P1] acquisition-source-breakdown (deferred from S193 audit #2). Bucket visitor referrer (search/social/direct/referral) into `api/funnel-summary.json.sources` (honest-dark, no URLs/PII). FIRST confirm referrer reaches the `/v/rum` path (it does NOT today — `analytics.js` captures it but the RUM beacon doesn't); add referrer-family to beacon + Worker allowlist + rollup (3 ends). Names the one channel worth doubling on a traffic-starved site.",
         "[S189][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. Re-run `node scripts/draft-weekly-forge.mjs` for SOUL-voice output, then founder reviews + publishes to `journal/` to clear the 82d-stale journal warn-gate.",
         "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. First-party surface CLEAN. Reprobe ~2026-06-18; pre-S185 samples aging out. Flip stays SOUL #3 founder-device gated.",
-        "[SIL][P3] PROOF-FEED-GENERATOR-GATE — extend coverage. The new `check-proof-feed-generators.mjs` guards the 10 status-proof feeds. As new public `/api/*.json` feeds are added, add them to `build-status-proof.mjs` FEEDS so they inherit the no-hand-seed guarantee. The gate also WARNs on a workflow-emitted feed whose generator path doesn't resolve — keep those honest."
+        "[S192→][OBS/P2] STAGING BOX RECOVERY. The `--refresh` probe confirmed `website.staging.vaultsparkstudios.com` (Hetzner) is genuinely DOWN — `staging-health` honestly reads `staging-unreachable` until restored. CANON-007 wants a live staging env. Agent-attemptable via `hcloud`/SSH — preflight before labeling founder.",
+        "[SIL][P2] HERO PLAY-VS-EXPLORE CTR SIGNAL. The S193 play-first hero added `data-track-event=home_hero_play_click` vs `home_hero_games_click`; add both to the RUM allowlist + `rollup-rum-ux` so the play-first-vs-explore split is measurable (validates the S123→S193 hero evolution with real field data)."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",

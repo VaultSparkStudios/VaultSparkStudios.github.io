@@ -45,6 +45,7 @@ const EXEMPT_PATTERNS = [
   /^\/investor-portal\/(documents|login|message|profile|updates|apply|admin)\//, // gated sub-routes
   /^\/security\/trusted-types\//,  // S158: noindex observability surface
   /\/\.ai\//,                       // S160 #14: AI-canonical fact sheets — linked from /.well-known/llms.txt, not nav
+  /^\/obelisk-passport\//,          // S193: untracked Obelisk-passport WIP (not in git HEAD) — remove when it ships
 ];
 
 function normalizeRel(full) {
