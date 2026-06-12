@@ -8,6 +8,7 @@ const root = process.cwd();
 const projectStatusPath = path.join(root, 'context', 'PROJECT_STATUS.json');
 const taskBoardPath = path.join(root, 'context', 'TASK_BOARD.md');
 const latestHandoffPath = path.join(root, 'context', 'LATEST_HANDOFF.md');
+const silPath = path.join(root, 'context', 'SELF_IMPROVEMENT_LOOP.md');
 const runtimePackPath = path.join(root, 'context', 'runtime-pack', 'RUNTIME_PACK.json');
 const outputPath = path.join(root, 'api', 'public-intelligence.json');
 const contractsDir = path.join(root, 'context', 'contracts');
@@ -330,7 +331,13 @@ const ciStatus = fs.existsSync(ciStatusPath) ? readJson(ciStatusPath) : null;
 const latestSessionBlock = extractLatestSessionBlock(latestHandoff);
 const sessionMatch = latestSessionBlock.match(/Session (\d+)/);
 const updatedMatch = latestHandoff.match(/Last updated:\s*([0-9-]+)/);
-const currentSession = (sessionMatch && Number(sessionMatch[1])) || projectStatus.currentSession || null;
+// SIL rolling-status is the authoritative session counter (updated every closeout)
+const silText = fs.existsSync(silPath) ? fs.readFileSync(silPath, 'utf8') : '';
+const silSessionMatch = silText.match(/Last session:[^|]+\|\s*Session\s+(\d+)/);
+const fromHandoff = sessionMatch && Number(sessionMatch[1]);
+const fromSil = silSessionMatch && Number(silSessionMatch[1]);
+const fromStatus = projectStatus.currentSession;
+const currentSession = Math.max(fromHandoff || 0, fromSil || 0, fromStatus || 0) || null;
 const latestWhereWeLeftOff =
   extractSection(latestSessionBlock, `Where We Left Off (Session ${currentSession})`) ||
   extractFirstMatchingSection(latestSessionBlock, 'Where We Left Off \\(Session ');
