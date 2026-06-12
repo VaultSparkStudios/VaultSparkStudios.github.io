@@ -91,6 +91,7 @@ function indexFor(projects) {
   lines.push('- Studio Pulse (live heartbeat): https://vaultsparkstudios.com/studio-pulse/');
   lines.push('- Membership: https://vaultsparkstudios.com/membership/');
   lines.push('- Insider Dispatches (signal log): https://vaultsparkstudios.com/journal/');
+  lines.push('- Citation (structured, dated facts for AI agents): https://vaultsparkstudios.com/api/citation.json');
   lines.push('');
   lines.push('## Projects (LLM-readable shards)');
   lines.push('');

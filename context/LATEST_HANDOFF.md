@@ -1,6 +1,21 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-12 (Session 190)## Where We Left Off — Session 190
+Last updated: 2026-06-12 (Session 191)
+
+## Where We Left Off — Session 191
+- Shipped: 4 items across 3 groups — **a11y** (reduced-motion-animation-guard) · **AI discovery** (structured-citation-endpoint) · **proof-surface honesty** (trust-manifest-seed-rot-guard, funnel-proof-in-manifest). Plus 1 deferred-with-evidence (oracle-per-cluster-feedback).
+- Tests: 2 new self-tested generators (`build-public-status` 9/9, `build-citation` 9/9) + all 27 gates exercising this session's changes pass individually. `build:check` end-to-end blocked ONLY by a pre-existing untracked `obelisk-passport/` WIP dir (not mine, not pushed → CI green).
+- Deploy: **pending push.** New `api/citation.json` + refreshed `api/public-status.json` + `status-proof.json` (funnel feed) deploy via CF Pages on push. No Worker change this session.
+
+**Session Intent:** Run the full `/goal [/start → /audit → /implement → /closeout]` chain with genius-level creative thinking. **Achieved — full chain run; 4 audit items shipped + 1 disciplined evidence-deferral; gates green for all changes.**
+
+- **Theme:** Complete the proof surface + harden its honesty. The funnel is data-starved (1 event/30d) — a traffic problem, not a code problem — so the audit added no new measurement and instead closed real integration/freshness/WCAG gaps the S186-S190 apparatus left open.
+- **Honesty highlight:** caught a real determinism bug in my OWN new generator (embedded wall-clock `heartbeat.generatedAt`) via `build:check` before it shipped → fixed to derive from stable activity-derived `lastActivity`. Surfaced (didn't disturb) an untracked `obelisk-passport/` WIP dir that isn't mine.
+- **Carries:** S191 prod-verify · seed-rot follow-up (staging-health 92%, security-posture 54%) · oracle-per-cluster (deferred, needs bounded Worker prefix-rule) · forge devlog publish (founder) · TT reprobe ~06-18.
+
+---
+
+## Where We Left Off — Session 190
 - Shipped: 10 items across 4 groups — **funnel depth** (funnel-waterfall-pedagogical, session-velocity-trust-badge, progressive-membership-unlock) · **content tooling** (forge-devlog-soul-voice-upgrade, changelog-entry-auto-derive) · **proof/trust layer** (proof-embed-card) · **Oracle intelligence** (oracle-chip-ranking, oracle-corpus-feedback-loop, tt-default-policy-finish)
 - Tests: 2 new/extended self-tested scripts (draft-weekly-forge 11/11, generate-changelog-entry 17/17, oracle clusters 3/3, rollup-rum-ux 11/11) · `build:check` green end-to-end
 - Deploy: **10 commits pending push** (f5bada74 · 6215ce4e · 89cd24c7 · 054eb6f6 · 1bd9a397 · d3031a50 · 5f930ac3 · 94df04cb · 8bcb830b · 0cef5b3a). Worker allowlist change (`membership-unlock:stage-*` + `proof-card:embed`) auto-deploys via `cloudflare-worker-deploy.yml`. Verify via pages.dev origin.

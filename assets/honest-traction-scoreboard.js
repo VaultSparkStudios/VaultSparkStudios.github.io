@@ -51,8 +51,14 @@
     return diffDays + ' days ago';
   }
 
-  // Count-up animation: from 0 to target over ~800ms, ease-out
+  // Count-up animation: from 0 to target over ~800ms, ease-out.
+  // Honors prefers-reduced-motion (WCAG 2.3.3) — motion-sensitive visitors
+  // get the final value instantly, no count-up.
   function animateCount(el, target) {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = String(target);
+      return;
+    }
     var start = null;
     var duration = 800;
     function step(ts) {

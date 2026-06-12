@@ -1,5 +1,21 @@
 # Work Log
 
+## 2026-06-12 — Session 191 (/goal chain: /start → /audit → /implement → /closeout · 4 shipped / 1 deferred-with-evidence)
+
+Ran the full /goal chain with a deliberately small, ground-truth-verified frontier audit. Theme: **complete the proof surface + harden its honesty**. The funnel S186-S190 built is data-starved (1 event/30d) — a traffic problem, not a code problem — so the audit added NO new measurement and instead closed real integration/freshness/WCAG gaps. Ground-truth first: probed pages.dev (S190 live), and Read-debunked a grep rendering artifact (`\v\rum`) that looked like a beacon-URL bug but the file correctly emits `/v/rum`.
+
+**Shipped 4:**
+1. **reduced-motion-animation-guard** — S190's count-up (`honest-traction-scoreboard.js`) + `vault-rank-bar.js` animated with no `prefers-reduced-motion` guard (40 sibling assets had one). Added JS guard + `@media(prefers-reduced-motion:reduce)` transition-kill. WCAG 2.3.3.
+2. **structured-citation-endpoint** — `scripts/build-citation.mjs` (9/9) → `api/citation.json`: identity + proprietary license (CANON-008) + 4 confirmed/sourced/dated claims + `suggestedCitation`; discoverable via agents.json + llms.txt. Lets LLMs cite VaultSpark accurately.
+3. **trust-manifest-seed-rot-guard** — `api/public-status.json` was a 2026-05-22 hand-seed crossing its 720h threshold on 06-21. New `scripts/build-public-status.mjs` (9/9) derives it from live feeds (deterministic); `build-status-proof.mjs` gained a seed-rot WARN that immediately flagged staging-health (92%) + security-posture (54%).
+4. **funnel-proof-in-manifest** — folded `funnel-summary.json` into `status-proof.json` as an `honestDarkOk` feed (present+fresh, never stale) so the one-fetch proof surface includes conversion posture without dragging trustScore.
+
+**Deferred with evidence:** oracle-per-cluster-feedback — Worker `RUM_UX_EVENTS` is exact-match, so dynamic cluster keys silently drop at the edge (S186 class); needs a bounded Worker prefix-rule + unit test first. Not worth the security-surface change at 1 event/30d.
+
+**Verification:** caught + fixed a determinism bug in my own `build-public-status` (wall-clock `heartbeat.generatedAt`) via `build:check` before it shipped. All 27 gates exercising this session's changes pass individually. `build:check` end-to-end blocked ONLY by a pre-existing untracked `obelisk-passport/` WIP dir (not mine, not pushed → CI green); left it untouched per the "didn't create it → surface, don't delete" rule.
+
+---
+
 ## 2026-06-12 — Session 190 (/goal chain: /start → /audit → /implement → /closeout · 10/10 shipped)
 
 Ran the full /goal chain. Theme: **deepen what you built**. The S186-S189 arc delivered a full funnel surface; S190 made every layer more resonant. Ground-truth probes confirmed honest-dark was correct on the funnel tile, caught a 1-session sessionsCompleted drift in `public-intelligence.json`, and found the forge devlog draft contained raw task-board text rather than SOUL prose — three real problems behind three of the 10 items.

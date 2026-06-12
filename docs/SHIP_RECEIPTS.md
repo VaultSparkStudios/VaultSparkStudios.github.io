@@ -7,8 +7,8 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Conversion | 1 | fdb136c8 surface earned trust microline at the signup decision + drop dead asset | pending |
-| Worlds | 2 | 9c771161 give the play-next destination a voice + build reconcile<br>f4358fc6 route attention across the catalog, never dead-end | pending |
-| Transparency | 4 | 57e98246 1-tap helpful/unhelpful on Ask IGNIS answers<br>fce0e350 roll allowlisted RUM ux events into api/funnel-summary.json + /status/ tile<br>973679ef seed Oracle empty-state with real query-cluster chips + instrument hint/chip funnel<br>809f7e35 closeout write-backs + durable fixes: propagate-nav inline→class, oracle schemaVersion, step3d.7 artifact ordering | pending |
+| Conversion | 2 | 1efa8097 forge devlog SOUL-voice upgrade<br>2fc5b32a progressive membership unlock — 3-stage personalized callout | pending |
+| Worlds | 1 | 9c771161 give the play-next destination a voice + build reconcile | pending |
+| Transparency | 6 | c7a47424 oracle corpus feedback loop — oracle-feedback.ndjson writer<br>13cf2014 oracle chip ranking — helpful-rate signal from oracle-feedback.ndjson<br>4e265756 changelog entry auto-derive from TASK_BOARD<br>2a984b3d show journey stages on /status/ even in honest-dark state<br>07a26062 derive sessionsCompleted from SIL rolling-status | pending |
 | Speed | 2 | 08ee09eb untrack .cache session logs (absolute-path leak) + gitignore<br>a40fce7c close the silent-drop bug class | home-lcp-s173 (4) |
-| Front door | 3 | 3c343c1a give the 2nd live title a hero promise line<br>53174e2c widen the funnel S187 started<br>09798337 activate sitewide footer email capture via existing Kit ESP | pending |
+| Front door | 2 | 96ecb9ed give the 2nd live title a hero promise line<br>53174e2c widen the funnel S187 started | pending |

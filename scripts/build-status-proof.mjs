@@ -29,6 +29,10 @@ const OUT = path.join(API, 'status-proof.json');
 
 // Proof feeds to bundle. staleAfterH = how old (hours) before the signal is
 // flagged stale (tuned per feed cadence: live probes short, static posture long).
+// honestDarkOk: a feed that is legitimately frozen until data arrives (e.g. the
+//   conversion funnel below minSamples) carries honestDark=true and is graded
+//   present+fresh — it is EXPECTED, not stale, and never the worstStale. This
+//   keeps trustScore honest: a data-starved funnel must not read as a broken feed.
 const FEEDS = [
   { key: 'uptime', staleAfterH: 2 },
   { key: 'field-win', staleAfterH: 48 },
@@ -38,9 +42,15 @@ const FEEDS = [
   { key: 'staging-health', staleAfterH: 168 },
   { key: 'geo-vitals', staleAfterH: 48 },
   { key: 'field-verdicts', staleAfterH: 72 },
+  { key: 'funnel-summary', staleAfterH: null, honestDarkOk: true }, // S191: conversion posture; frozen honest-dark until traffic
   { key: 'public-status', staleAfterH: 720 },
   { key: 'security-posture', staleAfterH: 720 },
 ];
+
+// Long-window "posture" feeds (≥ this) are hand-maintained seeds, not CI-refreshed
+// live probes. When one passes half its window it is approaching seed-rot and
+// should be refreshed before it silently drags trustScore. (S191 seed-rot guard.)
+const SEED_WINDOW_H = 168;
 
 function readJson(p) {
   try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; }
@@ -66,6 +76,7 @@ export function buildManifest(nowMs) {
   const proofs = {};
   let present = 0, fresh = 0;
   let worst = null;
+  const seedRisk = [];
 
   for (const feed of FEEDS) {
     const data = readJson(path.join(API, `${feed.key}.json`));
@@ -76,10 +87,22 @@ export function buildManifest(nowMs) {
     present++;
     const genAt = extractGeneratedAt(data);
     const ageSec = genAt ? Math.max(0, Math.round((now - Date.parse(genAt)) / 1000)) : null;
-    const stale = ageSec === null ? true : ageSec > feed.staleAfterH * 3600;
+    // honestDarkOk feeds (staleAfterH null OR data.honestDark) are EXPECTED-frozen:
+    // present + fresh, never stale, never worstStale.
+    const honestDark = feed.honestDarkOk && (feed.staleAfterH === null || data.honestDark === true);
+    const stale = honestDark ? false : (ageSec === null ? true : ageSec > feed.staleAfterH * 3600);
     if (!stale) fresh++;
-    if (ageSec !== null && (!worst || ageSec > worst.ageSeconds)) {
+    if (!honestDark && ageSec !== null && (!worst || ageSec > worst.ageSeconds)) {
       worst = { key: feed.key, ageSeconds: ageSec, generatedAt: genAt };
+    }
+    // Seed-rot watch: a hand-maintained posture feed past half its window.
+    if (!honestDark && feed.staleAfterH >= SEED_WINDOW_H && ageSec !== null && ageSec > feed.staleAfterH * 3600 * 0.5) {
+      seedRisk.push({
+        key: feed.key,
+        ageHours: Math.round(ageSec / 3600),
+        staleAfterH: feed.staleAfterH,
+        pctOfWindow: Math.round((ageSec / (feed.staleAfterH * 3600)) * 100),
+      });
     }
     proofs[feed.key] = {
       present: true,
@@ -87,6 +110,7 @@ export function buildManifest(nowMs) {
       generatedAt: genAt,
       freshnessSeconds: ageSec,
       staleAfterH: feed.staleAfterH,
+      honestDark,
       stale,
       data,
     };
@@ -106,6 +130,7 @@ export function buildManifest(nowMs) {
       stale: present - fresh,
       trustScore,
       worstStale: worst,
+      seedRisk,
     },
     proofs,
   };
@@ -120,9 +145,17 @@ function structure(m) {
   });
 }
 
+function warnSeedRot(seedRisk) {
+  if (!seedRisk || !seedRisk.length) return;
+  for (const r of seedRisk) {
+    console.warn(`⚠ status-proof seed-rot watch: ${r.key} is ${r.pctOfWindow}% through its ${r.staleAfterH}h window (${r.ageHours}h old) — refresh its generator before it drags trustScore.`);
+  }
+}
+
 function main() {
   const check = process.argv.includes('--check');
   const fresh = buildManifest();
+  warnSeedRot(fresh.summary.seedRisk);
   if (check) {
     const existing = readJson(OUT);
     if (!existing) { console.error('status-proof: manifest missing — run without --check'); process.exit(1); }

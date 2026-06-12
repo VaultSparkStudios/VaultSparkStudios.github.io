@@ -51,7 +51,9 @@
       '#vs-rank-bar{position:fixed;bottom:0;left:0;height:2px;background:var(--vs-gold,#ffc400);' +
       'width:0%;transition:width 1.4s cubic-bezier(.25,.8,.25,1);z-index:9999;pointer-events:none;}' +
       '#vs-rank-bar.vs-rank-bar--ready{opacity:1;}' +
-      '#vs-rank-bar.vs-rank-bar--maxed{background:linear-gradient(90deg,#ffc400,#ff7a00);}';
+      '#vs-rank-bar.vs-rank-bar--maxed{background:linear-gradient(90deg,#ffc400,#ff7a00);}' +
+      // WCAG 2.3.3 — motion-sensitive visitors get the bar at its final width with no sweep.
+      '@media(prefers-reduced-motion:reduce){#vs-rank-bar{transition:none;}}';
     document.head.appendChild(style);
     document.body.appendChild(barEl);
     return barEl;

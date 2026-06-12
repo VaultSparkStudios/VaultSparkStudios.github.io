@@ -1,17 +1,43 @@
 {
-  "generatedAt": "2026-05-22",
-  "source": "vaultsparkstudios.com worker proxy of hub.vaultsparkstudios.com/public-status (seed until Hub Worker /public-status endpoint is wired)",
+  "schemaVersion": "1.0",
+  "generatedBy": "scripts/build-public-status.mjs",
+  "generatedAt": "2026-06-12",
+  "publicSafe": true,
+  "source": "Derived from public feeds (public-intelligence + heartbeat + commit-map) until the Hub Worker /public-status endpoint is wired. Every value traces to a live source.",
   "studio": {
-    "reposOnline": 28,
-    "activeSessions": 1,
-    "lastArkBroadcastAt": "2026-05-22T22:00:00Z",
-    "ignisHeartbeatAt": "2026-05-22T22:15:00Z",
-    "lastShippedSession": "S160"
+    "reposOnline": 27,
+    "sparked": 3,
+    "forge": 8,
+    "sealed": 16,
+    "activeThisWeek": 1,
+    "lastArkBroadcastAt": "2026-06-12T04:08:50.000Z",
+    "ignisHeartbeatAt": "2026-06-12T01:48:41.900Z",
+    "lastShippedSession": "S190"
   },
   "nervousSystem": [
-    { "label": "Repos online", "value": 28 },
-    { "label": "Sessions active now", "value": 1 },
-    { "label": "IGNIS heartbeat", "value": "live" },
-    { "label": "Last Ark broadcast", "value": "minutes ago" }
+    {
+      "label": "Repos in the studio",
+      "value": 27
+    },
+    {
+      "label": "Live (Sparked)",
+      "value": 3
+    },
+    {
+      "label": "In the Forge",
+      "value": 8
+    },
+    {
+      "label": "Sealed",
+      "value": 16
+    },
+    {
+      "label": "Active this week",
+      "value": 1
+    },
+    {
+      "label": "Last shipped",
+      "value": "S190"
+    }
   ]
 }

@@ -1,0 +1,115 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0 (S191 goal-chain)",
+  "generatedAt": "2026-06-12",
+  "session": 191,
+  "sessionPrev": 190,
+  "project": "vaultsparkstudios-github-io",
+  "axisWeights": { "ux": 2.5, "speed": 2, "featureDepth": 1.5, "security": 1.0, "ai": 1.0, "feedback": 1.0 },
+  "topline": {
+    "lens": "Mature public studio site (SIL 960/1000). S186-S190 built and measured a full proof+conversion apparatus; the funnel is data-starved (1 event / 30d, honest-dark) — that is a traffic problem, not a code problem, so this audit does NOT add more measurement. Instead it (a) closes real integration/freshness gaps the proof apparatus left open, (b) extends the machine-SEO spine to the citation layer, and (c) pays down a concrete WCAG gap. Theme: COMPLETE THE PROOF SURFACE + HARDEN ITS HONESTY.",
+    "competitiveFrame": "The studio's proof manifest (status-proof.json, trustScore 80) has two honest-dark/seed feeds dragging it below 100 and is MISSING the conversion funnel it built. Its agents.json carries prose citation guidance but no structured, dated, machine-readable citation feed — the single thing an LLM most needs to answer 'what is VaultSpark Studios' without hallucinating. And S190's animated session count-up ships with no reduced-motion guard while 40 sibling assets honor it. These are completeness + honesty gaps in infrastructure that already exists, not net-new surfaces.",
+    "groundTruthVerified": [
+      "api/status-proof.json: trustScore=80, feeds=10 — funnel-summary NOT among PROOF_FEEDS (build-status-proof.mjs:33-41). Confirmed integration gap.",
+      "api/public-status.json: hardcoded seed, generatedAt 2026-05-22, staleAfterH 720 — crosses the 30d threshold on 2026-06-21, after which it turns the trust manifest amber. Latent landmine.",
+      "api/funnel-summary.json: asOf 2026-06-05, totalEvents 1 — deterministic (mirrors latest history day), frozen until traffic arrives. Correct honest-dark behavior; must be treated as expected-not-stale when folded into the manifest.",
+      "assets/ignis-answer-engine.js:31 emits to '/v/rum' correctly (grep rendered it as '\\v\\rum' — a tooling escaping artifact, NOT a bug; verified by Read).",
+      "api/citation.json: ABSENT. agents.json:42 has prose citation guidance pointing at llms-full.txt shards but no structured citation data.",
+      "assets/honest-traction-scoreboard.js:54-65 + assets/vault-rank-bar.js: requestAnimationFrame count-up with 0 prefers-reduced-motion guards; 40 assets sitewide DO guard. Confirmed WCAG 2.3.3 gap.",
+      "session-counter.js named in S190 records does NOT exist as a file — the count-up shipped inside honest-traction-scoreboard.js (commit 8bcb830b). Records mislabel; reconcile at closeout.",
+      "S190 features confirmed live on pages.dev origin (status-proof/funnel-summary/public-intelligence all 200, generatedAt today)."
+    ]
+  },
+  "totals": { "count": 5, "priority": 132.5, "top3": ["reduced-motion-animation-guard", "structured-citation-endpoint", "trust-manifest-seed-rot-guard"] },
+  "items": [
+    {
+      "id": 1,
+      "slug": "reduced-motion-animation-guard",
+      "tier": "high",
+      "axis": "ux",
+      "effort": "1h",
+      "effortHours": 1,
+      "impact": 6,
+      "innovation": 4,
+      "priority": 37.9,
+      "title": "Honor prefers-reduced-motion on the session count-up + rank bars",
+      "why": "S190's animated session count-up (honest-traction-scoreboard.js) and vault-rank-bar.js run requestAnimationFrame animations with no reduced-motion guard — motion-sensitive visitors get an unwanted count-up animation that WCAG 2.3.3 says should be suppressible. 40 other assets already honor the media query, so this is a coverage gap, not a new pattern. Outcome: keyboard- and motion-sensitive visitors reach the membership decision without a vestibular trigger.",
+      "recipe": "In honest-traction-scoreboard.js, before the rAF loop: if window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, set el.textContent = String(target) and return (skip animation). Same guard in vault-rank-bar.js before its bar-fill animation. Grep the two files for requestAnimationFrame and gate each.",
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 2,
+      "slug": "structured-citation-endpoint",
+      "tier": "high",
+      "axis": "ai",
+      "effort": "2h",
+      "effortHours": 2,
+      "impact": 7,
+      "innovation": 9,
+      "priority": 31.5,
+      "title": "Structured /api/citation.json for accurate LLM citation",
+      "why": "When an LLM is asked 'what is VaultSpark Studios / is it trustworthy', it has agents.json prose guidance but no structured, dated, machine-readable source with the actual citable facts. A canonical citation feed (studio identity, one-line description, 3 CONFIRMED proof metrics pulled from status-proof.json/field-win.json, canonical URL, license, asOf date) gives crawlers an authoritative source so they cite accurately instead of hallucinating. This is the natural next layer of the machine-SEO spine the studio already over-indexes on. Outcome: AI agents answer about VaultSpark with sourced, dated, honest facts (info-finding).",
+      "recipe": "New scripts/build-citation.mjs reads ecosystem-state.json + api/status-proof.json + api/field-win.json (confirmed wins only, honest-dark when none) and writes api/citation.json {schemaVersion, asOf, studio:{name,url,description,license}, claims:[{text, source, asOf}], suggestedCitation:'...'}. Add to agents.json discovery block + a 'Citation' line in llms.txt. Self-test the builder + wire into build + build:check (drift gate). Public-safe: only already-public confirmed metrics.",
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 3,
+      "slug": "trust-manifest-seed-rot-guard",
+      "tier": "high",
+      "axis": "security",
+      "effort": "1.5h",
+      "effortHours": 1.5,
+      "impact": 7,
+      "innovation": 7,
+      "priority": 27.1,
+      "title": "Stop the trust manifest from silently rotting on a hardcoded seed",
+      "why": "api/public-status.json is a hardcoded seed ('seed until Hub Worker /public-status endpoint is wired') stamped 2026-05-22 with a 720h (30d) staleAfter — it crosses that threshold on 2026-06-21, after which it quietly drags trustScore down and worstStale reports a month-old feed. The trust manifest's whole job is honesty; a seed that rots into a false 'stale' signal undermines it. Outcome: the public trust score stays honest and an agent reading status-proof.json never sees a phantom-stale feed.",
+      "recipe": "(a) In check-public-contract-health.mjs (the writer), derive public-status.json's mutable signals from real local sources (reposOnline from PROJECT_REGISTRY count, lastArkBroadcastAt/ignisHeartbeatAt from existing feeds) and stamp generatedAt = today on each regen so it tracks reality instead of freezing. (b) Add a check in check-public-contract-health.mjs --self-test (or a small new gate) that ERRORs when any status-proof FEED's committed generatedAt is older than 0.5x its staleAfterH — surfacing seed-rot before it hits prod. Wire into build:check.",
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 4,
+      "slug": "funnel-proof-in-manifest",
+      "tier": "high",
+      "axis": "feedback",
+      "effort": "1h",
+      "effortHours": 1,
+      "impact": 6,
+      "innovation": 6,
+      "priority": 22.7,
+      "title": "Fold the conversion funnel into the one-fetch proof manifest",
+      "why": "status-proof.json is the studio's self-grading 'one fetch verifies our posture' manifest, but the conversion funnel (funnel-summary.json, built S189) isn't one of its 10 feeds. An agent or visitor reading the canonical proof surface can see uptime, field-wins, and AI-spine health but not the conversion posture. Folding it in completes the proof surface. Critically: funnel-summary is deterministic and frozen until traffic arrives, so it must be marked honest-dark-aware (expected, not stale) or it would drag trustScore. Outcome: the single canonical proof fetch now answers 'how is conversion doing' honestly (info-finding).",
+      "recipe": "Add { key: 'funnel-summary', staleAfterH: null, honestDarkOk: true } to FEEDS in build-status-proof.mjs; in the freshness grader, treat honestDark=true (or staleAfterH=null) feeds as present+fresh (never counted as stale, never the worstStale). Add a self-test case proving a frozen honest-dark funnel keeps trustScore at 100 when all other feeds are fresh. /status/ proof tile already fetches the manifest — confirm it surfaces the new feed.",
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 5,
+      "slug": "oracle-per-cluster-feedback",
+      "tier": "nice-to-have",
+      "axis": "ai",
+      "effort": "1.5h",
+      "effortHours": 1.5,
+      "impact": 4,
+      "innovation": 6,
+      "priority": 13.3,
+      "title": "Make Oracle answer feedback attributable per query-cluster",
+      "why": "The oracle-answer:{helpful,unhelpful} beacon is global — rollup-rum-ux writes oracle-feedback.ndjson with clusterKey:'*', and the cluster ranker ignores '*' keys, so the helpfulScore signal can never become topic-specific. Carrying the matched cluster id on the vote makes answer quality attributable per topic, which is what build-oracle-query-clusters.mjs's recency-weighted ranker was designed to consume. Honest caveat: the funnel is data-starved, so this builds capability ahead of volume — low immediate ROI but it completes a loop already 80% built. Outcome: when traffic arrives, the studio learns WHICH topics the Oracle answers badly (info-finding).",
+      "recipe": "In ignis-answer-engine.js, when an answer renders, stash the matched cluster id (findCluster result) on the feedback control; on vote, emit oracle-answer:helpful:<clusterId> / :unhelpful:<clusterId> (dynamic-prefix allowlist the family in the Worker RUM_UX_EVENTS + check-rum-allowlist). In rollup-rum-ux.mjs updateOracleFeedback, parse the cluster suffix into clusterKey instead of hardcoding '*'. Keep '*' as the fallback when no cluster matched. Update self-tests on both ends.",
+      "executionLog": [
+        "S191: DEFERRED with evidence. Architectural blocker found: cloudflare/security-headers-worker.js RUM_UX_EVENTS is an EXACT-match Set (validateUxEvent → RUM_UX_EVENTS.has(value)), not a prefix-matcher. Cluster keys (oracle-insights.json: 'what_the', etc.) are unbounded/dynamic, so emitting oracle-answer:helpful:<clusterKey> would be silently dropped at the edge — the exact S186 silent-drop class the S188 allowlist gate exists to prevent. Shipping correctly requires a BOUNDED Worker prefix-rule for the oracle-answer: family (charset + length capped) + worker.unit.spec.js coverage + deriveSummary prefix-sum + check-funnel-contract tolerance — a security-surface change across 5 files. Deferred because the funnel is data-starved (1 event / 30d): this builds capability ahead of any volume, and the risk of subtly breaking the funnel aggregation (in build:check) outweighs near-zero current value. rollup-rum-ux updateOracleFeedback already parses r.clusterKey, so the data-layer side is ready; only the Worker acceptance + frontend emit remain. Next session: add the bounded prefix rule to the Worker first, prove it with a unit test, THEN wire the frontend emit + funnel prefix-sum in one change."
+      ],
+      "status": "deferred"
+    }
+  ],
+  "skipped": [
+    { "slug": "tt-enforce-reprobe", "reason": "Evidence-gated — reprobe due ~2026-06-18 (pre-S185 samples still aging out). Not actionable today." },
+    { "slug": "forge-devlog-publish", "reason": "Founder-gated (SOUL-voice review before publish). Re-run drafter, founder publishes." },
+    { "slug": "build-cadence-heatmap", "reason": "Redundant — velocity heatmaps already exist (studio-living.js living-heatmap, oracle-extra.js oracle-heatmap)." },
+    { "slug": "richer-ignis-layer", "reason": "Founder public-safe-boundary decision on exposing cross-project/sealed intelligence." }
+  ],
+  "innovationReserve": ["structured-citation-endpoint"]
+}

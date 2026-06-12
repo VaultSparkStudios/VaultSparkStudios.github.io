@@ -91,6 +91,7 @@ export function buildManifest(state) {
       entityGraph: `${SITE}/.well-known/entity-graph.json`,
       search: `${SITE}/search/`,
       statusProof: `${SITE}/api/status-proof.json`,
+      citation: `${SITE}/api/citation.json`,
     },
     primaryCta: {
       label: 'Become a Vault Member — free',

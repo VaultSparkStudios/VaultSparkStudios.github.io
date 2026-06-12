@@ -8,14 +8,45 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ██▇██
-Avgs - 3: 959.3 | 5: 959.4 | 10: 978.0 | 25: 976.0 | all: 961 (v3.0 /1000)
-  └ 3-session: Dev 95.3 | Align 96.0 | Momentum 95.7 | Engage 95.0 | Process 96.0
-Velocity trend: ↑ (S190: 10 shipped (highest single-session count since S185), 0 deferred-by-fatigue; S189: 5; S188: 7 — cadence holding) | Protocol velocity: ↑ (generate-changelog-entry + draft-weekly-forge upgrade are new reusable content tools; oracle-feedback loop closes the Oracle quality signal end-to-end) | Debt: ↓ (cleared the 8h progressive-membership-unlock carry from S185; closed 3 items the S189 brainstorm named; TT finish resolves the lingering schema-injector annotation)
-Momentum runway: ≥4 open Now items — prod-verify S190 (funnel waterfall + session badge + membership unlock + proof embed + Worker allowlist deploy), re-run forge devlog drafter for S190-voice output + founder publish, TT-enforce reprobe ~06-18, per-cluster Oracle feedback when frontend emits cluster key | Intent rate: 100% (last 5)
-Last session: 2026-06-12 | Session 190 | Total: 960/1000 (v3.0) | Velocity: 10 | protocolVelocity: 2
+Sparkline (last 5 totals): ▇█▇█▇
+Avgs - 3: 957.7 | 5: 958.2 | 10: 966.0 | 25: 974.0 | all: 961 (v3.0 /1000)
+  └ 3-session: Dev 93.0 | Align 97.0 | Momentum 95.3 | Engage 95.0 | Process 94.7
+Velocity trend: → (S191: 4 shipped + 1 disciplined evidence-deferral; S190: 10; S189: 5 — small-bore frontier by design after the big S190 funnel-depth pass) | Protocol velocity: ↑ (build-public-status + build-citation are 2 new reusable, self-tested generators; seed-rot WARN added to status-proof) | Debt: ↓ (closed a real WCAG gap + a latent trustScore landmine; the seed-rot guard now surfaces the next two before they bite)
+Momentum runway: ≥5 open Now items — prod-verify S191 (citation.json + public-status freshness + funnel feed), seed-rot follow-up (staging-health 92% / security-posture 54%), oracle-per-cluster (deferred, needs bounded Worker prefix-rule), forge devlog publish (founder), TT reprobe ~06-18 | Intent rate: 100% (last 5)
+Last session: 2026-06-12 | Session 191 | Total: 956/1000 (v3.0) | Velocity: 4 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-12 — Session 191 (/goal chain: /start → /audit → /implement → /closeout · 4 shipped / 1 deferred-with-evidence) | Total: 956/1000 (v3.0) | Velocity: 4 | Debt: ↓
+Avgs — 3: 957.7 | 5: 958.2 | 10: 966.0 | 25: 974.0 | all: 961
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 92 | Two new self-tested generators (build-public-status 9/9, build-citation 9/9); caught a real determinism bug in my own generator (wall-clock `heartbeat.generatedAt`) via `build:check` BEFORE it shipped, fixed to stable `lastActivity`; all 27 gates exercising changes pass. |
+| Creative Alignment | 97 | Citation endpoint extends the machine-SEO spine honestly — proprietary license per CANON-008, only confirmed/sourced claims, honest-dark when unconfirmed. No human creative direction (procedural goal-chain). |
+| Momentum | 95 | Velocity 4 — deliberately small-bore frontier after S190's 10-ship funnel-depth pass; 1 disciplined evidence-deferral (oracle-per-cluster), not a fatigue-skip; intent achieved. |
+| Engagement | 95 | Completed the one-fetch proof surface (funnel folded into status-proof) + a portable `citation.json` for AI agents — both deepen how external consumers read the studio's posture. |
+| Process Quality | 95 | Ground-truth-verified audit (Read-debunked a grep `\v\rum` artifact); disciplined deferral with a precise architectural blocker; surfaced an untracked `obelisk-passport/` WIP without disturbing it; the seed-rot guard pre-empts the next two landmines. |
+| Cross-Repo Coherence | 99 | Citation/agents.json/llms.txt stay mutually consistent (spine gate green); no cross-repo writes this session. |
+| Security Posture | 98 | Hardened the public trust manifest against silent seed-rot; deliberately DEFERRED the Worker allowlist change rather than loosen the edge exact-match Set for a data-starved feature. |
+| Ecosystem Integration | 96 | `api/citation.json` is portable AI-agent value any crawler can cite; the seed-rot WARN pattern is reusable across every posture feed. |
+| Capital Efficiency | 98 | All new feeds are static derivations from existing public artifacts — cost-neutral per CANON-029, no per-user studio cost. |
+| Automation Coverage | 93 | Both new generators wired into `build` + `build:check` with self-tests + drift checks; seed-rot watch automates landmine detection. |
+| **Total** | **956** | 4 shipped + 1 evidence-deferral; gates green for all changes. |
+
+**Top win:** The seed-rot guard immediately earned its keep — added to catch the public-status rot, it surfaced two MORE posture feeds (staging-health 92%, security-posture 54%) silently approaching false-stale before they could drag the public trustScore.
+**Top gap:** The conversion funnel is still data-starved (1 event/30d); no amount of code closes that — it needs real traffic, which is a marketing/distribution problem the studio hasn't solved.
+**Intent outcome:** Achieved — full goal-chain run; small, honest, ground-truth-verified audit; 4 shipped + 1 disciplined deferral.
+
+**Brainstorm**
+1. **Posture-feed generator sweep** — give `staging-health` + `security-posture` real generators (like build-public-status) so NO status-proof feed is a hand-seed; first step: `scripts/build-staging-health.mjs` deriving from the existing staging probe. (High)
+2. **Citation freshness beacon** — emit a tiny `citation:fetched` RUM event when an agent-readable surface serves citation.json, so the studio can measure whether AI crawlers actually consume it. (Medium)
+3. **Bounded Worker prefix-rule primitive** — add a reusable `prefixAllowlist(family, {charset, maxLen})` helper to the Worker so per-cluster Oracle feedback (and future dynamic families) can ship safely without re-litigating the exact-match-Set tradeoff. (Medium)
+4. **trustScore honesty audit** — a gate that fails if status-proof trustScore drops below 90 for a reason OTHER than a genuinely-down live probe (i.e. catch seed-rot/cadence artifacts masquerading as real degradation). (Medium)
+
+**Committed to TASK_BOARD:** [SIL] Posture-feed generator sweep (staging-health + security-posture) · [SIL] Bounded Worker prefix-rule primitive for dynamic RUM families
 
 ---
 
