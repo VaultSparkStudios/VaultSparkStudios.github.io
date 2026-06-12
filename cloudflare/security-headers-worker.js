@@ -264,6 +264,10 @@ const RUM_UX_EVENTS = new Set([
   // S189: Ask IGNIS answer feedback — 1-tap helpful/unhelpful on a delivered
   // answer. Names only (no query text, no IDs); feeds api/funnel-summary.json.
   'oracle-answer:helpful', 'oracle-answer:unhelpful',
+  // S190: progressive membership unlock — fires when membership-unlock.js sets
+  // body[data-vs-unlock-stage=N] based on visit/proof/dispatch signals. Names
+  // only; no PII; feeds funnel-summary stage-distribution bucket.
+  'membership-unlock:stage-2', 'membership-unlock:stage-3', 'membership-unlock:stage-4',
 ]);
 function cleanRumUxEvent(value) {
   return typeof value === 'string' && RUM_UX_EVENTS.has(value) ? value : null;

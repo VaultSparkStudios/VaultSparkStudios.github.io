@@ -45,6 +45,7 @@
           form.hidden = true;
           if (success) success.hidden = false;
           emitUx('studio-dispatch:subscribe');
+          try { window.localStorage.setItem('vs_dispatch_sub', '1'); } catch (_) {}
         } else {
           if (btn) { btn.disabled = false; btn.textContent = orig; }
           if (input) { input.setAttribute('aria-invalid', 'true'); input.focus(); }

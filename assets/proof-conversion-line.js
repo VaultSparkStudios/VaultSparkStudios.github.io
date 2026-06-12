@@ -72,7 +72,10 @@
     link.className = 'vs-proof-line__link';
     link.href = '/status/';
     link.textContent = 'See the proof';
-    link.addEventListener('click', function () { emitUx('proof-line:click'); });
+    link.addEventListener('click', function () {
+      emitUx('proof-line:click');
+      try { window.localStorage.setItem('vs_proof_seen', '1'); } catch (_) {}
+    });
     line.appendChild(link);
     root.insertBefore(line, root.firstChild);
   }

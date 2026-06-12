@@ -811,6 +811,24 @@
            cards on no-JS / degraded clients. -->
       <div id="mem-interview-mount" class="mem-interview" data-fallback="/vaultsparked/" style="margin: 2rem auto 0; max-width: 640px;"></div>
 
+      <!-- S190: progressive membership unlock callouts — shown by membership-unlock.js
+           via body[data-vs-unlock-stage] CSS selectors. All hidden by default. -->
+      <div class="vs-unlock-callout" data-stage="2" aria-live="polite" style="display:none;">
+        Welcome back. Returning members who claim a free account lock in their
+        <strong>rank position early</strong> — the leaderboard resets when we launch the next world.
+        <a href="/ranks/">See the full rank ladder →</a>
+      </div>
+      <div class="vs-unlock-callout" data-stage="3" aria-live="polite" style="display:none;">
+        You've seen the studio's field data. The members who act on that proof earliest
+        tend to hold the <strong>highest permanent ranks</strong> when new worlds open.
+        <a href="/vault-member/#register">Claim your rank slot now →</a>
+      </div>
+      <div class="vs-unlock-callout" data-stage="4" aria-live="polite" style="display:none;">
+        You're already on the Studio Dispatch list — <strong>you're in the community</strong>.
+        A free Vault account ties your rank, portal, and identity to that membership permanently.
+        <a href="/vault-member/#register">Activate your free account →</a>
+      </div>
+
       <div class="mem-hero-proof" aria-label="Vault community stats">
         <div class="mem-hero-proof-item">
           <strong id="proof-members">—</strong>
@@ -1389,6 +1407,7 @@
 <script src="/assets/recent-ships.js" defer></script>
 <script src="/assets/schema-injector.js" defer></script>
 <script src="/assets/membership-idle-loader.js" defer></script>
+<script src="/assets/membership-unlock.js" defer></script>
   <!-- vs-ambient:start -->
 <script src="/assets/ambient-core.shell-4796e4dbd3.js" defer></script>
 <script src="/assets/ambient-feature.shell-5b85ce5201.js" defer></script>
