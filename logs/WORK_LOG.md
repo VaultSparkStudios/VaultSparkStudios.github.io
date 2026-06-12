@@ -1,5 +1,18 @@
 # Work Log
 
+## 2026-06-12 — Session 192 (/goal chain: /start → /audit → /implement → /closeout · 5/5 shipped · build:check EXIT 0)
+
+Ran the full /goal chain and FINISHED the S191 proof-surface-honesty arc. Ground-truth-verified before scoring: `security-posture.json` was the lone surviving `manual-seed:` feed; `staging-health.json` sat at 95% of its 168h seed-rot window; `worker.unit.spec.js` had zero RUM-sanitizer coverage; the oracle-answer emit was global-only while the rollup already parsed clusterKey. No new measurement (the funnel is data-starved — a traffic problem).
+
+**Shipped 5:**
+1. **security-posture-live-derive** — `scripts/build-security-posture.mjs` (12/12) derives 6 controls from live repo evidence; each carries an `evidence` link + `verified` flag and downgrades to `unverified` if evidence stops resolving. Kills the last pure hand-seed (`generatedBy` now real). 6/6 verified.
+2. **proof-feed-generator-gate** — `scripts/check-proof-feed-generators.mjs` (12/12) fails build:check on any hand-seed / missing `generatedBy` among the bundled status-proof feeds. Caught + fixed `ci-status.json` (no provenance). The S191 memory lesson is now a structural gate.
+3. **bounded-prefix-allowlist-primitive** — `prefixAllowlist()` + `makeRumUxCleaner()` in `worker-lib.mjs`; Worker builds `cleanRumUxEvent` from them so a bounded dynamic family ships without loosening the exact-match Set. +2 `worker.unit` cases (23/23) — first RUM-sanitizer coverage.
+4. **oracle-per-cluster-feedback-finish** — closed the S191 deferred item: `rollup-rum-ux` `parseOracleAnswer` + prefix-aware global fold + per-(clusterKey,day) rows (19/19); frontend emits `oracle-answer:<part>:<clusterId>` on chip-known clusters. The studio now learns WHICH clusters miss.
+5. **staging-health-self-refresh** — `check-staging-parity.mjs` resilient (8s timeout, never throws) + honest `staging-unreachable` status + `--refresh` mode (6/6); low-churn refresh wired into `uptime-probe.yml`. Confirmed staging IS down (seed-rot root cause). `seedRisk` now `[]`.
+
+**Mid-session footgun:** 4 new `&&` segments overflowed the cmd.exe 8191-char `build:check` limit (CI on bash unaffected). Collapsed the proof-surface checks into `scripts/check-proof-surface.mjs` — net build:check now SHORTER than before. `build:check` EXIT 0 end-to-end (108-page crawl, 0 failures) with the pre-existing untracked `obelisk-passport/` parked. Audit: `docs/AUDIT_2026-06-12-S192.{json,md}`.
+
 ## 2026-06-12 — Session 191 (/goal chain: /start → /audit → /implement → /closeout · 4 shipped / 1 deferred-with-evidence)
 
 Ran the full /goal chain with a deliberately small, ground-truth-verified frontier audit. Theme: **complete the proof surface + harden its honesty**. The funnel S186-S190 built is data-starved (1 event/30d) — a traffic problem, not a code problem — so the audit added NO new measurement and instead closed real integration/freshness/WCAG gaps. Ground-truth first: probed pages.dev (S190 live), and Read-debunked a grep rendering artifact (`\v\rum`) that looked like a beacon-URL bug but the file correctly emits `/v/rum`.

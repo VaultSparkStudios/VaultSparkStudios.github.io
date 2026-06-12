@@ -1,0 +1,46 @@
+{
+  "session": 192,
+  "date": "2026-06-12",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios-github-io",
+  "headline": "Finished the proof-surface-honesty arc: the last hand-seed is gone, the seed-rot lesson is now a permanent gate, and dynamic RUM instrumentation has a safe bounded primitive — build:check EXIT 0, both seed-rot landmines cleared.",
+  "items": [
+    {
+      "id": 1, "slug": "proof-feed-generator-gate", "title": "Seeded-not-generated is now structurally impossible", "axis": "security",
+      "projectImpact": 8, "ecosystemImpact": 7,
+      "insight": "The studio kept re-learning that hand-seeded proof feeds rot into false-stale signals that drag the public trustScore — so this turns the lesson into a build:check gate instead of a console.warn nobody reads. On its very first run it caught ci-status.json shipping with no provenance at all, a gap nobody had noticed.",
+      "evidence": "scripts/check-proof-feed-generators.mjs 12/12 self-test; 10 bundled feeds confirmed live-derived; ci-status.json stamped + workflow now emits generatedBy."
+    },
+    {
+      "id": 2, "slug": "security-posture-live-derive", "title": "The public security posture now proves itself from repo evidence", "axis": "ai",
+      "projectImpact": 8, "ecosystemImpact": 7,
+      "insight": "security-posture.json was the last feed asserting controls nobody re-verified — a month-old hand-seed about to drag trustScore. Now each of its six controls is derived from the live file or gate that proves it, and an unresolvable control honestly downgrades to unverified rather than claiming active.",
+      "evidence": "scripts/build-security-posture.mjs 12/12 self-test; 6/6 controls verified; generatedBy is the real generator (was manual-seed:/implement-S167)."
+    },
+    {
+      "id": 3, "slug": "bounded-prefix-allowlist-primitive", "title": "Dynamic RUM instrumentation can ship without weakening the edge", "axis": "security",
+      "projectImpact": 7, "ecosystemImpact": 8,
+      "insight": "The Worker's names-only RUM allowlist was exact-match, so any dynamic event name silently dropped at the edge — the recurring silent-drop class. A charset-and-length-capped prefix primitive now admits a bounded family while the global Set stays authoritative, and the sanitizer finally has unit-test coverage.",
+      "evidence": "prefixAllowlist() + makeRumUxCleaner() in worker-lib.mjs; worker.unit.spec.js 23/23 (+2 new RUM cases, first-ever coverage)."
+    },
+    {
+      "id": 4, "slug": "oracle-per-cluster-feedback-finish", "title": "Ask IGNIS now learns which answer clusters miss, not just the global rate", "axis": "ai",
+      "projectImpact": 6, "ecosystemImpact": 6,
+      "insight": "S191 deferred this because dynamic keys dropped at the edge; once the prefix primitive landed the blocker was gone and the analysis layer was already waiting. The full pipeline — bounded edge family, per-cluster frontend emit, per-clusterKey rollup rows — now ships, retiring a carry that had aged two sessions.",
+      "evidence": "rollup-rum-ux.mjs 19/19 self-test (parseOracleAnswer + global fold + per-cluster rows); ignis-answer-engine.js emits oracle-answer:<part>:<clusterId>; check-rum-allowlist in sync."
+    },
+    {
+      "id": 5, "slug": "staging-health-self-refresh", "title": "Staging health stays fresh and honest even when staging is down", "axis": "speed",
+      "projectImpact": 7, "ecosystemImpact": 5,
+      "insight": "The parity feed hard-failed when the Hetzner box was unreachable, so its timestamp froze at 2026-06-05 and crept toward false-stale while reporting a stale green. It now reports an honest staging-unreachable with a reason and a fresh timestamp, refreshed low-churn on the uptime cadence — and the run confirmed the staging box is genuinely down.",
+      "evidence": "check-staging-parity.mjs 6/6 self-test; classifyStatus + --refresh mode; wired into uptime-probe.yml; status-proof seedRisk now []."
+    }
+  ],
+  "followUps": [
+    "Confirm S192 feeds on prod via pages.dev (security-posture generatedBy, staging-health fresh, seedRisk [], ci-status provenance, per-cluster beacon survives edge)",
+    "Bring the Hetzner staging box back so CANON-007 parity flips green (agent-attemptable via hcloud/SSH)",
+    "Per-cluster Oracle feedback is live but data-starved — watch for signal as chip traffic accrues"
+  ],
+  "blockers": [],
+  "silDelta": "+9 (956 → 965)"
+}

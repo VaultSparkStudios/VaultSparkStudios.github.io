@@ -23,6 +23,8 @@ import {
   isHtmlNavRequest,
   issueCsrfToken,
   verifyCsrfToken,
+  prefixAllowlist,
+  makeRumUxCleaner,
 } from '../cloudflare/worker-lib.mjs';
 
 const APEX = 'https://vaultsparkstudios.com';
@@ -281,4 +283,33 @@ test('DR cache is NOT consulted for non-HTML (asset/JSON) requests', async () =>
   const res = await originFetch(req);
   assert.equal(matched, false, 'DR cache must only back HTML navs, not assets');
   assert.ok(res.status >= 500);
+});
+
+// --- RUM ux-event allowlisting (S192) --------------------------------------
+
+test('prefixAllowlist admits a bounded family suffix and rejects unbounded input', () => {
+  const match = prefixAllowlist('oracle-answer:helpful', { maxLen: 24 });
+  assert.equal(match('oracle-answer:helpful:pricing'), true, 'valid clusterId suffix passes');
+  assert.equal(match('oracle-answer:helpful:a-b-9'), true, 'charset [a-z0-9-] passes');
+  assert.equal(match('oracle-answer:helpful:'), false, 'empty suffix rejected');
+  assert.equal(match('oracle-answer:helpful:Pricing'), false, 'uppercase rejected by default charset');
+  assert.equal(match('oracle-answer:helpful:free text'), false, 'spaces/free-text rejected');
+  assert.equal(match('oracle-answer:helpful:' + 'x'.repeat(25)), false, 'over maxLen rejected');
+  assert.equal(match('oracle-answer:unhelpful:pricing'), false, 'different family not matched');
+  assert.equal(match(42), false, 'non-string rejected');
+});
+
+test('makeRumUxCleaner: exact Set wins first, then bounded dynamic families, else null', () => {
+  const exact = new Set(['nav-sheet:open', 'oracle-answer:helpful']);
+  const clean = makeRumUxCleaner(exact, [
+    prefixAllowlist('oracle-answer:helpful', { maxLen: 24 }),
+    prefixAllowlist('oracle-answer:unhelpful', { maxLen: 24 }),
+  ]);
+  assert.equal(clean('nav-sheet:open'), 'nav-sheet:open', 'static exact name passes through');
+  assert.equal(clean('oracle-answer:helpful'), 'oracle-answer:helpful', 'static global feedback still passes');
+  assert.equal(clean('oracle-answer:helpful:pricing'), 'oracle-answer:helpful:pricing', 'bounded per-cluster name admitted');
+  assert.equal(clean('oracle-answer:unhelpful:vault-sso'), 'oracle-answer:unhelpful:vault-sso', 'second family admitted');
+  assert.equal(clean('oracle-answer:helpful:DROP TABLE'), null, 'illegal-charset suffix dropped');
+  assert.equal(clean('totally-unknown'), null, 'unknown name dropped (no silent free-text storage)');
+  assert.equal(clean(null), null, 'non-string dropped');
 });

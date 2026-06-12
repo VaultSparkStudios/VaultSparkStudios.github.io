@@ -1,15 +1,54 @@
 {
-  "schemaVersion": "1.0",
-  "generatedAt": "2026-05-27T00:00:00.000Z",
-  "generatedBy": "manual-seed:/implement-S167",
+  "schemaVersion": "1.1",
+  "generatedBy": "scripts/build-security-posture.mjs",
+  "generatedAt": "2026-06-12",
   "publicSafe": true,
   "posture": "active",
+  "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",
+  "verifiedControls": 6,
+  "totalControls": 6,
   "controls": [
-    { "label": "Security headers", "status": "active", "detail": "Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, referrer policy, and related browser hardening." },
-    { "label": "CSP discipline", "status": "active", "detail": "Static CSP audit and hash propagation are part of build verification." },
-    { "label": "RUM privacy", "status": "active", "detail": "RUM is route-level and privacy-minimized; no user IDs, query strings, or free text are stored." },
-    { "label": "Supply-chain scan", "status": "active", "detail": "CANON-023 supply-chain verification runs in build:check." },
-    { "label": "Obelisk adoption", "status": "phase-0-declared", "detail": "Identity wrapper exists; passkey-first migration waits on Obelisk Phase 2." },
-    { "label": "Responsible disclosure", "status": "active", "detail": "Reports route to founder@vaultsparkstudios.com with the security.txt policy." }
+    {
+      "label": "Security headers",
+      "status": "active",
+      "detail": "Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, and Referrer-Policy plus related browser hardening.",
+      "verified": true,
+      "evidence": "cloudflare/security-headers-worker.js"
+    },
+    {
+      "label": "CSP discipline",
+      "status": "active",
+      "detail": "Static CSP policy (config/csp-policy.mjs) is audited by csp-audit.mjs in build:check; hash/nonce propagation is part of build verification.",
+      "verified": true,
+      "evidence": "config/csp-policy.mjs + scripts/csp-audit.mjs"
+    },
+    {
+      "label": "RUM privacy",
+      "status": "active",
+      "detail": "RUM is route-level and privacy-minimized: ux events pass an allowlisted names-only Set (RUM_UX_EVENTS + cleanRumUxEvent) — no user IDs, query strings, or free text are ever stored.",
+      "verified": true,
+      "evidence": "cloudflare/security-headers-worker.js"
+    },
+    {
+      "label": "Supply-chain scan",
+      "status": "active",
+      "detail": "CANON-023 supply-chain verification (verify-supply-chain.mjs) runs in build:check.",
+      "verified": true,
+      "evidence": "scripts/verify-supply-chain.mjs"
+    },
+    {
+      "label": "Obelisk adoption",
+      "status": "phase-0-declared",
+      "detail": "Identity wrapper exists; Obelisk posture is phase-0-declared (passkey-first migration waits on later Obelisk phases).",
+      "verified": true,
+      "evidence": "context/OBELISK_ADOPTION.md"
+    },
+    {
+      "label": "Responsible disclosure",
+      "status": "active",
+      "detail": "Reports route to mailto:security@vaultsparkstudios.com via the published security.txt policy.",
+      "verified": true,
+      "evidence": ".well-known/security.txt"
+    }
   ]
 }

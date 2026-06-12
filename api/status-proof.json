@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-06-12T05:01:54.538Z",
+  "generatedAt": "2026-06-12T11:09:01.778Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -11,31 +11,18 @@
     "stale": 2,
     "trustScore": 82,
     "worstStale": {
-      "key": "security-posture",
-      "ageSeconds": 1400515,
-      "generatedAt": "2026-05-27T00:00:00.000Z"
+      "key": "field-verdicts",
+      "ageSeconds": 405831,
+      "generatedAt": "2026-06-07T18:25:10.430Z"
     },
-    "seedRisk": [
-      {
-        "key": "staging-health",
-        "ageHours": 154,
-        "staleAfterH": 168,
-        "pctOfWindow": 92
-      },
-      {
-        "key": "security-posture",
-        "ageHours": 389,
-        "staleAfterH": 720,
-        "pctOfWindow": 54
-      }
-    ]
+    "seedRisk": []
   },
   "proofs": {
     "uptime": {
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-06-12T01:55:59.634Z",
-      "freshnessSeconds": 11155,
+      "freshnessSeconds": 33182,
       "staleAfterH": 2,
       "stale": true,
       "data": {
@@ -148,7 +135,7 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-06-12T05:01:52.905Z",
+      "generatedAt": "2026-06-12T11:08:59.380Z",
       "freshnessSeconds": 2,
       "staleAfterH": 48,
       "stale": false,
@@ -185,19 +172,19 @@
             "postLcpP75": 4436
           }
         ],
-        "generatedAt": "2026-06-12T05:01:52.905Z"
+        "generatedAt": "2026-06-12T11:08:59.380Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-06-12T05:01:54.238Z",
+      "generatedAt": "2026-06-12T11:09:01.410Z",
       "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-12T05:01:54.238Z",
+        "generatedAt": "2026-06-12T11:09:01.410Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -225,29 +212,30 @@
     "ci-status": {
       "present": true,
       "source": "/api/ci-status.json",
-      "generatedAt": "2026-06-11T23:49:47.502Z",
-      "freshnessSeconds": 18727,
+      "generatedAt": "2026-06-12T04:15:26.128Z",
+      "freshnessSeconds": 24816,
       "staleAfterH": 96,
       "stale": false,
       "data": {
-        "generatedAt": "2026-06-11T23:49:47.502Z",
+        "generatedAt": "2026-06-12T04:15:26.128Z",
+        "generatedBy": ".github/workflows/ci-status-beacon.yml",
         "allGreen": false,
         "summary": "One or more CI gates are failing. Studio is investigating.",
         "workflows": [
           {
             "name": "E2E Test Suite",
             "status": "failure",
-            "updatedAt": "2026-06-11T23:45:31Z"
+            "updatedAt": "2026-06-12T04:11:32Z"
           },
           {
             "name": "Accessibility Audit",
-            "status": "success",
-            "updatedAt": "2026-06-11T23:46:31Z"
+            "status": "failure",
+            "updatedAt": "2026-06-12T04:12:53Z"
           },
           {
             "name": "Lighthouse CI",
             "status": "failure",
-            "updatedAt": "2026-06-11T23:49:36Z"
+            "updatedAt": "2026-06-12T04:15:17Z"
           }
         ]
       }
@@ -255,13 +243,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-06-12T05:01:53.388Z",
-      "freshnessSeconds": 1,
+      "generatedAt": "2026-06-12T11:09:00.182Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-12T05:01:53.388Z",
+        "generatedAt": "2026-06-12T11:09:00.182Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -276,90 +264,76 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-06-05T19:11:57.942Z",
-      "freshnessSeconds": 553797,
+      "generatedAt": "2026-06-12T10:47:46.417Z",
+      "freshnessSeconds": 1275,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-05T19:11:57.942Z",
+        "generatedAt": "2026-06-12T10:47:46.417Z",
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
         "production": "https://vaultsparkstudios.com",
         "staging": "https://website.staging.vaultsparkstudios.com",
-        "status": "green",
+        "status": "staging-unreachable",
+        "reason": "Staging origin did not respond within the probe budget; parity not comparable this cycle.",
         "routes": [
           {
             "route": "/",
             "prodStatus": 200,
-            "stagingStatus": 200,
-            "statusParity": true,
-            "shellParity": true,
+            "stagingStatus": 0,
+            "stagingReachable": false,
+            "statusParity": false,
+            "shellParity": false,
             "prodShell": [
-              "assets/ambient.shell-3667694cc0.js",
+              "assets/ambient-core.shell-4796e4dbd3.js",
+              "assets/ambient-feature.shell-5b85ce5201.js",
               "assets/nav-toggle.shell-6d8a113585.js",
               "assets/shell-health.shell-0995bd7945.js",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/theme-toggle.shell-b970c26bd9.js"
+              "assets/style.shell-cade1bd169.css",
+              "assets/style.shell-cade1bd169.css",
+              "assets/style.shell-cade1bd169.css",
+              "assets/theme-toggle.shell-f439e83c34.js"
             ],
-            "stagingShell": [
-              "assets/ambient.shell-3667694cc0.js",
-              "assets/nav-toggle.shell-6d8a113585.js",
-              "assets/shell-health.shell-0995bd7945.js",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/theme-toggle.shell-b970c26bd9.js"
-            ],
-            "headerParity": true
+            "stagingShell": [],
+            "headerParity": false
           },
           {
             "route": "/studio-pulse/",
             "prodStatus": 200,
-            "stagingStatus": 200,
-            "statusParity": true,
-            "shellParity": true,
+            "stagingStatus": 0,
+            "stagingReachable": false,
+            "statusParity": false,
+            "shellParity": false,
             "prodShell": [
-              "assets/ambient.shell-3667694cc0.js",
+              "assets/ambient-core.shell-4796e4dbd3.js",
+              "assets/ambient-feature.shell-5b85ce5201.js",
               "assets/nav-toggle.shell-6d8a113585.js",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/theme-toggle.shell-b970c26bd9.js"
+              "assets/style.shell-cade1bd169.css",
+              "assets/style.shell-cade1bd169.css",
+              "assets/style.shell-cade1bd169.css",
+              "assets/theme-toggle.shell-f439e83c34.js"
             ],
-            "stagingShell": [
-              "assets/ambient.shell-3667694cc0.js",
-              "assets/nav-toggle.shell-6d8a113585.js",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/theme-toggle.shell-b970c26bd9.js"
-            ],
-            "headerParity": true
+            "stagingShell": [],
+            "headerParity": false
           },
           {
             "route": "/membership/",
             "prodStatus": 200,
-            "stagingStatus": 200,
-            "statusParity": true,
-            "shellParity": true,
+            "stagingStatus": 0,
+            "stagingReachable": false,
+            "statusParity": false,
+            "shellParity": false,
             "prodShell": [
-              "assets/ambient.shell-3667694cc0.js",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/theme-toggle.shell-b970c26bd9.js"
+              "assets/ambient-core.shell-4796e4dbd3.js",
+              "assets/ambient-feature.shell-5b85ce5201.js",
+              "assets/style.shell-cade1bd169.css",
+              "assets/style.shell-cade1bd169.css",
+              "assets/style.shell-cade1bd169.css",
+              "assets/theme-toggle.shell-f439e83c34.js"
             ],
-            "stagingShell": [
-              "assets/ambient.shell-3667694cc0.js",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/style.shell-7082b9235c.css",
-              "assets/theme-toggle.shell-b970c26bd9.js"
-            ],
-            "headerParity": true
+            "stagingShell": [],
+            "headerParity": false
           }
         ]
       }
@@ -367,13 +341,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-06-12T05:01:53.318Z",
-      "freshnessSeconds": 1,
+      "generatedAt": "2026-06-12T11:09:00.022Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-12T05:01:53.318Z",
+        "generatedAt": "2026-06-12T11:09:00.022Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
@@ -425,7 +399,7 @@
       "present": true,
       "source": "/api/field-verdicts.json",
       "generatedAt": "2026-06-07T18:25:10.430Z",
-      "freshnessSeconds": 383804,
+      "freshnessSeconds": 405831,
       "staleAfterH": 72,
       "stale": true,
       "data": {
@@ -503,7 +477,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-05T00:00:00.000Z",
-      "freshnessSeconds": 622915,
+      "freshnessSeconds": 644942,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -582,7 +556,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-06-12T00:00:00.000Z",
-      "freshnessSeconds": 18115,
+      "freshnessSeconds": 40142,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -597,9 +571,9 @@
           "forge": 8,
           "sealed": 16,
           "activeThisWeek": 1,
-          "lastArkBroadcastAt": "2026-06-12T04:08:50.000Z",
+          "lastArkBroadcastAt": "2026-06-12T05:14:19.000Z",
           "ignisHeartbeatAt": "2026-06-12T01:48:41.900Z",
-          "lastShippedSession": "S190"
+          "lastShippedSession": "S191"
         },
         "nervousSystem": [
           {
@@ -624,7 +598,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S190"
+            "value": "S191"
           }
         ]
       }
@@ -632,46 +606,61 @@
     "security-posture": {
       "present": true,
       "source": "/api/security-posture.json",
-      "generatedAt": "2026-05-27T00:00:00.000Z",
-      "freshnessSeconds": 1400515,
+      "generatedAt": "2026-06-12T00:00:00.000Z",
+      "freshnessSeconds": 40142,
       "staleAfterH": 720,
       "stale": false,
       "data": {
-        "schemaVersion": "1.0",
-        "generatedAt": "2026-05-27T00:00:00.000Z",
-        "generatedBy": "manual-seed:/implement-S167",
+        "schemaVersion": "1.1",
+        "generatedBy": "scripts/build-security-posture.mjs",
+        "generatedAt": "2026-06-12",
         "publicSafe": true,
         "posture": "active",
+        "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",
+        "verifiedControls": 6,
+        "totalControls": 6,
         "controls": [
           {
             "label": "Security headers",
             "status": "active",
-            "detail": "Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, referrer policy, and related browser hardening."
+            "detail": "Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, and Referrer-Policy plus related browser hardening.",
+            "verified": true,
+            "evidence": "cloudflare/security-headers-worker.js"
           },
           {
             "label": "CSP discipline",
             "status": "active",
-            "detail": "Static CSP audit and hash propagation are part of build verification."
+            "detail": "Static CSP policy (config/csp-policy.mjs) is audited by csp-audit.mjs in build:check; hash/nonce propagation is part of build verification.",
+            "verified": true,
+            "evidence": "config/csp-policy.mjs + scripts/csp-audit.mjs"
           },
           {
             "label": "RUM privacy",
             "status": "active",
-            "detail": "RUM is route-level and privacy-minimized; no user IDs, query strings, or free text are stored."
+            "detail": "RUM is route-level and privacy-minimized: ux events pass an allowlisted names-only Set (RUM_UX_EVENTS + cleanRumUxEvent) — no user IDs, query strings, or free text are ever stored.",
+            "verified": true,
+            "evidence": "cloudflare/security-headers-worker.js"
           },
           {
             "label": "Supply-chain scan",
             "status": "active",
-            "detail": "CANON-023 supply-chain verification runs in build:check."
+            "detail": "CANON-023 supply-chain verification (verify-supply-chain.mjs) runs in build:check.",
+            "verified": true,
+            "evidence": "scripts/verify-supply-chain.mjs"
           },
           {
             "label": "Obelisk adoption",
             "status": "phase-0-declared",
-            "detail": "Identity wrapper exists; passkey-first migration waits on Obelisk Phase 2."
+            "detail": "Identity wrapper exists; Obelisk posture is phase-0-declared (passkey-first migration waits on later Obelisk phases).",
+            "verified": true,
+            "evidence": "context/OBELISK_ADOPTION.md"
           },
           {
             "label": "Responsible disclosure",
             "status": "active",
-            "detail": "Reports route to founder@vaultsparkstudios.com with the security.txt policy."
+            "detail": "Reports route to mailto:security@vaultsparkstudios.com via the published security.txt policy.",
+            "verified": true,
+            "evidence": ".well-known/security.txt"
           }
         ]
       }

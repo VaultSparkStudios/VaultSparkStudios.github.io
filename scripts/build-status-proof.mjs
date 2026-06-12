@@ -33,7 +33,7 @@ const OUT = path.join(API, 'status-proof.json');
 //   conversion funnel below minSamples) carries honestDark=true and is graded
 //   present+fresh — it is EXPECTED, not stale, and never the worstStale. This
 //   keeps trustScore honest: a data-starved funnel must not read as a broken feed.
-const FEEDS = [
+export const FEEDS = [
   { key: 'uptime', staleAfterH: 2 },
   { key: 'field-win', staleAfterH: 48 },
   { key: 'ai-discovery-health', staleAfterH: 48 },

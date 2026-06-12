@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-12T05:01:46.527Z",
+  "generatedAt": "2026-06-12T11:09:26.257Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,17 +22,19 @@
     }
   },
   "pulse": {
-    "currentSession": 190,
+    "currentSession": 192,
     "lastUpdated": "2026-06-12",
-    "currentFocus": "S190 goal-chain (/start -> /audit -> /implement -> /closeout): deepen the funnel layer. Shipped 10/10, build:check green. funnel-waterfall-pedagogical (5-stage waterfall on /status/ funnel tile; sessionsCompleted now build-derived), session-velocity-trust-badge (animated counter + velocity on /studio/), progressive-membership-unlock (4-stage classifier + 3 callout blocks on /membership/; Worker allowlist updated), forge-devlog-soul-voice-upgrade (16-term forbidden-terms table; SOUL-voice narrative), changelog-entry-auto-derive (generate-changelog-entry.mjs 17/17), proof-embed-card (standalone embeddable trust card; /status/ Share this proof section), oracle-chip-ranking (helpful-rate re-ranking from oracle-feedback.ndjson), oracle-corpus-feedback-loop (rollup-rum-ux feeds oracle-feedback.ndjson on unhelpful>=2 days), tt-default-policy-finish (clarifying TT comment on schema-injector.js).",
-    "nextMilestone": "Prod-verify S190 on pages.dev: funnel waterfall renders 5 stages, session badge animates, membership callout fires for returning visitors, proof-card:embed beacon lands in /v/rum, Worker deploys updated RUM_UX_EVENTS allowlist. Founder: re-run draft-weekly-forge.mjs for S190-voice output, review + publish to journal/. TT reprobe ~2026-06-18.",
+    "currentFocus": "S191 goal-chain (/start -> /audit -> /implement -> /closeout): complete the proof surface + harden its honesty. 4 shipped / 1 deferred-with-evidence, gates green for all changes. reduced-motion-animation-guard (WCAG 2.3.3 on honest-traction-scoreboard + vault-rank-bar), structured-citation-endpoint (api/citation.json via build-citation.mjs 9/9; agents.json + llms.txt discovery; CANON-008 license; honest-dark claims), trust-manifest-seed-rot-guard (build-public-status.mjs 9/9 replaces a rotting 2026-05-22 hand-seed; status-proof seed-rot WARN flagged staging-health 92% + security-posture 54%), funnel-proof-in-manifest (funnel-summary folded into status-proof as honestDarkOk feed). Deferred: oracle-per-cluster-feedback (Worker RUM_UX_EVENTS exact-match would drop dynamic keys; needs bounded prefix-rule first).",
+    "nextMilestone": "Prod-verify S191 on pages.dev: api/citation.json 200 with 4 sourced claims, public-status asOf today, status-proof exposes funnel feed. Seed-rot follow-up: give staging-health + security-posture real generators. Founder: review + publish forge devlog. TT reprobe ~2026-06-18.",
     "blockers": [],
     "queues": {
       "now": [
-        "[S190][VERIFY/P1] Confirm S190 features on prod after deploy. (a) `/status/` funnel waterfall renders 5 stages in honest-dark (——/——/——/——/——); (b) `/studio/` session counter animates on scroll; (c) `/membership/` stage-1 callout is absent on first visit (no localStorage signals yet); (d) `proof-card:embed` beacon lands in `/v/rum` when the embed preview loads on `/status/`; (e) Worker deploys the updated `RUM_UX_EVENTS` allowlist including `membership-unlock:stage-*`. Verify via pages.dev origin; never assume push==deploy.",
-        "[S190→][FEATURE/P2] Oracle per-cluster feedback granularity. `oracle-feedback.ndjson` currently uses `clusterKey: '*'` (global aggregate). Once the frontend emits the cluster key alongside the 👍/👎 beacon, switch `rollup-rum-ux.mjs` to per-cluster rows. The schema is already in place; only the emit-site needs updating.",
-        "[S189][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. `journal/_drafts/forge-week-2026-06-11.md` — S190 upgraded the drafter to SOUL-voice narrative; the draft itself was generated before the upgrade. Re-run `node scripts/draft-weekly-forge.mjs` to get the new-voice output, then founder reviews + publishes to `journal/` to clear the stale journal warn-gate.",
-        "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. First-party surface CLEAN. Reprobe ~2026-06-18; pre-S185 samples aging out. Flip stays SOUL #3 founder-device gated."
+        "[S192][VERIFY/P1] Confirm S192 features on prod after deploy. Verify via pages.dev origin (never assume push==deploy): (a) `/api/security-posture.json` shows `generatedBy: scripts/build-security-posture.mjs` (not manual-seed) + asOf today + 6/6 verified controls each with an `evidence` link; (b) `/api/staging-health.json` shows a fresh `generatedAt` + honest `status` (`staging-unreachable` until the Hetzner box is back) — no longer the 2026-06-05 stale `green`; (c) `/api/status-proof.json` `summary.seedRisk` is `[]`; (d) `/api/ci-status.json` carries `generatedBy`; (e) a per-cluster `oracle-answer:helpful:<id>` beacon survives the edge (POST `/v/rum` with a bounded suffix → stored; an over-length/illegal suffix → dropped).",
+        "[S192→][OBS/P2] STAGING BOX RECOVERY. The `--refresh` probe confirmed `website.staging.vaultsparkstudios.com` (Hetzner) is genuinely DOWN — `staging-health` will honestly read `staging-unreachable` until it's restored. CANON-007 wants a live staging env; bring the box back (or document its intended state) so parity flips green again. Agent-attemptable via `hcloud`/SSH capability — preflight before labeling founder.",
+        "[S191→][FEATURE/P3·MEASURE] Per-cluster Oracle feedback — now LIVE, awaiting signal. The full pipeline shipped S192 (edge bounded-prefix family + frontend per-cluster emit + rollup per-(clusterKey,day) rows). It is data-starved like the rest of the funnel; once chip traffic accrues, `data/oracle-feedback.ndjson` will carry per-cluster rows and `build-oracle-query-clusters.mjs` will down-weight the clusters that miss. No code action — this is a measurement-watch item.",
+        "[S189][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. Re-run `node scripts/draft-weekly-forge.mjs` for SOUL-voice output, then founder reviews + publishes to `journal/` to clear the 82d-stale journal warn-gate.",
+        "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. First-party surface CLEAN. Reprobe ~2026-06-18; pre-S185 samples aging out. Flip stays SOUL #3 founder-device gated.",
+        "[SIL][P3] PROOF-FEED-GENERATOR-GATE — extend coverage. The new `check-proof-feed-generators.mjs` guards the 10 status-proof feeds. As new public `/api/*.json` feeds are added, add them to `build-status-proof.mjs` FEEDS so they inherit the no-hand-seed guarantee. The gate also WARNs on a workflow-emitted feed whose generator path doesn't resolve — keep those honest."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",

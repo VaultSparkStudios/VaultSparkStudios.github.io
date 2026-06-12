@@ -146,3 +146,37 @@ export async function verifyCsrfToken(env, token) {
   if (Date.now() - Number(ts) > CSRF_TTL_MS) return false;
   return hmacVerify(env.CSRF_SIGNING_KEY, `${ts}.${rand}`, sig);
 }
+
+// --- RUM ux-event allowlisting (S192) --------------------------------------
+
+// The Worker stores an optional `ux` interaction name on each RUM beacon, gated
+// by an EXACT-match Set (RUM_UX_EVENTS) so only known, names-only events are
+// ever persisted — no free text. That Set cannot admit a *dynamic* name (e.g.
+// per-cluster Oracle feedback `oracle-answer:helpful:<clusterId>`): such names
+// silently drop at the edge (the S186 silent-drop class). prefixAllowlist gives
+// a BOUNDED escape hatch — a family admits `${family}:${suffix}` only when the
+// suffix passes a charset + length cap, so dynamic instrumentation ships without
+// loosening the global Set. The suffix is a single bounded token (colon-free);
+// structured names use a longer multi-segment family (e.g. 'oracle-answer:helpful').
+export function prefixAllowlist(family, { charset = /^[a-z0-9-]+$/, maxLen = 32 } = {}) {
+  const prefix = `${family}:`;
+  return (value) => {
+    if (typeof value !== 'string' || !value.startsWith(prefix)) return false;
+    const suffix = value.slice(prefix.length);
+    if (!suffix || suffix.length > maxLen) return false;
+    return charset.test(suffix);
+  };
+}
+
+// Build a RUM ux-event sanitizer: the exact-match Set wins first (authoritative
+// for all static names), then each bounded dynamic family matcher. Returns the
+// value when admitted, else null. Keeping the Set first means static behavior is
+// byte-identical; dynamic families are purely additive.
+export function makeRumUxCleaner(exactSet, dynamicMatchers = []) {
+  return (value) => {
+    if (typeof value !== 'string') return null;
+    if (exactSet.has(value)) return value;
+    for (const match of dynamicMatchers) { if (match(value)) return value; }
+    return null;
+  };
+}

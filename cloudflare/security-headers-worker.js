@@ -31,6 +31,8 @@ import {
   issueCsrfToken,
   verifyCsrfToken,
   CSRF_TTL_MS,
+  prefixAllowlist,
+  makeRumUxCleaner,
 } from './worker-lib.mjs';
 
 // ---------------------------------------------------------------------------
@@ -272,9 +274,16 @@ const RUM_UX_EVENTS = new Set([
   // measure trust-distribution reach outside the main site.
   'proof-card:embed',
 ]);
-function cleanRumUxEvent(value) {
-  return typeof value === 'string' && RUM_UX_EVENTS.has(value) ? value : null;
-}
+// S192: bounded dynamic families. The exact Set above stays authoritative for
+// static names; these admit `${family}:${suffix}` (single bounded token) so
+// dynamic instrumentation ships without loosening the global allowlist.
+//   - oracle-answer:helpful:<clusterId> / :unhelpful:<clusterId> (S192 #5) —
+//     per-cluster Ask IGNIS feedback; clusterId is [a-z0-9-], <=24 chars.
+const RUM_UX_DYNAMIC = [
+  prefixAllowlist('oracle-answer:helpful', { maxLen: 24 }),
+  prefixAllowlist('oracle-answer:unhelpful', { maxLen: 24 }),
+];
+const cleanRumUxEvent = makeRumUxCleaner(RUM_UX_EVENTS, RUM_UX_DYNAMIC);
 
 function cleanRumNumber(value, max) {
   const n = Number(value);

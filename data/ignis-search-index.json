@@ -1,20 +1,20 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-12T05:01:53.809Z",
+  "generatedAt": "2026-06-12T11:09:29.415Z",
   "generatedBy": "scripts/build-ignis-search-index.mjs",
   "publicSafe": true,
   "documents": [
     {
       "title": "VaultSpark Studios public memory",
       "url": "/llms-full.txt",
-      "summary": "# VaultSparkStudios.github.io > S190 goal-chain (/start -> /audit -> /implement -> /closeout): deepen the funnel layer. Shipped 10/10, build:check green. funnel-waterfall-pedagogical (5-stage waterfall on /status/ funnel tile; sessionsCompl",
-      "body": "# VaultSparkStudios.github.io > S190 goal-chain (/start -> /audit -> /implement -> /closeout): deepen the funnel layer. Shipped 10/10, build:check green. funnel-waterfall-pedagogical (5-stage waterfall on /status/ funnel tile; sessionsCompleted now build-derived), session-velocity-trust-badge (animated counter + velocity on /studio/), progressive-membership-unlock (4-stage classifier + 3 callout blocks on /membership/; Worker allowlist updated), forge-devlog-soul-voice-upgrade (16-term forbidden-terms table; SOUL-voice narrative), changelog-entry-auto-derive (generate-changelog-entry.mjs 17/17), proof-embed-card (standalone embeddable trust card; /status/ Share this proof section), oracle-ch"
+      "summary": "# VaultSparkStudios.github.io > S191 goal-chain (/start -> /audit -> /implement -> /closeout): complete the proof surface + harden its honesty. 4 shipped / 1 deferred-with-evidence, gates green for all changes. reduced-motion-animation-guar",
+      "body": "# VaultSparkStudios.github.io > S191 goal-chain (/start -> /audit -> /implement -> /closeout): complete the proof surface + harden its honesty. 4 shipped / 1 deferred-with-evidence, gates green for all changes. reduced-motion-animation-guard (WCAG 2.3.3 on honest-traction-scoreboard + vault-rank-bar), structured-citation-endpoint (api/citation.json via build-citation.mjs 9/9; agents.json + llms.txt discovery; CANON-008 license; honest-dark claims), trust-manifest-seed-rot-guard (build-public-status.mjs 9/9 replaces a rotting 2026-05-22 hand-seed; status-proof seed-rot WARN flagged staging-health 92% + security-posture 54%), funnel-proof-in-manifest (funnel-summary folded into status-proof as"
     },
     {
       "title": "Current studio focus",
       "url": "/studio-pulse/",
-      "summary": "S190 goal-chain (/start -> /audit -> /implement -> /closeout): deepen the funnel layer. Shipped 10/10, build:check green. funnel-waterfall-pedagogical (5-stage waterfall on /status/ funnel tile; sessionsCompleted now build-derived), session",
-      "body": "S190 goal-chain (/start -> /audit -> /implement -> /closeout): deepen the funnel layer. Shipped 10/10, build:check green. funnel-waterfall-pedagogical (5-stage waterfall on /status/ funnel tile; sessionsCompleted now build-derived), session-velocity-trust-badge (animated counter + velocity on /studio/), progressive-membership-unlock (4-stage classifier + 3 callout blocks on /membership/; Worker allowlist updated), forge-devlog-soul-voice-upgrade (16-term forbidden-terms table; SOUL-voice narrative), changelog-entry-auto-derive (generate-changelog-entry.mjs 17/17), proof-embed-card (standalone embeddable trust card; /status/ Share this proof section), oracle-chip-ranking (helpful-rate re-rank"
+      "summary": "S191 goal-chain (/start -> /audit -> /implement -> /closeout): complete the proof surface + harden its honesty. 4 shipped / 1 deferred-with-evidence, gates green for all changes. reduced-motion-animation-guard (WCAG 2.3.3 on honest-traction",
+      "body": "S191 goal-chain (/start -> /audit -> /implement -> /closeout): complete the proof surface + harden its honesty. 4 shipped / 1 deferred-with-evidence, gates green for all changes. reduced-motion-animation-guard (WCAG 2.3.3 on honest-traction-scoreboard + vault-rank-bar), structured-citation-endpoint (api/citation.json via build-citation.mjs 9/9; agents.json + llms.txt discovery; CANON-008 license; honest-dark claims), trust-manifest-seed-rot-guard (build-public-status.mjs 9/9 replaces a rotting 2026-05-22 hand-seed; status-proof seed-rot WARN flagged staging-health 92% + security-posture 54%), funnel-proof-in-manifest (funnel-summary folded into status-proof as honestDarkOk feed). Deferred: o"
     },
     {
       "title": "Call of Doodie",
@@ -145,8 +145,8 @@
     {
       "title": "Security posture",
       "url": "/security/",
-      "summary": "[{\"label\":\"Security headers\",\"status\":\"active\",\"detail\":\"Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, referrer policy, and related browser hardening.\"},{\"label\":\"CSP discipline\",\"status\":\"active\",\"detail\":\"Static CSP audit a",
-      "body": "[{\"label\":\"Security headers\",\"status\":\"active\",\"detail\":\"Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, referrer policy, and related browser hardening.\"},{\"label\":\"CSP discipline\",\"status\":\"active\",\"detail\":\"Static CSP audit and hash propagation are part of build verification.\"},{\"label\":\"RUM privacy\",\"status\":\"active\",\"detail\":\"RUM is route-level and privacy-minimized; no user IDs, query strings, or free text are stored.\"},{\"label\":\"Supply-chain scan\",\"status\":\"active\",\"detail\":\"CANON-023 supply-chain verification runs in build:check.\"},{\"label\":\"Obelisk adoption\",\"status\":\"phase-0-declared\",\"detail\":\"Identity wrapper exists; passkey-first migration waits on Obelisk Phase 2.\"}"
+      "summary": "[{\"label\":\"Security headers\",\"status\":\"active\",\"detail\":\"Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, and Referrer-Policy plus related browser hardening.\",\"verified\":true,\"evidence\":\"cloudflare/security-headers-worker.js\"},{",
+      "body": "[{\"label\":\"Security headers\",\"status\":\"active\",\"detail\":\"Cloudflare Worker applies CSP, HSTS, X-Content-Type-Options, and Referrer-Policy plus related browser hardening.\",\"verified\":true,\"evidence\":\"cloudflare/security-headers-worker.js\"},{\"label\":\"CSP discipline\",\"status\":\"active\",\"detail\":\"Static CSP policy (config/csp-policy.mjs) is audited by csp-audit.mjs in build:check; hash/nonce propagation is part of build verification.\",\"verified\":true,\"evidence\":\"config/csp-policy.mjs + scripts/csp-audit.mjs\"},{\"label\":\"RUM privacy\",\"status\":\"active\",\"detail\":\"RUM is route-level and privacy-minimized: ux events pass an allowlisted names-only Set (RUM_UX_EVENTS + cleanRumUxEvent) — no user IDs, que"
     },
     {
       "title": "privacy",

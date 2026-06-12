@@ -36,6 +36,13 @@
     return String(q || '').toLowerCase().split(/[^a-z0-9]+/).filter(function (t) { return t.length > 2; });
   }
 
+  // S192: bound a cluster key to the Worker prefixAllowlist charset ([a-z0-9-], <=24)
+  // so a per-cluster feedback name (oracle-answer:helpful:<id>) is admitted at the
+  // edge instead of silently dropped. Returns '' when nothing usable remains.
+  function clusterSlug(key) {
+    return String(key || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 24);
+  }
+
   function loadIndex() {
     if (!indexPromise) {
       indexPromise = fetch(INDEX_URL, { cache: 'default' }).then(function (r) { return r.json(); }).catch(function () { return { documents: [] }; });
@@ -74,9 +81,10 @@
     var out = root.querySelector('.vs-ask-ignis__answer');
     var chips = root.querySelector('.vs-ask-ignis__chips');
 
-    function runQuery(q, source) {
+    function runQuery(q, source, cluster) {
       q = String(q || '').trim();
       if (!q) return;
+      var clusterId = clusterSlug(cluster); // '' for typed queries (no known cluster)
       if (chips) chips.hidden = true; // first interaction made — retire the cold-start chips
       out.textContent = 'Reading public studio memory…';
       loadIndex().then(function (idx) {
@@ -101,8 +109,11 @@
           fb.addEventListener('click', function (e) {
             var b = e.target && e.target.closest ? e.target.closest('.vs-ask-ignis__vote') : null;
             if (!b) return;
-            if (b.getAttribute('data-vote') === 'helpful') emitUx('oracle-answer:helpful');
-            else emitUx('oracle-answer:unhelpful');
+            // S192: when a chip identified the cluster, tag the vote with it so
+            // the studio learns WHICH clusters miss (not just the global rate);
+            // typed queries (no known cluster) keep the global event.
+            var part = b.getAttribute('data-vote') === 'helpful' ? 'helpful' : 'unhelpful';
+            emitUx('oracle-answer:' + part + (clusterId ? ':' + clusterId : ''));
             fb.textContent = 'Thanks — noted.';
           });
         }
@@ -132,7 +143,7 @@
           btn.addEventListener('click', function () {
             form.q.value = c.query;
             emitUx('oracle-chip:click');
-            runQuery(c.query, 'chip');
+            runQuery(c.query, 'chip', c.key); // c.key identifies the Oracle cluster
           });
           chips.appendChild(btn);
         });

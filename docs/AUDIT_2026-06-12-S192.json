@@ -1,0 +1,169 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-06-12",
+  "session": 192,
+  "sessionPrev": 191,
+  "project": "vaultsparkstudios-github-io",
+  "axisWeights": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "topline": {
+    "theme": "Finish hardening the proof surface's honesty — replace the last hand-seed with a live-derived generator, convert the S191 seed-rot lesson into a permanent structural gate, and ship the bounded-prefix primitive that safely unblocks dynamic instrumentation.",
+    "note": "Ground-truth-verified before scoring: security-posture.json is the lone surviving `manual-seed:` feed (stamped 2026-05-27, rots 06-26); staging-health.json is ~7d old at its 168h threshold NOW; worker.unit.spec.js has ZERO RUM_UX_EVENTS tests; the oracle-answer frontend emit is global-only while rollup updateOracleFeedback already parses clusterKey. No new measurement added — the funnel is data-starved (traffic problem, not code), so every item closes a real integration/honesty/security gap the apparatus left open.",
+    "shipped": "5/5",
+    "outcome": "All 5 shipped. build:check EXIT 0 (108-page crawl clean). Both seed-rot landmines cleared (security-posture + staging-health); seedRisk now empty. Net build:check is SHORTER than before despite +4 checks (cmd.exe 8191 limit hit → proof-surface orchestrator)."
+  },
+  "totals": {
+    "items": 5,
+    "combinedPriority": 133.3,
+    "top3": [
+      "proof-feed-generator-gate",
+      "security-posture-live-derive",
+      "bounded-prefix-allowlist-primitive"
+    ]
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "proof-feed-generator-gate",
+      "tier": "transformative",
+      "axis": "security",
+      "effort": "1.5h",
+      "effortHours": 1.5,
+      "impact": 7,
+      "innovation": 9,
+      "priority": 34.8,
+      "title": "Make 'seeded, not generated' structurally impossible for any proof feed",
+      "why": "S191 caught two status-proof feeds rotting because they were hand-committed seeds with a frozen generatedAt, not live-derived artifacts — and the only thing standing between that bug and the public trustScore is a console.warn nobody reads in CI. The fix the studio actually learned ([[feedback_proof_manifest_seeds_and_worker_exact_match]]) deserves a gate, not a memory. Outcome: the trustScore that anchors every /status/ conversion-trust tile can never again be dragged by a feed that silently stopped tracking reality.",
+      "recipe": "New scripts/check-proof-feed-generators.mjs: import the FEEDS list from build-status-proof.mjs (export it if not already), and for each non-honestDarkOk feed assert (a) api/<key>.json exists, (b) its generatedBy does NOT start with 'manual-seed:' / 'manual-' / 'seed:', and (c) a generator script referenced by generatedBy exists on disk. ERROR on a manual-seed feed, WARN on a missing generator file. Ship a >=6-case self-test (seeded feed fails, generated feed passes, honestDark exempt, missing-file warns). Wire --self-test + the live check into build:check. Build AFTER item #2 so the gate goes green on first run.",
+      "executionLog": [
+        {
+          "session": 192,
+          "date": "2026-06-12",
+          "result": "SHIPPED",
+          "note": "Shipped scripts/check-proof-feed-generators.mjs (12/12 self-test); exported FEEDS from build-status-proof.mjs. Caught + fixed a real gap: ci-status.json had no generatedBy (stamped + workflow now emits it). 10 feeds confirmed live-derived."
+        }
+      ],
+      "status": "shipped"
+    },
+    {
+      "id": 2,
+      "slug": "security-posture-live-derive",
+      "tier": "transformative",
+      "axis": "ai",
+      "effort": "2h",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 32,
+      "title": "Derive the public security posture from repo evidence instead of a hand-seed",
+      "why": "api/security-posture.json is the last pure 'manual-seed:/implement-S167' feed — stamped 2026-05-27, it crosses its 720h staleness window on 06-26 and will start dragging trustScore while reporting month-old 'active' controls nobody re-verified. Each of its six claims is actually checkable against a live file or gate in this repo. Outcome: a self-auditing security-posture feed where every control traces to the artifact that proves it, and generatedAt tracks reality — the exact S191 build-public-status.mjs pattern applied to the one feed that still lies by omission.",
+      "recipe": "New scripts/build-security-posture.mjs deriving each control + an `evidence` link: Security headers -> grep cloudflare/security-headers-worker.js for the CSP/HSTS/X-Content-Type-Options/Referrer-Policy emitters; CSP discipline -> assert config/csp-policy.mjs + the CSP audit gate are wired in package.json build:check; RUM privacy -> assert the Worker stores names-only (RUM_UX_EVENTS set + cleanRumUxEvent, no free-text path); Supply-chain -> assert scan-npm-supply-chain.mjs is referenced in build:check; Obelisk -> read `Posture:` from context/OBELISK_ADOPTION.md (currently phase-0-declared); Responsible disclosure -> assert .well-known/security.txt exists + parse its contact. Emit schemaVersion 1.1, generatedBy 'scripts/build-security-posture.mjs', deterministic generatedAt (date-of-newest-evidence, not wall-clock). Self-test >=8. Wire into build + build:check.",
+      "executionLog": [
+        {
+          "session": 192,
+          "date": "2026-06-12",
+          "result": "SHIPPED",
+          "note": "Shipped scripts/build-security-posture.mjs (12/12 self-test) deriving 6 controls from live repo evidence; 6/6 verified, generatedBy now the real generator (was manual-seed). Wired into build + check-proof-surface."
+        }
+      ],
+      "status": "shipped"
+    },
+    {
+      "id": 3,
+      "slug": "bounded-prefix-allowlist-primitive",
+      "tier": "high",
+      "axis": "security",
+      "effort": "2h",
+      "effortHours": 2,
+      "impact": 7,
+      "innovation": 7,
+      "priority": 24.5,
+      "title": "Add a bounded prefixAllowlist() Worker primitive (and the RUM_UX tests that are missing)",
+      "why": "The Worker's RUM_UX_EVENTS is an exact-match Set, so any dynamic instrumentation name (per-cluster Oracle feedback, future per-entity events) silently drops at the edge — the same S186 silent-drop class. Today there is no safe way to admit a bounded dynamic family, and worker.unit.spec.js has zero coverage of the RUM event sanitizer at all. Outcome: a reusable, charset+length-capped prefix primitive lets the studio measure dynamic funnels without ever loosening the global allowlist, and the sanitizer finally gets a test harness so an allowlist edit can't regress unnoticed.",
+      "recipe": "In cloudflare/security-headers-worker.js export prefixAllowlist(family, {charset=/^[a-z0-9-]+$/, maxLen=32}) returning a matcher that accepts `${family}:${suffix}` only when suffix passes charset + length; thread it into cleanRumUxEvent as a second pass after the exact-Set check (exact match still wins). Keep the global Set authoritative for static names. Add worker.unit.spec.js cases: exact name passes, unknown name -> null, bounded-family valid suffix passes, over-length suffix -> null, illegal-charset suffix -> null. Export the helper for check-rum-allowlist.mjs to recognize dynamic-prefix families. No frontend wiring here — primitive only.",
+      "executionLog": [
+        {
+          "session": 192,
+          "date": "2026-06-12",
+          "result": "SHIPPED",
+          "note": "Shipped prefixAllowlist() + makeRumUxCleaner() in worker-lib.mjs; worker now builds cleanRumUxEvent from them. Added 2 worker.unit cases (23/23 total). Registered oracle-answer:helpful/:unhelpful bounded families at the edge."
+        }
+      ],
+      "status": "shipped"
+    },
+    {
+      "id": 4,
+      "slug": "staging-health-self-refresh",
+      "tier": "high",
+      "axis": "speed",
+      "effort": "2h",
+      "effortHours": 2,
+      "impact": 7,
+      "innovation": 6,
+      "priority": 21,
+      "title": "Keep staging-health honest + fresh even when staging is unreachable",
+      "why": "api/staging-health.json is generated by check-staging-parity.mjs but only runs ad-hoc, so at ~7 days old it is sitting on its 168h seed-rot threshold right now — and because the parity check hard-fails when the Hetzner staging box is unreachable, nothing refreshes the timestamp. A freshness signal that can only update when everything is perfect is a freshness signal that rots. Outcome: the staging-parity tile reports an explicit `staging-unreachable` status with a reason instead of silently going stale, and a low-churn scheduled refresh keeps generatedAt tracking reality so it stops dragging trustScore.",
+      "recipe": "In check-staging-parity.mjs, wrap each fetchRoute in a timeout + try/catch; if staging is unreachable, still WRITE api/staging-health.json with status 'staging-unreachable', a `reason`, a fresh generatedAt, and prodStatus preserved (never throw away the timestamp). Add a --refresh mode that writes-without-asserting for the scheduled path. Wire a low-churn step into .github/workflows/uptime-probe.yml (commit only on status change / new day bucket, [skip ci]-aware per [[feedback_skip_ci_tip_strands_cf_pages_deploy]]). Validate the YAML with npx --yes js-yaml before commit ([[feedback_validate_workflow_yaml_before_push]]).",
+      "executionLog": [
+        {
+          "session": 192,
+          "date": "2026-06-12",
+          "result": "SHIPPED",
+          "note": "check-staging-parity.mjs now resilient (8s timeout, never throws), classifyStatus + staging-unreachable honest status + reason, --refresh mode (6/6 self-test). Confirmed staging IS down (root cause of seed-rot). Wired low-churn refresh into uptime-probe.yml. seedRisk now []."
+        }
+      ],
+      "status": "shipped"
+    },
+    {
+      "id": 5,
+      "slug": "oracle-per-cluster-feedback-finish",
+      "tier": "high",
+      "axis": "ai",
+      "effort": "2h",
+      "effortHours": 2,
+      "impact": 6,
+      "innovation": 7,
+      "priority": 21,
+      "title": "Close the S191 deferred item: per-cluster Oracle answer feedback, safely",
+      "why": "S191 deferred per-cluster Oracle feedback because dynamic keys would drop at the exact-match edge — once item #3 lands, that blocker is gone, and the analysis layer is already waiting (rollup updateOracleFeedback parses clusterKey; it's pinned to 'global' only because the frontend never emits a cluster id). Outcome: the studio learns WHICH answer clusters are unhelpful, not just the global helpful-rate — the missing signal needed to actually improve Ask IGNIS retrieval. Ship the safe half now; it is cheap once the primitive exists and finally retires a carry that has aged two sessions.",
+      "recipe": "Register a bounded `oracle-answer` family via the item #3 prefixAllowlist (charset [a-z0-9-], maxLen ~24) so `oracle-answer:helpful:<clusterId>` and `:unhelpful:<clusterId>` are admitted at the edge; add a worker.unit case. In assets/ignis-answer-engine.js, when the answered question carries a data-cluster id, emit `oracle-answer:helpful:<clusterId>` (fall back to the existing global `oracle-answer:helpful` when no cluster is known — never break the current signal). Confirm rollup-rum-ux updateOracleFeedback writes per-clusterKey rows to data/oracle-feedback.ndjson. check-rum-allowlist must stay clean via the dynamic-family awareness from #3. Keep counts-only, no query text (privacy model unchanged).",
+      "executionLog": [
+        {
+          "session": 192,
+          "date": "2026-06-12",
+          "result": "SHIPPED",
+          "note": "Closed S191 deferred item. rollup-rum-ux: parseOracleAnswer + prefix-aware global fold + per-(clusterKey,day) rows (19/19 self-test). Frontend ignis-answer-engine.js emits oracle-answer:<part>:<clusterId> on chip-known clusters, global fallback for typed. check-rum-allowlist in sync."
+        }
+      ],
+      "status": "shipped"
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "tt-enforce-flip",
+      "reason": "Evidence-gated: reprobe due ~2026-06-18, pre-S185 samples still aging out. Not agent-attemptable yet + founder-device gated (SOUL #3)."
+    },
+    {
+      "slug": "forge-devlog-publish",
+      "reason": "Founder-gated content review (SOUL voice). Agent drafts; founder publishes."
+    },
+    {
+      "slug": "richer-ignis-layer-public-decision",
+      "reason": "Public-safe-boundary decision for cross-project/sealed intelligence — founder call, not agent work."
+    },
+    {
+      "slug": "new-funnel-instrumentation",
+      "reason": "Deliberately none. The funnel is data-starved (1 event/30d) — a traffic problem. Adding measurement to an unmeasured surface is motion without signal."
+    }
+  ],
+  "innovationReserve": [
+    "proof-feed-generator-gate",
+    "security-posture-live-derive",
+    "bounded-prefix-allowlist-primitive",
+    "oracle-per-cluster-feedback-finish"
+  ]
+}

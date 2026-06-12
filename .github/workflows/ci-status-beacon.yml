@@ -57,6 +57,7 @@ jobs:
 
           const payload = {
             generatedAt: new Date().toISOString(),
+            generatedBy: '.github/workflows/ci-status-beacon.yml',
             allGreen,
             summary: allGreen
               ? 'All CI gates passing — E2E, Accessibility, Lighthouse.'

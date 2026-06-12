@@ -123,7 +123,17 @@ export function deriveSummary(historyRows) {
 
   const families = FAMILIES.map(({ family, parts, rate, label }) => {
     const counts = {};
-    for (const part of parts) counts[part] = events[`${family}:${part}`] || 0;
+    // S192: prefix-aware so a bounded per-cluster name (oracle-answer:helpful:<id>)
+    // folds into the GLOBAL family rate alongside the untagged event. Other
+    // families have no sub-keys, so the exact match is the only contributor.
+    for (const part of parts) {
+      const exact = `${family}:${part}`;
+      let sum = 0;
+      for (const [ev, n] of Object.entries(events)) {
+        if (ev === exact || ev.startsWith(exact + ':')) sum += n;
+      }
+      counts[part] = sum;
+    }
     // oracle-answer denominator = helpful + unhelpful
     const denom = rate[1] === '_helpfulDenom'
       ? (counts.helpful || 0) + (counts.unhelpful || 0)
@@ -191,10 +201,19 @@ function writeSummary(summary) {
  *
  * Returns the number of new rows appended.
  */
+// Parse an oracle-answer ux event into {part, clusterKey}. Per-cluster names are
+// `oracle-answer:<part>:<clusterId>` (S192); an untagged name maps to clusterKey
+// '*'. clusterId charset mirrors the Worker prefixAllowlist bound ([a-z0-9-]).
+export function parseOracleAnswer(event) {
+  const m = String(event || '').match(/^oracle-answer:(helpful|unhelpful)(?::([a-z0-9-]+))?$/);
+  if (!m) return null;
+  return { part: m[1], clusterKey: m[2] || '*' };
+}
+
 export function updateOracleFeedback(historyRows, feedbackPath) {
   const fp = feedbackPath || ORACLE_FEEDBACK;
 
-  // Load existing feedback records to avoid duplicating days.
+  // Load existing feedback records to avoid duplicating (clusterKey, day) pairs.
   const existing = new Set();
   if (fs.existsSync(fp)) {
     for (const line of fs.readFileSync(fp, 'utf8').split('\n').filter(Boolean)) {
@@ -202,21 +221,30 @@ export function updateOracleFeedback(historyRows, feedbackPath) {
     }
   }
 
-  // Aggregate helpful/unhelpful counts per day from history.
-  const byDay = {};
+  // Aggregate helpful/unhelpful per (clusterKey, day). A per-cluster event also
+  // folds into the '*' global aggregate so the global row stays a true total.
+  const byKeyDay = {};
+  const bump = (clusterKey, day, part, count) => {
+    const k = `${clusterKey}|${day}`;
+    if (!byKeyDay[k]) byKeyDay[k] = { clusterKey, day, helpful: 0, unhelpful: 0 };
+    byKeyDay[k][part] += count;
+  };
   for (const r of historyRows) {
     if (!r.day || !r.event) continue;
-    if (!byDay[r.day]) byDay[r.day] = { helpful: 0, unhelpful: 0 };
-    if (r.event === 'oracle-answer:helpful') byDay[r.day].helpful += (r.count || 1);
-    else if (r.event === 'oracle-answer:unhelpful') byDay[r.day].unhelpful += (r.count || 1);
+    const parsed = parseOracleAnswer(r.event);
+    if (!parsed) continue;
+    const count = r.count || 1;
+    bump(parsed.clusterKey, r.day, parsed.part, count);
+    if (parsed.clusterKey !== '*') bump('*', r.day, parsed.part, count);
   }
 
   const newRows = [];
-  for (const [date, { helpful, unhelpful }] of Object.entries(byDay).sort()) {
+  for (const { clusterKey, day, helpful, unhelpful } of Object.values(byKeyDay)
+    .sort((a, b) => `${a.clusterKey}|${a.day}`.localeCompare(`${b.clusterKey}|${b.day}`))) {
     if (unhelpful < ORACLE_FEEDBACK_THRESHOLD) continue;
-    const key = `*|${date}`;
+    const key = `${clusterKey}|${day}`;
     if (existing.has(key)) continue;
-    newRows.push({ clusterKey: '*', date, helpful, unhelpful });
+    newRows.push({ clusterKey, date: day, helpful, unhelpful });
   }
 
   if (newRows.length) {
@@ -285,8 +313,30 @@ function selfTest() {
   const b = JSON.stringify(deriveSummary(history));
   assert(a === b, 'deriveSummary must be deterministic');
 
+  // S192: per-cluster oracle feedback. Parse helper + global fold + per-cluster rows.
+  assert(parseOracleAnswer('oracle-answer:helpful').clusterKey === '*', 'untagged → global clusterKey');
+  assert(parseOracleAnswer('oracle-answer:unhelpful:what-new').clusterKey === 'what-new', 'tagged → clusterId parsed');
+  assert(parseOracleAnswer('oracle-answer:helpful:Bad Key') === null, 'illegal clusterId charset → null');
+  assert(parseOracleAnswer('proof-line:shown') === null, 'non-oracle event → null');
+  // Per-cluster names fold into the GLOBAL family rate alongside untagged events.
+  const clusterHist = [
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'oracle-answer:helpful:what-new', count: 4 },
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'oracle-answer:unhelpful:what-new', count: 3 },
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'oracle-answer:helpful', count: 1 },
+  ];
+  const clusterSummary = deriveSummary(clusterHist);
+  const cFam = clusterSummary.families.find((f) => f.family === 'oracle-answer');
+  assert(cFam.counts.helpful === 5 && cFam.counts.unhelpful === 3, `global fold: helpful=5 unhelpful=3, got ${cFam.counts.helpful}/${cFam.counts.unhelpful}`);
+  // updateOracleFeedback writes a per-cluster row AND the global '*' row when over threshold.
+  const tmpFeedback2 = path.join(dir, 'oracle-feedback-cluster.ndjson');
+  const clusterAppended = updateOracleFeedback(clusterHist, tmpFeedback2);
+  const writtenCluster = fs.readFileSync(tmpFeedback2, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l));
+  assert(clusterAppended === 2, `expected 2 rows (what-new + global '*'), got ${clusterAppended}`);
+  assert(writtenCluster.some((r) => r.clusterKey === 'what-new' && r.unhelpful === 3), 'per-cluster row written');
+  assert(writtenCluster.some((r) => r.clusterKey === '*' && r.unhelpful === 3), 'global aggregate row written');
+
   fs.rmSync(dir, { recursive: true, force: true });
-  console.log('rollup-rum-ux --self-test: OK (11 assertions)');
+  console.log('rollup-rum-ux --self-test: OK (19 assertions)');
 }
 
 function assert(ok, msg) { if (!ok) { console.error('rollup-rum-ux --self-test FAIL:', msg); process.exit(1); } }
