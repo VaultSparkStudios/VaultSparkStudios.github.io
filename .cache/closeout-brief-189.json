@@ -1,0 +1,69 @@
+{
+  "session": 189,
+  "date": "2026-06-11",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios.github.io",
+  "headline": "Measured the funnel the studio spent three sessions building — and found it was blind at the analysis layer the whole time.",
+  "silDelta": "957/1000 (v3.0) · velocity 5 · 5/5 shipped",
+  "items": [
+    {
+      "id": "1",
+      "slug": "funnel-conversion-rollup",
+      "title": "Conversion funnel finally has eyes",
+      "axis": "feedback",
+      "projectImpact": 9,
+      "ecosystemImpact": 7,
+      "insight": "S186-S188 added thirteen conversion beacons and a gate to prove they were allowlisted — but the rollup kept only web-vitals and threw every funnel event away, so the site that obsessively publishes uptime and LCP tiles couldn't say whether a single dispatch prompt ever converted. The new rollup reads the same raw samples, counts the ux events, and lands an honest-dark Conversion funnel tile that lights up as traffic accrues. The funnel is finally a number you can watch leak, not a hope.",
+      "evidence": "rollup-rum-ux.mjs 8/8 + check-funnel-contract.mjs 4/4 self-tests; api/funnel-summary.json (counts-only, honestDark=true); /status/ tile; build:check green"
+    },
+    {
+      "id": "2",
+      "slug": "oracle-answer-feedback-loop",
+      "title": "Ask IGNIS can now hear 'that missed'",
+      "axis": "ai",
+      "projectImpact": 7,
+      "ecosystemImpact": 5,
+      "insight": "Every Oracle answer shipped into a void — the visitor had no way to flag a bad retrieval and the studio had no quality gradient to rank against. A one-tap helpful/unhelpful control under each answer changes that with two allowlisted beacons and no query text leaving the page. Answer quality becomes a measured rate inside the same funnel summary, not a guess.",
+      "evidence": "ignis-answer-engine.js feedback control; oracle-answer:{helpful,unhelpful} explicit-literal emits; Worker allowlist extended; check-rum-allowlist clean (0 dead)"
+    },
+    {
+      "id": "3",
+      "slug": "rum-dead-allowlist-sweep",
+      "title": "The allowlist is still an honest map",
+      "axis": "security",
+      "projectImpact": 4,
+      "ecosystemImpact": 3,
+      "insight": "After two sessions of adding beacons, the easy rot is an allowlist that lists events nobody emits anymore. Running the S188 integrity gate after the new wiring confirmed zero dead entries — every allowlisted name maps to a live emit. A clean save, not invented work.",
+      "evidence": "check-rum-allowlist: 16 allowlisted · 14 emit · all in sync · 0 dead"
+    },
+    {
+      "id": "4",
+      "slug": "flagship-storytelling-wave2",
+      "title": "The second live game stops landing on a bare title",
+      "axis": "ux",
+      "projectImpact": 6,
+      "ecosystemImpact": 3,
+      "insight": "The cross-game router sends real attention into VaultSpark Football GM, but it arrived at a hero with nothing but a name while its sibling call-of-doodie already had a voice. Mirroring the exact additive promise pattern gives the franchise sim a SOUL-voiced line and a single clear CTA. Reversible in one revert, no risky rebuild of a mature surface.",
+      "evidence": "games/vaultspark-football-gm/index.html hero-art-heading + hero-art-promise + matching CSS; single primary CTA preserved"
+    },
+    {
+      "id": "5",
+      "slug": "ignis-rescore-artifact-settle",
+      "title": "Stale signals made honest again",
+      "axis": "process",
+      "projectImpact": 5,
+      "ecosystemImpact": 4,
+      "insight": "The brief was carrying a 7-day-old IGNIS score and a committed search index still describing S186 work with stale commit SHAs. A rescore and two convergent build passes settled the real index-to-budget cascade and refreshed the score. The closeout brief now reflects reality instead of artifacts of staleness.",
+      "evidence": "IGNIS 40319->41975 (fresh); ignis-search-index + intelligence-budget converged to fixpoint; build:check green end-to-end"
+    }
+  ],
+  "followUps": [
+    "Build PROGRESSIVE-MEMBERSHIP-UNLOCK against the measured funnel-summary leak points instead of intuition (deferred since S185)",
+    "Fold api/funnel-summary.json into the /api/status-proof.json manifest so conversion joins the single proof surface",
+    "Publish the founder-reviewed forge devlog draft to clear the 82d journal warn-gate"
+  ],
+  "blockers": [
+    "Worker oracle-answer:* allowlist goes live only after cloudflare-worker-deploy.yml runs on push — verify the beacons aren't edge-dropped before trusting the count",
+    "WISHLIST-MOMENTUM still blocked on Supabase admin (capability MISSING locally)"
+  ]
+}

@@ -1,6 +1,20 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-11 (Session 188 — /goal chain: /start → /audit → /implement → /closeout · 7/7 shipped)
+Last updated: 2026-06-11 (Session 189 — /goal chain: /start → /audit → /implement → /closeout · 5/5 shipped)
+
+## Done (Session 189 — /goal chain · measure the funnel you built · 5 shipped)
+
+- [x] **[S189][FEEDBACK/P0] FUNNEL-CONVERSION-ROLLUP — DONE.** The 13 funnel beacons S186-S188 added fired to the edge but `rollup-rum.mjs` kept only web-vitals and dropped `row.ux` — instrumented at the edge, blind at the analysis layer. New `scripts/rollup-rum-ux.mjs` (8/8) aggregates ux events by name into committed `data/rum-ux-history.ndjson` + public-safe `api/funnel-summary.json` (counts only, honest-dark <20); `check-funnel-contract.mjs` (4/4) guards shape+PII+determinism; `/status/` Conversion funnel tile; wired into rum:pull+build+build:check. **DONE S189**
+- [x] **[S189][AI/P1] ORACLE-ANSWER-FEEDBACK-LOOP — DONE.** 1-tap 👍/👎 under each Ask IGNIS answer → explicit-literal allowlisted `oracle-answer:{helpful,unhelpful}` (no query text/IDs); Worker `RUM_UX_EVENTS` extended; `check-rum-allowlist` clean (both ends in one change). Feeds funnel-summary helpful-rate. **DONE S189**
+- [x] **[S189][SECURITY/P2] RUM-DEAD-ALLOWLIST-SWEEP — DONE (verified-clean).** After #1+#2 the gate reports 0 dead (16 allowlisted · 14 emit · in sync). `RUM_UX_EVENTS` confirmed an honest 1:1 map — no dead entries to clear. **DONE S189**
+- [x] **[S189][UX/P1] FLAGSHIP-STORYTELLING-WAVE2 — DONE.** Mirrored the S188 additive hero-promise pattern to vaultspark-football-gm (the 2nd live title + a play-next destination that still had a bare hero); single CTA preserved, reversible. **DONE S189**
+- [x] **[S189][PROCESS/P2] IGNIS-RESCORE-ARTIFACT-SETTLE — DONE.** IGNIS 40319→41975 (was 7d stale); two build passes converged a real index/budget cascade (S186→S188 content + current SHAs); funnel artifact made contract-valid. build:check GREEN end-to-end. **DONE S189**
+
+## Resolved this session (carries from S188 Now)
+
+- [x] **[S188][VERIFY/P0] Confirm S188 + S187 features on prod — RESOLVED S189 (SAVE).** Live pages.dev probes confirm all sub-items deployed: (a) `/faq/` (non-home) serves the Studio Dispatch footer; (b) Discord + Community Hub render in the Studio nav dropdown; (d) call-of-doodie hero promise renders; status-proof.json 200; tip is a deployable non-`[skip ci]` commit. Sub-item (c) RUM beacons landing is exactly what S189 funnel-summary now makes visible.
+- [x] **[S188][SIL] RUM-DEAD-ALLOWLIST-SWEEP — RESOLVED S189.** See Done above — gate clean, 0 dead.
+- [x] **[S186][SIL] PROOF-LINE-TELEMETRY — already DONE S188** (proof-line:{shown,click} beacons + allowlist sync).
 
 ## Done (Session 188 — /goal chain · finish-the-funnel + close a silent-bug class · 7 shipped)
 
@@ -30,7 +44,14 @@ Last updated: 2026-06-11 (Session 188 — /goal chain: /start → /audit → /im
 - [x] **[S186][TOKEN/P2] CLOSEOUT-BUILD-ORDER-MODULE — DONE.** `scripts/lib/build-order.mjs` (self-test 5/5, import-safe); step3d.7 refactored to import. Ordering can't silently drift. **DONE S186** (2867a0c5)
 - [x] **[S186][SPEED/P2] WINDOWS-%an-SHELL-BUG — DONE.** `pull-rum-summary.mjs` `--format=%cI|%an` had its `|` parsed as a cmd.exe pipe on Windows → `%an` broke every local build. Now `execFileSync` + `%n`. **DONE S186** (0a134ace)
 - [x] **[S186][MAINT/P3] VAULTSPARKED-PROOF-DELETE — DONE.** Confirmed 0 live refs (orphan checker 1→0); removed. **DONE S186** (36128a29)
-## Now (S188 runway — carries)
+## Now (S189 runway — pre-loaded)
+
+- [ ] **[S189][VERIFY/P1] Confirm S189 features on prod after deploy.** (a) `/status/` "Conversion funnel" tile renders (honest-dark "warming" until ≥20 funnel events accrue); (b) the Worker `cloudflare-worker-deploy.yml` run lands the `oracle-answer:*` allowlist so those beacons aren't edge-dropped (the S186 silent-drop shape) — confirm via a test 👍 on an Ask IGNIS answer landing in `/v/rum`; (c) `api/funnel-summary.json` is served 200 on pages.dev; (d) vaultspark-football-gm hero promise renders. Verify via pages.dev origin, never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
+- [ ] **[S189→][FEATURE/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK — now build it against measured leak points.** Deferred since S185 (8h) precisely because it was a guess. With `api/funnel-summary.json` live, the next session can read WHERE the journey actually leaks (dispatch-subscribe rate, proof-line click-through, oracle-chip→membership-intent) and build the multi-stage progressive disclosure against real funnel data instead of intuition. SOUL #2: never ship half-baked portal features — build it once the funnel shows the leak.
+- [ ] **[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft.** `journal/_drafts/forge-week-2026-06-11.md` is generated; founder reviews SOUL voice, then publish to `journal/` to clear the 82d-stale journal warn-gate (build:check warns, non-blocking).
+- [ ] **[S186][SECURITY/P1] TT-ENFORCE-REPROBE.** First-party surface CLEAN. Reprobe ~2026-06-18; pre-S185 samples aging out. Flip stays SOUL #3 founder-device gated.
+
+## Historical Runway (Session 188 — carries folded into S189 Now)
 
 - [ ] **[S188][VERIFY/P0] Confirm S188 + S187 features on prod.** (a) Studio Dispatch footer form renders + submits on a NON-home page (e.g. `/faq/`, `/games/call-of-doodie/`) — a real test subscriber lands via Kit; (b) Discord + Community Hub show in the Studio nav dropdown sitewide; (c) `proof-line:{shown,click}` + `studio-dispatch:subscribe` + `play-next:*` land in `/v/rum`; (d) call-of-doodie hero promise line renders. Verify via pages.dev origin + a prod path — never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]). Shell hash rotated this session → confirm cold-cache load is healthy.
 - [ ] **[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft.** `journal/_drafts/forge-week-2026-06-11.md` is generated; founder reviews SOUL voice, then publish to `journal/` to clear the 81d-stale journal gate (build:check warns until then).

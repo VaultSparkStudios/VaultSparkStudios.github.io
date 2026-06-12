@@ -2510,3 +2510,15 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
 - SIL: 943/1000 (v3.0) · Velocity: 11 · Debt: →
 - Deferred (next session): PROGRESSIVE-MEMBERSHIP-UNLOCK (Wave 5, 8h) · GEO-VITALS-WORKFLOW-TRIGGER · TT-ENFORCE-FLIP · RICHER-IGNIS-LAYER-DECISION · vaultsparked-proof delete · nav-sheet device verify.
 - Verification: `build:check` EXIT 0 end-to-end (108/108 pages); all 10 S185 wave commits + closeout pushed to origin/main.
+
+## Session 189 — 2026-06-11 — /goal chain: /start → /audit → /implement → /closeout (5/5 shipped)
+
+- **Theme:** Measure the funnel you built. The audit was ground-truth-verified first (live pages.dev probes confirmed every S187/S188 feature is deployed → top VERIFY carry resolved as a SAVE), then opened fresh frontier work. Standout finding: the conversion funnel S186-S188 built was instrumented at the edge but blind at the analysis layer.
+- **Shipped 5/5** (`docs/AUDIT_2026-06-11-S189.{json,md}`, combined Priority 90.8):
+  1. funnel-conversion-rollup — `rollup-rum-ux.mjs` (8/8) + `check-funnel-contract.mjs` (4/4) + `api/funnel-summary.json` (counts-only, honest-dark) + `/status/` Conversion funnel tile; closed the third instrumentation layer the allowlist gate couldn't see.
+  2. oracle-answer-feedback-loop — 1-tap 👍/👎 on Ask IGNIS answers → allowlisted `oracle-answer:{helpful,unhelpful}`; both ends wired in one change; feeds funnel helpful-rate.
+  3. rum-dead-allowlist-sweep — verified-clean (0 dead; 16 allowlisted · 14 emit · in sync).
+  4. flagship-storytelling-wave2 — additive hero promise mirrored to vaultspark-football-gm (2nd live title / play-next destination).
+  5. ignis-rescore-artifact-settle — IGNIS 40319→41975; converged a real index/budget cascade; funnel artifact contract-valid.
+- **Verification:** `build:check` EXIT 0 end-to-end (108-page crawl clean; two non-blocking content-freshness warns remain — founder-gated devlog publish). Two full build passes reached an artifact fixpoint. Worker allowlist change auto-deploys via `cloudflare-worker-deploy.yml` on push.
+- **Deferred (next session):** PROGRESSIVE-MEMBERSHIP-UNLOCK — now buildable against measured funnel-summary leak points instead of a guess · forge devlog publish (founder voice review) · TT-enforce reprobe ~06-18.

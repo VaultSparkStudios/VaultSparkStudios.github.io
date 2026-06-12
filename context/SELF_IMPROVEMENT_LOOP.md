@@ -8,14 +8,39 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇█▇██
-Avgs - 3: 956.7 | 5: 962.0 | 10: 980.0 | 25: 977.0 | all: 961 (v3.0 /1000)
-  └ 3-session: Dev 91.7 | Align 96.7 | Momentum 93.3 | Engage 94.7 | Process 93.7
-Velocity trend: ↑ (S187: 5 shipped + 3 already-done caught by the freshness tool built this session + 2 deferred; S186: 8; S185: 11 — sustained high)  |  Protocol velocity: ↑ (check-audit-staleness + check-content-freshness are new reusable gates; freshness-precheck immediately caught 3 dupes) |  Debt: ↓ (activated dead footer-form wiring; no new vendor — reused existing ConvertKit ESP; honest-fail replaces a faked-success form)
-Momentum runway: ≥5 open Now items — prod-verify 5 client features, publish forge devlog draft, wishlist-momentum (Supabase), discord-to-nav, flagship-storytelling  |  Intent rate: 100% (last 5)
-Last session: 2026-06-11 | Session 187 | Total: 957/1000 (v3.0) | Velocity: 5 | protocolVelocity: 2
+Sparkline (last 5 totals): █▇██▇
+Avgs - 3: 958.3 | 5: 960.6 | 10: 978.0 | 25: 976.0 | all: 961 (v3.0 /1000)
+  └ 3-session: Dev 95.7 | Align 96.0 | Momentum 96.0 | Engage 94.7 | Process 97.0
+Velocity trend: → (S189: 5 shipped + 1 carry resolved as a SAVE via live prod probe + 0 deferred-by-fatigue; S188: 7; S187: 5 — sustained, each item genuinely undone before scoring)  |  Protocol velocity: ↑ (rollup-rum-ux + check-funnel-contract are new reusable gates; the funnel summary is the third instrumentation layer the allowlist gate couldn't see) |  Debt: ↓ (closed the analysis-layer blind spot; converged a real S186-content artifact cascade the repo had carried stale)
+Momentum runway: ≥4 open Now items — prod-verify S189 (funnel tile + oracle-answer allowlist deploy), build PROGRESSIVE-MEMBERSHIP-UNLOCK against measured funnel leaks, publish forge devlog draft, TT-enforce reprobe ~06-18  |  Intent rate: 100% (last 5)
+Last session: 2026-06-11 | Session 189 | Total: 957/1000 (v3.0) | Velocity: 5 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-11 — Session 189 (/goal chain: /start → /audit → /implement → /closeout · 5/5 shipped) | Total: 957/1000 (v3.0) | Velocity: 5 | Debt: ↓
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 96 | 5/5 shipped across 5 atomic commits; 2 new self-tested gates (rollup-rum-ux 8/8, check-funnel-contract 4/4); `build:check` GREEN end-to-end after reaching an artifact fixpoint (two build passes converged a genuine index→budget cascade the committed repo had left stale at S186 content). |
+| Creative Alignment | 96 | Honest-dark held: the Conversion funnel tile shows "warming" until ≥20 events, never overstates; the football-gm promise is SOUL voice ("a franchise the league remembers"); ADDITIVE hero line, not a rebuild ([[feedback_flag_gated_ux_swap]]); counts-only, no PII. |
+| Momentum | 96 | Velocity 5 — every audit item shipped, 0 deferred-by-fatigue; only genuinely founder-gated items held (devlog publish). Each item committed clean before the next. |
+| Engagement | 95 | The funnel S186-S188 built is finally measurable end-to-end (visit→dispatch-shown→subscribe→proof-click); the Oracle answer feedback loop gives visitors a way to flag a miss and the studio a quality gradient. |
+| Process Quality | 97 | Ground-truth prod probe BEFORE scoring resolved the top VERIFY carry as a SAVE; extended the S186 "instrument both ends" lesson to a discovered THIRD end (the analysis rollup); preserved the determinism contract while satisfying the public-contract `generatedAt` requirement. Full chain, all write-backs. |
+| Cross-Repo Coherence | 95 | No sibling writes; the Worker allowlist change rides the existing `cloudflare-worker-deploy.yml` auto-deploy path; funnel-summary follows the established /status/ proof-tile convention. |
+| Security Posture | 96 | New public artifact is counts-only and guarded by a PII-surface gate in `check-funnel-contract`; `check-rum-allowlist` clean (both ends wired in one change per the S186 silent-drop lesson). |
+| Ecosystem Integration | 94 | `api/funnel-summary.json` is a new public proof surface in the /status/ family; a natural status-proof manifest candidate next session. |
+| Capital Efficiency | 97 | Cost-neutral per CANON-029 — static derivation over committed history, reused the existing /v/rum→R2 transport, no new vendor, no per-user studio cost. |
+| Automation Coverage | 95 | Funnel rollup wired into rum:pull + build + build:check; the history-derived `--check` can't flake on volatile cache, so the gate is durable. |
+
+### Brainstorm (S190 candidates)
+- **Funnel leak-targeted progressive-membership** — now that `api/funnel-summary.json` is live, read the actual leak (dispatch-subscribe rate vs proof-click vs oracle-chip→intent) and build the deferred multi-stage unlock against measured data, not intuition.
+- **Funnel-summary into status-proof manifest** — fold `api/funnel-summary.json` into `/api/status-proof.json` so the conversion signal joins the single self-grading proof surface.
+- **Funnel anomaly canary** — once samples accrue, a week-over-week conversion-rate regression alert (mirroring `check-rum-anomaly-canary`) so a funnel that stops converting pages the founder.
+
+### Commitments landed in TASK_BOARD
+- S189 Now: PROGRESSIVE-MEMBERSHIP-UNLOCK against measured funnel leaks · prod-verify S189 features (funnel tile + oracle-answer allowlist deploy).
 
 ---
 

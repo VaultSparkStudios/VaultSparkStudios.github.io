@@ -1693,3 +1693,15 @@ Graduating Trusted Types from report-only to enforce (audit #2) requires reading
 **Decision:** `scripts/draft-weekly-forge.mjs` generates a SOUL-voiced devlog draft from the forge-ledger but writes only to `journal/_drafts/` (gitignored); the founder reviews voice and publishes by hand. `scripts/check-content-freshness.mjs` is a **warn-only** build:check gate (a stale devlog must never block a deploy).
 
 **Why:** Studio canon requires founder review of hand-curated truth surfaces (project graphs, lore, brand voice), and AI content on public surfaces must use the audience voice. Auto-publishing a generated essay to the live journal would violate both. The drafter solves the cadence problem (journal was 81d stale) without ceding voice control.
+
+### 2026-06-11 — S189 — Instrument BOTH ends of a funnel: allowlist + emit is not enough without a rollup that keeps the event
+
+**Decision:** A conversion beacon is only "instrumented" when three layers agree: the emit-site fires it, the Worker allowlists it, AND the analysis rollup KEEPS it. S186-S188 wired emit+allowlist (and S188 added `check-rum-allowlist` to guard those two), but `rollup-rum.mjs` aggregated only web-vitals and silently discarded `row.ux` — so 13 funnel events died at the rollup. `scripts/rollup-rum-ux.mjs` + `api/funnel-summary.json` + `check-funnel-contract.mjs` close the third layer; the funnel summary is DERIVED from committed `data/rum-ux-history.ndjson` (never volatile `.cache`) so `--check` is deterministic.
+
+**Why:** The S186 lesson was "instrument both ends" (emit ↔ allowlist). S189 proves there is a third end — the analysis layer — and a passing allowlist gate gave false confidence that the funnel was measured when it was not. The site obsessively self-published uptime/perf/proof tiles while its own conversion funnel was invisible. Generalizable rule: when you add a telemetry name, trace it all the way to a surfaced number, not just to the edge.
+
+### 2026-06-11 — S189 — Public api/*.json artifacts must carry a deterministic generatedAt (=asOf), not wall-clock
+
+**Decision:** `check-public-contract-health.mjs` requires every `api/*.json` to have a `generatedAt` field. For artifacts whose `--check` gate byte-compares a re-derivation (funnel-summary, derived from committed history), `generatedAt` is set to the deterministic `asOf` (latest history day), NOT `Date.now()`. This satisfies the presence requirement without making the determinism gate flake.
+
+**Why:** A wall-clock `generatedAt` would drift on every `--check` and reintroduce the exact volatile-input drift class that bit the S183 gates. Deriving the timestamp from the data keeps the contract honest and the gate deterministic — the two requirements are not in tension when the stamp comes from the data, not the clock.
