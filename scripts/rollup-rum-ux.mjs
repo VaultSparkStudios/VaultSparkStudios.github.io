@@ -35,9 +35,13 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const HISTORY = path.join(ROOT, 'data', 'rum-ux-history.ndjson');
 const SUMMARY = path.join(ROOT, 'api', 'funnel-summary.json');
+const ORACLE_FEEDBACK = path.join(ROOT, 'data', 'oracle-feedback.ndjson');
 
 const WINDOW_DAYS = 30;
 const MIN_SAMPLES = 20; // honest-dark floor: below this the funnel is too sparse to read
+// S190: oracle feedback threshold — when a day accumulates this many unhelpful answers,
+// write a record to oracle-feedback.ndjson so the cluster ranker can down-weight.
+const ORACLE_FEEDBACK_THRESHOLD = 2;
 
 // Conversion funnel families. Each maps a family prefix to its tracked parts and
 // the (numerator, denominator) that define its headline rate. Keep in lockstep
@@ -172,6 +176,58 @@ function writeSummary(summary) {
 }
 
 // ---------------------------------------------------------------------------
+// S190: oracle feedback writer
+// ---------------------------------------------------------------------------
+
+/**
+ * Derive per-day oracle feedback rows from history. Fires when a day's
+ * unhelpful count exceeds ORACLE_FEEDBACK_THRESHOLD. Writes new rows to
+ * oracle-feedback.ndjson (append-only; skips days already recorded).
+ *
+ * clusterKey is 'global' until per-cluster beacons are added to the frontend.
+ * The cluster ranker (build-oracle-query-clusters.mjs) ignores 'global' keys,
+ * so this doesn't affect ranking today — but builds the file schema for when
+ * per-cluster data arrives.
+ *
+ * Returns the number of new rows appended.
+ */
+export function updateOracleFeedback(historyRows, feedbackPath) {
+  const fp = feedbackPath || ORACLE_FEEDBACK;
+
+  // Load existing feedback records to avoid duplicating days.
+  const existing = new Set();
+  if (fs.existsSync(fp)) {
+    for (const line of fs.readFileSync(fp, 'utf8').split('\n').filter(Boolean)) {
+      try { const r = JSON.parse(line); if (r.date) existing.add(`${r.clusterKey || '*'}|${r.date}`); } catch { /* skip */ }
+    }
+  }
+
+  // Aggregate helpful/unhelpful counts per day from history.
+  const byDay = {};
+  for (const r of historyRows) {
+    if (!r.day || !r.event) continue;
+    if (!byDay[r.day]) byDay[r.day] = { helpful: 0, unhelpful: 0 };
+    if (r.event === 'oracle-answer:helpful') byDay[r.day].helpful += (r.count || 1);
+    else if (r.event === 'oracle-answer:unhelpful') byDay[r.day].unhelpful += (r.count || 1);
+  }
+
+  const newRows = [];
+  for (const [date, { helpful, unhelpful }] of Object.entries(byDay).sort()) {
+    if (unhelpful < ORACLE_FEEDBACK_THRESHOLD) continue;
+    const key = `*|${date}`;
+    if (existing.has(key)) continue;
+    newRows.push({ clusterKey: '*', date, helpful, unhelpful });
+  }
+
+  if (newRows.length) {
+    fs.mkdirSync(path.dirname(fp), { recursive: true });
+    fs.appendFileSync(fp, newRows.map((r) => JSON.stringify(r)).join('\n') + '\n', 'utf8');
+  }
+
+  return newRows.length;
+}
+
+// ---------------------------------------------------------------------------
 // Self-test
 // ---------------------------------------------------------------------------
 
@@ -201,6 +257,20 @@ function selfTest() {
   assert(subs && subs.count === 1, 'expected 1 studio-dispatch:subscribe');
 
   const summary = deriveSummary(history);
+
+  // S190: oracle-feedback writer
+  const tmpFeedback = path.join(dir, 'oracle-feedback.ndjson');
+  const appended = updateOracleFeedback(history, tmpFeedback);
+  // oracle-answer:unhelpful=1 < threshold(2) → no record written
+  assert(appended === 0, `expected 0 feedback rows (unhelpful=1 < threshold), got ${appended}`);
+  // Add a day with unhelpful=3 → should write a row
+  const highUnhelpful = [...history, { schemaVersion:'1.0', day:'2026-06-11', event:'oracle-answer:unhelpful', count:3 }];
+  const appended2 = updateOracleFeedback(highUnhelpful, tmpFeedback);
+  assert(appended2 === 1, `expected 1 feedback row when unhelpful=3, got ${appended2}`);
+  // Idempotent: same day not re-appended
+  const appended3 = updateOracleFeedback(highUnhelpful, tmpFeedback);
+  assert(appended3 === 0, `expected 0 rows on re-run (idempotent), got ${appended3}`);
+
   assert(summary.events['proof-line:shown'] === 3, 'summary proof-line:shown=3');
   assert(summary.terminal['studio-dispatch:subscribe'] === 1, 'summary terminal subscribe=1');
   const proofFam = summary.families.find((f) => f.family === 'proof-line');
@@ -216,7 +286,7 @@ function selfTest() {
   assert(a === b, 'deriveSummary must be deterministic');
 
   fs.rmSync(dir, { recursive: true, force: true });
-  console.log('rollup-rum-ux --self-test: OK (8 assertions)');
+  console.log('rollup-rum-ux --self-test: OK (11 assertions)');
 }
 
 function assert(ok, msg) { if (!ok) { console.error('rollup-rum-ux --self-test FAIL:', msg); process.exit(1); } }
@@ -253,7 +323,9 @@ function main() {
   }
   const history = readHistory();
   writeSummary(deriveSummary(history));
-  console.log(`rollup-rum-ux: ${samples.length} ux sample(s) → ${history.length} history row(s) → api/funnel-summary.json`);
+  const newFeedback = updateOracleFeedback(history);
+  const feedbackNote = newFeedback ? ` + ${newFeedback} oracle-feedback row(s)` : '';
+  console.log(`rollup-rum-ux: ${samples.length} ux sample(s) → ${history.length} history row(s) → api/funnel-summary.json${feedbackNote}`);
 }
 
 const RUN_DIRECT = (() => {
