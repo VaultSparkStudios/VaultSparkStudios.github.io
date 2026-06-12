@@ -16,6 +16,9 @@
 (function () {
   'use strict';
 
+  // TT audit note (S190): type='application/ld+json' is not an executable MIME type,
+  // so script.appendChild(createTextNode) is NOT a TrustedTypes sink — no policy required.
+  // Confirmed by S185 policy wave + lint-tt-policies.mjs gate.
   function inject(obj) {
     var s = document.createElement('script');
     s.type = 'application/ld+json';
