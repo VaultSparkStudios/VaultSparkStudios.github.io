@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-11T23:12:47.779Z",
+  "generatedAt": "2026-06-12T01:33:35.106Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -42,6 +42,16 @@
       "feedbackSignals": 4,
       "shippedCommits": [
         {
+          "sha": "57e98246",
+          "summary": "1-tap helpful/unhelpful on Ask IGNIS answers",
+          "ts": "2026-06-12T01:26:44.000Z"
+        },
+        {
+          "sha": "fce0e350",
+          "summary": "roll allowlisted RUM ux events into api/funnel-summary.json + /status/ tile",
+          "ts": "2026-06-12T01:24:21.000Z"
+        },
+        {
           "sha": "973679ef",
           "summary": "seed Oracle empty-state with real query-cluster chips + instrument hint/chip funnel",
           "ts": "2026-06-11T03:12:27.000Z"
@@ -50,16 +60,6 @@
           "sha": "809f7e35",
           "summary": "closeout write-backs + durable fixes: propagate-nav inline→class, oracle schemaVersion, step3d.7 artifact ordering",
           "ts": "2026-06-11T00:06:15.000Z"
-        },
-        {
-          "sha": "576fff25",
-          "summary": "nav inline→class, s151 contract update, oracle schemaVersion, closeout artifact ordering",
-          "ts": "2026-06-11T00:06:15.000Z"
-        },
-        {
-          "sha": "2b67b8de",
-          "summary": "vault-kinesis SVG ship-pulse waveform on /studio-pulse/",
-          "ts": "2026-06-11T00:06:15.000Z"
         }
       ],
       "proof": null
@@ -67,8 +67,13 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 1,
+      "feedbackSignals": 2,
       "shippedCommits": [
+        {
+          "sha": "08ee09eb",
+          "summary": "untrack .cache session logs (absolute-path leak) + gitignore",
+          "ts": "2026-06-11T23:39:11.000Z"
+        },
         {
           "sha": "a40fce7c",
           "summary": "close the silent-drop bug class",
@@ -93,8 +98,13 @@
     {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 2,
+      "feedbackSignals": 3,
       "shippedCommits": [
+        {
+          "sha": "3c343c1a",
+          "summary": "give the 2nd live title a hero promise line",
+          "ts": "2026-06-12T01:28:20.000Z"
+        },
         {
           "sha": "53174e2c",
           "summary": "widen the funnel S187 started",

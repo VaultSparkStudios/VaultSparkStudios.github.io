@@ -138,7 +138,12 @@ export function deriveSummary(historyRows) {
 
   return {
     schemaVersion: '1.0',
+    // generatedAt mirrors asOf (latest history day) — deterministic, NOT wall-clock,
+    // so --check byte-comparison never drifts. Satisfies the public-contract-health
+    // generatedAt-presence requirement without sacrificing the determinism contract.
+    generatedAt: asOf,
     asOf,
+    publicSafe: true,
     windowDays: WINDOW_DAYS,
     minSamples: MIN_SAMPLES,
     totalEvents,

@@ -1,6 +1,6 @@
 # Genius Hit List — Session 188
 
-Generated: 2026-06-11
+Generated: 2026-06-12
 Project: `VaultSparkStudios.github.io`
 Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md
 
@@ -8,7 +8,7 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **84/100**
 - Health: **green**
-- Current SIL: **961/500**
+- Current SIL: **950/500**
 - CI health: **check gh run list**
 - Current focus: S188 goal-chain (/start -> /audit -> /implement -> /closeout): finish the funnel S187 started + close the S186 silent-drop bug class. Shipped 7/7, build:check green. sitewide-footer-dispatch (capture 1 page -> all 90 via propagate-nav), rum-allowlist-integrity-gate (check-rum-allowlist.mjs 7/7 — ERRORs on emitted-but-unallowlisted RUM names = the S186 silent edge-drop; wired into build:check), proof-line-telemetry (S186 microline was blind; added proof-line:{shown,click} beacons), audit-freshness-in-plumbing (staleness check is now a build:check gate, not a habit), stale-board-hygiene (reconciled the phantom vaultsparked-proof.js founder-action; 0 actionable orphans), flagship-product-storytelling (additive SOUL-voice hero promise on call-of-doodie, no mature-surface rebuild), shell-reconcile (hash rotated, 104 pages re-stamped).
 

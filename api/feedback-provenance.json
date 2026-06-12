@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-11",
+  "generatedAt": "2026-06-12",
   "generatedBy": "scripts/build-feedback-provenance.mjs",
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
@@ -47,6 +47,20 @@
       "count": 4,
       "commits": [
         {
+          "sha": "57e98246",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "1-tap helpful/unhelpful on Ask IGNIS answers",
+          "ts": "2026-06-12T01:26:44.000Z"
+        },
+        {
+          "sha": "fce0e350",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "roll allowlisted RUM ux events into api/funnel-summary.json + /status/ tile",
+          "ts": "2026-06-12T01:24:21.000Z"
+        },
+        {
           "sha": "973679ef",
           "move": "Shipped",
           "tone": "sparked",
@@ -59,28 +73,21 @@
           "tone": "muted",
           "summary": "closeout write-backs + durable fixes: propagate-nav inline→class, oracle schemaVersion, step3d.7 artifact ordering",
           "ts": "2026-06-11T00:06:15.000Z"
-        },
-        {
-          "sha": "576fff25",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "nav inline→class, s151 contract update, oracle schemaVersion, closeout artifact ordering",
-          "ts": "2026-06-11T00:06:15.000Z"
-        },
-        {
-          "sha": "2b67b8de",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "vault-kinesis SVG ship-pulse waveform on /studio-pulse/",
-          "ts": "2026-06-11T00:06:15.000Z"
         }
       ]
     },
     {
       "key": "speed",
       "label": "Speed",
-      "count": 1,
+      "count": 2,
       "commits": [
+        {
+          "sha": "08ee09eb",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "untrack .cache session logs (absolute-path leak) + gitignore",
+          "ts": "2026-06-11T23:39:11.000Z"
+        },
         {
           "sha": "a40fce7c",
           "move": "Shipped",
@@ -93,8 +100,15 @@
     {
       "key": "frontdoor",
       "label": "Front door",
-      "count": 2,
+      "count": 3,
       "commits": [
+        {
+          "sha": "3c343c1a",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "give the 2nd live title a hero promise line",
+          "ts": "2026-06-12T01:28:20.000Z"
+        },
         {
           "sha": "53174e2c",
           "move": "Shipped",
