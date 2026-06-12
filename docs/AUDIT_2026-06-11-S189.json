@@ -127,5 +127,12 @@
     }
   ],
   "topline_combined_priority": 90.8,
-  "executionLog": []
+  "executionLog": [
+    { "slug": "funnel-conversion-rollup", "status": "SHIPPED", "note": "rollup-rum-ux.mjs (8/8 self-test) + check-funnel-contract.mjs (4/4) + api/funnel-summary.json + /status/ Conversion funnel tile; wired into rum:pull+build+build:check. Confirmed the blind spot was real: rollup-rum.mjs kept vitals only, dropped row.ux." },
+    { "slug": "oracle-answer-feedback-loop", "status": "SHIPPED", "note": "1-tap helpful/unhelpful under each Ask IGNIS answer; explicit-literal oracle-answer:{helpful,unhelpful} emits; Worker allowlist extended; check-rum-allowlist clean (16 allowlisted/14 emit, 0 dead). Worker auto-deploys via cloudflare-worker-deploy.yml on push." },
+    { "slug": "rum-dead-allowlist-sweep", "status": "SHIPPED (verified-clean)", "note": "Gate clean after #1+#2 (0 dead). RUM_UX_EVENTS confirmed an honest 1:1 map; no dead entries to clear — a save, not invented work." },
+    { "slug": "flagship-storytelling-wave2", "status": "SHIPPED", "note": "Mirrored the S188 additive hero promise pattern (hero-art-heading + hero-art-promise + matching CSS) to vaultspark-football-gm; single primary CTA preserved; verified live-equivalent to call-of-doodie." },
+    { "slug": "ignis-rescore-artifact-settle", "status": "SHIPPED", "note": "IGNIS 40319->41975 (fresh); two build passes converged a real index/budget cascade (S186->S188 content + current SHAs); funnel artifact made contract-valid; build:check GREEN end-to-end." }
+  ],
+  "result": { "shipped": 5, "deferred": 0, "blocked": 0, "buildCheck": "green", "prodVerified": "S187/S188 features confirmed live on pages.dev before scoring" }
 }
