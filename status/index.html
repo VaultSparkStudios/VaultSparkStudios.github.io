@@ -479,6 +479,22 @@
         inc.className = 'incident-empty';
       }
     });
+    // S189 — conversion funnel: the studio finally measures the funnel it built
+    // (S186-S188 beacons). Rolls allowlisted ux events into aggregate counts.
+    // Honest-dark while below minSamples — never overstates a thin funnel.
+    get('/api/funnel-summary.json').then(function (d) {
+      if (!d || typeof d.totalEvents !== 'number') return;
+      if (d.honestDark) {
+        tile('Conversion funnel', 'warming', d.totalEvents + ' / ' + d.minSamples + ' events measured', 'neutral');
+        return;
+      }
+      var best = (d.families || []).filter(function (f) { return f.rate !== null; })
+        .sort(function (a, b) { return b.rate - a.rate; })[0];
+      var subs = (d.terminal && d.terminal['studio-dispatch:subscribe']) || 0;
+      tile('Conversion funnel', subs + ' dispatch subscribe' + (subs === 1 ? '' : 's'),
+        best ? (best.label + ' ' + best.rate + '%') : (d.totalEvents + ' funnel events / ' + d.windowDays + 'd'),
+        'good');
+    });
   })();
   </script>
 

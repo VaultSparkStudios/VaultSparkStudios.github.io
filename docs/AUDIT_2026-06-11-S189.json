@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 1,
+  "generatedBy": "/audit skill v1.0 (goal-chain S189 · freshness-verified against ground truth + prod probes)",
+  "generatedAt": "2026-06-11",
+  "session": 189,
+  "sessionPrev": 188,
+  "project": "vaultsparkstudios.github.io",
+  "projectName": "VaultSpark Studios",
+  "type": "website",
+  "axisWeights": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5
+  },
+  "topline": {
+    "lens": "Mature public studio site (SIL 957/1000) two sessions after the S186-S188 conversion-surface push welded a proof loop to a conversion loop and lifted email capture sitewide. This audit was ground-truth-verified first: prod (pages.dev) was probed live before scoring, and confirms S188+S187 ARE deployed (FAQ serves the sitewide dispatch footer, call-of-doodie shows the hero promise, Discord+Community are in the nav, status-proof.json is 200, tip is a deployable non-[skip ci] commit). So the top carried VERIFY item is a SAVE, not a skip. The theme this session is MEASURE THE FUNNEL YOU BUILT: across S186-S188 the studio added 13 funnel beacons to the Worker allowlist, but rollup-rum.mjs aggregates only web-vitals per route and discards every ux event name. The funnel is instrumented end-to-end at the edge and BLIND at the analysis layer.",
+    "competitiveFrame": "Carries the S187 read forward: VaultSpark is over-built on infrastructure and was under-built on the conversion surface. S186-S188 closed the build gap. The remaining asymmetry is now MEASUREMENT: the site self-publishes uptime %, LCP field-wins, and AI-spine health as first-class proof tiles, but cannot answer the one question that matters for revenue — 'of the visitors who saw a dispatch prompt, how many subscribed; of those, how many flagged membership intent.' A funnel you can't see the leaks in is a funnel you can't tune.",
+    "groundTruthVerified": [
+      "PROD pages.dev /api/status-proof.json -> 200",
+      "PROD /faq/ (non-home) serves footer-dispatch + Studio Dispatch column (S188 sitewide-footer-dispatch LIVE)",
+      "PROD /games/call-of-doodie/ renders hero promise line (S188 flagship-storytelling LIVE)",
+      "PROD / nav serves Discord + Community Hub (S187 LIVE)",
+      "git: 0 unpushed, tip 08ee09eb is a deployable non-[skip ci] commit",
+      "npm run build:check EXIT 0 (two volatile-cache drift advisories only: public-intelligence, llms-full-shards)",
+      "rollup-rum.mjs confirmed vitals-only -> ux funnel events dropped at analysis layer (the #1 finding)"
+    ],
+    "donotrebuild": [
+      "machine-SEO (llms.txt/agents.json/entity-graph/JSON-LD)",
+      "performance (CF Pages edge, ~172ms LCP)",
+      "build-in-public transport (forge-ledger, studio-pulse, dispatches)",
+      "proof-to-conversion bridge (proof-conversion-line.js, S186 — LIVE)",
+      "sitewide email capture (footer-dispatch, S188 — LIVE on all pages)",
+      "membership/identity spine + 3-stage membership-journey"
+    ]
+  },
+  "items": [
+    {
+      "rank": 1,
+      "slug": "funnel-conversion-rollup",
+      "tier": "fire",
+      "axis": "feedback",
+      "effort": "4h",
+      "impact": 9,
+      "innovation": 9,
+      "priority": 31.3,
+      "summary": "S186-S188 added 13 funnel beacons to the Worker RUM_UX_EVENTS allowlist (studio-dispatch:subscribe, proof-line:{shown,click}, play-next:{shown,click}, oracle-chip:{shown,click}, ignis-hint:{shown,dismissed,click}). They fire from real pages to /v/rum and are allowlist-verified by the S188 gate. But rollup-rum.mjs aggregates ONLY web-vitals (lcpP75/fcpP75/... per route) and discards every ux event name. The funnel is instrumented at the edge and blind at the analysis layer — the studio measures uptime, LCP, and AI-spine health as /status/ tiles, but cannot see its own conversion funnel.",
+      "why": "This is the same silent-drop class as the S186 RUM bug, one layer deeper: the names are allowlisted and emitted, but nothing aggregates them, so the data dies in the rollup. Closing it answers the only question that decides whether S186-S188 paid off: which funnel step leaks. Build it honest-dark (matches the S178 field-win pattern) so it lands now and lights up as CI accrues samples, and prove the aggregation logic this session with a synthetic-fixture self-test even if live counts are sparse.",
+      "recipe": "Add scripts/rollup-rum-ux.mjs (self-test on synthetic samples) that reads the SAME raw pulled sample dir as rollup-rum.mjs, aggregates ux event counts by name per day, writes data/rum-ux-history.ndjson + public-safe api/funnel-summary.json (anonymous aggregate COUNTS only — no email/PII, cost-neutral per CANON-029, honest-dark when total<N). Chain it into the npm run rum:pull sequence after rollup-rum. Add a /status/ 'Conversion funnel' tile rendering visit -> dispatch-shown -> dispatch-subscribe -> proof-line-click -> membership-intent as a step-leak bar. Add scripts/check-funnel-contract.mjs (shape + drift gate) to build + build:check. Outcome: the founder finally sees the funnel's leak points.",
+      "outcome": "conversion-measurement: surfaces which funnel step (capture -> subscribe -> intent) leaks, turning the 3-session funnel build from unproven to tunable."
+    },
+    {
+      "rank": 2,
+      "slug": "oracle-answer-feedback-loop",
+      "tier": "high",
+      "axis": "ai",
+      "effort": "2h",
+      "impact": 7,
+      "innovation": 7,
+      "priority": 24.5,
+      "summary": "Ask IGNIS / the Oracle answer engine delivers answers blind — there is no signal on whether an answer actually helped. S186 seeded one-tap question chips (killing the cold-start) and instrumented hint shown/click, but the ANSWER itself has no helpful/unhelpful capture, so the studio can't tell a great retrieval answer from a useless one, and the oracle-insights clustering has no quality gradient to learn from.",
+      "why": "A retrieval answer with no feedback affordance is a dead-end for both the visitor (no way to say 'that missed') and the studio (no way to improve ranking). A single 1-tap helpful/unhelpful control closes the AI feedback loop, feeds the new funnel-summary as an 'answer helpfulness' info-finding metric, and respects the established pattern: allowlist the beacon, let the S188 check-rum-allowlist gate verify both ends stay in sync.",
+      "recipe": "In assets/ignis-answer-engine.js, render a compact 'Helpful? thumbs up / thumbs down' control under each delivered answer (CSS classes, no inline styles per the strict style gate). On tap, emit allowlisted oracle-answer:{helpful,unhelpful} via the existing emitUx/beacon path and hide the control. Add oracle-answer:helpful + oracle-answer:unhelpful to Worker RUM_UX_EVENTS, then run node scripts/check-rum-allowlist.mjs so emit<->allowlist stays in sync. Surface the helpful-rate in funnel-summary (item #1) so answer quality is measured, not guessed.",
+      "outcome": "info-finding quality: makes Oracle answer helpfulness a measured signal and gives visitors a way to flag a miss, feeding future cluster ranking."
+    },
+    {
+      "rank": 3,
+      "slug": "flagship-storytelling-wave2",
+      "tier": "high",
+      "axis": "ux",
+      "effort": "1h",
+      "impact": 7,
+      "innovation": 4,
+      "priority": 17.7,
+      "summary": "S188 added an additive, reversible SOUL-voice hero promise line to call-of-doodie (the play-next destination) and confirmed it live on prod. But the OTHER SPARKED title — vaultspark-football-gm, which is ALSO a play-next destination (game-affinity routes call-of-doodie -> football-gm and back) — still has a bare title hero. The cross-game router sends real attention INTO football-gm; it lands on undifferentiated copy.",
+      "why": "Half-finishing the flagship-storytelling pass means one of the two live titles converts on landing and the other bounces. This is the cheapest high-certainty win on the board: mirror the exact additive pattern S188 proved (promise line under H1, single primary CTA preserved, no risky rebuild of a mature surface per the flag-gate learning). Reversible in one revert.",
+      "recipe": "Open games/vaultspark-football-gm/index.html, locate the hero H1, and add the same additive SOUL-voice promise line + single primary CTA structure used in games/call-of-doodie/ (S188 9d01d298). Keep it reversible and additive — do NOT rebuild the hero. Rebuild the ambient shell if the page is shell-stamped (npm run build), verify the line renders on the pages.dev origin, and confirm a single primary CTA.",
+      "outcome": "conversion-on-landing: the cross-game play-next route into football-gm lands on a voice-driven promise + one CTA instead of a bare title, matching its live sibling."
+    },
+    {
+      "rank": 4,
+      "slug": "rum-dead-allowlist-sweep",
+      "tier": "nice",
+      "axis": "security",
+      "effort": "0.5h",
+      "impact": 5,
+      "innovation": 3,
+      "priority": 11.3,
+      "summary": "Carried from S188. The new check-rum-allowlist gate WARNs when a name is in the Worker RUM_UX_EVENTS allowlist but never emitted from any assets/*.js (dead config). Adding the oracle-answer beacons (item #2) and consuming events in the funnel rollup (item #1) is the right moment to reconcile the allowlist so it stays an honest 1:1 map of live instrumentation rather than accumulating dead entries.",
+      "why": "An allowlist that drifts from real emit-sites silently rots into a map of intentions instead of reality — the inverse of the S186 bug. Running the gate after the new beacons land keeps RUM_UX_EVENTS truthful and prevents a future agent from trusting a dead name.",
+      "recipe": "Run node scripts/check-rum-allowlist.mjs after items #1-#2 land. For any WARN (allowlisted-but-never-emitted), either wire the missing emit or remove the dead entry from RUM_UX_EVENTS in cloudflare/security-headers-worker.js. Confirm the gate is clean (0 ERROR, 0 WARN) and that build:check still passes.",
+      "outcome": "instrumentation-integrity: RUM_UX_EVENTS stays an honest map of live funnel beacons, so funnel-summary (#1) never aggregates a phantom name."
+    },
+    {
+      "rank": 5,
+      "slug": "ignis-rescore-artifact-settle",
+      "tier": "nice",
+      "axis": "process",
+      "effort": "0.5h",
+      "impact": 4,
+      "innovation": 2,
+      "priority": 6.0,
+      "summary": "The startup brief flags IGNIS score 7d stale (ignisLastComputed 2026-06-05, brief signal amber) and two volatile-cache drift advisories (public-intelligence, llms-full-shards) that build:check reports non-blocking after every /start drain. Both make the brief's health signals less truthful than the actual state.",
+      "why": "Stale health signals erode the brief's value as the multi-agent handoff surface — the next session inherits an amber IGNIS and a 'drift' line that are artifacts of staleness, not real problems. A cheap rescore + a clean npm run build settles both so the closeout brief is honest.",
+      "recipe": "Run node ../vaultspark-studio-ops/scripts/ops.mjs rescore (or studio_rescore_ignis) to refresh ignisScore/ignisGrade/ignisLastComputed in context/PROJECT_STATUS.json. Run npm run build to regenerate public-intelligence + llms-full-shards, then rerun npm run build:check to confirm the drift advisories clear. Re-render the startup brief.",
+      "outcome": "signal-truth: the closeout brief's IGNIS + drift signals reflect reality, keeping the multi-agent handoff surface honest."
+    }
+  ],
+  "innovationReserve": [
+    {
+      "slug": "progressive-membership-unlock",
+      "innovation": 8,
+      "note": "Repeatedly deferred (S185->S186->S188), 8h full build. The visit-depth nudge core already lives in returning-visitor-digest.js (S178) and the 3-stage membership-journey.js exists. The remaining build is true multi-stage progressive disclosure. HELD this session: shipping it half-baked violates SOUL #2 ('Never ship half-baked portal features'). Anchor it as the next-session lead once the funnel-summary (#1) shows WHERE the journey leaks — build the unlock against measured leak points, not guesses."
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "wishlist-momentum-proof",
+      "reason": "BLOCKED on Supabase admin (capability MISSING locally) — needs aggregate count access. Cost-neutral per CANON-029 once unblocked, but not agent-attemptable this session."
+    },
+    {
+      "slug": "top-verify-carry",
+      "reason": "RESOLVED as a SAVE, not a skip: live prod probes confirm S188+S187 features deployed (dispatch sitewide, call-of-doodie promise, Discord+Community nav, status-proof 200, deployable tip). Sub-item (c) RUM beacons landing is exactly what item #1 (funnel-rollup) makes visible."
+    },
+    {
+      "slug": "tt-enforce-reprobe",
+      "reason": "Evidence-gated: reprobe due ~2026-06-18; pre-S185 samples still aging out. Flip stays SOUL #3 founder-device-gated. Not due this session."
+    }
+  ],
+  "topline_combined_priority": 90.8,
+  "executionLog": []
+}

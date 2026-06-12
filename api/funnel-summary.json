@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "1.0",
+  "asOf": "2026-06-05",
+  "windowDays": 30,
+  "minSamples": 20,
+  "totalEvents": 1,
+  "honestDark": true,
+  "events": {
+    "nav-sheet:open": 1
+  },
+  "families": [
+    {
+      "family": "proof-line",
+      "label": "proof line click-through",
+      "counts": {
+        "shown": 0,
+        "click": 0
+      },
+      "rate": null,
+      "rateBasis": "click/shown"
+    },
+    {
+      "family": "play-next",
+      "label": "cross-game play-next click-through",
+      "counts": {
+        "shown": 0,
+        "click": 0
+      },
+      "rate": null,
+      "rateBasis": "click/shown"
+    },
+    {
+      "family": "oracle-chip",
+      "label": "Oracle seed-chip click-through",
+      "counts": {
+        "shown": 0,
+        "click": 0
+      },
+      "rate": null,
+      "rateBasis": "click/shown"
+    },
+    {
+      "family": "ignis-hint",
+      "label": "proactive hint click-through",
+      "counts": {
+        "shown": 0,
+        "click": 0,
+        "dismissed": 0
+      },
+      "rate": null,
+      "rateBasis": "click/shown"
+    },
+    {
+      "family": "oracle-answer",
+      "label": "Oracle answer helpful-rate",
+      "counts": {
+        "helpful": 0,
+        "unhelpful": 0
+      },
+      "rate": null,
+      "rateBasis": "helpful/helpful+unhelpful"
+    }
+  ],
+  "terminal": {
+    "studio-dispatch:subscribe": 0
+  },
+  "note": "Aggregate anonymous interaction counts only — no PII, no per-user data. Honest-dark until minSamples is reached."
+}
