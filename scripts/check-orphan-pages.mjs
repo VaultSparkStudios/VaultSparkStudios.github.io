@@ -46,6 +46,7 @@ const EXEMPT_PATTERNS = [
   /^\/security\/trusted-types\//,  // S158: noindex observability surface
   /\/\.ai\//,                       // S160 #14: AI-canonical fact sheets — linked from /.well-known/llms.txt, not nav
   /^\/obelisk-passport\//,          // S193: untracked Obelisk-passport WIP (not in git HEAD) — remove when it ships
+  /^\/solara\//,                    // S193: standalone Vite game app (own UI, no VaultSpark shell nav) — like football-gm
 ];
 
 function normalizeRel(full) {

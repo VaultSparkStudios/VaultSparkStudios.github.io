@@ -387,12 +387,22 @@
       const FEED = document.getElementById('oracle-feed');
       const EMPTY = document.getElementById('oracle-feed-empty');
 
-      // 1. Try the authoritative ecosystem-state feed first.
+      // 1. Try the authoritative ecosystem-state feed first (local-only, gitignored).
       let ecosystem = null;
       try {
         const r = await fetch('/ignis/output/ecosystem-state.json', { cache: 'no-cache' });
         if (r.ok) ecosystem = await r.json();
       } catch {}
+
+      // 1b. Public-safe deployed ecosystem-state (S193 founder decision: all
+      // external projects, no internal-only data). Lights up the cognition hero
+      // + rich panels on prod, where /ignis/output/* 404s.
+      if (!ecosystem) {
+        try {
+          const r2 = await fetch('/api/ecosystem-state.json', { cache: 'no-cache' });
+          if (r2.ok) ecosystem = await r2.json();
+        } catch {}
+      }
 
       // 2. Fall back to the legacy portfolio-pulse + project-voices duo.
       let pulse = null, voices = null;

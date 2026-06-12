@@ -25,7 +25,10 @@ const SKIP_DIRS = new Set([
   // S193: untracked Obelisk-passport WIP (login/callback) — not in git HEAD, not
   // part of the public shell yet. Exempt until finished + committed; remove this
   // skip when it ships so nav-orphan guards it. (Mirrored in check-nav-orphans.)
-  'obelisk-passport'
+  'obelisk-passport',
+  // S193: solara is a standalone Vite game app (own dark UI, no VaultSpark shell
+  // nav by design) — same class as the exempted vaultspark-football-gm runtime.
+  'solara'
 ]);
 
 // Standalone game runtimes (no standard nav) + utility pages (noindex)

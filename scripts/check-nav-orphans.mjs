@@ -37,7 +37,11 @@ const SKIP_DIRS = new Set([
   // S193: untracked Obelisk-passport WIP (login/callback) — not in git HEAD, not
   // part of the public shell yet. Exempt until it's finished + committed; whoever
   // ships it should remove this skip so nav-orphan guards it. (Mirrors propagate-nav.)
-  'obelisk-passport'
+  'obelisk-passport',
+  // S193: solara is a standalone Vite game app (its own dark UI, no VaultSpark
+  // shell nav by design) — same class as the exempted vaultspark-football-gm
+  // game runtime. (Mirrors propagate-nav.)
+  'solara'
 ]);
 
 const SKIP_FILES = new Set([

@@ -41,7 +41,15 @@
       fetch('/ignis/output/ecosystem-state.json',    { cache: 'no-cache' }).catch(() => null),
     ]);
     const velocity  = velRes  && velRes.ok  ? await velRes.json()  : null;
-    const ecosystem = ecoRes  && ecoRes.ok  ? await ecoRes.json()  : null;
+    let ecosystem = ecoRes  && ecoRes.ok  ? await ecoRes.json()  : null;
+    // Public-safe deployed fallback (S193 founder decision: external projects,
+    // no internal data) so the ecosystem-driven panels render on prod where
+    // /ignis/output/* 404s. velocity has no public equivalent yet → stays null
+    // and the velocity-only panels self-hide via their own guards.
+    if (!ecosystem) {
+      const pub = await fetch('/api/ecosystem-state.json', { cache: 'no-cache' }).catch(() => null);
+      ecosystem = pub && pub.ok ? await pub.json() : null;
+    }
     return { velocity, ecosystem };
   }
 
@@ -442,18 +450,6 @@
 
     const { velocity, ecosystem } = await load();
 
-    // Honest-dark: every panel below is computed from the gitignored
-    // /ignis/output/* feed (404 on prod — it aggregates sealed sibling repos, so
-    // it can't ship publicly). When neither feed is reachable, hide these
-    // internal-only panels rather than leave a row of empty boxes that reads as
-    // "the Oracle isn't loading". The public portfolio feed + Ask IGNIS still
-    // render from deployed /api/* sources.
-    if (!velocity && !ecosystem) {
-      [insightsMount, heatmapMount, donutMount, moversMount, forecastsMount, comparisonMount, gravityMount]
-        .forEach((m) => { const sec = m && m.closest('section'); if (sec) sec.style.display = 'none'; });
-      return;
-    }
-
     if (insightsMount)  renderInsights(computeInsights(velocity, ecosystem), insightsMount);
     if (heatmapMount)   renderHeatmap(velocity, heatmapMount);
     if (donutMount)     renderLifecycleDonut(ecosystem, donutMount);
@@ -465,6 +461,13 @@
     if (gravityMount) renderGravity(ecosystem, gravityMount);
     if (velocity) renderChartMarkers(velocity);
     if (velocity)       wireChartHover(velocity);
+
+    // Honest-dark sweep: hide any panel whose mount ended up empty. On prod the
+    // public ecosystem feed (S193) fills cognition/lifecycle/movers/gravity/
+    // comparison, while the velocity-only panels (insights/heatmap/forecasts)
+    // have no public series yet and self-hide rather than show an empty box.
+    [insightsMount, heatmapMount, donutMount, moversMount, forecastsMount, comparisonMount, gravityMount]
+      .forEach((m) => { if (m && !m.children.length && !m.textContent.trim()) { const sec = m.closest('section'); if (sec) sec.style.display = 'none'; } });
   }
 
   if (document.readyState === 'loading') {
