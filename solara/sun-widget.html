@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Solara: Sunfall — Sun Observatory</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html,body{width:100%;height:100%;background:transparent;}
+    body{font-family:'Courier New',monospace;display:flex;align-items:center;justify-content:center;}
+    .widget{background:linear-gradient(160deg,#1e0a06,#0d0403);border:1px solid #5a1808;border-radius:8px;padding:14px 16px;width:220px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,0.6);}
+    .title{color:#c8a84e;font-size:10px;letter-spacing:2px;font-weight:700;margin-bottom:8px;text-transform:uppercase;}
+    .sun-circle{width:64px;height:64px;border-radius:50%;margin:0 auto 8px;position:relative;display:flex;align-items:center;justify-content:center;}
+    .sun-glow{position:absolute;inset:-4px;border-radius:50%;filter:blur(6px);opacity:0.6;}
+    .sun-text{font-size:18px;font-weight:700;position:relative;z-index:1;line-height:1;}
+    .sun-pct{font-size:9px;position:relative;z-index:1;opacity:0.8;}
+    .bar-wrap{background:#120604;border-radius:3px;height:5px;margin:6px 0;overflow:hidden;}
+    .bar-fill{height:100%;border-radius:3px;transition:width 1.5s;}
+    .phase{font-size:9px;font-weight:700;letter-spacing:1px;margin-bottom:4px;}
+    .stats{display:flex;justify-content:space-around;margin:6px 0;}
+    .stat{font-size:9px;color:#888;}
+    .stat b{display:block;font-size:11px;color:#c8a84e;font-weight:700;}
+    .cta{display:block;margin-top:8px;color:#7a5090;font-size:9px;text-decoration:none;padding:4px 8px;border:1px solid #3a1050;border-radius:3px;transition:color 0.2s,border-color 0.2s;}
+    .cta:hover{color:#c8a84e;border-color:#7a3090;}
+    .offline{color:#333;font-size:10px;padding:8px;}
+    .updated{font-size:8px;color:#333;margin-top:6px;}
+  </style>
+</head>
+<body>
+<div class="widget" id="widget">
+  <div class="title">☀ Solara: Sunfall</div>
+  <div class="sun-circle" id="sun-circle">
+    <div class="sun-glow" id="sun-glow"></div>
+    <div style="position:relative;z-index:1">
+      <div class="sun-text" id="sun-icon">☀</div>
+      <div class="sun-pct" id="sun-pct-small">—%</div>
+    </div>
+  </div>
+  <div class="bar-wrap"><div class="bar-fill" id="bar-fill" style="width:100%;background:#c8a84e"></div></div>
+  <div class="phase" id="phase-label" style="color:#c8a84e">Loading…</div>
+  <div class="stats">
+    <div class="stat"><b id="stat-deaths">—</b>Deaths</div>
+    <div class="stat"><b id="stat-season">1</b>Season</div>
+  </div>
+  <a class="cta" href="https://vaultsparkstudios.github.io/solara/" target="_blank" rel="noopener">Play Free →</a>
+  <div class="updated" id="updated"></div>
+</div>
+<script>
+// Inject your Supabase URL and anon key here, or load from parent frame
+const SB_URL = window.__SUPABASE_URL__ || '';
+const SB_KEY = window.__SUPABASE_KEY__ || '';
+
+function getPhaseInfo(b) {
+  if (b > 80) return { label: 'FULL DAWN', color: '#f0c040', glow: '#c8a840', icon: '☀' };
+  if (b > 60) return { label: 'AMBER WARNING', color: '#e08020', glow: '#d07010', icon: '🌤' };
+  if (b > 40) return { label: 'THE TWILIGHT', color: '#c06020', glow: '#a04010', icon: '🌅' };
+  if (b > 20) return { label: 'THE DIMMING', color: '#a03010', glow: '#802010', icon: '🌑' };
+  return { label: 'THE ECLIPSE', color: '#802010', glow: '#601010', icon: '⚫' };
+}
+
+async function refresh() {
+  if (!SB_URL) {
+    document.getElementById('phase-label').textContent = 'Offline';
+    document.getElementById('sun-pct-small').textContent = '—%';
+    return;
+  }
+  try {
+    const r = await fetch(`${SB_URL}/rest/v1/sun_state?select=brightness,total_deaths,season&limit=1`, {
+      headers: { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+    });
+    const data = await r.json();
+    const row = data && data[0];
+    if (!row) return;
+    const b = Math.max(0, Math.min(100, Number(row.brightness) || 100));
+    const phase = getPhaseInfo(b);
+    document.getElementById('sun-pct-small').textContent = Math.round(b) + '%';
+    document.getElementById('bar-fill').style.width = b + '%';
+    document.getElementById('bar-fill').style.background = phase.color;
+    document.getElementById('phase-label').textContent = phase.label;
+    document.getElementById('phase-label').style.color = phase.color;
+    document.getElementById('sun-icon').textContent = phase.icon;
+    document.getElementById('sun-glow').style.background = phase.glow;
+    document.getElementById('sun-circle').style.border = '2px solid ' + phase.color;
+    document.getElementById('stat-deaths').textContent = Number(row.total_deaths || 0).toLocaleString();
+    document.getElementById('stat-season').textContent = row.season || 1;
+    document.getElementById('updated').textContent = 'Updated ' + new Date().toLocaleTimeString();
+  } catch(e) {
+    document.getElementById('phase-label').textContent = 'Error loading';
+  }
+}
+
+refresh();
+setInterval(refresh, 300000); // refresh every 5 min
+</script>
+</body>
+</html>

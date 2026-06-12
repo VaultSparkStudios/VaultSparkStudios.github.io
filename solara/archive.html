@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Archive of the Fallen — Solara: Sunfall</title>
+  <meta name="description" content="Every grave, every epitaph, every player who fell this season in Solara: Sunfall. Their deaths dimmed the sun. Their words remain."/>
+  <meta property="og:title" content="Archive of the Fallen — Solara: Sunfall"/>
+  <meta property="og:description" content="The permanent record of every player who has fallen this season. Browse the graves. Read the epitaphs. Leave a Sunstone."/>
+  <meta property="og:type" content="website"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:#0d0403;color:#ddd;font-family:'Courier New',monospace;min-height:100vh;}
+    header{background:linear-gradient(180deg,#1e0a06,#0d0403);border-bottom:2px solid #5a1808;padding:20px 24px;text-align:center;}
+    header h1{color:#c8a84e;font-size:22px;letter-spacing:2px;margin-bottom:4px;}
+    header p{color:#666;font-size:12px;}
+    .sun-bar{background:#120604;border:1px solid #3a1008;border-radius:4px;height:8px;margin:12px auto;max-width:400px;overflow:hidden;}
+    .sun-fill{height:100%;background:linear-gradient(90deg,#c8a84e,#f0c040);transition:width 1s;border-radius:4px;}
+    .sun-label{color:#888;font-size:11px;text-align:center;margin-bottom:16px;}
+    #sun-pct{color:#c8a84e;font-weight:700;}
+    .controls{display:flex;gap:8px;padding:12px 24px;flex-wrap:wrap;align-items:center;border-bottom:1px solid #2a1008;}
+    .controls input{background:#1a0804;border:1px solid #5a1808;color:#ddd;padding:6px 10px;border-radius:4px;font-family:'Courier New',monospace;font-size:12px;flex:1;min-width:160px;}
+    .controls select{background:#1a0804;border:1px solid #5a1808;color:#ddd;padding:6px 8px;border-radius:4px;font-family:'Courier New',monospace;font-size:12px;}
+    .controls label{color:#888;font-size:11px;}
+    #grave-count{color:#555;font-size:11px;margin-left:auto;}
+    #graves{padding:16px 24px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+    .grave{background:linear-gradient(180deg,#1a0806,#120504);border:1px solid #3a1808;border-radius:6px;padding:12px;position:relative;transition:border-color 0.2s;}
+    .grave:hover{border-color:#7a4090;}
+    .grave.shrine{border-color:#7a4090;box-shadow:0 0 12px rgba(140,80,200,0.2);}
+    .grave.landmark{border-color:#c8a84e;box-shadow:0 0 12px rgba(200,168,78,0.15);}
+    .grave-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;}
+    .grave-name{color:#b4a0dc;font-weight:700;font-size:13px;}
+    .grave-cross{color:#7a5090;font-size:16px;}
+    .grave-epitaph{color:#c8a84e;font-style:italic;font-size:12px;line-height:1.5;margin-bottom:8px;min-height:20px;}
+    .grave-meta{color:#555;font-size:10px;line-height:1.6;}
+    .grave-meta span{margin-right:8px;}
+    .grave-offerings{color:#7a5090;font-size:10px;margin-top:4px;}
+    .faction-sk{color:#f0c040;}
+    .faction-ec{color:#8060c0;}
+    .faction-nu{color:#666;}
+    .empty{text-align:center;color:#444;font-size:13px;padding:40px;grid-column:1/-1;}
+    footer{border-top:1px solid #2a1008;padding:16px 24px;text-align:center;color:#333;font-size:10px;}
+    footer a{color:#5a3090;text-decoration:none;}
+    footer a:hover{color:#c8a84e;}
+    .loading{text-align:center;color:#555;padding:40px;grid-column:1/-1;}
+    #no-supabase{background:#1a0606;border:1px solid #4a1010;border-radius:6px;padding:16px;text-align:center;color:#888;font-size:12px;grid-column:1/-1;line-height:1.6;}
+  </style>
+</head>
+<body>
+<header>
+  <h1>✝ Archive of the Fallen</h1>
+  <p>Every player who has died in Solara: Sunfall. Their graves remain. Their words endure.</p>
+  <div class="sun-bar"><div class="sun-fill" id="sun-fill" style="width:100%"></div></div>
+  <div class="sun-label">☀ Sun: <span id="sun-pct">—</span>% · <span id="death-count">—</span> fallen this season</div>
+</header>
+<div class="controls">
+  <label>Search:</label>
+  <input type="text" id="search" placeholder="Name or epitaph..." oninput="filterGraves()"/>
+  <select id="faction-filter" onchange="filterGraves()">
+    <option value="">All Factions</option>
+    <option value="sunkeeper">☀ Sunkeepers</option>
+    <option value="eclipser">🌑 Eclipsers</option>
+    <option value="neutral">⚖ Neutral</option>
+  </select>
+  <select id="sort" onchange="loadGraves()">
+    <option value="newest">Newest first</option>
+    <option value="oldest">Oldest first</option>
+    <option value="wave">Highest wave</option>
+    <option value="offerings">Most offerings</option>
+  </select>
+  <span id="grave-count"></span>
+</div>
+<div id="graves"><div class="loading">Loading the Archive…</div></div>
+<footer>
+  <a href="/">← Back to Solara: Sunfall</a> ·
+  <a href="/sun-widget.html">Sun Widget</a> ·
+  VaultSpark Studios · Season <span id="season-num">1</span>
+</footer>
+<script>
+const SUPABASE_URL = typeof window !== 'undefined' && window.VITE_SUPABASE_URL || '';
+const SUPABASE_KEY = typeof window !== 'undefined' && window.VITE_SUPABASE_ANON_KEY || '';
+
+// Read from meta tags injected by the build (Vite injects these as window vars if configured)
+// Fallback: try env vars embedded at build time
+const SB_URL = window.__SUPABASE_URL__ || '';
+const SB_KEY = window.__SUPABASE_KEY__ || '';
+
+let allGraves = [];
+
+async function fetchJson(url, headers) {
+  const r = await fetch(url, { headers });
+  if (!r.ok) throw new Error(r.statusText);
+  return r.json();
+}
+
+async function loadSunState() {
+  if (!SB_URL) return;
+  try {
+    const data = await fetchJson(
+      `${SB_URL}/rest/v1/sun_state?select=brightness,total_deaths,season,season_name&limit=1`,
+      { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+    );
+    if (data && data[0]) {
+      const b = Math.round(data[0].brightness || 100);
+      document.getElementById('sun-pct').textContent = b;
+      document.getElementById('sun-fill').style.width = b + '%';
+      document.getElementById('death-count').textContent = (data[0].total_deaths || 0).toLocaleString();
+      document.getElementById('season-num').textContent = data[0].season || 1;
+    }
+  } catch(e) {}
+}
+
+async function loadGraves() {
+  const sort = document.getElementById('sort').value;
+  const order = sort === 'wave' ? 'wave_reached.desc'
+              : sort === 'offerings' ? 'sunstone_offerings.desc'
+              : sort === 'oldest' ? 'created_at.asc'
+              : 'created_at.desc';
+
+  const gravesEl = document.getElementById('graves');
+
+  if (!SB_URL) {
+    gravesEl.innerHTML = '<div id="no-supabase">The Archive is offline — Supabase is not yet configured.<br/>Once configured, every grave appears here permanently.<br/><a href="/" style="color:#7a5090">← Play the game</a></div>';
+    return;
+  }
+
+  try {
+    gravesEl.innerHTML = '<div class="loading">Loading the Archive…</div>';
+    const data = await fetchJson(
+      `${SB_URL}/rest/v1/graves?select=id,player_name,epitaph,x,y,faction,wave_reached,season,date_seed,sunstone_offerings,is_shrine,created_at&order=${order}&limit=200`,
+      { 'apikey': SB_KEY, 'Authorization': `Bearer ${SB_KEY}` }
+    );
+    allGraves = data || [];
+    document.getElementById('grave-count').textContent = allGraves.length + ' graves';
+    filterGraves();
+  } catch(e) {
+    gravesEl.innerHTML = '<div class="empty">Could not reach the Archive. Try again later.</div>';
+  }
+}
+
+function filterGraves() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const fac = document.getElementById('faction-filter').value;
+  const filtered = allGraves.filter(g => {
+    if (fac && g.faction !== fac) return false;
+    if (q && !((g.player_name||'').toLowerCase().includes(q)) && !((g.epitaph||'').toLowerCase().includes(q))) return false;
+    return true;
+  });
+  renderGraves(filtered);
+}
+
+function renderGraves(graves) {
+  const el = document.getElementById('graves');
+  if (!graves.length) { el.innerHTML = '<div class="empty">No graves found matching your search.</div>'; return; }
+  el.innerHTML = graves.map(g => {
+    const facClass = g.faction === 'sunkeeper' ? 'faction-sk' : g.faction === 'eclipser' ? 'faction-ec' : 'faction-nu';
+    const facIcon = g.faction === 'sunkeeper' ? '☀' : g.faction === 'eclipser' ? '🌑' : '⚖';
+    const shrine = (g.sunstone_offerings || 0) >= 50;
+    const majorShrine = (g.sunstone_offerings || 0) >= 200;
+    const cls = majorShrine ? 'grave landmark' : shrine ? 'grave shrine' : 'grave';
+    const date = g.date_seed ? g.date_seed.replace('solara-','') : '';
+    return `<div class="${cls}" id="grave-${g.id}">
+      <div class="grave-header">
+        <span class="grave-name">${escHtml(g.player_name || 'Unknown')}</span>
+        <span class="grave-cross">${majorShrine ? '🏛' : shrine ? '🕌' : '✝'}</span>
+      </div>
+      <div class="grave-epitaph">"${escHtml(g.epitaph || 'They fell without words.')}"</div>
+      <div class="grave-meta">
+        <span class="${facClass}">${facIcon} ${cap(g.faction || 'neutral')}</span>
+        <span>Wave ${g.wave_reached || 0}</span>
+        <span>${date}</span>
+      </div>
+      <div class="grave-offerings">🌟 ${g.sunstone_offerings || 0} offering${(g.sunstone_offerings||0)!==1?'s':''}</div>
+    </div>`;
+  }).join('');
+}
+
+function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function cap(s) { return s ? s.charAt(0).toUpperCase()+s.slice(1) : s; }
+
+loadSunState();
+loadGraves();
+</script>
+</body>
+</html>
