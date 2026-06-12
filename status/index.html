@@ -358,6 +358,29 @@
       </div>
     </section>
 
+    <!-- S190: Share this proof embed section -->
+    <section aria-labelledby="proof-embed-heading" style="margin-top:2.5rem;">
+      <div class="container">
+        <details>
+          <summary id="proof-embed-heading" style="cursor:pointer;list-style:none;display:flex;align-items:center;gap:.6rem;font-size:.9rem;color:var(--muted);user-select:none;">
+            <span style="color:var(--gold,#ffc400);font-weight:700;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;">▶ Share this proof</span>
+            <span>Embed the live trust card anywhere</span>
+          </summary>
+          <div style="margin-top:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start;">
+            <div>
+              <p style="font-size:.8rem;color:var(--muted);margin:0 0 .7rem;">Drop this one-liner into any page — press kit, Discord about section, link-in-bio. The card renders live data from this feed.</p>
+              <pre id="proof-embed-code" style="background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.7rem 1rem;font-size:.75rem;color:#7ec9ff;overflow-x:auto;white-space:pre-wrap;word-break:break-all;margin:0 0 .6rem;">&lt;script src="https://vaultsparkstudios.com/assets/proof-card.js" defer&gt;&lt;/script&gt;</pre>
+              <button id="proof-copy-btn" style="font-size:.75rem;padding:.35rem .8rem;border-radius:8px;border:1px solid rgba(255,196,0,.4);background:rgba(255,196,0,.08);color:var(--gold,#ffc400);cursor:pointer;">Copy embed code</button>
+            </div>
+            <div>
+              <p style="font-size:.78rem;color:var(--muted);margin:0 0 .6rem;">Live preview:</p>
+              <div data-vs-proof-card></div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>
+
   </main>
 
   <script>
@@ -799,6 +822,23 @@
     })();
   </script>
 <script src="/assets/schema-injector.js" defer></script>
+<script src="/assets/proof-card.js" defer></script>
+<script>
+(function () {
+  var btn = document.getElementById('proof-copy-btn');
+  var code = document.getElementById('proof-embed-code');
+  if (!btn || !code) return;
+  btn.addEventListener('click', function () {
+    var text = code.textContent.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'Copied!';
+        setTimeout(function () { btn.textContent = 'Copy embed code'; }, 2000);
+      });
+    }
+  });
+})();
+</script>
   <!-- vs-ambient:start -->
 <script src="/assets/ambient-core.shell-4796e4dbd3.js" defer></script>
 <script src="/assets/ambient-feature.shell-5b85ce5201.js" defer></script>

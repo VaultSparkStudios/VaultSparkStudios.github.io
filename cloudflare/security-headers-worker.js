@@ -268,6 +268,9 @@ const RUM_UX_EVENTS = new Set([
   // body[data-vs-unlock-stage=N] based on visit/proof/dispatch signals. Names
   // only; no PII; feeds funnel-summary stage-distribution bucket.
   'membership-unlock:stage-2', 'membership-unlock:stage-3', 'membership-unlock:stage-4',
+  // S190: proof embed card — fires on third-party embeds of proof-card.js to
+  // measure trust-distribution reach outside the main site.
+  'proof-card:embed',
 ]);
 function cleanRumUxEvent(value) {
   return typeof value === 'string' && RUM_UX_EVENTS.has(value) ? value : null;
