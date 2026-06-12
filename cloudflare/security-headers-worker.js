@@ -261,6 +261,9 @@ const RUM_UX_EVENTS = new Set([
   // S188: proof-to-conversion microline — impression + click-through on the
   // register-card trust line (names only, no IDs/free text; same privacy model).
   'proof-line:shown', 'proof-line:click',
+  // S189: Ask IGNIS answer feedback — 1-tap helpful/unhelpful on a delivered
+  // answer. Names only (no query text, no IDs); feeds api/funnel-summary.json.
+  'oracle-answer:helpful', 'oracle-answer:unhelpful',
 ]);
 function cleanRumUxEvent(value) {
   return typeof value === 'string' && RUM_UX_EVENTS.has(value) ? value : null;
