@@ -479,22 +479,65 @@
         inc.className = 'incident-empty';
       }
     });
-    // S189 — conversion funnel: the studio finally measures the funnel it built
-    // (S186-S188 beacons). Rolls allowlisted ux events into aggregate counts.
-    // Honest-dark while below minSamples — never overstates a thin funnel.
+    // S189 — conversion funnel measurement. S190 — pedagogical waterfall even in honest-dark.
+    // Shows the 4-stage journey the studio measures; fills with real rates when minSamples reached.
     get('/api/funnel-summary.json').then(function (d) {
       if (!d || typeof d.totalEvents !== 'number') return;
+      // Build a funnel waterfall tile regardless of honest-dark state
+      var card = document.createElement('div');
+      card.style.cssText = 'padding:1rem 1.2rem;border-radius:12px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.06);';
+      var lbl = document.createElement('div');
+      lbl.style.cssText = 'font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-bottom:.5rem;';
+      lbl.textContent = 'Conversion funnel';
+      card.appendChild(lbl);
+      // Waterfall stages: label, count or '—', arrow connector
+      var stagesData = [
+        { name: 'Proof seen', count: getFamilyCount(d, 'proof-line', 'shown') },
+        { name: 'Email shown', count: getFamilyCount(d, 'proof-line', 'click') },
+        { name: 'Subscribed', count: getTerminal(d, 'studio-dispatch:subscribe') },
+        { name: 'Membership', count: null } // off-site; not directly measurable
+      ];
+      var waterfall = document.createElement('div');
+      waterfall.style.cssText = 'display:flex;align-items:center;gap:.3rem;flex-wrap:wrap;';
+      stagesData.forEach(function (stage, i) {
+        var stageEl = document.createElement('div');
+        stageEl.style.cssText = 'display:flex;flex-direction:column;align-items:center;min-width:52px;';
+        var countEl = document.createElement('span');
+        var hasData = !d.honestDark && stage.count !== null && stage.count !== undefined;
+        countEl.style.cssText = 'font-size:1rem;font-weight:700;color:' + (hasData ? '#3ecf8e' : 'var(--dim)') + ';';
+        countEl.textContent = hasData ? String(stage.count) : (stage.count === null && i === 3 ? '?' : '—');
+        var nameEl = document.createElement('span');
+        nameEl.style.cssText = 'font-size:.62rem;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);text-align:center;margin-top:.1rem;';
+        nameEl.textContent = stage.name;
+        stageEl.appendChild(countEl); stageEl.appendChild(nameEl);
+        waterfall.appendChild(stageEl);
+        if (i < stagesData.length - 1) {
+          var arrow = document.createElement('span');
+          arrow.style.cssText = 'color:var(--dim);font-size:.8rem;opacity:.5;flex-shrink:0;';
+          arrow.textContent = '→';
+          waterfall.appendChild(arrow);
+        }
+      });
+      card.appendChild(waterfall);
+      var statusEl = document.createElement('div');
+      statusEl.style.cssText = 'font-size:.75rem;color:var(--muted);margin-top:.5rem;';
       if (d.honestDark) {
-        tile('Conversion funnel', 'warming', d.totalEvents + ' / ' + d.minSamples + ' events measured', 'neutral');
-        return;
+        statusEl.textContent = 'warming · ' + d.totalEvents + ' / ' + d.minSamples + ' events · rates show at threshold';
+      } else {
+        var subs = getTerminal(d, 'studio-dispatch:subscribe') || 0;
+        statusEl.textContent = subs + ' subscribe' + (subs === 1 ? '' : 's') + ' · ' + d.totalEvents + ' events / ' + d.windowDays + 'd';
       }
-      var best = (d.families || []).filter(function (f) { return f.rate !== null; })
-        .sort(function (a, b) { return b.rate - a.rate; })[0];
-      var subs = (d.terminal && d.terminal['studio-dispatch:subscribe']) || 0;
-      tile('Conversion funnel', subs + ' dispatch subscribe' + (subs === 1 ? '' : 's'),
-        best ? (best.label + ' ' + best.rate + '%') : (d.totalEvents + ' funnel events / ' + d.windowDays + 'd'),
-        'good');
+      card.appendChild(statusEl);
+      grid.appendChild(card);
     });
+    function getFamilyCount(d, family, key) {
+      if (!d || !d.families) return 0;
+      var f = d.families.filter(function (x) { return x.family === family; })[0];
+      return (f && f.counts && f.counts[key] != null) ? f.counts[key] : 0;
+    }
+    function getTerminal(d, key) {
+      return (d && d.terminal && d.terminal[key] != null) ? d.terminal[key] : 0;
+    }
   })();
   </script>
 
