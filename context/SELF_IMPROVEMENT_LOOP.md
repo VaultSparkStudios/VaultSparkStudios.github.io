@@ -8,14 +8,40 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █▇██▇
-Avgs - 3: 958.3 | 5: 960.6 | 10: 978.0 | 25: 976.0 | all: 961 (v3.0 /1000)
-  └ 3-session: Dev 95.7 | Align 96.0 | Momentum 96.0 | Engage 94.7 | Process 97.0
-Velocity trend: → (S189: 5 shipped + 1 carry resolved as a SAVE via live prod probe + 0 deferred-by-fatigue; S188: 7; S187: 5 — sustained, each item genuinely undone before scoring)  |  Protocol velocity: ↑ (rollup-rum-ux + check-funnel-contract are new reusable gates; the funnel summary is the third instrumentation layer the allowlist gate couldn't see) |  Debt: ↓ (closed the analysis-layer blind spot; converged a real S186-content artifact cascade the repo had carried stale)
-Momentum runway: ≥4 open Now items — prod-verify S189 (funnel tile + oracle-answer allowlist deploy), build PROGRESSIVE-MEMBERSHIP-UNLOCK against measured funnel leaks, publish forge devlog draft, TT-enforce reprobe ~06-18  |  Intent rate: 100% (last 5)
-Last session: 2026-06-11 | Session 189 | Total: 957/1000 (v3.0) | Velocity: 5 | protocolVelocity: 2
+Sparkline (last 5 totals): ██▇██
+Avgs - 3: 959.3 | 5: 959.4 | 10: 978.0 | 25: 976.0 | all: 961 (v3.0 /1000)
+  └ 3-session: Dev 95.3 | Align 96.0 | Momentum 95.7 | Engage 95.0 | Process 96.0
+Velocity trend: ↑ (S190: 10 shipped (highest single-session count since S185), 0 deferred-by-fatigue; S189: 5; S188: 7 — cadence holding) | Protocol velocity: ↑ (generate-changelog-entry + draft-weekly-forge upgrade are new reusable content tools; oracle-feedback loop closes the Oracle quality signal end-to-end) | Debt: ↓ (cleared the 8h progressive-membership-unlock carry from S185; closed 3 items the S189 brainstorm named; TT finish resolves the lingering schema-injector annotation)
+Momentum runway: ≥4 open Now items — prod-verify S190 (funnel waterfall + session badge + membership unlock + proof embed + Worker allowlist deploy), re-run forge devlog drafter for S190-voice output + founder publish, TT-enforce reprobe ~06-18, per-cluster Oracle feedback when frontend emits cluster key | Intent rate: 100% (last 5)
+Last session: 2026-06-12 | Session 190 | Total: 960/1000 (v3.0) | Velocity: 10 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-12 — Session 190 (/goal chain: /start → /audit → /implement → /closeout · 10/10 shipped) | Total: 960/1000 (v3.0) | Velocity: 10 | Debt: ↓
+
+| Category | Score | Note |
+|---|---|---|
+| Dev Health | 96 | 10/10 items shipped across 10 atomic commits; 4 self-tests extended/added (draft-weekly-forge 11/11, generate-changelog-entry 17/17, oracle-clusters 3/3, rollup-rum-ux 11/11); `build:check` GREEN end-to-end. Session resumed cleanly from a context compaction mid-`/implement` — git log served as state; no item was re-done or missed. |
+| Creative Alignment | 96 | Honest-dark held throughout: funnel waterfall shows `——` not fake rates; membership unlock fires only on real localStorage signals; proof embed fetches a live proof, not a static screenshot; forge devlog is SOUL voice ("what shipped, why it matters") with 16 internal-term redactions so nothing sounds like a build log. |
+| Momentum | 97 | Velocity 10 — every audit item shipped, 0 deferred by fatigue; the 8h progressive-membership-unlock carry from S185 finally closed; context compaction did not lose a single item. |
+| Engagement | 95 | Three complementary surfaces now deepen the visitor journey simultaneously: the `/status/` waterfall makes the measurement model pedagogical; `/membership/` matches the nudge to the visitor's stage; the shareable proof card extends the trust layer beyond the site itself. |
+| Process Quality | 96 | Ground-truth probe before scoring caught sessionsCompleted drift (188 vs 190) + devlog draft quality gap + correct honest-dark state. The "instrument both ends" discipline from S186 applied to the progressive unlock (membership-unlock:stage-* dynamic prefix + allowlist in one commit). All 10 write-backs complete. |
+| Cross-Repo Coherence | 97 | No sibling writes; Worker allowlist change rides the existing `cloudflare-worker-deploy.yml` auto-deploy; all new artifacts follow the established /status/ proof-tile and /api/ honest-dark conventions. |
+| Security Posture | 97 | `proof-card.js` uses absolute URL for third-party beacon delivery (no relative-URL ambiguity when embedded); `membership-unlock.js` reads only localStorage, never exfiltrates; `generate-changelog-entry.mjs` internal-patterns filter verified PII/secret-safe via self-test. |
+| Ecosystem Integration | 96 | `proof-card.js` embeds the trust layer on THIRD-PARTY surfaces — the proof becomes portable beyond vaultsparkstudios.com. Oracle feedback loop closes the quality gradient; `oracle-insights.json` `helpfulScore` is now a public-facing quality signal. |
+| Capital Efficiency | 98 | All 10 items are cost-neutral per CANON-029: static derivation, no new vendor, no per-user studio cost. The embeddable proof card reuses the existing `api/status-proof.json` endpoint with no additional infrastructure. |
+| Automation Coverage | 95 | `generate-changelog-entry.mjs` and the SOUL-voice upgrade to `draft-weekly-forge.mjs` make content generation substantially automated; oracle feedback loop runs on every `rum:pull` cycle with no manual step. |
+| **Total** | **960/1000** | (5 primary 480 + secondary: Coherence 97 · Security 97 · Ecosystem 96 · Capital 98 · Automation 95 = 483) |
+
+### Brainstorm (S191 candidates)
+- **Funnel anomaly canary** — once samples accrue past the honest-dark floor, `rollup-rum-ux.mjs` has the data for a week-over-week conversion-rate regression check (mirrors `check-rum-anomaly-canary.mjs`). A funnel that was converting at 5% and drops to 1% should page the founder, not silently.
+- **Per-cluster Oracle feedback** — `oracle-feedback.ndjson` is schema-ready; add the cluster key to the 👍/👎 beacon emission in `ignis-answer-engine.js`, then switch the aggregator to per-cluster rows. The `helpfulScore` field in `oracle-insights.json` will become genuinely signal-rich.
+- **Proof embed discovery** — `assets/proof-card.js` is embeddable but undiscoverable; add a `<link rel="alternate" type="application/javascript" href="/assets/proof-card.js" title="VaultSpark Studios Proof Card">` in `_headers` + mention in `agents.json` so builders can find the widget.
+
+### Commitments landed in TASK_BOARD
+- S190 Now: prod-verify S190 features · re-run forge devlog + founder publish · per-cluster Oracle feedback (S191 candidate) · TT reprobe ~06-18.
 
 ---
 

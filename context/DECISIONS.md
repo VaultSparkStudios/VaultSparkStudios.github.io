@@ -2,6 +2,10 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-12 — S190 — oracle-feedback.ndjson uses clusterKey='*' as global aggregate until per-cluster emission is wired
+
+Decision: `data/oracle-feedback.ndjson` rows currently use `clusterKey: '*'` (a global aggregate) rather than per-cluster keys. Rationale: the frontend 👍/👎 beacons in `ignis-answer-engine.js` emit `oracle-answer:{helpful,unhelpful}` without a cluster ID; tying the aggregation to a specific cluster would require reading the current chip set from the DOM at feedback time — an additional coupling. The schema in `oracle-feedback.ndjson` already includes a `clusterKey` field, so switching to per-cluster rows is a one-commit change once the frontend emits the cluster key alongside the beacon. `build-oracle-query-clusters.mjs` handles `*` as a global fallback: if `*` feedback has a higher helpful-rate than all coverage-only clusters, all clusters benefit equally from the signal (a conservative, non-misleading behavior). Per-cluster granularity is the correct end state; `*` is the honest intermediate state.
+
 ### 2026-06-10 — S185 — propagate-nav.mjs must use CSS classes for nav status colors (never inline style=)
 
 Decision: all nav dropdown status label colors are delivered via CSS classes in `assets/style.css` (`.dropdown-status-sparked`, `.dropdown-status-forge`, `.dropdown-status-vaulted`, etc.), never via inline `style=` attributes. Rationale: `check-intelligence-style-contract --strict` enforces zero inline styles on 7 intelligence pages; `propagate-nav.mjs` regenerates nav HTML across all 90+ pages on every build, so an inline `style=` in the nav template causes every propagated page to fail the strict check. Moving colors to classes is the canonical pattern (S169 established class-based intelligence styles; S185 extends it to nav). The vault-status-legend base layout is also a CSS class for the same reason.

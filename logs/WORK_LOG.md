@@ -1,5 +1,24 @@
 # Work Log
 
+## 2026-06-12 — Session 190 (/goal chain: /start → /audit → /implement → /closeout · 10/10 shipped)
+
+Ran the full /goal chain. Theme: **deepen what you built**. The S186-S189 arc delivered a full funnel surface; S190 made every layer more resonant. Ground-truth probes confirmed honest-dark was correct on the funnel tile, caught a 1-session sessionsCompleted drift in `public-intelligence.json`, and found the forge devlog draft contained raw task-board text rather than SOUL prose — three real problems behind three of the 10 items.
+
+**Shipped 10** (10 commits, build:check green end-to-end):
+1. **funnel-waterfall-pedagogical** — `/status/` funnel tile shows 5 labeled stages (Visit → Proof seen → Dispatch shown → Subscribe → Membership) with `——` placeholders in honest-dark; fills when ≥20 samples. Also fixed `public-intelligence.json` sessionsCompleted to build-derive from PROJECT_STATUS.json. (94df04cb + 0cef5b3a)
+2. **session-velocity-trust-badge** — `/studio/` session count animated 0→N on first viewport + "~1 per day" velocity from `api/commit-map.json`; `session-counter.js` 450B. (8bcb830b)
+3. **progressive-membership-unlock** — `assets/membership-unlock.js` classifies 4 visitor stages via localStorage signals; 3 stage-matched callout blocks on `/membership/`; `membership-unlock:stage-*` dynamic prefix allowlisted in the Worker; `check-rum-allowlist` clean (both ends in one change per S186 lesson). (5f930ac3)
+4. **forge-devlog-soul-voice-upgrade** — `draft-weekly-forge.mjs` rewritten to produce 2-paragraph SOUL-voice narrative (16-term forbidden-terms table: RUM→real-user metrics, S186→session S186, etc.; 10 slug→sentence mappings); self-test 11/11. (d3031a50)
+5. **changelog-entry-auto-derive** — new `scripts/generate-changelog-entry.mjs` (17/17 self-test); derives public-safe HTML `<article class="cl-phase">` from TASK_BOARD DONE lines; internal-patterns filter + REDACTIONS table; writes to `changelog/_drafts/`; never auto-publishes — founder review canon preserved. (1bd9a397)
+6. **proof-embed-card** — `assets/proof-card.js` (130 lines, standalone, no deps); `/status/` "Share this proof" `<details>` with live embed preview + nonce-safe copy button (no `onclick` attribute — nonce-injected inline `<script>` block); `proof-card:embed` added to Worker allowlist. (054eb6f6)
+7. **oracle-chip-ranking** — `build-oracle-query-clusters.mjs` re-ranks clusters by recency-weighted helpful-rate (`0.9^daysOld` decay) from `data/oracle-feedback.ndjson`; clusters with real feedback always outrank coverage-only clusters; `helpfulScore` field added to `api/oracle-insights.json`; self-test 3/3. (89cd24c7)
+8. **oracle-corpus-feedback-loop** — `rollup-rum-ux.mjs` now writes to `data/oracle-feedback.ndjson` when a day reaches `unhelpful ≥ 2`; schema ready for per-cluster granularity when frontend emits the cluster key; self-test 11/11. (6215ce4e)
+9. **tt-default-policy-finish** — clarifying TT audit comment in `assets/schema-injector.js` explaining why `createTextNode` on `type='application/ld+json'` is not a TrustedTypes sink; confirmed by S185 named-policy wave + lint-tt-policies gate; no code change needed. (f5bada74)
+
+**Note:** session resumed from a context compaction mid-`/implement` (items #1 and #2 were already committed). Remaining 8 items executed cleanly from git-log-derived state.
+
+**Founder-gated (surfaced, not auto-shipped):** forge devlog publish (re-run `draft-weekly-forge.mjs` for S190-voice output, then founder SOUL review + publish); richer-IGNIS-layer public-safe decision; TT-enforce reprobe ~2026-06-18.
+
 ## 2026-06-11 — Session 188 (/goal chain: /start → /audit → /implement → /closeout · 7/7 shipped)
 
 Ran the full /goal chain. Theme: finish the funnel S187 started + close the S186 silent-drop bug class. The audit was deliberately small-bore and **ground-truth-verified** — every candidate greped against the live repo + TASK_BOARD DONE before scoring (honoring the S186 2/10-already-done lesson). That discipline caught a phantom founder-action: `vaultsparked-proof.js` was deleted in S186, yet the Human Action queue + startup brief still asked the founder to delete it.

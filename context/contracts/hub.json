@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-12T02:40:41.837Z",
+  "generatedAt": "2026-06-12T04:05:48.895Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,16 +22,16 @@
     }
   },
   "pulse": {
-    "currentSession": 189,
+    "currentSession": 190,
     "lastUpdated": "2026-06-12",
-    "currentFocus": "S188 goal-chain (/start -> /audit -> /implement -> /closeout): finish the funnel S187 started + close the S186 silent-drop bug class. Shipped 7/7, build:check green. sitewide-footer-dispatch (capture 1 page -> all 90 via propagate-nav), rum-allowlist-integrity-gate (check-rum-allowlist.mjs 7/7 — ERRORs on emitted-but-unallowlisted RUM names = the S186 silent edge-drop; wired into build:check), proof-line-telemetry (S186 microline was blind; added proof-line:{shown,click} beacons), audit-freshness-in-plumbing (staleness check is now a build:check gate, not a habit), stale-board-hygiene (reconciled the phantom vaultsparked-proof.js founder-action; 0 actionable orphans), flagship-product-storytelling (additive SOUL-voice hero promise on call-of-doodie, no mature-surface rebuild), shell-reconcile (hash rotated, 104 pages re-stamped).",
-    "nextMilestone": "Prod-verify S188 on pages.dev: footer Studio Dispatch renders + submits on a NON-home page, Discord/Community in nav sitewide, proof-line:* + studio-dispatch:subscribe + play-next:* land in /v/rum, call-of-doodie hero promise renders, cold-cache healthy post shell-hash rotation. Founder: review+publish the forge devlog draft (clears 81d journal-stale gate).",
+    "currentFocus": "S190 goal-chain (/start -> /audit -> /implement -> /closeout): deepen the funnel layer. Shipped 10/10, build:check green. funnel-waterfall-pedagogical (5-stage waterfall on /status/ funnel tile; sessionsCompleted now build-derived), session-velocity-trust-badge (animated counter + velocity on /studio/), progressive-membership-unlock (4-stage classifier + 3 callout blocks on /membership/; Worker allowlist updated), forge-devlog-soul-voice-upgrade (16-term forbidden-terms table; SOUL-voice narrative), changelog-entry-auto-derive (generate-changelog-entry.mjs 17/17), proof-embed-card (standalone embeddable trust card; /status/ Share this proof section), oracle-chip-ranking (helpful-rate re-ranking from oracle-feedback.ndjson), oracle-corpus-feedback-loop (rollup-rum-ux feeds oracle-feedback.ndjson on unhelpful>=2 days), tt-default-policy-finish (clarifying TT comment on schema-injector.js).",
+    "nextMilestone": "Prod-verify S190 on pages.dev: funnel waterfall renders 5 stages, session badge animates, membership callout fires for returning visitors, proof-card:embed beacon lands in /v/rum, Worker deploys updated RUM_UX_EVENTS allowlist. Founder: re-run draft-weekly-forge.mjs for S190-voice output, review + publish to journal/. TT reprobe ~2026-06-18.",
     "blockers": [],
     "queues": {
       "now": [
-        "[S189][VERIFY/P1] Confirm S189 features on prod after deploy. (a) `/status/` \"Conversion funnel\" tile renders (honest-dark \"warming\" until ≥20 funnel events accrue); (b) the Worker `cloudflare-worker-deploy.yml` run lands the `oracle-answer:*` allowlist so those beacons aren't edge-dropped (the S186 silent-drop shape) — confirm via a test 👍 on an Ask IGNIS answer landing in `/v/rum`; (c) `api/funnel-summary.json` is served 200 on pages.dev; (d) vaultspark-football-gm hero promise renders. Verify via pages.dev origin, never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).",
-        "[S189→][FEATURE/P1] PROGRESSIVE-MEMBERSHIP-UNLOCK — now build it against measured leak points. Deferred since S185 (8h) precisely because it was a guess. With `api/funnel-summary.json` live, the next session can read WHERE the journey actually leaks (dispatch-subscribe rate, proof-line click-through, oracle-chip→membership-intent) and build the multi-stage progressive disclosure against real funnel data instead of intuition. SOUL #2: never ship half-baked portal features — build it once the funnel shows the leak.",
-        "[S187][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. `journal/_drafts/forge-week-2026-06-11.md` is generated; founder reviews SOUL voice, then publish to `journal/` to clear the 82d-stale journal warn-gate (build:check warns, non-blocking).",
+        "[S190][VERIFY/P1] Confirm S190 features on prod after deploy. (a) `/status/` funnel waterfall renders 5 stages in honest-dark (——/——/——/——/——); (b) `/studio/` session counter animates on scroll; (c) `/membership/` stage-1 callout is absent on first visit (no localStorage signals yet); (d) `proof-card:embed` beacon lands in `/v/rum` when the embed preview loads on `/status/`; (e) Worker deploys the updated `RUM_UX_EVENTS` allowlist including `membership-unlock:stage-*`. Verify via pages.dev origin; never assume push==deploy.",
+        "[S190→][FEATURE/P2] Oracle per-cluster feedback granularity. `oracle-feedback.ndjson` currently uses `clusterKey: '*'` (global aggregate). Once the frontend emits the cluster key alongside the 👍/👎 beacon, switch `rollup-rum-ux.mjs` to per-cluster rows. The schema is already in place; only the emit-site needs updating.",
+        "[S189][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. `journal/_drafts/forge-week-2026-06-11.md` — S190 upgraded the drafter to SOUL-voice narrative; the draft itself was generated before the upgrade. Re-run `node scripts/draft-weekly-forge.mjs` to get the new-voice output, then founder reviews + publishes to `journal/` to clear the stale journal warn-gate.",
         "[S186][SECURITY/P1] TT-ENFORCE-REPROBE. First-party surface CLEAN. Reprobe ~2026-06-18; pre-S185 samples aging out. Flip stays SOUL #3 founder-device gated."
       ],
       "next": [
