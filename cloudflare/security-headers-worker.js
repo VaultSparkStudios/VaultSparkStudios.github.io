@@ -531,6 +531,7 @@ export default {
     const originFetch = createOriginFetch({ PRIMARY_ORIGIN, FALLBACK_ORIGIN });
     const url = new URL(request.url);
     const method = request.method;
+    const isSolaraGameRoute = /^\/solara(\/|$)/i.test(url.pathname);
 
     // --- Layer 0: Real-user vitals beacon ingestion --------------------------
     if (url.pathname === '/v/rum') {
@@ -719,7 +720,7 @@ export default {
     // separate cache entry. The window query param is stripped before origin fetch.
     const curWindow = Math.floor(Date.now() / (HTML_NONCE_WINDOW_SEC * 1000));
     const htmlCacheKey = nonceModeOn ? new Request(`${request.url}${request.url.includes('?') ? '&' : '?'}_vsw=${curWindow}`) : null;
-    if (ttl > 0 || jsonSwr || nonceModeOn) {
+    if (!isSolaraGameRoute && (ttl > 0 || jsonSwr || nonceModeOn)) {
       const cacheReq = htmlCacheKey || request;
       const cached = await cache.match(cacheReq);
       if (cached) return cached;
@@ -750,7 +751,10 @@ export default {
     // --- Layer 6: Cache successful 200 responses ---
     // HTML in nonce mode: cache under the window-keyed request for HTML_NONCE_WINDOW_SEC.
     if (upstream.status === 200) {
-      if (isHtml && nonceModeOn && htmlCacheKey) {
+      if (isSolaraGameRoute) {
+        // The Solara game bundle is published as a nested static app under
+        // /solara/. Do not serve stale shell fallback HTML from Worker cache.
+      } else if (isHtml && nonceModeOn && htmlCacheKey) {
         ctx.waitUntil(cache.put(htmlCacheKey, finalResponse.clone()));
       } else if ((ttl > 0 || jsonSwr) && !(isHtml && nonceModeOn)) {
         ctx.waitUntil(cache.put(request, finalResponse.clone()));
