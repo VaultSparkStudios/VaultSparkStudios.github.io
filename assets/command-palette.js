@@ -254,6 +254,47 @@
     lastResults = search(q, items);
     selectedIdx = 0;
     renderResults(lastResults, q);
+    maybeInlineIgnis(q);
+  }
+
+  // S195 (item 5): the palette already does navigation; this makes it also ANSWER.
+  // For a question-shaped query we render IGNIS's top match inline — entirely
+  // client-side via VSIgnisAnswer.ask (the item-1 retrieval over the static
+  // index), so it costs zero API calls (CANON-029). Cmd+Enter still triggers the
+  // deeper, grandfathered paid synthesis for users who want it.
+  var inlineTimer = null;
+  function isQuestionShaped(q) {
+    if (!q || q.length < 6) return false;
+    if (/\?\s*$/.test(q)) return true;
+    return /^(what|how|why|who|when|where|can|does|do|is|are|should|which|tell me)\b/i.test(q);
+  }
+  function maybeInlineIgnis(q) {
+    if (inlineTimer) { clearTimeout(inlineTimer); inlineTimer = null; }
+    var api = window.VSIgnisAnswer;
+    if (!isQuestionShaped(q) || !api || typeof api.ask !== 'function') {
+      // Not a question (or engine absent) → don't keep a stale inline answer up.
+      if (refs && refs.ai && refs.ai.dataset.mode === 'inline') refs.ai.hidden = true;
+      return;
+    }
+    inlineTimer = setTimeout(function () {
+      api.ask(q).then(function (result) {
+        // Race guard: only paint if this is still the live query.
+        if (!result || !refs || refs.input.value.trim() !== q) return;
+        renderInlineIgnis(result);
+      }).catch(function () {});
+    }, 260);
+  }
+  function renderInlineIgnis(result) {
+    var sources = (result.sources || []).slice(0, 3).map(function (s) {
+      return '<a class="vs-palette-ai__source" href="' + escape(s.url || s.href || '/') + '">' + escape(s.title || s.url || 'source') + '</a>';
+    }).join('');
+    refs.ai.hidden = false;
+    refs.ai.dataset.mode = 'inline';
+    refs.ai.innerHTML = [
+      '<div class="vs-palette-ai__synth"><strong>IGNIS reads:</strong> ', escape(result.text), '</div>',
+      sources ? '<div class="vs-palette-ai__sources">' + sources + '</div>' : '',
+      '<div class="vs-palette-ai__loading" style="margin-top:0.45rem">Press <kbd>⌘↵</kbd> / <kbd>Ctrl+↵</kbd> for a deeper synthesis.</div>',
+    ].join('');
   }
 
   function renderResults(results, query) {
@@ -351,6 +392,7 @@
   }
 
   function renderIgnisResult(json, fromCache) {
+    if (refs && refs.ai) refs.ai.dataset.mode = 'paid';
     var sources = (json.sources || []).slice(0, 3).map(function (s) {
       return '<a class="vs-palette-ai__source" href="' + escape(s.href) + '">' + escape(s.title) + '</a>';
     }).join('');
