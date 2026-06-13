@@ -66,12 +66,32 @@
       .trim();
   }
 
-  function answer(query, index) {
+  // S195: conversational memory — entirely client-side, zero added API cost
+  // (CANON-029). We keep only the prior turn's topic tokens + top URL so a
+  // follow-up ("tell me more", "what about the free tier") resolves against the
+  // last answer instead of starting cold. Reset on a fresh, unrelated query.
+  var convo = { tokens: [], topUrl: '' };
+  var FOLLOWUP_RE = /^(tell me more|more\b|go on|continue|why\b|how about|what about|and |elaborate|explain|details?|keep going|then\b)/i;
+  function isFollowUp(q) {
+    q = String(q || '').trim();
+    if (!q || !convo.tokens.length) return false;
+    if (FOLLOWUP_RE.test(q)) return true;
+    // A bare pronoun / single short word with live context reads as a follow-up.
+    return tokens(q).length <= 1;
+  }
+
+  function answer(query, index, opts) {
+    opts = opts || {};
     var qTokens = tokens(query);
+    var priorTokens = opts.followUp ? (opts.priorTokens || convo.tokens) : [];
+    // On a follow-up, fold in the prior topic so "more" / pronouns have substance.
+    if (opts.followUp && priorTokens.length) qTokens = priorTokens.concat(qTokens);
     if (!qTokens.length) return null;
     var scored = (index.documents || []).map(function (doc) {
       var hay = [doc.title, doc.summary, doc.body, doc.url].join(' ').toLowerCase();
       var score = qTokens.reduce(function (acc, t) { return acc + (hay.indexOf(t) !== -1 ? 1 : 0); }, 0);
+      // Bias toward the prior answer's topic so a thread stays coherent (half-weight).
+      if (priorTokens.length) score += priorTokens.reduce(function (acc, t) { return acc + (hay.indexOf(t) !== -1 ? 0.5 : 0); }, 0);
       return { doc: doc, score: score };
     }).filter(function (row) { return row.score > 0; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 4);
     if (!scored.length) return null;
@@ -82,11 +102,16 @@
     };
   }
 
+  // Public, cost-neutral one-shot retrieval used by the command palette (item 5).
+  function ask(query) {
+    return loadIndex().then(function (idx) { return answer(query, idx, {}); });
+  }
+
   function ensureStyles() {
     if (document.getElementById('vs-ignis-answer-style')) return;
     var s = document.createElement('style');
     s.id = 'vs-ignis-answer-style';
-    s.textContent = '.vs-ask-ignis{margin:2rem 0;padding:1rem;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)}.vs-ask-ignis form{display:flex;gap:.6rem;flex-wrap:wrap}.vs-ask-ignis input{flex:1;min-width:220px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--text);border-radius:10px;padding:.8rem;font:inherit}.vs-ask-ignis button{border:0;border-radius:10px;padding:.8rem 1rem;background:linear-gradient(90deg,#ff7a00,#ffc400);font-weight:800;color:#10131f}.vs-ask-ignis__chips{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.7rem}.vs-ask-ignis__chip{font-size:.8rem;border:1px solid rgba(255,196,0,.3);border-radius:999px;padding:.4rem .8rem;background:rgba(255,196,0,.06);color:var(--gold);cursor:pointer;font:inherit;font-size:.8rem;text-align:left}.vs-ask-ignis__chip:hover{background:rgba(255,196,0,.14)}.vs-ask-ignis__answer{margin-top:1rem;color:var(--muted);line-height:1.65}.vs-ask-ignis__sources{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.7rem}.vs-ask-ignis__sources a{font-size:.78rem;border:1px solid rgba(255,196,0,.25);border-radius:999px;padding:.3rem .65rem;color:var(--gold)}.vs-ask-ignis__feedback{display:flex;align-items:center;gap:.5rem;margin-top:.85rem;font-size:.8rem;color:var(--dim)}.vs-ask-ignis__feedback-q{letter-spacing:.04em}.vs-ask-ignis__vote{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:10px;min-width:40px;min-height:36px;cursor:pointer;font-size:1rem;line-height:1;color:var(--text)}.vs-ask-ignis__vote:hover{background:rgba(255,196,0,.12);border-color:rgba(255,196,0,.35)}.vs-ignis-proactive{margin-top:.65rem;padding:.5rem .75rem;border-radius:10px;background:rgba(155,140,255,0.07);border:1px solid rgba(155,140,255,0.18);font-size:.8rem;color:#c4bcff;display:flex;align-items:center;gap:.5rem}.vs-ignis-proactive__label{flex:0 0 auto;font-weight:700;color:#9b8cff}.vs-ignis-proactive__link{color:#c4bcff;text-decoration:underline;text-decoration-color:rgba(155,140,255,0.4);flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.vs-ignis-proactive__msg{flex:1 1 auto}.vs-ignis-proactive__close{flex:0 0 auto;background:none;border:none;color:#9b8cff;font-size:1rem;cursor:pointer;padding:0;line-height:1}';
+    s.textContent = '.vs-ask-ignis{margin:2rem 0;padding:1rem;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)}.vs-ask-ignis form{display:flex;gap:.6rem;flex-wrap:wrap}.vs-ask-ignis input{flex:1;min-width:220px;border:1px solid var(--line);background:rgba(0,0,0,.18);color:var(--text);border-radius:10px;padding:.8rem;font:inherit}.vs-ask-ignis button{border:0;border-radius:10px;padding:.8rem 1rem;background:linear-gradient(90deg,#ff7a00,#ffc400);font-weight:800;color:#10131f}.vs-ask-ignis__chips{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.7rem}.vs-ask-ignis__chip{font-size:.8rem;border:1px solid rgba(255,196,0,.3);border-radius:999px;padding:.4rem .8rem;background:rgba(255,196,0,.06);color:var(--gold);cursor:pointer;font:inherit;font-size:.8rem;text-align:left}.vs-ask-ignis__chip:hover{background:rgba(255,196,0,.14)}.vs-ask-ignis__answer{margin-top:1rem;color:var(--muted);line-height:1.65}.vs-ask-ignis__sources{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.7rem}.vs-ask-ignis__sources a{font-size:.78rem;border:1px solid rgba(255,196,0,.25);border-radius:999px;padding:.3rem .65rem;color:var(--gold)}.vs-ask-ignis__feedback{display:flex;align-items:center;gap:.5rem;margin-top:.85rem;font-size:.8rem;color:var(--dim)}.vs-ask-ignis__feedback-q{letter-spacing:.04em}.vs-ask-ignis__vote{border:1px solid var(--line);background:rgba(255,255,255,.04);border-radius:10px;min-width:40px;min-height:36px;cursor:pointer;font-size:1rem;line-height:1;color:var(--text)}.vs-ask-ignis__vote:hover{background:rgba(255,196,0,.12);border-color:rgba(255,196,0,.35)}.vs-ignis-proactive{margin-top:.65rem;padding:.5rem .75rem;border-radius:10px;background:rgba(155,140,255,0.07);border:1px solid rgba(155,140,255,0.18);font-size:.8rem;color:#c4bcff;display:flex;align-items:center;gap:.5rem}.vs-ignis-proactive__label{flex:0 0 auto;font-weight:700;color:#9b8cff}.vs-ignis-proactive__link{color:#c4bcff;text-decoration:underline;text-decoration-color:rgba(155,140,255,0.4);flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.vs-ignis-proactive__msg{flex:1 1 auto}.vs-ignis-proactive__close{flex:0 0 auto;background:none;border:none;color:#9b8cff;font-size:1rem;cursor:pointer;padding:0;line-height:1}.vs-ask-ignis__followups{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:.85rem}.vs-ask-ignis__followup{font-size:.8rem;border:1px solid rgba(155,140,255,.3);border-radius:999px;padding:.4rem .8rem;background:rgba(155,140,255,.07);color:#c4bcff;cursor:pointer;font:inherit;font-size:.8rem;text-align:left}.vs-ask-ignis__followup:hover{background:rgba(155,140,255,.16)}';
     document.head.appendChild(s);
   }
 
@@ -101,10 +126,12 @@
       q = String(q || '').trim();
       if (!q) return;
       var clusterId = clusterSlug(cluster); // '' for typed queries (no known cluster)
+      var followUp = isFollowUp(q);
+      if (followUp) emitUx('oracle-followup:ask');
       if (chips) chips.hidden = true; // first interaction made — retire the cold-start chips
-      out.textContent = 'Reading public studio memory…';
+      out.textContent = followUp ? 'Following that thread…' : 'Reading public studio memory…';
       loadIndex().then(function (idx) {
-        var result = answer(q, idx);
+        var result = answer(q, idx, { followUp: followUp });
         if (!result) {
           out.innerHTML = vsHtml('IGNIS did not find a strong public match yet. Try "membership", "latest ships", "security", "Oracle", or a game name.');
           return;
@@ -133,7 +160,40 @@
             fb.textContent = 'Thanks — noted.';
           });
         }
+
+        // S195: remember this turn's topic so the next query can be a follow-up,
+        // then offer follow-up chips drawn from the sibling docs of THIS answer —
+        // the thread continues with one tap, never a re-typed cold-start.
+        var top = result.sources[0] || {};
+        convo.tokens = tokens(q).concat(tokens(top.title)).filter(function (t, i, a) { return a.indexOf(t) === i; }).slice(0, 8);
+        convo.topUrl = top.url || '';
+        renderFollowUps(out, result.sources, runQuery);
       });
+    }
+
+    // Build up to 3 one-tap continuations: a "Tell me more" thread-deepener plus
+    // the sibling docs this answer surfaced. Keeps the conversation moving without
+    // a single extra network/LLM call (CANON-029 cost-neutral).
+    function renderFollowUps(container, sources, run) {
+      var sibs = (sources || []).slice(1, 3);
+      var wrap = document.createElement('div');
+      wrap.className = 'vs-ask-ignis__followups';
+      var more = document.createElement('button');
+      more.type = 'button';
+      more.className = 'vs-ask-ignis__followup';
+      more.textContent = 'Tell me more →';
+      more.addEventListener('click', function () { emitUx('oracle-followup:more'); run('tell me more', 'followup'); });
+      wrap.appendChild(more);
+      sibs.forEach(function (doc) {
+        if (!doc || !doc.title) return;
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'vs-ask-ignis__followup';
+        b.textContent = scrub(doc.title);
+        b.addEventListener('click', function () { emitUx('oracle-followup:sibling'); run(scrub(doc.title), 'followup'); });
+        wrap.appendChild(b);
+      });
+      container.appendChild(wrap);
     }
 
     form.addEventListener('submit', function (event) {
@@ -286,5 +346,5 @@
     }
   }());
 
-  window.VSIgnisAnswer = { loadIndex: loadIndex, answer: answer, loadInsights: loadInsights };
+  window.VSIgnisAnswer = { loadIndex: loadIndex, answer: answer, ask: ask, isFollowUp: isFollowUp, loadInsights: loadInsights };
 })();

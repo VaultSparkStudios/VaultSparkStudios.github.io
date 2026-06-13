@@ -1,0 +1,322 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-06-13",
+  "session": 195,
+  "sessionPrev": 194,
+  "project": "vaultsparkstudios-website",
+  "type": "website",
+  "axisWeights": {
+    "ux": 2,
+    "feature-depth": 2,
+    "speed": 1.5,
+    "seo-branding": 1.5,
+    "ai": 1.5,
+    "security": 1.5,
+    "gamification": 1.5,
+    "feedback-loop": 1,
+    "token-cost": 1
+  },
+  "topline": {
+    "thesis": "The site is structurally mature, honest, and tightly instrumented (S186-S194 closed the measurement-apparatus gaps). The frontier now is EXPANSION, not repair: turn one-shot surfaces into living ones. The five highest-leverage moves all share a spine — make IGNIS conversational, make the studio's pulse visibly live, and give the hero genuine motion — each done cost-neutrally (CANON-029) and post-LCP (no perf regression). Verified-reject: the 'status-proof seed-rot' premise is false — S192 already shipped build-security-posture.mjs + check-proof-feed-generators.mjs.",
+    "top3": ["ignis-conversational-thread", "forge-immersion-layer", "studio-now-live-surface"]
+  },
+  "totals": {
+    "itemCount": 13,
+    "combinedPriority": 268.1,
+    "skippedCount": 2
+  },
+  "items": [
+    {
+      "id": 1,
+      "slug": "ignis-conversational-thread",
+      "tier": "transformative",
+      "axis": "ai",
+      "effort": "3h",
+      "effortHours": 3,
+      "impact": 9,
+      "innovation": 8,
+      "priority": 31.0,
+      "title": "Make IGNIS conversational without spending a cent — client-side multi-turn retrieval with follow-up intent",
+      "why": "Ask IGNIS is a one-shot lookup today: it retrieves the top cluster from /data/ignis-search-index.json and forgets everything the moment it answers. A visitor who types 'tell me more' or 'what about the free tier' starts from zero — the single biggest gap between this and a product that feels intelligent. The genius constraint: it must stay cost-neutral under CANON-029, so the whole thing runs client-side over the index already shipped — no new edge-LLM calls, zero added API cost, and as a bonus it keeps the privacy win S194 just earned.",
+      "recipe": "In ignis-answer-engine.js keep the last N (3) turns + the prior answer's top entities in memory; on a new query, detect follow-up shape ('more', pronouns, bare noun) and bias the retrieval toward the prior cluster; render 3 dynamic follow-up chips derived from the returned cluster's sibling docs.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Render 3 dynamic follow-up chips from the returned cluster's sibling docs (no memory yet) — instantly makes a one-shot answer feel like a thread." },
+        "L2": { "effortHours": 3, "recipe": "Add a client-side 3-turn context window + follow-up intent detection (more / pronoun / bare-noun) that biases retrieval toward the prior cluster; persist nothing server-side." },
+        "L3": { "effortHours": 8, "recipe": "Add a lightweight intent classifier + answer-synthesis that stitches 2-3 cluster docs into one narrative answer with inline citations — still 100% client-side, still zero API cost." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 2,
+      "slug": "forge-immersion-layer",
+      "tier": "transformative",
+      "axis": "ux",
+      "effort": "4h",
+      "effortHours": 4,
+      "impact": 8,
+      "innovation": 9,
+      "priority": 27.9,
+      "title": "Give the hero real motion — a capability-gated ember/forge field that mounts AFTER LCP so it can never cost a millisecond of paint",
+      "why": "The shell is CSS-and-SVG flat: rich gradients but no living motion, while the games embed their own canvases and leave the brand anchor looking static by comparison. The reason no one has added it is the LCP discipline this repo has bled over for a dozen sessions — so the move is a layer that mounts only after LCP fires, gated on prefers-reduced-motion, save-data, and deviceMemory, and self-throttles on FPS. Done right it reads as a forge that's actually lit, with zero regression to the perf budget that defines this site.",
+      "recipe": "Add forge-immersion.js to the ambient-feature bundle; on requestIdleCallback after LCP, if !reduced-motion && !save-data && deviceMemory>=4, mount a 2D canvas ember field behind the hero with an FPS cap and an IntersectionObserver pause when scrolled away.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Pure CSS/SVG ember particle field behind the hero (no canvas) — drifting gold motes on a keyframe, reduced-motion disables." },
+        "L2": { "effortHours": 4, "recipe": "Lazy 2D-canvas ember/forge-spark system mounted post-LCP via requestIdleCallback, FPS-capped, IntersectionObserver-paused, capability-gated." },
+        "L3": { "effortHours": 8, "recipe": "A <30KB WebGL heat-haze shader (gold forge glow) gated on GPU tier + interaction-only, with a static SVG fallback for every excluded device." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 3,
+      "slug": "studio-now-live-surface",
+      "tier": "high",
+      "axis": "feature-depth",
+      "effort": "3h",
+      "effortHours": 3,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 27.6,
+      "title": "Make the studio's pulse visibly LIVE — a 'Studio Now' surface joining founder-presence + ship-receipts + heartbeat",
+      "why": "Every feed on the site is a snapshot frozen at deploy, yet the raw material for a living signal is already published — founder-presence.json, ship-receipts.json, heartbeat.json. A visitor has no way to feel that this is an active studio building right now versus an abandoned landing page, and that felt-aliveness is the single strongest trust signal a one-founder studio can show. This is also the deepest cohesion win to Studio Ops: the site becomes a window onto the actual nervous system, not a brochure beside it.",
+      "recipe": "Add a 'Studio Now' pill/strip fed by founder-presence.json (live/idle) + the most recent ship-receipts.json entry ('shipped X · 4h ago') + today's heartbeat pulse count; reuse the favicon-pulse leader-election poller so it costs one fetch per browser.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "A header pill: 'Studio live · last shipped 4h ago' from founder-presence + ship-receipts top entry." },
+        "L2": { "effortHours": 3, "recipe": "A dedicated 'Studio Now' section animating recent pulses + current focus + live/idle state, polled once-per-browser via the existing BroadcastChannel leader." },
+        "L3": { "effortHours": 8, "recipe": "Near-real-time stream via a Worker SSE/edge-poll endpoint with a 'LIVE' badge and an activity waterfall of the last 10 studio events." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 4,
+      "slug": "you-asked-we-shipped-loop",
+      "tier": "high",
+      "axis": "feedback-loop",
+      "effort": "3h",
+      "effortHours": 3,
+      "impact": 7,
+      "innovation": 8,
+      "priority": 24.1,
+      "title": "Visibly close the feedback loop — link every shipped change back to the signal that asked for it",
+      "why": "The site captures feedback (feedback-decision-board) and records ships (ship-receipts) but never draws the line between them in front of the visitor, so the loop is invisible exactly where it would build the most trust. A public 'you asked → we decided → we shipped' join turns the changelog from a list of changes into proof that this studio listens. It compounds with the now-live S194 funnel: the moment a requested thing ships, the asker has a reason to come back.",
+      "recipe": "Join feedback-decision-board.json to ship-receipts.json by a shared tag/id; render a 'You asked → shipped' badge on matching changelog entries linking back to the originating feedback item.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Add a 'You asked for this' badge on changelog entries that carry a feedback-origin id." },
+        "L2": { "effortHours": 3, "recipe": "A decision-board view that threads feedback → decision → ship-receipt as one timeline per request." },
+        "L3": { "effortHours": 8, "recipe": "Opt-in: notify voters via Brevo when their requested item ships, closing the loop all the way to the inbox." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 5,
+      "slug": "command-palette-ask-and-act",
+      "tier": "high",
+      "axis": "ai",
+      "effort": "3h",
+      "effortHours": 3,
+      "impact": 7,
+      "innovation": 8,
+      "priority": 24.1,
+      "title": "Turn Cmd+K from a nav menu into an ask-and-act surface — IGNIS answers inline next to commands",
+      "why": "The command palette already indexes navigation, and IGNIS already answers questions — but they're two separate doors, so a power user has to know which one they want before they start typing. Fusing them means one keystroke handles both 'take me to membership' and 'what does membership cost', with the answer rendered inline. It's the kind of keyboard-first intelligence that signals a product built by people who live in keyboards, and it reuses the cost-neutral client retrieval from item 1.",
+      "recipe": "In command-palette.js, detect question-shaped input (ends in ?, starts with what/how/why/can) and render the IGNIS top-answer inline in the results list above the command matches; share the retrieval module with ignis-conversational-thread.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Add an 'Ask IGNIS: <query>' result row that deep-links to /ignis/ with the query prefilled." },
+        "L2": { "effortHours": 3, "recipe": "Render the IGNIS top-answer inline in the palette for question-shaped queries, reusing the item-1 retrieval module." },
+        "L3": { "effortHours": 6, "recipe": "Add agentic shortcuts (join, share, switch theme, jump-to-game) with fuzzy intent ranking so the palette can act, not just answer." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 6,
+      "slug": "member-quest-progression",
+      "tier": "high",
+      "axis": "gamification",
+      "effort": "4h",
+      "effortHours": 4,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 21.7,
+      "title": "Give ranks teeth — turn the thin /ranks/ and /pathways/ pages into real progression with quests and badges",
+      "why": "The four-tier rank system (Vaulted→Forge→Sparked→Ignited) is named everywhere but /ranks/ (472 lines) and /pathways/ (194 lines) barely render more than the labels, so a free member has no visible reason to climb. A progress bar plus a short quest chain converts an abstract tier into a goal the member can see closing, which is the single most reliable retention mechanic a free community has. It also feeds the very funnel S194 just re-lit — every quest step is a conversion event worth measuring.",
+      "recipe": "On /ranks/, render a progress bar to the next tier ('3 actions to Forge') from the member's Supabase profile; add a 3-step quest checklist (join → react → ask IGNIS) persisted per member.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Progress bar to next rank + 'X actions to <tier>' on /ranks/ from existing member score." },
+        "L2": { "effortHours": 4, "recipe": "Achievement badge set + a persisted quest checklist on the member profile, surfaced on /ranks/ and /vault-member/." },
+        "L3": { "effortHours": 8, "recipe": "A seasonal challenge ladder tied into /leaderboards/ with shareable badge cards (feeds OG item 12)." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 7,
+      "slug": "theme-as-rank-identity",
+      "tier": "high",
+      "axis": "ux",
+      "effort": "3h",
+      "effortHours": 3,
+      "impact": 6,
+      "innovation": 7,
+      "priority": 18.1,
+      "title": "Make the theme system mean something — unlock ambient themes by rank so personalization signals progress",
+      "why": "The ambient theme engine (dark/lava/cool/warm/high-contrast) is genuinely sophisticated but currently decorative — a setting nobody is rewarded for finding. Tying one or two premium themes to rank turns a cosmetic toggle into a visible badge of belonging that members carry on every page they load. It's near-zero marginal cost (the themes already exist) and it makes the gamification of item 6 felt, not just tracked.",
+      "recipe": "Persist theme choice already; gate 1-2 existing themes (e.g. 'lava') behind a rank check via body[data-vs-rank]; show a subtle 'unlocked at Forge' hint on locked themes in the picker.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Persist theme choice across sessions + a 'theme unlocked at rank X' hint in the picker." },
+        "L2": { "effortHours": 3, "recipe": "Gate 1-2 premium themes behind rank/membership via a server-trusted flag (CANON-029 server-side gate)." },
+        "L3": { "effortHours": 6, "recipe": "Seasonal/event themes + a theme gallery with live preview and a shareable 'my vault look' card." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 8,
+      "slug": "obelisk-trust-passport",
+      "tier": "high",
+      "axis": "security",
+      "effort": "3h",
+      "effortHours": 3,
+      "impact": 6,
+      "innovation": 7,
+      "priority": 18.1,
+      "title": "Make the Obelisk passport a live trust proof — render real security posture instead of a placeholder",
+      "why": "The /obelisk-passport/ page exists as a brand gesture but doesn't yet show anything a skeptic could verify, while the site quietly runs a genuinely strong stack (nonce CSP, Worker headers, supply-chain scanning, uptime). Surfacing security-posture.json + the headers verdict turns an empty promise into a public proof surface — exactly the 'show, don't claim' posture CANON-021 demands ('post-quantum migration-ready', never 'unhackable'). It advances the project's Obelisk adoption phase while giving every visitor a reason to trust the auth flow.",
+      "recipe": "On /obelisk-passport/, fetch security-posture.json + verify-headers output and render a live posture card (CSP strict ✓, headers ✓, supply-chain clean ✓, uptime %); link the signed-ish status-proof manifest.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Render live security-posture.json + headers verdict as a posture card on the passport page." },
+        "L2": { "effortHours": 3, "recipe": "Add supply-chain scan result + uptime + a link to the status-proof manifest, with honest-dark states while pending." },
+        "L3": { "effortHours": 6, "recipe": "Per-visit 'your connection' verify + Obelisk phase badge + a shareable trust card." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 9,
+      "slug": "first-visit-onboarding-arc",
+      "tier": "high",
+      "axis": "ux",
+      "effort": "3h",
+      "effortHours": 3,
+      "impact": 7,
+      "innovation": 6,
+      "priority": 18.1,
+      "title": "Orient first-time visitors in 30 seconds — a skippable arc pointing at membership, games, and IGNIS",
+      "why": "S194 re-lit a conversion funnel that had been dead for eight sessions, but a re-instrumented funnel still needs something to convert — and a first-time visitor lands on a 14-section narrative with no guided path. A short, dismissible coachmark arc (membership → games → ask IGNIS) gives the funnel a spine to measure and the visitor a reason to take the first action. It directly feeds the now-live funnel events, so impact is measurable the day it ships.",
+      "recipe": "Extend ignis-tour.js into a 3-step first-visit arc (localStorage-gated to once); each step emits a funnel: event so the arc's own conversion is measurable.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "A dismissible first-visit spotlight on the primary hero CTA + the Ask-IGNIS box." },
+        "L2": { "effortHours": 3, "recipe": "A 3-step coachmark arc (membership → games → IGNIS) with a funnel: event per step." },
+        "L3": { "effortHours": 6, "recipe": "Adaptive arc that branches on referrer/source bucket from the S194 acquisition-source breakdown." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 10,
+      "slug": "nav-sheet-graduate",
+      "tier": "high",
+      "axis": "ux",
+      "effort": "2h",
+      "effortHours": 2,
+      "impact": 7,
+      "innovation": 5,
+      "priority": 17.5,
+      "title": "Graduate the bottom-sheet mobile nav from flag to default — it has been ?nav=sheet-gated and yellow since S178",
+      "why": "The mobile bottom-sheet nav is built, shipped behind ?nav=sheet / localStorage, and has sat at 'yellow' in PROJECT_STATUS for sixteen sessions waiting on real-device confirmation — meaning every mobile visitor still gets the older drawer while a better surface gathers dust. Graduating it (after an iPhone + Android pass) is pure realized value from work already done. Keep the classic drawer as a one-line kill-switch so the flip is reversible forever.",
+      "recipe": "Founder verifies on a real iPhone + Android; then flip nav-sheet.js default-on for <=768px viewports with a localStorage kill-switch ('vs-nav-style=classic') retained as fallback.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Real-device verify (iPhone + Android), fix any safe-area/tap issues found." },
+        "L2": { "effortHours": 2, "recipe": "Flip default-on for <=768px with a localStorage kill-switch; classic drawer stays as fallback." },
+        "L3": { "effortHours": 4, "recipe": "Add haptic-style micro-feedback + safe-area-inset polish + edge-swipe-to-sheet handoff." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 11,
+      "slug": "field-inp-budget",
+      "tier": "nice-to-have",
+      "axis": "speed",
+      "effort": "2h",
+      "effortHours": 2,
+      "impact": 6,
+      "innovation": 5,
+      "priority": 15.0,
+      "title": "Extend the field perf budget from LCP-only to INP — measure the interaction lag the RUM gate is blind to",
+      "why": "The RUM perf budget guards LCP (load), but Core Web Vitals graded INP (interaction responsiveness) since 2024 and the site has no field signal for it — a long task in the ambient-feature bundle could be hurting the score invisibly. Capturing INP in the existing /v/rum beacon costs one added field and turns a blind spot into a gated number. It's the natural next rung on the perf-budget ladder the repo has been climbing since S153.",
+      "recipe": "Add INP capture (PerformanceObserver 'event' / web-vitals onINP) to the /v/rum beacon; surface it in rollup-rum and add an INP threshold to check-perf-budget (warn-only until >=50 samples, per the LCP precedent).",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Capture INP in the /v/rum beacon and surface it in the rollup summary." },
+        "L2": { "effortHours": 2, "recipe": "Add an INP threshold to check-perf-budget (warn-only until field samples accrue) + identify the worst interaction." },
+        "L3": { "effortHours": 4, "recipe": "Yield-to-main (scheduler.yield / setTimeout-chunk) the worst handler in the ambient-feature bundle." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 12,
+      "slug": "og-per-title-rasterizer",
+      "tier": "nice-to-have",
+      "axis": "seo-branding",
+      "effort": "4h",
+      "effortHours": 4,
+      "impact": 6,
+      "innovation": 6,
+      "priority": 13.9,
+      "title": "Give every game its own share card — the per-title PNG rasterizer S194 flagged as the OG L3 carry",
+      "why": "S194 fixed the blank-SVG share-card bug by repointing to a single PNG, but every page still shares the same generic card, so a posted game link looks identical to a posted legal page. A build-time per-title rasterizer gives each game and major page a bespoke card with its own title and art — the difference between a link that gets clicked and one that gets scrolled past. It's the explicit next rung named in the S194 nextMilestone.",
+      "recipe": "Add a build step using satori + resvg to render per-title 1200x630 PNGs from an HTML template (title + tagline + sigil); wire check-og-images to require a per-title card for SPARKED games.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Hand-make bespoke PNG cards for the 3 SPARKED titles + the homepage." },
+        "L2": { "effortHours": 4, "recipe": "Build-time satori/resvg rasterizer generating per-title cards from one template." },
+        "L3": { "effortHours": 8, "recipe": "A Worker dynamic-OG endpoint rendering per-URL cards on demand with edge cache." }
+      },
+      "executionLog": [],
+      "status": "open"
+    },
+    {
+      "id": 13,
+      "slug": "sitewide-jsonld-completion",
+      "tier": "nice-to-have",
+      "axis": "seo-branding",
+      "effort": "2h",
+      "effortHours": 2,
+      "impact": 6,
+      "innovation": 4,
+      "priority": 12.0,
+      "title": "Finish the structured-data coverage — BreadcrumbList on the ~57 pages missing it + an Article schema + a coverage gate",
+      "why": "Structured data is rich here (FAQPage, VideoGame, BlogPosting, Organization) but uneven: BreadcrumbList lands on only 57 of 114 pages, so half the site forfeits breadcrumb rich-results in search. Closing the gap with the existing propagate tooling plus Article schema on journal/dispatch entries is cheap SEO yield, and a coverage gate stops the drift from ever reopening. Low innovation, but it's a clean compounding branding win.",
+      "recipe": "Run the nav/breadcrumb propagate script across the 57 missing pages to inject BreadcrumbList; add Article/BlogPosting to journal + dispatch entries; add check-jsonld-coverage to build:check.",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Inject BreadcrumbList into the ~57 missing pages via the propagate script." },
+        "L2": { "effortHours": 2, "recipe": "Add Article schema to journal/dispatch + a check-jsonld-coverage gate in build:check." },
+        "L3": { "effortHours": 4, "recipe": "Add speakable + sitewide rich-result validation (schema lint) in CI." }
+      },
+      "executionLog": [],
+      "status": "open"
+    }
+  ],
+  "innovationReserve": [
+    "forge-immersion-layer",
+    "ignis-conversational-thread",
+    "studio-now-live-surface",
+    "you-asked-we-shipped-loop",
+    "command-palette-ask-and-act"
+  ],
+  "skipped": [
+    {
+      "slug": "status-proof-seed-rot-fix",
+      "reason": "FALSE PREMISE (verified-reject). The Explore pass flagged status-proof.json health metrics as hand-seeded rot, but S192 already shipped build-security-posture.mjs + check-proof-feed-generators.mjs which derive the feed and GATE against hand-seeds. Fixing it would re-introduce the very pattern the gate forbids."
+    },
+    {
+      "slug": "paid-llm-ignis-chat",
+      "reason": "CANON-029 violation. A studio-paid conversational LLM on the free public surface is forbidden pre-revenue. The cost-neutral client-side version (item 1) delivers the same felt experience with zero API cost."
+    }
+  ],
+  "executionSummary": ""
+}
