@@ -216,6 +216,25 @@
       idle: true
     },
     {
+      // S195: Studio Now — live presence + last-ship + weekly cadence strip.
+      // Homepage hero region only (its hook lives there); honest-dark otherwise.
+      src: '/assets/studio-now.js',
+      when: function () {
+        return !!document.querySelector('[data-studio-now]');
+      },
+      idle: true
+    },
+    {
+      // S195: you-asked → we-shipped — the public closed-feedback-loop panel.
+      // Mounts on the changelog hook; honest-dark when no themed receipt carries
+      // a feedback signal.
+      src: '/assets/you-asked-shipped.js',
+      when: function () {
+        return !!document.querySelector('[data-you-asked-shipped]');
+      },
+      idle: true
+    },
+    {
       // S187: footer dispatch — activates the dead VaultKit.wireForm('footer-email-form')
       // wiring through the EXISTING ConvertKit/Kit ESP (no new vendor). Mounts only
       // where the footer form exists; honest-dark + honest-fail (no faked success).
