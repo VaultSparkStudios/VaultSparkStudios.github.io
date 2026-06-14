@@ -618,14 +618,45 @@
 
     // Studio Ecosystem Velocity chart
     (async function () {
-      // Honest-dark: the velocity series lives in the gitignored /ignis/output/*
-      // feed (404 on prod), and no public-safe time-series exists yet. Hide the
-      // whole section when there's no data rather than show a dead "—/—" + empty
-      // chart that reads as "broken / not loading". [[feedback_public_surface_deployed_feed_not_gitignored]]
       const velSection = document.querySelector('section[aria-labelledby="oracle-velocity-heading"]');
       const hideVel = () => { if (velSection) velSection.style.display = 'none'; };
-      const res = await fetch('/ignis/output/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null);
-      if (!res || !res.ok) { hideVel(); return; }
+
+      // Try private IGNIS feed; fall back to public git-derived series (S198).
+      let res = await fetch('/ignis/output/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null);
+      if (!res || !res.ok) {
+        // Public fallback: api/velocity-series.json (24 weeks, git log, no private data).
+        const pubRes = await fetch('/api/velocity-series.json', { cache: 'no-cache' }).catch(() => null);
+        if (!pubRes || !pubRes.ok) { hideVel(); return; }
+        const pub = await pubRes.json();
+        if (!pub?.weeks?.length) { hideVel(); return; }
+        // Update label to reflect source
+        const hd = document.getElementById('oracle-velocity-heading');
+        if (hd) hd.textContent = 'Studio Cadence — ' + pub.totalCommits + ' commits, 24 weeks';
+        const desc = velSection && velSection.querySelector('p');
+        if (desc) desc.textContent = 'Public git history grouped by week. Source of truth: this GitHub repo. ' + pub.totalCommits + ' commits across the last 24 weeks.';
+        // Populate the one stat we have
+        const cEl = document.getElementById('vel-commits');
+        if (cEl) { cEl.textContent = pub.totalCommits.toLocaleString(); cEl.nextElementSibling.textContent = 'Commits (24 wk)'; }
+        // Render weekly bar chart in #vel-commit-bars
+        var barsEl = document.getElementById('vel-commit-bars');
+        if (barsEl) {
+          var W = 1000, H = 360, Ml = 40, Mr = 14, Mt = 30, Mb = 48;
+          var iW = W - Ml - Mr, iH = H - Mt - Mb;
+          var wks = pub.weeks, n = wks.length;
+          var mx = Math.max.apply(null, wks.map(function(w){return w.commitCount;})) || 1;
+          var bw = Math.max(1, Math.floor(iW / n) - 2);
+          var html = '';
+          for (var i = 0; i < n; i++) {
+            var cnt = wks[i].commitCount;
+            var bh = (cnt / mx) * iH;
+            var x = Ml + (i / n) * iW;
+            var y = Mt + iH - bh;
+            html += '<rect x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw + '" height="' + bh.toFixed(1) + '" fill="#FFC400" opacity="' + (cnt > 0 ? '0.75' : '0.15') + '" rx="2"/>';
+          }
+          barsEl.innerHTML = html;
+        }
+        return;
+      }
       const data = await res.json();
       if (!data?.series?.dates?.length) { hideVel(); return; }
 
