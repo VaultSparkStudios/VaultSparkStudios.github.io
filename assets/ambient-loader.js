@@ -216,6 +216,24 @@
       idle: true
     },
     {
+      // S195: forge immersion — post-LCP ember canvas behind the homepage hero.
+      // Capability-gated here too (so an incapable device never even fetches it);
+      // the script repeats the gate + waits for LCP before doing any work.
+      src: '/assets/forge-immersion.js',
+      when: function () {
+        var p = location.pathname || '/';
+        if (p !== '/' && !/\/index\.html$/i.test(p)) return false;
+        try {
+          if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false;
+          var c = navigator.connection || navigator.webkitConnection;
+          if (c && c.saveData) return false;
+          if (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory < 4) return false;
+        } catch (_e) {}
+        return true;
+      },
+      idle: true
+    },
+    {
       // S195: First Climb quest — client-side rank progression on /ranks/.
       src: '/assets/rank-quest.js',
       when: function () {
