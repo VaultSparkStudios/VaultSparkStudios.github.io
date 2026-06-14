@@ -2,6 +2,18 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-13 — S195 — conversational/AI depth on the public site stays client-side (CANON-029), never studio-paid LLM
+
+**Decision:** The S195 conversational IGNIS thread (multi-turn memory, follow-up intent, follow-up chips) and the Cmd+K inline answer both run 100% client-side over the already-shipped `/data/ignis-search-index.json` — no new edge-LLM calls. A studio-paid conversational LLM on the free public surface was explicitly NOT built (the `paid-llm-ignis-chat` audit option was skipped as a CANON-029 violation). The grandfathered Cmd+Enter Supabase `semantic-search` synthesis stays as the only paid path, gated behind an explicit keystroke. **Rationale:** zero per-user variable cost pre-revenue; the client-side version delivers the same felt experience.
+
+### 2026-06-13 — S195 — the public trust surface is /security/, not /obelisk-passport/ (auth-only)
+
+**Decision:** Live security-posture rendering (overall verdict + uptime + status-proof link) belongs on `/security/`, which already mounts `security-posture.js`. `/obelisk-passport/` is an auth flow (login/callback) only — no public passport landing page exists, so the audit's "obelisk-passport" item was truthfully redirected to deepen `/security/`. CANON-021 language preserved. **Rationale:** render proof where the public surface actually is; don't fabricate a landing page to match an item title.
+
+### 2026-06-13 — S195 — tier-gated theme LOCKING and the nav-sheet 100% default flip are founder-escalation-gated
+
+**Decision:** S195 shipped the safe, non-escalating slices of two items and explicitly deferred the gated remainder: (a) themes remain fully accessible — `theme-identity.js` adds only a cosmetic "earned" cue + saved-look toast; LOCKING a theme behind a paid/rank tier changes membership value (CLAUDE.md → "Membership tier logic") and waits for founder sign-off. (b) The mobile bottom-sheet nav got a durable `?nav=classic` kill-switch + a 25%→50% canary, but the 100% default swap stays gated on a founder real-device (iPhone+Android) pass per the flag-gated-UX-swap discipline. **Rationale:** ship realized value now; never force-ship an escalation-class change.
+
 ### 2026-06-12 — S194 — named-event funnel emits to the live /v/rum beacon, never gtag (gtag is gone)
 
 **Decision:** `funnel-tracking.js` and all `data-track-event`/`data-track-view`/`data-funnel-form` instrumentation route to the first-party `/v/rum` beacon under a bounded `funnel:<name>` family, NOT `gtag`. gtag was removed site-wide at S147/S175; any future code that reaches for `gtag('event', …)` is emitting into a no-op. The bounded `prefixAllowlist('funnel', …)` Worker family is the canonical way to ship named CTA events without growing the exact-match Set. **Rationale:** the gtag path was a silent dead sink for 8 sessions AND leaked internal intent enums to Google; the `/v/rum` path is first-party, name-only, and PII-safe. Three new dynamic families this session — `funnel:`, `source:`, `share:` — each charset/length-bounded + worker-unit covered.

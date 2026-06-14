@@ -3920,3 +3920,16 @@ Session Intent: /start → /go the full S182 genius list + a founder P0 mid-spri
 - **Carries:** S191 prod-verify · seed-rot follow-up (staging-health 92%, security-posture 54%) · oracle-per-cluster (deferred, needs bounded Worker prefix-rule) · forge devlog publish (founder) · TT reprobe ~06-18.
 
 ---
+
+
+---
+<!-- archived: 2026-06-14 -->
+
+## Where We Left Off — Session 192
+- Shipped: 5 items across 3 groups — **proof-surface honesty** (security-posture-live-derive, proof-feed-generator-gate, staging-health-self-refresh) · **edge security** (bounded-prefix-allowlist-primitive) · **AI feedback** (oracle-per-cluster-feedback-finish). Plus a mid-session build:check Windows-limit fix (proof-surface orchestrator).
+- Tests: 3 new/extended self-tested gates (`build-security-posture` 12/12, `check-proof-feed-generators` 12/12, `check-staging-parity` 6/6), `rollup-rum-ux` 19/19, `worker.unit` 23/23 (+2 RUM-sanitizer cases — first-ever coverage). **`build:check` EXIT 0 end-to-end** (108-page crawl, 0 failures) with the pre-existing untracked `obelisk-passport/` parked.
+- Deploy: **pending push.** Refreshed `api/security-posture.json` (live-derived) + `api/staging-health.json` (honest staging-unreachable) + `api/status-proof.json` (seedRisk now `[]`) + `api/ci-status.json` (provenance) deploy via CF Pages. Worker change (bounded-prefix RUM families) auto-deploys via `cloudflare-worker-deploy.yml` on push.
+
+**Session Intent:** Run the full `/goal [/start → /audit → /implement → /closeout]` chain with genius-level creative thinking. **Achieved — full chain run; 5/5 audit items shipped; build:check EXIT 0.**
+
+- **Theme:** Finish the S191 proof-surface-honesty arc. No new measurement (the funnel is data-starved — a traffic problem) — instead, replaced the last hand-seed with a live-derived generator, converted the seed-rot lesson into a permanent structural gate, and shipped the bounded-prefix primitive that safely unblocks dynamic instrumentation. Both seed-rot landmines cleared; `seedRisk` is now empty.

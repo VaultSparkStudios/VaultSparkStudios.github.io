@@ -1,5 +1,15 @@
 # Work Log
 
+## 2026-06-13 — Session 195 (/goal chain · broad expansion audit · 12/13 shipped, 1 deferred · build:check EXIT 0)
+
+Founder asked for a broad audit + refinement across every axis (features, depth, innovation, UI/UX, feedback loop, mobile, IGNIS/AI, Studio-Ops cohesion, security, speed, SEO/branding, navigation, immersion) and then `/goal`'d "complete all items + all tiers in one pass, then closeout." The audit's thesis: the site is mature and honest after 8 sessions of closing measurement gaps — so the frontier is **expansion, not repair**. Make the one-shot surfaces living, each cost-neutral (CANON-029) and post-LCP (no perf regression).
+
+**Shipped 12/13.** Headliners: **conversational IGNIS** (client-side multi-turn memory + follow-up intent + follow-up chips, zero API cost; `VSIgnisAnswer.ask()` reused by the palette); **forge-immersion** (post-LCP capability-gated 2D ember canvas — mounts only after the LCP entry fires, FPS+DPR-capped, IO-paused, self-excludes on reduced-motion/Save-Data/low-memory); **Studio Now** (live presence+ship+cadence strip); **you-asked→we-shipped** (closed-loop panel from the ship-receipts feedbackSignals join); **Cmd+K inline answers**. Plus member First-Climb quest, theme identity cue, /security/ trust-posture deepen (overall verdict + live uptime card), onboarding-arc gtag→/v/rum rewire (same dead-sink class as S194's funnel), nav-sheet kill-switch + 50% canary, INP field-budget gate, sitewide BreadcrumbList (29 pages + coverage gate).
+
+**Three premise-checks corrected the plan before it ran** (the /audit pre-verify discipline): rejected the seed-rot item on a verified false premise (S192 already fixed it); pivoted item 8 from obelisk-passport (auth-only) to the real public trust surface `/security/`; and found INP's whole beacon→rollup→summary chain already existed minus the gate evaluation, and the onboarding arc already existed but on a dead gtag sink. Two items (theme tier-lock, nav-sheet 100% flip) shipped safe non-escalating slices with the gated remainder flagged for founder rather than force-shipped.
+
+**Deferred 1** — og-per-title-rasterizer (native satori/resvg deps; package-trust + Windows-build risk; not worth destabilizing the green build for a priority-13.9 nice-to-have). **Two build:check contracts caught real gaps in the new work** and were fixed in-session: inline-style purity (moved security-posture's new styles to an injected `<style>` block + dropped a homepage hook's inline style) and the RUM allowlist (added `oracle-followup:*` to the Worker; renamed the tour's `emitFunnel`→`pushFunnel` so the emit-scanner reads it correctly). `build:check` EXIT 0 end-to-end.
+
 ## 2026-06-12 — Session 194 (/goal chain · the two silent killers under the apparatus · 5/5 shipped · build:check EXIT 0)
 
 Ran the full /goal chain (start → audit → implement → closeout). The audit refused to add more measurement to a funnel everyone agreed was traffic-starved, and instead ground-truth-probed what was already there — surfacing two silent killers that 193 sessions never caught, both hidden by something that *looked* like it worked.

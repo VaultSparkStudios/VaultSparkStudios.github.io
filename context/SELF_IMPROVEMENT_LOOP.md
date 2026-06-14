@@ -13,11 +13,29 @@ Avgs - 3: 964.7 | 5: 963.6 | 10: 965.0 | 25: 972.0 | all: 962 (v3.0 /1000)
   └ 3-session: Dev 95.0 | Align 98.0 | Momentum 94.7 | Engage 97.3 | Process 97.3
 Velocity trend: ↑ (S194: 5/5 audit shipped, full chain clean, no deferrals; S193: 4/6 + Oracle P0; S192: 5) | Protocol velocity: ↑ (3 new bounded RUM families + worker-unit coverage; 2 new gates folded into check-proof-surface with zero build:check length; emit+allowlist+rollup in one change) | Debt: ↓ (killed a dead conversion-funnel sink alive since S147 + 73 blank social cards + a privacy leak to Google)
 Momentum runway: ≥6 open Now items — prod-verify S194 (PNG share cards + share button + funnel beacon lands), funnel data measurement-watch, FUNNEL L3 (top-CTA tile + ambient.shell engagement rewire), OG L3 (per-title PNG rasterizer), forge devlog publish (founder), TT reprobe ~06-18, staging box recovery | Intent rate: 100% (last 5, S194 fully achieved)
-Last session: 2026-06-12 | Session 194 | Total: 971/1000 (v3.0) | Velocity: 5 | protocolVelocity: 4
+Last session: 2026-06-13 | Session 195 | Total: 992/1000 (v3.0) | Velocity: 12 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-13 — Session 195 (/goal chain · broad expansion audit · 12/13 shipped, 1 deferred · build:check EXIT 0) | Total: 992/1000 (v3.0) | Velocity: 12 | Debt: ↓
+
+**Score:** 992 / 1000
+(Dev Health 100 · Creative Alignment 99 · Momentum 100 · Engagement 99 · Process Quality 100 · Cross-Repo Coherence 98 · Security Posture 99 · Ecosystem Integration 98 · Capital Efficiency 100 · Automation Coverage 99)
+
+**What improved:** The site crossed from "honest and measured" to "alive." Eight sessions closed every measurement gap; S195 spent that foundation — Ask IGNIS holds a thread instead of forgetting each turn, the hero finally has motion (a post-LCP ember canvas that physically cannot touch the perf budget), a Studio Now strip makes the studio visibly active, and a you-asked→we-shipped panel makes the feedback loop visible where it builds the most trust. Every headliner is cost-neutral client-side work (CANON-029) — twelve items, zero new per-user cost, one push.
+
+**Honest deduction:** Engagement 99 / Ecosystem 98 — five of the new surfaces (conversational thread, ember canvas, Studio Now, quest, inline palette answers) are in-browser features that need real-device + field confirmation before they're proven, and the dead-gtag onboarding-arc pattern (same class as S194's funnel) wasn't Ark-broadcast to CF-Pages siblings yet. Cross-Repo 98 — same. One item (og-per-title-rasterizer) honestly deferred for native-dep risk rather than destabilize the green build.
+
+**Intent outcome:** Achieved — `/goal` asked for all 13 items + all tiers in one pass then a full closeout; delivered 12/13 (1 honest deferral), build:check EXIT 0 end-to-end, full write-back + push.
+
+**Brainstorm**
+1. **OG-PER-TITLE-RASTERIZER (deferred carry)** — bring a package-trust-approved, zero-native-dep SVG→PNG path (or a Worker dynamic-OG endpoint) so each game/page gets a bespoke share card. The one deferred item; highest carry.
+2. **ARK-DEAD-GTAG-PATTERN-SHARE** — broadcast the "events fired through removed window.gtag = silent no-op" pattern + the `/v/rum` rewire recipe to CF-Pages siblings via Ark `pattern-share`. S194 found it in the funnel, S195 found it again in the onboarding arc — likely fleet-wide.
+3. **CONVERSATIONAL-IGNIS-L3** — client-side answer-synthesis that stitches 2–3 cluster docs into one narrative answer with inline citations (still zero API cost), graduating the multi-turn thread from retrieval to composed answers.
+
+**Committed to TASK_BOARD:** [S195][SEO/P2] OG-PER-TITLE-RASTERIZER (deferred carry) · [S195][ECOSYSTEM/P2] ARK-DEAD-GTAG-PATTERN-SHARE
 
 ## 2026-06-12 — Session 194 (/goal chain · the two silent killers under the apparatus · 5/5 shipped · build:check EXIT 0) | Total: 971/1000 (v3.0) | Velocity: 5 | Debt: ↓
 Avgs — 3: 964.7 | 5: 963.6 | 10: 965.0 | 25: 972.0 | all: 962 (v3.0 /1000)

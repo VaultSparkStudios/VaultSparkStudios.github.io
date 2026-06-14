@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-14T01:15:26.520Z",
+  "generatedAt": "2026-06-14T01:49:00.530Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 194,
-    "currentFocus": "S194 goal-chain (/start -> /audit -> /implement -> /closeout): the two silent killers under the measurement apparatus. 5/5 shipped, build:check EXIT 0 end-to-end. (1) funnel-tracking-live-sink-rewire — funnel-tracking.js track() emitted only via gtag (removed S147/S175) so all 31 data-track-event + 13 data-track-view + 3 data-funnel-form interactions produced ZERO data; rewired to /v/rum under a bounded funnel: family (also a privacy upgrade: stopped leaking intent enums to Google) + purged dead googletagmanager hints. (2) og-image-raster-fix — 73 pages' primary og:image was an SVG (blank on FB/X/LinkedIn/Discord/Slack); repointed to static PNG + check-og-images gate. (3) web-share-per-game — share-game.js on game heroes. (4) videogame-schema-gate — locks out fabricated aggregateRating. (5) acquisition-source-breakdown — source:<bucket> channel bucketing. 3 new bounded RUM families + worker-unit coverage (25/25); 2 gates folded into check-proof-surface with zero build:check length.",
-    "nextMilestone": "Prod-verify S194 on a real browser: shared game link renders a PNG card (not blank), the share button is present on game heroes, and a homepage hero CTA click lands funnel:home_hero_play_click on /v/rum. Then watch funnel-summary funnelCtas/sources/shares fill as traffic accrues. Next code: FUNNEL L3 (top-CTA tile + ambient.shell engagement rewire), OG L3 (per-title PNG rasterizer). Founder: review + publish forge devlog. TT reprobe ~2026-06-18.",
+    "currentSession": 195,
+    "currentFocus": "S195 /goal chain (broad expansion audit → 12/13 shipped, 1 deferred · build:check EXIT 0). The frontier moved from repair to making one-shot surfaces LIVING: (1) conversational IGNIS — client-side multi-turn memory + follow-up intent + chips over the existing index, ZERO API cost (CANON-029); (2) forge-immersion — post-LCP capability-gated 2D ember canvas behind the hero (mounts after the LCP entry, FPS+DPR-capped, IO-paused, self-excludes on reduced-motion/Save-Data/low-mem); (3) Studio Now — live presence+ship+cadence strip; (4) you-asked→we-shipped closed-loop panel; (5) Cmd+K inline IGNIS answers. Plus First-Climb quest, theme identity cue, /security/ trust-posture deepen (verdict+uptime), onboarding-arc gtag→/v/rum rewire, nav-sheet kill-switch+50% canary, INP field gate, sitewide BreadcrumbList (29 pages+gate). Three premise-checks corrected the plan (rejected seed-rot false premise; item 8 pivoted obelisk-passport→/security/; INP chain existed minus the gate eval). Two escalation-class remainders (theme tier-lock, nav-sheet 100% flip) flagged for founder.",
+    "nextMilestone": "Prod-verify S195 on a real browser: conversational Ask IGNIS thread (ask → tell me more stays on-thread + chips), hero ember canvas fades in post-load on a capable device (absent w/ reduced-motion), Studio Now strip, Cmd+K inline answer, /ranks/ quest, /security/ verdict+uptime, /changelog/ you-asked panel. Then carries: og-per-title-rasterizer (the one deferral — needs zero-native-dep SVG→PNG), ARK dead-gtag pattern-share to CF-Pages siblings, founder decisions on theme tier-lock + nav-sheet 100% flip. TT reprobe ~2026-06-18.",
     "pulseKeys": [
       "now",
       "next",

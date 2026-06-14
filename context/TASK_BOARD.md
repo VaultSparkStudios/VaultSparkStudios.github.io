@@ -1,8 +1,17 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-12 (Session 194 — /goal chain · 5/5 shipped · build:check EXIT 0)
+Last updated: 2026-06-13 (Session 195 — /goal chain · 12/13 shipped, 1 deferred · build:check EXIT 0)
 
-## Now (S194 runway — pre-loaded)
+## Now (S195 runway — pre-loaded)
+
+- [ ] **[S195][VERIFY/P0] Confirm S195 expansion wave on prod after deploy.** On a real browser (datacenter curl 403 = benign CF challenge): (a) **Ask IGNIS** (`/ignis/` or `/search/`) — ask a question, then "tell me more" → answer stays on-thread + follow-up chips appear; (b) **homepage hero** — an ember field fades in behind the wordmark a moment after load on a capable device, and is ABSENT with reduced-motion on; (c) **Studio Now** strip renders under the hero; (d) **Cmd+K** — type "what is membership" → an inline "IGNIS reads:" answer appears above nav results; (e) `/ranks/` shows the First Climb quest; (f) `/security/` shows the verdict header + uptime card; (g) `/changelog/` shows the you-asked→we-shipped panel. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
+- [ ] **[S195][SEO/P2] OG-PER-TITLE-RASTERIZER (deferred carry).** The one S195 deferral. Bring a package-trust-approved, zero-native-dep SVG→PNG path (or a Worker dynamic-OG endpoint with edge cache) so each game/page gets a bespoke share card. `check-og-images` already gates SVG/missing.
+- [ ] **[S195][ECOSYSTEM/P2] ARK-DEAD-GTAG-PATTERN-SHARE.** Broadcast the "events fired through removed `window.gtag` = silent no-op" pattern + the `/v/rum` rewire recipe to CF-Pages siblings via Ark `pattern-share`. Found in the funnel (S194) AND the onboarding arc (S195) — likely fleet-wide.
+- [ ] **[S195][UX/P2·FOUNDER] THEME TIER-LOCK decision.** S195 shipped the non-gating theme identity cue; LOCKING a theme behind a paid/rank tier changes membership value (escalation). Founder: approve/deny a free-rank cosmetic unlock (e.g. Lava at Forge rank), then wire the server-trusted gate.
+- [ ] **[S195][UX/P1·FOUNDER] NAV-SHEET 100% FLIP — real-device verify.** Kill-switch (`?nav=classic`) + 50% canary shipped. Founder does an iPhone+Android pass on `?nav=sheet`; if clean, flip `data-nav-sheet-canary` to 100% (kill-switch stays as fallback).
+- [ ] **[S195][SEO/P3] ARTICLE-SCHEMA-JOURNAL.** Breadcrumb coverage complete; next JSON-LD rung is Article/BlogPosting on `journal/` + dispatch entries + extend the coverage gate.
+
+## Previous (S194 runway)
 
 - [ ] **[S194][VERIFY/P0] Confirm S194 ships on prod after deploy.** On a real browser (datacenter curl 403 = benign CF challenge): (a) share a game link to Discord/Slack/X → a real PNG card renders, not a blank rectangle (og-image-raster-fix); (b) `/games/call-of-doodie/` hero shows the "↗ Share this game" button and a tap fires Web Share (mobile) or copies the link; (c) DevTools Network → a homepage hero CTA click POSTs `funnel:home_hero_play_click` to `/v/rum` (200/204, not dropped). Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
 - [ ] **[S194→][FEATURE/P2·MEASURE] Funnel data is now LIVE — awaiting signal.** funnel-tracking rewire + acquisition-source + per-game share all emit to `/v/rum` and roll into `api/funnel-summary.json` (`funnelCtas`/`sources`/`shares`, honest-dark). Traffic-gated like the rest of the funnel; once visits accrue, watch which hero CTA converts, which channel the trickle arrives through, and which game gets shared. No code action — measurement-watch.
