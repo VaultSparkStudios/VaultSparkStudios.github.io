@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-14T19:02:14.376Z",
+  "generatedAt": "2026-06-14T19:57:41.014Z",
   "generatedBy": "scripts/report-ambient-coverage.mjs",
   "totalSources": 17,
-  "totalBytes": 66473,
+  "totalBytes": 66415,
   "forbiddenAmbientSourcesPresent": [],
   "candidates": [
     {
@@ -56,17 +56,6 @@
       "forbiddenAmbient": false,
       "risk": "low",
       "firstProofStep": "Confirm behavior with a focused Playwright smoke before moving assets/page-sigil.js behind a conditional loader."
-    },
-    {
-      "rank": 6,
-      "source": "assets/scroll-depth.js",
-      "sizeKb": 4.2,
-      "reasons": [
-        "session gated"
-      ],
-      "forbiddenAmbient": false,
-      "risk": "low",
-      "firstProofStep": "Run signed-out and signed-in browser smoke checks, then verify assets/scroll-depth.js is lazy-loaded only after session state is known."
     }
   ]
 }

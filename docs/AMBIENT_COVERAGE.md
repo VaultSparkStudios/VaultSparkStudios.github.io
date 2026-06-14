@@ -9,8 +9,8 @@
 > confirmation via the Playwright harness is the follow-up step.
 
 - Sources: **17**  ·  Total: **64.9 KB** (raw)
-- Guarded (conditional): **14** modules · **56.4 KB** — split candidates
-- Always-on: **3** modules · **8.5 KB**
+- Guarded (conditional): **13** modules · **52.2 KB** — split candidates
+- Always-on: **4** modules · **12.7 KB**
 
 ## By size (split candidates flagged)
 
@@ -22,7 +22,7 @@
 | `signed-in-state.js` | 4.7 KB | 🔶 guarded | session gated |
 | `vault-atlas.js` | 4.4 KB | 🔶 guarded | — |
 | `page-sigil.js` | 4.4 KB | 🔶 guarded | — |
-| `scroll-depth.js` | 4.2 KB | 🔶 guarded | session gated |
+| `scroll-depth.js` | 4.1 KB | always | — |
 | `edge-swipe-nav.js` | 3.8 KB | 🔶 guarded | capability gated |
 | `native-feel.js` | 3.3 KB | 🔶 guarded | viewport gated, capability gated |
 | `hover-prefetch.js` | 3.3 KB | 🔶 guarded | viewport gated, session gated, capability gated |

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-14T18:48:11.972Z",
+  "generatedAt": "2026-06-14T19:49:50.823Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -11,9 +11,9 @@
       "feedbackSignals": 1,
       "shippedCommits": [
         {
-          "sha": "5d85ab77",
-          "summary": "client-side progression + earned-look identity",
-          "ts": "2026-06-14T01:52:51.000Z"
+          "sha": "c13b8555",
+          "summary": "membership-value-clarity — Vault Journey day-in-the-life strip",
+          "ts": "2026-06-14T19:02:49.000Z"
         }
       ],
       "proof": null
@@ -21,8 +21,18 @@
     {
       "theme": "worlds",
       "label": "Worlds",
-      "feedbackSignals": 2,
+      "feedbackSignals": 4,
       "shippedCommits": [
+        {
+          "sha": "45209aaa",
+          "summary": "game-registry.json single source of truth + coherence gate wire",
+          "ts": "2026-06-14T19:49:07.000Z"
+        },
+        {
+          "sha": "90f61e35",
+          "summary": "Wave A — rank hook, First Climb quest, visit streak on game pages",
+          "ts": "2026-06-14T18:57:22.000Z"
+        },
         {
           "sha": "4ac71476",
           "summary": "SERP-safe meta descriptions on the conversion surface + game-page ceiling gate",
@@ -42,6 +52,21 @@
       "feedbackSignals": 6,
       "shippedCommits": [
         {
+          "sha": "1093904b",
+          "summary": "content-hash skip for expensive IGNIS build scripts",
+          "ts": "2026-06-14T19:34:40.000Z"
+        },
+        {
+          "sha": "a08692a0",
+          "summary": "ignis-local-session-memory — cross-page query history chips",
+          "ts": "2026-06-14T19:15:28.000Z"
+        },
+        {
+          "sha": "583cfc66",
+          "summary": "oracle-velocity-git-series — 24-week commit cadence sparkline",
+          "ts": "2026-06-14T19:09:53.000Z"
+        },
+        {
           "sha": "555baef4",
           "summary": "resync derived feeds after rebase onto origin (public-status/citation/status-proof)",
           "ts": "2026-06-14T15:31:34.000Z"
@@ -50,30 +75,41 @@
           "sha": "316101b4",
           "summary": "S182 refresh mind score + recompute five pillars (2026-06-14)",
           "ts": "2026-06-14T05:48:56.000Z"
-        },
-        {
-          "sha": "83036b5c",
-          "summary": "S182 publish live IGNIS output artifacts to web",
-          "ts": "2026-06-14T04:55:47.000Z"
-        },
-        {
-          "sha": "7f0ca36d",
-          "summary": "reconcile ignis-roi + ignis pages (date-boundary regen)",
-          "ts": "2026-06-14T04:25:06.000Z"
-        },
-        {
-          "sha": "ff6fcf55",
-          "summary": "reconcile PROJECT_STATUS post-closeout",
-          "ts": "2026-06-14T03:45:28.000Z"
         }
       ],
       "proof": null
+    },
+    {
+      "theme": "trust",
+      "label": "Trust & legal",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "1accff8e",
+          "summary": "TT reprobe clean + Trusted Types control in security-posture",
+          "ts": "2026-06-14T19:41:40.000Z"
+        }
+      ],
+      "proof": {
+        "set": "longtail-s171",
+        "captures": 6,
+        "routes": [
+          "/projects/vorn/",
+          "/privacy/",
+          "/journal/community-enters-the-vault/"
+        ]
+      }
     },
     {
       "theme": "speed",
       "label": "Speed",
       "feedbackSignals": 6,
       "shippedCommits": [
+        {
+          "sha": "29cc4f93",
+          "summary": "rewire dead gtag engagement sinks to /v/rum beacon",
+          "ts": "2026-06-14T19:24:46.000Z"
+        },
         {
           "sha": "fbe2c5f1",
           "summary": "regenerate feeds/bundles/shell + audit execution log (12/13 shipped)",
@@ -92,11 +128,6 @@
         {
           "sha": "64e21a8b",
           "summary": "wire INP into the field perf gate (chain was complete but unevaluated)",
-          "ts": "2026-06-14T01:52:51.000Z"
-        },
-        {
-          "sha": "327c250e",
-          "summary": "post-LCP capability-gated ember canvas behind hero",
           "ts": "2026-06-14T01:52:51.000Z"
         }
       ],

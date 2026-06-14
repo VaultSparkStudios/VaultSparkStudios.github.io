@@ -68,7 +68,7 @@ function build(todayStr) {
   const map = groupByWeek(lines, window);
   const weeks = window.map((w) => ({ week: w, commitCount: map[w] }));
   const total = weeks.reduce((s, r) => s + r.commitCount, 0);
-  return { generatedAt: todayStr, source: 'git-log', weeksBack: WEEKS, totalCommits: total, weeks };
+  return { schemaVersion: '1.0', generatedAt: todayStr, source: 'git-log', weeksBack: WEEKS, totalCommits: total, weeks };
 }
 
 function runSelfTest() {
@@ -117,7 +117,7 @@ if (isMain) {
   if (isCheck) {
     if (!existsSync(OUT)) { console.error('velocity-series.json missing — run build first'); process.exit(1); }
     const data = JSON.parse(readFileSync(OUT, 'utf8'));
-    const ok = data.weeks?.length > 0 && data.totalCommits >= 0 && data.source === 'git-log';
+    const ok = data.schemaVersion === '1.0' && data.weeks?.length > 0 && data.totalCommits >= 0 && data.source === 'git-log';
     if (!ok) { console.error('velocity-series.json schema invalid'); process.exit(1); }
     console.log('✓ velocity-series.json — ' + data.weeks.length + ' week(s) · ' + data.totalCommits + ' commit(s)');
     process.exit(0);
