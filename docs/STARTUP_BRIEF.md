@@ -1,10 +1,10 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-14 (Session 197 closeout) -->
+<!-- generated-at: 2026-06-14 (Session 198 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 197 closeout · 2026-06-14.
+> **Fast-boot brief** — generated at Session 198 closeout · 2026-06-14.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -13,7 +13,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 198 · 2026-06-14 · FOUNDER MODE                         ║
+║  Session 199 · 2026-06-14 · BUILDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -24,46 +24,46 @@
 ║  Staging       → https://website.staging.vaultsparkstudios.c ⚠   ║
 ║  Custom        → https://vaultsparkstudios.com/?nav=sheet ⚠      ║
 ║  Custom        → https://vaultsparkstudios.com/studio-pulse/ ✓   ║
-║  Unit tests    → npm run build:check ⚠                           ║
+║  Unit tests    → npm run build:check ✓                           ║
 ║  Local dev     → npm run verify:local ✓                          ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    972/1000   ███████████████████████░   97%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 3→                          ║
+║    968/1000   ███████████████████████░   97%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 9↑                          ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▆▄▇▂▄  →  (last 5 sessions)                            ║
+║    Trend  ▄▇▂▄▇  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health       97.7    ██████████  ▇▇▇▇▇▇▇▇ →               ║
-║    Alignment         99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum         92.7    █████████░  ▇▇▇▇▇▇▇▇ →               ║
-║    Engagement       95.3    ██████████  ▇▇▇▇▇▇▇▇ →               ║
-║    Process Qual      99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Coherence         99    ██████████  ········ →                ║
-║    Security          98    ██████████  ········ →                ║
-║    Ecosystem         96    ██████████  ········ →                ║
-║    Capital           98    ██████████  ········ →                ║
-║    Automation        93    █████████░  ········ →                ║
+║    Dev Health        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Alignment        97.7    ██████████  ▇▇▇▇▇▇▇▇ →               ║
+║    Momentum          94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Engagement        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Process Qual     97.3    ██████████  ▇▇▇▇▇▇▇▇ →               ║
+║    Coherence         95    ██████████  ········ →                ║
+║    Security          99    ██████████  ········ →                ║
+║    Ecosystem         94    █████████░  ········ →                ║
+║    Capital           99    ██████████  ········ →                ║
+║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 197 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 198 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116 passing  ·  Deploy: N/A                           ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         116/116 passing (2026-06-08)                   ║
-║  ✓  Velocity      3 →  ·  Debt: ↓                                ║
-║  ✓  Runway        ≥6 open Now items — prod-verify S195+S196+S19  ║
-║  ✓  Headroom      0% remaining · ~0 large item(s) fit            ║
+║  ✓  Tests         116/116 passing (2026-06-14)                   ║
+║  ✓  Velocity      9 ↑  ·  Debt: ↓                                ║
+║  ✓  Runway        game-registry derive-pass (nav/index from reg  ║
+║  ✓  Headroom      67% remaining · ~6 large item(s) fit           ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         41975 FORGE  ·  2d old                         ║
 ║  ✓  Truth         green  ·  Genome: 0/25                         ║
-║  ✓  Compliance   32/32 (100%) → ████████                         ║
+║  ⚠  Compliance   31/32 (97%) ↓ ███████▇                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.184  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -87,26 +87,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▄▇▂▄  3→  (last 5 sessions)                        ║
+║  Velocity:   ▄▇▂▄▇  9↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
-║  Streak:     ✓ 3 consecutive achieved-intent sessions            ║
+║  Streak:     ✓ 4 consecutive achieved-intent sessions            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   95  [COHESION]     PLAY→JOIN BRIDGE                            ║
-║        PLAY is a cross-surface bridge — one implementation impr  ║
+║   94  [VERIFY]       ENGAGEMENT-SIGNAL-VERIFY                    ║
+║        ENGAGEMENT-SIGNAL-VERIFY shipped last session — confirm   ║
 ║                                                                  ║
-║   93  [BRAND]        GAME-REGISTRY SINGLE-SOURCE (item 1 L3, de  ║
-║        GAME-REGISTRY SINGLE-SOURCE (item 1 L3, deferred). Game   ║
+║   93  [BRAND]        GAME-REGISTRY DERIVE-PASS (L2). data/game-  ║
+║        GAME-REGISTRY DERIVE-PASS (L2). data/game-registry.json   ║
 ║                                                                  ║
-║   88  [VERIFY]       Confirm the S195+S196+S197 deploy wave on   ║
-║        Confirm the S195+S196+S197 deploy wave on prod after thi  ║
+║   88  [VERIFY]       Confirm the S198 wave on prod after this p  ║
+║        Confirm the S198 wave on prod after this push. On a real  ║
 ║                                                                  ║
-║   87  [PRODUCT]      THEME TIER-LOCK decision. S195 shipped the  ║
-║        THEME TIER-LOCK decision. S195 shipped the non-gating th  ║
+║   86  [BRAND]        Forge Window naming propagation             ║
+║        The URL stays stable for search, but the public vocabula  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -114,5 +114,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 197 closeout · 2026-06-14*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 198 closeout · 2026-06-14*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
