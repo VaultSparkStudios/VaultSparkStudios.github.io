@@ -278,6 +278,15 @@
         return !!document.getElementById('footer-email-form');
       },
       idle: true
+    },
+    {
+      // S198: daily visit streak — 'Day N streak' badge above the join CTA on
+      // SPARKED game pages. Runs only where game_join_from_play CTA exists.
+      src: '/assets/visit-streak.js',
+      when: function () {
+        return !!document.querySelector('[data-track-event="game_join_from_play"]');
+      },
+      idle: true
     }
   ];
 

@@ -137,6 +137,19 @@
     .demo-placeholder-inner h3 { font-size: 1.5rem; font-weight: 700; margin: 0 0 0.75rem; }
     .demo-placeholder-inner p { color: var(--muted); font-size: 0.95rem; line-height: 1.65; margin: 0 0 1.5rem; }
     @media (max-width: 640px) { .game-iframe { height: 360px; } .demo-placeholder { padding: 2rem 1rem; } }
+    .rank-preview-card { display:flex; align-items:center; gap:0.75rem; margin-top:1.25rem; padding:0.75rem 1rem; background:rgba(255,184,0,0.06); border:1px solid rgba(255,184,0,0.2); border-radius:var(--radius); text-align:left; }
+    .rpc-badge { font-size:0.7rem; font-weight:700; letter-spacing:0.12em; color:var(--gold,#ffb800); background:rgba(255,184,0,0.12); padding:0.25rem 0.5rem; border-radius:4px; white-space:nowrap; flex-shrink:0; }
+    .rpc-body strong { display:block; font-size:0.88rem; color:var(--text); margin-bottom:0.2rem; }
+    .rpc-body p { font-size:0.8rem; color:var(--muted); margin:0 0 0.35rem; line-height:1.4; }
+    .rpc-body a { font-size:0.8rem; color:var(--gold,#ffb800); text-decoration:none; }
+    .rpc-body a:hover { text-decoration:underline; }
+    body[data-vs-signed-in] .rank-preview-card { display:none; }
+    .first-climb-hook { margin-top:0.6rem; padding:0.6rem 1rem; background:rgba(255,122,0,0.05); border:1px solid rgba(255,122,0,0.18); border-radius:var(--radius); font-size:0.8rem; display:flex; align-items:center; flex-wrap:wrap; gap:0.4rem; }
+    .fch-label { color:var(--muted,#a8b4d0); }
+    .fch-count { font-weight:700; color:var(--orange,#ff7a00); }
+    .first-climb-hook.fch-complete .fch-count { color:var(--gold,#ffc400); }
+    .fch-link { color:var(--gold,#ffc400); text-decoration:none; margin-left:auto; white-space:nowrap; }
+    .fch-link:hover { text-decoration:underline; }
     .updates-section { padding: 0 0 5rem; }
     .updates-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1.25rem; flex-wrap:wrap; gap:0.75rem; }
     .updates-header h2 { font-family:Georgia,"Times New Roman",serif; font-size:1.5rem; letter-spacing:-0.03em; margin:0; }
@@ -422,6 +435,19 @@
               <div style="display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center;">
                 <a href="https://callofdoodie.wtf/" target="_blank" rel="noreferrer" class="button" data-track-event="game_play_click">&#9654;&nbsp;Play Now — It's Free</a>
                 <a href="/vault-member/#register" class="button-secondary" data-track-event="game_join_from_play">Save Your Progress — Join Free</a>
+              </div>
+              <div class="rank-preview-card">
+                <span class="rpc-badge">FORGE</span>
+                <div class="rpc-body">
+                  <strong>Your starting rank</strong>
+                  <p>Every Vault Member begins at FORGE and rises through 9 ranks by playing.</p>
+                  <a href="/ranks/">See all 9 ranks →</a>
+                </div>
+              </div>
+              <div class="first-climb-hook" id="vs-fch">
+                <span class="fch-label">First Climb quest: play both SPARKED games</span>
+                <span class="fch-count" id="vs-fch-count">0 of 2</span>
+                <a class="fch-link" href="/ranks/">earn your first badge →</a>
               </div>
             </div>
           </div>
@@ -919,9 +945,31 @@
 
 <script src="/assets/schema-injector.js" defer></script>
   <!-- vs-ambient:start -->
-<script src="/assets/ambient-core.shell-5dce0e7ce6.js" defer></script>
+<script src="/assets/ambient-core.shell-e93d8544a4.js" defer></script>
 <script src="/assets/ambient-feature.shell-5b85ce5201.js" defer></script>
 <!-- vs-ambient:end -->
+<script>
+(function(){
+  var MY_KEY='vs_quest_play_cod';
+  var OTHER_KEY='vs_quest_play_fgm';
+  try {
+    var playBtn=document.querySelector('[data-track-event="game_play_click"]');
+    if(playBtn){
+      playBtn.addEventListener('click',function(){
+        try{localStorage.setItem(MY_KEY,'1');}catch(e){}
+      },{once:true});
+    }
+    var countEl=document.getElementById('vs-fch-count');
+    var hookEl=document.getElementById('vs-fch');
+    if(!countEl||!hookEl)return;
+    var thisDone=localStorage.getItem(MY_KEY)==='1';
+    var otherDone=localStorage.getItem(OTHER_KEY)==='1';
+    var n=(thisDone?1:0)+(otherDone?1:0);
+    countEl.textContent=n===2?'2 of 2 ✔':n+' of 2';
+    if(n===2)hookEl.classList.add('fch-complete');
+  }catch(e){}
+}());
+</script>
 </body>
 </html>
 

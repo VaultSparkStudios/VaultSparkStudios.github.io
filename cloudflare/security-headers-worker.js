@@ -278,6 +278,9 @@ const RUM_UX_EVENTS = new Set([
   // S190: proof embed card — fires on third-party embeds of proof-card.js to
   // measure trust-distribution reach outside the main site.
   'proof-card:embed',
+  // S198: visit-streak.js — daily streak events. streak:break is static; streak:day-N
+  // is emitted as a dynamic prefix (covered by RUM_UX_DYNAMIC streak family below).
+  'streak:break',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so
@@ -299,6 +302,8 @@ const RUM_UX_DYNAMIC = [
   // S194: share:<gameSlug>:<outcome> — per-game share button (native|copy|cancel|
   // error). Two bounded tokens: slug is [a-z0-9-], outcome is [a-z]. Names only.
   prefixAllowlist('share', { charset: /^[a-z0-9-]+:[a-z]+$/, maxLen: 40 }),
+  // S198: streak:day-N (N 1-30) + streak:break — daily visit streak from visit-streak.js.
+  prefixAllowlist('streak', { charset: /^[a-z0-9-]+$/, maxLen: 12 }),
 ];
 const cleanRumUxEvent = makeRumUxCleaner(RUM_UX_EVENTS, RUM_UX_DYNAMIC);
 
