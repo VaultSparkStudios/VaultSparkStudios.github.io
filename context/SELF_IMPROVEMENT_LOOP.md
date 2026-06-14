@@ -8,16 +8,34 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇█▇█
-Avgs - 3: 964.7 | 5: 963.6 | 10: 965.0 | 25: 972.0 | all: 962 (v3.0 /1000)
-  └ 3-session: Dev 95.0 | Align 98.0 | Momentum 94.7 | Engage 97.3 | Process 97.3
-Velocity trend: ↑ (S194: 5/5 audit shipped, full chain clean, no deferrals; S193: 4/6 + Oracle P0; S192: 5) | Protocol velocity: ↑ (3 new bounded RUM families + worker-unit coverage; 2 new gates folded into check-proof-surface with zero build:check length; emit+allowlist+rollup in one change) | Debt: ↓ (killed a dead conversion-funnel sink alive since S147 + 73 blank social cards + a privacy leak to Google)
-Momentum runway: ≥6 open Now items — prod-verify S194 (PNG share cards + share button + funnel beacon lands), funnel data measurement-watch, FUNNEL L3 (top-CTA tile + ambient.shell engagement rewire), OG L3 (per-title PNG rasterizer), forge devlog publish (founder), TT reprobe ~06-18, staging box recovery | Intent rate: 100% (last 5, S194 fully achieved)
-Last session: 2026-06-13 | Session 195 | Total: 992/1000 (v3.0) | Velocity: 12 | protocolVelocity: 4
+Sparkline (last 5 totals): ▇█▇█▇
+Avgs - 3: 976.3 | 5: 970.0 | 10: 967.0 | 25: 972.0 | all: 963 (v3.0 /1000)
+  └ 3-session: Dev 97.3 | Align 99.0 | Momentum 94.7 | Engage 97.0 | Process 99.3
+Velocity trend: → (S196: 2/3 shipped + 1 founder-gated, tight ground-truthed frontier; S195: 12/13; S194: 5/5) | Protocol velocity: ↑ (2 new build-time generators + self-tests + a collection drift-gate folded into check-proof-surface with zero build:check length; a false-premise deferral disproved with a live capability probe) | Debt: ↓ (46 generic share cards → bespoke per-title PNGs; a footgun script that re-breaks all OG cards now guarded; the bare journal Blog node now lists its posts)
+Momentum runway: ≥6 open Now items — prod-verify S196 (bespoke OG cards + collection schema via social debugger), ARK-DEAD-GTAG broadcast (founder approval), prod-verify S195 wave, THEME TIER-LOCK (founder), NAV-SHEET 100% flip (founder), forge devlog publish (founder), TT reprobe ~06-18, staging box recovery | Intent rate: 100% (last 5)
+Last session: 2026-06-14 | Session 196 | Total: 966/1000 (v3.0) | Velocity: 2 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-14 — Session 196 (/goal chain · tight ground-truthed audit · 2 shipped / 1 founder-gated · build:check EXIT 0) | Total: 966/1000 (v3.0) | Velocity: 2 | Debt: ↓
+
+**Score:** 966 / 1000
+(Dev Health 97 · Creative Alignment 99 · Momentum 90 · Engagement 95 · Process Quality 99 · Cross-Repo Coherence 96 · Security Posture 98 · Ecosystem Integration 95 · Capital Efficiency 99 · Automation Coverage 98)
+
+**What improved:** The strongest move this session wasn't a feature — it was a verification. S195 deferred the per-title OG rasterizer on the belief it needed risky native deps; one look at package.json plus a live probe showed `sharp` was already installed and rasterizing fine. That reframed a "deferred, package-trust + Windows-build risk" item into a clean same-day ship: 46 bespoke per-title social cards, generated from a SVG template the repo already had, at zero new supply-chain cost. The site's growth thesis is "a shared link sells the studio" — every shared link now carries a card that names the actual page instead of a generic studio rectangle. Item 2 closed the structured-data rung above S195's breadcrumbs (the journal listings now declare themselves as a publication with 10 dated posts), and both new generators are drift-gated.
+
+**Honest deduction:** Momentum 90 — only 2 items shipped (vs S195's 12); the frontier is genuinely thin after 195 sessions and three audit candidates were verified non-work, so this is honest low velocity, not stalling. Engagement 95 — the bespoke cards need prod/social-debugger confirmation before they're proven. Ecosystem 95 / Cross-Repo 96 — the dead-gtag fleet broadcast is drafted but founder-gated (the auto-mode classifier correctly blocked an unrequested outbound publish), so the cross-repo value isn't realized yet.
+
+**Intent outcome:** Achieved — `/goal` asked for the full chain at genius-level quality; delivered a tight ground-truthed audit, 2/3 shipped (1 founder-gated, not a fatigue skip), build:check EXIT 0, full write-back + push.
+
+**Brainstorm**
+1. **ARK-DEAD-GTAG-PATTERN-SHARE (founder approval)** — the broadcast is drafted; one founder yes ships fleet-wide value. If the founder prefers, scope it to named CF-Pages sibling slugs instead of `*`.
+2. **OG-CARD-DESIGN-VARIANTS (L3)** — per-status visual treatments (forge ember vs sparked blue) + an `ImageObject`/`primaryImageOfPage` JSON-LD pointing at the bespoke card so the share image doubles as a structured citation asset for LLMs.
+3. **COLLECTION-SCHEMA-L3** — add `Speakable` SpeakableSpecification to the journal entry pages for voice-assistant readout, and extend the ItemList to carry `datePublished` per item so the posts surface as a dated carousel in rich results.
+
+**Committed to TASK_BOARD:** [S196][ECOSYSTEM/P2·FOUNDER] ARK-DEAD-GTAG-PATTERN-SHARE (approval) · [S196][VERIFY/P0] prod-confirm bespoke OG cards + collection schema
 
 ## 2026-06-13 — Session 195 (/goal chain · broad expansion audit · 12/13 shipped, 1 deferred · build:check EXIT 0) | Total: 992/1000 (v3.0) | Velocity: 12 | Debt: ↓
 

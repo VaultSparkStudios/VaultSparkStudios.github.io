@@ -2,6 +2,18 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-14 — S196 — per-title OG cards are rasterized at build time with the sharp we already own (S195 deferral premise was false)
+
+**Decision:** Generate bespoke per-title Open Graph PNG cards at build time via `sharp` (already a trusted devDependency) rendering the existing OG SVG template, rather than the satori/resvg/CF-Image-Resizing paths considered. S195 deferred this item citing "needs native satori/resvg deps + Windows-build risk"; that premise was disproved by a live probe (`sharp` rasterizes the SVG to 1200×630 on this machine). The Cloudflare Image Resizing alternative was rejected under CANON-029 (it is a paid/plan-gated feature). The `/_og/` SVG Worker is retired for og:image use (SVG renders blank on socials — S194) and kept only as a layout-preview surface. **Rationale:** use the capability already owned; zero new supply chain, zero runtime cost, fully static + cacheable; resolves the one S195 deferral by correcting a false assumption rather than taking on new risk.
+
+### 2026-06-14 — S196 — bespoke card generation is non-destructive: never overwrite hand-made art
+
+**Decision:** `build-og-cards.mjs` regenerates cards ONLY for pages currently on a generic share image (`og-image.png` / `og-journal.png`) or on a card it previously generated; pages with hand-made bespoke art (game covers etc.) are left untouched. **Rationale:** a generated text card is a downgrade from real cover art — distinctiveness should not come at the cost of trampling deliberate design.
+
+### 2026-06-14 — S196 — the dead-gtag fleet broadcast is founder-gated, not forced
+
+**Decision:** The `ark.mjs ship --to '*'` pattern-share broadcast was denied by the auto-mode classifier (an outbound publish to all sibling repos under the founder's identity is not covered by project/skill encouragement). It was surfaced for explicit founder approval with the cargo payload drafted, NOT worked around. **Rationale:** outbound, broad-audience publishes need specific founder intent; the classifier's denial is the correct boundary and is honored.
+
 ### 2026-06-13 — S195 — conversational/AI depth on the public site stays client-side (CANON-029), never studio-paid LLM
 
 **Decision:** The S195 conversational IGNIS thread (multi-turn memory, follow-up intent, follow-up chips) and the Cmd+K inline answer both run 100% client-side over the already-shipped `/data/ignis-search-index.json` — no new edge-LLM calls. A studio-paid conversational LLM on the free public surface was explicitly NOT built (the `paid-llm-ignis-chat` audit option was skipped as a CANON-029 violation). The grandfathered Cmd+Enter Supabase `semantic-search` synthesis stays as the only paid path, gated behind an explicit keystroke. **Rationale:** zero per-user variable cost pre-revenue; the client-side version delivers the same felt experience.

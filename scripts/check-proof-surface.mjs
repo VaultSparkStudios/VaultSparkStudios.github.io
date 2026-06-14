@@ -35,6 +35,15 @@ const STEPS = [
   // blank share card on every platform, a silent conversion leak on shared links.
   ['check-og-images.mjs', ['--self-test']],
   ['check-og-images.mjs', []],
+  // S196: per-title share cards — the generator that rasterizes the OG SVG to real
+  // PNGs (via sharp) for every page still on a generic card. Its --self-test guards
+  // the slug/generic-detection/raster logic so the bespoke-card pipeline can't drift.
+  ['build-og-cards.mjs', ['--self-test']],
+  // S196: collection structured-data — the journal/archive/dispatches/changelog listing
+  // pages must carry CollectionPage schema (journal+archive enumerate every post). The
+  // --check fails if a new journal post isn't reflected in the ItemList (drift guard).
+  ['inject-collection-jsonld.mjs', ['--self-test']],
+  ['inject-collection-jsonld.mjs', ['--check']],
   // S194: schema honesty — no VideoGame page may carry a fabricated aggregateRating
   // (S193 removed three; this keeps invented review stars from silently returning).
   ['check-videogame-schema.mjs', ['--self-test']],

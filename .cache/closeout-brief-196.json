@@ -1,0 +1,43 @@
+{
+  "session": 196,
+  "date": "2026-06-14",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios.github.io",
+  "headline": "Disproved S195's OG-rasterizer deferral with a live sharp probe and shipped 46 bespoke per-title social cards — plus collection schema on the journal listings.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "og-bespoke-png-cards",
+      "title": "Bespoke per-title OG cards at build time (sharp we already own)",
+      "axis": "growth",
+      "projectImpact": 8,
+      "ecosystemImpact": 4,
+      "insight": "The site's pitch is that a shared link sells the studio, yet ~48 pages still shared one generic card after S194 — a game link looked the same as the privacy policy. S195 shelved the fix for a dependency risk that didn't exist: sharp was already installed and rasterizes the OG SVG straight to PNG. Now every shared link carries a card that names its actual page, at zero new supply-chain cost.",
+      "evidence": "46 PNGs in assets/og/ (1200x630 verified); check-og-images: 124 pages all real rasters; footgun update-og-images.mjs guarded; build:check EXIT 0"
+    },
+    {
+      "id": 2,
+      "slug": "collection-schema-listing",
+      "title": "CollectionPage + ItemList on the journal/changelog listing pages",
+      "axis": "seo",
+      "projectImpact": 6,
+      "ecosystemImpact": 3,
+      "insight": "The journal entries already had Article schema, but the listing pages declared a bare Blog node with zero posts inside it, so a crawler saw a pile of links instead of a publication. The new injector derives the post list from the entries' own schema and declares the journal, archive, dispatches and changelog as collections with their 10 dated posts enumerated. A build gate now fails if a new post isn't reflected, so it can't silently rot.",
+      "evidence": "inject-collection-jsonld.mjs 9/9 self-test; 4 listing pages carry CollectionPage; --check drift-gate folded into check-proof-surface"
+    }
+  ],
+  "followUps": [
+    "Prod-verify the bespoke OG cards + collection schema via the FB/X social debuggers (never assume push==deploy)",
+    "Founder: approve the dead-gtag fleet broadcast (cargo drafted) or scope it to named sibling slugs"
+  ],
+  "blockers": [],
+  "silDelta": { "from": 992, "to": 966, "kind": "structural", "note": "Lower velocity (2 vs 12) is honest — the frontier is thin after 195 sessions and 3 audit candidates were verified non-work. Quality/coherence/capital-efficiency stayed high." },
+  "honestyLedger": [
+    { "title": "faqpage-schema", "why": "Verified already live on faq/contact/all 8 game pages — a save, not a build." },
+    { "title": "article-schema-journal-entries", "why": "Verified already on all 10 journal entries; pivoted to the real gap (collection schema on listings)." },
+    { "title": "doctor-launch-readiness-red", "why": "The doctor ⛔ is sibling-scoped (veilos + orphan codex locks); CANON-018 forbids fixing cross-repo here. All 11 website probes green." },
+    { "title": "og-via-cf-image-resizing", "why": "Rejected — Cloudflare Image Resizing is a paid feature; CANON-029 forbids variable cost on the free tier." },
+    { "title": "ark-dead-gtag-pattern-share broadcast", "why": "Auto-mode classifier denied the outbound '*' publish; surfaced for founder approval rather than forced past the denial." }
+  ],
+  "diffStat": { "files": 105, "insertions": 949, "deletions": 863, "suite": "build:check EXIT 0", "testsDelta": "+22 self-test assertions (build-og-cards 13 + inject-collection 9)", "probesDelta": "+2 gates folded into check-proof-surface" }
+}

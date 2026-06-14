@@ -1,19 +1,16 @@
 <!-- generated-by: /implement skill v1.0 -->
-<!-- generated-at: 2026-06-12 · session 194 · source: docs/AUDIT_2026-06-12-S194.json -->
+<!-- generated-at: 2026-06-14 · session 196 · source: docs/AUDIT_2026-06-14.json -->
 
-# Implement Plan — Session 194
+# Implement Plan — Session 196
 
-Sequenced for optimal efficiency (shared surfaces grouped, both 🔥 front-loaded, foundations before dependents).
+Sequenced for optimal Priority-per-hour, not raw descending priority.
 
-## Wave 1 — Measurement revival (Worker allowlist + RUM beacon + rollup)
-1. **#1 funnel-tracking-live-sink-rewire** (🔥 · feedback-loop · L2) — rewire `track()` gtag no-op → `/v/rum` beacon under bounded `funnel:` family; allowlist + rollup; purge dead googletagmanager hints. Subsumes HERO-PLAY-VS-EXPLORE Now item.
-2. **#5 acquisition-source-breakdown** (💡 · feedback-loop · L2) — rides on #1's live sink: bucket referrer channel into `funnel-summary.json.sources`.
+| Order | # | Slug | Rung | Effort | Why this slot |
+|---|---|---|---|---|---|
+| 1 | 1 | **og-bespoke-png-cards** | L2 | 3.5h | 🔥 headline + removes a live footgun (stale script re-breaks OG). Richest-context-first. Foundational: also neutralizes the dead `/_og/` path. |
+| 2 | 2 | **collection-schema-listing** | L2 | 1.5h | Same build/schema surface as #1 → context reuse. Façade-on-foundation: structured-data rung above S195 breadcrumbs. |
+| 3 | 3 | **ark-dead-gtag-pattern-share** | L2 | 20m | Independent fire-and-forget broadcast; small close to bank momentum. |
 
-## Wave 2 — Distribution (OG + share)
-3. **#2 og-image-raster-fix** (🔥 · ux · L2) — repoint 73 pages' SVG og:image → static PNG; add `check-og-images.mjs` gate. Unblocks #3.
-4. **#3 web-share-per-game** (⚡ · gamification · L2) — `share-game.js` on 10 game pages; bounded `share:` RUM family.
+**Skipped (verified non-work):** faqpage-schema (done) · article-schema-journal-entries (done) · doctor-launch-readiness-red (sibling-scoped, CANON-018) · og-via-cf-image-resizing (paid, CANON-029).
 
-## Wave 3 — Hygiene gate
-5. **#4 videogame-schema-gate** (💡 · security · L1) — `check-videogame-schema.mjs` locks out fabricated review stars.
-
-Lighthouse ≥90 mobile is CI-owned (no local runner) — noted as exception per S181 precedent; changes are JS-sink/metadata only, no render-path regression.
+**Budget posture:** context fresh at audit. Default L2 rungs; climb to L3 if budget ample after #3.

@@ -1,14 +1,23 @@
 /**
- * update-og-images.mjs
- * One-shot script: rewrites all public-page og:image meta tags to point at the
- * dynamic og-image-worker at https://vaultsparkstudios.com/_og/.
+ * update-og-images.mjs — ⚠ RETIRED / DANGEROUS, kept for history only.
  *
- * Extracts og:title from each file, derives eyebrow + status from path,
- * and URL-encodes the params into the new content value.
+ * This one-shot script repoints every page's og:image at the /_og/ SVG worker.
+ * That is exactly the bug S194 fixed: SVG og:image renders BLANK on FB/X/LinkedIn/
+ * Discord/Slack, and check-og-images.mjs now hard-fails any page that points there.
+ * Running this would silently re-break all 78 share cards. It is guarded below so it
+ * cannot run by accident.
  *
- * Skip list: vault-member, investor-portal, studio-hub, share, open-source,
- * 404, offline, google-site-verification.
+ * The supported per-title share-card path is scripts/build-og-cards.mjs (S196):
+ * it rasterizes the same card design to real PNGs via sharp at build time.
+ * Pass --force-legacy only if you are deliberately resurrecting the SVG endpoint.
  */
+if (!process.argv.includes('--force-legacy')) {
+  console.error('✗ update-og-images.mjs is RETIRED — it repoints og:image at the /_og/ SVG worker,');
+  console.error('  which renders BLANK on every social platform (the S194 bug). check-og-images.mjs');
+  console.error('  would fail the build. Use:  node scripts/build-og-cards.mjs   (sharp → real PNGs).');
+  console.error('  Override only to deliberately resurrect the SVG endpoint:  --force-legacy');
+  process.exit(2);
+}
 
 import { readFileSync, writeFileSync, readdirSync, statSync } from 'fs';
 import { join, relative } from 'path';

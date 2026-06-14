@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0 (Claude Code · Opus 4.8)",
+  "generatedAt": "2026-06-14",
+  "session": 196,
+  "sessionPrev": 195,
+  "project": "vaultsparkstudios.github.io",
+  "type": "website",
+  "axisWeights": { "ux": 2, "featureDepth": 2, "speed": 1.5, "tokenCost": 1.5 },
+  "topline": {
+    "thesis": "After 195 sessions the honest frontier is small. Every candidate was ground-truth-verified against live code FIRST — and verification REJECTED more than it kept: FAQPage schema (already on faq/contact/all games), Article-on-journal-entries (all 10 done), and the doctor red (sibling-scoped, CANON-018) are verified non-work. The one survivor that matters is the deferral S195 logged on a FALSE premise: the per-title OG rasterizer was deferred for 'needs native satori/resvg deps + Windows-build risk' — but sharp@0.34.5 is ALREADY a trusted devDependency and rasterizes SVG->PNG cleanly on this exact machine (verified: 1200x630, 19.5KB). The site's whole growth thesis is 'shared links convert'; bespoke cards are the missing piece and they cost zero new deps.",
+    "top3": ["og-bespoke-png-cards", "collection-schema-listing", "ark-dead-gtag-pattern-share"]
+  },
+  "totals": { "items": 3, "combinedPriority": 60.8, "skipped": 3 },
+  "items": [
+    {
+      "id": 1,
+      "slug": "og-bespoke-png-cards",
+      "tier": "transformative",
+      "axis": "growth",
+      "effort": "3.5h",
+      "effortHours": 3.5,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 25.6,
+      "title": "Bespoke per-title OG cards at build time with the sharp we already own — closing the one S195 deferral by disproving its premise",
+      "why": "VaultSpark's entire growth model is that a shared link sells the studio before a human ever clicks. S194 found 73 pages were shipping blank OG images and bandaged it by repointing them at static PNGs — but most pages now share one generic og-image.png, so a link to Call of Doodie looks identical to a link to the privacy policy. S195 deferred the real fix citing a native-dependency / Windows-build risk that simply isn't real: sharp@0.34.5 is already a trusted devDependency and I verified it rasterizes the existing og-image-worker.js SVG template straight to a 1200x630 PNG on this machine. A reject-of-the-deferral is itself the win here — there is no new supply-chain surface to clear.",
+      "recipe": "Extract renderSvg() from cloudflare/og-image-worker.js into a shared pure module (lib/og-template.mjs). New scripts/build-og-cards.mjs: walk public pages, reuse update-og-images.mjs getMeta() to derive {title,eyebrow,status}, render SVG, pipe through sharp(Buffer.from(svg)).png() -> assets/og/<slug>.png; rewrite each page's og:image + twitter:image to its bespoke PNG. THEN neutralize the footgun: the stale update-og-images.mjs still repoints OG at the dead /_og/ SVG worker (running it re-breaks everything S194 fixed) and the worker's source comment still falsely claims 'social platforms all rasterize SVG fine' — guard/retire the script, correct the comment. check-og-images.mjs already gates SVG/missing so it validates the result for free.",
+      "ladder": {
+        "L1": { "effortHours": 1.5, "recipe": "Generate bespoke PNGs for the high-traffic surfaces only (homepage, /membership/, the 2 live games, /studio/) + neutralize the stale update-og-images.mjs footgun and fix the worker's false comment. Everything else keeps its S194 static PNG." },
+        "L2": { "effortHours": 3.5, "recipe": "Full build-og-cards.mjs across all ~115 public pages, wired into npm run build, idempotent (hash-skip unchanged), with a --check self-test folded into the check-proof-surface orchestrator (zero cmd.exe-chain growth)." },
+        "L3": { "effortHours": 8, "recipe": "Add per-status visual variants + a deploy-time freshness gate that regenerates only pages whose og:title changed, and emit ImageObject/primaryImageOfPage JSON-LD pointing at the bespoke card so the OG image is also a structured-data citation asset for LLMs." }
+      },
+      "executionLog": [
+        "S196: SHIPPED (L2 + quality climb). Verified sharp rasterizes the OG SVG on this machine (1200x630). Extracted renderSvg into scripts/lib/og-template.mjs (single source of truth); refactored og-image-worker.js to import it + corrected its false 'SVG rasterizes fine' comment. New scripts/build-og-cards.mjs (13/13 self-test) rendered 46 bespoke per-title PNGs (assets/og/og-*.png) for every page still on a generic card (35 og-image.png + 11 og-journal.png), rewrote og:image+twitter:image, left hand-made bespoke art untouched. Quality climb: cleanCardTitle() strips the redundant '| VaultSpark Studios' suffix so the headline is the page's real name (the wordmark is already on the card); generator now re-renders cards it owns so template changes refresh content. Neutralized the footgun: update-og-images.mjs (repoints OG at the dead /_og/ SVG worker) now refuses to run without --force-legacy. Wired into npm run build; --self-test folded into check-proof-surface (zero cmd.exe growth). check-og-images gate: 124 pages, all real rasters. build:check EXIT 0."
+      ],
+      "status": "shipped",
+      "shipped": true
+    },
+    {
+      "id": 2,
+      "slug": "collection-schema-listing",
+      "tier": "high",
+      "axis": "seo",
+      "effort": "1.5h",
+      "effortHours": 1.5,
+      "impact": 7,
+      "innovation": 5,
+      "priority": 19.3,
+      "title": "Blog + ItemList schema on the listing pages — the true remaining JSON-LD rung (Article-on-entries is already done)",
+      "why": "The TASK_BOARD carry reads 'ARTICLE-SCHEMA-JOURNAL' but ground-truth says all 10 journal entries ALREADY carry Article/BlogPosting schema — so naively 'adding Article schema' would be redundant work, the exact S186 trap. The genuine gap is one level up: journal/, journal/dispatches/, journal/archive/ and changelog/ are collection pages with zero Blog/ItemList/CollectionPage schema, so a crawler or LLM sees a pile of links instead of a structured publication with N dated posts. Wrapping the listings tells Google and answer-engines 'this is a Blog, here are its 10 posts in order' — the structured-understanding rung above the breadcrumbs S195 just completed.",
+      "recipe": "Add a Blog node (with blogPost/itemListElement -> each entry's url+headline+datePublished, derived from the existing journal entries' own Article schema so there's a single source of truth) to journal/index.html; add ItemList to journal/dispatches/ + journal/archive/ + changelog/. Reuse the assets/schema-injector.js named-policy pattern (no inline scripts, TT-safe). Extend the JSON-LD coverage gate already folded into check-proof-surface so a listing page that loses its collection schema fails build:check.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Blog + ItemList on journal/index.html only (the canonical hub) — biggest single SEO surface, no gate change." },
+        "L2": { "effortHours": 1.5, "recipe": "Collection schema on all 4 listing pages + extend the coverage gate to enforce it." },
+        "L3": { "effortHours": 3, "recipe": "Generate the itemListElement array at build time from the journal entries' front-matter so a new post auto-registers in the Blog node, plus add Speakable SpeakableSpecification to the entry pages for voice-assistant readout." }
+      },
+      "executionLog": [
+        "S196: SHIPPED (L2). Ground-truth corrected the premise — all 10 journal ENTRIES already had Article schema; the real gap was the LISTING pages (journal/index had a bare Blog with no posts listed; archive/dispatches/changelog had only BreadcrumbList). New scripts/inject-collection-jsonld.mjs (9/9 self-test) derives the post list from each entry's own BlogPosting schema (single source of truth) and injects a marker-idempotent CollectionPage block before </head>: journal/index + journal/archive get a CollectionPage whose mainEntity is an ItemList of all 10 posts (newest-first); dispatches + changelog get a CollectionPage node. Wired into npm run build (after og-cards, before shell-stamp); --self-test + --check folded into check-proof-surface (the --check fails build if a new journal post isn't reflected in the ItemList — drift guard). build:check EXIT 0."
+      ],
+      "status": "shipped",
+      "shipped": true
+    },
+    {
+      "id": 3,
+      "slug": "ark-dead-gtag-pattern-share",
+      "tier": "nice-to-have",
+      "axis": "ecosystem",
+      "effort": "20m",
+      "effortHours": 0.4,
+      "impact": 5,
+      "innovation": 4,
+      "priority": 15.9,
+      "title": "Broadcast the dead-gtag silent-no-op pattern to the CF-Pages fleet via Studio Ark",
+      "why": "The same class of bug bit this site TWICE in two sessions: S194's funnel and S195's onboarding tour both fired events through a window.gtag that was removed site-wide at S147 — a permanent silent no-op hidden beside a working beacon. Any sibling repo that also dropped Google Analytics but kept gtag('event',...) call-sites is silently losing the same data right now. CANON-018 says cross-repo intelligence rides the Ark; this is a 20-minute broadcast that could save sibling sessions days of phantom 'why is conversion flat' debugging.",
+      "recipe": "node scripts/ark.mjs ship --type pattern-share --to '*' --payload with the pattern ('events fired through a removed window.gtag are a permanent silent no-op'), the detection recipe (grep gtag( call-sites, verify the global is DEFINED not just called), and the fix recipe (rewire to the /v/rum beacon under a bounded prefix family + add a build-time emit-vs-allowlist gate). Tag with ['analytics','silent-drop','cf-pages','gtag'].",
+      "ladder": {
+        "L1": { "effortHours": 0.2, "recipe": "Ship the pattern-share cargo with the one-line pattern + detection grep." },
+        "L2": { "effortHours": 0.4, "recipe": "Full payload with pattern + detection + /v/rum rewire recipe + tags, addressed to the fleet." },
+        "L3": { "effortHours": 1, "recipe": "Also ship a ready-to-run check-dead-gtag.mjs gate script as cargo so siblings can drop it straight into their build:check." }
+      },
+      "executionLog": [
+        "S196: FOUNDER-GATED (not skipped). The `ark.mjs ship --to '*'` broadcast was denied by the auto-mode classifier — an outbound publish to all sibling repos under the founder's identity needs explicit founder intent (project/skill encouragement is not specific user intent for a broad outward write). The full pattern-share cargo payload is drafted and ready; surfaced for one-tap founder approval at closeout. Honest deferral, not a miss."
+      ],
+      "status": "deferred-founder-gated",
+      "shipped": false
+    }
+  ],
+  "innovationReserve": [],
+  "skipped": [
+    { "slug": "faqpage-schema", "reason": "Verified ALREADY DONE — FAQPage/Question schema is live on faq/, contact/, and all 8 game pages. A save, not a miss." },
+    { "slug": "article-schema-journal-entries", "reason": "Verified ALREADY DONE — all 10 journal entries carry Article/BlogPosting schema. The real gap (collection schema on listings) is promoted to item 2." },
+    { "slug": "doctor-launch-readiness-red", "reason": "Verified NON-WEBSITE — the doctor ⛔ is the SPARKED launch-readiness probe failing on 2 SIBLING-scoped blockers (veilos drift + orphaned codex locks in other repos), root-caused S193. CANON-018 forbids the cross-repo writes to fix them here; all 11 website-owned probes are green. Orphan locks auto-clear on those repos' next /start." },
+    { "slug": "og-rasterizer-via-cf-image-resizing", "reason": "Considered and rejected — Cloudflare Image Resizing (/cdn-cgi/image/) would rasterize the SVG at the edge with zero deps, but it is a paid/plan-gated feature and CANON-029 forbids variable cost on the free tier. The sharp build-time path (item 1) achieves the same outcome with no runtime cost." }
+  ],
+  "executionSummary": { "shipped": 2, "deferred": 1, "skipped": 3, "notes": "Tight, fully ground-truthed frontier. 3 false/done premises rejected before scoring (the S173 reject-is-a-win discipline). Headline item (og-bespoke-png-cards) resurrected the S195 deferral by disproving its dependency-risk premise with a live sharp probe, then climbed within-rung for card-title quality. Item 2's premise was also corrected (Article-on-entries already done → real gap is collection schema on listings). Item 3 (Ark broadcast) is founder-gated by the auto-mode classifier, cargo ready. build:check EXIT 0 end-to-end (115-page crawl, 0 status failures, 0 blocking-script findings)." }
+}

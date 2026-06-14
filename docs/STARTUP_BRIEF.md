@@ -30,18 +30,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    992/1000   ███████████████████████░   99%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 12↑                         ║
-║    Last active: 0d  ·  Last closeout: 1d  ·  (active = newest o  ║
-║    Trend  ▄▄▆▄▇  ↑  (last 5 sessions)                            ║
+║    966/1000   ███████████████████████░   97%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2→                          ║
+║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
+║    Trend  ▄▆▄▇▂  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        95    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Alignment         98    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Dev Health       97.3    ██████████  ▇▇▇▇▇▇▇▇ →               ║
+║    Alignment         99    ██████████  ▇▇▇▇▇▇▇▇ →                ║
 ║    Momentum         94.7    █████████░  ▇▇▇▇▇▇▇▇ →               ║
-║    Engagement       97.3    ██████████  ▇▇▇▇▇▇▇▇ →               ║
-║    Process Qual     97.3    ██████████  ▇▇▇▇▇▇▇▇ →               ║
+║    Engagement        97    ██████████  ▇▇▇▇▇▇▇▇ →                ║
+║    Process Qual     99.3    ██████████  ▇▇▇▇▇▇▇▇ →               ║
 ║    Coherence         99    ██████████  ········ →                ║
 ║    Security          98    ██████████  ········ →                ║
 ║    Ecosystem         96    ██████████  ········ →                ║
@@ -57,10 +57,10 @@
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-08)                   ║
-║  ✓  Velocity      12 ↑  ·  Debt: ↓                               ║
-║  ✓  Runway        ≥6 open Now items — prod-verify S194 (PNG sha  ║
-║  ✓  Headroom      0% remaining · ~0 large item(s) fit            ║
-║  ✓  Context age   1d                                             ║
+║  ✓  Velocity      2 →  ·  Debt: ↓                                ║
+║  ✓  Runway        ≥6 open Now items — prod-verify S196 (bespoke  ║
+║  ✓  Headroom      67% remaining · ~6 large item(s) fit           ║
+║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         41975 FORGE  ·  2d old                         ║
 ║  ✓  Truth         green  ·  Genome: 0/25                         ║
 ║  ✓  Compliance   32/32 (100%) → ████████                         ║
@@ -87,26 +87,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▄▆▄▇  12↑  (last 5 sessions)                       ║
+║  Velocity:   ▄▆▄▇▂  2→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
-║  Streak:     ✓ 1 consecutive achieved-intent session             ║
+║  Streak:     ✓ 2 consecutive achieved-intent sessions            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Confirm S195 expansion wave on prod after   ║
-║        Confirm S195 expansion wave on prod after deploy. On a r  ║
-║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   91  [VERIFY]       NAV-SHEET 100% FLIP                         ║
+║   94  [VERIFY]       Confirm S195 expansion wave on prod after   ║
+║        Confirm S195 expansion wave on prod after deploy. On a r  ║
+║                                                                  ║
+║   88  [VERIFY]       Confirm S196 social-card + collection-sche  ║
+║        Confirm S196 social-card + collection-schema wave on pro  ║
+║                                                                  ║
+║   88  [VERIFY]       NAV-SHEET 100% FLIP                         ║
 ║        NAV-SHEET 100% FLIP shipped last session — confirm it wo  ║
 ║                                                                  ║
-║   90  [PRODUCT]      THEME TIER-LOCK decision. S195 shipped the  ║
+║   87  [PRODUCT]      THEME TIER-LOCK decision. S195 shipped the  ║
 ║        THEME TIER-LOCK decision. S195 shipped the non-gating th  ║
-║                                                                  ║
-║   86  [BRAND]        Forge Window naming propagation             ║
-║        The URL stays stable for search, but the public vocabula  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 

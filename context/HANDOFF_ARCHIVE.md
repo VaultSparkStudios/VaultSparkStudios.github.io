@@ -3933,3 +3933,21 @@ Session Intent: /start → /go the full S182 genius list + a founder P0 mid-spri
 **Session Intent:** Run the full `/goal [/start → /audit → /implement → /closeout]` chain with genius-level creative thinking. **Achieved — full chain run; 5/5 audit items shipped; build:check EXIT 0.**
 
 - **Theme:** Finish the S191 proof-surface-honesty arc. No new measurement (the funnel is data-starved — a traffic problem) — instead, replaced the last hand-seed with a live-derived generator, converted the seed-rot lesson into a permanent structural gate, and shipped the bounded-prefix primitive that safely unblocks dynamic instrumentation. Both seed-rot landmines cleared; `seedRisk` is now empty.
+
+---
+<!-- archived: 2026-06-14 -->
+
+## Where We Left Off — Session 194
+- Shipped: 5/5 audit items across 3 waves — **measurement revival** (funnel-tracking-live-sink-rewire, acquisition-source-breakdown) · **distribution** (og-image-raster-fix, web-share-per-game) · **hygiene** (videogame-schema-gate).
+- Tests: `build:check` **EXIT 0 end-to-end** (115-page crawl, 0 status failures, 0 blocking-script findings). `worker.unit` 23→25 (+2 S194 tests for the funnel/source/share families); `rollup-rum-ux` self-test 19→24; new gates `check-og-images` 6/6 + `check-videogame-schema` 5/5 folded into `check-proof-surface` (zero build:check length added); `check-rum-allowlist` in sync (20 allowlisted · 16 emit call-sites).
+- Deploy: **pending push.** `assets/funnel-tracking.js`, `assets/analytics.js`, `assets/share-game.js` (new), `cloudflare/security-headers-worker.js` (3 new bounded RUM families), `scripts/{rollup-rum-ux,propagate-nav,check-proof-surface}.mjs`, `scripts/check-og-images.mjs` + `scripts/check-videogame-schema.mjs` (new), `assets/ambient-loader.js`, 73 pages' og:image, ~80 page heads (dead-hint purge), shells re-stamped. **Worker change auto-deploys via `cloudflare-worker-deploy.yml` on push; site via CF Pages.**
+
+**Session Intent:** Run the full `/goal [/start → /audit → /implement → /closeout]` chain with genius-level creative thinking. **Achieved — full chain ran clean; 5/5 audit items shipped; build:check EXIT 0; no founder interrupts.**
+
+- **Theme:** Stop polishing the apparatus and find what's broken UNDER it. Ground-truth probing (not the brief) surfaced two silent killers 193 sessions never caught: the homepage's entire named-event conversion funnel had been a dead `gtag` no-op since gtag's removal, and 73 pages' primary share-card was a blank-on-every-platform SVG. Both were masked — the funnel by a parallel working `/v/rum` beacon, the OG break by a false code comment asserting SVG works on social.
+- **Honesty highlight:** the OG worker's own comment ("social platforms all rasterize SVG og:image fine") was the trap — verified against reality (FB/X/LinkedIn/Discord/Slack reject SVG) rather than trusting the comment. The funnel rewire is also a privacy upgrade: the dead gtag path had been wired to leak internal intent enums (`vault_trust`, `journey_stage`) to Google; the new `/v/rum` path transmits only the allowlisted event name.
+- **Verify next session:** real-browser prod checks (see TASK_BOARD S194 VERIFY/P0) — shared game link renders a PNG card; share button present; hero CTA click lands `funnel:home_hero_play_click` on `/v/rum`.
+
+## Human Action Required
+- [ ] **RICHER-IGNIS-LAYER public-safe decision** — the Oracle's cognition hero + velocity + 7 insight panels are now hidden on prod (they source sealed-project internal data). To make them live publicly you must decide what cross-project intelligence is public-safe + approve a sanitized public generator. Until then the Oracle is honestly leaner. (Founder-only: cross-project/sealed-data exposure call.)
+- [ ] **(Optional) Doctor 13/13** — needs action in OTHER repos: veilos launch-readiness (its repo says SPARKED but registry says `active` — fix the drift or set liveUrl) + 2 orphaned codex locks (auto-clear when Hashmark + vaultspark-football-gm next run /start). Not fixable from this website session per CANON-018.
