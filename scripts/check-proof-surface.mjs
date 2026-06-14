@@ -39,6 +39,10 @@ const STEPS = [
   // (S193 removed three; this keeps invented review stars from silently returning).
   ['check-videogame-schema.mjs', ['--self-test']],
   ['check-videogame-schema.mjs', []],
+  // S195: structured-data coverage — every indexable public page must carry a
+  // BreadcrumbList so breadcrumb rich-results never silently regress (folded into
+  // this orchestrator rather than extending the cmd.exe-bounded build:check chain).
+  ['inject-breadcrumb-jsonld.mjs', ['--check']],
 ];
 
 let failed = 0;
