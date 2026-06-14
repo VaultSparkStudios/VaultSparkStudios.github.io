@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-14T15:12:50.631Z",
+  "generatedAt": "2026-06-14T15:31:05.482Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,29 +10,73 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 98,
+  "totalSamples": 134,
   "sufficientRoutes": 0,
   "routes": {
     "/": {
-      "samples": 13,
+      "samples": 17,
       "sufficient": false,
       "p75": {
-        "lcp": 1792,
-        "cls": 0.0863,
-        "inp": 56,
-        "fcp": 1128,
+        "lcp": 1992,
+        "cls": 0.0999,
+        "inp": 408,
+        "fcp": 1792,
         "ttfb": 488
       }
     },
+    "/brand/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 656,
+        "cls": 0.0092,
+        "inp": 320,
+        "fcp": 656,
+        "ttfb": 221
+      }
+    },
+    "/community/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 18604,
+        "cls": 0.0002,
+        "inp": 0,
+        "fcp": 18604,
+        "ttfb": 4
+      }
+    },
+    "/contact/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 984,
+        "cls": 0.0007,
+        "inp": 352,
+        "fcp": 984,
+        "ttfb": 157
+      }
+    },
     "/games/": {
-      "samples": 5,
+      "samples": 6,
       "sufficient": false,
       "p75": {
         "lcp": 732,
-        "cls": 0.0398,
+        "cls": 0.0551,
         "inp": 280,
         "fcp": 732,
         "ttfb": 248
+      }
+    },
+    "/games/call-of-doodie/": {
+      "samples": 5,
+      "sufficient": false,
+      "p75": {
+        "lcp": 7124,
+        "cls": 0.0002,
+        "inp": 168,
+        "fcp": 7124,
+        "ttfb": 92
       }
     },
     "/games/gridiron-gm-play/": {
@@ -80,24 +124,35 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 25,
+      "samples": 30,
       "sufficient": false,
       "p75": {
-        "lcp": 1956,
+        "lcp": 952,
         "cls": 0.0013,
-        "inp": 896,
-        "fcp": 1956,
-        "ttfb": 603
+        "inp": 440,
+        "fcp": 952,
+        "ttfb": 452
       }
     },
-    "/ignis/roi/": {
+    "/ignis/": {
       "samples": 1,
       "sufficient": false,
       "p75": {
-        "lcp": 524,
+        "lcp": 424,
+        "cls": 0.0009,
+        "inp": 192,
+        "fcp": 424,
+        "ttfb": 153
+      }
+    },
+    "/ignis/roi/": {
+      "samples": 2,
+      "sufficient": false,
+      "p75": {
+        "lcp": 680,
         "cls": 0.0093,
-        "inp": 160,
-        "fcp": 524,
+        "inp": 200,
+        "fcp": 680,
         "ttfb": 255
       }
     },
@@ -113,47 +168,69 @@
       }
     },
     "/membership/": {
-      "samples": 1,
+      "samples": 3,
       "sufficient": false,
       "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
+        "lcp": 612,
+        "cls": 0.113,
+        "inp": 296,
+        "fcp": 612,
+        "ttfb": 158
       }
     },
     "/nervous-system/": {
-      "samples": 12,
+      "samples": 14,
       "sufficient": false,
       "p75": {
-        "lcp": 1860,
+        "lcp": 616,
         "cls": 0.0857,
         "inp": 200,
-        "fcp": 1860,
+        "fcp": 616,
         "ttfb": 202
       }
     },
     "/oracle/": {
-      "samples": 12,
+      "samples": 13,
       "sufficient": false,
       "p75": {
-        "lcp": 1140,
+        "lcp": 900,
         "cls": 0.0021,
-        "inp": 552,
-        "fcp": 1140,
-        "ttfb": 259
+        "inp": 368,
+        "fcp": 900,
+        "ttfb": 194
       }
     },
     "/pathways/": {
+      "samples": 4,
+      "sufficient": false,
+      "p75": {
+        "lcp": 628,
+        "cls": 0.0705,
+        "inp": 248,
+        "fcp": 628,
+        "ttfb": 226
+      }
+    },
+    "/pathways/builders/": {
       "samples": 2,
       "sufficient": false,
       "p75": {
-        "lcp": 476,
-        "cls": 0.0705,
-        "inp": 160,
-        "fcp": 476,
-        "ttfb": 226
+        "lcp": 532,
+        "cls": 0.0009,
+        "inp": 248,
+        "fcp": 532,
+        "ttfb": 158
+      }
+    },
+    "/projects/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 760,
+        "cls": 0.0094,
+        "inp": 368,
+        "fcp": 760,
+        "ttfb": 256
       }
     },
     "/projects/seamline/": {
@@ -189,6 +266,17 @@
         "ttfb": 113
       }
     },
+    "/rights/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 664,
+        "cls": 0.0007,
+        "inp": 176,
+        "fcp": 664,
+        "ttfb": 164
+      }
+    },
     "/search/": {
       "samples": 1,
       "sufficient": false,
@@ -212,7 +300,7 @@
       }
     },
     "/social/": {
-      "samples": 1,
+      "samples": 2,
       "sufficient": false,
       "p75": {
         "lcp": 424,
@@ -234,11 +322,11 @@
       }
     },
     "/studio-pulse/": {
-      "samples": 2,
+      "samples": 3,
       "sufficient": false,
       "p75": {
         "lcp": 656,
-        "cls": 0.0339,
+        "cls": 0.1977,
         "inp": 336,
         "fcp": 656,
         "ttfb": 254
@@ -256,14 +344,14 @@
       }
     },
     "/universe/": {
-      "samples": 1,
+      "samples": 2,
       "sufficient": false,
       "p75": {
-        "lcp": 256,
+        "lcp": 1380,
         "cls": 0.1051,
-        "inp": 0,
-        "fcp": 256,
-        "ttfb": 8
+        "inp": 472,
+        "fcp": 1380,
+        "ttfb": 117
       }
     },
     "/vault-portal/": {
