@@ -658,6 +658,31 @@
     /* Elements that only show for members / anonymous (controlled by JS stage) */
     .mj-member-only { display: none; }
     .mj-anon-only { display: block; }
+
+    /* S198: Vault Journey — day-in-the-life narrative strip */
+    .vault-journey { padding: 0 0 3.5rem; }
+    .vault-journey-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .vault-journey-heading { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.5rem, 3vw, 2.2rem); letter-spacing: -0.03em; margin-bottom: 0.6rem; }
+    .vault-journey-sub { color: var(--muted); font-size: 1rem; line-height: 1.65; max-width: 52ch; }
+    .vault-journey-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; margin-top: 2rem; }
+    .vj-card { padding: 1.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius); position: relative; overflow: hidden; }
+    .vj-card::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
+    .vj-card:hover::before { opacity: 1; }
+    .vj-card-1::before { background: radial-gradient(ellipse at top left, rgba(255,184,0,0.08), transparent 60%); }
+    .vj-card-2::before { background: radial-gradient(ellipse at top left, rgba(255,122,0,0.08), transparent 60%); }
+    .vj-card-3::before { background: radial-gradient(ellipse at top left, rgba(31,162,255,0.08), transparent 60%); }
+    .vj-day { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.75rem; }
+    .vj-icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+    .vj-heading { font-size: 1.05rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; line-height: 1.25; }
+    .vj-body { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 1rem; }
+    .vj-cta { font-size: 0.82rem; font-weight: 700; color: var(--gold); text-decoration: none; display: inline-flex; align-items: center; gap: 0.3rem; }
+    .vj-cta:hover { text-decoration: underline; }
+    .vj-badge { display: inline-block; font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.5rem; border-radius: 4px; margin-bottom: 0.75rem; }
+    .vj-badge-forge { background: rgba(255,184,0,0.1); color: var(--gold); border: 1px solid rgba(255,184,0,0.2); }
+    .vj-badge-climb { background: rgba(255,122,0,0.1); color: #ff7a00; border: 1px solid rgba(255,122,0,0.2); }
+    .vj-badge-rank { background: rgba(31,162,255,0.1); color: #1fa2ff; border: 1px solid rgba(31,162,255,0.2); }
+    @media (max-width: 768px) { .vault-journey-grid { grid-template-columns: 1fr; } }
+    @media (min-width: 769px) and (max-width: 1024px) { .vault-journey-grid { grid-template-columns: 1fr 1fr; } .vj-card-3 { grid-column: span 2; } }
   </style>
 
   <!-- pre-paint-stage:start -->
@@ -943,6 +968,41 @@
   <div class="container" data-reveal="fade-up">
     <div data-rank-projector></div>
   </div>
+
+  <!-- ── Vault Journey — day-in-the-life narrative (S198) ──── -->
+  <section class="vault-journey" data-reveal="fade-up" aria-labelledby="journey-heading">
+    <div class="container">
+      <div class="vault-journey-eyebrow">Your Vault Journey</div>
+      <h2 id="journey-heading" class="vault-journey-heading">What changes when you join</h2>
+      <p class="vault-journey-sub">This isn't a checklist of features. It's what Monday feels like three months from now.</p>
+      <div class="vault-journey-grid">
+        <div class="vj-card vj-card-1">
+          <div class="vj-day">Day 1</div>
+          <span class="vj-badge vj-badge-forge">FORGE</span>
+          <span class="vj-icon" aria-hidden="true">🎮</span>
+          <div class="vj-heading">The Play Moment</div>
+          <p class="vj-body">You play Call of Doodie and your score lands on the leaderboard — the first one with your name on it. The rank clock starts. FORGE is where every member begins, and the Vault tracks it.</p>
+          <a class="vj-cta" href="#register">Join free — start at FORGE →</a>
+        </div>
+        <div class="vj-card vj-card-2">
+          <div class="vj-day">Day 30</div>
+          <span class="vj-badge vj-badge-climb">FIRST CLIMB</span>
+          <span class="vj-icon" aria-hidden="true">🏆</span>
+          <div class="vj-heading">The Quest Moment</div>
+          <p class="vj-body">You've played both SPARKED games. The First Climb badge unlocks. It's the first proof that you're not just visiting — you're climbing. Your rank moves with you as new games ship.</p>
+          <a class="vj-cta" href="/ranks/">See all 9 ranks →</a>
+        </div>
+        <div class="vj-card vj-card-3">
+          <div class="vj-day">Day 90</div>
+          <span class="vj-badge vj-badge-rank">KNOWN</span>
+          <span class="vj-icon" aria-hidden="true">⚡</span>
+          <div class="vj-heading">The Community Moment</div>
+          <p class="vj-body">People in the Vault recognize your handle by your rank badge. You're not anonymous — you're ranked. SPARKED and ETERNAL members get Dispatch access and priority release slots as the universe expands.</p>
+          <a class="vj-cta" href="/membership/#tiers-heading">See tier unlocks →</a>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- ── Tier Identity Cards ─────────────────────────── -->
   <section class="mem-tiers" data-reveal="fade-up" aria-labelledby="tiers-heading">
