@@ -167,6 +167,8 @@
         var top = result.sources[0] || {};
         convo.tokens = tokens(q).concat(tokens(top.title)).filter(function (t, i, a) { return a.indexOf(t) === i; }).slice(0, 8);
         convo.topUrl = top.url || '';
+        // S195: cross-surface quest flag — asking IGNIS completes a rank-quest step.
+        try { localStorage.setItem('vs_quest_ask', '1'); } catch (_e) {}
         renderFollowUps(out, result.sources, runQuery);
       });
     }

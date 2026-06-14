@@ -216,6 +216,23 @@
       idle: true
     },
     {
+      // S195: First Climb quest — client-side rank progression on /ranks/.
+      src: '/assets/rank-quest.js',
+      when: function () {
+        return !!document.querySelector('[data-rank-quest]');
+      },
+      idle: true
+    },
+    {
+      // S195: theme identity — earned-look cue + saved-confirmation. Any page
+      // with the theme picker; purely cosmetic, no gating.
+      src: '/assets/theme-identity.js',
+      when: function () {
+        return !!document.querySelector('.theme-picker');
+      },
+      idle: true
+    },
+    {
       // S195: Studio Now — live presence + last-ship + weekly cadence strip.
       // Homepage hero region only (its hook lives there); honest-dark otherwise.
       src: '/assets/studio-now.js',

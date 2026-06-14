@@ -125,6 +125,8 @@
         btn.addEventListener('click', function () {
           markReacted(ledger, eid, r.value);
           submitReaction(eid, r.value);
+          // S195: cross-surface quest flag — reacting completes a rank-quest step.
+          try { localStorage.setItem('vs_quest_react', '1'); } catch (_e) {}
           // Highlight pressed button, disable all
           bar.querySelectorAll('.vs-cr__btn').forEach(function (b) {
             b.classList.remove('vs-cr__btn--reacted');
