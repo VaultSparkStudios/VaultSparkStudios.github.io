@@ -8,14 +8,35 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇█▇█▇
-Avgs - 3: 976.3 | 5: 970.0 | 10: 967.0 | 25: 972.0 | all: 963 (v3.0 /1000)
-  └ 3-session: Dev 97.3 | Align 99.0 | Momentum 94.7 | Engage 97.0 | Process 99.3
-Velocity trend: → (S196: 2/3 shipped + 1 founder-gated, tight ground-truthed frontier; S195: 12/13; S194: 5/5) | Protocol velocity: ↑ (2 new build-time generators + self-tests + a collection drift-gate folded into check-proof-surface with zero build:check length; a false-premise deferral disproved with a live capability probe) | Debt: ↓ (46 generic share cards → bespoke per-title PNGs; a footgun script that re-breaks all OG cards now guarded; the bare journal Blog node now lists its posts)
-Momentum runway: ≥6 open Now items — prod-verify S196 (bespoke OG cards + collection schema via social debugger), ARK-DEAD-GTAG broadcast (founder approval), prod-verify S195 wave, THEME TIER-LOCK (founder), NAV-SHEET 100% flip (founder), forge devlog publish (founder), TT reprobe ~06-18, staging box recovery | Intent rate: 100% (last 5)
-Last session: 2026-06-14 | Session 196 | Total: 966/1000 (v3.0) | Velocity: 2 | protocolVelocity: 3
+Sparkline (last 5 totals): █▇█▇█
+Avgs - 3: 971.7 | 5: 971.0 | 10: 967.5 | 25: 972.0 | all: 963 (v3.0 /1000)
+  └ 3-session: Dev 97.7 | Align 99.0 | Momentum 92.7 | Engage 95.3 | Process 99.0
+Velocity trend: → (S197: 3/3 shipped, walk-the-journey audit; S196: 2/3 + 1 founder-gated; S195: 12/13) | Protocol velocity: ↑ (new check-game-playability-coherence gate (7/7) + a tightened game-page meta ceiling, both folded into existing checks with zero build:check cmd.exe-chain growth) | Debt: ↓ (a CANON-031 self-contradicting "Demo Coming Soon" section killed on both live game pages; 13 truncating meta descriptions made SERP-safe; gridiron embed-stub debris cleared)
+Momentum runway: ≥6 open Now items — prod-verify S195+S196+S197 wave (game play panels + bespoke OG cards + collection schema via social debugger), game-registry single-source (item 1 L3), ARK-DEAD-GTAG broadcast (founder), THEME TIER-LOCK (founder), NAV-SHEET 100% flip (founder), forge devlog publish (founder), TT reprobe ~06-18, staging box recovery | Intent rate: 100% (last 5)
+Last session: 2026-06-14 | Session 197 | Total: 972/1000 (v3.0) | Velocity: 3 | protocolVelocity: 2
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-14 — Session 197 (/goal chain · walk-the-journey audit · 3/3 shipped · build:check EXIT 0) | Total: 972/1000 (v3.0) | Velocity: 3 | Debt: ↓
+
+**Score:** 972 / 1000
+(Dev Health 98 · Creative Alignment 99 · Momentum 94 · Engagement 96 · Process Quality 99 · Cross-Repo Coherence 96 · Security Posture 98 · Ecosystem Integration 95 · Capital Efficiency 99 · Automation Coverage 98)
+
+**What improved:** The genius of this session wasn't an algorithm — it was a habit nobody had practiced in 11 sessions: I walked the actual primary user journey instead of trusting the registry's labels. That surfaced a CANON-031 lying surface no funnel dashboard could ever catch — both SPARKED game pages (call-of-doodie, vaultspark-football-gm) carried a stale "Demo Coming Soon — playable build in active development" section directly contradicting their own working "Play Now" hero links, on a site whose whole pitch is "a shared link sells the studio." Replaced both with live Play panels that also fuse the membership capture at the play moment, shipped a coherence gate so a SPARKED page can never silently claim "coming soon" again, and tightened all 13 game/listing meta descriptions to SERP-safe lengths (the prime share surface was truncating mid-sentence). Three premise-checks were rejected on verification (journal-looks-abandoned disproven, AEO-content speculative, more-funnel-instrumentation correctly refused on an over-built apparatus) — fewer, truer items.
+
+**Honest deduction:** Momentum 94 — 3/3 shipped + an L3 climb, but the genuinely structural fix (item 1 L3, single-source `game-registry.json` across the 4 status surfaces) was honestly deferred as too risky late-session; the gate is the interim guard, not the cure. Engagement 96 — the conversion-surface fixes need prod + social-debugger confirmation before they're proven (same caveat as S196). Ecosystem 95 — the coherence-gate pattern is fleet-shareable but nothing was broadcast this session. The audit's own headline ("CTA dead-ends on a placeholder") was corrected DOWN during implement — the discipline working, but a reminder that a confident audit framing still needs the journey-walk before it's trusted.
+
+**Intent outcome:** Achieved — `/goal` asked for the full chain at genius-level quality; delivered a tight ground-truthed audit, 3/3 shipped at L2–L3, build:check EXIT 0, full write-back + push.
+
+**Brainstorm**
+1. **GAME-REGISTRY SINGLE-SOURCE (item 1 L3)** — the 4-surface status disconnection is the root cause of this whole class; a `data/game-registry.json` single source that nav/index/affinity/page all derive from would make the contradiction structurally impossible (the gate would cross-check against it). Its own ~6h session.
+2. **WALK-THE-JOURNEY as a recurring audit step** — this session proved 11 sessions of measurement-polishing missed a flagship lying surface because no one clicked the #1 CTA. Consider a lightweight `check-primary-journey.mjs` asserting every SPARKED title's promoted CTA reaches a real play surface, plus a closeout habit of literally walking hero→play→join once.
+
+### Commitments landed in TASK_BOARD (S197)
+- GAME-REGISTRY SINGLE-SOURCE (item 1 L3) → Now runway P2
+- PLAY→JOIN BRIDGE measurement-watch → Now runway P3
 
 ---
 

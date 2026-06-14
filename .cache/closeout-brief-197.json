@@ -1,0 +1,51 @@
+{
+  "session": 197,
+  "date": "2026-06-14",
+  "agent": "claude-code",
+  "repo": "vaultsparkstudios.github.io",
+  "headline": "Walked the studio's own #1 CTA for the first time in 11 sessions and found the flagship game pages telling visitors a live game was 'coming soon' — fixed the lying surface, fused play into the membership funnel, and made every game's share snippet whole.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "game-play-dead-end-fix",
+      "title": "SPARKED game pages no longer contradict themselves with a stale 'Demo Coming Soon'",
+      "axis": "ux",
+      "projectImpact": 9,
+      "ecosystemImpact": 5,
+      "insight": "Both live titles carried a 'Demo Coming Soon' section that directly contradicted their own working 'Play Now' hero links — a CANON-031 lying surface on the studio's flagship conversion-and-share pages, missed for 11 sessions because the audits trusted the registry's 'Live & Playable' label instead of clicking through. Replaced both with live Play panels and shipped a coherence gate so a SPARKED page can never silently claim 'coming soon' again. The deeper 4-surface root cause (a single-source game registry) is deferred to its own session; the gate is the interim guard.",
+      "evidence": "check-game-playability-coherence.mjs 7/7 self-test, folded into check-proof-surface (12 game pages coherent, 0 warnings); commit d4d194f6"
+    },
+    {
+      "id": 2,
+      "slug": "post-play-membership-bridge",
+      "title": "Fused the play moment into the membership funnel",
+      "axis": "featureDepth",
+      "projectImpact": 7,
+      "ecosystemImpact": 4,
+      "insight": "The games are the traffic magnet but handed every visitor to an external build with no capture, on a site whose SOUL says membership is the load-bearing thing. Each new Play panel now pairs the play CTA with a 'save your progress / track your franchise — join free' ask at the exact moment of intent, instrumented as a bounded funnel:* beacon so the play-to-join bridge is measurable once traffic accrues.",
+      "evidence": "funnel-tracking.js loaded on both SPARKED pages; game_play_click / game_join_from_play emit to /v/rum; check-rum-allowlist in sync (23 allowlisted / 19 emit)"
+    },
+    {
+      "id": 3,
+      "slug": "game-snippet-truncation-fix",
+      "title": "Made every game's search/social/AI snippet a whole sentence",
+      "axis": "ux",
+      "projectImpact": 7,
+      "ecosystemImpact": 3,
+      "insight": "Seven game pages plus the games index shipped 201-258-char meta descriptions that truncate mid-sentence in Google, Discord, and AI-answer unfurls — the prime share surface for a studio whose thesis is 'a shared link sells the studio', cut off at the knees. Rewrote all 13 flagged pages to SERP-safe lengths and added a tighter 160-char ceiling for game pages so the conversion surface can't regress.",
+      "evidence": "check-meta-descriptions 0 length warnings (was 10), self-test 10/10 incl. game-page ceiling; commit 69a175e0"
+    }
+  ],
+  "followUps": [
+    "Prod-verify the S195+S196+S197 wave on a real browser (game Play panels, bespoke OG cards, journal collection schema, Ask IGNIS multi-turn)",
+    "GAME-REGISTRY SINGLE-SOURCE (item 1 L3) — data/game-registry.json across the 4 status surfaces, ~6h, its own session"
+  ],
+  "blockers": [],
+  "honestyLedger": [
+    { "title": "journal-looks-abandoned-fix", "why": "DISPROVEN on verification — journal/index.html already renders a live journal-feed.js beside the curated entries; the surface is not abandoned. Freshness is a founder-gated content-publish decision (SOUL: no auto-publish), not a code gap." },
+    { "title": "aeo-qa-content-page", "why": "Speculative on a data-starved site — oracle-queries.json is curated seed chips, not captured intent, and FAQPage schema already ships sitewide. Net-new Q&A content is low-confidence ROI until real query data exists." },
+    { "title": "more-funnel-instrumentation", "why": "Refused — S186-S196 over-built the apparatus on a funnel at ~1 event/30d; adding more measurement before fixing the broken conversion path would compound the imbalance." },
+    { "title": "game-play-dead-end-fix headline framing", "why": "Corrected DOWN during implement — the audit said 'the #1 CTA dead-ends on a placeholder', but the hero already linked the live build; the real bug was a self-contradicting section, not a hard dead-end. Fewer, truer claims." }
+  ],
+  "silDelta": { "from": 966, "to": 972, "kind": "real" }
+}

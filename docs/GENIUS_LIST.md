@@ -1,4 +1,4 @@
-# Genius Hit List — Session 195
+# Genius Hit List — Session 197
 
 Generated: 2026-06-14
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **81/100**
+- Overall opportunity pressure: **82/100**
 - Health: **green**
 - Current SIL: **958/500**
 - CI health: **check gh run list**
-- Current focus: S195 /goal chain (broad expansion audit → 12/13 shipped, 1 deferred · build:check EXIT 0). The frontier moved from repair to making one-shot surfaces LIVING: (1) conversational IGNIS — client-side multi-turn memory + follow-up intent + chips over the existing index, ZERO API cost (CANON-029); (2) forge-immersion — post-LCP capability-gated 2D ember canvas behind the hero (mounts after the LCP entry, FPS+DPR-capped, IO-paused, self-excludes on reduced-motion/Save-Data/low-mem); (3) Studio Now — live presence+ship+cadence strip; (4) you-asked→we-shipped closed-loop panel; (5) Cmd+K inline IGNIS answers. Plus First-Climb quest, theme identity cue, /security/ trust-posture deepen (verdict+uptime), onboarding-arc gtag→/v/rum rewire, nav-sheet kill-switch+50% canary, INP field gate, sitewide BreadcrumbList (29 pages+gate). Three premise-checks corrected the plan (rejected seed-rot false premise; item 8 pivoted obelisk-passport→/security/; INP chain existed minus the gate eval). Two escalation-class remainders (theme tier-lock, nav-sheet 100% flip) flagged for founder.
+- Current focus: S197 /goal chain (walk-the-journey audit → 3/3 shipped · build:check EXIT 0). Broke the 11-session measurement-polish loop by walking the actual primary user journey: both SPARKED game pages (call-of-doodie, vaultspark-football-gm) carried a stale "Demo Coming Soon" section contradicting their own live "Play Now" hero links — a CANON-031 lying surface on the studio's flagship conversion+share pages. Shipped: (1) live Play panels replacing the contradiction + a check-game-playability-coherence gate (7/7); (2) play→join membership bridge at the play moment (bounded funnel:* to /v/rum); (3) all 13 truncating game/listing meta descriptions made SERP-safe + a 160-char game-page ceiling gate. Rejected 3 speculative items on verification. PROJECT_STATUS was stale at 195 (S196 partial closeout) — corrected to 197.
 
 ## Strategic Read
 
@@ -29,26 +29,24 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 2. [VERIFY] Confirm S195 expansion wave on prod after deploy. On a real browser (…
-Final score: **94**
-[S195][VERIFY/P0] Confirm S195 expansion wave on prod after deploy. On a real browser (datacenter curl 403 = benign CF challenge): (a) Ask IGNIS (/ignis/ or /search/) — ask a question, then "tell me more" → answer stays on-thread + follow-up chips appear; (b) homepage hero — an ember field fades in behind the wordmark a moment after load on a capable device, and is ABSENT with reduced-motion on; (c) Studio Now strip renders under the hero; (d) Cmd+K — type "what is membership" → an inline "IGNIS reads:" answer appears above nav results; (e) /ranks/ shows the First Climb quest; (f) /security/ shows the verdict header + uptime card; (g) /changelog/ shows the you-asked→we-shipped panel. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
-Why it matters: Confirm S195 expansion wave on prod after deploy. On a real browser (d shipped last session — confirm it works in production before piling new work on top.
+#### 2. [COHESION] PLAY→JOIN BRIDGE
+Final score: **95**
+[S197→][MEASURE/P3] PLAY→JOIN BRIDGE — awaiting signal. game_play_click / game_join_from_play now emit as bounded funnel:* to /v/rum from both SPARKED game pages and roll into api/funnel-summary.json. Traffic-gated like the rest of the funnel; once visits accrue, watch the play→join conversion. No code action — measurement-watch.
+Why it matters: PLAY is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
+
+First command: `node scripts/generate-public-intelligence.mjs`
+
+#### 3. [BRAND] GAME-REGISTRY SINGLE-SOURCE (item 1 L3, deferred). Game status lives …
+Final score: **93**
+[S197→][UX/P2] GAME-REGISTRY SINGLE-SOURCE (item 1 L3, deferred). Game status lives in 4 disconnected places (nav dropdown, games-index card, data/game-affinity.json, the game page body) — that disconnection is what let a SPARKED title show "Demo Coming Soon". Create data/game-registry.json (slug → {status, playUrl, embeddable}) as the single source; derive nav/index/affinity/page status + play links from it at build; have check-game-playability-coherence.mjs cross-check all 4 surfaces against it. ~6h structural refactor — its own session. The S197 coherence gate already blocks the specific contradiction class in the interim.
+Why it matters: GAME-REGISTRY SINGLE-SOURCE (item 1 L3, deferred). Game status lives i affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+
+#### 4. [VERIFY] Confirm the S195+S196+S197 deploy wave on prod after this push. On a …
+Final score: **88**
+[S197][VERIFY/P0] Confirm the S195+S196+S197 deploy wave on prod after this push. On a real browser (datacenter curl 403 = benign CF challenge): (a) S197 — /games/call-of-doodie/ and /games/vaultspark-football-gm/ no longer show a "Demo Coming Soon" block; the lower "Try It Now" section shows a live "▶ Play Now / Play Beta — It's Free" CTA + a "Save Your Progress / Track Your Franchise — Join Free" button; view-source a game page → meta description ≤160 chars reading as a complete sentence; (b) S196 — paste a game URL + /faq/ into the Facebook Sharing Debugger → each shows a bespoke per-title PNG, and /journal/ source carries a CollectionPage ItemList; (c) S195 — Ask IGNIS multi-turn, hero ember canvas, Studio Now strip, Cmd+K inline answer. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
+Why it matters: Confirm the S195+S196+S197 deploy wave on prod after this push. On a r shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 3. [VERIFY] Confirm S196 social-card + collection-schema wave on prod after deplo…
-Final score: **88**
-[S196][VERIFY/P0] Confirm S196 social-card + collection-schema wave on prod after deploy. On a real browser / social debugger (datacenter curl 403 = benign CF challenge): (a) paste page URLs (homepage, /faq/, /membership/, a journal entry, /ignis/) into the Facebook Sharing Debugger / X Card Validator → each shows a bespoke per-title PNG (e.g. "FAQ", "The Vault Is Sparked"), not a generic card or blank rectangle; (b) view-source /journal/ → a CollectionPage JSON-LD block with an ItemList of 10 posts sits before </head>; (c) Google Rich Results test on /journal/ recognizes the collection. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
-Why it matters: Confirm S196 social-card + collection-schema wave on prod after deploy shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 4. [VERIFY] NAV-SHEET 100% FLIP
-Final score: **88**
-[S195][UX/P1·FOUNDER] NAV-SHEET 100% FLIP — real-device verify. Kill-switch (?nav=classic) + 50% canary shipped. Founder does an iPhone+Android pass on ?nav=sheet; if clean, flip data-nav-sheet-canary to 100% (kill-switch stays as fallback).
-Why it matters: NAV-SHEET 100% FLIP shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check`
 
 ### NEXT
 
@@ -64,58 +62,58 @@ Why it matters: The URL stays stable for search, but the public vocabulary shoul
 
 First command: `node scripts/propagate-nav.mjs`
 
-#### 3. [INTELLIGENCE] ARK-DEAD-GTAG-PATTERN-SHARE
-Final score: **84**
-[S196][ECOSYSTEM/P2·FOUNDER] ARK-DEAD-GTAG-PATTERN-SHARE — approval needed. The fleet broadcast was DENIED by the auto-mode classifier (outbound ark ship --to '*' under founder identity needs explicit intent). Cargo payload drafted + ready (see S196 audit log). Founder: approve the prepared node scripts/ark.mjs ship --type pattern-share --to '*' ..., or scope it to named CF-Pages sibling slugs.
-Why it matters: ARK-DEAD-GTAG-PATTERN-SHARE keeps the ranked audit current so later sessions don't iterate on stale signal.
+#### 3. [VERIFY] NAV-SHEET 100% FLIP
+Final score: **81**
+[S195][UX/P1·FOUNDER] NAV-SHEET 100% FLIP — real-device verify. Kill-switch (?nav=classic) + 50% canary shipped. Founder does an iPhone+Android pass on ?nav=sheet; if clean, flip data-nav-sheet-canary to 100%.
+Why it matters: NAV-SHEET 100% FLIP was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
-First command: `node scripts/generate-genius-list.mjs`
+First command: `npm run build:check`
 
-#### 4. [PRODUCT] FUNNEL L3
-Final score: **75**
-[SIL][P2] FUNNEL L3 — top-CTA tile + ambient.shell engagement rewire. S194 climbed to L2 only. L3: a "top funnel events" block in api/funnel-summary.json rendered on /status/, AND rewire the still-dead window.gtag-guarded engagement events in ambient.shell (scroll_milestone, exit_intent_shown/answered, ignis_lens_opened, visit_depth_upsell_shown) to the /v/rum beacon — same dead-sink class, just in the shell bundle.
-Why it matters: FUNNEL L3 is open, local, and unblocked — can ship this session.
+#### 4. [PRODUCT] Review + publish the forge devlog draft. Re-run node scripts/draft-we…
+Final score: **78**
+[S189][CONTENT/P1·FOUNDER] Review + publish the forge devlog draft. Re-run node scripts/draft-weekly-forge.mjs, founder reviews + publishes to journal/ to clear the 84d-stale journal warn-gate (changelog 62d also stale).
+Why it matters: Review + publish the forge devlog draft. Re-run is open, local, and unblocked — can ship this session.
 
-#### 5. [PRODUCT] OG L3
-Final score: **72**
-[SIL][P3] OG L3 — per-title PNG pre-rasterizer. S194 repointed 73 pages to static PNGs (correct + zero-cost) but the bespoke per-title /_og/ design is now unused for crawlers. L3: a zero-dependency, package-trust-approved build-time SVG→PNG pre-rasterizer so per-page titled cards work AS PNG without the SVG break.
-Why it matters: OG L3 is open, local, and unblocked — can ship this session.
+#### 5. [SECURITY] TT-ENFORCE-REPROBE. First-party surface CLEAN. Reprobe ~2026-06-18; p…
+Final score: **78**
+[S186][SECURITY/P1] TT-ENFORCE-REPROBE. First-party surface CLEAN. Reprobe ~2026-06-18; pre-S185 samples aging out. Flip stays SOUL #3 founder-device gated.
+Why it matters: TT-ENFORCE-REPROBE. First-party surface CLEAN. Reprobe ~2026-06-18; pr lowers operational risk and is entirely local — no external dependencies block it.
+
+First command: `node scripts/lint-repo.mjs`
 
 ### LATER
 
-#### 1. [VERIFY] Confirm S194 ships on prod after deploy. On a real browser (datacente…
-Final score: **71**
-[S194][VERIFY/P0] Confirm S194 ships on prod after deploy. On a real browser (datacenter curl 403 = benign CF challenge): (a) share a game link to Discord/Slack/X → a real PNG card renders, not a blank rectangle (og-image-raster-fix); (b) /games/call-of-doodie/ hero shows the "↗ Share this game" button and a tap fires Web Share (mobile) or copies the link; (c) DevTools Network → a homepage hero CTA click POSTs funnel:home_hero_play_click to /v/rum (200/204, not dropped). Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
-Why it matters: Confirm S194 ships on prod after deploy. On a real browser (datacenter shipped last session — confirm it works in production before piling new work on top.
+#### 1. [PRODUCT] STAGING BOX RECOVERY. website.staging.vaultsparkstudios.com (Hetzner)…
+Final score: **75**
+[S192→][OBS/P2] STAGING BOX RECOVERY. website.staging.vaultsparkstudios.com (Hetzner) genuinely DOWN — staging-health reads staging-unreachable. CANON-007 wants a live staging env. Agent-attemptable via hcloud/SSH — preflight before labeling founder.
+Why it matters: STAGING BOX RECOVERY. website.staging.vaultsparkstudios.com (Hetzner)  is open, local, and unblocked — can ship this session.
+
+#### 2. [PRODUCT] ARK-DEAD-GTAG-PATTERN-SHARE
+Final score: **69**
+[S196][ECOSYSTEM/P2·FOUNDER] ARK-DEAD-GTAG-PATTERN-SHARE — approval needed. Fleet broadcast DENIED by the auto-mode classifier (outbound ark ship --to '*' under founder identity needs explicit intent). Cargo payload drafted + ready. Founder: approve or scope to named CF-Pages sibling slugs.
+Why it matters: ARK-DEAD-GTAG-PATTERN-SHARE is open, local, and unblocked — can ship this session.
+
+#### 3. [VERIFY] Confirm S195 expansion wave on prod after deploy. On a real browser (…
+Final score: **63**
+[S195][VERIFY/P0] Confirm S195 expansion wave on prod after deploy. On a real browser (datacenter curl 403 = benign CF challenge): (a) Ask IGNIS (/ignis/ or /search/) — ask a question, then "tell me more" → answer stays on-thread + follow-up chips appear; (b) homepage hero — an ember field fades in behind the wordmark a moment after load on a capable device, and is ABSENT with reduced-motion on; (c) Studio Now strip renders under the hero; (d) Cmd+K — type "what is membership" → an inline "IGNIS reads:" answer appears above nav results; (e) /ranks/ shows the First Climb quest; (f) /security/ shows the verdict header + uptime card; (g) /changelog/ shows the you-asked→we-shipped panel. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
+Why it matters: Confirm S195 expansion wave on prod after deploy. On a real browser (d was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-#### 2. [PRODUCT] Funnel data is now LIVE
-Final score: **66**
-[S194→][FEATURE/P2·MEASURE] Funnel data is now LIVE — awaiting signal. funnel-tracking rewire + acquisition-source + per-game share all emit to /v/rum and roll into api/funnel-summary.json (funnelCtas/sources/shares, honest-dark). Traffic-gated like the rest of the funnel; once visits accrue, watch which hero CTA converts, which channel the trickle arrives through, and which game gets shared. No code action — measurement-watch.
-Why it matters: Funnel data is now LIVE is open, local, and unblocked — can ship this session.
-
-#### 3. [INTELLIGENCE] acquisition-source-breakdown (deferred from S193 audit #2). Bucket vi…
-Final score: **66**
-[S193→][AI/P1] acquisition-source-breakdown (deferred from S193 audit #2). Bucket visitor referrer (search/social/direct/referral) into api/funnel-summary.json.sources (honest-dark, no URLs/PII). FIRST confirm referrer reaches the /v/rum path (it does NOT today — analytics.js captures it but the RUM beacon doesn't); add referrer-family to beacon + Worker allowlist + rollup (3 ends). Names the one channel worth doubling on a traffic-starved site.
-Why it matters: acquisition-source-breakdown (deferred from S193 audit #2). Bucket vis keeps the ranked audit current so later sessions don't iterate on stale signal.
-
-First command: `node scripts/generate-genius-list.mjs`
 
 ## Recommended Build Order
 
 1. Post-push CI confirmation
-2. Confirm S195 expansion wave on prod after deploy. On a real browser (…
-3. Confirm S196 social-card + collection-schema wave on prod after deplo…
-4. NAV-SHEET 100% FLIP
+2. PLAY→JOIN BRIDGE
+3. GAME-REGISTRY SINGLE-SOURCE (item 1 L3, deferred). Game status lives …
+4. Confirm the S195+S196+S197 deploy wave on prod after this push. On a …
 5. THEME TIER-LOCK decision. S195 shipped the non-gating theme identity …
 6. Forge Window naming propagation
-7. ARK-DEAD-GTAG-PATTERN-SHARE
-8. FUNNEL L3
-9. OG L3
-10. Confirm S194 ships on prod after deploy. On a real browser (datacente…
-11. Funnel data is now LIVE
-12. acquisition-source-breakdown (deferred from S193 audit #2). Bucket vi…
+7. NAV-SHEET 100% FLIP
+8. Review + publish the forge devlog draft. Re-run node scripts/draft-we…
+9. TT-ENFORCE-REPROBE. First-party surface CLEAN. Reprobe ~2026-06-18; p…
+10. STAGING BOX RECOVERY. website.staging.vaultsparkstudios.com (Hetzner)…
+11. ARK-DEAD-GTAG-PATTERN-SHARE
+12. Confirm S195 expansion wave on prod after deploy. On a real browser (…
 
 ## Best Immediate Move
 

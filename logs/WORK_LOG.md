@@ -2623,3 +2623,16 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
   5. ignis-rescore-artifact-settle — IGNIS 40319→41975; converged a real index/budget cascade; funnel artifact contract-valid.
 - **Verification:** `build:check` EXIT 0 end-to-end (108-page crawl clean; two non-blocking content-freshness warns remain — founder-gated devlog publish). Two full build passes reached an artifact fixpoint. Worker allowlist change auto-deploys via `cloudflare-worker-deploy.yml` on push.
 - **Deferred (next session):** PROGRESSIVE-MEMBERSHIP-UNLOCK — now buildable against measured funnel-summary leak points instead of a guess · forge devlog publish (founder voice review) · TT-enforce reprobe ~06-18.
+
+## 2026-06-14 — Session 197 (/goal chain: /start → /audit → /implement → /closeout · 3/3 shipped · build:check EXIT 0)
+
+**Audit:** `docs/AUDIT_2026-06-14-S197.{json,md}` — 3 items, combined Priority 75.0. Walked the actual primary user journey (first time in 11 sessions) instead of trusting registry labels; rejected 3 speculative items on verification (journal-looks-abandoned disproven, AEO-content speculative, more-funnel-instrumentation refused on an over-built apparatus).
+
+**Shipped 3/3:**
+1. `game-play-dead-end-fix` (🔥 L2) — Both SPARKED game pages carried a stale "Demo Coming Soon" section contradicting their own live "Play Now" hero links (CANON-031 lying surface). Replaced with live Play panels; cleared gridiron (VAULTED) embed-stub debris; new `check-game-playability-coherence.mjs` (7/7) folded into `check-proof-surface`. L3 single-source game-registry deferred (6h, too risky late-session). Commit d4d194f6.
+2. `post-play-membership-bridge` (⚡ L2) — Each Play panel fuses play CTA (`game_play_click`) + membership capture (`game_join_from_play`) at the play moment; `funnel-tracking.js` loaded on both pages → bounded `funnel:*` to `/v/rum`. Merged into commit d4d194f6.
+3. `game-snippet-truncation-fix` (⚡ L3) — 13 flagged game/listing meta descriptions rewritten to SERP-safe ~136–159 chars; new 160-char game-page ceiling in `check-meta-descriptions` (WARN-only, 10/10 self-test). Commit 69a175e0.
+
+**Verify:** `npm run build` EXIT 0; `npm run build:check` EXIT 0 end-to-end (115-page crawl, 0 status failures, 0 blocking-script findings, meta-desc 0 length warns, coherence gate green). Only pre-existing journal-84d/changelog-62d freshness warns remain (founder-gated).
+
+**Note:** PROJECT_STATUS.json was stale at session 195 (S196 closeout was partial); corrected to 197 this session.
