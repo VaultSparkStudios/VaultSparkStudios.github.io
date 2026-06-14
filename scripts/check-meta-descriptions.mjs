@@ -33,6 +33,10 @@ const EXCLUDE_DIRS = new Set([
 
 const IDEAL_MIN = 70;
 const IDEAL_MAX = 200;
+// S197: game pages are the prime conversion + social-share surface ("a shared
+// link sells the studio"), and they truncate hardest in SERP/Discord/AI unfurls.
+// Hold them to a tighter SERP-safe ceiling so a complete sentence always survives.
+const GAME_IDEAL_MAX = 160;
 
 function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
@@ -60,14 +64,16 @@ export function analyzeHtml(html) {
   return { isNoindex, hasDescription: m != null, description, length: description ? description.length : 0 };
 }
 
-export function classify(html) {
+export function classify(html, relPath = '') {
   const a = analyzeHtml(html);
   if (a.isNoindex) return { verdict: 'skip', reason: 'noindex' };
   if (!a.hasDescription || a.length === 0) {
     return { verdict: 'error', reason: a.hasDescription ? 'empty description' : 'no description meta' };
   }
-  if (a.length < IDEAL_MIN || a.length > IDEAL_MAX) {
-    return { verdict: 'warn', reason: `length ${a.length} outside ideal ${IDEAL_MIN}-${IDEAL_MAX}` };
+  const isGamePage = /(^|\/)games\/[^/]+\/index\.html$/.test(relPath.replace(/\\/g, '/'));
+  const max = isGamePage ? GAME_IDEAL_MAX : IDEAL_MAX;
+  if (a.length < IDEAL_MIN || a.length > max) {
+    return { verdict: 'warn', reason: `length ${a.length} outside ideal ${IDEAL_MIN}-${max}` };
   }
   return { verdict: 'ok' };
 }
@@ -87,6 +93,11 @@ function selfTest() {
   ok(apos.length > 60, "apostrophe inside double-quoted content does not truncate (regression guard)");
   const longOne = '<meta name="description" content="' + 'y'.repeat(260) + '" />';
   ok(classify(longOne).verdict === 'warn', 'over-long description → warn (not error)');
+  // S197: a 175-char description is fine for a normal page but over the tighter
+  // 160 game-page ceiling — warn for games, ok elsewhere.
+  const mid = '<meta name="description" content="' + 'z'.repeat(175) + '" />';
+  ok(classify(mid, 'about/index.html').verdict === 'ok', '175 chars on a normal page → ok');
+  ok(classify(mid, 'games/call-of-doodie/index.html').verdict === 'warn', '175 chars on a game page → warn (tighter SERP-safe ceiling)');
 
   if (fail) { console.error(`check-meta-descriptions --self-test: ${fail} failure(s)`); process.exit(1); }
   console.log('check-meta-descriptions --self-test: all passed');
@@ -105,7 +116,7 @@ function main() {
     let html;
     try { html = readFileSync(file, 'utf8'); } catch { continue; }
     const rel = relative(ROOT, file).replace(/\\/g, '/');
-    const r = classify(html);
+    const r = classify(html, rel);
     if (r.verdict === 'skip') { skipped++; continue; }
     checked++;
     if (r.verdict === 'error') errors.push(`${rel} — ${r.reason}`);
