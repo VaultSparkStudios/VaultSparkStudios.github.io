@@ -33,12 +33,21 @@
         try { localStorage.removeItem('vs-nav-style'); } catch (_) {}
         return false;
       }
+      // S195 (item 10): explicit, durable kill-switch. `?nav=classic` (or a stored
+      // 'classic') permanently opts a device back to the legacy drawer — the
+      // reversible escape hatch that makes graduating the default safe.
+      if (params.get('nav') === 'classic') {
+        try { localStorage.setItem('vs-nav-style', 'classic'); } catch (_) {}
+        return false;
+      }
+      if (localStorage.getItem('vs-nav-style') === 'classic') return false;
       if (localStorage.getItem('vs-nav-style') === 'sheet') return true;
       if (!window.matchMedia || !window.matchMedia('(max-width: 768px)').matches) return false;
-      // S174 canary-readout: 30d at 5% produced ZERO telemetry (intake verified
-      // working - traffic is just thin). Raised to 25% so the graduation
-      // decision gets data; founder device verify still gates the default swap.
-      var canary = Number(document.documentElement.getAttribute('data-nav-sheet-canary') || 25);
+      // S195: graduation ramp. S174 ran 5%, S185 raised to 25%; with the kill-switch
+      // now in place the canary moves to 50% to gather the data the full default
+      // swap needs. The 100% flip stays founder-device-verify-gated (flag-gated
+      // UX-swap discipline) — that real-device pass is the remaining human step.
+      var canary = Number(document.documentElement.getAttribute('data-nav-sheet-canary') || 50);
       if (canary <= 0) return false;
       var key = localStorage.getItem('vs-nav-canary-key');
       if (!key) {
