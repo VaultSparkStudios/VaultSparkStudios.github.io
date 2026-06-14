@@ -1,0 +1,66 @@
+{
+  "schema": "intelligence-health-score@1",
+  "generatedAt": "2026-06-14T02:47:31.931Z",
+  "composite": 78,
+  "maxPossible": 100,
+  "verdict": "⚠",
+  "sources": [
+    {
+      "label": "twin",
+      "score": 14,
+      "maxScore": 20,
+      "detail": "cv-calibrated Brier=0.0721 (raw 0.1176) ece=0.0429 (well-calibrated; n=746) · base=0.842 bss=0.458",
+      "bound": "saturated"
+    },
+    {
+      "label": "arena",
+      "score": 15,
+      "maxScore": 20,
+      "detail": "discrim=0.7301 (arbiter:live-corpus-graded); hard-negative payoff=stalled n=40 quality=strong usableShare=1.00 weak=0 · base=0.500 bss=0.460",
+      "bound": "saturated"
+    },
+    {
+      "label": "innov-brier",
+      "score": 15,
+      "maxScore": 20,
+      "detail": "brier=0.0664 · base=0.107 bss=0.305",
+      "bound": "saturated"
+    },
+    {
+      "label": "carry-oracle",
+      "score": 20,
+      "maxScore": 20,
+      "detail": "n=206 medianAge=1",
+      "bound": "healthy"
+    },
+    {
+      "label": "sqp-cal",
+      "score": 14,
+      "maxScore": 20,
+      "detail": "good=0/4 poor=1 method=isotonic-PAV infer✓ · factorBSS=0.23(n=1)",
+      "bound": "capability-bound"
+    }
+  ],
+  "gapBreakdown": {
+    "dataBound": 0,
+    "capabilityBound": 6,
+    "saturated": 16
+  },
+  "actionableGap": [
+    "sqp-cal(14)"
+  ],
+  "signalsRow": {
+    "label": "Intel health",
+    "detail": "78/100 · gap 6c/0d/16s · twin:14 arena:15 innov-brier:15 carry-oracle:20 sqp-cal:14",
+    "verdict": "⚠"
+  },
+  "worstComponent": {
+    "label": "sqp-cal",
+    "score": 14,
+    "bound": "capability-bound"
+  },
+  "worstActionable": {
+    "label": "sqp-cal",
+    "score": 14
+  }
+}

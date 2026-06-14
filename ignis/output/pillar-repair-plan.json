@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-06-14T02:48:40.947Z",
+  "project": "vaultspark-ignis",
+  "weakestPillarId": "execution",
+  "weakestPillarName": "EXECUTION",
+  "currentScore": 4392.62,
+  "targetScore": 6150,
+  "grade": "F",
+  "topFactorGaps": [
+    {
+      "factorId": "generic-evidence-depth",
+      "factorName": "Evidence Depth",
+      "cluster": "Unknown",
+      "currentScore": 44,
+      "targetScore": 74,
+      "gapScore": 30,
+      "rootCause": "EXECUTION pillar is below 50%. Review which factors have zero values.",
+      "intervention": "Run `node dist/cli.js score .` with `--full` to see per-factor breakdown. Supply missing data for top-gap factors.",
+      "evidenceNeeded": "Pillar-specific events and signals"
+    }
+  ],
+  "rootCauseSummary": "EXECUTION pillar at F grade. Run full score to see per-factor breakdown.",
+  "estimatedLift": 1800,
+  "interventionIds": [
+    "pillar-repair-execution-generic-evidence-depth"
+  ],
+  "measurementHorizon": "medium",
+  "summary": "Pillar repair: EXECUTION at F (4,392.62/10000). 1 factor gaps identified. Estimated lift 1,800 pts from top 3 interventions. 0/1 interventions already tracked in outcome ledger."
+}
