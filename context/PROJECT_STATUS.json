@@ -12,18 +12,26 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S197 /goal chain (walk-the-journey audit → 3/3 shipped · build:check EXIT 0). Broke the 11-session measurement-polish loop by walking the actual primary user journey: both SPARKED game pages (call-of-doodie, vaultspark-football-gm) carried a stale \"Demo Coming Soon\" section contradicting their own live \"Play Now\" hero links — a CANON-031 lying surface on the studio's flagship conversion+share pages. Shipped: (1) live Play panels replacing the contradiction + a check-game-playability-coherence gate (7/7); (2) play→join membership bridge at the play moment (bounded funnel:* to /v/rum); (3) all 13 truncating game/listing meta descriptions made SERP-safe + a 160-char game-page ceiling gate. Rejected 3 speculative items on verification. PROJECT_STATUS was stale at 195 (S196 partial closeout) — corrected to 197.",
-  "nextMilestone": "Prod-verify the S195+S196+S197 wave on a real browser: game pages show live Play panels (no \"Demo Coming Soon\"), bespoke per-title OG cards in the Facebook debugger, journal CollectionPage schema, Ask IGNIS multi-turn. Then the structural carry: game-registry.json single-source across the 4 status surfaces (item 1 L3, ~6h). Founder-gated: ARK dead-gtag broadcast, theme tier-lock, nav-sheet 100% flip, forge devlog publish. TT reprobe ~2026-06-18.",
-  "blockers": [],
+  "currentFocus": "S198 /goal chain (context-resumed · 9/11 shipped · build:check EXIT 0). Highest-velocity session since S195. Gamification depth first: rank-preview card + First Climb quest hook on both SPARKED game pages; visit-streak.js daily badge ambient module; vault-journey.js 3-panel membership timeline; oracle velocity-series public API. Then structural repair: D1 save (emitSourceOnce already in analytics.js); D2 scroll-depth+exit-intent rewired from dead gtag to /v/rum engagement: prefix family (closes last major dead-sink class in the ambient bundle); E1 build-cache.mjs shared SHA-256 hash-skip library wired into 3 IGNIS scripts; F1 7th Trusted Types control in security-posture (7/7 verified); F2 BLOCKED (hcloud MISSING — founder needed); G1-L1 data/game-registry.json canonical single source of truth for 8 game slugs + check-game-playability-coherence registry cross-check. 9 commits on main, pushed at closeout.",
+  "nextMilestone": "Prod-verify the S198 wave on a real browser: game pages show rank-preview card + First Climb quest; /membership/ shows Vault Journey 3-panel arc; Oracle velocity chart renders; scroll-to-25% confirms engagement:scroll_25 in /v/rum. Then game-registry derive-pass (L2: derive nav/index card statuses from data/game-registry.json at build time, ~2h). Founder-gated: staging box recovery (HCLOUD_TOKEN), ARK-DEAD-GTAG broadcast, THEME TIER-LOCK, NAV-SHEET 100% flip, forge devlog publish. TT reprobe ~06-18.",
+  "blockers": [
+    {
+      "id": "staging-box-hcloud",
+      "label": "STAGING BOX RECOVERY — HUMAN ACTION REQUIRED",
+      "detail": "hcloud CLI not installed AND HCLOUD_TOKEN MISSING in secrets gateway. CANON-019 preflight completed. Founder: retrieve HCLOUD_TOKEN from Hetzner Cloud Console → add to secrets gateway. Agent re-attempts once READY.",
+      "since": "2026-06-14",
+      "addedSession": 198
+    }
+  ],
   "lastUpdated": "2026-06-14",
-  "currentSession": 197,
+  "currentSession": 198,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-06-12",
-  "silScore": 958,
-  "silAvg3": 985,
-  "silVelocity": 12,
+  "silScore": 968,
+  "silAvg3": 968.7,
+  "silVelocity": 9,
   "silDebt": "↓",
-  "silLastSession": 197,
+  "silLastSession": 198,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -50,7 +58,7 @@
     {
       "type": "tests",
       "command": "npm run build:check",
-      "status": "yellow"
+      "status": "green"
     },
     {
       "type": "local",
@@ -71,16 +79,16 @@
   "silMax": 1000,
   "silScoreLegacy500": 458,
   "silCategoriesV3": {
-    "devHealth": 92,
+    "devHealth": 97,
     "creativeAlignment": 97,
-    "momentum": 95,
-    "engagement": 95,
-    "processQuality": 95,
-    "crossRepoCoherence": 99,
-    "securityPosture": 98,
-    "ecosystemIntegration": 96,
-    "capitalEfficiency": 98,
-    "automationCoverage": 93
+    "momentum": 97,
+    "engagement": 93,
+    "processQuality": 98,
+    "crossRepoCoherence": 95,
+    "securityPosture": 99,
+    "ecosystemIntegration": 94,
+    "capitalEfficiency": 99,
+    "automationCoverage": 99
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
@@ -195,6 +203,6 @@
   "silScoreReconciledFrom": 978,
   "testsTotal": 116,
   "testsPassing": 116,
-  "testsLastRun": "2026-06-08",
+  "testsLastRun": "2026-06-14",
   "testsLabel": "build:check gates"
 }

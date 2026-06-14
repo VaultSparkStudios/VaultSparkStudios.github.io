@@ -2636,3 +2636,25 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
 **Verify:** `npm run build` EXIT 0; `npm run build:check` EXIT 0 end-to-end (115-page crawl, 0 status failures, 0 blocking-script findings, meta-desc 0 length warns, coherence gate green). Only pre-existing journal-84d/changelog-62d freshness warns remain (founder-gated).
 
 **Note:** PROJECT_STATUS.json was stale at session 195 (S196 closeout was partial); corrected to 197 this session.
+
+## 2026-06-14 — Session 198 (/goal chain context-resumed · 9/11 shipped · 1 blocked · 1 already-done · build:check EXIT 0)
+
+**Theme:** Structural repair under the gamification surface. Waves A+B1+C1+C2 shipped gamification depth (rank-preview, streak badge, vault journey, velocity series); waves D2+E1+F1+G1-L1 closed the dead-sink instrumentation class and laid the game-registry structural foundation. The D1 reject-on-verification is the session's discipline highlight — emitSourceOnce was already live in S194.
+
+**Shipped 9/11** (`docs/AUDIT_2026-06-14-S198.{json,md}`):
+1. `rank-preview-card + first-climb-hook` (🔥 Wave A) — leaderboard sneak-peek card + First Climb quest hook (3 steps) on both SPARKED game pages. Pre-compaction.
+2. `visit-streak-badge` (⚡ Wave B1) — `assets/visit-streak.js` daily-visit streak badge via localStorage. Pre-compaction.
+3. `vault-journey-timeline` (⚡ Wave C1) — 3-panel Forge→Sparked→Vault narrative arc on `/membership/`. Pre-compaction.
+4. `oracle-velocity-series` (⚡ Wave C2) — `scripts/build-velocity-series.mjs` + `api/velocity-series.json` (24w, schemaVersion 1.0, 5/5 self-test). Pre-compaction.
+5. `engagement-rewire` (⚡ D2) — `scroll-depth.js` + `exit-intent.js` from dead gtag → `/v/rum` `engagement:` prefix; Worker `RUM_UX_DYNAMIC`; `engagements` block in `rollup-rum-ux`/`funnel-summary`; ambient bundle rebuilt hash `6895f1ae09`.
+6. `build-cache-library` (💡 E1) — `scripts/lib/build-cache.mjs` SHA-256 hash-skip (3/3 self-test) wired into 3 IGNIS build scripts.
+7. `tt-reprobe-control` (💡 F1) — 7th Trusted Types control in `build-security-posture.mjs` (7/7 verified, 14 assertions).
+8. `velocity-series-schema-fix` (bugfix) — added `schemaVersion:'1.0'` to velocity-series, fixing `check-public-contract-health` failure.
+9. `game-registry-single-source` (⚡ G1-L1) — `data/game-registry.json` (8 slugs) + `check-game-playability-coherence.mjs` registry cross-check.
+
+**D1 save:** `acquisition-source-rum` — `analytics.js` `emitSourceOnce()` was already wired to `/v/rum` (S194 work). Premise disproved before writing a character. Reject-on-verification = win.
+**F2 blocked:** STAGING BOX RECOVERY — CANON-019 preflight: hcloud CLI not installed + HCLOUD_TOKEN MISSING → genuine founder-hardware block.
+
+**Verify:** `npm run build:check` EXIT 0 end-to-end (115-page crawl, 0 status failures, 0 blocking-script findings, coherence 8 games, TT 7/7). Pre-existing journal-84d/changelog-62d warns remain (founder-gated).
+
+**SIL:** 968/1000 (v3.0) · Velocity: 9 · Debt: ↓ · All 9 commits pushed at closeout.

@@ -28,6 +28,8 @@ data/studio-feed.json
 # file captures the node module-not-found stderr (with absolute local paths).
 # Excluded to keep pre-push absolute-path checks clean.
 .cache/router-suggest.json
+# E1 build-cache.mjs content-hash skip files (local optimization, not repo state)
+.cache/*-hash
 
 # wrangler files
 .wrangler

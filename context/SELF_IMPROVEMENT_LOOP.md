@@ -8,16 +8,34 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █▇█▇█
-Avgs - 3: 971.7 | 5: 971.0 | 10: 967.5 | 25: 972.0 | all: 963 (v3.0 /1000)
-  └ 3-session: Dev 97.7 | Align 99.0 | Momentum 92.7 | Engage 95.3 | Process 99.0
-Velocity trend: → (S197: 3/3 shipped, walk-the-journey audit; S196: 2/3 + 1 founder-gated; S195: 12/13) | Protocol velocity: ↑ (new check-game-playability-coherence gate (7/7) + a tightened game-page meta ceiling, both folded into existing checks with zero build:check cmd.exe-chain growth) | Debt: ↓ (a CANON-031 self-contradicting "Demo Coming Soon" section killed on both live game pages; 13 truncating meta descriptions made SERP-safe; gridiron embed-stub debris cleared)
-Momentum runway: ≥6 open Now items — prod-verify S195+S196+S197 wave (game play panels + bespoke OG cards + collection schema via social debugger), game-registry single-source (item 1 L3), ARK-DEAD-GTAG broadcast (founder), THEME TIER-LOCK (founder), NAV-SHEET 100% flip (founder), forge devlog publish (founder), TT reprobe ~06-18, staging box recovery | Intent rate: 100% (last 5)
-Last session: 2026-06-14 | Session 197 | Total: 972/1000 (v3.0) | Velocity: 3 | protocolVelocity: 2
+Sparkline (last 5 totals): █████
+Avgs - 3: 968.7 | 5: 973.8 | 10: 965 | 25: 971 | all: 963 (v3.0 /1000)
+  └ 3-session: Dev 95.0 | Align 97.7 | Momentum 94.0 | Engage 95.0 | Process 97.3
+Velocity trend: ↑ (S198: 9/11 shipped + 1 D1 save; S197: 3/3; S196: 2/3 + 1 founder-gated) | Protocol velocity: ↑ (build-cache.mjs shared hash-skip library + 7th TT security-posture control + game-registry canonical single source + engagement: prefixAllowlist + engagements rollup block) | Debt: ↓ (dead gtag scroll+exit-intent sinks wired to /v/rum; velocity-series schemaVersion fixed; game-registry structural foundation laid; 3 expensive IGNIS build scripts skip on no-change)
+Momentum runway: game-registry derive-pass (nav/index from registry L2, ~2h) · prod-verify S195–S198 wave · staging box recovery (HUMAN ACTION: HCLOUD_TOKEN) · ARK-DEAD-GTAG broadcast (founder) · THEME TIER-LOCK (founder) · NAV-SHEET 100% flip (founder) · forge devlog publish (founder) · TT reprobe ~06-18 | Intent rate: 100% (last 5)
+Last session: 2026-06-14 | Session 198 | Total: 968/1000 (v3.0) | Velocity: 9 | protocolVelocity: 4
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-14 — Session 198 (/goal chain · context-resumed · 9/11 shipped · 1 blocked (F2/hcloud) · 1 already-done (D1 save) · build:check EXIT 0) | Total: 968/1000 (v3.0) | Velocity: 9 | Debt: ↓
+
+**Score:** 968 / 1000
+(Dev Health 97 · Creative Alignment 97 · Momentum 97 · Engagement 93 · Process Quality 98 · Cross-Repo Coherence 95 · Security Posture 99 · Ecosystem Integration 94 · Capital Efficiency 99 · Automation Coverage 99)
+
+**What improved:** Nine items shipped from a context-resumed /goal chain — the best velocity since S195 (12 items). The session's first half delivered gamification depth: rank-preview leaderboard cards + First Climb quest hooks on both SPARKED game pages, a visit-streak daily badge ambient module, a Vault Journey 3-panel membership timeline, and the oracle velocity-series public API. The second half pivoted to structural repair: `data/game-registry.json` as the canonical single source of truth for 8 game slugs, a shared `scripts/lib/build-cache.mjs` SHA-256 hash-skip library wired into 3 expensive IGNIS scripts, and the two largest dead gtag sinks in the ambient bundle (scroll_milestone + exit_intent_shown/answered) finally rewired to emit `engagement:*` in `/v/rum` after 20+ sessions of darkness. The security posture probe now honestly verifies 7 of 7 controls including Trusted Types. D1 was a save-not-skip: `analytics.js` `emitSourceOnce()` was already shipping `source:<bucket>` to `/v/rum` (S194 work).
+
+**Honest deduction (Engagement 93):** The engagement signals are wired but data is accruing — scroll depth and exit intent milestones will produce their first meaningful samples only after the next real-visitor wave. The visit-streak badge and vault-journey timeline are in-browser UX improvements whose uplift can't be claimed until field data flows. Cross-Repo Coherence 95 — F2 (staging box recovery) is genuinely blocked on a missing hcloud credential; the CANON-019 preflight was completed, confirming this is a real founder-hardware blocker, not a phantom.
+
+**Intent outcome:** Achieved — full /goal chain (resumed from context compaction), 9 code items shipped + 1 D1 save-not-skip + 1 F2 genuine blocker, build:check EXIT 0, full closeout write-back.
+
+**Brainstorm**
+1. **GAME-REGISTRY-DERIVE-PASS (L2)** — `data/game-registry.json` is now the single source of truth. Derive the games-index card statuses and nav dropdown from it at build time: `scripts/derive-game-nav.mjs` + `scripts/derive-game-index.mjs`. The registry cross-check gate already errors on HTML↔registry drift, making derivation structurally safe. ~2h. High probability.
+2. **ENGAGEMENT-SIGNAL-VERIFY** — once 20+ real-visitor sessions accrue post-deploy, pull `api/funnel-summary.json` and confirm `engagements.scroll_25`, `engagements.exit_intent_shown` are non-zero. The wiring is done; the signal confirmation is the next honest milestone. ~30m verification. High probability.
+3. **VISIT-STREAK-ANALYTICS** — add a bounded `streak:N` RUM event when a visitor opens the streak badge, feeding a `streaks` block in `rollup-rum-ux`. The badge is live but its uptake is invisible in the funnel. ~1h. Medium probability.
+
+**Committed to TASK_BOARD:** [S199][STRUCT/P1] GAME-REGISTRY-DERIVE-PASS · [S199][OBS/P2] ENGAGEMENT-SIGNAL-VERIFY · [S199][MEASURE/P3] VISIT-STREAK-ANALYTICS
 
 ## 2026-06-14 — Session 197 (/goal chain · walk-the-journey audit · 3/3 shipped · build:check EXIT 0) | Total: 972/1000 (v3.0) | Velocity: 3 | Debt: ↓
 
