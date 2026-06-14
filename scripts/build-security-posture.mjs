@@ -18,6 +18,7 @@
  *   - Supply-chain scan     ← verify-supply-chain.mjs wired in build:check
  *   - Obelisk adoption      ← `Posture:` line in context/OBELISK_ADOPTION.md
  *   - Responsible disclosure← .well-known/security.txt Contact
+ *   - Trusted Types         ← tt-default-policy.js + lint-tt-policies.mjs (report-only; enforce flip founder-gated)
  *
  * Each control carries an `evidence` link + a `verified` boolean. If the evidence
  * stops resolving, the control HONESTLY downgrades to status 'unverified' instead
@@ -58,6 +59,7 @@ function exists(rel) {
  *   supplyChain: boolean,      // scripts/verify-supply-chain.mjs exists
  *   obelisk:     string|null,  // context/OBELISK_ADOPTION.md contents
  *   securityTxt: string|null,  // .well-known/security.txt contents
+ *   ttPolicy:    boolean,      // assets/tt-default-policy.js + scripts/lint-tt-policies.mjs exist
  *   today:       string,       // YYYY-MM-DD verification date
  * }
  */
@@ -72,6 +74,7 @@ export function derive(probe) {
   const cspOk = probe.cspPolicy && /csp-audit\.mjs/.test(bc);
   const rumPrivacyOk = /RUM_UX_EVENTS/.test(w) && /cleanRumUxEvent/.test(w);
   const supplyOk = probe.supplyChain && /verify-supply-chain\.mjs/.test(bc);
+  const ttOk = !!probe.ttPolicy;
   const obeliskMatch = ob.match(/\*\*Posture:\*\*\s*`?([a-z0-9-]+)`?/i) || ob.match(/Posture:\s*`?([a-z0-9-]+)`?/i);
   const obeliskPosture = obeliskMatch ? obeliskMatch[1] : null;
   const disclosureMatch = st.match(/Contact:\s*(\S+)/i);
@@ -112,6 +115,9 @@ export function derive(probe) {
     control('Responsible disclosure', !!disclosureContact,
       `Reports route to ${disclosureContact} via the published security.txt policy.`,
       '.well-known/security.txt'),
+    control('Trusted Types', ttOk,
+      'First-party DOM sinks covered by tt-default-policy.js (report-only; enforce flip is founder-gated pending real-device verify). lint-tt-policies.mjs in build:check keeps all named policies file-specific.',
+      'assets/tt-default-policy.js + scripts/lint-tt-policies.mjs'),
   ];
 
   const verifiedCount = controls.filter((c) => c.verified).length;
@@ -140,6 +146,7 @@ function probeRepo(today) {
     supplyChain: exists('scripts/verify-supply-chain.mjs'),
     obelisk: readText('context/OBELISK_ADOPTION.md'),
     securityTxt: readText('.well-known/security.txt'),
+    ttPolicy: exists('assets/tt-default-policy.js') && exists('scripts/lint-tt-policies.mjs'),
     today,
   };
 }
@@ -165,22 +172,24 @@ function selfTest() {
     supplyChain: true,
     obelisk: '**Posture:** `phase-0-declared` (S159, 2026-05-22)',
     securityTxt: 'Contact: mailto:security@vaultsparkstudios.com\nExpires: 2027-05-13T00:00:00.000Z',
+    ttPolicy: true,
     today: '2026-06-12',
   };
   const m = derive(good);
   assert(m.schemaVersion === '1.1', 'schemaVersion 1.1');
   assert(m.generatedBy === 'scripts/build-security-posture.mjs', 'generatedBy is the real generator (not a manual-seed)');
-  assert(m.totalControls === 6, `6 controls, got ${m.totalControls}`);
-  assert(m.verifiedControls === 6, `all 6 verified on good evidence, got ${m.verifiedControls}`);
+  assert(m.totalControls === 7, `7 controls, got ${m.totalControls}`);
+  assert(m.verifiedControls === 7, `all 7 verified on good evidence, got ${m.verifiedControls}`);
   assert(m.controls.find((c) => c.label === 'Obelisk adoption').status === 'phase-0-declared', 'Obelisk posture parsed from md');
   assert(m.controls.find((c) => c.label === 'Responsible disclosure').detail.includes('security@vaultsparkstudios.com'), 'disclosure contact parsed');
+  assert(m.controls.find((c) => c.label === 'Trusted Types').verified === true, 'Trusted Types verified on good evidence');
   assert(m.posture === 'active', `posture active on full evidence, got ${m.posture}`);
 
   // Honest downgrade: missing CSP policy file → that control unverified, others intact.
   const noCsp = derive({ ...good, cspPolicy: false });
   const cspControl = noCsp.controls.find((c) => c.label === 'CSP discipline');
   assert(cspControl.status === 'unverified' && cspControl.verified === false, 'missing csp evidence → unverified, not asserted');
-  assert(noCsp.verifiedControls === 5, `one control lost → 5 verified, got ${noCsp.verifiedControls}`);
+  assert(noCsp.verifiedControls === 6, `one control lost → 6 verified, got ${noCsp.verifiedControls}`);
 
   // Missing worker headers → security-headers + rum-privacy both downgrade.
   const noWorker = derive({ ...good, workerJs: '' });
@@ -191,7 +200,7 @@ function selfTest() {
   // Determinism: derive is pure (same probe → same structure).
   assert(structure(derive(good)) === structure(derive(good)), 'derive must be deterministic');
 
-  console.log('build-security-posture --self-test: OK (12 assertions)');
+  console.log('build-security-posture --self-test: OK (14 assertions)');
 }
 
 function main() {

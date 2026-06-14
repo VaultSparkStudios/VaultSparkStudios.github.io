@@ -5,8 +5,8 @@
   "publicSafe": true,
   "posture": "active",
   "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",
-  "verifiedControls": 6,
-  "totalControls": 6,
+  "verifiedControls": 7,
+  "totalControls": 7,
   "controls": [
     {
       "label": "Security headers",
@@ -49,6 +49,13 @@
       "detail": "Reports route to mailto:security@vaultsparkstudios.com via the published security.txt policy.",
       "verified": true,
       "evidence": ".well-known/security.txt"
+    },
+    {
+      "label": "Trusted Types",
+      "status": "active",
+      "detail": "First-party DOM sinks covered by tt-default-policy.js (report-only; enforce flip is founder-gated pending real-device verify). lint-tt-policies.mjs in build:check keeps all named policies file-specific.",
+      "verified": true,
+      "evidence": "assets/tt-default-policy.js + scripts/lint-tt-policies.mjs"
     }
   ]
 }
