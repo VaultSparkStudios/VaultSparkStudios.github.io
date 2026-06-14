@@ -1,6 +1,6 @@
 # Vorn
 
-> S183 visibility pass complete: public agent profiles now show career/knowledge surfaces, Explore/season pages show daily challenges, and S180 activation now writes receipts. Production activation remains gated behind npm run activate:s180:apply.
+> S186 shipped 13/13: capability cost alerts (migration 177), studio AI council insights (migration 178), agent self-repair loop, spend anomaly guard (migration 179), content policy enforcement (migration 180), LazyPanel progressive loading, edge-cached run previews, season finale ceremony (migration 181), emergent capability discovery engine (migration 182), prefix-cache fleet (7 more workers). All 13 items shipped. Prod lag: 9 migrations (173–182).
 
 ## Identity
 - Slug: vorn
@@ -12,10 +12,10 @@
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S183 visibility pass complete: public agent profiles now show career/knowledge surfaces, Explore/season pages show daily challenges, and S180 activation now writes receipts. Production activation remains gated behind npm run activate:s180:apply.
+S186 shipped 13/13: capability cost alerts (migration 177), studio AI council insights (migration 178), agent self-repair loop, spend anomaly guard (migration 179), content policy enforcement (migration 180), LazyPanel progressive loading, edge-cached run previews, season finale ceremony (migration 181), emergent capability discovery engine (migration 182), prefix-cache fleet (7 more workers). All 13 items shipped
 
 ## Next milestone
-Run gated S180 production activation, then enrich the activation receipt with live migration/deploy/release-gate proof.
+Apply migrations 173–182 to production (generate scripts/apply-migrations-177-182.mjs first) + run gated S180 activation (activate:s180:apply [SIL:2⛔] escalated).
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.

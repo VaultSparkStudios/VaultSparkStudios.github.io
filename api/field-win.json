@@ -4,18 +4,18 @@
   "publicSafe": true,
   "note": "Confirmed deploy verdicts from real-visitor field windows. Only improved/regressed/neutral (never pending) are published. No per-visit data.",
   "hasConfirmed": true,
-  "confirmedCount": 1,
+  "confirmedCount": 3,
   "topWin": {
-    "route": "/",
+    "route": "/games/",
     "boundary": "2026-06-05",
     "label": "S173 critical path + S175 origin migration to CF Pages",
     "verdict": "improved",
-    "lcpDeltaPct": -55.9,
-    "confidence": "medium",
-    "preSamples": 38,
-    "postSamples": 13,
-    "preLcpP75": 9489,
-    "postLcpP75": 4182
+    "lcpDeltaPct": -92.7,
+    "confidence": "low",
+    "preSamples": 8,
+    "postSamples": 5,
+    "preLcpP75": 2000,
+    "postLcpP75": 146
   },
   "confirmed": [
     {
@@ -23,13 +23,37 @@
       "boundary": "2026-06-05",
       "label": "S173 critical path + S175 origin migration to CF Pages",
       "verdict": "improved",
-      "lcpDeltaPct": -55.9,
+      "lcpDeltaPct": -62.2,
       "confidence": "medium",
       "preSamples": 38,
-      "postSamples": 13,
+      "postSamples": 16,
       "preLcpP75": 9489,
-      "postLcpP75": 4182
+      "postLcpP75": 3584
+    },
+    {
+      "route": "/games/",
+      "boundary": "2026-06-05",
+      "label": "S173 critical path + S175 origin migration to CF Pages",
+      "verdict": "improved",
+      "lcpDeltaPct": -92.7,
+      "confidence": "low",
+      "preSamples": 8,
+      "postSamples": 5,
+      "preLcpP75": 2000,
+      "postLcpP75": 146
+    },
+    {
+      "route": "/games/gridiron-gm/",
+      "boundary": "2026-06-05",
+      "label": "S173 critical path + S175 origin migration to CF Pages",
+      "verdict": "neutral",
+      "lcpDeltaPct": -5.2,
+      "confidence": "low",
+      "preSamples": 5,
+      "postSamples": 7,
+      "preLcpP75": 1294,
+      "postLcpP75": 1227
     }
   ],
-  "generatedAt": "2026-06-12T21:38:43.616Z"
+  "generatedAt": "2026-06-14T01:15:36.732Z"
 }

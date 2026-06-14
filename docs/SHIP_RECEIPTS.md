@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-06-12 -->
+<!-- generated-at: 2026-06-14 -->
 
 # Ship Receipts
 
@@ -7,8 +7,8 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Conversion | 2 | 1efa8097 forge devlog SOUL-voice upgrade<br>2fc5b32a progressive membership unlock — 3-stage personalized callout | pending |
+| Conversion | 1 | 345b598a client-side progression + earned-look identity | pending |
 | Worlds | 3 | 6a944f9c play-first hero + Oracle/Ask-IGNIS honesty fix + remove 3 fabricated game ratings + measure IGNIS spend (goal-chain, …<br>f3d29b12 bypass cache for solara game route<br>8d3dfd12 publish solara game at root route | pending |
-| Transparency | 6 | daf78dac trigger CF Pages build for S193 Oracle rich layer<br>24565963 public-safe Oracle rich layer — light up cognition + ecosystem panels for external projects<br>c7a47424 oracle corpus feedback loop — oracle-feedback.ndjson writer<br>13cf2014 oracle chip ranking — helpful-rate signal from oracle-feedback.ndjson<br>4e265756 changelog entry auto-derive from TASK_BOARD | pending |
-| Speed | 1 | 0d4bb10d complete the proof surface + harden its honesty (4 shipped / 1 deferred) | home-lcp-s173 (4) |
-| Front door | 1 | 96ecb9ed give the 2nd live title a hero promise line | pending |
+| Transparency | 6 | 83f688c0 rewire dead gtag tour telemetry to /v/rum + IGNIS handoff<br>3519a107 inline cost-neutral IGNIS answers for questions<br>9438e2da client-side multi-turn IGNIS + follow-up chips<br>daf78dac trigger CF Pages build for S193 Oracle rich layer<br>24565963 public-safe Oracle rich layer — light up cognition + ecosystem panels for external projects | pending |
+| Speed | 6 | 3fa2a7b9 style-purity + rum-allowlist contract compliance<br>0cd076fc BreadcrumbList on 29 missing pages + coverage gate<br>dfcb4a4e wire INP into the field perf gate (chain was complete but unevaluated)<br>6e966c3b post-LCP capability-gated ember canvas behind hero<br>3a27f724 rewire dead gtag funnel sink to /v/rum + fix 73 blank SVG og:image cards | home-lcp-s173 (4) |
+| Front door | 1 | 328e397b durable classic kill-switch + 50% graduation canary | pending |
