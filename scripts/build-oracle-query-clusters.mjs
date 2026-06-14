@@ -17,6 +17,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkHash, saveHash } from './lib/build-cache.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -26,6 +27,7 @@ const FEEDBACK_SRC = path.join(ROOT, 'data', 'oracle-feedback.ndjson');
 const OUT = path.join(ROOT, 'api', 'oracle-insights.json');
 const CHECK = process.argv.includes('--check');
 const SELF_TEST = process.argv.includes('--self-test');
+const FORCE = process.argv.includes('--force');
 
 if (SELF_TEST) {
   const testQueries = { anonymous: ['What games exist?', 'How do I join?'] };
@@ -140,6 +142,14 @@ function buildClusters(queries, index, feedbackMap = {}) {
   return { schemaVersion: '1.0', generatedAt: new Date().toISOString(), publicSafe: true, clusters: ranked };
 }
 
+// Content-hash skip: rebuild only when oracle-queries or the ignis index changes.
+const ORACLE_INPUTS = [QUERIES_SRC, INDEX_SRC, FEEDBACK_SRC];
+const oracleCache = (!FORCE) ? checkHash('oracle-clusters', ORACLE_INPUTS) : { hit: false, hash: '' };
+if (!CHECK && oracleCache.hit) {
+  console.log('build-oracle-query-clusters: SKIP (inputs unchanged)');
+  process.exit(0);
+}
+
 const queries = readJson(QUERIES_SRC);
 const index = readJson(INDEX_SRC);
 const feedbackMap = loadFeedbackMap(FEEDBACK_SRC);
@@ -150,5 +160,6 @@ if (!index) { console.warn('ignis-search-index.json missing — clusters will ha
 const indexDocs = Array.isArray(index) ? index : (index && Array.isArray(index.documents) ? index.documents : []);
 const result = buildClusters(queries, indexDocs, feedbackMap);
 fs.writeFileSync(OUT, JSON.stringify(result, null, 2));
+saveHash('oracle-clusters', oracleCache.hash);
 const feedbackNote = Object.keys(feedbackMap).length ? ` (${Object.keys(feedbackMap).length} clusters with feedback data)` : ' (no feedback data yet — ranked by coverage)';
 console.log(`✓ oracle-insights.json — ${result.clusters.length} clusters${feedbackNote}`);

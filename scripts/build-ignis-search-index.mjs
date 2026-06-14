@@ -2,12 +2,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { checkHash, saveHash } from './lib/build-cache.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const OUT = path.join(ROOT, 'data', 'ignis-search-index.json');
 const CHECK = process.argv.includes('--check');
 const SELFTEST = process.argv.includes('--self-test');
+const FORCE = process.argv.includes('--force');
 
 function read(rel) {
   try { return fs.readFileSync(path.join(ROOT, rel), 'utf8'); } catch { return ''; }
@@ -132,6 +134,22 @@ if (SELFTEST) {
 
 const VOICE_LEAK = /\bS\d{2,3}\b|goal[\s-]*chain|\/(start|audit|implement|closeout)\b|\bdeferred\b|\d+\s+shipped|proof surface|build:check/i;
 
+// Content-hash skip: rebuild only when input data files change.
+const IGNIS_INPUTS = [
+  path.join(ROOT, 'api', 'public-intelligence.json'),
+  path.join(ROOT, 'api', 'feedback-provenance.json'),
+  path.join(ROOT, 'api', 'security-posture.json'),
+  path.join(ROOT, 'llms-full.txt'),
+  ...['privacy/index.html', 'terms/index.html', 'rights/index.html',
+      'membership/index.html', 'games/index.html', 'universe/index.html',
+      'oracle/index.html'].map((r) => path.join(ROOT, r)),
+];
+const ignisCache = (!FORCE) ? checkHash('ignis-index', IGNIS_INPUTS) : { hit: false, hash: '' };
+if (ignisCache.hit) {
+  console.log('build-ignis-search-index: SKIP (inputs unchanged)');
+  process.exit(0);
+}
+
 const artifact = build();
 const text = JSON.stringify(artifact, null, 2) + '\n';
 if (CHECK) {
@@ -153,4 +171,5 @@ if (CHECK) {
   process.exit(0);
 }
 fs.writeFileSync(OUT, text);
+saveHash('ignis-index', ignisCache.hash);
 console.log(`build-ignis-search-index -> data/ignis-search-index.json (${artifact.documents.length} docs)`);

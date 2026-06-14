@@ -21,6 +21,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { checkHash, saveHash } from './lib/build-cache.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -28,6 +29,7 @@ const OUT  = path.join(ROOT, '.well-known', 'entity-graph.json');
 const REGISTRY = path.resolve(ROOT, '..', 'vaultspark-studio-ops', 'portfolio', 'PROJECT_REGISTRY.json');
 
 const CHECK = process.argv.includes('--check');
+const FORCE = process.argv.includes('--force');
 
 const ORIGIN = 'https://vaultsparkstudios.com';
 const ID = (slug) => `${ORIGIN}/#${slug}`;
@@ -155,6 +157,13 @@ function buildGraph(registry) {
 }
 
 function main() {
+  const ENTITY_INPUTS = [REGISTRY];
+  const entityCache = (!FORCE) ? checkHash('entity-graph', ENTITY_INPUTS) : { hit: false, hash: '' };
+  if (!CHECK && entityCache.hit) {
+    console.log('build-entity-graph: SKIP (inputs unchanged)');
+    return;
+  }
+
   const registry = loadRegistry();
   const graph = buildGraph(registry);
   const json = JSON.stringify(graph, null, 2);
@@ -174,6 +183,7 @@ function main() {
 
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, json + '\n');
+  saveHash('entity-graph', entityCache.hash);
   console.log(`build-entity-graph: wrote ${graph['@graph'].length} entities → .well-known/entity-graph.json`);
 }
 
