@@ -1,33 +1,41 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-14T01:43:20.427Z",
+  "generatedAt": "2026-06-14T06:40:09.821Z",
   "generatedBy": "scripts/check-staging-parity.mjs",
   "publicSafe": true,
   "production": "https://vaultsparkstudios.com",
   "staging": "https://website.staging.vaultsparkstudios.com",
-  "status": "staging-unreachable",
-  "reason": "Staging origin did not respond within the probe budget; parity not comparable this cycle.",
+  "status": "yellow",
   "routes": [
     {
       "route": "/",
       "prodStatus": 403,
-      "stagingStatus": 0,
-      "stagingReachable": false,
+      "stagingStatus": 200,
+      "stagingReachable": true,
       "statusParity": false,
-      "shellParity": true,
+      "shellParity": false,
       "prodShell": [],
-      "stagingShell": [],
+      "stagingShell": [
+        "assets/ambient-core.shell-5dce0e7ce6.js",
+        "assets/ambient-feature.shell-5b85ce5201.js",
+        "assets/nav-toggle.shell-6d8a113585.js",
+        "assets/shell-health.shell-0995bd7945.js",
+        "assets/style.shell-cade1bd169.css",
+        "assets/style.shell-cade1bd169.css",
+        "assets/style.shell-cade1bd169.css",
+        "assets/theme-toggle.shell-f439e83c34.js"
+      ],
       "headerParity": false
     },
     {
       "route": "/studio-pulse/",
       "prodStatus": 200,
-      "stagingStatus": 0,
-      "stagingReachable": false,
-      "statusParity": false,
-      "shellParity": false,
+      "stagingStatus": 200,
+      "stagingReachable": true,
+      "statusParity": true,
+      "shellParity": true,
       "prodShell": [
-        "assets/ambient-core.shell-351ac2597b.js",
+        "assets/ambient-core.shell-5dce0e7ce6.js",
         "assets/ambient-feature.shell-5b85ce5201.js",
         "assets/nav-toggle.shell-6d8a113585.js",
         "assets/style.shell-cade1bd169.css",
@@ -35,25 +43,40 @@
         "assets/style.shell-cade1bd169.css",
         "assets/theme-toggle.shell-f439e83c34.js"
       ],
-      "stagingShell": [],
+      "stagingShell": [
+        "assets/ambient-core.shell-5dce0e7ce6.js",
+        "assets/ambient-feature.shell-5b85ce5201.js",
+        "assets/nav-toggle.shell-6d8a113585.js",
+        "assets/style.shell-cade1bd169.css",
+        "assets/style.shell-cade1bd169.css",
+        "assets/style.shell-cade1bd169.css",
+        "assets/theme-toggle.shell-f439e83c34.js"
+      ],
       "headerParity": false
     },
     {
       "route": "/membership/",
       "prodStatus": 200,
-      "stagingStatus": 0,
-      "stagingReachable": false,
-      "statusParity": false,
-      "shellParity": false,
+      "stagingStatus": 200,
+      "stagingReachable": true,
+      "statusParity": true,
+      "shellParity": true,
       "prodShell": [
-        "assets/ambient-core.shell-351ac2597b.js",
+        "assets/ambient-core.shell-5dce0e7ce6.js",
         "assets/ambient-feature.shell-5b85ce5201.js",
         "assets/style.shell-cade1bd169.css",
         "assets/style.shell-cade1bd169.css",
         "assets/style.shell-cade1bd169.css",
         "assets/theme-toggle.shell-f439e83c34.js"
       ],
-      "stagingShell": [],
+      "stagingShell": [
+        "assets/ambient-core.shell-5dce0e7ce6.js",
+        "assets/ambient-feature.shell-5b85ce5201.js",
+        "assets/style.shell-cade1bd169.css",
+        "assets/style.shell-cade1bd169.css",
+        "assets/style.shell-cade1bd169.css",
+        "assets/theme-toggle.shell-f439e83c34.js"
+      ],
       "headerParity": false
     }
   ]
