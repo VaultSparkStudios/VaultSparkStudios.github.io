@@ -206,14 +206,24 @@ function evaluateRum(summary) {
     }
     const lcpOver = lcpMed > budget.lcp;
     const clsOver = clsMed > budget.cls;
+    // S195 (item 11): INP joins the field gate. CWV has graded INP since 2024, the
+    // beacon already captures it, and the rollup already emits inpP75 — but the
+    // check only fires when a route's p75 actually carries inp, so it stays
+    // dormant (never false-fails) on an LCP-only summary until field data flows.
+    const inpMed = Number(r.p75?.inp);
+    const hasInp = Number.isFinite(inpMed);
+    const inpBudget = Number.isFinite(budget.inp) ? budget.inp : 200;
+    const inpOver = hasInp && inpMed > inpBudget;
     out.push({
       route, profile: 'field', source: 'rum',
-      status: (lcpOver || clsOver) ? 'over-budget' : 'ok',
+      status: (lcpOver || clsOver || inpOver) ? 'over-budget' : 'ok',
       lcpMed: Math.round(lcpMed), clsMed: Number(clsMed.toFixed(4)),
+      ...(hasInp ? { inpMed: Math.round(inpMed) } : {}),
       budget, samples: r.samples,
       reasons: [
         lcpOver ? `field p75 LCP ${Math.round(lcpMed)}ms > ${budget.lcp}ms (${r.samples} samples)` : null,
         clsOver ? `field p75 CLS ${clsMed.toFixed(4)} > ${budget.cls} (${r.samples} samples)` : null,
+        inpOver ? `field p75 INP ${Math.round(inpMed)}ms > ${inpBudget}ms (${r.samples} samples)` : null,
       ].filter(Boolean),
     });
   }
@@ -237,6 +247,16 @@ if (SELF_TEST) {
       name: 'rum: sufficient route over field LCP → over-budget',
       summary: { fieldBudget: { lcp: 2500, cls: 0.1, inp: 200 }, routes: { '/': { samples: 80, sufficient: true, p75: { lcp: 3300, cls: 0.05 } } } },
       expect: 'over-budget',
+    },
+    {
+      name: 'rum: sufficient route over field INP → over-budget (S195)',
+      summary: { fieldBudget: { lcp: 2500, cls: 0.1, inp: 200 }, routes: { '/': { samples: 80, sufficient: true, p75: { lcp: 2100, cls: 0.05, inp: 320 } } } },
+      expect: 'over-budget',
+    },
+    {
+      name: 'rum: route with no inp in p75 → ok (INP dormant, S195)',
+      summary: { fieldBudget: { lcp: 2500, cls: 0.1, inp: 200 }, routes: { '/': { samples: 80, sufficient: true, p75: { lcp: 2100, cls: 0.05 } } } },
+      expect: 'ok',
     },
     {
       name: 'rum: thin route → low-sample (advisory, falls back)',
