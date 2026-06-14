@@ -304,6 +304,9 @@ const RUM_UX_DYNAMIC = [
   prefixAllowlist('share', { charset: /^[a-z0-9-]+:[a-z]+$/, maxLen: 40 }),
   // S198: streak:day-N (N 1-30) + streak:break — daily visit streak from visit-streak.js.
   prefixAllowlist('streak', { charset: /^[a-z0-9-]+$/, maxLen: 12 }),
+  // S198: engagement:scroll_N (25/50/75/100) + engagement:exit_intent_shown/answered —
+  // primary in-page engagement signals, previously dead gtag sinks, now land in /v/rum.
+  prefixAllowlist('engagement', { charset: /^[a-z0-9_]+$/, maxLen: 32 }),
 ];
 const cleanRumUxEvent = makeRumUxCleaner(RUM_UX_EVENTS, RUM_UX_DYNAMIC);
 

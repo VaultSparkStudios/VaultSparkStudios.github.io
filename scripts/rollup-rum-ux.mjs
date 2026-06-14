@@ -179,6 +179,16 @@ export function deriveSummary(historyRows) {
   const sortedShares = {};
   for (const k of Object.keys(shares).sort()) sortedShares[k] = shares[k];
 
+  // S198: engagement signals (scroll depth + exit intent) — previously dead gtag sinks,
+  // now landing in /v/rum via sendBeacon. Aggregated here as scroll_N counts + intent
+  // shown/answered so the studio can finally measure real in-page engagement depth.
+  const engagements = {};
+  for (const [ev, n] of Object.entries(events)) {
+    if (ev.startsWith('engagement:')) engagements[ev.slice('engagement:'.length)] = n;
+  }
+  const sortedEngagements = {};
+  for (const k of Object.keys(engagements).sort()) sortedEngagements[k] = engagements[k];
+
   // Sort the events map for byte-stable output.
   const sortedEvents = {};
   for (const k of Object.keys(events).sort()) sortedEvents[k] = events[k];
@@ -187,6 +197,7 @@ export function deriveSummary(historyRows) {
     funnelCtas: sortedFunnelCtas,
     sources: sortedSources,
     shares: sortedShares,
+    engagements: sortedEngagements,
     schemaVersion: '1.0',
     // generatedAt mirrors asOf (latest history day) — deterministic, NOT wall-clock,
     // so --check byte-comparison never drifts. Satisfies the public-contract-health

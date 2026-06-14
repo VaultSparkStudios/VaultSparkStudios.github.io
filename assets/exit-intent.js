@@ -132,7 +132,7 @@
       q.textContent = '';
       panel.appendChild(thanks);
       setTimeout(function () { if (panel.parentNode) panel.parentNode.removeChild(panel); }, 2200);
-      if (window.gtag) window.gtag('event', 'exit_intent_answered', { answer: key, page: location.pathname });
+      try { if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([JSON.stringify({ ux: 'engagement:exit_intent_answered', answer: key })], { type: 'application/json' })); } catch (_) {}
     }
 
     ANSWERS.forEach(function (opt) {
@@ -153,7 +153,7 @@
     panel.appendChild(btns);
     document.body.appendChild(panel);
 
-    if (window.gtag) window.gtag('event', 'exit_intent_shown', { page: location.pathname });
+    try { if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([JSON.stringify({ ux: 'engagement:exit_intent_shown' })], { type: 'application/json' })); } catch (_) {}
   }
 
   function bindDesktop() {

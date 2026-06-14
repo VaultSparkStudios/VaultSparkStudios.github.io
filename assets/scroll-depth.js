@@ -1,5 +1,5 @@
-// scroll-depth.js — GA4 scroll-depth milestone tracking
-// Fires gtag scroll_milestone events at 25 / 50 / 75 / 100% of page height.
+// scroll-depth.js — scroll-depth milestone tracking
+// Fires engagement:scroll_N events (25/50/75/100%) to /v/rum via sendBeacon.
 // Sentinels are created dynamically — no HTML changes required.
 // CSP-safe: no eval, no new Function, no inline handlers.
 
@@ -8,12 +8,11 @@
 
   document.addEventListener('DOMContentLoaded', function () {
 
-    // Guard: GA4 gtag must be available (may not be on ad-blocked sessions).
-    // We define a safe wrapper so the rest of the code stays clean.
     function fireEvent(percent) {
       try {
-        if (typeof gtag === 'function') {
-          gtag('event', 'scroll_milestone', { percent: percent });
+        var body = JSON.stringify({ ux: 'engagement:scroll_' + percent });
+        if (navigator.sendBeacon) {
+          navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
         }
       } catch (e) {
         // Silently swallow — analytics failure must never break page behaviour.
