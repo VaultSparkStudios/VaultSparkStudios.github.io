@@ -25,6 +25,21 @@
   var SEEN_KEY = 'vs_tour_seen';
   var OFFER_DELAY_MS = 8000;
 
+  // S195 (item 9): the onboarding arc's events fired through window.gtag, which
+  // was removed site-wide at S147/S175 — so every tour metric was a silent no-op
+  // (the same dead-sink class S194 fixed for the funnel). Rewire to the live
+  // /v/rum funnel beacon: bounded `funnel:` family, allowlisted at the Worker,
+  // privacy-minimized (event name only, no IDs/payload). CANON-029 cost-neutral.
+  function emitFunnel(name) {
+    try {
+      var suffix = String(name || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_').slice(0, 48);
+      if (!suffix) return;
+      var body = JSON.stringify({ route: location.pathname || '/', ux: 'funnel:' + suffix });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+      else fetch('/v/rum', { method: 'POST', body: body, headers: { 'Content-Type': 'application/json' }, keepalive: true }).catch(function () {});
+    } catch (_) {}
+  }
+
   function optedOut() {
     try {
       if (sessionStorage.getItem(SEEN_KEY) === '1') return true;
@@ -124,7 +139,18 @@
     skip.addEventListener('click', onSkip);
     var progress = document.createElement('span'); progress.className = 'vs-tour-card__progress';
     progress.textContent = (index + 1) + ' / ' + total;
-    actions.appendChild(btn); actions.appendChild(skip); actions.appendChild(progress);
+    actions.appendChild(btn); actions.appendChild(skip);
+    // Final stop routes the warmed-up visitor straight into the oracle — the arc
+    // hands off to a measurable conversion action (funnel:onboarding_tour_ask_ignis).
+    if (index + 1 >= total) {
+      var ask = document.createElement('a');
+      ask.className = 'vs-tour-card__skip';
+      ask.href = '/ignis/';
+      ask.textContent = 'Ask IGNIS';
+      ask.addEventListener('click', function () { emitFunnel('onboarding_tour_ask_ignis'); });
+      actions.appendChild(ask);
+    }
+    actions.appendChild(progress);
     card.appendChild(eyebrow); card.appendChild(title); card.appendChild(body); card.appendChild(actions);
     document.body.appendChild(card);
     btn.focus({ preventScroll: true });
@@ -140,25 +166,25 @@
     markSeen();
     var stops = STOPS.map(function (s) { return { meta: s, el: resolveAnchor(s) }; }).filter(function (s) { return s.el; });
     if (!stops.length) { closeCard(); return; }
-    if (window.gtag) window.gtag('event', 'ignis_tour_started', { stops: stops.length });
+    emitFunnel('onboarding_tour_started');
 
     // Escape key aborts the tour at any stop.
     var onKey = function (e) {
       if (e.key === 'Escape' || e.keyCode === 27) {
         document.removeEventListener('keydown', onKey);
         closeCard();
-        if (window.gtag) window.gtag('event', 'ignis_tour_skipped', { atStop: -1 });
+        emitFunnel('onboarding_tour_skipped_esc');
       }
     };
     document.addEventListener('keydown', onKey);
 
     var i = 0;
     function step() {
-      if (i >= stops.length) { closeCard(); if (window.gtag) window.gtag('event', 'ignis_tour_completed'); return; }
+      if (i >= stops.length) { closeCard(); emitFunnel('onboarding_tour_completed'); return; }
       var s = stops[i];
       scrollTo(s.el);
       setTimeout(function () {
-        renderCard(i, stops.length, s.meta, function next() { i++; step(); }, function skip() { closeCard(); if (window.gtag) window.gtag('event', 'ignis_tour_skipped', { atStop: i }); });
+        renderCard(i, stops.length, s.meta, function next() { i++; step(); }, function skip() { closeCard(); emitFunnel('onboarding_tour_skipped'); });
       }, 320);
     }
     step();
@@ -177,6 +203,7 @@
       startTour();
     });
     document.body.appendChild(pill);
+    emitFunnel('onboarding_tour_offered');
     // Auto-dismiss the offer after 30s of inaction — never nag.
     setTimeout(function () {
       if (pill.parentNode) pill.parentNode.removeChild(pill);
