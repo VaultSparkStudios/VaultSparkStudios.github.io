@@ -266,6 +266,11 @@ const RUM_UX_EVENTS = new Set([
   // S189: Ask IGNIS answer feedback — 1-tap helpful/unhelpful on a delivered
   // answer. Names only (no query text, no IDs); feeds api/funnel-summary.json.
   'oracle-answer:helpful', 'oracle-answer:unhelpful',
+  // S195: conversational IGNIS follow-ups — ask (a typed/bare follow-up resolved
+  // against the prior turn), more ("tell me more" deepener), sibling (a follow-up
+  // chip from the last answer's sibling docs). Names only; client-side retrieval,
+  // no query text. Measures whether the new multi-turn thread gets used.
+  'oracle-followup:ask', 'oracle-followup:more', 'oracle-followup:sibling',
   // S190: progressive membership unlock — fires when membership-unlock.js sets
   // body[data-vs-unlock-stage=N] based on visit/proof/dispatch signals. Names
   // only; no PII; feeds funnel-summary stage-distribution bucket.

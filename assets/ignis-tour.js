@@ -30,7 +30,7 @@
   // (the same dead-sink class S194 fixed for the funnel). Rewire to the live
   // /v/rum funnel beacon: bounded `funnel:` family, allowlisted at the Worker,
   // privacy-minimized (event name only, no IDs/payload). CANON-029 cost-neutral.
-  function emitFunnel(name) {
+  function pushFunnel(name) {
     try {
       var suffix = String(name || '').toLowerCase().replace(/[^a-z0-9_]+/g, '_').slice(0, 48);
       if (!suffix) return;
@@ -147,7 +147,7 @@
       ask.className = 'vs-tour-card__skip';
       ask.href = '/ignis/';
       ask.textContent = 'Ask IGNIS';
-      ask.addEventListener('click', function () { emitFunnel('onboarding_tour_ask_ignis'); });
+      ask.addEventListener('click', function () { pushFunnel('onboarding_tour_ask_ignis'); });
       actions.appendChild(ask);
     }
     actions.appendChild(progress);
@@ -166,25 +166,25 @@
     markSeen();
     var stops = STOPS.map(function (s) { return { meta: s, el: resolveAnchor(s) }; }).filter(function (s) { return s.el; });
     if (!stops.length) { closeCard(); return; }
-    emitFunnel('onboarding_tour_started');
+    pushFunnel('onboarding_tour_started');
 
     // Escape key aborts the tour at any stop.
     var onKey = function (e) {
       if (e.key === 'Escape' || e.keyCode === 27) {
         document.removeEventListener('keydown', onKey);
         closeCard();
-        emitFunnel('onboarding_tour_skipped_esc');
+        pushFunnel('onboarding_tour_skipped_esc');
       }
     };
     document.addEventListener('keydown', onKey);
 
     var i = 0;
     function step() {
-      if (i >= stops.length) { closeCard(); emitFunnel('onboarding_tour_completed'); return; }
+      if (i >= stops.length) { closeCard(); pushFunnel('onboarding_tour_completed'); return; }
       var s = stops[i];
       scrollTo(s.el);
       setTimeout(function () {
-        renderCard(i, stops.length, s.meta, function next() { i++; step(); }, function skip() { closeCard(); emitFunnel('onboarding_tour_skipped'); });
+        renderCard(i, stops.length, s.meta, function next() { i++; step(); }, function skip() { closeCard(); pushFunnel('onboarding_tour_skipped'); });
       }, 320);
     }
     step();
@@ -203,7 +203,7 @@
       startTour();
     });
     document.body.appendChild(pill);
-    emitFunnel('onboarding_tour_offered');
+    pushFunnel('onboarding_tour_offered');
     // Auto-dismiss the offer after 30s of inaction — never nag.
     setTimeout(function () {
       if (pill.parentNode) pill.parentNode.removeChild(pill);

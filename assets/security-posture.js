@@ -16,10 +16,25 @@
       '</span><h3>' + esc(label) + '</h3><p class="security-posture__detail">' + esc(detail) + '</p></article>';
   }
 
+  // Styles live in an injected <style> block (no inline style attributes — the
+  // style-purity contract forbids them). __verdict/__foot are S195 additions.
+  function ensureStyles() {
+    if (document.getElementById('vs-security-posture-style')) return;
+    var s = document.createElement('style');
+    s.id = 'vs-security-posture-style';
+    s.textContent =
+      '.security-posture__verdict{color:var(--muted);margin:.2rem 0 1.2rem}' +
+      '.security-posture__verdict strong{color:var(--gold,#ffc400)}' +
+      '.security-posture__foot{margin-top:1.3rem;color:var(--dim,#6272a0);font-size:.82rem}' +
+      '.security-posture__foot a{color:var(--gold,#ffc400)}';
+    document.head.appendChild(s);
+  }
+
   function boot() {
     if (location.pathname.indexOf('/security') !== 0) return;
     var main = document.querySelector('main');
     if (!main || document.querySelector('[data-security-posture]')) return;
+    ensureStyles();
     var section = document.createElement('section');
     section.className = 'container security-posture';
     section.setAttribute('data-security-posture', '');
@@ -38,8 +53,8 @@
 
       var head = '<div class="eyebrow">Trust Center</div>' +
         '<h2 class="security-posture__title">Public security posture.</h2>' +
-        '<p class="security-posture__verdict" style="color:var(--muted);margin:.2rem 0 1.2rem">' +
-          '<strong style="color:var(--gold,#ffc400)">' + esc(verified) + ' of ' + esc(total) + '</strong> controls verified from live repo evidence' +
+        '<p class="security-posture__verdict">' +
+          '<strong>' + esc(verified) + ' of ' + esc(total) + '</strong> controls verified from live repo evidence' +
           (data.posture ? ' · posture <strong>' + esc(data.posture) + '</strong>' : '') +
         '</p>';
 
@@ -53,9 +68,9 @@
         cards += card(st, 'Availability', detail);
       }
 
-      var foot = '<p class="security-posture__foot" style="margin-top:1.3rem;color:var(--dim,#6272a0);font-size:.82rem">' +
-        'Full machine-readable proof: <a href="/api/status-proof.json" style="color:var(--gold,#ffc400)">status-proof.json</a> · ' +
-        'Obelisk trust posture: <a href="/obelisk-passport/login.html" style="color:var(--gold,#ffc400)">passport</a>. ' +
+      var foot = '<p class="security-posture__foot">' +
+        'Full machine-readable proof: <a href="/api/status-proof.json">status-proof.json</a> · ' +
+        'Obelisk trust posture: <a href="/obelisk-passport/login.html">passport</a>. ' +
         'Post-quantum migration-ready.</p>';
 
       section.innerHTML = head + '<div class="security-posture__grid">' + cards + '</div>' + foot;
