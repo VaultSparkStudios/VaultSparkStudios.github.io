@@ -270,7 +270,7 @@ const RUM_UX_EVENTS = new Set([
   // against the prior turn), more ("tell me more" deepener), sibling (a follow-up
   // chip from the last answer's sibling docs). Names only; client-side retrieval,
   // no query text. Measures whether the new multi-turn thread gets used.
-  'oracle-followup:ask', 'oracle-followup:more', 'oracle-followup:sibling',
+  'oracle-followup:ask', 'oracle-followup:more', 'oracle-followup:sibling', 'oracle-followup:history',
   // S190: progressive membership unlock — fires when membership-unlock.js sets
   // body[data-vs-unlock-stage=N] based on visit/proof/dispatch signals. Names
   // only; no PII; feeds funnel-summary stage-distribution bucket.
