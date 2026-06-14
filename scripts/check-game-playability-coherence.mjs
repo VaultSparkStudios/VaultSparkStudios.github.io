@@ -111,13 +111,31 @@ function runSelfTest() {
   console.error('✗ check-game-playability-coherence --self-test: ' + fail + ' failed'); process.exit(1);
 }
 
+// Load game-registry.json if present (S198: single source of truth for status/playUrl).
+function loadRegistry() {
+  try {
+    return JSON.parse(readFileSync(join(ROOT, 'data', 'game-registry.json'), 'utf8')).games || {};
+  } catch { return {}; }
+}
+
 function runScan() {
+  const registry = loadRegistry();
   const files = execSync('git ls-files "games/*/index.html"', { cwd: ROOT, encoding: 'utf8' })
     .split('\n').filter(Boolean);
   let errors = 0, warns = 0, scanned = 0;
   for (const f of files) {
     scanned++;
-    const { status, findings } = classifyGamePage(readFileSync(join(ROOT, f), 'utf8'));
+    const html = readFileSync(join(ROOT, f), 'utf8');
+    const { status, findings } = classifyGamePage(html);
+    // Registry cross-check: if the registry declares a status for this slug,
+    // the page's data-status must agree — a divergence means one was updated but
+    // not the other (the exact class of drift data/game-registry.json prevents).
+    const slug = f.split('/')[1];
+    const reg = registry[slug];
+    if (reg && reg.status !== status && status !== 'unknown') {
+      findings.push({ level: 'error',
+        msg: `registry says status="${reg.status}" but page has data-status="${status}" — update one to match` });
+    }
     for (const x of findings) {
       if (x.level === 'error') { console.error(`✗ ${f} [${status}]: ${x.msg}`); errors++; }
       else { console.warn(`  ⚠ ${f} [${status}]: ${x.msg}`); warns++; }
@@ -127,7 +145,8 @@ function runScan() {
     console.error(`✗ check-game-playability-coherence: ${errors} SPARKED↔playable contradiction(s) — fix before push`);
     process.exit(1);
   }
-  console.log(`✓ check-game-playability-coherence: ${scanned} game page(s) coherent` + (warns ? ` (${warns} warning)` : ''));
+  const regNote = Object.keys(registry).length ? ` (registry: ${Object.keys(registry).length} games)` : '';
+  console.log(`✓ check-game-playability-coherence: ${scanned} game page(s) coherent${regNote}` + (warns ? ` (${warns} warning)` : ''));
   process.exit(0);
 }
 
