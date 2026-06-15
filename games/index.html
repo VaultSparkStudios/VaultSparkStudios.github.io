@@ -411,21 +411,23 @@
       margin-top: 0.06rem;
     }
 
-    /* ── Color themes for art panels ── */
-    .doodie .game-card-hero::before,
-    .doodie .card-hero::before { background: radial-gradient(ellipse, #e84040 0%, #6b1a1a 60%, transparent 100%); }
-    .gridiron .game-card-hero::before,
-    .gridiron .card-hero::before { background: radial-gradient(ellipse, #1fa2ff 0%, #0a3d70 60%, transparent 100%); }
-    .footballgm .game-card-hero::before,
-    .footballgm .card-hero::before { background: radial-gradient(ellipse, #22c55e 0%, #064e1e 60%, transparent 100%); }
-    .vaultfront .game-card-hero::before,
-    .vaultfront .card-hero::before { background: radial-gradient(ellipse, #ffc400 0%, #5c3d00 60%, transparent 100%); }
-    .solara .game-card-hero::before,
-    .solara .card-hero::before { background: radial-gradient(ellipse, #c084fc 0%, #3b0764 60%, transparent 100%); }
-    .mindframe .game-card-hero::before,
-    .mindframe .card-hero::before { background: radial-gradient(ellipse, #06b6d4 0%, #012d35 60%, transparent 100%); }
-    .vault-sealed .game-card-hero::before,
-    .vault-sealed .card-hero::before { background: radial-gradient(ellipse, #475569 0%, #0f172a 60%, transparent 100%); }
+    /* ── Bespoke cover-art tiles (S200) — cover PNG layered over the accent
+          gradient fallback; if the image fails the gradient still reads as art. ── */
+    .card-hero, .game-card-hero {
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+    }
+    .doodie.card-hero, .doodie.game-card-hero        { background-image: url(/assets/covers/doodie.png),      radial-gradient(ellipse at 30% 35%, #e84040, #6b1a1a 60%, transparent 100%); }
+    .gridiron.card-hero, .gridiron.game-card-hero    { background-image: url(/assets/covers/gridiron.png),    radial-gradient(ellipse at 30% 35%, #1fa2ff, #0a3d70 60%, transparent 100%); }
+    .footballgm.card-hero, .footballgm.game-card-hero{ background-image: url(/assets/covers/footballgm.png),  radial-gradient(ellipse at 30% 35%, #22c55e, #064e1e 60%, transparent 100%); }
+    .vaultfront.card-hero, .vaultfront.game-card-hero{ background-image: url(/assets/covers/vaultfront.png),  radial-gradient(ellipse at 30% 35%, #ffc400, #5c3d00 60%, transparent 100%); }
+    .solara.card-hero, .solara.game-card-hero        { background-image: url(/assets/covers/solara.png),      radial-gradient(ellipse at 30% 35%, #c084fc, #3b0764 60%, transparent 100%); }
+    .mindframe.card-hero, .mindframe.game-card-hero  { background-image: url(/assets/covers/mindframe.png),    radial-gradient(ellipse at 30% 35%, #06b6d4, #012d35 60%, transparent 100%); }
+    .the-exodus.card-hero, .the-exodus.game-card-hero{ background-image: url(/assets/covers/the-exodus.png),  radial-gradient(ellipse at 30% 35%, #f97316, #4a1d05 60%, transparent 100%); }
+    .vault-sealed.card-hero, .vault-sealed.game-card-hero { background-image: url(/assets/covers/vault-sealed.png), radial-gradient(ellipse at 30% 35%, #475569, #0f172a 60%, transparent 100%); }
+    /* the cover already carries the title lockup; hide the duplicate DOM heading + keep status badge */
+    .card-hero h3, .game-card-hero h2 { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
     /* ── FAQ ── */
     .faq-section { padding: 2rem 0 4rem; }
@@ -687,26 +689,6 @@
             </div>
           </article>
 
-          <!-- Gridiron GM Play -->
-          <article class="game-card" data-status="vaulted" data-game="gridiron-gm-play" data-genre="sports" aria-label="Gridiron GM Play — Vaulted">
-            <div class="card-hero gridiron">
-              <span class="status status-vaulted card-badge">🔒 Vaulted</span>
-              <h3>Gridiron GM Play</h3>
-            </div>
-            <div class="card-content">
-              <p>
-                The playable browser build of Gridiron GM. Vaulted while the next version is forged. Our active football sim today is VaultSpark Football GM — persistent leagues, save and continue.
-              </p>
-              <div class="meta">
-                <span>Sports Sim</span><span>Franchise</span><span>Vaulted</span>
-              </div>
-              <div class="game-card-actions">
-                <a class="button" href="/games/vaultspark-football-gm/">Play Football GM Instead</a>
-                <a class="button-secondary" href="/games/gridiron-gm-play/">About Gridiron GM Play</a>
-              </div>
-            </div>
-          </article>
-
           <!-- VaultSpark Football GM -->
           <article class="game-card" data-status="sparked" data-game="vaultspark-football-gm" data-genre="sports" aria-label="VaultSpark Football GM — Sparked">
             <div class="card-hero footballgm">
@@ -746,7 +728,7 @@
                 <span>Strategy</span><span>Real-Time</span><span>Vault Warfare</span>
               </div>
               <div class="game-card-actions">
-                <a class="button" href="/vault-member/#register">Get Early Access</a>
+                <a class="button" href="/vault-member/#register">Join Waitlist</a>
                 <a class="button-secondary" href="/games/vaultfront/">About VaultFront</a>
               </div>
             </div>
@@ -790,7 +772,7 @@
                 <span>Puzzle</span><span>Cognitive</span><span>Experimental</span>
               </div>
               <div class="game-card-actions">
-                <a class="button" href="/vault-member/#register">Get Early Signal</a>
+                <a class="button" href="/vault-member/#register">Join Waitlist</a>
                 <a class="button-secondary" href="/games/mindframe/">About MindFrame</a>
               </div>
             </div>
@@ -812,7 +794,7 @@
                 <span>Survival</span><span>Narrative</span><span>Browser</span>
               </div>
               <div class="game-card-actions">
-                <a class="button" href="/vault-member/#register">Get Early Signal</a>
+                <a class="button" href="/vault-member/#register">Join Waitlist</a>
                 <a class="button-secondary" href="/games/the-exodus/">About The Exodus</a>
               </div>
             </div>

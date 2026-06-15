@@ -1,30 +1,33 @@
-<!-- generated-by: /implement skill v1.0 (S198) -->
-<!-- generated-at: 2026-06-14 · session 198 · source: docs/AUDIT_2026-06-14-S198.json -->
+<!-- generated-by: /implement skill v1.0 -->
+<!-- generated-at: 2026-06-15 · session 200 · source: docs/AUDIT_2026-06-15.json -->
 
-# Implement Plan — S198
+# Implement Plan — AUDIT_2026-06-15 (full plan, one pass)
 
-Source: docs/AUDIT_2026-06-14-S198.json · 12 items · Combined Priority: 325.05
+Sequenced for optimal efficiency (group by code surface, front-load 🔥 + quick wins, foundations before façades). Ladder rung chosen per item to fit budget; riskier URL-deleting merges run L1 (cross-link/dedupe, no SEO-breaking deletes) this pass.
 
-## Wave Order (optimal efficiency — grouped by code surface)
+## Wave 1 — Games surface (games/index.html + game pages + CSS)
+- **#10** games-grid-honesty-and-cta — L2 (quick win)
+- **#3** game-cover-art-system — L2
 
-| Wave | # | Slug | Axis | Effort | Priority | Rung |
-|---|---|---|---|---|---|---|
-| **A: Game Pages** | | | | | | |
-| A1 | 3 | vault-rank-hook-play-pages | gamification | 1h | 35.4 | L2 |
-| A2 | 7 | first-climb-cross-surface | gamification | 2h | 24.5 | L2 |
-| A3 | 2 | visit-streak-retention | newFeatures | 2h | 36.0 | L2 |
-| **B: Membership** | | | | | | |
-| B1 | 1 | membership-value-clarity | ux | 2h | 70.0 | L2 |
-| **C: AI/IGNIS** | | | | | | |
-| C1 | 4 | oracle-velocity-git-series | ai | 1h | 35.4 | L2 |
-| C2 | 5 | ignis-local-session-memory | ai | 2h | 28.0 | L2 |
-| **D: Worker + Ambient** | | | | | | |
-| D1 | 10 | acquisition-source-rum-complete | feedbackLoop | 1h | 15.2 | L2 |
-| D2 | 9 | ambient-shell-dead-sink-rewire | featureDepth | 2h | 15.75 | L2 |
-| **E: Build** | | | | | | |
-| E1 | 6 | ignis-build-incremental | speed | 1h | 25.3 | L2 |
-| **F: Security** | | | | | | |
-| F1 | 11 | tt-enforce-reprobe | security | 30m | 10.6 | L2 |
-| F2 | 12 | staging-box-recovery | security | 1h | 8.9 | L2 |
-| **G: Structural** | | | | | | |
-| G1 | 8 | game-registry-single-source | featureDepth | 6h | 20.0 | L1 |
+## Wave 2 — Homepage / shell (index.html + style.css + home JS)
+- **#9** light-mode-visual-quality — L2
+- **#5** hero-immersion-parallax — L2
+- **#6** homepage-live-velocity-meter — L1→L2
+- **#7** homepage-merge-activity-feeds — L1 (tabs, no removals)
+
+## Wave 3 — Member / membership surface
+- **#2** portal-member-first-load-premium — L2
+- **#12** member-surface-ia-cleanup — L1 (nav + cross-link)
+- **#14** merge-membership-value — L1 (cross-link/dedupe)
+
+## Wave 4 — Intelligence surface
+- **#1** render-dormant-intelligence-visuals — L2
+- **#8** differentiate-intelligence-surfaces — L1 (purpose banner + sub-nav)
+- **#4** universe-depth-map — L1 (homepage teaser constellation)
+
+## Wave 5 — Info / IA redundancy
+- **#11** merge-pathways-pages — L1 (data-drive, defer deletion)
+- **#15** merge-brand-into-press — L1 (cross-link + nav dedupe)
+- **#13** faq-data-driven-search — L2
+
+Final: `npm run build:check` green → full `/closeout`.
