@@ -40,15 +40,19 @@
       fetch('/ignis/output/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null),
       fetch('/ignis/output/ecosystem-state.json',    { cache: 'no-cache' }).catch(() => null),
     ]);
-    const velocity  = velRes  && velRes.ok  ? await velRes.json()  : null;
+    let velocity  = velRes  && velRes.ok  ? await velRes.json()  : null;
     let ecosystem = ecoRes  && ecoRes.ok  ? await ecoRes.json()  : null;
-    // Public-safe deployed fallback (S193 founder decision: external projects,
-    // no internal data) so the ecosystem-driven panels render on prod where
-    // /ignis/output/* 404s. velocity has no public equivalent yet → stays null
-    // and the velocity-only panels self-hide via their own guards.
+    // Public-safe deployed fallbacks (S193 + S200) so the panels render on prod
+    // where /ignis/output/* is gitignored and 404s. ecosystem ← /api/ecosystem-state.json;
+    // velocity ← /api/ecosystem-velocity.json (S200 #1 — public daily commit series,
+    // no internal data) which makes the 60-day heatmap + velocity insights live.
     if (!ecosystem) {
       const pub = await fetch('/api/ecosystem-state.json', { cache: 'no-cache' }).catch(() => null);
       ecosystem = pub && pub.ok ? await pub.json() : null;
+    }
+    if (!velocity) {
+      const pubV = await fetch('/api/ecosystem-velocity.json', { cache: 'no-cache' }).catch(() => null);
+      velocity = pubV && pubV.ok ? await pubV.json() : null;
     }
     return { velocity, ecosystem };
   }
