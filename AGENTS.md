@@ -258,6 +258,7 @@ For `audience: public-*` projects:
 - **CANON-038** · Shared Studio Self-Host Server — one Hetzner box · isolated per-project databases/APIs · default self-host target
 - **CANON-039** · Build-It-Ourselves, Internal-First, OSS-Research Discipline — own our stack; reuse internal tools; research free/credible/verified open-source before adopting or building
 - **CANON-040** · Agent-Deployed Migrations — AI agents apply database/infra migrations themselves, automatically, behind the safety gates
+- **CANON-041** · Website Mobile Parity + Elite Visual Craft — full desktop↔mobile UI/UX parity at all times · no broken mobile nav · every site visually elite
 
 <!-- canon-index:end -->
 

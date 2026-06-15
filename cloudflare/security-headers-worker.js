@@ -285,7 +285,7 @@ const RUM_UX_EVENTS = new Set([
   // admitted at runtime by the engagement/pwa/streak RUM_UX_DYNAMIC prefixes below,
   // but check-rum-allowlist only validates the static Set for emitted names — list
   // them here so the integrity gate stays green without loosening runtime behavior.
-  'engagement:ignis_lens_opened', 'engagement:visit_depth_upsell_shown',
+  'engagement:ignis_lens_opened', 'engagement:visit_depth_upsell_shown', 'engagement:ignis_synthesis_opened',
   'pwa:banner_shown', 'pwa:install_accepted', 'pwa:install_dismissed', 'pwa:already_installed',
   'streak:badge-shown',
 ]);

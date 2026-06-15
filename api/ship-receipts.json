@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-15T06:59:27.826Z",
+  "generatedAt": "2026-06-15T17:03:08.982Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,17 +8,22 @@
     {
       "theme": "conversion",
       "label": "Conversion",
-      "feedbackSignals": 2,
+      "feedbackSignals": 3,
       "shippedCommits": [
+        {
+          "sha": "8061ae0f",
+          "summary": "classified intel section for Vault Members",
+          "ts": "2026-06-15T16:05:56.000Z"
+        },
+        {
+          "sha": "840af6b0",
+          "summary": "IGNIS tier advisor + intent filter tabs (S201 #1+2)",
+          "ts": "2026-06-15T15:40:29.000Z"
+        },
         {
           "sha": "83ac0d1f",
           "summary": "tier-aware portal header accent + member-directory discoverability + membership cross-link",
           "ts": "2026-06-15T05:22:55.000Z"
-        },
-        {
-          "sha": "8f82b79a",
-          "summary": "membership-value-clarity — Vault Journey day-in-the-life strip",
-          "ts": "2026-06-14T20:27:19.000Z"
         }
       ],
       "proof": null
@@ -26,7 +31,7 @@
     {
       "theme": "worlds",
       "label": "Worlds",
-      "feedbackSignals": 6,
+      "feedbackSignals": 3,
       "shippedCommits": [
         {
           "sha": "0f2d7ae4",
@@ -42,16 +47,6 @@
           "sha": "76741c53",
           "summary": "game-registry.json single source of truth + coherence gate wire",
           "ts": "2026-06-14T20:27:19.000Z"
-        },
-        {
-          "sha": "8319e9f7",
-          "summary": "Wave A — rank hook, First Climb quest, visit streak on game pages",
-          "ts": "2026-06-14T20:27:19.000Z"
-        },
-        {
-          "sha": "4ac71476",
-          "summary": "SERP-safe meta descriptions on the conversion surface + game-page ceiling gate",
-          "ts": "2026-06-14T15:18:06.000Z"
         }
       ],
       "proof": null
@@ -59,8 +54,13 @@
     {
       "theme": "transparency",
       "label": "Transparency",
-      "feedbackSignals": 6,
+      "feedbackSignals": 5,
       "shippedCommits": [
+        {
+          "sha": "11ef748b",
+          "summary": "session digest after 2+ queries",
+          "ts": "2026-06-15T16:24:22.000Z"
+        },
         {
           "sha": "71883411",
           "summary": "cross-link brand <-> press media kits (#15 L1)",
@@ -79,11 +79,6 @@
         {
           "sha": "81fcd653",
           "summary": "content-hash skip for expensive IGNIS build scripts",
-          "ts": "2026-06-14T20:27:19.000Z"
-        },
-        {
-          "sha": "1d7f5057",
-          "summary": "ignis-local-session-memory — cross-page query history chips",
           "ts": "2026-06-14T20:27:19.000Z"
         }
       ],
@@ -113,7 +108,7 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 3,
+      "feedbackSignals": 2,
       "shippedCommits": [
         {
           "sha": "7478c7dc",
@@ -124,11 +119,6 @@
           "sha": "c58428b2",
           "summary": "closeout write-backs + 12/12 shipped — SIL 975 · zero deferrals · first perfect session",
           "ts": "2026-06-15T02:50:46.000Z"
-        },
-        {
-          "sha": "c627e815",
-          "summary": "rewire dead gtag engagement sinks to /v/rum beacon",
-          "ts": "2026-06-14T20:27:19.000Z"
         }
       ],
       "proof": {
@@ -145,6 +135,19 @@
         "lcpDeltaPct": -66.1,
         "confidence": "medium"
       }
+    },
+    {
+      "theme": "frontdoor",
+      "label": "Front door",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "68c379da",
+          "summary": "rank climbers strip on homepage",
+          "ts": "2026-06-15T16:39:48.000Z"
+        }
+      ],
+      "proof": null
     }
   ]
 }

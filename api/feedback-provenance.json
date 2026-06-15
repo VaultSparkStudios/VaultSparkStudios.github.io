@@ -4,33 +4,40 @@
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 5,
+  "themeCount": 6,
   "themes": [
     {
       "key": "conversion",
       "label": "Conversion",
-      "count": 2,
+      "count": 3,
       "commits": [
+        {
+          "sha": "8061ae0f",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "classified intel section for Vault Members",
+          "ts": "2026-06-15T16:05:56.000Z"
+        },
+        {
+          "sha": "840af6b0",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "IGNIS tier advisor + intent filter tabs (S201 #1+2)",
+          "ts": "2026-06-15T15:40:29.000Z"
+        },
         {
           "sha": "83ac0d1f",
           "move": "Shipped",
           "tone": "sparked",
           "summary": "tier-aware portal header accent + member-directory discoverability + membership cross-link",
           "ts": "2026-06-15T05:22:55.000Z"
-        },
-        {
-          "sha": "8f82b79a",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "membership-value-clarity — Vault Journey day-in-the-life strip",
-          "ts": "2026-06-14T20:27:19.000Z"
         }
       ]
     },
     {
       "key": "worlds",
       "label": "Worlds",
-      "count": 6,
+      "count": 3,
       "commits": [
         {
           "sha": "0f2d7ae4",
@@ -52,35 +59,21 @@
           "tone": "sparked",
           "summary": "game-registry.json single source of truth + coherence gate wire",
           "ts": "2026-06-14T20:27:19.000Z"
-        },
-        {
-          "sha": "8319e9f7",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "Wave A — rank hook, First Climb quest, visit streak on game pages",
-          "ts": "2026-06-14T20:27:19.000Z"
-        },
-        {
-          "sha": "4ac71476",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "SERP-safe meta descriptions on the conversion surface + game-page ceiling gate",
-          "ts": "2026-06-14T15:18:06.000Z"
-        },
-        {
-          "sha": "88f435df",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "SPARKED game pages no longer contradict themselves with a stale \"Demo Coming Soon\"",
-          "ts": "2026-06-14T15:18:06.000Z"
         }
       ]
     },
     {
       "key": "transparency",
       "label": "Transparency",
-      "count": 6,
+      "count": 5,
       "commits": [
+        {
+          "sha": "11ef748b",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "session digest after 2+ queries",
+          "ts": "2026-06-15T16:24:22.000Z"
+        },
         {
           "sha": "71883411",
           "move": "Shipped",
@@ -108,20 +101,6 @@
           "tone": "sparked",
           "summary": "content-hash skip for expensive IGNIS build scripts",
           "ts": "2026-06-14T20:27:19.000Z"
-        },
-        {
-          "sha": "1d7f5057",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "ignis-local-session-memory — cross-page query history chips",
-          "ts": "2026-06-14T20:27:19.000Z"
-        },
-        {
-          "sha": "110f5be8",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "oracle-velocity-git-series — 24-week commit cadence sparkline",
-          "ts": "2026-06-14T20:27:19.000Z"
         }
       ]
     },
@@ -142,7 +121,7 @@
     {
       "key": "speed",
       "label": "Speed",
-      "count": 3,
+      "count": 2,
       "commits": [
         {
           "sha": "7478c7dc",
@@ -157,13 +136,20 @@
           "tone": "muted",
           "summary": "closeout write-backs + 12/12 shipped — SIL 975 · zero deferrals · first perfect session",
           "ts": "2026-06-15T02:50:46.000Z"
-        },
+        }
+      ]
+    },
+    {
+      "key": "frontdoor",
+      "label": "Front door",
+      "count": 1,
+      "commits": [
         {
-          "sha": "c627e815",
+          "sha": "68c379da",
           "move": "Shipped",
           "tone": "sparked",
-          "summary": "rewire dead gtag engagement sinks to /v/rum beacon",
-          "ts": "2026-06-14T20:27:19.000Z"
+          "summary": "rank climbers strip on homepage",
+          "ts": "2026-06-15T16:39:48.000Z"
         }
       ]
     }

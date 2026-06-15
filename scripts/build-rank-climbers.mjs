@@ -55,6 +55,7 @@ async function build() {
   try { climbers = await fetchClimbers(); } catch (e) { console.warn('[build-rank-climbers] fetch failed:', e.message); }
 
   const out = {
+    schemaVersion: '1.0',
     generatedAt: new Date().toISOString(),
     period: periodLabel,
     climbers: climbers,

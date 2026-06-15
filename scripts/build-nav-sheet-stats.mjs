@@ -56,6 +56,23 @@ function loadRows() {
       .filter(Boolean);
     return { source: path.relative(ROOT, abs), rows };
   }
+  // Fallback: scan .cache/rum-raw/ date-partitioned directories (fetch-rum-from-r2 output)
+  const cacheDir = path.join(ROOT, '.cache', 'rum-raw');
+  if (fs.existsSync(cacheDir)) {
+    const rows = [];
+    for (const dt of fs.readdirSync(cacheDir).sort()) {
+      const dtDir = path.join(cacheDir, dt);
+      if (!fs.statSync(dtDir).isDirectory()) continue;
+      for (const f of fs.readdirSync(dtDir)) {
+        if (!f.endsWith('.json')) continue;
+        try {
+          const parsed = JSON.parse(fs.readFileSync(path.join(dtDir, f), 'utf8'));
+          rows.push(parsed);
+        } catch {}
+      }
+    }
+    if (rows.length > 0) return { source: `.cache/rum-raw (${rows.length} events)`, rows };
+  }
   return { source: 'none', rows: [] };
 }
 

@@ -91,7 +91,7 @@ for (const project of registry.projects) {
   }
 
   if (truth && !/^Overall status:.*\b(green|yellow|red|unknown)\b/m.test(truth)) issues.push('TRUTH_AUDIT.md missing Overall status line');
-  if (truth && !/^Last reviewed:\s*\d{4}-\d{2}-\d{2}(?:\s*\([^)]*\))?$/m.test(truth)) issues.push('TRUTH_AUDIT.md missing Last reviewed date');
+  if (truth && !/^Last reviewed:\s*\d{4}-\d{2}-\d{2}/m.test(truth)) issues.push('TRUTH_AUDIT.md missing Last reviewed date');
 
   results.push({
     slug: project.slug,

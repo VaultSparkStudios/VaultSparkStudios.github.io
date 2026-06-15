@@ -213,7 +213,7 @@
     });
   }
 
-  function emitShareEvent(outcome) {
+  function beaconShare(outcome) {
     try {
       navigator.sendBeacon('/v/rum', JSON.stringify({
         ux: 'share:rank-card:' + outcome,
@@ -246,7 +246,7 @@
   async function shareRankCard(data) {
     var blob;
     try { blob = await buildShareCard(data); }
-    catch (_) { emitShareEvent('error'); return; }
+    catch (_) { beaconShare('error'); return; }
 
     var slug = (data.rank || 'rank').toLowerCase().replace(/\s+/g, '-');
     var file = new File([blob], 'vault-rank-' + slug + '.png', { type: 'image/png' });
@@ -257,20 +257,20 @@
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
       try {
         await navigator.share({ title: 'My Vault Rank: ' + data.rank, text: shareText, files: [file] });
-        emitShareEvent('native');
+        beaconShare('native');
         return;
       } catch (e) {
-        if (e && e.name === 'AbortError') { emitShareEvent('cancel'); return; }
+        if (e && e.name === 'AbortError') { beaconShare('cancel'); return; }
       }
     }
 
     // Fallback: clipboard copy
     try {
       await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-      emitShareEvent('copy');
+      beaconShare('copy');
       showShareToast('Rank card copied!');
     } catch (_) {
-      emitShareEvent('error');
+      beaconShare('error');
       showShareToast('Share not supported on this browser.');
     }
   }

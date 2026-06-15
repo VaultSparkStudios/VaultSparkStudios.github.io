@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-15T07:05:13.277Z",
+  "generatedAt": "2026-06-15T17:03:12.775Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -25,7 +25,7 @@
     {
       "key": "feedback",
       "label": "Feedback Themes",
-      "value": "5",
+      "value": "6",
       "href": "/feedback/"
     },
     {
@@ -60,7 +60,7 @@
     {
       "surface": "mobile-nav",
       "verdict": "canary",
-      "evidence": "0 nav-sheet opens; defaultSwapReady=false",
+      "evidence": "1 nav-sheet opens; defaultSwapReady=false",
       "next": "Expose a small deterministic mobile cohort and re-check close mix."
     },
     {
@@ -72,7 +72,7 @@
     {
       "surface": "feedback",
       "verdict": "investigate",
-      "evidence": "5 public-safe feedback themes",
+      "evidence": "6 public-safe feedback themes",
       "next": "Route top themes into feedback decision board lanes."
     }
   ],
