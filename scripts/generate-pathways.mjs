@@ -1,0 +1,145 @@
+#!/usr/bin/env node
+/**
+ * generate-pathways.mjs — S201 merge-pathways-pages.
+ *
+ * Reads data/pathways.json and regenerates all 6 pathways sub-page index.html files
+ * files from a single source of truth. Idempotent; only writes files
+ * when content changes.
+ *
+ * Usage:
+ *   node scripts/generate-pathways.mjs          # dry-run (shows diff)
+ *   node scripts/generate-pathways.mjs --apply  # writes files
+ *   node scripts/generate-pathways.mjs --check  # exits 1 if any file is stale
+ */
+import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { fileURLToPath } from 'url';
+import { join, dirname } from 'path';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(__dirname, '..');
+
+const APPLY = process.argv.includes('--apply');
+const CHECK = process.argv.includes('--check');
+
+const data = JSON.parse(readFileSync(join(ROOT, 'data/pathways.json'), 'utf8'));
+const pathways = data.pathways;
+
+// Read one existing file to extract the shared nav/footer boilerplate.
+// The generator preserves the current nav exactly — it only swaps the per-pathway content.
+const SAMPLE = join(ROOT, 'pathways/builders/index.html');
+const sample = readFileSync(SAMPLE, 'utf8');
+
+// Extract nav block (from <nav class="nav-center" to </nav>) and footer block.
+const NAV_START = sample.indexOf('<nav class="nav-center"');
+const NAV_END = sample.indexOf('</nav>', sample.indexOf('</nav>', NAV_START) + 6) + 6; // outer </nav>
+const navBlock = sample.slice(NAV_START, NAV_END);
+
+const FOOTER_START = sample.indexOf('<footer class="site-footer"');
+const FOOTER_END = sample.indexOf('</footer>') + 9;
+const footerBlock = sample.slice(FOOTER_START, FOOTER_END);
+
+// Extract ambient scripts block.
+const AMBIENT_START = sample.indexOf('<!-- vs-ambient:start -->');
+const AMBIENT_END = sample.indexOf('<!-- vs-ambient:end -->') + '<!-- vs-ambient:end -->'.length;
+const ambientBlock = sample.slice(AMBIENT_START, AMBIENT_END);
+
+const SPEC_START = sample.indexOf('<!-- vs-speculation:start -->');
+const SPEC_END = sample.indexOf('<!-- vs-speculation:end -->') + '<!-- vs-speculation:end -->'.length;
+const speculationBlock = sample.slice(SPEC_START, SPEC_END);
+
+function escapeHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function buildBreadcrumb(p) {
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://vaultsparkstudios.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Pathways', item: 'https://vaultsparkstudios.com/pathways/' },
+      { '@type': 'ListItem', position: 3, name: p.breadcrumbName, item: `https://vaultsparkstudios.com/pathways/${p.slug}/` }
+    ]
+  });
+}
+
+function buildCtas(ctas) {
+  return ctas.map(function (c) {
+    return `<a class="${escapeHtml(c.type)}" href="${escapeHtml(c.href)}">${escapeHtml(c.label)}</a>`;
+  }).join(' ');
+}
+
+function buildPage(p) {
+  const depthPrefix = '../../';
+  return `<!DOCTYPE html><html lang="en" class="dark-mode" data-theme="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${escapeHtml(p.pageTitle)}</title><meta name="description" content="${escapeHtml(p.metaDescription)}"><link rel="canonical" href="${escapeHtml('https://vaultsparkstudios.com/pathways/' + p.slug + '/')}"><link rel="stylesheet" href="${depthPrefix}assets/style.shell-cade1bd169.css">${speculationBlock}
+<script type="application/ld+json" data-vs-breadcrumb>${buildBreadcrumb(p)}</script>
+</head><body class="dark-mode" data-theme="dark">
+<script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement,r);document.body.classList.remove.apply(document.body,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script><a href="#main-content" class="skip-link">Skip to main content</a><header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="/" aria-label="VaultSpark Studios — home">
+        <img fetchpriority="high" src="${depthPrefix}assets/vaultspark-icon-nav.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <span class="brand-wordmark">VaultSpark<span class="brand-suffix"> Studios</span><small>The vault is sparked</small></span>
+      </a>
+      ${navBlock}
+      <div class="nav-right">
+        <a class="nav-icon-link" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer" aria-label="VaultSpark Studios on GitHub"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        <a class="nav-signin" href="/vault-member/#login">Sign In</a>
+        <a class="button button-sm" href="/vault-member/#register">Join The Vault</a>
+        <button type="button" class="hamburger" id="hamburger" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header><main id="main-content"><section class="container" style="padding:5rem 0"><span class="eyebrow">${escapeHtml(p.eyebrow)}</span><h1 style="font-family:Georgia,serif;font-size:clamp(2.4rem,6vw,4.5rem)">${escapeHtml(p.headline)}</h1><p style="color:var(--muted);max-width:70ch">${escapeHtml(p.lede)}</p><p style="margin-top:1.5rem">${buildCtas(p.ctas)}</p></section></main>${footerBlock}<script src="${depthPrefix}assets/ambient.shell-3667694cc0.js" defer></script>  ${ambientBlock}
+</body></html>
+`;
+}
+
+let stale = 0;
+let updated = 0;
+
+for (const p of pathways) {
+  const outPath = join(ROOT, `pathways/${p.slug}/index.html`);
+  const generated = buildPage(p);
+
+  if (!existsSync(outPath)) {
+    if (APPLY) {
+      writeFileSync(outPath, generated, 'utf8');
+      console.log(`[generate-pathways] created ${p.slug}/index.html`);
+      updated++;
+    } else {
+      console.log(`[generate-pathways] MISSING: pathways/${p.slug}/index.html`);
+      stale++;
+    }
+    continue;
+  }
+
+  const existing = readFileSync(outPath, 'utf8');
+
+  // Compare meaningful content only (ignore trailing whitespace differences).
+  if (existing.trim() === generated.trim()) {
+    if (!CHECK) console.log(`[generate-pathways] OK: pathways/${p.slug}/index.html`);
+    continue;
+  }
+
+  stale++;
+  if (APPLY) {
+    writeFileSync(outPath, generated, 'utf8');
+    console.log(`[generate-pathways] updated pathways/${p.slug}/index.html`);
+    updated++;
+  } else if (!CHECK) {
+    console.log(`[generate-pathways] STALE: pathways/${p.slug}/index.html`);
+  }
+}
+
+if (CHECK && stale > 0) {
+  console.error(`[generate-pathways] ${stale} pathway page(s) are stale — run with --apply to regenerate.`);
+  process.exit(1);
+}
+
+if (!APPLY && !CHECK && stale > 0) {
+  console.log(`[generate-pathways] ${stale} stale — run with --apply to update.`);
+}
+if (APPLY) {
+  console.log(`[generate-pathways] done — ${updated} updated, ${pathways.length - updated} unchanged.`);
+}
