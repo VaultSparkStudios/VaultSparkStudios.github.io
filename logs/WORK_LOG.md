@@ -2718,3 +2718,15 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
 **Verify:** `npm run build:check` EXIT 0 end-to-end (115-page crawl, 0 status failures, 0 blocking-script findings, coherence 8 games, TT 7/7). Pre-existing journal-84d/changelog-62d warns remain (founder-gated).
 
 **SIL:** 968/1000 (v3.0) · Velocity: 9 · Debt: ↓ · All 9 commits pushed at closeout.
+
+## 2026-06-15 — Session 203 (founder creative direction · Manifesto overhaul + 7-surface identity sync · deployed live)
+
+**Founder ask:** Completely overhaul "The VaultSpark Manifesto" to reflect the real studio identity, all projects, and overall mission — then (on clarification) "research everything … some things DO get VAULTED so the current manifesto is wrong," plus "add the rewrites and edits to all pages that mention similar content," "commit and push and run /closeout," and "make sure this goes to main website live."
+
+**Shipped 1 creative deliverable (commit `4bd708d7`, pushed, verified live on apex):**
+1. `manifesto-overhaul` — rewrote The VaultSpark Manifesto (`studio/index.html`, 3 → 5 paragraphs). Fixed the lifecycle contradiction (old copy claimed a sparked world "cannot be un-sparked / cannot go back into containment / permanent" — contradicts the real VAULTED status) and broadened from games-only to the connected portfolio: games · cinematic worlds · creative/trading tools · AI-native intelligence. Movements: forge → what-we-forge ("different forms, one fire") → the cycle (FORGE→SPARK→VAULT, "vaulted, not buried") → the code (open · honest · independent · identity-forged-in · free front door) → what-it-becomes.
+2. `identity-surface-sync` — swept 6 echoing surfaces to match: studio FAQ #1, homepage hero "Vault-Forge" + "Inside The Vault" (fixed "no vault can withhold forever"), press short bio (+AI-native intelligence), universe mythology (re-seal/reignite beat, in-lore), join subtext. Dated journal + legal/SEO meta left as historical record.
+
+**Verify:** `build:check` content + style gates pass end-to-end; sole failure is a **pre-existing** `build-public-status` proof-feed drift (confirmed on a clean tree — unrelated). Apex `vaultsparkstudios.com/studio/` confirmed serving the new manifesto post-deploy.
+
+**SIL:** 981/1000 (v3.0) · Velocity: 1 · Debt: → · 1 commit pushed (rebased over CI beacons; substantive tip).

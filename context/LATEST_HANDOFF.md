@@ -1,6 +1,16 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-15 (Session 202)
+Last updated: 2026-06-15 (Session 203)
+## Where We Left Off — Session 203
+- **Founder direction (creative):** "I want this 'Manifesto' to be completely altered and overhauled and based on the actual studio identity and all our projects and our overall mission and goal" → on clarification: "research everything … and some things DO get VAULTED so the current manifesto is wrong." Then: "Also add the rewrites and edits to all pages that mention similar content" + "commit and push and run /closeout" + "make sure this goes to main website live."
+- **Shipped 1 creative deliverable (manifesto overhaul + 7-surface identity sync), commit `4bd708d7`, pushed + verified live on apex:**
+  - **The VaultSpark Manifesto rewritten** (`studio/index.html`) — 3 → 5 paragraphs. Kept the iconic blockquote; fixed the lifecycle contradiction (old: sparked world "cannot be un-sparked … cannot go back into containment … permanent" — contradicts VAULTED); broadened from games-only to the real connected portfolio (games · cinematic worlds · creative/trading tools · AI-native intelligence). Five movements: forge / what-we-forge / the cycle / the code / what-it-becomes.
+  - **6 echoing surfaces synced:** studio FAQ #1 ("game studio" → creative studio + vaulted-return); homepage hero "Vault-Forge" line + "Inside The Vault" panel (fixed "no vault can withhold forever"); press short bio (+AI-native intelligence + sealed-back nuance); universe mythology (softened "does not preserve" + re-seal/reignite beat, in-lore); join subtext (broadened beyond "game studio").
+  - **Left as historical record:** dated journal dispatches + legal/SEO meta (no false claim in them).
+- **Tests:** `build:check` content + style gates all pass. The one failure is a **pre-existing** `build-public-status` proof-feed drift — verified present on a clean tree (stashed my changes, still failed), so unrelated to this work. Fix when desired: `node scripts/build-public-status.mjs`.
+- **Deploy:** `4bd708d7` pushed to main (substantive tip, rebased over CI beacons), GitHub Pages build succeeded, **apex `vaultsparkstudios.com/studio/` confirmed serving the new manifesto** (marker "Different forms, one fire" present; old "cannot be un-sparked" gone).
+- **Next-session verify targets:** (a) `/press/`, `/universe/`, `/join/`, homepage — confirm the broadened copy renders on a real browser; (b) consider the `check-identity-coherence.mjs` gate (S203 SIL commit) to drift-proof the new "creative studio" framing.
+
 ## Where We Left Off — Session 202
 - **Founder direction:** "do the RLS fix now" + "and any other fixes or fix anything broken" + Nervous System visitor review. S202 was a targeted bug-fix session with no /audit — pure founder-directed fixes.
 - **Shipped 3 fixes (1 commit `46b1784c`, pushed to main):**

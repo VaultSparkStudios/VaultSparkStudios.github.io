@@ -9,15 +9,27 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 979.3 | 5: 977.6 | 10: 968 | 25: 972 | all: 965 (v3.0 /1000)
-  └ 3-session: Dev 98.7 | Align 98.0 | Momentum 98.0 | Engage 97.7 | Process 99.0
-Velocity trend: → (S202: bug-fix session, 3 fixes — small scope but real unblocks; S201: 9/10; S200: 12/15) | Protocol velocity: ↑ (vault-climbers now live; Nervous System now visitor-readable; pathToFileURL lesson closes a class of Windows ESM bugs) | Debt: ↓ (rank_name silent error fixed; RLS unblocked; dev-speak on public page eliminated)
-Momentum runway: prod-verify S202 (vault-climbers strip visible; Nervous System visitor copy live) · prod-verify S201 (classified reveal; Share Rank; IGNIS synthesis; pathways rendered) · prod-verify S200 visual wave · staging box recovery (HUMAN ACTION: HCLOUD_TOKEN) · universe depth-map (founder lore) | Intent rate: 100% (last 5)
-Last session: 2026-06-15 | Session 202 | Total: 982/1000 (v3.0) | Velocity: 3 | protocolVelocity: 3
+Avgs - 3: 981.0 | 5: 979.8 | 10: 970 | 25: 972 | all: 966 (v3.0 /1000)
+  └ 3-session: Dev 98.7 | Align 98.3 | Momentum 98.0 | Engage 98.0 | Process 98.3
+Velocity trend: → (S203: founder creative session, 1 deliverable — manifesto overhaul + 7-surface identity sync, deployed live; S202: 3 fixes; S201: 9/10) | Protocol velocity: → (content/brand session — no protocol changes) | Debt: → (fixed a real identity contradiction: manifesto claimed sparked worlds "cannot go back into containment" while VAULTED is a load-bearing status)
+Momentum runway: prod-verify S202 (vault-climbers strip; Nervous System visitor copy) · prod-verify S201 (classified reveal; Share Rank; IGNIS synthesis; pathways) · universe depth-map (founder lore) · staging box recovery (HUMAN ACTION: HCLOUD_TOKEN) | Intent rate: 100% (last 5)
+Last session: 2026-06-15 | Session 203 | Total: 981/1000 (v3.0) | Velocity: 1 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-15 — Session 203 (founder creative direction · Manifesto overhaul + 7-surface identity sync · deployed live · build:check gates green) | Total: 981/1000 (v3.0) | Velocity: 1 | Debt: →
+
+**Score:** 981 / 1000
+Dev Health 98 | Creative Alignment 99 | Momentum 98 | Engagement 98 | Process Quality 98 | Cross-Repo Coherence 97 | Security Posture 99 | Ecosystem Integration 97 | Capital Efficiency 99 | Automation Coverage 98
+
+**What worked:** Resolved the central identity tension up front via a focused two-question clarification (positioning + scope) before writing a word — the founder corrected toward "research everything; some things DO get VAULTED so the current manifesto is wrong." That catch was the session's spine: the old manifesto asserted a sparked world "cannot be un-sparked… cannot go back into containment… permanent," directly contradicting the studio's own FORGE → SPARK → VAULT lifecycle (VAULTED is real and load-bearing). Rewrote the manifesto around the truthful cycle AND broadened it from games-only to the actual connected portfolio (games · cinematic worlds · creative/trading tools · AI-native intelligence). Grounded every claim in the real roster (registry, press bio, universe mythology) rather than inventing copy. Swept all 7 echoing surfaces in one coherent pass so no page contradicts the new narrative.
+
+**What to improve next:** The site has ~6 places that restate studio identity ("independent game studio" in meta keywords, milestone noscript, privacy/investor legal copy) — a `check-identity-coherence.mjs` gate could flag when marketing prose calls VaultSpark a "game studio" (narrowing) vs the canonical "creative studio." Would prevent identity drift the way `check-game-playability-coherence` prevents status drift.
+
+**Commit 1 to TASK_BOARD:** Add `check-identity-coherence.mjs` — WARN when public prose narrows the studio to "game studio" instead of the canonical "creative studio building games, worlds, tools, and intelligence."
+**Commit 2 to TASK_BOARD:** Prod-verify the manifesto wave on a real browser (studio/home/press/universe/join read the new copy; no "cannot be un-sparked" anywhere).
 
 ## 2026-06-15 — Session 202 (bug-fix · 3 targeted fixes · build:check EXIT 0) | Total: 982/1000 (v3.0) | Velocity: 3 | Debt: ↓
 

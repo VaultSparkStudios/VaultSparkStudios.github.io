@@ -1,6 +1,12 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-15 (Session 202 — vault-climbers RLS fix + vault-rank-bar.js fix + Nervous System visitor rewrite · build:check EXIT 0)
+Last updated: 2026-06-15 (Session 203 — VaultSpark Manifesto overhaul + 7-surface identity sync · deployed live · gates green)
+
+## Now (S203 runway — pre-loaded)
+
+- [ ] **[S203][VERIFY/P0] Prod-verify the manifesto wave on a real browser.** After deploy: `/studio/` reads the new 5-movement manifesto (no "cannot be un-sparked" / "We don't build products" anywhere); homepage hero "Vault-Forge" line + "Inside The Vault" panel read the broadened copy; `/press/` short bio mentions AI-native intelligence; `/universe/` mythology shows the re-seal/reignite beat; `/join/` subtext no longer says "game studio". Apex already confirmed serving new `/studio/` copy at closeout — re-check the other 4 surfaces. ~10m.
+- [ ] **[S203][SIL][STRUCT/P3] Add `check-identity-coherence.mjs` gate.** WARN (not error) when public marketing prose narrows VaultSpark to "game studio" instead of the canonical "creative studio building games, cinematic worlds, creative tools, and AI-native intelligence." Mirrors how `check-game-playability-coherence` prevents status drift — this prevents identity drift. Allowlist legal/SEO contexts (privacy, investor, meta keywords). ~45m.
+- [ ] **[S203][SIL][DOCS/P3] Document the manifesto/identity canon in one place.** The studio narrative is now consistent across 7 surfaces but has no single source doc; a short `docs/STUDIO_NARRATIVE.md` (the manifesto + the FORGE→SPARK→VAULT cycle + the "different forms, one fire" portfolio framing) gives future sessions one place to copy voice from. ~30m.
 
 ## Now (S202 runway — pre-loaded)
 
