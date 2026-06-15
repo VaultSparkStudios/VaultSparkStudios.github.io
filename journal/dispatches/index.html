@@ -111,6 +111,82 @@
       .disp-card { padding: 1.15rem 1.25rem; }
       .disp-card__body { font-size: 0.96rem; }
     }
+
+    /* S201 lore-gated-dispatches */
+    .disp-classified {
+      margin-top: 2.8rem;
+      padding: 1.8rem 1.6rem;
+      border-radius: 16px;
+      border: 1px solid rgba(255,196,0,0.18);
+      background: rgba(255,196,0,0.03);
+      position: relative;
+      overflow: hidden;
+    }
+    .disp-classified::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        -45deg,
+        rgba(255,196,0,0.015) 0px,
+        rgba(255,196,0,0.015) 1px,
+        transparent 1px,
+        transparent 18px
+      );
+      pointer-events: none;
+    }
+    .disp-classified__header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+    }
+    .disp-classified__badge {
+      display: inline-block;
+      padding: 0.18rem 0.55rem;
+      border-radius: 5px;
+      background: rgba(255,196,0,0.12);
+      border: 1px solid rgba(255,196,0,0.3);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      color: #ffc400;
+    }
+    .disp-classified__title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+    }
+    .disp-classified__lock {
+      text-align: center;
+      padding: 1.6rem 0.5rem;
+      position: relative;
+    }
+    .disp-classified__lock-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+      filter: grayscale(0.3);
+    }
+    .disp-classified__lock-msg {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      max-width: 50ch;
+      margin: 0 auto 1.4rem;
+    }
+    .disp-classified__rank-note {
+      font-size: 0.72rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: rgba(255,196,0,0.55);
+      font-weight: 700;
+      margin: 0 0 1.2rem;
+    }
+    .disp-card--classified { border-color: rgba(255,196,0,0.22); }
+    .disp-card--classified::before { background: linear-gradient(180deg, rgba(255,196,0,0.7), transparent); }
   </style>
 
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -228,6 +304,20 @@
           No dispatches recorded yet — check back tomorrow. The first signal lands when the daily workflow runs.
           <br><br><a href="/journal/" style="color:var(--gold);">Read the Signal Log instead &rarr;</a>
         </div>
+        <!-- S201 lore-gated classified section -->
+        <div class="disp-classified" id="disp-classified" aria-label="Classified insider dispatches">
+          <div class="disp-classified__header">
+            <span class="disp-classified__badge" aria-label="Classified">CLASSIFIED</span>
+            <h2 class="disp-classified__title">Insider Intel</h2>
+          </div>
+          <div class="disp-classified__lock" id="disp-classified-lock">
+            <div class="disp-classified__lock-icon" aria-hidden="true">🔒</div>
+            <p class="disp-classified__lock-msg">3 classified dispatches are held in the vault. Vault Members get unfiltered session intelligence — what actually happened behind each dispatch, raw build signals, and early reads on what's coming next.</p>
+            <a class="button" href="/vault-member/#register">Join The Vault — Free</a>
+          </div>
+          <div class="disp-classified__content" id="disp-classified-content" hidden aria-live="polite"></div>
+        </div>
+
         <div class="disp-rss">
           <div>
             <strong>Follow the dispatch.</strong>
@@ -416,6 +506,83 @@
           statusEl.textContent = 'Dispatch history not available right now';
           emptyEl.hidden = false;
         });
+    })();
+
+    // S201 lore-gated-dispatches: reveal classified intel to Vault Members.
+    (function () {
+      var lockEl = document.getElementById('disp-classified-lock');
+      var contentEl = document.getElementById('disp-classified-content');
+      if (!lockEl || !contentEl) return;
+
+      var INTEL = [
+        {
+          label: 'SESSION INTEL',
+          date: '2026-06-15',
+          body: 'S201 ran a full /audit → /implement → /closeout chain unattended. The IGNIS membership advisor, intent filter, FAQ data migration, rank card sharing, and lore-gated dispatches all shipped in one pass. Session context was compacted mid-run; the agent resumed without data loss and continued executing from exactly where it paused.'
+        },
+        {
+          label: 'FORGE STATUS',
+          date: '2026-06-14',
+          body: 'S196 closed twelve of thirteen goals. IGNIS client-side memory activated at zero API cost — the ember canvas now reads system GPU capability before rendering. BreadcrumbList structured data extended to 29 pages, covering every journal entry and legal surface.'
+        },
+        {
+          label: 'VAULT SIGNAL',
+          date: '2026-06-08',
+          body: 'The AI-discovery spine is sealed. /agents.json now ships with honest capability declarations, gated end-to-end against llms.txt for consistency. A 108-page crawl returned zero failures. The ambient JS bundle trimmed 23%, and the meta-description floor holds at 100% coverage.'
+        }
+      ];
+
+      function fmtDate(iso) {
+        try { return new Date(iso).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }); } catch (_) { return iso; }
+      }
+
+      function revealClassified(memberRank) {
+        lockEl.hidden = true;
+        while (contentEl.firstChild) contentEl.removeChild(contentEl.firstChild);
+
+        var note = document.createElement('p');
+        note.className = 'disp-classified__rank-note';
+        note.textContent = 'Viewing as ' + (memberRank || 'Vault Member') + ' · Unfiltered session intelligence';
+        contentEl.appendChild(note);
+
+        for (var i = 0; i < INTEL.length; i++) {
+          var intel = INTEL[i];
+          var card = document.createElement('article');
+          card.className = 'disp-card disp-card--classified';
+
+          var badge = document.createElement('div');
+          badge.className = 'disp-card__date';
+          badge.textContent = intel.label + ' · ' + fmtDate(intel.date);
+          card.appendChild(badge);
+
+          var body = document.createElement('div');
+          body.className = 'disp-card__body';
+          body.textContent = intel.body;
+          card.appendChild(body);
+
+          contentEl.appendChild(card);
+        }
+        contentEl.hidden = false;
+
+        try {
+          navigator.sendBeacon('/v/rum', JSON.stringify({
+            ux: 'engagement:classified_intel_view',
+            route: location.pathname,
+            ts: Date.now()
+          }));
+        } catch (_) {}
+      }
+
+      document.addEventListener('vs:session-ready', function (e) {
+        var detail = (e && e.detail) || {};
+        if (!detail.signedIn) return;
+        var rank = null;
+        try {
+          var c = sessionStorage.getItem('vs-rank-bar-data');
+          if (c) rank = JSON.parse(c).rank;
+        } catch (_) {}
+        revealClassified(rank);
+      });
     })();
   </script>
   <!-- vs-ambient:start -->
