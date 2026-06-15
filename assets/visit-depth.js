@@ -23,6 +23,13 @@
   var MIN_DWELL_MS  = 12 * 1000;
   var SUPPRESS_PATHS = ['/vault-member/', '/investor-portal/', '/studio-hub/', '/admin/', '/vaultsparked/', '/membership/'];
 
+  function emitUx(event) {
+    try {
+      var body = JSON.stringify({ route: location.pathname, ux: event });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+    } catch (_) {}
+  }
+
   // Map first path segment to a human-readable section label.
   var SECTION_LABELS = {
     '':            'the home vault',
@@ -147,7 +154,7 @@
     };
     document.addEventListener('keydown', onKey);
     try { sessionStorage.setItem(KEY_SHOWN, '1'); } catch (_) {}
-    if (window.gtag) window.gtag('event', 'visit_depth_upsell_shown', { sections: list.length });
+    emitUx('engagement:visit_depth_upsell_shown');
   }
 
   function maybeShow() {

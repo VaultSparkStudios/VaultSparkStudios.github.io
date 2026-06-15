@@ -172,11 +172,13 @@
         convo.topUrl = top.url || '';
         // S195: cross-surface quest flag — asking IGNIS completes a rank-quest step.
         try { localStorage.setItem('vs_quest_ask', '1'); } catch (_e) {}
-        // S198: local session memory — save query to history (max 3, newest first).
+        // S199 L2: persist query + timestamp; max 10, deduplicate by text.
         try {
-          var hist = JSON.parse(localStorage.getItem('vs_ignis_history') || '[]');
+          var rawHist = JSON.parse(localStorage.getItem('vs_ignis_history') || '[]');
           var qText = q.slice(0, 80);
-          hist = [qText].concat(hist.filter(function (h) { return h !== qText; })).slice(0, 3);
+          // Normalise legacy entries (plain strings from S198) to {query, ts} objects.
+          var hist = rawHist.map(function (e) { return typeof e === 'string' ? { query: e, ts: 0 } : e; });
+          hist = [{ query: qText, ts: Date.now() }].concat(hist.filter(function (e) { return e.query !== qText; })).slice(0, 10);
           localStorage.setItem('vs_ignis_history', JSON.stringify(hist));
         } catch (_e) {}
         renderFollowUps(out, result.sources, runQuery);
@@ -208,25 +210,28 @@
       container.appendChild(wrap);
     }
 
-    // S198: show cross-page history chips on load if history exists + input empty.
+    // S199 L2: show last-5 cross-page history chips on load if history exists + input empty.
     if (histEl) {
       try {
-        var prevHist = JSON.parse(localStorage.getItem('vs_ignis_history') || '[]');
+        var rawHist2 = JSON.parse(localStorage.getItem('vs_ignis_history') || '[]');
+        // Normalise legacy plain-string entries; cap display at 5 most recent.
+        var prevHist = rawHist2.map(function (e) { return typeof e === 'string' ? { query: e, ts: 0 } : e; }).slice(0, 5);
         if (prevHist.length && !form.q.value) {
           var label = document.createElement('span');
           label.className = 'vs-ask-ignis__history-label';
           label.textContent = 'Continue your research';
           var row = document.createElement('div');
           row.className = 'vs-ask-ignis__history-row';
-          prevHist.forEach(function (q) {
+          prevHist.forEach(function (entry) {
+            var qStr = entry.query || '';
             var btn = document.createElement('button');
             btn.type = 'button';
             btn.className = 'vs-ask-ignis__history-chip';
-            btn.textContent = q;
+            btn.textContent = qStr;
             btn.addEventListener('click', function () {
               emitUx('oracle-followup:history');
-              form.q.value = q;
-              runQuery(q, 'history');
+              form.q.value = qStr;
+              runQuery(qStr, 'history');
             });
             row.appendChild(btn);
           });

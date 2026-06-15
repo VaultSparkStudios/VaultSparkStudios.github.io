@@ -303,10 +303,15 @@ const RUM_UX_DYNAMIC = [
   // error). Two bounded tokens: slug is [a-z0-9-], outcome is [a-z]. Names only.
   prefixAllowlist('share', { charset: /^[a-z0-9-]+:[a-z]+$/, maxLen: 40 }),
   // S198: streak:day-N (N 1-30) + streak:break — daily visit streak from visit-streak.js.
+  // S199: streak:badge-shown — fires when badge renders (uptake signal, no trailing day/N).
   prefixAllowlist('streak', { charset: /^[a-z0-9-]+$/, maxLen: 12 }),
   // S198: engagement:scroll_N (25/50/75/100) + engagement:exit_intent_shown/answered —
   // primary in-page engagement signals, previously dead gtag sinks, now land in /v/rum.
-  prefixAllowlist('engagement', { charset: /^[a-z0-9_]+$/, maxLen: 32 }),
+  // S199: + engagement:visit_depth_upsell_shown + engagement:ignis_lens_opened (funnel L3)
+  prefixAllowlist('engagement', { charset: /^[a-z0-9_]+$/, maxLen: 48 }),
+  // S199: pwa:banner_shown / install_accepted / install_dismissed / already_installed —
+  // PWA install funnel from pwa-install.js. Bounded; no session/user data.
+  prefixAllowlist('pwa', { charset: /^[a-z_]+$/, maxLen: 24 }),
 ];
 const cleanRumUxEvent = makeRumUxCleaner(RUM_UX_EVENTS, RUM_UX_DYNAMIC);
 
@@ -566,6 +571,37 @@ export default {
     // --- Layer 0: Trusted Types report-only intake --------------------------
     if (url.pathname === '/v/tt-report') {
       return handleTrustedTypesReport(request, env, ctx);
+    }
+
+    // --- Layer 0: CSP violation reporting (S199) ----------------------------
+    // report-uri /v/csp-report in WORKER_CSP routes browser violations here.
+    // Stores structured entries in KV under csp:date:sequence (same namespace
+    // as TT reports). Sampled at 100% — full CSP violations are rare and high-signal.
+    if (url.pathname === '/v/csp-report') {
+      if (request.method !== 'POST') return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+      const len = Number(request.headers.get('Content-Length') || 0);
+      if (len > 16384) return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+      try {
+        const raw = await request.json();
+        if (env.RATE_LIMIT) {
+          const report = raw?.['csp-report'] || raw?.['content-security-policy-report'] || raw || {};
+          const day = new Date().toISOString().slice(0, 10);
+          const counterKey = `csp:${day}:counter`;
+          const current = Number(await env.RATE_LIMIT.get(counterKey)) || 0;
+          const next = (current + 1) % 200;
+          const entry = {
+            ts: new Date().toISOString(),
+            directive: String(report['violated-directive'] || report.violatedDirective || '').slice(0, 120),
+            blockedUri: String(report['blocked-uri'] || report.blockedURL || '').slice(0, 200),
+            documentUri: String(report['document-uri'] || report.documentURL || '').slice(0, 200),
+          };
+          ctx.waitUntil(Promise.all([
+            env.RATE_LIMIT.put(`csp:${day}:${String(next).padStart(4, '0')}`, JSON.stringify(entry), { expirationTtl: 259200 }),
+            env.RATE_LIMIT.put(counterKey, String(next), { expirationTtl: 262800 }),
+          ]));
+        }
+      } catch (_) { /* absorb parse errors — always 204 */ }
+      return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
     }
 
     // --- Layer 0a: hub subdomain terminates here, independent pipeline ---

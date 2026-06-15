@@ -13,7 +13,7 @@
  * Import-safe: side effects run only when invoked directly.
  */
 import { execSync, spawnSync } from 'node:child_process';
-import { writeFileSync, readFileSync, existsSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -66,7 +66,19 @@ function build(todayStr) {
   const lines = result.stdout.split('\n');
   const window = weekWindow(todayStr, WEEKS);
   const map = groupByWeek(lines, window);
-  const weeks = window.map((w) => ({ week: w, commitCount: map[w] }));
+  let weeks = window.map((w) => ({ week: w, commitCount: map[w] }));
+
+  // S199 oracle-velocity-window-repair: trim leading zero-commit weeks so the
+  // chart doesn't render a long empty flatline before the first active week.
+  // Always keeps at least MIN_TRAILING weeks total to show recent cadence.
+  const MIN_TRAILING = 4;
+  const firstActive = weeks.findIndex((w) => w.commitCount > 0);
+  if (firstActive > 0) {
+    // Trim up to firstActive, but never leave fewer than MIN_TRAILING weeks.
+    const sliceFrom = Math.min(firstActive, Math.max(0, weeks.length - MIN_TRAILING));
+    if (sliceFrom > 0) weeks = weeks.slice(sliceFrom);
+  }
+
   const total = weeks.reduce((s, r) => s + r.commitCount, 0);
   return { schemaVersion: '1.0', generatedAt: todayStr, source: 'git-log', weeksBack: WEEKS, totalCommits: total, weeks };
 }
@@ -124,9 +136,22 @@ if (isMain) {
   }
 
   try {
+    // S199 build-cache: skip rebuild when HEAD SHA + today haven't changed.
+    // The velocity series only differs when commits land or the date rolls over.
+    const headSha = spawnSync('git', ['rev-parse', 'HEAD'], { cwd: ROOT, encoding: 'utf8' }).stdout.trim();
     const today = new Date().toISOString().slice(0, 10);
+    const cacheStamp = `${headSha}:${today}`;
+    const cacheFile = join(ROOT, '.cache', 'velocity-series-hash');
+    let cachedStamp = '';
+    try { cachedStamp = readFileSync(cacheFile, 'utf8').trim(); } catch {}
+    if (existsSync(OUT) && cachedStamp === cacheStamp) {
+      console.log('build-velocity-series → api/velocity-series.json (cache hit, skipped)');
+      process.exit(0);
+    }
     const data = build(today);
     writeFileSync(OUT, JSON.stringify(data, null, 2) + '\n');
+    mkdirSync(join(ROOT, '.cache'), { recursive: true });
+    writeFileSync(cacheFile, cacheStamp + '\n', 'utf8');
     console.log('build-velocity-series → api/velocity-series.json (' + data.weeks.length + ' weeks · ' + data.totalCommits + ' commits)');
   } catch (e) {
     console.error('build-velocity-series error:', e.message);

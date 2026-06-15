@@ -4,15 +4,15 @@ Generated: 2026-06-14
 
 Tracks Studio OS compliance validation pass rate so drift is visible before it becomes a hard blocker.
 
-Latest: **31/32** passed · **97%** · trend ↓ · ███████▇
+Latest: **32/32** passed · **100%** · trend → · ████████
 
 ## Current Failing Projects
 
-- **VaultSpark Forge** — PROJECT_STATUS.json unreadable
+- None
 
 | Date | Passed | Failed | Skipped | Issues | Score |
 |---|---:|---:|---:|---:|---:|
-| 2026-06-14 | 31 | 1 | 0 | 1 | 97% |
+| 2026-06-14 | 32 | 0 | 0 | 0 | 100% |
 | 2026-06-12 | 32 | 0 | 0 | 0 | 100% |
 | 2026-06-11 | 32 | 0 | 0 | 0 | 100% |
 | 2026-06-10 | 32 | 0 | 0 | 0 | 100% |

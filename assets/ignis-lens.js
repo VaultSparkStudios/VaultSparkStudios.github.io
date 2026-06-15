@@ -25,6 +25,13 @@
 
   var SUPPRESS_PATHS = ['/vault-member/', '/investor-portal/', '/studio-hub/', '/admin/'];
 
+  function emitUx(event) {
+    try {
+      var body = JSON.stringify({ route: location.pathname, ux: event });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+    } catch (_) {}
+  }
+
   function shouldSuppress() {
     if (document.querySelector('[data-vault-oracle]')) return true;
     var path = location.pathname;
@@ -100,7 +107,7 @@
         }).catch(function () {
           host.textContent = 'IGNIS is offline. Try again in a moment.';
         });
-        if (window.gtag) window.gtag('event', 'ignis_lens_opened');
+        emitUx('engagement:ignis_lens_opened');
       }
     });
   }

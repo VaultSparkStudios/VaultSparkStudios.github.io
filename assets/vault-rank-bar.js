@@ -25,6 +25,7 @@
 
   var STORAGE_KEY = 'vs-rank-bar-data';
   var BAR_ID = 'vs-rank-bar';
+  var VELOCITY_ID = 'vs-rank-velocity';
   var barEl = null;
 
   function getRankProgress(points) {
@@ -62,17 +63,46 @@
   function renderBar(data) {
     if (!data || data.pct === undefined) return;
     var bar = ensureBar();
-    bar.setAttribute('title', data.maxed
+    var titleBase = data.maxed
       ? 'Rank: The Sparked — max rank'
-      : ('Rank progress: ' + data.rank + ' → ' + (data.next || '') + ' (' + data.pct + '%)'));
+      : ('Rank progress: ' + data.rank + ' → ' + (data.next || '') + ' (' + data.pct + '%)');
+    var velocityNote = data.weeksToNext
+      ? ' · At your pace: ' + data.next + ' in ~' + data.weeksToNext + ' week' + (data.weeksToNext === 1 ? '' : 's')
+      : '';
+    bar.setAttribute('title', titleBase + velocityNote);
     if (data.maxed) {
       bar.classList.add('vs-rank-bar--maxed');
+    }
+    // S199: show velocity chip on /ranks/ and /vault-member/ pages where space exists.
+    if (!data.maxed && data.weeksToNext && data.next) {
+      var onRankPage = /^\/(ranks|vault-member)\b/.test(location.pathname);
+      if (onRankPage) renderVelocityChip(data);
     }
     // Defer width set by a frame so the CSS transition fires.
     requestAnimationFrame(function () {
       bar.classList.add('vs-rank-bar--ready');
       bar.style.width = (data.pct || 0) + '%';
     });
+  }
+
+  // S199 membership-rank-velocity: brief velocity chip that fades in above rank bar.
+  function renderVelocityChip(data) {
+    if (document.getElementById(VELOCITY_ID)) return;
+    var chip = document.createElement('div');
+    chip.id = VELOCITY_ID;
+    chip.setAttribute('aria-live', 'polite');
+    chip.textContent = 'At your pace: ' + data.next + ' in ~' + data.weeksToNext + ' week' + (data.weeksToNext === 1 ? '' : 's');
+    var style = document.createElement('style');
+    style.textContent =
+      '#vs-rank-velocity{position:fixed;bottom:8px;right:12px;z-index:9998;' +
+      'padding:.28rem .7rem;background:rgba(13,17,28,.92);border:1px solid rgba(255,196,0,.25);' +
+      'border-radius:8px;font-size:.74rem;font-weight:600;color:rgba(255,255,255,.7);' +
+      'pointer-events:none;opacity:0;transition:opacity .6s ease .8s;}' +
+      '#vs-rank-velocity.vs-velocity--visible{opacity:1;}' +
+      '@media(prefers-reduced-motion:reduce){#vs-rank-velocity{transition:none;}}';
+    document.head.appendChild(style);
+    document.body.appendChild(chip);
+    requestAnimationFrame(function () { chip.classList.add('vs-velocity--visible'); });
   }
 
   function getCached() {
@@ -97,11 +127,30 @@
     try {
       var sb = window.VSSupabase;
       if (!sb) return;
-      var res = await sb.from('vault_members').select('points, rank_name').eq('id', userId).maybeSingle();
+      // S199: add created_at for velocity projection (no PII risk — own member row).
+      var res = await sb.from('vault_members').select('points, rank_name, created_at').eq('id', userId).maybeSingle();
       if (!res || !res.data) return;
       var points = Number(res.data.points) || 0;
       var progress = getRankProgress(points);
-      var data = { userId: userId, pct: progress.pct, rank: progress.rank, next: progress.next, maxed: progress.maxed };
+
+      // S199 membership-rank-velocity: project weeks to next tier.
+      var weeksToNext = null;
+      if (!progress.maxed && res.data.created_at) {
+        var joinMs = new Date(res.data.created_at).getTime();
+        var daysSinceJoin = Math.max(1, (Date.now() - joinMs) / 86400000);
+        var pointsPerDay = points / daysSinceJoin;
+        if (pointsPerDay > 0) {
+          var currentTier = RANK_THRESHOLDS.find(function (r) { return r.title === progress.rank; });
+          if (currentTier && currentTier.next !== null) {
+            var pointsNeeded = currentTier.next - points;
+            weeksToNext = Math.ceil(pointsNeeded / (pointsPerDay * 7));
+            if (weeksToNext < 1) weeksToNext = 1;
+            if (weeksToNext > 999) weeksToNext = null; // suppress implausible projections
+          }
+        }
+      }
+
+      var data = { userId: userId, pct: progress.pct, rank: progress.rank, next: progress.next, maxed: progress.maxed, weeksToNext: weeksToNext };
       setCache(data);
       renderBar(data);
     } catch (_) { /* silent */ }

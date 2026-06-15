@@ -107,6 +107,7 @@
     }
 
     target.parentNode.insertBefore(badge, target);
+    emitUx('streak:badge-shown');
   }
 
   function mount() {

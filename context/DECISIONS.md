@@ -2,6 +2,10 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-14 — S199 — Ark signature failures: all 111 are pattern-share from vaultspark-forge; fix requires studio-ops Ark signing key update
+
+**Decision:** The 111 Ark signature failures drained at S199 session start are all `pattern-share` cargo from `vaultspark-forge`. The `diagnose --sigs` subcommand does not exist in the current Ark CLI. The root cause is a signing key mismatch between the `vaultspark-forge` sender and the expected key registered in this repo's Ark verifier. Fixing this requires a studio-ops-side update to the Ark signing configuration for the `vaultspark-forge` slug — this repo cannot self-heal. **Action deferred to studio-ops** under CANON-018 (cross-repo intelligence flows through Ark, not direct file writes). Until healed, all `pattern-share` cargo from `vaultspark-forge` is silently dropped on drain. **Rationale:** root cause correctly identified; fix requires the cross-repo ops lane, not this project's code.
+
 ### 2026-06-14 — S196 — per-title OG cards are rasterized at build time with the sharp we already own (S195 deferral premise was false)
 
 **Decision:** Generate bespoke per-title Open Graph PNG cards at build time via `sharp` (already a trusted devDependency) rendering the existing OG SVG template, rather than the satori/resvg/CF-Image-Resizing paths considered. S195 deferred this item citing "needs native satori/resvg deps + Windows-build risk"; that premise was disproved by a live probe (`sharp` rasterizes the SVG to 1200×630 on this machine). The Cloudflare Image Resizing alternative was rejected under CANON-029 (it is a paid/plan-gated feature). The `/_og/` SVG Worker is retired for og:image use (SVG renders blank on socials — S194) and kept only as a layout-preview surface. **Rationale:** use the capability already owned; zero new supply chain, zero runtime cost, fully static + cacheable; resolves the one S195 deferral by correcting a false assumption rather than taking on new risk.

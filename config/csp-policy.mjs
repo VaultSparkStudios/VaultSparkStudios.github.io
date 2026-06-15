@@ -138,6 +138,7 @@ function buildCsp(options = {}) {
   ].filter(Boolean);
 
   if (options.upgradeInsecureRequests) directives.push('upgrade-insecure-requests');
+  if (options.reportUri) directives.push(`report-uri ${options.reportUri}`);
   return `${directives.join('; ')};`;
 }
 
@@ -156,6 +157,7 @@ export const WORKER_CSP = buildCsp({
   formAction: ["'self'", 'https://api.web3forms.com'],
   objectSrc: ["'none'"],
   upgradeInsecureRequests: true,
+  reportUri: 'https://vaultsparkstudios.com/v/csp-report',
 });
 
 export const REDIRECT_PAGE_CSP = buildCsp({

@@ -9,15 +9,24 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 968.7 | 5: 973.8 | 10: 965 | 25: 971 | all: 963 (v3.0 /1000)
-  └ 3-session: Dev 95.0 | Align 97.7 | Momentum 94.0 | Engage 95.0 | Process 97.3
-Velocity trend: ↑ (S198: 9/11 shipped + 1 D1 save; S197: 3/3; S196: 2/3 + 1 founder-gated) | Protocol velocity: ↑ (build-cache.mjs shared hash-skip library + 7th TT security-posture control + game-registry canonical single source + engagement: prefixAllowlist + engagements rollup block) | Debt: ↓ (dead gtag scroll+exit-intent sinks wired to /v/rum; velocity-series schemaVersion fixed; game-registry structural foundation laid; 3 expensive IGNIS build scripts skip on no-change)
-Momentum runway: game-registry derive-pass (nav/index from registry L2, ~2h) · prod-verify S195–S198 wave · staging box recovery (HUMAN ACTION: HCLOUD_TOKEN) · ARK-DEAD-GTAG broadcast (founder) · THEME TIER-LOCK (founder) · NAV-SHEET 100% flip (founder) · forge devlog publish (founder) · TT reprobe ~06-18 | Intent rate: 100% (last 5)
-Last session: 2026-06-14 | Session 198 | Total: 968/1000 (v3.0) | Velocity: 9 | protocolVelocity: 4
+Avgs - 3: 970.3 | 5: 971.2 | 10: 966 | 25: 971 | all: 964 (v3.0 /1000)
+  └ 3-session: Dev 96.3 | Align 97.7 | Momentum 96.7 | Engage 95.7 | Process 98.0
+Velocity trend: ↑ (S199: 12/12 shipped — first perfect 12/12 session; S198: 9/11; S197: 3/3) | Protocol velocity: ↑ (game-registry L2 derive scripts wired as CI gates; CSP reporting endpoint; stale-shell gate; IGNIS history L2; rank velocity chip) | Debt: ↓ (stale shells deleted; dead gtag visit-depth+ignis-lens wired; Ark sig root-cause logged; velocity chart zeros trimmed)
+Momentum runway: prod-verify S199 (IGNIS history chips; /v/csp-report KV; Oracle velocity 4 weeks; /ranks/ chip) · staging box recovery (HUMAN ACTION: HCLOUD_TOKEN) · ARK-DEAD-GTAG broadcast (founder) · THEME TIER-LOCK (founder) · NAV-SHEET 100% flip (founder) · forge devlog publish (founder) · TT reprobe ~06-18 | Intent rate: 100% (last 5)
+Last session: 2026-06-15 | Session 199 | Total: 975/1000 (v3.0) | Velocity: 12 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-15 — Session 199 (/goal chain · context-resumed · 12/12 shipped · build:check EXIT 0) | Total: 975/1000 (v3.0) | Velocity: 12 | Debt: ↓
+
+**Score:** 975 / 1000
+(Dev Health 98 · Creative Alignment 97 · Momentum 99 · Engagement 97 · Process Quality 99 · Cross-Repo Coherence 96 · Security Posture 100 · Ecosystem Integration 95 · Capital Efficiency 99 · Automation Coverage 100)
+
+**Audit:** 12 items, all shipped. Zero deferrals. Classes closed: (1) CSP violations now observable via /v/csp-report + report-uri; (2) game nav/index now derived from registry — structural drift impossible; (3) stale shells now have a cleanup gate. IGNIS query memory upgraded to {query,ts} L2. Membership rank velocity shipped (weeks-to-next projection). Oracle velocity chart leading-zeros trimmed. Ark sig failures root-caused and logged.
+
+**Brainstorm commit:** Wire `derive-game-nav.mjs --apply` + `derive-game-index.mjs --apply` into `npm run build` (not just build:check) so derivation runs automatically on every build and drift can never accumulate even without a CI run.
 
 ## 2026-06-14 — Session 198 (/goal chain · context-resumed · 9/11 shipped · 1 blocked (F2/hcloud) · 1 already-done (D1 save) · build:check EXIT 0) | Total: 968/1000 (v3.0) | Velocity: 9 | Debt: ↓
 

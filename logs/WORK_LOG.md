@@ -1,5 +1,21 @@
 # Work Log
 
+## 2026-06-15 — Session 199 (/goal chain · 12/12 shipped · first zero-deferral perfect run · build:check EXIT 0)
+
+Full `/goal` chain (start → audit → implement → closeout) with genius-level thinking. S199 is the first session to ship all 12 audit items with zero deferrals, zero blocked, zero carries. Context compacted mid-session; resumed cleanly from the compaction summary.
+
+**Observability arc (#1 + #3 + #10):** CSP violation reporting is now live — Worker `/v/csp-report` POST route stores violations to KV (`csp:date:seq` keys, 3-day TTL); `config/csp-policy.mjs` gained `reportUri` option and `WORKER_CSP` now appends `report-uri`. PWA install events are now measured (`pwa:already_installed/banner_shown/install_accepted/install_dismissed` via `/v/rum` + `pwa:` prefix family in `RUM_UX_DYNAMIC`). Previously invisible surfaces.
+
+**Intelligence arc (#2 + #8):** IGNIS query memory upgraded from S198's plain-string max-3 to `{query, ts}` objects (max-10 stored, last-5 rendered), backwards-compatible normalizer handles mixed old/new entries. Membership rank velocity: `vault-rank-bar.js` now fetches `created_at` alongside points, computes velocity (points/day since join date), projects weeks-to-next-rank, and shows a fixed-position chip on /ranks/ + /vault-member/ for non-maxed signed-in members. Oracle velocity window repaired: `build-velocity-series.mjs` now trims leading zero-commit weeks (keeps ≥4 trailing) → chart shows 4 real weeks not 22 blank bars.
+
+**Registry derive pass (#4):** `scripts/derive-game-nav.mjs` (7/7 self-test) + `scripts/derive-game-index.mjs` (6/6 self-test) now derive all games nav HTML and index card statuses directly from `data/game-registry.json`. Added `navOrder` field to registry for explicit ordering. Applied --apply: 91 HTML pages updated (Solara label corrected from "Solara" → "Solara: Sunfall"). Both wired as CI gates in `check-proof-surface`. The game registry is now truly the single source of truth for both status and display order.
+
+**Structural hygiene (#5 + #9 + #12):** Ark signature failure root-cause logged to DECISIONS.md (all 111 failures from `vaultspark-forge` pattern-share type — key mismatch, fix needs studio-ops). 13 orphaned `*.shell-*.js` files deleted via `clean-stale-shells.mjs` (--check gate added to `check-proof-surface`). `manifest.json` description corrected ("The Forge Window" → "Studio Pulse"). Build cache stamp added to velocity script — skips rebuild when HEAD SHA + date unchanged.
+
+**Dead sink closures (#6 + #7):** `assets/ignis-lens.js` + `assets/visit-depth.js` rewired from `window.gtag` (removed S147) to `/v/rum` `engagement:` family — closes the last two outstanding items of the Funnel L3 dead-gtag arc. `assets/visit-streak.js` gains `streak:badge-shown` emit; `rollup-rum-ux.mjs` adds `streaks` + `pwa` aggregation blocks.
+
+`build:check` **EXIT 0** end-to-end. 6 new CI gates added to `check-proof-surface` (derive-nav self-test+check, derive-index self-test+check, clean-shells check). check-proof-surface.mjs chain stayed well under the cmd.exe 8191-char limit.
+
 ## 2026-06-14 — Session 196 (/goal chain · tight ground-truthed audit · 2 shipped / 1 founder-gated · build:check EXIT 0)
 
 `/goal` chain (/start → /audit → /implement → /closeout) with genius-level creative thinking. After 195 sessions the honest frontier is small, so the audit was deliberately tight (3 items) and every candidate was ground-truth-verified before scoring — **verification rejected more than it kept** (the S173 reject-is-a-win discipline): FAQPage schema already live on faq/contact/all 8 game pages, Article schema already on all 10 journal entries, and the doctor ⛔ is sibling-scoped (veilos drift + orphan codex locks in other repos, CANON-018) — three verified non-work items.

@@ -1,2298 +1,1232 @@
 {
-  "drainedAt": "2026-06-14T17:00:43.274Z",
+  "drainedAt": "2026-06-15T02:06:46.761Z",
   "slug": "vaultsparkstudios-website",
-  "count": 98,
+  "count": 15,
   "cargo": [
     {
-      "id": "01JQPM6IJRC28430B3ADE6D246",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-06-10T21:14:49.339Z",
-      "payload": {}
-    },
-    {
-      "id": "01JQPPKKCP0F452CC6942A177A",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-10T22:14:55.641Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 1,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-10T22:14:55.582Z"
-      }
-    },
-    {
-      "id": "01JQPPRF752B6D3A47CD795594",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-10T22:18:39.718Z",
-      "payload": {
-        "sessionId": "166",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-10T16:49:05.241Z"
-      }
-    },
-    {
-      "id": "01JQPPRFNN2219B883D768DA37",
+      "id": "01JR49VCJF997E078269DB031C",
       "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-10T22:18:40.247Z",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:49.647Z",
       "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JQPV0RTJFA2BD2A845FB4C13",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-10T23:48:59.444Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 2,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-10T23:48:59.377Z"
-      }
-    },
-    {
-      "id": "01JQPV27QMA717811B7634B3DD",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-10T23:49:44.406Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 2,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-10T23:49:44.334Z"
-      }
-    },
-    {
-      "id": "01JQPV3LGS52950C53D53F2589",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-10T23:50:31.196Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 2,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-10T23:50:31.135Z"
-      }
-    },
-    {
-      "id": "01JQPV9KFCCBE254EFDA272084",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-10T23:53:46.732Z",
-      "payload": {
-        "sessionId": "166",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-10T16:49:05.241Z"
-      }
-    },
-    {
-      "id": "01JQPV9KUBE90C8E325B5EC1E2",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-10T23:53:47.211Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JQQ6T4702C20EA329852CA5D",
-      "type": "agent-handoff",
-      "from": "obelisk",
-      "shippedAt": "2026-06-11T02:06:45.472Z",
-      "payload": {
-        "intent": "Adopt Obelisk Gate as this project's login/create-account system (federate to the Hub IdP).",
-        "cohort": "D",
-        "targetPosture": "phase-4-public-app-migrated",
-        "migrationProfile": "careful — dual-run + account-link + opt-in passkey; per-project",
-        "suggestedTier": "T4",
-        "contract": "docs/VAULT_SSO_CONTRACT.md",
-        "recipe": "docs/RELYING_PARTY_INTEGRATION.md",
-        "blockedOn": [],
-        "idp": {
-          "rpID": "obeliskgate.com",
-          "origin": "https://obeliskgate.com",
-          "healthz": "https://obeliskgate.com/healthz",
-          "auth": "https://obeliskgate.com/auth",
-          "liveSince": "2026-06-06",
-          "ceremonyVerified": "2026-06-08"
-        },
-        "experience": {
-          "client": "packages/auth-kit/src/client.js — drop-in window.ObeliskAuth (redirect/iframe/mount)",
-          "renderer": "packages/auth-kit/src/auth-experience.js — 9-screen immersive renderer (W51)",
-          "embed": "docs/UNIFIED_STUDIO_LOGIN.md",
-          "recipe": "docs/RELYING_PARTY_INTEGRATION.md"
-        },
-        "createAccount": {
-          "flow": "signup → passkey-first enrollment → Vault SSO auto-membership",
-          "contract": "docs/VAULT_SSO_CONTRACT.md",
-          "signupGate": "OBELISK_SIGNUP_TOKEN per-RP invite until OBELISK_SIGNUP_CLOSED=1; login never gated"
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "windows-workaround",
+          "path": "scripts/closeout-step-3-7-parallel.mjs",
+          "medium": "game",
+          "summary": "Windows-specific code path in closeout-step-3-7-parallel.mjs — review for cross-platform consistency",
+          "tags": [
+            "windows",
+            "platform",
+            "game"
+          ]
         }
       }
     },
     {
-      "id": "01JQQ6T4IDF3FA04D250171C0C",
+      "id": "01JR49VCU3C4A43FF555B1287A",
       "type": "pattern-share",
-      "from": "obelisk",
-      "shippedAt": "2026-06-11T02:06:45.837Z",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:49.987Z",
       "payload": {
-        "pattern": "obelisk-gate-v1",
-        "summary": "Passkey-first Studio identity layer: WebAuthn + TOTP + hardened magic-link + recovery codes + device trust + capability-grant sessions, every event receipt-backed and risk-adaptive. One IdP (Hub), many relying parties.",
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "ark",
+          "path": "scripts/lib/ark.mjs",
+          "exports": [
+            "RECEIPT_LINK_FIELD",
+            "receiptOrigId",
+            "findStudioOpsRoot",
+            "loadManifest",
+            "loadArkKey"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'ark' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VD6K4683BE5E178033EA",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:50.261Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "boot-amortization",
+          "path": "scripts/lib/boot-amortization.mjs",
+          "exports": [
+            "ROOT",
+            "HISTORY_CAP",
+            "MIN_SAMPLES_TO_WARN",
+            "WASTED_AVG_BAND",
+            "liveAmortization"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'boot-amortization' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VDBR2B25B132974021A9",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:50.428Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "commit-gates",
+          "path": "scripts/lib/commit-gates.mjs",
+          "exports": [
+            "COMMIT_GATES",
+            "evaluateCommitGates"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'commit-gates' (2 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VDL96E2B27B42C28ED55",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:50.729Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "cross-repo-tasks",
+          "path": "scripts/lib/cross-repo-tasks.mjs",
+          "exports": [
+            "parseTaskBoard",
+            "loadProjectTaskBoard",
+            "loadPortfolioTaskBoards"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'cross-repo-tasks' (3 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VDQQ53590586B61E4BD9",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:50.906Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "human-action-ages",
+          "path": "scripts/lib/human-action-ages.mjs",
+          "exports": [
+            "ensureAges",
+            "daysSince"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'human-action-ages' (2 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VE6R027080B4E1588CFA",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:51.291Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "ignis-insight",
+          "path": "scripts/lib/ignis-insight.mjs",
+          "exports": [
+            "loadIgnisInsight"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'ignis-insight' (1 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VEMD8A99C3DC46CFF592",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:51.790Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "session-economics",
+          "path": "scripts/lib/session-economics.mjs",
+          "exports": [
+            "CLOSEOUT_PCT",
+            "CONSIDER_PCT",
+            "AMORTIZATION_BANDS",
+            "bootAmortization",
+            "sessionFloorVerdict"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'session-economics' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VERJ63E4F2B9A006C0BB",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:51.955Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "shared-policies",
+          "path": "scripts/lib/shared-policies.mjs",
+          "exports": [
+            "STUDIO_MANIFEST_REQUIRED_KEYS",
+            "WALK_IGNORE_DIRS",
+            "SPARK_RAMP",
+            "SKILL_FRONTMATTER_SCALAR_KEYS",
+            "BLOCKED_STATUSES_CORE"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'shared-policies' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VF6750A7BDB246FCA77B",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:52.296Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "sil-forecaster",
+          "path": "scripts/lib/sil-forecaster.mjs",
+          "exports": [
+            "parseSilHistory",
+            "forecastNext",
+            "renderForecastBlock"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'sil-forecaster' (3 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VFE822A998C6524C6B62",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:52.553Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "skill-cost-ledger",
+          "path": "scripts/lib/skill-cost-ledger.mjs",
+          "exports": [
+            "recordSkillCost",
+            "recentSkillCosts",
+            "priorOverrun",
+            "detectRegressions",
+            "detectSevereOverruns"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'skill-cost-ledger' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VFJF7DD9AD12C9F1FA73",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:52.720Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "skill-router",
+          "path": "scripts/lib/skill-router.mjs",
+          "exports": [
+            "DEFAULT_WEIGHTS",
+            "loadCatalog",
+            "loadOverrides",
+            "projectSignature",
+            "classifyIntent"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'skill-router' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VFOT7E3BDFFF2A3233AD",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:52.894Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "studio-events",
+          "path": "scripts/lib/studio-events.mjs",
+          "exports": [
+            "eventsPath",
+            "readEvents",
+            "appendEvent",
+            "latestEvents"
+          ],
+          "medium": "game",
+          "axis": "quality",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:quality",
+            "reusable"
+          ],
+          "summary": "New shared lib 'studio-events' (4 exports) [axis:quality] — likely useful in other game repos AND other quality-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR49VG264BAD86E8B2CF4B8A",
+      "type": "pattern-share",
+      "from": "vaultspark-forge",
+      "shippedAt": "2026-06-15T00:12:53.190Z",
+      "payload": {
+        "type": "pattern-share",
+        "payload": {
+          "pattern": "library-extraction",
+          "name": "visual-blocks",
+          "path": "scripts/lib/visual-blocks.mjs",
+          "exports": [
+            "sparkline",
+            "bar",
+            "trend",
+            "GLYPH",
+            "glyph"
+          ],
+          "medium": "game",
+          "axis": "ux",
+          "context": "extracted from vaultspark-forge",
+          "tags": [
+            "library",
+            "game",
+            "axis:ux",
+            "reusable"
+          ],
+          "summary": "New shared lib 'visual-blocks' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
+        }
+      }
+    },
+    {
+      "id": "01JR4F5L6ED52AC49A1F534074",
+      "type": "agent-handoff",
+      "from": "obelisk",
+      "shippedAt": "2026-06-15T01:43:37.934Z",
+      "payload": {
+        "intent": "Adopt Obelisk Gate for identity (OIDC). One studio auth plane — this project federates to https://obeliskgate.com and gets login + passkeys + MFA + tokens + API-key grants + a signed audit trail by pointing at Obelisk, no per-project auth engine.",
+        "obeliskAuthVersion": "0.1.0",
+        "oidc": {
+          "issuer": "https://obeliskgate.com",
+          "clientId": "rp-vaultsparkstudios-website",
+          "redirectUri": "https://vaultspark.studio/auth/callback",
+          "scopes": [
+            "openid",
+            "profile",
+            "offline_access"
+          ]
+        },
         "sdk": {
-          "name": "@vaultspark/obelisk-auth-kit",
+          "package": "@vaultspark/obelisk-auth",
           "version": "0.1.0",
-          "path": "packages/auth-kit/"
+          "next": "@vaultspark/obelisk-auth/next",
+          "readme": "packages/auth-sdk/README.md"
         },
-        "console": {
-          "name": "@vaultspark/obelisk-console",
-          "version": "0.1.0",
-          "path": "packages/console/"
+        "runbook": "docs/GOTRUE_TO_OBELISK_MIGRATION.md",
+        "contract": "docs/OBELISK_GATE_SPEC.md",
+        "archetype": "static-html",
+        "propagation": {
+          "serverSide": "Login UI, OIDC, security policy, and the Obelisk Rating propagate INSTANTLY on Gate deploy — this project redirects to the Gate; nothing to update here.",
+          "clientSide": "Embedded-SDK changes propagate by bumping obeliskAuthVersion in Obelisk + re-running propagate-obelisk-auth.mjs (re-ships this cargo)."
         },
-        "primitives": [
-          {
-            "name": "totp.js",
-            "note": "RFC 6238, verified against the spec's appendix vectors"
-          },
-          {
-            "name": "recovery.js",
-            "note": "hashes-only storage, single-use, rotation"
-          },
-          {
-            "name": "magic-link.js",
-            "note": "PKCE + same-device + single-use + TTL; T3/T4/T5 only"
-          },
-          {
-            "name": "device-trust.js",
-            "note": "known/trusted ledger → step-up on unfamiliar device"
-          },
-          {
-            "name": "capability-session.js",
-            "note": "sessions as scoped attenuable macaroons"
-          },
-          {
-            "name": "identity.js",
-            "note": "signup/login/step-up/recovery orchestrator + Vault SSO membership"
-          }
-        ],
-        "relyingPartyEndpoints": [
-          "GET /auth/registration-options",
-          "POST /auth/registration-verify",
-          "GET /auth/assertion-options",
-          "POST /auth/assertion-verify"
-        ],
-        "contract": "docs/VAULT_SSO_CONTRACT.md",
-        "honesty": "Built + tested on localhost (advisory WebAuthn until @simplewebauthn/server installed). Production rollout is deploy-gated (Hub IdP + domain + RP credentials)."
-      }
-    },
-    {
-      "id": "01JQQ747ONC7F244148BBE100A",
-      "type": "pattern-share",
-      "from": "obelisk",
-      "shippedAt": "2026-06-11T02:10:38.488Z",
-      "payload": {
-        "pattern": "obelisk-gate-rollout-in-flight",
-        "context": "Wave 57: the 33 adoption agent-handoff packets are now DISPATCHED via Studio Ark. Every project adopts Obelisk Gate as its login/create-account system (federate to https://obeliskgate.com).",
-        "solution": "Drain your ark inbox; follow payload.experience (window.ObeliskAuth + immersive auth-experience) + payload.createAccount (signup -> passkey -> Vault SSO auto-membership). Recipe: docs/RELYING_PARTY_INTEGRATION.md in obelisk.",
-        "tags": [
-          "obelisk-gate",
-          "auth",
-          "rollout",
-          "wave57"
+        "doNot": [
+          "No hand-rolled crypto.",
+          "No long-lived broad API keys (use Obelisk Grants).",
+          "Obelisk never writes into this repo — apply this cargo locally."
         ]
-      }
-    },
-    {
-      "id": "01JQQDR7FB3091ED3C12332D61",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-06-11T04:08:03.307Z",
-      "payload": {
-        "session": 65,
-        "wave": 57,
-        "repo": "obelisk",
-        "headline": "Open the Ark: the studio-wide login rollout physically dispatched — 39/39 Ark packets (33 adoption A:17 B:12 D:4) with live Gate truth + create-account contract; rollout funnel live; dormant-allowlist empty; OBELISK_VAULT_KEY active; trust 963 LEGENDARY; 1111/1111 tests.",
-        "action": "Drain your inbox: your obelisk-adoption agent-handoff carries payload.idp + payload.experience + payload.createAccount. Recipe: docs/RELYING_PARTY_INTEGRATION.md (obelisk)."
-      }
-    },
-    {
-      "id": "01JQQF1KIVA0799D511ADD8A40",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-11T04:29:01.919Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 11,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-11T04:29:01.853Z"
-      }
-    },
-    {
-      "id": "01JQSDDRU1E762DFC3C79889D3",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.369Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "vaultsparkstudios-website",
-        "metric": 81,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU31D7AB256E70278E3",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.371Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "vaultspark-studios-social-dashboard",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU40BD7B19B6A0433D3",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.372Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "vaultspark-studio-hub",
-        "metric": 69,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU46E0991337563B3A9",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.372Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "voidfall",
-        "metric": 114,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU53A5E9A686540ACF8",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.373Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "voidfall-companion",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU56005E4353B48344B",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.373Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "scriptorium",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU6E7B1DC951FF8188C",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.374Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "mindframe",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU767BF7E8050A9B242",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.375Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "call-of-doodie",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU7BCC47F2301BB87A5",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.375Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "vaultspark-football-gm",
-        "metric": 116,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU8F3F40DED97B8022E",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.376Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "gridiron-gm",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU89683289382306AF0",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.376Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "gridiron-gm-play",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRU9F852C79AB69FA7D8",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.377Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "solara",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUA94494496A90ABF39",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.378Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "vaultfront",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUA211F7F09E6AF0340",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.378Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "vaultspark-forge",
-        "metric": 116,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUBACBA82E201C3E423",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.379Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "the-exodus",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUC2D0B89DED9CCBE28",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.380Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "statvault",
-        "metric": 82,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUD42DAD01AB66CAC86",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.381Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "velaxis",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUEDFA45325B4C0273E",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.382Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "promogrind",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUF85DBC7992B473360",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.383Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "vorn",
-        "metric": 116,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUGF7B8F269C3C2AD62",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.384Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "ideaforge",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUH027CDECB417F304F",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.385Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "canon",
-        "metric": 108,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUH7BB1777E6D96E347",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.385Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "living-protocol",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUI3E64AFA0F1D11B9D",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.386Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "vaultspark-ignis",
-        "metric": 116,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUJF654CBE92EC19974",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.387Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "orva-eon",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUJBF892160F24D9EBC",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.387Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "sparkfunnel",
-        "metric": 92,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUK7FEF2A56515B29F1",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.388Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "seamline",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUK9F63AE1B0025F4C9",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.388Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "obelisk",
-        "metric": 67,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUL588E5D8D85120338",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.389Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "veilos",
-        "metric": 114,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRULFE630C187B9F2686",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.389Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "concurrent",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRULCABAE6BFA3B16E66",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.389Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "hashmark",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUM5ADFC3A4A75970F4",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.390Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "voidfall-build",
-        "metric": 114,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUM4F82A3436C9725D7",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.390Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "analytica",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUNF4F3B074AC0E4DC0",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.391Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "ouren",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSDDRUN6F076C77B7B6C7CC",
-      "type": "harbor-alert",
-      "from": "vaultspark-studio-ops",
-      "shippedAt": "2026-06-11T22:39:14.391Z",
-      "payload": {
-        "alertType": "depth",
-        "slug": "sparkraid",
-        "metric": 115,
-        "threshold": 5
-      }
-    },
-    {
-      "id": "01JQSFUTRDF6F0061DAA02DB35",
-      "type": "repo-question",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-11T23:23:30.541Z",
-      "payload": {
-        "question": "SIL data integrity: silScore=961 but sum(categories)=950 — recompute silScore from categories (silScore := sum(silCategoriesV3), clamp 0..100) via write-project-status --fix at next session.",
-        "source": "sil-ingest-check",
-        "hashes": [
-          "e08d327dfce6"
-        ]
-      }
-    },
-    {
-      "id": "01JQSGNL5H19CA2232D084F723",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-06-11T23:37:00.850Z",
-      "payload": {
-        "sessionId": "66",
-        "wave": 58,
-        "headline": "Obelisk W58 Listen for the Echo: rollout MEASURED — transport truth 2 drained/31 queued/0 delivery defects; vaultspark-studio-hub is the first VERIFIED relying party (4/5 markers); veilos flagged declared-only; sender seed-trust live (studio-ops unverified-seed streak 70 — fleet ARK_HMAC_SEED propagation requested, fingerprint sha256:277fd908); declarative defect-state registry now gates recurring failure classes as data.",
-        "bullets": [
-          "1130/1130 tests · 405 files · 11/11 shipped",
-          "31 adoption packets queued in YOUR inbox — drain at /start to receive the Obelisk Gate login handoff",
-          "veilos: posture claims phase-3-ops-integrated with no integration evidence — please reconcile"
-        ],
-        "repo": "obelisk"
-      }
-    },
-    {
-      "id": "01JQSH3LQBE97B31E68819BA9B",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-11T23:43:34.731Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 0,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-11T23:43:34.656Z"
-      }
-    },
-    {
-      "id": "01JQSH647DD6917D3518AE91C4",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-11T23:44:55.021Z",
-      "payload": {
-        "sessionId": "169",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-11T23:44:54.935Z"
-      }
-    },
-    {
-      "id": "01JQSH64NRE200AC342DF62010",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-11T23:44:55.548Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JQSOJHIR64C36CF1CE4FDC44",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T01:54:34.716Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 0,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T01:54:34.622Z"
-      }
-    },
-    {
-      "id": "01JQSOMID3C66082FD1598B510",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T01:56:13.860Z",
-      "payload": {
-        "sessionId": "169",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-11T23:44:54.935Z"
-      }
-    },
-    {
-      "id": "01JQSOMJ5K96886E7C7568E164",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T01:56:14.644Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JQSVJJ3L240B60E378CE93CC",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T03:56:56.309Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 52,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T03:56:56.217Z"
-      }
-    },
-    {
-      "id": "01JQSVMD1F7ABD70529847B7CB",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T03:58:28.399Z",
-      "payload": {
-        "sessionId": "169",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-11T23:44:54.935Z"
-      }
-    },
-    {
-      "id": "01JQSVME3P5E169296063B21C8",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T03:58:29.497Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JQT2OE852CD462169BCB178A",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T04:52:00.901Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 7,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T04:52:00.815Z"
-      }
-    },
-    {
-      "id": "01JQT4VA1Q44D38352232C608F",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T05:30:43.130Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 7,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T05:30:43.075Z"
-      }
-    },
-    {
-      "id": "01JQT51ILC1F66500C63758B90",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T05:31:57.484Z",
-      "payload": {
-        "sessionId": "169",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-11T23:44:54.935Z"
-      }
-    },
-    {
-      "id": "01JQT51J6J060CD87C0D5EB32B",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T05:31:58.035Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JQTP3K0T73F9448FDBB71DF1",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T11:22:35.934Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 5,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T11:22:35.831Z"
-      }
-    },
-    {
-      "id": "01JQTP5M0F6DDDE4CBB03F32A7",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T11:23:43.503Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 5,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T11:23:43.273Z"
-      }
-    },
-    {
-      "id": "01JQTP62UQA5112F4A0C98E4DB",
-      "type": "session-impact-summary",
-      "from": "obelisk",
-      "shippedAt": "2026-06-12T11:23:56.762Z",
-      "payload": {
-        "session": "S68-W60",
-        "repo": "obelisk",
-        "date": "2026-06-12",
-        "headline": "Prove It Before the Wire: Passport verified against a loopback IdP (23/27 round-trips, 0 config defects); capability surface 6/6 READY; threat coverage 24/24; sender-trust markers + transport pulse + green-collapse land truth at the reading surfaces.",
-        "shipped": 9,
-        "tests": "1170/1170",
-        "sil": "998/1000",
-        "forSiblings": "Your obelisk-passport/ integration is loopback-verified from the Obelisk side (config-clean). Remaining: wire the 1-3 lines per OBELISK_PASSPORT.md; live login activates when the IdP serves."
-      }
-    },
-    {
-      "id": "01JQTP9T7R036BF8B4766003A7",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T11:26:01.979Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 5,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T11:26:01.852Z"
-      }
-    },
-    {
-      "id": "01JQTPCPPSCA76821B24085479",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T11:27:36.765Z",
-      "payload": {
-        "sessionId": "169",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-11T23:44:54.935Z"
-      }
-    },
-    {
-      "id": "01JQTPCQSN54B33102944326B5",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T11:27:37.880Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JQTUALNB23A07888ABF36564",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T12:53:49.931Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 2,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T12:53:49.832Z"
-      }
-    },
-    {
-      "id": "01JQTUHD0A305E1E002FDF5EA1",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T12:57:30.378Z",
-      "payload": {
-        "sessionId": "169",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-11T23:44:54.935Z"
-      }
-    },
-    {
-      "id": "01JQTUHDJOF5605155BA5033AE",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T12:57:31.000Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JQUOON9018D53CE6449C08E1",
-      "type": "pattern-share",
-      "from": "solara",
-      "shippedAt": "2026-06-12T20:35:53.248Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "solara",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JQUV73LG2B1F06EDDE0FEEFF",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T22:28:36.144Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 5,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T22:28:36.062Z"
-      }
-    },
-    {
-      "id": "01JQUVCU5931B0258344B7559D",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T22:31:47.113Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 48,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T22:31:47.029Z"
-      }
-    },
-    {
-      "id": "01JQUVDD3A0D2B07706E261043",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T22:32:02.410Z",
-      "payload": {
-        "sessionId": "169",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-11T23:44:54.935Z"
-      }
-    },
-    {
-      "id": "01JQUVDDOM46B3058CA43B08C0",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T22:32:03.094Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JQUVH87NA2CC4CAA9BAC3948",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-12T22:34:08.504Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 15,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-12T22:34:08.427Z"
-      }
-    },
-    {
-      "id": "01JR1AEQ6E5778DBCD750AD935",
-      "type": "pattern-share",
-      "from": "solara",
-      "shippedAt": "2026-06-13T20:23:31.790Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "solara",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JR1D339D744D85805227E2BA",
-      "type": "repo-question",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:09:33.613Z",
-      "payload": {
-        "question": "SIL data integrity: silScore=971 but sum(categories)=958 — recompute silScore from categories (silScore := sum(silCategoriesV3), clamp 0..100) via write-project-status --fix at next session.",
-        "source": "sil-ingest-check",
-        "hashes": [
-          "fa431c1df22a"
-        ]
-      }
-    },
-    {
-      "id": "01JR1DRHTGF9DDC3F202944442",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:22:55.024Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 13,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-13T21:22:54.936Z"
-      }
-    },
-    {
-      "id": "01JR1DSSGT909F51E0366D96B2",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:23:38.653Z",
-      "payload": {
-        "sessionId": "169",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-11T23:44:54.935Z"
-      }
-    },
-    {
-      "id": "01JR1DST522F4BF61A576EEE49",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:23:39.298Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JR1DUQAQ60EDD47EBB166BBA",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:24:41.946Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 63,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-13T21:24:41.865Z"
-      }
-    },
-    {
-      "id": "01JR1E05I3452A843DC3F26773",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:25:26.211Z",
-      "payload": {
-        "sessionId": "169",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-11T23:44:54.935Z"
-      }
-    },
-    {
-      "id": "01JR1E068J67584DEF6DCF97E2",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:25:26.932Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JR1E3C0C57D6421BF2A2B2A4",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:27:11.116Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 15,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-13T21:27:11.020Z"
-      }
-    },
-    {
-      "id": "01JR1FEFJ34E3DAC445EC8ED96",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:50:43.811Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 62,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-13T21:50:43.693Z"
-      }
-    },
-    {
-      "id": "01JR1FGUV91675ED8535C922F4",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:52:05.097Z",
-      "payload": {
-        "sessionId": "169",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-11T23:44:54.935Z"
-      }
-    },
-    {
-      "id": "01JR1FGVJ054011E414E9751CE",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-13T21:52:05.728Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JR1IRND0E7F62648313CB59E",
-      "type": "pattern-share",
-      "from": "seamline",
-      "shippedAt": "2026-06-13T22:50:23.521Z",
-      "payload": {
-        "pattern": "velocity-acceleration-ceremony",
-        "solution": "computeVelocityAcceleration() in lib/capture-analytics.ts: 4-week bucket analysis, streakWeeks = consecutive positive WoW deltas >5%, accelerating when streakWeeks>=2 AND thisWeek>=5%. ThreadAccelerationBanner.tsx shows dismissible week bar trio with native share intent and clipboard fallback. Route GET /api/dashboard/thread-acceleration (cache private 900s). Zero AI cost — pure aggregate math.",
-        "tags": [
-          "subscriber-growth",
-          "gamification",
-          "ceremony",
-          "share-intent",
-          "zero-ai-cost"
-        ]
-      }
-    },
-    {
-      "id": "01JR1IU3QQ43AF87EAB5F044D4",
-      "type": "pattern-share",
-      "from": "seamline",
-      "shippedAt": "2026-06-13T22:51:41.786Z",
-      "payload": {
-        "pattern": "creator-percentile-rank",
-        "solution": "GET /api/dashboard/creator-rank: auth client fetches creator_type + 30d lead count, service client batches all same-type creators (200/chunk), rank = sorted descending findIndex, percentile = ((total-rank)/(total-1))*100. RankBadge.tsx with animated PercentileRing SVG (strokeDasharray), milestone chips for top_10/top_25/top_50, TrendingUp banner. Hides when total<3. Cache private 1800s. Privacy: only aggregate counts, never subscriber PII.",
-        "tags": [
-          "attribution",
-          "gamification",
-          "percentile",
-          "rank",
-          "creator-intelligence"
-        ]
-      }
-    },
-    {
-      "id": "01JR1U70CL4251DDDCBFC4407A",
-      "type": "canon-update",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-14T02:08:47.509Z",
-      "payload": {
-        "canon": "CANON-038",
-        "title": "Shared Studio Self-Host Server",
-        "summary": "Studio runs ONE shared Hetzner box (CX51: 16 vCPU AMD/32GB/160GB) as the default self-host target. Projects needing a DB/backend provision their OWN isolated Postgres database/schema + least-privilege role + RLS + non-overlapping ports + own subdomain via the secrets-gateway provisioner (scripts/provision-project-db.mjs at /initiate) — never sharing creds or conflicting with siblings. Self-hosted PostgreSQL is the preferred DB tech (over cloud-managed). Treat the box as SHARED multi-tenant infra.",
-        "effective": "2026-06-13",
-        "doc": "docs/decisions/STUDIO_DATABASE_ARCHITECTURE.md"
-      }
-    },
-    {
-      "id": "01JR21BKDK75B5800A1FE84791",
-      "type": "repo-question",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-14T03:03:44.820Z",
-      "payload": {
-        "question": "SIL data integrity: silScore=992 but sum(categories)=958 — recompute silScore from categories (silScore := sum(silCategoriesV3), clamp 0..100) via write-project-status --fix at next session.",
-        "source": "sil-ingest-check",
-        "hashes": [
-          "fb5df3a94636"
-        ]
-      }
-    },
-    {
-      "id": "01JR231JRRA30461D7B3F98916",
-      "type": "session-outcome",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-14T03:33:13.723Z",
-      "payload": {
-        "slug": "vaultspark-studio-ops",
-        "medium": "infrastructure",
-        "session": "91",
-        "sil": null,
-        "prevSil": 1,
-        "delta": null,
-        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
-        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 15,
-        "vaultStatus": "sparked",
-        "ts": "2026-06-14T03:33:12.944Z"
-      }
-    },
-    {
-      "id": "01JR236H6T246327749CA034E0",
-      "type": "session-impact-summary",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-14T03:35:54.845Z",
-      "payload": {
-        "sessionId": "178",
-        "headline": "Session closed.",
-        "bullets": [
-          "(no shipped items recorded this session)"
-        ],
-        "synopsis": "",
-        "generatedAt": "2026-06-14T03:35:54.684Z"
-      }
-    },
-    {
-      "id": "01JR236J5O79238C160129FACD",
-      "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-14T03:35:56.856Z",
-      "payload": {
-        "pattern": "skill-outcome",
-        "tags": [
-          "skill:closeout",
-          "type:infra",
-          "outcome:good"
-        ],
-        "context": "studio-ops",
-        "solution": "closeout completed cleanly"
-      }
-    },
-    {
-      "id": "01JR2DR7SH8B3BF27D62344A06",
-      "type": "canon-update",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-14T06:41:59.185Z",
-      "payload": {
-        "canon": "CANON-039+040",
-        "title": "Build-It-Ourselves / Internal-First / OSS-Research + Agent-Deployed Migrations",
-        "summary": "CANON-039: before adding any dependency or building from scratch, climb the adoption ladder — reuse an INTERNAL studio tool (see docs/INTERNAL_TOOLS.md) > adopt free/credible/verified OSS (license+trust gated) > build-and-own > paid (last resort, founder-approved); mandatory thorough OSS-alternative research; own what we build. CANON-040: AI agents deploy database/infra migrations themselves, automatically, behind staging+Founder-Twin+rollback+secrets gates; only irreversible/destructive prod ops are human-reserved; pending unapplied migrations are a deploy-currency signal.",
-        "effective": "2026-06-14",
-        "doc": "docs/STUDIO_CANON.md + docs/INTERNAL_TOOLS.md"
       }
     }
   ],
   "sigFailures": [
     {
-      "id": "01JQHKD1SK31FF4CBFFF030142",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.224Z"
-    },
-    {
-      "id": "01JQHRBPCB6EBDEA3973B9843F",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.226Z"
-    },
-    {
-      "id": "01JQHSFN7J97F430D96B315278",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.227Z"
-    },
-    {
-      "id": "01JQI46EFVC8BD286B4FCDD822",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.227Z"
-    },
-    {
-      "id": "01JQI4D3FQ3BA52F6588E56947",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.228Z"
-    },
-    {
-      "id": "01JQI4OUTB96AD6C055DF11110",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.229Z"
-    },
-    {
       "id": "01JQINBF618F4D2BF5FF602868",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.229Z"
+      "ts": "2026-06-15T02:06:46.718Z"
     },
     {
       "id": "01JQINKEL12608945FB7EEDCB4",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.230Z"
+      "ts": "2026-06-15T02:06:46.720Z"
     },
     {
       "id": "01JQIO628O3ED21389810C7039",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.230Z"
+      "ts": "2026-06-15T02:06:46.721Z"
     },
     {
       "id": "01JQIOHBFV01C7A92ADC94594F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.231Z"
+      "ts": "2026-06-15T02:06:46.722Z"
     },
     {
       "id": "01JQISC3NC4181FD2AB28760B7",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.231Z"
+      "ts": "2026-06-15T02:06:46.723Z"
     },
     {
       "id": "01JQITQM23E02B74E40A549E93",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.232Z"
+      "ts": "2026-06-15T02:06:46.724Z"
     },
     {
       "id": "01JQIU9EMS5F82D26EB46C34BF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.232Z"
+      "ts": "2026-06-15T02:06:46.724Z"
     },
     {
       "id": "01JQIV646P19B27D92EBD58BDC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.233Z"
+      "ts": "2026-06-15T02:06:46.725Z"
     },
     {
       "id": "01JQK2NJMI222BE708E8FC5EDD",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.233Z"
+      "ts": "2026-06-15T02:06:46.726Z"
     },
     {
       "id": "01JQK2VB9S04C324A82EC8D819",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.233Z"
+      "ts": "2026-06-15T02:06:46.726Z"
     },
     {
       "id": "01JQK3QR7RAC8B1E0A42BEE8E6",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.234Z"
+      "ts": "2026-06-15T02:06:46.727Z"
     },
     {
       "id": "01JQK44U3C62E189F1F46A5E88",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.234Z"
+      "ts": "2026-06-15T02:06:46.727Z"
     },
     {
       "id": "01JQK4D6IO8D155D9737B18129",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.234Z"
+      "ts": "2026-06-15T02:06:46.727Z"
     },
     {
       "id": "01JQK4JCMQ42CBE29D52E43C65",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.235Z"
+      "ts": "2026-06-15T02:06:46.728Z"
     },
     {
       "id": "01JQK4UVUQ2DF2EAEA8D147CBC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.235Z"
+      "ts": "2026-06-15T02:06:46.728Z"
     },
     {
       "id": "01JQK7LMEVF1CCF71CBD87994D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.235Z"
+      "ts": "2026-06-15T02:06:46.728Z"
     },
     {
       "id": "01JQK7PQPU8647F73682F9F6A0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.236Z"
+      "ts": "2026-06-15T02:06:46.729Z"
     },
     {
       "id": "01JQK8DPR033D60CB308D621AC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.236Z"
+      "ts": "2026-06-15T02:06:46.729Z"
     },
     {
       "id": "01JQKRSKRGE3F6ACF397DD5F69",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.237Z"
+      "ts": "2026-06-15T02:06:46.730Z"
     },
     {
       "id": "01JQL2JG06557EF9A1AFEF274C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.237Z"
+      "ts": "2026-06-15T02:06:46.730Z"
     },
     {
       "id": "01JQL2MV12F3FE0FACCCEAF6A9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.237Z"
+      "ts": "2026-06-15T02:06:46.731Z"
     },
     {
       "id": "01JQL2T67S297B80EBA938FA0B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.237Z"
+      "ts": "2026-06-15T02:06:46.731Z"
     },
     {
       "id": "01JQL31BJ4C2694F6FD68A8A16",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.238Z"
+      "ts": "2026-06-15T02:06:46.731Z"
     },
     {
       "id": "01JQN4BMP0FA0F8371A00CDC08",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.238Z"
+      "ts": "2026-06-15T02:06:46.731Z"
     },
     {
       "id": "01JQN4R7U49577021F5E104785",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.239Z"
+      "ts": "2026-06-15T02:06:46.732Z"
     },
     {
       "id": "01JQN4UJD42BAE2396CFF8A726",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.239Z"
+      "ts": "2026-06-15T02:06:46.732Z"
     },
     {
       "id": "01JQN5BHT914367ACCEE226576",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.240Z"
+      "ts": "2026-06-15T02:06:46.732Z"
     },
     {
       "id": "01JQN5KTML529E6ED06050EA3F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.240Z"
+      "ts": "2026-06-15T02:06:46.732Z"
     },
     {
       "id": "01JQN67UL31A1BC544762D30F1",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.241Z"
+      "ts": "2026-06-15T02:06:46.733Z"
     },
     {
       "id": "01JQN6FN7V332DEF86CE4AC468",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.241Z"
+      "ts": "2026-06-15T02:06:46.733Z"
     },
     {
       "id": "01JQN6M6QC8AF4BFAE76938B0A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.242Z"
+      "ts": "2026-06-15T02:06:46.734Z"
     },
     {
       "id": "01JQOV532GDBFC80A9AAF5ABC1",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.242Z"
+      "ts": "2026-06-15T02:06:46.735Z"
     },
     {
       "id": "01JQOVTIRHBD65E3C7AB226E3E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.242Z"
+      "ts": "2026-06-15T02:06:46.735Z"
     },
     {
       "id": "01JQP0LDDC893D1A4B4C405469",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.243Z"
+      "ts": "2026-06-15T02:06:46.735Z"
     },
     {
       "id": "01JQP0S9IUAEC72A0AD8B8E204",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.243Z"
+      "ts": "2026-06-15T02:06:46.736Z"
     },
     {
       "id": "01JQP76PVDD87FC67CA34831ED",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.244Z"
+      "ts": "2026-06-15T02:06:46.736Z"
     },
     {
       "id": "01JQP9553LF3B4BEB6775E378E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.244Z"
+      "ts": "2026-06-15T02:06:46.736Z"
     },
     {
       "id": "01JQP99PUOF675A2646F858738",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.244Z"
+      "ts": "2026-06-15T02:06:46.736Z"
     },
     {
       "id": "01JQP9ASG563DF4361FB6C3673",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.245Z"
+      "ts": "2026-06-15T02:06:46.737Z"
     },
     {
       "id": "01JQP9H76B0571F0C1F43C1F5E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.245Z"
+      "ts": "2026-06-15T02:06:46.737Z"
     },
     {
       "id": "01JQPA11DP277EDE94F1B74A00",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.246Z"
+      "ts": "2026-06-15T02:06:46.737Z"
     },
     {
       "id": "01JQPC2H3C0975063CEE000038",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.246Z"
+      "ts": "2026-06-15T02:06:46.737Z"
     },
     {
       "id": "01JQPCGGFV60F28A40E2D1D792",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.247Z"
+      "ts": "2026-06-15T02:06:46.738Z"
     },
     {
       "id": "01JQPK5UAMC819F99ADF92AA59",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.247Z"
+      "ts": "2026-06-15T02:06:46.738Z"
     },
     {
       "id": "01JQPL06Q414FD561F3829DD6A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.247Z"
+      "ts": "2026-06-15T02:06:46.738Z"
     },
     {
       "id": "01JQPLCH0HF2244068B3763F39",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.248Z"
+      "ts": "2026-06-15T02:06:46.738Z"
     },
     {
       "id": "01JQQBC1QTFC4876ACE8B32985",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.249Z"
+      "ts": "2026-06-15T02:06:46.739Z"
     },
     {
       "id": "01JQQCI2GAAA9BD0C877D8AD79",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.249Z"
+      "ts": "2026-06-15T02:06:46.739Z"
     },
     {
       "id": "01JQQCRR8TCC27A96E84A93D32",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.251Z"
+      "ts": "2026-06-15T02:06:46.739Z"
     },
     {
       "id": "01JQQDAL76126359C0A12B9283",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.252Z"
+      "ts": "2026-06-15T02:06:46.740Z"
     },
     {
       "id": "01JQQDP3IOB26689F2F6B376AC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.253Z"
+      "ts": "2026-06-15T02:06:46.740Z"
     },
     {
       "id": "01JQQE3O9CBB70A91AF3D9795E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.253Z"
+      "ts": "2026-06-15T02:06:46.740Z"
     },
     {
       "id": "01JQSDNNDGAC98B98ED22CCF21",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.254Z"
+      "ts": "2026-06-15T02:06:46.740Z"
     },
     {
       "id": "01JQSFB7KCA2E47FA065979808",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.254Z"
+      "ts": "2026-06-15T02:06:46.741Z"
     },
     {
       "id": "01JQSFKS1MBED5FBEE18EC5A7F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.255Z"
+      "ts": "2026-06-15T02:06:46.741Z"
     },
     {
       "id": "01JQSGJVPG91A508C06B6CD7D9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.256Z"
+      "ts": "2026-06-15T02:06:46.741Z"
     },
     {
       "id": "01JQSGRC6V260E6771CC54D689",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.256Z"
+      "ts": "2026-06-15T02:06:46.742Z"
     },
     {
       "id": "01JQSM342E6AFC4CAF9051329A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.256Z"
+      "ts": "2026-06-15T02:06:46.742Z"
     },
     {
       "id": "01JQSN7V8185ABD21C8E610A17",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.257Z"
+      "ts": "2026-06-15T02:06:46.742Z"
     },
     {
       "id": "01JQSNLDLU97D5E000D949B002",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.257Z"
+      "ts": "2026-06-15T02:06:46.743Z"
     },
     {
       "id": "01JQSNVOSP7958F4F5CBF89946",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.258Z"
+      "ts": "2026-06-15T02:06:46.743Z"
     },
     {
       "id": "01JQSU6O637F483BD51BFE8507",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.258Z"
+      "ts": "2026-06-15T02:06:46.743Z"
     },
     {
       "id": "01JQT37K8FEA49AAF42F266323",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.259Z"
+      "ts": "2026-06-15T02:06:46.743Z"
     },
     {
       "id": "01JQT3NJFC8637796D9AF7DC2B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.259Z"
+      "ts": "2026-06-15T02:06:46.744Z"
     },
     {
       "id": "01JQT4HGKB32F185D39DB85E75",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.259Z"
+      "ts": "2026-06-15T02:06:46.744Z"
     },
     {
       "id": "01JQT4Q9REEF5E91C00F6A64A3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.260Z"
+      "ts": "2026-06-15T02:06:46.744Z"
     },
     {
       "id": "01JQTMQ7518762C13861C92971",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.260Z"
+      "ts": "2026-06-15T02:06:46.744Z"
     },
     {
       "id": "01JQTN26EB6C7119BB7FF524F7",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.260Z"
+      "ts": "2026-06-15T02:06:46.745Z"
     },
     {
       "id": "01JQTNMFBBD013A4EFF866BB64",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.261Z"
+      "ts": "2026-06-15T02:06:46.745Z"
     },
     {
       "id": "01JQTNSKKB15724E469EB3049A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.261Z"
+      "ts": "2026-06-15T02:06:46.745Z"
     },
     {
       "id": "01JQTOB0PG0974E96B9BDB174D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.261Z"
+      "ts": "2026-06-15T02:06:46.746Z"
     },
     {
       "id": "01JQTRRPMO4513017B17C5EF3E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.261Z"
+      "ts": "2026-06-15T02:06:46.746Z"
     },
     {
       "id": "01JQTS9UF5579717A1D63B372C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.262Z"
+      "ts": "2026-06-15T02:06:46.746Z"
     },
     {
       "id": "01JQTSDTOMA03308D4499CB98E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.262Z"
+      "ts": "2026-06-15T02:06:46.747Z"
     },
     {
       "id": "01JQTSV5EP3DAE5A5B5559D017",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.262Z"
+      "ts": "2026-06-15T02:06:46.747Z"
     },
     {
       "id": "01JQUKJ2HGE8E5D1397A174671",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.263Z"
+      "ts": "2026-06-15T02:06:46.747Z"
     },
     {
       "id": "01JQUL7FA5FF2CC166D18A3B01",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.263Z"
+      "ts": "2026-06-15T02:06:46.748Z"
     },
     {
       "id": "01JQULN42JD3AED963C90CE3B5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.263Z"
+      "ts": "2026-06-15T02:06:46.748Z"
     },
     {
       "id": "01JQUR1A5402B95AB466907853",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.264Z"
+      "ts": "2026-06-15T02:06:46.748Z"
     },
     {
       "id": "01JQURUL56935091DCF96A1A80",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.264Z"
+      "ts": "2026-06-15T02:06:46.749Z"
     },
     {
       "id": "01JQUSD5TH64E17A614185DFDC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.264Z"
+      "ts": "2026-06-15T02:06:46.749Z"
     },
     {
       "id": "01JQUTDDUN15F28212DDD792EE",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.265Z"
+      "ts": "2026-06-15T02:06:46.749Z"
     },
     {
       "id": "01JR19CMTC5DEDFB3ED682B4B3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.265Z"
+      "ts": "2026-06-15T02:06:46.750Z"
     },
     {
       "id": "01JR19R5PUABD88201E96380B6",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.265Z"
+      "ts": "2026-06-15T02:06:46.750Z"
     },
     {
       "id": "01JR1BFAAKE0293C7FE54555AA",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.266Z"
+      "ts": "2026-06-15T02:06:46.750Z"
     },
     {
       "id": "01JR1CGV6B05C2515966C88331",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.266Z"
+      "ts": "2026-06-15T02:06:46.750Z"
     },
     {
       "id": "01JR1D76EK11F17CFFC82CF7D3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.266Z"
+      "ts": "2026-06-15T02:06:46.751Z"
     },
     {
       "id": "01JR1IFHD0DEAB84B806FC1C5F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.266Z"
+      "ts": "2026-06-15T02:06:46.751Z"
     },
     {
       "id": "01JR1J5RUAFDC1C77982B9F06E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.267Z"
+      "ts": "2026-06-15T02:06:46.751Z"
     },
     {
       "id": "01JR1JBID08D5130BE5E9FE58E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.267Z"
+      "ts": "2026-06-15T02:06:46.752Z"
     },
     {
       "id": "01JR1JUSFQ6308CE0A3BB6D862",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.267Z"
+      "ts": "2026-06-15T02:06:46.752Z"
     },
     {
       "id": "01JR1K9614875723A5FB3CDBFA",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.268Z"
+      "ts": "2026-06-15T02:06:46.752Z"
     },
     {
       "id": "01JR1KEHG2B9F1740DE1D7A7F6",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.268Z"
+      "ts": "2026-06-15T02:06:46.752Z"
     },
     {
       "id": "01JR1KK3M1B6C18B802C36DB64",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.268Z"
+      "ts": "2026-06-15T02:06:46.753Z"
     },
     {
       "id": "01JR1KKVQJ383D592F2A1E1C74",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.268Z"
+      "ts": "2026-06-15T02:06:46.753Z"
     },
     {
       "id": "01JR1KTVLT54F8A483EB5F79D3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.269Z"
+      "ts": "2026-06-15T02:06:46.753Z"
     },
     {
       "id": "01JR1LMU259DCB16FB4E94EC61",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.269Z"
+      "ts": "2026-06-15T02:06:46.753Z"
     },
     {
       "id": "01JR1NGTAT904A89C3977BC35C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.269Z"
+      "ts": "2026-06-15T02:06:46.754Z"
     },
     {
       "id": "01JR1OT0350EB0697A8FF262C8",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.269Z"
+      "ts": "2026-06-15T02:06:46.754Z"
     },
     {
       "id": "01JR1SHSEM91ED195B4BC016F1",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.270Z"
+      "ts": "2026-06-15T02:06:46.754Z"
     },
     {
       "id": "01JR1T9EPU6A01DF5FCE0C395F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.270Z"
+      "ts": "2026-06-15T02:06:46.754Z"
     },
     {
       "id": "01JR1V6KFEBD441E567070F2C7",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.271Z"
+      "ts": "2026-06-15T02:06:46.755Z"
     },
     {
       "id": "01JR2046NP291A44FA215EF962",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.271Z"
+      "ts": "2026-06-15T02:06:46.755Z"
     },
     {
       "id": "01JR20NVH49A2CEFDACA6E74A0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-14T17:00:43.271Z"
+      "ts": "2026-06-15T02:06:46.755Z"
+    },
+    {
+      "id": "01JR3LGD30E31016D5FD7A7658",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-15T02:06:46.755Z"
+    },
+    {
+      "id": "01JR3M6FJO92A1E7F2C6AB6A0F",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-15T02:06:46.756Z"
+    },
+    {
+      "id": "01JR3NT8JD3184EDF18042CE2D",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-15T02:06:46.756Z"
+    },
+    {
+      "id": "01JR3OG678350871BDDCAAEEC2",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-15T02:06:46.756Z"
+    },
+    {
+      "id": "01JR3U7RQODBC1373987B77882",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-15T02:06:46.756Z"
+    },
+    {
+      "id": "01JR48GTN9DE40D118108E7518",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-15T02:06:46.757Z"
+    },
+    {
+      "id": "01JR4G48MFAE0D7D590404F77A",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-15T02:06:46.757Z"
     }
   ]
 }

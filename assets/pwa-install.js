@@ -7,6 +7,18 @@
   var DISMISS_KEY = 'vs_pwa_dismissed';
   var deferredPrompt = null;
 
+  function emitUx(event) {
+    try {
+      var body = JSON.stringify({ route: location.pathname, ux: event });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+    } catch (_) {}
+  }
+
+  // Detect already-installed state on page load (standalone display mode).
+  if (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) {
+    emitUx('pwa:already_installed');
+  }
+
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault();
     deferredPrompt = e;
@@ -49,6 +61,7 @@
       + '<button id="pwa-dismiss-btn" aria-label="Dismiss install prompt" style="padding:0.42rem 0.65rem;background:transparent;border:1px solid rgba(255,255,255,0.14);color:rgba(255,255,255,0.45);font-size:0.78rem;border-radius:9px;cursor:pointer;font-family:inherit;flex-shrink:0;">Not now</button>';
 
     document.body.appendChild(banner);
+    emitUx('pwa:banner_shown');
 
     document.getElementById('pwa-install-btn').addEventListener('click', function () {
       if (!deferredPrompt) return;
@@ -56,13 +69,17 @@
       deferredPrompt.userChoice.then(function (result) {
         deferredPrompt = null;
         banner.remove();
-        if (result.outcome !== 'accepted') {
+        if (result.outcome === 'accepted') {
+          emitUx('pwa:install_accepted');
+        } else {
+          emitUx('pwa:install_dismissed');
           localStorage.setItem(DISMISS_KEY, Date.now().toString());
         }
       });
     });
 
     document.getElementById('pwa-dismiss-btn').addEventListener('click', function () {
+      emitUx('pwa:install_dismissed');
       localStorage.setItem(DISMISS_KEY, Date.now().toString());
       banner.remove();
     });

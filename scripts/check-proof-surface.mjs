@@ -62,6 +62,16 @@ const STEPS = [
   // non-empty and schema-valid so the oracle chart never silently shows empty.
   ['build-velocity-series.mjs', ['--self-test']],
   ['build-velocity-series.mjs', ['--check']],
+  // S199: game-registry coherence — nav and index HTML must reflect the registry;
+  // derive scripts fail --check when any page's games nav is out of sync or any
+  // card's data-status drifts from the canonical game-registry.json entry.
+  ['derive-game-nav.mjs', ['--self-test']],
+  ['derive-game-nav.mjs', ['--check']],
+  ['derive-game-index.mjs', ['--self-test']],
+  ['derive-game-index.mjs', ['--check']],
+  // S199: stale shell cleanup — guard that no unreferenced *.shell-*.js asset
+  // accumulates; exits 1 if stale files are found (run --apply to clean).
+  ['clean-stale-shells.mjs', ['--check']],
 ];
 
 let failed = 0;

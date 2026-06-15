@@ -189,6 +189,25 @@ export function deriveSummary(historyRows) {
   const sortedEngagements = {};
   for (const k of Object.keys(engagements).sort()) sortedEngagements[k] = engagements[k];
 
+  // S199: visit-streak.js — daily streak badge render + day/break events.
+  // streak:badge-shown → badge appeared on screen; streak:day-N → new consecutive day;
+  // streak:break → streak reset. Aggregated as distribution for funnel-summary.
+  const streaks = {};
+  for (const [ev, n] of Object.entries(events)) {
+    if (ev.startsWith('streak:')) streaks[ev.slice('streak:'.length)] = n;
+  }
+  const sortedStreaks = {};
+  for (const k of Object.keys(streaks).sort()) sortedStreaks[k] = streaks[k];
+
+  // S199: pwa-install.js — banner_shown / install_accepted / install_dismissed /
+  // already_installed. Measures install-funnel conversion at each step.
+  const pwa = {};
+  for (const [ev, n] of Object.entries(events)) {
+    if (ev.startsWith('pwa:')) pwa[ev.slice('pwa:'.length)] = n;
+  }
+  const sortedPwa = {};
+  for (const k of Object.keys(pwa).sort()) sortedPwa[k] = pwa[k];
+
   // Sort the events map for byte-stable output.
   const sortedEvents = {};
   for (const k of Object.keys(events).sort()) sortedEvents[k] = events[k];
@@ -198,6 +217,8 @@ export function deriveSummary(historyRows) {
     sources: sortedSources,
     shares: sortedShares,
     engagements: sortedEngagements,
+    streaks: sortedStreaks,
+    pwa: sortedPwa,
     schemaVersion: '1.0',
     // generatedAt mirrors asOf (latest history day) — deterministic, NOT wall-clock,
     // so --check byte-comparison never drifts. Satisfies the public-contract-health
