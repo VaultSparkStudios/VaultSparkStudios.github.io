@@ -120,6 +120,55 @@
       animation-duration: 15s;
     }
 
+    /* Light-mode first-class glows (S200 #9) — the dark-tuned opacities all but
+       vanish on a light background; boost intensity + tighten blur per theme. */
+    body.light-mode .hero-glow { filter: blur(58px); }
+    body.light-mode .hero-glow.blue   { background: radial-gradient(circle, rgba(31,120,220,0.30), transparent 70%); }
+    body.light-mode .hero-glow.orange { background: radial-gradient(circle, rgba(255,96,0,0.24), transparent 70%); }
+    body.light-mode .hero-glow.gold   { background: radial-gradient(circle, rgba(228,158,0,0.26), transparent 70%); }
+    body.ambient-mode .hero-glow      { filter: blur(74px); }
+
+    /* Hero parallax depth (S200 #5) — scroll-driven, progressive enhancement,
+       honored only when motion is allowed and scroll timelines are supported. */
+    @media (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: scroll()) {
+        .hero-chamber {
+          animation: heroParallax linear both;
+          animation-timeline: scroll(root);
+          animation-range: 0 60vh;
+          will-change: transform;
+        }
+      }
+    }
+    @keyframes heroParallax {
+      from { transform: translateY(0); }
+      to   { transform: translateY(48px); }
+    }
+
+    /* Live initiative counts (S200 #6) — self-proving studio velocity */
+    .pulse-teaser-counts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin: 1.1rem 0 0.2rem;
+    }
+    .pti-count {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      padding: 0.6rem 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.03);
+      transition: border-color 0.16s ease, transform 0.16s ease;
+    }
+    .pti-count:hover { border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+    .pti-num { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+    .pti-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* Heartbeat folded into the Recent Ships momentum surface (S200 #7) */
+    .home-heartbeat-folded { margin-top: 1.6rem; }
+
     /* ─── Hero ─── */
     .hero {
       position: relative;
@@ -1277,8 +1326,13 @@
         <div class="pulse-teaser vsx-8f91c00c97">
           <div class="pulse-teaser-copy vsx-bbc5920c6f">
             <p class="eyebrow vsx-ac869d00de">Studio Pulse</p>
-            <h2 id="studio-pulse-teaser-heading">27 initiatives. One vault. One live window.</h2>
-            <p>Four worlds playable. Nine more taking shape in the forge. Twelve sealed in the deep, glowing behind locks. See every world we're building, every tool in motion, every silhouette waiting to breathe — updated every session.</p>
+            <h2 id="studio-pulse-teaser-heading">Every initiative. One vault. One live window.</h2>
+            <p>Worlds playable now, more taking shape in the forge, and silhouettes sealed in the deep. See every world we're building, every tool in motion, every silhouette waiting to breathe — updated every session.</p>
+            <div class="pulse-teaser-counts" data-initiative-counts hidden aria-label="Live studio initiative counts">
+              <a class="pti-count" href="/games/" data-status="sparked"><strong class="pti-num">—</strong><span class="pti-label">🔥 Live</span></a>
+              <a class="pti-count" href="/studio-pulse/" data-status="forge"><strong class="pti-num">—</strong><span class="pti-label">⚒️ In the forge</span></a>
+              <a class="pti-count" href="/studio-pulse/" data-status="sealed"><strong class="pti-num">—</strong><span class="pti-label">🔒 Sealed</span></a>
+            </div>
           </div>
           <div class="pulse-teaser-actions vsx-4d065b717d">
             <a class="button" href="/studio-pulse/" data-track-event="home_pulse_teaser_click">Open Studio Pulse &nbsp;→</a>
@@ -1593,13 +1647,8 @@
           <a class="button-secondary button-sm" href="/changelog/" data-track-event="home_recent_ships_changelog_click">Full Changelog</a>
         </div>
         <div class="recent-ships-grid" data-recent-ships aria-live="polite"></div>
-      </div>
-    </section>
-
-    <!-- ── Portfolio Heartbeat ───────────────────────────────── -->
-    <section class="surface-section" data-reveal="fade-up" data-track-view="home_heartbeat_view">
-      <div class="container">
-        <div data-heartbeat></div>
+        <!-- Portfolio Heartbeat folded in (S200 #7) — one momentum surface, not two -->
+        <div data-heartbeat data-track-view="home_heartbeat_view" class="home-heartbeat-folded"></div>
       </div>
     </section>
 
@@ -1933,6 +1982,7 @@
   <script src="/assets/recent-ships.js" defer></script>
   <script src="/assets/ignis-tour.js" defer></script>
   <script src="/assets/home-dynamic-hero.js" defer></script>
+  <script src="/assets/home-initiative-counter.js" defer></script>
   <script src="/assets/hero-ticker.js" defer></script>
   <script src="/assets/cookie-consent.js" defer></script>
   <script src="/assets/pwa-install.js" defer></script>
