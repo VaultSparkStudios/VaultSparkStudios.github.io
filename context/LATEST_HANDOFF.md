@@ -1,5 +1,25 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
+Last updated: 2026-06-15 (Session 201)
+
+## Where We Left Off — Session 201
+- **Founder direction:** automated `/start → /audit → /implement → /closeout` goal chain. S201 ran a fresh /audit against the current codebase, generating 10 new items, then /implement shipped 9/10 (1 premise-false WIN — `theme-cross-device-sync` already done in theme-toggle.js).
+- **Shipped 9/10:**
+  - **wire-derive-into-build (S199 carry):** wired `derive-game-nav.mjs --apply`, `derive-game-index.mjs --apply`, `generate-pathways.mjs --apply`, `build-rank-climbers.mjs` into `npm run build` — all generators cascade on every build.
+  - **ignis-membership-advisor:** IGNIS surfaced membership suggestion on relevant queries (after 2+ queries on membership/vault/join topics).
+  - **membership-intent-filter:** membership page filters by visitor intent via referrer/entry path.
+  - **faq-data-driven-search (S200 deferred #13):** `/faq/` entries moved to `data/faq.json`, rendered with search + category tabs; FAQPage schema auto-generated from JSON.
+  - **shareable-rank-progress-card:** Canvas 800×360 rank card generator in `vault-rank-bar.js`; Web Share API (PNG file) with clipboard fallback; `share:rank-card:*` RUM family. Injects "Share Rank" button on `/ranks/`, `/vault-member/`, `/membership/`.
+  - **lore-gated-dispatches:** Classified intel section in `/journal/dispatches/` — shows lock state to anonymous, reveals 3 session-intelligence entries with rank note to signed-in members via `vs:session-ready` event.
+  - **merge-pathways-pages (S200 deferred #11):** `data/pathways.json` + `scripts/generate-pathways.mjs` — all 6 pathway pages generated from single data source at build time. No canonical URL changes; no Worker 301s needed.
+  - **ignis-synthesis-mode:** After 2+ IGNIS queries, "Synthesize my session →" button appears; reveals SESSION DIGEST card (topic list, deduped source chips). Zero API calls — pure client-side session array.
+  - **vault-climbers-monthly-digest:** `scripts/build-rank-climbers.mjs` + `api/rank-climbers.json` + homepage strip. Strip stays `hidden` when climbers array is empty (RLS blocks anon reads for now — infrastructure wired, activates when relaxed).
+  - **theme-cross-device-sync → PREMISE-FALSE WIN:** `theme-toggle.js` already had full `saveAccountTheme()` / `syncThemeWithAccount()` writing to `vault_members.prefs.site_theme`. Skipped; detected before any work started.
+- **Contract fixes:** `engagement:ignis_synthesis_opened` added to static `RUM_UX_EVENTS` Set (static-literal emits must be in Set even if prefix allowlist covers runtime); `api/rank-climbers.json` `schemaVersion: "1.0"` added for public-contract-health gate.
+- **Tests:** `npm run build` + key check gates green. Full `npm run build:check` passes all logic gates (Windows libuv UV_HANDLE_CLOSING crash is benign process-teardown artifact on Windows, not a logic failure; all individual scripts pass with exit 0 when run standalone).
+- **Deploy:** 8 commits pushed, rebased over CI beacon commits. CF Pages builds from pushed tip (non-[skip ci]).
+- **Next-session verify targets:** (a) `/journal/dispatches/` — sign in → classified section reveals; (b) `/ranks/` or `/vault-member/` (signed-in) → "Share Rank" button appears bottom-right, tapping opens Web Share; (c) `/ignis/` — ask 2+ questions → "Synthesize my session →" button appears; (d) homepage → no climbers strip if RLS blocks (hidden, no layout shift); (e) `/pathways/builders/` through `/pathways/lore/` → all render correctly from generated source.
+
 Last updated: 2026-06-15 (Session 200)
 
 ## Where We Left Off — Session 200

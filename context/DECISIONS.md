@@ -2,6 +2,18 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-15 — S201 — pathways merge solved via build-time generation, not Worker Layer 0c redirects
+
+**Decision:** Instead of collapsing 6 `pathways/*` pages to a single filterable URL via Worker 301s (S200 deferral rationale), implemented `scripts/generate-pathways.mjs` that reads `data/pathways.json` and regenerates all 6 pages from a single data source at build time. Canonical URLs unchanged; no SEO disruption. **Rationale:** the S200 deferral said "needs Worker-301 propagation" — but the redundancy goal (single source of truth for content) is fully achieved by data-driven generation without touching canonical URLs. Worker 301s would be churn (kill 6 URLs, set up redirects, update all internal links) with no benefit to the visitor. Data-driven generation is simpler, safer, and immediately ships. Gated by `generate-pathways.mjs --check` in `npm run build`.
+
+### 2026-06-15 — S201 — classified dispatches reveal uses static INTEL array, not Supabase RLS
+
+**Decision:** The lore-gated dispatches section in `journal/dispatches/index.html` reveals 3 classified session-intelligence entries from a static JS `INTEL` array rather than fetching from Supabase vault_members. **Rationale:** Supabase RLS blocks anonymous reads on vault_members; server-side member-verification for dynamic per-rank content would require an edge function. CANON-029 (free-tier cost-neutral) + CANON-015 (Claude Max first) preclude an edge function for lore delivery. Static classified content is a valid and honest choice — it still gates on `vs:session-ready` + `signedIn` (client-side auth), delivers the delight moment, and avoids new server costs.
+
+### 2026-06-15 — S201 — vault-climbers strip stays hidden with empty climbers array (RLS blocks anonymous vault_members read)
+
+**Decision:** `build-rank-climbers.mjs` queries Supabase `vault_members` with only the publishable anon key; this gets a 400 (RLS) for now. The script writes an empty `api/rank-climbers.json`; the homepage strip stays `hidden` when `climbers.length === 0`, so there is no layout shift and no lying surface. **Rationale:** granting anonymous read of vault_members would expose usernames + rank to unauthenticated callers; a custom DB function with explicit SELECT list would be the secure path. Deferred to a future session when membership table has real data worth showing publicly. The infrastructure is fully wired — strip activates when RLS is relaxed or a server-side function is wired.
+
 ### 2026-06-15 — S200 — Oracle intelligence panels read a committed public daily-velocity feed, not the gitignored local aggregate
 
 **Decision:** Add `scripts/build-oracle-velocity-public.mjs` → committed `api/ecosystem-velocity.json` (60-day daily commit series + peak day, derived from the public git log — commit counts only, no internal data) and make `assets/oracle-extra.js` fall back to it when `/ignis/output/ecosystem-velocity.json` 404s. **Rationale:** the Oracle heatmap + smart-insights fetched `/ignis/output/*`, which is gitignored and 404s on production, so they sat at "Loading…" for every public visitor (the S183 gitignored-feed-on-prod class, [[feedback_public_surface_deployed_feed_not_gitignored]]). Public surfaces must render the deployed public-safe feed. The existing `api/velocity-series.json` (S198) is weekly-bucketed and shape-incompatible with the daily heatmap, so a purpose-built daily feed in the exact consumer shape is correct over reshaping the renderer. Wired into `npm run build`; co-activity/IGNIS insight cards self-skip without internal data (honest).

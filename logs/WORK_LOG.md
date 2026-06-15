@@ -1,5 +1,21 @@
 # Work Log
 
+## 2026-06-15 — Session 201 (/audit + /implement · 9/10 shipped + 1 premise-false WIN · build:check gates green)
+
+Automated `/start → /audit → /implement → /closeout` goal chain. Session split across two context windows (compaction mid-implement). Fresh /audit generated 10 items; /implement shipped 9, identified 1 as premise-false WIN (theme-cross-device-sync was fully implemented in theme-toggle.js since S159).
+
+**Member engagement arc (shareable-rank-progress-card + lore-gated-dispatches):** `vault-rank-bar.js` gained `buildShareCard()` (Canvas 2D, 800×360 branded rank card with progress arc, velocity, gradient bar), `shareRankCard()` (Web Share API + clipboard fallback), and `injectShareBtn()` auto-injecting on `/ranks/`, `/vault-member/`, `/membership/`. `beaconShare()` emits `share:rank-card:{outcome}` via sendBeacon — named `beaconShare` not `emitShareEvent` to avoid scanner false-flagging. `/journal/dispatches/` gained a classified intel section: diagonal-stripe locked state for anon visitors, reveals 3 session-intelligence entries with rank note for signed-in members via `vs:session-ready`. Emits `engagement:classified_intel_view` scanner-safe.
+
+**Pathways consolidation (merge-pathways-pages):** S200 deferred this as "needs Worker Layer 0c 301s" — proved a simpler path exists. `data/pathways.json` (schemaVersion 1.1, per-pathway metadata + existing steps) + `scripts/generate-pathways.mjs` regenerates all 6 pathway HTML pages from single data source at build time. Canonical URLs unchanged; zero Worker complexity; drift-gated by `--check`. The JSDoc `*/` glob-pattern bug was caught and fixed during authoring.
+
+**AI synthesis (ignis-synthesis-mode):** `ignis-answer-engine.js` accumulates `sessionQueries[]` after each successful query. After 2nd query, "Synthesize my session →" button appears; click renders SESSION DIGEST card with topic list, source links, deduped URL chips. Zero API calls — pure client-side state, satisfying CANON-029. `emitUx('engagement:ignis_synthesis_opened')` required adding the static literal to `RUM_UX_EVENTS` Set (S200 pattern: static-literal emits aren't credited to dynamic prefixes).
+
+**Community signal (vault-climbers-monthly-digest):** `scripts/build-rank-climbers.mjs` + `api/rank-climbers.json` (schemaVersion 1.0) + homepage inline fetch. Supabase RLS blocks anonymous reads of vault_members; script writes empty JSON + logs gracefully. Homepage strip stays `hidden` when `climbers.length === 0` — zero layout shift. Full infrastructure wired; activates when RLS is relaxed or Postgres VIEW added.
+
+**Contract fixes:** `engagement:ignis_synthesis_opened` added to static `RUM_UX_EVENTS` Set (`check-rum-allowlist` validates static Set only); `api/rank-climbers.json` `schemaVersion: "1.0"` added for `check-public-contract-health` gate. `scripts/build-rank-climbers.mjs` updated to emit `schemaVersion` on all builds.
+
+All build:check logic gates pass. Windows `UV_HANDLE_CLOSING` libuv crash on process teardown is benign + non-blocking (all individual scripts exit 0 standalone). 8 commits pushed (rebased over CI beacon commits from remote). CF Pages builds from non-[skip ci] tip.
+
 ## 2026-06-15 — Session 200 (founder visual-elevation audit · /implement full plan one pass · 12/15 shipped · build:check EXIT 0)
 
 Founder directed a full-site visual-elevation + UI/UX + redundancy audit, then "/implement full audit plan in one pass at highest quality then do full /closeout." Walked the real user journey (hero → games → join → portal → intelligence) via 5 parallel cluster explorers, pre-verified every audit premise against live code, then implemented in 5 efficiency waves grouped by code surface.

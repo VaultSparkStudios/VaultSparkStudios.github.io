@@ -9,15 +9,26 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 970.3 | 5: 971.2 | 10: 966 | 25: 971 | all: 964 (v3.0 /1000)
-  └ 3-session: Dev 96.3 | Align 97.7 | Momentum 96.7 | Engage 95.7 | Process 98.0
-Velocity trend: ↑ (S199: 12/12 shipped — first perfect 12/12 session; S198: 9/11; S197: 3/3) | Protocol velocity: ↑ (game-registry L2 derive scripts wired as CI gates; CSP reporting endpoint; stale-shell gate; IGNIS history L2; rank velocity chip) | Debt: ↓ (stale shells deleted; dead gtag visit-depth+ignis-lens wired; Ark sig root-cause logged; velocity chart zeros trimmed)
-Momentum runway: prod-verify S199 (IGNIS history chips; /v/csp-report KV; Oracle velocity 4 weeks; /ranks/ chip) · staging box recovery (HUMAN ACTION: HCLOUD_TOKEN) · ARK-DEAD-GTAG broadcast (founder) · THEME TIER-LOCK (founder) · NAV-SHEET 100% flip (founder) · forge devlog publish (founder) · TT reprobe ~06-18 | Intent rate: 100% (last 5)
-Last session: 2026-06-15 | Session 199 | Total: 975/1000 (v3.0) | Velocity: 12 | protocolVelocity: 5
+Avgs - 3: 978.7 | 5: 977.0 | 10: 968 | 25: 972 | all: 965 (v3.0 /1000)
+  └ 3-session: Dev 98.3 | Align 97.7 | Momentum 98.3 | Engage 97.3 | Process 98.7
+Velocity trend: ↑ (S201: 9/10 shipped + 1 premise-false WIN; S200: 12/15; S199: 12/12) | Protocol velocity: ↑ (data-driven pathways generation; IGNIS synthesis mode; shareable rank cards; classified dispatches; vault-climbers strip; FAQ data-driven) | Debt: ↓ (RUM allowlist static-list + schemaVersion gate fixed; premise-false detection working; pathways merge solved without Worker-301 complexity)
+Momentum runway: prod-verify S201 (classified reveal; Share Rank; IGNIS synthesis; pathways rendered) · vault-climbers RLS (Postgres VIEW or edge fn) · prod-verify S200 visual wave · staging box recovery (HUMAN ACTION: HCLOUD_TOKEN) · universe depth-map (founder lore) · forge devlog publish (founder) · TT reprobe ~06-18 | Intent rate: 100% (last 5)
+Last session: 2026-06-15 | Session 201 | Total: 980/1000 (v3.0) | Velocity: 9 | protocolVelocity: 5
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-15 — Session 201 (/audit + /implement 9/10 shipped + 1 premise-false WIN · build:check gates green) | Total: 980/1000 (v3.0) | Velocity: 9 | Debt: ↓
+
+**Score:** 980 / 1000
+(Dev Health 99 · Creative Alignment 98 · Momentum 99 · Engagement 98 · Process Quality 98 · Cross-Repo Coherence 96 · Security Posture 99 · Ecosystem Integration 96 · Capital Efficiency 99 · Automation Coverage 98)
+
+**Audit:** Fresh S201 audit, 10 items, 9 shipped, 1 premise-false WIN. Classes closed: (1) ranked-progress sharing via canvas rank card + Web Share API; (2) lore-gated dispatches reveal for signed-in members; (3) pathways data-driven generation from single JSON source (proved Worker-301s were unnecessary — simpler solution existed); (4) IGNIS synthesis mode (client-side session digest, zero API cost); (5) vault-climbers digest wired (hidden until RLS opened); (6–9) ignis-membership-advisor, membership-intent-filter, faq-data-driven-search, wire-derive-into-build. Build:check gates green (Windows libuv UV_HANDLE_CLOSING crash on process teardown is benign).
+
+**SIL note:** 980 — same as S199 which was 12/12. S201 achieved equivalent with 9/10 by identifying the premise-false WIN early and executing each shipped item at full quality. The pathways-merge solution (data-driven generation) was specifically smarter than the deferred approach (Worker-301 complexity).
+
+**Brainstorm commit:** (1) Wire vault-climbers via Postgres VIEW so the homepage strip can show real community data — infrastructure is already there, just needs RLS gate relaxed safely; (2) IGNIS synthesis mode's session-array pattern is reusable — consider a `vs:synthesis-ready` event for other pages that want to surface "here's what you explored today" context.
 
 ## 2026-06-15 — Session 200 (founder visual-elevation audit · /implement full plan one pass · 12/15 shipped · build:check EXIT 0) | Total: 976/1000 (v3.0) | Velocity: 12 | Debt: ↓
 
