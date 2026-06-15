@@ -255,6 +255,9 @@ For `audience: public-*` projects:
 - **CANON-035** · Project Brand Identity — every project designs its own professional logo, favicon, and brand kit
 - **CANON-036** · Deploy Currency Discipline — production must not silently lag main
 - **CANON-037** · Canon Half-Life and Automated Consistency — re-confirmation cadence + consistency check
+- **CANON-038** · Shared Studio Self-Host Server — one Hetzner box · isolated per-project databases/APIs · default self-host target
+- **CANON-039** · Build-It-Ourselves, Internal-First, OSS-Research Discipline — own our stack; reuse internal tools; research free/credible/verified open-source before adopting or building
+- **CANON-040** · Agent-Deployed Migrations — AI agents apply database/infra migrations themselves, automatically, behind the safety gates
 
 <!-- canon-index:end -->
 

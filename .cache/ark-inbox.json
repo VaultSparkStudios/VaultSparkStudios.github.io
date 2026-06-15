@@ -1,452 +1,94 @@
 {
-  "drainedAt": "2026-06-15T02:06:46.761Z",
+  "drainedAt": "2026-06-15T03:36:26.568Z",
   "slug": "vaultsparkstudios-website",
-  "count": 15,
+  "count": 5,
   "cargo": [
     {
-      "id": "01JR49VCJF997E078269DB031C",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:49.647Z",
+      "id": "01JR4IVHUC8C6FFDC376708A2F",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-15T02:50:12.300Z",
       "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "windows-workaround",
-          "path": "scripts/closeout-step-3-7-parallel.mjs",
-          "medium": "game",
-          "summary": "Windows-specific code path in closeout-step-3-7-parallel.mjs — review for cross-platform consistency",
-          "tags": [
-            "windows",
-            "platform",
-            "game"
-          ]
-        }
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 48,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-15T02:50:12.174Z"
       }
     },
     {
-      "id": "01JR49VCU3C4A43FF555B1287A",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:49.987Z",
+      "id": "01JR4J5S6B3C6D8F44DB8116ED",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-15T02:53:39.403Z",
       "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "ark",
-          "path": "scripts/lib/ark.mjs",
-          "exports": [
-            "RECEIPT_LINK_FIELD",
-            "receiptOrigId",
-            "findStudioOpsRoot",
-            "loadManifest",
-            "loadArkKey"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'ark' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 48,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-15T02:53:39.267Z"
       }
     },
     {
-      "id": "01JR49VD6K4683BE5E178033EA",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:50.261Z",
+      "id": "01JR4JCCMH7278BCFE64879BC6",
+      "type": "session-outcome",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-15T02:57:12.914Z",
       "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "boot-amortization",
-          "path": "scripts/lib/boot-amortization.mjs",
-          "exports": [
-            "ROOT",
-            "HISTORY_CAP",
-            "MIN_SAMPLES_TO_WARN",
-            "WASTED_AVG_BAND",
-            "liveAmortization"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'boot-amortization' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 48,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-15T02:57:12.801Z"
       }
     },
     {
-      "id": "01JR49VDBR2B25B132974021A9",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:50.428Z",
+      "id": "01JR4JERA46A155486949707DE",
+      "type": "session-impact-summary",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-15T02:58:33.412Z",
       "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "commit-gates",
-          "path": "scripts/lib/commit-gates.mjs",
-          "exports": [
-            "COMMIT_GATES",
-            "evaluateCommitGates"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'commit-gates' (2 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
+        "sessionId": "179",
+        "headline": "Session closed.",
+        "bullets": [
+          "(no shipped items recorded this session)"
+        ],
+        "synopsis": "",
+        "generatedAt": "2026-06-14T21:01:17.706Z"
       }
     },
     {
-      "id": "01JR49VDL96E2B27B42C28ED55",
+      "id": "01JR4JET9HF006D957BDED85A4",
       "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:50.729Z",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-15T02:58:35.442Z",
       "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "cross-repo-tasks",
-          "path": "scripts/lib/cross-repo-tasks.mjs",
-          "exports": [
-            "parseTaskBoard",
-            "loadProjectTaskBoard",
-            "loadPortfolioTaskBoards"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'cross-repo-tasks' (3 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
-      }
-    },
-    {
-      "id": "01JR49VDQQ53590586B61E4BD9",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:50.906Z",
-      "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "human-action-ages",
-          "path": "scripts/lib/human-action-ages.mjs",
-          "exports": [
-            "ensureAges",
-            "daysSince"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'human-action-ages' (2 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
-      }
-    },
-    {
-      "id": "01JR49VE6R027080B4E1588CFA",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:51.291Z",
-      "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "ignis-insight",
-          "path": "scripts/lib/ignis-insight.mjs",
-          "exports": [
-            "loadIgnisInsight"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'ignis-insight' (1 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
-      }
-    },
-    {
-      "id": "01JR49VEMD8A99C3DC46CFF592",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:51.790Z",
-      "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "session-economics",
-          "path": "scripts/lib/session-economics.mjs",
-          "exports": [
-            "CLOSEOUT_PCT",
-            "CONSIDER_PCT",
-            "AMORTIZATION_BANDS",
-            "bootAmortization",
-            "sessionFloorVerdict"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'session-economics' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
-      }
-    },
-    {
-      "id": "01JR49VERJ63E4F2B9A006C0BB",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:51.955Z",
-      "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "shared-policies",
-          "path": "scripts/lib/shared-policies.mjs",
-          "exports": [
-            "STUDIO_MANIFEST_REQUIRED_KEYS",
-            "WALK_IGNORE_DIRS",
-            "SPARK_RAMP",
-            "SKILL_FRONTMATTER_SCALAR_KEYS",
-            "BLOCKED_STATUSES_CORE"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'shared-policies' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
-      }
-    },
-    {
-      "id": "01JR49VF6750A7BDB246FCA77B",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:52.296Z",
-      "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "sil-forecaster",
-          "path": "scripts/lib/sil-forecaster.mjs",
-          "exports": [
-            "parseSilHistory",
-            "forecastNext",
-            "renderForecastBlock"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'sil-forecaster' (3 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
-      }
-    },
-    {
-      "id": "01JR49VFE822A998C6524C6B62",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:52.553Z",
-      "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "skill-cost-ledger",
-          "path": "scripts/lib/skill-cost-ledger.mjs",
-          "exports": [
-            "recordSkillCost",
-            "recentSkillCosts",
-            "priorOverrun",
-            "detectRegressions",
-            "detectSevereOverruns"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'skill-cost-ledger' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
-      }
-    },
-    {
-      "id": "01JR49VFJF7DD9AD12C9F1FA73",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:52.720Z",
-      "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "skill-router",
-          "path": "scripts/lib/skill-router.mjs",
-          "exports": [
-            "DEFAULT_WEIGHTS",
-            "loadCatalog",
-            "loadOverrides",
-            "projectSignature",
-            "classifyIntent"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'skill-router' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
-      }
-    },
-    {
-      "id": "01JR49VFOT7E3BDFFF2A3233AD",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:52.894Z",
-      "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "studio-events",
-          "path": "scripts/lib/studio-events.mjs",
-          "exports": [
-            "eventsPath",
-            "readEvents",
-            "appendEvent",
-            "latestEvents"
-          ],
-          "medium": "game",
-          "axis": "quality",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:quality",
-            "reusable"
-          ],
-          "summary": "New shared lib 'studio-events' (4 exports) [axis:quality] — likely useful in other game repos AND other quality-axis projects"
-        }
-      }
-    },
-    {
-      "id": "01JR49VG264BAD86E8B2CF4B8A",
-      "type": "pattern-share",
-      "from": "vaultspark-forge",
-      "shippedAt": "2026-06-15T00:12:53.190Z",
-      "payload": {
-        "type": "pattern-share",
-        "payload": {
-          "pattern": "library-extraction",
-          "name": "visual-blocks",
-          "path": "scripts/lib/visual-blocks.mjs",
-          "exports": [
-            "sparkline",
-            "bar",
-            "trend",
-            "GLYPH",
-            "glyph"
-          ],
-          "medium": "game",
-          "axis": "ux",
-          "context": "extracted from vaultspark-forge",
-          "tags": [
-            "library",
-            "game",
-            "axis:ux",
-            "reusable"
-          ],
-          "summary": "New shared lib 'visual-blocks' (5 exports) [axis:ux] — likely useful in other game repos AND other ux-axis projects"
-        }
-      }
-    },
-    {
-      "id": "01JR4F5L6ED52AC49A1F534074",
-      "type": "agent-handoff",
-      "from": "obelisk",
-      "shippedAt": "2026-06-15T01:43:37.934Z",
-      "payload": {
-        "intent": "Adopt Obelisk Gate for identity (OIDC). One studio auth plane — this project federates to https://obeliskgate.com and gets login + passkeys + MFA + tokens + API-key grants + a signed audit trail by pointing at Obelisk, no per-project auth engine.",
-        "obeliskAuthVersion": "0.1.0",
-        "oidc": {
-          "issuer": "https://obeliskgate.com",
-          "clientId": "rp-vaultsparkstudios-website",
-          "redirectUri": "https://vaultspark.studio/auth/callback",
-          "scopes": [
-            "openid",
-            "profile",
-            "offline_access"
-          ]
-        },
-        "sdk": {
-          "package": "@vaultspark/obelisk-auth",
-          "version": "0.1.0",
-          "next": "@vaultspark/obelisk-auth/next",
-          "readme": "packages/auth-sdk/README.md"
-        },
-        "runbook": "docs/GOTRUE_TO_OBELISK_MIGRATION.md",
-        "contract": "docs/OBELISK_GATE_SPEC.md",
-        "archetype": "static-html",
-        "propagation": {
-          "serverSide": "Login UI, OIDC, security policy, and the Obelisk Rating propagate INSTANTLY on Gate deploy — this project redirects to the Gate; nothing to update here.",
-          "clientSide": "Embedded-SDK changes propagate by bumping obeliskAuthVersion in Obelisk + re-running propagate-obelisk-auth.mjs (re-ships this cargo)."
-        },
-        "doNot": [
-          "No hand-rolled crypto.",
-          "No long-lived broad API keys (use Obelisk Grants).",
-          "Obelisk never writes into this repo — apply this cargo locally."
-        ]
+        "pattern": "skill-outcome",
+        "tags": [
+          "skill:closeout",
+          "type:infra",
+          "outcome:good"
+        ],
+        "context": "studio-ops",
+        "solution": "closeout completed cleanly"
       }
     }
   ],
@@ -456,777 +98,784 @@
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.718Z"
+      "ts": "2026-06-15T03:36:26.532Z"
     },
     {
       "id": "01JQINKEL12608945FB7EEDCB4",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.720Z"
+      "ts": "2026-06-15T03:36:26.534Z"
     },
     {
       "id": "01JQIO628O3ED21389810C7039",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.721Z"
+      "ts": "2026-06-15T03:36:26.534Z"
     },
     {
       "id": "01JQIOHBFV01C7A92ADC94594F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.722Z"
+      "ts": "2026-06-15T03:36:26.535Z"
     },
     {
       "id": "01JQISC3NC4181FD2AB28760B7",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.723Z"
+      "ts": "2026-06-15T03:36:26.535Z"
     },
     {
       "id": "01JQITQM23E02B74E40A549E93",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.724Z"
+      "ts": "2026-06-15T03:36:26.536Z"
     },
     {
       "id": "01JQIU9EMS5F82D26EB46C34BF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.724Z"
+      "ts": "2026-06-15T03:36:26.536Z"
     },
     {
       "id": "01JQIV646P19B27D92EBD58BDC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.725Z"
+      "ts": "2026-06-15T03:36:26.536Z"
     },
     {
       "id": "01JQK2NJMI222BE708E8FC5EDD",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.726Z"
+      "ts": "2026-06-15T03:36:26.537Z"
     },
     {
       "id": "01JQK2VB9S04C324A82EC8D819",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.726Z"
+      "ts": "2026-06-15T03:36:26.537Z"
     },
     {
       "id": "01JQK3QR7RAC8B1E0A42BEE8E6",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.727Z"
+      "ts": "2026-06-15T03:36:26.537Z"
     },
     {
       "id": "01JQK44U3C62E189F1F46A5E88",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.727Z"
+      "ts": "2026-06-15T03:36:26.537Z"
     },
     {
       "id": "01JQK4D6IO8D155D9737B18129",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.727Z"
+      "ts": "2026-06-15T03:36:26.538Z"
     },
     {
       "id": "01JQK4JCMQ42CBE29D52E43C65",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.728Z"
+      "ts": "2026-06-15T03:36:26.538Z"
     },
     {
       "id": "01JQK4UVUQ2DF2EAEA8D147CBC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.728Z"
+      "ts": "2026-06-15T03:36:26.538Z"
     },
     {
       "id": "01JQK7LMEVF1CCF71CBD87994D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.728Z"
+      "ts": "2026-06-15T03:36:26.539Z"
     },
     {
       "id": "01JQK7PQPU8647F73682F9F6A0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.729Z"
+      "ts": "2026-06-15T03:36:26.539Z"
     },
     {
       "id": "01JQK8DPR033D60CB308D621AC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.729Z"
+      "ts": "2026-06-15T03:36:26.539Z"
     },
     {
       "id": "01JQKRSKRGE3F6ACF397DD5F69",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.730Z"
+      "ts": "2026-06-15T03:36:26.540Z"
     },
     {
       "id": "01JQL2JG06557EF9A1AFEF274C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.730Z"
+      "ts": "2026-06-15T03:36:26.540Z"
     },
     {
       "id": "01JQL2MV12F3FE0FACCCEAF6A9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.731Z"
+      "ts": "2026-06-15T03:36:26.540Z"
     },
     {
       "id": "01JQL2T67S297B80EBA938FA0B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.731Z"
+      "ts": "2026-06-15T03:36:26.540Z"
     },
     {
       "id": "01JQL31BJ4C2694F6FD68A8A16",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.731Z"
+      "ts": "2026-06-15T03:36:26.541Z"
     },
     {
       "id": "01JQN4BMP0FA0F8371A00CDC08",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.731Z"
+      "ts": "2026-06-15T03:36:26.541Z"
     },
     {
       "id": "01JQN4R7U49577021F5E104785",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.732Z"
+      "ts": "2026-06-15T03:36:26.541Z"
     },
     {
       "id": "01JQN4UJD42BAE2396CFF8A726",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.732Z"
+      "ts": "2026-06-15T03:36:26.541Z"
     },
     {
       "id": "01JQN5BHT914367ACCEE226576",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.732Z"
+      "ts": "2026-06-15T03:36:26.542Z"
     },
     {
       "id": "01JQN5KTML529E6ED06050EA3F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.732Z"
+      "ts": "2026-06-15T03:36:26.542Z"
     },
     {
       "id": "01JQN67UL31A1BC544762D30F1",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.733Z"
+      "ts": "2026-06-15T03:36:26.543Z"
     },
     {
       "id": "01JQN6FN7V332DEF86CE4AC468",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.733Z"
+      "ts": "2026-06-15T03:36:26.543Z"
     },
     {
       "id": "01JQN6M6QC8AF4BFAE76938B0A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.734Z"
+      "ts": "2026-06-15T03:36:26.543Z"
     },
     {
       "id": "01JQOV532GDBFC80A9AAF5ABC1",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.735Z"
+      "ts": "2026-06-15T03:36:26.544Z"
     },
     {
       "id": "01JQOVTIRHBD65E3C7AB226E3E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.735Z"
+      "ts": "2026-06-15T03:36:26.544Z"
     },
     {
       "id": "01JQP0LDDC893D1A4B4C405469",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.735Z"
+      "ts": "2026-06-15T03:36:26.544Z"
     },
     {
       "id": "01JQP0S9IUAEC72A0AD8B8E204",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.736Z"
+      "ts": "2026-06-15T03:36:26.544Z"
     },
     {
       "id": "01JQP76PVDD87FC67CA34831ED",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.736Z"
+      "ts": "2026-06-15T03:36:26.545Z"
     },
     {
       "id": "01JQP9553LF3B4BEB6775E378E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.736Z"
+      "ts": "2026-06-15T03:36:26.545Z"
     },
     {
       "id": "01JQP99PUOF675A2646F858738",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.736Z"
+      "ts": "2026-06-15T03:36:26.545Z"
     },
     {
       "id": "01JQP9ASG563DF4361FB6C3673",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.737Z"
+      "ts": "2026-06-15T03:36:26.545Z"
     },
     {
       "id": "01JQP9H76B0571F0C1F43C1F5E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.737Z"
+      "ts": "2026-06-15T03:36:26.545Z"
     },
     {
       "id": "01JQPA11DP277EDE94F1B74A00",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.737Z"
+      "ts": "2026-06-15T03:36:26.546Z"
     },
     {
       "id": "01JQPC2H3C0975063CEE000038",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.737Z"
+      "ts": "2026-06-15T03:36:26.546Z"
     },
     {
       "id": "01JQPCGGFV60F28A40E2D1D792",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.738Z"
+      "ts": "2026-06-15T03:36:26.546Z"
     },
     {
       "id": "01JQPK5UAMC819F99ADF92AA59",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.738Z"
+      "ts": "2026-06-15T03:36:26.546Z"
     },
     {
       "id": "01JQPL06Q414FD561F3829DD6A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.738Z"
+      "ts": "2026-06-15T03:36:26.547Z"
     },
     {
       "id": "01JQPLCH0HF2244068B3763F39",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.738Z"
+      "ts": "2026-06-15T03:36:26.547Z"
     },
     {
       "id": "01JQQBC1QTFC4876ACE8B32985",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.739Z"
+      "ts": "2026-06-15T03:36:26.547Z"
     },
     {
       "id": "01JQQCI2GAAA9BD0C877D8AD79",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.739Z"
+      "ts": "2026-06-15T03:36:26.547Z"
     },
     {
       "id": "01JQQCRR8TCC27A96E84A93D32",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.739Z"
+      "ts": "2026-06-15T03:36:26.548Z"
     },
     {
       "id": "01JQQDAL76126359C0A12B9283",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.740Z"
+      "ts": "2026-06-15T03:36:26.548Z"
     },
     {
       "id": "01JQQDP3IOB26689F2F6B376AC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.740Z"
+      "ts": "2026-06-15T03:36:26.548Z"
     },
     {
       "id": "01JQQE3O9CBB70A91AF3D9795E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.740Z"
+      "ts": "2026-06-15T03:36:26.548Z"
     },
     {
       "id": "01JQSDNNDGAC98B98ED22CCF21",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.740Z"
+      "ts": "2026-06-15T03:36:26.549Z"
     },
     {
       "id": "01JQSFB7KCA2E47FA065979808",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.741Z"
+      "ts": "2026-06-15T03:36:26.549Z"
     },
     {
       "id": "01JQSFKS1MBED5FBEE18EC5A7F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.741Z"
+      "ts": "2026-06-15T03:36:26.549Z"
     },
     {
       "id": "01JQSGJVPG91A508C06B6CD7D9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.741Z"
+      "ts": "2026-06-15T03:36:26.550Z"
     },
     {
       "id": "01JQSGRC6V260E6771CC54D689",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.742Z"
+      "ts": "2026-06-15T03:36:26.550Z"
     },
     {
       "id": "01JQSM342E6AFC4CAF9051329A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.742Z"
+      "ts": "2026-06-15T03:36:26.550Z"
     },
     {
       "id": "01JQSN7V8185ABD21C8E610A17",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.742Z"
+      "ts": "2026-06-15T03:36:26.551Z"
     },
     {
       "id": "01JQSNLDLU97D5E000D949B002",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.743Z"
+      "ts": "2026-06-15T03:36:26.551Z"
     },
     {
       "id": "01JQSNVOSP7958F4F5CBF89946",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.743Z"
+      "ts": "2026-06-15T03:36:26.552Z"
     },
     {
       "id": "01JQSU6O637F483BD51BFE8507",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.743Z"
+      "ts": "2026-06-15T03:36:26.552Z"
     },
     {
       "id": "01JQT37K8FEA49AAF42F266323",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.743Z"
+      "ts": "2026-06-15T03:36:26.552Z"
     },
     {
       "id": "01JQT3NJFC8637796D9AF7DC2B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.744Z"
+      "ts": "2026-06-15T03:36:26.553Z"
     },
     {
       "id": "01JQT4HGKB32F185D39DB85E75",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.744Z"
+      "ts": "2026-06-15T03:36:26.553Z"
     },
     {
       "id": "01JQT4Q9REEF5E91C00F6A64A3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.744Z"
+      "ts": "2026-06-15T03:36:26.554Z"
     },
     {
       "id": "01JQTMQ7518762C13861C92971",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.744Z"
+      "ts": "2026-06-15T03:36:26.554Z"
     },
     {
       "id": "01JQTN26EB6C7119BB7FF524F7",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.745Z"
+      "ts": "2026-06-15T03:36:26.554Z"
     },
     {
       "id": "01JQTNMFBBD013A4EFF866BB64",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.745Z"
+      "ts": "2026-06-15T03:36:26.555Z"
     },
     {
       "id": "01JQTNSKKB15724E469EB3049A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.745Z"
+      "ts": "2026-06-15T03:36:26.555Z"
     },
     {
       "id": "01JQTOB0PG0974E96B9BDB174D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.746Z"
+      "ts": "2026-06-15T03:36:26.556Z"
     },
     {
       "id": "01JQTRRPMO4513017B17C5EF3E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.746Z"
+      "ts": "2026-06-15T03:36:26.556Z"
     },
     {
       "id": "01JQTS9UF5579717A1D63B372C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.746Z"
+      "ts": "2026-06-15T03:36:26.556Z"
     },
     {
       "id": "01JQTSDTOMA03308D4499CB98E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.747Z"
+      "ts": "2026-06-15T03:36:26.557Z"
     },
     {
       "id": "01JQTSV5EP3DAE5A5B5559D017",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.747Z"
+      "ts": "2026-06-15T03:36:26.557Z"
     },
     {
       "id": "01JQUKJ2HGE8E5D1397A174671",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.747Z"
+      "ts": "2026-06-15T03:36:26.557Z"
     },
     {
       "id": "01JQUL7FA5FF2CC166D18A3B01",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.748Z"
+      "ts": "2026-06-15T03:36:26.557Z"
     },
     {
       "id": "01JQULN42JD3AED963C90CE3B5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.748Z"
+      "ts": "2026-06-15T03:36:26.558Z"
     },
     {
       "id": "01JQUR1A5402B95AB466907853",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.748Z"
+      "ts": "2026-06-15T03:36:26.558Z"
     },
     {
       "id": "01JQURUL56935091DCF96A1A80",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.749Z"
+      "ts": "2026-06-15T03:36:26.558Z"
     },
     {
       "id": "01JQUSD5TH64E17A614185DFDC",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.749Z"
+      "ts": "2026-06-15T03:36:26.558Z"
     },
     {
       "id": "01JQUTDDUN15F28212DDD792EE",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.749Z"
+      "ts": "2026-06-15T03:36:26.559Z"
     },
     {
       "id": "01JR19CMTC5DEDFB3ED682B4B3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.750Z"
+      "ts": "2026-06-15T03:36:26.559Z"
     },
     {
       "id": "01JR19R5PUABD88201E96380B6",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.750Z"
+      "ts": "2026-06-15T03:36:26.559Z"
     },
     {
       "id": "01JR1BFAAKE0293C7FE54555AA",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.750Z"
+      "ts": "2026-06-15T03:36:26.559Z"
     },
     {
       "id": "01JR1CGV6B05C2515966C88331",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.750Z"
+      "ts": "2026-06-15T03:36:26.560Z"
     },
     {
       "id": "01JR1D76EK11F17CFFC82CF7D3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.751Z"
+      "ts": "2026-06-15T03:36:26.560Z"
     },
     {
       "id": "01JR1IFHD0DEAB84B806FC1C5F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.751Z"
+      "ts": "2026-06-15T03:36:26.560Z"
     },
     {
       "id": "01JR1J5RUAFDC1C77982B9F06E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.751Z"
+      "ts": "2026-06-15T03:36:26.561Z"
     },
     {
       "id": "01JR1JBID08D5130BE5E9FE58E",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.752Z"
+      "ts": "2026-06-15T03:36:26.561Z"
     },
     {
       "id": "01JR1JUSFQ6308CE0A3BB6D862",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.752Z"
+      "ts": "2026-06-15T03:36:26.561Z"
     },
     {
       "id": "01JR1K9614875723A5FB3CDBFA",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.752Z"
+      "ts": "2026-06-15T03:36:26.561Z"
     },
     {
       "id": "01JR1KEHG2B9F1740DE1D7A7F6",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.752Z"
+      "ts": "2026-06-15T03:36:26.562Z"
     },
     {
       "id": "01JR1KK3M1B6C18B802C36DB64",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.753Z"
+      "ts": "2026-06-15T03:36:26.562Z"
     },
     {
       "id": "01JR1KKVQJ383D592F2A1E1C74",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.753Z"
+      "ts": "2026-06-15T03:36:26.562Z"
     },
     {
       "id": "01JR1KTVLT54F8A483EB5F79D3",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.753Z"
+      "ts": "2026-06-15T03:36:26.562Z"
     },
     {
       "id": "01JR1LMU259DCB16FB4E94EC61",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.753Z"
+      "ts": "2026-06-15T03:36:26.563Z"
     },
     {
       "id": "01JR1NGTAT904A89C3977BC35C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.754Z"
+      "ts": "2026-06-15T03:36:26.563Z"
     },
     {
       "id": "01JR1OT0350EB0697A8FF262C8",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.754Z"
+      "ts": "2026-06-15T03:36:26.563Z"
     },
     {
       "id": "01JR1SHSEM91ED195B4BC016F1",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.754Z"
+      "ts": "2026-06-15T03:36:26.563Z"
     },
     {
       "id": "01JR1T9EPU6A01DF5FCE0C395F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.754Z"
+      "ts": "2026-06-15T03:36:26.564Z"
     },
     {
       "id": "01JR1V6KFEBD441E567070F2C7",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.755Z"
+      "ts": "2026-06-15T03:36:26.564Z"
     },
     {
       "id": "01JR2046NP291A44FA215EF962",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.755Z"
+      "ts": "2026-06-15T03:36:26.564Z"
     },
     {
       "id": "01JR20NVH49A2CEFDACA6E74A0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.755Z"
+      "ts": "2026-06-15T03:36:26.564Z"
     },
     {
       "id": "01JR3LGD30E31016D5FD7A7658",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.755Z"
+      "ts": "2026-06-15T03:36:26.565Z"
     },
     {
       "id": "01JR3M6FJO92A1E7F2C6AB6A0F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.756Z"
+      "ts": "2026-06-15T03:36:26.565Z"
     },
     {
       "id": "01JR3NT8JD3184EDF18042CE2D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.756Z"
+      "ts": "2026-06-15T03:36:26.565Z"
     },
     {
       "id": "01JR3OG678350871BDDCAAEEC2",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.756Z"
+      "ts": "2026-06-15T03:36:26.566Z"
     },
     {
       "id": "01JR3U7RQODBC1373987B77882",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.756Z"
+      "ts": "2026-06-15T03:36:26.566Z"
     },
     {
       "id": "01JR48GTN9DE40D118108E7518",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.757Z"
+      "ts": "2026-06-15T03:36:26.566Z"
     },
     {
       "id": "01JR4G48MFAE0D7D590404F77A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-15T02:06:46.757Z"
+      "ts": "2026-06-15T03:36:26.566Z"
+    },
+    {
+      "id": "01JR4H20U1D4112B1EE2ED33CE",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-15T03:36:26.567Z"
     }
   ]
 }

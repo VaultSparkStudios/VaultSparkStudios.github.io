@@ -281,6 +281,13 @@ const RUM_UX_EVENTS = new Set([
   // S198: visit-streak.js — daily streak events. streak:break is static; streak:day-N
   // is emitted as a dynamic prefix (covered by RUM_UX_DYNAMIC streak family below).
   'streak:break',
+  // S200: these are emitted as STATIC literals (not concatenated) and are already
+  // admitted at runtime by the engagement/pwa/streak RUM_UX_DYNAMIC prefixes below,
+  // but check-rum-allowlist only validates the static Set for emitted names — list
+  // them here so the integrity gate stays green without loosening runtime behavior.
+  'engagement:ignis_lens_opened', 'engagement:visit_depth_upsell_shown',
+  'pwa:banner_shown', 'pwa:install_accepted', 'pwa:install_dismissed', 'pwa:already_installed',
+  'streak:badge-shown',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so

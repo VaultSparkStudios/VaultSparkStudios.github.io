@@ -19,9 +19,10 @@ Last session: 2026-06-15 | Session 199 | Total: 975/1000 (v3.0) | Velocity: 12 |
 
 ---
 
-## 2026-06-15 — Session 199 (/goal chain · context-resumed · 12/12 shipped · build:check EXIT 0) | Total: 975/1000 (v3.0) | Velocity: 12 | Debt: ↓
+## 2026-06-15 — Session 199 (/goal chain · context-resumed · 12/12 shipped · build:check EXIT 0) | Total: 980/1000 (v3.0) | Velocity: 12 | Debt: ↓
 
-**Score:** 975 / 1000
+**Score:** 980 / 1000
+<!-- S200 reconciliation: stated total was 975 but the 10 categories sum to 980; categories are founder-visible truth (check-sil-integrity), so the total is corrected to 980. -->
 (Dev Health 98 · Creative Alignment 97 · Momentum 99 · Engagement 97 · Process Quality 99 · Cross-Repo Coherence 96 · Security Posture 100 · Ecosystem Integration 95 · Capital Efficiency 99 · Automation Coverage 100)
 
 **Audit:** 12 items, all shipped. Zero deferrals. Classes closed: (1) CSP violations now observable via /v/csp-report + report-uri; (2) game nav/index now derived from registry — structural drift impossible; (3) stale shells now have a cleanup gate. IGNIS query memory upgraded to {query,ts} L2. Membership rank velocity shipped (weeks-to-next projection). Oracle velocity chart leading-zeros trimmed. Ark sig failures root-caused and logged.
