@@ -2,6 +2,18 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-15 — S200 — Oracle intelligence panels read a committed public daily-velocity feed, not the gitignored local aggregate
+
+**Decision:** Add `scripts/build-oracle-velocity-public.mjs` → committed `api/ecosystem-velocity.json` (60-day daily commit series + peak day, derived from the public git log — commit counts only, no internal data) and make `assets/oracle-extra.js` fall back to it when `/ignis/output/ecosystem-velocity.json` 404s. **Rationale:** the Oracle heatmap + smart-insights fetched `/ignis/output/*`, which is gitignored and 404s on production, so they sat at "Loading…" for every public visitor (the S183 gitignored-feed-on-prod class, [[feedback_public_surface_deployed_feed_not_gitignored]]). Public surfaces must render the deployed public-safe feed. The existing `api/velocity-series.json` (S198) is weekly-bucketed and shape-incompatible with the daily heatmap, so a purpose-built daily feed in the exact consumer shape is correct over reshaping the renderer. Wired into `npm run build`; co-activity/IGNIS insight cards self-skip without internal data (honest).
+
+### 2026-06-15 — S200 — Game cards carry generated bespoke cover art over the accent gradient fallback
+
+**Decision:** `scripts/build-game-covers.mjs` rasterizes one branded SVG→PNG cover per game (keyed to the existing per-game CSS class) via the already-owned `sharp`; cards layer the cover over the radial gradient so a failed image still reads as art. **Rationale:** the games grid is the #1 conversion surface and uniform radial-gradient cards read generic (SOUL anti-goal). Reuses the S196 build-time SVG→PNG capability — zero new deps, zero runtime cost, deterministic + gated by build. Mirrors the non-destructive OG-card discipline; the gradient remains the fallback layer.
+
+### 2026-06-15 — S200 — RUM allowlist gate: static-list events already covered by dynamic prefixes; SIL totals reconcile to category sum
+
+**Decision:** (a) Added 7 statically-emitted RUM event names (`engagement:*`, `pwa:*`, `streak:badge-shown`) to the Worker `RUM_UX_EVENTS` Set even though `RUM_UX_DYNAMIC` prefixes already admit them at runtime — `check-rum-allowlist` validates only the static Set for emitted-name coverage, so static-listing greens the gate with no runtime change. (b) Reconciled the S199 SIL stated total (975) to its category sum (980) per `check-sil-integrity` (categories are founder-visible truth). **Rationale:** both were pre-existing gate debt blocking a clean `build:check`; fixing them is correctness, not scope creep. Logged so the static/dynamic RUM duplication is intentional and not later "cleaned up" into a regression.
+
 ### 2026-06-14 — S199 — Ark signature failures: all 111 are pattern-share from vaultspark-forge; fix requires studio-ops Ark signing key update
 
 **Decision:** The 111 Ark signature failures drained at S199 session start are all `pattern-share` cargo from `vaultspark-forge`. The `diagnose --sigs` subcommand does not exist in the current Ark CLI. The root cause is a signing key mismatch between the `vaultspark-forge` sender and the expected key registered in this repo's Ark verifier. Fixing this requires a studio-ops-side update to the Ark signing configuration for the `vaultspark-forge` slug — this repo cannot self-heal. **Action deferred to studio-ops** under CANON-018 (cross-repo intelligence flows through Ark, not direct file writes). Until healed, all `pattern-share` cargo from `vaultspark-forge` is silently dropped on drain. **Rationale:** root cause correctly identified; fix requires the cross-repo ops lane, not this project's code.

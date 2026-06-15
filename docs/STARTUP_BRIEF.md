@@ -1,10 +1,10 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-15 (Session 199 closeout) -->
+<!-- generated-at: 2026-06-15 (Session 200 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 199 closeout · 2026-06-15.
+> **Fast-boot brief** — generated at Session 200 closeout · 2026-06-15.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -13,7 +13,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 200 · 2026-06-15 · FOUNDER MODE                         ║
+║  Session 201 · 2026-06-15 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -33,7 +33,7 @@
 ║    975/1000   ███████████████████████░   98%                     ║
 ║    SIL v3.0  ·  Avg3: ?  ·  Velocity 12↑                         ║
 ║    Last active: 0d  ·  Last closeout: 0d  ·  (active = newest o  ║
-║    Trend  ▇▂▄▇▇  ↑  (last 5 sessions)                            ║
+║    Trend  ▂▄▇▇▇  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -42,24 +42,24 @@
 ║    Momentum         96.7    ██████████  ▇▇▇▇▇▇▇▇ →               ║
 ║    Engagement       95.7    ██████████  ▇▇▇▇▇▇▇▇ →               ║
 ║    Process Qual      98    ██████████  ▇▇▇▇▇▇▇▇ →                ║
-║    Coherence         95    ██████████  ········ →                ║
+║    Coherence         96    ██████████  ········ →                ║
 ║    Security          99    ██████████  ········ →                ║
-║    Ecosystem         94    █████████░  ········ →                ║
+║    Ecosystem         95    ██████████  ········ →                ║
 ║    Capital           99    ██████████  ········ →                ║
-║    Automation        99    ██████████  ········ →                ║
+║    Automation        98    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 199 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 200 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116 passing  ·  Deploy: N/A                           ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
-║  ✓  Tests         116/116 passing (2026-06-14)                   ║
+║  ✓  Tests         116/116 passing (2026-06-15)                   ║
 ║  ✓  Velocity      12 ↑  ·  Debt: ↓                               ║
 ║  ✓  Runway        prod-verify S199 (IGNIS history chips; /v/csp  ║
-║  ✓  Headroom      66% remaining · ~6 large item(s) fit           ║
+║  ✓  Headroom      0% remaining · ~0 large item(s) fit            ║
 ║  ✓  Context age   0d                                             ║
 ║  ✓  IGNIS         41975 FORGE  ·  3d old                         ║
 ║  ✓  Truth         green  ·  Genome: 0/25                         ║
@@ -87,26 +87,26 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇▂▄▇▇  12↑  (last 5 sessions)                       ║
+║  Velocity:   ▂▄▇▇▇  12↑  (last 5 sessions)                       ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   97  [VERIFY]       ENGAGEMENT-SIGNAL-VERIFY                    ║
-║        ENGAGEMENT-SIGNAL-VERIFY shipped last session — confirm   ║
+║  100  [VERIFY]       Confirm the S200 visual wave on prod after  ║
+║        Confirm the S200 visual wave on prod after this push. On  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   94  [VERIFY]       WIRE DERIVE SCRIPTS INTO BUILD. S199 shipp  ║
-║        WIRE DERIVE SCRIPTS INTO BUILD. S199 shipped derive-game  ║
+║   94  [AI]           UNIVERSE DEPTH MAP                          ║
+║        UNIVERSE DEPTH MAP must stay grounded in public intellig  ║
 ║                                                                  ║
-║   88  [VERIFY]       Confirm the S199 wave on prod after this p  ║
-║        Confirm the S199 wave on prod after this push. On a real  ║
+║   93  [PRODUCT]      MERGE 6 pathways/* pages → one filterable   ║
+║        MERGE 6 pathways/* pages is open, local, and unblocked —  ║
 ║                                                                  ║
-║   86  [VERIFY]       Confirm the S198 wave on prod after this p  ║
-║        Confirm the S198 wave on prod after this push. On a real  ║
+║   87  [PRODUCT]      FAQ data-driven + search + category tabs.   ║
+║        FAQ data-driven + search + category tabs. Move /faq/ ent  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -114,5 +114,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 199 closeout · 2026-06-15*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 200 closeout · 2026-06-15*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

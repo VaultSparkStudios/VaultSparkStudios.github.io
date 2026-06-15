@@ -1,8 +1,16 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-15 (Session 199 — /goal chain · 12/12 shipped · zero deferrals · build:check EXIT 0)
+Last updated: 2026-06-15 (Session 200 — visual-elevation audit · /implement one pass · 12/15 shipped · build:check EXIT 0)
 
-## Now (S199 runway — pre-loaded)
+## Now (S200 runway — pre-loaded)
+
+- [ ] **[S200][VERIFY/P0] Confirm the S200 visual wave on prod after this push.** On a real browser (datacenter curl 403 = benign CF challenge): (a) `/games/` cards show bespoke cover art, not bare radial gradients; (b) `/oracle/` renders a 60-day heatmap grid + ≥2 smart-insight cards (NOT "Loading 60-day grid…"); (c) homepage in **light mode** → hero glows are clearly visible; (d) homepage "Every initiative. One vault." strip shows live live/forge/sealed counts; (e) oracle/studio-pulse/nervous-system each show the "Studio Intelligence" suite nav with the current page highlighted. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
+- [ ] **[S200→][REDUNDANCY/P2] MERGE 6 pathways/* pages → one filterable /pathways/.** The six `pathways/{players,builders,investors,supporters,press,lore}/index.html` are byte-identical 165-line templates. Data-drive from one source + collapse to `/pathways/?audience=` with filters + 301 the six subfolders via Worker Layer 0c (+ `tests/redirects.spec.js` case). Carried from AUDIT_2026-06-15 #11 (deferred: needs Worker-301 propagation + content extraction). ~3h.
+- [ ] **[S200→][DEPTH/P2·FOUNDER] UNIVERSE DEPTH MAP — needs founder-verified lore edges.** Interactive node-graph of game/project/lore connections (reuse the constellation renderer from the oracle fix). Net-new `/universe/` graph + `universe-graph.json`; lore/canon edges require founder review ([[feedback_handcurated_truth_needs_founder_review]]) before publish. Carried from AUDIT_2026-06-15 #4. ~8h.
+- [ ] **[S200→][TEXT-ORG/P3] FAQ data-driven + search + category tabs.** Move `/faq/` entries to `data/faq.json`, render client-side with search + category filters, keep FAQPage schema generated from the JSON. Carried from AUDIT_2026-06-15 #13. ~2h.
+- [ ] **[S200→][REDUNDANCY/P3] Complete the membership-value, brand→press, and member-IA merges.** S200 shipped the cross-links (L1); the full 301 merges + nav-dropdown dedupe + /member/ retirement still pending (need Worker Layer 0c propagation + a /member/ usage audit). From AUDIT_2026-06-15 #12/#14/#15.
+
+## Previous (S199 runway)
 
 - [ ] **[S199][VERIFY/P0] Confirm the S199 wave on prod after this push.** On a real browser: (a) Ask IGNIS a question, close the page, return — history chips appear ("Continue your research: [prior query]"); (b) `/oracle/` velocity chart shows 4 real weeks (W22–W25), not 22 blank bars; (c) `/ranks/` or `/vault-member/` (signed-in) → velocity chip "At your pace: [NextRank] in ~N weeks" visible bottom-right; (d) trigger any CSP violation (e.g., inline eval) → check Worker KV for `csp:` keys via Cloudflare dashboard; (e) share any game page URL to Discord/Slack → bespoke PNG card renders. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
 - [ ] **[S199][OBS/P2] ENGAGEMENT-SIGNAL-VERIFY — awaiting signal.** `engagement:scroll_25/50/75/100` and `engagement:exit_intent_shown/answered` now emit to `/v/rum` from the ambient bundle (S198 D2 rewire — was dead gtag since S147). Once 20+ real-visitor sessions accrue post-deploy, pull `api/funnel-summary.json` and confirm `engagements.*` keys are non-zero. No code action — measurement-watch.

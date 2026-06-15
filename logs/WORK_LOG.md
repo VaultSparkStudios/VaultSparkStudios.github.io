@@ -1,5 +1,21 @@
 # Work Log
 
+## 2026-06-15 — Session 200 (founder visual-elevation audit · /implement full plan one pass · 12/15 shipped · build:check EXIT 0)
+
+Founder directed a full-site visual-elevation + UI/UX + redundancy audit, then "/implement full audit plan in one pass at highest quality then do full /closeout." Walked the real user journey (hero → games → join → portal → intelligence) via 5 parallel cluster explorers, pre-verified every audit premise against live code, then implemented in 5 efficiency waves grouped by code surface.
+
+**Visual arc (#3 + #9 + #5):** Game cards were bare radial gradients on the #1 conversion surface — new `build-game-covers.mjs` rasterizes 8 bespoke SVG→PNG cover tiles (sharp, zero new deps) layered over the gradient as fallback; also fixed a latent missing `.the-exodus` gradient and removed the dead-end "Gridiron GM Play" card. Hero glows were near-invisible in light mode → theme-aware intensity/blur (light + ambient). Scroll-driven parallax on the hero vignette (reduced-motion safe).
+
+**Intelligence root-cause (#1):** The Oracle 60-day heatmap + smart-insights fetched gitignored `/ignis/output/*` which 404s on prod (the S183 gitignored-feed class), so they sat at "Loading" forever for the public. New `build-oracle-velocity-public.mjs` emits public-safe `api/ecosystem-velocity.json` (daily commit series only) in the exact consumer shape; `oracle-extra.js` now falls back to it. Verified: 2 live insight cards + 60-day heatmap data render. Added the shared "Studio Intelligence" suite nav (#8) to oracle/studio-pulse/nervous-system so the three stop reading as duplicates, each labeling its distinct job.
+
+**Homepage momentum (#6 + #7):** Static "27 initiatives" copy replaced with live live/forge/sealed counts from the public-intelligence feed (`home-initiative-counter.js`, honest empty state). Folded Portfolio Heartbeat into the Recent Ships section (one momentum surface, not two).
+
+**Member + IA (#2 + #12 + #14 + #15):** Tier-aware dashboard-header accent for VaultSparked members (the "flat panel" premise was largely disproven — the portal already ships a gradient card, pace-to-next-tier, streak, founding badge). Browse-Members link in the always-visible portal header. Cross-links: membership-value→membership and brand↔press.
+
+**Premise discipline:** 3 audit candidates demoted on verification (ranks/ already uses rank-orb; oracle velocity data shipped S198; legal pages canon-locked). 3 items honestly deferred (#4 universe map needs founder-verified lore; #11 pathways merge needs Worker-301 propagation; #13 FAQ refactor). Also fixed two pre-existing gate-debt items found while greening build:check (RUM allowlist static-list; S199 SIL arithmetic 975→980).
+
+`npm run build` + `npm run build:check` **EXIT 0** end-to-end.
+
 ## 2026-06-15 — Session 199 (/goal chain · 12/12 shipped · first zero-deferral perfect run · build:check EXIT 0)
 
 Full `/goal` chain (start → audit → implement → closeout) with genius-level thinking. S199 is the first session to ship all 12 audit items with zero deferrals, zero blocked, zero carries. Context compacted mid-session; resumed cleanly from the compaction summary.
