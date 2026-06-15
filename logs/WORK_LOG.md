@@ -1,5 +1,17 @@
 # Work Log
 
+## 2026-06-15 — Session 202 (bug-fix session · 3 fixes · build:check EXIT 0)
+
+Founder-directed bug-fix session. No /audit. Three targeted fixes shipped as one commit (`46b1784c`).
+
+**vault-climbers RLS unblocked:** The S201 `build-rank-climbers.mjs` had two bugs — it used the anon key (blocked by RLS → 200 empty array, no warning) AND queried a non-existent `rank_name` column. Root-caused via direct debug: service role key resolved fine from secrets gateway, but the build script used a bare Windows path in `import()` which Node.js rejects (needs `file://` URL scheme). Fixed by using `pathToFileURL(secretsPath).href` in the dynamic import. Also fixed query to `select=username,points&public_profile=eq.true` — rank computed from `RANK_THRESHOLDS` constants. `api/rank-climbers.json` now has 5 real climbers.
+
+**vault-rank-bar.js silent select error:** `vault-rank-bar.js:325` queried `'points, rank_name, created_at'` from `vault_members`. `rank_name` column doesn't exist (rank is computed client-side by `getRankProgress()`). This would cause a Supabase error for signed-in members loading their rank bar. Fixed by removing `rank_name` from the select.
+
+**Nervous System page visitor rewrite:** Founder flagged the page as "not readable" and "dev talk." Investigation confirmed: the `focus` and `nextMilestone` fields in `api/nervous-system.json` came directly from `PROJECT_STATUS.currentFocus`/`nextMilestone` — raw session agent notes with session codes, script names, and CLI flags. The "Source contracts" panel showed raw API paths. Added `publicNote`/`publicNextStep` to `PROJECT_STATUS.json` with visitor-friendly copy. Rewrote `build-nervous-system.mjs` with translation functions. Updated HTML page with better panel labels; removed "Source contracts" entirely.
+
+**Gate fixed:** Stale [S199] TASK_BOARD entry causing `check-stale-open-tasks` failure; flipped to done.
+
 ## 2026-06-15 — Session 201 (/audit + /implement · 9/10 shipped + 1 premise-false WIN · build:check gates green)
 
 Automated `/start → /audit → /implement → /closeout` goal chain. Session split across two context windows (compaction mid-implement). Fresh /audit generated 10 items; /implement shipped 9, identified 1 as premise-false WIN (theme-cross-device-sync was fully implemented in theme-toggle.js since S159).

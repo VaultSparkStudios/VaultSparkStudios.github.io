@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-15T17:02:58.530Z",
+  "generatedAt": "2026-06-15T20:10:07.200Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 200,
+    "currentSession": 202,
     "lastUpdated": "2026-06-15",
-    "currentFocus": "S200 founder visual-elevation audit (/implement full plan one pass · 12/15 shipped · build:check EXIT 0). Bespoke game cover art (build-game-covers.mjs → 8 SVG→PNG tiles, sharp, zero deps) over gradient fallback + dead Gridiron-Play card removed + forge CTAs standardized; Oracle data-viz root-cause fixed (heatmap+insights fetched gitignored /ignis/output/* → public api/ecosystem-velocity.json fallback, verified rendering); homepage theme-aware light-mode glows + hero parallax + live initiative counts (home-initiative-counter.js) + Heartbeat folded into Recent Ships; tier-aware portal header accent + Browse-Members link; Studio Intelligence suite nav across oracle/studio-pulse/nervous-system; membership-value→membership + brand↔press cross-links. Deferred 3 (universe map #4 founder-lore-gated, pathways merge #11 Worker-301, FAQ #13). Fixed pre-existing gate debt (RUM static-list, S199 SIL arithmetic).",
-    "nextMilestone": "Prod-verify S200 visual wave: /games/ cards show cover art (not gradients); /oracle/ heatmap+insights render (not 'Loading'); homepage light-mode glows visible; 'Every initiative' live counts; intelligence suite nav present. Then carries: pathways 6→1 merge (Worker-301), universe depth-map (founder lore), FAQ data-driven. Founder-gated: staging box recovery (HCLOUD_TOKEN), THEME TIER-LOCK, NAV-SHEET 100% flip, forge devlog publish.",
+    "currentFocus": "S202 bug-fix session. vault-climbers RLS unblocked (service role key via secrets gateway + pathToFileURL fix + rank_name column removed + public_profile filter). vault-rank-bar.js rank_name silent select error fixed. Nervous System page rewritten for visitors (stripDevTalk + humanVerdict/humanSurface translation + publicNote/publicNextStep fields + Source contracts panel removed). TASK_BOARD stale task flipped. build:check EXIT 0.",
+    "nextMilestone": "Prod-verify S202: homepage vault-climbers strip shows 5 members; /nervous-system/ shows visitor-friendly copy. Then: prod-verify S201 (classified dispatches reveal, Share Rank, IGNIS synthesis, pathways). Universe depth-map (founder lore edges). Staging box recovery (HCLOUD_TOKEN).",
     "ignis": {
       "score": 41975,
       "grade": "FORGE",
@@ -118,7 +118,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 200,
+    "sessionsCompleted": 202,
     "liveProjects": 3,
     "projectsInForge": 8,
     "activeEdgeFunctions": 16,
@@ -133,18 +133,18 @@
     "forge": 8,
     "vaulted": 0,
     "silCategories": {
-      "devHealth": 98,
+      "devHealth": 99,
       "alignment": 98,
       "momentum": 97,
-      "engagement": 97,
+      "engagement": 98,
       "process": 99,
-      "coherence": 96,
+      "coherence": 97,
       "security": 99,
-      "ecosystem": 95,
+      "ecosystem": 98,
       "capital": 99,
       "automation": 98,
-      "total": 976,
-      "updatedSession": 200
+      "total": 982,
+      "updatedSession": 202
     },
     "sealedNextRevealAt": null
   },
@@ -576,12 +576,12 @@
     ],
     "latest": [
       {
-        "id": "session-closed-website-2026-06-15t07-06-31-929z",
+        "id": "session-closed-website-2026-06-15t20-10-06-925z",
         "source": "closeout-autopilot",
         "type": "public_ship",
         "title": "Studio Website shipped a fresh session closeout",
         "url": "/",
-        "occurredAt": "2026-06-15T07:06:31.929Z",
+        "occurredAt": "2026-06-15T20:10:06.925Z",
         "projectId": "website",
         "weight": 100
       },
@@ -596,13 +596,13 @@
         "weight": 100
       },
       {
-        "id": "session-closed-studio-ops-2026-04-23t16-57-41-762z",
+        "id": "session-closed-website-2026-06-15t07-06-31-929z",
         "source": "closeout-autopilot",
         "type": "public_ship",
-        "title": "Studio Ops shipped a fresh session closeout",
-        "url": "/studio-pulse/",
-        "occurredAt": "2026-04-23T16:57:41.762Z",
-        "projectId": "studio-ops",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-06-15T07:06:31.929Z",
+        "projectId": "website",
         "weight": 100
       },
       {
@@ -685,7 +685,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-06-15T07:40:11.621Z",
+    "checkedAt": "2026-06-15T19:17:03.812Z",
     "workflows": [
       {
         "name": "E2E Test Suite",
@@ -693,7 +693,7 @@
       },
       {
         "name": "Accessibility Audit",
-        "status": "success"
+        "status": "failure"
       },
       {
         "name": "Lighthouse CI",

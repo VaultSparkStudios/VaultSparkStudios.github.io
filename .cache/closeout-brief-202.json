@@ -1,0 +1,62 @@
+{
+  "session": 202,
+  "date": "2026-06-15",
+  "agent": "claude-sonnet-4-6",
+  "repo": "vaultsparkstudios.github.io",
+  "headline": "Vault-climbers strip unblocked after 2 silent bugs; Nervous System rewired for real visitors; inline style contract enforced across vault-climbers HTML.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "vault-climbers-rls-fix",
+      "title": "Vault Climbers RLS + rank_name bugs fixed",
+      "axis": "speed/efficiency",
+      "projectImpact": 8,
+      "ecosystemImpact": 4,
+      "insight": "The vault-climbers strip wired in S201 showed nothing on the homepage because the anon Supabase key returns HTTP 200 with an empty array when RLS blocks — a silent failure, not a 400. Switching to the service role key via the CANON-012 secrets gateway immediately returned 5 real climbers. A second independent bug — querying a non-existent `rank_name` column — was fixed in both the build script and vault-rank-bar.js. On Windows, the dynamic ESM import of the secrets gateway required wrapping the path with `pathToFileURL()` from node:url.",
+      "evidence": "api/rank-climbers.json has 5 real climbers: VaultSpark (100169pts), vaulteternalqa (1000pts), OneKingdom/Voidfall/DreadSpike (575-601pts)"
+    },
+    {
+      "id": 2,
+      "slug": "nervous-system-visitor-rewrite",
+      "title": "Nervous System page rewritten for visitors",
+      "axis": "ui/ux",
+      "projectImpact": 6,
+      "ecosystemImpact": 3,
+      "insight": "The /nervous-system/ page was displaying raw session-agent notes as its 'What we shipped' copy — e.g. 'S202 #3 vault-climbers-rls-fix: scripts/build-rank-climbers.mjs — switched from hardcoded anon key'. Visitors saw dev jargon with no context. build-nervous-system.mjs was rewritten with stripDevTalk(), humanVerdict(), humanSurface() translation functions, and the 'Source contracts' panel (raw API file paths) was removed entirely. PROJECT_STATUS.json gained publicNote/publicNextStep fields that are preferred when set.",
+      "evidence": "api/nervous-system.json now renders plain English; build-nervous-system.mjs --check passes"
+    },
+    {
+      "id": 3,
+      "slug": "vault-climbers-inline-style-contract",
+      "title": "Vault-climbers inline style contract fix",
+      "axis": "speed/efficiency",
+      "projectImpact": 3,
+      "ecosystemImpact": 2,
+      "insight": "The vault-climbers strip shipped in S201 with 6 inline style attributes on index.html, violating check-intelligence-style-contract which monitors index.html as an HTML_TARGET. Extracted all inline styles to CSS classes in assets/style.css (#vault-climbers-strip, #vault-climbers-inner, .vc-label, .vc-period, .vc-ranks-link) and updated the HTML. Shell rebuild required after CSS change.",
+      "evidence": "check-intelligence-style-contract --strict: ok (7 pages, 6 runtimes)"
+    }
+  ],
+  "honestyLedger": [],
+  "followUps": [
+    "Verify vault-climbers strip on prod after CF Pages deploys c49455ac",
+    "Verify /nervous-system/ shows visitor-friendly copy on prod",
+    "Add check-public-note-freshness.mjs gate to fail if publicNote is missing or contains session codes [S202][STRUCT/P3]"
+  ],
+  "blockers": [
+    "[S198][SECURITY/P2·HUMAN] Staging box recovery — HCLOUD_TOKEN missing"
+  ],
+  "silDelta": {
+    "before": 982,
+    "after": 982,
+    "kind": "structural",
+    "note": "Score stable; structural integrity improvements (style contract, public surfaces cleaned up)"
+  },
+  "diffStat": {
+    "files": 16,
+    "insertions": 120,
+    "deletions": 45,
+    "suite": "build:check EXIT 0",
+    "testsDelta": 0,
+    "probesDelta": 0
+  }
+}

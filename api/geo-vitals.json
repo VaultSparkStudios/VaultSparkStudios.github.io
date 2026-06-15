@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-15T20:55:09.283Z",
+  "generatedAt": "2026-06-15T19:52:00.265Z",
   "generatedBy": "scripts/build-geo-vitals.mjs",
   "publicSafe": true,
   "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
@@ -8,18 +8,40 @@
   "countries": [
     {
       "country": "US",
-      "samples": 107,
-      "lcpP75": 1824,
-      "ttfbP75": 117,
+      "samples": 208,
+      "lcpP75": 1376,
+      "ttfbP75": 167,
       "colos": [
+        "ATL",
         "BOS",
+        "CMH",
         "DEN",
         "DFW",
         "EWR",
         "IAD",
+        "MCI",
         "ORD",
         "SEA",
         "SJC"
+      ]
+    },
+    {
+      "country": "IN",
+      "samples": 5,
+      "lcpP75": 836,
+      "ttfbP75": 328,
+      "colos": [
+        "BOM",
+        "BOS"
+      ]
+    },
+    {
+      "country": "BY",
+      "samples": 4,
+      "lcpP75": 18604,
+      "ttfbP75": 128,
+      "colos": [
+        "WAW"
       ]
     },
     {
@@ -34,12 +56,15 @@
     },
     {
       "country": "other",
-      "samples": 6,
-      "lcpP75": 9960,
-      "ttfbP75": 1620,
+      "samples": 9,
+      "lcpP75": 1888,
+      "ttfbP75": 1286,
       "colos": [
+        "FCO",
+        "FRA",
         "GRU",
         "LAX",
+        "LIS",
         "MRS",
         "PRG",
         "YVR"

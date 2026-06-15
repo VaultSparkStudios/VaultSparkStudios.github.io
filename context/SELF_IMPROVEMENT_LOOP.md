@@ -9,15 +9,27 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 978.7 | 5: 977.0 | 10: 968 | 25: 972 | all: 965 (v3.0 /1000)
-  └ 3-session: Dev 98.3 | Align 97.7 | Momentum 98.3 | Engage 97.3 | Process 98.7
-Velocity trend: ↑ (S201: 9/10 shipped + 1 premise-false WIN; S200: 12/15; S199: 12/12) | Protocol velocity: ↑ (data-driven pathways generation; IGNIS synthesis mode; shareable rank cards; classified dispatches; vault-climbers strip; FAQ data-driven) | Debt: ↓ (RUM allowlist static-list + schemaVersion gate fixed; premise-false detection working; pathways merge solved without Worker-301 complexity)
-Momentum runway: prod-verify S201 (classified reveal; Share Rank; IGNIS synthesis; pathways rendered) · vault-climbers RLS (Postgres VIEW or edge fn) · prod-verify S200 visual wave · staging box recovery (HUMAN ACTION: HCLOUD_TOKEN) · universe depth-map (founder lore) · forge devlog publish (founder) · TT reprobe ~06-18 | Intent rate: 100% (last 5)
-Last session: 2026-06-15 | Session 201 | Total: 980/1000 (v3.0) | Velocity: 9 | protocolVelocity: 5
+Avgs - 3: 979.3 | 5: 977.6 | 10: 968 | 25: 972 | all: 965 (v3.0 /1000)
+  └ 3-session: Dev 98.7 | Align 98.0 | Momentum 98.0 | Engage 97.7 | Process 99.0
+Velocity trend: → (S202: bug-fix session, 3 fixes — small scope but real unblocks; S201: 9/10; S200: 12/15) | Protocol velocity: ↑ (vault-climbers now live; Nervous System now visitor-readable; pathToFileURL lesson closes a class of Windows ESM bugs) | Debt: ↓ (rank_name silent error fixed; RLS unblocked; dev-speak on public page eliminated)
+Momentum runway: prod-verify S202 (vault-climbers strip visible; Nervous System visitor copy live) · prod-verify S201 (classified reveal; Share Rank; IGNIS synthesis; pathways rendered) · prod-verify S200 visual wave · staging box recovery (HUMAN ACTION: HCLOUD_TOKEN) · universe depth-map (founder lore) | Intent rate: 100% (last 5)
+Last session: 2026-06-15 | Session 202 | Total: 982/1000 (v3.0) | Velocity: 3 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-15 — Session 202 (bug-fix · 3 targeted fixes · build:check EXIT 0) | Total: 982/1000 (v3.0) | Velocity: 3 | Debt: ↓
+
+**Score:** 982 / 1000
+Dev Health 99 | Creative Alignment 98 | Momentum 97 | Engagement 98 | Process Quality 99 | Cross-Repo Coherence 97 | Security Posture 99 | Ecosystem Integration 98 | Capital Efficiency 99 | Automation Coverage 98
+
+**What worked:** pathToFileURL root-cause identification (dynamic ESM import on Windows requires file:// URL scheme — bare absolute paths fail silently); dev-speak detection on a live public page; build-time service-role bypass being cleaner than edge fn / Postgres VIEW for this use case. `check-stale-open-tasks` caught a TASK_BOARD drift properly.
+
+**What to improve next:** Add `pathToFileURL` note to the secrets gateway pattern docs so future ESM dynamic-imports on Windows don't hit the same silent failure. Also: add a build-time check that `PROJECT_STATUS.publicNote` is set whenever `currentFocus` contains session codes (auto-detect dev-speak).
+
+**Commit 1 to TASK_BOARD:** Add `check-public-note-freshness.mjs` — fails if `PROJECT_STATUS.publicNote` is missing or >7d stale relative to `lastUpdated`.
+**Commit 2 to TASK_BOARD:** Document `pathToFileURL` pattern in `docs/INTERNAL_TOOLS.md` for future ESM dynamic imports.
 
 ## 2026-06-15 — Session 201 (/audit + /implement 9/10 shipped + 1 premise-false WIN · build:check gates green) | Total: 980/1000 (v3.0) | Velocity: 9 | Debt: ↓
 
