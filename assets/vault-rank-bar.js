@@ -74,9 +74,13 @@
       bar.classList.add('vs-rank-bar--maxed');
     }
     // S199: show velocity chip on /ranks/ and /vault-member/ pages where space exists.
-    if (!data.maxed && data.weeksToNext && data.next) {
-      var onRankPage = /^\/(ranks|vault-member)\b/.test(location.pathname);
-      if (onRankPage) renderVelocityChip(data);
+    var onRankPage = /^\/(ranks|vault-member)\b/.test(location.pathname);
+    if (!data.maxed && data.weeksToNext && data.next && onRankPage) {
+      renderVelocityChip(data);
+    }
+    // S201: share button on rank pages (and /membership/).
+    if (onRankPage || /^\/membership\b/.test(location.pathname)) {
+      injectShareBtn(data);
     }
     // Defer width set by a frame so the CSS transition fires.
     requestAnimationFrame(function () {
@@ -103,6 +107,196 @@
     document.head.appendChild(style);
     document.body.appendChild(chip);
     requestAnimationFrame(function () { chip.classList.add('vs-velocity--visible'); });
+  }
+
+  // S201 shareable-rank-progress-card: canvas card + Web Share API.
+  function buildShareCard(data) {
+    return new Promise(function (resolve, reject) {
+      try {
+        var W = 800, H = 360;
+        var canvas = document.createElement('canvas');
+        canvas.width = W;
+        canvas.height = H;
+        var ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('no-canvas')); return; }
+
+        // Background
+        ctx.fillStyle = '#06070b';
+        ctx.fillRect(0, 0, W, H);
+
+        // Gold top accent bar
+        var topGrd = ctx.createLinearGradient(0, 0, W, 0);
+        topGrd.addColorStop(0, '#ffc400');
+        topGrd.addColorStop(1, '#ff7a00');
+        ctx.fillStyle = topGrd;
+        ctx.fillRect(0, 0, W, 5);
+
+        // Subtle grid lines
+        ctx.strokeStyle = 'rgba(255,255,255,0.03)';
+        ctx.lineWidth = 1;
+        for (var gx = 0; gx < W; gx += 40) {
+          ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, H); ctx.stroke();
+        }
+
+        // Brand label
+        ctx.fillStyle = 'rgba(255,196,0,0.6)';
+        ctx.font = '600 13px system-ui,-apple-system,sans-serif';
+        ctx.letterSpacing = '0.12em';
+        ctx.fillText('VAULTSPARK STUDIOS', 44, 54);
+        ctx.letterSpacing = '0';
+
+        // Rank title
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 44px system-ui,-apple-system,sans-serif';
+        ctx.fillText(data.rank, 44, 126);
+
+        // Progress bar track
+        var BAR_X = 44, BAR_Y = 158, BAR_W = W - 88, BAR_H = 10, BAR_R = 5;
+        ctx.fillStyle = 'rgba(255,255,255,0.07)';
+        ctx.beginPath();
+        ctx.moveTo(BAR_X + BAR_R, BAR_Y);
+        ctx.arcTo(BAR_X + BAR_W, BAR_Y, BAR_X + BAR_W, BAR_Y + BAR_H, BAR_R);
+        ctx.arcTo(BAR_X + BAR_W, BAR_Y + BAR_H, BAR_X, BAR_Y + BAR_H, BAR_R);
+        ctx.arcTo(BAR_X, BAR_Y + BAR_H, BAR_X, BAR_Y, BAR_R);
+        ctx.arcTo(BAR_X, BAR_Y, BAR_X + BAR_W, BAR_Y, BAR_R);
+        ctx.closePath();
+        ctx.fill();
+
+        // Progress bar fill
+        var fillW = Math.max(BAR_R * 2, Math.round(BAR_W * data.pct / 100));
+        var fg = ctx.createLinearGradient(BAR_X, 0, BAR_X + fillW, 0);
+        fg.addColorStop(0, '#ffc400');
+        fg.addColorStop(1, '#ff7a00');
+        ctx.fillStyle = data.maxed ? fg : fg;
+        ctx.beginPath();
+        ctx.moveTo(BAR_X + BAR_R, BAR_Y);
+        ctx.arcTo(BAR_X + fillW, BAR_Y, BAR_X + fillW, BAR_Y + BAR_H, BAR_R);
+        ctx.arcTo(BAR_X + fillW, BAR_Y + BAR_H, BAR_X, BAR_Y + BAR_H, BAR_R);
+        ctx.arcTo(BAR_X, BAR_Y + BAR_H, BAR_X, BAR_Y, BAR_R);
+        ctx.arcTo(BAR_X, BAR_Y, BAR_X + fillW, BAR_Y, BAR_R);
+        ctx.closePath();
+        ctx.fill();
+
+        // Percentage label
+        ctx.fillStyle = '#ffc400';
+        ctx.font = 'bold 30px system-ui,-apple-system,sans-serif';
+        ctx.fillText(data.pct + '%', 44, 214);
+
+        // Next rank label
+        if (!data.maxed && data.next) {
+          ctx.fillStyle = 'rgba(255,255,255,0.42)';
+          ctx.font = '400 17px system-ui,-apple-system,sans-serif';
+          var pctW = ctx.measureText(data.pct + '%').width;
+          ctx.fillText('→ ' + data.next, 44 + pctW + 12, 214);
+        } else if (data.maxed) {
+          ctx.fillStyle = 'rgba(255,196,0,0.55)';
+          ctx.font = '400 15px system-ui,-apple-system,sans-serif';
+          ctx.fillText('MAX RANK ACHIEVED', 44 + 80, 214);
+        }
+
+        // Velocity line
+        if (data.weeksToNext && data.next) {
+          ctx.fillStyle = 'rgba(255,255,255,0.3)';
+          ctx.font = '400 14px system-ui,-apple-system,sans-serif';
+          ctx.fillText('On track for ' + data.next + ' in ~' + data.weeksToNext + (data.weeksToNext === 1 ? ' week' : ' weeks'), 44, 254);
+        }
+
+        // Site URL
+        ctx.fillStyle = 'rgba(255,255,255,0.2)';
+        ctx.font = '400 13px system-ui,-apple-system,sans-serif';
+        ctx.fillText('vaultsparkstudios.com/ranks/', 44, H - 28);
+
+        canvas.toBlob(function (blob) {
+          if (blob) resolve(blob); else reject(new Error('blob-null'));
+        }, 'image/png');
+      } catch (err) { reject(err); }
+    });
+  }
+
+  function emitShareEvent(outcome) {
+    try {
+      navigator.sendBeacon('/v/rum', JSON.stringify({
+        ux: 'share:rank-card:' + outcome,
+        route: location.pathname,
+        ts: Date.now()
+      }));
+    } catch (_) {}
+  }
+
+  function showShareToast(msg) {
+    var t = document.getElementById('vs-rank-share-toast');
+    if (!t) {
+      t = document.createElement('div');
+      t.id = 'vs-rank-share-toast';
+      var s = document.createElement('style');
+      s.textContent =
+        '#vs-rank-share-toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%) translateY(8px);' +
+        'z-index:10001;padding:.45rem 1.1rem;background:rgba(13,17,28,.96);border:1px solid rgba(255,196,0,.35);' +
+        'border-radius:10px;font-size:.8rem;font-weight:600;color:#ffc400;opacity:0;' +
+        'transition:opacity .3s,transform .3s;pointer-events:none;}' +
+        '#vs-rank-share-toast.vs-toast--show{opacity:1;transform:translateX(-50%) translateY(0);}';
+      document.head.appendChild(s);
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.classList.add('vs-toast--show');
+    setTimeout(function () { t.classList.remove('vs-toast--show'); }, 2400);
+  }
+
+  async function shareRankCard(data) {
+    var blob;
+    try { blob = await buildShareCard(data); }
+    catch (_) { emitShareEvent('error'); return; }
+
+    var slug = (data.rank || 'rank').toLowerCase().replace(/\s+/g, '-');
+    var file = new File([blob], 'vault-rank-' + slug + '.png', { type: 'image/png' });
+    var shareText = data.maxed
+      ? 'I reached max rank at VaultSpark Studios — ' + data.rank + '!'
+      : 'I\'m a ' + data.rank + ' at VaultSpark Studios — ' + data.pct + '% to ' + (data.next || 'next rank') + '!';
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ title: 'My Vault Rank: ' + data.rank, text: shareText, files: [file] });
+        emitShareEvent('native');
+        return;
+      } catch (e) {
+        if (e && e.name === 'AbortError') { emitShareEvent('cancel'); return; }
+      }
+    }
+
+    // Fallback: clipboard copy
+    try {
+      await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+      emitShareEvent('copy');
+      showShareToast('Rank card copied!');
+    } catch (_) {
+      emitShareEvent('error');
+      showShareToast('Share not supported on this browser.');
+    }
+  }
+
+  var SHARE_BTN_ID = 'vs-rank-share-btn';
+
+  function injectShareBtn(data) {
+    if (document.getElementById(SHARE_BTN_ID)) return;
+    var btn = document.createElement('button');
+    btn.id = SHARE_BTN_ID;
+    btn.type = 'button';
+    btn.setAttribute('aria-label', 'Share your rank card');
+    btn.textContent = 'Share Rank';
+    var s = document.createElement('style');
+    s.textContent =
+      '#vs-rank-share-btn{position:fixed;bottom:18px;right:12px;z-index:9998;' +
+      'padding:.32rem .85rem;background:rgba(13,17,28,.92);border:1px solid rgba(255,196,0,.32);' +
+      'border-radius:8px;font-size:.74rem;font-weight:700;color:rgba(255,196,0,.9);cursor:pointer;' +
+      'opacity:0;transition:opacity .6s ease 1.2s,border-color .2s,color .2s;}' +
+      '#vs-rank-share-btn.vs-share--visible{opacity:1;}' +
+      '#vs-rank-share-btn:hover{border-color:rgba(255,196,0,.7);color:#ffc400;}' +
+      '@media(prefers-reduced-motion:reduce){#vs-rank-share-btn{transition:none;}}';
+    document.head.appendChild(s);
+    document.body.appendChild(btn);
+    btn.addEventListener('click', function () { shareRankCard(data); });
+    requestAnimationFrame(function () { btn.classList.add('vs-share--visible'); });
   }
 
   function getCached() {
