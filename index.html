@@ -1178,6 +1178,40 @@
       </div>
     </section>
 
+    <!-- S201 vault-climbers-monthly-digest: render-on-data (hidden if empty) -->
+    <section id="vault-climbers-strip" hidden aria-label="Vault Climbers this month" style="padding:0;overflow:clip">
+      <div class="container">
+        <div id="vault-climbers-inner" style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap;padding:.9rem 0;border-top:1px solid rgba(255,196,0,.1);border-bottom:1px solid rgba(255,196,0,.1)">
+          <span style="font-size:.7rem;font-weight:900;letter-spacing:.12em;color:rgba(255,196,0,.65);flex-shrink:0">VAULT CLIMBERS</span>
+          <span id="vault-climbers-period" style="font-size:.7rem;color:var(--dim);flex-shrink:0"></span>
+          <div id="vault-climbers-list" style="display:flex;gap:.5rem;flex-wrap:wrap;flex:1"></div>
+          <a href="/ranks/" style="font-size:.74rem;font-weight:700;color:rgba(255,196,0,.7);white-space:nowrap;flex-shrink:0">See Ranks →</a>
+        </div>
+      </div>
+    </section>
+    <script>
+      (function () {
+        fetch('/api/rank-climbers.json', { cache: 'default' })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (data) {
+            if (!data || !data.climbers || !data.climbers.length) return;
+            var strip = document.getElementById('vault-climbers-strip');
+            var period = document.getElementById('vault-climbers-period');
+            var list = document.getElementById('vault-climbers-list');
+            if (!strip || !list) return;
+            if (period) period.textContent = '· ' + (data.period || '');
+            data.climbers.slice(0, 5).forEach(function (c) {
+              var chip = document.createElement('span');
+              chip.style.cssText = 'display:inline-flex;align-items:center;gap:.3rem;font-size:.74rem;padding:.22rem .6rem;border-radius:999px;background:rgba(255,196,0,.06);border:1px solid rgba(255,196,0,.2);color:var(--text)';
+              chip.textContent = (c.handle || 'Member') + ' · ' + (c.rank || '');
+              list.appendChild(chip);
+            });
+            strip.hidden = false;
+          })
+          .catch(function () {});
+      }());
+    </script>
+
     <!-- ── Studio Showcase Spine (S147 showcase-spine) ────────
          Fuses 3 live signals into one strip so visitors get the
          studio story without traversing /journal/, /studio-pulse/,
