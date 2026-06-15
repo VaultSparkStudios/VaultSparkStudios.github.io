@@ -13,24 +13,65 @@ function readJson(rel, fallback = null) {
   catch { return fallback; }
 }
 
-function publicText(value) {
-  return String(value || '')
-    .replace(/\bHuman Action Required\b/gi, 'manual confirmation')
-    .replace(/\bFounder Action Required\b/gi, 'manual confirmation')
-    .replace(/\bfounder action\b/gi, 'manual confirmation')
-    .replace(/\bfounder-action\b/gi, 'manual confirmation')
-    .replace(/\binternal\/private\b/gi, 'studio-side')
-    .replace(/\bAPI key\b/gi, 'capability')
-    .replace(/\bsecret\b/gi, 'capability');
+// Translate technical tile values to visitor language
+const TILE_VALUE_MAP = {
+  green: 'Healthy', yellow: 'Attention', red: 'Needs work',
+  active: 'Live', check: 'Passing', canary: 'Testing',
+  ready: 'Live', unknown: 'Checking', hold: 'Under review',
+};
+function humanTileValue(v) {
+  return TILE_VALUE_MAP[String(v).toLowerCase()] || String(v);
 }
 
-function publicValue(value) {
-  if (Array.isArray(value)) return value.map(publicValue);
-  if (value && typeof value === 'object') {
-    return Object.fromEntries(Object.entries(value).map(([key, val]) => [key, publicValue(val)]));
-  }
-  if (typeof value === 'string') return publicText(value);
-  return value;
+// Translate decision surface names to visitor language
+const SURFACE_LABEL_MAP = {
+  'mobile-nav': 'Mobile navigation',
+  'performance': 'Site performance',
+  'feedback': 'Community feedback',
+  'ci': 'Build pipeline',
+  'studio': 'Studio health',
+};
+function humanSurface(s) {
+  return SURFACE_LABEL_MAP[String(s).toLowerCase()] || String(s).replace(/-/g, ' ');
+}
+
+// Translate decision verdicts to visitor language
+const VERDICT_LABEL_MAP = {
+  canary: 'Testing with a small group',
+  hold: 'Monitoring before full rollout',
+  investigate: 'Gathering feedback',
+  ready: 'Live for everyone',
+  green: 'Working well',
+  yellow: 'Under observation',
+  red: 'Actively fixing',
+};
+function humanVerdict(v) {
+  return VERDICT_LABEL_MAP[String(v).toLowerCase()] || String(v);
+}
+
+// Strip dev-speak markers from text. Used as fallback when no publicNote is set.
+function stripDevTalk(text) {
+  if (!text) return '';
+  return String(text)
+    // Remove session codes like S200, S201 #5
+    .replace(/\bS\d{2,3}(?:\s+(?:goal|carry|#\d+))?\s*/gi, '')
+    // Remove slash commands
+    .replace(/\/(?:implement|audit|start|closeout|go)\b/g, '')
+    // Remove file names with extensions (build-x.mjs etc.)
+    .replace(/\b[\w-]+\.(?:mjs|js|json|css|sql|html|ts)\b\s*(?:→\s*)?/g, '')
+    // Remove npm/build commands
+    .replace(/\bnpm run [^\s·,]+/g, '')
+    .replace(/build:check[^\s·,→)]*/g, '')
+    .replace(/EXIT\s+\d+/g, '')
+    // Remove parenthetical technical details
+    .replace(/\([^)]*(?:\.mjs|\.js|check|deploy|zero deps|EXIT|→|--)[^)]*\)/g, '')
+    // Clean up arrow and bullet artifacts
+    .replace(/\s*→\s*/g, ', ')
+    .replace(/\s+[·•]\s+/g, '. ')
+    // Clean leading/trailing noise
+    .replace(/^[·,\-\s]+|[·,\-\s]+$/gm, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
 }
 
 function build() {
@@ -41,32 +82,40 @@ function build() {
   const nav = readJson('api/nav-sheet-stats.json', {});
   const social = readJson('api/social-dashboard-public.json', {});
   const ux = readJson('api/ux-decision-ledger.json', {});
+  const status = readJson('context/PROJECT_STATUS.json', {});
+
+  // Visitor-friendly note: prefer explicit publicNote from PROJECT_STATUS, fall back to stripped text.
+  const rawFocus = intel?.project?.currentFocus || '';
+  const focus = status?.publicNote || stripDevTalk(rawFocus) || 'The studio is actively shipping new features.';
+
+  const rawNext = intel?.project?.nextMilestone || '';
+  const nextStep = status?.publicNextStep || stripDevTalk(rawNext) || '';
+
+  // Translate decisions to visitor-readable format
+  const decisions = (ux?.decisions || []).map(function (d) {
+    return {
+      surface: humanSurface(d.surface || ''),
+      status: humanVerdict(d.verdict || ''),
+      note: d.next || '',
+    };
+  });
+
   return {
     schemaVersion: '1.0',
     generatedAt: new Date().toISOString(),
     generatedBy: 'scripts/build-nervous-system.mjs',
     publicSafe: true,
     tiles: [
-      { key: 'studio', label: 'Studio Health', value: intel?.project?.health || 'unknown', href: '/studio-pulse/' },
-      { key: 'ci', label: 'CI', value: ci?.allGreen === true ? 'green' : 'check', href: '/status/' },
-      { key: 'ignis', label: 'IGNIS ROI', value: roi?.summary?.tokensSaved ? `${roi.summary.tokensSaved} tokens saved` : 'active', href: '/ignis/roi/' },
-      { key: 'feedback', label: 'Feedback Themes', value: String(feedback?.themeCount || 0), href: '/feedback/' },
-      { key: 'mobile', label: 'Mobile Nav Ready', value: nav?.readiness?.defaultSwapReady ? 'ready' : 'canary', href: '/api/nav-sheet-stats.json' },
-      { key: 'social', label: 'Social Channels', value: String(social?.channels?.length || intel?.stats?.trackedSocialAccounts || 0), href: '/social/' }
+      { key: 'studio', label: 'Studio Health',       value: humanTileValue(intel?.project?.health || 'unknown'), href: '/studio-pulse/' },
+      { key: 'ci',     label: 'Builds',               value: ci?.allGreen === true ? 'Passing' : 'Check',       href: '/status/' },
+      { key: 'ignis',  label: 'AI Intelligence',      value: humanTileValue(roi?.summary?.tokensSaved ? 'active' : 'active'), href: '/ignis/' },
+      { key: 'feedback', label: 'Feedback themes',    value: String(feedback?.themeCount || 0),                 href: '/feedback/' },
+      { key: 'mobile', label: 'Mobile experience',    value: humanTileValue(nav?.readiness?.defaultSwapReady ? 'ready' : 'canary'), href: '/' },
+      { key: 'social', label: 'Social channels',      value: String(social?.channels?.length || intel?.stats?.trackedSocialAccounts || 0), href: '/social/' },
     ],
-    focus: publicText(intel?.project?.currentFocus || ''),
-    nextMilestone: publicText(intel?.project?.nextMilestone || ''),
-    pulse: publicValue(intel?.pulse || {}),
-    decisions: publicValue(ux?.decisions || []),
-    sources: [
-      '/api/public-intelligence.json',
-      '/api/feedback-provenance.json',
-      '/api/ci-status.json',
-      '/api/ignis-roi.json',
-      '/api/nav-sheet-stats.json',
-      '/api/social-dashboard-public.json',
-      '/api/ux-decision-ledger.json'
-    ]
+    focus,
+    nextStep,
+    decisions,
   };
 }
 

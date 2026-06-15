@@ -1,88 +1,63 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-15T17:03:12.775Z",
+  "generatedAt": "2026-06-15T19:27:30.934Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
     {
       "key": "studio",
       "label": "Studio Health",
-      "value": "green",
+      "value": "Healthy",
       "href": "/studio-pulse/"
     },
     {
       "key": "ci",
-      "label": "CI",
-      "value": "check",
+      "label": "Builds",
+      "value": "Check",
       "href": "/status/"
     },
     {
       "key": "ignis",
-      "label": "IGNIS ROI",
-      "value": "active",
-      "href": "/ignis/roi/"
+      "label": "AI Intelligence",
+      "value": "Live",
+      "href": "/ignis/"
     },
     {
       "key": "feedback",
-      "label": "Feedback Themes",
+      "label": "Feedback themes",
       "value": "6",
       "href": "/feedback/"
     },
     {
       "key": "mobile",
-      "label": "Mobile Nav Ready",
-      "value": "canary",
-      "href": "/api/nav-sheet-stats.json"
+      "label": "Mobile experience",
+      "value": "Testing",
+      "href": "/"
     },
     {
       "key": "social",
-      "label": "Social Channels",
+      "label": "Social channels",
       "value": "6",
       "href": "/social/"
     }
   ],
-  "focus": "S200 founder visual-elevation audit (/implement full plan one pass · 12/15 shipped · build:check EXIT 0). Bespoke game cover art (build-game-covers.mjs → 8 SVG→PNG tiles, sharp, zero deps) over gradient fallback + dead Gridiron-Play card removed + forge CTAs standardized; Oracle data-viz root-cause fixed (heatmap+insights fetched gitignored /ignis/output/* → public api/ecosystem-velocity.json fallback, verified rendering); homepage theme-aware light-mode glows + hero parallax + live initiative counts (home-initiative-counter.js) + Heartbeat folded into Recent Ships; tier-aware portal header accent + Browse-Members link; Studio Intelligence suite nav across oracle/studio-pulse/nervous-system; membership-value→membership + brand↔press cross-links. Deferred 3 (universe map #4 founder-lore-gated, pathways merge #11 Worker-301, FAQ #13). Fixed pre-existing gate debt (RUM static-list, S199 SIL arithmetic).",
-  "nextMilestone": "Prod-verify S200 visual wave: /games/ cards show cover art (not gradients); /oracle/ heatmap+insights render (not 'Loading'); homepage light-mode glows visible; 'Every initiative' live counts; intelligence suite nav present. Then carries: pathways 6→1 merge (Worker-301), universe depth-map (founder lore), FAQ data-driven. Founder-gated: staging box recovery (HCLOUD_TOKEN), THEME TIER-LOCK, NAV-SHEET 100% flip, forge devlog publish.",
-  "pulse": {
-    "now": [
-      "Studio Pulse live data — the Forge Window now hydrates from the public intelligence feed again.",
-      "Feedback UX polish — Signal Feedback now opens from a compact button instead of interrupting the page.",
-      "Social Dashboard activity feed — connecting cross-platform activity into a unified studio presence."
-    ],
-    "next": [
-      "Forge Window naming rollout — public navigation, guidance copy, and activity surfaces now speak one language.",
-      "Expanded intent routing on games and universe hubs.",
-      "Cloudflare security hardening — additional WAF rules for international traffic filtering."
-    ],
-    "shipped": []
-  },
+  "focus": "We just shipped shareable Vault Rank cards, insider classified dispatches for members, a searchable FAQ, data-driven pathway guides, IGNIS session synthesis, and the Vault Climbers leaderboard strip.",
+  "nextStep": "Verifying new member features in production, building the universe lore depth-map, and planning the next wave of improvements.",
   "decisions": [
     {
-      "surface": "mobile-nav",
-      "verdict": "canary",
-      "evidence": "1 nav-sheet opens; defaultSwapReady=false",
-      "next": "Expose a small deterministic mobile cohort and re-check close mix."
+      "surface": "Mobile navigation",
+      "status": "Testing with a small group",
+      "note": "Expose a small deterministic mobile cohort and re-check close mix."
     },
     {
-      "surface": "performance",
-      "verdict": "hold",
-      "evidence": "Home RUM samples=11",
-      "next": "Flip strict only after field p75 is sufficient and healthy."
+      "surface": "Site performance",
+      "status": "Monitoring before full rollout",
+      "note": "Flip strict only after field p75 is sufficient and healthy."
     },
     {
-      "surface": "feedback",
-      "verdict": "investigate",
-      "evidence": "6 public-safe feedback themes",
-      "next": "Route top themes into feedback decision board lanes."
+      "surface": "Community feedback",
+      "status": "Gathering feedback",
+      "note": "Route top themes into feedback decision board lanes."
     }
-  ],
-  "sources": [
-    "/api/public-intelligence.json",
-    "/api/feedback-provenance.json",
-    "/api/ci-status.json",
-    "/api/ignis-roi.json",
-    "/api/nav-sheet-stats.json",
-    "/api/social-dashboard-public.json",
-    "/api/ux-decision-ledger.json"
   ]
 }

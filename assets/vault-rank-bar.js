@@ -322,7 +322,7 @@
       var sb = window.VSSupabase;
       if (!sb) return;
       // S199: add created_at for velocity projection (no PII risk — own member row).
-      var res = await sb.from('vault_members').select('points, rank_name, created_at').eq('id', userId).maybeSingle();
+      var res = await sb.from('vault_members').select('points, created_at').eq('id', userId).maybeSingle();
       if (!res || !res.data) return;
       var points = Number(res.data.points) || 0;
       var progress = getRankProgress(points);

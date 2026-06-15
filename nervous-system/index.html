@@ -99,10 +99,9 @@
   <section class="container">
     <div id="nsTiles" class="ns-grid" aria-live="polite"></div>
     <div class="ns-flow">
-      <article class="ns-panel"><h2>Current focus</h2><p id="nsFocus" class="vsx-57f9e31d78">Loading the public intelligence feed…</p></article>
-      <article class="ns-panel"><h2>Next milestone</h2><p id="nsNext" class="vsx-57f9e31d78">Loading the public intelligence feed…</p></article>
-      <article class="ns-panel"><h2>Decision ledger</h2><div id="nsDecisions" class="vsx-57f9e31d78">Loading UX decision ledger…</div></article>
-      <article class="ns-panel"><h2>Source contracts</h2><div id="nsSources" class="vsx-57f9e31d78">Loading source contracts…</div></article>
+      <article class="ns-panel"><h2>What we shipped</h2><p id="nsFocus" class="vsx-57f9e31d78">Loading…</p></article>
+      <article class="ns-panel"><h2>What's coming</h2><p id="nsNext" class="vsx-57f9e31d78">Loading…</p></article>
+      <article class="ns-panel"><h2>Active decisions</h2><div id="nsDecisions" class="vsx-57f9e31d78">Loading…</div></article>
     </div>
   </section>
 </main>
@@ -210,11 +209,10 @@
   </footer>
 <script>
 fetch('/api/nervous-system.json').then(r=>r.json()).then(data=>{
-  document.getElementById('nsTiles').innerHTML=(data.tiles||[]).map(t=>`<a class="ns-tile" href="${t.href}"><span>${t.label}</span><strong>${t.value}</strong><em class="vsx-d6b1e0b319">Open source →</em></a>`).join('');
-  document.getElementById('nsFocus').textContent=data.focus||'No current public focus available.';
-  document.getElementById('nsNext').textContent=data.nextMilestone||'No next milestone available.';
-  document.getElementById('nsDecisions').innerHTML=(data.decisions||[]).map(d=>`<p><strong>${d.surface}:</strong> ${d.verdict}<br><span>${d.next}</span></p>`).join('')||'No active decisions.';
-  document.getElementById('nsSources').innerHTML=(data.sources||[]).map(s=>`<a href="${s}" class="vsx-bf0d26312a">${s}</a>`).join('');
+  document.getElementById('nsTiles').innerHTML=(data.tiles||[]).map(t=>`<a class="ns-tile" href="${t.href}"><span>${t.label}</span><strong>${t.value}</strong><em class="vsx-d6b1e0b319">View →</em></a>`).join('');
+  document.getElementById('nsFocus').textContent=data.focus||'The studio is actively shipping.';
+  document.getElementById('nsNext').textContent=data.nextStep||data.nextMilestone||'';
+  document.getElementById('nsDecisions').innerHTML=(data.decisions||[]).map(d=>`<p><strong>${d.surface}:</strong> ${d.status}<br><span>${d.note||''}</span></p>`).join('')||'No active decisions.';
 });
 </script>
 <script src="../assets/ambient.shell-3667694cc0.js" defer></script>
