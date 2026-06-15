@@ -56,6 +56,24 @@
     .ignis-pillar .pillar-grade { font-size:0.68rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);padding:0.1em 0.4em;border:1px solid rgba(255,255,255,0.12);border-radius:4px; }
     .ignis-pillar .pillar-bar { flex:1;height:3px;border-radius:2px;background:rgba(255,255,255,0.08);overflow:hidden; }
     .ignis-pillar .pillar-bar-fill { height:100%;border-radius:2px;background:#FFC400;transition:width 0.7s ease; }
+    /* IGNIS Platform Intelligence Panel */
+    .ignis-platform-panel{margin:2.5rem 0;display:none}
+    .ignis-platform-panel[aria-hidden="false"]{display:block}
+    .ignis-intel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:1rem;margin-bottom:1.5rem}
+    .ignis-intel-card{padding:1.1rem 1.1rem 0.9rem;border-radius:14px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,122,0,0.12)}
+    .ignis-intel-card .metric-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.4rem}
+    .ignis-intel-card .metric-val{font-size:1.7rem;font-weight:800;letter-spacing:-0.03em;color:#FF7A00;line-height:1}
+    .ignis-intel-card .metric-sub{font-size:0.76rem;color:var(--muted);margin-top:0.25rem}
+    .ignis-status-row{display:flex;align-items:center;gap:0.6rem;padding:0.85rem 1.1rem;background:rgba(255,255,255,0.025);border-radius:10px;border:1px solid rgba(255,255,255,0.06);margin-bottom:1.5rem}
+    .ignis-status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;background:#22c55e;box-shadow:0 0 8px #22c55e}
+    .ignis-sparkline-wrap{margin-bottom:1.5rem}
+    .ignis-sparkline-label{font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:0.5rem}
+    .ignis-voice{font-size:0.92rem;color:var(--muted);line-height:1.65;padding:1rem 1.2rem;border-left:2px solid rgba(255,122,0,0.3);margin:0 0 1.5rem}
+    .ignis-caps-section{padding:0 0 2.5rem}
+    .ignis-caps-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0.75rem}
+    .ignis-cap-card{padding:1rem 1.1rem;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07)}
+    .ignis-cap-card strong{display:block;font-size:0.84rem;font-weight:700;margin-bottom:0.3rem;color:#FFC400}
+    .ignis-cap-card span{font-size:0.8rem;color:var(--muted);line-height:1.5}
   </style>
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
@@ -155,6 +173,65 @@
           <div class="ignis-tier-card" style="border-color:rgba(245,158,11,0.3);"><strong style="color:#f59e0b;">Forge · 20k–60k</strong>Active build. Shipping. Learning fast.</div>
           <div class="ignis-tier-card" style="border-color:rgba(251,191,36,0.35);"><strong style="color:#fbbf24;">Sparked · 60k–85k</strong>Live output, compounding.</div>
           <div class="ignis-tier-card" style="border-color:rgba(255,122,0,0.4);"><strong style="color:#FF7A00;">Ignited · 85k–100k</strong>Peak velocity. All systems hot.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IGNIS Platform Intelligence — live data from ignis-platform-public@1 -->
+    <section style="padding:0 0 1rem;" aria-label="IGNIS platform intelligence">
+      <div class="container">
+        <div class="eyebrow" style="margin-bottom:1rem;">Intelligence platform</div>
+        <h2 style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-0.03em;margin:0 0 1.5rem;">The engine behind the score.</h2>
+        <div class="ignis-platform-panel" data-ignis-platform-panel aria-hidden="true">
+          <div class="ignis-status-row">
+            <div class="ignis-status-dot" data-ignis-status-dot></div>
+            <span style="font-size:0.84rem;font-weight:600;" data-ignis-status>Loading…</span>
+          </div>
+          <div class="ignis-intel-grid">
+            <div class="ignis-intel-card">
+              <div class="metric-label">SIL Score</div>
+              <div class="metric-val"><span data-ignis-sil>—</span><span style="font-size:0.9rem;color:var(--muted)">/1000</span></div>
+              <div class="metric-sub">Self-improvement <span data-ignis-sil-trend>→</span></div>
+            </div>
+            <div class="ignis-intel-card">
+              <div class="metric-label">Intel Health</div>
+              <div class="metric-val"><span data-ignis-intel>—</span><span style="font-size:0.9rem;color:var(--muted)">%</span></div>
+              <div class="metric-sub">Prediction accuracy</div>
+            </div>
+            <div class="ignis-intel-card">
+              <div class="metric-label">Sessions</div>
+              <div class="metric-val"><span data-ignis-sessions>—</span></div>
+              <div class="metric-sub">Intelligence runs</div>
+            </div>
+            <div class="ignis-intel-card">
+              <div class="metric-label">Ships / Session</div>
+              <div class="metric-val"><span data-ignis-ships-avg>—</span></div>
+              <div class="metric-sub">Avg delivery rate</div>
+            </div>
+          </div>
+          <div class="ignis-sparkline-wrap">
+            <div class="ignis-sparkline-label">SIL history — last 17 sessions</div>
+            <div data-ignis-sparkline style="height:40px;"></div>
+          </div>
+          <blockquote class="ignis-voice" data-ignis-voice></blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section class="ignis-caps-section" aria-labelledby="caps-heading">
+      <div class="container">
+        <div class="eyebrow" style="margin-bottom:1rem;">Active capabilities</div>
+        <h2 id="caps-heading" style="font-family:Georgia,'Times New Roman',serif;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-0.03em;margin:0 0 1.5rem;">What IGNIS does for the studio.</h2>
+        <div class="ignis-caps-grid" data-ignis-caps>
+          <!-- Populated by ignis-platform.js from /api/ignis-platform-status.json -->
+          <div class="ignis-cap-card"><strong>Decision scoring</strong><span>Calibrated scoring for studio decisions</span></div>
+          <div class="ignis-cap-card"><strong>Portfolio monitoring</strong><span>Real-time health tracking across all projects</span></div>
+          <div class="ignis-cap-card"><strong>Carry prediction</strong><span>Survival curve estimation for open work items</span></div>
+          <div class="ignis-cap-card"><strong>Feed intelligence</strong><span>Multi-source signal ingestion and liveness tracking</span></div>
+          <div class="ignis-cap-card"><strong>Calibration</strong><span>Isotonic PAV calibration across prediction models</span></div>
+          <div class="ignis-cap-card"><strong>Pattern distribution</strong><span>Studio-wide RCA pattern sharing</span></div>
+          <div class="ignis-cap-card"><strong>Studio Council</strong><span>Cross-project automated feedback at session start</span></div>
+          <div class="ignis-cap-card"><strong>Intelligence coupling</strong><span>Lead-indicator detection across prediction dimensions</span></div>
         </div>
       </div>
     </section>
@@ -325,6 +402,7 @@
   <script src="/assets/sentry-init.js" defer></script>
   <script src="/assets/public-intelligence.js" defer></script>
   <script src="/assets/ignis-live.js" defer></script>
+  <script src="/assets/ignis-platform.js" defer></script>
 <script src="/assets/schema-injector.js" defer></script>
   <!-- vs-ambient:start -->
 <script src="/assets/ambient-core.shell-6895f1ae09.js" defer></script>
