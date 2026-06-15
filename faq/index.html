@@ -223,129 +223,110 @@
       </div>
     </section>
 
+    <!-- FAQ — S201 #3: data-driven renderer from /data/faq.json -->
     <section style="padding:0 0 1rem;">
       <div class="container">
-        <div class="policy-body">
-
-          <h2>General</h2>
-
-          <details class="faq-item">
-            <summary>What is VaultSpark Studios?</summary>
-            <div class="faq-answer">
-              <p>VaultSpark Studios is a professional creative studio that builds browser-first games, intelligent software, and public studio systems. We create everything from arcade games to sports simulations to AI-powered platforms — all playable or usable directly in your browser.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Are your games free to play?</summary>
-            <div class="faq-answer">
-              <p>Yes. Every VaultSpark game is free to play in your browser. No downloads, no installs, no paywalls. Just open the page and play.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>What does SPARKED, FORGE, and VAULTED mean?</summary>
-            <div class="faq-answer">
-              <p><strong>SPARKED</strong> means the project is live and active in the world. <strong>FORGE</strong> means it is currently being built. <strong>VAULTED</strong> means it has been paused or shelved — preserved in the vault for potential future return.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Do I need to create an account to play games?</summary>
-            <div class="faq-answer">
-              <p>No. All games are playable without an account. However, creating a free Vault Member account lets you earn points, track progress, and appear on the leaderboard.</p>
-            </div>
-          </details>
-
-          <div class="policy-divider"></div>
-
-          <h2>Vault Membership</h2>
-
-          <details class="faq-item">
-            <summary>What is Vault Membership?</summary>
-            <div class="faq-answer">
-              <p>Vault Membership is a free account system. Members earn Vault Points through engagement, climb ranks from Initiate to Overseer, access classified studio content, and appear on the public leaderboard.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>How do I earn Vault Points?</summary>
-            <div class="faq-answer">
-              <p>Points are earned through various activities: playing games, visiting the site regularly, engaging with studio content, and participating in community events. The exact point values are detailed in the <a href="/community/">Community Hub</a>.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>What are the Vault Ranks?</summary>
-            <div class="faq-answer">
-              <p>Vault Ranks progress from Initiate through multiple tiers up to Overseer. Each rank unlocks new perks, badges, and access levels. View the full rank ladder on the <a href="/ranks/">Ranks page</a>.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Can I have multiple accounts?</summary>
-            <div class="faq-answer">
-              <p>No. One account per person as outlined in our <a href="/terms/">Terms of Service</a>. Multiple accounts used to manipulate points or rankings may be suspended.</p>
-            </div>
-          </details>
-
-          <div class="policy-divider"></div>
-
-          <h2>Account &amp; Data</h2>
-
-          <details class="faq-item">
-            <summary>How do I delete my account?</summary>
-            <div class="faq-answer">
-              <p>You can request account deletion by emailing <a href="mailto:founder@vaultsparkstudios.com">founder@vaultsparkstudios.com</a> with the subject "Account Deletion", or by using our <a href="/data-deletion/">data deletion request form</a>. We process requests within 30 days.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>What data do you collect?</summary>
-            <div class="faq-answer">
-              <p>We collect basic account information (email, username), usage analytics, and browser preferences. We do not sell your data. Full details are in our <a href="/privacy/">Privacy Policy</a>.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Do you use cookies?</summary>
-            <div class="faq-answer">
-              <p>We use essential cookies for site functionality and optional analytics cookies (Google Analytics). No advertising or tracking cookies. See our <a href="/cookies/">Cookie Policy</a> for the full list.</p>
-            </div>
-          </details>
-
-          <div class="policy-divider"></div>
-
-          <h2>Technical</h2>
-
-          <details class="faq-item">
-            <summary>What browsers do you support?</summary>
-            <div class="faq-answer">
-              <p>VaultSpark Studios works on all modern browsers: Chrome, Firefox, Safari, Edge, and their mobile equivalents. We recommend keeping your browser up to date for the best experience.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>Can I install the site as an app?</summary>
-            <div class="faq-answer">
-              <p>Yes. VaultSpark Studios is a Progressive Web App (PWA). On supported browsers, you will see an install prompt, or you can use your browser's "Add to Home Screen" or "Install App" option.</p>
-            </div>
-          </details>
-
-          <details class="faq-item">
-            <summary>I found a bug — how do I report it?</summary>
-            <div class="faq-answer">
-              <p>Use the <a href="/contact/">contact form</a> or email <a href="mailto:founder@vaultsparkstudios.com">founder@vaultsparkstudios.com</a>. For security-related issues, see our <a href="/security/">Security Policy</a>.</p>
-            </div>
-          </details>
-
-          <div class="policy-divider"></div>
-
-          <p>Still have questions? <a href="/contact/">Contact us</a> and we will get back to you.</p>
-
+        <!-- Search + category filter bar -->
+        <div style="margin-bottom:1.6rem;display:flex;gap:0.6rem;flex-wrap:wrap;align-items:center;">
+          <input id="faq-search" type="search" placeholder="Search FAQ…" autocomplete="off"
+            style="flex:1;min-width:200px;padding:0.65rem 1rem;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--text);font-size:0.9rem;font-family:inherit;"
+            aria-label="Search frequently asked questions" />
+          <div id="faq-cats" role="group" aria-label="Filter by category" style="display:flex;gap:0.4rem;flex-wrap:wrap;"></div>
         </div>
+        <!-- FAQ accordion rendered by JS from /data/faq.json -->
+        <div id="faq-root" class="policy-body"></div>
+        <p id="faq-no-results" hidden style="color:var(--muted);text-align:center;padding:2rem 0;">
+          No matching questions. <a href="/ignis/?q=FAQ:" id="faq-ignis-link" style="color:var(--gold);">Ask IGNIS instead →</a>
+        </p>
+        <p style="margin-top:1.8rem;">Still have questions? <a href="/contact/">Contact us</a> and we will get back to you.</p>
       </div>
     </section>
+
+    <script>
+    (function(){
+      var CAT_LABELS = {general:'General',membership:'Vault Membership',account:'Account & Data',technical:'Technical'};
+      var CAT_ORDER = ['general','membership','account','technical'];
+      var root = document.getElementById('faq-root');
+      var searchEl = document.getElementById('faq-search');
+      var catsEl = document.getElementById('faq-cats');
+      var noResults = document.getElementById('faq-no-results');
+      var ignisBanner = document.getElementById('faq-ignis-link');
+      var FAQ = null;
+      var activeCat = 'all';
+      var searchTerm = '';
+
+      function catBtn(cat, label, active) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = label;
+        b.dataset.cat = cat;
+        b.style.cssText = 'padding:0.42rem 0.9rem;border-radius:999px;font-size:0.82rem;font-weight:600;font-family:inherit;cursor:pointer;border:1px solid ' + (active?'rgba(255,255,255,0.15)':'rgba(255,255,255,0.07)') + ';background:' + (active?'rgba(255,255,255,0.08)':'transparent') + ';color:' + (active?'var(--text)':'var(--muted)') + ';';
+        b.addEventListener('click', function(){ setFilter(cat); });
+        return b;
+      }
+
+      function buildCats(faq) {
+        catsEl.innerHTML = '';
+        catsEl.appendChild(catBtn('all', 'All', activeCat==='all'));
+        var seen = [];
+        faq.forEach(function(f){ if(seen.indexOf(f.category)===-1) seen.push(f.category); });
+        CAT_ORDER.forEach(function(c){ if(seen.indexOf(c)!==-1) catsEl.appendChild(catBtn(c, CAT_LABELS[c]||c, activeCat===c)); });
+      }
+
+      function render(faq) {
+        if (!root) return;
+        var term = searchTerm.trim().toLowerCase();
+        var visible = faq.filter(function(f){
+          var matchCat = activeCat==='all' || f.category===activeCat;
+          var matchSearch = !term || f.question.toLowerCase().indexOf(term)!==-1 || f.answer.toLowerCase().indexOf(term)!==-1;
+          return matchCat && matchSearch;
+        });
+        if (!visible.length) {
+          root.innerHTML = '';
+          if(noResults) { noResults.hidden=false; if(ignisBanner&&term) ignisBanner.href='/ignis/?q='+encodeURIComponent(term); }
+          return;
+        }
+        if(noResults) noResults.hidden = true;
+        var byCat = {};
+        visible.forEach(function(f){ (byCat[f.category]=byCat[f.category]||[]).push(f); });
+        var html = '';
+        CAT_ORDER.forEach(function(cat){
+          if(!byCat[cat]) return;
+          html += '<h2>' + (CAT_LABELS[cat]||cat) + '</h2>';
+          byCat[cat].forEach(function(f){
+            html += '<details class="faq-item" id="faq-'+f.id+'"><summary>'+f.question+'</summary><div class="faq-answer"><p>'+f.answer+'</p></div></details>';
+          });
+          html += '<div class="policy-divider"></div>';
+        });
+        root.innerHTML = html;
+      }
+
+      function setFilter(cat) {
+        activeCat = cat;
+        buildCats(FAQ);
+        render(FAQ);
+      }
+
+      fetch('/data/faq.json')
+        .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+        .then(function(data){
+          FAQ = data;
+          buildCats(FAQ);
+          render(FAQ);
+        })
+        .catch(function(){
+          if(root) root.innerHTML = '<p>Could not load FAQ. <a href="/contact/">Contact us</a> for help.</p>';
+        });
+
+      if(searchEl) {
+        searchEl.addEventListener('input', function(){
+          searchTerm = searchEl.value;
+          if(ignisBanner) ignisBanner.href = '/ignis/?q='+encodeURIComponent(searchTerm||'FAQ:');
+          if(FAQ) render(FAQ);
+        });
+      }
+    })();
+    </script>
   </main>
 
   <footer class="site-footer" aria-label="Site footer">
