@@ -1013,9 +1013,18 @@
         <p style="color:var(--muted);max-width:54ch;margin:0.8rem auto 0;font-size:1.02rem;line-height:1.68;">The vault is free to enter. Go deeper when you're ready.</p>
       </div>
 
-      <div class="mem-tiers-grid">
+      <!-- Intent tabs — S201 #2 -->
+      <div class="mem-intent-tabs" role="group" aria-label="Filter tiers by your purpose" style="display:flex;justify-content:center;gap:0.5rem;margin-bottom:1.8rem;flex-wrap:wrap;">
+        <button class="mem-intent-btn mem-intent-btn--active" data-intent="all" type="button" style="padding:0.5rem 1.2rem;border-radius:999px;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.07);color:var(--text);font-size:0.88rem;font-weight:600;font-family:inherit;cursor:pointer;">All Tiers</button>
+        <button class="mem-intent-btn" data-intent="play" type="button" style="padding:0.5rem 1.2rem;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--muted);font-size:0.88rem;font-weight:600;font-family:inherit;cursor:pointer;">▶ Play</button>
+        <button class="mem-intent-btn" data-intent="create" type="button" style="padding:0.5rem 1.2rem;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--muted);font-size:0.88rem;font-weight:600;font-family:inherit;cursor:pointer;">⚒ Create</button>
+        <button class="mem-intent-btn" data-intent="support" type="button" style="padding:0.5rem 1.2rem;border-radius:999px;border:1px solid rgba(255,255,255,0.08);background:transparent;color:var(--muted);font-size:0.88rem;font-weight:600;font-family:inherit;cursor:pointer;">♾ Support</button>
+      </div>
+      <p id="mem-intent-hint" style="text-align:center;color:var(--muted);font-size:0.88rem;min-height:1.3em;margin-bottom:1rem;"></p>
+
+      <div class="mem-tiers-grid" id="mem-tiers-grid-el">
         <!-- Free -->
-        <div class="mem-tier-card tier-free">
+        <div class="mem-tier-card tier-free" data-intent-tags="all play">
           <span class="tier-badge tier-badge-free">◈ Vault Member</span>
           <div class="mem-tier-name">Vault<br>Member</div>
           <div class="mem-tier-price" style="color:var(--text);">Free</div>
@@ -1033,7 +1042,7 @@
         </div>
 
         <!-- VaultSparked -->
-        <div class="mem-tier-card tier-sparked">
+        <div class="mem-tier-card tier-sparked" data-intent-tags="all play create support">
           <div class="tier-glow" aria-hidden="true"></div>
           <span class="tier-badge tier-badge-sparked">⚡ VaultSparked</span>
           <div class="mem-tier-name">Vault<br>Sparked</div>
@@ -1053,7 +1062,7 @@
         </div>
 
         <!-- Eternal -->
-        <div class="mem-tier-card tier-eternal">
+        <div class="mem-tier-card tier-eternal" data-intent-tags="all support create">
           <div class="tier-glow" aria-hidden="true"></div>
           <span class="tier-badge tier-badge-eternal">♾ VaultSparked Eternal</span>
           <div class="mem-tier-name">Vault<br>Eternal</div>
@@ -1074,7 +1083,16 @@
         </div>
       </div>
 
-      <p style="text-align:center;margin-top:1.8rem;font-size:0.82rem;color:var(--dim);">
+      <!-- IGNIS Tier Advisor — S201 #1 -->
+      <div class="mem-ignis-advisor" style="text-align:center;margin-top:2.2rem;padding:1.5rem 1.2rem;border-radius:16px;background:rgba(255,196,0,0.04);border:1px solid rgba(255,196,0,0.14);">
+        <p style="color:var(--muted);font-size:0.95rem;margin:0 0 0.9rem;"><strong style="color:var(--text);">Not sure which tier fits you?</strong> Describe yourself and IGNIS will recommend the right one.</p>
+        <form class="mem-ignis-form" onsubmit="(function(e){e.preventDefault();var inp=e.target.querySelector('.mem-ignis-input');var q=inp?inp.value.trim():'';if(!q)return;try{navigator.sendBeacon('/v/rum',JSON.stringify({ux:'funnel:membership_ignis_query',route:'/membership/',ts:Date.now()}));}catch(_){}window.location.href='/ignis/?q='+encodeURIComponent('Which Vault Membership tier is right for me? ')+encodeURIComponent(q);})(event)" style="display:flex;gap:0.6rem;max-width:520px;margin:0 auto;flex-wrap:wrap;">
+          <input class="mem-ignis-input" type="text" placeholder="e.g. I play indie games casually, limited budget…" style="flex:1;min-width:180px;padding:0.72rem 1.1rem;border-radius:999px;border:1px solid rgba(255,196,0,0.22);background:rgba(255,196,0,0.04);color:var(--text);font-size:0.9rem;font-family:inherit;" aria-label="Describe yourself to get a tier recommendation" />
+          <button type="submit" style="padding:0.72rem 1.2rem;border-radius:999px;border:1px solid rgba(255,196,0,0.3);background:rgba(255,196,0,0.1);color:var(--gold);font-size:0.9rem;font-weight:700;font-family:inherit;cursor:pointer;white-space:nowrap;flex-shrink:0;">Ask IGNIS →</button>
+        </form>
+      </div>
+
+      <p style="text-align:center;margin-top:1.4rem;font-size:0.82rem;color:var(--dim);">
         Current prices are grandfather-locked — early members keep this rate forever as the vault grows.
         <a href="/membership-value/" style="color:var(--gold);text-decoration:none;margin-left:0.4em;">See value breakdown →</a>
       </p>
@@ -1469,5 +1487,39 @@
 <script src="/assets/ambient-core.shell-6895f1ae09.js" defer></script>
 <script src="/assets/ambient-feature.shell-5b85ce5201.js" defer></script>
 <!-- vs-ambient:end -->
+<!-- Intent filter for tier grid — S201 #2 -->
+<script>
+(function(){
+  var HINTS = {
+    all: '',
+    play: 'Showing tiers most relevant for players — every tier gives you game access.',
+    create: 'Showing tiers with studio access, co-dev perks, and creation tools.',
+    support: 'Showing tiers for supporters who want to fuel the vault and lock in lifetime pricing.'
+  };
+  document.addEventListener('DOMContentLoaded', function() {
+    var btns = document.querySelectorAll('.mem-intent-btn');
+    var cards = document.querySelectorAll('[data-intent-tags]');
+    var hint = document.getElementById('mem-intent-hint');
+    if (!btns.length || !cards.length) return;
+    function setIntent(intent) {
+      btns.forEach(function(b) {
+        var active = b.getAttribute('data-intent') === intent;
+        b.style.background = active ? 'rgba(255,255,255,0.07)' : 'transparent';
+        b.style.borderColor = active ? 'rgba(255,255,255,0.12)' : 'rgba(255,255,255,0.08)';
+        b.style.color = active ? 'var(--text)' : 'var(--muted)';
+      });
+      cards.forEach(function(c) {
+        var tags = (c.getAttribute('data-intent-tags') || '').split(' ');
+        c.style.display = (intent === 'all' || tags.indexOf(intent) !== -1) ? '' : 'none';
+      });
+      if (hint) hint.textContent = HINTS[intent] || '';
+      try { navigator.sendBeacon('/v/rum', JSON.stringify({ux:'funnel:membership_intent_tab',route:'/membership/',intent:intent,ts:Date.now()})); } catch(_){}
+    }
+    btns.forEach(function(b) {
+      b.addEventListener('click', function() { setIntent(b.getAttribute('data-intent')); });
+    });
+  });
+})();
+</script>
 </body>
 </html>
