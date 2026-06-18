@@ -1,5 +1,17 @@
 # Work Log
 
+## 2026-06-18 — Session 207 · post-closeout founder-task execution (founder-authorized)
+
+After the S207 closeout, the founder authorized executing the carried "next-session" + "founder-only" items and completing the S204 visual overhaul. Done end-to-end:
+
+- **Worker prod deploy** — `wrangler deploy --env production` (token via `cloudflare.deploy` gateway); `v9c4395c7`, new RUM prefixes live at the edge. `prod-verify-wave` → 7/7 (full wave live on prod).
+- **Stripe TRIAL50 (LIVE)** — created coupon `vMXTeDFL` (50% off, duration once) + active promo `TRIAL50` via raw Stripe REST; needed `Stripe-Version: 2024-06-20` (account's pinned version rejected `coupon` otherwise). 50%-off trial now real end-to-end through `create-checkout`. Reversible.
+- **VAPID provisioned** — P-256 keypair via `node:crypto` (no `web-push` install — package-trust BLOCK), stored in the gateway, `cloudflare.vapid` capability registered → READY. Fixed a real `await getSecret().catch()`-on-sync bug in `push-dispatch.mjs`.
+- **Hero v2 graduated** — made the distilled hero the homepage default (S204 overhaul's final piece) + `?hero=classic` kill-switch. Verified the rest of the S204 overhaul live (polish layer, portal premium, consolidation + 301s, mission rewrite [coherence gate clean], freshness).
+- **Forge devlog** — completed the draft's factual paragraph (publish-ready); left publishing to the founder (founder-voice essay, never auto-published).
+
+Boundaries held: subscription-pricing confirmed against public copy before creating; founder-voice surface not auto-published; cross-repo `CAPABILITY_MAP` edit left uncommitted in the studio-ops working tree. `build:check` EXIT 0. Pushed.
+
 ## 2026-06-18 — Session 207 (autonomous /goal chain · 9/9 audit items shipped · build:check EXIT 0)
 
 Autonomous `/start → /audit → /implement → /closeout`. The S207 audit deliberately answered the goal's "what did we miss?" by walking the LIVE CONVERSION PATHS of the S206 wave — and found three S206 features that don't convert.
