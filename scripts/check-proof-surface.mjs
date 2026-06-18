@@ -110,4 +110,11 @@ if (pn.status !== 0) {
   console.warn('  ⚠  check-public-note-freshness: dev jargon in public copy (update context/PROJECT_STATUS.json)');
 }
 
+// S206: identity coherence — WARN when mission surfaces narrow VaultSpark to "game studio"
+// instead of the canonical "creative studio". Advisory only; does not block the build.
+const ic = spawnSync(process.execPath, [path.join(__dirname, 'check-identity-coherence.mjs')], { stdio: 'inherit' });
+if (ic.status !== 0) {
+  console.warn('  ⚠  check-identity-coherence: identity-narrowing copy found (update mission surfaces)');
+}
+
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');
