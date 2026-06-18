@@ -265,6 +265,40 @@
       </div>
     </section>
 
+    <!-- S205 #13: personalized member context panel — hidden until auth confirms -->
+    <style>
+      .ignis-member-ctx { display: none; padding: 1.4rem 0 0; }
+      body[data-vs-signed-in] .ignis-member-ctx { display: block; }
+      .ignis-member-ctx__inner {
+        display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+        padding: 1rem 1.4rem; border-radius: 16px;
+        background: rgba(255,196,0,.04); border: 1px solid rgba(255,196,0,.18);
+        margin-bottom: 1.5rem;
+      }
+      .ignis-member-ctx__chip {
+        display: inline-flex; align-items: center; gap: .4rem;
+        padding: .32rem .75rem; border-radius: 999px; font-size: .78rem; font-weight: 700;
+        background: rgba(255,196,0,.1); border: 1px solid rgba(255,196,0,.3); color: var(--gold, #ffc400);
+      }
+      .ignis-member-ctx__milestone { font-size: .82rem; color: var(--muted, #a8b4d0); flex: 1 1 180px; }
+      .ignis-member-ctx__ask {
+        display: inline-flex; align-items: center; gap: .4rem;
+        padding: .45rem 1rem; border-radius: 12px; font-size: .82rem; font-weight: 700;
+        background: rgba(255,196,0,.12); border: 1px solid rgba(255,196,0,.3); color: var(--gold, #ffc400);
+        cursor: pointer; font-family: inherit; white-space: nowrap;
+      }
+      .ignis-member-ctx__ask:hover { background: rgba(255,196,0,.2); }
+    </style>
+    <div class="ignis-member-ctx" id="ignis-member-ctx" aria-hidden="true">
+      <div class="container">
+        <div class="ignis-member-ctx__inner" id="ignis-member-ctx-inner">
+          <span class="ignis-member-ctx__chip" id="ignis-member-rank-chip">Vault Member</span>
+          <span class="ignis-member-ctx__milestone" id="ignis-member-milestone">Your journey through the vault continues.</span>
+          <button type="button" class="ignis-member-ctx__ask" id="ignis-member-ask-btn">Ask about your rank journey →</button>
+        </div>
+      </div>
+    </div>
+
     <section style="padding:1rem 0 4rem;">
       <div class="container">
         <h2 style="font-family:Georgia,serif;font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-0.02em;margin:0 0 0.4rem;">Ask IGNIS <span style="font-family:Georgia,serif;font-size:0.65em;letter-spacing:0.08em;text-transform:uppercase;color:var(--gold,#d4af37);vertical-align:0.2em;">· members only</span></h2>
@@ -408,5 +442,62 @@
 <script src="/assets/ambient-core.shell-6895f1ae09.js" defer></script>
 <script src="/assets/ambient-feature.shell-5b85ce5201.js" defer></script>
 <!-- vs-ambient:end -->
+<!-- S205 #13: personalized member context panel wire-up -->
+<script>
+(function(){
+  var TIER_LABELS = { free: 'Vault Member', sparked: 'Vault Sparked', eternal: 'Vault Eternal' };
+  var TIER_MILESTONES = {
+    free: 'Upgrade to Vault Sparked to unlock 2× XP, priority access, and deeper oracle sessions.',
+    sparked: 'Vault Sparked active. Your next step: Vault Eternal — permanent grandfather pricing locked for life.',
+    eternal: 'Vault Eternal — you are baked into the vault records permanently. Maximum everything.'
+  };
+  var TIER_ASKS = {
+    free: 'What do Vault Sparked members unlock?',
+    sparked: 'What does Vault Eternal add beyond Sparked?',
+    eternal: 'What content is available only to Eternal members?'
+  };
+
+  function esc(s) { var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+  function populatePanel(tier, name) {
+    var ctx = document.getElementById('ignis-member-ctx');
+    var chip = document.getElementById('ignis-member-rank-chip');
+    var milestone = document.getElementById('ignis-member-milestone');
+    var askBtn = document.getElementById('ignis-member-ask-btn');
+    if (!ctx || !chip || !milestone || !askBtn) return;
+
+    var label = TIER_LABELS[tier] || 'Vault Member';
+    chip.textContent = label;
+    if (name) chip.textContent = label + ' · ' + name.split(' ')[0];
+
+    milestone.textContent = TIER_MILESTONES[tier] || TIER_MILESTONES.free;
+
+    var defaultAsk = TIER_ASKS[tier] || TIER_ASKS.free;
+    askBtn.textContent = 'Ask: "' + defaultAsk + '" →';
+
+    askBtn.addEventListener('click', function() {
+      // Pre-fill vault oracle input if present, else navigate to /oracle/?q=
+      var input = document.querySelector('[data-vault-oracle] input, [data-vault-oracle] textarea');
+      if (input) {
+        input.value = defaultAsk;
+        var form = input.closest('form');
+        if (form) { form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true })); return; }
+      }
+      location.href = '/oracle/?q=' + encodeURIComponent(defaultAsk);
+    });
+
+    ctx.setAttribute('aria-hidden', 'false');
+  }
+
+  document.addEventListener('vs:session-ready', function(e) {
+    var detail = e.detail || {};
+    if (!detail.signedIn) return;
+    var meta = (detail.session && detail.session.raw && detail.session.raw.user && detail.session.raw.user.user_metadata) || {};
+    var tier = (meta.membership_tier || meta.tier || 'free').toLowerCase();
+    var name = meta.full_name || meta.name || '';
+    populatePanel(tier, name);
+  });
+})();
+</script>
 </body>
 </html>
