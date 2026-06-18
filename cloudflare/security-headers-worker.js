@@ -732,6 +732,13 @@ export default {
     if (/^\/products\/vorn(\/|$)/i.test(url.pathname)) {
       return Response.redirect('https://joinvorn.com/', 301);
     }
+    // S205 #10 L1: membership cluster consolidation — redirect old paths to unified hub
+    if (/^\/membership-value(\/|$)/i.test(url.pathname)) {
+      return Response.redirect(`${url.origin}/membership/#benefits`, 301);
+    }
+    if (/^\/vaultsparked(\/|$)/i.test(url.pathname)) {
+      return Response.redirect(`${url.origin}/membership/#tiers`, 301);
+    }
 
     // --- Layer 0: CSRF token endpoint (lightweight, public, no caching) ---
     if (method === 'GET' && url.pathname === '/_csrf') {

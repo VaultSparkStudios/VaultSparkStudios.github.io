@@ -696,6 +696,15 @@
     .vj-badge-rank { background: rgba(31,162,255,0.1); color: #1fa2ff; border: 1px solid rgba(31,162,255,0.2); }
     @media (max-width: 768px) { .vault-journey-grid { grid-template-columns: 1fr; } }
     @media (min-width: 769px) and (max-width: 1024px) { .vault-journey-grid { grid-template-columns: 1fr 1fr; } .vj-card-3 { grid-column: span 2; } }
+
+    /* S205 #10 L1: membership hub tab nav */
+    .mem-hub-nav { background: rgba(255,255,255,.025); border-bottom: 1px solid rgba(255,196,0,.1); position: sticky; top: var(--nav-height,78px); z-index: 10; }
+    .mem-hub-nav__inner { display: flex; gap: .25rem; padding: .4rem 0; overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+    .mem-hub-nav__inner::-webkit-scrollbar { display: none; }
+    .mem-hub-nav__tab { display: inline-flex; align-items: center; padding: .45rem 1rem; border-radius: 8px; font-size: .86rem; font-weight: 600; color: var(--muted); white-space: nowrap; transition: color .15s, background .15s; }
+    .mem-hub-nav__tab:hover { color: var(--text); background: rgba(255,255,255,.06); }
+    .mem-hub-nav__tab:target { color: var(--gold); }
+    @media (max-width: 480px) { .mem-hub-nav__tab { font-size: .8rem; padding: .4rem .7rem; } }
   </style>
 
   <!-- pre-paint-stage:start -->
@@ -807,7 +816,7 @@
 <main id="main-content">
 
   <!-- ── Hero ─────────────────────────────────────────── -->
-  <section class="mem-hero" aria-labelledby="mem-hero-heading">
+  <section class="mem-hero" id="overview" aria-labelledby="mem-hero-heading">
     <div class="orb orb-gold" aria-hidden="true"></div>
     <div class="orb orb-blue" aria-hidden="true"></div>
     <div class="orb orb-purple" aria-hidden="true"></div>
@@ -888,6 +897,18 @@
     </div>
   </section>
 
+  <!-- ── Hub Tab Nav (S205 #10 L1) ──────────────────────── -->
+  <nav class="mem-hub-nav" aria-label="Membership sections">
+    <div class="container">
+      <div class="mem-hub-nav__inner">
+        <a class="mem-hub-nav__tab" href="#overview">Overview</a>
+        <a class="mem-hub-nav__tab" href="#tiers">Tiers</a>
+        <a class="mem-hub-nav__tab" href="#benefits">Benefits</a>
+        <a class="mem-hub-nav__tab" href="#ranks">Ranks</a>
+      </div>
+    </div>
+  </nav>
+
   <section class="telemetry-matrix" data-reveal="fade-up" data-track-view="membership_telemetry_matrix_view" aria-label="Membership telemetry">
     <div class="container">
       <div data-telemetry-matrix data-telemetry-context="membership"></div>
@@ -907,7 +928,7 @@
   </section>
 
   <!-- ── Rank Progression Strip ──────────────────────── -->
-  <section class="mem-rank-strip" data-reveal="fade-up" aria-labelledby="rank-strip-heading">
+  <section class="mem-rank-strip" id="ranks" data-reveal="fade-up" aria-labelledby="rank-strip-heading">
     <div class="container">
       <div style="text-align:center;margin-bottom:1.6rem;">
         <span class="eyebrow">9 Progression Tiers</span>
@@ -1018,7 +1039,7 @@
   </section>
 
   <!-- ── Tier Identity Cards ─────────────────────────── -->
-  <section class="mem-tiers" data-reveal="fade-up" aria-labelledby="tiers-heading">
+  <section class="mem-tiers" id="tiers" data-reveal="fade-up" aria-labelledby="tiers-heading">
     <div class="container">
       <div style="text-align:center;margin-bottom:1rem;">
         <span class="eyebrow">Three Tiers</span>
@@ -1113,7 +1134,7 @@
   </section>
 
   <!-- ── World Vault Teaser ──────────────────────────── -->
-  <section class="mem-worlds" data-reveal="fade-up" aria-labelledby="worlds-heading">
+  <section class="mem-worlds" id="benefits" data-reveal="fade-up" aria-labelledby="worlds-heading">
     <div class="container">
       <div style="text-align:center;margin-bottom:1.8rem;">
         <span class="eyebrow">What's Inside The Vault</span>
