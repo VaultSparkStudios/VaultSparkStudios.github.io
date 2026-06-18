@@ -74,10 +74,12 @@
       getJSON('/api/founder-presence.json'),
       getJSON('/api/ship-receipts.json'),
       getJSON('/api/heartbeat.json'),
+      getJSON('/api/vault-momentum.json'),
     ]).then(function (res) {
       var pres = res[0] || {};
       var receipts = res[1] || {};
       var hb = res[2] || {};
+      var momentum = res[3] || {};
 
       // Most recent shipped commit across all themed receipts.
       var lastCommit = null, lastTs = 0;
@@ -122,6 +124,16 @@
       if (pulses7d != null) {
         strip.appendChild(sep());
         strip.appendChild(seg(String(pulses7d), pulses7d === 1 ? 'ship this week' : 'ships this week'));
+      }
+
+      // S205 #11: vault momentum chip — SOUL-voice label from precomputed score
+      if (momentum.label && !momentum.honestDark) {
+        strip.appendChild(sep());
+        var mSeg = seg('Forge', momentum.label);
+        mSeg.setAttribute('title', 'Vault momentum score: ' + (momentum.score || 0) + '/100');
+        if (momentum.label === 'SPARKED') mSeg.style.color = 'var(--gold,#ffc400)';
+        else if (momentum.label === 'FORGING') mSeg.style.color = 'var(--text,#eef2ff)';
+        strip.appendChild(mSeg);
       }
 
       root.appendChild(strip);

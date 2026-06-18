@@ -72,6 +72,10 @@ const STEPS = [
   // S199: stale shell cleanup — guard that no unreferenced *.shell-*.js asset
   // accumulates; exits 1 if stale files are found (run --apply to clean).
   ['clean-stale-shells.mjs', ['--check']],
+  // S205: vault momentum — rolling score from 3 public feeds; gating ensures
+  // api/vault-momentum.json stays in sync with source feeds at build time.
+  ['build-vault-momentum.mjs', ['--self-test']],
+  ['build-vault-momentum.mjs', ['--check']],
 ];
 
 let failed = 0;
