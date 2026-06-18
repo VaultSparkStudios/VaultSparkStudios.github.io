@@ -117,7 +117,10 @@
     body.className = 'vs-playnext__body';
     var k = document.createElement('p');
     k.className = 'vs-playnext__kicker';
-    k.textContent = 'Done here? ' + t.name + ' is live too — play free';
+    // S207 (dead-cta-rotation-loop): use the active copy variant if one is set
+    // (self-heals if this CTA stays dead), else the default completion framing.
+    if (t.kicker) k.textContent = t.kicker;
+    else k.textContent = 'Done here? ' + t.name + ' is live too — play free';
     var reason = document.createElement('p');
     reason.className = 'vs-playnext__reason';
     reason.textContent = t.reason;
@@ -150,7 +153,7 @@
 
   // S207: reveal only on an engagement signal so the card reads as a next-step,
   // not a pre-engagement interruption. Fires once, then disarms all triggers.
-  function armReveal(card, slug) {
+  function armReveal(card, slug, variant) {
     var revealed = false;
     var cleanup = [];
     function reveal() {
@@ -161,6 +164,9 @@
       void card.offsetWidth;
       card.classList.add('is-in');
       emitUx('play-next:shown', slug);
+      // S207: attribute the impression to the active copy variant so rollup can
+      // tell which variant earns clicks (dead-cta-rotation-loop).
+      emitUx('cta:variant:play-next:' + (variant || 0), slug);
     }
 
     // 1) Scroll depth ≥60% of the document.
@@ -186,6 +192,21 @@
     onScroll();
   }
 
+  // S207: resolve the active copy variant + index for the play-next CTA.
+  function resolveVariant(t) {
+    return fetch('/data/cta-state.json', { cache: 'default' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (state) {
+        var c = state && state.ctas && state.ctas['play-next'];
+        if (c && c.activeCopy) {
+          t.kicker = c.activeCopy.replace(/\{name\}/g, t.name);
+          t.variant = c.activeVariant || 0;
+        }
+        return t;
+      })
+      .catch(function () { return t; });
+  }
+
   function boot() {
     var slug = currentSlug();
     if (!slug) return;
@@ -194,8 +215,10 @@
       .then(function (data) {
         var t = pickTarget(data, slug);
         if (!t) return;
-        var card = render(t);
-        if (card) armReveal(card, t.slug);
+        return resolveVariant(t).then(function (tv) {
+          var card = render(tv);
+          if (card) armReveal(card, tv.slug, tv.variant);
+        });
       })
       .catch(function () {});
   }

@@ -154,7 +154,8 @@
       '.vs-ask-ignis__history{margin-top:.7rem}.vs-ask-ignis__history-label{display:block;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--dim,#6272a0);margin-bottom:.4rem}.vs-ask-ignis__history-row{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}.vs-ask-ignis__history-chip{font-size:.8rem;border:1px solid rgba(100,200,255,.25);border-radius:999px;padding:.35rem .75rem;background:rgba(100,200,255,.06);color:#7cc8ff;cursor:pointer;font:inherit;text-align:left}.vs-ask-ignis__history-chip:hover{background:rgba(100,200,255,.15)}.vs-ask-ignis__history-clear{background:none;border:none;color:var(--dim,#6272a0);cursor:pointer;font-size:.8rem;padding:.3rem .5rem;border-radius:6px;line-height:1}.vs-ask-ignis__history-clear:hover{color:var(--muted,#a8b4d0)}' +
       '.vs-ask-ignis__deepdive{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;font-size:.78rem;font-weight:700;color:var(--gold,#ffc400);text-decoration:none;opacity:.75;transition:opacity .15s}.vs-ask-ignis__deepdive:hover{opacity:1}' +
       '.vs-ignis-synthesis-card{margin-top:1rem;padding:.9rem 1rem;border-radius:12px;background:rgba(255,196,0,.04);border:1px solid rgba(255,196,0,.18)}.vs-ignis-synthesis-card__header{display:flex;align-items:center;gap:.7rem;margin-bottom:.7rem}.vs-ignis-synthesis-card__badge{display:inline-block;padding:.15rem .5rem;border-radius:5px;background:rgba(255,196,0,.12);border:1px solid rgba(255,196,0,.28);font-size:.65rem;font-weight:900;letter-spacing:.12em;color:#ffc400}.vs-ignis-synthesis-card__count{font-size:.78rem;color:var(--muted,#a8b4d0)}.vs-ignis-synthesis-card__list{display:flex;flex-direction:column;gap:.5rem}.vs-ignis-synthesis-card__row{display:flex;flex-direction:column;gap:.15rem}.vs-ignis-synthesis-card__q{font-size:.85rem;color:var(--text,#eef2ff)}.vs-ignis-synthesis-card__src{font-size:.75rem;color:rgba(255,196,0,.7);text-decoration:none}.vs-ignis-synthesis-card__src:hover{text-decoration:underline}.vs-ignis-synthesis-card__reads-label{margin-top:.75rem;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim,#6272a0);font-weight:700}.vs-ignis-synthesis-card__reads{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.35rem}' +
-      '.vs-ask-ignis__related{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem;margin-top:.75rem;padding-top:.7rem;border-top:1px solid rgba(255,196,0,.1)}.vs-ask-ignis__related-label{font-size:.7rem;font-weight:700;color:var(--dim,#6272a0);text-transform:uppercase;letter-spacing:.05em;margin-right:.15rem;white-space:nowrap}.vs-ask-ignis__related-chip{display:inline-flex;align-items:center;padding:.2rem .65rem;border-radius:100px;font-size:.76rem;font-weight:600;background:rgba(255,196,0,.06);border:1px solid rgba(255,196,0,.2);color:var(--gold,#ffc400);cursor:pointer;font:inherit;line-height:1.4;transition:background .12s,border-color .12s}.vs-ask-ignis__related-chip:hover{background:rgba(255,196,0,.16);border-color:rgba(255,196,0,.4)}' +
+      '.vs-ask-ignis__related{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem;margin-top:.75rem;padding-top:.7rem;border-top:1px solid rgba(255,196,0,.1)}.vs-ask-ignis__related-label{font-size:.7rem;font-weight:700;color:var(--dim,#6272a0);text-transform:uppercase;letter-spacing:.05em;margin-right:.15rem;white-space:nowrap}.vs-ask-ignis__related-chip{display:inline-flex;align-items:center;padding:.2rem .65rem;border-radius:100px;font-size:.76rem;font-weight:600;background:rgba(255,196,0,.06);border:1px solid rgba(255,196,0,.2);color:var(--gold,#ffc400);cursor:pointer;font:inherit;line-height:1.4;transition:background .12s,border-color .12s}.vs-ask-ignis__related-chip:hover{background:rgba(255,196,0,.16);border-color:rgba(255,196,0,.4)}.vs-ask-ignis__related-chip[aria-expanded="true"]{background:rgba(255,196,0,.2);border-color:rgba(255,196,0,.5)}' +
+      '.vs-ignis-catalog{margin-top:.7rem;display:grid;gap:.5rem}.vs-ignis-catalog__card{display:block;padding:.65rem .8rem;border-radius:12px;border:1px solid rgba(255,196,0,.16);background:rgba(255,196,0,.04);text-decoration:none}.vs-ignis-catalog__card:hover{background:rgba(255,196,0,.09);border-color:rgba(255,196,0,.32)}.vs-ignis-catalog__name{font-size:.86rem;font-weight:800;color:var(--text,#eef2ff);display:flex;align-items:center;gap:.45rem}.vs-ignis-catalog__status{font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold,#ffc400);border:1px solid rgba(255,196,0,.3);border-radius:999px;padding:.05rem .45rem}.vs-ignis-catalog__note{font-size:.78rem;color:var(--muted,#a8b4d0);margin:.25rem 0 0;line-height:1.5}.vs-ignis-catalog__ask{font-size:.76rem;color:var(--dim,#6272a0);background:none;border:none;cursor:pointer;font:inherit;padding:.2rem 0 0;text-decoration:underline;text-decoration-color:rgba(255,196,0,.3)}.vs-ignis-catalog__ask:hover{color:var(--gold,#ffc400)}' +
       '.vs-ignis-cache-label{font-size:.78rem;color:var(--dim,#6272a0)}.vs-ignis-cache-hint{font-size:.75rem;color:var(--dim,#6272a0)}' +
       '.vs-ignis-fb-form{display:flex;flex-direction:column;gap:.4rem;width:100%}.vs-ignis-fb-lbl{font-size:.78rem;color:var(--muted,#9aa3b2)}.vs-ignis-fb-row{display:flex;gap:.4rem}.vs-ignis-fb-inp{flex:1;border:1px solid var(--line,rgba(255,255,255,.12));background:rgba(0,0,0,.18);color:var(--text,#e8eaf0);border-radius:8px;padding:.45rem .7rem;font:inherit;font-size:.82rem}.vs-ignis-fb-btn{border:0;border-radius:8px;padding:.45rem .8rem;background:rgba(255,196,0,.18);color:var(--gold,#ffc400);font-weight:700;font-size:.82rem;cursor:pointer}';
     document.head.appendChild(s);
@@ -238,7 +239,14 @@
               form.addEventListener('submit', function (ev) {
                 ev.preventDefault();
                 var val = inp.value.trim();
-                if (val) emitUx('oracle:feedback_submitted');
+                if (val) {
+                  emitUx('oracle:feedback_submitted');
+                  // S207 (oracle-feedback-themes-loop): attribute the submission to
+                  // its topic cluster so we learn WHICH topics drive "tell us more"
+                  // — privacy-preserving (the free text is never transmitted, only
+                  // the topic key). build-oracle-feedback-themes.mjs aggregates these.
+                  if (clusterId) emitUx('oracle-feedback:' + clusterId);
+                }
                 fb.textContent = 'Got it — we\'ll use this to improve.';
               });
               fb.appendChild(form);
@@ -396,29 +404,124 @@
     }
 
     // S205 #12: knowledge-graph related chips — entity-linked navigation from the top result.
+    // S207 (ignis-graph-depth-l3): a chip now EXPANDS an in-place mini-catalog
+    // sub-panel of matching cards from api/public-intelligence.json (graph
+    // traversal) instead of only re-querying — the Oracle becomes a graph you
+    // browse. Each card keeps a re-query fallback link.
+    var _catalogPromise = null;
+    function loadCatalog() {
+      if (!_catalogPromise) {
+        _catalogPromise = fetch('/api/public-intelligence.json', { cache: 'default' })
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (d) { return (d && Array.isArray(d.catalog)) ? d.catalog : []; })
+          .catch(function () { return []; });
+      }
+      return _catalogPromise;
+    }
+
+    // Up to 3 catalog cards related to the clicked entity: the entity itself
+    // first (slug/name match), then same-type siblings.
+    function matchCatalog(catalog, entity) {
+      var key = (entity.slug || entity.label || '').toLowerCase();
+      var label = (entity.label || '').toLowerCase();
+      var self = catalog.filter(function (c) {
+        return String(c.id).toLowerCase() === key || String(c.name).toLowerCase() === label;
+      });
+      var siblings = catalog.filter(function (c) {
+        return entity.type && c.type === entity.type && self.indexOf(c) === -1;
+      });
+      return self.concat(siblings).slice(0, 3);
+    }
+
+    function renderMiniCatalog(panel, entity, run) {
+      panel.textContent = '';
+      loadCatalog().then(function (catalog) {
+        var cards = matchCatalog(catalog, entity);
+        panel.textContent = '';
+        if (!cards.length) {
+          // Honest-dark fallback: no catalog match → offer the re-query path.
+          var ask = document.createElement('button');
+          ask.type = 'button';
+          ask.className = 'vs-ignis-catalog__ask';
+          ask.textContent = 'Ask IGNIS about ' + entity.label + ' →';
+          ask.addEventListener('click', function () { run(entity.label, 'related'); });
+          panel.appendChild(ask);
+          return;
+        }
+        cards.forEach(function (c) {
+          var card = document.createElement(c.deployedUrl ? 'a' : 'div');
+          card.className = 'vs-ignis-catalog__card';
+          if (c.deployedUrl) { card.href = c.deployedUrl; card.rel = 'noopener'; }
+          var name = document.createElement('div');
+          name.className = 'vs-ignis-catalog__name';
+          name.appendChild(document.createTextNode(c.name || c.id));
+          if (c.status) {
+            var st = document.createElement('span');
+            st.className = 'vs-ignis-catalog__status';
+            st.textContent = c.status;
+            name.appendChild(st);
+          }
+          card.appendChild(name);
+          if (c.note) {
+            var note = document.createElement('p');
+            note.className = 'vs-ignis-catalog__note';
+            note.textContent = c.note;
+            card.appendChild(note);
+          }
+          panel.appendChild(card);
+        });
+        // Re-query fallback under the cards.
+        var ask = document.createElement('button');
+        ask.type = 'button';
+        ask.className = 'vs-ignis-catalog__ask';
+        ask.textContent = 'Ask IGNIS about ' + entity.label + ' →';
+        ask.addEventListener('click', function () { run(entity.label, 'related'); });
+        panel.appendChild(ask);
+      });
+    }
+
     function renderRelated(container, topDoc, run) {
       var entities = topDoc && topDoc.relatedEntities;
       if (!entities || !entities.length) return;
       var prev = container.querySelector('.vs-ask-ignis__related');
       if (prev) prev.parentNode.removeChild(prev);
+      var prevCat = container.querySelector('.vs-ignis-catalog');
+      if (prevCat) prevCat.parentNode.removeChild(prevCat);
+
       var wrap = document.createElement('div');
       wrap.className = 'vs-ask-ignis__related';
       var lbl = document.createElement('span');
       lbl.className = 'vs-ask-ignis__related-label';
       lbl.textContent = 'Related:';
       wrap.appendChild(lbl);
+
+      var panel = document.createElement('div');
+      panel.className = 'vs-ignis-catalog';
+      panel.hidden = true;
+
       entities.slice(0, 4).forEach(function (entity) {
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'vs-ask-ignis__related-chip';
         btn.textContent = entity.label;
+        btn.setAttribute('aria-expanded', 'false');
         btn.addEventListener('click', function () {
+          var open = btn.getAttribute('aria-expanded') === 'true';
+          // Collapse sibling chips.
+          wrap.querySelectorAll('.vs-ask-ignis__related-chip').forEach(function (b) {
+            b.setAttribute('aria-expanded', 'false');
+          });
+          if (open) { panel.hidden = true; return; }
+          btn.setAttribute('aria-expanded', 'true');
           emitUx('oracle:related_click');
-          run(entity.label, 'related');
+          emitUx('oracle:graph_traverse');
+          panel.hidden = false;
+          renderMiniCatalog(panel, entity, run);
         });
         wrap.appendChild(btn);
       });
       container.appendChild(wrap);
+      container.appendChild(panel);
     }
 
     // S199 L2: show last-5 cross-page history chips on load if history exists + input empty.

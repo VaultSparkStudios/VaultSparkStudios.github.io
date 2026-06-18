@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-18T16:59:43.137Z",
+  "generatedAt": "2026-06-18T17:24:02.110Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,7 +8,7 @@
     {
       "theme": "conversion",
       "label": "Conversion",
-      "feedbackSignals": 6,
+      "feedbackSignals": 5,
       "shippedCommits": [
         {
           "sha": "0bf0351a",
@@ -57,6 +57,16 @@
       "feedbackSignals": 6,
       "shippedCommits": [
         {
+          "sha": "10134d56",
+          "summary": "closeout write-backs — context/handoff/SIL/decisions/status",
+          "ts": "2026-06-18T16:39:11.000Z"
+        },
+        {
+          "sha": "1be3049c",
+          "summary": "passport page nav-skip + ignis style-contract compliance",
+          "ts": "2026-06-18T16:23:04.000Z"
+        },
+        {
           "sha": "8fa8637b",
           "summary": "ignis prefix-sharing query cache — continuity for returning visitors (#15)",
           "ts": "2026-06-18T16:09:34.000Z"
@@ -70,16 +80,6 @@
           "sha": "0e22d439",
           "summary": "oracle-query-insights feed + build gate (#9)",
           "ts": "2026-06-18T15:50:46.000Z"
-        },
-        {
-          "sha": "ba7fb84a",
-          "summary": "adaptive oracle intro for returning IGNIS visitors (#1)",
-          "ts": "2026-06-18T15:32:35.000Z"
-        },
-        {
-          "sha": "aa8149b4",
-          "summary": "ignis-knowledge-graph L2 — entity-linked chips + push-dispatch scaffold",
-          "ts": "2026-06-18T07:13:54.000Z"
         }
       ],
       "proof": null
@@ -109,6 +109,19 @@
         "lcpDeltaPct": -35.9,
         "confidence": "high"
       }
+    },
+    {
+      "theme": "frontdoor",
+      "label": "Front door",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "85304191",
+          "summary": "build artifacts — api regen + nav propagation + ambient shell rotate",
+          "ts": "2026-06-18T16:23:16.000Z"
+        }
+      ],
+      "proof": null
     }
   ]
 }

@@ -131,4 +131,18 @@ if (ca.status !== 0) {
   console.warn('  ⚠  build-constellation-activity: api/constellation-activity.json missing or stale (run node scripts/build-constellation-activity.mjs)');
 }
 
+// S207: oracle feedback themes — ranks topics by thumbs-down "tell us more"
+// submission volume (free text never transmitted). honestDark until 5+ accrue.
+const oft = spawnSync(process.execPath, [path.join(__dirname, 'build-oracle-feedback-themes.mjs'), '--check'], { stdio: 'inherit' });
+if (oft.status !== 0) {
+  console.warn('  ⚠  build-oracle-feedback-themes: api/oracle-feedback-themes.json missing or stale (run node scripts/build-oracle-feedback-themes.mjs)');
+}
+
+// S207: dead-cta variant rotation state — derived from api/dead-ctas.json so a
+// dead CTA self-heals across deploys. Advisory drift gate.
+const cts = spawnSync(process.execPath, [path.join(__dirname, 'build-cta-state.mjs'), '--check'], { stdio: 'inherit' });
+if (cts.status !== 0) {
+  console.warn('  ⚠  build-cta-state: data/cta-state.json missing or stale (run node scripts/build-cta-state.mjs)');
+}
+
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');

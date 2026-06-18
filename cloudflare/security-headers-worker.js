@@ -293,6 +293,8 @@ const RUM_UX_EVENTS = new Set([
   // query text committed to RUM (URL carries it; beacon carries only the intent event).
   'oracle:deepdive_click',
   'oracle:related_click',
+  // S207: related chip expanded an in-place mini-catalog sub-panel (graph traversal).
+  'oracle:graph_traverse',
   // S206 #3: vault-momentum social proof strip impression on /membership/.
   // Honest-dark: only emitted when api/vault-momentum.json has real data.
   'membership:momentum_strip_shown',
@@ -328,6 +330,8 @@ const RUM_UX_EVENTS = new Set([
 const RUM_UX_DYNAMIC = [
   prefixAllowlist('oracle-answer:helpful', { maxLen: 24 }),
   prefixAllowlist('oracle-answer:unhelpful', { maxLen: 24 }),
+  // S207: oracle-feedback:<clusterId> — topic attribution of "tell us more" submissions.
+  prefixAllowlist('oracle-feedback', { charset: /^[a-z0-9-]+$/, maxLen: 24 }),
   prefixAllowlist('funnel', { charset: /^[a-z0-9_]+$/, maxLen: 48 }),
   prefixAllowlist('source', { charset: /^[a-z]+$/, maxLen: 16 }),
   // S194: share:<gameSlug>:<outcome> — per-game share button (native|copy|cancel|
@@ -346,6 +350,8 @@ const RUM_UX_DYNAMIC = [
   // S205 #15: constellation:unlock:<id> — fires when a 3-page sequence completes.
   // id is [a-z0-9-], max 24 chars. Names only; no path/user data in beacon.
   prefixAllowlist('constellation', { charset: /^[a-z0-9:-]+$/, maxLen: 36 }),
+  // S207: cta:variant:<id>:<n> — dead-cta-rotation-loop variant attribution.
+  prefixAllowlist('cta', { charset: /^[a-z0-9:-]+$/, maxLen: 36 }),
 ];
 const cleanRumUxEvent = makeRumUxCleaner(RUM_UX_EVENTS, RUM_UX_DYNAMIC);
 

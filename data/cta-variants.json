@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0",
+  "comment": "Copy-variant registry for tracked CTAs. build-cta-state.mjs reads api/dead-ctas.json and, when a CTA is flagged dead (shown>=N, click=0), advances its active variant index so the surface self-heals across deploys instead of waiting for a human to notice. Variant 0 is the current/default copy. {name} is interpolated client-side. See audit dead-cta-rotation-loop.",
+  "ctas": {
+    "play-next": {
+      "kind": "kicker",
+      "note": "Cross-game play-next card headline (assets/cross-game-play-next.js). Variant 0 = the S207 completion-framed copy shipped in play-next-intent-retiming.",
+      "variants": [
+        "Done here? {name} is live too — play free",
+        "Liked this? {name} is the studio's other live game — jump in",
+        "Keep playing — {name} is free and live right now"
+      ]
+    }
+  }
+}
