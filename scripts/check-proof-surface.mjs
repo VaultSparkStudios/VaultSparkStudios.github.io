@@ -152,4 +152,10 @@ if (hp.status !== 0) {
   console.warn('  ⚠  build-hero-portfolio: index.html hero showcase stale (run node scripts/build-hero-portfolio.mjs)');
 }
 
+// S207: Atlas ecosystem map — atlas/index.html index must match the live catalog.
+const atl = spawnSync(process.execPath, [path.join(__dirname, 'build-atlas.mjs'), '--check'], { stdio: 'inherit' });
+if (atl.status !== 0) {
+  console.warn('  ⚠  build-atlas: atlas/index.html ecosystem index stale (run node scripts/build-atlas.mjs)');
+}
+
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');
