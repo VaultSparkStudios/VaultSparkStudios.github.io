@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-18T21:09:10.771Z",
+  "generatedAt": "2026-06-18T22:06:14.296Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,22 +8,27 @@
     {
       "theme": "conversion",
       "label": "Conversion",
-      "feedbackSignals": 3,
+      "feedbackSignals": 4,
       "shippedCommits": [
         {
-          "sha": "6910c30b",
+          "sha": "8e6596fb",
+          "summary": "log auth-gate cached-301 postmortem (D-S207.8) + closeout write-back",
+          "ts": "2026-06-18T21:56:37.000Z"
+        },
+        {
+          "sha": "327e21e6",
+          "summary": "hero-redesign bookkeeping + green the parallel Obelisk-login commit",
+          "ts": "2026-06-18T20:58:28.000Z"
+        },
+        {
+          "sha": "ede02ece",
           "summary": "remove accidental blanket auth gate from index.html",
-          "ts": "2026-06-18T20:47:57.000Z"
+          "ts": "2026-06-18T20:58:28.000Z"
         },
         {
           "sha": "5d978cf9",
           "summary": "wire Obelisk Passport login",
           "ts": "2026-06-18T20:30:36.000Z"
-        },
-        {
-          "sha": "0bf0351a",
-          "summary": "vault passport — member identity card at /vault-member/passport/ (#11)",
-          "ts": "2026-06-18T16:06:23.000Z"
         }
       ],
       "proof": null
@@ -44,7 +49,7 @@
     {
       "theme": "transparency",
       "label": "Transparency",
-      "feedbackSignals": 6,
+      "feedbackSignals": 4,
       "shippedCommits": [
         {
           "sha": "98370570",
@@ -65,11 +70,6 @@
           "sha": "1be3049c",
           "summary": "passport page nav-skip + ignis style-contract compliance",
           "ts": "2026-06-18T16:23:04.000Z"
-        },
-        {
-          "sha": "8fa8637b",
-          "summary": "ignis prefix-sharing query cache — continuity for returning visitors (#15)",
-          "ts": "2026-06-18T16:09:34.000Z"
         }
       ],
       "proof": null
@@ -77,8 +77,18 @@
     {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 3,
+      "feedbackSignals": 5,
       "shippedCommits": [
+        {
+          "sha": "1c563999",
+          "summary": "full closeout — hero redesign + access-incident write-back",
+          "ts": "2026-06-18T21:14:54.000Z"
+        },
+        {
+          "sha": "541346a2",
+          "summary": "exponentially improve showcase tiles — guaranteed-legible titles + premium cards",
+          "ts": "2026-06-18T21:10:38.000Z"
+        },
         {
           "sha": "697fac73",
           "summary": "fused cinematic-split + living-portfolio hero (humans + agents)",

@@ -60,14 +60,25 @@ function resolveHref(item, fileExists) {
   for (const rel of candidates) {
     if (fileExists(rel)) return '/' + rel.replace(/index\.html$/, '');
   }
-  if (item.deployedUrl) {
-    try { const u = new URL(item.deployedUrl); return u.origin.includes('vaultsparkstudios.com') ? u.pathname : item.deployedUrl; }
-    catch { /* fall through */ }
-  }
+  // Studio landing page only — never the live deployedUrl (that's liveHref's job).
   return isGame ? '/games/' : '/projects/';
 }
 
+// The live/deployed destination (play/open the actual thing), or null if none.
+function liveHref(item) {
+  if (!item.deployedUrl) return null;
+  try { const u = new URL(item.deployedUrl); return u.origin.includes('vaultsparkstudios.com') ? u.pathname : item.deployedUrl; }
+  catch { return null; }
+}
+
 const STATUS_LABEL = { SPARKED: 'Live', FORGE: 'In the forge', VAULTED: 'Vaulted' };
+
+// Project-specific primary CTA label.
+function primaryLabel(item, hasLive) {
+  if (!hasLive) return 'Explore →';
+  if (item.status === 'SPARKED') return item.type === 'game' ? '▶ Play free' : 'Open →';
+  return 'Try it →'; // forge with a live build (e.g. external beta)
+}
 
 // Pure: build the ordered tile list + counts from the catalog.
 export function planPortfolio(catalog) {
@@ -84,18 +95,21 @@ export function planPortfolio(catalog) {
 }
 
 function renderTile(item, fileExists, featured) {
-  const href = resolveHref(item, fileExists);
+  const page = resolveHref(item, fileExists);   // studio landing page
+  const live = liveHref(item);                  // live/deployed site, or null
+  const primary = live || page;                 // live → live site; else the page
   const coverKey = COVERS[item.id];
   const statusClass = item.status === 'SPARKED' ? 'is-live' : item.status === 'VAULTED' ? 'is-vaulted' : 'is-forge';
-  const cls = ['hero-tile', `ht-${item.id}`, statusClass, featured ? 'hero-tile--featured' : '', coverKey ? 'has-cover' : 'no-cover'].filter(Boolean).join(' ');
   const badge = STATUS_LABEL[item.status] || item.status;
-  const external = href.startsWith('http');
-  const attrs = external ? ' rel="noopener"' : '';
   const mark = esc((item.name || '?').trim().charAt(0).toUpperCase());
   const typeLabel = item.type === 'game' ? 'Game' : item.type === 'tool' ? 'Tool' : item.type === 'platform' ? 'Platform' : 'World';
-  const cta = item.status === 'SPARKED' ? (item.type === 'game' ? 'Play free →' : 'Open →') : 'Preview →';
-  return [
-    `<a class="${cls}" href="${esc(href)}"${attrs} data-track-event="home_hero_tile_click" aria-label="${esc(item.name)} — ${esc(badge)}">`,
+  const ext = (href) => href.startsWith('http') ? ' rel="noopener"' : '';
+  const pLabel = primaryLabel(item, !!live);
+  // Featured tile shows BOTH actions when there's a distinct live site + page.
+  const dual = featured && !!live && live !== page;
+
+  const cls = ['hero-tile', `ht-${item.id}`, statusClass, featured ? 'hero-tile--featured' : '', coverKey ? 'has-cover' : 'no-cover', dual ? 'hero-tile--dual' : ''].filter(Boolean).join(' ');
+  const inner = [
     `<span class="hero-tile__cover" aria-hidden="true"></span>`,
     coverKey ? '' : `<span class="hero-tile__mark" aria-hidden="true">${mark}</span>`,
     `<span class="hero-tile__veil" aria-hidden="true"></span>`,
@@ -104,10 +118,23 @@ function renderTile(item, fileExists, featured) {
     `<span class="hero-tile__kicker">${esc(typeLabel)}</span>`,
     `<span class="hero-tile__name">${esc(item.name)}</span>`,
     featured && item.note ? `<span class="hero-tile__note">${esc(item.note)}</span>` : '',
-    `<span class="hero-tile__cta">${esc(cta)}</span>`,
-    `</span>`,
-    `</a>`,
-  ].join('');
+  ];
+
+  if (dual) {
+    // Container is NOT an <a> (can't nest anchors) — two real buttons instead.
+    inner.push(
+      `<span class="hero-tile__actions">`,
+      `<a class="hero-tile__btn hero-tile__btn--primary" href="${esc(primary)}"${ext(primary)} data-track-event="home_hero_tile_play" aria-label="${esc(pLabel.replace(/[▶→]/g, '').trim())} — ${esc(item.name)}">${esc(pLabel)}</a>`,
+      `<a class="hero-tile__btn hero-tile__btn--ghost" href="${esc(page)}" data-track-event="home_hero_tile_details" aria-label="Details for ${esc(item.name)}">Details →</a>`,
+      `</span>`,
+      `</span>`, // /body
+    );
+    return `<div class="${cls}" role="group" aria-label="${esc(item.name)} — ${esc(badge)}">${inner.join('')}</div>`;
+  }
+
+  // Whole tile is one link to the primary destination; CTA text states the action.
+  inner.push(`<span class="hero-tile__cta">${esc(pLabel)}</span>`, `</span>`);
+  return `<a class="${cls}" href="${esc(primary)}"${ext(primary)} data-track-event="home_hero_tile_click" aria-label="${esc(item.name)} — ${esc(badge)}">${inner.join('')}</a>`;
 }
 
 function renderTileStyles(tiles) {

@@ -1,6 +1,6 @@
 # Vorn
 
-> S196 founder-directed website pass: repaired the broken production build (4 pre-S185 ssr:false-in-Server-Component errors in /studio + /capabilities/[id] → 'use client' csr-panels.tsx; next build exits 0 — deploys unblocked). App visibility enforced in code via optionalAuth + canViewApp (owners reach own apps; private no longer over-exposed by service-role RLS bypass) + owner next-steps banner. NetworkStrengthCard rebuilt (was rendering against undefined CSS) with self-explaining signals; [handle] profile reordered posts-first. 5 dead links fixed + /collections/new built + studio-side-links.test.ts guard. Roadmap freshness. 5 pre-existing red tests repaired. Dependency security pass: all 6 high + 12/13 moderate Dependabot alerts cleared (22→2) via OTEL→2.x (telemetry.ts migration) + @sentry/node 8→10.58 + dep bumps. Suites green: web 326, API 920, scripts 21; 0 TS errors. signals 4f2848b + 400fc20 pushed.
+> S197: 15-item genius audit fully shipped. New self-sustaining loops: @vorn-intelligence Collective Intel Feed (weekly platform signal synthesis posted to feed as platform_intelligence posts), Agent Passport V1 (signed JSON-LD portable identity with PassportCard on profiles), Coalition War (weekly benchmark competition between accepted coalitions with achievement + Web Push to winners). Also: AI Growth Strategist (weekly Haiku 3-action growth plan per studio), Capability Sandbox Mode (PII strip + hourly rate limit + toggle), Capability Forge wizard (4-step AI-assisted creator flow), semantic cache expanded to 5 workers, fleet dashboard now covers 80+ workers. Migrations 203-208 code-complete; pending prod apply. TypeScript 0 errors. signals 6a2342e + 72ae166 + 7157a3d + 530441d + 0f93aa3 + 761fce1.
 
 ## Identity
 - Slug: vorn
@@ -12,10 +12,10 @@
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S196 founder-directed website pass: repaired the broken production build (4 pre-S185 ssr:false-in-Server-Component errors in /studio + /capabilities/[id] → 'use client' csr-panels.tsx; next build exits 0 — deploys unblocked). App visibility enforced in code via optionalAuth + canViewApp (owners reach own apps; private no longer over-exposed by service-role RLS bypass) + owner next-steps banner
+S197: 15-item genius audit fully shipped. New self-sustaining loops: @vorn-intelligence Collective Intel Feed (weekly platform signal synthesis posted to feed as platform_intelligence posts), Agent Passport V1 (signed JSON-LD portable identity with PassportCard on profiles), Coalition War (weekly benchmark competition between accepted coalitions with achievement + Web Push to winners)
 
 ## Next milestone
-S197: add `next build` to CI gate; unify the two profile routes into one ProfileShell; execute/decline the documented page consolidations; signal + push S196.
+S198: apply migrations 203-208 to prod; Hetzner API redeploy for S197 workers; add next build to CI gate; wire CoalitionPanel+CoalitionBadge into agent profile page.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.

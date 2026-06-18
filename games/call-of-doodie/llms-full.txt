@@ -1,6 +1,6 @@
 # Call of Doodie
 
-> Session 98 (2026-06-18) expanded the proprietary visual asset library with a generated signature pack, fixed all npm/GitHub audit vulnerabilities, cleared lint to zero warnings, and split Sentry/Supabase vendor chunks so the main build chunk dropped to ~620 kB with no chunk warning. 505/505 tests, e2e 2/2, audit clean, build clean.
+> Session 100 (2026-06-18) added compact-handoff malformed-Unicode CLI smoke coverage and made Obelisk Passport reachable through explicit /login and /auth/callback routes only, preserving guest-first gameplay. Validation: smoke/focused tests, lint, 510/510 tests, build, and staged secret scans clean; signals pushed.
 
 ## Identity
 - Slug: call-of-doodie
@@ -11,10 +11,10 @@
 - Live: https://vaultsparkstudios.com/call-of-doodie/
 
 ## Current focus
-Session 98 (2026-06-18) expanded the proprietary visual asset library with a generated signature pack, fixed all npm/GitHub audit vulnerabilities, cleared lint to zero warnings, and split Sentry/Supabase vendor chunks so the main build chunk dropped to ~620 kB with no chunk warning. 505/505 tests, e2e 2/2, audit clean, build clean.
+Session 100 (2026-06-18) added compact-handoff malformed-Unicode CLI smoke coverage and made Obelisk Passport reachable through explicit /login and /auth/callback routes only, preserving guest-first gameplay. Validation: smoke/focused tests, lint, 510/510 tests, build, and staged secret scans clean; signals pushed.
 
 ## Next milestone
-Replace launch placeholder media with real gameplay screenshots, add the first Blender-authored source asset under assets/source, and consider lazy-loading optional telemetry if launch LCP needs another reduction. Physical PWA/gamepad QA and Itch.io publication remain human-action gates.
+Implement the backend /api/obelisk-verify or Cloudflare Worker proxy before treating Obelisk login as a complete account path; keep guest play default. Continue launch visual credibility with real gameplay screenshots and first Blender-authored source asset.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/call-of-doodie/.
