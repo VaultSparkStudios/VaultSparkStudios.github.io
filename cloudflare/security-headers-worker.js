@@ -323,6 +323,9 @@ const RUM_UX_DYNAMIC = [
   // S199: pwa:banner_shown / install_accepted / install_dismissed / already_installed —
   // PWA install funnel from pwa-install.js. Bounded; no session/user data.
   prefixAllowlist('pwa', { charset: /^[a-z_]+$/, maxLen: 24 }),
+  // S205 #15: constellation:unlock:<id> — fires when a 3-page sequence completes.
+  // id is [a-z0-9-], max 24 chars. Names only; no path/user data in beacon.
+  prefixAllowlist('constellation', { charset: /^[a-z0-9:-]+$/, maxLen: 36 }),
 ];
 const cleanRumUxEvent = makeRumUxCleaner(RUM_UX_EVENTS, RUM_UX_DYNAMIC);
 
