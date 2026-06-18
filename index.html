@@ -414,7 +414,7 @@
     .hero-reveal {
       opacity: 0;
       animation: heroFadeUp 0.62s ease-out forwards;
-      animation-delay: var(--reveal-delay, 1.4s);
+      animation-delay: var(--reveal-delay, 0.85s);
     }
 
     /* ── Forge keyframes ── */
@@ -1068,7 +1068,7 @@
 
     <!-- ── Hero ──────────────────────────────────────────── -->
     <!-- ── Hero ───────────────────────────────── -->
-    <section class="hero" aria-labelledby="hero-heading">
+    <section class="hero" aria-labelledby="hero-heading" data-hero-section>
       <!-- Vignette chamber — spatial depth from all four edges -->
       <div class="hero-chamber" aria-hidden="true"></div>
 
@@ -1137,6 +1137,37 @@
         </div>
       </div>
     </section>
+
+    <script>
+    /* hero-scroll-activation (S205 #1) — orchestrate wordmark→content sequence.
+       Fires when hero enters the viewport; sets per-element --reveal-delay so the
+       CSS animation plays in a natural stagger. Falls back to CSS default (0.85s)
+       when IntersectionObserver is absent or motion is reduced. */
+    (function () {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var hero = document.querySelector('[data-hero-section]');
+      if (!hero) return;
+      var reveals = Array.prototype.slice.call(hero.querySelectorAll('.hero-reveal'));
+      /* Delays tuned so first element reveals after VAULTSPARK wordmark settles
+         (last letter = index 9, delay = 0.12 + 9*0.065 = 0.705s + 0.72s anim ≈ 1.4s fully resolved;
+          fade-in perception starts at ~0.82s after wordmark start). */
+      var delays = [0.82, 0.96, 1.10, 1.24, 1.42, 1.62, 1.85];
+      function activate() {
+        reveals.forEach(function (el, i) {
+          el.style.setProperty('--reveal-delay', (delays[i] !== undefined ? delays[i] : 1.85 + (i - delays.length) * 0.18) + 's');
+        });
+        hero.setAttribute('data-hero-animated', 'true');
+      }
+      if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) { activate(); obs.disconnect(); }
+        }, { threshold: 0.02 });
+        obs.observe(hero);
+      } else {
+        activate();
+      }
+    }());
+    </script>
 
     <!-- ── Studio Now (live presence + cadence) ────────────── -->
     <div class="container" data-studio-now></div>
