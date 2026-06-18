@@ -1,14 +1,28 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-18 (Session 206 — autonomous /goal chain · 13 shipped + 2 verified-done + 2 bonus · build:check EXIT 0)
+Last updated: 2026-06-18 (Session 207 — autonomous /goal chain · 9/9 audit items shipped · build:check EXIT 0)
 
-## Now (S206 runway)
+## Now (S207 runway)
 
-- [ ] **[S206][VERIFY/P0] Prod-verify the S206 wave on a real browser.** (a) `/vault-member/passport/` — sign in → rank badge + tenure + achievements card renders; Share Passport copies URL. (b) `/ignis/` or `/oracle/` — ask question, navigate away, return, ask same prefix → "Continuing from earlier search" teaser appears; 👎 vote → text input form expands. (c) `/membership/` — adaptive tier highlight shows (anon = generic, returning = different card pulse). (d) `/join/?promo=TRIAL50` — trial offer page resolves. Never assume push==deploy.
-- [ ] **[S206][CONTENT/P2·FOUNDER] Review + publish forge devlog.** `node scripts/draft-weekly-forge.mjs` → SOUL-voice draft. Clears the 84d journal stale warn.
+- [ ] **[S207][VERIFY/P0] Re-run `node scripts/prod-verify-wave.mjs` after CF Pages deploys S207.** Post-deploy the `/vault-member/passport/` sentinel ("Forge your own Vault Passport") should flip FAIL → PASS (correctly pending at closeout — committed, not yet deployed). All other S207 surfaces already PASS. Replaces the manual browser-walk for presence/liveness.
+- [ ] **[S207][INFRA/P1] Deploy the Worker with `--env production`.** `cloudflare/security-headers-worker.js` added RUM prefixes `cta` + `oracle-feedback` + statics `passport:inbound`/`oracle:graph_traverse`. Until redeploy those beacons drop at the edge. `wrangler deploy --env production` ([[feedback_worker_apex_self_loop_outage]]). ~10m.
+- [ ] **[S207][MEASURE/P2] Watch retimed play-next + auto-rotation.** Once post-S207 visits accrue, check `api/dead-ctas.json`: if `play-next` is STILL dead, run `node scripts/build-cta-state.mjs --advance` to rotate to copy variant 1. If it converts, the retiming win is confirmed. Measurement-watch.
+- [ ] **[S206][CONTENT/P2·FOUNDER] Review + publish forge devlog.** `node scripts/draft-weekly-forge.mjs` → SOUL-voice draft. Clears the 66d changelog stale warn.
 - [ ] **[S205][INFRA/P2·FOUNDER] WEB-PUSH VAPID KEYS REQUIRED.** `cloudflare.vapid` capability MISSING. Scaffold `scripts/push-dispatch.mjs` ready. Founder: (1) `npx web-push generate-vapid-keys` (2) store in `secrets/cloudflare.vapid.env` (3) add `VAPID_PUBLIC_KEY` to Worker env (4) `node scripts/push-dispatch.mjs --test`.
-- [ ] **[S206][SIL/P3] CONSTELLATION-SEQUENCE-ANALYTICS.** Add `constellation:progress:<id>:<step>` per-page events (beyond the existing `constellation:unlock:<id>`) so we can see WHERE visitors drop off in each sequence. Fold into `rollup-rum-ux`. ~1h.
-- [ ] **[S206][AI/P2] IGNIS-GRAPH-DEPTH-L3.** Cross-entity traversal: clicking a "Related" chip renders a sub-panel with 3 matching cards from `api/public-intelligence.json` (mini-catalog mode in `ignis-answer-engine.js`). ~4h.
+- [ ] **[S207][PRODUCT/P2·FOUNDER] Create the Stripe TRIAL50 coupon (makes 50%-off real end-to-end).** Path is now coherent (lands on `/vaultsparked/`, acknowledges + passes the promo, server-validated). The `promotion_code` object must exist in Stripe — pricing = founder gate. Until then the path honestly shows "Promo code not found or expired." `trial-offer-promo-acknowledgment` L3.
+
+## Done (S207 — autonomous /goal chain · 9/9)
+
+- [x] **[S207] play-next-intent-retiming — DONE.** Dead card (18/0) → engagement-gated reveal + completion copy + real card. `assets/cross-game-play-next.js`.
+- [x] **[S207] trial-offer-promo-acknowledgment — DONE.** Retargeted to `/vaultsparked/`; auto-applies + acknowledges `?promo=`; server-validated. (L3 Stripe coupon = founder, above.)
+- [x] **[S207] passport-share-inbound-conversion — DONE.** No-session shared-passport state → "Forge your own" conversion surface + `passport:inbound`.
+- [x] **[S207] prod-wave-verify-automation — DONE.** `scripts/prod-verify-wave.mjs` + `data/wave-manifest.json`; closes the 7-deep [VERIFY/P0] backlog. Self-test 6/6.
+- [x] **[S207] ambient-bundle-reaudit — DONE (verified-clean).** S205–S206 assets predicate/page-loaded, not in 61KB core bundle; js-budget green.
+- [x] **[S206→S207] CONSTELLATION-SEQUENCE-ANALYTICS — DONE.** `constellation:progress:<id>:<step>` + rollup drop-off block. Self-test 26/26.
+- [x] **[S206→S207] IGNIS-GRAPH-DEPTH-L3 — DONE.** Related chips expand in-place mini-catalog from `api/public-intelligence.json`; `oracle:graph_traverse`.
+- [x] **[S207] oracle-feedback-themes-loop — DONE.** Topic-attributed `oracle-feedback:<cluster>` → `api/oracle-feedback-themes.json` + advisory gate. Self-test 7/7.
+- [x] **[S207] dead-cta-rotation-loop — DONE.** `data/cta-variants.json` + idempotent `build-cta-state.mjs` (rotate on `--advance`) + `cta:variant` RUM. Self-test 6/6.
+- [x] **[S204→S207] check-mission-statement-coherence gate — VERIFIED DONE.** Already exists + wired into `check-proof-surface` (reject-on-verification save).
 
 ## Previous (S206 shipped in S206 session)
 

@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-18 (Session 206 closeout) -->
+<!-- generated-at: 2026-06-18 (Session 207 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 206 closeout · 2026-06-18.
+> **Fast-boot brief** — generated at Session 207 closeout · 2026-06-18.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 207 · 2026-06-18 · FOUNDER MODE                         ║
+║  Session 208 · 2026-06-18 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,18 +35,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    882/1000   █████████████████████░░░   88%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 15↑                         ║
+║    905/1000   █████████████████████░░░   91%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 9↑                          ║
 ║    Last active: 20621d  ·  Last closeout: 0d  ·  (active = newe  ║
-║    Trend  ▇▄▂▄█  ↑  (last 5 sessions)                            ║
+║    Trend  ▄▂▄█▇  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        88    █████████░  ██▇████▇ ↓                ║
-║    Alignment         92    █████████░  ███████▇ ↓                ║
-║    Momentum          93    █████████░  ████▇███ ↓                ║
-║    Engagement        88    █████████░  ███████▇ ↓                ║
-║    Process Qual      80    ████████░░  ███████▇ ↓                ║
+║    Dev Health        90    █████████░  █▇████▇▇ ↓                ║
+║    Alignment         93    █████████░  ██████▇█ →                ║
+║    Momentum          94    █████████░  ███▇████ →                ║
+║    Engagement        91    █████████░  ██████▇▇ →                ║
+║    Process Qual      88    █████████░  ██████▇▇ →                ║
 ║    Coherence         88    █████████░  ········ →                ║
 ║    Security          87    █████████░  ········ →                ║
 ║    Ecosystem         89    █████████░  ········ →                ║
@@ -55,22 +55,22 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 206 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 207 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    2% used                          ║
-║     3,580 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
-║     ~1,790 tok/turn  ·  cache 50%  ·  100 turns to compact       ║
-║     Verdict: CONTINUE                                            ║
+║  ✓  ███████████░░░░░░░░░░░░░   46% used                          ║
+║     92,762 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
+║     ~46,381 tok/turn  ·  cache 50%  ·  1 turns to compact        ║
+║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-15)                   ║
-║  ✓  Velocity      15 ↑  ·  Debt: ↓                               ║
-║  ✓  Runway        Prod-verify S206 wave · VAPID keys (founder)   ║
+║  ✓  Velocity      9 ↑  ·  Debt: ↓                                ║
+║  ✓  Runway        Re-run prod-verify-wave post-deploy · Deploy   ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         41975 FORGE  ·  6d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
@@ -101,31 +101,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▇▄▂▄█  15↑  (last 5 sessions)                       ║
+║  Velocity:   ▄▂▄█▇  9↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  859/1000  (↓23 vs current 882)                      ║
-║  At-risk:    Process Quality Δ-4 · Dev Health Δ-3 · Security Δ-  ║
+║  Projected:  885/1000  (↓20 vs current 905)                      ║
+║  At-risk:    Process Quality Δ-3 · Security Δ-3                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
+║  100  [VERIFY]       Re-run node scripts/prod-verify-wave.mjs a  ║
+║        Re-run shipped last session — confirm it works in produc  ║
+║                                                                  ║
+║   99  [SECURITY]     Deploy the Worker with --env production. c  ║
+║        Deploy the Worker with --env production. cloudflare/secu  ║
+║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [BRAND]        Review + publish forge devlog. node script  ║
-║        Review + publish forge devlog. affects public vocabulary  ║
+║   90  [PRODUCT]      Watch retimed play-next + auto-rotation. O  ║
+║        Watch retimed play-next + auto-rotation. Once post-S207   ║
 ║                                                                  ║
-║   90  [PRODUCT]      WEB-PUSH VAPID KEYS REQUIRED. cloudflare.v  ║
-║        WEB-PUSH VAPID KEYS REQUIRED. cloudflare.vapid capabilit  ║
-║                                                                  ║
-║   88  [VERIFY]       Prod-verify the S206 wave on a real browse  ║
-║        Prod-verify the S206 wave on a real browser. (a) /vault-  ║
-║                                                                  ║
-║   88  [AI]           IGNIS-GRAPH-DEPTH-L3. Cross-entity travers  ║
-║        IGNIS-GRAPH-DEPTH-L3. Cross-entity traversal: clicking a  ║
+║   89  [REVENUE]      Create the Stripe TRIAL50 coupon (makes 50  ║
+║        Create the Stripe TRIAL50 coupon (makes 50%-off real end  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -133,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 206 closeout · 2026-06-18*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 207 closeout · 2026-06-18*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

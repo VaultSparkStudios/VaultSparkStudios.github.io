@@ -8,14 +8,46 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): █████
-Avgs - 3: 949.3 | 5: 962.8 | 10: 969 | 25: 969 | all: 963 (v3.0 /1000)
-  └ 3-session: Dev 93.0 | Align 95.7 | Momentum 95.3 | Engage 91.3 | Process 85.7
-Velocity trend: ↑ (S206: 13+2 items shipped autonomous chain; S205: 15 items autonomous chain; S204: 3 groups founder-directed) | Protocol velocity: → | Debt: ↓ (bonus carries shipped: identity-coherence gate + public-note freshness gate; CI merge friction resolved)
-Momentum runway: Prod-verify S206 wave · VAPID keys (founder) · Trial-offer Stripe wire · Passport federated share · Forge devlog publish (founder) | Intent rate: 100% (last 5)
-Last session: 2026-06-18 | Session 206 | Total: 882/1000 (v3.0) | Velocity: 15 | protocolVelocity: 0
+Sparkline (last 5 totals): ███▂▃
+Avgs - 3: 922.7 | 5: 946.2 | 10: 962 | 25: 962 | all: 961 (v3.0 /1000)
+  └ 3-session: Dev 92.3 | Align 94.7 | Momentum 94.3 | Engage 92.3 | Process 89.0
+Velocity trend: ↑ (S207: 9/9 audit items autonomous chain; S206: 13+2 items autonomous chain; S205: 15 items autonomous chain) | Protocol velocity: → | Debt: ↓ (prod-verify automation closes the 7-deep [VERIFY/P0] backlog; caught + fixed own --check drift trap)
+Momentum runway: Re-run prod-verify-wave post-deploy · Deploy Worker --env production · VAPID keys (founder) · Stripe TRIAL50 coupon (founder) · Forge devlog publish (founder) | Intent rate: 100% (last 5)
+Last session: 2026-06-18 | Session 207 | Total: 905/1000 (v3.0) | Velocity: 9 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-18 — Session 207 (/goal autonomous chain · 9/9 audit items shipped · build:check EXIT 0) | Total: 905/1000 (v3.0) | Velocity: 9 | Debt: ↓
+
+Dev Health 90 | Creative Alignment 93 | Momentum 94 | Engagement 91 | Process Quality 88 | Cross-Repo Coherence 88 | Security Posture 88 | Ecosystem Integration 90 | Capital Efficiency 92 | Automation Coverage 91
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 90 | ↑ | build:check EXIT 0; fixed 2 pre-existing derived-artifact drifts + a latent S206 orphan-pages gap; one libuv Windows async flake mid-run (clean on retry, not a logic failure). |
+| Creative Alignment | 93 | ↑ | The whole wave is honesty-driven: killed a lying surface (trial offer → free page), closed a viral-loop dead-end (passport), recovered a measurably-dead CTA. Conversion craft over net-new gloss. |
+| Momentum | 94 | ↑ | 9/9 audit items shipped in one chain + a verified-already-done save; no deferrals among the 9. |
+| Engagement | 91 | ↑ | Three of the four highest-priority items directly repair conversion surfaces (cross-game routing, paid-trial path, passport referral loop). |
+| Process Quality | 88 | ↑ | Caught + fixed my OWN volatile-`--check` drift trap in build-cta-state before it shipped (D-S207.2); reject-on-verification save (mission-coherence gate already done); automated the verification debt instead of filing another manual task. |
+| Cross-Repo Coherence | 88 | → | No cross-repo writes; RUM allowlist 45/47 in sync; new prefixes documented. |
+| Security Posture | 88 | ↑ | Promo handling validates server-side (no client trust); passport `?u=` greeting sanitized + never leaks email; free text never transmitted in the feedback loop. |
+| Ecosystem Integration | 90 | ↑ | prod-verify-wave + wave-manifest close the cross-session verification gap; oracle-feedback-themes + cta-state add two self-feeding loops. |
+| Capital Efficiency | 92 | ↑ | The headline fixes target revenue surfaces (paid-trial path made coherent, dead conversion CTA recovered); zero new deps; token-thrifty closeout. |
+| Automation Coverage | 91 | ↑ | prod-verify-wave automates the 7-deep manual [VERIFY/P0] backlog; dead-cta self-heal + 2 new advisory gates wired into check-proof-surface (no build:check length added — folded into the orchestrator). |
+| **Total** | **905/1000** | ↑ | Recovery from S206's 882 — process quality rebounds (caught own trap, honest verification) and the wave is squarely revenue/honesty-focused. |
+
+**Top win:** Answered the goal's "what did we miss?" literally — audited last session's LIVE conversion paths and found three S206 features that don't convert (play-next 18/0, trial offer a dangling promise on a free page, passport viral loop dead-ending), then fixed all three + automated the verification debt that let them slip.
+**Top gap:** The real 50%-off still needs a founder-created Stripe coupon (logged); the new Worker RUM prefixes need a `--env production` deploy to stop dropping at the edge.
+**Intent outcome:** ACHIEVED — 9/9 shipped, build:check EXIT 0.
+
+**Brainstorm**
+1. A `check-promo-target-coherence.mjs` gate — fail if any client surface links to `?promo=` on a page with no checkout/promo handler (would have caught the S206 trial-offer lying surface at build time). · path: mirror check-dead-ctas scan + grep promo links vs checkout pages. · High.
+2. Wire `prod-verify-wave.mjs` into the closeout autopilot as a post-push step (with CF-Pages propagation backoff) so every wave is auto-verified the moment it deploys. · path: closeout-autopilot step after push. · High.
+3. Auto-emit the wave manifest from the session's changed `api/` + page files at closeout (prod-verify L3) so the manifest never goes stale. · path: git diff --name-only since session start → manifest. · Medium.
+4. A generic `cta:variant` rollup block in rollup-rum-ux so dead-cta-rotation outcomes are visible per variant. · path: mirror the constellations block. · Medium.
+
+**Committed to TASK_BOARD:** [S207][INFRA/P1] Deploy Worker --env production · [S207][MEASURE/P2] Watch retimed play-next + auto-rotation
 
 ---
 
