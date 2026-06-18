@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-18T19:53:37.674Z",
+  "generatedAt": "2026-06-18T20:28:17.505Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,22 +8,25 @@
     {
       "theme": "conversion",
       "label": "Conversion",
-      "feedbackSignals": 3,
+      "feedbackSignals": 1,
       "shippedCommits": [
         {
           "sha": "0bf0351a",
           "summary": "vault passport — member identity card at /vault-member/passport/ (#11)",
           "ts": "2026-06-18T16:06:23.000Z"
-        },
+        }
+      ],
+      "proof": null
+    },
+    {
+      "theme": "worlds",
+      "label": "Worlds",
+      "feedbackSignals": 1,
+      "shippedCommits": [
         {
-          "sha": "15c2143d",
-          "summary": "progressive tier reveal on /membership/ — staggered scroll animation (#4)",
-          "ts": "2026-06-18T15:44:24.000Z"
-        },
-        {
-          "sha": "a0882cbf",
-          "summary": "adaptive pricing reveal — profile-matched tier highlight on /membership/ (#8)",
-          "ts": "2026-06-18T15:42:56.000Z"
+          "sha": "759bcbbe",
+          "summary": "twin doorway CTAs — Explore Our Games (/games) + Explore Our Projects (/projects)",
+          "ts": "2026-06-18T19:55:16.000Z"
         }
       ],
       "proof": null
@@ -62,36 +65,15 @@
       "proof": null
     },
     {
-      "theme": "speed",
-      "label": "Speed",
-      "feedbackSignals": 1,
-      "shippedCommits": [
-        {
-          "sha": "5b90d8cb",
-          "summary": "rebuild API outputs + ambient bundle after Wave 2 features",
-          "ts": "2026-06-18T15:41:21.000Z"
-        }
-      ],
-      "proof": {
-        "set": "home-lcp-s173",
-        "captures": 4,
-        "routes": [
-          "/"
-        ]
-      },
-      "fieldVerdict": {
-        "boundary": "2026-06-05",
-        "label": "S173 critical path + S175 origin migration to CF Pages",
-        "verdict": "improved",
-        "lcpDeltaPct": -35.9,
-        "confidence": "high"
-      }
-    },
-    {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 1,
+      "feedbackSignals": 2,
       "shippedCommits": [
+        {
+          "sha": "7c6f5503",
+          "summary": "graduate hero v2 + complete the S204 visual overhaul; fix push-dispatch",
+          "ts": "2026-06-18T18:26:16.000Z"
+        },
         {
           "sha": "85304191",
           "summary": "build artifacts — api regen + nav propagation + ambient shell rotate",

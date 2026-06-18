@@ -145,4 +145,11 @@ if (cts.status !== 0) {
   console.warn('  ⚠  build-cta-state: data/cta-state.json missing or stale (run node scripts/build-cta-state.mjs)');
 }
 
+// S207: hero living-portfolio showcase — server-rendered tiles + counts in
+// index.html must match the live catalog feed. Drift gate.
+const hp = spawnSync(process.execPath, [path.join(__dirname, 'build-hero-portfolio.mjs'), '--check'], { stdio: 'inherit' });
+if (hp.status !== 0) {
+  console.warn('  ⚠  build-hero-portfolio: index.html hero showcase stale (run node scripts/build-hero-portfolio.mjs)');
+}
+
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');
