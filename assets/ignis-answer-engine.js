@@ -72,6 +72,42 @@
   // last answer instead of starting cold. Reset on a fresh, unrelated query.
   var convo = { tokens: [], topUrl: '' };
 
+  // S206 #15: prefix-sharing query cache. First 3 words of a query become a key;
+  // successful answers write an excerpt + ts. On a new query, a prefix match
+  // surfaces "Continuing from your earlier search" to bridge multi-visit threads.
+  var PREFIX_CACHE_KEY = 'vs_ignis_prefix_cache';
+  var PREFIX_TTL_MS = 24 * 60 * 60 * 1000; // 24h
+  var PREFIX_MAX = 20;
+
+  function prefixKey(q) {
+    return tokens(q).slice(0, 3).join(' ');
+  }
+
+  function readPrefixCache() {
+    try { return JSON.parse(localStorage.getItem(PREFIX_CACHE_KEY) || '[]'); }
+    catch (_) { return []; }
+  }
+
+  function writePrefixCache(q, excerpt) {
+    try {
+      var key = prefixKey(q);
+      if (!key) return;
+      var cache = readPrefixCache().filter(function (e) { return e.key !== key; });
+      cache.unshift({ key: key, excerpt: excerpt, ts: Date.now(), q: q.slice(0, 80) });
+      if (cache.length > PREFIX_MAX) cache.length = PREFIX_MAX;
+      localStorage.setItem(PREFIX_CACHE_KEY, JSON.stringify(cache));
+    } catch (_) {}
+  }
+
+  function lookupPrefixCache(q) {
+    var key = prefixKey(q);
+    if (!key) return null;
+    var now = Date.now();
+    return readPrefixCache().find(function (e) {
+      return e.key === key && (now - e.ts) < PREFIX_TTL_MS;
+    }) || null;
+  }
+
   // S201 ignis-synthesis-mode: session-scoped query log (cleared on page load).
   var sessionQueries = [];
   var FOLLOWUP_RE = /^(tell me more|more\b|go on|continue|why\b|how about|what about|and |elaborate|explain|details?|keep going|then\b)/i;
@@ -138,7 +174,12 @@
       if (followUp) emitUx('oracle-followup:ask');
       if (chips) chips.hidden = true; // first interaction made — retire the cold-start chips
       if (histEl) histEl.hidden = true;
+      // S206 #15: prefix cache hit — show excerpt while loading for continuity.
+      var cacheHit = !followUp && lookupPrefixCache(q);
       out.textContent = followUp ? 'Following that thread…' : 'Reading public studio memory…';
+      if (cacheHit) {
+        out.innerHTML = vsHtml('<span style="font-size:.78rem;color:var(--dim,#6272a0)">Continuing from your earlier search —</span> ' + esc(cacheHit.excerpt) + '<br><span style="font-size:.75rem;color:var(--dim,#6272a0)">Checking for updates…</span>');
+      }
       loadIndex().then(function (idx) {
         var result = answer(q, idx, { followUp: followUp });
         if (!result) {
@@ -212,6 +253,8 @@
         convo.topUrl = top.url || '';
         // S195: cross-surface quest flag — asking IGNIS completes a rank-quest step.
         try { localStorage.setItem('vs_quest_ask', '1'); } catch (_e) {}
+        // S206 #15: write prefix cache entry for this successful answer.
+        writePrefixCache(q, result.text.slice(0, 180));
         // S199 L2: persist query + timestamp; max 10, deduplicate by text.
         try {
           var rawHist = JSON.parse(localStorage.getItem('vs_ignis_history') || '[]');
