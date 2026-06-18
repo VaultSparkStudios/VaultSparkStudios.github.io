@@ -1,7 +1,7 @@
 <!-- generated-by: /implement skill v1.0 -->
-<!-- generated-at: 2026-06-18 · session 205 · source: docs/AUDIT_2026-06-18.json -->
+<!-- generated-at: 2026-06-18 · session 206 · source: docs/AUDIT_2026-06-18.json -->
 
-# Implement Plan — AUDIT_2026-06-15 (full plan, one pass)
+# Implement Plan — AUDIT_2026-06-18 S206 (16 items · 7 waves)
 
 Sequenced for optimal efficiency (group by code surface, front-load 🔥 + quick wins, foundations before façades). Ladder rung chosen per item to fit budget; riskier URL-deleting merges run L1 (cross-link/dedupe, no SEO-breaking deletes) this pass.
 

@@ -1,37 +1,39 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 24b17d7757d7 -->
-<!-- generated-at: 2026-06-18T05:27:25.479Z -->
+<!-- source-hash: 5156521145dc -->
+<!-- generated-at: 2026-06-18T14:57:16.848Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 204 HANDOFF SUMMARY
+# Handoff Summary — Session 205
 
-Status
-- Session 204, intent PARTIAL. Mission rewrite + tooling + premium polish shipped/green; hero, portal, consolidation, freshness carried.
+## Session
+- Session 205. Autonomous /goal chain (start→audit→implement→closeout), no founder direction.
+- Outcome: ACHIEVED. All 15 audit items shipped; build:check EXIT 0; 1 infra blocker logged.
 
-Shipped
-- Toolchain restored to green: completed hidden WIP refactor, created 7 missing modules, fixed secrets.mjs CAP_MAP_PATH + S113 guard, restored ANTHROPIC_API export, fixed schemaVersion emission. Startup-brief renderer EXIT 0.
-- Mission rewritten purpose-first: retired "pressure/ignition" framing across studio/index.html, index.html, press/index.html. New line forged-in-open/sealed/sparked. Universe lore left as in-world fiction. Fixed "one spark"→"spark by spark".
-- Premium polish layer (additive) appended to assets/style.css: design tokens, focus-visible ring, button states, scrollbar, card lift. Reduced-motion guarded. Propagated to 104 pages (style.shell-a603ec43fc.css).
+## Shipped (S205)
+- Hero: scroll-activation stagger; hero-v2 flag (?hero=v2); adaptive welcome strip (rank + Continue CTA).
+- Studio: vault-momentum-score chip; dead-CTA gate (check-dead-ctas.mjs + api/dead-ctas.json).
+- Membership: progressive tier reveal; sticky hub tab nav; Worker 301s for legacy paths (25/25 tests); portal-premium motion/elevation vars.
+- Ignis/Oracle: Cmd+K deep-dive links; personalized homepage panel; knowledge-graph related-entity chips (15/31 docs).
+- Community: constellation challenges (5 hidden badges); dispatch emoji reactions.
+- Content: natural-language changelog (24 entries); freshness sweep (7 portfolio entries).
 
-Tests
-- npm run build:check EXIT 0 end-to-end. Fixed 3 previously-masked gate failures. Remaining ✗ are warn-only advisories (7 registry dirs, / desktop perf, changelog 66d stale).
+## Tests / Deploy
+- build:check EXIT 0. RUM allowlist 35/33 synced. Worker 25/25. IGNIS 31 docs, 0 voice leaks.
+- Pushed via closeout-autopilot.mjs.
 
-Now (top 3)
-- §3 homepage hero refinement (flag-gate per mature-surface rule, founder visual review).
-- §5 conservative consolidation (membership cluster → tabbed hub; Worker Layer 0c 301s).
-- §4 portal (user panel).
+## Now Bucket (top 3)
+- Prod-verify S205 wave (hero=v2 flag, Oracle entity chips, dispatch reactions, constellation unlock).
+- S204 verify pass (premium polish layer, mission rewrite on prod).
+- Graduate hero-v2 to default after founder sign-off.
 
-Blockers (top 3)
-- Prod deploy unverified: confirm pages.dev origin + JSON path next session (CF bot-challenge ≠ outage).
-- Hero/consolidation/portal/freshness need fresh context to hit elite bar (see docs/AUDIT_2026-06-17.md).
-- Changelog 66d stale (warn-only).
+## Blockers (top 3)
+- cloudflare.vapid MISSING (infra) — blocks push-dispatch.
+- Hero-v2 graduation gated on founder real-device review.
+- S204 §3/§4/§5/§6 carried items awaiting verify before further build.
 
-Human-blocked
-- Founder visual review required for hero refinement (§3) — pending since S204 (~1 session).
-- Founder decisions already captured: mission=purpose-first, consolidation=conservative.
+## Human-Blocked (with age)
+- VAPID keys — FOUNDER ACTION, opened S205 (current). Steps: npx web-push generate-vapid-keys → store secrets/cloudflare.vapid.env → add VAPID_PUBLIC_KEY to Worker env → node scripts/push-dispatch.mjs --test.
+- Hero-v2 real-device review — FOUNDER, opened S205 (current).
 
-Reference
-- Execution plan: docs/AUDIT_2026-06-17.md.
-
-Next session: verify prod deploy, then start §3 hero behind flag-gate with founder visual review.
+Next session: prod-verify S205 wave, then S204 carry-forward (hero/portal/consolidation/freshness).
