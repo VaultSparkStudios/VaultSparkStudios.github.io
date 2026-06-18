@@ -109,6 +109,15 @@
       idle: true
     },
     {
+      // S206 #1: adaptive oracle intro — /ignis/ only. Personalizes the
+      // Ask IGNIS heading + context p for visitors with query history.
+      src: '/assets/ignis-personalize-intro.js',
+      when: function () {
+        return (location.pathname || '/').indexOf('/ignis') === 0;
+      },
+      idle: true
+    },
+    {
       // S180 ambient-split wave 3 — the pathfinder only runs on these exact
       // information-finding routes, so keep it off every other cold page.
       src: '/assets/intent-flight-director.js',

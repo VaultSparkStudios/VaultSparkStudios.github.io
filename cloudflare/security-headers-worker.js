@@ -296,6 +296,9 @@ const RUM_UX_EVENTS = new Set([
   // S206 #3: vault-momentum social proof strip impression on /membership/.
   // Honest-dark: only emitted when api/vault-momentum.json has real data.
   'membership:momentum_strip_shown',
+  // S206 #1: adaptive oracle intro — fires when returning-visitor personalization
+  // is applied on /ignis/ (≥1 history entry found in localStorage vs_ignis_history).
+  'oracle:personalized_intro_shown',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so
