@@ -1,6 +1,6 @@
 /* honest-traction-scoreboard.js — S187 honest social proof · S190 velocity badge.
    Surfaces honest, dated, externally-meaningful counts from api/public-intelligence.json.
-   Includes the sealed/vaulted count as a trust signal, never hidden.
+   Includes the vaulted count as a trust signal, never hidden.
 
    S190 enhancements:
    - IntersectionObserver count-up animation for sessions figure (800ms ease-out)
@@ -21,12 +21,13 @@
     var p = (data && data.portfolio) || {};
     var live = n(s.liveProjects != null ? s.liveProjects : p.sparked);
     var forge = n(s.projectsInForge != null ? s.projectsInForge : p.forge);
-    var sealed = n(p.sealedCount);
+    // SEALED retired — VAULTED is what sealed means (coined vocab); accept either source key.
+    var vaulted = n(p.vaultedCount != null ? p.vaultedCount : p.sealedCount);
     var sessions = n(s.sessionsCompleted);
     var figs = [];
-    if (live != null && live >= 1) figs.push({ v: live, label: live === 1 ? 'live' : 'live', animate: false });
+    if (live != null && live >= 1) figs.push({ v: live, label: 'sparked', animate: false });
     if (forge != null && forge >= 1) figs.push({ v: forge, label: 'in the forge', animate: false });
-    if (sealed != null && sealed >= 1) figs.push({ v: sealed, label: 'sealed', animate: false });
+    if (vaulted != null && vaulted >= 1) figs.push({ v: vaulted, label: 'vaulted', animate: false });
     if (sessions != null && sessions >= 10) figs.push({ v: sessions, label: 'sessions in the open', animate: true });
     return figs;
   }

@@ -71,7 +71,7 @@ function liveHref(item) {
   catch { return null; }
 }
 
-const STATUS_LABEL = { SPARKED: 'Live', FORGE: 'In the forge', VAULTED: 'Vaulted' };
+const STATUS_LABEL = { SPARKED: 'Sparked', FORGE: 'In the Forge', VAULTED: 'Vaulted' };
 
 // Project-specific primary CTA label. Compact labels on small tiles (where a
 // second button shares the row); fuller labels on the featured tile.

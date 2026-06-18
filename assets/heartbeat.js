@@ -16,13 +16,11 @@
     sparked: '#FFC400',
     forge:   '#f59e0b',
     vaulted: '#94a3b8',
-    sealed:  '#7EC9FF',
   };
   var TIER_LABEL = {
     sparked: 'Sparked',
-    forge:   'In the forge',
+    forge:   'In the Forge',
     vaulted: 'Vaulted',
-    sealed:  'Sealed',
   };
 
   var STYLE = [
@@ -80,8 +78,9 @@
   }
 
   function render(root, data) {
-    var totals = { sparked: 0, forge: 0, vaulted: 0, sealed: 0 };
-    (data.projects || []).forEach(function (p) { totals[p.tier] = (totals[p.tier] || 0) + 1; });
+    var totals = { sparked: 0, forge: 0, vaulted: 0 };
+    // SEALED retired — fold into VAULTED (coined vocab: vaulted is sealed).
+    (data.projects || []).forEach(function (p) { var t = p.tier === 'sealed' ? 'vaulted' : p.tier; totals[t] = (totals[t] || 0) + 1; });
     var total = data.projects ? data.projects.length : 0;
     var totalPulses = (data.projects || []).reduce(function (a, p) { return a + (p.pulses30d || 0); }, 0);
     var hottest = (data.projects || []).slice().sort(function (a, b) {
@@ -108,7 +107,7 @@
       + '<h2 class="vs-hb__title">The forge is alive — ' + total + ' initiatives</h2>'
       + '<span class="vs-hb__sub">' + (data.windowDays || 30) + 'd window &middot; '
       + (totals.sparked || 0) + ' sparked &middot; ' + (totals.forge || 0) + ' forge &middot; '
-      + (totals.vaulted || 0) + ' vaulted &middot; ' + (totals.sealed || 0) + ' sealed'
+      + (totals.vaulted || 0) + ' vaulted'
       + (hottest ? ' &middot; hottest: ' + hottest.name : '') + '</span>';
 
     var grid = document.createElement('div');

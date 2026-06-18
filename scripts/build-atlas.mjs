@@ -52,9 +52,9 @@ function goLabel(item, isLive) {
 }
 
 const GROUPS = [
-  { status: 'SPARKED', cls: 'is-live', title: 'Live', blurb: 'Playable / usable right now.' },
+  { status: 'SPARKED', cls: 'is-live', title: 'Sparked', blurb: 'Live — playable or usable right now.' },
   { status: 'FORGE', cls: 'is-forge', title: 'In the Forge', blurb: 'Being built in the open.' },
-  { status: 'VAULTED', cls: 'is-vaulted', title: 'Vaulted', blurb: 'Sealed — holding their charge.' },
+  { status: 'VAULTED', cls: 'is-vaulted', title: 'Vaulted', blurb: 'Paused — holding their charge until they respark.' },
 ];
 
 export function renderAtlas(catalog, fileExists) {

@@ -126,18 +126,18 @@
   // ─── 3. LIFECYCLE DONUT ───────────────────────────────────────────────────
   function renderLifecycleDonut(ecosystem, mount) {
     if (!mount || !ecosystem?.projects) return;
-    const buckets = { sparked: 0, forge: 0, vaulted: 0, sealed: 0, other: 0 };
+    const buckets = { sparked: 0, forge: 0, vaulted: 0, other: 0 };
     for (const p of ecosystem.projects) {
       const s = String(p.vaultStatus || '').toLowerCase();
       if (s.includes('sparked')) buckets.sparked++;
       else if (s.includes('forge')) buckets.forge++;
-      else if (s.includes('vaulted')) buckets.vaulted++;
-      else if (s.includes('sealed')) buckets.sealed++;
+      // SEALED retired — folded into VAULTED (coined vocab: vaulted is sealed).
+      else if (s.includes('vaulted') || s.includes('sealed')) buckets.vaulted++;
       else buckets.other++;
     }
     const total = Object.values(buckets).reduce((a, b) => a + b, 0) || 1;
-    const colors = { sparked: '#FFC400', forge: '#FF7A00', vaulted: '#94a3b8', sealed: '#7EC9FF', other: '#475569' };
-    const labels = { sparked: '🔥 Sparked', forge: '⚒ Forge', vaulted: '🔒 Vaulted', sealed: '⬡ Sealed', other: 'Other' };
+    const colors = { sparked: '#FFC400', forge: '#FF7A00', vaulted: '#94a3b8', other: '#475569' };
+    const labels = { sparked: '🔥 Sparked', forge: '⚒ Forge', vaulted: '🔒 Vaulted', other: 'Other' };
 
     let cumulative = 0;
     const segments = Object.entries(buckets).filter(([_, v]) => v > 0).map(([k, v]) => {

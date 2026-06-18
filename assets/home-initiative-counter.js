@@ -18,15 +18,17 @@
       .then(function (data) {
         var catalog = (data && data.catalog) || [];
         if (!Array.isArray(catalog) || !catalog.length) return; // honest: leave hidden
-        var counts = { SPARKED: 0, FORGE: 0, SEALED: 0, VAULTED: 0 };
+        var counts = { SPARKED: 0, FORGE: 0, VAULTED: 0 };
         catalog.forEach(function (c) {
           var s = (c.status || '').toUpperCase();
+          // SEALED retired — it's what VAULTED means (coined vocab); fold any in.
+          if (s === 'SEALED') s = 'VAULTED';
           if (counts[s] != null) counts[s] += 1;
         });
         var map = {
           sparked: counts.SPARKED,
           forge: counts.FORGE,
-          sealed: counts.SEALED + counts.VAULTED
+          vaulted: counts.VAULTED
         };
         var any = false;
         strip.querySelectorAll('.pti-count').forEach(function (el) {

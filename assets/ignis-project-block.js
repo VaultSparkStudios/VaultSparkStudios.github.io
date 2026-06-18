@@ -150,15 +150,14 @@
     const quote = publicText(voiceEntry?.quote || fallback?.quote || 'The flame reads this project.');
     const projectName = el.getAttribute('data-project') || '';
     // Status-derived accent colour: SPARKED → gold, FORGE → orange, others → steel.
+    // SEALED retired — VAULTED is what sealed means (coined vocab).
     const statusAccent = status === 'SPARKED' ? '#FFC400'
                       : status === 'FORGE'   ? '#FF7A00'
                       : status === 'VAULTED' ? '#94a3b8'
-                      : status === 'SEALED'  ? '#7EC9FF'
                       :                         '#94a3b8';
-    const statusLabel = status === 'SPARKED' ? '🔥 Sparked · Live'
+    const statusLabel = status === 'SPARKED' ? '🔥 Sparked'
                      : status === 'FORGE'   ? '⚒ In The Forge'
                      : status === 'VAULTED' ? '🔒 Vaulted'
-                     : status === 'SEALED'  ? '⬡ Sealed Vault'
                      :                         escapeHtml(status);
     const liveUrl = el.dataset.liveUrl || pulseEntry?.liveUrl || fallback?.liveUrl || '';
 
