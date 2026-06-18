@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" class="dark-mode" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fjnpzjjyhnpmunfoycrp.supabase.co" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vault Passport · VaultSpark Studios</title>
+  <meta name="description" content="Your Vault Passport — rank badge, tenure, and studio achievements in one shareable card." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta property="og:title" content="Vault Passport · VaultSpark Studios" />
+  <meta property="og:description" content="A member of the Vault — rank, tenure, and achievements." />
+  <meta property="og:image" content="/assets/og/passport-template.png" />
+  <link rel="stylesheet" href="/assets/style.css" />
+  <link rel="canonical" href="https://vaultsparkstudios.com/vault-member/passport/" />
+
+  <style>
+    .vp-root{max-width:480px;margin:3rem auto;padding:0 1rem}
+    .vp-card{background:linear-gradient(145deg,#0f1218 0%,#141820 60%,#0e1520 100%);border:1px solid rgba(255,196,0,.22);border-radius:20px;padding:2rem 1.75rem;position:relative;overflow:hidden}
+    .vp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#ff7a00,#ffc400)}
+    .vp-label{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,196,0,.5);margin-bottom:1.5rem}
+    .vp-rank-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+    .vp-rank-badge{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;background:rgba(255,196,0,.1);border:2px solid rgba(255,196,0,.35);flex-shrink:0}
+    .vp-rank-info .vp-rank-name{font-size:1.15rem;font-weight:800;color:#ffc400;margin:0}
+    .vp-rank-info .vp-points{font-size:.82rem;color:rgba(255,255,255,.45);margin:.1rem 0 0}
+    .vp-divider{border:none;border-top:1px solid rgba(255,255,255,.07);margin:1.2rem 0}
+    .vp-stats{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;margin-bottom:1.4rem}
+    .vp-stat label{display:block;font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:.2rem}
+    .vp-stat .vp-stat-val{font-size:.95rem;font-weight:600;color:#e8eaf0}
+    .vp-achievements{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:1.4rem}
+    .vp-badge{background:rgba(255,196,0,.08);border:1px solid rgba(255,196,0,.18);border-radius:999px;padding:.3rem .65rem;font-size:.75rem;color:#ffc400}
+    .vp-actions{display:flex;gap:.65rem}
+    .vp-share-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:.45rem;padding:.7rem 1rem;border-radius:10px;background:rgba(255,196,0,.12);border:1px solid rgba(255,196,0,.28);color:#ffc400;font-weight:700;font-size:.88rem;cursor:pointer;transition:background .15s}
+    .vp-share-btn:hover{background:rgba(255,196,0,.2)}
+    .vp-portal-link{display:flex;align-items:center;justify-content:center;padding:.7rem 1rem;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:.88rem;text-decoration:none}
+    .vp-portal-link:hover{background:rgba(255,255,255,.08)}
+    .vp-auth-gate{text-align:center;padding:3rem 1rem}
+    .vp-auth-gate p{color:rgba(255,255,255,.5);margin-bottom:1rem}
+    .vp-auth-gate a{display:inline-block;padding:.65rem 1.5rem;border-radius:10px;background:linear-gradient(90deg,#ff7a00,#ffc400);color:#1a1205;font-weight:700;text-decoration:none}
+    .vp-copied{font-size:.75rem;color:#4ade80;margin-left:.3rem}
+    .vp-watermark{text-align:center;margin-top:1.4rem;font-size:.7rem;color:rgba(255,255,255,.2)}
+    .vp-watermark a{color:rgba(255,196,0,.4)}
+  </style>
+</head>
+<body class="dark-mode" data-no-strip>
+
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/" class="nav-brand" aria-label="VaultSpark Studios home">
+        <img src="/assets/vaultspark-logo.webp" width="28" height="28" alt="VaultSpark Studios logo" loading="eager" />
+        <span class="brand-name">VaultSpark</span><span class="brand-suffix"> Studios</span>
+      </a>
+      <nav class="nav-links" aria-label="Site navigation">
+        <a href="/vault-member/">Portal</a>
+        <a href="/membership/">Membership</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="vp-root">
+      <div id="vp-auth-gate" class="vp-auth-gate" hidden>
+        <p>Sign in to view your Vault Passport.</p>
+        <a href="/vault-member/">Go to Member Portal</a>
+      </div>
+      <div id="vp-loading" aria-live="polite" style="text-align:center;padding:3rem 1rem;color:rgba(255,255,255,.35);">Loading passport…</div>
+      <div id="vp-card-wrap" hidden>
+        <div class="vp-card" role="region" aria-label="Your Vault Passport">
+          <div class="vp-label">⚡ Vault Passport</div>
+          <div class="vp-rank-row">
+            <div class="vp-rank-badge" id="vp-rank-badge">⚡</div>
+            <div class="vp-rank-info">
+              <p class="vp-rank-name" id="vp-rank-name">—</p>
+              <p class="vp-points" id="vp-points">— Vault Points</p>
+            </div>
+          </div>
+          <hr class="vp-divider" />
+          <div class="vp-stats">
+            <div class="vp-stat">
+              <label>Member since</label>
+              <span class="vp-stat-val" id="vp-member-since">—</span>
+            </div>
+            <div class="vp-stat">
+              <label>Tenure</label>
+              <span class="vp-stat-val" id="vp-tenure">—</span>
+            </div>
+          </div>
+          <div class="vp-achievements" id="vp-achievements"></div>
+          <div class="vp-actions">
+            <button type="button" class="vp-share-btn" id="vp-share-btn" aria-label="Share your Vault Passport">
+              Share Passport <span id="vp-copied" class="vp-copied" hidden>Copied!</span>
+            </button>
+            <a href="/vault-member/" class="vp-portal-link" aria-label="Back to member portal">Portal</a>
+          </div>
+        </div>
+        <p class="vp-watermark">VaultSpark Studios · <a href="/vault-member/">Member Portal</a></p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Supabase + passport logic (vault-passport.js emits passport:viewed / passport:shared to /v/rum) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.49.1/dist/umd/supabase.js" integrity="sha384-tuevtT+97g9yLeuT/m52ejUJbc0hzsN6MPLiQEccySreiGjrcgk2tMBJR7/l6HGM" crossorigin="anonymous" defer></script>
+  <script src="/assets/supabase-client.js" defer></script>
+  <script src="/assets/vault-passport.js" defer></script>
+  <script src="/assets/analytics.js" defer></script>
+  <script src="/assets/cookie-consent.js" defer></script>
+
+</body>
+</html>
