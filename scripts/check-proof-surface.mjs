@@ -103,4 +103,11 @@ if (dc.status !== 0) {
   console.warn('  ⚠  check-dead-ctas: dead-ctas.json drift (run node scripts/check-dead-ctas.mjs)');
 }
 
+// S206: public-note freshness — ERROR on session codes or dev jargon in visitor-facing
+// PROJECT_STATUS fields (publicNote, publicNextStep). Advisory only.
+const pn = spawnSync(process.execPath, [path.join(__dirname, 'check-public-note-freshness.mjs')], { stdio: 'inherit' });
+if (pn.status !== 0) {
+  console.warn('  ⚠  check-public-note-freshness: dev jargon in public copy (update context/PROJECT_STATUS.json)');
+}
+
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');
