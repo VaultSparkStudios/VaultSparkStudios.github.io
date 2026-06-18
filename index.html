@@ -410,6 +410,70 @@
     .hero-tile__btn--ghost:hover { background: rgba(255, 255, 255, 0.16); transform: translateY(-1px); }
     .hero-tile__btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
+    /* ════════ S207 ELITE POLISH — premium depth, light, motion ════════ */
+    :root { --hero-ease: cubic-bezier(0.22, 0.61, 0.36, 1); }
+
+    .hero-showcase { position: relative; }
+    .hero-showcase::before {
+      content: ""; position: absolute; inset: -8% -6% -10% -6%; z-index: -1; pointer-events: none;
+      background: radial-gradient(60% 55% at 70% 18%, rgba(255, 196, 0, 0.10), transparent 70%),
+                  radial-gradient(55% 50% at 20% 90%, rgba(31, 162, 255, 0.10), transparent 72%);
+      filter: blur(8px);
+    }
+
+    .hero-tile {
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset, 0 6px 22px rgba(0, 0, 0, 0.34);
+      transition: transform 0.28s var(--hero-ease), border-color 0.28s var(--hero-ease), box-shadow 0.28s var(--hero-ease);
+    }
+    .hero-tile::after {
+      content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: 2; pointer-events: none;
+      padding: 1px;
+      background: linear-gradient(150deg, color-mix(in srgb, var(--tile-accent, #ffc400) 45%, transparent), transparent 42%, rgba(255,255,255,0.05) 100%);
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor; mask-composite: exclude;
+      opacity: 0.5; transition: opacity 0.28s var(--hero-ease);
+    }
+    .hero-tile:hover {
+      transform: translateY(-5px);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.10) inset,
+        0 20px 46px rgba(0, 0, 0, 0.5),
+        0 0 0 1px color-mix(in srgb, var(--tile-accent, #ffc400) 50%, transparent),
+        0 14px 40px color-mix(in srgb, var(--tile-accent, #ffc400) 22%, transparent);
+    }
+    .hero-tile:hover::after { opacity: 1; }
+
+    .hero-tile--featured {
+      box-shadow: 0 1px 0 rgba(255,255,255,0.08) inset, 0 10px 40px rgba(0,0,0,0.42),
+                  0 0 60px color-mix(in srgb, var(--tile-accent, #ffc400) 14%, transparent);
+    }
+    .hero-tile--featured .hero-tile__cover::after {
+      content: ""; position: absolute; inset: 0;
+      background: linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.06) 50%, transparent 60%);
+      transform: translateX(-120%); animation: hero-sheen 7s var(--hero-ease) infinite;
+    }
+    @keyframes hero-sheen { 0%, 72% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+
+    .hero-tile:not(.hero-tile--featured) .hero-tile__btn { padding: 0.4rem 0.7rem; font-size: 0.76rem; border-radius: 9px; }
+    .hero-tile:not(.hero-tile--featured) .hero-tile__actions { gap: 0.4rem; margin-top: 0.55rem; }
+
+    .hero-tile__btn--primary {
+      box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 6px 16px rgba(255, 196, 0, 0.28);
+    }
+    .hero-tile__btn--primary:hover { box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 8px 22px rgba(255,196,0,0.4); }
+
+    .hero-stage .forge-line-1 { text-shadow: 0 2px 40px rgba(255, 196, 0, 0.12); }
+    .hero-pulse { padding: 0.45rem 0.85rem; border-radius: 999px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.07); width: fit-content; }
+    .hero-stage .hero-actions .button, .hero-stage .hero-actions .button-accent { box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-tile--featured .hero-tile__cover::after { animation: none; display: none; }
+    }
+    @media (max-width: 900px) {
+      .hero-pulse { margin-left: auto; margin-right: auto; }
+    }
+
     @media (max-width: 900px) {
       .hero-stage { grid-template-columns: 1fr; gap: 1.8rem; text-align: center; }
       .hero-stage .forge-wordmark,
@@ -1394,7 +1458,7 @@
 
         <!-- Living portfolio showcase — server-rendered from api/public-intelligence.json (build-hero-portfolio.mjs).
              First interface for humans AND agents: real <a> tiles + ItemList JSON-LD, instant + crawlable. -->
-        <!-- hero-showcase:start --><style data-hero-portfolio-style>.ht-call-of-doodie{--tile-accent:#ff9478}.ht-call-of-doodie .hero-tile__cover{background-image:url(/assets/covers/doodie.png)}.ht-promogrind{--tile-accent:#7ae7c7}.ht-football-gm{--tile-accent:#69b3ff}.ht-football-gm .hero-tile__cover{background-image:url(/assets/covers/footballgm.png)}.ht-mindframe{--tile-accent:#38bdf8}.ht-mindframe .hero-tile__cover{background-image:url(/assets/covers/mindframe.png)}.ht-velaxis{--tile-accent:#4ade80}</style><div class="hero-showcase" role="group" aria-label="VaultSpark Studios portfolio — live and in-forge worlds"><div class="hero-tile ht-call-of-doodie is-live hero-tile--featured has-cover hero-tile--dual" role="group" aria-label="Call of Doodie — Live"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Live</span><span class="hero-tile__body"><span class="hero-tile__kicker">Game</span><span class="hero-tile__name">Call of Doodie</span><span class="hero-tile__note">Playable now. Satirical multiplayer chaos, live and still sharpening.</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="/call-of-doodie/" data-track-event="home_hero_tile_play" aria-label="Play free — Call of Doodie">▶ Play free</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/call-of-doodie/" data-track-event="home_hero_tile_details" aria-label="Details for Call of Doodie">Details →</a></span></span></div><a class="hero-tile ht-promogrind is-live no-cover" href="/promogrind/" data-track-event="home_hero_tile_click" aria-label="PromoGrind — Live"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__mark" aria-hidden="true">P</span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Live</span><span class="hero-tile__body"><span class="hero-tile__kicker">Tool</span><span class="hero-tile__name">PromoGrind</span><span class="hero-tile__cta">Open →</span></span></a><a class="hero-tile ht-football-gm is-live has-cover" href="/vaultspark-football-gm/" data-track-event="home_hero_tile_click" aria-label="VaultSpark Football GM — Live"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Live</span><span class="hero-tile__body"><span class="hero-tile__kicker">Game</span><span class="hero-tile__name">VaultSpark Football GM</span><span class="hero-tile__cta">▶ Play free</span></span></a><a class="hero-tile ht-mindframe is-forge has-cover" href="https://steadfast-determination-production.up.railway.app" rel="noopener" data-track-event="home_hero_tile_click" aria-label="MindFrame — In the forge"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>In the forge</span><span class="hero-tile__body"><span class="hero-tile__kicker">Tool</span><span class="hero-tile__name">MindFrame</span><span class="hero-tile__cta">Try it →</span></span></a><a class="hero-tile ht-velaxis is-forge no-cover" href="/projects/velaxis/" data-track-event="home_hero_tile_click" aria-label="Velaxis — In the forge"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__mark" aria-hidden="true">V</span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>In the forge</span><span class="hero-tile__body"><span class="hero-tile__kicker">Tool</span><span class="hero-tile__name">Velaxis</span><span class="hero-tile__cta">Explore →</span></span></a></div><script type="application/ld+json" data-hero-portfolio-ld>{"@context":"https://schema.org","@type":"ItemList","name":"VaultSpark Studios portfolio","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"VideoGame","name":"Call of Doodie","url":"https://vaultsparkstudios.com/games/call-of-doodie/","creativeWorkStatus":"Published"}},{"@type":"ListItem","position":2,"item":{"@type":"CreativeWork","name":"PromoGrind","url":"https://vaultsparkstudios.com/projects/promogrind/","creativeWorkStatus":"Published"}},{"@type":"ListItem","position":3,"item":{"@type":"VideoGame","name":"VaultSpark Football GM","url":"https://vaultsparkstudios.com/games/","creativeWorkStatus":"Published"}},{"@type":"ListItem","position":4,"item":{"@type":"CreativeWork","name":"MindFrame","url":"https://vaultsparkstudios.com/projects/","creativeWorkStatus":"In development"}},{"@type":"ListItem","position":5,"item":{"@type":"CreativeWork","name":"Velaxis","url":"https://vaultsparkstudios.com/projects/velaxis/","creativeWorkStatus":"In development"}}]}</script><!-- hero-showcase:end -->
+        <!-- hero-showcase:start --><style data-hero-portfolio-style>.ht-call-of-doodie{--tile-accent:#ff9478}.ht-call-of-doodie .hero-tile__cover{background-image:url(/assets/covers/doodie.png)}.ht-promogrind{--tile-accent:#7ae7c7}.ht-football-gm{--tile-accent:#69b3ff}.ht-football-gm .hero-tile__cover{background-image:url(/assets/covers/footballgm.png)}.ht-mindframe{--tile-accent:#38bdf8}.ht-mindframe .hero-tile__cover{background-image:url(/assets/covers/mindframe.png)}.ht-velaxis{--tile-accent:#4ade80}</style><div class="hero-showcase" role="group" aria-label="VaultSpark Studios portfolio — live and in-forge worlds"><div class="hero-tile ht-call-of-doodie is-live hero-tile--featured has-cover hero-tile--dual" role="group" aria-label="Call of Doodie — Live"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Live</span><span class="hero-tile__body"><span class="hero-tile__kicker">Game</span><span class="hero-tile__name">Call of Doodie</span><span class="hero-tile__note">Playable now. Satirical multiplayer chaos, live and still sharpening.</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="/call-of-doodie/" data-track-event="home_hero_tile_play" aria-label="Play free — Call of Doodie">▶ Play free</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/call-of-doodie/" data-track-event="home_hero_tile_details" aria-label="Details for Call of Doodie">Details →</a></span></span></div><div class="hero-tile ht-promogrind is-live no-cover hero-tile--dual" role="group" aria-label="PromoGrind — Live"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__mark" aria-hidden="true">P</span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Live</span><span class="hero-tile__body"><span class="hero-tile__kicker">Tool</span><span class="hero-tile__name">PromoGrind</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="/promogrind/" data-track-event="home_hero_tile_play" aria-label="Open — PromoGrind">Open</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/projects/promogrind/" data-track-event="home_hero_tile_details" aria-label="Details for PromoGrind">Details</a></span></span></div><div class="hero-tile ht-football-gm is-live has-cover hero-tile--dual" role="group" aria-label="VaultSpark Football GM — Live"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>Live</span><span class="hero-tile__body"><span class="hero-tile__kicker">Game</span><span class="hero-tile__name">VaultSpark Football GM</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="/vaultspark-football-gm/" data-track-event="home_hero_tile_play" aria-label="Play — VaultSpark Football GM">▶ Play</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/games/" data-track-event="home_hero_tile_details" aria-label="Details for VaultSpark Football GM">Details</a></span></span></div><div class="hero-tile ht-mindframe is-forge has-cover hero-tile--dual" role="group" aria-label="MindFrame — In the forge"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>In the forge</span><span class="hero-tile__body"><span class="hero-tile__kicker">Tool</span><span class="hero-tile__name">MindFrame</span><span class="hero-tile__actions"><a class="hero-tile__btn hero-tile__btn--primary" href="https://steadfast-determination-production.up.railway.app" rel="noopener" data-track-event="home_hero_tile_play" aria-label="Try it — MindFrame">Try it</a><a class="hero-tile__btn hero-tile__btn--ghost" href="/projects/" data-track-event="home_hero_tile_details" aria-label="Details for MindFrame">Details</a></span></span></div><a class="hero-tile ht-velaxis is-forge no-cover" href="/projects/velaxis/" data-track-event="home_hero_tile_click" aria-label="Velaxis — In the forge"><span class="hero-tile__cover" aria-hidden="true"></span><span class="hero-tile__mark" aria-hidden="true">V</span><span class="hero-tile__veil" aria-hidden="true"></span><span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>In the forge</span><span class="hero-tile__body"><span class="hero-tile__kicker">Tool</span><span class="hero-tile__name">Velaxis</span><span class="hero-tile__cta">Explore →</span></span></a></div><script type="application/ld+json" data-hero-portfolio-ld>{"@context":"https://schema.org","@type":"ItemList","name":"VaultSpark Studios portfolio","itemListElement":[{"@type":"ListItem","position":1,"item":{"@type":"VideoGame","name":"Call of Doodie","url":"https://vaultsparkstudios.com/games/call-of-doodie/","creativeWorkStatus":"Published"}},{"@type":"ListItem","position":2,"item":{"@type":"CreativeWork","name":"PromoGrind","url":"https://vaultsparkstudios.com/projects/promogrind/","creativeWorkStatus":"Published"}},{"@type":"ListItem","position":3,"item":{"@type":"VideoGame","name":"VaultSpark Football GM","url":"https://vaultsparkstudios.com/games/","creativeWorkStatus":"Published"}},{"@type":"ListItem","position":4,"item":{"@type":"CreativeWork","name":"MindFrame","url":"https://vaultsparkstudios.com/projects/","creativeWorkStatus":"In development"}},{"@type":"ListItem","position":5,"item":{"@type":"CreativeWork","name":"Velaxis","url":"https://vaultsparkstudios.com/projects/velaxis/","creativeWorkStatus":"In development"}}]}</script><!-- hero-showcase:end -->
         </div><!-- /.hero-stage -->
 
         <!-- 6. Meta strip — chips + stats -->

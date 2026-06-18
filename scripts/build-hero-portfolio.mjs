@@ -73,11 +73,15 @@ function liveHref(item) {
 
 const STATUS_LABEL = { SPARKED: 'Live', FORGE: 'In the forge', VAULTED: 'Vaulted' };
 
-// Project-specific primary CTA label.
-function primaryLabel(item, hasLive) {
+// Project-specific primary CTA label. Compact labels on small tiles (where a
+// second button shares the row); fuller labels on the featured tile.
+function primaryLabel(item, hasLive, featured) {
   if (!hasLive) return 'Explore →';
-  if (item.status === 'SPARKED') return item.type === 'game' ? '▶ Play free' : 'Open →';
-  return 'Try it →'; // forge with a live build (e.g. external beta)
+  if (item.status === 'SPARKED') {
+    if (item.type === 'game') return featured ? '▶ Play free' : '▶ Play';
+    return featured ? 'Open →' : 'Open';
+  }
+  return featured ? 'Try it →' : 'Try it'; // forge with a live build (external beta)
 }
 
 // Pure: build the ordered tile list + counts from the catalog.
@@ -104,9 +108,10 @@ function renderTile(item, fileExists, featured) {
   const mark = esc((item.name || '?').trim().charAt(0).toUpperCase());
   const typeLabel = item.type === 'game' ? 'Game' : item.type === 'tool' ? 'Tool' : item.type === 'platform' ? 'Platform' : 'World';
   const ext = (href) => href.startsWith('http') ? ' rel="noopener"' : '';
-  const pLabel = primaryLabel(item, !!live);
-  // Featured tile shows BOTH actions when there's a distinct live site + page.
-  const dual = featured && !!live && live !== page;
+  const pLabel = primaryLabel(item, !!live, featured);
+  // Any tile with a distinct live site + studio page shows BOTH actions.
+  const dual = !!live && live !== page;
+  const detailsLabel = featured ? 'Details →' : 'Details';
 
   const cls = ['hero-tile', `ht-${item.id}`, statusClass, featured ? 'hero-tile--featured' : '', coverKey ? 'has-cover' : 'no-cover', dual ? 'hero-tile--dual' : ''].filter(Boolean).join(' ');
   const inner = [
@@ -125,7 +130,7 @@ function renderTile(item, fileExists, featured) {
     inner.push(
       `<span class="hero-tile__actions">`,
       `<a class="hero-tile__btn hero-tile__btn--primary" href="${esc(primary)}"${ext(primary)} data-track-event="home_hero_tile_play" aria-label="${esc(pLabel.replace(/[▶→]/g, '').trim())} — ${esc(item.name)}">${esc(pLabel)}</a>`,
-      `<a class="hero-tile__btn hero-tile__btn--ghost" href="${esc(page)}" data-track-event="home_hero_tile_details" aria-label="Details for ${esc(item.name)}">Details →</a>`,
+      `<a class="hero-tile__btn hero-tile__btn--ghost" href="${esc(page)}" data-track-event="home_hero_tile_details" aria-label="Details for ${esc(item.name)}">${detailsLabel}</a>`,
       `</span>`,
       `</span>`, // /body
     );
