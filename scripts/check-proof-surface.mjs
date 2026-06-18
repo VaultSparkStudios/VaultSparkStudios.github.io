@@ -124,4 +124,11 @@ if (oqi.status !== 0) {
   console.warn('  ⚠  build-oracle-query-insights: api/oracle-query-insights.json missing or stale (run node scripts/build-oracle-query-insights.mjs)');
 }
 
+// S206: constellation activity — aggregates unlock events from rum-ux-history;
+// honestDark when < 3 real unlocks. Advisory: activates as tracker data arrives.
+const ca = spawnSync(process.execPath, [path.join(__dirname, 'build-constellation-activity.mjs'), '--check'], { stdio: 'inherit' });
+if (ca.status !== 0) {
+  console.warn('  ⚠  build-constellation-activity: api/constellation-activity.json missing or stale (run node scripts/build-constellation-activity.mjs)');
+}
+
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');
