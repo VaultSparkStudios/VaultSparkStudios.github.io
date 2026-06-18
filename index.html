@@ -251,6 +251,20 @@
       justify-content: center;
     }
 
+    /* S207: twin doorway CTAs — Games (gold .button) + Projects (blue accent),
+       both filled + equally prominent, distinct hue for wayfinding. */
+    .hero-actions .button-accent {
+      color: #03101f;
+      background: linear-gradient(135deg, #5cc0ff, #1FA2FF 55%, #2f86ff);
+      background-size: 200% 100%;
+      border-color: transparent;
+      transition: background-position .3s ease, filter .15s ease, transform .15s ease;
+    }
+    .hero-actions .button-accent:hover {
+      background-position: 100% 0;
+      filter: brightness(1.05);
+    }
+
     .hero-story {
       margin-top: 2rem;
       padding: 1.1rem 1.2rem;
@@ -1207,8 +1221,8 @@
 
         <!-- 5. CTA — play-first (S193: lead with the value — free in-browser play, no download; single primary preserved, "Explore" demoted to ghost secondary) -->
         <div class="hero-actions hero-reveal vsx-39180291ca">
-          <a class="button" href="/games/call-of-doodie/" data-track-event="home_hero_play_click">&#9654;&nbsp;Play Free — No Download</a>
-          <a class="button-ghost" href="/games/" data-track-event="home_hero_games_click">Explore Our Games</a>
+          <a class="button" href="/games/" data-track-event="home_hero_games_click">Explore Our Games</a>
+          <a class="button button-accent" href="/projects/" data-track-event="home_hero_projects_click">Explore Our Projects</a>
         </div>
 
         <!-- 6. Meta strip — chips + stats -->
