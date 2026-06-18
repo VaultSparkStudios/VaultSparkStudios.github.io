@@ -304,6 +304,9 @@ const RUM_UX_EVENTS = new Set([
   'funnel:trial_offer_shown',
   'funnel:trial_offer_clicked',
   'funnel:trial_offer_dismissed',
+  // S206 #13: oracle feedback close — text captured on thumbs-down; no text
+  // stored in RUM, just the submission event for volume tracking.
+  'oracle:feedback_submitted',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so

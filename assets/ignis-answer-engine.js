@@ -161,12 +161,46 @@
           fb.addEventListener('click', function (e) {
             var b = e.target && e.target.closest ? e.target.closest('.vs-ask-ignis__vote') : null;
             if (!b) return;
-            // S192: when a chip identified the cluster, tag the vote with it so
-            // the studio learns WHICH clusters miss (not just the global rate);
-            // typed queries (no known cluster) keep the global event.
             var part = b.getAttribute('data-vote') === 'helpful' ? 'helpful' : 'unhelpful';
+            // S192: cluster-tagged vote for per-topic quality tracking.
             emitUx('oracle-answer:' + part + (clusterId ? ':' + clusterId : ''));
-            fb.textContent = 'Thanks — noted.';
+            if (part === 'helpful') {
+              fb.textContent = 'Thanks — glad that helped.';
+            } else {
+              // S206 #13: thumbs-down expands to a text input so visitors can
+              // describe the miss; captured as oracle:feedback_submitted via RUM
+              // (no backend storage at L1 — data lands in the analytics pipeline).
+              fb.innerHTML = '';
+              var form = document.createElement('form');
+              form.style.cssText = 'display:flex;flex-direction:column;gap:.4rem;width:100%;';
+              var lbl = document.createElement('label');
+              lbl.textContent = 'What were you looking for?';
+              lbl.style.cssText = 'font-size:.78rem;color:var(--muted,#9aa3b2);';
+              var row = document.createElement('div');
+              row.style.cssText = 'display:flex;gap:.4rem;';
+              var inp = document.createElement('input');
+              inp.type = 'text';
+              inp.placeholder = 'e.g. how to cancel membership…';
+              inp.maxLength = 140;
+              inp.setAttribute('aria-label', 'What were you looking for?');
+              inp.style.cssText = 'flex:1;border:1px solid var(--line,rgba(255,255,255,.12));background:rgba(0,0,0,.18);color:var(--text,#e8eaf0);border-radius:8px;padding:.45rem .7rem;font:inherit;font-size:.82rem;';
+              var btn = document.createElement('button');
+              btn.type = 'submit';
+              btn.textContent = 'Send';
+              btn.style.cssText = 'border:0;border-radius:8px;padding:.45rem .8rem;background:rgba(255,196,0,.18);color:var(--gold,#ffc400);font-weight:700;font-size:.82rem;cursor:pointer;';
+              row.appendChild(inp);
+              row.appendChild(btn);
+              form.appendChild(lbl);
+              form.appendChild(row);
+              form.addEventListener('submit', function (ev) {
+                ev.preventDefault();
+                var val = inp.value.trim();
+                if (val) emitUx('oracle:feedback_submitted');
+                fb.textContent = 'Got it — we\'ll use this to improve.';
+              });
+              fb.appendChild(form);
+              inp.focus();
+            }
           });
         }
 
