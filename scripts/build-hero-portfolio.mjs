@@ -33,7 +33,7 @@ const ROOT = path.join(__dirname, '..');
 const FEED = path.join(ROOT, 'api/public-intelligence.json');
 const INDEX = path.join(ROOT, 'index.html');
 const TOTAL_PROJECTS = 27; // full registry (catalog is the public subset)
-const MAX_TILES = 7;       // featured + 6 in the bento
+const MAX_TILES = 5;       // featured (full-width) + 4 in a 2×2 bento — balanced against the lede
 
 const argv = process.argv.slice(2);
 const SELF_TEST = argv.includes('--self-test');
@@ -91,13 +91,20 @@ function renderTile(item, fileExists, featured) {
   const badge = STATUS_LABEL[item.status] || item.status;
   const external = href.startsWith('http');
   const attrs = external ? ' rel="noopener"' : '';
+  const mark = esc((item.name || '?').trim().charAt(0).toUpperCase());
+  const typeLabel = item.type === 'game' ? 'Game' : item.type === 'tool' ? 'Tool' : item.type === 'platform' ? 'Platform' : 'World';
+  const cta = item.status === 'SPARKED' ? (item.type === 'game' ? 'Play free →' : 'Open →') : 'Preview →';
   return [
     `<a class="${cls}" href="${esc(href)}"${attrs} data-track-event="home_hero_tile_click" aria-label="${esc(item.name)} — ${esc(badge)}">`,
     `<span class="hero-tile__cover" aria-hidden="true"></span>`,
+    coverKey ? '' : `<span class="hero-tile__mark" aria-hidden="true">${mark}</span>`,
     `<span class="hero-tile__veil" aria-hidden="true"></span>`,
-    `<span class="hero-tile__badge">${item.status === 'SPARKED' ? '▶ ' : ''}${esc(badge)}</span>`,
-    `<span class="hero-tile__body"><span class="hero-tile__name">${esc(item.name)}</span>`,
+    `<span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>${esc(badge)}</span>`,
+    `<span class="hero-tile__body">`,
+    `<span class="hero-tile__kicker">${esc(typeLabel)}</span>`,
+    `<span class="hero-tile__name">${esc(item.name)}</span>`,
     featured && item.note ? `<span class="hero-tile__note">${esc(item.note)}</span>` : '',
+    `<span class="hero-tile__cta">${esc(cta)}</span>`,
     `</span>`,
     `</a>`,
   ].join('');
