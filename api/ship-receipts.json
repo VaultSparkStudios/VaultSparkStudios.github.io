@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-18T05:54:11.037Z",
+  "generatedAt": "2026-06-18T07:08:38.613Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,27 +8,32 @@
     {
       "theme": "conversion",
       "label": "Conversion",
-      "feedbackSignals": 4,
+      "feedbackSignals": 5,
       "shippedCommits": [
+        {
+          "sha": "3524a313",
+          "summary": "membership-consolidation L1 — hub tab nav + Worker 301 redirects",
+          "ts": "2026-06-18T06:53:05.000Z"
+        },
+        {
+          "sha": "27380c8a",
+          "summary": "personalized-ignis-homepage L2 — member context panel",
+          "ts": "2026-06-18T06:31:35.000Z"
+        },
+        {
+          "sha": "ff5a6fbc",
+          "summary": "progressive-membership-reveal — paid tiers stagger on scroll",
+          "ts": "2026-06-18T06:20:23.000Z"
+        },
+        {
+          "sha": "ade727a1",
+          "summary": "adaptive homepage welcome strip — signed-in members see rank + Continue CTA",
+          "ts": "2026-06-18T06:08:45.000Z"
+        },
         {
           "sha": "4bd708d7",
           "summary": "overhaul VaultSpark Manifesto + sync identity surfaces",
           "ts": "2026-06-15T23:15:39.000Z"
-        },
-        {
-          "sha": "702ba5f5",
-          "summary": "classified intel section for Vault Members",
-          "ts": "2026-06-15T17:57:35.000Z"
-        },
-        {
-          "sha": "9e9fd182",
-          "summary": "IGNIS tier advisor + intent filter tabs (S201 #1+2)",
-          "ts": "2026-06-15T17:57:35.000Z"
-        },
-        {
-          "sha": "83ac0d1f",
-          "summary": "tier-aware portal header accent + member-directory discoverability + membership cross-link",
-          "ts": "2026-06-15T05:22:55.000Z"
         }
       ],
       "proof": null
@@ -36,32 +41,27 @@
     {
       "theme": "transparency",
       "label": "Transparency",
-      "feedbackSignals": 6,
+      "feedbackSignals": 4,
       "shippedCommits": [
+        {
+          "sha": "dab900df",
+          "summary": "ignis-knowledge-graph L2 — entity-linked chips + push-dispatch scaffold",
+          "ts": "2026-06-18T06:51:03.000Z"
+        },
+        {
+          "sha": "917825c9",
+          "summary": "natural-language-changelog L1 — SOUL-voice narrative from commits",
+          "ts": "2026-06-18T06:39:06.000Z"
+        },
+        {
+          "sha": "674851de",
+          "summary": "command-palette-ignis-terminal L1 — deep-dive link + URL pre-fill",
+          "ts": "2026-06-18T06:30:00.000Z"
+        },
         {
           "sha": "0d85587d",
           "summary": "remove duplicate % on intel health; increase /1000 font size to 1.2rem",
           "ts": "2026-06-15T19:11:20.000Z"
-        },
-        {
-          "sha": "0a2c6bfa",
-          "summary": "live IGNIS intelligence panel on /ignis/ page",
-          "ts": "2026-06-15T19:02:23.000Z"
-        },
-        {
-          "sha": "929bef56",
-          "summary": "session digest after 2+ queries",
-          "ts": "2026-06-15T17:57:35.000Z"
-        },
-        {
-          "sha": "71883411",
-          "summary": "cross-link brand <-> press media kits (#15 L1)",
-          "ts": "2026-06-15T06:01:54.000Z"
-        },
-        {
-          "sha": "ca8f57bb",
-          "summary": "render heatmap+insights from public feed (gitignored 404 root cause) + intelligence suite nav",
-          "ts": "2026-06-15T05:56:51.000Z"
         }
       ],
       "proof": null
@@ -69,17 +69,12 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 2,
+      "feedbackSignals": 1,
       "shippedCommits": [
         {
-          "sha": "3d7cdff5",
-          "summary": "schemaVersion on rank-climbers + RUM allowlist + build artifacts",
-          "ts": "2026-06-15T18:00:41.000Z"
-        },
-        {
-          "sha": "7478c7dc",
-          "summary": "RUM allowlist static-list + SIL reconcile + regenerated artifacts",
-          "ts": "2026-06-15T06:33:24.000Z"
+          "sha": "c145c899",
+          "summary": "hero GPU compositing — remove filter:blur, encode softness in gradient",
+          "ts": "2026-06-18T06:02:45.000Z"
         }
       ],
       "proof": {
@@ -100,12 +95,17 @@
     {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 1,
+      "feedbackSignals": 2,
       "shippedCommits": [
         {
-          "sha": "433bdca6",
-          "summary": "rank climbers strip on homepage",
-          "ts": "2026-06-15T17:57:35.000Z"
+          "sha": "762b6edd",
+          "summary": "hero-refinement v2 flag-gate — ?hero=v2 simplified hero variant",
+          "ts": "2026-06-18T06:06:29.000Z"
+        },
+        {
+          "sha": "da2ebce3",
+          "summary": "hero scroll activation — IntersectionObserver stagger + reduce base delay",
+          "ts": "2026-06-18T06:05:00.000Z"
         }
       ],
       "proof": null

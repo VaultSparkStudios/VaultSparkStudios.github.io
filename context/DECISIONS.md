@@ -2,6 +2,17 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-18 — S205 — Membership consolidation uses Worker 301s; IGNIS knowledge graph schema; Web Push deferred to VAPID-ready
+
+**D-S205.1 — Worker Layer 0c 301s are canonical for membership URL consolidation; meta-refresh stubs are never used.**
+`/membership-value/` → `/membership/#benefits` and `/vaultsparked/` → `/membership/#tiers` added as Worker regex 301s in `cloudflare/security-headers-worker.js`. This matches the Worker Layer 0c canonical pattern (single RTT vs multi-RTT; no crawl pollution). The `/vaultsparked/` path previously existed as a distinct page; anyone with a saved link now lands on the tiers anchor of the tabbed hub. No portal-access flow depends on the old `/vaultsparked/` URL — confirmed by checking that the portal auth flow uses `/vault-member/portal/`, not `/vaultsparked/`.
+
+**D-S205.2 — IGNIS knowledge graph uses entityType + relatedEntities[] on docs; no server-side graph DB needed.**
+`data/ignis-search-index.json` now carries entityType (game/hub/tool/universe/project) and relatedEntities[] (up to 4 related slugs + labels + types) as flat fields on 15 of 31 docs. Built at `npm run build` time by `build-ignis-search-index.mjs` from `data/game-registry.json` + static entity map. The answer engine renders chips from `topDoc.relatedEntities` with no fetch — zero runtime cost. This is intentionally shallow (no full graph traversal); deeper cross-entity inference is deferred to a future IGNIS knowledge base upgrade.
+
+**D-S205.3 — Web Push scaffolded but blocked on founder VAPID key generation; `push-dispatch.mjs` exits gracefully when keys are absent.**
+`cloudflare.vapid` capability is MISSING per `check-secrets.mjs --for cloudflare.vapid`. CANON-019 preflight completed — no agent path to generate VAPID keys. Created `scripts/push-dispatch.mjs` as a VAPID-aware scaffold that detects missing credentials and exits with step-by-step instructions rather than failing hard. The `web-push` npm package must be installed separately once VAPID keys are stored. Marked FOUNDER ACTION REQUIRED in TASK_BOARD.
+
 ### 2026-06-18 — S204 — Mission statement is purpose-first; complete abandoned WIP rather than revert; premium polish is an additive token layer
 
 **Decision (mission):** Replaced the "pressure / containment / moment before ignition" quoted mission statement with a purpose-first line across all 6 mission surfaces — *"The vault isn't where ideas wait. It's where games, cinematic worlds, creative tools, and AI-native intelligence are forged in the open, sealed until they're real, and sparked into the world with an identity impossible to ignore."* `/universe/` keeps the "pressure system" wording because it is explicitly in-world cosmology (fiction), not the studio mission. **Rationale:** the founder said the "pressure" framing doesn't reflect the studio's purpose; the new line keeps the vault/forge/spark lifecycle but leads with WHAT the studio makes (the connected portfolio) and the standard it holds work to.

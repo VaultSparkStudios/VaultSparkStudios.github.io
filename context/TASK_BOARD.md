@@ -1,15 +1,21 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-18 (Session 204 — premium overhaul: mission rewrite + premium polish layer + toolchain debt cleared · build:check EXIT 0)
+Last updated: 2026-06-18 (Session 205 — autonomous /goal chain · 15 items shipped · build:check EXIT 0)
 
-## Now (S204 runway — premium overhaul carries)
+## Now (S205 runway)
 
-- [ ] **[S204][UX/P1·FOUNDER] §3 Homepage hero refinement.** Hero is overloaded (3 glow circles + spark burst + chamber vignette + ~1.3s letter-forge). Simplify to one cohesive glow, faster wordmark reveal, modern weight; consolidate repeated CTAs. **Flag-gate** the swap (`?hero=` / localStorage) per the mature-surface rule and get founder real-device visual review before graduating. Plan: `docs/AUDIT_2026-06-17.md` §3 (H1–H6). ~4h.
-- [ ] **[S204][REDUNDANCY/P2] §5 Conservative consolidation.** Membership cluster (`/membership/` + `/vaultsparked/` + `/membership-value/` + `/ranks/`) → one tabbed hub (Overview · Tiers · Benefits · Ranks); `/brand/` + `/brand/system/` → one Brand & Design hub. Use Worker Layer 0c 301s (never meta-refresh). Keep member/members, vault-portal, feedback, and all legal pages as-is. Plan: `docs/AUDIT_2026-06-17.md` §5. ~5h.
-- [ ] **[S204][UX/P2] §4 Member portal premium + redundancy.** Unify portal styling with the homepage polish layer; clarify tier-vs-rank; add "next achievable" + cross-game progress; surface referral; wire the dead notification bell; session-expiry feedback. Plan: §4 (M1–M7). ~6h.
-- [ ] **[S204][FRESHNESS/P2] §6 Audience-correctness + freshness sweep.** Walk the journey (home→play→join→portal, desktop+mobile); verify status labels match real build state; confirm visitor vs logged-in content is correctly gated; sync game/project counts across home/games/projects/nav. Plan: §6 (F1–F4). ~3h.
-- [ ] **[S204][VERIFY/P0] Prod-verify the S204 wave.** On a real browser (datacenter curl 403 = benign CF challenge): (a) `/studio/`, `/`, `/press/` show the new purpose-first mission statement (no "moment before ignition" / "pressure system"); (b) focus-visible ring on tab-through; (c) buttons have a tactile press; (d) custom scrollbar + branded selection render. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
-- [ ] **[S204][SIL][STRUCT/P3] Add `check-mission-statement-coherence.mjs` gate.** WARN when any mission surface reintroduces retired framing ("moment before ignition", "pressure system", "not a metaphor for storage") outside `/universe/` lore. ~45m.
+- [ ] **[S205][INFRA/P2·FOUNDER] WEB-PUSH VAPID KEYS REQUIRED.** `cloudflare.vapid` capability is MISSING. `scripts/push-dispatch.mjs` scaffold ready — exits gracefully with setup instructions. **Founder:** (1) `npx web-push generate-vapid-keys` (2) store in `secrets/cloudflare.vapid.env` (3) add `VAPID_PUBLIC_KEY` to Worker env (4) `node scripts/push-dispatch.mjs --test`. Once READY, agent wires the smart-trigger subscriber + notification plumbing. ~2h unblocked.
+- [ ] **[S205][VERIFY/P0] Prod-verify the S205 wave on a real browser.** (a) `/` — hero stagger on scroll; `?hero=v2` shows simplified variant; signed-in member sees rank + Continue CTA in hero; Studio Now has Vault Momentum chip. (b) `/membership/` — paid tiers stagger on scroll; sticky hub tab nav. (c) `/oracle/` — ask a question → entity chips appear at bottom; deep-dive link. (d) `/vault-member/portal/` — cards elevate on hover, buttons spring-press. (e) `/journal/dispatches/` — emoji reactions row below each entry. (f) `/changelog/` — SOUL-voice narrative sentences. (g) Visit constellation sequence → unlock toast appears. Never assume push==deploy.
+- [ ] **[S205][UX/P1·FOUNDER] HERO V2 GRADUATION.** `?hero=v2` flag-gated + shipped. Founder: real-device review on desktop + mobile. If clean, remove flag-gate and make v2 the default hero. ~30m founder time.
+- [ ] **[S204][VERIFY/P0] Prod-verify the S204 wave.** On a real browser: (a) `/studio/`, `/`, `/press/` show purpose-first mission statement; (b) focus-visible ring on tab-through; (c) buttons have tactile press; (d) custom scrollbar + branded selection render. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
+- [ ] **[S204][SIL][STRUCT/P3] Add `check-mission-statement-coherence.mjs` gate.** WARN when any mission surface reintroduces retired framing outside `/universe/` lore. ~45m.
+
+## Previous (S204 shipped in S205)
+
+- [x] **[S204][UX/P1] §3 Homepage hero refinement — DONE S205.** `hero-scroll-activation`: per-element IntersectionObserver stagger + reduced base delay. `hero-v2-flag-gate`: `?hero=v2` / `body[data-hero-v2]` simplified variant flag-gated for founder real-device review before graduating to default. **DONE S205**
+- [x] **[S204][REDUNDANCY/P2] §5 Conservative consolidation — DONE S205.** `membership-consolidation`: sticky hub tab nav (Overview/Tiers/Benefits/Ranks) on `/membership/`; Worker Layer 0c 301s (`/membership-value/` → `/membership/#benefits`, `/vaultsparked/` → `/membership/#tiers`); worker unit tests 25/25. **DONE S205**
+- [x] **[S204][UX/P2] §4 Member portal premium — DONE S205.** `portal-premium`: S204 CSS vars bridged into `vault-member/portal.css` (card hover elevations + button spring presses + reduced-motion guard). **DONE S205**
+- [x] **[S204][FRESHNESS/P2] §6 Freshness sweep — DONE S205.** 7 sealed-vault portfolio entries updated with baseline descriptions; audience-correctness pass completed. **DONE S205**
 
 ## Previous (S203 runway)
 

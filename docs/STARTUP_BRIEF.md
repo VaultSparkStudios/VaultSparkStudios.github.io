@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-18 (Session 204 closeout) -->
+<!-- generated-at: 2026-06-18 (Session 205 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 204 closeout · 2026-06-18.
+> **Fast-boot brief** — generated at Session 205 closeout · 2026-06-18.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 205 · 2026-06-18 · FOUNDER MODE                         ║
+║  Session 206 · 2026-06-18 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -55,16 +55,16 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 204 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 205 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  █████████████████████░░░   87% used                          ║
-║     173,152 / 200,000 tok  ·  unknown/default  ·  heuristic      ║
-║     ~86,576 tok/turn  ·  cache 50%  ·  0 turns to compact        ║
-║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
+║  ✓  ████░░░░░░░░░░░░░░░░░░░░   18% used                          ║
+║     175,118 / 1,000,000 tok  ·  claude-code/opus-4-8-1m  ·  mea  ║
+║     ~87,559 tok/turn  ·  cache 50%  ·  8 turns to compact        ║
+║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
@@ -76,7 +76,7 @@
 ║  ✓  Truth         green  ·  Genome: ?                            ║
 ║  ⛔  Compliance   32/35 (91%) ↓ ███████▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
-║  ✓  Entropy       0.190  (healthy)                               ║
+║  ✓  Entropy       0.210  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
 ║  ✓  Patterns      no recurring pressure detected                 ║
 ║  ✓  Templates     v3.3 aligned                                   ║
@@ -84,6 +84,7 @@
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
 ║  ⛔  Doctor        9/13 (69%)  ·  3 failing                       ║
 ║  ✓  Cost          no ledger data                                 ║
+║  ⚠  Dead CTAs     1 dead (≥5 shown, 0 clicks)                    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
@@ -111,20 +112,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      §3 Homepage hero refinement. Hero is overl  ║
-║        §3 Homepage hero refinement. Hero is overloaded (3 glow   ║
+║   97  [VERIFY]       Prod-verify the S205 wave on a real browse  ║
+║        Prod-verify the S205 wave on a real browser. (a) / shipp  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      §5 Conservative consolidation. Membership   ║
-║        §5 Conservative consolidation. Membership cluster (/memb  ║
+║   90  [PRODUCT]      HERO V2 GRADUATION. ?hero=v2 flag-gated +   ║
+║        HERO V2 GRADUATION. ?hero=v2 flag-gated + shipped. Found  ║
 ║                                                                  ║
-║   91  [VERIFY]       §6 Audience-correctness + freshness sweep.  ║
-║        §6 Audience-correctness + freshness sweep. Walk the jour  ║
+║   89  [VERIFY]       Prod-verify the S204 wave. On a real brows  ║
+║        Prod-verify the S204 wave. On a real browser: (a) /studi  ║
 ║                                                                  ║
-║   90  [PRODUCT]      §4 Member portal premium + redundancy. Uni  ║
-║        §4 Member portal premium + redundancy. Unify portal styl  ║
+║   86  [BRAND]        Forge Window naming propagation             ║
+║        The URL stays stable for search, but the public vocabula  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -132,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 204 closeout · 2026-06-18*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 205 closeout · 2026-06-18*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

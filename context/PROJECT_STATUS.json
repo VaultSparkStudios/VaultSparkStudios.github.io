@@ -12,9 +12,16 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "Premium overhaul in progress: mission statement rewritten purpose-first + site-wide premium polish layer shipped; hero/portal/consolidation/freshness carried.",
-  "nextMilestone": "Prod-verify the manifesto wave across studio/home/press/universe/join on a real browser. Then: prod-verify S202 (vault-climbers strip, Nervous System visitor copy) + S201 wave. Universe depth-map (founder lore edges). Staging box recovery (HCLOUD_TOKEN).",
+  "currentFocus": "S205 autonomous wave shipped: engagement depth (constellation challenges, entity chips in IGNIS answers, dispatch reactions, vault-momentum score), membership consolidation (tab nav + Worker 301s), portal premium polish, hero v2 flag-gated. Next: prod-verify S205 wave + hero v2 graduation (founder real-device).",
+  "nextMilestone": "Prod-verify S205: ?hero=v2 flag, entity chips on Oracle, dispatch reactions, constellation unlock toast, membership tab nav. VAPID keys (founder action). Hero v2 graduation. S204/S203 verify passes.",
   "blockers": [
+    {
+      "id": "vapid-keys",
+      "label": "WEB-PUSH VAPID KEYS — FOUNDER ACTION REQUIRED",
+      "detail": "cloudflare.vapid capability MISSING. Scaffold scripts/push-dispatch.mjs ready. Founder: (1) npx web-push generate-vapid-keys (2) store in secrets/cloudflare.vapid.env (3) add VAPID_PUBLIC_KEY to Worker env (4) node scripts/push-dispatch.mjs --test.",
+      "since": "2026-06-18",
+      "addedSession": 205
+    },
     {
       "id": "staging-box-hcloud",
       "label": "STAGING BOX RECOVERY — HUMAN ACTION REQUIRED",
@@ -24,14 +31,14 @@
     }
   ],
   "lastUpdated": "2026-06-18",
-  "currentSession": 204,
+  "currentSession": 205,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-06-15",
-  "silScore": 981,
-  "silAvg3": 981.3,
-  "silVelocity": 3,
+  "silScore": 985,
+  "silAvg3": 982.3,
+  "silVelocity": 15,
   "silDebt": "↓",
-  "silLastSession": 204,
+  "silLastSession": 205,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -205,6 +212,6 @@
   "testsPassing": 116,
   "testsLastRun": "2026-06-15",
   "testsLabel": "build:check gates",
-  "publicNote": "We refreshed the studio's mission statement and gave the whole site a more polished, premium feel — smoother motion, clearer focus states, and a refined look across desktop and mobile.",
-  "publicNextStep": "Next: a redesigned homepage hero and a streamlined membership area."
+  "publicNote": "We deepened the experience this week: hidden constellation challenges for explorers, emoji reactions on studio dispatches, smart related-entity chips in the AI Oracle, and a smoother streamlined membership area.",
+  "publicNextStep": "Next: prod-verify the new wave on a real browser, and graduate the redesigned homepage hero once the founder signs off."
 }

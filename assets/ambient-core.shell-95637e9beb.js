@@ -939,6 +939,15 @@
         return !!document.querySelector('[data-track-event="game_join_from_play"]');
       },
       idle: true
+    },
+    {
+      // S205 #15: constellation challenges — hidden page-sequence badges.
+      // Tracks visited paths in localStorage; unlocks on matching a 3-page
+      // constellation sequence. Data from /data/constellations.json (no rebuild
+      // needed to add new constellations). Runs sitewide, idle-priority.
+      src: '/assets/constellation-tracker.js',
+      when: function () { return true; },
+      idle: true
     }
   ];
 

@@ -1,4 +1,4 @@
-# Genius Hit List — Session 204
+# Genius Hit List — Session 205
 
 Generated: 2026-06-18
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **85/100**
+- Overall opportunity pressure: **83/100**
 - Health: **green**
-- Current SIL: **981/500**
+- Current SIL: **985/500**
 - CI health: **check gh run list**
-- Current focus: Premium overhaul in progress: mission statement rewritten purpose-first + site-wide premium polish layer shipped; hero/portal/consolidation/freshness carried.
+- Current focus: S205 autonomous wave shipped: engagement depth (constellation challenges, entity chips in IGNIS answers, dispatch reactions, vault-momentum score), membership consolidation (tab nav + Worker 301s), portal premium polish, hero v2 flag-gated. Next: prod-verify S205 wave + hero v2 graduation (founder real-device).
 
 ## Strategic Read
 
@@ -22,10 +22,12 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] §3 Homepage hero refinement. Hero is overloaded (3 glow circles + spa…
-Final score: **96**
-[S204][UX/P1·FOUNDER] §3 Homepage hero refinement. Hero is overloaded (3 glow circles + spark burst + chamber vignette + ~1.3s letter-forge). Simplify to one cohesive glow, faster wordmark reveal, modern weight; consolidate repeated CTAs. Flag-gate the swap (?hero= / localStorage) per the mature-surface rule and get founder real-device visual review before graduating. Plan: docs/AUDIT_2026-06-17.md §3 (H1–H6). ~4h.
-Why it matters: §3 Homepage hero refinement. Hero is overloaded (3 glow circles + spar is open, local, and unblocked — can ship this session.
+#### 1. [VERIFY] Prod-verify the S205 wave on a real browser. (a) /
+Final score: **97**
+[S205][VERIFY/P0] Prod-verify the S205 wave on a real browser. (a) / — hero stagger on scroll; ?hero=v2 shows simplified variant; signed-in member sees rank + Continue CTA in hero; Studio Now has Vault Momentum chip. (b) /membership/ — paid tiers stagger on scroll; sticky hub tab nav. (c) /oracle/ — ask a question → entity chips appear at bottom; deep-dive link. (d) /vault-member/portal/ — cards elevate on hover, buttons spring-press. (e) /journal/dispatches/ — emoji reactions row below each entry. (f) /changelog/ — SOUL-voice narrative sentences. (g) Visit constellation sequence → unlock toast appears. Never assume push==deploy.
+Why it matters: Prod-verify the S205 wave on a real browser. (a) / shipped last session — confirm it works in production before piling new work on top.
+
+First command: `npm run build:check`
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,82 +36,80 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] §5 Conservative consolidation. Membership cluster (/membership/ + /va…
-Final score: **93**
-[S204][REDUNDANCY/P2] §5 Conservative consolidation. Membership cluster (/membership/ + /vaultsparked/ + /membership-value/ + /ranks/) → one tabbed hub (Overview · Tiers · Benefits · Ranks); /brand/ + /brand/system/ → one Brand & Design hub. Use Worker Layer 0c 301s (never meta-refresh). Keep member/members, vault-portal, feedback, and all legal pages as-is. Plan: docs/AUDIT_2026-06-17.md §5. ~5h.
-Why it matters: §5 Conservative consolidation. Membership cluster (/membership/ + /vau is open, local, and unblocked — can ship this session.
-
-#### 4. [VERIFY] §6 Audience-correctness + freshness sweep. Walk the journey (home→pla…
-Final score: **91**
-[S204][FRESHNESS/P2] §6 Audience-correctness + freshness sweep. Walk the journey (home→play→join→portal, desktop+mobile); verify status labels match real build state; confirm visitor vs logged-in content is correctly gated; sync game/project counts across home/games/projects/nav. Plan: §6 (F1–F4). ~3h.
-Why it matters: §6 Audience-correctness + freshness sweep. Walk the journey (home shipped last session — confirm it works in production before piling new work on top.
-
-First command: `npm run build:check`
-
-### NEXT
-
-#### 1. [PRODUCT] §4 Member portal premium + redundancy. Unify portal styling with the …
+#### 3. [PRODUCT] HERO V2 GRADUATION. ?hero=v2 flag-gated + shipped. Founder: real-devi…
 Final score: **90**
-[S204][UX/P2] §4 Member portal premium + redundancy. Unify portal styling with the homepage polish layer; clarify tier-vs-rank; add "next achievable" + cross-game progress; surface referral; wire the dead notification bell; session-expiry feedback. Plan: §4 (M1–M7). ~6h.
-Why it matters: §4 Member portal premium + redundancy. Unify portal styling with the h is open, local, and unblocked — can ship this session.
+[S205][UX/P1·FOUNDER] HERO V2 GRADUATION. ?hero=v2 flag-gated + shipped. Founder: real-device review on desktop + mobile. If clean, remove flag-gate and make v2 the default hero. ~30m founder time.
+Why it matters: HERO V2 GRADUATION. ?hero=v2 flag-gated + shipped. Founder: real-devic is open, local, and unblocked — can ship this session.
 
-#### 2. [VERIFY] Prod-verify the S204 wave. On a real browser (datacenter curl 403 = b…
-Final score: **88**
-[S204][VERIFY/P0] Prod-verify the S204 wave. On a real browser (datacenter curl 403 = benign CF challenge): (a) /studio/, /, /press/ show the new purpose-first mission statement (no "moment before ignition" / "pressure system"); (b) focus-visible ring on tab-through; (c) buttons have a tactile press; (d) custom scrollbar + branded selection render. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
-Why it matters: Prod-verify the S204 wave. On a real browser (datacenter curl 403 = be shipped last session — confirm it works in production before piling new work on top.
+#### 4. [VERIFY] Prod-verify the S204 wave. On a real browser: (a) /studio/, /, /press…
+Final score: **89**
+[S204][VERIFY/P0] Prod-verify the S204 wave. On a real browser: (a) /studio/, /, /press/ show purpose-first mission statement; (b) focus-visible ring on tab-through; (c) buttons have tactile press; (d) custom scrollbar + branded selection render. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
+Why it matters: Prod-verify the S204 wave. On a real browser: (a) /studio/, /, /press/ shipped last session — confirm it works in production before piling new work on top.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
-#### 3. [BRAND] Forge Window naming propagation
+### NEXT
+
+#### 1. [BRAND] Forge Window naming propagation
 Final score: **86**
 Finish propagating Forge Window language across generated copy and shared surfaces while preserving /studio-pulse/ for SEO.
 Why it matters: The URL stays stable for search, but the public vocabulary should stay coherent everywhere visitors see it.
 
 First command: `node scripts/propagate-nav.mjs`
 
-#### 4. [PRODUCT] Add check-mission-statement-coherence.mjs gate. WARN when any mission…
-Final score: **81**
-[S204][SIL][STRUCT/P3] Add check-mission-statement-coherence.mjs gate. WARN when any mission surface reintroduces retired framing ("moment before ignition", "pressure system", "not a metaphor for storage") outside /universe/ lore. ~45m.
+#### 2. [PRODUCT] WEB-PUSH VAPID KEYS REQUIRED. cloudflare.vapid capability is MISSING.…
+Final score: **84**
+[S205][INFRA/P2·FOUNDER] WEB-PUSH VAPID KEYS REQUIRED. cloudflare.vapid capability is MISSING. scripts/push-dispatch.mjs scaffold ready — exits gracefully with setup instructions. Founder: (1) npx web-push generate-vapid-keys (2) store in secrets/cloudflare.vapid.env (3) add VAPID_PUBLIC_KEY to Worker env (4) node scripts/push-dispatch.mjs --test. Once READY, agent wires the smart-trigger subscriber + notification plumbing. ~2h unblocked.
+Why it matters: WEB-PUSH VAPID KEYS REQUIRED. cloudflare.vapid capability is MISSING.  is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Add check-mission-statement-coherence.mjs gate. WARN when any mission…
+Final score: **84**
+[S204][SIL][STRUCT/P3] Add check-mission-statement-coherence.mjs gate. WARN when any mission surface reintroduces retired framing outside /universe/ lore. ~45m.
 Why it matters: Add check-mission-statement-coherence.mjs gate. WARN when any mission  is open, local, and unblocked — can ship this session.
 
-#### 5. [VERIFY] Prod-verify the manifesto wave on a real browser. After deploy: /stud…
-Final score: **80**
+#### 4. [VERIFY] Prod-verify the manifesto wave on a real browser. After deploy: /stud…
+Final score: **78**
 [S203][VERIFY/P0] Prod-verify the manifesto wave on a real browser. After deploy: /studio/ reads the new 5-movement manifesto (no "cannot be un-sparked" / "We don't build products" anywhere); homepage hero "Vault-Forge" line + "Inside The Vault" panel read the broadened copy; /press/ short bio mentions AI-native intelligence; /universe/ mythology shows the re-seal/reignite beat; /join/ subtext no longer says "game studio". Apex already confirmed serving new /studio/ copy at closeout — re-check the other 4 surfaces. ~10m.
-Why it matters: Prod-verify the manifesto wave on a real browser. After deploy: /studi shipped last session — confirm it works in production before piling new work on top.
+Why it matters: Prod-verify the manifesto wave on a real browser. After deploy: /studi was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check`
 
-### LATER
-
-#### 1. [PRODUCT] Add check-identity-coherence.mjs gate. WARN (not error) when public m…
-Final score: **75**
+#### 5. [PRODUCT] Add check-identity-coherence.mjs gate. WARN (not error) when public m…
+Final score: **78**
 [S203][SIL][STRUCT/P3] Add check-identity-coherence.mjs gate. WARN (not error) when public marketing prose narrows VaultSpark to "game studio" instead of the canonical "creative studio building games, cinematic worlds, creative tools, and AI-native intelligence." Mirrors how check-game-playability-coherence prevents status drift — this prevents identity drift. Allowlist legal/SEO contexts (privacy, investor, meta keywords). ~45m.
 Why it matters: Add check-identity-coherence.mjs gate. WARN (not error) when public ma is open, local, and unblocked — can ship this session.
 
-#### 2. [BRAND] Document the manifesto/identity canon in one place. The studio narrat…
-Final score: **72**
+### LATER
+
+#### 1. [BRAND] Document the manifesto/identity canon in one place. The studio narrat…
+Final score: **75**
 [S203][SIL][DOCS/P3] Document the manifesto/identity canon in one place. The studio narrative is now consistent across 7 surfaces but has no single source doc; a short docs/STUDIO_NARRATIVE.md (the manifesto + the FORGE→SPARK→VAULT cycle + the "different forms, one fire" portfolio framing) gives future sessions one place to copy voice from. ~30m.
 Why it matters: Document the manifesto/identity canon in one place. The studio narrati affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
-#### 3. [PRODUCT] Add check-public-note-freshness.mjs gate. Fails build:check if PROJEC…
-Final score: **69**
+#### 2. [PRODUCT] Add check-public-note-freshness.mjs gate. Fails build:check if PROJEC…
+Final score: **72**
 [S202][STRUCT/P3] Add check-public-note-freshness.mjs gate. Fails build:check if PROJECT_STATUS.publicNote is missing or contains session-code patterns (S\d{2,3}). Ensures Nervous System always shows visitor-friendly copy. ~30m.
 Why it matters: Add check-public-note-freshness.mjs gate. Fails build:check if PROJECT is open, local, and unblocked — can ship this session.
 
+#### 3. [PRODUCT] Document pathToFileURL pattern in docs/INTERNAL_TOOLS.md. ESM dynamic…
+Final score: **69**
+[S202][DOCS/P3] Document pathToFileURL pattern in docs/INTERNAL_TOOLS.md. ESM dynamic import() on Windows requires file:// URL scheme; bare absolute paths fail silently. Future scripts hitting the secrets gateway must use pathToFileURL(secretsPath).href. ~15m.
+Why it matters: Document pathToFileURL pattern in docs/INTERNAL_TOOLS.md. ESM dynamic  is open, local, and unblocked — can ship this session.
+
 ## Recommended Build Order
 
-1. §3 Homepage hero refinement. Hero is overloaded (3 glow circles + spa…
+1. Prod-verify the S205 wave on a real browser. (a) /
 2. Post-push CI confirmation
-3. §5 Conservative consolidation. Membership cluster (/membership/ + /va…
-4. §6 Audience-correctness + freshness sweep. Walk the journey (home→pla…
-5. §4 Member portal premium + redundancy. Unify portal styling with the …
-6. Prod-verify the S204 wave. On a real browser (datacenter curl 403 = b…
-7. Forge Window naming propagation
-8. Add check-mission-statement-coherence.mjs gate. WARN when any mission…
-9. Prod-verify the manifesto wave on a real browser. After deploy: /stud…
-10. Add check-identity-coherence.mjs gate. WARN (not error) when public m…
-11. Document the manifesto/identity canon in one place. The studio narrat…
-12. Add check-public-note-freshness.mjs gate. Fails build:check if PROJEC…
+3. HERO V2 GRADUATION. ?hero=v2 flag-gated + shipped. Founder: real-devi…
+4. Prod-verify the S204 wave. On a real browser: (a) /studio/, /, /press…
+5. Forge Window naming propagation
+6. WEB-PUSH VAPID KEYS REQUIRED. cloudflare.vapid capability is MISSING.…
+7. Add check-mission-statement-coherence.mjs gate. WARN when any mission…
+8. Prod-verify the manifesto wave on a real browser. After deploy: /stud…
+9. Add check-identity-coherence.mjs gate. WARN (not error) when public m…
+10. Document the manifesto/identity canon in one place. The studio narrat…
+11. Add check-public-note-freshness.mjs gate. Fails build:check if PROJEC…
+12. Document pathToFileURL pattern in docs/INTERNAL_TOOLS.md. ESM dynamic…
 
 ## Best Immediate Move
 

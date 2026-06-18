@@ -1,32 +1,37 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: d115c5eefc30 -->
-<!-- generated-at: 2026-06-15T08:02:16.082Z -->
+<!-- source-hash: 24b17d7757d7 -->
+<!-- generated-at: 2026-06-18T05:27:25.479Z -->
 
 # LATEST_HANDOFF (compact)
 
-# Session 200 Handoff — VaultSparkStudios.github.io
+SESSION 204 HANDOFF SUMMARY
 
-SHIPPED: 12/15 audit items (game covers, oracle heatmap+public API, homepage hero/theme/counters, portal tier-aware header, intelligence suite nav, cross-links). EXIT 0 on build. Deferred 3: universe-depth-map (lore edges), pathways merge (Worker 301s), FAQ refactor.
+Status
+- Session 204, intent PARTIAL. Mission rewrite + tooling + premium polish shipped/green; hero, portal, consolidation, freshness carried.
 
-NOW BUCKET (3 top):
-- Verify prod: /games/ shows bespoke cover tiles; /oracle/ renders 60-day heatmap + 2 insight cards (no "Loading"); homepage light-mode hero glows visible
-- Homepage "Every initiative" strip live counts (live/forge/sealed) via home-initiative-counter.js
-- oracle/studio-pulse/nervous-system each show "Studio Intelligence" suite nav
+Shipped
+- Toolchain restored to green: completed hidden WIP refactor, created 7 missing modules, fixed secrets.mjs CAP_MAP_PATH + S113 guard, restored ANTHROPIC_API export, fixed schemaVersion emission. Startup-brief renderer EXIT 0.
+- Mission rewritten purpose-first: retired "pressure/ignition" framing across studio/index.html, index.html, press/index.html. New line forged-in-open/sealed/sparked. Universe lore left as in-world fiction. Fixed "one spark"→"spark by spark".
+- Premium polish layer (additive) appended to assets/style.css: design tokens, focus-visible ring, button states, scrollbar, card lift. Reduced-motion guarded. Propagated to 104 pages (style.shell-a603ec43fc.css).
 
-BLOCKERS (3 top):
-- #4 universe-depth-map: needs founder-verified canon lore edges per boundary set
-- #11 pathways merge: requires Worker Layer 0c 301 redirects + content extraction
-- #13 FAQ data-driven: medium refactor scope pending priority
+Tests
+- npm run build:check EXIT 0 end-to-end. Fixed 3 previously-masked gate failures. Remaining ✗ are warn-only advisories (7 registry dirs, / desktop perf, changelog 66d stale).
 
-HUMAN-BLOCKED:
-- #4 (age: 1 session, awaiting founder lore verification)
-- #11 (age: 1 session, awaiting Worker ops)
-- #13 (age: 1 session, deferred pending capacity)
+Now (top 3)
+- §3 homepage hero refinement (flag-gate per mature-surface rule, founder visual review).
+- §5 conservative consolidation (membership cluster → tabbed hub; Worker Layer 0c 301s).
+- §4 portal (user panel).
 
-GATE DEBT:
-- RUM allowlist: static Set validation covers only 7 names; 2+ prefix-matched at runtime but check only validates static (low risk, noted)
-- S199 SIL arithmetic: corrected 975→980 (now matches category sum)
+Blockers (top 3)
+- Prod deploy unverified: confirm pages.dev origin + JSON path next session (CF bot-challenge ≠ outage).
+- Hero/consolidation/portal/freshness need fresh context to hit elite bar (see docs/AUDIT_2026-06-17.md).
+- Changelog 66d stale (warn-only).
 
-DEPLOY NOTE: CF Pages via push. Validate prod live before assuming deploy success.
+Human-blocked
+- Founder visual review required for hero refinement (§3) — pending since S204 (~1 session).
+- Founder decisions already captured: mission=purpose-first, consolidation=conservative.
 
-Next session: confirm 5 verify targets on prod, then prioritize #4/#11/#13 or new audit.
+Reference
+- Execution plan: docs/AUDIT_2026-06-17.md.
+
+Next session: verify prod deploy, then start §3 hero behind flag-gate with founder visual review.
