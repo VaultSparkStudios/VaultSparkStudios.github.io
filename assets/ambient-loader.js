@@ -127,6 +127,15 @@
       idle: true
     },
     {
+      // S206 #4: membership tier scroll-reveal — /membership/ only. Activates
+      // staggered IntersectionObserver animation on .tier-reveal cards.
+      src: '/assets/membership-tier-reveal.js',
+      when: function () {
+        return (location.pathname || '/').indexOf('/membership') === 0;
+      },
+      idle: true
+    },
+    {
       // S180 ambient-split wave 3 — the pathfinder only runs on these exact
       // information-finding routes, so keep it off every other cold page.
       src: '/assets/intent-flight-director.js',
