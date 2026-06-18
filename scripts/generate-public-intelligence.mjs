@@ -44,6 +44,29 @@ const CATALOG_NOTES = {
   'living-protocol': 'Generational wellness OS. Build your protocol, pass it down.',
 };
 
+// Specific, on-brand category per initiative (the coarse `type` bucket isn't the
+// real category — e.g. MindFrame is AI intelligence, not a generic "tool").
+// Grounded in each project's actual nature; falls back to a type label.
+const CATALOG_CATEGORIES = {
+  'call-of-doodie': 'Action Comedy',
+  'vaultspark-football-gm': 'Sports Sim',
+  'football-gm': 'Sports Sim',
+  'gridiron-gm': 'Sports Sim',
+  'solara': 'Survival World',
+  'vaultspark-forge': 'Crafting World',
+  'the-exodus': 'Narrative Survival',
+  'voidfall': 'Cinematic Saga',
+  'vaultfront': 'Survival World',
+  'mindframe': 'AI Intelligence',
+  'promogrind': 'Creator Tool',
+  'velaxis': 'Trading Intelligence',
+  'vorn': 'Agent Platform',
+  'seamline': 'Creator Tool',
+  'canon': 'Taste Platform',
+  'living-protocol': 'Wellness OS',
+};
+const TYPE_CATEGORY = { game: 'Game', tool: 'Tool', platform: 'Platform', infrastructure: 'Intelligence' };
+
 // Translate developmentPhase → approximate visible progress so the forge reads
 // honestly without leaking internal velocity numbers.
 function progressForPhase(phase, vaultStatus) {
@@ -101,6 +124,7 @@ async function loadRegistryCatalog() {
       id: project.id,
       name: project.name,
       type,
+      category: CATALOG_CATEGORIES[project.id] || TYPE_CATEGORY[project.type] || 'Project',
       status,
       progress: progressForPhase(project.developmentPhase, vaultRaw),
       note: CATALOG_NOTES[project.id] || 'In the forge.',

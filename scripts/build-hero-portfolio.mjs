@@ -101,16 +101,20 @@ export function planPortfolio(catalog) {
 function renderTile(item, fileExists, featured) {
   const page = resolveHref(item, fileExists);   // studio landing page
   const live = liveHref(item);                  // live/deployed site, or null
-  const primary = live || page;                 // live → live site; else the page
+  // Only truly-live (SPARKED) projects route to their live site; FORGE projects
+  // route to their studio page (a forge dev/staging URL is not a public destination).
+  const sparkedLive = item.status === 'SPARKED' && live;
+  const primary = sparkedLive ? live : page;
   const coverKey = COVERS[item.id];
   const statusClass = item.status === 'SPARKED' ? 'is-live' : item.status === 'VAULTED' ? 'is-vaulted' : 'is-forge';
   const badge = STATUS_LABEL[item.status] || item.status;
   const mark = esc((item.name || '?').trim().charAt(0).toUpperCase());
-  const typeLabel = item.type === 'game' ? 'Game' : item.type === 'tool' ? 'Tool' : item.type === 'platform' ? 'Platform' : 'World';
+  // Specific category (e.g. "AI Intelligence") from the feed; fall back to a type label.
+  const typeLabel = item.category || (item.type === 'game' ? 'Game' : item.type === 'tool' ? 'Tool' : item.type === 'platform' ? 'Platform' : 'World');
   const ext = (href) => href.startsWith('http') ? ' rel="noopener"' : '';
-  const pLabel = primaryLabel(item, !!live, featured);
-  // Any tile with a distinct live site + studio page shows BOTH actions.
-  const dual = !!live && live !== page;
+  const pLabel = primaryLabel(item, !!sparkedLive, featured);
+  // Dual buttons only when a SPARKED project has a distinct live site + studio page.
+  const dual = !!sparkedLive && live !== page;
   const detailsLabel = featured ? 'Details →' : 'Details';
 
   const cls = ['hero-tile', `ht-${item.id}`, statusClass, featured ? 'hero-tile--featured' : '', coverKey ? 'has-cover' : 'no-cover', dual ? 'hero-tile--dual' : ''].filter(Boolean).join(' ');
