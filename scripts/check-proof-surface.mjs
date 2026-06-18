@@ -83,4 +83,13 @@ if (failed) {
   console.error('check-proof-surface: a proof-surface honesty gate failed (see above).');
   process.exit(1);
 }
+
+// S205: mission-coherence advisory — WARN only (does not fail the build gate),
+// but surfaces retired framing before it reaches prod. Exit 1 → advisory printed
+// above; this outer check never propagates the non-zero status.
+const mc = spawnSync(process.execPath, [path.join(__dirname, 'check-mission-statement-coherence.mjs')], { stdio: 'inherit' });
+if (mc.status !== 0) {
+  console.warn('  ⚠  check-mission-statement-coherence: retired framing detected (advisory — see above)');
+}
+
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');
