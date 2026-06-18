@@ -96,4 +96,11 @@ if (mc.status !== 0) {
   console.warn('  ⚠  check-mission-statement-coherence: retired framing detected (advisory — see above)');
 }
 
+// S205: dead-CTA advisory — verifies api/dead-ctas.json is in sync with funnel-summary.
+// Non-fatal: dead CTAs are an attention signal, not a build blocker.
+const dc = spawnSync(process.execPath, [path.join(__dirname, 'check-dead-ctas.mjs'), '--check'], { stdio: 'inherit' });
+if (dc.status !== 0) {
+  console.warn('  ⚠  check-dead-ctas: dead-ctas.json drift (run node scripts/check-dead-ctas.mjs)');
+}
+
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');
