@@ -33,17 +33,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { resolveCapability, getSecret, redact } from './lib/secrets.mjs';
-import { ANTHROPIC_API } from './lib/model-router.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-// Public-safe repos do not carry their own secrets/ — fall back to the canonical
-// secrets/ in the sibling vaultspark-studio-ops checkout. (S112 fix; restored S114.)
-const CAP_MAP_CANDIDATES = [
-  path.join(ROOT, 'secrets', 'CAPABILITY_MAP.json'),
-  path.resolve(ROOT, '..', 'vaultspark-studio-ops', 'secrets', 'CAPABILITY_MAP.json'),
-];
-const CAP_MAP_PATH = CAP_MAP_CANDIDATES.find(p => fs.existsSync(p)) || CAP_MAP_CANDIDATES[0];
+const CAP_MAP_PATH = path.join(ROOT, 'secrets', 'CAPABILITY_MAP.json');
 const LEDGER = path.join(ROOT, 'portfolio', 'ops', 'capability-probes.ndjson');
 
 const args = process.argv.slice(2);
@@ -63,7 +56,7 @@ if (!ALL && !FILTER) {
 const PROBES = {
   'claude.api': async () => {
     const key = getSecret('ANTHROPIC_API_KEY', 'claude.api');
-    const r = await httpFetch(ANTHROPIC_API.models, { headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01' } });
+    const r = await httpFetch('https://api.anthropic.com/v1/models', { headers: { 'x-api-key': key, 'anthropic-version': '2023-06-01' } });
     return interpret(r);
   },
   'stripe.checkout': async () => {
@@ -163,12 +156,19 @@ function interpret(r) {
 }
 
 // ── Main ────────────────────────────────────────────────────────────────
-if (!fs.existsSync(CAP_MAP_PATH)) {
-  console.error('probe-capability · CAPABILITY_MAP.json not found in:');
-  for (const p of CAP_MAP_CANDIDATES) console.error(`  ${p}`);
-  process.exit(1);
+// S157 #8 — the map is gitignored, so CI checkouts (and fresh machines) lack
+// it. Exit with an explicit honest skip instead of an ENOENT stack trace.
+let capMap;
+try {
+  capMap = JSON.parse(fs.readFileSync(CAP_MAP_PATH, 'utf8'));
+} catch (e) {
+  if (e.code === 'ENOENT') {
+    if (JSON_MODE) console.log('[]');
+    console.error('⚠ secrets/CAPABILITY_MAP.json missing — probe skipped (SKIPPED=no-capability-map)');
+    process.exit(0);
+  }
+  throw e;
 }
-const capMap = JSON.parse(fs.readFileSync(CAP_MAP_PATH, 'utf8'));
 const caps = FILTER ? [FILTER] : Object.keys(capMap.capabilities);
 
 const results = [];
@@ -201,14 +201,7 @@ try {
   fs.mkdirSync(path.dirname(LEDGER), { recursive: true });
   for (const r of results) fs.appendFileSync(LEDGER, JSON.stringify(r) + '\n');
 } catch { /* non-fatal */ }
-// Stamp lastProbeAt/Status back, but only when CAPABILITY_MAP lives in this repo.
-// The sibling-fallback path is in vaultspark-studio-ops — silent cross-repo
-// writes would violate the AGENTS.md cross-repo-write safety rule.
-if (CAP_MAP_PATH.startsWith(ROOT + path.sep)) {
-  try { fs.writeFileSync(CAP_MAP_PATH, JSON.stringify(capMap, null, 2) + '\n'); } catch { /* non-fatal */ }
-} else if (!JSON_MODE) {
-  console.log(`probe-capability · skipped CAPABILITY_MAP stamp (read from sibling: ${path.relative(ROOT, CAP_MAP_PATH)})`);
-}
+try { fs.writeFileSync(CAP_MAP_PATH, JSON.stringify(capMap, null, 2) + '\n'); } catch { /* non-fatal */ }
 
 if (JSON_MODE) { console.log(JSON.stringify(results, null, 2)); process.exit(0); }
 

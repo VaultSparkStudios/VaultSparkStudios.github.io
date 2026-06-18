@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-06-18T00:18:43.727Z",
+  "generatedAt": "2026-06-18T05:00:26.966Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
     "feeds": 11,
     "present": 11,
-    "fresh": 7,
-    "stale": 4,
-    "trustScore": 64,
+    "fresh": 9,
+    "stale": 2,
+    "trustScore": 82,
     "worstStale": {
       "key": "field-verdicts",
-      "ageSeconds": 885213,
+      "ageSeconds": 902117,
       "generatedAt": "2026-06-07T18:25:10.430Z"
     },
     "seedRisk": []
@@ -21,35 +21,35 @@
     "uptime": {
       "present": true,
       "source": "/api/uptime.json",
-      "generatedAt": "2026-06-18T00:18:43.243Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-06-15T23:02:20.820Z",
+      "freshnessSeconds": 194286,
       "staleAfterH": 2,
-      "stale": false,
+      "stale": true,
       "data": {
         "schemaVersion": "2.0",
-        "generatedAt": "2026-06-18T00:18:43.243Z",
+        "generatedAt": "2026-06-15T23:02:20.820Z",
         "generatedBy": "scripts/probe-uptime.mjs",
         "overall": "up",
         "liveness": {
           "endpoint": "/api/founder-presence.json",
           "status": 200,
-          "ms": 35,
+          "ms": 45,
           "ok": true
         },
         "routes": [
           {
             "route": "/",
             "status": 200,
-            "ms": 133,
+            "ms": 144,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 133,
+              "ms": 144,
               "ok": true
             },
             "edge": {
               "status": 403,
-              "ms": 43,
+              "ms": 83,
               "shape": "challenged",
               "note": "edge-challenged (informational; real browsers pass)"
             }
@@ -57,16 +57,16 @@
           {
             "route": "/games/",
             "status": 200,
-            "ms": 35,
+            "ms": 29,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 35,
+              "ms": 29,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 126,
+              "ms": 158,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -74,16 +74,16 @@
           {
             "route": "/vault-member/",
             "status": 200,
-            "ms": 34,
+            "ms": 127,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 34,
+              "ms": 127,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 71,
+              "ms": 82,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -91,16 +91,16 @@
           {
             "route": "/membership/",
             "status": 200,
-            "ms": 33,
+            "ms": 160,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 33,
+              "ms": 160,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 54,
+              "ms": 86,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -108,16 +108,16 @@
           {
             "route": "/status/",
             "status": 200,
-            "ms": 28,
+            "ms": 132,
             "ok": true,
             "origin": {
               "status": 200,
-              "ms": 28,
+              "ms": 132,
               "ok": true
             },
             "edge": {
               "status": 200,
-              "ms": 62,
+              "ms": 78,
               "shape": "served",
               "note": "served (real content reached)"
             }
@@ -125,7 +125,7 @@
         ],
         "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path).",
         "rollup": {
-          "checks": 78,
+          "checks": 64,
           "upPct": 100,
           "lastIncidentAt": null,
           "lastIncidentState": null
@@ -135,10 +135,10 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-06-15T17:03:09.456Z",
-      "freshnessSeconds": 198934,
+      "generatedAt": "2026-06-18T05:00:25.625Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
-      "stale": true,
+      "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-field-win-proof.mjs",
@@ -196,19 +196,19 @@
             "postLcpP75": 1227
           }
         ],
-        "generatedAt": "2026-06-15T17:03:09.456Z"
+        "generatedAt": "2026-06-18T05:00:25.625Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-06-15T17:03:13.840Z",
-      "freshnessSeconds": 198930,
+      "generatedAt": "2026-06-18T05:00:26.784Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
-      "stale": true,
+      "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-15T17:03:13.840Z",
+        "generatedAt": "2026-06-18T05:00:26.784Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -219,7 +219,7 @@
           "noDeadInternalUrls": true
         },
         "counts": {
-          "publicProjects": 13,
+          "publicProjects": 14,
           "manifestShards": 8,
           "llmsShards": 8,
           "fixedSurfaces": 13
@@ -236,12 +236,12 @@
     "ci-status": {
       "present": true,
       "source": "/api/ci-status.json",
-      "generatedAt": "2026-06-15T23:47:17.826Z",
-      "freshnessSeconds": 174686,
+      "generatedAt": "2026-06-15T23:20:58.062Z",
+      "freshnessSeconds": 193169,
       "staleAfterH": 96,
       "stale": false,
       "data": {
-        "generatedAt": "2026-06-15T23:47:17.826Z",
+        "generatedAt": "2026-06-15T23:20:58.062Z",
         "generatedBy": ".github/workflows/ci-status-beacon.yml",
         "allGreen": false,
         "summary": "One or more CI gates are failing. Studio is investigating.",
@@ -249,17 +249,17 @@
           {
             "name": "E2E Test Suite",
             "status": "failure",
-            "updatedAt": "2026-06-15T23:42:59Z"
+            "updatedAt": "2026-06-15T23:17:08Z"
           },
           {
             "name": "Accessibility Audit",
             "status": "failure",
-            "updatedAt": "2026-06-15T23:44:35Z"
+            "updatedAt": "2026-06-15T23:18:40Z"
           },
           {
             "name": "Lighthouse CI",
             "status": "failure",
-            "updatedAt": "2026-06-15T23:47:02Z"
+            "updatedAt": "2026-06-15T23:20:47Z"
           }
         ]
       }
@@ -267,19 +267,19 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-06-15T17:03:11.341Z",
-      "freshnessSeconds": 198932,
+      "generatedAt": "2026-06-18T05:00:26.091Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
-      "stale": true,
+      "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-15T17:03:11.341Z",
+        "generatedAt": "2026-06-18T05:00:26.091Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
         "windowDays": 7,
-        "totalSamples": 128,
-        "routesObserved": 32,
+        "totalSamples": 77,
+        "routesObserved": 24,
         "minSamples": 50,
         "fieldReady": false,
         "measured": []
@@ -288,13 +288,13 @@
     "staging-health": {
       "present": true,
       "source": "/api/staging-health.json",
-      "generatedAt": "2026-06-18T00:18:43.630Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-06-15T23:02:21.328Z",
+      "freshnessSeconds": 194286,
       "staleAfterH": 168,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-18T00:18:43.630Z",
+        "generatedAt": "2026-06-15T23:02:21.328Z",
         "generatedBy": "scripts/check-staging-parity.mjs",
         "publicSafe": true,
         "production": "https://vaultsparkstudios.com",
@@ -379,13 +379,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-06-18T00:18:43.687Z",
-      "freshnessSeconds": 0,
+      "generatedAt": "2026-06-18T05:00:26.044Z",
+      "freshnessSeconds": 1,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-18T00:18:43.687Z",
+        "generatedAt": "2026-06-18T05:00:26.044Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
@@ -462,7 +462,7 @@
       "present": true,
       "source": "/api/field-verdicts.json",
       "generatedAt": "2026-06-07T18:25:10.430Z",
-      "freshnessSeconds": 885213,
+      "freshnessSeconds": 902117,
       "staleAfterH": 72,
       "stale": true,
       "data": {
@@ -540,7 +540,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 346724,
+      "freshnessSeconds": 363627,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -629,14 +629,14 @@
     "public-status": {
       "present": true,
       "source": "/api/public-status.json",
-      "generatedAt": "2026-06-15T00:00:00.000Z",
-      "freshnessSeconds": 260324,
+      "generatedAt": "2026-06-18T00:00:00.000Z",
+      "freshnessSeconds": 18027,
       "staleAfterH": 720,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
         "generatedBy": "scripts/build-public-status.mjs",
-        "generatedAt": "2026-06-15",
+        "generatedAt": "2026-06-18",
         "publicSafe": true,
         "source": "Derived from public feeds (public-intelligence + heartbeat + commit-map) until the Hub Worker /public-status endpoint is wired. Every value traces to a live source.",
         "studio": {
@@ -645,9 +645,9 @@
           "forge": 8,
           "sealed": 16,
           "activeThisWeek": 1,
-          "lastArkBroadcastAt": "2026-06-15T16:39:48.000Z",
-          "ignisHeartbeatAt": "2026-06-15T07:06:31.929Z",
-          "lastShippedSession": "S202"
+          "lastArkBroadcastAt": "2026-06-15T23:41:27.000Z",
+          "ignisHeartbeatAt": "2026-06-15T20:10:06.925Z",
+          "lastShippedSession": "S204"
         },
         "nervousSystem": [
           {
@@ -672,7 +672,7 @@
           },
           {
             "label": "Last shipped",
-            "value": "S202"
+            "value": "S204"
           }
         ]
       }
@@ -680,14 +680,14 @@
     "security-posture": {
       "present": true,
       "source": "/api/security-posture.json",
-      "generatedAt": "2026-06-15T00:00:00.000Z",
-      "freshnessSeconds": 260324,
+      "generatedAt": "2026-06-18T00:00:00.000Z",
+      "freshnessSeconds": 18027,
       "staleAfterH": 720,
       "stale": false,
       "data": {
         "schemaVersion": "1.1",
         "generatedBy": "scripts/build-security-posture.mjs",
-        "generatedAt": "2026-06-15",
+        "generatedAt": "2026-06-18",
         "publicSafe": true,
         "posture": "active",
         "source": "Derived from live repo evidence at build time. Each control links the file or build gate that proves it; an unresolvable control downgrades to unverified rather than being asserted.",

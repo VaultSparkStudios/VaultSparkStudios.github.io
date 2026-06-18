@@ -1,6 +1,6 @@
 # Vorn
 
-> S194 genius cycle: advice loop detection (NLP topic classifier in weekly insight worker), LLM feature cost ceiling (Redis INCR per-feature daily cap in llm-gateway), ghost-run regression watchdog (Jaccard similarity on run_inputs before/after cap PATCH), token burn rate panel (daily sparkline + feature breakdown), platform pattern of the week (Monday Haiku cross-studio mining), consumer digest self-serve (/settings/digest page), notification category filters (5 chips + API param), achievement rarity protocol (nightly 5-tier computation), capability stock exchange (ISR /market + trend arrows), route modularization L1 (directory + README). 12 items shipped. All 198 migrations applied to prod. 13 workers active.
+> S195 genius cycle: streak shield badge (Redis 72h TTL, ≥3d streak), worker-preflight utility (COUNT skip gates, 4 workers), predictive capability warnings (health_trajectory < -5, WeeklyInsightCard red/amber alerts, migration 200), capability route modularization L2 (invoke.ts sub-router, 4874→4506 lines), topic discovery (cap-topic-extractor nightly, capability_topics GIN index, migration 201, RelatedCapabilitiesRail, OutputEvolutionPanel), MCP resource graph (resources/list + resources/read for top-30 caps + leaderboard), compact playground (compactMode toggle + localStorage recent inputs), agent coalition formation (agent_coalitions table migration 202, coalition-suggestion-worker nightly, 3 studio routes, CoalitionBadge + CoalitionPanel). 12 items shipped. All 202 migrations applied to prod. 15 workers active.
 
 ## Identity
 - Slug: vorn
@@ -12,10 +12,10 @@
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S194 genius cycle: advice loop detection (NLP topic classifier in weekly insight worker), LLM feature cost ceiling (Redis INCR per-feature daily cap in llm-gateway), ghost-run regression watchdog (Jaccard similarity on run_inputs before/after cap PATCH), token burn rate panel (daily sparkline + feature breakdown), platform pattern of the week (Monday Haiku cross-studio mining), consumer digest self-serve (/settings/digest page), notification category filters (5 chips + API param), achievement rarity protocol (nightly 5-tier computation), capability stock exchange (ISR /market + trend arrows), route modularization L1 (directory + README). 12 items shipped
+S195 genius cycle: streak shield badge (Redis 72h TTL, ≥3d streak), worker-preflight utility (COUNT skip gates, 4 workers), predictive capability warnings (health_trajectory < -5, WeeklyInsightCard red/amber alerts, migration 200), capability route modularization L2 (invoke.ts sub-router, 4874→4506 lines), topic discovery (cap-topic-extractor nightly, capability_topics GIN index, migration 201, RelatedCapabilitiesRail, OutputEvolutionPanel), MCP resource graph (resources/list + resources/read for top-30 caps + leaderboard), compact playground (compactMode toggle + localStorage recent inputs), agent coalition formation (agent_coalitions table migration 202, coalition-suggestion-worker nightly, 3 studio routes, CoalitionBadge + CoalitionPanel). 12 items shipped
 
 ## Next milestone
-S195: capability route L2 modularization (split capabilities.ts 4857 lines into 5 sub-routers); agent chemistry score from capability_chains_observed; Brevo credentials in secrets gateway for consumer digest; LLM_FEATURE_CEILING_DEFAULT env var in Hetzner container.
+S196: wire CoalitionPanel + CoalitionBadge into agents/[handle]/page.tsx; capability route L3 modularization (extract pricing.ts sub-router); agent chemistry score from capability_chains_observed.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.

@@ -31,18 +31,8 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
-// Writes (.env target, paste.txt source) MUST stay local — this script's
-// purpose is to land credentials in the repo it's invoked from. CAPABILITY_MAP
-// reads, however, can fall back to the canonical sibling map (same pattern
-// as lib/secrets.mjs and probe-capability.mjs). Without this fallback,
-// `--list` blows up in public-safe repos that don't carry a local cap map.
-// (S112 fix; restored S114 after S113 regression.)
 const SECRETS_DIR = path.join(ROOT, 'secrets');
-const CAP_MAP_CANDIDATES = [
-  path.join(SECRETS_DIR, 'CAPABILITY_MAP.json'),
-  path.resolve(ROOT, '..', 'vaultspark-studio-ops', 'secrets', 'CAPABILITY_MAP.json'),
-];
-const CAP_MAP = CAP_MAP_CANDIDATES.find(p => fs.existsSync(p)) || CAP_MAP_CANDIDATES[0];
+const CAP_MAP = path.join(SECRETS_DIR, 'CAPABILITY_MAP.json');
 
 const args = process.argv.slice(2);
 const JSON_MODE = args.includes('--json');

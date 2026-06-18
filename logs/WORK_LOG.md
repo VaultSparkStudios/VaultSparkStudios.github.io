@@ -1,5 +1,19 @@
 # Work Log
 
+## 2026-06-18 — Session 204 (founder premium-overhaul · mission rewrite + premium polish + toolchain debt cleared · build:check EXIT 0)
+
+Founder directive: make the website elite/premium/seamless across all devices (cost authorized), rewrite the "pressure" mission statement, redundancy/merge pass, freshness sweep, token-optimal plan. Clarified via AskUserQuestion → mission Purpose/portfolio-first, Conservative consolidation, full build. Full analysis + plan written to `docs/AUDIT_2026-06-17.md`.
+
+**Toolchain debt cleared (the session's hidden bulk):** a pre-existing uncommitted WIP refactor had silently broken the startup-brief renderer (imported 6 never-created modules) and the secrets gateway. Completed it: created `scripts/lib/turn-classifier.mjs`, `visual-blocks.mjs`, `doctor-predicates.mjs`, `shared-policies.mjs`, `sil-categories.mjs`, `skill-cost-ledger.mjs`, and `scripts/classify-warning-provenance.mjs` (each to its consumer contract); fixed `secrets.mjs` so `CAP_MAP_PATH` resolves to whichever dir holds CAPABILITY_MAP.json and the `VAULTSPARK_SECRETS_DIR_OVERRIDE` test-isolation / S113 regression guard is restored; restored the `ANTHROPIC_API` export in `model-router.mjs`; root-fixed `build-ignis-platform-status.mjs` to always emit `schemaVersion`. Renderer EXIT 0 + validates conformant.
+
+**Mission statement rewritten (purpose-first):** retired "pressure/containment/moment before ignition" across `studio/index.html` (manifesto blockquote + why-VaultSpark quote), `index.html` (Inside-The-Vault panel + Vault-Forge hero story), `press/index.html` (blockquote + short bio); `/universe/` lore preserved as fiction; fixed `studio/index.html` "one spark"→"spark by spark" (solo-bet posture gate).
+
+**Premium polish layer:** appended additive layer to `assets/style.css` — motion/elevation/radius/accent-role tokens, site-wide `:focus-visible` ring, button press states, branded selection, refined scrollbar, smoother card lift (reduced-motion-guarded). Shell rebuilt + propagated to 104 pages (`style.shell-a603ec43fc.css`). Caught + removed a dangerous duplicate `[data-reveal]` opacity rule before it shipped (would have hidden content — scroll-reveal already uses `.revealed`).
+
+**Gates:** `build:check` EXIT 0. Completing the WIP exposed + fixed 3 previously-masked failures (ignis-platform `schemaVersion`, taskboard runway hygiene, studio solo-bet posture). Rotated TASK_BOARD 184KB→167KB.
+
+**Carried (need fresh context for the elite bar):** §3 hero refinement (flag-gate + founder review), §4 portal premium, §5 conservative consolidation (membership+brand hubs via Worker 301s), §6 freshness sweep — all in `docs/AUDIT_2026-06-17.md`.
+
 ## 2026-06-15 — Session 202 (bug-fix session · 3 fixes · build:check EXIT 0)
 
 Founder-directed bug-fix session. No /audit. Three targeted fixes shipped as one commit (`46b1784c`).

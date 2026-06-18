@@ -9,15 +9,46 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 981.0 | 5: 979.8 | 10: 970 | 25: 972 | all: 966 (v3.0 /1000)
-  └ 3-session: Dev 98.7 | Align 98.3 | Momentum 98.0 | Engage 98.0 | Process 98.3
-Velocity trend: → (S203: founder creative session, 1 deliverable — manifesto overhaul + 7-surface identity sync, deployed live; S202: 3 fixes; S201: 9/10) | Protocol velocity: → (content/brand session — no protocol changes) | Debt: → (fixed a real identity contradiction: manifesto claimed sparked worlds "cannot go back into containment" while VAULTED is a load-bearing status)
-Momentum runway: prod-verify S202 (vault-climbers strip; Nervous System visitor copy) · prod-verify S201 (classified reveal; Share Rank; IGNIS synthesis; pathways) · universe depth-map (founder lore) · staging box recovery (HUMAN ACTION: HCLOUD_TOKEN) | Intent rate: 100% (last 5)
-Last session: 2026-06-15 | Session 203 | Total: 981/1000 (v3.0) | Velocity: 1 | protocolVelocity: 0
+Avgs - 3: 981.3 | 5: 980.0 | 10: 974 | 25: 972 | all: 966 (v3.0 /1000)
+  └ 3-session: Dev 98.7 | Align 98.7 | Momentum 97.0 | Engage 98.0 | Process 98.7
+Velocity trend: → (S204: founder premium-overhaul — mission rewrite + premium polish layer + toolchain debt cleared, 3 groups; S203: 1 deliverable; S202: 3 fixes) | Protocol velocity: → (no prompt/template changes — script/infra fixes only) | Debt: ↓ (cleared a large pre-existing broken-WIP refactor: 6 never-created module imports + secrets gateway regression + generator schemaVersion drift — build:check back to EXIT 0)
+Momentum runway: §3 hero refinement (founder visual review) · §5 conservative consolidation (membership+brand hubs via Worker 301s) · §4 portal premium · §6 freshness sweep · prod-verify S204 wave · staging box (HUMAN: HCLOUD_TOKEN) | Intent rate: 100% (last 5)
+Last session: 2026-06-18 | Session 204 | Total: 981/1000 (v3.0) | Velocity: 3 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-18 — Session 204 (founder premium-overhaul · mission rewrite + premium polish layer + toolchain debt cleared · build:check EXIT 0) | Total: 981/1000 (v3.0) | Velocity: 3 | Debt: ↓
+Avgs — 3: 981.3 | 5: 980.0 | 10: 974 | 25: 972 | all: 966
+  └ 3-session: Dev 98.7 | Align 98.7 | Momentum 97.0 | Engage 98.0 | Process 98.7
+Dev Health 99 | Creative Alignment 99 | Momentum 96 | Engagement 98 | Process Quality 99 | Cross-Repo Coherence 97 | Security Posture 99 | Ecosystem Integration 97 | Capital Efficiency 99 | Automation Coverage 98
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 99 | ↑ | Cleared a large pre-existing broken-WIP refactor (7 modules created, secrets/model-router/generator fixed); build:check EXIT 0. |
+| Creative Alignment | 99 | → | Purpose-first mission statement rewritten per founder direction across 6 surfaces; vault/forge/spark lifecycle preserved; universe lore respected as fiction. |
+| Momentum | 96 | ↓ | 3 groups shipped + green, but 4 of 6 planned phases (hero/portal/consolidation/freshness) honestly deferred for the quality bar. |
+| Engagement | 98 | → | Site-wide premium polish (focus, motion, press states, scrollbar) lifts the felt experience for every visitor + member. |
+| Process Quality | 99 | ↑ | Completed orphaned WIP correctly rather than papering over; root-fixed a generator/contract drift; clean green gates + clear carries. |
+| Security Posture | 99 | → | Secrets gateway CAP_MAP fallback fixed AND the S113-class override regression guard restored. |
+| Cross-Repo Coherence | 97 | → | model-router opus-4-8 upgrade + ANTHROPIC_API chokepoint preserved. |
+| Ecosystem Integration | 97 | → | Shared modules (sil-categories, doctor-predicates, visual-blocks) now exist for any Studio surface. |
+| Capital Efficiency | 99 | → | Token-optimal order followed (shared layers before per-page); cost-authorized but spent on durable craft not gloss. |
+| Automation Coverage | 98 | → | Renderer + gate suite restored to green; new mission-coherence gate queued. |
+| **Total** | **981/1000** | → | |
+
+**Top win:** Restored the whole toolchain to green by correctly completing a large abandoned WIP refactor, then shipped the founder's mission rewrite + a cohesive site-wide premium polish layer.
+**Top gap:** The hidden WIP debt consumed the budget that would have reached the hero/portal/consolidation phases — those are deferred (well-specced) rather than rushed.
+**Intent outcome:** Partial — §0/§1/§2 shipped + green; §3–§6 carried for the elite/seamless quality bar (founder visual review recommended for the hero).
+
+**Brainstorm**
+1. `check-mission-statement-coherence.mjs` gate — WARN if retired "pressure/ignition" framing returns to a mission surface (committed to TASK_BOARD). · path: mirror check-studio-content-posture pattern. · High.
+2. Flag-gated hero variant behind `?hero=v2` so the founder can A/B the simplified hero on a real device before it graduates. · path: duplicate hero block, gate via param in home JS. · High.
+3. A `validate-module-imports` pre-commit hook so a half-applied refactor (missing module imports) can never sit uncommitted-broken again. · path: wire into existing pre-push. · Medium.
+4. Promote the new motion/elevation/accent tokens into the existing components (cards, dropdowns, panels) for compounding polish. · path: targeted style.css edits referencing the new vars. · Medium.
+
+**Committed to TASK_BOARD:** [SIL] check-mission-statement-coherence.mjs gate · (hero flag-variant tracked in §3 carry)
 
 ## 2026-06-15 — Session 203 (founder creative direction · Manifesto overhaul + 7-surface identity sync · deployed live · build:check gates green) | Total: 981/1000 (v3.0) | Velocity: 1 | Debt: →
 

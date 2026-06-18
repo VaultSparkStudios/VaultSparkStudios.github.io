@@ -89,10 +89,7 @@ const hash = crypto.createHash('sha256').update(handoff).digest('hex');
 let cached = null;
 try { cached = JSON.parse(fs.readFileSync(CACHE, 'utf8')); } catch {}
 
-// S174 handoff-cache-ttl: the cache key is the content hash — an unchanged
-// handoff never needs a fresh LLM call. The old 1h TTL re-burned ~3K haiku
-// tokens per session start for identical input. 7d hard ceiling for safety.
-const stillFresh = cached && cached.hash === hash && (Date.now() - (cached.ts || 0)) < 7 * 86_400_000;
+const stillFresh = cached && cached.hash === hash && (Date.now() - (cached.ts || 0)) < 3_600_000;
 if (stillFresh && !force) {
   fs.writeFileSync(OUT, cached.digest);
   console.log(`✓ Compact handoff (cached) → context/LATEST_HANDOFF.compact.md  (${cached.digest.length} chars)`);

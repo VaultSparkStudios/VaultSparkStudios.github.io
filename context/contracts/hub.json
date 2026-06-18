@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-15T20:10:07.199Z",
+  "generatedAt": "2026-06-18T05:00:35.060Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 202,
-    "lastUpdated": "2026-06-15",
-    "currentFocus": "S202 bug-fix session. vault-climbers RLS unblocked (service role key via secrets gateway + pathToFileURL fix + rank_name column removed + public_profile filter). vault-rank-bar.js rank_name silent select error fixed. Nervous System page rewritten for visitors (stripDevTalk + humanVerdict/humanSurface translation + publicNote/publicNextStep fields + Source contracts panel removed). TASK_BOARD stale task flipped. build:check EXIT 0.",
-    "nextMilestone": "Prod-verify S202: homepage vault-climbers strip shows 5 members; /nervous-system/ shows visitor-friendly copy. Then: prod-verify S201 (classified dispatches reveal, Share Rank, IGNIS synthesis, pathways). Universe depth-map (founder lore edges). Staging box recovery (HCLOUD_TOKEN).",
+    "currentSession": 204,
+    "lastUpdated": "2026-06-18",
+    "currentFocus": "Premium overhaul in progress: mission statement rewritten purpose-first + site-wide premium polish layer shipped; hero/portal/consolidation/freshness carried.",
+    "nextMilestone": "Prod-verify the manifesto wave across studio/home/press/universe/join on a real browser. Then: prod-verify S202 (vault-climbers strip, Nervous System visitor copy) + S201 wave. Universe depth-map (founder lore edges). Staging box recovery (HCLOUD_TOKEN).",
     "blockers": [
       {
         "id": "staging-box-hcloud",
@@ -37,14 +37,12 @@
     ],
     "queues": {
       "now": [
-        "[S202][STRUCT/P3] Add `check-public-note-freshness.mjs` gate. Fails build:check if `PROJECT_STATUS.publicNote` is missing or contains session-code patterns (S\\d{2,3}). Ensures Nervous System always shows visitor-friendly copy. ~30m.",
-        "[S202][DOCS/P3] Document `pathToFileURL` pattern in `docs/INTERNAL_TOOLS.md`. ESM dynamic `import()` on Windows requires `file://` URL scheme; bare absolute paths fail silently. Future scripts hitting the secrets gateway must use `pathToFileURL(secretsPath).href`. ~15m.",
-        "[S202][VERIFY/P0] Confirm vault-climbers strip on prod. After CF Pages deploys from `46b1784c`: homepage → vault-climbers strip should appear with 5 members (VaultSpark, vaulteternalqa, OneKingdom, Voidfall, DreadSpike) and their ranks. If still hidden, check `api/rank-climbers.json` is current on prod (curl https://vaultsparkstudios.com/api/rank-climbers.json) and confirm strip `hidden` attr is removed when climbers > 0. Never assume push==deploy.",
-        "[S201][VERIFY/P0] Confirm S201 wave on prod. On a real browser (datacenter curl 403 = benign CF challenge): (a) `/journal/dispatches/` — sign in → classified section reveals 3 session-intelligence entries with rank note; (b) `/ranks/` or `/vault-member/` (signed-in) → \"Share Rank\" button appears bottom-right, tapping opens Web Share or copies to clipboard; (c) `/ignis/` — ask 2+ questions → \"Synthesize my session →\" button appears, clicking opens SESSION DIGEST card with topic list + deduped source chips; (d) `/pathways/builders/` and others render correctly from data-driven source. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).",
-        "[S201→][INFRA/P2] VAULT CLIMBERS RLS — DONE S202. Switched `build-rank-climbers.mjs` to CANON-012 secrets gateway (service role key bypasses RLS). Fixed Windows ESM `pathToFileURL` bug. Removed non-existent `rank_name` column; rank computed from `RANK_THRESHOLDS`. Added `public_profile=eq.true` filter. 5 real climbers in `api/rank-climbers.json`. DONE S202",
-        "[S201→][DEPTH/P2·FOUNDER] UNIVERSE DEPTH MAP — needs founder-verified lore edges. Interactive node-graph of game/project/lore connections. Net-new `/universe/` + `universe-graph.json`; lore/canon edges require founder review ([[feedback_handcurated_truth_needs_founder_review]]). Carried from AUDIT_2026-06-15 #4. ~8h.",
-        "[S200][VERIFY/P0] Confirm the S200 visual wave on prod after this push. On a real browser (datacenter curl 403 = benign CF challenge): (a) `/games/` cards show bespoke cover art, not bare radial gradients; (b) `/oracle/` renders a 60-day heatmap grid + ≥2 smart-insight cards (NOT \"Loading 60-day grid…\"); (c) homepage in light mode → hero glows are clearly visible; (d) homepage \"Every initiative. One vault.\" strip shows live live/forge/sealed counts; (e) oracle/studio-pulse/nervous-system each show the \"Studio Intelligence\" suite nav with the current page highlighted. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).",
-        "[S200→][REDUNDANCY/P3] Complete the membership-value, brand→press, and member-IA merges. S200 shipped the cross-links (L1); the full 301 merges + nav-dropdown dedupe + /member/ retirement still pending (need Worker Layer 0c propagation + a /member/ usage audit). From AUDIT_2026-06-15 #12/#14/#15."
+        "[S204][UX/P1·FOUNDER] §3 Homepage hero refinement. Hero is overloaded (3 glow circles + spark burst + chamber vignette + ~1.3s letter-forge). Simplify to one cohesive glow, faster wordmark reveal, modern weight; consolidate repeated CTAs. Flag-gate the swap (`?hero=` / localStorage) per the mature-surface rule and get founder real-device visual review before graduating. Plan: `docs/AUDIT_2026-06-17.md` §3 (H1–H6). ~4h.",
+        "[S204][REDUNDANCY/P2] §5 Conservative consolidation. Membership cluster (`/membership/` + `/vaultsparked/` + `/membership-value/` + `/ranks/`) → one tabbed hub (Overview · Tiers · Benefits · Ranks); `/brand/` + `/brand/system/` → one Brand & Design hub. Use Worker Layer 0c 301s (never meta-refresh). Keep member/members, vault-portal, feedback, and all legal pages as-is. Plan: `docs/AUDIT_2026-06-17.md` §5. ~5h.",
+        "[S204][UX/P2] §4 Member portal premium + redundancy. Unify portal styling with the homepage polish layer; clarify tier-vs-rank; add \"next achievable\" + cross-game progress; surface referral; wire the dead notification bell; session-expiry feedback. Plan: §4 (M1–M7). ~6h.",
+        "[S204][FRESHNESS/P2] §6 Audience-correctness + freshness sweep. Walk the journey (home→play→join→portal, desktop+mobile); verify status labels match real build state; confirm visitor vs logged-in content is correctly gated; sync game/project counts across home/games/projects/nav. Plan: §6 (F1–F4). ~3h.",
+        "[S204][VERIFY/P0] Prod-verify the S204 wave. On a real browser (datacenter curl 403 = benign CF challenge): (a) `/studio/`, `/`, `/press/` show the new purpose-first mission statement (no \"moment before ignition\" / \"pressure system\"); (b) focus-visible ring on tab-through; (c) buttons have a tactile press; (d) custom scrollbar + branded selection render. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).",
+        "[S204][SIL][STRUCT/P3] Add `check-mission-statement-coherence.mjs` gate. WARN when any mission surface reintroduces retired framing (\"moment before ignition\", \"pressure system\", \"not a metaphor for storage\") outside `/universe/` lore. ~45m."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",

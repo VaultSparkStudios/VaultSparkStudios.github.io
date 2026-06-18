@@ -1,39 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-15T17:03:11.755Z",
+  "generatedAt": "2026-06-18T05:00:26.179Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 128,
+  "totalSamples": 77,
   "sufficientRoutes": 0,
-  "siteState": "warning",
+  "siteState": "accumulating",
   "nextRoute": {
     "route": "/games/vaultspark-football-gm/",
-    "samples": 30,
+    "samples": 19,
     "minSamples": 50,
-    "state": "warning",
-    "remaining": 20,
+    "state": "accumulating",
+    "remaining": 31,
     "p75": {
-      "lcp": 952,
-      "cls": 0.0013,
-      "inp": 440,
-      "fcp": 952,
-      "ttfb": 452
+      "lcp": 1956,
+      "cls": 0.0026,
+      "inp": 896,
+      "fcp": 1956,
+      "ttfb": 603
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 11,
+      "samples": 8,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 39,
+      "remaining": 42,
       "p75": {
-        "lcp": 1792,
+        "lcp": 1992,
         "cls": 0.0999,
         "inp": 408,
-        "fcp": 1792,
-        "ttfb": 488
+        "fcp": 1992,
+        "ttfb": 529
       },
       "overBudget": false
     },
@@ -84,10 +84,10 @@
     },
     {
       "route": "/games/",
-      "samples": 6,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 44,
+      "remaining": 48,
       "p75": {
         "lcp": 732,
         "cls": 0.0551,
@@ -113,29 +113,14 @@
       "overBudget": false
     },
     {
-      "route": "/games/gridiron-gm-play/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 2316,
-        "cls": 0.0013,
-        "inp": 96,
-        "fcp": 2316,
-        "ttfb": 1994
-      },
-      "overBudget": false
-    },
-    {
       "route": "/games/gridiron-gm/",
-      "samples": 7,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 43,
+      "remaining": 46,
       "p75": {
         "lcp": 1340,
-        "cls": 0.0005,
+        "cls": 0.0398,
         "inp": 192,
         "fcp": 1340,
         "ttfb": 906
@@ -143,47 +128,17 @@
       "overBudget": false
     },
     {
-      "route": "/games/project-unknown/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 568,
-        "cls": 0.0005,
-        "inp": 0,
-        "fcp": 568,
-        "ttfb": 15
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/games/vaultfront/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 1204,
-        "cls": 0.0005,
-        "inp": 56,
-        "fcp": 1204,
-        "ttfb": 617
-      },
-      "overBudget": false
-    },
-    {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 30,
+      "samples": 19,
       "minSamples": 50,
-      "state": "warning",
-      "remaining": 20,
+      "state": "accumulating",
+      "remaining": 31,
       "p75": {
-        "lcp": 952,
-        "cls": 0.0013,
-        "inp": 440,
-        "fcp": 952,
-        "ttfb": 452
+        "lcp": 1956,
+        "cls": 0.0026,
+        "inp": 896,
+        "fcp": 1956,
+        "ttfb": 603
       },
       "overBudget": false
     },
@@ -204,31 +159,16 @@
     },
     {
       "route": "/ignis/roi/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 680,
-        "cls": 0.0093,
-        "inp": 200,
-        "fcp": 680,
-        "ttfb": 255
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/journal/roadmap-goes-public/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 388,
-        "cls": 0.0005,
-        "inp": 0,
-        "fcp": 388,
-        "ttfb": 20
+        "lcp": 680,
+        "cls": 0.0091,
+        "inp": 200,
+        "fcp": 680,
+        "ttfb": 195
       },
       "overBudget": false
     },
@@ -249,46 +189,46 @@
     },
     {
       "route": "/nervous-system/",
-      "samples": 14,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 36,
-      "p75": {
-        "lcp": 616,
-        "cls": 0.0857,
-        "inp": 200,
-        "fcp": 616,
-        "ttfb": 202
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/oracle/",
-      "samples": 13,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 37,
-      "p75": {
-        "lcp": 900,
-        "cls": 0.0021,
-        "inp": 368,
-        "fcp": 900,
-        "ttfb": 194
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/pathways/",
       "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 46,
       "p75": {
+        "lcp": 1860,
+        "cls": 0.1085,
+        "inp": 248,
+        "fcp": 1860,
+        "ttfb": 222
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/oracle/",
+      "samples": 10,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 40,
+      "p75": {
+        "lcp": 900,
+        "cls": 0.01,
+        "inp": 368,
+        "fcp": 900,
+        "ttfb": 259
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/pathways/",
+      "samples": 2,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 48,
+      "p75": {
         "lcp": 628,
-        "cls": 0.0705,
+        "cls": 0.0376,
         "inp": 248,
         "fcp": 628,
-        "ttfb": 226
+        "ttfb": 167
       },
       "overBudget": false
     },
@@ -338,36 +278,6 @@
       "overBudget": false
     },
     {
-      "route": "/projects/statvault/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 1376,
-        "cls": 0.0009,
-        "inp": 0,
-        "fcp": 1376,
-        "ttfb": 220
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/projects/vault-pipeline/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 800,
-        "cls": 0.0005,
-        "inp": 0,
-        "fcp": 800,
-        "ttfb": 113
-      },
-      "overBudget": false
-    },
-    {
       "route": "/rights/",
       "samples": 1,
       "minSamples": 50,
@@ -398,77 +308,47 @@
       "overBudget": false
     },
     {
-      "route": "/sitemap-page/",
+      "route": "/social/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 424,
-        "cls": 0.0006,
-        "inp": 200,
-        "fcp": 424,
-        "ttfb": 130
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/social/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 424,
-        "cls": 0.1673,
-        "inp": 176,
-        "fcp": 424,
-        "ttfb": 166
+        "lcp": 388,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 388,
+        "ttfb": 12
       },
       "overBudget": false
     },
     {
       "route": "/status/",
-      "samples": 3,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 48,
       "p75": {
         "lcp": 2016,
-        "cls": 0.0092,
-        "inp": 320,
+        "cls": 0,
+        "inp": 72,
         "fcp": 2016,
-        "ttfb": 106
+        "ttfb": 105
       },
       "overBudget": false
     },
     {
       "route": "/studio-pulse/",
-      "samples": 3,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 47,
-      "p75": {
-        "lcp": 656,
-        "cls": 0.1977,
-        "inp": 336,
-        "fcp": 656,
-        "ttfb": 254
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/terms/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 264,
-        "cls": 0.0145,
+        "lcp": 536,
+        "cls": 0.1977,
         "inp": 0,
-        "fcp": 264,
-        "ttfb": 25
+        "fcp": 536,
+        "ttfb": 35
       },
       "overBudget": false
     },

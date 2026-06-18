@@ -1,17 +1,20 @@
 # Compliance History
 
-Generated: 2026-06-15
+Generated: 2026-06-18
 
 Tracks Studio OS compliance validation pass rate so drift is visible before it becomes a hard blocker.
 
-Latest: **32/32** passed · **100%** · trend → · ████████
+Latest: **32/35** passed · **91%** · trend ↓ · ███████▆
 
 ## Current Failing Projects
 
-- None
+- **Syntha** — start.md not at v3.3 (is vunknown, behind canonical template); closeout.md not at v3.3 (is vunknown, behind canonical template)
+- **VOID** — start.md not at v3.3 (is vunknown, behind canonical template); closeout.md not at v3.3 (is vunknown, behind canonical template); TRUTH_AUDIT.md missing v1.1 header; PROJECT_STATUS.json schemaVersion missing or invalid; PROJECT_STATUS.json missing truthAuditStatus; PROJECT_STATUS.json missing truthAuditLastRun; TRUTH_AUDIT.md missing Overall status line; TRUTH_AUDIT.md missing Last reviewed date
+- **SHADOW** — start.md not at v3.3 (is vunknown, behind canonical template); closeout.md not at v3.3 (is vunknown, behind canonical template); TRUTH_AUDIT.md missing v1.1 header; PROJECT_STATUS.json missing truthAuditStatus; PROJECT_STATUS.json missing truthAuditLastRun; TRUTH_AUDIT.md missing Overall status line; TRUTH_AUDIT.md missing Last reviewed date
 
 | Date | Passed | Failed | Skipped | Issues | Score |
 |---|---:|---:|---:|---:|---:|
+| 2026-06-18 | 32 | 3 | 0 | 17 | 91% |
 | 2026-06-15 | 32 | 0 | 0 | 0 | 100% |
 | 2026-06-14 | 32 | 0 | 0 | 0 | 100% |
 | 2026-06-12 | 32 | 0 | 0 | 0 | 100% |
@@ -31,4 +34,3 @@ Latest: **32/32** passed · **100%** · trend → · ████████
 | 2026-05-17 | 27 | 0 | 0 | 0 | 100% |
 | 2026-05-16 | 27 | 0 | 0 | 0 | 100% |
 | 2026-05-15 | 27 | 0 | 0 | 0 | 100% |
-| 2026-05-14 | 27 | 0 | 0 | 0 | 100% |
