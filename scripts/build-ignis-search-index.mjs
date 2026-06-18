@@ -62,8 +62,60 @@ function metaDescription(html) {
 
 function build() {
   const docs = [];
-  const add = (title, urlPath, body, summary = '') =>
-    docs.push({ title, url: urlPath, summary: strip(summary || body, 240), body: strip(body) });
+  const add = (title, urlPath, body, summary = '', entityMeta = null) => {
+    const doc = { title, url: urlPath, summary: strip(summary || body, 240), body: strip(body) };
+    if (entityMeta) Object.assign(doc, entityMeta);
+    docs.push(doc);
+  };
+
+  // S205 #12: entity graph — entityType + relatedEntities[] for knowledge-graph chips
+  const gameReg = readJson('data/game-registry.json');
+  const ENTITY_RELATIONS = {};
+  if (gameReg && gameReg.games) {
+    const sparked = Object.entries(gameReg.games)
+      .filter(([, g]) => g.status === 'sparked')
+      .map(([slug, g]) => ({ slug, label: g.name, type: 'game' }));
+    const forging = Object.entries(gameReg.games)
+      .filter(([, g]) => g.status === 'forge')
+      .map(([slug, g]) => ({ slug, label: g.name, type: 'game' }));
+    sparked.forEach(({ slug }) => {
+      ENTITY_RELATIONS[slug] = {
+        entityType: 'game',
+        relatedEntities: [
+          ...sparked.filter((g) => g.slug !== slug).slice(0, 2),
+          { slug: 'games', label: 'All games', type: 'page' },
+        ],
+      };
+    });
+    forging.forEach(({ slug }) => {
+      ENTITY_RELATIONS[slug] = {
+        entityType: 'game',
+        relatedEntities: [
+          ...forging.filter((g) => g.slug !== slug).slice(0, 2),
+          ...sparked.slice(0, 1),
+          { slug: 'games', label: 'Games in the Vault', type: 'page' },
+        ],
+      };
+    });
+  }
+  const STATIC_ENTITY = {
+    games: { entityType: 'hub', relatedEntities: [
+      { slug: 'universe', label: 'The Universe', type: 'page' },
+      { slug: 'oracle', label: 'Ecosystem Oracle', type: 'tool' },
+    ] },
+    universe: { entityType: 'universe', relatedEntities: [
+      { slug: 'games', label: 'Games', type: 'hub' },
+      { slug: 'oracle', label: 'Ecosystem Oracle', type: 'tool' },
+    ] },
+    oracle: { entityType: 'tool', relatedEntities: [
+      { slug: 'studio', label: 'The Studio', type: 'page' },
+      { slug: 'membership', label: 'Membership', type: 'hub' },
+    ] },
+    membership: { entityType: 'hub', relatedEntities: [
+      { slug: 'vault-member', label: 'Vault Portal', type: 'page' },
+      { slug: 'vaultsparked', label: 'Vault Sparked', type: 'page' },
+    ] },
+  };
 
   const intel = readJson('api/public-intelligence.json');
 
@@ -85,9 +137,13 @@ function build() {
       : (intel.pulse?.now || []).slice(0, 2).join(' ');
     add('Current studio focus', '/studio/', focusSummary || 'The studio ships in public, week over week.');
 
-    (intel.catalog || []).forEach((p) =>
+    (intel.catalog || []).forEach((p) => {
+      const entityMeta = ENTITY_RELATIONS[p.id] || (p.type === 'game'
+        ? { entityType: 'game', relatedEntities: [{ slug: 'games', label: 'All games', type: 'page' }] }
+        : { entityType: 'project', relatedEntities: [{ slug: 'studio', label: 'The Studio', type: 'page' }] });
       add(p.name, p.deployedUrl || `/${p.type === 'game' ? 'games' : 'projects'}/${p.id}/`,
-        `${p.name} ${p.status || ''} ${p.note || ''} ${p.summary || ''}`));
+        `${p.name} ${p.status || ''} ${p.note || ''} ${p.summary || ''}`, '', entityMeta);
+    });
 
     (intel.consumerChangelog || []).forEach((c) =>
       add(c.title, '/changelog/', `${c.title} ${(c.highlights || []).join(' ')}`));
@@ -112,7 +168,8 @@ function build() {
 
   ['privacy/index.html', 'terms/index.html', 'rights/index.html', 'membership/index.html', 'games/index.html', 'universe/index.html', 'oracle/index.html'].forEach((rel) => {
     const html = read(rel);
-    if (html) add(rel.replace('/index.html', ''), '/' + rel.replace('index.html', ''), html, metaDescription(html));
+    const pageSlug = rel.replace('/index.html', '');
+    if (html) add(pageSlug, '/' + rel.replace('index.html', ''), html, metaDescription(html), STATIC_ENTITY[pageSlug] || null);
   });
 
   return { schemaVersion: '1.0', generatedAt: new Date().toISOString(), generatedBy: 'scripts/build-ignis-search-index.mjs', publicSafe: true, documents: docs };
@@ -139,6 +196,7 @@ const IGNIS_INPUTS = [
   path.join(ROOT, 'api', 'public-intelligence.json'),
   path.join(ROOT, 'api', 'feedback-provenance.json'),
   path.join(ROOT, 'api', 'security-posture.json'),
+  path.join(ROOT, 'data', 'game-registry.json'),
   path.join(ROOT, 'llms-full.txt'),
   ...['privacy/index.html', 'terms/index.html', 'rights/index.html',
       'membership/index.html', 'games/index.html', 'universe/index.html',

@@ -292,6 +292,7 @@ const RUM_UX_EVENTS = new Set([
   // an inline oracle answer, escalating their thread to /oracle/?q=. Names only; no
   // query text committed to RUM (URL carries it; beacon carries only the intent event).
   'oracle:deepdive_click',
+  'oracle:related_click',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so
