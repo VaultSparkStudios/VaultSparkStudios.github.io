@@ -1,17 +1,31 @@
-/* cross-game-play-next.js — S187 cross-product routing.
+/* cross-game-play-next.js — S187 cross-product routing (redesigned S206 #2).
    A studio brand's structural advantage over a single-game site is re-spending
    attention across the catalog (Lou's audience-compounding thesis). When a
    visitor reaches a game page, surface ONE tailored "play next" card that always
    points at a PLAYABLE title — so a forge page never dead-ends and a live page
    routes to the other live game.
 
-   Honest-dark: render only when a real, playable recommendation exists and it
-   isn't the current page. TT-safe (DOM nodes + textContent only). Loads on game
-   routes; mounts into [data-play-next] if present, else appends after main. */
+   S206 redesign: card now mounts immediately after .game-hero (visible above
+   the fold), uses a personalized "Haven't tried [name] yet?" headline, and
+   includes the game's cover art thumbnail. Honest-dark: renders only when a
+   real, playable recommendation exists and it isn't the current page.
+   TT-safe (DOM nodes + textContent/src only). Loads on game routes. */
 (function () {
   'use strict';
 
   var DATA_URL = '/data/game-affinity.json';
+
+  // Cover art map: game slug → /assets/covers/<key>.png
+  var COVERS = {
+    'call-of-doodie':        'doodie',
+    'vaultspark-football-gm':'footballgm',
+    'football-gm':           'footballgm',
+    'gridiron-gm':           'gridiron',
+    'mindframe':             'mindframe',
+    'solara':                'solara',
+    'the-exodus':            'the-exodus',
+    'vaultfront':            'vaultfront',
+  };
 
   function emitUx(event, slug) {
     try {
@@ -20,7 +34,6 @@
     } catch (_e) {}
   }
 
-  // Current game slug = first path segment, with or without a /games/ prefix.
   function currentSlug() {
     var parts = (location.pathname || '/').split('/').filter(Boolean);
     if (!parts.length) return null;
@@ -33,15 +46,13 @@
     var live = data.live || {};
     var aff = (data.affinity || {})[slug];
     var targetSlug = aff && aff.next;
-    // fall through to the first playable that isn't the current page
     if (!targetSlug || !live[targetSlug]) {
       var pool = data._forgePlayNow || Object.keys(live);
       targetSlug = pool.filter(function (s) { return s !== slug; })[0];
     }
     if (!targetSlug || targetSlug === slug) return null;
     var t = live[targetSlug];
-    if (!t || !t.url) return null;            // honest-dark: only route to playable
-    // don't recommend the page you're already on (alias-safe by URL)
+    if (!t || !t.url) return null;
     if (location.pathname.replace(/\/+$/, '') === t.url.replace(/\/+$/, '')) return null;
     return { slug: targetSlug, name: t.name, url: t.url, reason: (aff && aff.reason) || 'Playable right now.' };
   }
@@ -50,36 +61,86 @@
     if (document.getElementById('vs-playnext-style')) return;
     var s = document.createElement('style');
     s.id = 'vs-playnext-style';
-    s.textContent = '.vs-playnext{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;max-width:680px;margin:2.4rem auto;padding:1rem 1.25rem;border:1px solid rgba(255,196,0,.22);border-radius:14px;background:rgba(255,196,0,.05)}.vs-playnext__body{flex:1 1 240px;min-width:0}.vs-playnext__kicker{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted,#9aa3b2);margin:0 0 .2rem}.vs-playnext__name{font-size:1.05rem;font-weight:700;color:var(--text,#f4f6fb);margin:0 0 .15rem}.vs-playnext__reason{font-size:.84rem;color:var(--muted,#9aa3b2);margin:0}.vs-playnext__cta{flex:0 0 auto;background:var(--gold,#ffc400);color:#1a1205;font-weight:700;font-size:.86rem;padding:.55rem 1rem;border-radius:9px;text-decoration:none;white-space:nowrap}.vs-playnext__cta:hover{filter:brightness(1.06)}';
+    s.textContent =
+      '.vs-playnext{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;' +
+        'max-width:100%;margin:0 auto;padding:1rem 1.5rem;' +
+        'border-bottom:1px solid rgba(255,196,0,.15);' +
+        'background:rgba(255,196,0,.04);}' +
+      '.vs-playnext__cover{flex:0 0 auto;width:72px;height:54px;object-fit:cover;' +
+        'border-radius:8px;border:1px solid rgba(255,196,0,.2);}' +
+      '.vs-playnext__body{flex:1 1 200px;min-width:0;}' +
+      '.vs-playnext__kicker{font-size:.78rem;font-weight:700;letter-spacing:.02em;' +
+        'color:var(--text,#f4f6fb);margin:0 0 .15rem;}' +
+      '.vs-playnext__reason{font-size:.82rem;color:var(--muted,#9aa3b2);margin:0;}' +
+      '.vs-playnext__cta{flex:0 0 auto;background:var(--gold,#ffc400);color:#1a1205;' +
+        'font-weight:700;font-size:.86rem;padding:.55rem 1.1rem;border-radius:9px;' +
+        'text-decoration:none;white-space:nowrap;}' +
+      '.vs-playnext__cta:hover{filter:brightness(1.06);}' +
+      '@media(max-width:480px){.vs-playnext__cover{display:none;}}';
     document.head.appendChild(s);
   }
 
-  function render(root, t) {
+  function render(t) {
     styles();
     var card = document.createElement('aside');
     card.className = 'vs-playnext';
-    card.setAttribute('aria-label', 'Play next');
+    card.setAttribute('aria-label', 'Play next: ' + t.name);
+
+    // Cover art
+    var coverKey = COVERS[t.slug];
+    if (coverKey) {
+      var img = document.createElement('img');
+      img.className = 'vs-playnext__cover';
+      img.src = '/assets/covers/' + coverKey + '.png';
+      img.alt = t.name + ' cover';
+      img.width = 72;
+      img.height = 54;
+      img.loading = 'lazy';
+      card.appendChild(img);
+    }
+
+    // Body: personalized kicker + reason
     var body = document.createElement('div');
     body.className = 'vs-playnext__body';
-    var k = document.createElement('p'); k.className = 'vs-playnext__kicker'; k.textContent = 'Play next';
-    var name = document.createElement('p'); name.className = 'vs-playnext__name'; name.textContent = t.name;
-    var reason = document.createElement('p'); reason.className = 'vs-playnext__reason'; reason.textContent = t.reason;
-    body.appendChild(k); body.appendChild(name); body.appendChild(reason);
+    var k = document.createElement('p');
+    k.className = 'vs-playnext__kicker';
+    k.textContent = 'Haven’t tried ' + t.name + ' yet?';
+    var reason = document.createElement('p');
+    reason.className = 'vs-playnext__reason';
+    reason.textContent = t.reason;
+    body.appendChild(k);
+    body.appendChild(reason);
+    card.appendChild(body);
+
+    // CTA
     var cta = document.createElement('a');
     cta.className = 'vs-playnext__cta';
     cta.href = t.url;
     cta.textContent = 'Play it →';
     cta.addEventListener('click', function () { emitUx('play-next:click', t.slug); });
-    card.appendChild(body); card.appendChild(cta);
-    root.appendChild(card);
-    emitUx('play-next:shown', t.slug);
-  }
+    card.appendChild(cta);
 
-  function mountPoint() {
-    return document.querySelector('[data-play-next]') ||
-      document.querySelector('main') ||
-      document.getElementById('main-content') ||
-      document.body;
+    // Mount: after .game-hero (above the fold) > [data-play-next] > prepend main > append body
+    var hook = document.querySelector('[data-play-next]');
+    if (hook) {
+      hook.appendChild(card);
+    } else {
+      var hero = document.querySelector('.game-hero');
+      if (hero) {
+        hero.insertAdjacentElement('afterend', card);
+      } else {
+        var mainEl = document.querySelector('main') ||
+          document.getElementById('main-content') ||
+          document.body;
+        if (mainEl.firstChild) {
+          mainEl.insertBefore(card, mainEl.firstChild);
+        } else {
+          mainEl.appendChild(card);
+        }
+      }
+    }
+
+    emitUx('play-next:shown', t.slug);
   }
 
   function boot() {
@@ -89,10 +150,10 @@
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) {
         var t = pickTarget(data, slug);
-        if (!t) return;                       // honest-dark
-        render(mountPoint(), t);
+        if (!t) return;
+        render(t);
       })
-      .catch(function () { /* data unreachable → render nothing */ });
+      .catch(function () {});
   }
 
   if (document.readyState === 'loading') {
