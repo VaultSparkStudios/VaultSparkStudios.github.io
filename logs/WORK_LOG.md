@@ -1,5 +1,25 @@
 # Work Log
 
+## 2026-06-18 — Session 206 (autonomous /goal chain · 13 items shipped + 2 verified-done + 2 bonus · build:check EXIT 0)
+
+Autonomous `/start → /audit → /implement → /closeout` goal-chain. 16-item S206 audit: conversion depth, AI UX, member identity, build efficiency.
+
+**Conversion wave:** `smart-trial-offer.js` (bottom-anchored 50%-off panel, ambient-loader predicate, 3 RUM events) + `adaptive-pricing-reveal` (profile-matched tier card highlight) + `progressive-tier-reveal` (IntersectionObserver stagger on tier cards) + `vault-momentum-strip-membership` (SPARKED/FORGING/AT REST chip on `/membership/`).
+
+**AI depth:** `adaptive-oracle-intro` (returning visitor "Welcome back" + last-queried chip from localStorage) + `oracle-feedback-close` (👎 vote expands to text input form — CSS classes in `ensureStyles()`, not inline styles, passing intelligence-style-contract) + `ignis-prefix-cache` (3-word LRU prefix cache, 20 entries, 24h TTL; "Continuing from earlier search" teaser for returning visitors).
+
+**Member identity:** `vault-passport` — `/vault-member/passport/` auth-gated card; 9 RANKS tiers, tenure, achievements, Web Share API; `passport:viewed/shared` RUM; noindex; exempt from nav-propagation.
+
+**New public feeds:** `api/oracle-query-insights.json` (from `build-oracle-query-insights.mjs`, honestDark <10 answers) + `api/constellation-activity.json` (from `build-constellation-activity.mjs`, honestDark <3 unlocks); both advisory-gated in `check-proof-surface.mjs`.
+
+**Build efficiency:** `build-parallel-phase.mjs` fans 13 independent generators via `Promise.allSettled` — ~2.9s wall-clock vs ~6.3s serial.
+
+**Bonus carries shipped:** `check-identity-coherence.mjs` gate + 4 'game studio' copy violations fixed; `check-public-note-freshness.mjs` gate.
+
+**Verified already-done:** referrer-source-breakdown (#6, wired S194) + TT-enforce-reprobe (#16, lint-tt-policies clean).
+
+**Gates:** `npm run build:check` EXIT 0. RUM allowlist 43/43 in sync. Worker unit tests 25/25. Intelligence style contract clean. 4 CI cron merge conflicts resolved during session (geo-vitals, status-proof, public-intelligence, uptime artifacts — all ours-strategy on generated files).
+
 ## 2026-06-18 — Session 204 (founder premium-overhaul · mission rewrite + premium polish + toolchain debt cleared · build:check EXIT 0)
 
 Founder directive: make the website elite/premium/seamless across all devices (cost authorized), rewrite the "pressure" mission statement, redundancy/merge pass, freshness sweep, token-optimal plan. Clarified via AskUserQuestion → mission Purpose/portfolio-first, Conservative consolidation, full build. Full analysis + plan written to `docs/AUDIT_2026-06-17.md`.

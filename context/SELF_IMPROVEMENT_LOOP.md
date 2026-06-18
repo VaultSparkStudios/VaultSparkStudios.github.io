@@ -9,13 +9,37 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): █████
-Avgs - 3: 981.3 | 5: 980.0 | 10: 974 | 25: 972 | all: 966 (v3.0 /1000)
-  └ 3-session: Dev 98.7 | Align 98.7 | Momentum 97.0 | Engage 98.0 | Process 98.7
-Velocity trend: → (S204: founder premium-overhaul — mission rewrite + premium polish layer + toolchain debt cleared, 3 groups; S203: 1 deliverable; S202: 3 fixes) | Protocol velocity: → (no prompt/template changes — script/infra fixes only) | Debt: ↓ (cleared a large pre-existing broken-WIP refactor: 6 never-created module imports + secrets gateway regression + generator schemaVersion drift — build:check back to EXIT 0)
-Momentum runway: §3 hero refinement (founder visual review) · §5 conservative consolidation (membership+brand hubs via Worker 301s) · §4 portal premium · §6 freshness sweep · prod-verify S204 wave · staging box (HUMAN: HCLOUD_TOKEN) | Intent rate: 100% (last 5)
-Last session: 2026-06-18 | Session 204 | Total: 981/1000 (v3.0) | Velocity: 3 | protocolVelocity: 0
+Avgs - 3: 949.3 | 5: 962.8 | 10: 969 | 25: 969 | all: 963 (v3.0 /1000)
+  └ 3-session: Dev 93.0 | Align 95.7 | Momentum 95.3 | Engage 91.3 | Process 85.7
+Velocity trend: ↑ (S206: 13+2 items shipped autonomous chain; S205: 15 items autonomous chain; S204: 3 groups founder-directed) | Protocol velocity: → | Debt: ↓ (bonus carries shipped: identity-coherence gate + public-note freshness gate; CI merge friction resolved)
+Momentum runway: Prod-verify S206 wave · VAPID keys (founder) · Trial-offer Stripe wire · Passport federated share · Forge devlog publish (founder) | Intent rate: 100% (last 5)
+Last session: 2026-06-18 | Session 206 | Total: 882/1000 (v3.0) | Velocity: 15 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-18 — Session 206 (/goal autonomous chain · 13 shipped + 2 verified-done + 2 bonus · build:check EXIT 0) | Total: 882/1000 (v3.0) | Velocity: 15 | Debt: ↓
+
+Dev Health 88 | Creative Alignment 92 | Momentum 93 | Engagement 88 | Process Quality 80 | Cross-Repo Coherence 88 | Security Posture 87 | Ecosystem Integration 89 | Capital Efficiency 90 | Automation Coverage 87
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 88 | ↓ | build:check EXIT 0 but required 2 fix commits (style-contract + nav-skip); 3 drift rounds (llms-shards×2, ignis/ecosystem-state); push required 5 attempts (4 CI cron merge conflicts). |
+| Creative Alignment | 92 | ↓ | Vault Passport (member identity card), ignis prefix cache (returning visitor continuity), smart trial offer (conversion funnel), oracle feedback form — strong creative wave. |
+| Momentum | 93 | ↓ | 13 items coded + 2 verified-done (honest saves) + 2 bonus carries = 17 items addressed total. |
+| Engagement | 88 | ↓ | Trial offer, passport share, oracle feedback close, prefix cache teaser all directly improve conversion and return-engagement. |
+| Process Quality | 80 | ↓ | Intelligence-style-contract violation caught post-commit (needed fix commit). Three separate merge conflicts with CI cron during session. Push took 5 attempts. Style contract compliance should be caught before committing. |
+| Cross-Repo Coherence | 88 | → | No cross-repo side effects; all RUM allowlist in sync; identity-coherence gate prevents future vocabulary drift. |
+| Security Posture | 87 | ↓ | RUM allowlist 43/43 in sync. Passport page properly noindex + auth-gated. No `.style.` on RUNTIME_TARGETS in final state. |
+| Ecosystem Integration | 89 | → | 2 new public feeds (oracle-query-insights, constellation-activity) + vault-passport page + build-parallel-phase.mjs. |
+| Capital Efficiency | 90 | → | Build parallelization saves ~3.4s per build, compounds over every future session. Zero new paid deps. |
+| Automation Coverage | 87 | ↓ | 2 new proof-surface advisory gates. Nav-skip exempted in 2 files (idiomatic). Parallel phase covers 13 generators automatically. |
+| **Total** | **882/1000** | ↓ | SIL drop driven by process friction (CI merge conflicts, post-commit style fix) not shipping failures. |
+
+**Root cause of SIL drop:** Intelligence-style-contract is a RUNTIME_TARGET rule that should be checked BEFORE committing code to `ignis-answer-engine.js`. The fix: before committing any change to a file in `RUNTIME_TARGETS`, run `node scripts/check-intelligence-style-contract.mjs --strict` as a pre-commit step in the next session. This is the same class as the S194 "dead parallel path" lesson — two things can look correct in isolation while one breaks the other.
+
+**Committed to TASK_BOARD:** [S206][CONVERSION/P1] TRIAL-OFFER-STRIPE-WIRE · [S206][MEMBER/P2] PASSPORT-FEDERATED-SHARE
 
 ---
 

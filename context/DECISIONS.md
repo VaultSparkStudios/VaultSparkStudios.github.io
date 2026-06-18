@@ -2,6 +2,14 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-18 — S206 — Vault Passport exempt from sitewide nav propagation; smart-trial-offer is anon-only with localStorage gate; build parallelization uses Promise.allSettled not sequential chaining
+
+**D-S206.1 — `/vault-member/passport/` is added to SKIP_FILES in both `propagate-nav.mjs` and `check-nav-orphans.mjs`.** The page is auth-gated, noindex/nofollow, has its own minimal nav (portal + membership links only), and is not part of the public sitewide shell. Propagating the sitewide header/footer to it would inject a nav bar the member can't meaningfully use (it's a single-card auth page) and would require the page to track the full sitewide nav state. Pattern follows `vault-member/admin/ignis-spend/index.html` (existing precedent). **Rationale:** the check-nav-orphans gate is a structural correctness gate for public-facing pages; auth-gated single-purpose pages that deliberately carry a custom minimal nav are a well-defined exception.
+
+**D-S206.2 — `smart-trial-offer.js` targets anonymous high-intent visitors only; the ambient-loader predicate gates on `body[data-vs-signed-in]` and `vs_trial_offered` localStorage.** Signed-in members are excluded because they already have a membership and showing a 50%-off acquisition offer to an existing member is confusing and undermines the value of their commitment. The localStorage gate prevents the panel from repeating on subsequent sessions — one clear offer per visitor lifecycle. The promo code `TRIAL50` links to `/join/?promo=TRIAL50` — a URL that Stripe checkout or a Worker can parse to apply a 50% discount (not wired at time of ship; the landing page resolves and the offer is real only after a discount code exists in Stripe). **Rationale:** conversion offer surfaces work best when they are well-timed, non-repetitive, and only shown to qualified unacquired visitors.
+
+**D-S206.3 — Build parallel phase uses `Promise.allSettled` (not `Promise.all`) so a single failing generator does not block the others.** All 13 generators run to completion; failed generators print their errors and the phase exits non-zero at the end with a count of failures. This matches the "diagnose everything, fix what broke" CI discipline — a single generator failure should never leave the engineer blind about the other 12. **Rationale:** in a serial `&&`-chained build, the first failure silences all subsequent output. With `allSettled`, every generator's output is available for diagnosis. The trade-off is a slightly slower failure (generators that would have been skipped still run) — acceptable because generators are fast (total <3s) and the debuggability win is high.
+
 ### 2026-06-18 — S205 — Membership consolidation uses Worker 301s; IGNIS knowledge graph schema; Web Push deferred to VAPID-ready
 
 **D-S205.1 — Worker Layer 0c 301s are canonical for membership URL consolidation; meta-refresh stubs are never used.**

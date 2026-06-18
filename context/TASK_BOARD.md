@@ -1,8 +1,33 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-18 (Session 205 — autonomous /goal chain · 15 items shipped · build:check EXIT 0)
+Last updated: 2026-06-18 (Session 206 — autonomous /goal chain · 13 shipped + 2 verified-done + 2 bonus · build:check EXIT 0)
 
-## Now (S205 runway)
+## Now (S206 runway)
+
+- [ ] **[S206][VERIFY/P0] Prod-verify the S206 wave on a real browser.** (a) `/vault-member/passport/` — sign in → rank badge + tenure + achievements card renders; Share Passport copies URL. (b) `/ignis/` or `/oracle/` — ask question, navigate away, return, ask same prefix → "Continuing from earlier search" teaser appears; 👎 vote → text input form expands. (c) `/membership/` — adaptive tier highlight shows (anon = generic, returning = different card pulse). (d) `/join/?promo=TRIAL50` — trial offer page resolves. Never assume push==deploy.
+- [ ] **[S206][CONTENT/P2·FOUNDER] Review + publish forge devlog.** `node scripts/draft-weekly-forge.mjs` → SOUL-voice draft. Clears the 84d journal stale warn.
+- [ ] **[S205][INFRA/P2·FOUNDER] WEB-PUSH VAPID KEYS REQUIRED.** `cloudflare.vapid` capability MISSING. Scaffold `scripts/push-dispatch.mjs` ready. Founder: (1) `npx web-push generate-vapid-keys` (2) store in `secrets/cloudflare.vapid.env` (3) add `VAPID_PUBLIC_KEY` to Worker env (4) `node scripts/push-dispatch.mjs --test`.
+- [ ] **[S206][SIL/P3] CONSTELLATION-SEQUENCE-ANALYTICS.** Add `constellation:progress:<id>:<step>` per-page events (beyond the existing `constellation:unlock:<id>`) so we can see WHERE visitors drop off in each sequence. Fold into `rollup-rum-ux`. ~1h.
+- [ ] **[S206][AI/P2] IGNIS-GRAPH-DEPTH-L3.** Cross-entity traversal: clicking a "Related" chip renders a sub-panel with 3 matching cards from `api/public-intelligence.json` (mini-catalog mode in `ignis-answer-engine.js`). ~4h.
+
+## Previous (S206 shipped in S206 session)
+
+- [x] **[S206] adaptive-oracle-intro — DONE S206.** Returning IGNIS visitors see "Welcome back — pick up where you left off" header + last-queried topic chip rendered from localStorage.
+- [x] **[S206] play-next-redesign — DONE S206.** Hero-positioned cross-game card with bespoke cover art, SOUL-voice headline, play→join bridge.
+- [x] **[S206] vault-momentum-strip-membership — DONE S206.** Momentum score chip on `/membership/` showing SPARKED/FORGING/AT REST.
+- [x] **[S206] progressive-tier-reveal — DONE S206.** IntersectionObserver stagger on paid tier cards.
+- [x] **[S206] adaptive-pricing-reveal — DONE S206.** Profile-matched tier highlight (anon/member/returning).
+- [x] **[S206] smart-trial-offer — DONE S206.** `assets/smart-trial-offer.js` — 50%-off bottom panel, ambient-loader predicate, 3 RUM events.
+- [x] **[S206] oracle-query-insights — DONE S206.** `api/oracle-query-insights.json` + build gate in check-proof-surface.
+- [x] **[S206] constellation-public-feed — DONE S206.** `api/constellation-activity.json` + build gate.
+- [x] **[S206] vault-passport — DONE S206.** `/vault-member/passport/` — auth-gated member identity card with rank, tenure, achievements, Web Share.
+- [x] **[S206] build-parallelization — DONE S206.** `scripts/build-parallel-phase.mjs` fans 13 generators (~2.9s vs ~6.3s serial).
+- [x] **[S206] oracle-feedback-close — DONE S206.** 👎 expands to text input form; `oracle:feedback_submitted` RUM.
+- [x] **[S206] ignis-prefix-cache — DONE S206.** 3-word prefix LRU cache, 20 entries, 24h TTL; "Continuing from earlier search" teaser.
+- [x] **[S206] identity-coherence-gate (bonus carry) — DONE S206.** `scripts/check-identity-coherence.mjs` ships; 4 'game studio' copy violations fixed.
+- [x] **[S206] public-note-freshness-gate (bonus carry) — DONE S206.** `scripts/check-public-note-freshness.mjs` guards `publicNote` visitor copy.
+
+## Previous (S205 runway)
 
 - [ ] **[S205][INFRA/P2·FOUNDER] WEB-PUSH VAPID KEYS REQUIRED.** `cloudflare.vapid` capability is MISSING. `scripts/push-dispatch.mjs` scaffold ready — exits gracefully with setup instructions. **Founder:** (1) `npx web-push generate-vapid-keys` (2) store in `secrets/cloudflare.vapid.env` (3) add `VAPID_PUBLIC_KEY` to Worker env (4) `node scripts/push-dispatch.mjs --test`. Once READY, agent wires the smart-trigger subscriber + notification plumbing. ~2h unblocked.
 - [ ] **[S205][VERIFY/P0] Prod-verify the S205 wave on a real browser.** (a) `/` — hero stagger on scroll; `?hero=v2` shows simplified variant; signed-in member sees rank + Continue CTA in hero; Studio Now has Vault Momentum chip. (b) `/membership/` — paid tiers stagger on scroll; sticky hub tab nav. (c) `/oracle/` — ask a question → entity chips appear at bottom; deep-dive link. (d) `/vault-member/portal/` — cards elevate on hover, buttons spring-press. (e) `/journal/dispatches/` — emoji reactions row below each entry. (f) `/changelog/` — SOUL-voice narrative sentences. (g) Visit constellation sequence → unlock toast appears. Never assume push==deploy.
