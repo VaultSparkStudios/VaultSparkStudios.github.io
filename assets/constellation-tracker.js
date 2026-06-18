@@ -16,6 +16,7 @@
 
   var STORAGE_KEY = 'vs_cst_visited';   // visited page list (last 50)
   var UNLOCKED_KEY = 'vs_cst_unlocked'; // set of unlocked constellation ids
+  var PROGRESS_KEY = 'vs_cst_progress'; // S207: { id: maxStepReached } high-water marks
 
   function normPath(p) {
     // Normalise to /path/ form so /studio and /studio/ both match.
@@ -129,6 +130,56 @@
     } catch (_) {}
   }
 
+  // S207 (constellation-sequence-analytics): emit per-step progress so we can
+  // see WHERE visitors drop off in each sequence, not just who completes it.
+  // High-water-marked in localStorage so a step fires at most once per visitor.
+  function readProgress() {
+    try { return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'); } catch (_) { return {}; }
+  }
+  function saveProgress(obj) {
+    try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(obj)); } catch (_) {}
+  }
+  function emitProgress(id, step) {
+    try {
+      // suffix stays within the Worker constellation prefix charset/length budget.
+      var suffix = ('progress:' + id + ':' + step).slice(0, 36);
+      navigator.sendBeacon('/v/rum', JSON.stringify({
+        ux: 'constellation:' + suffix,
+        route: currentPath(),
+        ts: Date.now(),
+      }));
+    } catch (_) {}
+  }
+
+  // How many sequence steps (in order) the visitor has reached for a constellation.
+  function sequenceReach(constellation, visited) {
+    var required = constellation.pages.map(normPath);
+    var idx = 0;
+    for (var i = 0; i < visited.length && idx < required.length; i++) {
+      if (visited[i] === required[idx]) idx++;
+    }
+    return idx;
+  }
+
+  function trackProgress(constellations, visited, unlocked) {
+    var progress = readProgress();
+    var changed = false;
+    constellations.forEach(function (c) {
+      if (unlocked.indexOf(c.id) !== -1) return; // completed → unlock event covers it
+      var reach = sequenceReach(c, visited);
+      var prev = progress[c.id] || 0;
+      // Emit for each newly-reached intermediate step (1..reach, below completion).
+      if (reach > prev && reach > 0 && reach < c.pages.length) {
+        for (var step = prev + 1; step <= reach; step++) {
+          emitProgress(c.id, step);
+        }
+        progress[c.id] = reach;
+        changed = true;
+      }
+    });
+    if (changed) saveProgress(progress);
+  }
+
   function boot() {
     var path = currentPath();
     var visited = recordVisit(path);
@@ -138,6 +189,8 @@
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (constellations) {
         if (!Array.isArray(constellations)) return;
+        // Emit per-step progress before checking completions (drop-off telemetry).
+        trackProgress(constellations, visited, unlocked);
         var newOnes = checkConstellations(constellations, visited, unlocked);
         if (!newOnes.length) return;
         var ids = unlocked.concat(newOnes.map(function (c) { return c.id; }));

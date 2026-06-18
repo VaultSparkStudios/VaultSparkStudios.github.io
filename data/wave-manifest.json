@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "1.0",
+  "comment": "Surfaces the current session's wave is expected to deploy. prod-verify-wave.mjs fetches each from the pages.dev origin (bypasses the CF bot-challenge) and asserts liveness. Update at closeout to point at the session's shipped surfaces. type=json asserts 200 + parseable + (schemaVersion|generatedAt); type=page asserts 200 + optional sentinel substring.",
+  "session": 207,
+  "updatedAt": "2026-06-18",
+  "surfaces": [
+    { "path": "/api/oracle-query-insights.json", "type": "json" },
+    { "path": "/api/constellation-activity.json", "type": "json" },
+    { "path": "/api/dead-ctas.json", "type": "json" },
+    { "path": "/api/public-intelligence.json", "type": "json" },
+    { "path": "/vault-member/passport/", "type": "page", "sentinel": "Forge your own Vault Passport" },
+    { "path": "/vaultsparked/", "type": "page", "sentinel": "sparked-promo-input" },
+    { "path": "/join/", "type": "page", "sentinel": "Claim Your" }
+  ]
+}

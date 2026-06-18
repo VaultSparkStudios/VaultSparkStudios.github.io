@@ -208,6 +208,37 @@ export function deriveSummary(historyRows) {
   const sortedPwa = {};
   for (const k of Object.keys(pwa).sort()) sortedPwa[k] = pwa[k];
 
+  // S207: constellation-tracker.js — per-step progress + completion. Build a
+  // per-constellation drop-off view so we can see WHERE visitors abandon each
+  // hidden sequence, not just who finished it.
+  //   constellation:progress:<id>:<step> → reached step N of the sequence
+  //   constellation:unlock:<id>          → completed the sequence
+  const constellations = {};
+  function ensureC(id) {
+    if (!constellations[id]) constellations[id] = { steps: {}, unlocked: 0 };
+    return constellations[id];
+  }
+  for (const [ev, n] of Object.entries(events)) {
+    if (ev.startsWith('constellation:progress:')) {
+      const rest = ev.slice('constellation:progress:'.length); // <id>:<step>
+      const lastColon = rest.lastIndexOf(':');
+      if (lastColon > 0) {
+        const id = rest.slice(0, lastColon);
+        const step = rest.slice(lastColon + 1);
+        ensureC(id).steps[step] = n;
+      }
+    } else if (ev.startsWith('constellation:unlock:')) {
+      ensureC(ev.slice('constellation:unlock:'.length)).unlocked += n;
+    }
+  }
+  const sortedConstellations = {};
+  for (const id of Object.keys(constellations).sort()) {
+    const c = constellations[id];
+    const sortedSteps = {};
+    for (const s of Object.keys(c.steps).sort()) sortedSteps[s] = c.steps[s];
+    sortedConstellations[id] = { steps: sortedSteps, unlocked: c.unlocked };
+  }
+
   // Sort the events map for byte-stable output.
   const sortedEvents = {};
   for (const k of Object.keys(events).sort()) sortedEvents[k] = events[k];
@@ -219,6 +250,7 @@ export function deriveSummary(historyRows) {
     engagements: sortedEngagements,
     streaks: sortedStreaks,
     pwa: sortedPwa,
+    constellations: sortedConstellations,
     schemaVersion: '1.0',
     // generatedAt mirrors asOf (latest history day) — deterministic, NOT wall-clock,
     // so --check byte-comparison never drifts. Satisfies the public-contract-health
@@ -420,8 +452,19 @@ function selfTest() {
   assert(Object.keys(s194.funnelCtas).join(',') === 'home_hero_games_click,home_hero_play_click', 'funnelCtas keys sorted for byte-stability');
   assert(s194.shares['call-of-doodie:native'] === 3 && s194.shares['call-of-doodie:copy'] === 1, 'shares strips share: prefix and counts per slug:outcome');
 
+  // S207: constellation drop-off — per-step progress + completion aggregation.
+  const cstHist = [
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'constellation:progress:builders:1', count: 9 },
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'constellation:progress:builders:2', count: 4 },
+    { schemaVersion: '1.0', day: '2026-06-12', event: 'constellation:unlock:builders', count: 2 },
+  ];
+  const cst = deriveSummary(cstHist);
+  assert(cst.constellations.builders.steps['1'] === 9 && cst.constellations.builders.steps['2'] === 4,
+    'constellations: per-step reach aggregated (drop-off visible: 9→4)');
+  assert(cst.constellations.builders.unlocked === 2, 'constellations: completion count folded from unlock events');
+
   fs.rmSync(dir, { recursive: true, force: true });
-  console.log('rollup-rum-ux --self-test: OK (24 assertions)');
+  console.log('rollup-rum-ux --self-test: OK (26 assertions)');
 }
 
 function assert(ok, msg) { if (!ok) { console.error('rollup-rum-ux --self-test FAIL:', msg); process.exit(1); } }
