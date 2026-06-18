@@ -444,6 +444,51 @@
         linear-gradient(180deg, rgba(200,195,190,0.12) 0%, transparent 20%, transparent 80%, rgba(200,195,190,0.15) 100%);
     }
 
+    /* ── Member welcome strip (S205 #4) — above hero, signed-in only ── */
+    .member-welcome-strip {
+      display: none;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.6rem max(1.5rem, calc((100vw - 1200px) / 2 + 1rem));
+      background: rgba(255,196,0,0.04);
+      border-bottom: 1px solid rgba(255,196,0,0.10);
+      font-size: 0.87rem;
+      color: var(--muted);
+    }
+    body[data-vs-signed-in] .member-welcome-strip { display: flex; }
+    .member-welcome-rank {
+      font-weight: 700;
+      font-size: 0.70rem;
+      letter-spacing: 0.09em;
+      padding: 0.10rem 0.44rem;
+      border-radius: 999px;
+      background: rgba(255,196,0,0.12);
+      color: var(--gold);
+      border: 1px solid rgba(255,196,0,0.22);
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .member-welcome-rank.rank-ETERNAL {
+      background: rgba(139,92,246,0.12);
+      color: #8B5CF6;
+      border-color: rgba(139,92,246,0.28);
+    }
+    .member-welcome-cta {
+      margin-left: auto;
+      font-weight: 600;
+      color: var(--gold);
+      font-size: 0.87rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      white-space: nowrap;
+    }
+    .member-welcome-cta:hover { opacity: 0.82; }
+    @media (max-width: 640px) {
+      .member-welcome-strip { flex-wrap: wrap; gap: 0.5rem; }
+      .member-welcome-cta { margin-left: 0; }
+    }
+
     /* ── Hero v2 — flag-gated variant (?hero=v2 | localStorage heroV2) ──
        Distills to a single centered glow + faster wordmark + earlier CTAs.
        REQUIRES founder real-device review before graduating to default. */
@@ -1090,6 +1135,37 @@
     <!-- Hero v2 flag-reader (S205 #3) — runs early so CSS variant activates
          before first paint. ?hero=v2 param or localStorage('heroV2')='1'. -->
     <script>(function(){var p=new URLSearchParams(location.search);if(p.get('hero')==='v2'||localStorage.getItem('heroV2')==='1'){document.body.dataset.heroV2='true';}}());</script>
+
+    <!-- Member welcome strip (S205 #4) — hidden until signed-in; populated by
+         vs:session-ready. Additive — anonymous visitors see no change. -->
+    <div class="member-welcome-strip" id="member-welcome-strip" aria-hidden="true" aria-label="Member welcome"></div>
+    <script>
+    (function () {
+      var strip = document.getElementById('member-welcome-strip');
+      if (!strip) return;
+      function esc(s) {
+        return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+      function populate(name, tier) {
+        var t = String(tier || 'MEMBER').toUpperCase();
+        var rankClass = t === 'ETERNAL' ? ' rank-ETERNAL' : '';
+        strip.setAttribute('aria-hidden', 'false');
+        strip.innerHTML =
+          '<span class="member-welcome-rank' + rankClass + '">' + esc(t) + '</span>' +
+          '<span>Welcome back, ' + esc(name || 'Vault Member') + '</span>' +
+          '<a class="member-welcome-cta" href="/vault-member/">Continue to Your Vault ›</a>';
+      }
+      document.addEventListener('vs:session-ready', function (e) {
+        var d = e && e.detail;
+        if (!d || !d.signedIn) return;
+        var raw = (d.session && (d.session.raw || d.session._raw)) || {};
+        var meta = raw.user_metadata || raw.raw_user_meta_data || {};
+        var name = meta.name || meta.display_name || (raw.email ? raw.email.split('@')[0] : null);
+        var tier = (raw.app_metadata || {}).tier || 'MEMBER';
+        populate(name, tier);
+      });
+    }());
+    </script>
 
     <!-- ── Hero ──────────────────────────────────────────── -->
     <!-- ── Hero ───────────────────────────────── -->
