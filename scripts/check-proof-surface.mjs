@@ -117,4 +117,11 @@ if (ic.status !== 0) {
   console.warn('  ⚠  check-identity-coherence: identity-narrowing copy found (update mission surfaces)');
 }
 
+// S206: oracle query insights — generates api/oracle-query-insights.json from
+// oracle cluster data + RUM events. Advisory: honestDark when < 10 answers.
+const oqi = spawnSync(process.execPath, [path.join(__dirname, 'build-oracle-query-insights.mjs'), '--check'], { stdio: 'inherit' });
+if (oqi.status !== 0) {
+  console.warn('  ⚠  build-oracle-query-insights: api/oracle-query-insights.json missing or stale (run node scripts/build-oracle-query-insights.mjs)');
+}
+
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');
