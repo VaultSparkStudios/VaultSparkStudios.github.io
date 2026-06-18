@@ -52,7 +52,10 @@ const SKIP_FILES = new Set([
   'share/index.html',
   'google-site-verification-REPLACE_ME.html',
   'vault-member/admin/ignis-spend/index.html',
-  'vault-member/passport/index.html'
+  'vault-member/passport/index.html',
+  // S207: Obelisk Passport login + OAuth callback — auth utility pages, own minimal layout.
+  'login.html',
+  'auth/callback.html'
 ]);
 
 function findHtml(dir, base = dir, out = []) {

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-18T20:28:17.505Z",
+  "generatedAt": "2026-06-18T20:55:40.604Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,8 +8,18 @@
     {
       "theme": "conversion",
       "label": "Conversion",
-      "feedbackSignals": 1,
+      "feedbackSignals": 3,
       "shippedCommits": [
+        {
+          "sha": "6910c30b",
+          "summary": "remove accidental blanket auth gate from index.html",
+          "ts": "2026-06-18T20:47:57.000Z"
+        },
+        {
+          "sha": "5d978cf9",
+          "summary": "wire Obelisk Passport login",
+          "ts": "2026-06-18T20:30:36.000Z"
+        },
         {
           "sha": "0bf0351a",
           "summary": "vault passport — member identity card at /vault-member/passport/ (#11)",
@@ -67,8 +77,13 @@
     {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 2,
+      "feedbackSignals": 3,
       "shippedCommits": [
+        {
+          "sha": "697fac73",
+          "summary": "fused cinematic-split + living-portfolio hero (humans + agents)",
+          "ts": "2026-06-18T20:30:18.000Z"
+        },
         {
           "sha": "7c6f5503",
           "summary": "graduate hero v2 + complete the S204 visual overhaul; fix push-dispatch",

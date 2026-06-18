@@ -48,6 +48,10 @@ const EXEMPT_PATTERNS = [
   /^\/obelisk-passport\//,          // S193: untracked Obelisk-passport WIP (not in git HEAD) — remove when it ships
   /^\/solara\//,                    // S193: standalone Vite game app (own UI, no VaultSpark shell nav) — like football-gm
   /^\/vault-member\/passport\//,    // S207: Vault Passport — noindex member card, reached via portal + share link only (own minimal nav)
+  /^\/login\/?$/,                   // S207: Obelisk Passport login — auth utility page, own minimal layout
+  /^\/login\.html$/,
+  /^\/auth\/callback\/?$/,          // S207: OAuth callback landing — not nav-reachable by design
+  /^\/auth\/callback\.html$/,
 ];
 
 function normalizeRel(full) {

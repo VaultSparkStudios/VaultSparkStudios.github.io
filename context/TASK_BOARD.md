@@ -12,6 +12,13 @@ Last updated: 2026-06-18 (Session 207 — autonomous /goal chain · 9/9 audit it
 - [x] **[S204→S207][UX/P1] HERO V2 GRADUATED — DONE (founder-authorized, the visual overhaul's final piece).** Made the distilled hero (single centered glow + faster wordmark + earlier CTAs) the default in `index.html`; kill-switch `?hero=classic` / `localStorage('heroClassic')='1'` restores the original 3-glow hero. build:check EXIT 0. **Founder veto path:** if v2 reads wrong on your device, append `?hero=classic` and tell me to revert the default (one-line).
 - [ ] **[S206][CONTENT/P1·FOUNDER] Publish forge devlog — DRAFT COMPLETE.** `journal/_drafts/forge-week-2026-06-18.md` is publish-ready (factual paragraph filled in). Intentionally NOT auto-published: it's a founder-voice essay (the draft tool never auto-publishes by design). Founder: edit the lead paragraph into your own voice + publish to `journal/` to clear the 66d changelog warn.
 
+## Done (S207 — founder-directed hero + founder tasks)
+
+- [x] **[S207] HERO REDESIGN (fusion #1+#2) — DONE.** Asymmetric cinematic split (lede + twin gold/blue CTAs → /games/ + /projects/ + live pulse line) × living-portfolio bento of real tiles, server-rendered by `scripts/build-hero-portfolio.mjs` from `api/public-intelligence.json` (instant, crawlable, ItemList JSON-LD for agents). Zero inline styles; mobile stacks; build + drift gate wired. Self-test 7/7; build:check EXIT 0; deployed.
+- [x] **[S207] Hero CTAs restructured — DONE.** "Explore Our Games" (/games/) + "Explore Our Projects" (/projects/), both emphasized (gold + blue accent).
+- [x] **[S207] Stripe TRIAL50 (live) · VAPID provisioned · Worker prod deploy · hero v2 graduated (then superseded by the full redesign) — DONE.** (see D-S207.4/.5/.6)
+- [ ] **[S207][FOUNDER/PARALLEL] Obelisk Passport login (`5d978cf9`)** — a parallel session's auth-wiring commit (login.html + auth/callback.html). Agent greened its build:check failure (nav-orphan exemptions) without touching the auth flow; auth-flow ownership stays with the founder's Obelisk session.
+
 ## Done (S207 — autonomous /goal chain · 9/9)
 
 - [x] **[S207] play-next-intent-retiming — DONE.** Dead card (18/0) → engagement-gated reveal + completion copy + real card. `assets/cross-game-play-next.js`.

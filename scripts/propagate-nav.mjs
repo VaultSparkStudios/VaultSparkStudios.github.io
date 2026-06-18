@@ -43,7 +43,11 @@ const SKIP_FILES = new Set([
   // S135: internal admin (sub-page of vault-member admin)
   'vault-member/admin/ignis-spend/index.html',
   // S206: vault passport is auth-gated + noindex — own minimal nav, not sitewide shell
-  'vault-member/passport/index.html'
+  'vault-member/passport/index.html',
+  // S207: Obelisk Passport login + OAuth callback — auth utility pages with their
+  // own minimal layout (no sitewide header/footer), like the passport page.
+  'login.html',
+  'auth/callback.html'
 ]);
 
 // ─── Active link mapping ───────────────────────────────

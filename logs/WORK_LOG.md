@@ -1,5 +1,13 @@
 # Work Log
 
+## 2026-06-18 — Session 207 · hero redesign (founder-directed)
+
+Founder reframed the hero as the first interface for humans AND agents — must be the most intelligent/machine-legible AND most immersive component — and chose to fuse directions #1 (cinematic split) + #2 (living portfolio).
+
+Built it: asymmetric `.hero-stage` (left `.hero-lede` = wordmark + statement + twin gold/blue CTAs [Explore Our Games → /games/, Explore Our Projects → /projects/] + live portfolio-pulse line; right `.hero-showcase` = bento of real project tiles). `scripts/build-hero-portfolio.mjs` server-renders the showcase + counts from `api/public-intelligence.json` (instant/LCP-safe, crawlable, ItemList JSON-LD for agents); per-tile accents via injected `<style>` (zero inline `style=` — index.html is a style-contract target); mobile stacks; wired into build + check-proof-surface drift gate. Self-test 7/7; build:check EXIT 0; deployed.
+
+Also greened a parallel session's WIP `5d978cf9 feat(auth): wire Obelisk Passport login` — it was red on build:check (login.html + auth/callback.html were nav-orphans). Added the two pages to SKIP_FILES in `propagate-nav.mjs` + `check-nav-orphans.mjs` (auth utility pages, own minimal layout — same rationale as the passport exemption). NOT touching the auth flow itself.
+
 ## 2026-06-18 — Session 207 · post-closeout founder-task execution (founder-authorized)
 
 After the S207 closeout, the founder authorized executing the carried "next-session" + "founder-only" items and completing the S204 visual overhaul. Done end-to-end:
