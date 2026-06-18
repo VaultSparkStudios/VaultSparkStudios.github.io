@@ -293,6 +293,19 @@
     }
     .mem-cta-eternal:hover { box-shadow: 0 8px 32px rgba(139,92,246,0.5); transform: translateY(-1px); }
 
+    /* Progressive reveal — paid tiers enter on scroll */
+    .tier-reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.55s cubic-bezier(.22,.68,0,1.2), transform 0.55s cubic-bezier(.22,.68,0,1.2);
+    }
+    .tier-reveal.tier-reveal-2 { transition-delay: 0.12s; }
+    .tier-reveal.tier-reveal-3 { transition-delay: 0.24s; }
+    .tier-reveal.in-view { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) {
+      .tier-reveal { opacity: 1; transform: none; transition: none; }
+    }
+
     /* What you're really joining */
     .mem-identity {
       padding: 5rem 0;
@@ -1042,7 +1055,7 @@
         </div>
 
         <!-- VaultSparked -->
-        <div class="mem-tier-card tier-sparked" data-intent-tags="all play create support">
+        <div class="mem-tier-card tier-sparked tier-reveal tier-reveal-2" data-intent-tags="all play create support">
           <div class="tier-glow" aria-hidden="true"></div>
           <span class="tier-badge tier-badge-sparked">⚡ VaultSparked</span>
           <div class="mem-tier-name">Vault<br>Sparked</div>
@@ -1062,7 +1075,7 @@
         </div>
 
         <!-- Eternal -->
-        <div class="mem-tier-card tier-eternal" data-intent-tags="all support create">
+        <div class="mem-tier-card tier-eternal tier-reveal tier-reveal-3" data-intent-tags="all support create">
           <div class="tier-glow" aria-hidden="true"></div>
           <span class="tier-badge tier-badge-eternal">♾ VaultSparked Eternal</span>
           <div class="mem-tier-name">Vault<br>Eternal</div>
@@ -1487,6 +1500,22 @@
 <script src="/assets/ambient-core.shell-6895f1ae09.js" defer></script>
 <script src="/assets/ambient-feature.shell-5b85ce5201.js" defer></script>
 <!-- vs-ambient:end -->
+<!-- Progressive tier reveal — S205 #2: paid tiers stagger-reveal on scroll -->
+<script>
+(function(){
+  var reveals = document.querySelectorAll('.tier-reveal');
+  if (!reveals.length || !window.IntersectionObserver) {
+    reveals.forEach(function(el){ el.classList.add('in-view'); });
+    return;
+  }
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in-view'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(function(el){ obs.observe(el); });
+})();
+</script>
 <!-- Intent filter for tier grid — S201 #2 -->
 <script>
 (function(){
