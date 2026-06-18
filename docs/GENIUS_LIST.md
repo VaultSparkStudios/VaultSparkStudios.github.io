@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] Watch retimed play-next + auto-rotation. Once post-S207 visits accrue…
+#### 1. [PRODUCT] Core Web Vitals pass. The ✗ / (field) perf-budget advisory has lingered
 Final score: **96**
-[S207][MEASURE/P2] Watch retimed play-next + auto-rotation. Once post-S207 visits accrue, check api/dead-ctas.json: if play-next is STILL dead, run node scripts/build-cta-state.mjs --advance to rotate to copy variant 1. If it converts, the retiming win is confirmed. Measurement-watch.
-Why it matters: Watch retimed play-next + auto-rotation. Once post-S207 visits accrue, is open, local, and unblocked — can ship this session.
+[PERF/P1] Core Web Vitals pass. The ✗ / (field) perf-budget advisory has lingered — premium is *felt* as speed. Optimize hero cover PNGs (AVIF/responsive), trim critical path, target sub-1.8s LCP, re-measure via RUM.
+Why it matters: Core Web Vitals pass. The ✗ / (field) perf-budget advisory has lingere is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,15 +34,15 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [BRAND] Publish forge devlog
-Final score: **93**
-[S206][CONTENT/P1·FOUNDER] Publish forge devlog — DRAFT COMPLETE. journal/_drafts/forge-week-2026-06-18.md is publish-ready (factual paragraph filled in). Intentionally NOT auto-published: it's a founder-voice essay (the draft tool never auto-publishes by design). Founder: edit the lead paragraph into your own voice + publish to journal/ to clear the 66d changelog warn.
-Why it matters: Publish forge devlog affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
-
-#### 4. [BRAND] Obelisk Passport login (5d978cf9)
+#### 3. [PRODUCT] Graduate the elite hero treatment (gradient-glass, accent glow, premi…
 Final score: **90**
-[S207][FOUNDER/PARALLEL] Obelisk Passport login (5d978cf9) — a parallel session's auth-wiring commit (login.html + auth/callback.html). Agent greened its build:check failure (nav-orphan exemptions) without touching the auth flow; auth-flow ownership stays with the founder's Obelisk session. GUARDRAIL (D-S207.8, postmortem): the auth gate must redirect with 302 + Cache-Control: no-store, NEVER 301, and must NEVER gate the public site / apex / (private paths only). A 301 blanket gate misfired this session and cached-301-locked the founder out ~1h.
-Why it matters: Obelisk Passport login (5d978cf9) affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+[COHESION/P2] Graduate the elite hero treatment (gradient-glass, accent glow, premium easing) into /games/, /membership/, /studio/, and the Atlas rows so the whole site matches the homepage.
+Why it matters: Graduate the elite hero treatment (gradient-glass, accent glow, premiu is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] Atlas v2. Hero visual + per-project cover thumbnails + a "moving this…
+Final score: **87**
+[DEPTH/P3] Atlas v2. Hero visual + per-project cover thumbnails + a "moving this week" live strip.
+Why it matters: Atlas v2. Hero visual + per-project cover thumbnails + a "moving this  is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
@@ -53,61 +53,59 @@ Why it matters: The URL stays stable for search, but the public vocabulary shoul
 
 First command: `node scripts/propagate-nav.mjs`
 
-#### 2. [VERIFY] Prod-verify the S205 wave on a real browser. (a) /
+#### 2. [PRODUCT] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)
+Final score: **84**
+[CONTENT/P1·FOUNDER] Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) — clears the 66d changelog stale warn.
+Why it matters: Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md) is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] Bespoke OG cards. Atlas + several pages use generic og-home.png; gene…
 Final score: **81**
+[POLISH/P2] Bespoke OG cards. Atlas + several pages use generic og-home.png; generate bespoke per-page social cards (reuse the sharp SVG→PNG generator). Atlas first.
+Why it matters: Bespoke OG cards. Atlas + several pages use generic og-home.png; gener is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] Watch retimed play-next + auto-rotation. Once post-S207 visits accrue…
+Final score: **81**
+[S207][MEASURE/P2] Watch retimed play-next + auto-rotation. Once post-S207 visits accrue, check api/dead-ctas.json: if play-next is STILL dead, run node scripts/build-cta-state.mjs --advance to rotate to copy variant 1. If it converts, the retiming win is confirmed. Measurement-watch.
+Why it matters: Watch retimed play-next + auto-rotation. Once post-S207 visits accrue, is open, local, and unblocked — can ship this session.
+
+#### 5. [BRAND] Publish forge devlog
+Final score: **78**
+[S206][CONTENT/P1·FOUNDER] Publish forge devlog — DRAFT COMPLETE. journal/_drafts/forge-week-2026-06-18.md is publish-ready (factual paragraph filled in). Intentionally NOT auto-published: it's a founder-voice essay (the draft tool never auto-publishes by design). Founder: edit the lead paragraph into your own voice + publish to journal/ to clear the 66d changelog warn.
+Why it matters: Publish forge devlog affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+
+### LATER
+
+#### 1. [BRAND] Obelisk Passport login (5d978cf9)
+Final score: **75**
+[S207][FOUNDER/PARALLEL] Obelisk Passport login (5d978cf9) — a parallel session's auth-wiring commit (login.html + auth/callback.html). Agent greened its build:check failure (nav-orphan exemptions) without touching the auth flow; auth-flow ownership stays with the founder's Obelisk session. GUARDRAIL (D-S207.8, postmortem): the auth gate must redirect with 302 + Cache-Control: no-store, NEVER 301, and must NEVER gate the public site / apex / (private paths only). A 301 blanket gate misfired this session and cached-301-locked the founder out ~1h.
+Why it matters: Obelisk Passport login (5d978cf9) affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+
+#### 2. [VERIFY] Prod-verify the S205 wave on a real browser. (a) /
+Final score: **66**
 [S205][VERIFY/P0] Prod-verify the S205 wave on a real browser. (a) / — hero stagger on scroll; ?hero=v2 shows simplified variant; signed-in member sees rank + Continue CTA in hero; Studio Now has Vault Momentum chip. (b) /membership/ — paid tiers stagger on scroll; sticky hub tab nav. (c) /oracle/ — ask a question → entity chips appear at bottom; deep-dive link. (d) /vault-member/portal/ — cards elevate on hover, buttons spring-press. (e) /journal/dispatches/ — emoji reactions row below each entry. (f) /changelog/ — SOUL-voice narrative sentences. (g) Visit constellation sequence → unlock toast appears. Never assume push==deploy.
 Why it matters: Prod-verify the S205 wave on a real browser. (a) / was flagged 2 sessions ago; each session it stays unverified it risks hiding a regression.
 
 First command: `npm run build:check`
 
 #### 3. [PRODUCT] HERO V2 GRADUATION. ?hero=v2 flag-gated + shipped. Founder: real-devi…
-Final score: **81**
+Final score: **66**
 [S205][UX/P1·FOUNDER] HERO V2 GRADUATION. ?hero=v2 flag-gated + shipped. Founder: real-device review on desktop + mobile. If clean, remove flag-gate and make v2 the default hero. ~30m founder time.
 Why it matters: HERO V2 GRADUATION. ?hero=v2 flag-gated + shipped. Founder: real-devic is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] WEB-PUSH VAPID KEYS REQUIRED. cloudflare.vapid capability is MISSING.…
-Final score: **75**
-[S205][INFRA/P2·FOUNDER] WEB-PUSH VAPID KEYS REQUIRED. cloudflare.vapid capability is MISSING. scripts/push-dispatch.mjs scaffold ready — exits gracefully with setup instructions. Founder: (1) npx web-push generate-vapid-keys (2) store in secrets/cloudflare.vapid.env (3) add VAPID_PUBLIC_KEY to Worker env (4) node scripts/push-dispatch.mjs --test. Once READY, agent wires the smart-trigger subscriber + notification plumbing. ~2h unblocked.
-Why it matters: WEB-PUSH VAPID KEYS REQUIRED. cloudflare.vapid capability is MISSING.  is open, local, and unblocked — can ship this session.
-
-#### 5. [VERIFY] Prod-verify the S204 wave. On a real browser: (a) /studio/, /, /press…
-Final score: **75**
-[S204][VERIFY/P0] Prod-verify the S204 wave. On a real browser: (a) /studio/, /, /press/ show purpose-first mission statement; (b) focus-visible ring on tab-through; (c) buttons have tactile press; (d) custom scrollbar + branded selection render. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).
-Why it matters: Prod-verify the S204 wave. On a real browser: (a) /studio/, /, /press/ was flagged 3 sessions ago; each session it stays unverified it risks hiding a regression.
-
-First command: `npm run build:check && node scripts/csp-audit.mjs`
-
-### LATER
-
-#### 1. [PRODUCT] Add check-mission-statement-coherence.mjs gate. WARN when any mission…
-Final score: **75**
-[S204][SIL][STRUCT/P3] Add check-mission-statement-coherence.mjs gate. WARN when any mission surface reintroduces retired framing outside /universe/ lore. ~45m.
-Why it matters: Add check-mission-statement-coherence.mjs gate. WARN when any mission  is open, local, and unblocked — can ship this session.
-
-#### 2. [PRODUCT] Add check-identity-coherence.mjs gate. WARN (not error) when public m…
-Final score: **69**
-[S203][SIL][STRUCT/P3] Add check-identity-coherence.mjs gate. WARN (not error) when public marketing prose narrows VaultSpark to "game studio" instead of the canonical "creative studio building games, cinematic worlds, creative tools, and AI-native intelligence." Mirrors how check-game-playability-coherence prevents status drift — this prevents identity drift. Allowlist legal/SEO contexts (privacy, investor, meta keywords). ~45m.
-Why it matters: Add check-identity-coherence.mjs gate. WARN (not error) when public ma is open, local, and unblocked — can ship this session.
-
-#### 3. [BRAND] Document the manifesto/identity canon in one place. The studio narrat…
-Final score: **66**
-[S203][SIL][DOCS/P3] Document the manifesto/identity canon in one place. The studio narrative is now consistent across 7 surfaces but has no single source doc; a short docs/STUDIO_NARRATIVE.md (the manifesto + the FORGE→SPARK→VAULT cycle + the "different forms, one fire" portfolio framing) gives future sessions one place to copy voice from. ~30m.
-Why it matters: Document the manifesto/identity canon in one place. The studio narrati affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
-
 ## Recommended Build Order
 
-1. Watch retimed play-next + auto-rotation. Once post-S207 visits accrue…
+1. Core Web Vitals pass. The ✗ / (field) perf-budget advisory has lingered
 2. Post-push CI confirmation
-3. Publish forge devlog
-4. Obelisk Passport login (5d978cf9)
+3. Graduate the elite hero treatment (gradient-glass, accent glow, premi…
+4. Atlas v2. Hero visual + per-project cover thumbnails + a "moving this…
 5. Forge Window naming propagation
-6. Prod-verify the S205 wave on a real browser. (a) /
-7. HERO V2 GRADUATION. ?hero=v2 flag-gated + shipped. Founder: real-devi…
-8. WEB-PUSH VAPID KEYS REQUIRED. cloudflare.vapid capability is MISSING.…
-9. Prod-verify the S204 wave. On a real browser: (a) /studio/, /, /press…
-10. Add check-mission-statement-coherence.mjs gate. WARN when any mission…
-11. Add check-identity-coherence.mjs gate. WARN (not error) when public m…
-12. Document the manifesto/identity canon in one place. The studio narrat…
+6. Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.md)
+7. Bespoke OG cards. Atlas + several pages use generic og-home.png; gene…
+8. Watch retimed play-next + auto-rotation. Once post-S207 visits accrue…
+9. Publish forge devlog
+10. Obelisk Passport login (5d978cf9)
+11. Prod-verify the S205 wave on a real browser. (a) /
+12. HERO V2 GRADUATION. ?hero=v2 flag-gated + shipped. Founder: real-devi…
 
 ## Best Immediate Move
 

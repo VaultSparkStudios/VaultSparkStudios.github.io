@@ -1,8 +1,21 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-18 (Session 207 — autonomous /goal chain · 9/9 audit items shipped · build:check EXIT 0)
+Last updated: 2026-06-18 (Session 207 — extended: audit + founder tasks + hero redesign + Atlas + Vault Lifecycle canon)
+
+## Premium-site roadmap (next pass — "best premium independent studio site in the world")
+
+Recommendation: run `/audit` → `/implement` to chart + execute. Top themes identified S207:
+- [ ] **[PERF/P1] Core Web Vitals pass.** The `✗ / (field)` perf-budget advisory has lingered — premium is *felt* as speed. Optimize hero cover PNGs (AVIF/responsive), trim critical path, target sub-1.8s LCP, re-measure via RUM.
+- [ ] **[POLISH/P2] Bespoke OG cards.** Atlas + several pages use generic `og-home.png`; generate bespoke per-page social cards (reuse the `sharp` SVG→PNG generator). Atlas first.
+- [ ] **[COHESION/P2] Graduate the elite hero treatment** (gradient-glass, accent glow, premium easing) into `/games/`, `/membership/`, `/studio/`, and the Atlas rows so the whole site matches the homepage.
+- [ ] **[DEPTH/P3] Atlas v2.** Hero visual + per-project cover thumbnails + a "moving this week" live strip.
+- [ ] **[CONTENT/P1·FOUNDER] Publish the forge devlog** (`journal/_drafts/forge-week-2026-06-18.md`) — clears the 66d changelog stale warn.
 
 ## Now (S207 runway)
+
+- [x] **[S207] Atlas ecosystem map (/atlas/) — DONE.** Server-rendered hyperlinked map (Sparked/Forge/Vaulted) + Atlas term + ItemList JSON-LD; in Studio nav + sitemap. `scripts/build-atlas.mjs`.
+- [x] **[S207] Hero tile links + categories — DONE.** SPARKED→live, FORGE→studio page (fixed MindFrame railway link); dual buttons on live tiles; real per-project categories (MindFrame = AI Intelligence).
+- [x] **[S207] Vault Lifecycle canonized + SEALED retired — DONE.** `docs/VAULT_LIFECYCLE.md` + D-S207.9; SEALED purged sitewide; "Live"→"Sparked"; Ark canon proposal to studio-ops + hub.
 
 - [x] **[S207][VERIFY/P0] Prod-verify the S207 wave — DONE (post-deploy, same session).** `node scripts/prod-verify-wave.mjs` → **7 pass / 0 fail**: all S206/S207 artifacts + the new passport "Forge your own" copy + `/vaultsparked/` + `/join/` confirmed live on the pages.dev origin. CF Pages deployed the wave.
 - [x] **[S207][INFRA/P1] Deploy the Worker with `--env production` — DONE (same session).** Deployed `vaultspark-security-headers-production` Version `9c4395c7` (token via cloudflare.deploy gateway). New RUM prefixes `cta` + `oracle-feedback` + statics `passport:inbound`/`oracle:graph_traverse` now live at the edge.

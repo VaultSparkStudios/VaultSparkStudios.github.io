@@ -12,7 +12,7 @@ Sparkline (last 5 totals): ███▂▃
 Avgs - 3: 922.7 | 5: 946.2 | 10: 962 | 25: 962 | all: 961 (v3.0 /1000)
   └ 3-session: Dev 92.3 | Align 94.7 | Momentum 94.3 | Engage 92.3 | Process 89.0
 Velocity trend: ↑ (S207: 9/9 audit items autonomous chain; S206: 13+2 items autonomous chain; S205: 15 items autonomous chain) | Protocol velocity: → | Debt: ↓ (prod-verify automation closes the 7-deep [VERIFY/P0] backlog; caught + fixed own --check drift trap)
-Momentum runway: Founder real-device review of the redesigned hero (clear site-data first — stale cached gate) · publish forge devlog (draft complete) · build web-push feature on the provisioned VAPID cred · finish/own the Obelisk Passport login auth flow · studio-ops commit cloudflare.vapid CAPABILITY_MAP entry | Intent rate: 100% (last 5) | (S207 shipped: 9-item audit + fused agent+human hero redesign + Stripe TRIAL50 live + VAPID + Worker prod deploy; access-gate incident resolved)
+Momentum runway: PREMIUM ROADMAP (run /audit→/implement) — Core Web Vitals/perf · bespoke OG cards · finish-cohesion (graduate elite hero treatment site-wide) · Atlas v2 · publish forge devlog (founder) · real-device hero review (founder) · Obelisk session owns auth flow | Intent rate: 100% (last 5) | (S207 shipped: 9-item audit + agent+human hero redesign + Stripe TRIAL50 live + VAPID + Worker deploy + /atlas/ ecosystem map + Vault Lifecycle canonized [SEALED retired])
 Last session: 2026-06-18 | Session 207 | Total: 905/1000 (v3.0) | Velocity: 9 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->

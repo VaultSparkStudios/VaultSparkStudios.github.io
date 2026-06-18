@@ -70,11 +70,11 @@
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-15)                   ║
 ║  ✓  Velocity      9 ↑  ·  Debt: ↓                                ║
-║  ✓  Runway        Founder real-device review of the redesigned   ║
+║  ✓  Runway        PREMIUM ROADMAP (run /audit→/implement) — Cor  ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         41975 FORGE  ·  6d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
-║  ⛔  Compliance   32/35 (91%) ↓ ███████▆                          ║
+║  ⛔  Compliance   31/35 (89%) ↓ ███████▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.210  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -112,17 +112,17 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Watch retimed play-next + auto-rotation. O  ║
-║        Watch retimed play-next + auto-rotation. Once post-S207   ║
+║   96  [PRODUCT]      Core Web Vitals pass. The ✗ / (field) perf  ║
+║        Core Web Vitals pass. The ✗ / (field) perf-budget adviso  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [BRAND]        Publish forge devlog                        ║
-║        Publish forge devlog affects public vocabulary and navig  ║
+║   90  [PRODUCT]      Graduate the elite hero treatment (gradien  ║
+║        Graduate the elite hero treatment (gradient-glass, accen  ║
 ║                                                                  ║
-║   90  [BRAND]        Obelisk Passport login (5d978cf9)           ║
-║        Obelisk Passport login (5d978cf9) affects public vocabul  ║
+║   87  [PRODUCT]      Atlas v2. Hero visual + per-project cover   ║
+║        Atlas v2. Hero visual + per-project cover thumbnails + a  ║
 ║                                                                  ║
 ║   86  [BRAND]        Forge Window naming propagation             ║
 ║        The URL stays stable for search, but the public vocabula  ║
