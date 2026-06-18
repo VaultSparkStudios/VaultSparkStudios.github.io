@@ -444,6 +444,27 @@
         linear-gradient(180deg, rgba(200,195,190,0.12) 0%, transparent 20%, transparent 80%, rgba(200,195,190,0.15) 100%);
     }
 
+    /* ── Hero v2 — flag-gated variant (?hero=v2 | localStorage heroV2) ──
+       Distills to a single centered glow + faster wordmark + earlier CTAs.
+       REQUIRES founder real-device review before graduating to default. */
+    body[data-hero-v2] .hero-glow.orange,
+    body[data-hero-v2] .hero-glow.gold,
+    body[data-hero-v2] .forge-spark-burst { display: none; }
+    body[data-hero-v2] .hero-glow.blue {
+      left: 50%; top: -18%;
+      transform: translateX(-50%);
+      width: 58vw; max-width: 720px;
+      background: radial-gradient(circle, rgba(40,130,255,0.20) 0%, rgba(200,100,20,0.10) 45%, transparent 75%);
+      animation-duration: 12s;
+    }
+    body[data-hero-v2] .forge-letter {
+      animation-duration: 0.32s;
+      animation-delay: calc(0.04s + var(--li, 0) * 0.028s);
+    }
+    body[data-hero-v2] .hero-reveal {
+      animation-delay: var(--reveal-delay, 0.52s);
+    }
+
     /* ── Reduced-motion: instant reveal, no animations ── */
     @media (prefers-reduced-motion: reduce) {
       .forge-letter,
@@ -1065,6 +1086,10 @@
 
   <!-- ═══ MAIN ═════════════════════════════════════════════ -->
   <main id="main-content">
+
+    <!-- Hero v2 flag-reader (S205 #3) — runs early so CSS variant activates
+         before first paint. ?hero=v2 param or localStorage('heroV2')='1'. -->
+    <script>(function(){var p=new URLSearchParams(location.search);if(p.get('hero')==='v2'||localStorage.getItem('heroV2')==='1'){document.body.dataset.heroV2='true';}}());</script>
 
     <!-- ── Hero ──────────────────────────────────────────── -->
     <!-- ── Hero ───────────────────────────────── -->
