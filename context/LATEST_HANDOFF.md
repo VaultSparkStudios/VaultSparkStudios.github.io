@@ -1,9 +1,12 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-18 (Session 207)
+Last updated: 2026-06-18 (Session 207 — extended: audit wave → founder tasks → hero redesign)
+
+> **S207 final state (read first):** This session grew well past the original 9-item audit. After the audit wave it executed the founder-authorized "founder-only" carries (Worker prod deploy · live Stripe TRIAL50 coupon · VAPID provisioned · hero v2 graduated) and then a **founder-directed full hero redesign** — the fused cinematic-split + living-portfolio hero (agent-AND-human-first: server-rendered real project tiles + ItemList JSON-LD + twin /games/ + /projects/ CTAs), with the tiles exponentially upgraded for legibility (D-S207.7). An **access incident** (a parallel Obelisk-login change briefly added a blanket auth gate to index.html → reverted in `ede02ece`) is resolved; residual lockouts are stale client cache (clear site data). **Next-session top items:** founder real-device review of the new hero (after clearing site-data) · publish the forge devlog draft · build the web-push feature on the provisioned VAPID cred · the founder's Obelisk session owns the auth-flow completion. All work pushed; build:check EXIT 0.
+
 ## Where We Left Off — Session 207
 
-- **Session Intent:** Autonomous `/goal` chain — `/start → /audit → /implement → /closeout`, genius-level, "best in history" + "anything we missed or didn't finish from last few sessions?" No founder direction beyond the goal.
+- **Session Intent:** Autonomous `/goal` chain — `/start → /audit → /implement → /closeout`, genius-level, "best in history" + "anything we missed or didn't finish from last few sessions?" Then extended by founder direction (do the founder-only tasks; redesign + exponentially improve the hero).
 - **Intent outcome: ACHIEVED** — fresh 9-item S207 audit generated + all 9 shipped; `build:check` EXIT 0. The audit's deliberate lens answered the "what did we miss" question directly: it walked the live conversion paths of last session's wave and found three S206 features that don't actually convert, plus the recurring [VERIFY/P0] backlog.
 - **Shipped (9/9 — `docs/AUDIT_2026-06-18-S207.{json,md}`):**
   - `play-next-intent-retiming` (#1) — the dead cross-game card (18 shown / 0 clicks) now reveals on engagement (scroll ≥60% / 45s dwell / exit-intent), completion-framed copy, real card at end of content. `assets/cross-game-play-next.js`.

@@ -61,16 +61,16 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ███████████░░░░░░░░░░░░░   46% used                          ║
-║     92,762 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
-║     ~46,381 tok/turn  ·  cache 50%  ·  1 turns to compact        ║
-║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
+║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
+║     2,886 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
+║     ~1,443 tok/turn  ·  cache 50%  ·  125 turns to compact       ║
+║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-15)                   ║
 ║  ✓  Velocity      9 ↑  ·  Debt: ↓                                ║
-║  ✓  Runway        Re-run prod-verify-wave post-deploy · Deploy   ║
+║  ✓  Runway        Founder real-device review of the redesigned   ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         41975 FORGE  ·  6d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
@@ -112,20 +112,20 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║  100  [VERIFY]       Re-run node scripts/prod-verify-wave.mjs a  ║
-║        Re-run shipped last session — confirm it works in produc  ║
-║                                                                  ║
-║   99  [SECURITY]     Deploy the Worker with --env production. c  ║
-║        Deploy the Worker with --env production. cloudflare/secu  ║
+║   96  [PRODUCT]      Watch retimed play-next + auto-rotation. O  ║
+║        Watch retimed play-next + auto-rotation. Once post-S207   ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Watch retimed play-next + auto-rotation. O  ║
-║        Watch retimed play-next + auto-rotation. Once post-S207   ║
+║   93  [BRAND]        Publish forge devlog                        ║
+║        Publish forge devlog affects public vocabulary and navig  ║
 ║                                                                  ║
-║   89  [REVENUE]      Create the Stripe TRIAL50 coupon (makes 50  ║
-║        Create the Stripe TRIAL50 coupon (makes 50%-off real end  ║
+║   90  [BRAND]        Obelisk Passport login (5d978cf9)           ║
+║        Obelisk Passport login (5d978cf9) affects public vocabul  ║
+║                                                                  ║
+║   86  [BRAND]        Forge Window naming propagation             ║
+║        The URL stays stable for search, but the public vocabula  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
