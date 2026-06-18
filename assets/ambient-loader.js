@@ -332,6 +332,17 @@
       src: '/assets/constellation-tracker.js',
       when: function () { return true; },
       idle: true
+    },
+    {
+      // S206 #7: smart trial offer — 50% off first month shown once to
+      // high-intent visitors (3+ visits or 5+ min page-dwell). Gates on
+      // vs_trial_offered; never shows to signed-in members.
+      src: '/assets/smart-trial-offer.js',
+      when: function () {
+        if (document.body && document.body.hasAttribute('data-vs-signed-in')) return false;
+        try { return !localStorage.getItem('vs_trial_offered'); } catch (_) { return true; }
+      },
+      idle: true
     }
   ];
 

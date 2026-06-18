@@ -299,6 +299,11 @@ const RUM_UX_EVENTS = new Set([
   // S206 #1: adaptive oracle intro — fires when returning-visitor personalization
   // is applied on /ignis/ (≥1 history entry found in localStorage vs_ignis_history).
   'oracle:personalized_intro_shown',
+  // S206 #7: smart trial offer — high-intent visitor conversion nudge.
+  // Gate: vs_trial_offered; fires exactly once per device.
+  'funnel:trial_offer_shown',
+  'funnel:trial_offer_clicked',
+  'funnel:trial_offer_dismissed',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so
