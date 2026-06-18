@@ -41,7 +41,9 @@ const SKIP_FILES = new Set([
   'share/index.html',
   'google-site-verification-REPLACE_ME.html',
   // S135: internal admin (sub-page of vault-member admin)
-  'vault-member/admin/ignis-spend/index.html'
+  'vault-member/admin/ignis-spend/index.html',
+  // S206: vault passport is auth-gated + noindex — own minimal nav, not sitewide shell
+  'vault-member/passport/index.html'
 ]);
 
 // ─── Active link mapping ───────────────────────────────

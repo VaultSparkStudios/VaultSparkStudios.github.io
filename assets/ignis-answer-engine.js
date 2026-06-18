@@ -154,7 +154,9 @@
       '.vs-ask-ignis__history{margin-top:.7rem}.vs-ask-ignis__history-label{display:block;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--dim,#6272a0);margin-bottom:.4rem}.vs-ask-ignis__history-row{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}.vs-ask-ignis__history-chip{font-size:.8rem;border:1px solid rgba(100,200,255,.25);border-radius:999px;padding:.35rem .75rem;background:rgba(100,200,255,.06);color:#7cc8ff;cursor:pointer;font:inherit;text-align:left}.vs-ask-ignis__history-chip:hover{background:rgba(100,200,255,.15)}.vs-ask-ignis__history-clear{background:none;border:none;color:var(--dim,#6272a0);cursor:pointer;font-size:.8rem;padding:.3rem .5rem;border-radius:6px;line-height:1}.vs-ask-ignis__history-clear:hover{color:var(--muted,#a8b4d0)}' +
       '.vs-ask-ignis__deepdive{display:inline-flex;align-items:center;gap:.35rem;margin-top:.9rem;font-size:.78rem;font-weight:700;color:var(--gold,#ffc400);text-decoration:none;opacity:.75;transition:opacity .15s}.vs-ask-ignis__deepdive:hover{opacity:1}' +
       '.vs-ignis-synthesis-card{margin-top:1rem;padding:.9rem 1rem;border-radius:12px;background:rgba(255,196,0,.04);border:1px solid rgba(255,196,0,.18)}.vs-ignis-synthesis-card__header{display:flex;align-items:center;gap:.7rem;margin-bottom:.7rem}.vs-ignis-synthesis-card__badge{display:inline-block;padding:.15rem .5rem;border-radius:5px;background:rgba(255,196,0,.12);border:1px solid rgba(255,196,0,.28);font-size:.65rem;font-weight:900;letter-spacing:.12em;color:#ffc400}.vs-ignis-synthesis-card__count{font-size:.78rem;color:var(--muted,#a8b4d0)}.vs-ignis-synthesis-card__list{display:flex;flex-direction:column;gap:.5rem}.vs-ignis-synthesis-card__row{display:flex;flex-direction:column;gap:.15rem}.vs-ignis-synthesis-card__q{font-size:.85rem;color:var(--text,#eef2ff)}.vs-ignis-synthesis-card__src{font-size:.75rem;color:rgba(255,196,0,.7);text-decoration:none}.vs-ignis-synthesis-card__src:hover{text-decoration:underline}.vs-ignis-synthesis-card__reads-label{margin-top:.75rem;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim,#6272a0);font-weight:700}.vs-ignis-synthesis-card__reads{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.35rem}' +
-      '.vs-ask-ignis__related{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem;margin-top:.75rem;padding-top:.7rem;border-top:1px solid rgba(255,196,0,.1)}.vs-ask-ignis__related-label{font-size:.7rem;font-weight:700;color:var(--dim,#6272a0);text-transform:uppercase;letter-spacing:.05em;margin-right:.15rem;white-space:nowrap}.vs-ask-ignis__related-chip{display:inline-flex;align-items:center;padding:.2rem .65rem;border-radius:100px;font-size:.76rem;font-weight:600;background:rgba(255,196,0,.06);border:1px solid rgba(255,196,0,.2);color:var(--gold,#ffc400);cursor:pointer;font:inherit;line-height:1.4;transition:background .12s,border-color .12s}.vs-ask-ignis__related-chip:hover{background:rgba(255,196,0,.16);border-color:rgba(255,196,0,.4)}';
+      '.vs-ask-ignis__related{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem;margin-top:.75rem;padding-top:.7rem;border-top:1px solid rgba(255,196,0,.1)}.vs-ask-ignis__related-label{font-size:.7rem;font-weight:700;color:var(--dim,#6272a0);text-transform:uppercase;letter-spacing:.05em;margin-right:.15rem;white-space:nowrap}.vs-ask-ignis__related-chip{display:inline-flex;align-items:center;padding:.2rem .65rem;border-radius:100px;font-size:.76rem;font-weight:600;background:rgba(255,196,0,.06);border:1px solid rgba(255,196,0,.2);color:var(--gold,#ffc400);cursor:pointer;font:inherit;line-height:1.4;transition:background .12s,border-color .12s}.vs-ask-ignis__related-chip:hover{background:rgba(255,196,0,.16);border-color:rgba(255,196,0,.4)}' +
+      '.vs-ignis-cache-label{font-size:.78rem;color:var(--dim,#6272a0)}.vs-ignis-cache-hint{font-size:.75rem;color:var(--dim,#6272a0)}' +
+      '.vs-ignis-fb-form{display:flex;flex-direction:column;gap:.4rem;width:100%}.vs-ignis-fb-lbl{font-size:.78rem;color:var(--muted,#9aa3b2)}.vs-ignis-fb-row{display:flex;gap:.4rem}.vs-ignis-fb-inp{flex:1;border:1px solid var(--line,rgba(255,255,255,.12));background:rgba(0,0,0,.18);color:var(--text,#e8eaf0);border-radius:8px;padding:.45rem .7rem;font:inherit;font-size:.82rem}.vs-ignis-fb-btn{border:0;border-radius:8px;padding:.45rem .8rem;background:rgba(255,196,0,.18);color:var(--gold,#ffc400);font-weight:700;font-size:.82rem;cursor:pointer}';
     document.head.appendChild(s);
   }
 
@@ -178,7 +180,7 @@
       var cacheHit = !followUp && lookupPrefixCache(q);
       out.textContent = followUp ? 'Following that thread…' : 'Reading public studio memory…';
       if (cacheHit) {
-        out.innerHTML = vsHtml('<span style="font-size:.78rem;color:var(--dim,#6272a0)">Continuing from your earlier search —</span> ' + esc(cacheHit.excerpt) + '<br><span style="font-size:.75rem;color:var(--dim,#6272a0)">Checking for updates…</span>');
+        out.innerHTML = vsHtml('<span class="vs-ignis-cache-label">Continuing from your earlier search —</span> ' + esc(cacheHit.excerpt) + '<br><span class="vs-ignis-cache-hint">Checking for updates…</span>');
       }
       loadIndex().then(function (idx) {
         var result = answer(q, idx, { followUp: followUp });
@@ -213,22 +215,22 @@
               // (no backend storage at L1 — data lands in the analytics pipeline).
               fb.innerHTML = '';
               var form = document.createElement('form');
-              form.style.cssText = 'display:flex;flex-direction:column;gap:.4rem;width:100%;';
+              form.className = 'vs-ignis-fb-form';
               var lbl = document.createElement('label');
               lbl.textContent = 'What were you looking for?';
-              lbl.style.cssText = 'font-size:.78rem;color:var(--muted,#9aa3b2);';
+              lbl.className = 'vs-ignis-fb-lbl';
               var row = document.createElement('div');
-              row.style.cssText = 'display:flex;gap:.4rem;';
+              row.className = 'vs-ignis-fb-row';
               var inp = document.createElement('input');
               inp.type = 'text';
               inp.placeholder = 'e.g. how to cancel membership…';
               inp.maxLength = 140;
               inp.setAttribute('aria-label', 'What were you looking for?');
-              inp.style.cssText = 'flex:1;border:1px solid var(--line,rgba(255,255,255,.12));background:rgba(0,0,0,.18);color:var(--text,#e8eaf0);border-radius:8px;padding:.45rem .7rem;font:inherit;font-size:.82rem;';
+              inp.className = 'vs-ignis-fb-inp';
               var btn = document.createElement('button');
               btn.type = 'submit';
               btn.textContent = 'Send';
-              btn.style.cssText = 'border:0;border-radius:8px;padding:.45rem .8rem;background:rgba(255,196,0,.18);color:var(--gold,#ffc400);font-weight:700;font-size:.82rem;cursor:pointer;';
+              btn.className = 'vs-ignis-fb-btn';
               row.appendChild(inp);
               row.appendChild(btn);
               form.appendChild(lbl);

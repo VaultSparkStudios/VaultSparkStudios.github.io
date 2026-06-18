@@ -51,7 +51,8 @@ const SKIP_FILES = new Set([
   '404.html', 'offline.html',
   'share/index.html',
   'google-site-verification-REPLACE_ME.html',
-  'vault-member/admin/ignis-spend/index.html'
+  'vault-member/admin/ignis-spend/index.html',
+  'vault-member/passport/index.html'
 ]);
 
 function findHtml(dir, base = dir, out = []) {
