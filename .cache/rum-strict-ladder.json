@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-18T16:21:42.256Z",
+  "generatedAt": "2026-06-18T16:59:59.961Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 218,
+  "totalSamples": 227,
   "sufficientRoutes": 1,
   "siteState": "partial-route-strict",
   "nextRoute": {
     "route": "/games/vaultspark-football-gm/",
-    "samples": 21,
+    "samples": 22,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 29,
+    "remaining": 28,
     "p75": {
       "lcp": 1616,
       "cls": 0.0016,
@@ -24,7 +24,7 @@
   "routes": [
     {
       "route": "/",
-      "samples": 109,
+      "samples": 116,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
@@ -129,10 +129,10 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 21,
+      "samples": 22,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 29,
+      "remaining": 28,
       "p75": {
         "lcp": 1616,
         "cls": 0.0016,
@@ -409,6 +409,21 @@
         "inp": 472,
         "fcp": 1380,
         "ttfb": 117
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/universe/voidfall/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 434,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 434,
+        "ttfb": 300
       },
       "overBudget": false
     },

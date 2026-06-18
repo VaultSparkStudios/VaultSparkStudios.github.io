@@ -310,6 +310,8 @@ const RUM_UX_EVENTS = new Set([
   // S206 #11: vault passport — member card impression + share action.
   'passport:viewed',
   'passport:shared',
+  // S207: anonymous viewer opened a shared passport → inbound join surface.
+  'passport:inbound',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so

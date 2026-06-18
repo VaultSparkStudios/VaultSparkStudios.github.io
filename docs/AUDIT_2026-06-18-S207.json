@@ -1,0 +1,224 @@
+{
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-06-18",
+  "session": 207,
+  "project": { "slug": "vaultsparkstudios-website", "type": "website", "name": "VaultSpark Studios Website" },
+  "axes": {
+    "ux": 2.5,
+    "speed": 2,
+    "featureDepth": 1.5,
+    "ai": 1,
+    "feedback": 1,
+    "security": 1,
+    "gamification": 1
+  },
+  "successBarAdditions": [
+    "Each item must name the conversion or info-finding outcome"
+  ],
+  "lens": "S207 frontier — 'what did we ship last session that isn't actually working?' Audit walked the live conversion paths of the S206 wave instead of inventing net-new surface. Three S206 features were measurably or structurally non-converting (play-next dead 18/0, trial offer a dangling promise, passport viral loop dead-ends). The recurring process miss — a 7-deep [VERIFY/P0] backlog with no automation — is closed structurally.",
+  "items": [
+    {
+      "id": 1,
+      "slug": "play-next-intent-retiming",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 7,
+      "priority": 78.8,
+      "title": "Retime the dead cross-game play-next card from pre-engagement to post-engagement",
+      "why": "We REDESIGNED this card last session (S206 #2) and moved it above the fold — and it now has 18 impressions and 0 clicks (api/dead-ctas.json, the single flagged dead CTA). The redesign made it MORE banner-blind, not less: a visitor lands on a game page to play THAT game, and a thin gold divider strip saying 'Haven't tried [other game] yet?' fires before they've engaged, fighting the page's own primary Play CTA. The fix is timing + framing, not pixels. Outcome: recover a cross-catalog routing path that currently converts a measured 0% of 18 impressions — the studio's audience-compounding thesis depends on this card working.",
+      "recipe": "In assets/cross-game-play-next.js: (1) defer render() until an engagement signal — IntersectionObserver on the game's own play area reaching >=60% scroll OR a 45s dwell OR exit-intent (mouseleave toward top), whichever fires first; (2) reframe copy from pre-engagement 'Haven't tried X yet?' to completion-framed 'Done here? [Name] is live too - play free' so it reads as a next-step not an interruption; (3) make it a real card (vertical, larger cover, own visual weight) instead of a divider strip between hero and content; (4) keep honest-dark + TT-safe DOM building. Re-emit play-next:shown only on actual reveal so the dead-CTA gate measures the new timing fairly.",
+      "evidence": "assets/cross-game-play-next.js:83-144 render() mounts immediately after .game-hero via insertAdjacentElement('afterend'); api/dead-ctas.json shows {source:family, id:play-next, shown:18, click:0}; check-dead-ctas.mjs already gates this family so the fix is measurable next cycle.",
+      "status": "pending",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Reframe copy to completion-framed 'Done here? [Name] is live too - play free' and keep current mount. Cheapest honest test of the framing hypothesis." },
+        "L2": { "effortHours": 2, "recipe": "Engagement-gated reveal (scroll >=60% OR 45s dwell OR exit-intent) + completion copy + real vertical card. Re-emit shown on reveal." },
+        "L3": { "effortHours": 5, "recipe": "Client A/B: 50% post-engagement timing, 50% above-fold; both emit a variant tag to /v/rum so rollup-rum-ux proves which timing wins, feeding dead-cta-rotation-loop." }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 2,
+      "slug": "trial-offer-promo-acknowledgment",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 1.5,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 74.7,
+      "title": "Honor the 50%-off trial offer on the /join/ page (dangling promise today)",
+      "why": "Last session shipped smart-trial-offer.js (S206 #7) - a panel that says 'Claim 50% off' and links to /join/?promo=TRIAL50. But /join/ does NOT read the promo param at all (grep: zero handling), so a high-intent visitor who clicks the discount lands on a page that never acknowledges or applies it. That is a broken conversion path AND a public-promise integrity problem (CANON-031 - no lying surfaces). Outcome: every trial-offer click lands on a page that confirms the discount, raising the highest-intent funnel segment's conversion instead of silently dropping it.",
+      "recipe": "On /join/: read ?promo from the URL; if it matches a known promo (TRIAL50), inject a dismissible acknowledgment banner above the tier cards ('50% off your first 3 months - applied at checkout') and persist promo to sessionStorage so it survives the auth round-trip. Pass the promo through to the create-checkout edge call (Stripe promotion_code). L1 = honest acknowledgment + pass-through; the actual Stripe coupon object is the escalation rung (pricing = founder gate). Emit funnel:promo_landed RUM. A promo link with no matching server-side coupon shows 'offer expired' rather than a silent no-op.",
+      "evidence": "assets/smart-trial-offer.js:9,14,34 - OFFER_URL='/join/?promo=TRIAL50', comment admits 'No Stripe code validation on the client'; grep promo/TRIAL50/coupon in join/index.html returns only an unrelated nav dropdown - zero promo handling exists.",
+      "status": "pending",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Read ?promo on /join/, show acknowledgment banner + sessionStorage persist. No checkout wiring - closes the lying-surface gap immediately." },
+        "L2": { "effortHours": 1.5, "recipe": "L1 + pass promo through to create-checkout as promotion_code; funnel:promo_landed RUM; expired-promo fallback copy." },
+        "L3": { "effortHours": 3, "recipe": "Create the Stripe promotion_code object via the gateway (founder pricing approval), validate in stripe-webhook, reconcile the discount in the member record so the 50% is real end-to-end." }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 3,
+      "slug": "passport-share-inbound-conversion",
+      "tier": "🔥",
+      "axis": "ux",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 7,
+      "priority": 70.0,
+      "title": "Turn shared Vault Passports into a signup loop (inbound CTA is missing)",
+      "why": "Last session shipped the Vault Passport (S206 #11) with Web Share so members can broadcast their rank - a viral gesture. But /vault-member/passport/ has NO inbound CTA: someone who opens a shared passport URL (the entire point of sharing) sees an auth-gated card and zero prompt to make their own. The viral loop dead-ends at the moment of highest social proof. Outcome: convert each shared-passport open into a 'Forge your own Vault Passport - join free' path, closing a referral loop the share button currently opens but never lands.",
+      "recipe": "On /vault-member/passport/, detect the non-owner / anonymous viewer state (no session OR ?u=<handle> differs from signed-in user). For that state, render a prominent 'Forge your own Vault Passport' card under the shared card: rank ladder, one-line value prop, join CTA deep-linked to /join/ with funnel:passport_inbound RUM. Owner view unchanged. Honest-dark when the shared handle can't be resolved. TT-safe DOM. Optionally read ?u= to greet 'You're viewing [handle]'s passport'.",
+      "evidence": "grep join|sign.?up|forge your own in vault-member/passport/index.html returns nothing - no inbound CTA exists; S206 handoff confirms Web Share + clipboard fallback shipped but only the outbound half of the loop.",
+      "status": "pending",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Static 'Forge your own Vault Passport - join free' CTA shown to anonymous viewers under the card. No handle resolution." },
+        "L2": { "effortHours": 2, "recipe": "Viewer-state detection + rank-ladder teaser + funnel:passport_inbound RUM + ?u= greeting when present." },
+        "L3": { "effortHours": 4, "recipe": "Render a real read-only public passport for ?u=<handle> from a public profile feed (public_profile=eq.true) so shared links show the actual person's rank/tenure to anonymous viewers - maximum social proof before the join CTA." }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 4,
+      "slug": "prod-wave-verify-automation",
+      "tier": "🔥",
+      "axis": "speed",
+      "effortHours": 2,
+      "impact": 8,
+      "innovation": 8,
+      "priority": 64.0,
+      "title": "Automate prod wave verification - kill the 7-deep [VERIFY/P0] backlog",
+      "why": "Every session for the last 8 (S199->S206) ships a wave and files a manual '[VERIFY/P0] Prod-verify the S{N} wave on a real browser' task - and almost none get checked, so the TASK_BOARD carries a 7-deep verification debt. This is the literal answer to 'what did we miss': not features, but confirmation that shipped features actually deployed. Most of each checklist (does the artifact/page exist on prod?) is machine-checkable via the pages.dev origin (CF bot-challenge != outage, per S177). Outcome: every wave is auto-verified at closeout, the manual backlog disappears, and a genuinely-broken deploy is caught the same session instead of 8 sessions later.",
+      "recipe": "Write scripts/prod-verify-wave.mjs: read the current wave's expected surfaces from a small manifest (api JSON paths + page routes), fetch each from https://vaultsparkstudios-website.pages.dev/ (origin bypasses the bot-challenge), assert 200 + (JSON) schemaVersion present + (pages) a sentinel string. Emit a pass/fail report; honest-dark on network failure (don't false-fail a CI runner). Wire as an advisory closeout step. Truly-visual checks stay human; presence/liveness is automated.",
+      "evidence": "TASK_BOARD carries [VERIFY/P0] items for S199,S200,S201,S204,S205,S206 - 6+ unverified waves; no scripts/prod-verify*.mjs exists (glob confirmed); this session proved the pattern by curling the S206 artifacts (all 200 on pages.dev, apex 403 = benign).",
+      "status": "pending",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Script fetches a hardcoded list of the latest wave's artifacts from pages.dev origin, asserts 200, prints a report. Manual invocation." },
+        "L2": { "effortHours": 2, "recipe": "Manifest-driven (reads wave surfaces from a small JSON) + JSON schemaVersion + page sentinel assertions + honest-dark. Wired as advisory closeout step." },
+        "L3": { "effortHours": 4, "recipe": "Closeout auto-emits the wave manifest from the session's changed api/ + page files, runs the verifier post-push with retry/backoff for CF Pages propagation, writes a verify badge into PROJECT_STATUS.json for the startup brief." }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 5,
+      "slug": "ambient-bundle-reaudit",
+      "tier": "⚡",
+      "axis": "speed",
+      "effortHours": 2,
+      "impact": 6,
+      "innovation": 4,
+      "priority": 24.0,
+      "title": "Re-audit the ambient bundle weight after 5+ assets added in S205-S206",
+      "why": "S205-S206 added several predicate-loaded client assets (smart-trial-offer.js, cross-game-play-next redesign, ignis-prefix-cache, oracle-feedback-close, passport). The ambient loader predicate-loads features, but each addition risks creeping the core bundle or the cold-cache request count that S136 fought down to 1. Speed is weighted 2x and LCP history is sensitive (S153/S160 regressions). Outcome: confirm the recent wave didn't regress cold-cache requests or core bundle size, or split what crept - protecting the field LCP that drives bounce.",
+      "recipe": "Run the ambient-coverage / bundle audit and diff core-bundle byte size + cold-cache request count vs the S204 baseline. Confirm the 5 new assets are predicate-loaded (not in core). If any leaked into core, move to predicate load. Capture before/after request count. Re-run a synthetic LCP trace on / and /games/ to confirm no regression.",
+      "evidence": "S205/S206 handoffs list smart-trial-offer.js, cross-game-play-next redesign, ignis-prefix-cache, oracle-feedback-close as new client assets; memory feedback_new_asset_contract_gotchas notes feature assets must be predicate-loaded via ambient-loader, not bundled.",
+      "status": "pending",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Diff core bundle size + cold-cache request count vs baseline; report only." },
+        "L2": { "effortHours": 2, "recipe": "Full audit + move any leaked assets to predicate load + synthetic LCP re-trace on / and /games/." },
+        "L3": { "effortHours": 4, "recipe": "Add check-bundle-budget.mjs gate that fails build:check if core bundle bytes or cold-cache request count exceeds a committed budget." }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 6,
+      "slug": "constellation-sequence-analytics",
+      "tier": "⚡",
+      "axis": "ai",
+      "effortHours": 1,
+      "impact": 6,
+      "innovation": 6,
+      "priority": 22.7,
+      "title": "Per-step constellation progress events to see where sequences drop off (S206 carry)",
+      "why": "Constellation challenges (S205) emit constellation:unlock:<id> only on completion - so we see who finished a hidden page-sequence but are blind to WHERE the rest abandoned it. Carried from S206. Outcome: per-step drop-off visibility lets us shorten or re-route the sequences that bleed visitors, turning a gamification feature we can't tune into one we can.",
+      "recipe": "In assets/constellation-tracker.js, emit constellation:progress:<id>:<step> as each step in a sequence is reached (not just the terminal unlock). Add the matching prefix to the Worker RUM allowlist (RUM_UX_DYNAMIC) and to check-rum-allowlist so the gate stays green. Add a 'constellations' drop-off block to rollup-rum-ux.mjs aggregating step reach counts per sequence.",
+      "evidence": "TASK_BOARD [S206][SIL/P3] CONSTELLATION-SEQUENCE-ANALYTICS carry; data/constellations.json + assets/constellation-tracker.js shipped S205 with only the unlock event.",
+      "status": "pending",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Emit constellation:progress:<id>:<step> + allowlist the prefix + check-rum-allowlist update. No rollup block yet." },
+        "L2": { "effortHours": 2, "recipe": "L1 + rollup-rum-ux 'constellations' drop-off aggregation block." },
+        "L3": { "effortHours": 3, "recipe": "Surface the funnel in api/constellation-activity.json (drop-off per step) and render a step-by-step completion bar in the public constellation feed, honest-dark under threshold." }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 7,
+      "slug": "ignis-graph-depth-l3",
+      "tier": "⚡",
+      "axis": "ai",
+      "effortHours": 4,
+      "impact": 7,
+      "innovation": 8,
+      "priority": 21.6,
+      "title": "IGNIS cross-entity traversal: 'Related' chips open a mini-catalog sub-panel (S206 carry)",
+      "why": "S205 shipped related-entity chips at the bottom of IGNIS answers, but clicking one just re-queries. Carried from S206. Genius depth: clicking a Related chip should expand a sub-panel of 3 matching cards drawn from api/public-intelligence.json - a mini-catalog traversal - so the Oracle becomes a graph you browse, not a single-shot Q&A. Outcome: deeper info-finding sessions (more queries per visit), the leading indicator of membership consideration.",
+      "recipe": "In assets/ignis-answer-engine.js, add a 'mini-catalog mode': on related-chip click, fetch (cached) api/public-intelligence.json, match the chip's entity to up to 3 related entities, render a sub-panel of compact cards (title + one-line + link) below the answer instead of re-running the query. Emit oracle:graph_traverse RUM (allowlist it). Keep the existing re-query as a fallback link. Intelligence-style-contract compliant - CSS classes via ensureStyles(), never inline styles.",
+      "evidence": "TASK_BOARD [S206][AI/P2] IGNIS-GRAPH-DEPTH-L3 carry; assets/ignis-answer-engine.js renders related chips (S205); api/public-intelligence.json is the deployed public-safe feed (S183).",
+      "status": "pending",
+      "ladder": {
+        "L1": { "effortHours": 1.5, "recipe": "Related chip click renders up to 3 related entity links inline (text only) from public-intelligence.json. No card UI." },
+        "L2": { "effortHours": 4, "recipe": "Full mini-catalog sub-panel with compact cards + oracle:graph_traverse RUM + ensureStyles() CSS classes." },
+        "L3": { "effortHours": 8, "recipe": "Multi-hop breadcrumb traversal (chip -> sub-panel -> chip) with a back stack, so a visitor browses the entity graph several hops deep without leaving the answer view." }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 8,
+      "slug": "oracle-feedback-themes-loop",
+      "tier": "💡",
+      "axis": "feedback",
+      "effortHours": 2,
+      "impact": 6,
+      "innovation": 7,
+      "priority": 21.0,
+      "title": "Close the loop on the Oracle thumbs-down feedback form - aggregate into a themes feed",
+      "why": "S206 shipped the oracle-feedback-close form (thumbs-down -> text input -> oracle:feedback_submitted RUM), but the captured text currently just lands in the RUM stream with no aggregation or action - an open loop. Outcome: aggregate negative-feedback themes into api/oracle-feedback-themes.json so 'what visitors wish the Oracle answered' becomes a ranked content backlog, turning raw signal into the next wave's IGNIS depth priorities.",
+      "recipe": "Add scripts/build-oracle-feedback-themes.mjs: read oracle:feedback_submitted events from the RUM rollup, cluster by simple keyword/topic, emit api/oracle-feedback-themes.json (top requested topics, counts, honest-dark when <5 submissions). Add an advisory gate in check-proof-surface.mjs. Optionally surface top unmet topics on an internal/ops view (not public).",
+      "evidence": "S206 handoff: oracle-feedback-close emits oracle:feedback_submitted on submit; no aggregation script consumes it (no build-oracle-feedback*.mjs exists).",
+      "status": "pending",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "Script tallies feedback submission counts into api/oracle-feedback-themes.json. No clustering." },
+        "L2": { "effortHours": 2, "recipe": "Keyword clustering + ranked topics + honest-dark + advisory gate in check-proof-surface." },
+        "L3": { "effortHours": 4, "recipe": "Feed the top unmet topics back into the IGNIS search index so the Oracle proactively suggests 'others asked about X' - a self-improving content loop." }
+      },
+      "executionLog": []
+    },
+    {
+      "id": 9,
+      "slug": "dead-cta-rotation-loop",
+      "tier": "💡",
+      "axis": "feedback",
+      "effortHours": 3,
+      "impact": 6,
+      "innovation": 8,
+      "priority": 20.7,
+      "title": "Structural dead-CTA recovery: rotate copy variants when a CTA flatlines",
+      "why": "check-dead-ctas.mjs (S205) FLAGS dead CTAs but nothing ACTS on them - the play-next card sat at 18/0 until this audit looked. Genius second-order fix: when a CTA crosses the dead threshold (shown >=N, click 0), the page automatically rotates to the next copy variant from a small registry and re-measures, so a dead CTA self-heals across deploys instead of waiting for a human to notice. Outcome: every conversion surface becomes a standing A/B that escapes local minima on its own.",
+      "recipe": "Define data/cta-variants.json (CTA id -> ordered copy variants). In the relevant client modules, read api/dead-ctas.json at build time (or a derived data/cta-state.json) and select the next variant for any CTA currently flagged dead. Emit cta:variant:<id>:<n> RUM so rollup can attribute clicks to the active variant. Start with play-next (the one real dead CTA) as the pilot. Structural sibling of item #1's L3.",
+      "evidence": "scripts/check-dead-ctas.mjs + api/dead-ctas.json exist (S205) and flag id:play-next 18/0; no variant-rotation consumer exists.",
+      "status": "pending",
+      "ladder": {
+        "L1": { "effortHours": 1, "recipe": "data/cta-variants.json + manual variant pick for play-next only. No auto-rotation." },
+        "L2": { "effortHours": 3, "recipe": "Build-time variant selection driven by dead-cta state + cta:variant RUM attribution, piloted on play-next." },
+        "L3": { "effortHours": 6, "recipe": "Generalize to all tracked CTAs with a rotation ledger recording which variant beat which, so the registry converges on the winning copy per surface." }
+      },
+      "executionLog": []
+    }
+  ],
+  "shipped": [],
+  "blocked": [
+    { "slug": "web-push-vapid-keys", "reason": "cloudflare.vapid capability MISSING - founder must generate + store VAPID keys (S205 carry)." },
+    { "slug": "hero-v2-graduation", "reason": "Needs founder real-device review on desktop+mobile before removing ?hero=v2 flag-gate (S205 carry)." },
+    { "slug": "staging-box-recovery", "reason": "HCLOUD_TOKEN MISSING + hcloud CLI not installed - founder-hardware block (S198 carry, CANON-019 preflight done)." }
+  ],
+  "skipped": [
+    { "slug": "check-mission-statement-coherence-gate", "reason": "VERIFIED ALREADY DONE - scripts/check-mission-statement-coherence.mjs exists and is wired into check-proof-surface.mjs (S204 carry complete). A reject-on-verification win." }
+  ],
+  "summary": {
+    "totalItems": 9,
+    "combinedPriority": 397.5,
+    "top3": ["play-next-intent-retiming", "trial-offer-promo-acknowledgment", "passport-share-inbound-conversion"]
+  }
+}

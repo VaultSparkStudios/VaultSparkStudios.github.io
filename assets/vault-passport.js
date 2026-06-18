@@ -76,16 +76,74 @@
       achWrap.appendChild(chip);
     });
 
+    // Expose a shareable handle (username only — never the email) so the share
+    // button can carry ?u= for a personalized recipient greeting.
+    if (member.username && member.username.indexOf('@') === -1) {
+      window.__vpHandle = String(member.username).replace(/[^A-Za-z0-9_.-]/g, '').slice(0, 32);
+    }
+
     document.getElementById('vp-loading').hidden = true;
     document.getElementById('vp-card-wrap').hidden = false;
     emitUx('passport:viewed');
+  }
+
+  // S207 (passport-share-inbound-conversion): a shared passport opened by an
+  // anonymous visitor used to dead-end at "sign in to view YOUR passport". Turn
+  // that no-session state into a conversion surface — rank-ladder teaser + a
+  // "forge your own" join CTA + optional "you're viewing @handle's passport"
+  // greeting when the share carried ?u=. Closes the viral loop the share opens.
+  function showInbound() {
+    var gate = document.getElementById('vp-auth-gate');
+    if (!gate) return;
+
+    // Rank-ladder teaser (first / mid / apex) — social proof of the journey.
+    var ladder = document.getElementById('vp-ladder');
+    if (ladder && !ladder.childElementCount) {
+      var steps = [RANKS[0], RANKS[3], RANKS[RANKS.length - 1]];
+      steps.forEach(function (r, i) {
+        var step = document.createElement('span');
+        step.className = 'vp-ladder-step';
+        step.title = r.name;
+        step.textContent = r.icon;
+        ladder.appendChild(step);
+        if (i < steps.length - 1) {
+          var arrow = document.createElement('span');
+          arrow.className = 'vp-ladder-arrow';
+          arrow.textContent = '→';
+          ladder.appendChild(arrow);
+        }
+      });
+    }
+
+    // Optional greeting when the share carried a handle (?u=).
+    var handle = '';
+    try { handle = (new URLSearchParams(location.search).get('u') || '').trim(); } catch (_) {}
+    handle = handle.replace(/[^A-Za-z0-9_.-]/g, '').slice(0, 32);
+    if (handle) {
+      var greet = document.getElementById('vp-inbound-greeting');
+      if (greet) {
+        greet.textContent = "You're viewing @" + handle + "'s Vault Passport";
+        greet.hidden = false;
+      }
+    }
+
+    gate.hidden = false;
+    emitUx('passport:inbound');
   }
 
   function wireShare() {
     var btn = document.getElementById('vp-share-btn');
     if (!btn) return;
     btn.addEventListener('click', function () {
+      // Carry the owner's handle so recipients get a personalized greeting.
       var url = location.href;
+      try {
+        if (window.__vpHandle) {
+          var u = new URL(location.href);
+          u.searchParams.set('u', window.__vpHandle);
+          url = u.href;
+        }
+      } catch (_) {}
       if (navigator.share) {
         navigator.share({ title: 'My Vault Passport', url: url }).catch(function () {});
       } else if (navigator.clipboard) {
@@ -115,8 +173,7 @@
         var session = res && res.data && res.data.session;
         if (!session) {
           document.getElementById('vp-loading').hidden = true;
-          var gate = document.getElementById('vp-auth-gate');
-          if (gate) gate.hidden = false;
+          showInbound();
           return;
         }
         db.from('vault_members')

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-18T16:21:35.045Z",
+  "generatedAt": "2026-06-18T16:59:50.967Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 205,
+    "currentSession": 206,
     "lastUpdated": "2026-06-18",
-    "currentFocus": "S205 autonomous wave shipped: engagement depth (constellation challenges, entity chips in IGNIS answers, dispatch reactions, vault-momentum score), membership consolidation (tab nav + Worker 301s), portal premium polish, hero v2 flag-gated. Next: prod-verify S205 wave + hero v2 graduation (founder real-device).",
-    "nextMilestone": "Prod-verify S205: ?hero=v2 flag, entity chips on Oracle, dispatch reactions, constellation unlock toast, membership tab nav. VAPID keys (founder action). Hero v2 graduation. S204/S203 verify passes.",
+    "currentFocus": "S206 autonomous wave shipped: vault passport (member identity card at /vault-member/passport/), smart trial offer (high-intent conversion panel), oracle feedback form (👎 → text input), ignis prefix cache (returning visitor continuity), 13 parallel build generators, oracle query insights + constellation activity feeds.",
+    "nextMilestone": "Prod-verify S206 wave: passport card, trial offer panel, prefix cache teaser, oracle feedback form. VAPID keys (founder). Trial-offer Stripe wire (~1h). S205 hero v2 graduation (founder real-device).",
     "blockers": [
       {
         "id": "vapid-keys",
@@ -44,11 +44,11 @@
     ],
     "queues": {
       "now": [
-        "[S205][INFRA/P2·FOUNDER] WEB-PUSH VAPID KEYS REQUIRED. `cloudflare.vapid` capability is MISSING. `scripts/push-dispatch.mjs` scaffold ready — exits gracefully with setup instructions. Founder: (1) `npx web-push generate-vapid-keys` (2) store in `secrets/cloudflare.vapid.env` (3) add `VAPID_PUBLIC_KEY` to Worker env (4) `node scripts/push-dispatch.mjs --test`. Once READY, agent wires the smart-trigger subscriber + notification plumbing. ~2h unblocked.",
-        "[S205][VERIFY/P0] Prod-verify the S205 wave on a real browser. (a) `/` — hero stagger on scroll; `?hero=v2` shows simplified variant; signed-in member sees rank + Continue CTA in hero; Studio Now has Vault Momentum chip. (b) `/membership/` — paid tiers stagger on scroll; sticky hub tab nav. (c) `/oracle/` — ask a question → entity chips appear at bottom; deep-dive link. (d) `/vault-member/portal/` — cards elevate on hover, buttons spring-press. (e) `/journal/dispatches/` — emoji reactions row below each entry. (f) `/changelog/` — SOUL-voice narrative sentences. (g) Visit constellation sequence → unlock toast appears. Never assume push==deploy.",
-        "[S205][UX/P1·FOUNDER] HERO V2 GRADUATION. `?hero=v2` flag-gated + shipped. Founder: real-device review on desktop + mobile. If clean, remove flag-gate and make v2 the default hero. ~30m founder time.",
-        "[S204][VERIFY/P0] Prod-verify the S204 wave. On a real browser: (a) `/studio/`, `/`, `/press/` show purpose-first mission statement; (b) focus-visible ring on tab-through; (c) buttons have tactile press; (d) custom scrollbar + branded selection render. Never assume push==deploy ([[feedback_skip_ci_tip_strands_cf_pages_deploy]]).",
-        "[S204][SIL][STRUCT/P3] Add `check-mission-statement-coherence.mjs` gate. WARN when any mission surface reintroduces retired framing outside `/universe/` lore. ~45m."
+        "[S206][VERIFY/P0] Prod-verify the S206 wave on a real browser. (a) `/vault-member/passport/` — sign in → rank badge + tenure + achievements card renders; Share Passport copies URL. (b) `/ignis/` or `/oracle/` — ask question, navigate away, return, ask same prefix → \"Continuing from earlier search\" teaser appears; 👎 vote → text input form expands. (c) `/membership/` — adaptive tier highlight shows (anon = generic, returning = different card pulse). (d) `/join/?promo=TRIAL50` — trial offer page resolves. Never assume push==deploy.",
+        "[S206][CONTENT/P2·FOUNDER] Review + publish forge devlog. `node scripts/draft-weekly-forge.mjs` → SOUL-voice draft. Clears the 84d journal stale warn.",
+        "[S205][INFRA/P2·FOUNDER] WEB-PUSH VAPID KEYS REQUIRED. `cloudflare.vapid` capability MISSING. Scaffold `scripts/push-dispatch.mjs` ready. Founder: (1) `npx web-push generate-vapid-keys` (2) store in `secrets/cloudflare.vapid.env` (3) add `VAPID_PUBLIC_KEY` to Worker env (4) `node scripts/push-dispatch.mjs --test`.",
+        "[S206][SIL/P3] CONSTELLATION-SEQUENCE-ANALYTICS. Add `constellation:progress:<id>:<step>` per-page events (beyond the existing `constellation:unlock:<id>`) so we can see WHERE visitors drop off in each sequence. Fold into `rollup-rum-ux`. ~1h.",
+        "[S206][AI/P2] IGNIS-GRAPH-DEPTH-L3. Cross-entity traversal: clicking a \"Related\" chip renders a sub-panel with 3 matching cards from `api/public-intelligence.json` (mini-catalog mode in `ignis-answer-engine.js`). ~4h."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",

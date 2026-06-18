@@ -38,9 +38,18 @@
     .vp-share-btn:hover{background:rgba(255,196,0,.2)}
     .vp-portal-link{display:flex;align-items:center;justify-content:center;padding:.7rem 1rem;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.6);font-size:.88rem;text-decoration:none}
     .vp-portal-link:hover{background:rgba(255,255,255,.08)}
-    .vp-auth-gate{text-align:center;padding:3rem 1rem}
+    .vp-auth-gate{text-align:center;padding:2.5rem 1.25rem;background:linear-gradient(145deg,#0f1218 0%,#141820 60%,#0e1520 100%);border:1px solid rgba(255,196,0,.22);border-radius:20px}
+    .vp-auth-gate .vp-label{margin-bottom:1rem}
+    .vp-inbound-greeting{font-size:.82rem;font-weight:700;color:rgba(255,196,0,.7);margin-bottom:.6rem}
+    .vp-inbound-title{font-size:1.5rem;font-weight:800;color:#ffc400;margin-bottom:.7rem}
     .vp-auth-gate p{color:rgba(255,255,255,.5);margin-bottom:1rem}
-    .vp-auth-gate a{display:inline-block;padding:.65rem 1.5rem;border-radius:10px;background:linear-gradient(90deg,#ff7a00,#ffc400);color:#1a1205;font-weight:700;text-decoration:none}
+    .vp-ladder{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.35rem;margin:1.1rem 0 1.4rem;font-size:1.1rem;line-height:1}
+    .vp-ladder .vp-ladder-step{opacity:.55}
+    .vp-ladder .vp-ladder-arrow{color:rgba(255,255,255,.2);font-size:.8rem}
+    .vp-auth-gate a#vp-inbound-cta{display:inline-block;padding:.7rem 1.6rem;border-radius:10px;background:linear-gradient(90deg,#ff7a00,#ffc400);color:#1a1205;font-weight:800;text-decoration:none}
+    .vp-auth-gate a#vp-inbound-cta:hover{filter:brightness(1.06)}
+    .vp-inbound-signin{font-size:.82rem;color:rgba(255,255,255,.4);margin-top:1.1rem}
+    .vp-inbound-signin a{color:rgba(255,196,0,.7);font-weight:600}
     .vp-copied{font-size:.75rem;color:#4ade80;margin-left:.3rem}
     .vp-watermark{text-align:center;margin-top:1.4rem;font-size:.7rem;color:rgba(255,255,255,.2)}
     .vp-watermark a{color:rgba(255,196,0,.4)}
@@ -64,8 +73,13 @@
   <main>
     <div class="vp-root">
       <div id="vp-auth-gate" class="vp-auth-gate" hidden>
-        <p>Sign in to view your Vault Passport.</p>
-        <a href="/vault-member/">Go to Member Portal</a>
+        <div class="vp-label">⚡ Vault Passport</div>
+        <p id="vp-inbound-greeting" class="vp-inbound-greeting" hidden></p>
+        <h2 class="vp-inbound-title">Forge your own Vault Passport</h2>
+        <p>Earn rank across every VaultSpark world — from Spark Initiate to The Sparked — and carry one shareable identity card that grows with you. Free to join.</p>
+        <div class="vp-ladder" id="vp-ladder" aria-hidden="true"></div>
+        <a href="/join/" id="vp-inbound-cta" data-track-event="passport_inbound_join" data-track-category="passport" data-track-location="/vault-member/passport/">Forge your passport — join free →</a>
+        <p class="vp-inbound-signin">Already a member? <a href="/vault-member/">Sign in →</a></p>
       </div>
       <div id="vp-loading" aria-live="polite" style="text-align:center;padding:3rem 1rem;color:rgba(255,255,255,.35);">Loading passport…</div>
       <div id="vp-card-wrap" hidden>

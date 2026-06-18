@@ -182,9 +182,58 @@
     }
   }
 
+  // ── Promo from URL (S207 trial-offer-promo-acknowledgment) ──────────
+  // The smart-trial-offer panel links here as /vaultsparked/?promo=TRIAL50.
+  // Pre-fill the checkout promo field + acknowledge it so the offer is honored
+  // instead of dropped. The actual discount is validated server-side by
+  // create-checkout — an unknown/expired code surfaces an honest toast.
+  function applyUrlPromo() {
+    var code = '';
+    try { code = (new URLSearchParams(location.search).get('promo') || '').trim(); } catch (_) {}
+    // Fallback: a promo carried across the auth bounce to /vault-member/ and back.
+    if (!code) { try { code = (sessionStorage.getItem('vs_promo_code') || '').trim(); } catch (_) {} }
+    if (!code) return;
+    // Sanitize to a promo-code charset; cap length.
+    code = code.toUpperCase().replace(/[^A-Z0-9_-]/g, '').slice(0, 40);
+    if (!code) return;
+
+    var input = document.getElementById('sparked-promo-input');
+    var proInput = document.getElementById('pro-promo-input');
+    if (input && !input.value) input.value = code;
+    if (proInput && !proInput.value) proInput.value = code;
+
+    // Acknowledgment note beside the primary promo field (TT-safe DOM).
+    var anchor = input || proInput;
+    if (anchor && !document.getElementById('vs-promo-ack')) {
+      var note = document.createElement('p');
+      note.id = 'vs-promo-ack';
+      note.setAttribute('role', 'status');
+      note.style.cssText = 'margin:.5rem 0 0;font-size:.82rem;font-weight:600;color:var(--gold,#ffc400);';
+      note.textContent = '✓ Offer code ' + code + ' applied — your discount is calculated at checkout.';
+      var holder = anchor.closest('.pricing-promo') || anchor.parentNode;
+      if (holder) holder.appendChild(note);
+    }
+
+    // Persist across the auth round-trip (checkout bounces to /vault-member/).
+    try { sessionStorage.setItem('vs_promo_code', code); } catch (_) {}
+
+    // Nudge the visitor to the pricing block where the offer lives.
+    var pricing = document.getElementById('pricing');
+    if (pricing && location.hash !== '#pricing') {
+      pricing.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Telemetry: high-intent promo landing.
+    try {
+      var body = JSON.stringify({ route: location.pathname || '/', ux: 'funnel:promo_landed', label: code });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+    } catch (_) {}
+  }
+
   // ── Wire up buttons ─────────────────────────────────────────────────
   document.addEventListener('DOMContentLoaded', function () {
     loadPhaseData();
+    applyUrlPromo();
 
     // VaultSparked checkout button
     var sparkedBtn = document.getElementById('vaultsparked-upgrade-btn');

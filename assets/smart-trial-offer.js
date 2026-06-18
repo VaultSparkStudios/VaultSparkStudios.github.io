@@ -31,7 +31,12 @@
   if (lsGet('vs_trial_offered')) return;
 
   var PANEL_ID = 'vs-trial-offer-panel';
-  var OFFER_URL = '/join/?promo=TRIAL50';
+  // S207 (trial-offer-promo-acknowledgment): the discount applies to the PAID
+  // VaultSparked tier, whose checkout (with full promo_code plumbing) lives at
+  // /vaultsparked/ — NOT the free /join/ page. /vaultsparked/ now auto-reads the
+  // ?promo= param into the checkout promo field, and create-checkout validates it
+  // server-side (an unknown code surfaces an honest "not found or expired" toast).
+  var OFFER_URL = '/vaultsparked/?promo=TRIAL50';
   var SESSION_MIN = 5; // minutes of current-page presence
 
   function ensureStyles() {
