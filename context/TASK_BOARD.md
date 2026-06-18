@@ -17,7 +17,7 @@ Last updated: 2026-06-18 (Session 207 — autonomous /goal chain · 9/9 audit it
 - [x] **[S207] HERO REDESIGN (fusion #1+#2) — DONE.** Asymmetric cinematic split (lede + twin gold/blue CTAs → /games/ + /projects/ + live pulse line) × living-portfolio bento of real tiles, server-rendered by `scripts/build-hero-portfolio.mjs` from `api/public-intelligence.json` (instant, crawlable, ItemList JSON-LD for agents). Zero inline styles; mobile stacks; build + drift gate wired. Self-test 7/7; build:check EXIT 0; deployed.
 - [x] **[S207] Hero CTAs restructured — DONE.** "Explore Our Games" (/games/) + "Explore Our Projects" (/projects/), both emphasized (gold + blue accent).
 - [x] **[S207] Stripe TRIAL50 (live) · VAPID provisioned · Worker prod deploy · hero v2 graduated (then superseded by the full redesign) — DONE.** (see D-S207.4/.5/.6)
-- [ ] **[S207][FOUNDER/PARALLEL] Obelisk Passport login (`5d978cf9`)** — a parallel session's auth-wiring commit (login.html + auth/callback.html). Agent greened its build:check failure (nav-orphan exemptions) without touching the auth flow; auth-flow ownership stays with the founder's Obelisk session.
+- [ ] **[S207][FOUNDER/PARALLEL] Obelisk Passport login (`5d978cf9`)** — a parallel session's auth-wiring commit (login.html + auth/callback.html). Agent greened its build:check failure (nav-orphan exemptions) without touching the auth flow; auth-flow ownership stays with the founder's Obelisk session. **GUARDRAIL (D-S207.8, postmortem):** the auth gate must redirect with **302 + `Cache-Control: no-store`**, NEVER 301, and must NEVER gate the public site / apex `/` (private paths only). A 301 blanket gate misfired this session and cached-301-locked the founder out ~1h.
 
 ## Done (S207 — autonomous /goal chain · 9/9)
 

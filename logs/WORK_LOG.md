@@ -1,5 +1,9 @@
 # Work Log
 
+## 2026-06-18 — Session 207 · access-incident postmortem (cached-301 lockout)
+
+Founder reported the public site redirecting to obeliskgate.com + showing Obelisk's favicon, persisting through site-data clears, different browsers, and extension toggles. Diagnosed entirely from the founder's own machine (the shell runs locally): hosts file clean, no proxy, OS resolves to Cloudflare, `curl -A "<browser UA>"` → 200 real site, deployed HTML/JS carry zero redirect. Conclusion: server + machine clean; the lockout was a **cached 301** in the one Chrome profile (the briefly-live blanket gate had emitted a permanent redirect; reverted at source in `ede02ece`). Fix: an **all-time** cached-files clear (range-limited clears + per-site "clear site data" don't evict a 301). Founder confirmed fixed once they used the All-time range. Logged the prevention (D-S207.8 + memory): auth gates must use 302 + no-store, never 301, and never gate the public site.
+
 ## 2026-06-18 — Session 207 · hero redesign (founder-directed)
 
 Founder reframed the hero as the first interface for humans AND agents — must be the most intelligent/machine-legible AND most immersive component — and chose to fuse directions #1 (cinematic split) + #2 (living portfolio).
