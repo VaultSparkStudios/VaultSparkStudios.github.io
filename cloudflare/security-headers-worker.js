@@ -293,6 +293,9 @@ const RUM_UX_EVENTS = new Set([
   // query text committed to RUM (URL carries it; beacon carries only the intent event).
   'oracle:deepdive_click',
   'oracle:related_click',
+  // S206 #3: vault-momentum social proof strip impression on /membership/.
+  // Honest-dark: only emitted when api/vault-momentum.json has real data.
+  'membership:momentum_strip_shown',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so
