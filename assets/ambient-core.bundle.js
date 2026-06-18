@@ -770,6 +770,24 @@
       idle: true
     },
     {
+      // S206 #8: adaptive pricing reveal — /membership/ only. Highlights
+      // the most relevant tier based on referrer + localStorage signals.
+      src: '/assets/adaptive-pricing.js',
+      when: function () {
+        return (location.pathname || '/').indexOf('/membership') === 0;
+      },
+      idle: true
+    },
+    {
+      // S206 #4: membership tier scroll-reveal — /membership/ only. Activates
+      // staggered IntersectionObserver animation on .tier-reveal cards.
+      src: '/assets/membership-tier-reveal.js',
+      when: function () {
+        return (location.pathname || '/').indexOf('/membership') === 0;
+      },
+      idle: true
+    },
+    {
       // S180 ambient-split wave 3 — the pathfinder only runs on these exact
       // information-finding routes, so keep it off every other cold page.
       src: '/assets/intent-flight-director.js',
@@ -965,6 +983,17 @@
       // needed to add new constellations). Runs sitewide, idle-priority.
       src: '/assets/constellation-tracker.js',
       when: function () { return true; },
+      idle: true
+    },
+    {
+      // S206 #7: smart trial offer — 50% off first month shown once to
+      // high-intent visitors (3+ visits or 5+ min page-dwell). Gates on
+      // vs_trial_offered; never shows to signed-in members.
+      src: '/assets/smart-trial-offer.js',
+      when: function () {
+        if (document.body && document.body.hasAttribute('data-vs-signed-in')) return false;
+        try { return !localStorage.getItem('vs_trial_offered'); } catch (_) { return true; }
+      },
       idle: true
     }
   ];

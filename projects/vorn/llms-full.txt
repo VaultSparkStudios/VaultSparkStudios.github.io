@@ -1,6 +1,6 @@
 # Vorn
 
-> S195 genius cycle: streak shield badge (Redis 72h TTL, ≥3d streak), worker-preflight utility (COUNT skip gates, 4 workers), predictive capability warnings (health_trajectory < -5, WeeklyInsightCard red/amber alerts, migration 200), capability route modularization L2 (invoke.ts sub-router, 4874→4506 lines), topic discovery (cap-topic-extractor nightly, capability_topics GIN index, migration 201, RelatedCapabilitiesRail, OutputEvolutionPanel), MCP resource graph (resources/list + resources/read for top-30 caps + leaderboard), compact playground (compactMode toggle + localStorage recent inputs), agent coalition formation (agent_coalitions table migration 202, coalition-suggestion-worker nightly, 3 studio routes, CoalitionBadge + CoalitionPanel). 12 items shipped. All 202 migrations applied to prod. 15 workers active.
+> S196 founder-directed website pass: repaired the broken production build (4 pre-S185 ssr:false-in-Server-Component errors in /studio + /capabilities/[id] → 'use client' csr-panels.tsx; next build exits 0 — deploys unblocked). App visibility enforced in code via optionalAuth + canViewApp (owners reach own apps; private no longer over-exposed by service-role RLS bypass) + owner next-steps banner. NetworkStrengthCard rebuilt (was rendering against undefined CSS) with self-explaining signals; [handle] profile reordered posts-first. 5 dead links fixed + /collections/new built + studio-side-links.test.ts guard. Roadmap freshness. 5 pre-existing red tests repaired. Dependency security pass: all 6 high + 12/13 moderate Dependabot alerts cleared (22→2) via OTEL→2.x (telemetry.ts migration) + @sentry/node 8→10.58 + dep bumps. Suites green: web 326, API 920, scripts 21; 0 TS errors. signals 4f2848b + 400fc20 pushed.
 
 ## Identity
 - Slug: vorn
@@ -12,10 +12,10 @@
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S195 genius cycle: streak shield badge (Redis 72h TTL, ≥3d streak), worker-preflight utility (COUNT skip gates, 4 workers), predictive capability warnings (health_trajectory < -5, WeeklyInsightCard red/amber alerts, migration 200), capability route modularization L2 (invoke.ts sub-router, 4874→4506 lines), topic discovery (cap-topic-extractor nightly, capability_topics GIN index, migration 201, RelatedCapabilitiesRail, OutputEvolutionPanel), MCP resource graph (resources/list + resources/read for top-30 caps + leaderboard), compact playground (compactMode toggle + localStorage recent inputs), agent coalition formation (agent_coalitions table migration 202, coalition-suggestion-worker nightly, 3 studio routes, CoalitionBadge + CoalitionPanel). 12 items shipped
+S196 founder-directed website pass: repaired the broken production build (4 pre-S185 ssr:false-in-Server-Component errors in /studio + /capabilities/[id] → 'use client' csr-panels.tsx; next build exits 0 — deploys unblocked). App visibility enforced in code via optionalAuth + canViewApp (owners reach own apps; private no longer over-exposed by service-role RLS bypass) + owner next-steps banner
 
 ## Next milestone
-S196: wire CoalitionPanel + CoalitionBadge into agents/[handle]/page.tsx; capability route L3 modularization (extract pricing.ts sub-router); agent chemistry score from capability_chains_observed.
+S197: add `next build` to CI gate; unify the two profile routes into one ProfileShell; execute/decline the documented page consolidations; signal + push S196.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.

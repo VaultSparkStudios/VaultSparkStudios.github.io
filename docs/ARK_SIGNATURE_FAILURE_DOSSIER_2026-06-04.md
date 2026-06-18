@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ark-signature-dossier.mjs -->
-<!-- generated-at: 2026-06-10 -->
+<!-- generated-at: 2026-06-18 -->
 
 # Ark Signature Failure Dossier
 
@@ -7,55 +7,72 @@ Ark drain is restored, but signature failures mean some cross-repo cargo cannot 
 
 | Cargo id | Producer | Type | Error | Observed |
 |---|---|---|---|---|
-| `01JQ7IHRB203462A9CEB553339` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.289Z |
-| `01JQ7NMS6UC09DAC5A1F480EC7` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.291Z |
-| `01JQ81DUUGAB4D9AAFCA86A4C8` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.292Z |
-| `01JQAM72190FE3E53A1B0BD420` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.292Z |
-| `01JQCICHT84D1C93ABFA2815B5` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.293Z |
-| `01JQCJJ6UJ58823FD3FA2F87F9` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.293Z |
-| `01JQCJTVLQ6F05216E5DEF7C2A` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.293Z |
-| `01JQCRN04845C357EFA1432730` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.294Z |
-| `01JQCRSC077D12D04C9643D8A5` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.294Z |
-| `01JQCSJ3GAF0C1159B2E93303E` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.294Z |
-| `01JQCTOARQA66B83C9C4C5A111` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.295Z |
-| `01JQCU0K94E50C7AFDEDB892E1` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.295Z |
-| `01JQHKD1SK31FF4CBFFF030142` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.295Z |
-| `01JQHRBPCB6EBDEA3973B9843F` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.295Z |
-| `01JQHSFN7J97F430D96B315278` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.295Z |
-| `01JQI46EFVC8BD286B4FCDD822` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.296Z |
-| `01JQI4D3FQ3BA52F6588E56947` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.296Z |
-| `01JQI4OUTB96AD6C055DF11110` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.296Z |
-| `01JQINBF618F4D2BF5FF602868` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.296Z |
-| `01JQINKEL12608945FB7EEDCB4` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.297Z |
-| `01JQIO628O3ED21389810C7039` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.297Z |
-| `01JQIOHBFV01C7A92ADC94594F` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.297Z |
-| `01JQISC3NC4181FD2AB28760B7` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.297Z |
-| `01JQITQM23E02B74E40A549E93` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.298Z |
-| `01JQIU9EMS5F82D26EB46C34BF` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.298Z |
-| `01JQIV646P19B27D92EBD58BDC` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.298Z |
-| `01JQK2NJMI222BE708E8FC5EDD` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.298Z |
-| `01JQK2VB9S04C324A82EC8D819` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.298Z |
-| `01JQK3QR7RAC8B1E0A42BEE8E6` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.299Z |
-| `01JQK44U3C62E189F1F46A5E88` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.299Z |
-| `01JQK4D6IO8D155D9737B18129` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.299Z |
-| `01JQK4JCMQ42CBE29D52E43C65` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.299Z |
-| `01JQK4UVUQ2DF2EAEA8D147CBC` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.299Z |
-| `01JQK7LMEVF1CCF71CBD87994D` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.300Z |
-| `01JQK7PQPU8647F73682F9F6A0` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.300Z |
-| `01JQK8DPR033D60CB308D621AC` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.300Z |
-| `01JQKRSKRGE3F6ACF397DD5F69` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.300Z |
-| `01JQL2JG06557EF9A1AFEF274C` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.301Z |
-| `01JQL2MV12F3FE0FACCCEAF6A9` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.301Z |
-| `01JQL2T67S297B80EBA938FA0B` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.301Z |
-| `01JQL31BJ4C2694F6FD68A8A16` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.301Z |
-| `01JQN4BMP0FA0F8371A00CDC08` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.302Z |
-| `01JQN4R7U49577021F5E104785` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.302Z |
-| `01JQN4UJD42BAE2396CFF8A726` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.302Z |
-| `01JQN5BHT914367ACCEE226576` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.302Z |
-| `01JQN5KTML529E6ED06050EA3F` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.302Z |
-| `01JQN67UL31A1BC544762D30F1` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.303Z |
-| `01JQN6FN7V332DEF86CE4AC468` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.303Z |
-| `01JQN6M6QC8AF4BFAE76938B0A` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-10T14:01:45.303Z |
+| `01JQSDNNDGAC98B98ED22CCF21` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.628Z |
+| `01JQSFB7KCA2E47FA065979808` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.630Z |
+| `01JQSFKS1MBED5FBEE18EC5A7F` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.631Z |
+| `01JQSGJVPG91A508C06B6CD7D9` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.632Z |
+| `01JQSGRC6V260E6771CC54D689` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.633Z |
+| `01JQSM342E6AFC4CAF9051329A` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.634Z |
+| `01JQSN7V8185ABD21C8E610A17` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.635Z |
+| `01JQSNLDLU97D5E000D949B002` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.636Z |
+| `01JQSNVOSP7958F4F5CBF89946` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.636Z |
+| `01JQSU6O637F483BD51BFE8507` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.637Z |
+| `01JQT37K8FEA49AAF42F266323` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.637Z |
+| `01JQT3NJFC8637796D9AF7DC2B` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.638Z |
+| `01JQT4HGKB32F185D39DB85E75` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.638Z |
+| `01JQT4Q9REEF5E91C00F6A64A3` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.639Z |
+| `01JQTMQ7518762C13861C92971` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.639Z |
+| `01JQTN26EB6C7119BB7FF524F7` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.639Z |
+| `01JQTNMFBBD013A4EFF866BB64` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.640Z |
+| `01JQTNSKKB15724E469EB3049A` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.640Z |
+| `01JQTOB0PG0974E96B9BDB174D` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.641Z |
+| `01JQTRRPMO4513017B17C5EF3E` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.641Z |
+| `01JQTS9UF5579717A1D63B372C` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.642Z |
+| `01JQTSDTOMA03308D4499CB98E` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.642Z |
+| `01JQTSV5EP3DAE5A5B5559D017` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.643Z |
+| `01JQUKJ2HGE8E5D1397A174671` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.643Z |
+| `01JQUL7FA5FF2CC166D18A3B01` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.644Z |
+| `01JQULN42JD3AED963C90CE3B5` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.644Z |
+| `01JQUR1A5402B95AB466907853` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.645Z |
+| `01JQURUL56935091DCF96A1A80` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.646Z |
+| `01JQUSD5TH64E17A614185DFDC` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.647Z |
+| `01JQUTDDUN15F28212DDD792EE` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.648Z |
+| `01JR19CMTC5DEDFB3ED682B4B3` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.649Z |
+| `01JR19R5PUABD88201E96380B6` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.649Z |
+| `01JR1BFAAKE0293C7FE54555AA` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.650Z |
+| `01JR1CGV6B05C2515966C88331` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.651Z |
+| `01JR1D76EK11F17CFFC82CF7D3` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.651Z |
+| `01JR1IFHD0DEAB84B806FC1C5F` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.651Z |
+| `01JR1J5RUAFDC1C77982B9F06E` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.652Z |
+| `01JR1JBID08D5130BE5E9FE58E` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.652Z |
+| `01JR1JUSFQ6308CE0A3BB6D862` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.652Z |
+| `01JR1K9614875723A5FB3CDBFA` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.653Z |
+| `01JR1KEHG2B9F1740DE1D7A7F6` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.653Z |
+| `01JR1KK3M1B6C18B802C36DB64` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.653Z |
+| `01JR1KKVQJ383D592F2A1E1C74` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.654Z |
+| `01JR1KTVLT54F8A483EB5F79D3` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.654Z |
+| `01JR1LMU259DCB16FB4E94EC61` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.654Z |
+| `01JR1NGTAT904A89C3977BC35C` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.655Z |
+| `01JR1OT0350EB0697A8FF262C8` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.655Z |
+| `01JR1SHSEM91ED195B4BC016F1` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.655Z |
+| `01JR1T9EPU6A01DF5FCE0C395F` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.656Z |
+| `01JR1V6KFEBD441E567070F2C7` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.656Z |
+| `01JR2046NP291A44FA215EF962` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.658Z |
+| `01JR20NVH49A2CEFDACA6E74A0` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.658Z |
+| `01JR3LGD30E31016D5FD7A7658` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.659Z |
+| `01JR3M6FJO92A1E7F2C6AB6A0F` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.659Z |
+| `01JR3NT8JD3184EDF18042CE2D` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.659Z |
+| `01JR3OG678350871BDDCAAEEC2` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.660Z |
+| `01JR3U7RQODBC1373987B77882` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.660Z |
+| `01JR48GTN9DE40D118108E7518` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.661Z |
+| `01JR4G48MFAE0D7D590404F77A` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.661Z |
+| `01JR4H20U1D4112B1EE2ED33CE` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.662Z |
+| `01JR55Q771619986A391334250` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.662Z |
+| `01JR5R8CFD4A3B33D526AB7E2F` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.663Z |
+| `01JR5VCO1J0EB44E7238A15BE6` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.663Z |
+| `01JR60II0S7A7CCACD2B19DBC9` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.664Z |
+| `01JRCCP8DKF066718B718139AF` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.664Z |
+| `01JRCDFEAA8DBE1E9A9F92425F` | vaultspark-studio-ops | port-online | sig mismatch | 2026-06-18T14:57:35.665Z |
 
 ## Recommended Studio-Ops Repair
 
