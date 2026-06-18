@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-18T17:38:03.892Z",
+  "generatedAt": "2026-06-18T18:21:48.318Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -44,10 +44,10 @@
     ],
     "queues": {
       "now": [
-        "[S207][VERIFY/P0] Re-run `node scripts/prod-verify-wave.mjs` after CF Pages deploys S207. Post-deploy the `/vault-member/passport/` sentinel (\"Forge your own Vault Passport\") should flip FAIL → PASS (correctly pending at closeout — committed, not yet deployed). All other S207 surfaces already PASS. Replaces the manual browser-walk for presence/liveness.",
-        "[S207][INFRA/P1] Deploy the Worker with `--env production`. `cloudflare/security-headers-worker.js` added RUM prefixes `cta` + `oracle-feedback` + statics `passport:inbound`/`oracle:graph_traverse`. Until redeploy those beacons drop at the edge. `wrangler deploy --env production` ([[feedback_worker_apex_self_loop_outage]]). ~10m.",
+        "[S207][VERIFY/P0] Prod-verify the S207 wave — DONE (post-deploy, same session). `node scripts/prod-verify-wave.mjs` → 7 pass / 0 fail: all S206/S207 artifacts + the new passport \"Forge your own\" copy + `/vaultsparked/` + `/join/` confirmed live on the pages.dev origin. CF Pages deployed the wave.",
+        "[S207][INFRA/P1] Deploy the Worker with `--env production` — DONE (same session). Deployed `vaultspark-security-headers-production` Version `9c4395c7` (token via cloudflare.deploy gateway). New RUM prefixes `cta` + `oracle-feedback` + statics `passport:inbound`/`oracle:graph_traverse` now live at the edge.",
         "[S207][MEASURE/P2] Watch retimed play-next + auto-rotation. Once post-S207 visits accrue, check `api/dead-ctas.json`: if `play-next` is STILL dead, run `node scripts/build-cta-state.mjs --advance` to rotate to copy variant 1. If it converts, the retiming win is confirmed. Measurement-watch.",
-        "[S206][CONTENT/P2·FOUNDER] Review + publish forge devlog. `node scripts/draft-weekly-forge.mjs` → SOUL-voice draft. Clears the 66d changelog stale warn.",
+        "[S206][CONTENT/P1·FOUNDER] Review + publish forge devlog — DRAFT READY. Agent generated `journal/_drafts/forge-week-2026-06-18.md` (`scripts/draft-weekly-forge.mjs`). Founder: review the SOUL-voice draft + publish to `journal/` to clear the 66d changelog stale warn.",
         "[S205][INFRA/P2·FOUNDER] WEB-PUSH VAPID KEYS REQUIRED. `cloudflare.vapid` capability MISSING. Scaffold `scripts/push-dispatch.mjs` ready. Founder: (1) `npx web-push generate-vapid-keys` (2) store in `secrets/cloudflare.vapid.env` (3) add `VAPID_PUBLIC_KEY` to Worker env (4) `node scripts/push-dispatch.mjs --test`.",
         "[S207][PRODUCT/P2·FOUNDER] Create the Stripe TRIAL50 coupon (makes 50%-off real end-to-end). Path is now coherent (lands on `/vaultsparked/`, acknowledges + passes the promo, server-validated). The `promotion_code` object must exist in Stripe — pricing = founder gate. Until then the path honestly shows \"Promo code not found or expired.\" `trial-offer-promo-acknowledgment` L3."
       ],

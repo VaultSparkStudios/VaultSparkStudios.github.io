@@ -29,9 +29,13 @@ async function getVapidCreds() {
   try {
     const opsPath = join(ROOT, '..', 'vaultspark-studio-ops', 'scripts', 'lib', 'secrets.mjs');
     const { getSecret } = await import(new URL('file:///' + opsPath.replace(/\\/g, '/')).href);
-    const pub = await getSecret('VAPID_PUBLIC_KEY', 'cloudflare.vapid').catch(() => null);
-    const priv = await getSecret('VAPID_PRIVATE_KEY', 'cloudflare.vapid').catch(() => null);
-    const subj = await getSecret('VAPID_SUBJECT', 'cloudflare.vapid').catch(() => null);
+    // getSecret is synchronous — `await getSecret(...).catch()` throws (".catch is
+    // not a function") and was silently swallowed, faking MISSING. Resolve each
+    // defensively (works whether getSecret is sync or returns a thenable). [S207 fix]
+    const safe = async (key) => { try { return await getSecret(key, 'cloudflare.vapid'); } catch { return null; } };
+    const pub = await safe('VAPID_PUBLIC_KEY');
+    const priv = await safe('VAPID_PRIVATE_KEY');
+    const subj = await safe('VAPID_SUBJECT');
     return { pub, priv, subj };
   } catch (_) {
     return { pub: null, priv: null, subj: null };

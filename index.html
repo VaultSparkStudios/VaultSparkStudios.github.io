@@ -489,9 +489,10 @@
       .member-welcome-cta { margin-left: 0; }
     }
 
-    /* ── Hero v2 — flag-gated variant (?hero=v2 | localStorage heroV2) ──
+    /* ── Hero v2 — DEFAULT since S207 (the S204 visual overhaul's final piece) ──
        Distills to a single centered glow + faster wordmark + earlier CTAs.
-       REQUIRES founder real-device review before graduating to default. */
+       Kill-switch: ?hero=classic or localStorage('heroClassic')='1' restores the
+       original 3-glow hero (founder veto path if v2 reads wrong on a real device). */
     body[data-hero-v2] .hero-glow.orange,
     body[data-hero-v2] .hero-glow.gold,
     body[data-hero-v2] .forge-spark-burst { display: none; }
@@ -1133,8 +1134,10 @@
   <main id="main-content">
 
     <!-- Hero v2 flag-reader (S205 #3) — runs early so CSS variant activates
-         before first paint. ?hero=v2 param or localStorage('heroV2')='1'. -->
-    <script>(function(){var p=new URLSearchParams(location.search);if(p.get('hero')==='v2'||localStorage.getItem('heroV2')==='1'){document.body.dataset.heroV2='true';}}());</script>
+         before first paint. S207: v2 GRADUATED to default (the S204 visual
+         overhaul's final piece). Kill-switch: ?hero=classic or
+         localStorage('heroClassic')='1' restores the original 3-glow hero. -->
+    <script>(function(){var p=new URLSearchParams(location.search);var classic=p.get('hero')==='classic'||localStorage.getItem('heroClassic')==='1';if(!classic){document.body.dataset.heroV2='true';}}());</script>
 
     <!-- Member welcome strip (S205 #4) — hidden until signed-in; populated by
          vs:session-ready. Additive — anonymous visitors see no change. -->
