@@ -312,6 +312,51 @@ export const PROJECTS = [
     color: "#69b3ff",
     studioOsApplied: true,
   },
+
+  // ── FORGE PORTFOLIO (public studio pages · D-S208) ──────────────
+  // Public initiatives with on-site studio pages. Forge projects route to their
+  // studio page (never a not-yet-launched external URL); deployedUrl stays null so
+  // the page is the destination. Founder-directed surfacing (S208).
+  {
+    id: "seamline", name: "Seamline", type: "tool", status: "in-development", statusLabel: "In Development",
+    developmentPhase: "design", vaultStatus: "forge", description: "Creator portfolio hub. Your whole world, one thread.",
+    githubRepo: "VaultSparkStudios/seamline", supabaseGameSlug: null, deployedUrl: null, localFolder: "seamline", color: "#34d399", studioOsApplied: false,
+  },
+  {
+    id: "hashmark", name: "Hashmark", type: "tool", status: "in-development", statusLabel: "In Development",
+    developmentPhase: "full-stack-dev", vaultStatus: "forge", description: "Football, rewritten every week by AI.",
+    githubRepo: "VaultSparkStudios/hashmark", supabaseGameSlug: null, deployedUrl: null, localFolder: "hashmark", color: "#4ade80", studioOsApplied: false,
+  },
+  {
+    id: "shadow", name: "SHADOW", type: "tool", status: "in-development", statusLabel: "In Development",
+    developmentPhase: "full-stack-dev", vaultStatus: "forge", description: "An operating system for artists.",
+    githubRepo: "VaultSparkStudios/shadow", supabaseGameSlug: null, deployedUrl: null, localFolder: "shadow", color: "#a78bfa", studioOsApplied: false,
+  },
+  {
+    id: "concurrent", name: "Concurrent", type: "platform", status: "in-development", statusLabel: "In Development",
+    developmentPhase: "design", vaultStatus: "forge", description: "A workstation built around user-owned AI.",
+    githubRepo: "VaultSparkStudios/concurrent", supabaseGameSlug: null, deployedUrl: null, localFolder: "concurrent", color: "#38bdf8", studioOsApplied: false,
+  },
+  {
+    id: "ouren", name: "Ouren", type: "tool", status: "in-development", statusLabel: "In Development",
+    developmentPhase: "design", vaultStatus: "forge", description: "Ambient intelligence for smart eyewear.",
+    githubRepo: "VaultSparkStudios/ouren", supabaseGameSlug: null, deployedUrl: null, localFolder: "ouren", color: "#f59e0b", studioOsApplied: false,
+  },
+  {
+    id: "sparkraid", name: "SparkRaid", type: "platform", status: "in-development", statusLabel: "In Development",
+    developmentPhase: "full-stack-dev", vaultStatus: "forge", description: "Every tip is an event.",
+    githubRepo: "VaultSparkStudios/sparkraid", supabaseGameSlug: null, deployedUrl: null, localFolder: "sparkraid", color: "#fb7185", studioOsApplied: false,
+  },
+  {
+    id: "syntha", name: "Syntha", type: "platform", status: "in-development", statusLabel: "In Development",
+    developmentPhase: "design", vaultStatus: "forge", description: "AI-accepted music, with rights made clear.",
+    githubRepo: "VaultSparkStudios/syntha", supabaseGameSlug: null, deployedUrl: null, localFolder: "syntha", color: "#c084fc", studioOsApplied: false,
+  },
+  {
+    id: "obelisk", name: "Obelisk", type: "platform", status: "in-development", statusLabel: "In Development",
+    developmentPhase: "integration", vaultStatus: "forge", description: "Trust and capability for the AI era.",
+    githubRepo: "VaultSparkStudios/obelisk", supabaseGameSlug: null, deployedUrl: null, localFolder: "obelisk", color: "#7dd3fc", studioOsApplied: false,
+  },
 ];
 
 // ─────────────────────────────────────────────

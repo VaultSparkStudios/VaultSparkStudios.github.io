@@ -1,29 +1,77 @@
 {
-  "generatedAt": "2026-06-14T05:22:59.790Z",
-  "project": "vaultspark-ignis",
-  "weakestPillarId": "execution",
-  "weakestPillarName": "EXECUTION",
-  "currentScore": 4392.62,
-  "targetScore": 6150,
+  "generatedAt": "2026-06-19T03:51:41.744Z",
+  "project": "vaultsparkstudios-website",
+  "weakestPillarId": "creativity",
+  "weakestPillarName": "CREATIVITY",
+  "currentScore": 3386.77,
+  "targetScore": 4741,
   "grade": "F",
   "topFactorGaps": [
     {
-      "factorId": "generic-evidence-depth",
-      "factorName": "Evidence Depth",
-      "cluster": "Unknown",
-      "currentScore": 44,
-      "targetScore": 74,
-      "gapScore": 30,
-      "rootCause": "EXECUTION pillar is below 50%. Review which factors have zero values.",
-      "intervention": "Run `node dist/cli.js score .` with `--full` to see per-factor breakdown. Supply missing data for top-gap factors.",
-      "evidenceNeeded": "Pillar-specific events and signals"
+      "factorId": "forge_proposal_count",
+      "factorName": "Forge Proposal Count",
+      "cluster": "Brainstorm Fertility",
+      "currentScore": 0,
+      "targetScore": 60,
+      "gapScore": 60,
+      "rootCause": "No forge proposals are being submitted. IGNIS infrastructure projects default to direct implementation without a proposal pipeline.",
+      "intervention": "Add forge-proposal-style entries to ignis/input/proposals.json for each brainstorm item from SIL. Treat each genius list item as a \"proposal\" with category, status, and description.",
+      "evidenceNeeded": "ignis/input/proposals.json with at least 5 proposals (pending/accepted/implemented)"
+    },
+    {
+      "factorId": "canon_growth_fertility",
+      "factorName": "Canon Growth Fertility",
+      "cluster": "Brainstorm Fertility",
+      "currentScore": 0,
+      "targetScore": 55,
+      "gapScore": 55,
+      "rootCause": "No canon entries exist. Canon captures reusable creative patterns — IGNIS has these but they are not being serialized into the scoring layer.",
+      "intervention": "Write IGNIS design decisions, algorithm patterns, and intelligence module contracts to ignis/input/canon.json. Each SIL improvement item that changes behavior is a canon pattern.",
+      "evidenceNeeded": "ignis/input/canon.json with at least 5 canon patterns"
+    },
+    {
+      "factorId": "overall_creative_confidence",
+      "factorName": "Overall Creative Confidence",
+      "cluster": "Creative Confidence",
+      "currentScore": 29,
+      "targetScore": 70,
+      "gapScore": 41,
+      "rootCause": "Low score because forge proposals, canon entries, and session events lack proposal/canon data. The combined metric needs all 5 data types present.",
+      "intervention": "Once forge proposals and canon entries are populated, this factor lifts automatically. Ensure session events have improvementGroups data.",
+      "evidenceNeeded": "forgeProposals.length > 0 AND canonEntries.length > 0"
+    },
+    {
+      "factorId": "pipeline_conversion_rate",
+      "factorName": "Pipeline Conversion Rate",
+      "cluster": "Innovation Pipeline",
+      "currentScore": 0,
+      "targetScore": 65,
+      "gapScore": 65,
+      "rootCause": "Zero forge proposals means pipeline conversion rate is 0 by definition.",
+      "intervention": "Mark SIL-committed items that were implemented as proposals with status=\"implemented\" in proposals.json.",
+      "evidenceNeeded": "proposals.json with status transitions from pending → implemented"
+    },
+    {
+      "factorId": "improvement_group_entropy",
+      "factorName": "Improvement Group Entropy",
+      "cluster": "Cross-Pollination",
+      "currentScore": 0,
+      "targetScore": 50,
+      "gapScore": 50,
+      "rootCause": "Session events do not carry improvementGroups data — entropy is 0 when groups map is empty.",
+      "intervention": "Enrich session.audit events with improvementGroups field: { \"intelligence\": 3, \"protocol\": 2, \"evidence\": 1 }. This data already exists in SIL entries.",
+      "evidenceNeeded": "session.audit events with non-empty improvementGroups map"
     }
   ],
-  "rootCauseSummary": "EXECUTION pillar at F grade. Run full score to see per-factor breakdown.",
-  "estimatedLift": 1800,
+  "rootCauseSummary": "Forge proposal and canon entry fields are empty — the creativity pillar measures innovation pipeline health, which requires serialized proposal and pattern data that IGNIS currently produces implicitly (in SIL, CDR, brainstorm) but does not write to ignis/input/*.json feeds.",
+  "estimatedLift": 9360,
   "interventionIds": [
-    "pillar-repair-execution-generic-evidence-depth"
+    "pillar-repair-creativity-forge_proposal_count",
+    "pillar-repair-creativity-canon_growth_fertility",
+    "pillar-repair-creativity-overall_creative_confidence",
+    "pillar-repair-creativity-pipeline_conversion_rate",
+    "pillar-repair-creativity-improvement_group_entropy"
   ],
   "measurementHorizon": "medium",
-  "summary": "Pillar repair: EXECUTION at F (4,392.62/10000). 1 factor gaps identified. Estimated lift 1,800 pts from top 3 interventions. 0/1 interventions already tracked in outcome ledger."
+  "summary": "Pillar repair: CREATIVITY at F (3,386.77/10000). 5 factor gaps identified. Estimated lift 9,360 pts from top 3 interventions. 0/5 interventions already tracked in outcome ledger."
 }
