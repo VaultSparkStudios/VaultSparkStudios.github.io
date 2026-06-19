@@ -1,0 +1,38 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-website",
+  "date": "2026-06-19",
+  "session": 209,
+  "sessionType": "implementation",
+  "label": "arc · dead-CTA recency epoch + citation sync",
+  "calibration": false,
+  "scores": {
+    "devHealth": 91, "creativeAlignment": 92, "momentum": 86,
+    "engagement": 88, "processQuality": 93
+  },
+  "total": 450,
+  "maxScore": 500,
+  "velocity": 2,
+  "protocolVelocity": 0,
+  "durationMinutes": 75,
+  "debt": "↓",
+  "rollingAvg3": {
+    "devHealth": 91.7, "creativeAlignment": 93.3, "momentum": 89.3,
+    "engagement": 89.7, "processQuality": 92.7, "total": 906.0
+  },
+  "rollingAvgTotals": { "3": 906.0, "5": null, "10": null, "25": 955, "all": 958 },
+  "topWin": "Root-fixed a recurring false 'dead CTA' signal: play-next was judged dead on pre-retiming impressions because the dead-CTA detector had no recency floor; added a per-family epoch (play-next=2026-06-18) + a control self-test proving it flips the count — same observability-honesty class as the S208 perf staleness fix.",
+  "topGap": "Velocity was low (2 deep items); the OG-not-generic guard and nav-dropdown derivation were honestly deferred rather than shipped, and the systemic recencyWindow() helper that would prevent this class everywhere is still only a brainstorm item.",
+  "intentOutcome": "Achieved",
+  "improvementsShipped": 2,
+  "improvementGroups": {
+    "observability-honesty": ["dead-cta-recency-epoch", "control-self-test"],
+    "feed-hygiene": ["citation-source-sync"]
+  },
+  "testsTotal": 116,
+  "testsByType": { "buildCheckGates": 116 },
+  "testsDelta": 0,
+  "deployStatus": "pending",
+  "ignisFlags": ["low-velocity", "intent-achieved", "debt-clear"],
+  "ignisNote": "The recency-bound trap is a class, not a one-off: S208 fixed it in the perf-budget window, S209 found the identical shape in the dead-CTA detector. The tell is a signal red for N sessions despite a shipped fix; the cure is a recency floor keyed to the fix date plus a control test. Next leverage: make the recency floor systemic across all rolling-window gates."
+}

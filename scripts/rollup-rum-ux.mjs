@@ -46,9 +46,21 @@ const ORACLE_FEEDBACK_THRESHOLD = 2;
 // Conversion funnel families. Each maps a family prefix to its tracked parts and
 // the (numerator, denominator) that define its headline rate. Keep in lockstep
 // with the Worker RUM_UX_EVENTS allowlist (check-rum-allowlist guards emit-side).
+//
+// S209 — `epoch` (optional, 'YYYY-MM-DD'): a recency floor for this family's
+// impressions. When a CTA is materially RETIMED (copy/placement changed), the
+// impressions emitted BEFORE the change belong to the old, dead variant and must
+// not be counted against the new one — otherwise a just-fixed CTA is judged
+// "dead" forever on pre-fix data (the recency-bound trap, cf. the perf-budget
+// --stale-days horizon, [[feedback_perf_budget_window_needs_recency_bound]]).
+// `epoch` only TIGHTENS the window; it never widens past WINDOW_DAYS. BUMP it to
+// the deploy date whenever the surface materially changes.
 const FAMILIES = [
   { family: 'proof-line', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'proof line click-through' },
-  { family: 'play-next', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'cross-game play-next click-through' },
+  // play-next retimed S207 (commit 2aa59982, 2026-06-18): reveal-on-engagement +
+  // completion-framed copy. Pre-epoch impressions are the dead S206 above-the-fold
+  // variant — excluded so the retimed copy gets a clean measurement window.
+  { family: 'play-next', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'cross-game play-next click-through', epoch: '2026-06-18' },
   { family: 'oracle-chip', parts: ['shown', 'click'], rate: ['click', 'shown'], label: 'Oracle seed-chip click-through' },
   { family: 'ignis-hint', parts: ['shown', 'click', 'dismissed'], rate: ['click', 'shown'], label: 'proactive hint click-through' },
   { family: 'oracle-answer', parts: ['helpful', 'unhelpful'], rate: ['helpful', '_helpfulDenom'], label: 'Oracle answer helpful-rate' },
@@ -121,16 +133,23 @@ export function deriveSummary(historyRows) {
   }
   const totalEvents = Object.values(events).reduce((a, b) => a + b, 0);
 
-  const families = FAMILIES.map(({ family, parts, rate, label }) => {
+  const families = FAMILIES.map(({ family, parts, rate, label, epoch }) => {
     const counts = {};
+    // S209: when the family declares a recency `epoch`, count from the dated
+    // windowRows (filtered to day >= epoch) rather than the day-collapsed `events`
+    // map, so impressions emitted before the CTA's last material change are
+    // excluded. Without an epoch this reduces to the same totals as `events`
+    // (byte-stable — no behavior change for epoch-less families).
+    const famRows = epoch ? windowRows.filter((r) => r.day >= epoch) : windowRows;
     // S192: prefix-aware so a bounded per-cluster name (oracle-answer:helpful:<id>)
     // folds into the GLOBAL family rate alongside the untagged event. Other
     // families have no sub-keys, so the exact match is the only contributor.
     for (const part of parts) {
       const exact = `${family}:${part}`;
       let sum = 0;
-      for (const [ev, n] of Object.entries(events)) {
-        if (ev === exact || ev.startsWith(exact + ':')) sum += n;
+      for (const r of famRows) {
+        const ev = r.event;
+        if (ev === exact || ev.startsWith(exact + ':')) sum += Number(r.count) || 0;
       }
       counts[part] = sum;
     }
@@ -140,7 +159,11 @@ export function deriveSummary(historyRows) {
       : (counts[rate[1]] || 0);
     const num = counts[rate[0]] || 0;
     const ratePct = denom > 0 ? +((num / denom) * 100).toFixed(1) : null;
-    return { family, label, counts, rate: ratePct, rateBasis: `${rate[0]}/${rate[1] === '_helpfulDenom' ? 'helpful+unhelpful' : rate[1]}` };
+    const out = { family, label, counts, rate: ratePct, rateBasis: `${rate[0]}/${rate[1] === '_helpfulDenom' ? 'helpful+unhelpful' : rate[1]}` };
+    // Honest surface: when an epoch tightened the window, say so (`since`) so the
+    // count is self-describing and the dead-CTA verdict is auditable.
+    if (epoch) out.since = epoch;
+    return out;
   });
 
   const terminal = {};
@@ -463,8 +486,29 @@ function selfTest() {
     'constellations: per-step reach aggregated (drop-off visible: 9→4)');
   assert(cst.constellations.builders.unlocked === 2, 'constellations: completion count folded from unlock events');
 
+  // S209: recency epoch — pre-epoch impressions are EXCLUDED so a retimed CTA is
+  // not judged "dead" on the old variant's data. play-next epoch = 2026-06-18.
+  // Control: 12 pre-epoch shows + 6 post-epoch shows. Dead-CTA detection (shown
+  // >= MIN_SHOWN=5, click=0) must see only the 6 post-epoch shows — and the
+  // epoch must demonstrably FLIP the verdict vs. an unwindowed sum of 18.
+  const epochHist = [
+    { schemaVersion: '1.0', day: '2026-06-14', event: 'play-next:shown', count: 12 }, // pre-epoch (dead S206 variant)
+    { schemaVersion: '1.0', day: '2026-06-19', event: 'play-next:shown', count: 6 },  // post-epoch (retimed copy)
+  ];
+  const epochSummary = deriveSummary(epochHist);
+  const pnFam = epochSummary.families.find((f) => f.family === 'play-next');
+  assert(pnFam.counts.shown === 6, `epoch excludes pre-2026-06-18 shows: expected 6, got ${pnFam.counts.shown}`);
+  assert(pnFam.since === '2026-06-18', `epoch surfaced as since: got ${pnFam.since}`);
+  // Control proof: the raw unwindowed sum is 18 (would be flagged dead); the
+  // epoch tightens it to 6 — a different number, so the horizon genuinely fired.
+  const rawShown = epochHist.reduce((a, r) => a + r.count, 0);
+  assert(rawShown === 18 && pnFam.counts.shown !== rawShown, 'epoch flips the count vs. the unwindowed sum (18 → 6)');
+  // Epoch-less families are unaffected (byte-stable): proof-line still sums fully.
+  const plFam = deriveSummary([{ schemaVersion: '1.0', day: '2026-06-01', event: 'proof-line:shown', count: 4 }]).families.find((f) => f.family === 'proof-line');
+  assert(plFam.counts.shown === 4 && plFam.since === undefined, 'epoch-less family unchanged (no since, full window)');
+
   fs.rmSync(dir, { recursive: true, force: true });
-  console.log('rollup-rum-ux --self-test: OK (26 assertions)');
+  console.log('rollup-rum-ux --self-test: OK (31 assertions)');
 }
 
 function assert(ok, msg) { if (!ok) { console.error('rollup-rum-ux --self-test FAIL:', msg); process.exit(1); } }

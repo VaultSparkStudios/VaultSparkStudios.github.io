@@ -8,16 +8,48 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ███▂█
-Avgs - 3: 915.7 | 5: 933 | 10: 958 | 25: 960 | all: 960 (v3.0 /1000)
-  └ 3-session: Dev 92.0 | Align 94.0 | Momentum 92.7 | Engage 91.0 | Process 91.0
-Velocity trend: → (S208: 4 audit items + 2 self-validating gates + 1 bonus drift fix; S207: 9/9 audit items; S206: 13+2 items) | Protocol velocity: → | Debt: ↓ (killed a lingering perf phantom at its root; hardened a gate that had let a false closeout claim survive)
-Momentum runway: COHESION + HONESTY (run /audit→/implement) — broad hero-glow graduation to /games//membership//studio/ (mature-surface · real-device review) · shell-CSS version reconciliation (pre-existing) · publish forge devlog (founder) · sibling compliance drift via Ark · Atlas "moving this week" once a per-project activity source exists | Intent rate: 100% (last 5) | (S208 shipped: completed S207's falsely-claimed SEALED purge [89-page legend + components] + hardened the vocab gate + killed the perf-budget phantom + AVIF/WebP covers + Atlas OG + Atlas v2 thumbnails)
-Last session: 2026-06-19 | Session 208 | Total: 925/1000 (v3.0) | Velocity: 12 | protocolVelocity: 0
+Sparkline (last 5 totals): ▇▆▇▇▆
+Avgs - 3: 906.0 | 5: ~920 | 10: ~945 | 25: 955 | all: 958 (v3.0 /1000)
+  └ 3-session: Dev 91.7 | Align 93.3 | Momentum 89.3 | Engage 89.7 | Process 92.7
+Velocity trend: ↓ (S209: 2 deep root-fix items + 1 control self-test; S208: 4 items + 2 gates + 1 bonus; S207: 9/9) | Protocol velocity: → | Debt: ↓ (removed the recurring dead-CTA false-signal class at its measurement root)
+Momentum runway: HONESTY + COHESION (run /audit→/implement) — fold the OG-not-generic guard into an existing check (build:check at cmd.exe length limit) · derive nav Projects/Games dropdowns once the catalog∪extra-paged merge is designed · re-evaluate play-next rotation once post-2026-06-18 impressions accrue · broad hero-glow graduation (mature-surface · real-device review) · publish forge devlog (founder) · sibling compliance drift via Ark | Intent rate: 100% (last 5) | (S209 shipped: dead-CTA recency epoch root-fix + control self-test + citation sync; resolved the S207 play-next measure-watch; resynced PROJECT_STATUS SIL fields)
+Last session: 2026-06-19 | Session 209 | Total: 901/1000 (v3.0) | Velocity: 2 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-19 — Session 209 (/goal autonomous arc · dead-CTA recency epoch root-fix + control self-test + citation sync · build:check EXIT 0) | Total: 901/1000 (v3.0) | Velocity: 2 | Debt: ↓
+Avgs — 3: 906.0 | 5: ~920 | 10: ~945 | 25: 955 | all: 958
+
+Dev Health 91 | Creative Alignment 92 | Momentum 86 | Engagement 88 | Process Quality 93 | Cross-Repo Coherence 90 | Security Posture 88 | Ecosystem Integration 89 | Capital Efficiency 91 | Automation Coverage 93
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 91 | ↓ | build:check EXIT 0, doctor blockingFailing 0; one clean root-fix in the measurement logic (not a surface patch) + a control self-test (26→31 assertions). Fewer LOC than S208's multi-fix, hence −1. |
+| Creative Alignment | 92 | ↓ | Serves the binding observability-honesty rule: a "dead" CTA verdict was a measurement artifact, and the fix makes the signal tell the truth rather than rotating a CTA on false data. No soul surface touched. |
+| Momentum | 86 | ↓ | 2 substantive items (epoch root-fix + citation sync) — intentionally narrow-but-deep; 100% intent. Lower velocity than S208's wave, recorded honestly. |
+| Engagement | 88 | ↓ | No net-new engagement surface (correct — the value was honesty, not features); the epoch makes the conversion-measurement itself trustworthy. |
+| Process Quality | 93 | → | Audit grounded in live doctor/build:check signals (no invention); premise-verified the rotation question before acting (would have rotated prematurely); honest deferrals recorded; control self-test proves logic not a data edit; the env red (port-4173 orphan) was classified, not force-greened. |
+| Cross-Repo Coherence | 90 | ↓ | Correctly scoped the doctor's 3 compliance "failures" (Hashmark/VOID/SHADOW/VEILOS) OUT as portfolio-wide sibling-repo data → route via Ark; never touched a sibling tree. −2 vs S208 (no Ark cargo shipped this session, just identified). |
+| Security Posture | 88 | → | No auth/secret surface touched; scan clean; killed only an orphaned local preview server. |
+| Ecosystem Integration | 89 | ↑ | The recency-epoch generalizes a studio-wide lesson (second subsystem after perf-budget to get a recency horizon) — a shareable pattern. |
+| Capital Efficiency | 91 | → | Flat-rate Max Plan; no spend; removed a recurring false-signal that wasted attention each session. |
+| Automation Coverage | 93 | → | The dead-CTA detector is now self-validating against premature verdicts via the per-family epoch + a control self-test that proves the horizon fired. |
+
+### Self-audit + brainstorm
+
+**What this session proves:** the recency-bound trap is a *class*, not a one-off. S208 fixed it in the perf-budget window; S209 found the identical shape in the dead-CTA detector — a rolling aggregate that judges a *resolved/retimed* item forever on pre-fix samples. The tell is always the same: a signal that's been "red" for N sessions despite a shipped fix. The cure is always the same: a recency floor keyed to the fix's deploy date, plus a control test proving the floor flips the verdict (so it's logic, not a data edit). The next leverage point is to make this *systemic* — any rolling-window gate should carry an epoch/horizon by construction.
+
+**Second-order candidates generated:**
+1. **A shared `recencyWindow(rows, {windowDays, epoch})` helper** — factor the perf-budget staleness horizon + this dead-CTA epoch into one tested primitive, so every rolling aggregate inherits a recency floor instead of re-deriving it. (path: extract from `rollup-rum-ux` + `check-perf-budget`; High)
+2. **OG-not-generic guard** — assert no non-home page references another page's bespoke `og:image`; fold into `check-og-images` (not a new build:check segment — at the cmd.exe limit). (Medium — carried to Now)
+3. **Auto-stamp the epoch on rotation** — when `build-cta-state --advance` rotates a CTA, write the deploy date back as that family's `epoch` so the measurement window resets automatically with the copy change. (Medium)
+4. **`PROJECT_STATUS.json` ↔ SIL.md drift gate** — a check that the JSON `silScore`/`silCategoriesV3` mirror matches the latest SIL.md entry (this session found a 925-vs-912 drift by hand). (High)
+
+### Committed to TASK_BOARD (1–2 items)
+1. **[HONESTY/P1]** Fold the OG-not-generic guard into an existing wired check (already in Now from S208).
+2. **[BRAND/P2]** Derive the nav Projects/Games dropdowns from the catalog once the merge design lands (already in Now from S208).
 
 ## 2026-06-19 — Session 208 (/goal autonomous arc · finished S207's falsely-claimed SEALED purge + perf-honesty + cover optimization + Atlas v2 · build:check EXIT 0) | Total: 912/1000 (v3.0) | Velocity: 7 | Debt: ↓
 
