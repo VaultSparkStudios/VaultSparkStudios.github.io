@@ -4587,6 +4587,102 @@ body[data-motion="reduced"] *::after {
   font-size:.96rem;
   line-height:1.7;
 }
+/* S202: vault-climbers strip */
+#vault-climbers-strip{padding:0;overflow:clip}
+#vault-climbers-inner{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;padding:.9rem 0;border-top:1px solid rgba(255,196,0,.1);border-bottom:1px solid rgba(255,196,0,.1)}
+.vc-label{font-size:.7rem;font-weight:900;letter-spacing:.12em;color:rgba(255,196,0,.65);flex-shrink:0}
+.vc-period{font-size:.7rem;color:var(--dim);flex-shrink:0}
+#vault-climbers-list{display:flex;gap:.5rem;flex-wrap:wrap;flex:1}
+.vc-ranks-link{font-size:.74rem;font-weight:700;color:rgba(255,196,0,.7);white-space:nowrap;flex-shrink:0}
+
+/* ============================================================
+   PREMIUM POLISH LAYER  ·  S204 (additive — no rule rewrites)
+   Cohesive motion/elevation/accent tokens + site-wide micro-interaction,
+   focus, selection and surface refinements. Reduced-motion guarded.
+   ============================================================ */
+:root {
+  /* Motion system — one easing/duration vocabulary for the whole site */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 0.16s;
+  --dur-base: 0.26s;
+  --dur-slow: 0.5s;
+  /* Elevation scale — consistent depth across cards/menus/modals */
+  --elev-1: 0 2px 8px rgba(0,0,0,0.18);
+  --elev-2: 0 12px 34px rgba(0,0,0,0.34);
+  --elev-3: 0 28px 72px rgba(0,0,0,0.52);
+  /* Radius scale */
+  --radius-sm: 12px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  /* Accent roles — semantic names so hierarchy stops leaning only on gold */
+  --accent-primary: var(--gold);
+  --accent-secondary: var(--blue);
+  --accent-tertiary: var(--purple);
+  --focus-ring: 0 0 0 3px rgba(31,162,255,0.55), 0 0 0 6px rgba(31,162,255,0.18);
+}
+
+/* Smooth, premium scrolling + native momentum */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* Branded text selection */
+::selection { background: rgba(255,196,0,0.28); color: #fff; }
+body.light-mode ::selection { background: rgba(255,196,0,0.32); color: #162033; }
+
+/* Refined custom scrollbar (desktop) */
+@media (pointer: fine) {
+  * { scrollbar-width: thin; scrollbar-color: rgba(124,92,252,0.4) transparent; }
+  ::-webkit-scrollbar { width: 11px; height: 11px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, rgba(31,162,255,0.45), rgba(124,92,252,0.45));
+    border-radius: 999px; border: 3px solid transparent; background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, rgba(31,162,255,0.7), rgba(124,92,252,0.7));
+    background-clip: content-box;
+  }
+}
+
+/* Unified focus-visible ring — accessible AND premium (replaces inconsistent outlines) */
+a:focus-visible,
+button:focus-visible,
+.button:focus-visible,
+.button-secondary:focus-visible,
+.button-ghost:focus-visible,
+[role="button"]:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+/* Button micro-interactions — springy hover + tactile press */
+.button, .button-secondary, .button-ghost {
+  transition: transform var(--dur-base) var(--ease-spring),
+              box-shadow var(--dur-base) var(--ease-out),
+              background var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out);
+}
+.button:active, .button-secondary:active, .button-ghost:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: var(--dur-fast);
+}
+
+/* Card lift — smoother, deeper, consistent easing.
+   (Scroll-reveal is already handled correctly elsewhere via the `.revealed`
+   class toggled by scroll-reveal.js — intentionally NOT duplicated here.) */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card { transition: transform var(--dur-base) var(--ease-out),
+                      border-color var(--dur-base) var(--ease-out),
+                      box-shadow var(--dur-base) var(--ease-out); }
+  .card:hover { transform: translateY(-4px); }
+}
 
 /* extracted intelligence surface inline styles: start */
 .vsx-0045f7ad4f{margin:0;padding:1.2rem 1.4rem;border-left:3px solid #FF7A00;background:rgba(255,122,0,0.05);border-radius:0 14px 14px 0;font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:1.02rem;line-height:1.6;color:rgba(255,245,220,0.94);}
@@ -4768,7 +4864,6 @@ body[data-motion="reduced"] *::after {
 .vsx-bd4c6f2149{font-size:0.85rem;color:var(--muted);text-decoration:none;transition:color 0.15s;}
 .vsx-bdd4113929{padding:0 0 4rem;display:none;}
 .vsx-bece355826{margin-bottom:1.5rem;}
-.vsx-bf0d26312a{display:inline-block;margin:.2rem .35rem .2rem 0;color:var(--gold)}
 .vsx-c16ecaa368{padding:0 0 1rem;}
 .vsx-c32e878319{--platform-color:#d0d5df;}
 .vsx-c43eb96857{min-height:44px;border-radius:10px;border:1px solid rgba(126,201,255,0.24);background:rgba(255,255,255,0.04);color:var(--text);padding:0.65rem 0.75rem;}
@@ -4831,100 +4926,3 @@ body[data-motion="reduced"] *::after {
 .vsx-fbaa57db1f{color:#7EC9FF;}
 .vsx-fee6135269{background:rgba(0,0,0,0.7);border:1px solid rgba(214,40,40,0.3);border-radius:10px;padding:0.7rem 1rem;backdrop-filter:blur(6px);}
 /* extracted intelligence surface inline styles: end */
-/* S202: vault-climbers strip */
-#vault-climbers-strip{padding:0;overflow:clip}
-#vault-climbers-inner{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;padding:.9rem 0;border-top:1px solid rgba(255,196,0,.1);border-bottom:1px solid rgba(255,196,0,.1)}
-.vc-label{font-size:.7rem;font-weight:900;letter-spacing:.12em;color:rgba(255,196,0,.65);flex-shrink:0}
-.vc-period{font-size:.7rem;color:var(--dim);flex-shrink:0}
-#vault-climbers-list{display:flex;gap:.5rem;flex-wrap:wrap;flex:1}
-.vc-ranks-link{font-size:.74rem;font-weight:700;color:rgba(255,196,0,.7);white-space:nowrap;flex-shrink:0}
-
-/* ============================================================
-   PREMIUM POLISH LAYER  ·  S204 (additive — no rule rewrites)
-   Cohesive motion/elevation/accent tokens + site-wide micro-interaction,
-   focus, selection and surface refinements. Reduced-motion guarded.
-   ============================================================ */
-:root {
-  /* Motion system — one easing/duration vocabulary for the whole site */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --ease-soft: cubic-bezier(0.4, 0, 0.2, 1);
-  --dur-fast: 0.16s;
-  --dur-base: 0.26s;
-  --dur-slow: 0.5s;
-  /* Elevation scale — consistent depth across cards/menus/modals */
-  --elev-1: 0 2px 8px rgba(0,0,0,0.18);
-  --elev-2: 0 12px 34px rgba(0,0,0,0.34);
-  --elev-3: 0 28px 72px rgba(0,0,0,0.52);
-  /* Radius scale */
-  --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 24px;
-  /* Accent roles — semantic names so hierarchy stops leaning only on gold */
-  --accent-primary: var(--gold);
-  --accent-secondary: var(--blue);
-  --accent-tertiary: var(--purple);
-  --focus-ring: 0 0 0 3px rgba(31,162,255,0.55), 0 0 0 6px rgba(31,162,255,0.18);
-}
-
-/* Smooth, premium scrolling + native momentum */
-html { scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-
-/* Branded text selection */
-::selection { background: rgba(255,196,0,0.28); color: #fff; }
-body.light-mode ::selection { background: rgba(255,196,0,0.32); color: #162033; }
-
-/* Refined custom scrollbar (desktop) */
-@media (pointer: fine) {
-  * { scrollbar-width: thin; scrollbar-color: rgba(124,92,252,0.4) transparent; }
-  ::-webkit-scrollbar { width: 11px; height: 11px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(180deg, rgba(31,162,255,0.45), rgba(124,92,252,0.45));
-    border-radius: 999px; border: 3px solid transparent; background-clip: content-box;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(180deg, rgba(31,162,255,0.7), rgba(124,92,252,0.7));
-    background-clip: content-box;
-  }
-}
-
-/* Unified focus-visible ring — accessible AND premium (replaces inconsistent outlines) */
-a:focus-visible,
-button:focus-visible,
-.button:focus-visible,
-.button-secondary:focus-visible,
-.button-ghost:focus-visible,
-[role="button"]:focus-visible,
-input:focus-visible,
-select:focus-visible,
-textarea:focus-visible,
-summary:focus-visible {
-  outline: none;
-  box-shadow: var(--focus-ring);
-  border-radius: var(--radius-sm);
-}
-
-/* Button micro-interactions — springy hover + tactile press */
-.button, .button-secondary, .button-ghost {
-  transition: transform var(--dur-base) var(--ease-spring),
-              box-shadow var(--dur-base) var(--ease-out),
-              background var(--dur-base) var(--ease-out),
-              border-color var(--dur-base) var(--ease-out);
-}
-.button:active, .button-secondary:active, .button-ghost:active {
-  transform: translateY(0) scale(0.97);
-  transition-duration: var(--dur-fast);
-}
-
-/* Card lift — smoother, deeper, consistent easing.
-   (Scroll-reveal is already handled correctly elsewhere via the `.revealed`
-   class toggled by scroll-reveal.js — intentionally NOT duplicated here.) */
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .card { transition: transform var(--dur-base) var(--ease-out),
-                      border-color var(--dur-base) var(--ease-out),
-                      box-shadow var(--dur-base) var(--ease-out); }
-  .card:hover { transform: translateY(-4px); }
-}
-

@@ -32,11 +32,6 @@ const SECRETS_DIR = process.env.VAULTSPARK_SECRETS_DIR_OVERRIDE || path.join(REP
 // studio-ops itself, a sibling project repo, or a worktree.
 // Local `<repo>/secrets/` still wins when both define the same key (project override).
 function findStudioOpsSecretsDir() {
-  // Test isolation: when a test redirects lookups, use ONLY that dir — never
-  // reach into the real studio-ops sibling (keeps credential-mocks hermetic and
-  // preserves the S113-class regression guard that points the override at an
-  // empty dir and expects capabilities to resolve "missing").
-  if (process.env.VAULTSPARK_SECRETS_DIR_OVERRIDE) return null;
   if (process.env.STUDIO_OPS_SECRETS_DIR) return process.env.STUDIO_OPS_SECRETS_DIR;
   let dir = REPO_ROOT;
   for (let i = 0; i < 6; i++) {
@@ -49,16 +44,8 @@ function findStudioOpsSecretsDir() {
   return null;
 }
 const STUDIO_OPS_SECRETS_DIR = findStudioOpsSecretsDir();
-// CAPABILITY_MAP.json lives wherever the real secrets are. Public-safe repos
-// (this one, IdeaForge, etc.) carry no local secrets/, so prefer the local map
-// when present, else fall back to the studio-ops sibling. Without this, every
-// capability resolves to "missing" and gateway scripts (probe-capability,
-// check-secrets, doctor) misreport readiness — the exact S112/S114 regression
-// the gateway-readiness smoke check guards against.
-const CAP_MAP_DIR = [SECRETS_DIR, STUDIO_OPS_SECRETS_DIR]
-  .find(d => d && fs.existsSync(path.join(d, 'CAPABILITY_MAP.json'))) || SECRETS_DIR;
-const CAP_MAP_PATH = path.join(CAP_MAP_DIR, 'CAPABILITY_MAP.json');
-const ACCESS_LOG = path.join(fs.existsSync(SECRETS_DIR) ? SECRETS_DIR : CAP_MAP_DIR, '.access.log');
+const CAP_MAP_PATH = path.join(SECRETS_DIR, 'CAPABILITY_MAP.json');
+const ACCESS_LOG = path.join(SECRETS_DIR, '.access.log');
 
 let _cache = null;         // flat merged env
 let _cacheStamp = 0;

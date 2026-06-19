@@ -17,7 +17,7 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { spawnSync } from 'child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import { renderTitleHeader, renderLastCompleted, renderTestItNow } from './lib/brief-blocks.mjs';
 import { parseUnifiedItems } from './lib/task-board.mjs';
 import { loadPortfolioTaskBoards } from './lib/cross-repo-tasks.mjs';
@@ -184,7 +184,6 @@ const cdr         = readText(path.join(root, 'docs', 'CREATIVE_DIRECTION_RECORD.
 const revSig      = readText(path.join(root, 'portfolio', 'REVENUE_SIGNALS.md'));
 const complianceHistory = readJson(path.join(root, 'context', 'COMPLIANCE_HISTORY.json'), { snapshots: [] });
 const intentPlan  = readText(path.join(root, 'context', 'SESSION_INTENT_PLAN.md'));
-const deadCtaData = readJson(path.join(root, 'api', 'dead-ctas.json'), null);
 const humanPressure = readJson(path.join(root, 'portfolio', 'compiled', 'HUMAN_ACTION_PRESSURE.json'), { items: [] });
 
 const meterAgent = lockValue('agent') || 'unknown';
@@ -775,8 +774,6 @@ const sigCtx    = sig(typeof ctxAge === 'number' ? ctxAge : 99, v => v <= 7, v =
 const sigIgnis  = sig(typeof ignisAge === 'number' ? ignisAge : 99, v => v < 7, v => v < 14);
 const sigCdr    = cdrGap ? '⚠' : '✓';
 const sigVer    = versionDrift ? '⚠' : '✓';
-const deadCtaCount = deadCtaData && !deadCtaData.noData ? deadCtaData.deadCount : 0;
-const sigDeadCta = !deadCtaData || deadCtaData.noData ? '·' : deadCtaCount === 0 ? '✓' : '⚠';
 const sigRev    = revAge <= 7 ? '✓' : revAge <= 14 ? '⚠' : '⛔';
 const sigTruth  = truthStatus === 'green' ? '✓' : truthStatus === 'yellow' ? '⚠' : '⛔';
 const complianceSnapshots = Array.isArray(complianceHistory.snapshots) ? complianceHistory.snapshots : [];
@@ -1159,7 +1156,6 @@ const lines = [
   row(`${sigDeploy}  Deploy gaps   ${deployLabel}`),
   row(`${sigDoctor}  Doctor        ${doctorDetail}`),
   row(`${sigCost}  Cost          ${costDetail}`),
-  row(`${sigDeadCta}  Dead CTAs     ${deadCtaData && !deadCtaData.noData ? `${deadCtaCount} dead (≥5 shown, 0 clicks)` : 'no funnel data yet'}`),
   bot(),
   ``,
   // ── IGNIS INSIGHT ──────────────────────────────────────────────────────────

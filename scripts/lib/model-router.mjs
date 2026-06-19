@@ -47,19 +47,6 @@ export const MODELS = {
 };
 
 /**
- * Anthropic API endpoints — single source of truth so scripts don't hardcode
- * URLs (the pre-push hook flags any `api.anthropic.com` literal outside this
- * chokepoint file). Imported by compact-handoff, generate-vault-narrative,
- * paste-credential, probe-capability, secrets.
- */
-export const ANTHROPIC_API = {
-  host:    'api.anthropic.com',
-  base:    'https://api.anthropic.com',
-  messages: 'https://api.anthropic.com/v1/messages',
-  models:   'https://api.anthropic.com/v1/models',
-};
-
-/**
  * Context window sizes (tokens), keyed by resolved model ID or agent name.
  * Kept here — alongside MODELS — so the chokepoint remains the single place
  * that knows anything model-specific. Consumers (e.g. scripts/context-meter.mjs)

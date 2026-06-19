@@ -714,6 +714,19 @@
       idle: true
     },
     {
+      // S210 #2: returning-visitor signal strip — voice-driven changelog headlines
+      // "What sparked since your last visit" on the homepage for ≥2 visits.
+      // Additive to the digest (count vs narrative); homepage-only; idle-loaded.
+      src: '/assets/returning-signal-strip.js',
+      when: function () {
+        try {
+          var p = (window.location.pathname || '/').replace(/\/?$/, '/');
+          return p === '/' && parseInt(localStorage.getItem('vs_visit_count') || '0', 10) >= 2;
+        } catch (_) { return false; }
+      },
+      idle: true
+    },
+    {
       // S179 ambient-split wave 2 — route-scoped widgets that self-mount on a
       // single surface. Each predicate mirrors the script's own mount guard, so
       // behavior is identical; they just no longer parse on the ~95% of pages

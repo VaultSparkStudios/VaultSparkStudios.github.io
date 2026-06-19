@@ -208,8 +208,22 @@ Don't know the command? Check capabilities before declaring anything unknown or 
 
 For `audience: public-*` projects:
 - **Sitemap (CANON-011):** every page in `vaultspark-studio-ops/docs/PROJECT_SITEMAP_STANDARD.md` exists + passes bars (LCP <1.8s · CWV green · strict CSP · `/agents.json` · `/.well-known/llms.txt` · sitemap.xml). Score ≥8/10 before SPARKED. Audit: `node ../vaultspark-studio-ops/scripts/check-sitemap-compliance.mjs --project <slug>`.
-- **Website scaffold (D-S119.3):** before scaffolding any page, consult `vaultspark-studio-ops/portfolio/STUDIO_WEBSITE_SCAFFOLD/catalog.json` + `patterns.json`; use the consensus pattern unless SOUL justifies deviation (log in DECISIONS). Public signup → wire the Vault SSO contract (`vaultspark-studio-ops/docs/VAULT_SSO_CONTRACT.md`).
-- **Enforce:** branding line per type (CANON-006), footer `© 2026 VaultSpark Studios LLC. All rights reserved.`, `/privacy` + `/terms`, acronyms spelled out on first use (CANON-030), free tier cost-neutral (CANON-029), staging before prod (CANON-007). `/app-release-gate` checks these before any SPARKED flip.
+- **Website scaffold (D-S119.3 · RECOMMENDATION, not a mandate — D-S183.2):** consult `vaultspark-studio-ops/portfolio/STUDIO_WEBSITE_SCAFFOLD/catalog.json` + `patterns.json` as a **recommended starting library** to draw from and elevate per your SOUL — not a strict "only-use-this". Note deviations in DECISIONS so the catalog learns. Make menus/page names/themes/schemas/stack **as project-specific as possible** and keep exploring better options (**CANON-049** — never static). Whatever you start from must clear the elite bar:
+  - Start visual implementation from the scaffold's semantic theme layer when useful: `vaultspark-studio-ops/docs/templates/project-system/website-theme-tokens.css` + `patterns.json` theme recipes, then adapt colors/assets to the project's own brand kit.
+  - **CANON-041** desktop↔mobile parity + genuinely impressive UI/UX (scrollable 100dvh mobile drawer, never a broken/sticky menu — the pattern is the floor, not the finish).
+  - **CANON-047** theme toggle (≥ dark + light + optional project themes, each a human-best palette tied to branding) — **AI image-test every theme** (screenshot pages/panels/modals; no black-on-black / light-on-white / sub-WCAG-AA; blocking in `/app-release-gate`).
+  - **CANON-048** dual-audience: built for Humans AND AI Agents (`/agents.json` + `/.well-known/llms.txt` + JSON-LD + Obelisk agent auth) + AI-search-first (GEO/AEO alongside SEO).
+  - **CANON-045** Obelisk identity plane — public signup/auth wires Obelisk for ONE studio account across every project + human/agent receipts (Vault SSO contract folding into Obelisk; target Obelisk).
+- **Enforce (legal/IP complete):** branding line per type (CANON-006), footer `© 2026 VaultSpark Studios LLC. All rights reserved.`, proprietary/all-rights-reserved notice (CANON-008), `/privacy` + `/terms`, acronyms spelled out on first use (CANON-030), free tier cost-neutral (CANON-029), staging before prod (CANON-007). `/app-release-gate` checks these before any SPARKED flip.
+
+## Actively CHECK canon — don't just point at it (S183 founder directive)
+
+Referencing the index below is not enough — **every project actively checks Studio Canon and records its posture.** At `/initiate` (mandatory) and on `/start`, run:
+```bash
+node ../vaultspark-studio-ops/scripts/check-canon-adoption.mjs --project . --write   # initiate / refresh
+node ../vaultspark-studio-ops/scripts/check-canon-adoption.mjs --project . --check   # start (verify current)
+```
+It reads the **live** `STUDIO_CANON.md` (always current) and maintains `context/CANON_ADOPTION.md` — each ACTIVE canon marked adopted / pending / review / exempt-with-reason. Walk the `review` rows for your type. A missing/stale adoption file is a doctor finding (`canon-adoption-active`). The canon index below is the *map*; `CANON_ADOPTION.md` is your *checked posture against it*.
 
 ---
 
@@ -259,6 +273,15 @@ For `audience: public-*` projects:
 - **CANON-039** · Build-It-Ourselves, Internal-First, OSS-Research Discipline — own our stack; reuse internal tools; research free/credible/verified open-source before adopting or building
 - **CANON-040** · Agent-Deployed Migrations — AI agents apply database/infra migrations themselves, automatically, behind the safety gates
 - **CANON-041** · Website Mobile Parity + Elite Visual Craft — full desktop↔mobile UI/UX parity at all times · no broken mobile nav · every site visually elite
+- **CANON-042** · Studio Branding System: approved usages, DBA rule, and the elite auto-updating footer — Standardize how every VaultSpark surface presents the brand
+- **CANON-043** · Baseline repository security hygiene — free-tier: Dependabot + SECURITY.md + public secret scanning
+- **CANON-044** · In-session task scaffolding (Phase/Wave lists), reconciled at closeout — For any multi-step work (≥3 steps) or any multi-phase / multi-wave piece of work, every studio agent (Claude Code, Codex, any model/MCP) MUST maintain a live in-session…
+- **CANON-045** · Obelisk is the unified studio identity + auth plane — one studio account across every project
+- **CANON-046** · Canon weighting: tiers + autonomy-first conflict resolution — not all canon is absolute
+- **CANON-047** · Theme system + AI-verified human readability — no unreadable panels, ever
+- **CANON-048** · Dual-audience ecosystem: every surface built for Humans AND AI Agents — + AI-search-first
+- **CANON-049** · Continuous evolution: the studio + every project is never static — Decision. The studio and every project within it are never static. Each is expected to constantly learn, evolve, grow, and explore newer or better options — themes,…
+- **CANON-050** · Atlas: the foundation that carries the ecosystem — and the standard it is held to — Decision. Atlas is the studio's foundation principle — and its self-application verb. Named for the Titan who holds up the world
 
 <!-- canon-index:end -->
 

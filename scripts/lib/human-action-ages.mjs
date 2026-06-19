@@ -1,73 +1,84 @@
 /**
- * Tracks first-seen dates for Human Action Required items so they can show
- * age in the startup brief even if the task has no explicit session-count notation.
+ * human-action-ages.mjs — First-seen tracker for Human Action Required items.
  *
- * Ledger persisted at .cache/human-action-ages.json
+ * Founder unlocks brief box showed "new" for items that had no `~N sessions`
+ * notation, so aged-item escalation couldn't fire. This module maintains
+ * portfolio/HUMAN_ACTION_AGES.json mapping each canonical action title to its
+ * first-seen ISO date and session number.
+ *
+ * Usage:
+ *   import { ensureAges, daysSince } from './lib/human-action-ages.mjs';
+ *   const ages = ensureAges(taskBoardText, { root });
+ *   ages[title] -> { firstSeen: '2026-01-02', session: 45 }
  */
 
-import fs from 'fs';
-import path from 'path';
+import fs from 'node:fs';
+import path from 'node:path';
 
-const LEDGER_FILE = '.cache/human-action-ages.json';
+const LEDGER_REL = 'portfolio/HUMAN_ACTION_AGES.json';
 
-function today() {
-  return new Date().toISOString().slice(0, 10);
+function parseHumanItems(taskBoardText) {
+  const parts = taskBoardText.split(/^## /m);
+  const section = parts.find((p) => p.startsWith('Human Action Required'));
+  if (!section) return [];
+  const body = section.slice(section.indexOf('\n') + 1);
+  return body
+    .split(/\r?\n/)
+    .filter((l) => /^- \[ \]/.test(l))
+    .map((line) => {
+      const clean = line.replace(/^- \[ \]\s*/, '').replace(/\*\*/g, '');
+      const title = clean.split(/\s+—\s+/)[0].trim();
+      return { title, raw: line };
+    });
 }
 
-/** Returns days between isoDate and today (always >= 0). */
-export function daysSince(isoDate) {
-  const ms = Date.now() - new Date(isoDate).getTime();
-  return Math.max(0, Math.floor(ms / 86_400_000));
-}
-
-/**
- * Read the ledger, backfill any missing items from taskBoard text, persist,
- * and return the ledger map: { [title]: { firstSeen: 'YYYY-MM-DD' } }
- */
-export function ensureAges(taskBoard, { root = '.' } = {}) {
-  const ledgerPath = path.join(root, LEDGER_FILE);
-
-  // Load existing ledger
-  let ledger = {};
+function readLedger(root) {
+  const p = path.join(root, LEDGER_REL);
+  if (!fs.existsSync(p)) return {};
   try {
-    ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'));
+    return JSON.parse(fs.readFileSync(p, 'utf8'));
   } catch {
-    // No ledger yet — start fresh
+    return {};
   }
+}
 
-  // Extract current Human Action Required items
-  const parts = taskBoard.split(/^## /m);
-  const section = parts.find(p => p.startsWith('Human Action Required'));
-  const items = section
-    ? section
-        .slice(section.indexOf('\n') + 1)
-        .split(/\r?\n/)
-        .filter(l => /^- \[ \]/.test(l))
-    : [];
+function writeLedger(root, ledger) {
+  const p = path.join(root, LEDGER_REL);
+  fs.mkdirSync(path.dirname(p), { recursive: true });
+  fs.writeFileSync(p, JSON.stringify(ledger, null, 2));
+}
 
-  const now = today();
-  let changed = false;
+export function ensureAges(taskBoardText, opts = {}) {
+  const root = opts.root || process.cwd();
+  const ledger = readLedger(root);
+  const items = parseHumanItems(taskBoardText);
+  const today = new Date().toISOString().slice(0, 10);
+  const session = opts.currentSession || null;
+  let dirty = false;
 
-  for (const line of items) {
-    const title = line
-      .replace(/^- \[ \]\s*/, '')
-      .replace(/\*\*/g, '')
-      .split(/\s+—\s+/)[0]
-      .trim();
-    if (title && !ledger[title]) {
-      ledger[title] = { firstSeen: now };
-      changed = true;
+  // Add any new items with today's date.
+  for (const item of items) {
+    if (!ledger[item.title]) {
+      ledger[item.title] = { firstSeen: today, session };
+      dirty = true;
     }
   }
 
-  if (changed) {
-    try {
-      fs.mkdirSync(path.join(root, '.cache'), { recursive: true });
-      fs.writeFileSync(ledgerPath, JSON.stringify(ledger, null, 2));
-    } catch {
-      // Non-fatal — ledger just won't persist this run
+  // Prune titles that no longer appear (they got resolved).
+  const activeTitles = new Set(items.map((i) => i.title));
+  for (const title of Object.keys(ledger)) {
+    if (!activeTitles.has(title)) {
+      delete ledger[title];
+      dirty = true;
     }
   }
 
+  if (dirty && !opts.readonly) writeLedger(root, ledger);
   return ledger;
+}
+
+export function daysSince(isoDate) {
+  const d = new Date(isoDate).getTime();
+  if (!Number.isFinite(d)) return null;
+  return Math.floor((Date.now() - d) / 86400000);
 }

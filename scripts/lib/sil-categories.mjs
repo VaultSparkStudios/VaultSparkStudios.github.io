@@ -1,43 +1,17 @@
-/**
- * sil-categories.mjs
- *
- * Canonical SIL v3.0 category vocabulary (CANON-009 — 10 × 100 = 1000).
- * Extracted to a single source so writers/validators/renderers can't drift
- * (S156 #21 policy-drift extraction). Keys MUST match the property names in
- * context/PROJECT_STATUS.json → silCategoriesV3.
- */
+// sil-categories.mjs — canonical SIL v3.0 category list (CANON-009, 10×100=1000).
+//
+// S156 #21: lint-policy-drift found this array independently defined in FIVE
+// files (check-sil-category-ranges · write-project-status · reconcile-sil-math
+// · resync-sil-score · sil-ingest-guard) — the exact divergent-policy class
+// S153 debugged three times. One definition, everyone imports.
+//
+// Changing the rubric is a CANON change (DECISIONS.md) — never edit this list
+// for a local convenience.
 
-/** Ordered category keys — the order the SIL total sums them in. */
 export const V3_CATS = [
-  'devHealth',
-  'creativeAlignment',
-  'momentum',
-  'engagement',
-  'processQuality',
-  'crossRepoCoherence',
-  'securityPosture',
-  'ecosystemIntegration',
-  'capitalEfficiency',
-  'automationCoverage',
+  'devHealth', 'creativeAlignment', 'momentum', 'engagement', 'processQuality',
+  'crossRepoCoherence', 'securityPosture', 'ecosystemIntegration', 'capitalEfficiency', 'automationCoverage',
 ];
 
-/** Human-readable labels, keyed by category key (for briefs/boards). */
-export const V3_CAT_LABELS = {
-  devHealth: 'Dev Health',
-  creativeAlignment: 'Creative Alignment',
-  momentum: 'Momentum',
-  engagement: 'Engagement',
-  processQuality: 'Process Quality',
-  crossRepoCoherence: 'Cross-Repo Coherence',
-  securityPosture: 'Security Posture',
-  ecosystemIntegration: 'Ecosystem Integration',
-  capitalEfficiency: 'Capital Efficiency',
-  automationCoverage: 'Automation Coverage',
-};
-
-/** Per-category max (SIL v3.0 rubric). */
-export const V3_CAT_MAX = 100;
-/** Total SIL max — sum of all categories (CANON-009). */
-export const V3_TOTAL_MAX = V3_CATS.length * V3_CAT_MAX; // 1000
-
-export default { V3_CATS, V3_CAT_LABELS, V3_CAT_MAX, V3_TOTAL_MAX };
+export const V3_MAX_PER_CATEGORY = 100;
+export const V3_MAX_TOTAL = 1000;

@@ -1,81 +1,74 @@
-/**
- * turn-classifier.mjs
- *
- * S120 #3 — lightweight per-turn model router (SIL #612).
- *
- * Heuristic classifier consumed by `model-router.mjs` → `callClaude()`.
- * Given the last user prompt (and optional system text), it returns a model
- * recommendation so cheap transactional turns can be routed DOWN to Haiku and
- * clearly strategic turns routed UP to Opus, regardless of the model the caller
- * requested. It is intentionally CONSERVATIVE — it only deviates from the
- * caller's choice when a signal is unambiguous; otherwise it returns the
- * neutral 'sonnet' verdict, which the consumer treats as "no change".
- *
- * Contract (relied on by model-router.mjs:452):
- *   classifyTurn({ prompt, system? }) -> { model: 'haiku'|'sonnet'|'opus', reason: string }
- *
- * The consumer only acts on:
- *   - model === 'haiku'  → downshift when caller asked for opus/sonnet
- *   - model === 'opus'   → upshift   when caller asked for haiku/sonnet
- * Any other verdict (e.g. 'sonnet') is a no-op for the caller.
- *
- * Disable globally with TURN_CLASSIFY_DISABLED=1 (handled in the consumer).
- */
+// turn-classifier.mjs
+// Audit item #6 (S114). Per-turn model classification atop the per-repo
+// T1/T2/T3 routing. Lets the router escalate (Haiku → Sonnet → Opus) per turn
+// when the turn's signal demands it, rather than running every turn at the
+// repo's nominal tier.
+//
+// Pure function — no I/O. Imported by scripts/lib/model-router.mjs in callClaude().
 
-const HAIKU_MAX_CHARS = 600;   // pure-transform turns are short
-const OPUS_MIN_CHARS = 1400;   // strategic turns tend to be long + multi-part
-
-// Cheap, transactional, single-shot work → Haiku is sufficient.
-const HAIKU_SIGNALS = [
-  /\b(validate|verify|check|lint|format|count|list|lookup|extract|parse|classify|tag|rename|slugify|normali[sz]e)\b/i,
-  /\b(is (this|it|there)|does (this|it)|how many|what is the (value|count|status))\b/i,
-  /\b(yes\/no|true\/false|one[- ]line|single line|short answer)\b/i,
+const ESCALATE_KEYWORDS = [
+  // creative-direction signals — opus
+  'canon', 'decision', 'soul.md', 'creative direction',
+  'security', 'rights', 'license', 'irreversible',
+  // architecture signals — opus
+  'architecture', 'schema migration', 'protocol design',
+  // execution-only signals — haiku
+  'summarize', 'rephrase', 'render', 'classify', 'extract',
+  'tag', 'normalize', 'format', 'pretty-print'
 ];
 
-// Deep, multi-constraint, cross-cutting work → Opus earns its cost.
-const OPUS_SIGNALS = [
-  /\b(architect|architecture|strateg(y|ic)|deep (analysis|dive)|refactor|redesign|trade-?offs?)\b/i,
-  /\b(cross-project|portfolio|multi-step|root[- ]cause|reconcile|synthesi[sz]e|forecast|predict)\b/i,
-  /\b(plan the|design the|evaluate (options|approaches)|weigh|compare (approaches|designs))\b/i,
+const OPUS_PATTERNS = [
+  /canon|decision|soul\.md|creative direction/i,
+  /security|rights|license|irreversible|destructive/i,
+  /architecture|schema migration|protocol design/i
 ];
 
-function countMatches(text, patterns) {
-  let n = 0;
-  for (const re of patterns) if (re.test(text)) n++;
-  return n;
-}
+const HAIKU_PATTERNS = [
+  /^(summarize|rephrase|render|classify|extract|tag|normalize|format)\b/i,
+  /pretty-?print|wrap.*at.*\d+ cols?/i,
+  /one-line|three-?sentence|≤\s*\d+ tokens?/i
+];
 
-/**
- * @param {object} args
- * @param {string} args.prompt  - the last user message (string or stringified)
- * @param {string} [args.system] - optional system text for extra signal
- * @returns {{model: 'haiku'|'sonnet'|'opus', reason: string}}
- */
-export function classifyTurn({ prompt = '', system = '' } = {}) {
-  const text = String(prompt || '');
-  const all = `${text}\n${String(system || '')}`;
+export function classifyTurn({ prompt = '', repoTier = 'T2_opusplan', intent = 'execution' } = {}) {
+  const text = String(prompt).slice(0, 4000);
   const len = text.length;
 
-  const opusHits = countMatches(all, OPUS_SIGNALS);
-  const haikuHits = countMatches(all, HAIKU_SIGNALS);
-
-  // Strong, unambiguous strategic signal → upshift to Opus.
-  if (opusHits >= 2 || (opusHits >= 1 && len >= OPUS_MIN_CHARS)) {
-    return { model: 'opus', reason: `opus-signals:${opusHits}/len:${len}` };
+  // Force opus for any signal touching canon/security/architecture
+  for (const re of OPUS_PATTERNS) {
+    if (re.test(text)) return { model: 'opus', reason: 'canon/security/architecture signal', tier: 'T3_opus' };
   }
 
-  // Short + transactional, with no strategic signal → downshift to Haiku.
-  if (haikuHits >= 1 && len <= HAIKU_MAX_CHARS && opusHits === 0) {
-    return { model: 'haiku', reason: `haiku-signals:${haikuHits}/len:${len}` };
+  // Force haiku for pure formatting/extraction
+  for (const re of HAIKU_PATTERNS) {
+    if (re.test(text)) return { model: 'haiku', reason: 'pure transform — haiku sufficient', tier: 'T1_sonnet→haiku' };
   }
 
-  // Very short turns with no strategic signal are also Haiku-able.
-  if (len > 0 && len <= 160 && opusHits === 0) {
-    return { model: 'haiku', reason: `short-turn/len:${len}` };
+  // Short, single-action prompts → haiku
+  if (len < 300 && !/decide|design|plan|architect/i.test(text)) {
+    return { model: 'haiku', reason: 'short transactional turn', tier: 'T1' };
   }
 
-  // Default: leave the caller's choice untouched.
-  return { model: 'sonnet', reason: 'neutral' };
+  // Long planning prompts → opus
+  if (len > 2000 && /plan|design|propose|recommend/i.test(text)) {
+    return { model: 'opus', reason: 'long planning turn', tier: 'T3_opus' };
+  }
+
+  // Default: respect repo tier
+  const tierMap = {
+    'T3_opus': 'opus',
+    'T2_opusplan': 'sonnet',
+    'T1_sonnet': 'sonnet',
+    'T1_haiku': 'haiku'
+  };
+  return { model: tierMap[repoTier] || 'sonnet', reason: 'repo-tier default', tier: repoTier };
 }
 
-export default { classifyTurn };
+// CLI for ad-hoc inspection
+if (process.argv[1]?.endsWith('turn-classifier.mjs')) {
+  const prompt = process.argv.slice(2).join(' ');
+  if (!prompt) {
+    console.log('usage: node scripts/lib/turn-classifier.mjs "<prompt text>"');
+    process.exit(0);
+  }
+  console.log(JSON.stringify(classifyTurn({ prompt }), null, 2));
+}

@@ -25,7 +25,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { execSync } from 'node:child_process';
+import { execSync } from './lib/safe-spawn.mjs';
 // Inline context window sizes — keeps this script self-contained for propagation to all project repos.
 // Update here if new models are added to the studio fleet.
 function contextWindowForAgent(agent) {

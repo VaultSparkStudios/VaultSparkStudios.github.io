@@ -1,39 +1,47 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 5156521145dc -->
-<!-- generated-at: 2026-06-18T14:57:16.848Z -->
+<!-- source-hash: 855294b1d518 -->
+<!-- generated-at: 2026-06-19T21:28:55.136Z -->
 
 # LATEST_HANDOFF (compact)
 
-# Handoff Summary — Session 205
+# Handoff Summary — VaultSparkStudios.github.io
 
 ## Session
-- Session 205. Autonomous /goal chain (start→audit→implement→closeout), no founder direction.
-- Outcome: ACHIEVED. All 15 audit items shipped; build:check EXIT 0; 1 infra blocker logged.
+- S209 (autonomous /goal arc: start→audit→implement→closeout). Last updated 2026-06-19.
 
-## Shipped (S205)
-- Hero: scroll-activation stagger; hero-v2 flag (?hero=v2); adaptive welcome strip (rank + Continue CTA).
-- Studio: vault-momentum-score chip; dead-CTA gate (check-dead-ctas.mjs + api/dead-ctas.json).
-- Membership: progressive tier reveal; sticky hub tab nav; Worker 301s for legacy paths (25/25 tests); portal-premium motion/elevation vars.
-- Ignis/Oracle: Cmd+K deep-dive links; personalized homepage panel; knowledge-graph related-entity chips (15/31 docs).
-- Community: constellation challenges (5 hidden badges); dispatch emoji reactions.
-- Content: natural-language changelog (24 entries); freshness sweep (7 portfolio entries).
+## Shipped (S209)
+- rollup-rum-ux.mjs: per-family recency epoch in deriveSummary() (play-next epoch=2026-06-18); pre-epoch impressions excluded; surfaced as `since`. play-next deadCount 18→0 (honest "insufficient post-retiming data").
+- Control self-test proving epoch flips count (18 raw → 6 windowed). 26→31 assertions.
+- api/citation.json source sync (uptime 88→89).
+- Resynced PROJECT_STATUS.json SIL fields to SIL.md authoritative (silScore 925→912).
+- Resolved S207 play-next measure-watch on TASK_BOARD: do NOT rotate the CTA.
 
-## Tests / Deploy
-- build:check EXIT 0. RUM allowlist 35/33 synced. Worker 25/25. IGNIS 31 docs, 0 voice leaks.
-- Pushed via closeout-autopilot.mjs.
+## State
+- build:check EXIT 0 · 116/116 gates · doctor blockingFailing 0.
+- Deploy pending: committed to main, CF Pages auto-deploys pushed tip.
+
+## Current Intent
+- Maintain observability honesty: rolling aggregates need recency horizons or they fail resolved items forever (same class as S208 perf-budget phantom).
 
 ## Now Bucket (top 3)
-- Prod-verify S205 wave (hero=v2 flag, Oracle entity chips, dispatch reactions, constellation unlock).
-- S204 verify pass (premium polish layer, mission rewrite on prod).
-- Graduate hero-v2 to default after founder sign-off.
+1. Verify S209 deploy lands via CF Pages auto-deploy.
+2. Build web-push FEATURE on provisioned VAPID cred (Worker push endpoint + client subscribe UI + pinned web-push).
+3. Derive nav Projects dropdown + press counts from catalog (currently hardcoded, broke twice on data change).
 
 ## Blockers (top 3)
-- cloudflare.vapid MISSING (infra) — blocks push-dispatch.
-- Hero-v2 graduation gated on founder real-device review.
-- S204 §3/§4/§5/§6 carried items awaiting verify before further build.
+1. build:check at cmd.exe length limit — new gates must fold into existing checks (blocks OG-not-generic guard).
+2. nav-dropdown catalog-derivation needs catalog∪extra-paged merge design.
+3. Worker RUM beacons drop at edge unless deployed with `--env production`.
 
 ## Human-Blocked (with age)
-- VAPID keys — FOUNDER ACTION, opened S205 (current). Steps: npx web-push generate-vapid-keys → store secrets/cloudflare.vapid.env → add VAPID_PUBLIC_KEY to Worker env → node scripts/push-dispatch.mjs --test.
-- Hero-v2 real-device review — FOUNDER, opened S205 (current).
+- Publish forge devlog draft (journal/_drafts/forge-week-2026-06-18.md) in founder voice — since S207.
+- Real-device hero v2 review (`?hero=classic` reverts) — since S207.
+- Confirm remaining external live product URLs as projects launch — since S208.
+- Staging box HCLOUD_TOKEN — since S207.
+- studio-ops: commit cloudflare.vapid CAPABILITY_MAP entry (in their working tree) — since S207.
 
-Next session: prod-verify S205 wave, then S204 carry-forward (hero/portal/consolidation/freshness).
+## Out of Scope
+- Doctor's 3 "failures" (Hashmark/VOID/SHADOW/VEILOS compliance) are sibling-repo data — route via Ark, never edit siblings directly.
+
+## Next Session
+Verify S209 CF Pages deploy, then start the agent-doable web-push feature on the provisioned VAPID cred.

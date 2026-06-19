@@ -1,142 +1,128 @@
-/**
- * sil-forecaster.mjs
- *
- * Parses SELF_IMPROVEMENT_LOOP.md session history and projects next session's
- * SIL score (total + per-category) from recent trend. Feeds the optional
- * "SIL FORECAST" block in the startup brief, which degrades gracefully when
- * this returns [] / null.
- *
- * Contract (relied on by render-startup-brief.mjs:1216):
- *   parseSilHistory(silTxt) -> Array<{ session, date, total, velocity, categories }>  (NEWEST first)
- *   forecastNext(sessions, { velocity, blockerPressure, contextAge })
- *       -> { totalPredicted: number, categories: { [name]: { predicted, delta } } } | null
- */
+// sil-forecaster.mjs
+// Audit item #3 (S114). Forecast next session's SIL category scores from
+// last-3 session deltas + current TASK_BOARD pressure + velocity signals.
+//
+// Read by: scripts/render-startup-brief.mjs (new SIL FORECAST block)
+// Pure function — no I/O side-effects.
 
-// Canonical 10 SIL v3.0 categories (label as it appears in SIL category lines).
+import fs from 'node:fs';
+import path from 'node:path';
+
+const CATEGORIES = [
+  'Dev Health', 'Creative Alignment', 'Momentum',
+  'Engagement', 'Process Quality', 'Cross-Repo Coher',
+  'Security Posture', 'Ecosystem Integ', 'Capital Efficiency',
+  'Automation Cover'
+];
+
 const CATEGORY_ALIASES = {
-  'dev health': 'Dev Health',
-  'creative alignment': 'Alignment',
-  'alignment': 'Alignment',
-  'momentum': 'Momentum',
-  'engagement': 'Engagement',
-  'process quality': 'Process Quality',
-  'cross-repo coherence': 'Coherence',
-  'coherence': 'Coherence',
-  'security posture': 'Security',
-  'security': 'Security',
-  'ecosystem integration': 'Ecosystem',
-  'ecosystem': 'Ecosystem',
-  'capital efficiency': 'Capital',
-  'automation coverage': 'Automation',
-  'automation': 'Automation',
+  'Cross-Repo Coherence': 'Cross-Repo Coher',
+  'Ecosystem Integration': 'Ecosystem Integ',
+  'Automation Coverage': 'Automation Cover',
+  'Engagement (infra)': 'Engagement'
 };
 
-function canonCategory(raw) {
-  return CATEGORY_ALIASES[String(raw || '').trim().toLowerCase()] || null;
-}
-
-/**
- * Parse the per-session score lines. Each session is a `## ... Session N ...
- * Total: NNN/1000 ...` header optionally followed by a category line:
- *   "Dev Health 98 | Creative Alignment 99 | Momentum 98 | ..."
- *   (separator may be `|` or `·`, optionally wrapped in parentheses)
- * @param {string} silTxt
- * @returns {Array} sessions, newest first
- */
-export function parseSilHistory(silTxt) {
-  const txt = String(silTxt || '');
-  if (!txt) return [];
-
-  const lines = txt.split('\n');
+export function parseSilHistory(silText, maxSessions = 5) {
+  const sessionRe = /^## (\d{4}-\d{2}-\d{2}) — Session (\d+)[^\n]*Total: (\d+)\/1000/gm;
   const sessions = [];
-  const headerRe = /^##\s+(\d{4}-\d{2}-\d{2})\s+—\s+Session\s+(\d+)\b[\s\S]*?Total:\s*(\d+)\/1000/i;
-
-  for (let i = 0; i < lines.length; i++) {
-    const m = lines[i].match(headerRe);
-    if (!m) continue;
-    const [, date, sessionStr, totalStr] = m;
-    const velMatch = lines[i].match(/Velocity:\s*(\d+)/i);
-
-    // Look ahead a few lines for the category breakdown line.
-    const categories = {};
-    for (let j = i + 1; j <= Math.min(i + 4, lines.length - 1); j++) {
-      const cl = lines[j];
-      if (/^##\s/.test(cl)) break; // hit next session
-      // Category tokens look like "<Name words> <number>" separated by | or ·
-      const pairRe = /([A-Za-z][A-Za-z -]+?)\s+(\d{1,3})(?=\s*[|·)]|\s*$)/g;
-      let pm;
-      let found = 0;
-      while ((pm = pairRe.exec(cl)) !== null) {
-        const name = canonCategory(pm[1]);
-        const val = parseInt(pm[2], 10);
-        if (name && Number.isFinite(val) && val >= 0 && val <= 100) {
-          categories[name] = val;
-          found++;
-        }
-      }
-      if (found >= 5) break; // got a real category line
-    }
-
-    sessions.push({
-      session: parseInt(sessionStr, 10),
-      date,
-      total: parseInt(totalStr, 10),
-      velocity: velMatch ? parseInt(velMatch[1], 10) : null,
-      categories,
-    });
+  let m;
+  while ((m = sessionRe.exec(silText)) !== null) {
+    sessions.push({ date: m[1], session: Number(m[2]), total: Number(m[3]), idx: m.index });
+    if (sessions.length >= maxSessions) break;
   }
-
-  // File is already newest-first; preserve that order.
+  // Extract category scores from each session block
+  for (let i = 0; i < sessions.length; i++) {
+    const start = sessions[i].idx;
+    const end = i + 1 < sessions.length ? sessions[i + 1].idx : silText.length;
+    const block = silText.slice(start, end);
+    const cats = {};
+    // table rows: | N | Category Name | score | Δ | notes |
+    const rowRe = /^\|\s*\d+\s*\|\s*([A-Za-z][^|]+?)\s*\|\s*(\d+)\s*\|/gm;
+    let rm;
+    while ((rm = rowRe.exec(block)) !== null) {
+      const raw = rm[1].trim();
+      const canonical = CATEGORY_ALIASES[raw] || raw;
+      cats[canonical] = Number(rm[2]);
+    }
+    sessions[i].categories = cats;
+  }
   return sessions;
 }
 
-/** Average of consecutive deltas (linear trend) over a numeric series given newest-first. */
-function trendSlope(valuesNewestFirst) {
-  const v = valuesNewestFirst.filter((n) => Number.isFinite(n));
-  if (v.length < 2) return 0;
-  let sum = 0;
-  let n = 0;
-  // newest-first → delta from older to newer is v[k-1] - v[k]
-  for (let k = 1; k < v.length; k++) {
-    sum += v[k - 1] - v[k];
-    n++;
-  }
-  return n ? sum / n : 0;
-}
-
-const clamp100 = (x) => Math.max(0, Math.min(100, x));
-
-/**
- * Project next session scores from recent history.
- * @param {Array} sessions - newest first (from parseSilHistory)
- * @param {object} [signals] - { velocity, blockerPressure, contextAge } (advisory)
- * @returns {{totalPredicted:number, categories:Object}|null}
- */
 export function forecastNext(sessions, signals = {}) {
-  if (!Array.isArray(sessions) || sessions.length === 0) return null;
-  const recent = sessions.slice(0, 5);
-  const current = recent[0];
-  if (!current || !current.categories) return null;
-
-  const catNames = Object.keys(current.categories);
-  if (catNames.length === 0) return null;
-
-  // Headwind: low velocity / high blocker pressure dampen projected gains.
-  const velocity = Number(signals.velocity);
-  const headwind = Number.isFinite(velocity) && velocity <= 1 ? 0.5 : 1;
-
-  const categories = {};
-  let totalPredicted = 0;
-  for (const name of catNames) {
-    const series = recent.map((s) => s.categories?.[name]).filter((n) => Number.isFinite(n));
-    const curVal = current.categories[name];
-    const slope = trendSlope(series) * headwind;
-    const predicted = Math.round(clamp100(curVal + slope));
-    categories[name] = { predicted, delta: predicted - curVal };
-    totalPredicted += predicted;
+  // signals: { velocity, blockerPressure, contextAge, unblocked }
+  if (!sessions.length) return null;
+  const forecast = {};
+  for (const cat of CATEGORIES) {
+    const series = sessions.map(s => s.categories[cat]).filter(n => typeof n === 'number');
+    if (!series.length) { forecast[cat] = { predicted: null, confidence: 'none' }; continue; }
+    // Simple AR(1): predict = last + alpha * (last - last-1), clamped 0..100
+    const last = series[0];
+    const last2 = series[1] ?? last;
+    let delta = last - last2;
+    // Apply external-signal nudges
+    if (cat === 'Momentum' && signals.velocity != null) {
+      delta += signals.velocity >= 10 ? 2 : signals.velocity <= 2 ? -5 : 0;
+    }
+    if (cat === 'Security Posture' && signals.blockerPressure >= 80) {
+      delta -= 2; // aging credentials drag security
+    }
+    if (cat === 'Capital Efficiency' && signals.contextAge >= 7) {
+      delta -= 1;
+    }
+    const predicted = Math.max(0, Math.min(100, last + 0.6 * delta));
+    forecast[cat] = {
+      predicted: Math.round(predicted),
+      delta: Math.round(predicted - last),
+      confidence: series.length >= 3 ? 'medium' : 'low'
+    };
   }
-
-  return { totalPredicted, categories };
+  // Aggregate total
+  const totalPred = Object.values(forecast)
+    .filter(f => f.predicted != null)
+    .reduce((sum, f) => sum + f.predicted, 0);
+  return { categories: forecast, totalPredicted: totalPred, basis: sessions.length };
 }
 
-export default { parseSilHistory, forecastNext };
+export function renderForecastBlock(forecast, currentTotal = null) {
+  if (!forecast) return '';
+  const lines = [];
+  lines.push('╔══ SIL FORECAST (next session) ═════════════════════════════════╗');
+  const arrow = (d) => d > 0 ? '↑' : d < 0 ? '↓' : '→';
+  if (currentTotal != null) {
+    const diff = forecast.totalPredicted - currentTotal;
+    lines.push(`║  Projected total: ${forecast.totalPredicted}/1000  (${arrow(diff)}${Math.abs(diff)} vs current ${currentTotal})`.padEnd(67) + '║');
+  } else {
+    lines.push(`║  Projected total: ${forecast.totalPredicted}/1000`.padEnd(67) + '║');
+  }
+  const risky = Object.entries(forecast.categories)
+    .filter(([, f]) => f.delta != null && f.delta <= -3)
+    .sort((a, b) => a[1].delta - b[1].delta)
+    .slice(0, 3);
+  if (risky.length) {
+    lines.push('║'.padEnd(67) + '║');
+    lines.push('║  At-risk categories (forecast drop ≥3):'.padEnd(67) + '║');
+    for (const [cat, f] of risky) {
+      lines.push(`║    ↓ ${cat.padEnd(22)} ${f.predicted} (Δ${f.delta})`.padEnd(67) + '║');
+    }
+  } else {
+    lines.push('║  All categories forecast stable or rising.'.padEnd(67) + '║');
+  }
+  lines.push('╚════════════════════════════════════════════════════════════════╝');
+  return lines.join('\n');
+}
+
+// CLI entry
+if (import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}` || process.argv[1].endsWith('sil-forecaster.mjs')) {
+  const root = process.cwd();
+  const silPath = path.join(root, 'context', 'SELF_IMPROVEMENT_LOOP.md');
+  const sil = fs.readFileSync(silPath, 'utf8');
+  const sessions = parseSilHistory(sil);
+  const last = sessions[0];
+  const forecast = forecastNext(sessions, { velocity: 11, blockerPressure: 87, contextAge: 0 });
+  if (process.argv.includes('--json')) {
+    console.log(JSON.stringify({ basis: sessions.map(s => ({ session: s.session, total: s.total })), forecast }, null, 2));
+  } else {
+    console.log(renderForecastBlock(forecast, last?.total));
+  }
+}

@@ -46,37 +46,24 @@ export function parseHumanItems(markdown) {
   const section = extractSection(markdown, 'Human Action Required');
   if (!section) return [];
 
-  const results = [];
-  for (const line of section.split(/\r?\n/)) {
-    // Must be an open checkbox
-    if (!/^- \[ \]/.test(line)) continue;
-
-    const body = line.replace(/^- \[ \]\s*/, '');
-
-    // Extract first **…** block as the title tag (e.g. "[WEB3FORMS]")
-    const tagMatch = body.match(/^\*\*(.+?)\*\*/);
-    const rawTag = tagMatch ? tagMatch[1].trim() : '';
-
-    // Description: everything after the last ` — ` separator, or the full body
-    const dashIdx = body.lastIndexOf(' — ');
-    const description = dashIdx !== -1 ? body.slice(dashIdx + 3).trim() : body;
-
-    // Build a clean title: tag + any text between the closing ** and the first —
-    let title = rawTag;
-    if (tagMatch) {
-      const afterTag = body.slice(tagMatch[0].length).replace(/^ — .*$/, '').replace(/ — .*$/, '').trim();
-      if (afterTag) title = `${rawTag} ${afterTag}`;
-    }
-    if (!title) title = body.split(' — ')[0].replace(/\*\*/g, '').trim();
-
-    const ageMatch =
-      description.match(/\((~?\d+)\s+sessions?\)/i) ||
-      description.match(/\((\d+)\s+sessions?\s+old\)/i);
-    const ageSessions = ageMatch ? parseInt(ageMatch[1].replace('~', ''), 10) : null;
-
-    results.push({ title, description, raw: body, ageSessions });
-  }
-  return results;
+  return section
+    .split(/\r?\n/)
+    .map((line) => line.match(/^- \[ \] \*\*(.*?)\*\* — (.*)$/))
+    .filter(Boolean)
+    .map((parts) => {
+      const title = parts[1].trim();
+      const description = parts[2].trim();
+      const ageMatch =
+        description.match(/\((~?\d+)\s+sessions?\)/i) ||
+        description.match(/\((\d+)\s+sessions?\s+old\)/i);
+      const ageSessions = ageMatch ? parseInt(ageMatch[1].replace('~', ''), 10) : null;
+      return {
+        title,
+        description,
+        raw: `**${title}** — ${description}`,
+        ageSessions,
+      };
+    });
 }
 
 export function extractCurrentSessionIntent(markdown) {

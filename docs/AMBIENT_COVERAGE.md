@@ -8,15 +8,15 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **17**  ·  Total: **67.1 KB** (raw)
-- Guarded (conditional): **13** modules · **54.4 KB** — split candidates
+- Sources: **17**  ·  Total: **67.6 KB** (raw)
+- Guarded (conditional): **13** modules · **55.0 KB** — split candidates
 - Always-on: **4** modules · **12.7 KB**
 
 ## By size (split candidates flagged)
 
 | Source | Size | Shape | Why conditional |
 |---|--:|:-:|---|
-| `ambient-loader.js` | 14.6 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
+| `ambient-loader.js` | 15.2 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
 | `adaptive-speculation.js` | 5.2 KB | 🔶 guarded | — |
 | `breadcrumb-render.js` | 4.7 KB | always | — |
 | `signed-in-state.js` | 4.7 KB | 🔶 guarded | session gated |

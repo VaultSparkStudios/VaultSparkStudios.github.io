@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-19T18:16:38.001Z",
+  "generatedAt": "2026-06-19T23:08:09.286Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 208,
+    "currentSession": 209,
     "lastUpdated": "2026-06-19",
-    "currentFocus": "S208 (autonomous /goal arc) finished the work S207's closeout falsely claimed done: S207 said 'SEALED retired + purged sitewide' but the footer status legend still rendered '⬡ SEALED — Vault sealed' on 89 pages + a whole sealed-vault component used it as a status badge. Completed the real SEALED→VAULTED purge (legend root-fixed in propagate-nav + re-propagated to 90 pages, sealed-vault-row + studio-pulse-live badges/captions migrated, generator + prose swept) and HARDENED the vocabulary gate so it scans the footer for retired status vocab (it stripped the footer before — that's why the lie went undetected). Also: killed the perf-budget PHANTOM (the lingering '/ desktop LCP 13060ms' advisory was a rolling-3 median dragged by two 26-day-old, already-fixed S161 incident traces; added a staleness horizon so resolved-incident samples expire — real RUM p75 is 976ms); shipped AVIF+WebP covers (~93% smaller) via image-set()+@supports on hero + games; repointed Atlas OG to its bespoke card; Atlas v2 cover thumbnails. build:check EXIT 0, doctor blockingFailing 0.",
-    "nextMilestone": "Founder: publish the forge devlog draft (your voice) + real-device review of the graduated hero + (optional) the broad hero-glow graduation to /games//membership//studio/ (deferred this session — mature-surface, wants visual verification). Engineering (unblocked): broader shell-CSS version reconciliation (some propagator-skipped pages still reference stale style.shell-*.css hashes). studio-ops: sibling compliance drift (Syntha/VOID/SHADOW/MindFrame v3.3 + TRUTH_AUDIT headers) + VEILOS launch blocker — ship via Ark, never direct sibling edits.",
+    "currentFocus": "S209 (autonomous /goal arc) root-fixed a recurring false conversion signal: the play-next CTA has read 'dead' (18 shown / 0 clicks) every session since S207, but the detector (check-dead-ctas <- rollup-rum-ux families[]) summed impressions over the whole 30-day window with no floor at the CTA's last material change. The card was retimed S207 (2026-06-18) and the funnel data only reaches 2026-06-14, so all 18 impressions are the pre-retiming variant — the new copy has zero measured impressions yet was judged dead on the old one's data. Added a per-family recency 'epoch' to deriveSummary() (play-next=2026-06-18, surfaced as 'since'); deadCount -> 0 (honest 'insufficient post-retiming data'). Shipped with a control self-test proving the epoch flips the count (18 raw -> 6 windowed). Same class as the S208 perf-budget staleness phantom. Also synced api/citation.json (uptime 88->89) and resynced these SIL fields, which had drifted from the SIL.md ledger. build:check EXIT 0, doctor blockingFailing 0.",
+    "nextMilestone": "Engineering (unblocked): fold the OG-not-generic guard into an existing wired check (build:check at cmd.exe length limit); derive the nav Projects/Games dropdowns from the catalog once the catalog-union-extra-paged merge is designed. Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice) + real-device review of the graduated hero. studio-ops: sibling compliance drift (Hashmark/VOID/SHADOW/VEILOS) — ship via Ark, never direct sibling edits.",
     "blockers": [
       {
         "id": "staging-box-hcloud",
@@ -37,14 +37,9 @@
     ],
     "queues": {
       "now": [
-        "[S207] Atlas ecosystem map (/atlas/) — DONE. Server-rendered hyperlinked map (Sparked/Forge/Vaulted) + Atlas term + ItemList JSON-LD; in Studio nav + sitemap. `scripts/build-atlas.mjs`.",
-        "[S207] Hero tile links + categories — DONE. SPARKED→live, FORGE→studio page (fixed MindFrame railway link); dual buttons on live tiles; real per-project categories (MindFrame = AI Intelligence).",
-        "[S207] Vault Lifecycle canonized + SEALED retired — DONE. `docs/VAULT_LIFECYCLE.md` + D-S207.9; \"Live\"→\"Sparked\"; Ark canon proposal to studio-ops + hub. ⚠️ NOTE (S208): the \"purged sitewide\" claim was FALSE — the footer status legend still rendered `⬡ SEALED — Vault sealed` on 89 pages + a sealed-vault component used it as a status badge. S208 completed the real purge (legend root-fixed in propagate-nav + re-propagated; components/prose migrated; generator swept) and hardened `check-vocabulary-consistency.mjs` to scan the footer so this can't recur. See D-S208.1.",
-        "[S207][VERIFY/P0] Prod-verify the S207 wave — DONE (post-deploy, same session). `node scripts/prod-verify-wave.mjs` → 7 pass / 0 fail: all S206/S207 artifacts + the new passport \"Forge your own\" copy + `/vaultsparked/` + `/join/` confirmed live on the pages.dev origin. CF Pages deployed the wave.",
-        "[S207][INFRA/P1] Deploy the Worker with `--env production` — DONE (same session). Deployed `vaultspark-security-headers-production` Version `9c4395c7` (token via cloudflare.deploy gateway). New RUM prefixes `cta` + `oracle-feedback` + statics `passport:inbound`/`oracle:graph_traverse` now live at the edge.",
-        "[S207][MEASURE/P2] Watch retimed play-next + auto-rotation. Once post-S207 visits accrue, check `api/dead-ctas.json`: if `play-next` is STILL dead, run `node scripts/build-cta-state.mjs --advance` to rotate to copy variant 1. If it converts, the retiming win is confirmed. Measurement-watch.",
-        "[S207][PRODUCT/P1] Stripe TRIAL50 coupon — DONE (agent, founder-authorized). Created on the LIVE account: coupon `vMXTeDFL` (50% off · duration=once = first month) + active promotion_code `TRIAL50` (`promo_1TjkTpGMN60PfJYs9KQQR8p2`). `create-checkout`'s `promotionCodes.list({code:'TRIAL50',active:true})` resolves it → 50%-off trial is real end-to-end. (Account's pinned Stripe API version was old — raw `promotion_codes` create needed `Stripe-Version: 2024-06-20`.) REVERT: deactivate the promo code in the Stripe dashboard.",
-        "[S207][INFRA/P2] WEB-PUSH VAPID credential — PROVISIONED (agent, founder-authorized). Generated a P-256 keypair via `node:crypto` (no `web-push` install — that package is package-trust BLOCK on `@latest`), stored in `vaultspark-studio-ops/secrets/cloudflare.vapid.env` (gitignored), registered the `cloudflare.vapid` capability in studio-ops `CAPABILITY_MAP.json` → `check-secrets --for cloudflare.vapid` = READY. Fixed a real bug in `push-dispatch.mjs` (`await getSecret().catch()` on a sync value faked MISSING). Remaining engineering (NOT founder-gated): install a pinned `web-push`, wire the Worker push endpoint + client subscribe UI, then `push-dispatch --test`. Studio-ops follow-up: commit the `CAPABILITY_MAP.json` `cloudflare.vapid` entry (left in their working tree per the cross-repo commit boundary)."
+        "[HONESTY/P1] Fold the OG-not-generic guard into an existing wired check. A gate asserting no non-home page references another page's bespoke `og:image` card. `check-og-images.mjs` already validates per-page OG presence; extend it (or `check-proof-surface` orchestrator) — do NOT add a new `build:check` `&&` segment (chain is near the cmd.exe length limit, [[feedback_buildcheck_cmdexe_length_limit]]). Carried from S208.",
+        "[BRAND/P2] Derive the nav Projects/Games dropdowns from the catalog. Blocked on the catalog∪extra-paged merge design (the nav lists non-catalog paged projects) — premature derivation drifts ([[feedback_derive_dont_hardcode_public_surfaces]]). Design the merge first, then derive. Carried from S208.",
+        "[MEASURE/P3] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue. The recency epoch (D-S209.1) gives the retimed copy a clean window; if it's STILL dead on post-epoch data, `build-cta-state --advance` rotates to variant 1. No code action until data accrues."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -53,7 +48,11 @@
         "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
-      "shipped": []
+      "shipped": [
+        "Shipped: 2 improvements across 2 groups — observability-honesty (`rollup-rum-ux` per-family recency epoch + control self-test), feed-hygiene (`api/citation.json` source sync).",
+        "Tests: 116/116 build:check gates passing (delta +0) · `rollup-rum-ux --self-test` 26→31 assertions.",
+        "Deploy: pending (committed to main; CF Pages auto-deploys the pushed tip)."
+      ]
     },
     "ignis": {
       "score": 44691,
