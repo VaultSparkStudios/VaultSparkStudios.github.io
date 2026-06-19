@@ -80,6 +80,61 @@ function getAssetPrefix(relPath) {
   return '../'.repeat(depth);
 }
 
+// ─── S210 #8: Data-driven nav entries ──────────────────
+// Maintaining nav = edit an array entry, not an HTML blob.
+// check-nav-catalog-sync.mjs gates drift between this list + the catalog.
+const NAV_GAMES = [
+  { status: 'SPARKED', label: '🔥 Sparked', cssClass: 'dropdown-status-sparked', entries: [
+    { href: '/games/call-of-doodie/', label: 'Call of Doodie' },
+    { href: '/games/vaultspark-football-gm/', label: 'VaultSpark Football GM' },
+  ]},
+  { status: 'FORGE', label: '⚒️ In The Forge', cssClass: 'dropdown-status-forge', entries: [
+    { href: '/games/vaultfront/', label: 'VaultFront' },
+    { href: '/games/solara/', label: 'Solara' },
+    { href: '/games/mindframe/', label: 'MindFrame' },
+    { href: '/games/the-exodus/', label: 'The Exodus' },
+    { href: '/games/voidfall/', label: 'Voidfall' },
+    { href: '/games/vaultspark-forge/', label: 'VaultSpark Forge' },
+  ]},
+  { status: 'VAULTED', label: '🔒 Vaulted', cssClass: 'dropdown-status-vaulted', entries: [
+    { href: '/games/gridiron-gm/', label: 'Gridiron GM' },
+    { href: '/games/project-unknown/', label: 'Project Unknown' },
+  ]},
+];
+
+const NAV_PROJECTS = [
+  { status: 'SPARKED', label: '🔥 Sparked', cssClass: 'dropdown-status-sparked', entries: [
+    { href: '/projects/velaxis/', label: 'Velaxis' },
+    { href: '/projects/vorn/', label: 'Vorn' },
+    { href: '/projects/promogrind/', label: 'PromoGrind' },
+    { href: '/projects/signal-log/', label: 'Signal Log' },
+    { href: '/projects/vault-pipeline/', label: 'Vault Pipeline' },
+    { href: '/projects/vault-member/', label: 'Vault Member' },
+  ]},
+  { status: 'FORGE', label: '⚒️ In The Forge', cssClass: 'dropdown-status-forge', entries: [
+    { href: '/projects/seamline/', label: 'Seamline' },
+    { href: '/projects/hashmark/', label: 'Hashmark' },
+    { href: '/projects/shadow/', label: 'SHADOW' },
+    { href: '/projects/concurrent/', label: 'Concurrent' },
+    { href: '/projects/ouren/', label: 'Ouren' },
+    { href: '/projects/sparkraid/', label: 'SparkRaid' },
+    { href: '/projects/syntha/', label: 'Syntha' },
+    { href: '/projects/obelisk/', label: 'Obelisk' },
+    { href: '/projects/ideaforge/', label: 'IdeaForge' },
+    { href: '/projects/statvault/', label: 'StatVault' },
+    { href: '/projects/canon/', label: 'Canon' },
+    { href: '/projects/the-living-protocol/', label: 'The Living Protocol' },
+  ]},
+];
+
+// Build a status-grouped dropdown section from data arrays.
+function buildStatusSections(sections) {
+  return sections.map((s) =>
+    `<div class="dropdown-divider"></div><span class="dropdown-label ${s.cssClass}">${s.label}</span>` +
+    s.entries.map((e) => `<a href="${e.href}">${e.label}</a>`).join('')
+  ).join('');
+}
+
 // ─── Build nav HTML ────────────────────────────────────
 function buildNav(assetPrefix, activeHref) {
   // The active link carries both the visual class and the semantic
@@ -99,8 +154,8 @@ function buildNav(assetPrefix, activeHref) {
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
         ${a('/', 'Home')}
-        <div class="nav-item has-dropdown"><a href="/games/"${gamesActive}>Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/games/call-of-doodie/">Call of Doodie</a><a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/games/vaultfront/">VaultFront</a><a href="/games/solara/">Solara</a><a href="/games/mindframe/">MindFrame</a><a href="/games/the-exodus/">The Exodus</a><a href="/games/voidfall/">Voidfall</a><a href="/games/vaultspark-forge/">VaultSpark Forge</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-vaulted">🔒 Vaulted</span><a href="/games/gridiron-gm/">Gridiron GM</a><a href="/games/project-unknown/">Project Unknown</a></div></div>
-        <div class="nav-item has-dropdown"><a href="/projects/"${projectsActive}>Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-sparked">🔥 Sparked</span><a href="/projects/velaxis/">Velaxis</a><a href="/projects/vorn/">Vorn</a><a href="/projects/promogrind/">PromoGrind</a><a href="/projects/signal-log/">Signal Log</a><a href="/projects/vault-pipeline/">Vault Pipeline</a><a href="/projects/vault-member/">Vault Member</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-forge">⚒️ In The Forge</span><a href="/projects/seamline/">Seamline</a><a href="/projects/hashmark/">Hashmark</a><a href="/projects/shadow/">SHADOW</a><a href="/projects/concurrent/">Concurrent</a><a href="/projects/ouren/">Ouren</a><a href="/projects/sparkraid/">SparkRaid</a><a href="/projects/syntha/">Syntha</a><a href="/projects/obelisk/">Obelisk</a><a href="/projects/ideaforge/">IdeaForge</a><a href="/projects/statvault/">StatVault</a><a href="/projects/canon/">Canon</a><a href="/projects/the-living-protocol/">The Living Protocol</a></div></div>
+        <div class="nav-item has-dropdown"><a href="/games/"${gamesActive}>Games <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Games</span><a href="/games/">All Games</a>${buildStatusSections(NAV_GAMES)}</div></div>
+        <div class="nav-item has-dropdown"><a href="/projects/"${projectsActive}>Projects <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Projects</span><a href="/projects/">All Projects</a>${buildStatusSections(NAV_PROJECTS)}</div></div>
         <div class="nav-item has-dropdown"><a href="/membership/"${membershipActive}>Membership <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Vault Membership</span><a href="/membership/">About Membership</a><a href="/vaultsparked/">Choose Your Tier</a><a href="/membership-value/">Value Breakdown</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-intel">Portals</span><a href="/vault-portal/">Vault Portal &nbsp;<span class="dropdown-portal-choose">(choose)</span></a><a href="/vault-member/">Vault Member</a><a href="/investor-portal/" class="dropdown-link-investor">Investor Portal</a><div class="dropdown-divider"></div><span class="dropdown-label">Member Area</span><a href="/vault-wall/">Vault Wall</a><a href="/ranks/">Vault Ranks</a><a href="/leaderboards/">Leaderboards</a><a href="/invite/">Refer a Friend</a></div></div>
         <div class="nav-item has-dropdown"><a href="/universe/"${activeAttr(activeHref === '/universe/')}>Universe <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label">Universe</span><a href="/universe/">Universe Home</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-active">🔥 Active Worlds</span><a href="/universe/voidfall/">Voidfall</a><div class="dropdown-divider"></div><span class="dropdown-label dropdown-status-honored">🔒 Honored</span><a href="/universe/dreadspike/">DreadSpike (vaulted)</a><div class="dropdown-divider"></div><span class="dropdown-label">Lore Surfaces</span><a href="/journal/dispatches/">Insider Dispatches</a></div></div>
         <div class="nav-item has-dropdown"><a href="/studio/"${activeAttr(activeHref === '/studio/')}>Studio <span class="caret" aria-hidden="true">&#9660;</span></a><div class="nav-dropdown"><span class="dropdown-label dropdown-status-intel">Live Intelligence</span><a href="/nervous-system/" class="dropdown-link-intel">Studio Nervous System</a><a href="/oracle/" class="dropdown-link-intel">⚡ Ecosystem Oracle</a><a href="/studio-pulse/">Studio Pulse</a><a href="/ignis/">IGNIS</a><div class="dropdown-divider"></div><span class="dropdown-label">Studio</span><a href="/atlas/">⬡ Atlas · Ecosystem Map</a><a href="/studio/">About</a><a href="/roadmap/">Vault Pipeline</a><a href="/changelog/">Changelog</a><a href="/journal/">Signal Log</a><a href="/journal/dispatches/">Insider Dispatches</a><div class="dropdown-divider"></div><span class="dropdown-label">Community</span><a href="/community/">Community Hub</a><a href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer">Discord</a><div class="dropdown-divider"></div><span class="dropdown-label">Outside-In</span><a href="/press/">Press Kit</a><a href="/brand/">Brand Kit</a><a href="/social/">Social Channels</a></div></div>

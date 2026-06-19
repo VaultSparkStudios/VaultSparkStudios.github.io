@@ -183,6 +183,13 @@ if (atl.status !== 0) {
 // silently. Never blocks; SKIPs when the studio-ops sibling isn't reachable (CI).
 spawnSync(process.execPath, [path.join(__dirname, 'check-registry-freshness.mjs')], { stdio: 'inherit' });
 
+// S210 #8: nav-catalog sync advisory — warns when a SPARKED catalog entry is absent
+// from NAV_GAMES or NAV_PROJECTS arrays in propagate-nav.mjs.
+const ncs = spawnSync(process.execPath, [path.join(__dirname, 'check-nav-catalog-sync.mjs')], { stdio: 'inherit' });
+if (ncs.status !== 0) {
+  console.warn('  ⚠  check-nav-catalog-sync: SPARKED catalog entries missing from nav arrays (update propagate-nav.mjs)');
+}
+
 // S210 #3: build-sha freshness gate — api/build-sha.json must match HEAD.
 // Ensures `npm run build` was run before `build:check` so the SHA beacon is current.
 const bsh = spawnSync(process.execPath, [path.join(__dirname, 'generate-build-sha.mjs'), '--check'], { stdio: 'inherit' });
