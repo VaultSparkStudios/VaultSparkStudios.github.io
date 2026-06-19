@@ -32,7 +32,11 @@ function esc(s) {
 
 function pageHref(item, fileExists) {
   const isGame = item.type === 'game';
-  const cands = isGame ? [`games/${item.id}/index.html`, `${item.id}/index.html`] : [`projects/${item.id}/index.html`, `${item.id}/index.html`];
+  // Check both sections (type-natural first) so a type-mismatched project resolves
+  // to its real page instead of a generic landing (D-S208.8).
+  const cands = isGame
+    ? [`games/${item.id}/index.html`, `projects/${item.id}/index.html`, `${item.id}/index.html`]
+    : [`projects/${item.id}/index.html`, `games/${item.id}/index.html`, `${item.id}/index.html`];
   for (const rel of cands) if (fileExists(rel)) return '/' + rel.replace(/index\.html$/, '');
   return isGame ? '/games/' : '/projects/';
 }

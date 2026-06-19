@@ -54,9 +54,12 @@ function esc(s) {
 function resolveHref(item, fileExists) {
   const id = item.id;
   const isGame = item.type === 'game';
+  // Prefer the type-natural location, but fall back to the OTHER section so a
+  // type-mismatched project (e.g. MindFrame is typed tool but its page lives at
+  // games/mindframe) still resolves to its real page, not a generic landing (D-S208.8).
   const candidates = isGame
-    ? [`games/${id}/index.html`, `${id}/index.html`]
-    : [`projects/${id}/index.html`, `${id}/index.html`];
+    ? [`games/${id}/index.html`, `projects/${id}/index.html`, `${id}/index.html`]
+    : [`projects/${id}/index.html`, `games/${id}/index.html`, `${id}/index.html`];
   for (const rel of candidates) {
     if (fileExists(rel)) return '/' + rel.replace(/index\.html$/, '');
   }

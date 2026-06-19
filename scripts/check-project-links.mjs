@@ -38,8 +38,10 @@ function liveHref(item) {
 
 function pageFor(item, exists) {
   const isGame = item.type === 'game';
-  const cands = isGame ? [`games/${item.id}/index.html`, `${item.id}/index.html`]
-                       : [`projects/${item.id}/index.html`, `${item.id}/index.html`];
+  // Both sections (type-natural first) so a type-mismatched project resolves to its
+  // real page, matching build-hero-portfolio + build-atlas (D-S208.8).
+  const cands = isGame ? [`games/${item.id}/index.html`, `projects/${item.id}/index.html`, `${item.id}/index.html`]
+                       : [`projects/${item.id}/index.html`, `games/${item.id}/index.html`, `${item.id}/index.html`];
   for (const rel of cands) if (exists(rel)) return '/' + rel.replace(/index\.html$/, '');
   return null; // no dedicated page → generic section fallback
 }

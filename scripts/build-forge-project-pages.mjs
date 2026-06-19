@@ -37,16 +37,21 @@ const PROJECTS = [
   { id: 'sparkraid', name: 'SparkRaid', category: 'Creator Economy', teaser: 'Every tip is an event.', liveUrl: null },
   { id: 'syntha', name: 'Syntha', category: 'Music Platform', teaser: 'AI-accepted music, with rights made clear.', liveUrl: null },
   { id: 'obelisk', name: 'Obelisk', category: 'Trust Protocol', teaser: 'Trust and capability for the AI era.', liveUrl: 'https://obeliskgate.com' },
+  // Flagship creative works in the games section (D-S208.8) — teaser pages so the
+  // Atlas/hero link to a real page, not the generic /games/ index.
+  { id: 'voidfall', name: 'Voidfall', section: 'games', category: 'Cinematic Saga', teaser: 'A nine-book cosmic-horror saga. Not a game — a world.', liveUrl: null },
+  { id: 'vaultspark-forge', name: 'VaultSpark Forge', section: 'games', category: 'Crafting World', teaser: 'A crafting-and-building world taking shape in the forge.', liveUrl: null },
 ];
 
 function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
 
 // Build one page by templating the Seamline forging page. Pure for testability.
 export function renderPage(template, p) {
+  const section = p.section || 'projects';
   let html = template;
-  // 1. Path + slug tokens (lowercase): /projects/seamline/ , og-projects-seamline , data-voice etc.
-  html = html.replace(/projects\/seamline\//g, `projects/${p.id}/`);
-  html = html.replace(/og-projects-seamline/g, `og-projects-${p.id}`);
+  // 1. Path + slug tokens (lowercase): /projects/seamline/ → /<section>/<id>/ , og slug, data-voice.
+  html = html.replace(/projects\/seamline\//g, `${section}/${p.id}/`);
+  html = html.replace(/og-projects-seamline/g, `og-${section}-${p.id}`);
   html = html.replace(/data-voice="seamline"/g, `data-voice="${p.id}"`);
   // 2. Display-name tokens: "Seamline" → name (covers title, OG, JSON-LD, h1, data-project, prose).
   html = html.replace(/Seamline/g, esc(p.name));
@@ -80,7 +85,7 @@ if (!existsSync(TEMPLATE)) { console.error('✗ template missing: projects/seaml
 const template = readFileSync(TEMPLATE, 'utf8');
 let created = 0, skipped = 0, missing = [];
 for (const p of PROJECTS) {
-  const rel = `projects/${p.id}/index.html`;
+  const rel = `${p.section || 'projects'}/${p.id}/index.html`;
   const abs = join(ROOT, rel);
   if (existsSync(abs) && !FORCE) { skipped++; continue; }
   if (CHECK) { missing.push(rel); continue; }
