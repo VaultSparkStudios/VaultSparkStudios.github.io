@@ -51,7 +51,7 @@
     el.innerHTML = [
       statTile(portfolio.sparked, 'Playable now', 'sparked'),
       statTile(portfolio.forge, 'Taking shape in the forge', 'forge'),
-      statTile(portfolio.sealedCount, 'Sealed in the deep vault', 'sealed'),
+      statTile(portfolio.sealedCount, 'Vaulted in the deep', 'sealed'),
       statTile(portfolio.total, 'Initiatives under the vault banner', 'total'),
     ].join('');
   }
@@ -110,8 +110,8 @@
     if (!container || !portfolio) return;
     var count = portfolio.sealedCount || 0;
     if (caption) {
-      caption.innerHTML = '<strong>' + count + '</strong> more initiatives are taking shape in sealed vaults. ' +
-        'Not ready to speak yet. When a seal breaks, Vault Members hear first.';
+      caption.innerHTML = '<strong>' + count + '</strong> more initiatives are taking shape behind vault doors. ' +
+        'Not ready to speak yet. When a vault opens, Vault Members hear first.';
     }
     var tiles = [];
     for (var i = 0; i < count; i += 1) {
@@ -122,7 +122,7 @@
             '<circle cx="24" cy="24" r="11" fill="none" stroke="currentColor" stroke-width="1.2" />' +
             '<path d="M24 15 v10 M19 24 h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" />' +
           '</svg>' +
-          '<span class="forge-sealed-label">SEALED</span>' +
+          '<span class="forge-sealed-label">VAULTED</span>' +
         '</div>'
       );
     }
@@ -170,7 +170,7 @@
     var teasers = [
       { eyebrow: 'A new world is taking shape',  body: 'Another title is sharpening its edges in the forge. Silhouette only — for now.' },
       { eyebrow: 'The membership vault gets deeper', body: 'New recognitions, new rituals, new ways to leave a mark on the wall.' },
-      { eyebrow: 'A sealed vault breaks signal',  body: 'One of the deep-forge initiatives prepares to step into the light.' },
+      { eyebrow: 'A vault breaks signal',  body: 'One of the deep-forge initiatives prepares to step into the light.' },
     ];
     el.innerHTML = teasers.map(function (t) {
       return '<article class="forge-teaser">' +

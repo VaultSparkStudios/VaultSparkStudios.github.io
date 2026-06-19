@@ -8,16 +8,47 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ███▂▃
-Avgs - 3: 922.7 | 5: 946.2 | 10: 962 | 25: 962 | all: 961 (v3.0 /1000)
-  └ 3-session: Dev 92.3 | Align 94.7 | Momentum 94.3 | Engage 92.3 | Process 89.0
-Velocity trend: ↑ (S207: 9/9 audit items autonomous chain; S206: 13+2 items autonomous chain; S205: 15 items autonomous chain) | Protocol velocity: → | Debt: ↓ (prod-verify automation closes the 7-deep [VERIFY/P0] backlog; caught + fixed own --check drift trap)
-Momentum runway: PREMIUM ROADMAP (run /audit→/implement) — Core Web Vitals/perf · bespoke OG cards · finish-cohesion (graduate elite hero treatment site-wide) · Atlas v2 · publish forge devlog (founder) · real-device hero review (founder) · Obelisk session owns auth flow | Intent rate: 100% (last 5) | (S207 shipped: 9-item audit + agent+human hero redesign + Stripe TRIAL50 live + VAPID + Worker deploy + /atlas/ ecosystem map + Vault Lifecycle canonized [SEALED retired])
-Last session: 2026-06-18 | Session 207 | Total: 905/1000 (v3.0) | Velocity: 9 | protocolVelocity: 0
+Sparkline (last 5 totals): ███▂█
+Avgs - 3: 915.7 | 5: 933 | 10: 958 | 25: 960 | all: 960 (v3.0 /1000)
+  └ 3-session: Dev 92.0 | Align 94.0 | Momentum 92.7 | Engage 91.0 | Process 91.0
+Velocity trend: → (S208: 4 audit items + 2 self-validating gates + 1 bonus drift fix; S207: 9/9 audit items; S206: 13+2 items) | Protocol velocity: → | Debt: ↓ (killed a lingering perf phantom at its root; hardened a gate that had let a false closeout claim survive)
+Momentum runway: COHESION + HONESTY (run /audit→/implement) — broad hero-glow graduation to /games//membership//studio/ (mature-surface · real-device review) · shell-CSS version reconciliation (pre-existing) · publish forge devlog (founder) · sibling compliance drift via Ark · Atlas "moving this week" once a per-project activity source exists | Intent rate: 100% (last 5) | (S208 shipped: completed S207's falsely-claimed SEALED purge [89-page legend + components] + hardened the vocab gate + killed the perf-budget phantom + AVIF/WebP covers + Atlas OG + Atlas v2 thumbnails)
+Last session: 2026-06-19 | Session 208 | Total: 912/1000 (v3.0) | Velocity: 7 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-19 — Session 208 (/goal autonomous arc · finished S207's falsely-claimed SEALED purge + perf-honesty + cover optimization + Atlas v2 · build:check EXIT 0) | Total: 912/1000 (v3.0) | Velocity: 7 | Debt: ↓
+
+Dev Health 92 | Creative Alignment 95 | Momentum 90 | Engagement 90 | Process Quality 93 | Cross-Repo Coherence 92 | Security Posture 88 | Ecosystem Integration 88 | Capital Efficiency 91 | Automation Coverage 93
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 92 | ↑ | build:check EXIT 0, doctor blockingFailing 0, secret scan clean; every fix is a root-fix (legend at the propagator source, perf at the windowing logic, OG at the meta), not a surface patch. Caught + repaired a self-induced velaxis drift P0 before it shipped. |
+| Creative Alignment | 95 | ↑ | The whole arc serves the founder's "finish what was cut off" + the binding observability-honesty rule: it root-caused that the unfinished work was a FALSE closeout claim and made it true, while preserving the brand's "sealed" metaphor (no blunt find-replace). |
+| Momentum | 90 | ↓ | 4 audit items shipped + 2 self-validating gates + 1 bonus fix; intentionally fewer-but-deeper than S207's 9, with two honest deferrals (hero graduation, Atlas strip) recorded rather than force-shipped. |
+| Engagement | 90 | ↓ | Atlas v2 cover thumbnails + 93%-smaller covers raise visual quality; no net-new engagement surface (correct call — the session's value was honesty + craft, not more features). |
+| Process Quality | 93 | ↑ | Premise-verified every audit item against live code (rejected 1 already-done, deferred 2 with evidence); honest deferrals recorded as wins; the perf self-test ships a CONTROL case proving the fix is logic, not a data edit. |
+| Cross-Repo Coherence | 92 | ↑ | Identified the 3 doctor "failures" as portfolio-wide sibling drift (Syntha/VOID/SHADOW/VEILOS) and routed them to Ark — never touched a sibling tree to go green. |
+| Security Posture | 88 | → | scan-secrets clean; no auth/secret surface touched; gitignored local model override only. |
+| Ecosystem Integration | 88 | → | Sibling compliance drift left to Ark cargo; no direct cross-repo writes. |
+| Capital Efficiency | 91 | ↓ | Flat-rate Max Plan; covers got 93% smaller (real egress/CWV efficiency); no new spend. |
+| Automation Coverage | 93 | ↑ | Two new self-validating gates: the vocab gate now catches retired status vocab in the footer (would have caught the S207 lie), and the perf gate is now recency-aware (resolved incidents expire). |
+
+### Self-audit + brainstorm
+
+**What this session proves:** the most dangerous bug class isn't a broken feature — it's a *green gate over a false claim*. S207 said "SEALED purged sitewide," build:check was green, and the lie lived on 89 pages because the one gate that polices vocabulary deliberately skipped the footer where the violation lived. The fix wasn't just the purge — it was making the gate able to see the surface it claims to police. Same shape as the perf phantom: a "13s LCP" gate that was structurally incapable of distinguishing a resolved incident from a current regression. Both are observability-honesty failures, the binding non-negotiable.
+
+**Second-order candidates generated (2 shipped, rest seeded):**
+- ✅ SHIPPED — footer-aware retired-vocab gate (`scanFooter` patterns + non-false-positive self-test).
+- ✅ SHIPPED — recency-bounded perf-budget window (staleness horizon + control self-test).
+- SEEDED — an "OG-not-generic" guard (no non-home page may reference another page's bespoke og card); deferred only because build:check is at the cmd.exe length limit (7986 chars) — wants folding into an existing orchestrator, not a new `&&` segment.
+- SEEDED — a "closeout-claim verifier": parse a closeout's done-claims ("purged X sitewide") and assert each against a real gate before the commit lands. The deepest root cause; the highest-leverage future gate.
+
+### Committed to TASK_BOARD (1–2 items)
+1. **[HONESTY/P1]** Fold the OG-not-generic guard into an existing wired check (build-og-cards --check or check-proof-surface orchestrator) — build:check is at the cmd.exe length limit, so no new segment.
+2. **[COHESION/P2·FOUNDER-REVIEW]** Graduate the homepage hero glow treatment (blue/gold/orange chamber) to /games//membership//studio/ behind a flag, then founder real-device verify before defaulting (mature-surface rule).
 
 ## 2026-06-18 — Session 207 (/goal autonomous chain · 9/9 audit items shipped · build:check EXIT 0) | Total: 905/1000 (v3.0) | Velocity: 9 | Debt: ↓
 

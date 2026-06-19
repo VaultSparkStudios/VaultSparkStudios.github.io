@@ -57,9 +57,30 @@ const GROUPS = [
   { status: 'VAULTED', cls: 'is-vaulted', title: 'Vaulted', blurb: 'Paused — holding their charge until they respark.' },
 ];
 
+// D-S208 (Atlas v2): project id → bespoke cover key (assets/covers/<key>.{avif,webp,png}).
+// Mirrors build-hero-portfolio's COVERS map. Rows with a cover get a thumbnail; the
+// rest fall back to an accent-tinted initial tile so the column stays consistent.
+const COVERS = {
+  'call-of-doodie': 'doodie', 'football-gm': 'footballgm', 'vaultspark-football-gm': 'footballgm',
+  'gridiron-gm': 'gridiron', 'mindframe': 'mindframe', 'solara': 'solara',
+  'the-exodus': 'the-exodus', 'vaultfront': 'vaultfront',
+};
+
+// Cover delivery via image-set() + @supports + PNG fallback (D-S208) — AVIF ~93%
+// smaller than PNG, PNG kept for non-supporting browsers. One rule per covered row.
+function coverStyleRule(id, key) {
+  return `.atlas-row.ht-${id} .atlas-row__thumb{background-image:url(/assets/covers/${key}.png)}`
+    + `@supports (background-image:image-set(url(/assets/covers/${key}.avif) type("image/avif"))){`
+    + `.atlas-row.ht-${id} .atlas-row__thumb{background-image:image-set(`
+    + `url(/assets/covers/${key}.avif) type("image/avif"),`
+    + `url(/assets/covers/${key}.webp) type("image/webp"),`
+    + `url(/assets/covers/${key}.png) type("image/png"))}}`;
+}
+
 export function renderAtlas(catalog, fileExists) {
   const blocks = [];
   const ld = [];
+  const coverRules = [];
   let pos = 0;
   for (const g of GROUPS) {
     const items = catalog.filter((c) => c.status === g.status);
@@ -68,9 +89,21 @@ export function renderAtlas(catalog, fileExists) {
       const { href, external } = destination(item, fileExists);
       const isLive = !!(item.status === 'SPARKED' && liveHref(item));
       const accent = item.color || '#ffc400';
+      const coverKey = COVERS[item.id];
+      // D-S208: thumbnail — bespoke cover when one exists, else an accent-initial
+      // tile (decorative, aria-hidden; the row's accessible name is on the <a>).
+      let thumb;
+      if (coverKey) {
+        coverRules.push(coverStyleRule(esc(item.id), coverKey));
+        thumb = `<span class="atlas-row__thumb has-cover" aria-hidden="true"></span>`;
+      } else {
+        const initial = esc((item.name || '?').trim().charAt(0).toUpperCase());
+        thumb = `<span class="atlas-row__thumb no-cover" aria-hidden="true">${initial}</span>`;
+      }
       ld.push({ '@type': 'ListItem', position: ++pos, name: item.name, url: 'https://vaultsparkstudios.com' + (href.startsWith('http') ? '' : href) });
       return [
         `<a class="atlas-row ht-${esc(item.id)}" href="${esc(href)}"${external ? ' rel="noopener"' : ''} style="--row-accent:${esc(accent)}" data-track-event="atlas_row_click" aria-label="${esc(item.name)} — ${esc(item.category || item.type)}">`,
+        thumb,
         `<span class="atlas-row__main"><span class="atlas-row__top"><span class="atlas-row__name">${esc(item.name)}</span><span class="atlas-row__cat">${esc(item.category || item.type)}</span></span>`,
         `<span class="atlas-row__note">${esc(item.note || '')}</span></span>`,
         `<span class="atlas-row__go" aria-hidden="true">${goLabel(item, isLive)}</span>`,
@@ -86,7 +119,8 @@ export function renderAtlas(catalog, fileExists) {
     );
   }
   const json = JSON.stringify({ '@context': 'https://schema.org', '@type': 'ItemList', name: 'VaultSpark Studios ecosystem', itemListElement: ld });
-  return blocks.join('') + `<script type="application/ld+json" data-atlas-ld>${json}</script>`;
+  const coverStyle = coverRules.length ? `<style data-atlas-covers>${coverRules.join('')}</style>` : '';
+  return coverStyle + blocks.join('') + `<script type="application/ld+json" data-atlas-ld>${json}</script>`;
 }
 
 function inject(html, content) {

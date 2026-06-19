@@ -89,19 +89,37 @@ export async function renderCoverPng(spec) {
   return sharp(Buffer.from(renderCoverSvg(spec))).png({ compressionLevel: 9 }).toBuffer();
 }
 
+// D-S208: modern-format siblings. Covers are CSS background-images delivered via
+// image-set() with a PNG fallback (progressive enhancement, @supports-guarded), so
+// emitting AVIF + WebP next to each PNG cuts the cover payload ~60-75% on the
+// homepage hero and games grid with zero markup risk — non-supporting browsers
+// keep the PNG. sharp@0.34.5 (trusted devDep) rasterizes all three from one SVG.
+export async function renderCoverWebp(spec) {
+  return sharp(Buffer.from(renderCoverSvg(spec))).webp({ quality: 78, effort: 5 }).toBuffer();
+}
+export async function renderCoverAvif(spec) {
+  return sharp(Buffer.from(renderCoverSvg(spec))).avif({ quality: 52, effort: 5 }).toBuffer();
+}
+
 async function run({ check } = {}) {
   if (!check && !existsSync(OUT_DIR)) mkdirSync(OUT_DIR, { recursive: true });
-  let n = 0;
+  let n = 0, bytesPng = 0, bytesModern = 0;
   for (const spec of COVERS) {
     const rel = `assets/covers/${spec.cls}.png`;
-    if (check) { console.log(`  • would render ${rel} (${spec.title})`); n++; continue; }
-    const png = await renderCoverPng(spec);
+    if (check) { console.log(`  • would render ${rel} (+.webp +.avif) (${spec.title})`); n++; continue; }
+    const [png, webp, avif] = await Promise.all([
+      renderCoverPng(spec), renderCoverWebp(spec), renderCoverAvif(spec),
+    ]);
     writeFileSync(join(ROOT, rel), png);
+    writeFileSync(join(ROOT, `assets/covers/${spec.cls}.webp`), webp);
+    writeFileSync(join(ROOT, `assets/covers/${spec.cls}.avif`), avif);
+    bytesPng += png.length; bytesModern += avif.length;
     n++;
   }
+  const saved = bytesPng > 0 ? Math.round((1 - bytesModern / bytesPng) * 100) : 0;
   console.log(check
-    ? `build-game-covers --check: ${n} cover(s) would render`
-    : `✓ build-game-covers: ${n} cover tile(s) rendered → assets/covers/`);
+    ? `build-game-covers --check: ${n} cover(s) would render (png+webp+avif)`
+    : `✓ build-game-covers: ${n} cover tile(s) rendered → assets/covers/ (png+webp+avif · AVIF ~${saved}% smaller than PNG)`);
 }
 
 async function selfTest() {

@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-18 (Session 207 closeout) -->
+<!-- generated-at: 2026-06-19 (Session 208 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 207 closeout · 2026-06-18.
+> **Fast-boot brief** — generated at Session 208 closeout · 2026-06-19.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 208 · 2026-06-18 · FOUNDER MODE                         ║
+║  Session 209 · 2026-06-19 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,18 +35,18 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    905/1000   █████████████████████░░░   91%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 9↑                          ║
-║    Last active: 20621d  ·  Last closeout: 0d  ·  (active = newe  ║
-║    Trend  ▄▂▄█▇  ↑  (last 5 sessions)                            ║
+║    912/1000   █████████████████████░░░   91%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 7→                          ║
+║    Last active: 20622d  ·  Last closeout: 0d  ·  (active = newe  ║
+║    Trend  ▂▄█▇▆  →  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        90    █████████░  █▇████▇▇ ↓                ║
-║    Alignment         93    █████████░  ██████▇█ →                ║
-║    Momentum          94    █████████░  ███▇████ →                ║
-║    Engagement        91    █████████░  ██████▇▇ →                ║
-║    Process Qual      88    █████████░  ██████▇▇ →                ║
+║    Dev Health        92    █████████░  ▇████▇▇▇ →                ║
+║    Alignment         95    ██████████  █████▇██ →                ║
+║    Momentum          90    █████████░  ██▇████▇ ↓                ║
+║    Engagement        90    █████████░  █████▇▇▇ →                ║
+║    Process Qual      93    █████████░  █████▇▇█ ↑                ║
 ║    Coherence         88    █████████░  ········ →                ║
 ║    Security          87    █████████░  ········ →                ║
 ║    Ecosystem         89    █████████░  ········ →                ║
@@ -55,26 +55,26 @@
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 207 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 208 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,885 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
-║     ~1,443 tok/turn  ·  cache 50%  ·  125 turns to compact       ║
-║     Verdict: CONTINUE                                            ║
+║  ✓  ███████████████░░░░░░░░░   63% used                          ║
+║     124,915 / 200,000 tok  ·  unknown/default  ·  heuristic      ║
+║     ~62,458 tok/turn  ·  cache 50%  ·  0 turns to compact        ║
+║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-15)                   ║
-║  ✓  Velocity      9 ↑  ·  Debt: ↓                                ║
-║  ✓  Runway        PREMIUM ROADMAP (run /audit→/implement) — Cor  ║
+║  ✓  Velocity      7 →  ·  Debt: ↓                                ║
+║  ✓  Runway        COHESION + HONESTY (run /audit→/implement) —   ║
 ║  ⛔  Context age   ?d                                             ║
-║  ✓  IGNIS         41975 FORGE  ·  6d old                         ║
+║  ⚠  IGNIS         41975 FORGE  ·  7d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
-║  ⛔  Compliance   31/35 (89%) ↓ ███████▆                          ║
+║  ⛔  Compliance   31/35 (89%) → ██████▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.210  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -82,14 +82,14 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ⛔  Doctor        9/13 (69%)  ·  3 failing                       ║
+║  ⛔  Doctor        8/13 (62%)  ·  3 failing                       ║
 ║  ✓  Cost          no ledger data                                 ║
 ║  ⚠  Dead CTAs     1 dead (≥5 shown, 0 clicks)                    ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    15d · [S164→MOBILE-SHEET-DEFAULT-SWAP]                        ║
+║    16d · [S164→MOBILE-SHEET-DEFAULT-SWAP]                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -101,31 +101,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▂▄█▇  9↑  (last 5 sessions)                        ║
+║  Velocity:   ▂▄█▇▆  7→  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  885/1000  (↓20 vs current 905)                      ║
-║  At-risk:    Process Quality Δ-3 · Security Δ-3                  ║
+║  Projected:  896/1000  (↓16 vs current 912)                      ║
+║  At-risk:    Security Δ-3                                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [PRODUCT]      Core Web Vitals pass. The ✗ / (field) perf  ║
-║        Core Web Vitals pass. The ✗ / (field) perf-budget adviso  ║
-║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Graduate the elite hero treatment (gradien  ║
-║        Graduate the elite hero treatment (gradient-glass, accen  ║
+║   90  [PRODUCT]      Closeout-claim verifier (stretch). Parse a  ║
+║        Closeout-claim verifier (stretch). Parse a closeout's "p  ║
 ║                                                                  ║
-║   87  [PRODUCT]      Atlas v2. Hero visual + per-project cover   ║
-║        Atlas v2. Hero visual + per-project cover thumbnails + a  ║
+║   87  [BRAND]        Publish the forge devlog (journal/_drafts/  ║
+║        Publish the forge devlog (journal/_drafts/forge-week-202  ║
 ║                                                                  ║
 ║   86  [BRAND]        Forge Window naming propagation             ║
 ║        The URL stays stable for search, but the public vocabula  ║
+║                                                                  ║
+║   84  [PRODUCT]      OG-not-generic guard. Assert no non-home p  ║
+║        OG-not-generic guard. Assert no non-home page references  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -133,5 +133,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 207 closeout · 2026-06-18*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 208 closeout · 2026-06-19*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

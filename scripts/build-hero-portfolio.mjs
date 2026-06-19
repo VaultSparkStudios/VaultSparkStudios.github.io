@@ -146,11 +146,25 @@ function renderTile(item, fileExists, featured) {
   return `<a class="${cls}" href="${esc(primary)}"${ext(primary)} data-track-event="home_hero_tile_click" aria-label="${esc(item.name)} — ${esc(badge)}">${inner.join('')}</a>`;
 }
 
+// D-S208: cover delivery uses image-set() with a PNG base + @supports guard, so
+// browsers that grok image-set()+type() pull the AVIF (~93% smaller) or WebP, and
+// everything else keeps the original PNG. Pure progressive enhancement — no markup
+// change, no regression risk on the (mature, S207-redesigned) hero surface.
+function coverRule(id, key) {
+  const base = `.ht-${id} .hero-tile__cover{background-image:url(/assets/covers/${key}.png)}`;
+  const modern = `@supports (background-image:image-set(url(/assets/covers/${key}.avif) type("image/avif"))){`
+    + `.ht-${id} .hero-tile__cover{background-image:image-set(`
+    + `url(/assets/covers/${key}.avif) type("image/avif"),`
+    + `url(/assets/covers/${key}.webp) type("image/webp"),`
+    + `url(/assets/covers/${key}.png) type("image/png"))}}`;
+  return base + modern;
+}
+
 function renderTileStyles(tiles) {
   const rules = tiles.map((t) => {
     const accent = t.color || '#ffc400';
     const coverKey = COVERS[t.id];
-    const cover = coverKey ? `.ht-${t.id} .hero-tile__cover{background-image:url(/assets/covers/${coverKey}.png)}` : '';
+    const cover = coverKey ? coverRule(t.id, coverKey) : '';
     return `.ht-${t.id}{--tile-accent:${accent}}${cover}`;
   });
   return `<style data-hero-portfolio-style>${rules.join('')}</style>`;

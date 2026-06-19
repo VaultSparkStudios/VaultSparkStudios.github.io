@@ -126,6 +126,21 @@ const PROFILE_BUDGET = {
 const DEFAULT_BUDGET = { lcp: 3000, cls: 0.1 };
 const WINDOW = 3;
 
+// D-S208: staleness horizon. The rolling window must reflect *current* performance,
+// not a resolved incident from weeks ago. Before S208 the window took the newest 3
+// samples regardless of age, so two 2026-05-24 S161 LCP-incident traces (13060ms +
+// 14528ms, sha b5c422d1) kept dragging the `/` desktop median to 13060ms — even
+// though the post-fix 2026-06-03 trace is 676ms and real field RUM p75 is 976ms.
+// A sample older than this horizon (relative to now) is excluded from the window;
+// the data is NOT deleted — it just stops voting in a "is the site fast *now*" gate.
+// Tunable via --stale-days=N. Set 0 to disable (legacy newest-N behaviour).
+const STALE_DAYS = (() => {
+  const a = args.find((x) => x.startsWith('--stale-days='));
+  const n = a ? Number(a.split('=')[1]) : 21;
+  return Number.isFinite(n) && n >= 0 ? n : 21;
+})();
+const DAY_MS = 86400000;
+
 function median(nums) {
   const sorted = [...nums].sort((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
@@ -140,7 +155,7 @@ function loadHistory(text) {
     .filter(Boolean);
 }
 
-function evaluate(rows) {
+function evaluate(rows, nowMs = Date.now()) {
   // Group by route × profile, take latest WINDOW samples (newest first by ts).
   const groups = new Map();
   for (const r of rows) {
@@ -150,12 +165,20 @@ function evaluate(rows) {
     groups.get(key).push(r);
   }
   const results = [];
+  const horizonMs = STALE_DAYS > 0 ? STALE_DAYS * DAY_MS : Infinity;
   for (const [key, samples] of groups) {
     samples.sort((a, b) => (b.ts || '').localeCompare(a.ts || ''));
-    const window = samples.slice(0, WINDOW);
+    // D-S208: drop samples older than the staleness horizon so a resolved incident
+    // can't keep dragging the median. Samples without a parseable ts are kept
+    // (can't age them out — conservative).
+    const fresh = samples.filter((s) => {
+      const t = Date.parse(s.ts || '');
+      return !Number.isFinite(t) || (nowMs - t) <= horizonMs;
+    });
+    const window = fresh.slice(0, WINDOW);
     const [route, profile] = key.split('|');
     if (window.length < WINDOW) {
-      results.push({ route, profile, status: 'insufficient', count: window.length });
+      results.push({ route, profile, status: 'insufficient', count: window.length, stale: samples.length - fresh.length });
       continue;
     }
     const lcps = window.map(s => Number(s.lcp)).filter(n => Number.isFinite(n));
@@ -327,10 +350,39 @@ if (SELF_TEST) {
       ],
       expectStatus: 'ok',
     },
+    {
+      // D-S208: the exact phantom — 1 fresh fast sample + 2 stale incident traces.
+      // Without the horizon the median is 13060ms (over-budget); with it, the stale
+      // pair expires and only the fresh sample remains → insufficient (advisory).
+      name: 'D-S208: stale incident samples expire out of the window → insufficient',
+      now: '2026-06-19T00:00Z',
+      rows: [
+        { ts: '2026-06-03T22:55Z', route: '/', profile: 'desktop', lcp: 676, cls: 0.002 },
+        { ts: '2026-05-24T12:51Z', route: '/', profile: 'desktop', lcp: 14528, cls: 0.002 },
+        { ts: '2026-05-24T12:09Z', route: '/', profile: 'desktop', lcp: 13060, cls: 0.0337 },
+      ],
+      expectStatus: 'insufficient',
+    },
+    {
+      // Control: without the staleness horizon (--stale-days=0 semantics, simulated
+      // by a `now` close to the samples) the same rows DO go over-budget — proving
+      // the horizon is what changed the verdict, not a data edit.
+      name: 'D-S208 control: same rows, now-near-samples → over-budget (median 13060)',
+      now: '2026-06-04T00:00Z',
+      rows: [
+        { ts: '2026-06-03T22:55Z', route: '/', profile: 'desktop', lcp: 676, cls: 0.002 },
+        { ts: '2026-05-24T12:51Z', route: '/', profile: 'desktop', lcp: 14528, cls: 0.002 },
+        { ts: '2026-05-24T12:09Z', route: '/', profile: 'desktop', lcp: 13060, cls: 0.0337 },
+      ],
+      expectStatus: 'over-budget',
+    },
   ];
+  // Default anchor keeps the legacy 2026-05-22 fixtures inside the horizon; cases
+  // may override with their own `now` to exercise the staleness boundary.
+  const DEFAULT_NOW = Date.parse('2026-05-22T11:00Z');
   let pass = 0, fail = 0;
   for (const c of cases) {
-    const results = evaluate(c.rows);
+    const results = evaluate(c.rows, c.now ? Date.parse(c.now) : DEFAULT_NOW);
     const got = results[0]?.status;
     const ok = got === c.expectStatus;
     console.log(`  ${ok ? '✓' : '✗'} ${c.name} (expect ${c.expectStatus}, got ${got})`);

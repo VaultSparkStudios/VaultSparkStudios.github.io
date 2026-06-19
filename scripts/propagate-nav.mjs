@@ -241,10 +241,9 @@ function buildFooter(assetPrefix) {
         <a class="footer-socials-all" href="/social/">All channels &rarr;</a>
       </div>
       <div class="vault-status-legend">
-        <span class="legend-status-sparked">🔥 SPARKED — Live</span>
+        <span class="legend-status-sparked">🔥 SPARKED — Live &amp; improving</span>
         <span class="legend-status-forge">⚒️ FORGE — Building</span>
-        <span class="legend-status-vaulted">🔒 VAULTED — Paused</span>
-        <span class="legend-status-sealed">⬡ SEALED — Vault sealed</span>
+        <span class="legend-status-vaulted">🔒 VAULTED — Paused or archived</span>
         <span class="legend-status-meta">27 initiatives under the vault banner · <a href="/studio-pulse/">open Studio Pulse &rarr;</a></span>
       </div>
       <div class="footer-bottom">

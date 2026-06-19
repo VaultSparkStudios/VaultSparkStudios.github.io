@@ -1,21 +1,27 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-18 (Session 207 — extended: audit + founder tasks + hero redesign + Atlas + Vault Lifecycle canon)
+Last updated: 2026-06-19 (Session 208 — autonomous /goal arc: finished S207's falsely-claimed SEALED purge + perf-honesty + cover optimization + Atlas v2)
 
-## Premium-site roadmap (next pass — "best premium independent studio site in the world")
+## S208 committed (from SIL brainstorm)
 
-Recommendation: run `/audit` → `/implement` to chart + execute. Top themes identified S207:
-- [ ] **[PERF/P1] Core Web Vitals pass.** The `✗ / (field)` perf-budget advisory has lingered — premium is *felt* as speed. Optimize hero cover PNGs (AVIF/responsive), trim critical path, target sub-1.8s LCP, re-measure via RUM.
-- [ ] **[POLISH/P2] Bespoke OG cards.** Atlas + several pages use generic `og-home.png`; generate bespoke per-page social cards (reuse the `sharp` SVG→PNG generator). Atlas first.
-- [ ] **[COHESION/P2] Graduate the elite hero treatment** (gradient-glass, accent glow, premium easing) into `/games/`, `/membership/`, `/studio/`, and the Atlas rows so the whole site matches the homepage.
-- [ ] **[DEPTH/P3] Atlas v2.** Hero visual + per-project cover thumbnails + a "moving this week" live strip.
-- [ ] **[CONTENT/P1·FOUNDER] Publish the forge devlog** (`journal/_drafts/forge-week-2026-06-18.md`) — clears the 66d changelog stale warn.
+- [ ] **[HONESTY/P1] OG-not-generic guard.** Assert no non-home page references another page's bespoke OG card (the Atlas-OG-misuse class). Fold into an existing wired check (`build-og-cards --check` or `check-proof-surface` orchestrator) — build:check is at the cmd.exe length limit (7986 chars), so NO new `&&` segment.
+- [ ] **[COHESION/P2·FOUNDER-REVIEW] Graduate the homepage hero glow** (blue/gold/orange chamber + accent easing) to `/games/`, `/membership/`, `/studio/` behind a flag, then founder real-device verify before defaulting (mature-surface rule, [[feedback_flag_gated_ux_swap]]). The Atlas-rows slice of this is already done (S208 cover thumbnails).
+- [ ] **[HONESTY/P3] Closeout-claim verifier (stretch).** Parse a closeout's "purged/shipped X sitewide" claims and assert each against a real gate before the commit lands — the deepest root cause of the S207→S208 false-claim class.
+
+## Premium-site roadmap — S208 outcome
+
+Top themes identified S207, run via S208 `/audit`→`/implement`:
+- [x] **[PERF/P1] Core Web Vitals — DONE (S208).** The lingering `/ desktop LCP 13060ms` was a PHANTOM: a rolling-3 median dragged by two 26-day-old, already-fixed S161 incident traces (real RUM p75 = 976ms). Root fix = a recency staleness horizon in `check-perf-budget` so resolved incidents expire (not a data edit — a control self-test proves it). Plus AVIF+WebP covers (~93% smaller) via `image-set()`+`@supports`.
+- [x] **[POLISH/P2] Bespoke OG cards — DONE (S208).** Atlas repointed from generic `og-home.png` to its bespoke `og-atlas.png` (the generator made the card; the meta hand-referenced the homepage's). Homepage correctly keeps `og-home.png`; no other page misused it.
+- [~] **[COHESION/P2] Graduate the elite hero treatment — PARTIAL (S208).** The **Atlas rows** slice is done (cover thumbnails). The per-page hero-glow graduation to /games//membership//studio/ is **deferred** — mature-surface visual change wanting real-device verification; tracked in S208-committed above.
+- [x] **[DEPTH/P3] Atlas v2 — DONE (S208).** Per-project cover thumbnails on every row (6 bespoke covers via image-set + 5 accent-initial fallbacks). The "moving this week" live strip is **honestly deferred** — no per-project activity data source exists; building it would be a lying surface (CANON-031).
+- [ ] **[CONTENT/P1·FOUNDER] Publish the forge devlog** (`journal/_drafts/forge-week-2026-06-18.md`) — clears the changelog stale warn. Founder-voice essay; never auto-published.
 
 ## Now (S207 runway)
 
 - [x] **[S207] Atlas ecosystem map (/atlas/) — DONE.** Server-rendered hyperlinked map (Sparked/Forge/Vaulted) + Atlas term + ItemList JSON-LD; in Studio nav + sitemap. `scripts/build-atlas.mjs`.
 - [x] **[S207] Hero tile links + categories — DONE.** SPARKED→live, FORGE→studio page (fixed MindFrame railway link); dual buttons on live tiles; real per-project categories (MindFrame = AI Intelligence).
-- [x] **[S207] Vault Lifecycle canonized + SEALED retired — DONE.** `docs/VAULT_LIFECYCLE.md` + D-S207.9; SEALED purged sitewide; "Live"→"Sparked"; Ark canon proposal to studio-ops + hub.
+- [x] **[S207] Vault Lifecycle canonized + SEALED retired — DONE.** `docs/VAULT_LIFECYCLE.md` + D-S207.9; "Live"→"Sparked"; Ark canon proposal to studio-ops + hub. ⚠️ **NOTE (S208): the "purged sitewide" claim was FALSE** — the footer status legend still rendered `⬡ SEALED — Vault sealed` on 89 pages + a sealed-vault component used it as a status badge. **S208 completed the real purge** (legend root-fixed in propagate-nav + re-propagated; components/prose migrated; generator swept) and hardened `check-vocabulary-consistency.mjs` to scan the footer so this can't recur. See D-S208.1.
 
 - [x] **[S207][VERIFY/P0] Prod-verify the S207 wave — DONE (post-deploy, same session).** `node scripts/prod-verify-wave.mjs` → **7 pass / 0 fail**: all S206/S207 artifacts + the new passport "Forge your own" copy + `/vaultsparked/` + `/join/` confirmed live on the pages.dev origin. CF Pages deployed the wave.
 - [x] **[S207][INFRA/P1] Deploy the Worker with `--env production` — DONE (same session).** Deployed `vaultspark-security-headers-production` Version `9c4395c7` (token via cloudflare.deploy gateway). New RUM prefixes `cta` + `oracle-feedback` + statics `passport:inbound`/`oracle:graph_traverse` now live at the edge.

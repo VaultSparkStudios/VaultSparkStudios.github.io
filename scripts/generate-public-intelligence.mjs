@@ -32,7 +32,7 @@ const CATALOG_NOTES = {
   'vaultspark-football-gm': 'Live beta. Deep football GM with analytics — polish rounds still in motion.',
   'football-gm': 'Live beta. Deep football GM with analytics — polish rounds still in motion.',
   'solara': 'Desert survival world. Systems converging.',
-  'vaultspark-forge': 'Crafting-and-building world in early concept. Sealed silhouette for now.',
+  'vaultspark-forge': 'Crafting-and-building world in early concept. Vaulted silhouette for now.',
   'the-exodus': 'Narrative survival — a dying world, a hard decision. Direction locked, scope expanding.',
   'voidfall': 'Nine-book cosmic-horror saga. Book 1 at lock. Not a game — a world.',
   'promogrind': 'Live utility. Vault-gated promo engine, iterating on UX.',
@@ -574,7 +574,7 @@ function buildActivityHeatmap(catalog) {
     .sort((a, b) => b.heat - a.heat);
 
   if (sealedCount > 0) {
-    result.push({ projectId: HEATMAP_SEALED_BUCKET, name: 'Sealed-vault projects', type: 'sealed', heat: sealedCount });
+    result.push({ projectId: HEATMAP_SEALED_BUCKET, name: 'Vaulted projects', type: 'sealed', heat: sealedCount });
   }
   return result;
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-18T23:26:51.924Z",
+  "generatedAt": "2026-06-19T01:35:29.626Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,18 +22,11 @@
     }
   },
   "pulse": {
-    "currentSession": 207,
-    "lastUpdated": "2026-06-18",
-    "currentFocus": "S207 shipped 9/9 (fixed three non-converting S206 features + prod-wave verification automation + dead-CTA self-heal + Oracle feedback loop + IGNIS graph traversal), then — founder-authorized — executed the founder-only carries: deployed the Worker to prod (wave verified 7/7), created the LIVE Stripe TRIAL50 coupon (50%-off trial now real end-to-end), provisioned the VAPID push credential, and graduated hero v2 to the homepage default (completing the S204 premium visual overhaul; ?hero=classic kill-switch).",
-    "nextMilestone": "Founder: publish the forge devlog draft (your voice) + eyeball graduated hero v2 on a real device (?hero=classic reverts). Engineering (unblocked): build the web-push feature on the now-provisioned VAPID credential. studio-ops: commit the cloudflare.vapid CAPABILITY_MAP entry. Measurement-watch the retimed play-next CTA.",
+    "currentSession": 208,
+    "lastUpdated": "2026-06-19",
+    "currentFocus": "S208 (autonomous /goal arc) finished the work S207's closeout falsely claimed done: S207 said 'SEALED retired + purged sitewide' but the footer status legend still rendered '⬡ SEALED — Vault sealed' on 89 pages + a whole sealed-vault component used it as a status badge. Completed the real SEALED→VAULTED purge (legend root-fixed in propagate-nav + re-propagated to 90 pages, sealed-vault-row + studio-pulse-live badges/captions migrated, generator + prose swept) and HARDENED the vocabulary gate so it scans the footer for retired status vocab (it stripped the footer before — that's why the lie went undetected). Also: killed the perf-budget PHANTOM (the lingering '/ desktop LCP 13060ms' advisory was a rolling-3 median dragged by two 26-day-old, already-fixed S161 incident traces; added a staleness horizon so resolved-incident samples expire — real RUM p75 is 976ms); shipped AVIF+WebP covers (~93% smaller) via image-set()+@supports on hero + games; repointed Atlas OG to its bespoke card; Atlas v2 cover thumbnails. build:check EXIT 0, doctor blockingFailing 0.",
+    "nextMilestone": "Founder: publish the forge devlog draft (your voice) + real-device review of the graduated hero + (optional) the broad hero-glow graduation to /games//membership//studio/ (deferred this session — mature-surface, wants visual verification). Engineering (unblocked): broader shell-CSS version reconciliation (some propagator-skipped pages still reference stale style.shell-*.css hashes). studio-ops: sibling compliance drift (Syntha/VOID/SHADOW/MindFrame v3.3 + TRUTH_AUDIT headers) + VEILOS launch blocker — ship via Ark, never direct sibling edits.",
     "blockers": [
-      {
-        "id": "vapid-keys",
-        "label": "WEB-PUSH VAPID KEYS — FOUNDER ACTION REQUIRED",
-        "detail": "cloudflare.vapid capability MISSING. Scaffold scripts/push-dispatch.mjs ready. Founder: (1) npx web-push generate-vapid-keys (2) store in secrets/cloudflare.vapid.env (3) add VAPID_PUBLIC_KEY to Worker env (4) node scripts/push-dispatch.mjs --test.",
-        "since": "2026-06-18",
-        "addedSession": 205
-      },
       {
         "id": "staging-box-hcloud",
         "label": "STAGING BOX RECOVERY — HUMAN ACTION REQUIRED",
@@ -44,13 +37,14 @@
     ],
     "queues": {
       "now": [
+        "[S207] Atlas ecosystem map (/atlas/) — DONE. Server-rendered hyperlinked map (Sparked/Forge/Vaulted) + Atlas term + ItemList JSON-LD; in Studio nav + sitemap. `scripts/build-atlas.mjs`.",
+        "[S207] Hero tile links + categories — DONE. SPARKED→live, FORGE→studio page (fixed MindFrame railway link); dual buttons on live tiles; real per-project categories (MindFrame = AI Intelligence).",
+        "[S207] Vault Lifecycle canonized + SEALED retired — DONE. `docs/VAULT_LIFECYCLE.md` + D-S207.9; \"Live\"→\"Sparked\"; Ark canon proposal to studio-ops + hub. ⚠️ NOTE (S208): the \"purged sitewide\" claim was FALSE — the footer status legend still rendered `⬡ SEALED — Vault sealed` on 89 pages + a sealed-vault component used it as a status badge. S208 completed the real purge (legend root-fixed in propagate-nav + re-propagated; components/prose migrated; generator swept) and hardened `check-vocabulary-consistency.mjs` to scan the footer so this can't recur. See D-S208.1.",
         "[S207][VERIFY/P0] Prod-verify the S207 wave — DONE (post-deploy, same session). `node scripts/prod-verify-wave.mjs` → 7 pass / 0 fail: all S206/S207 artifacts + the new passport \"Forge your own\" copy + `/vaultsparked/` + `/join/` confirmed live on the pages.dev origin. CF Pages deployed the wave.",
         "[S207][INFRA/P1] Deploy the Worker with `--env production` — DONE (same session). Deployed `vaultspark-security-headers-production` Version `9c4395c7` (token via cloudflare.deploy gateway). New RUM prefixes `cta` + `oracle-feedback` + statics `passport:inbound`/`oracle:graph_traverse` now live at the edge.",
         "[S207][MEASURE/P2] Watch retimed play-next + auto-rotation. Once post-S207 visits accrue, check `api/dead-ctas.json`: if `play-next` is STILL dead, run `node scripts/build-cta-state.mjs --advance` to rotate to copy variant 1. If it converts, the retiming win is confirmed. Measurement-watch.",
         "[S207][PRODUCT/P1] Stripe TRIAL50 coupon — DONE (agent, founder-authorized). Created on the LIVE account: coupon `vMXTeDFL` (50% off · duration=once = first month) + active promotion_code `TRIAL50` (`promo_1TjkTpGMN60PfJYs9KQQR8p2`). `create-checkout`'s `promotionCodes.list({code:'TRIAL50',active:true})` resolves it → 50%-off trial is real end-to-end. (Account's pinned Stripe API version was old — raw `promotion_codes` create needed `Stripe-Version: 2024-06-20`.) REVERT: deactivate the promo code in the Stripe dashboard.",
-        "[S207][INFRA/P2] WEB-PUSH VAPID credential — PROVISIONED (agent, founder-authorized). Generated a P-256 keypair via `node:crypto` (no `web-push` install — that package is package-trust BLOCK on `@latest`), stored in `vaultspark-studio-ops/secrets/cloudflare.vapid.env` (gitignored), registered the `cloudflare.vapid` capability in studio-ops `CAPABILITY_MAP.json` → `check-secrets --for cloudflare.vapid` = READY. Fixed a real bug in `push-dispatch.mjs` (`await getSecret().catch()` on a sync value faked MISSING). Remaining engineering (NOT founder-gated): install a pinned `web-push`, wire the Worker push endpoint + client subscribe UI, then `push-dispatch --test`. Studio-ops follow-up: commit the `CAPABILITY_MAP.json` `cloudflare.vapid` entry (left in their working tree per the cross-repo commit boundary).",
-        "[S204→S207][UX/P1] HERO V2 GRADUATED — DONE (founder-authorized, the visual overhaul's final piece). Made the distilled hero (single centered glow + faster wordmark + earlier CTAs) the default in `index.html`; kill-switch `?hero=classic` / `localStorage('heroClassic')='1'` restores the original 3-glow hero. build:check EXIT 0. Founder veto path: if v2 reads wrong on your device, append `?hero=classic` and tell me to revert the default (one-line).",
-        "[S206][CONTENT/P1·FOUNDER] Publish forge devlog — DRAFT COMPLETE. `journal/_drafts/forge-week-2026-06-18.md` is publish-ready (factual paragraph filled in). Intentionally NOT auto-published: it's a founder-voice essay (the draft tool never auto-publishes by design). Founder: edit the lead paragraph into your own voice + publish to `journal/` to clear the 66d changelog warn."
+        "[S207][INFRA/P2] WEB-PUSH VAPID credential — PROVISIONED (agent, founder-authorized). Generated a P-256 keypair via `node:crypto` (no `web-push` install — that package is package-trust BLOCK on `@latest`), stored in `vaultspark-studio-ops/secrets/cloudflare.vapid.env` (gitignored), registered the `cloudflare.vapid` capability in studio-ops `CAPABILITY_MAP.json` → `check-secrets --for cloudflare.vapid` = READY. Fixed a real bug in `push-dispatch.mjs` (`await getSecret().catch()` on a sync value faked MISSING). Remaining engineering (NOT founder-gated): install a pinned `web-push`, wire the Worker push endpoint + client subscribe UI, then `push-dispatch --test`. Studio-ops follow-up: commit the `CAPABILITY_MAP.json` `cloudflare.vapid` entry (left in their working tree per the cross-repo commit boundary)."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
