@@ -298,7 +298,8 @@
     }
 
     document.getElementById('mobileToggle')?.addEventListener('click', () => {
-      document.getElementById('mobileMenu')?.classList.toggle('open');
+      const open = document.getElementById('mobileMenu')?.classList.toggle('open') ?? false;
+      document.body.style.overflow = open ? 'hidden' : '';
     });
     });
   </script>
