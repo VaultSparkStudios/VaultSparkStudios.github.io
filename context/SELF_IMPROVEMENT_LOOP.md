@@ -8,16 +8,48 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▆▇▇▆
-Avgs - 3: 906.0 | 5: ~920 | 10: ~945 | 25: 955 | all: 958 (v3.0 /1000)
-  └ 3-session: Dev 91.7 | Align 93.3 | Momentum 89.3 | Engage 89.7 | Process 92.7
-Velocity trend: ↓ (S209: 2 deep root-fix items + 1 control self-test; S208: 4 items + 2 gates + 1 bonus; S207: 9/9) | Protocol velocity: → | Debt: ↓ (removed the recurring dead-CTA false-signal class at its measurement root)
-Momentum runway: HONESTY + COHESION (run /audit→/implement) — fold the OG-not-generic guard into an existing check (build:check at cmd.exe length limit) · derive nav Projects/Games dropdowns once the catalog∪extra-paged merge is designed · re-evaluate play-next rotation once post-2026-06-18 impressions accrue · broad hero-glow graduation (mature-surface · real-device review) · publish forge devlog (founder) · sibling compliance drift via Ark | Intent rate: 100% (last 5) | (S209 shipped: dead-CTA recency epoch root-fix + control self-test + citation sync; resolved the S207 play-next measure-watch; resynced PROJECT_STATUS SIL fields)
-Last session: 2026-06-19 | Session 209 | Total: 901/1000 (v3.0) | Velocity: 2 | protocolVelocity: 0
+Sparkline (last 5 totals): ▇▆▇▇▇
+Avgs - 3: 908.7 | 5: ~912 | 10: ~940 | 25: 954 | all: 958 (v3.0 /1000)
+  └ 3-session: Dev 92.3 | Align 91.0 | Momentum 88.7 | Engage 91.3 | Process 93.0
+Velocity trend: ↑ (S210: 6 items + 1 honest deferral; S209: 2 deep root-fix items; S208: 4 items + 2 gates) | Protocol velocity: → | Debt: → (nav-catalog sync closes the nav-list-hardcoding class; OG uniqueness gate closes generic-fallback class)
+Momentum runway: ENGAGEMENT + INFRA — web-push feature (VAPID READY, ship the endpoint) · re-evaluate play-next rotation post-2026-06-18 · broad hero-glow graduation (mature-surface · real-device review) · publish forge devlog (founder) · sibling compliance drift via Ark | Intent rate: 100% (last 5) | (S210 shipped: IGNIS contextual chips + loading animation + offline fallback + returning-visitor strip + OG uniqueness gate + build-SHA beacon + nav-catalog derivation; deferred: web-push #7 VAPID READY)
+Last session: 2026-06-19 | Session 210 | Total: 913/1000 (v3.0) | Velocity: 6 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-19 — Session 210 (/goal autonomous arc · IGNIS UX depth + returning-visitor strip + OG uniqueness + build-SHA beacon + nav-catalog derivation · build:check EXIT 0) | Total: 913/1000 (v3.0) | Velocity: 6 | Debt: →
+Avgs — 3: 908.7 | 5: ~912 | 10: ~940 | 25: 954 | all: 958
+
+Dev Health 93 | Creative Alignment 91 | Momentum 90 | Engagement 93 | Process Quality 93 | Cross-Repo Coherence 90 | Security Posture 88 | Ecosystem Integration 91 | Capital Efficiency 91 | Automation Coverage 93
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 93 | ↑ | build:check EXIT 0; 6 items with self-tests shipped; 3 new gates (check-nav-catalog-sync 4/4, check-og-images uniqueness 9/9, generate-build-sha --check); stale-shell cleanup resolved; pre-existing claude.api advisory unchanged and documented. |
+| Creative Alignment | 91 | ↓ | IGNIS chips + loading animation + offline fallback serve the oracle ambition; returning-visitor strip is SOUL-aligned (changelog voice). Nav-catalog sync is maintenance. No soul surface violated. −1 vs S209 on creative novelty (no net-new narrative surface). |
+| Momentum | 90 | ↑ | 6 items shipped across 4 organized waves + 1 bonus (#8); strong velocity rebound after S209's narrow single-item fix. |
+| Engagement | 93 | ↑ | Contextual IGNIS chips (pre-warm oracle before typing), loading animation (trust signal during cold fetch), offline fallback (prevents silent abandonment), returning-visitor signal strip (re-engages returning visitors with changelog since last visit) — all four are direct engagement drivers. |
+| Process Quality | 93 | → | All items premise-verified; nav-catalog-sync false-positive from external `veilos.io` URL resolved with `internalSlug()` + `deployedUrl` candidate expansion; stale-shell discovered and cleaned immediately; honest deferral of #7 (evidence: VAPID READY, engineering ~4h, not a phantom blocker). |
+| Cross-Repo Coherence | 90 | → | No cross-repo edits; `check-nav-catalog-sync.mjs` correctly skips external-URL entries (veilos.io); all RUM allowlist additions confirmed in `cloudflare/security-headers-worker.js`. |
+| Security Posture | 88 | → | No auth surface touched; 5 new RUM events added to `RUM_UX_EVENTS` (oracle:suggestion_click, oracle:offline_cache_shown, strip:signal_shown, strip:dismissed, strip:changelog_click); check-rum-allowlist passes. |
+| Ecosystem Integration | 91 | ↑ | `generate-build-sha.mjs` + `check-pages-deploy.mjs` closes CANON-036 deploy-currency blind spot; nav-catalog sync keeps the ecosystem map honest against `api/public-intelligence.json`. |
+| Capital Efficiency | 91 | → | All on flat-rate Max Plan; no spend; no new paid deps. |
+| Automation Coverage | 93 | → | 3 new self-validated gates; returning-signal-strip is predicate-loaded (no bundle cost on first visit); IGNIS improvements are pure JS with no new deps. |
+
+### Self-audit + brainstorm
+
+**What this session proves:** the oracle surface benefits from trust signals at every state — cold (loading animation), offline (fallback with cached data), and contextual (pre-warmed chips matched to page intent). The returning-visitor signal strip is the first surface that explicitly acknowledges returning visitors as a separate audience with different information needs than first-timers. The build-SHA beacon is the first time we can programmatically verify deploy currency after a push.
+
+**Second-order candidates generated:**
+1. **Deploy-currency dashboard tile** — `/status/` could show the SHA diff between HEAD and pages.dev, making "is the latest push live?" visible to agents and founders at a glance. The SHA beacon already provides the data. (Low effort — `check-pages-deploy.mjs` already fetches it)
+2. **IGNIS chip analytics** — `oracle:suggestion_click` now fires, but we don't yet know which specific chip was clicked. Add `oracle:suggestion_click:<slug>` bounded family so we learn which contextual prompts resonate per page. (Low effort — modify event name in the click handler)
+3. **Web-push feature (honest carry)** — VAPID READY; ship the Worker `/v/push-subscribe` endpoint + `assets/push-subscribe.js` + `push-dispatch.mjs --test`. S211 next session priority. (4h effort)
+4. **Returning-visitor strip A/B** — the signal strip could show `vs_visit_count` in the copy ("you've visited N times — here's what changed") as a personalization signal. Low risk; adds measurable warmth for power users.
+
+### Committed to TASK_BOARD (2 items)
+- `[INFRA/P2]` Web-push feature (#7 carry, VAPID READY, S211 priority)
+- `[MEASURE/P3]` IGNIS chip analytics — bounded `oracle:suggestion_click:<slug>` family (SIL)
 
 ## 2026-06-19 — Session 209 (/goal autonomous arc · dead-CTA recency epoch root-fix + control self-test + citation sync · build:check EXIT 0) | Total: 901/1000 (v3.0) | Velocity: 2 | Debt: ↓
 Avgs — 3: 906.0 | 5: ~920 | 10: ~945 | 25: 955 | all: 958

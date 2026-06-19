@@ -1,6 +1,24 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-19 (Session 208 — autonomous /goal arc: finished S207's falsely-claimed SEALED purge + perf-honesty + cover optimization + Atlas v2)
+Last updated: 2026-06-19 (Session 210 — autonomous /goal arc: IGNIS UX depth + returning-visitor strip + OG uniqueness + build-SHA beacon + nav-catalog derivation)
+
+## S210 outcome + carries
+
+**Shipped in S210 (6/7 — wave items #1 #2 #3 #4 #5 #6 + bonus #8):**
+- [x] **[AI/P1] #1/#4/#5 — IGNIS contextual chips + loading animation + offline fallback.** Contextual chips pre-populate page-matched suggested queries (`PAGE_QUERIES` map, 9 groups) at `mount()`. rAF count-up "Searching N FORGE units…" fires during index fetch, cancelled on resolve. Offline fallback shows cached prefix-LRU entries + retry button. `oracle:suggestion_click` + `oracle:offline_cache_shown` RUM.
+- [x] **[ENGAGEMENT/P2] #2 — Returning-visitor signal strip.** Slim dismissible strip for `vs_visit_count ≥ 2` on homepage; reads `api/changelog-narrative.json`, surfaces entries newer than `vs_last_visit_ts`; CTAs to `/changelog/`; `strip:signal_shown`/`dismissed`/`changelog_click` RUM; predicate-loaded (idle).
+- [x] **[HONESTY/P1] #6 — OG-image uniqueness gate.** Extended `check-og-images.mjs` with `checkOgUniqueness()`: ERROR on generic `og-image.png` on non-root pages; WARN on URL shared across non-alias pages; self-test 9/9. Fixed `projects/vault-member/` OG.
+- [x] **[INFRA/P2] #3 — Build-SHA beacon + deploy probe.** `generate-build-sha.mjs` writes `api/build-sha.json` at build time; `check-pages-deploy.mjs` fetches live pages.dev beacon post-push; closes CANON-036 deploy-currency blind spot.
+- [x] **[NO-REDUNDANCY/P1] #8 — Nav-dropdown catalog-derivation + sync gate.** Refactored `propagate-nav.mjs` hardcoded dropdowns into `NAV_GAMES`+`NAV_PROJECTS` data arrays + `buildStatusSections()`; propagated to 99 pages; `check-nav-catalog-sync.mjs` advisory gate (4/4); wired into `check-proof-surface`.
+
+**Honest deferral (S210):**
+- [ ] **[INFRA/P2] #7 — Web-push feature.** VAPID keys are READY (`cloudflare.vapid` capability = READY, keys in gateway). Remaining: Worker `/v/push-subscribe` endpoint + `assets/push-subscribe.js` + `push-dispatch.mjs --send` live test. Estimated 4h. Deferred to a dedicated session — not trivial enough to close at end-of-session closeout.
+
+## Now (S211 runway)
+
+- [ ] **[INFRA/P2] Web-push feature** — VAPID READY; ship the endpoint + subscribe UI + dispatch test. (Carry from S210 #7)
+- [ ] **[MEASURE/P3] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.** Epoch set to 2026-06-18 (D-S209.1); `deadCount` = 0 (honest "insufficient data"). No action until field data shows a verdict.
+- [ ] **[CONTENT/P1·FOUNDER] Publish the forge devlog** (`journal/_drafts/forge-week-2026-06-18.md`) — clears the changelog stale warn. Founder-voice essay; never auto-published.
 
 ## S208 SATURATION outcome + carries
 
