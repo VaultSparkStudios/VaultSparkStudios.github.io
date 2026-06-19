@@ -183,4 +183,11 @@ if (atl.status !== 0) {
 // silently. Never blocks; SKIPs when the studio-ops sibling isn't reachable (CI).
 spawnSync(process.execPath, [path.join(__dirname, 'check-registry-freshness.mjs')], { stdio: 'inherit' });
 
+// S210 #3: build-sha freshness gate — api/build-sha.json must match HEAD.
+// Ensures `npm run build` was run before `build:check` so the SHA beacon is current.
+const bsh = spawnSync(process.execPath, [path.join(__dirname, 'generate-build-sha.mjs'), '--check'], { stdio: 'inherit' });
+if (bsh.status !== 0) {
+  console.warn('  ⚠  generate-build-sha: api/build-sha.json missing or stale (run npm run build)');
+}
+
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');

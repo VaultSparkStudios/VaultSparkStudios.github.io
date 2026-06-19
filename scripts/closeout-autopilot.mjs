@@ -365,6 +365,10 @@ if (!SKIP_PUSH) {
           const detail = sh('node scripts/check-postpush-ci.mjs');
           if (detail.out.trim()) console.error(detail.out);
         }
+        // S210 #3 · CF Pages build verify — confirms the deployed SHA on pages.dev
+        // matches HEAD. Advisory: CF Pages usually deploys within 60-90s; mismatch
+        // means a build is in-flight. Writes context/.deploy-pending on mismatch.
+        sh('node scripts/check-pages-deploy.mjs');
       }
     }
   }
