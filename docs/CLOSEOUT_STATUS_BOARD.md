@@ -1,31 +1,29 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-05-27 (Session 169 closeout) -->
+<!-- generated-at: 2026-06-19 (Session 209 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S169 ═══════╗
-║  Date: 2026-05-27  ·  SIL: 998/1000  ·  Velocity: 1 ↓            ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S209 ═══════╗
+║  Date: 2026-06-19  ·  SIL: 901/1000  ·  Velocity: 2 ↓            ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ Main wayfinding copy upgraded on home, `/studio/`, `/project  ║
-║  ✓ Legacy intelligence inline-style debt removed from the S168   ║
-║  ✓ New theme system: `docs/STUDIO_THEME_EVOLUTION_SYSTEM.md` do  ║
-║  ✓ Verification: `npm run build` passed; `npm run build:check`   ║
-║  ✓ Carry: long-tail copy immersion pass for project detail/lega  ║
+║  ✓ Shipped: 2 improvements across 2 groups — observability-hone  ║
+║  ✓ Tests: 116/116 build:check gates passing (delta +0) · `rollu  ║
+║  ✓ Deploy: pending (committed to main; CF Pages auto-deploys th  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 998/1000 ═══════════════════════════════════════╗
-║    Dev Health         100  ██████████                            ║
-║    Alignment          99   ██████████                            ║
-║    Momentum           99   ██████████                            ║
-║    Engagement         97   ██████████                            ║
-║    Process Qual       100  ██████████                            ║
-║    Coherence          100  ██████████                            ║
-║    Security           99   ██████████                            ║
-║    Ecosystem          100  ██████████                            ║
-║    Capital            100  ██████████                            ║
-║    Automation         99   ██████████                            ║
+╔══ SCORES · SIL 901/1000 ═══════════════════════════════════════╗
+║    Dev Health         91   █████████░                            ║
+║    Alignment          92   █████████░                            ║
+║    Momentum           86   █████████░                            ║
+║    Engagement         88   █████████░                            ║
+║    Process Qual       93   █████████░                            ║
+║    Coherence          90   █████████░                            ║
+║    Security           88   █████████░                            ║
+║    Ecosystem          89   █████████░                            ║
+║    Capital            91   █████████░                            ║
+║    Automation         93   █████████░                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  · context/CURRENT_STATE.md                                      ║
@@ -37,6 +35,7 @@
 ║  · docs/CREATIVE_DIRECTION_RECORD.md                             ║
 ║  · context/TRUTH_AUDIT.md                                        ║
 ║  · context/PROJECT_STATUS.json                                   ║
+║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
 ║  Changes: 0 files  ·  M:0 A:0 D:0 ?:0                            ║
@@ -44,10 +43,10 @@
 ║  Branch: main                                                    ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        12/13                                            ║
+║  Doctor:        9/13                                             ║
 ║  Compliance:    —                                                ║
-║  Tests:         —                                                ║
-║  IGNIS:         7d ago                                           ║
+║  Tests:         116/116                                          ║
+║  IGNIS:         1d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝
