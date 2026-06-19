@@ -63,6 +63,51 @@ export function scanPage(html, assetExists) {
   return findings;
 }
 
+// S210 #6: cross-page OG uniqueness check.
+// Returns ERRORs for: (a) og:image URL shared across >1 non-root content page,
+// (b) any non-root-index.html page using the generic assets/og-image.png fallback.
+// Exclusions: 404.html files (game/section 404s legitimately reuse the section cover);
+//   path alias pairs like member/ + members/ (same content, two entry points).
+export function checkOgUniqueness(pageImages) {
+  // Normalise path separators and exclude 404 pages from uniqueness tracking.
+  const norm = (p) => p.replace(/\\/g, '/');
+  const filtered = pageImages.filter(({ file }) => !norm(file).endsWith('404.html'));
+
+  const urlToPages = new Map();
+  for (const { file, url } of filtered) {
+    if (!url) continue;
+    if (!urlToPages.has(url)) urlToPages.set(url, []);
+    urlToPages.get(url).push(norm(file));
+  }
+
+  // Alias pairs: if two files share a URL and one is the plural/alias of the other,
+  // allow it (e.g. member/index.html + members/index.html).
+  function isAliasPair(pages) {
+    if (pages.length !== 2) return false;
+    const [a, b] = pages.map((p) => p.replace(/\/index\.html$/, '').replace(/\\/g, '/'));
+    return a + 's' === b || b + 's' === a || a.replace(/s$/, '') === b.replace(/s$/, '');
+  }
+
+  const errors = [];
+  for (const [url, pages] of urlToPages) {
+    const isGeneric = /\bog-image\.png$/.test(url);
+    const nonRoot = pages.filter((p) => p !== 'index.html');
+    if (isGeneric && nonRoot.length) {
+      errors.push({ level: 'error', msg: `Generic og-image.png used on non-root page(s): ${nonRoot.join(', ')} — each page needs a bespoke OG card` });
+    }
+    // Warn on the same non-generic URL shared across more than 1 page.
+    // Exceptions: root index.html + one other; alias pairs (member/members).
+    // WARN not ERROR — shared OGs reduce social card quality but don't render blank.
+    if (!isGeneric && pages.length > 1) {
+      const hasRoot = pages.includes('index.html');
+      if (!hasRoot && !isAliasPair(pages)) {
+        errors.push({ level: 'warn', msg: `og:image ${url} shared by ${pages.length} pages (${pages.slice(0, 3).join(', ')}${pages.length > 3 ? '…' : ''}) — each page should have a unique social card` });
+      }
+    }
+  }
+  return errors;
+}
+
 function runSelfTest() {
   let fail = 0;
   const assert = (c, m) => { if (!c) { console.error('  ✗ ' + m); fail++; } };
@@ -92,7 +137,31 @@ function runSelfTest() {
   f = scanPage('<meta property="og:image" content="https://vaultsparkstudios.com/assets/og-cod.png" /><meta name="twitter:image" content="https://vaultsparkstudios.com/assets/og-cod.png" />', exists);
   assert(!f.some((x) => x.level === 'error'), 'clean page has no errors');
 
-  if (fail === 0) { console.log('✓ check-og-images --self-test: 6/6 passed'); process.exit(0); }
+  // S210 #6: uniqueness — generic og-image.png on a project page → error
+  let u = checkOgUniqueness([
+    { file: 'index.html', url: '/assets/og-image.png' },
+    { file: 'games/voidfall/index.html', url: '/assets/og-image.png' },
+  ]);
+  assert(u.some((x) => x.level === 'error' && /Generic/.test(x.msg)), 'flags generic og-image.png on games/ page');
+
+  // uniqueness — same URL on 3 project pages → warn (not error; doesn't render blank)
+  u = checkOgUniqueness([
+    { file: 'projects/a/index.html', url: '/assets/og-project-a.png' },
+    { file: 'projects/b/index.html', url: '/assets/og-project-a.png' },
+    { file: 'projects/c/index.html', url: '/assets/og-project-a.png' },
+  ]);
+  assert(u.some((x) => x.level === 'warn' && /shared/.test(x.msg)), 'warns URL shared across 3 project pages');
+
+  // uniqueness — unique URLs → no error
+  u = checkOgUniqueness([
+    { file: 'index.html', url: '/assets/og-home.png' },
+    { file: 'games/voidfall/index.html', url: '/assets/og-voidfall.png' },
+    { file: 'games/cod/index.html', url: '/assets/og-cod.png' },
+  ]);
+  assert(u.length === 0, 'unique URLs per page passes');
+
+  const total = 9;
+  if (fail === 0) { console.log(`✓ check-og-images --self-test: ${total}/${total} passed`); process.exit(0); }
   console.error('✗ check-og-images --self-test: ' + fail + ' failed'); process.exit(1);
 }
 
@@ -101,12 +170,22 @@ function runScan() {
     .split('\n').filter(Boolean).filter((f) => !f.startsWith('docs/'));
   const assetExists = (rel) => existsSync(join(ROOT, rel));
   let errors = 0, warns = 0;
+  const pageImages = [];
   for (const f of files) {
-    const findings = scanPage(readFileSync(join(ROOT, f), 'utf8'), assetExists);
+    const html = readFileSync(join(ROOT, f), 'utf8');
+    const findings = scanPage(html, assetExists);
     for (const x of findings) {
       if (x.level === 'error') { console.error(`✗ ${f}: ${x.msg}`); errors++; }
       else { warns++; }
     }
+    const og = metaImage(html, 'og:image');
+    pageImages.push({ file: f, url: og });
+  }
+  // S210 #6: cross-page uniqueness check (ERRORs block; WARNs inform).
+  const uniqueErrors = checkOgUniqueness(pageImages);
+  for (const x of uniqueErrors) {
+    if (x.level === 'error') { console.error(`✗ ${x.msg}`); errors++; }
+    else { console.warn(`⚠ ${x.msg}`); warns++; }
   }
   if (errors) {
     console.error(`✗ check-og-images: ${errors} broken social-card image(s) — fix before push`);
