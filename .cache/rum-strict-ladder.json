@@ -1,39 +1,54 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-19T04:10:49.461Z",
+  "generatedAt": "2026-06-19T17:29:23.903Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 199,
+  "totalSamples": 297,
   "sufficientRoutes": 1,
   "siteState": "partial-route-strict",
   "nextRoute": {
     "route": "/games/vaultspark-football-gm/",
-    "samples": 16,
+    "samples": 21,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 34,
+    "remaining": 29,
     "p75": {
-      "lcp": 1616,
+      "lcp": 952,
       "cls": 0.0026,
-      "inp": 1152,
-      "fcp": 1616,
-      "ttfb": 452
+      "inp": 440,
+      "fcp": 952,
+      "ttfb": 215
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 112,
+      "samples": 162,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
         "lcp": 1992,
-        "cls": 0.0911,
-        "inp": 408,
+        "cls": 0.102,
+        "inp": 488,
         "fcp": 1024,
         "ttfb": 189
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/about",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -84,13 +99,13 @@
     },
     {
       "route": "/games/",
-      "samples": 2,
+      "samples": 13,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 37,
       "p75": {
         "lcp": 732,
-        "cls": 0.0551,
+        "cls": 0.2037,
         "inp": 280,
         "fcp": 732,
         "ttfb": 248
@@ -99,28 +114,28 @@
     },
     {
       "route": "/games/call-of-doodie/",
-      "samples": 7,
+      "samples": 15,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 43,
+      "remaining": 35,
       "p75": {
-        "lcp": 7124,
-        "cls": 0.0002,
-        "inp": 168,
-        "fcp": 7124,
-        "ttfb": 92
+        "lcp": 532,
+        "cls": 0,
+        "inp": 104,
+        "fcp": 532,
+        "ttfb": 86
       },
       "overBudget": false
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 10,
+      "samples": 14,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 40,
+      "remaining": 36,
       "p75": {
         "lcp": 2996,
-        "cls": 0.0398,
+        "cls": 0.0874,
         "inp": 192,
         "fcp": 2996,
         "ttfb": 1143
@@ -128,31 +143,61 @@
       "overBudget": false
     },
     {
-      "route": "/games/vaultspark-football-gm/",
-      "samples": 16,
+      "route": "/games/solara/",
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 34,
+      "remaining": 48,
       "p75": {
-        "lcp": 1616,
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/vaultfront/",
+      "samples": 8,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 42,
+      "p75": {
+        "lcp": 2184,
+        "cls": 0.1011,
+        "inp": 272,
+        "fcp": 2184,
+        "ttfb": 710
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/vaultspark-football-gm/",
+      "samples": 21,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 29,
+      "p75": {
+        "lcp": 952,
         "cls": 0.0026,
-        "inp": 1152,
-        "fcp": 1616,
-        "ttfb": 452
+        "inp": 440,
+        "fcp": 952,
+        "ttfb": 215
       },
       "overBudget": false
     },
     {
       "route": "/ignis/",
-      "samples": 6,
+      "samples": 7,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 44,
+      "remaining": 43,
       "p75": {
-        "lcp": 704,
-        "cls": 0.0804,
-        "inp": 488,
-        "fcp": 704,
+        "lcp": 692,
+        "cls": 0.0145,
+        "inp": 208,
+        "fcp": 692,
         "ttfb": 173
       },
       "overBudget": false
@@ -174,16 +219,16 @@
     },
     {
       "route": "/membership/",
-      "samples": 4,
+      "samples": 7,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 43,
       "p75": {
-        "lcp": 612,
-        "cls": 0.113,
-        "inp": 296,
-        "fcp": 612,
-        "ttfb": 158
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -249,31 +294,61 @@
     },
     {
       "route": "/projects/",
-      "samples": 1,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 47,
       "p75": {
-        "lcp": 760,
+        "lcp": 1512,
         "cls": 0.0094,
         "inp": 368,
-        "fcp": 760,
+        "fcp": 1512,
         "ttfb": 256
       },
       "overBudget": false
     },
     {
       "route": "/projects/promogrind/",
+      "samples": 2,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 48,
+      "p75": {
+        "lcp": 1396,
+        "cls": 0.0009,
+        "inp": 392,
+        "fcp": 1396,
+        "ttfb": 102
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/projects/velaxis/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 1396,
-        "cls": 0.0005,
+        "lcp": 544,
+        "cls": 0.0187,
         "inp": 0,
-        "fcp": 1396,
-        "ttfb": 102
+        "fcp": 544,
+        "ttfb": 193
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/promogrind/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       },
       "overBudget": false
     },

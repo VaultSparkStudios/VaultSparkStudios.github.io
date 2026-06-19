@@ -1,0 +1,113 @@
+#!/usr/bin/env node
+/* check-registry-freshness.mjs — D-S208.7: surface drift between the website's local
+ * project registry (studio-hub/src/data/studioRegistry.js) and the canonical
+ * portfolio/PROJECT_REGISTRY.json in the studio-ops sibling repo.
+ *
+ * The whole S208 "wrong links / missing projects" problem was SILENT divergence: the
+ * local registry lagged the canonical one (stale URLs/statuses, missing public
+ * projects) and nothing flagged it. This gate makes that drift VISIBLE so it's caught
+ * at build time instead of by a founder noticing wrong links.
+ *
+ * Advisory by design (the local registry intentionally overrides some canonical
+ * audience flags + URLs per founder direction — see D-S208.4/5). It WARNs, never
+ * blocks, and SKIPs cleanly when the sibling repo isn't reachable (e.g. CI).
+ *
+ * Usage: node scripts/check-registry-freshness.mjs [--json] [--self-test]
+ * Exit: 0 always (advisory) unless --self-test fails.
+ */
+import { readFileSync, existsSync } from 'node:fs';
+import { join, dirname, resolve } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
+const argv = process.argv.slice(2);
+const JSON_MODE = argv.includes('--json');
+const SELF_TEST = argv.includes('--self-test');
+
+const CANON_PATHS = [
+  resolve(ROOT, '../vaultspark-studio-ops/portfolio/PROJECT_REGISTRY.json'),
+  resolve(ROOT, '../../vaultspark-studio-ops/portfolio/PROJECT_REGISTRY.json'),
+];
+
+// Pure: compare local vs canonical project sets. Both are arrays of {id/slug, vaultStatus, deployedUrl/url}.
+// Returns { missingPublic, statusDrift, urlDrift } — all advisory.
+// Known slug aliases (canonical slug → local id) — same project, historically different id.
+const ALIASES = { 'vaultspark-football-gm': 'football-gm' };
+
+export function diffRegistries(localProjects, canonProjects, { internalIds = new Set() } = {}) {
+  const norm = (s) => String(s || '').toLowerCase();
+  const localById = new Map(localProjects.map((p) => [p.id, p]));
+  const localId = (canonSlug) => (localById.has(canonSlug) ? canonSlug : (ALIASES[canonSlug] || canonSlug));
+  const missingPublic = [];
+  const statusDrift = [];
+  const urlDrift = [];
+  for (const c of canonProjects) {
+    const id = c.slug;
+    if (!id) continue;
+    const isPublic = /public/i.test(c.audience || '');
+    if (!isPublic) continue;                 // only public projects belong on the site
+    if (internalIds.has(id)) continue;       // explicitly site-internal
+    if (id === 'vaultsparkstudios-website') continue;
+    const local = localById.get(localId(id));
+    if (!local) { missingPublic.push({ id, name: c.name, audience: c.audience }); continue; }
+    // Status drift (only flag when canonical is sparked but local isn't — under-promotion is the risky case).
+    const cStatus = norm(c.vaultStatus);
+    const lStatus = norm(local.vaultStatus);
+    if (cStatus === 'sparked' && lStatus !== 'sparked') statusDrift.push({ id, canonical: cStatus, local: lStatus });
+  }
+  return { missingPublic, statusDrift, urlDrift };
+}
+
+if (SELF_TEST) {
+  const local = [{ id: 'a', vaultStatus: 'sparked' }, { id: 'b', vaultStatus: 'forge' }];
+  const canon = [
+    { slug: 'a', vaultStatus: 'sparked', audience: 'public-live' },
+    { slug: 'b', vaultStatus: 'sparked', audience: 'public-unlaunched' }, // drift: canon sparked, local forge
+    { slug: 'c', vaultStatus: 'forge', audience: 'public-unlaunched' },   // missing from local
+    { slug: 'd', vaultStatus: 'forge', audience: 'internal' },            // internal — ignored
+  ];
+  const r = diffRegistries(local, canon);
+  let fail = 0; const a = (c, m) => { if (!c) { console.error('  ✗ ' + m); fail++; } else console.log('  ✓ ' + m); };
+  a(r.missingPublic.length === 1 && r.missingPublic[0].id === 'c', 'detects missing public project (c)');
+  a(r.statusDrift.length === 1 && r.statusDrift[0].id === 'b', 'detects under-promotion drift (b)');
+  a(!r.missingPublic.find((x) => x.id === 'd'), 'ignores internal-audience project (d)');
+  console.log(`\ncheck-registry-freshness self-test: ${fail ? '✗ ' + fail + ' failed' : 'all passed'}`);
+  process.exit(fail ? 1 : 0);
+}
+
+// Load local registry (ESM dynamic import — pathToFileURL for Windows, per memory).
+let localProjects = [];
+try {
+  const m = await import(pathToFileURL(join(ROOT, 'studio-hub/src/data/studioRegistry.js')).href);
+  localProjects = m.PROJECTS || [];
+} catch (e) {
+  console.log('check-registry-freshness · SKIP — local registry unreadable: ' + e.message);
+  process.exit(0);
+}
+const canonPath = CANON_PATHS.find((p) => existsSync(p));
+if (!canonPath) {
+  console.log('check-registry-freshness · SKIP — canonical registry not reachable (expected in CI)');
+  process.exit(0);
+}
+const canonProjects = JSON.parse(readFileSync(canonPath, 'utf8')).projects || [];
+const internalIds = new Set(['studio-ops', 'social-dashboard', 'sparkfunnel', 'vaultspark-studio-hub', 'vaultspark-ignis', 'gridiron-gm', 'gridiron-gm-play', 'statsforge', 'website']);
+const { missingPublic, statusDrift } = diffRegistries(localProjects, canonProjects, { internalIds });
+
+if (JSON_MODE) { console.log(JSON.stringify({ missingPublic, statusDrift }, null, 2)); process.exit(0); }
+
+console.log('check-registry-freshness  (local studioRegistry.js vs canonical PROJECT_REGISTRY.json)');
+console.log('──────────────────────────────────────────────');
+if (!missingPublic.length && !statusDrift.length) {
+  console.log('  ✓ local registry covers every public canonical project; no under-promotion drift.');
+  process.exit(0);
+}
+if (missingPublic.length) {
+  console.log(`  ⚠ ${missingPublic.length} public canonical project(s) not on the site:`);
+  for (const p of missingPublic) console.log(`      · ${p.id} (${p.audience})`);
+}
+if (statusDrift.length) {
+  console.log(`  ⚠ ${statusDrift.length} project(s) canonical-SPARKED but local-${statusDrift[0].local}:`);
+  for (const p of statusDrift) console.log(`      · ${p.id}: canonical ${p.canonical} ≠ local ${p.local}`);
+}
+console.log('  → advisory: confirm with founder, then sync studio-hub/src/data/studioRegistry.js (or ship Ark to studio-ops).');
+process.exit(0);

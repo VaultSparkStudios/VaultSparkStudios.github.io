@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-19T04:10:48.172Z",
+  "generatedAt": "2026-06-19T17:29:23.107Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,18 +10,29 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 199,
+  "totalSamples": 297,
   "sufficientRoutes": 1,
   "routes": {
     "/": {
-      "samples": 112,
+      "samples": 162,
       "sufficient": true,
       "p75": {
         "lcp": 1992,
-        "cls": 0.0911,
-        "inp": 408,
+        "cls": 0.102,
+        "inp": 488,
         "fcp": 1024,
         "ttfb": 189
+      }
+    },
+    "/about": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       }
     },
     "/brand/": {
@@ -58,57 +69,79 @@
       }
     },
     "/games/": {
-      "samples": 2,
+      "samples": 13,
       "sufficient": false,
       "p75": {
         "lcp": 732,
-        "cls": 0.0551,
+        "cls": 0.2037,
         "inp": 280,
         "fcp": 732,
         "ttfb": 248
       }
     },
     "/games/call-of-doodie/": {
-      "samples": 7,
+      "samples": 15,
       "sufficient": false,
       "p75": {
-        "lcp": 7124,
-        "cls": 0.0002,
-        "inp": 168,
-        "fcp": 7124,
-        "ttfb": 92
+        "lcp": 532,
+        "cls": 0,
+        "inp": 104,
+        "fcp": 532,
+        "ttfb": 86
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 10,
+      "samples": 14,
       "sufficient": false,
       "p75": {
         "lcp": 2996,
-        "cls": 0.0398,
+        "cls": 0.0874,
         "inp": 192,
         "fcp": 2996,
         "ttfb": 1143
       }
     },
-    "/games/vaultspark-football-gm/": {
-      "samples": 16,
+    "/games/solara/": {
+      "samples": 2,
       "sufficient": false,
       "p75": {
-        "lcp": 1616,
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
+      }
+    },
+    "/games/vaultfront/": {
+      "samples": 8,
+      "sufficient": false,
+      "p75": {
+        "lcp": 2184,
+        "cls": 0.1011,
+        "inp": 272,
+        "fcp": 2184,
+        "ttfb": 710
+      }
+    },
+    "/games/vaultspark-football-gm/": {
+      "samples": 21,
+      "sufficient": false,
+      "p75": {
+        "lcp": 952,
         "cls": 0.0026,
-        "inp": 1152,
-        "fcp": 1616,
-        "ttfb": 452
+        "inp": 440,
+        "fcp": 952,
+        "ttfb": 215
       }
     },
     "/ignis/": {
-      "samples": 6,
+      "samples": 7,
       "sufficient": false,
       "p75": {
-        "lcp": 704,
-        "cls": 0.0804,
-        "inp": 488,
-        "fcp": 704,
+        "lcp": 692,
+        "cls": 0.0145,
+        "inp": 208,
+        "fcp": 692,
         "ttfb": 173
       }
     },
@@ -124,14 +157,14 @@
       }
     },
     "/membership/": {
-      "samples": 4,
+      "samples": 7,
       "sufficient": false,
       "p75": {
-        "lcp": 612,
-        "cls": 0.113,
-        "inp": 296,
-        "fcp": 612,
-        "ttfb": 158
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       }
     },
     "/nervous-system/": {
@@ -179,25 +212,47 @@
       }
     },
     "/projects/": {
-      "samples": 1,
+      "samples": 3,
       "sufficient": false,
       "p75": {
-        "lcp": 760,
+        "lcp": 1512,
         "cls": 0.0094,
         "inp": 368,
-        "fcp": 760,
+        "fcp": 1512,
         "ttfb": 256
       }
     },
     "/projects/promogrind/": {
-      "samples": 1,
+      "samples": 2,
       "sufficient": false,
       "p75": {
         "lcp": 1396,
-        "cls": 0.0005,
-        "inp": 0,
+        "cls": 0.0009,
+        "inp": 392,
         "fcp": 1396,
         "ttfb": 102
+      }
+    },
+    "/projects/velaxis/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 544,
+        "cls": 0.0187,
+        "inp": 0,
+        "fcp": 544,
+        "ttfb": 193
+      }
+    },
+    "/promogrind/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       }
     },
     "/rights/": {

@@ -65,6 +65,15 @@ const STEPS = [
   // hero never link to a generic fallback. --check fails if a configured page is missing.
   ['build-forge-project-pages.mjs', ['--self-test']],
   ['build-forge-project-pages.mjs', ['--check']],
+  // D-S208.6: portfolio counts derive from the catalog — the press-kit "N sparked ·
+  // M forge" stat line + prose count words are injected at build time, so they can't
+  // drift when a project's status changes (they broke build:check twice in S208).
+  ['build-portfolio-counts.mjs', ['--self-test']],
+  ['build-portfolio-counts.mjs', ['--check']],
+  // D-S208.7: registry-freshness self-test — the diff logic that surfaces local↔canonical
+  // registry divergence (the silent-drift class behind the S208 wrong-links problem).
+  // The live run is advisory (below); only its self-test gates here.
+  ['check-registry-freshness.mjs', ['--self-test']],
   // S195: structured-data coverage — every indexable public page must carry a
   // BreadcrumbList so breadcrumb rich-results never silently regress (folded into
   // this orchestrator rather than extending the cmd.exe-bounded build:check chain).
@@ -168,5 +177,10 @@ const atl = spawnSync(process.execPath, [path.join(__dirname, 'build-atlas.mjs')
 if (atl.status !== 0) {
   console.warn('  ⚠  build-atlas: atlas/index.html ecosystem index stale (run node scripts/build-atlas.mjs)');
 }
+
+// D-S208.7: registry-freshness advisory — surface local↔canonical registry divergence
+// (missing public projects / under-promotion) so the wrong-links class can't recur
+// silently. Never blocks; SKIPs when the studio-ops sibling isn't reachable (CI).
+spawnSync(process.execPath, [path.join(__dirname, 'check-registry-freshness.mjs')], { stdio: 'inherit' });
 
 console.log('check-proof-surface ✓ security posture + proof-feed provenance verified');
