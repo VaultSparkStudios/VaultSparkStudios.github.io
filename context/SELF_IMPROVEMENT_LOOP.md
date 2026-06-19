@@ -13,7 +13,7 @@ Avgs - 3: 915.7 | 5: 933 | 10: 958 | 25: 960 | all: 960 (v3.0 /1000)
   └ 3-session: Dev 92.0 | Align 94.0 | Momentum 92.7 | Engage 91.0 | Process 91.0
 Velocity trend: → (S208: 4 audit items + 2 self-validating gates + 1 bonus drift fix; S207: 9/9 audit items; S206: 13+2 items) | Protocol velocity: → | Debt: ↓ (killed a lingering perf phantom at its root; hardened a gate that had let a false closeout claim survive)
 Momentum runway: COHESION + HONESTY (run /audit→/implement) — broad hero-glow graduation to /games//membership//studio/ (mature-surface · real-device review) · shell-CSS version reconciliation (pre-existing) · publish forge devlog (founder) · sibling compliance drift via Ark · Atlas "moving this week" once a per-project activity source exists | Intent rate: 100% (last 5) | (S208 shipped: completed S207's falsely-claimed SEALED purge [89-page legend + components] + hardened the vocab gate + killed the perf-budget phantom + AVIF/WebP covers + Atlas OG + Atlas v2 thumbnails)
-Last session: 2026-06-19 | Session 208 | Total: 912/1000 (v3.0) | Velocity: 7 | protocolVelocity: 0
+Last session: 2026-06-19 | Session 208 | Total: 925/1000 (v3.0) | Velocity: 12 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 

@@ -2,11 +2,18 @@
 
 Last updated: 2026-06-19 (Session 208 — autonomous /goal arc: finished S207's falsely-claimed SEALED purge + perf-honesty + cover optimization + Atlas v2)
 
-## S208 committed (from SIL brainstorm)
+## S208 SATURATION outcome + carries
 
-- [ ] **[HONESTY/P1] OG-not-generic guard.** Assert no non-home page references another page's bespoke OG card (the Atlas-OG-misuse class). Fold into an existing wired check (`build-og-cards --check` or `check-proof-surface` orchestrator) — build:check is at the cmd.exe length limit (7986 chars), so NO new `&&` segment.
-- [ ] **[COHESION/P2·FOUNDER-REVIEW] Graduate the homepage hero glow** (blue/gold/orange chamber + accent easing) to `/games/`, `/membership/`, `/studio/` behind a flag, then founder real-device verify before defaulting (mature-surface rule, [[feedback_flag_gated_ux_swap]]). The Atlas-rows slice of this is already done (S208 cover thumbnails).
-- [ ] **[HONESTY/P3] Closeout-claim verifier (stretch).** Parse a closeout's "purged/shipped X sitewide" claims and assert each against a real gate before the commit lands — the deepest root cause of the S207→S208 false-claim class.
+**Shipped in the saturation pass (second-order, source-of-truth throughline):**
+- [x] **[NO-REDUNDANCY] Portfolio counts derive from the catalog** — `build-portfolio-counts.mjs` (D-S208.6). Press-kit stat line + prose count words injected at build time; can't drift.
+- [x] **[HONESTY] Registry-freshness gate** — `check-registry-freshness.mjs` (D-S208.7). Surfaces local↔canonical divergence (advisory, sibling read-only, CI-SKIP).
+- [x] **[LINK-CLEAN] Type-agnostic page resolution + flagship pages** (D-S208.8) — both-section resolveHref (fixed MindFrame) + Voidfall/VaultSpark Forge teaser pages → all 20 project links resolve, 0 advisories.
+
+**Carries (honest deferrals — recorded, not skipped):**
+- [ ] **[NO-REDUNDANCY/P1] Derive the nav "Projects" + "Games" dropdowns from the catalog.** The last hardcoded project-list fragility. Needs a catalog∪extra-paged merge (the nav lists non-catalog paged projects: signal-log, vault-pipeline, ideaforge, statvault, canon, the-living-protocol) — defer rather than ship half-done (would drop those).
+- [ ] **[HONESTY/P3] Closeout-claim verifier (stretch).** Parse a closeout's "purged/shipped X sitewide" claims and assert each against a real gate before the commit lands — deepest root cause of the S207→S208 false-claim class. Complex (NL-claim → gate mapping); the footer-aware vocab gate already covers the SEALED instance.
+- [ ] **[HONESTY/P3] OG-not-generic guard.** No non-home page references another page's bespoke OG card. Low marginal value now (instance fixed; check-og-images already catches broken/missing OG). Fold into an existing wired check if revisited.
+- [ ] **[COHESION/P2·FOUNDER-REVIEW] Graduate the homepage hero glow** to `/games/`, `/membership/`, `/studio/` behind a flag, then founder real-device verify (mature-surface rule, [[feedback_flag_gated_ux_swap]]). Atlas-rows slice already done.
 
 ## Premium-site roadmap — S208 outcome
 
