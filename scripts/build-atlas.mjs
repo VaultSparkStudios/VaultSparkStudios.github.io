@@ -36,9 +36,16 @@ function pageHref(item, fileExists) {
   for (const rel of cands) if (fileExists(rel)) return '/' + rel.replace(/index\.html$/, '');
   return isGame ? '/games/' : '/projects/';
 }
+// Dev/staging hosts never become a public "live" link (D-S208.4) — real product
+// domains pass through, dev hosts resolve to null (→ studio page instead).
+const DEV_HOST_RE = /(\.up\.railway\.app|\.railway\.app|\.pages\.dev|\.workers\.dev|\.onrender\.com|\.vercel\.app|\.netlify\.app|localhost|127\.0\.0\.1)$/i;
 function liveHref(item) {
   if (!item.deployedUrl) return null;
-  try { const u = new URL(item.deployedUrl); return u.origin.includes('vaultsparkstudios.com') ? u.pathname : item.deployedUrl; } catch { return null; }
+  try {
+    const u = new URL(item.deployedUrl);
+    if (DEV_HOST_RE.test(u.hostname)) return null;
+    return u.origin.includes('vaultsparkstudios.com') ? u.pathname : item.deployedUrl;
+  } catch { return null; }
 }
 function destination(item, fileExists) {
   const live = liveHref(item);

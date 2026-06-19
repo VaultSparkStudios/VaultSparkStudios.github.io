@@ -1,18 +1,18 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-06-19T01:35:40.753Z",
+  "generatedAt": "2026-06-19T03:34:33.975Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
     "feeds": 11,
     "present": 11,
-    "fresh": 10,
-    "stale": 1,
-    "trustScore": 91,
+    "fresh": 9,
+    "stale": 2,
+    "trustScore": 82,
     "worstStale": {
       "key": "field-verdicts",
-      "ageSeconds": 976230,
+      "ageSeconds": 983364,
       "generatedAt": "2026-06-07T18:25:10.430Z"
     },
     "seedRisk": []
@@ -22,9 +22,9 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-06-18T23:44:31.240Z",
-      "freshnessSeconds": 6670,
+      "freshnessSeconds": 13803,
       "staleAfterH": 2,
-      "stale": false,
+      "stale": true,
       "data": {
         "schemaVersion": "2.0",
         "generatedAt": "2026-06-18T23:44:31.240Z",
@@ -152,8 +152,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-06-19T01:35:24.725Z",
-      "freshnessSeconds": 16,
+      "generatedAt": "2026-06-19T03:34:16.651Z",
+      "freshnessSeconds": 17,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -213,19 +213,19 @@
             "postLcpP75": 2179
           }
         ],
-        "generatedAt": "2026-06-19T01:35:24.725Z"
+        "generatedAt": "2026-06-19T03:34:16.651Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-06-19T01:35:40.489Z",
+      "generatedAt": "2026-06-19T03:34:33.623Z",
       "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-19T01:35:40.489Z",
+        "generatedAt": "2026-06-19T03:34:33.623Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -254,7 +254,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-06-18T23:52:44.079Z",
-      "freshnessSeconds": 6177,
+      "freshnessSeconds": 13310,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -284,13 +284,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-06-19T01:35:38.041Z",
-      "freshnessSeconds": 3,
+      "generatedAt": "2026-06-19T03:34:32.320Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-19T01:35:38.041Z",
+        "generatedAt": "2026-06-19T03:34:32.320Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -316,7 +316,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-06-18T23:44:32.146Z",
-      "freshnessSeconds": 6669,
+      "freshnessSeconds": 13802,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -406,13 +406,13 @@
     "geo-vitals": {
       "present": true,
       "source": "/api/geo-vitals.json",
-      "generatedAt": "2026-06-19T01:35:37.895Z",
-      "freshnessSeconds": 3,
+      "generatedAt": "2026-06-19T03:34:32.225Z",
+      "freshnessSeconds": 2,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-19T01:35:37.895Z",
+        "generatedAt": "2026-06-19T03:34:32.225Z",
         "generatedBy": "scripts/build-geo-vitals.mjs",
         "publicSafe": true,
         "note": "Per-country field vitals from real visits. Countries under 3 samples are bucketed as \"other\".",
@@ -489,7 +489,7 @@
       "present": true,
       "source": "/api/field-verdicts.json",
       "generatedAt": "2026-06-07T18:25:10.430Z",
-      "freshnessSeconds": 976230,
+      "freshnessSeconds": 983364,
       "staleAfterH": 72,
       "stale": true,
       "data": {
@@ -567,7 +567,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 437741,
+      "freshnessSeconds": 444874,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -658,7 +658,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-06-19T00:00:00.000Z",
-      "freshnessSeconds": 5741,
+      "freshnessSeconds": 12874,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -669,11 +669,11 @@
         "source": "Derived from public feeds (public-intelligence + heartbeat + commit-map) until the Hub Worker /public-status endpoint is wired. Every value traces to a live source.",
         "studio": {
           "reposOnline": 27,
-          "sparked": 3,
-          "forge": 8,
-          "sealed": 16,
+          "sparked": 6,
+          "forge": 6,
+          "sealed": 15,
           "activeThisWeek": 1,
-          "lastArkBroadcastAt": "2026-06-18T23:45:16.000Z",
+          "lastArkBroadcastAt": "2026-06-19T01:41:33.000Z",
           "ignisHeartbeatAt": "2026-06-18T07:13:32.448Z",
           "lastShippedSession": "S208"
         },
@@ -684,15 +684,15 @@
           },
           {
             "label": "Live (Sparked)",
-            "value": 3
+            "value": 6
           },
           {
             "label": "In the Forge",
-            "value": 8
+            "value": 6
           },
           {
             "label": "Sealed",
-            "value": 16
+            "value": 15
           },
           {
             "label": "Active this week",
@@ -709,7 +709,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-06-19T00:00:00.000Z",
-      "freshnessSeconds": 5741,
+      "freshnessSeconds": 12874,
       "staleAfterH": 720,
       "stale": false,
       "data": {

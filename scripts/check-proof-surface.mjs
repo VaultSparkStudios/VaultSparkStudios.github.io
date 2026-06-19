@@ -54,6 +54,12 @@ const STEPS = [
   // the studio's prime conversion surface without lengthening the build:check chain.
   ['check-game-playability-coherence.mjs', ['--self-test']],
   ['check-game-playability-coherence.mjs', []],
+  // D-S208.4: project-hyperlink coverage — every Atlas + hero project link must
+  // resolve to a real on-disk page or a valid (non-dev-host) live URL. Fails on a
+  // dead page or a dev/staging host leaking as a public CTA. The studio site is the
+  // live source of truth for the ecosystem, so its links are verified every build.
+  ['check-project-links.mjs', ['--self-test']],
+  ['check-project-links.mjs', []],
   // S195: structured-data coverage — every indexable public page must carry a
   // BreadcrumbList so breadcrumb rich-results never silently regress (folded into
   // this orchestrator rather than extending the cmd.exe-bounded build:check chain).

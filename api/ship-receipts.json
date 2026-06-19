@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-19T01:35:24.335Z",
+  "generatedAt": "2026-06-19T03:34:16.555Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -73,6 +73,32 @@
         }
       ],
       "proof": null
+    },
+    {
+      "theme": "speed",
+      "label": "Speed",
+      "feedbackSignals": 1,
+      "shippedCommits": [
+        {
+          "sha": "29c3d652",
+          "summary": "finish S207's falsely-claimed SEALED purge + perf-honesty + AVIF covers + Atlas v2",
+          "ts": "2026-06-19T01:41:33.000Z"
+        }
+      ],
+      "proof": {
+        "set": "home-lcp-s173",
+        "captures": 4,
+        "routes": [
+          "/"
+        ]
+      },
+      "fieldVerdict": {
+        "boundary": "2026-06-05",
+        "label": "S173 critical path + S175 origin migration to CF Pages",
+        "verdict": "improved",
+        "lcpDeltaPct": -35.9,
+        "confidence": "high"
+      }
     },
     {
       "theme": "frontdoor",

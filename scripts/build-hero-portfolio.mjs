@@ -64,11 +64,21 @@ function resolveHref(item, fileExists) {
   return isGame ? '/games/' : '/projects/';
 }
 
+// Dev/staging hosts that must NEVER be surfaced as a public "live" link, even if a
+// project is mis-flagged SPARKED. Real product domains (velaxis.markets, joinvorn.com,
+// veilos.io, promogrind.bet, …) pass through; these do not. (D-S208.4)
+const DEV_HOST_RE = /(\.up\.railway\.app|\.railway\.app|\.pages\.dev|\.workers\.dev|\.onrender\.com|\.vercel\.app|\.netlify\.app|localhost|127\.0\.0\.1)$/i;
+
 // The live/deployed destination (play/open the actual thing), or null if none.
+// A real product URL — on our apex (→ pathname) or an external product domain
+// (→ absolute). Dev/staging hosts resolve to null so they never become a CTA.
 function liveHref(item) {
   if (!item.deployedUrl) return null;
-  try { const u = new URL(item.deployedUrl); return u.origin.includes('vaultsparkstudios.com') ? u.pathname : item.deployedUrl; }
-  catch { return null; }
+  try {
+    const u = new URL(item.deployedUrl);
+    if (DEV_HOST_RE.test(u.hostname)) return null;
+    return u.origin.includes('vaultsparkstudios.com') ? u.pathname : item.deployedUrl;
+  } catch { return null; }
 }
 
 const STATUS_LABEL = { SPARKED: 'Sparked', FORGE: 'In the Forge', VAULTED: 'Vaulted' };
