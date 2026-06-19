@@ -318,6 +318,10 @@ const RUM_UX_EVENTS = new Set([
   'oracle:suggestion_click',
   // S210 #5: IGNIS offline fallback shown — network failure surfaced cached prefix entries.
   'oracle:offline_cache_shown',
+  // S210 #2: returning-visitor signal strip — "What sparked since your last visit".
+  'strip:signal_shown',
+  'strip:dismissed',
+  'strip:changelog_click',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so
