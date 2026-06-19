@@ -314,6 +314,10 @@ const RUM_UX_EVENTS = new Set([
   'passport:shared',
   // S207: anonymous viewer opened a shared passport → inbound join surface.
   'passport:inbound',
+  // S210 #1: page-aware context chip clicked (oracle suggestion pre-populated for this pathname).
+  'oracle:suggestion_click',
+  // S210 #5: IGNIS offline fallback shown — network failure surfaced cached prefix entries.
+  'oracle:offline_cache_shown',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so

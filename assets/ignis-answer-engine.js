@@ -16,6 +16,7 @@
 
   var INDEX_URL = '/data/ignis-search-index.json';
   var indexPromise = null;
+  var _indexDocCount = 0; // S210 #4: cached doc count for loading animation
 
   function esc(s) {
     return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -45,7 +46,7 @@
 
   function loadIndex() {
     if (!indexPromise) {
-      indexPromise = fetch(INDEX_URL, { cache: 'default' }).then(function (r) { return r.json(); }).catch(function () { return { documents: [] }; });
+      indexPromise = fetch(INDEX_URL, { cache: 'default' }).then(function (r) { return r.json(); }).then(function (idx) { if (idx && idx.documents) _indexDocCount = idx.documents.length; return idx; }).catch(function () { return { documents: [], _offline: true }; }); // S210 #4+#5
     }
     return indexPromise;
   }
@@ -157,17 +158,36 @@
       '.vs-ask-ignis__related{display:flex;align-items:center;flex-wrap:wrap;gap:.4rem;margin-top:.75rem;padding-top:.7rem;border-top:1px solid rgba(255,196,0,.1)}.vs-ask-ignis__related-label{font-size:.7rem;font-weight:700;color:var(--dim,#6272a0);text-transform:uppercase;letter-spacing:.05em;margin-right:.15rem;white-space:nowrap}.vs-ask-ignis__related-chip{display:inline-flex;align-items:center;padding:.2rem .65rem;border-radius:100px;font-size:.76rem;font-weight:600;background:rgba(255,196,0,.06);border:1px solid rgba(255,196,0,.2);color:var(--gold,#ffc400);cursor:pointer;font:inherit;line-height:1.4;transition:background .12s,border-color .12s}.vs-ask-ignis__related-chip:hover{background:rgba(255,196,0,.16);border-color:rgba(255,196,0,.4)}.vs-ask-ignis__related-chip[aria-expanded="true"]{background:rgba(255,196,0,.2);border-color:rgba(255,196,0,.5)}' +
       '.vs-ignis-catalog{margin-top:.7rem;display:grid;gap:.5rem}.vs-ignis-catalog__card{display:block;padding:.65rem .8rem;border-radius:12px;border:1px solid rgba(255,196,0,.16);background:rgba(255,196,0,.04);text-decoration:none}.vs-ignis-catalog__card:hover{background:rgba(255,196,0,.09);border-color:rgba(255,196,0,.32)}.vs-ignis-catalog__name{font-size:.86rem;font-weight:800;color:var(--text,#eef2ff);display:flex;align-items:center;gap:.45rem}.vs-ignis-catalog__status{font-size:.62rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold,#ffc400);border:1px solid rgba(255,196,0,.3);border-radius:999px;padding:.05rem .45rem}.vs-ignis-catalog__note{font-size:.78rem;color:var(--muted,#a8b4d0);margin:.25rem 0 0;line-height:1.5}.vs-ignis-catalog__ask{font-size:.76rem;color:var(--dim,#6272a0);background:none;border:none;cursor:pointer;font:inherit;padding:.2rem 0 0;text-decoration:underline;text-decoration-color:rgba(255,196,0,.3)}.vs-ignis-catalog__ask:hover{color:var(--gold,#ffc400)}' +
       '.vs-ignis-cache-label{font-size:.78rem;color:var(--dim,#6272a0)}.vs-ignis-cache-hint{font-size:.75rem;color:var(--dim,#6272a0)}' +
-      '.vs-ignis-fb-form{display:flex;flex-direction:column;gap:.4rem;width:100%}.vs-ignis-fb-lbl{font-size:.78rem;color:var(--muted,#9aa3b2)}.vs-ignis-fb-row{display:flex;gap:.4rem}.vs-ignis-fb-inp{flex:1;border:1px solid var(--line,rgba(255,255,255,.12));background:rgba(0,0,0,.18);color:var(--text,#e8eaf0);border-radius:8px;padding:.45rem .7rem;font:inherit;font-size:.82rem}.vs-ignis-fb-btn{border:0;border-radius:8px;padding:.45rem .8rem;background:rgba(255,196,0,.18);color:var(--gold,#ffc400);font-weight:700;font-size:.82rem;cursor:pointer}';
+      '.vs-ignis-fb-form{display:flex;flex-direction:column;gap:.4rem;width:100%}.vs-ignis-fb-lbl{font-size:.78rem;color:var(--muted,#9aa3b2)}.vs-ignis-fb-row{display:flex;gap:.4rem}.vs-ignis-fb-inp{flex:1;border:1px solid var(--line,rgba(255,255,255,.12));background:rgba(0,0,0,.18);color:var(--text,#e8eaf0);border-radius:8px;padding:.45rem .7rem;font:inherit;font-size:.82rem}.vs-ignis-fb-btn{border:0;border-radius:8px;padding:.45rem .8rem;background:rgba(255,196,0,.18);color:var(--gold,#ffc400);font-weight:700;font-size:.82rem;cursor:pointer}' +
+      '.vs-ask-ignis__chip--context{border-color:rgba(255,196,0,.45);background:rgba(255,196,0,.1);color:var(--gold,#ffc400);font-weight:600}' +
+      '.vs-ignis-offline{padding:.6rem 0}.vs-ignis-offline__msg{font-size:.82rem;color:var(--muted,#a8b4d0);margin:0 0 .6rem}.vs-ignis-offline__list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}.vs-ignis-offline__row{border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.55rem .75rem}.vs-ignis-offline__q{display:block;font-size:.82rem;font-weight:600;color:var(--text,#eef2ff);margin-bottom:.2rem}.vs-ignis-offline__excerpt{display:block;font-size:.78rem;color:var(--muted,#a8b4d0);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.vs-ignis-offline__retry{background:none;border:1px solid rgba(255,196,0,.3);border-radius:999px;color:var(--gold,#ffc400);font:inherit;font-size:.82rem;cursor:pointer;padding:.4rem .9rem}';
     document.head.appendChild(s);
   }
 
-  function mount(root) {
+  function mount(root, contextQueries) { // S210 #1: contextQueries = page-aware chips
     ensureStyles();
     root.innerHTML = vsHtml('<div class="vs-ask-ignis"><form><input name="q" placeholder="Ask IGNIS about games, membership, security, feedback, or recent ships…" autocomplete="off"><button type="submit">Ask IGNIS</button></form><div class="vs-ask-ignis__history" hidden></div><div class="vs-ask-ignis__chips" hidden></div><div class="vs-ask-ignis__answer" aria-live="polite"></div></div>');
     var form = root.querySelector('form');
     var out = root.querySelector('.vs-ask-ignis__answer');
     var chips = root.querySelector('.vs-ask-ignis__chips');
     var histEl = root.querySelector('.vs-ask-ignis__history');
+
+    // S210 #1: render page-aware context chips immediately (sync, no fetch needed).
+    if (chips && contextQueries && contextQueries.length) {
+      contextQueries.forEach(function (q) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'vs-ask-ignis__chip vs-ask-ignis__chip--context';
+        btn.textContent = q;
+        btn.addEventListener('click', function () {
+          form.q.value = q;
+          emitUx('oracle:suggestion_click');
+          runQuery(q, 'context-chip');
+        });
+        chips.appendChild(btn);
+      });
+      chips.hidden = false;
+    }
 
     function runQuery(q, source, cluster) {
       q = String(q || '').trim();
@@ -179,11 +199,31 @@
       if (histEl) histEl.hidden = true;
       // S206 #15: prefix cache hit — show excerpt while loading for continuity.
       var cacheHit = !followUp && lookupPrefixCache(q);
-      out.textContent = followUp ? 'Following that thread…' : 'Reading public studio memory…';
+      // S210 #4: loading trust animation — "Searching N FORGE units…" while index loads.
+      var _rafId = null;
+      if (followUp) {
+        out.textContent = 'Following that thread…';
+      } else if (_indexDocCount > 0) {
+        var _startTs = Date.now();
+        var _target = _indexDocCount;
+        (function _countUp() {
+          var pct = Math.min((Date.now() - _startTs) / 1200, 1);
+          out.textContent = 'Searching ' + Math.round(pct * _target).toLocaleString() + ' FORGE units…';
+          if (pct < 1) _rafId = requestAnimationFrame(_countUp);
+        }());
+      } else {
+        out.textContent = 'Searching the Forge…';
+      }
       if (cacheHit) {
         out.innerHTML = vsHtml('<span class="vs-ignis-cache-label">Continuing from your earlier search —</span> ' + esc(cacheHit.excerpt) + '<br><span class="vs-ignis-cache-hint">Checking for updates…</span>');
       }
       loadIndex().then(function (idx) {
+        if (_rafId) { cancelAnimationFrame(_rafId); _rafId = null; } // S210 #4: stop count animation
+        // S210 #5: offline cache fallback — surface prefix-cache on network failure.
+        if (idx && idx._offline) {
+          renderOfflineFallback(out, q, runQuery);
+          return;
+        }
         var result = answer(q, idx, { followUp: followUp });
         if (!result) {
           out.innerHTML = vsHtml('IGNIS did not find a strong public match yet. Try "membership", "latest ships", "security", "Oracle", or a game name.');
@@ -566,6 +606,32 @@
       } catch (_e) {}
     }
 
+    // S210 #5: offline cache fallback renderer.
+    function renderOfflineFallback(container, q, run) {
+      var cached = readPrefixCache();
+      var frag = '<div class="vs-ignis-offline">';
+      if (cached.length) {
+        frag += '<p class="vs-ignis-offline__msg">Network unavailable — here\'s what the Forge remembered from your earlier session:</p>';
+        frag += '<div class="vs-ignis-offline__list">';
+        cached.slice(0, 5).forEach(function (entry) {
+          frag += '<div class="vs-ignis-offline__row"><span class="vs-ignis-offline__q">' + esc(entry.q) + '</span><span class="vs-ignis-offline__excerpt">' + esc(entry.excerpt) + '</span></div>';
+        });
+        frag += '</div>';
+      } else {
+        frag += '<p class="vs-ignis-offline__msg">Network unavailable — the Forge is unreachable right now.</p>';
+      }
+      frag += '<button type="button" class="vs-ignis-offline__retry">Try again →</button></div>';
+      container.innerHTML = vsHtml(frag);
+      var retry = container.querySelector('.vs-ignis-offline__retry');
+      if (retry) {
+        retry.addEventListener('click', function () {
+          indexPromise = null; // reset so next call re-fetches
+          run(q, 'retry');
+        });
+      }
+      emitUx('oracle:offline_cache_shown');
+    }
+
     form.addEventListener('submit', function (event) {
       event.preventDefault();
       runQuery(form.q.value, 'typed');
@@ -611,6 +677,30 @@
     }
   }
 
+  // S210 #1: page-aware contextual query chips.
+  var PAGE_QUERIES = {
+    '/games/':       ['What games are in development?', 'Which games are playable now?', 'When does the next game launch?'],
+    '/projects/':    ['What projects are currently SPARKED?', 'What\'s in The Forge right now?', 'Which projects are Vaulted?'],
+    '/membership/':  ['What does Vault membership include?', 'How does the free tier work?', 'What\'s the difference between tiers?'],
+    '/oracle/':      ['What can IGNIS tell me about the studio?', 'What shipped recently?', 'What\'s the most innovative project?'],
+    '/ignis/':       ['What can IGNIS tell me about the studio?', 'What shipped recently?', 'What\'s the most innovative project?'],
+    '/press/':       ['What is VaultSpark Studios?', 'What games has the studio shipped?', 'How do I contact the studio?'],
+    '/vault-member/':['What perks do I get as a member?', 'How do I manage my membership?', 'What\'s coming for members?'],
+    '/changelog/':   ['What shipped in the last month?', 'What was the biggest recent change?', 'What\'s next on the roadmap?'],
+    '/':             ['What is VaultSpark Studios building?', 'What are the flagship projects?', 'How do I become a Vault member?'],
+  };
+
+  function getContextQueries() {
+    var path = (window.location.pathname || '/').replace(/\/?$/, '/').toLowerCase();
+    // exact match first, then prefix match (handles subpaths like /games/voidfall/)
+    if (PAGE_QUERIES[path]) return PAGE_QUERIES[path];
+    var keys = Object.keys(PAGE_QUERIES);
+    for (var i = 0; i < keys.length; i++) {
+      if (keys[i] !== '/' && path.indexOf(keys[i]) === 0) return PAGE_QUERIES[keys[i]];
+    }
+    return PAGE_QUERIES['/'];
+  }
+
   function boot() {
     var roots = Array.prototype.slice.call(document.querySelectorAll('[data-ask-ignis]'));
     if (!roots.length && (location.pathname.indexOf('/search') === 0 || location.pathname.indexOf('/oracle') === 0)) {
@@ -624,7 +714,8 @@
         roots.push(wrap);
       }
     }
-    roots.forEach(mount);
+    var cq = getContextQueries(); // S210 #1
+    roots.forEach(function (r) { mount(r, cq); });
   }
 
   var INSIGHTS_URL = '/api/oracle-insights.json';
