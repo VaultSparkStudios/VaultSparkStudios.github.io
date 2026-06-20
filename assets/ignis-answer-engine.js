@@ -162,6 +162,7 @@
       '.vs-ask-ignis__chip--context{border-color:rgba(255,196,0,.45);background:rgba(255,196,0,.1);color:var(--gold,#ffc400);font-weight:600}' +
       '.vs-ask-ignis__chip-tray{margin-top:.7rem}.vs-ask-ignis__tray-tabs{display:flex;gap:.3rem;margin-bottom:.45rem}.vs-ask-ignis__tray-tab{background:none;border:1px solid rgba(255,255,255,.08);border-radius:999px;color:var(--dim,#6272a0);font:600 .72rem/1 inherit;padding:.28rem .7rem;cursor:pointer;transition:background .12s,color .12s}.vs-ask-ignis__tray-tab:hover{color:var(--muted,#a8b4d0);background:rgba(255,255,255,.05)}.vs-ask-ignis__tray-tab--active{border-color:rgba(255,196,0,.35);background:rgba(255,196,0,.07);color:var(--gold,#ffc400)}' +
       '.vs-ask-ignis__followups--entities{margin-top:.4rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem}.vs-ask-ignis__followup-label{font-size:.72rem;color:var(--dim,#6272a0);white-space:nowrap}' +
+      '.vs-ask-ignis__cluster-group{margin-top:.55rem}.vs-ask-ignis__cluster-label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim,#6272a0);margin-bottom:.3rem}' +
       '.vs-ignis-offline{padding:.6rem 0}.vs-ignis-offline__msg{font-size:.82rem;color:var(--muted,#a8b4d0);margin:0 0 .6rem}.vs-ignis-offline__list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}.vs-ignis-offline__row{border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.55rem .75rem}.vs-ignis-offline__q{display:block;font-size:.82rem;font-weight:600;color:var(--text,#eef2ff);margin-bottom:.2rem}.vs-ignis-offline__excerpt{display:block;font-size:.78rem;color:var(--muted,#a8b4d0);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.vs-ignis-offline__retry{background:none;border:1px solid rgba(255,196,0,.3);border-radius:999px;color:var(--gold,#ffc400);font:inherit;font-size:.82rem;cursor:pointer;padding:.4rem .9rem}';
     document.head.appendChild(s);
   }
@@ -735,25 +736,61 @@
     // question chips drawn from the real Oracle query clusters, so a visitor's
     // first interaction is a click, not a typed query. Honest: chips reflect
     // what the corpus can actually answer; public-safe (anonymous tier only).
+    // S211 Wave 4: semantic theme classification for oracle cluster chips.
+    var CLUSTER_THEMES = [
+      { label: 'Games',     words: ['game', 'play', 'challenge', 'first', 'active', 'vault right'] },
+      { label: 'Community', words: ['member', 'different', 'rank', 'join', 'tier', 'community'] },
+      { label: 'Studio',    words: ['building', 'forge', 'vaultspark', 'studio', 'ship', 'new'] },
+    ];
+    function clusterTheme(query) {
+      var q = (query || '').toLowerCase();
+      for (var i = 0; i < CLUSTER_THEMES.length; i++) {
+        var t = CLUSTER_THEMES[i];
+        for (var j = 0; j < t.words.length; j++) {
+          if (q.indexOf(t.words[j]) !== -1) return t.label;
+        }
+      }
+      return 'Explore';
+    }
+
     if (chips) {
       loadInsights().then(function (insights) {
         var clusters = (insights && insights.clusters || []).filter(function (c) {
           return c && c.query && (!c.tier || c.tier === 'anonymous');
-        }).slice(0, 3);
-        if (!clusters.length) return;
-        clusters.forEach(function (c) {
-          var btn = document.createElement('button');
-          btn.type = 'button';
-          btn.className = 'vs-ask-ignis__chip';
-          btn.textContent = c.query;
-          btn.addEventListener('click', function () {
-            form.q.value = c.query;
-            emitUx('oracle-chip:click');
-            runQuery(c.query, 'chip', c.key); // c.key identifies the Oracle cluster
-          });
-          chips.appendChild(btn);
         });
-        if (tray && tray.hidden) showTray('topics'); // no history — default to Topics
+        if (!clusters.length) return;
+
+        // Group by semantic theme
+        var groups = {};
+        clusters.forEach(function (c) {
+          var theme = clusterTheme(c.query);
+          if (!groups[theme]) groups[theme] = [];
+          groups[theme].push(c);
+        });
+
+        Object.keys(groups).forEach(function (theme) {
+          var group = document.createElement('div');
+          group.className = 'vs-ask-ignis__cluster-group';
+          var lbl = document.createElement('span');
+          lbl.className = 'vs-ask-ignis__cluster-label';
+          lbl.textContent = theme;
+          group.appendChild(lbl);
+          groups[theme].forEach(function (c) {
+            var btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'vs-ask-ignis__chip';
+            btn.textContent = c.query;
+            btn.addEventListener('click', function () {
+              form.q.value = c.query;
+              emitUx('oracle-chip:click');
+              runQuery(c.query, 'chip', c.key);
+            });
+            group.appendChild(btn);
+          });
+          chips.appendChild(group);
+        });
+
+        if (tray && tray.hidden) showTray('topics');
         emitUx('oracle-chip:shown');
       });
     }
