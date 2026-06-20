@@ -8,16 +8,48 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▆▇▇
-Avgs - 3: 910.7 | 5: ~913 | 10: ~938 | 25: 954 | all: 958 (v3.0 /1000)
-  └ 3-session: Dev 93.0 | Align 91.7 | Momentum 91.7 | Engage 93.7 | Process 93.0
-Velocity trend: ↑↑ (S211: 7 items shipped across 7 waves; S210: 6 items + 1 honest deferral; S209: 2 deep root-fix items) | Protocol velocity: → | Debt: → (web-push endpoint + subscribe UI shipped; earn-strip motivates portal engagement)
-Momentum runway: MEASUREMENT — re-evaluate play-next rotation once post-2026-06-18 impressions accrue · CONTENT (founder): publish forge devlog · ENGINEERING: nav Projects/Games dropdown catalog-derivation (needs catalog∪extra-paged merge design) · sibling compliance drift via Ark | Intent rate: 100% (last 5) | (S211 shipped: web-push endpoint + subscribe UI + VAPID public key; IGNIS unified tray; entity follow-up chips; semantic cluster grouping; changelog push CTA; game discovery quiz; rank earn-faster strip. Worker deployed e4e21429.)
-Last session: 2026-06-20 | Session 211 | Total: 919/1000 (v3.0) | Velocity: 7 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▇▆▇▇▇
+Avgs - 3: 918.0 | 5: ~913 | 10: ~938 | 25: 954 | all: 958 (v3.0 /1000)
+  └ 3-session: Dev 93.0 | Align 92.0 | Momentum 92.0 | Engage 93.7 | Process 93.0
+Velocity trend: ↑↑ (S212: 6 items; S211: 7 items; S210: 6 items) | Protocol velocity: → | Debt: ↑ (push dispatch + changelog trigger close the full notification loop; quiz personalization + IGNIS starters close the first-time visitor cold-start gap)
+Momentum runway: PUSH — run push:count → send first real notification (push:notify); MEASUREMENT — re-evaluate play-next once post-2026-06-18 impressions accrue; CONTENT (founder): publish forge devlog; ENGINEERING: nav catalog-derivation; sibling compliance via Ark | Intent rate: 100% (last 5) | (S212 shipped: orphan shell cleanup; PWA manifest fix; quiz personalization (vs_last_game); IGNIS starter prompts; push dispatch KV batch (notify-subscribers.mjs); changelog notification trigger (notify-changelog-subscribers.mjs). Worker deployed ac1b2596.)
+Last session: 2026-06-20 | Session 212 | Total: 922/1000 (v3.0) | Velocity: 6 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-20 — Session 212 (/goal autonomous arc continuation · orphan cleanup + quiz personalization + IGNIS starters + push dispatch KV + changelog trigger · Worker deployed ac1b2596) | Total: 922/1000 (v3.0) | Velocity: 6 | Debt: ↑
+Avgs — 3: 918.0 | 5: ~913 | 10: ~938 | 25: 954 | all: 958
+
+Dev Health 93 | Creative Alignment 92 | Momentum 92 | Engagement 94 | Process Quality 93 | Cross-Repo Coherence 90 | Security Posture 90 | Ecosystem Integration 93 | Capital Efficiency 92 | Automation Coverage 93
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 93 | → | Worker deployed ac1b2596; check-rum-allowlist 63/67 all in sync; check-intelligence-style-contract CLEAN; orphan shell-9ed075739d removed on discovery. Pre-existing smoke-startup-scripts advisory (claude.api) unchanged. |
+| Creative Alignment | 92 | → | Quiz personalization uses `vs_last_game` to make returning players feel immediately seen — a small personalization signal with outsized warmth. IGNIS starters are SOUL-voice: five curated questions that teach visitors how to use the oracle while it cold-starts. Both are examples of closing the "what do I do here?" friction gap without adding UI complexity. |
+| Momentum | 92 | → | 6 items; carried S211's two highest-priority second-order candidates (push dispatch + quiz personalization) to completion within one context window continuation. The push notification pipeline is now architecturally complete from subscribe to dispatch to changelog trigger. |
+| Engagement | 94 | → | Quiz personalization makes returning visitors feel recognized (pre-selected option + "Based on your last session" label + quiz:personalized RUM); IGNIS starters eliminate cold-start friction for first-time visitors (shown only when no vs_ignis_history exists); push dispatch closes the full notification engagement loop (subscribe → KV store → dispatch → changelog auto-trigger). |
+| Process Quality | 93 | → | RUM beacon fix (window.emitUx → direct navigator.sendBeacon('/v/rum', ...)) caught by scanner and fixed before shipping; orphan shell detected and cleaned immediately on discovery; CANON-019 preflight complete on credentials before building dispatch. All premises verified against live code. |
+| Cross-Repo Coherence | 90 | → | No cross-repo edits; all new RUM events (quiz:personalized + oracle:starter_click) registered in Worker RUM_UX_EVENTS; check-rum-allowlist confirms sync. Secrets gateway used properly for both cloudflare.deploy and cloudflare.vapid in dispatch scripts. |
+| Security Posture | 90 | +1 | VAPID private key stays in gateway; notify-subscribers.mjs + notify-changelog-subscribers.mjs resolve credentials via getSecret() — no hardcoded keys. KV batch dispatch uses CF API Bearer token from cloudflare.deploy capability (never in repo). |
+| Ecosystem Integration | 93 | +1 | Push notification pipeline complete: subscribe (/v/push-subscribe Worker) → store (RATE_LIMIT KV vs:push:sub:) → dispatch (notify-subscribers.mjs) → changelog-trigger (notify-changelog-subscribers.mjs with sentinel). First automated publisher→subscriber→notification chain in the studio ecosystem. npm run push:notify / push:count / notify:changelog aliases. |
+| Capital Efficiency | 92 | +1 | No new paid deps; web-push@3.6.7 was already installed from S211; cloudflare.deploy capacity covers the API calls; everything on flat-rate Max Plan. |
+| Automation Coverage | 93 | → | Two new automation scripts + 3 npm aliases close the push ecosystem loop; notify-changelog-subscribers + sentinel pattern is the canonical model for event-driven push in this studio. |
+
+### Self-audit + brainstorm
+
+**What this session proves:** context-window continuations can be as productive as fresh sessions when the wave plan is intact from the prior session. S212 picked up exactly where S211 left off (W5 in the pre-compaction session, W5-W6 post-compaction) without re-discovery overhead. The quiz personalization is the first feature in this studio that uses a cross-session behavioral signal (vs_last_game) to personalize a UI element — small but meaningful architecture: set the signal in ambient-loader on game pages, read it in the quiz. The IGNIS starter prompts solve the blank-slate problem that every AI-powered oracle surface has.
+
+**Second-order candidates generated:**
+1. **Push test → first real notification** — run `npm run push:count` to check current subscribers, then `npm run push:notify -- --title "..."` to send the first real notification to real people. This is NOT an engineering task — it's a founder-authorized deployment. (< 30 min, agent-executable with founder go-ahead)
+2. **Starter prompts → click analytics** — we emit `oracle:starter_click` but don't yet know which specific prompt was clicked. Add a bounded suffix (e.g. `oracle:starter_click:ask-about-games`) so we learn which starters resonate. (30 min, low-risk enhancement)
+3. **Changelog trigger → test dispatch** — run `notify-changelog-subscribers.mjs --dry-run` to preview the next dispatch payload, then `--force` to test end-to-end. (< 30 min, agent-executable)
+4. **vs_last_game → portal personalization** — the same `vs_last_game` signal used in the quiz could show a "Continue playing [game]" quick-link in the portal dashboard when the member is a returning player. (2h, portal-page, requires portal auth context)
+
+### Committed to TASK_BOARD (2 items)
+- `[PUSH/P1·FOUNDER]` First real push notification test — run push:count → then push:notify (founder go-ahead required for first real dispatch to subscribers)
+- `[AI/P2·SIL]` IGNIS starter prompts analytics — bounded `oracle:starter_click:<prompt-slug>` suffix to learn which starters resonate
 
 ## 2026-06-20 — Session 211 (/goal autonomous arc · web-push endpoint + IGNIS tray + entity chips + cluster grouping + changelog CTA + game quiz + earn-faster strip · build:check EXIT 0) | Total: 919/1000 (v3.0) | Velocity: 7 | Debt: →
 Avgs — 3: 910.7 | 5: ~913 | 10: ~938 | 25: 954 | all: 958

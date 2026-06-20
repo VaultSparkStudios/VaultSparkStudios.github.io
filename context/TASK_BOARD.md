@@ -1,6 +1,25 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-20 (Session 211 — autonomous arc: web-push complete + IGNIS depth + game discovery quiz + changelog CTA + portal depth)
+Last updated: 2026-06-20 (Session 212 — autonomous arc continuation: quiz personalization + IGNIS starters + push dispatch KV + changelog trigger)
+
+## S212 outcome + carries
+
+**Shipped in S212 (6/6 waves):**
+- [x] **[W1/CLEAN] Orphan shell cleanup.** Deleted 7 stale `ambient-core.shell-*.js` + `ambient-feature.bundle.shell-*.js` artifacts that were superseded but not cleaned up (30,832 lines removed). Also discovered and deleted `shell-9ed075739d.js` (not in manifest) generated during S212 bundle rebuild.
+- [x] **[W2/POLISH] PWA manifest screenshot + push-dispatch status.** `manifest.json` screenshot → `/assets/og/og-home.png` (bespoke, was generic fallback). `push-dispatch.mjs` header status updated to READY. `emitUx` in `game-discovery-quiz.js` + `push-subscribe.js` fixed from `window.emitUx` delegation to direct `navigator.sendBeacon('/v/rum', ...)` (RUM scanner now detects them; 9 dead warnings → 0; 54→67 call-sites).
+- [x] **[W3/ENGAGEMENT] Game quiz personalization.** `vs_last_game` tracking IIFE in `ambient-loader.js` (cod/fgm/forge on game page visits). `game-discovery-quiz.js`: reads `vs_last_game` at mount, pre-selects matching Q1 option (`vs-quiz__opt--preselected`), shows "Based on your last session" hint, emits `quiz:personalized` RUM. Worker RUM_UX_EVENTS updated.
+- [x] **[W4/AI] IGNIS curated starter prompts.** 5 SOUL-voice questions in `starterWrap` below IGNIS form; CSS via `ensureStyles()` (style contract compliant); hidden on first query + when `vs_ignis_history` exists (first-time-visitor guidance only). `oracle:starter_click` RUM. Worker updated.
+- [x] **[W5/INFRA] Push dispatch KV batch.** `scripts/notify-subscribers.mjs`: lists `vs:push:sub:` keys from RATE_LIMIT KV (CF API via cloudflare.deploy capability), fetches each subscription, dispatches via web-push. `--dry-run` / `--count` / `--force` modes. `npm run push:notify` + `push:count`.
+- [x] **[W6/INFRA] Changelog notification trigger.** `scripts/notify-changelog-subscribers.mjs`: reads `api/changelog-narrative.json`, compares latest SHA vs `data/last-notified-changelog.json` sentinel, dispatches push on new entry (honest-dark: sentinel only updated after successful send). `--dry-run` / `--force`. `npm run notify:changelog`.
+
+**S212 honesty ledger:**
+- `smoke-startup-scripts` 1/14 FAILED (claude.api advisory, pre-existing since S210+, non-blocking in CI where the capability resolves).
+
+**S212 carries (next session):**
+- [ ] **[PUSH/P1·FOUNDER]** First real push notification — run `npm run push:count` to check subscriber count, then `npm run push:notify -- --title "..." --body "..."` (founder go-ahead required for first dispatch to real subscribers).
+- [ ] **[AI/P2·SIL]** IGNIS starter prompts analytics — extend `oracle:starter_click` with bounded prompt slug suffix so we learn which starters resonate.
+- [ ] **[MEASURE/P3]** Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
+- [ ] **[CONTENT/P1·FOUNDER]** Publish forge devlog (draft ready; founder-voice, never auto-published).
 
 ## S211 outcome + carries
 
