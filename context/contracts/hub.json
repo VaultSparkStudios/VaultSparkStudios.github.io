@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-19T23:08:09.286Z",
+  "generatedAt": "2026-06-19T23:58:21.163Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 209,
+    "currentSession": 210,
     "lastUpdated": "2026-06-19",
-    "currentFocus": "S209 (autonomous /goal arc) root-fixed a recurring false conversion signal: the play-next CTA has read 'dead' (18 shown / 0 clicks) every session since S207, but the detector (check-dead-ctas <- rollup-rum-ux families[]) summed impressions over the whole 30-day window with no floor at the CTA's last material change. The card was retimed S207 (2026-06-18) and the funnel data only reaches 2026-06-14, so all 18 impressions are the pre-retiming variant — the new copy has zero measured impressions yet was judged dead on the old one's data. Added a per-family recency 'epoch' to deriveSummary() (play-next=2026-06-18, surfaced as 'since'); deadCount -> 0 (honest 'insufficient post-retiming data'). Shipped with a control self-test proving the epoch flips the count (18 raw -> 6 windowed). Same class as the S208 perf-budget staleness phantom. Also synced api/citation.json (uptime 88->89) and resynced these SIL fields, which had drifted from the SIL.md ledger. build:check EXIT 0, doctor blockingFailing 0.",
-    "nextMilestone": "Engineering (unblocked): fold the OG-not-generic guard into an existing wired check (build:check at cmd.exe length limit); derive the nav Projects/Games dropdowns from the catalog once the catalog-union-extra-paged merge is designed. Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice) + real-device review of the graduated hero. studio-ops: sibling compliance drift (Hashmark/VOID/SHADOW/VEILOS) — ship via Ark, never direct sibling edits.",
+    "currentFocus": "S210 (autonomous /goal arc) shipped 6 items: IGNIS contextual chips (PAGE_QUERIES map for 9 pathname groups, pre-populated at mount() before first keystroke), loading trust animation (rAF count-up 'Searching N FORGE units…' during cold fetch, cancelled on resolve), offline fallback (renderOfflineFallback shows cached prefix-LRU + retry); returning-visitor signal strip (slim dismissible strip on homepage for vs_visit_count >= 2, reads changelog-narrative.json newer than vs_last_visit_ts); OG-image uniqueness gate (check-og-images checkOgUniqueness, ERROR on generic og-image.png on non-root pages, self-test 9/9, fixed vault-member og); build-SHA beacon (generate-build-sha writes api/build-sha.json + check-pages-deploy verifies post-push, closes CANON-036 blind spot); nav-dropdown catalog-derivation (NAV_GAMES+NAV_PROJECTS arrays + buildStatusSections in propagate-nav, 99 pages propagated, check-nav-catalog-sync 4/4). Honest deferral: web-push #7 (VAPID READY, 4h engineering). build:check EXIT 0, doctor blockingFailing 0. SIL 913.",
+    "nextMilestone": "Engineering: web-push feature (VAPID READY — ship Worker /v/push-subscribe + assets/push-subscribe.js + push-dispatch --test, ~4h). Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice) + real-device review of the graduated hero. studio-ops: sibling compliance drift (Hashmark/VOID/SHADOW/VEILOS) — ship via Ark, never direct sibling edits.",
     "blockers": [
       {
         "id": "staging-box-hcloud",
@@ -37,9 +37,9 @@
     ],
     "queues": {
       "now": [
-        "[HONESTY/P1] Fold the OG-not-generic guard into an existing wired check. A gate asserting no non-home page references another page's bespoke `og:image` card. `check-og-images.mjs` already validates per-page OG presence; extend it (or `check-proof-surface` orchestrator) — do NOT add a new `build:check` `&&` segment (chain is near the cmd.exe length limit, [[feedback_buildcheck_cmdexe_length_limit]]). Carried from S208.",
-        "[BRAND/P2] Derive the nav Projects/Games dropdowns from the catalog. Blocked on the catalog∪extra-paged merge design (the nav lists non-catalog paged projects) — premature derivation drifts ([[feedback_derive_dont_hardcode_public_surfaces]]). Design the merge first, then derive. Carried from S208.",
-        "[MEASURE/P3] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue. The recency epoch (D-S209.1) gives the retimed copy a clean window; if it's STILL dead on post-epoch data, `build-cta-state --advance` rotates to variant 1. No code action until data accrues."
+        "[INFRA/P2] Web-push feature — VAPID READY; ship the endpoint + subscribe UI + dispatch test. (Carry from S210 #7)",
+        "[MEASURE/P3] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Epoch set to 2026-06-18 (D-S209.1); `deadCount` = 0 (honest \"insufficient data\"). No action until field data shows a verdict.",
+        "[CONTENT/P1·FOUNDER] Publish the forge devlog (`journal/_drafts/forge-week-2026-06-18.md`) — clears the changelog stale warn. Founder-voice essay; never auto-published."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -49,9 +49,9 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "Shipped: 2 improvements across 2 groups — observability-honesty (`rollup-rum-ux` per-family recency epoch + control self-test), feed-hygiene (`api/citation.json` source sync).",
-        "Tests: 116/116 build:check gates passing (delta +0) · `rollup-rum-ux --self-test` 26→31 assertions.",
-        "Deploy: pending (committed to main; CF Pages auto-deploys the pushed tip)."
+        "Shipped: 6 improvements across 4 waves + bonus nav-derivation — IGNIS contextual chips + loading animation + offline fallback (#1/#4/#5), returning-visitor signal strip (#2), OG-image uniqueness gate (#6), build-SHA beacon + deploy probe (#3), nav-dropdown catalog-derivation + sync gate (#8). Deferred: web-push (#7, 4h effort, VAPID READY).",
+        "Tests: 116/116 build:check gates passing (delta +0 · new checks advisory; pre-existing `claude.api` gateway-readiness advisory unchanged) · `check-nav-catalog-sync` 4/4 · `check-og-images` 9/9.",
+        "Deploy: direct push to main; CF Pages auto-deploys; `check-pages-deploy.mjs` now verifies the SHA beacon post-push."
       ]
     },
     "ignis": {

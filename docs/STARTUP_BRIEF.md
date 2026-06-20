@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-19 (Session 209 closeout) -->
+<!-- generated-at: 2026-06-19 (Session 210 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 209 closeout · 2026-06-19.
+> **Fast-boot brief** — generated at Session 210 closeout · 2026-06-19.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 210 · 2026-06-19 · FOUNDER MODE                         ║
+║  Session 211 · 2026-06-19 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,42 +35,42 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    901/1000   █████████████████████░░░   90%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 2↓                          ║
+║    913/1000   █████████████████████░░░   91%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6↑                          ║
 ║    Last active: 20622d  ·  Last closeout: 0d  ·  (active = newe  ║
-║    Trend  ▄█▇▆▂  ↓  (last 5 sessions)                            ║
+║    Trend  █▇▆▂▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
-║    Dev Health        91    █████████░  ████▇▇▇▇ →                ║
-║    Alignment         92    █████████░  ████▇██▇ →                ║
-║    Momentum          86    █████████░  █▇████▇▇ ↓                ║
-║    Engagement        88    █████████░  ████▇▇▇▇ →                ║
-║    Process Qual      93    █████████░  ████▇▇██ →                ║
+║    Dev Health        93    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Alignment         91    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Momentum          90    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Engagement        93    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Process Qual      93    █████████░  ▇▇▇▆▇▇▇▇ →                ║
 ║    Coherence         90    █████████░  ········ →                ║
 ║    Security          88    █████████░  ········ →                ║
-║    Ecosystem         89    █████████░  ········ →                ║
+║    Ecosystem         91    █████████░  ········ →                ║
 ║    Capital           91    █████████░  ········ →                ║
 ║    Automation        93    █████████░  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 209 ═══════════════════════════╗
-║  Shipped:  2 improvements across 2 groups — observability-hones  ║
+╔══ WHERE WE LEFT OFF  ·  Session 210 ═══════════════════════════╗
+║  Shipped:  6 improvements across 4 waves + bonus nav-derivation  ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ██████████░░░░░░░░░░░░░░   40% used                          ║
-║     79,192 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
-║     ~39,596 tok/turn  ·  cache 50%  ·  2 turns to compact        ║
-║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
+║  ✓  ██░░░░░░░░░░░░░░░░░░░░░░    7% used                          ║
+║     72,682 / 1,000,000 tok  ·  claude-code/opus-4-8-1m  ·  meas  ║
+║     ~36,341 tok/turn  ·  cache 50%  ·  23 turns to compact       ║
+║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-15)                   ║
-║  ✓  Velocity      2 ↓  ·  Debt: ↓                                ║
-║  ✓  Runway        HONESTY + COHESION (run /audit→/implement) —   ║
+║  ✓  Velocity      6 ↑  ·  Debt: →                                ║
+║  ✓  Runway        ENGAGEMENT + INFRA — web-push feature (VAPID   ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         44691 FORGE  ·  0d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
@@ -83,13 +83,12 @@
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
 ║  ⛔  Doctor        9/13 (69%)  ·  3 failing                       ║
-║  ✓  Cost          no ledger data                                 ║
-║  ✓  Dead CTAs     0 dead (≥5 shown, 0 clicks)                    ║
+║  ✓  Cost          real $0.02/7d · 7d notional $0.24 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║    16d · [S164→MOBILE-SHEET-DEFAULT-SWAP]                        ║
+║  today · [S164→MOBILE-SHEET-DEFAULT-SWAP]                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -101,31 +100,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄█▇▆▂  2↓  (last 5 sessions)                        ║
+║  Velocity:   █▇▆▂▆  6↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  882/1000  (↓19 vs current 901)                      ║
-║  At-risk:    Security Δ-3                                        ║
+║  Projected:  0/1000  (↓913 vs current 913)                       ║
+║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
+║   96  [PRODUCT]      #7                                          ║
+║        #7 is open, local, and unblocked — can ship this session  ║
+║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Closeout-claim verifier (stretch). Parse a  ║
-║        Closeout-claim verifier (stretch). Parse a closeout's "p  ║
+║   93  [PRODUCT]      Web-push feature                            ║
+║        Web-push feature is open, local, and unblocked — can shi  ║
 ║                                                                  ║
-║   90  [PRODUCT]      OG-not-generic guard. No non-home page ref  ║
-║        OG-not-generic guard. No non-home page references anothe  ║
+║   90  [PRODUCT]      Re-evaluate play-next rotation once post-2  ║
+║        Re-evaluate play-next rotation once post-2026-06-18 impr  ║
 ║                                                                  ║
-║   86  [BRAND]        Forge Window naming propagation             ║
-║        The URL stays stable for search, but the public vocabula  ║
-║                                                                  ║
-║   84  [BRAND]        Derive the nav "Projects" + "Games" dropdo  ║
-║        Derive the nav "Projects" + "Games" dropdowns from the c  ║
+║   87  [BRAND]        Publish the forge devlog (journal/_drafts/  ║
+║        Publish the forge devlog (journal/_drafts/forge-week-202  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -133,5 +132,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 209 closeout · 2026-06-19*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 210 closeout · 2026-06-19*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

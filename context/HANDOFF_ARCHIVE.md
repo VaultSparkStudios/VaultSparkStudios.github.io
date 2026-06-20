@@ -4129,3 +4129,30 @@ Last updated: 2026-06-15 (Session 200)
 - **Tests:** `npm run build:check` **EXIT 0** end-to-end. Completing the WIP exposed + fixed 3 previously-masked gate failures (ignis-platform `schemaVersion`, taskboard runway hygiene, studio solo-bet posture). Remaining ✗ in the log are warn-only advisories (7 registry on-site dirs, `/` desktop perf, changelog 66d stale).
 - **Deploy:** committed via autopilot; verify on prod next session (pages.dev origin + a JSON path — CF bot-challenge ≠ outage).
 - **Next-session priority:** §3 homepage hero refinement (flag-gate per mature-surface rule, founder visual review) → §5 conservative consolidation (Worker Layer 0c 301s) → §4 portal → §6 freshness. Plan in `docs/AUDIT_2026-06-17.md`.
+
+---
+<!-- archived: 2026-06-19 -->
+
+## Where We Left Off — Session 206
+
+- **Session Intent:** Autonomous `/goal` chain — `/start → /audit → /implement → /closeout`. Genius-level creative innovation across all 9 axes. No founder direction; agent ran full 16-item S206 audit.
+- **Intent outcome: ACHIEVED** — 13 items shipped with code changes, 2 verified already-done, 2 bonus carry items shipped. `build:check` EXIT 0.
+- **Shipped (13 + 2 bonus):**
+  - `adaptive-oracle-intro` (#1) — returning IGNIS visitors see "Welcome back" header + last-queried topic chip from localStorage history.
+  - `play-next-redesign` (#2) — cross-game card hero-positioned with bespoke cover art tile and SOUL headline; play→join bridge wired.
+  - `vault-momentum-strip-membership` (#3) — momentum score chip on `/membership/` (SPARKED ≥60 / FORGING 30–59 / AT REST <30).
+  - `progressive-tier-reveal` (#4) — paid tier cards stagger in via IntersectionObserver on `/membership/`; free tier immediate.
+  - `adaptive-pricing-reveal` (#8) — anonymous / returning / member profile matched to a highlighted "best for you" tier card pulse.
+  - `smart-trial-offer` (#7) — `assets/smart-trial-offer.js` bottom-anchored 50%-off panel; triggers on 3 visits OR 5-min dwell; gated `vs_trial_offered` localStorage; 3 RUM events (`funnel:trial_offer_shown/clicked/dismissed`); ambient-loader predicate (anon-only, offer-not-seen).
+  - `oracle-query-insights` (#9) — `scripts/build-oracle-query-insights.mjs` → `api/oracle-query-insights.json` (chip interaction counts, top clusters, honestDark when <10 answers); advisory gate in check-proof-surface.
+  - `constellation-public-feed` (#10) — `scripts/build-constellation-activity.mjs` → `api/constellation-activity.json` (aggregate unlock count, challenge breakdown, honestDark when <3); advisory gate.
+  - `vault-passport` (#11) — `/vault-member/passport/` — auth-gated member identity card: rank badge (9 RANKS tiers), Vault Points, tenure, achievements; Web Share API with clipboard fallback; `passport:viewed / passport:shared` RUM. Page in SKIP_FILES for nav-propagation (noindex, own minimal nav).
+  - `build-parallelization` (#12) — `scripts/build-parallel-phase.mjs` fans 13 independent generators via `Promise.allSettled`; wall-clock ~2.9s vs ~6.3s serial; wired into `npm run build`.
+  - `oracle-feedback-close` (#13) — 👎 vote expands to a styled text input form (CSS classes via `ensureStyles()`, intelligence-style-contract compliant, not inline styles); `oracle:feedback_submitted` RUM on submit.
+  - `ignis-prefix-cache` (#15) — 3-word prefix key → answer excerpt LRU cache (20 entries, 24h TTL) stored in `vs_ignis_prefix_cache` localStorage; "Continuing from earlier search" teaser shown before fresh fetch completes.
+  - `identity-coherence-gate` (bonus carry from S203) — `scripts/check-identity-coherence.mjs` WARN gate; fixed 4 'game studio' copy violations to "creative studio".
+  - `public-note-freshness-gate` (bonus carry from S202) — `scripts/check-public-note-freshness.mjs` fails build if `publicNote` is missing or contains session-code patterns.
+- **Verified already-done (no code change):** #6 referrer-source-breakdown (wired in S194 via `analytics.js`); #16 TT-enforce-reprobe (`lint-tt-policies.mjs` passes, `home-idle-loader.js` and `schema-injector.js` verified clean).
+- **Tests:** `npm run build:check` EXIT 0. RUM allowlist 43/43 in sync. Worker unit tests 25/25. Intelligence style contract 7 pages / 6 runtimes clean.
+- **Deploy:** pushed to origin/main (merged 4 CI cron commits during session; tip is not `[skip ci]`).
+- **Next-session priority:** Prod-verify S206 wave (passport + trial offer + prefix cache + feedback form). Forge devlog publish (founder). VAPID keys (founder). Constellation sequence analytics carry.
