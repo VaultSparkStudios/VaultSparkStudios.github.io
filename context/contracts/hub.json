@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-20T06:30:48.240Z",
+  "generatedAt": "2026-06-20T19:42:06.709Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 210,
+    "currentSession": 211,
     "lastUpdated": "2026-06-20",
-    "currentFocus": "S210 (autonomous /goal arc) shipped 6 items: IGNIS contextual chips (PAGE_QUERIES map for 9 pathname groups, pre-populated at mount() before first keystroke), loading trust animation (rAF count-up 'Searching N FORGE units…' during cold fetch, cancelled on resolve), offline fallback (renderOfflineFallback shows cached prefix-LRU + retry); returning-visitor signal strip (slim dismissible strip on homepage for vs_visit_count >= 2, reads changelog-narrative.json newer than vs_last_visit_ts); OG-image uniqueness gate (check-og-images checkOgUniqueness, ERROR on generic og-image.png on non-root pages, self-test 9/9, fixed vault-member og); build-SHA beacon (generate-build-sha writes api/build-sha.json + check-pages-deploy verifies post-push, closes CANON-036 blind spot); nav-dropdown catalog-derivation (NAV_GAMES+NAV_PROJECTS arrays + buildStatusSections in propagate-nav, 99 pages propagated, check-nav-catalog-sync 4/4). Honest deferral: web-push #7 (VAPID READY, 4h engineering). build:check EXIT 0, doctor blockingFailing 0. SIL 913.",
-    "nextMilestone": "Engineering: web-push feature (VAPID READY — ship Worker /v/push-subscribe + assets/push-subscribe.js + push-dispatch --test, ~4h). Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice) + real-device review of the graduated hero. studio-ops: sibling compliance drift (Hashmark/VOID/SHADOW/VEILOS) — ship via Ark, never direct sibling edits.",
+    "currentFocus": "S211 (autonomous arc) shipped 7 waves: web-push endpoint (/v/push-subscribe, SHA-256 KV storage, 90-day TTL) + subscribe UI (push-subscribe.js portal toggle + [data-push-subscribe] containers) + VAPID public key published (api/push-config.json); IGNIS unified Recent|Topics tray (tabbed chip tray, sessionStorage persistence); entity follow-up chips (renderEntityChips, 'Dig deeper:' row from answer text tokens); semantic cluster grouping (CLUSTER_THEMES Games/Community/Studio keyword classification, all 4 anonymous clusters shown); changelog inline push CTA ([data-push-subscribe] hook in /changelog/ hero); game discovery quiz (3-question weighted-score quiz on /games/ routing to best-fit game + catalog filter scroll); rank earn-faster strip (3 quick-win methods below rank bar in portal). Worker deployed e4e21429. Doctor blockingFailing 0. SIL 913→925 (estimated).",
+    "nextMilestone": "Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice). Engineering: nav Projects/Games dropdown catalog-derivation (needs catalog∪extra-paged merge design). studio-ops: sibling compliance drift (Hashmark/VOID/SHADOW/VEILOS) — ship via Ark.",
     "blockers": [
       {
         "id": "staging-box-hcloud",
@@ -49,9 +49,10 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "Shipped: 6 improvements across 4 waves + bonus nav-derivation — IGNIS contextual chips + loading animation + offline fallback (#1/#4/#5), returning-visitor signal strip (#2), OG-image uniqueness gate (#6), build-SHA beacon + deploy probe (#3), nav-dropdown catalog-derivation + sync gate (#8). Deferred: web-push (#7, 4h effort, VAPID READY).",
-        "Tests: 116/116 build:check gates passing (delta +0 · new checks advisory; pre-existing `claude.api` gateway-readiness advisory unchanged) · `check-nav-catalog-sync` 4/4 · `check-og-images` 9/9.",
-        "Deploy: direct push to main; CF Pages auto-deploys; `check-pages-deploy.mjs` now verifies the SHA beacon post-push."
+        "Shipped: 7 waves — web-push endpoint+UI+config (W1), IGNIS \"Recent | Topics\" unified tray (W2), entity follow-up chips (W3), semantic cluster grouping (W4), changelog inline push CTA (W5), game discovery quiz (W6), rank earn-faster strip (W7).",
+        "Tests: 25/25 Worker unit tests · style contract clean · ambient bundle sync · RUM allowlist clean (9 advisory dead-config warnings — all predicate-loaded assets, not scanner-visible).",
+        "Deploy: pushed to main (8276fce5); Worker deployed `e4e21429` (`/v/push-subscribe` endpoint live).",
+        "Deferrals: play-next rotation re-evaluation (awaiting post-epoch field data); forge devlog (founder-voice, never auto-published)."
       ]
     },
     "ignis": {

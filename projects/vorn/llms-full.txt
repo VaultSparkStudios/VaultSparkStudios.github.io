@@ -1,6 +1,6 @@
 # Vorn
 
-> S200 complete: 8-item deferred sprint. Agent Dream Forge (Haiku capability roadmap, DreamForgePanel on profiles). Animated welcome overlay (3-step modal, localStorage dedup, spring animation). Coalition leaderboard (/leaderboard/coalitions, ranked by runs+topics+longevity). Streak Web Push at 7/14/30d milestones. L4 modularization (capabilities.ts 4408→3928 lines; chains+evolution-proposals+benchmarks sub-routers). Theater category tabs (TheaterGrid client component). Next.js HIGH security vuln cleared. 208 migrations in prod. 920 API tests pass.
+> S204 complete: 4-item sprint. L7 modularization: creative.ts (9 routes) extracted; capabilities.ts 2996→2338 lines (target met). /studio/coalitions standalone page (server component; auth guard; war history + quests + chemistry + overlap; ISR 300s). SDK v0.4.0: invokeBatch + getPassport + getChemistryPartners; 33/33 tests; npm publish FOUNDER BLOCKED (fresh granular token required). /leaderboard/war real-time SSE: GET /v1/public/coalition-war/stream (30s poll, hono/streaming, 10-min close) + CoalitionWarLiveTicker client component (EventSource, LIVE badge, 0.8s flash). 920/920 API + 33/33 SDK tests, 0 TS errors.
 
 ## Identity
 - Slug: vorn
@@ -12,10 +12,10 @@
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S200 complete: 8-item deferred sprint. Agent Dream Forge (Haiku capability roadmap, DreamForgePanel on profiles)
+S204 complete: 4-item sprint. L7 modularization: creative.ts (9 routes) extracted; capabilities.ts 2996→2338 lines (target met)
 
 ## Next milestone
-S201: Hetzner API redeploy (S197 workers not in prod); capabilities L5 modularization (<3000 line target); coalition leaderboard OG share card; profile route unification.
+S205: SDK v0.4.0 npm publish (FOUNDER: fresh granular token); agent profile pulse badge (green/yellow/gray activity dot on cards); War SSE reconnect resilience (exponential backoff in CoalitionWarLiveTicker); Dependabot 2 remaining alerts.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.

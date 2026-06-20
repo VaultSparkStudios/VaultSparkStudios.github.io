@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-20T06:30:56.220Z",
+  "generatedAt": "2026-06-20T19:42:13.707Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 260,
+  "totalSamples": 303,
   "sufficientRoutes": 1,
   "siteState": "partial-route-strict",
   "nextRoute": {
     "route": "/games/call-of-doodie/",
-    "samples": 13,
+    "samples": 16,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 37,
+    "remaining": 34,
     "p75": {
       "lcp": 0,
       "cls": 0,
@@ -24,15 +24,15 @@
   "routes": [
     {
       "route": "/",
-      "samples": 161,
+      "samples": 180,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
         "lcp": 1992,
-        "cls": 0.102,
-        "inp": 488,
-        "fcp": 852,
+        "cls": 0.104,
+        "inp": 248,
+        "fcp": 1648,
         "ttfb": 189
       },
       "overBudget": false
@@ -53,6 +53,51 @@
       "overBudget": false
     },
     {
+      "route": "/assets/og/og-*.png",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/careers/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 784,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 784,
+        "ttfb": 86
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/changelog/",
+      "samples": 3,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 47,
+      "p75": {
+        "lcp": 1292,
+        "cls": 0.6367,
+        "inp": 0,
+        "fcp": 1292,
+        "ttfb": 895
+      },
+      "overBudget": false
+    },
+    {
       "route": "/contact/",
       "samples": 1,
       "minSamples": 50,
@@ -69,10 +114,10 @@
     },
     {
       "route": "/games/",
-      "samples": 11,
+      "samples": 15,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 39,
+      "remaining": 35,
       "p75": {
         "lcp": 644,
         "cls": 0.2037,
@@ -84,10 +129,10 @@
     },
     {
       "route": "/games/call-of-doodie/",
-      "samples": 13,
+      "samples": 16,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 37,
+      "remaining": 34,
       "p75": {
         "lcp": 0,
         "cls": 0,
@@ -99,10 +144,10 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 11,
+      "samples": 15,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 39,
+      "remaining": 35,
       "p75": {
         "lcp": 2996,
         "cls": 0.0874,
@@ -174,10 +219,10 @@
     },
     {
       "route": "/membership/",
-      "samples": 5,
+      "samples": 7,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 45,
+      "remaining": 43,
       "p75": {
         "lcp": 0,
         "cls": 0,
@@ -189,25 +234,25 @@
     },
     {
       "route": "/nervous-system/",
-      "samples": 6,
+      "samples": 8,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 44,
+      "remaining": 42,
       "p75": {
         "lcp": 684,
         "cls": 0.0979,
         "inp": 464,
         "fcp": 684,
-        "ttfb": 133
+        "ttfb": 157
       },
       "overBudget": false
     },
     {
       "route": "/oracle/",
-      "samples": 2,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 47,
       "p75": {
         "lcp": 800,
         "cls": 0.1757,
@@ -278,6 +323,21 @@
       "overBudget": false
     },
     {
+      "route": "/projects/vorn/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
+      },
+      "overBudget": false
+    },
+    {
       "route": "/promogrind/",
       "samples": 1,
       "minSamples": 50,
@@ -339,10 +399,10 @@
     },
     {
       "route": "/studio/",
-      "samples": 4,
+      "samples": 5,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 45,
       "p75": {
         "lcp": 3572,
         "cls": 0.0009,
@@ -384,10 +444,10 @@
     },
     {
       "route": "/vault-member/",
-      "samples": 1,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 48,
       "p75": {
         "lcp": 0,
         "cls": 0,

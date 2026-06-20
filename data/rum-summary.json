@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-20T06:30:55.298Z",
+  "generatedAt": "2026-06-20T19:42:12.945Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,17 +10,17 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 260,
+  "totalSamples": 303,
   "sufficientRoutes": 1,
   "routes": {
     "/": {
-      "samples": 161,
+      "samples": 180,
       "sufficient": true,
       "p75": {
         "lcp": 1992,
-        "cls": 0.102,
-        "inp": 488,
-        "fcp": 852,
+        "cls": 0.104,
+        "inp": 248,
+        "fcp": 1648,
         "ttfb": 189
       }
     },
@@ -35,6 +35,39 @@
         "ttfb": 0
       }
     },
+    "/assets/og/og-*.png": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
+      }
+    },
+    "/careers/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 784,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 784,
+        "ttfb": 86
+      }
+    },
+    "/changelog/": {
+      "samples": 3,
+      "sufficient": false,
+      "p75": {
+        "lcp": 1292,
+        "cls": 0.6367,
+        "inp": 0,
+        "fcp": 1292,
+        "ttfb": 895
+      }
+    },
     "/contact/": {
       "samples": 1,
       "sufficient": false,
@@ -47,7 +80,7 @@
       }
     },
     "/games/": {
-      "samples": 11,
+      "samples": 15,
       "sufficient": false,
       "p75": {
         "lcp": 644,
@@ -58,7 +91,7 @@
       }
     },
     "/games/call-of-doodie/": {
-      "samples": 13,
+      "samples": 16,
       "sufficient": false,
       "p75": {
         "lcp": 0,
@@ -69,7 +102,7 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 11,
+      "samples": 15,
       "sufficient": false,
       "p75": {
         "lcp": 2996,
@@ -124,7 +157,7 @@
       }
     },
     "/membership/": {
-      "samples": 5,
+      "samples": 7,
       "sufficient": false,
       "p75": {
         "lcp": 0,
@@ -135,18 +168,18 @@
       }
     },
     "/nervous-system/": {
-      "samples": 6,
+      "samples": 8,
       "sufficient": false,
       "p75": {
         "lcp": 684,
         "cls": 0.0979,
         "inp": 464,
         "fcp": 684,
-        "ttfb": 133
+        "ttfb": 157
       }
     },
     "/oracle/": {
-      "samples": 2,
+      "samples": 3,
       "sufficient": false,
       "p75": {
         "lcp": 800,
@@ -200,6 +233,17 @@
         "ttfb": 193
       }
     },
+    "/projects/vorn/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
+      }
+    },
     "/promogrind/": {
       "samples": 1,
       "sufficient": false,
@@ -245,7 +289,7 @@
       }
     },
     "/studio/": {
-      "samples": 4,
+      "samples": 5,
       "sufficient": false,
       "p75": {
         "lcp": 3572,
@@ -278,7 +322,7 @@
       }
     },
     "/vault-member/": {
-      "samples": 1,
+      "samples": 2,
       "sufficient": false,
       "p75": {
         "lcp": 0,
