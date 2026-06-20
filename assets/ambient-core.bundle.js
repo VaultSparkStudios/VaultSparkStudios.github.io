@@ -1078,6 +1078,20 @@
     run();
   }
 
+  // S212: track last-visited game page for quiz personalization.
+  // Writes vs_last_game ('cod'|'fgm'|'forge') on any game-family page.
+  // The game-discovery-quiz reads this to pre-select on /games/.
+  (function () {
+    try {
+      var p = location.pathname || '/';
+      var key = null;
+      if (/\/(games\/)?call-of-doodie\//.test(p)) key = 'cod';
+      else if (/\/(games\/)?(vaultspark-football-gm|football-gm|gridiron-gm)\//.test(p)) key = 'fgm';
+      else if (/^\/games\/[^/]+\//.test(p)) key = 'forge';
+      if (key) localStorage.setItem('vs_last_game', key);
+    } catch (_) {}
+  })();
+
   window.VSAmbientLoader = { load: load };
 })();
 

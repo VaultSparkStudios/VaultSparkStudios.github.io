@@ -163,7 +163,8 @@
       '.vs-ask-ignis__chip-tray{margin-top:.7rem}.vs-ask-ignis__tray-tabs{display:flex;gap:.3rem;margin-bottom:.45rem}.vs-ask-ignis__tray-tab{background:none;border:1px solid rgba(255,255,255,.08);border-radius:999px;color:var(--dim,#6272a0);font:600 .72rem/1 inherit;padding:.28rem .7rem;cursor:pointer;transition:background .12s,color .12s}.vs-ask-ignis__tray-tab:hover{color:var(--muted,#a8b4d0);background:rgba(255,255,255,.05)}.vs-ask-ignis__tray-tab--active{border-color:rgba(255,196,0,.35);background:rgba(255,196,0,.07);color:var(--gold,#ffc400)}' +
       '.vs-ask-ignis__followups--entities{margin-top:.4rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem}.vs-ask-ignis__followup-label{font-size:.72rem;color:var(--dim,#6272a0);white-space:nowrap}' +
       '.vs-ask-ignis__cluster-group{margin-top:.55rem}.vs-ask-ignis__cluster-label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim,#6272a0);margin-bottom:.3rem}' +
-      '.vs-ignis-offline{padding:.6rem 0}.vs-ignis-offline__msg{font-size:.82rem;color:var(--muted,#a8b4d0);margin:0 0 .6rem}.vs-ignis-offline__list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}.vs-ignis-offline__row{border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.55rem .75rem}.vs-ignis-offline__q{display:block;font-size:.82rem;font-weight:600;color:var(--text,#eef2ff);margin-bottom:.2rem}.vs-ignis-offline__excerpt{display:block;font-size:.78rem;color:var(--muted,#a8b4d0);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.vs-ignis-offline__retry{background:none;border:1px solid rgba(255,196,0,.3);border-radius:999px;color:var(--gold,#ffc400);font:inherit;font-size:.82rem;cursor:pointer;padding:.4rem .9rem}';
+      '.vs-ignis-offline{padding:.6rem 0}.vs-ignis-offline__msg{font-size:.82rem;color:var(--muted,#a8b4d0);margin:0 0 .6rem}.vs-ignis-offline__list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}.vs-ignis-offline__row{border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.55rem .75rem}.vs-ignis-offline__q{display:block;font-size:.82rem;font-weight:600;color:var(--text,#eef2ff);margin-bottom:.2rem}.vs-ignis-offline__excerpt{display:block;font-size:.78rem;color:var(--muted,#a8b4d0);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.vs-ignis-offline__retry{background:none;border:1px solid rgba(255,196,0,.3);border-radius:999px;color:var(--gold,#ffc400);font:inherit;font-size:.82rem;cursor:pointer;padding:.4rem .9rem}' +
+      '.vs-ignis-starters{margin-top:.8rem;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.06)}.vs-ignis-starters__label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim,#6272a0);margin-bottom:.5rem}.vs-ignis-starters__chips{display:flex;flex-direction:column;gap:.35rem}.vs-ignis-starters__chip{text-align:left;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.55rem .85rem;color:var(--muted,#a8b4d0);font:inherit;font-size:.85rem;cursor:pointer;line-height:1.4;transition:background .12s,border-color .12s,color .12s}.vs-ignis-starters__chip:hover{background:rgba(255,196,0,.06);border-color:rgba(255,196,0,.22);color:var(--text,#eef2ff)}';
     document.head.appendChild(s);
   }
 
@@ -175,6 +176,47 @@
     var chips = root.querySelector('.vs-ask-ignis__chips');
     var histEl = root.querySelector('.vs-ask-ignis__history');
     var tray = root.querySelector('.vs-ask-ignis__chip-tray');
+
+    // S212 W4: curated starter prompts — shown to first-time / no-history visitors.
+    // 5 SOUL-voice questions that model the depth of IGNIS; auto-dismissed on first query.
+    var starterWrap = null;
+    (function renderStarters() {
+      var STARTERS = [
+        'What\'s currently being built in the Forge?',
+        'Which games can I play right now for free?',
+        'How does the Vault rank system work?',
+        'What makes VaultSpark Studios different?',
+        'What shipped in the studio recently?',
+      ];
+      var hasHistory = false;
+      try { hasHistory = !!(localStorage.getItem('vs_ignis_history')); } catch (_) {}
+      if (hasHistory) return;
+      starterWrap = document.createElement('div');
+      starterWrap.className = 'vs-ignis-starters';
+      var lbl = document.createElement('div');
+      lbl.className = 'vs-ignis-starters__label';
+      lbl.textContent = 'Ask the vault';
+      starterWrap.appendChild(lbl);
+      var starterList = document.createElement('div');
+      starterList.className = 'vs-ignis-starters__chips';
+      STARTERS.forEach(function (q) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'vs-ignis-starters__chip';
+        btn.textContent = q;
+        btn.addEventListener('click', function () {
+          form.q.value = q;
+          emitUx('oracle:starter_click');
+          if (starterWrap) starterWrap.hidden = true;
+          runQuery(q, 'starter');
+        });
+        starterList.appendChild(btn);
+      });
+      starterWrap.appendChild(starterList);
+      var trayEl = root.querySelector('.vs-ask-ignis__chip-tray');
+      var container = root.querySelector('.vs-ask-ignis');
+      if (container) container.insertBefore(starterWrap, trayEl || out);
+    })();
 
     // S211 Wave 2: tab wiring for unified chip tray (Recent | Topics).
     function activateTab(tabName) {
@@ -224,6 +266,7 @@
       var followUp = isFollowUp(q);
       if (followUp) emitUx('oracle-followup:ask');
       if (tray) tray.hidden = true; // first interaction — retire the chip tray
+      if (starterWrap) starterWrap.hidden = true; // S212 W4: hide starters on first query
       // S206 #15: prefix cache hit — show excerpt while loading for continuity.
       var cacheHit = !followUp && lookupPrefixCache(q);
       // S210 #4: loading trust animation — "Searching N FORGE units…" while index loads.
