@@ -322,6 +322,8 @@ const RUM_UX_EVENTS = new Set([
   'strip:signal_shown',
   'strip:dismissed',
   'strip:changelog_click',
+  // S211 Wave 1: web-push subscription events from push-subscribe.js.
+  'push:subscribed', 'push:unsubscribed', 'push:error', 'push:prompt_shown',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so
@@ -509,6 +511,61 @@ async function handleTrustedTypesReport(request, env, ctx) {
 }
 
 // ---------------------------------------------------------------------------
+// Web-push subscription storage (S211)
+// Stores/removes PushSubscription JSON in RATE_LIMIT KV under vs:push:sub:<hash>.
+// Key is the first 32 hex chars of SHA-256(endpoint) — identifies the subscription
+// without persisting the raw endpoint URL as a KV key.
+// ---------------------------------------------------------------------------
+async function handlePushSubscribe(request, env, ctx) {
+  const NO_STORE = { 'Cache-Control': 'no-store' };
+  const JSON_HEADERS = { 'Cache-Control': 'no-store', 'Content-Type': 'application/json' };
+
+  if (!env.RATE_LIMIT) {
+    return new Response(JSON.stringify({ ok: false, error: 'storage_unavailable' }), { status: 503, headers: JSON_HEADERS });
+  }
+
+  async function hashEndpoint(endpoint) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(endpoint));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('').slice(0, 32);
+  }
+
+  if (request.method === 'POST') {
+    const len = Number(request.headers.get('Content-Length') || 0);
+    if (len > 4096) return new Response(null, { status: 413, headers: NO_STORE });
+    let sub;
+    try { sub = await request.json(); } catch {
+      return new Response(JSON.stringify({ ok: false, error: 'bad_json' }), { status: 400, headers: JSON_HEADERS });
+    }
+    const ep = sub?.endpoint;
+    if (!ep || typeof ep !== 'string' || ep.length > 512) {
+      return new Response(JSON.stringify({ ok: false, error: 'invalid_endpoint' }), { status: 400, headers: JSON_HEADERS });
+    }
+    const hash = await hashEndpoint(ep);
+    const payload = JSON.stringify({ endpoint: ep, keys: sub.keys || null, registeredAt: new Date().toISOString() });
+    ctx.waitUntil(env.RATE_LIMIT.put(`vs:push:sub:${hash}`, payload, { expirationTtl: 7776000 }));
+    return new Response(JSON.stringify({ ok: true }), { status: 201, headers: JSON_HEADERS });
+  }
+
+  if (request.method === 'DELETE') {
+    const len = Number(request.headers.get('Content-Length') || 0);
+    if (len > 2048) return new Response(null, { status: 413, headers: NO_STORE });
+    let body;
+    try { body = await request.json(); } catch {
+      return new Response(JSON.stringify({ ok: false, error: 'bad_json' }), { status: 400, headers: JSON_HEADERS });
+    }
+    const ep = body?.endpoint;
+    if (!ep || typeof ep !== 'string' || ep.length > 512) {
+      return new Response(JSON.stringify({ ok: false, error: 'invalid_endpoint' }), { status: 400, headers: JSON_HEADERS });
+    }
+    const hash = await hashEndpoint(ep);
+    ctx.waitUntil(env.RATE_LIMIT.delete(`vs:push:sub:${hash}`));
+    return new Response(JSON.stringify({ ok: true }), { status: 200, headers: JSON_HEADERS });
+  }
+
+  return new Response(JSON.stringify({ ok: false, error: 'method_not_allowed' }), { status: 405, headers: JSON_HEADERS });
+}
+
+// ---------------------------------------------------------------------------
 // CSP — hash mode (default) vs nonce mode (env-flagged migration)
 // ---------------------------------------------------------------------------
 
@@ -650,6 +707,13 @@ export default {
         }
       } catch (_) { /* absorb parse errors — always 204 */ }
       return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
+    }
+
+    // --- Layer 0: Web-push subscription management (S211) -------------------
+    // POST stores subscription JSON in KV (vs:push:sub:<sha256-prefix>); TTL 90d.
+    // DELETE removes by hashed endpoint. Same-origin; no CORS needed.
+    if (url.pathname === '/v/push-subscribe') {
+      return handlePushSubscribe(request, env, ctx);
     }
 
     // --- Layer 0a: hub subdomain terminates here, independent pipeline ---

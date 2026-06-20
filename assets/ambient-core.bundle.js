@@ -727,6 +727,18 @@
       idle: true
     },
     {
+      // S211 Wave 1: web-push subscribe UI — wires the #toggle-push in the vault-member
+      // portal and any [data-push-subscribe] containers (e.g. /changelog/).
+      // PushManager guard prevents loading on unsupported browsers (Safari <16.4, etc.).
+      src: '/assets/push-subscribe.js',
+      when: function () {
+        if (!('PushManager' in window) || !('serviceWorker' in navigator)) return false;
+        var p = (window.location.pathname || '/').replace(/\/?$/, '/');
+        return p === '/vault-member/' || !!document.querySelector('[data-push-subscribe]');
+      },
+      idle: true
+    },
+    {
       // S179 ambient-split wave 2 — route-scoped widgets that self-mount on a
       // single surface. Each predicate mirrors the script's own mount guard, so
       // behavior is identical; they just no longer parse on the ~95% of pages
