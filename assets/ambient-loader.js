@@ -75,6 +75,16 @@
       idle: true
     },
     {
+      // S211 Wave 6: game discovery quiz — 3-question match flow on /games/.
+      // Routes to Call of Doodie, Football GM, or Forge previews; also triggers
+      // the catalog genre/status filter via data-filter buttons.
+      src: '/assets/game-discovery-quiz.js',
+      when: function () {
+        return !!document.querySelector('[data-game-discovery-quiz]');
+      },
+      idle: true
+    },
+    {
       // S211 Wave 1: web-push subscribe UI — wires the #toggle-push in the vault-member
       // portal and any [data-push-subscribe] containers (e.g. /changelog/).
       // PushManager guard prevents loading on unsupported browsers (Safari <16.4, etc.).

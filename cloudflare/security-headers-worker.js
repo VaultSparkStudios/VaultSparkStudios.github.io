@@ -311,6 +311,8 @@ const RUM_UX_EVENTS = new Set([
   'oracle:feedback_submitted',
   // S211 Wave 3: entity-derived follow-up chips ("Dig deeper:" row below oracle answers).
   'oracle:followup_shown', 'oracle:followup_click',
+  // S211 Wave 6: game discovery quiz events.
+  'quiz:shown', 'quiz:answer', 'quiz:complete', 'quiz:restart', 'quiz:catalog_scroll',
   // S206 #11: vault passport — member card impression + share action.
   'passport:viewed',
   'passport:shared',
