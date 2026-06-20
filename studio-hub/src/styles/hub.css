@@ -947,10 +947,13 @@ body.theme-light .issue-item { background: var(--panel-2); }
     top: 0;
     left: 0;
     width: 270px;
-    height: 100vh;
+    height: 100dvh;
+    overflow-y: auto;
     z-index: 100;
     box-shadow: 4px 0 24px rgba(0,0,0,0.4);
     padding-top: env(safe-area-inset-top, 24px);
+    padding-right: env(safe-area-inset-right, 0);
+    padding-bottom: env(safe-area-inset-bottom, 16px);
     padding-left: env(safe-area-inset-left, 0);
   }
 
