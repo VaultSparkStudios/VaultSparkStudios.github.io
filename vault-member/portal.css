@@ -2500,6 +2500,39 @@ body.light-mode .dashboard-intro {
   font-variant-numeric: tabular-nums;
 }
 
+/* ── S211 Wave 7: rank earn-faster strip ────────────────────── */
+.rank-earn-strip {
+  margin-top: 0.85rem;
+  border-top: 1px solid rgba(255,255,255,.06);
+  padding-top: 0.65rem;
+}
+.rank-earn-strip__label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--dim);
+  margin-bottom: 0.4rem;
+}
+.rank-earn-strip__row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.22rem 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+  text-decoration: none;
+}
+.rank-earn-strip__row--link:hover { color: var(--text); }
+.rank-earn-strip__icon { flex-shrink: 0; font-size: 0.9rem; }
+.rank-earn-strip__text { flex: 1; }
+.rank-earn-strip__pts {
+  font-weight: 700;
+  color: var(--gold);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
 /* ── S66: Skeleton loaders ───────────────────────────────────── */
 @keyframes skeleton-pulse {
   0%   { background-position: 200% 0; }
