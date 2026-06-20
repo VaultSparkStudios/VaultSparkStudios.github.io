@@ -41,7 +41,10 @@
     "deploy": "wrangler deploy --env production --config cloudflare/wrangler.toml",
     "deploy:bare": "wrangler deploy --config cloudflare/wrangler.toml",
     "smoke:live": "node scripts/smoke-live.mjs",
-    "preview": "wrangler dev --config cloudflare/wrangler.toml"
+    "preview": "wrangler dev --config cloudflare/wrangler.toml",
+    "push:notify": "node scripts/notify-subscribers.mjs",
+    "push:count": "node scripts/notify-subscribers.mjs --count",
+    "notify:changelog": "node scripts/notify-changelog-subscribers.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",
