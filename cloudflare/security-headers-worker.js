@@ -309,6 +309,8 @@ const RUM_UX_EVENTS = new Set([
   // S206 #13: oracle feedback close — text captured on thumbs-down; no text
   // stored in RUM, just the submission event for volume tracking.
   'oracle:feedback_submitted',
+  // S211 Wave 3: entity-derived follow-up chips ("Dig deeper:" row below oracle answers).
+  'oracle:followup_shown', 'oracle:followup_click',
   // S206 #11: vault passport — member card impression + share action.
   'passport:viewed',
   'passport:shared',

@@ -161,6 +161,7 @@
       '.vs-ignis-fb-form{display:flex;flex-direction:column;gap:.4rem;width:100%}.vs-ignis-fb-lbl{font-size:.78rem;color:var(--muted,#9aa3b2)}.vs-ignis-fb-row{display:flex;gap:.4rem}.vs-ignis-fb-inp{flex:1;border:1px solid var(--line,rgba(255,255,255,.12));background:rgba(0,0,0,.18);color:var(--text,#e8eaf0);border-radius:8px;padding:.45rem .7rem;font:inherit;font-size:.82rem}.vs-ignis-fb-btn{border:0;border-radius:8px;padding:.45rem .8rem;background:rgba(255,196,0,.18);color:var(--gold,#ffc400);font-weight:700;font-size:.82rem;cursor:pointer}' +
       '.vs-ask-ignis__chip--context{border-color:rgba(255,196,0,.45);background:rgba(255,196,0,.1);color:var(--gold,#ffc400);font-weight:600}' +
       '.vs-ask-ignis__chip-tray{margin-top:.7rem}.vs-ask-ignis__tray-tabs{display:flex;gap:.3rem;margin-bottom:.45rem}.vs-ask-ignis__tray-tab{background:none;border:1px solid rgba(255,255,255,.08);border-radius:999px;color:var(--dim,#6272a0);font:600 .72rem/1 inherit;padding:.28rem .7rem;cursor:pointer;transition:background .12s,color .12s}.vs-ask-ignis__tray-tab:hover{color:var(--muted,#a8b4d0);background:rgba(255,255,255,.05)}.vs-ask-ignis__tray-tab--active{border-color:rgba(255,196,0,.35);background:rgba(255,196,0,.07);color:var(--gold,#ffc400)}' +
+      '.vs-ask-ignis__followups--entities{margin-top:.4rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem}.vs-ask-ignis__followup-label{font-size:.72rem;color:var(--dim,#6272a0);white-space:nowrap}' +
       '.vs-ignis-offline{padding:.6rem 0}.vs-ignis-offline__msg{font-size:.82rem;color:var(--muted,#a8b4d0);margin:0 0 .6rem}.vs-ignis-offline__list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}.vs-ignis-offline__row{border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.55rem .75rem}.vs-ignis-offline__q{display:block;font-size:.82rem;font-weight:600;color:var(--text,#eef2ff);margin-bottom:.2rem}.vs-ignis-offline__excerpt{display:block;font-size:.78rem;color:var(--muted,#a8b4d0);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.vs-ignis-offline__retry{background:none;border:1px solid rgba(255,196,0,.3);border-radius:999px;color:var(--gold,#ffc400);font:inherit;font-size:.82rem;cursor:pointer;padding:.4rem .9rem}';
     document.head.appendChild(s);
   }
@@ -343,6 +344,7 @@
         var topDoc = result.sources[0] || {};
         sessionQueries.push({ q: q.slice(0, 80), title: scrub(topDoc.title || ''), url: topDoc.url || '' });
         renderFollowUps(out, result.sources, runQuery);
+        renderEntityChips(out, result, q, idx, runQuery); // S211 Wave 3
         if (sessionQueries.length >= 2) renderSynthesisHint(out, runQuery);
         renderRelated(out, topDoc, runQuery);
         // S205 #8 L1: Cmd+K IGNIS terminal — escape hatch to /ignis/ with query pre-filled.
@@ -465,6 +467,53 @@
         b.addEventListener('click', function () { emitUx('oracle-followup:sibling'); run(scrub(doc.title), 'followup'); });
         wrap.appendChild(b);
       });
+      container.appendChild(wrap);
+    }
+
+    // S211 Wave 3: entity-derived follow-up chips — terms from the answer text (not
+    // in the query) that match index doc titles, surfaced as "Dig deeper:" chips.
+    // Distinct from renderFollowUps (sibling docs) and the graph traversal below
+    // (catalog cards). These connect vocabulary in the answer back to knowledge graph nodes.
+    function renderEntityChips(container, result, q, idx, run) {
+      if (!result || !result.text || !idx || !Array.isArray(idx.documents)) return;
+      var aToks = tokens(result.text);
+      var qSet = {};
+      tokens(q).forEach(function (t) { qSet[t] = true; });
+      var aSet = {};
+      aToks.forEach(function (t) { aSet[t] = true; });
+      var existingUrls = {};
+      (result.sources || []).forEach(function (s) { if (s && s.url) existingUrls[s.url] = true; });
+
+      var scored = [];
+      idx.documents.forEach(function (doc) {
+        if (!doc || !doc.title || existingUrls[doc.url]) return;
+        var tToks = tokens(doc.title);
+        if (!tToks.length) return;
+        var hits = tToks.filter(function (t) { return aSet[t] && !qSet[t]; }).length;
+        if (hits > 0) scored.push({ doc: doc, hits: hits });
+      });
+      scored.sort(function (a, b) { return b.hits - a.hits; });
+      var top = scored.slice(0, 3);
+      if (!top.length) return;
+
+      var wrap = document.createElement('div');
+      wrap.className = 'vs-ask-ignis__followups vs-ask-ignis__followups--entities';
+      var label = document.createElement('span');
+      label.className = 'vs-ask-ignis__followup-label';
+      label.textContent = 'Dig deeper:';
+      wrap.appendChild(label);
+      top.forEach(function (r) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'vs-ask-ignis__followup';
+        b.textContent = scrub(r.doc.title);
+        b.addEventListener('click', function () {
+          emitUx('oracle:followup_click');
+          run(scrub(r.doc.title), 'followup');
+        });
+        wrap.appendChild(b);
+      });
+      emitUx('oracle:followup_shown');
       container.appendChild(wrap);
     }
 
