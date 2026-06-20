@@ -21,7 +21,10 @@
   }
 
   function emitUx(name) {
-    try { if (window.emitUx) window.emitUx(name); } catch (_) {}
+    try {
+      var body = JSON.stringify({ route: location.pathname || '/', ux: name });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+    } catch (_) {}
   }
 
   function getConfig() {

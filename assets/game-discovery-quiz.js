@@ -61,7 +61,10 @@
   };
 
   function emitUx(name) {
-    try { if (window.emitUx) window.emitUx(name); } catch (_) {}
+    try {
+      var body = JSON.stringify({ route: location.pathname || '/', ux: name });
+      if (navigator.sendBeacon) navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+    } catch (_) {}
   }
 
   function triggerFilter(filterVal) {
@@ -219,8 +222,48 @@
       emitUx('quiz:complete');
     }
 
+    // S212: personalization — pre-select first-question option based on last game.
+    // Reads vs_last_game set by ambient-loader on game page visits.
+    var lastGame = null;
+    try { lastGame = localStorage.getItem('vs_last_game'); } catch (_) {}
+    var personalized = lastGame && scores[lastGame] === 0 &&
+      QUESTIONS[0].opts.some(function (o) { return o.scores[lastGame] === Math.max.apply(null, Object.values(o.scores)); });
+
     emitUx('quiz:shown');
-    renderQuestion(0);
+    if (personalized) { emitUx('quiz:personalized'); }
+
+    function renderQuestionPersonalized(qIdx) {
+      renderQuestion(qIdx);
+      if (qIdx === 0 && personalized) {
+        // After render, highlight the pre-matched option and add 'Based on your last game' label.
+        var optBtns = container.querySelectorAll('.vs-quiz__opt');
+        var matchIdx = -1;
+        QUESTIONS[0].opts.forEach(function (o, i) {
+          if (o.scores[lastGame] === Math.max.apply(null, Object.values(o.scores))) matchIdx = i;
+        });
+        if (matchIdx >= 0 && optBtns[matchIdx]) {
+          optBtns[matchIdx].classList.add('vs-quiz__opt--preselected');
+          var hint = document.createElement('div');
+          hint.className = 'vs-quiz__personalized-hint';
+          hint.textContent = 'Based on your last session';
+          container.insertBefore(hint, container.querySelector('.vs-quiz__opts'));
+        }
+      }
+    }
+
+    // Add personalized styles to the injected sheet.
+    var styleEl = document.getElementById('vs-quiz-styles');
+    if (styleEl && personalized) {
+      styleEl.textContent +=
+        '.vs-quiz__opt--preselected{border-color:rgba(255,196,0,.45)!important;background:rgba(255,196,0,.06)!important}' +
+        '.vs-quiz__personalized-hint{font-size:.75rem;color:var(--gold,#ffc400);margin-bottom:.55rem;opacity:.8}';
+    }
+
+    if (personalized) {
+      renderQuestionPersonalized(0);
+    } else {
+      renderQuestion(0);
+    }
   }
 
   function boot() {
