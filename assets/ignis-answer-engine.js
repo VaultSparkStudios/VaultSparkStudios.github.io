@@ -160,19 +160,46 @@
       '.vs-ignis-cache-label{font-size:.78rem;color:var(--dim,#6272a0)}.vs-ignis-cache-hint{font-size:.75rem;color:var(--dim,#6272a0)}' +
       '.vs-ignis-fb-form{display:flex;flex-direction:column;gap:.4rem;width:100%}.vs-ignis-fb-lbl{font-size:.78rem;color:var(--muted,#9aa3b2)}.vs-ignis-fb-row{display:flex;gap:.4rem}.vs-ignis-fb-inp{flex:1;border:1px solid var(--line,rgba(255,255,255,.12));background:rgba(0,0,0,.18);color:var(--text,#e8eaf0);border-radius:8px;padding:.45rem .7rem;font:inherit;font-size:.82rem}.vs-ignis-fb-btn{border:0;border-radius:8px;padding:.45rem .8rem;background:rgba(255,196,0,.18);color:var(--gold,#ffc400);font-weight:700;font-size:.82rem;cursor:pointer}' +
       '.vs-ask-ignis__chip--context{border-color:rgba(255,196,0,.45);background:rgba(255,196,0,.1);color:var(--gold,#ffc400);font-weight:600}' +
+      '.vs-ask-ignis__chip-tray{margin-top:.7rem}.vs-ask-ignis__tray-tabs{display:flex;gap:.3rem;margin-bottom:.45rem}.vs-ask-ignis__tray-tab{background:none;border:1px solid rgba(255,255,255,.08);border-radius:999px;color:var(--dim,#6272a0);font:600 .72rem/1 inherit;padding:.28rem .7rem;cursor:pointer;transition:background .12s,color .12s}.vs-ask-ignis__tray-tab:hover{color:var(--muted,#a8b4d0);background:rgba(255,255,255,.05)}.vs-ask-ignis__tray-tab--active{border-color:rgba(255,196,0,.35);background:rgba(255,196,0,.07);color:var(--gold,#ffc400)}' +
       '.vs-ignis-offline{padding:.6rem 0}.vs-ignis-offline__msg{font-size:.82rem;color:var(--muted,#a8b4d0);margin:0 0 .6rem}.vs-ignis-offline__list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}.vs-ignis-offline__row{border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.55rem .75rem}.vs-ignis-offline__q{display:block;font-size:.82rem;font-weight:600;color:var(--text,#eef2ff);margin-bottom:.2rem}.vs-ignis-offline__excerpt{display:block;font-size:.78rem;color:var(--muted,#a8b4d0);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.vs-ignis-offline__retry{background:none;border:1px solid rgba(255,196,0,.3);border-radius:999px;color:var(--gold,#ffc400);font:inherit;font-size:.82rem;cursor:pointer;padding:.4rem .9rem}';
     document.head.appendChild(s);
   }
 
   function mount(root, contextQueries) { // S210 #1: contextQueries = page-aware chips
     ensureStyles();
-    root.innerHTML = vsHtml('<div class="vs-ask-ignis"><form><input name="q" placeholder="Ask IGNIS about games, membership, security, feedback, or recent ships…" autocomplete="off"><button type="submit">Ask IGNIS</button></form><div class="vs-ask-ignis__history" hidden></div><div class="vs-ask-ignis__chips" hidden></div><div class="vs-ask-ignis__answer" aria-live="polite"></div></div>');
+    root.innerHTML = vsHtml('<div class="vs-ask-ignis"><form><input name="q" placeholder="Ask IGNIS about games, membership, security, feedback, or recent ships…" autocomplete="off"><button type="submit">Ask IGNIS</button></form><div class="vs-ask-ignis__chip-tray" hidden><div class="vs-ask-ignis__tray-tabs"><button type="button" class="vs-ask-ignis__tray-tab" data-tab="recent">Recent</button><button type="button" class="vs-ask-ignis__tray-tab" data-tab="topics">Topics</button></div><div class="vs-ask-ignis__history" hidden></div><div class="vs-ask-ignis__chips" hidden></div></div><div class="vs-ask-ignis__answer" aria-live="polite"></div></div>');
     var form = root.querySelector('form');
     var out = root.querySelector('.vs-ask-ignis__answer');
     var chips = root.querySelector('.vs-ask-ignis__chips');
     var histEl = root.querySelector('.vs-ask-ignis__history');
+    var tray = root.querySelector('.vs-ask-ignis__chip-tray');
+
+    // S211 Wave 2: tab wiring for unified chip tray (Recent | Topics).
+    function activateTab(tabName) {
+      try { sessionStorage.setItem('vs_ignis_tab', tabName); } catch (_) {}
+      if (tray) {
+        Array.prototype.forEach.call(tray.querySelectorAll('.vs-ask-ignis__tray-tab'), function (t) {
+          t.classList.toggle('vs-ask-ignis__tray-tab--active', t.dataset.tab === tabName);
+        });
+      }
+      if (histEl) histEl.hidden = tabName !== 'recent';
+      if (chips) chips.hidden = tabName !== 'topics';
+    }
+    function showTray(defaultTab) {
+      if (!tray) return;
+      var saved = null;
+      try { saved = sessionStorage.getItem('vs_ignis_tab'); } catch (_) {}
+      activateTab(saved || defaultTab || 'topics');
+      tray.hidden = false;
+    }
+    if (tray) {
+      Array.prototype.forEach.call(tray.querySelectorAll('.vs-ask-ignis__tray-tab'), function (t) {
+        t.addEventListener('click', function () { activateTab(t.dataset.tab); });
+      });
+    }
 
     // S210 #1: render page-aware context chips immediately (sync, no fetch needed).
+    // Tray visibility is deferred — showTray() is called after history is also checked.
     if (chips && contextQueries && contextQueries.length) {
       contextQueries.forEach(function (q) {
         var btn = document.createElement('button');
@@ -186,7 +213,6 @@
         });
         chips.appendChild(btn);
       });
-      chips.hidden = false;
     }
 
     function runQuery(q, source, cluster) {
@@ -195,8 +221,7 @@
       var clusterId = clusterSlug(cluster); // '' for typed queries (no known cluster)
       var followUp = isFollowUp(q);
       if (followUp) emitUx('oracle-followup:ask');
-      if (chips) chips.hidden = true; // first interaction made — retire the cold-start chips
-      if (histEl) histEl.hidden = true;
+      if (tray) tray.hidden = true; // first interaction — retire the chip tray
       // S206 #15: prefix cache hit — show excerpt while loading for continuity.
       var cacheHit = !followUp && lookupPrefixCache(q);
       // S210 #4: loading trust animation — "Searching N FORGE units…" while index loads.
@@ -564,16 +589,14 @@
       container.appendChild(panel);
     }
 
-    // S199 L2: show last-5 cross-page history chips on load if history exists + input empty.
+    // S211 Wave 2: history chips shown in the "Recent" tab of the unified tray.
+    // Label removed — the tab itself ("Recent") serves as the section title.
+    var _hasHistory = false;
     if (histEl) {
       try {
         var rawHist2 = JSON.parse(localStorage.getItem('vs_ignis_history') || '[]');
-        // Normalise legacy plain-string entries; cap display at 5 most recent.
         var prevHist = rawHist2.map(function (e) { return typeof e === 'string' ? { query: e, ts: 0 } : e; }).slice(0, 5);
         if (prevHist.length && !form.q.value) {
-          var label = document.createElement('span');
-          label.className = 'vs-ask-ignis__history-label';
-          label.textContent = 'Continue your research';
           var row = document.createElement('div');
           row.className = 'vs-ask-ignis__history-row';
           prevHist.forEach(function (entry) {
@@ -596,14 +619,24 @@
           clearBtn.textContent = '× clear';
           clearBtn.addEventListener('click', function () {
             try { localStorage.removeItem('vs_ignis_history'); } catch (_e) {}
-            histEl.hidden = true;
+            if (chips && chips.children.length) {
+              activateTab('topics'); // fall back to Topics when Recent is cleared
+            } else {
+              if (tray) tray.hidden = true;
+            }
           });
           row.appendChild(clearBtn);
-          histEl.appendChild(label);
           histEl.appendChild(row);
-          histEl.hidden = false;
+          _hasHistory = true;
         }
       } catch (_e) {}
+    }
+
+    // Show the tray now if we have sync content (history or context chips). Default tab:
+    // "recent" when history exists, "topics" when only context chips are present.
+    var _hasContextChips = chips && chips.children.length > 0;
+    if (_hasHistory || _hasContextChips) {
+      showTray(_hasHistory ? 'recent' : 'topics');
     }
 
     // S210 #5: offline cache fallback renderer.
@@ -671,7 +704,7 @@
           });
           chips.appendChild(btn);
         });
-        chips.hidden = false;
+        if (tray && tray.hidden) showTray('topics'); // no history — default to Topics
         emitUx('oracle-chip:shown');
       });
     }
