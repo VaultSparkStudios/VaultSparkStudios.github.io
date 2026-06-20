@@ -13,7 +13,7 @@
      node scripts/push-dispatch.mjs --status # just check if VAPID is ready
 
    Requires: web-push package installed (npm install web-push --save-dev)
-   Status: BLOCKED — cloudflare.vapid MISSING (generate VAPID keys + store in secrets)
+   Status: READY — cloudflare.vapid present in secrets gateway (web-push installed, VAPID keys provisioned S207)
 */
 import { createRequire } from 'node:module';
 import { join, dirname } from 'node:path';

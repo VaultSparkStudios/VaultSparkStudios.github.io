@@ -149,5 +149,50 @@
   ],
   "innovationReserve": ["ignis-unified-chips", "game-discovery-quiz", "ignis-follow-up-threading", "ignis-semantic-clustering"],
   "combinedPriority": 342.1,
-  "executionLog": []
+  "executionLog": [
+    { "session": 211, "slug": "ignis-unified-chips", "shipped": true, "wave": "W2", "rung": "L2", "commit": "in S211 closeout" },
+    { "session": 211, "slug": "game-discovery-quiz", "shipped": true, "wave": "W6", "rung": "L2", "commit": "in S211 closeout" },
+    { "session": 211, "slug": "web-push-complete", "shipped": true, "wave": "W1", "rung": "L2", "commit": "in S211 closeout", "note": "Worker /v/push-subscribe + push-subscribe.js + push-config.json" },
+    { "session": 211, "slug": "ignis-follow-up-threading", "shipped": true, "wave": "W3", "rung": "L2", "commit": "in S211 closeout", "note": "renderEntityChips entity follow-up" },
+    { "session": 211, "slug": "ignis-semantic-clustering", "shipped": true, "wave": "W4", "rung": "L2", "commit": "in S211 closeout", "note": "CLUSTER_THEMES keyword classifier" },
+    { "session": 211, "slug": "changelog-subscribe-cta", "shipped": true, "wave": "W5", "rung": "L1", "commit": "in S211 closeout" },
+    { "session": 211, "slug": "vault-member-portal-depth", "shipped": true, "wave": "W7", "rung": "L1", "commit": "in S211 closeout", "note": "earn-faster strip — not full rank dashboard" }
+  ],
+  "s212Items": [
+    {
+      "id": "S212-1", "slug": "orphan-shell-cleanup", "tier": "⚡", "axis": "speed",
+      "title": "Remove 7 orphan shell files", "effortHours": 0.17, "impact": 6, "innovation": 2, "priority": 10.5,
+      "recipe": "git rm 7 orphan shell files not in shell-manifest.json", "shipped": false
+    },
+    {
+      "id": "S212-2", "slug": "pwa-manifest-screenshot", "tier": "💡", "axis": "speed",
+      "title": "PWA manifest screenshot → bespoke og-home.png", "effortHours": 0.17, "impact": 5, "innovation": 2, "priority": 8.8,
+      "recipe": "manifest.json screenshot src → /assets/og/og-home.png + add shortcuts", "shipped": false
+    },
+    {
+      "id": "S212-3", "slug": "push-dispatch-status-update", "tier": "⚡", "axis": "speed",
+      "title": "Push-dispatch comment: BLOCKED → READY", "effortHours": 0.08, "impact": 4, "innovation": 1, "priority": 6.5,
+      "recipe": "Update push-dispatch.mjs header comment status line", "shipped": false
+    },
+    {
+      "id": "S212-4", "slug": "game-quiz-personalization", "tier": "⚡", "axis": "gamification",
+      "title": "Game quiz: pre-select from vs_last_game", "effortHours": 1, "impact": 7, "innovation": 6, "priority": 16.2,
+      "recipe": "Read localStorage vs_last_game; pre-select matching quiz option; emit quiz:personalized RUM", "shipped": false
+    },
+    {
+      "id": "S212-5", "slug": "ignis-starter-prompts", "tier": "⚡", "axis": "ai",
+      "title": "IGNIS: curated 'Ask the vault' starter prompts", "effortHours": 1, "impact": 8, "innovation": 7, "priority": 18.6,
+      "recipe": "5 SOUL-voice starter questions as clickable chips above oracle input; hide after first query; oracle:starter_click RUM", "shipped": false
+    },
+    {
+      "id": "S212-6", "slug": "push-kv-batch-dispatch", "tier": "🔥", "axis": "feature",
+      "title": "Push dispatch: KV batch + notify-subscribers.mjs", "effortHours": 2, "impact": 9, "innovation": 7, "priority": 20.9,
+      "recipe": "--kv-dispatch mode: CF KV list sub: keys → webPush.sendNotification each; notify-subscribers.mjs wrapper; npm push:notify", "shipped": false
+    },
+    {
+      "id": "S212-7", "slug": "changelog-notification-trigger", "tier": "⚡", "axis": "engagement",
+      "title": "Changelog push notification trigger", "effortHours": 1.5, "impact": 8, "innovation": 6, "priority": 17.4,
+      "recipe": "notify-changelog-subscribers.mjs: changelog JSON → sha sentinel → dispatch to all subscribers if new entry", "shipped": false
+    }
+  ]
 }
