@@ -1,6 +1,21 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-19 (Session 210 — autonomous /goal arc: IGNIS UX depth + returning-visitor strip + OG uniqueness + build-SHA beacon + nav-catalog derivation)
+Last updated: 2026-06-20 (Session 211 — autonomous arc: web-push complete + IGNIS depth + game discovery quiz + changelog CTA + portal depth)
+
+## S211 outcome + carries
+
+**Shipped in S211 (7/7 waves):**
+- [x] **[W1/INFRA] Web-push complete.** Worker `/v/push-subscribe` (SHA-256 endpoint hash, RATE_LIMIT KV, 90-day TTL); `assets/push-subscribe.js` wires portal `#toggle-push` + `[data-push-subscribe]` containers; `api/push-config.json` (VAPID public key); ambient-loader predicate-loaded. RUM: push:subscribed/unsubscribed/error/prompt_shown. Worker deployed `e4e21429`.
+- [x] **[W2/AI] IGNIS unified chip tray.** "Recent | Topics" tabs unify history + contextual chips + oracle clusters; `sessionStorage` tab persistence; `showTray()` / `activateTab()`.
+- [x] **[W3/AI] IGNIS entity follow-up chips.** `renderEntityChips()` tokenizes answer text → finds index docs whose title tokens appear in answer but not query → "Dig deeper:" chips. `oracle:followup_shown`/`oracle:followup_click` RUM.
+- [x] **[W4/AI] IGNIS semantic cluster grouping.** Oracle Topics chips grouped by `CLUSTER_THEMES` keyword classification (Games / Community / Studio); shows all 4 anonymous clusters (was 3); uppercase group labels.
+- [x] **[W5/ENGAGEMENT] Changelog inline push CTA.** `[data-push-subscribe]` hook in `/changelog/` hero → push-subscribe.js auto-renders direct subscribe button for PushManager-capable browsers.
+- [x] **[W6/ENGAGEMENT] Game discovery quiz.** `assets/game-discovery-quiz.js`: 3-question weighted-score quiz on `/games/` routing to Call of Doodie / Football GM / Forge preview. Result triggers catalog filter scroll. `quiz:*` RUM (5 events).
+- [x] **[W7/PORTAL] Rank earn-faster strip.** Compact "Earn faster" strip below rank bar (3 quick-win methods with `/invite/` live link). CSS in `portal.css`.
+
+**Honest deferrals (S211):**
+- [ ] **[MEASURE/P3] Re-evaluate play-next rotation.** Epoch = 2026-06-18; `deadCount` = 0. No action until post-epoch field data accrues.
+- [ ] **[CONTENT/P1·FOUNDER] Publish forge devlog.** Founder-voice; never auto-published.
 
 ## S210 outcome + carries
 

@@ -8,16 +8,48 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▆▇▇▇
-Avgs - 3: 908.7 | 5: ~912 | 10: ~940 | 25: 954 | all: 958 (v3.0 /1000)
-  └ 3-session: Dev 92.3 | Align 91.0 | Momentum 88.7 | Engage 91.3 | Process 93.0
-Velocity trend: ↑ (S210: 6 items + 1 honest deferral; S209: 2 deep root-fix items; S208: 4 items + 2 gates) | Protocol velocity: → | Debt: → (nav-catalog sync closes the nav-list-hardcoding class; OG uniqueness gate closes generic-fallback class)
-Momentum runway: ENGAGEMENT + INFRA — web-push feature (VAPID READY, ship the endpoint) · re-evaluate play-next rotation post-2026-06-18 · broad hero-glow graduation (mature-surface · real-device review) · publish forge devlog (founder) · sibling compliance drift via Ark | Intent rate: 100% (last 5) | (S210 shipped: IGNIS contextual chips + loading animation + offline fallback + returning-visitor strip + OG uniqueness gate + build-SHA beacon + nav-catalog derivation; deferred: web-push #7 VAPID READY)
-Last session: 2026-06-19 | Session 210 | Total: 913/1000 (v3.0) | Velocity: 6 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▇▆▇▇
+Avgs - 3: 910.7 | 5: ~913 | 10: ~938 | 25: 954 | all: 958 (v3.0 /1000)
+  └ 3-session: Dev 93.0 | Align 91.7 | Momentum 91.7 | Engage 93.7 | Process 93.0
+Velocity trend: ↑↑ (S211: 7 items shipped across 7 waves; S210: 6 items + 1 honest deferral; S209: 2 deep root-fix items) | Protocol velocity: → | Debt: → (web-push endpoint + subscribe UI shipped; earn-strip motivates portal engagement)
+Momentum runway: MEASUREMENT — re-evaluate play-next rotation once post-2026-06-18 impressions accrue · CONTENT (founder): publish forge devlog · ENGINEERING: nav Projects/Games dropdown catalog-derivation (needs catalog∪extra-paged merge design) · sibling compliance drift via Ark | Intent rate: 100% (last 5) | (S211 shipped: web-push endpoint + subscribe UI + VAPID public key; IGNIS unified tray; entity follow-up chips; semantic cluster grouping; changelog push CTA; game discovery quiz; rank earn-faster strip. Worker deployed e4e21429.)
+Last session: 2026-06-20 | Session 211 | Total: 919/1000 (v3.0) | Velocity: 7 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-20 — Session 211 (/goal autonomous arc · web-push endpoint + IGNIS tray + entity chips + cluster grouping + changelog CTA + game quiz + earn-faster strip · build:check EXIT 0) | Total: 919/1000 (v3.0) | Velocity: 7 | Debt: →
+Avgs — 3: 910.7 | 5: ~913 | 10: ~938 | 25: 954 | all: 958
+
+Dev Health 93 | Creative Alignment 92 | Momentum 92 | Engagement 94 | Process Quality 93 | Cross-Repo Coherence 90 | Security Posture 89 | Ecosystem Integration 92 | Capital Efficiency 91 | Automation Coverage 93
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 93 | → | build:check EXIT 0; Worker deployed e4e21429; VAPID public key committed to api/push-config.json; push-subscribe.js + game-discovery-quiz.js registered + bundle rebuilt (14 sources, 60.2KB core). Pre-existing `smoke-startup-scripts` (claude.api advisory) unchanged. |
+| Creative Alignment | 92 | ↑ | Game quiz with 3-question weighted scoring is a novel routing mechanism; entity chips from token intersection is a lightweight intelligence surface; tabbed tray unifies two separate chip rows into a single UX. Earn-faster strip is honest-and-actionable (real actions, real points). SOUL non-negotiables intact. |
+| Momentum | 92 | ↑ | 7 items shipped across 7 waves — highest item count in recent sessions; carried the S210 web-push VAPID READY item to completion in Wave 1. |
+| Engagement | 94 | ↑ | Web-push subscription infrastructure (portal toggle + [data-push-subscribe] containers + changelog CTA); game quiz routes anonymous visitors to the best-fit game by preference; earn-faster strip shows members a concrete path to rank progress; entity chips extend oracle sessions beyond the initial answer. |
+| Process Quality | 93 | → | Caught and fixed style.cssText violation on IGNIS monitored runtime target (renderEntityChips); stash/rebase sequence handled cleanly on diverged remote; all 7 items premise-verified against live code before implementation. |
+| Cross-Repo Coherence | 90 | → | No cross-repo tree edits; all RUM events registered in Worker RUM_UX_EVENTS; push events + quiz events show advisory dead-warnings (predicate-loaded assets — scanner-invisible, documented, exit 0). |
+| Security Posture | 89 | ↑ | VAPID key boundary held: public key only in api/push-config.json (safe to commit); private key stays in secrets gateway only. Push endpoint uses SHA-256 hashed endpoint storage (privacy-preserving, no raw endpoint in KV). |
+| Ecosystem Integration | 92 | ↑ | /v/push-subscribe Worker route live; push-config.json published as a public API endpoint; changelog + portal + games all wired to push-subscribe.js via [data-push-subscribe] and ambient-loader predicates. |
+| Capital Efficiency | 91 | → | No new paid dependencies; all flat-rate Max Plan; VAPID via crypto.subtle (no web-push npm package needed). |
+| Automation Coverage | 93 | → | No new build:check gates this session (sufficient coverage; ambient-loader predicate-loaded assets are by design scanner-invisible). Earn-faster strip and quiz are client-side with no build-time data generation. |
+
+### Self-audit + brainstorm
+
+**What this session proves:** the S210 VAPID carry was a straight execution — keys were READY, the endpoint and subscribe UI shipped cleanly in Wave 1. The IGNIS tray unification (Wave 2) collapses two previously separate chip surfaces into one tabbed component without losing either. Entity chips from token intersection (Wave 3) provide contextually relevant follow-ups without any server round-trips or LLM calls — a pattern worth repeating on other index-powered surfaces. The game quiz (Wave 6) is the first funnel that actively routes anonymous visitors toward conversion rather than passively listing options; the earn-faster strip (Wave 7) is the first portal surface that shows members a concrete "how to level up" path rather than just showing where they are.
+
+**Second-order candidates generated:**
+1. **Push dispatch v1** — the endpoint is live and the subscriber list is building; the missing piece is `push-dispatch.mjs --send` sending an actual notification. Even a test dispatch to all current subscribers would close the loop. (2h effort, can be a non-build-time script)
+2. **Game quiz personalization** — if `vs_visit_count` > 1 and the visitor has a `vs_last_game` cookie, pre-select the option that matches their history and show "Play again?" as a fourth outcome. (2h effort, predicate-loaded)
+3. **Earn-faster strip real data** — the strip currently shows static point values. If the portal `rankConfig` from Supabase exposes the actual multipliers, the strip could derive them at render time (portal auth already provides the session). (3h effort)
+4. **Push notification dispatch test** — after ≥1 subscriber, run `push-dispatch.mjs --test --to self` to verify the full end-to-end path (subscribe → KV → dispatch → notification). Currently the infrastructure is unproven end-to-end.
+
+### Committed to TASK_BOARD (2 items)
+- `[INFRA/P2·SIL]` Push dispatch v1 — `push-dispatch.mjs --send` test dispatch closes the web-push loop end-to-end
+- `[ENGAGEMENT/P3·SIL]` Game quiz personalization — pre-select based on `vs_last_game` cookie for returning players
 
 ## 2026-06-19 — Session 210 (/goal autonomous arc · IGNIS UX depth + returning-visitor strip + OG uniqueness + build-SHA beacon + nav-catalog derivation · build:check EXIT 0) | Total: 913/1000 (v3.0) | Velocity: 6 | Debt: →
 Avgs — 3: 908.7 | 5: ~912 | 10: ~940 | 25: 954 | all: 958
