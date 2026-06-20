@@ -1,34 +1,34 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-06-19 (Session 209 closeout) -->
+<!-- generated-at: 2026-06-19 (Session 210 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S209 ═══════╗
-║  Date: 2026-06-19  ·  SIL: 901/1000  ·  Velocity: 2 ↓            ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S210 ═══════╗
+║  Date: 2026-06-19  ·  SIL: 913/1000  ·  Velocity: 6 →            ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ Shipped: 2 improvements across 2 groups — observability-hone  ║
-║  ✓ Tests: 116/116 build:check gates passing (delta +0) · `rollu  ║
-║  ✓ Deploy: pending (committed to main; CF Pages auto-deploys th  ║
+║  ✓ Shipped: 6 improvements across 4 waves + bonus nav-derivatio  ║
+║  ✓ Tests: 116/116 build:check gates passing (delta +0 · new che  ║
+║  ✓ Deploy: direct push to main; CF Pages auto-deploys; `check-p  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 901/1000 ═══════════════════════════════════════╗
-║    Dev Health         91   █████████░                            ║
-║    Alignment          92   █████████░                            ║
-║    Momentum           86   █████████░                            ║
-║    Engagement         88   █████████░                            ║
+╔══ SCORES · SIL 913/1000 ═══════════════════════════════════════╗
+║    Dev Health         93   █████████░                            ║
+║    Alignment          91   █████████░                            ║
+║    Momentum           90   █████████░                            ║
+║    Engagement         93   █████████░                            ║
 ║    Process Qual       93   █████████░                            ║
 ║    Coherence          90   █████████░                            ║
 ║    Security           88   █████████░                            ║
-║    Ecosystem          89   █████████░                            ║
+║    Ecosystem          91   █████████░                            ║
 ║    Capital            91   █████████░                            ║
 ║    Automation         93   █████████░                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  · context/CURRENT_STATE.md                                      ║
 ║  · context/TASK_BOARD.md                                         ║
-║  · context/LATEST_HANDOFF.md                                     ║
+║  ✓ context/LATEST_HANDOFF.md                                     ║
 ║  · logs/WORK_LOG.md                                              ║
 ║  · context/DECISIONS.md                                          ║
 ║  · context/SELF_IMPROVEMENT_LOOP.md                              ║
@@ -38,9 +38,13 @@
 ║  · agent memory (~/.claude/projects/<slug>/memory/)              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ GIT STATUS ══════════════════════════════════════════════════╗
-║  Changes: 0 files  ·  M:0 A:0 D:0 ?:0                            ║
-║  Ahead: 0  ·  Behind: 0                                          ║
+║  Changes: 24 files  ·  M:19 A:0 D:0 ?:5                          ║
+║  Ahead: 7  ·  Behind: 0                                          ║
 ║  Branch: main                                                    ║
+╚════════════════════════════════════════════════════════════════╝
+╔══ DEPLOYMENT ══════════════════════════════════════════════════╗
+║  Staging:  https://website.staging.vaultsparkstudios.com  ·  he  ║
+║  Live:     N/A — pre-deploy (FORGE)                              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
 ║  Doctor:        9/13                                             ║
