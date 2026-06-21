@@ -150,7 +150,7 @@
       var s = document.createElement('style');
       s.id = 'vs-push-subscribe-styles';
       s.textContent =
-        '.vs-push-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1.2rem;border-radius:999px;border:1px solid rgba(31,162,255,.4);background:rgba(31,162,255,.08);color:#7fc3ff;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;transition:background .18s,transform .18s;}' +
+        '.vs-push-btn{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1.2rem;min-height:44px;border-radius:999px;border:1px solid rgba(31,162,255,.4);background:rgba(31,162,255,.08);color:#7fc3ff;font-weight:700;font-size:.85rem;cursor:pointer;font-family:inherit;transition:background .18s,transform .18s;}' +
         '.vs-push-btn:hover:not(:disabled){background:rgba(31,162,255,.14);transform:translateY(-1px);}' +
         '.vs-push-btn:disabled{opacity:.5;cursor:default;}' +
         '.vs-push-btn--active{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3);color:#4ade80;}' +
