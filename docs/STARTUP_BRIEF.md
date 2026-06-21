@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-21 (Session 212 closeout) -->
+<!-- generated-at: 2026-06-21 (Session 213 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 212 closeout · 2026-06-21.
+> **Fast-boot brief** — generated at Session 213 closeout · 2026-06-21.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 213 · 2026-06-21 · FOUNDER MODE                         ║
+║  Session 214 · 2026-06-21 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,42 +35,42 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    922/1000   ██████████████████████░░   92%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6↑                          ║
-║    Last active: 20624d  ·  Last closeout: 1d  ·  (active = newe  ║
-║    Trend  ▆▂▆▆▆  ↑  (last 5 sessions)                            ║
+║    927/1000   ██████████████████████░░   93%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 5↑                          ║
+║    Last active: 20624d  ·  Last closeout: 0d  ·  (active = newe  ║
+║    Trend  ▂▆▆▆▄  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
 ║    Dev Health        93    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Alignment         92    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Momentum          92    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Alignment         93    █████████░  ▇▇▇▇▇▇▇▇ →                ║
+║    Momentum          93    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Engagement        94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Process Qual      93    █████████░  ▇▆▇▇▇▇▇▇ →                ║
-║    Coherence         90    █████████░  ········ →                ║
-║    Security          90    █████████░  ········ →                ║
+║    Process Qual      93    █████████░  ▆▇▇▇▇▇▇▇ →                ║
+║    Coherence         91    █████████░  ········ →                ║
+║    Security          91    █████████░  ········ →                ║
 ║    Ecosystem         93    █████████░  ········ →                ║
 ║    Capital           92    █████████░  ········ →                ║
-║    Automation        93    █████████░  ········ →                ║
+║    Automation        94    █████████░  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 212 ═══════════════════════════╗
-║  Shipped:  6 waves — orphan shell cleanup W1, PWA manifest fix   ║
+╔══ WHERE WE LEFT OFF  ·  Session 213 ═══════════════════════════╗
+║  Shipped:  5 waves — W2a IGNIS starter analytics (oracle:starte  ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,867 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
-║     ~1,434 tok/turn  ·  cache 50%  ·  126 turns to compact       ║
+║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    2% used                          ║
+║     18,961 / 1,000,000 tok  ·  claude-code/opus-4-8-1m  ·  meas  ║
+║     ~9,481 tok/turn  ·  cache 50%  ·  95 turns to compact        ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-15)                   ║
-║  ✓  Velocity      6 ↑  ·  Debt: ↑                                ║
-║  ✓  Runway        PUSH — run push:count → send first real notif  ║
+║  ✓  Velocity      5 ↑  ·  Debt: ↓                                ║
+║  ✓  Runway        PUSH — run push:count → send first segmented   ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         44691 FORGE  ·  2d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
@@ -100,31 +100,31 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▂▆▆▆  6↑  (last 5 sessions)                        ║
+║  Velocity:   ▂▆▆▆▄  5↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  0/1000  (↓922 vs current 922)                       ║
+║  Projected:  0/1000  (↓927 vs current 927)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   97  [AI]           IGNIS starter prompts analytics             ║
-║        IGNIS starter prompts analytics must stay grounded in pu  ║
-║                                                                  ║
 ║   96  [PRODUCT]      First real push notification                ║
 ║        First real push notification is open, local, and unblock  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   90  [PRODUCT]      Re-evaluate play-next rotation once post-2  ║
+║   93  [PRODUCT]      Re-evaluate play-next rotation once post-2  ║
 ║        Re-evaluate play-next rotation once post-2026-06-18 impr  ║
 ║                                                                  ║
-║   87  [BRAND]        Publish forge devlog (draft ready; founder  ║
+║   90  [BRAND]        Publish forge devlog (draft ready; founder  ║
 ║        Publish forge devlog (draft ready; founder-voice, never   ║
+║                                                                  ║
+║   87  [PRODUCT]      studio-ops: process Ark cargo 01JRK6AH97E0  ║
+║        studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -132,5 +132,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 212 closeout · 2026-06-21*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 213 closeout · 2026-06-21*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
