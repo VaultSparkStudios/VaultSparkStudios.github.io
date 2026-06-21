@@ -177,38 +177,52 @@
     var histEl = root.querySelector('.vs-ask-ignis__history');
     var tray = root.querySelector('.vs-ask-ignis__chip-tray');
 
-    // S212 W4: curated starter prompts — shown to first-time / no-history visitors.
-    // 5 SOUL-voice questions that model the depth of IGNIS; auto-dismissed on first query.
+    // S212 W4: curated starter prompts — first-time / no-history visitors.
+    // S213 W2a: per-starter slug for analytics attribution.
+    // S213 W2b: vs_last_game personalization — game visitors see relevant starters.
+    var STARTERS_ALL = [
+      { q: 'What\'s currently being built in the Forge?', slug: 'forge-builds' },
+      { q: 'Which games can I play right now for free?', slug: 'free-games' },
+      { q: 'How does the Vault rank system work?', slug: 'rank-system' },
+      { q: 'What makes VaultSpark Studios different?', slug: 'studio-diff' },
+      { q: 'What shipped in the studio recently?', slug: 'recent-ships' },
+    ];
+    var STARTERS_GAME = {
+      cod:   [{ q: 'What makes Call of Doodie different?', slug: 'cod-diff' },
+              { q: 'What\'s new in Call of Doodie?', slug: 'cod-new' }],
+      fgm:   [{ q: 'How deep is Football GM\'s franchise mode?', slug: 'fgm-depth' },
+              { q: 'What\'s unique about VaultSpark Football GM?', slug: 'fgm-diff' }],
+      forge: [{ q: 'What\'s being built in the Forge right now?', slug: 'forge-now' },
+              { q: 'Which Forge project launches next?', slug: 'forge-launch' }],
+    };
     var starterWrap = null;
     (function renderStarters() {
-      var STARTERS = [
-        'What\'s currently being built in the Forge?',
-        'Which games can I play right now for free?',
-        'How does the Vault rank system work?',
-        'What makes VaultSpark Studios different?',
-        'What shipped in the studio recently?',
-      ];
       var hasHistory = false;
       try { hasHistory = !!(localStorage.getItem('vs_ignis_history')); } catch (_) {}
       if (hasHistory) return;
+      var lastGame = null;
+      try { lastGame = localStorage.getItem('vs_last_game'); } catch (_) {}
+      var gameStarters = (lastGame && STARTERS_GAME[lastGame]) || [];
+      var starters = gameStarters.concat(STARTERS_ALL).slice(0, 5);
       starterWrap = document.createElement('div');
       starterWrap.className = 'vs-ignis-starters';
       var lbl = document.createElement('div');
       lbl.className = 'vs-ignis-starters__label';
-      lbl.textContent = 'Ask the vault';
+      lbl.textContent = gameStarters.length ? 'Based on your last game' : 'Ask the vault';
       starterWrap.appendChild(lbl);
       var starterList = document.createElement('div');
       starterList.className = 'vs-ignis-starters__chips';
-      STARTERS.forEach(function (q) {
+      starters.forEach(function (s) {
         var btn = document.createElement('button');
         btn.type = 'button';
         btn.className = 'vs-ignis-starters__chip';
-        btn.textContent = q;
+        btn.setAttribute('data-slug', s.slug);
+        btn.textContent = s.q;
         btn.addEventListener('click', function () {
-          form.q.value = q;
-          emitUx('oracle:starter_click');
+          form.q.value = s.q;
+          emitUx('oracle:starter_click:' + s.slug);
           if (starterWrap) starterWrap.hidden = true;
-          runQuery(q, 'starter');
+          runQuery(s.q, 'starter');
         });
         starterList.appendChild(btn);
       });
@@ -296,7 +310,21 @@
         }
         var result = answer(q, idx, { followUp: followUp });
         if (!result) {
-          out.innerHTML = vsHtml('IGNIS did not find a strong public match yet. Try "membership", "latest ships", "security", "Oracle", or a game name.');
+          // S213 W2c: dynamic no-result fallback — suggest from STARTERS_ALL so
+          // suggestions stay current as the index grows; emit oracle:no_result for
+          // visibility into miss rate (was completely invisible before this session).
+          emitUx('oracle:no_result');
+          var fallbacks = (STARTERS_ALL || []).slice(0, 3);
+          var fbHtml = '<p class="vs-ignis-no-result">IGNIS didn’t find a match. Try one of these—</p>' +
+            '<div class="vs-ignis-starters__chips">' +
+            fallbacks.map(function (s) {
+              return '<button type="button" class="vs-ignis-starters__chip" data-fb-slug="' + esc(s.slug) + '">' + esc(s.q) + '</button>';
+            }).join('') + '</div>';
+          out.innerHTML = vsHtml(fbHtml);
+          var fbBtns = out.querySelectorAll('[data-fb-slug]');
+          if (fbBtns) fbBtns.forEach(function (b) {
+            b.addEventListener('click', function () { runQuery(b.textContent.trim(), 'no-result-fallback'); });
+          });
           return;
         }
         out.innerHTML = vsHtml('<strong>IGNIS read:</strong> ' + esc(result.text) + '<div class="vs-ask-ignis__sources">' + result.sources.map(function (src) {

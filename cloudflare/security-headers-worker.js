@@ -320,10 +320,10 @@ const RUM_UX_EVENTS = new Set([
   'passport:inbound',
   // S210 #1: page-aware context chip clicked (oracle suggestion pre-populated for this pathname).
   'oracle:suggestion_click',
-  // S212 W4: curated starter prompt clicked (first-time visitor guidance).
-  'oracle:starter_click',
   // S210 #5: IGNIS offline fallback shown — network failure surfaced cached prefix entries.
   'oracle:offline_cache_shown',
+  // S213 W2c: no-result event — query found zero matches; miss rate now measurable.
+  'oracle:no_result',
   // S210 #2: returning-visitor signal strip — "What sparked since your last visit".
   'strip:signal_shown',
   'strip:dismissed',
@@ -368,6 +368,11 @@ const RUM_UX_DYNAMIC = [
   prefixAllowlist('constellation', { charset: /^[a-z0-9:-]+$/, maxLen: 36 }),
   // S207: cta:variant:<id>:<n> — dead-cta-rotation-loop variant attribution.
   prefixAllowlist('cta', { charset: /^[a-z0-9:-]+$/, maxLen: 36 }),
+  // S213 W2a: oracle:starter_click:<slug> — per-starter attribution (forge-builds /
+  // free-games / rank-system / studio-diff / recent-ships / cod-diff / cod-new /
+  // fgm-depth / fgm-diff / forge-now / forge-launch). Static oracle:starter_click
+  // removed from exact Set; slug suffix now required so we learn which starters resonate.
+  prefixAllowlist('oracle:starter_click', { charset: /^[a-z0-9-]+$/, maxLen: 20 }),
 ];
 const cleanRumUxEvent = makeRumUxCleaner(RUM_UX_EVENTS, RUM_UX_DYNAMIC);
 
