@@ -330,6 +330,8 @@ const RUM_UX_EVENTS = new Set([
   'strip:changelog_click',
   // S211 Wave 1: web-push subscription events from push-subscribe.js.
   'push:subscribed', 'push:unsubscribed', 'push:error', 'push:prompt_shown',
+  // S213 W3b: service-worker push delivery + click tracking
+  'push:received', 'push:clicked',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so

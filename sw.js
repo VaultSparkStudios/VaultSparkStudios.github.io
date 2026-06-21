@@ -280,6 +280,17 @@ self.addEventListener('fetch', (e) => {
 });
 
 // ── Push Notifications ─────────────────────────────────────────────────────
+function rumBeacon(uxName) {
+  try {
+    fetch('/v/rum', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ route: '/sw', ux: uxName }),
+      keepalive: true,
+    }).catch(function () {});
+  } catch (_) {}
+}
+
 self.addEventListener('push', function (event) {
   let data = {
     title: 'VaultSpark Studios',
@@ -297,12 +308,13 @@ self.addEventListener('push', function (event) {
       badge: '/assets/icon-32.png',
       tag:   'vaultspark-push',
       data:  { url: data.url },
-    })
+    }).then(function () { rumBeacon('push:received'); })
   );
 });
 
 self.addEventListener('notificationclick', function (event) {
   event.notification.close();
+  rumBeacon('push:clicked');
   const url = (event.notification.data && event.notification.data.url) || '/vault-member/';
   event.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(function (wins) {
