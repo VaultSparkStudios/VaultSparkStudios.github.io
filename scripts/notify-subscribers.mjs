@@ -81,11 +81,11 @@ async function listAllSubKeys(accountId, apiToken) {
 
   if (!accountId || !apiToken) {
     console.error('notify-subscribers: cloudflare.deploy credentials MISSING');
-    process.exit(1);
+    process.exitCode = 1; return;
   }
   if (!vapidPub || !vapidPriv || !vapidSubj) {
     console.error('notify-subscribers: cloudflare.vapid credentials MISSING');
-    process.exit(1);
+    process.exitCode = 1; return;
   }
 
   console.log('Listing subscribers from KV…');
@@ -93,7 +93,6 @@ async function listAllSubKeys(accountId, apiToken) {
   console.log(`Found ${keys.length} subscriber key(s).`);
 
   if (COUNT_ONLY) {
-    // Fetch all subs to show game breakdown
     const gameCounts = {};
     let withGame = 0, withoutGame = 0;
     for (const key of keys) {
@@ -108,23 +107,23 @@ async function listAllSubKeys(accountId, apiToken) {
     }
     console.log(`  With game context: ${withGame} (${Object.entries(gameCounts).map(([g, n]) => `${g}:${n}`).join(', ') || 'none'})`);
     console.log(`  No game context:   ${withoutGame}`);
-    process.exit(0);
+    return;
   }
 
   if (!keys.length) {
     console.log('No subscribers — nothing to send.');
-    process.exit(0);
+    return;
   }
 
   if (!BODY) {
     console.error('notify-subscribers: --body is required');
-    process.exit(1);
+    process.exitCode = 1; return;
   }
 
   const require = createRequire(import.meta.url);
   let webPush;
   try { webPush = require('web-push'); }
-  catch (_) { console.error('notify-subscribers: web-push not installed'); process.exit(1); }
+  catch (_) { console.error('notify-subscribers: web-push not installed'); process.exitCode = 1; return; }
 
   webPush.setVapidDetails(vapidSubj, vapidPub, vapidPriv);
 
@@ -143,7 +142,7 @@ async function listAllSubKeys(accountId, apiToken) {
     console.log('  body: ', BODY);
     console.log('  url:  ', URL_PATH);
     if (GAME_FILTER) console.log('  filter: --game', GAME_FILTER);
-    process.exit(0);
+    return;
   }
 
   let sent = 0, failed = 0, skipped = 0;
@@ -162,5 +161,5 @@ async function listAllSubKeys(accountId, apiToken) {
   }
   const skipNote = GAME_FILTER ? ` · ${skipped} skipped (game≠${GAME_FILTER})` : '';
   console.log(`Done: ${sent} sent, ${failed} failed${skipNote} (${keys.length} total).`);
-  process.exit(failed > 0 && sent === 0 ? 1 : 0);
+  if (failed > 0 && sent === 0) process.exitCode = 1;
 })();

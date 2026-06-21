@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-20T19:42:06.709Z",
+  "generatedAt": "2026-06-21T04:06:57.873Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 211,
-    "lastUpdated": "2026-06-20",
-    "currentFocus": "S211 (autonomous arc) shipped 7 waves: web-push endpoint (/v/push-subscribe, SHA-256 KV storage, 90-day TTL) + subscribe UI (push-subscribe.js portal toggle + [data-push-subscribe] containers) + VAPID public key published (api/push-config.json); IGNIS unified Recent|Topics tray (tabbed chip tray, sessionStorage persistence); entity follow-up chips (renderEntityChips, 'Dig deeper:' row from answer text tokens); semantic cluster grouping (CLUSTER_THEMES Games/Community/Studio keyword classification, all 4 anonymous clusters shown); changelog inline push CTA ([data-push-subscribe] hook in /changelog/ hero); game discovery quiz (3-question weighted-score quiz on /games/ routing to best-fit game + catalog filter scroll); rank earn-faster strip (3 quick-win methods below rank bar in portal). Worker deployed e4e21429. Doctor blockingFailing 0. SIL 913→925 (estimated).",
-    "nextMilestone": "Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice). Engineering: nav Projects/Games dropdown catalog-derivation (needs catalog∪extra-paged merge design). studio-ops: sibling compliance drift (Hashmark/VOID/SHADOW/VEILOS) — ship via Ark.",
+    "currentSession": 212,
+    "lastUpdated": "2026-06-21",
+    "currentFocus": "S212 (autonomous arc continuation) shipped 6 waves: W1 orphan shell cleanup (7 stale build artifacts removed); W2 PWA manifest → bespoke og-home.png + push-dispatch status READY; W3 game quiz personalization (vs_last_game ambient-loader tracker + pre-selected Q1 option + 'Based on your last session' hint + quiz:personalized RUM); W4 IGNIS curated starter prompts (5 SOUL-voice questions, hidden on first query, oracle:starter_click RUM, first-time-visitor guidance); W5 push dispatch KV batch (notify-subscribers.mjs: enumerates vs:push:sub: keys from CF KV via cloudflare.deploy API, fetches subscriptions, dispatches via web-push + npm run push:notify/push:count); W6 changelog notification trigger (notify-changelog-subscribers.mjs: reads changelog-narrative.json, compares against data/last-notified-changelog.json sentinel, dispatches push on new entry + npm run notify:changelog). Worker deployed ac1b2596. RUM allowlist clean (63 allowlisted · 67 call-sites). Doctor blockingFailing 0. SIL 919→922.",
+    "nextMilestone": "Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice). Engineering: nav Projects/Games dropdown catalog-derivation (needs catalog∪extra-paged merge design). Push: first real-world test of notify-subscribers.mjs (run push:count to see subscriber count, then push:notify to send first notification). studio-ops: sibling compliance drift (Hashmark/VOID/SHADOW/VEILOS) — ship via Ark.",
     "blockers": [
       {
         "id": "staging-box-hcloud",
@@ -49,10 +49,11 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "Shipped: 7 waves — web-push endpoint+UI+config (W1), IGNIS \"Recent | Topics\" unified tray (W2), entity follow-up chips (W3), semantic cluster grouping (W4), changelog inline push CTA (W5), game discovery quiz (W6), rank earn-faster strip (W7).",
-        "Tests: 25/25 Worker unit tests · style contract clean · ambient bundle sync · RUM allowlist clean (9 advisory dead-config warnings — all predicate-loaded assets, not scanner-visible).",
-        "Deploy: pushed to main (8276fce5); Worker deployed `e4e21429` (`/v/push-subscribe` endpoint live).",
-        "Deferrals: play-next rotation re-evaluation (awaiting post-epoch field data); forge devlog (founder-voice, never auto-published)."
+        "Shipped: 6 waves — orphan shell cleanup W1, PWA manifest fix W2, game quiz personalization (vs_last_game) W3, IGNIS curated starter prompts W4, push dispatch KV batch (notify-subscribers.mjs) W5, changelog notification trigger (notify-changelog-subscribers.mjs) W6.",
+        "Tests: Worker deployed ac1b2596 · check-rum-allowlist 63/67 clean · check-intelligence-style-contract clean · doctor blockingFailing 0.",
+        "Deploy: pushed to main (25d5b147 build artifacts); Worker ac1b2596 deployed with quiz:personalized + oracle:starter_click in RUM_UX_EVENTS.",
+        "First action next session: `npm run push:count` to see subscriber count → `npm run push:notify -- --title \"...\" --body \"...\"` for first real notification (founder go-ahead required).",
+        "Deferrals: play-next rotation (awaiting post-2026-06-18 field data); forge devlog (founder-voice); nav catalog-derivation (catalog∪extra-paged merge design needed)."
       ]
     },
     "ignis": {

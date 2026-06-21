@@ -1,485 +1,362 @@
 {
-  "drainedAt": "2026-06-20T06:06:31.805Z",
+  "drainedAt": "2026-06-21T03:23:51.083Z",
   "slug": "vaultsparkstudios-website",
   "count": 2,
   "cargo": [
     {
-      "id": "01JRH4BG2471D9379FA9309E42",
-      "type": "security-protocol-update",
+      "id": "01JRHUKBBC8D6C2CD030210AAE",
+      "type": "session-outcome",
       "from": "studio-ops",
-      "shippedAt": "2026-06-19T23:44:42.564Z",
+      "shippedAt": "2026-06-20T07:23:55.628Z",
       "payload": {
-        "title": "Window-storm hard root-fix + pre-push single-pass scan (S187, founder-flagged)",
-        "summary": "Every Node child_process spawn must set windowsHide:true (S186 shell:true-only rule missed plain spawn(node,…), the real run-doctor storm). Same mass-spawn burst trips Windows Defender Trojan:Win32/SuspExec.SE (false positive). Fix: import all spawns from scripts/lib/safe-spawn.mjs (hardened drop-in); check-windows-hide.mjs now bans direct child_process imports. Also: pre-push hook rewritten single-pass (was ~2800 subprocess spawns on large commits → hung pushes).",
-        "action": "Your next /start auto-applies window-storm-rewire (queued in PENDING_PROPAGATION): copies safe-spawn.mjs + windows-hide-shim.cjs + broadened lint, then rewires your scripts off raw child_process. No action needed — it self-applies.",
-        "refs": [
-          "scripts/lib/safe-spawn.mjs",
-          "scripts/check-windows-hide.mjs",
-          "scripts/codemod-safe-spawn.mjs",
-          "scripts/git-hooks/pre-push"
-        ],
-        "canon": "CANON-016 (propagation) · §0 no-OS-window"
+        "slug": "vaultspark-studio-ops",
+        "medium": "infrastructure",
+        "session": "91",
+        "sil": null,
+        "prevSil": 1,
+        "delta": null,
+        "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
+        "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
+        "shippedFiles": 1,
+        "vaultStatus": "sparked",
+        "ts": "2026-06-20T07:23:55.051Z"
       }
     },
     {
-      "id": "01JRH4DQKIAE422E8ABE44EA25",
-      "type": "pattern-share",
+      "id": "01JRHV19L29A63ED0A34A57110",
+      "type": "session-impact-summary",
       "from": "studio-ops",
-      "shippedAt": "2026-06-19T23:45:58.930Z",
+      "shippedAt": "2026-06-20T07:30:59.874Z",
       "payload": {
-        "title": "Website scaffold: RECOMMENDATION reinforced + 12 MUST gates (S187 founder directives)",
-        "summary": "STUDIO_WEBSITE_SCAFFOLD is a RECOMMENDATION (keep your project creativity + project-specific infra primary; floor to exceed). New MUST gates (blocking in /app-release-gate): footer-completeness (footer ⊇ header ∪ footer-only) · full live cross-platform parity (web/mobile-web/native) · Obelisk login scaffolding (elite UI/UX prepared for newest live Obelisk) · account-menu top-right (prefs/settings/customization) · screenshot visual-testing (required) · multiple project-specific one-click themes incl. dark mode. Recommended tooling: Playwright (screenshot image-test), Docker (where it fits), always use most up-to-date tooling.",
-        "action": "Before scaffolding any public page, read portfolio/STUDIO_WEBSITE_SCAFFOLD/patterns.json (enforcementModel.mustGates) + run scripts/check-footer-completeness.mjs at release.",
-        "refs": [
-          "portfolio/STUDIO_WEBSITE_SCAFFOLD/patterns.json",
-          "portfolio/STUDIO_WEBSITE_SCAFFOLD/catalog.json",
-          "scripts/lib/footer-completeness.mjs",
-          "docs/STUDIO_WEBSITE_SCAFFOLD_PLAN.md"
-        ]
+        "session": 188,
+        "project": "studio-ops",
+        "headline": "Drained top-2 genius [SIL] items root-fixed + caught a hidden S187 codemod regression",
+        "items": [
+          "safe-push.sh rebase-retry helper wired into all 25 telemetry workflows (launch-control push-race fix)",
+          "committed-state de-flake via retry-on-transient-spawn-failure",
+          "FIX: safe-spawn wrapper dropped util.promisify.custom -> promisify(exec) crashed batch-push.mjs (latent studio-wide)",
+          "policy-drift extraction to shared WALK_IGNORE_DIRS"
+        ],
+        "suite": "1360/1360 · 246/246 · 0 flaky",
+        "sil": 999
       }
     }
   ],
   "sigFailures": [
     {
-      "id": "01JR19CMTC5DEDFB3ED682B4B3",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.784Z"
-    },
-    {
-      "id": "01JR19R5PUABD88201E96380B6",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.785Z"
-    },
-    {
-      "id": "01JR1BFAAKE0293C7FE54555AA",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.785Z"
-    },
-    {
-      "id": "01JR1CGV6B05C2515966C88331",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.786Z"
-    },
-    {
-      "id": "01JR1D76EK11F17CFFC82CF7D3",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.786Z"
-    },
-    {
-      "id": "01JR1IFHD0DEAB84B806FC1C5F",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.786Z"
-    },
-    {
-      "id": "01JR1J5RUAFDC1C77982B9F06E",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.786Z"
-    },
-    {
-      "id": "01JR1JBID08D5130BE5E9FE58E",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.787Z"
-    },
-    {
-      "id": "01JR1JUSFQ6308CE0A3BB6D862",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.787Z"
-    },
-    {
-      "id": "01JR1K9614875723A5FB3CDBFA",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.788Z"
-    },
-    {
-      "id": "01JR1KEHG2B9F1740DE1D7A7F6",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.788Z"
-    },
-    {
-      "id": "01JR1KK3M1B6C18B802C36DB64",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.788Z"
-    },
-    {
-      "id": "01JR1KKVQJ383D592F2A1E1C74",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.788Z"
-    },
-    {
-      "id": "01JR1KTVLT54F8A483EB5F79D3",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.789Z"
-    },
-    {
-      "id": "01JR1LMU259DCB16FB4E94EC61",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.789Z"
-    },
-    {
-      "id": "01JR1NGTAT904A89C3977BC35C",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.789Z"
-    },
-    {
-      "id": "01JR1OT0350EB0697A8FF262C8",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.790Z"
-    },
-    {
-      "id": "01JR1SHSEM91ED195B4BC016F1",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.790Z"
-    },
-    {
-      "id": "01JR1T9EPU6A01DF5FCE0C395F",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.790Z"
-    },
-    {
-      "id": "01JR1V6KFEBD441E567070F2C7",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.791Z"
-    },
-    {
-      "id": "01JR2046NP291A44FA215EF962",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.791Z"
-    },
-    {
-      "id": "01JR20NVH49A2CEFDACA6E74A0",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.792Z"
-    },
-    {
       "id": "01JR3LGD30E31016D5FD7A7658",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.792Z"
+      "ts": "2026-06-21T03:23:51.063Z"
     },
     {
       "id": "01JR3M6FJO92A1E7F2C6AB6A0F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.792Z"
+      "ts": "2026-06-21T03:23:51.064Z"
     },
     {
       "id": "01JR3NT8JD3184EDF18042CE2D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.792Z"
+      "ts": "2026-06-21T03:23:51.065Z"
     },
     {
       "id": "01JR3OG678350871BDDCAAEEC2",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.793Z"
+      "ts": "2026-06-21T03:23:51.065Z"
     },
     {
       "id": "01JR3U7RQODBC1373987B77882",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.793Z"
+      "ts": "2026-06-21T03:23:51.065Z"
     },
     {
       "id": "01JR48GTN9DE40D118108E7518",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.793Z"
+      "ts": "2026-06-21T03:23:51.066Z"
     },
     {
       "id": "01JR4G48MFAE0D7D590404F77A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.793Z"
+      "ts": "2026-06-21T03:23:51.066Z"
     },
     {
       "id": "01JR4H20U1D4112B1EE2ED33CE",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.794Z"
+      "ts": "2026-06-21T03:23:51.067Z"
     },
     {
       "id": "01JR55Q771619986A391334250",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.794Z"
+      "ts": "2026-06-21T03:23:51.067Z"
     },
     {
       "id": "01JR5R8CFD4A3B33D526AB7E2F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.794Z"
+      "ts": "2026-06-21T03:23:51.068Z"
     },
     {
       "id": "01JR5VCO1J0EB44E7238A15BE6",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.794Z"
+      "ts": "2026-06-21T03:23:51.068Z"
     },
     {
       "id": "01JR60II0S7A7CCACD2B19DBC9",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.795Z"
+      "ts": "2026-06-21T03:23:51.069Z"
     },
     {
       "id": "01JRCCP8DKF066718B718139AF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.795Z"
+      "ts": "2026-06-21T03:23:51.069Z"
     },
     {
       "id": "01JRCDFEAA8DBE1E9A9F92425F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.796Z"
+      "ts": "2026-06-21T03:23:51.070Z"
     },
     {
       "id": "01JRDMHE4DC195D51675BF84D5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.796Z"
+      "ts": "2026-06-21T03:23:51.070Z"
     },
     {
       "id": "01JRDMPTP33134F36DF8E0B94A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.797Z"
+      "ts": "2026-06-21T03:23:51.071Z"
     },
     {
       "id": "01JRDMVMJTAD80DC4CECF1BDEF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.797Z"
+      "ts": "2026-06-21T03:23:51.071Z"
     },
     {
       "id": "01JRDNMM7K818654F7A9CB1E41",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.797Z"
+      "ts": "2026-06-21T03:23:51.071Z"
     },
     {
       "id": "01JREC1M2D85CEC60D492D080C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.797Z"
+      "ts": "2026-06-21T03:23:51.072Z"
     },
     {
       "id": "01JREC8EABBD028F3852F7535C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.798Z"
+      "ts": "2026-06-21T03:23:51.072Z"
     },
     {
       "id": "01JRECF61OA69E2C2535F6A007",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.798Z"
+      "ts": "2026-06-21T03:23:51.073Z"
     },
     {
       "id": "01JRECUT0J0507BFA5A860A369",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.798Z"
+      "ts": "2026-06-21T03:23:51.073Z"
     },
     {
       "id": "01JREG20CJ82D68E8797F3893D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.798Z"
+      "ts": "2026-06-21T03:23:51.074Z"
     },
     {
       "id": "01JREGDOHKA9D52EE7D2583907",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.799Z"
+      "ts": "2026-06-21T03:23:51.074Z"
     },
     {
       "id": "01JREGQP2CB8FE70808D927A5D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.799Z"
+      "ts": "2026-06-21T03:23:51.074Z"
     },
     {
       "id": "01JREH6K365F76225DF4A9C52A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.799Z"
+      "ts": "2026-06-21T03:23:51.075Z"
     },
     {
       "id": "01JREHNVFP13C80EABF9BB3A56",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.800Z"
+      "ts": "2026-06-21T03:23:51.075Z"
     },
     {
       "id": "01JREI96372325E9D071C89663",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.800Z"
+      "ts": "2026-06-21T03:23:51.075Z"
     },
     {
       "id": "01JREIEBTPA260F88FE041AF2B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.800Z"
+      "ts": "2026-06-21T03:23:51.075Z"
     },
     {
       "id": "01JRELOSSU73920F0581FB2C82",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.800Z"
+      "ts": "2026-06-21T03:23:51.076Z"
     },
     {
       "id": "01JREMOO03FD541C097C310167",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.801Z"
+      "ts": "2026-06-21T03:23:51.076Z"
     },
     {
       "id": "01JRF0BUCGC74503FC624CE9CD",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.801Z"
+      "ts": "2026-06-21T03:23:51.077Z"
     },
     {
       "id": "01JRF0O7ND023ACD3CB8618ADF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.801Z"
+      "ts": "2026-06-21T03:23:51.077Z"
     },
     {
       "id": "01JRGCMO751FA176F0942DFC4A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.801Z"
+      "ts": "2026-06-21T03:23:51.078Z"
     },
     {
       "id": "01JRGEBPBM1ADF3103FB6B31C8",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.802Z"
+      "ts": "2026-06-21T03:23:51.078Z"
     },
     {
       "id": "01JRGP11BND88D313D4C2048DF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.802Z"
+      "ts": "2026-06-21T03:23:51.078Z"
     },
     {
       "id": "01JRGQFOUI2C4657E5FF7C3C31",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.802Z"
+      "ts": "2026-06-21T03:23:51.079Z"
     },
     {
       "id": "01JRGQP6FR8B048BBC82635712",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.803Z"
+      "ts": "2026-06-21T03:23:51.080Z"
     },
     {
       "id": "01JRGR0M7R344C1B5CFCAF4E95",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.803Z"
+      "ts": "2026-06-21T03:23:51.080Z"
     },
     {
       "id": "01JRGS20HQ8B42B27788C0B1B0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.803Z"
+      "ts": "2026-06-21T03:23:51.080Z"
     },
     {
       "id": "01JRGSMDUI481F2AB6731F990D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-20T06:06:31.804Z"
+      "ts": "2026-06-21T03:23:51.080Z"
+    },
+    {
+      "id": "01JRHQ6RJN91EB006200D24148",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-21T03:23:51.081Z"
+    },
+    {
+      "id": "01JRHR7GQHCAC9E9AA546E7EBB",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-21T03:23:51.081Z"
+    },
+    {
+      "id": "01JRHSELPG735E2A109615421B",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-21T03:23:51.081Z"
+    },
+    {
+      "id": "01JRHU0JFQF4F66769C3FBCC4B",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-21T03:23:51.082Z"
     }
   ]
 }

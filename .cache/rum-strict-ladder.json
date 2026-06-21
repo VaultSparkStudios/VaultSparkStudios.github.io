@@ -1,38 +1,38 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-20T19:42:13.707Z",
+  "generatedAt": "2026-06-21T04:07:08.125Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 303,
+  "totalSamples": 291,
   "sufficientRoutes": 1,
   "siteState": "partial-route-strict",
   "nextRoute": {
-    "route": "/games/call-of-doodie/",
-    "samples": 16,
+    "route": "/games/",
+    "samples": 15,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 34,
+    "remaining": 35,
     "p75": {
-      "lcp": 0,
-      "cls": 0,
-      "inp": 0,
-      "fcp": 0,
-      "ttfb": 0
+      "lcp": 644,
+      "cls": 0.2037,
+      "inp": 40,
+      "fcp": 644,
+      "ttfb": 219
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 180,
+      "samples": 177,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
-        "lcp": 1992,
+        "lcp": 1648,
         "cls": 0.104,
-        "inp": 248,
-        "fcp": 1648,
+        "inp": 232,
+        "fcp": 852,
         "ttfb": 189
       },
       "overBudget": false
@@ -98,21 +98,6 @@
       "overBudget": false
     },
     {
-      "route": "/contact/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 984,
-        "cls": 0,
-        "inp": 352,
-        "fcp": 984,
-        "ttfb": 22
-      },
-      "overBudget": false
-    },
-    {
       "route": "/games/",
       "samples": 15,
       "minSamples": 50,
@@ -129,10 +114,10 @@
     },
     {
       "route": "/games/call-of-doodie/",
-      "samples": 16,
+      "samples": 13,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 34,
+      "remaining": 37,
       "p75": {
         "lcp": 0,
         "cls": 0,
@@ -189,10 +174,10 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 11,
+      "samples": 8,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 39,
+      "remaining": 42,
       "p75": {
         "lcp": 1616,
         "cls": 0.0233,
@@ -384,13 +369,13 @@
     },
     {
       "route": "/studio-pulse/",
-      "samples": 4,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 46,
+      "remaining": 47,
       "p75": {
         "lcp": 748,
-        "cls": 0.1977,
+        "cls": 0.1639,
         "inp": 576,
         "fcp": 748,
         "ttfb": 93
@@ -414,16 +399,16 @@
     },
     {
       "route": "/universe/",
-      "samples": 2,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
       "p75": {
-        "lcp": 1380,
-        "cls": 0.084,
-        "inp": 472,
-        "fcp": 1380,
-        "ttfb": 117
+        "lcp": 668,
+        "cls": 0.052,
+        "inp": 176,
+        "fcp": 668,
+        "ttfb": 4
       },
       "overBudget": false
     },

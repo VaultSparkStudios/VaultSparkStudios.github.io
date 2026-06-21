@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-20T19:42:12.945Z",
+  "generatedAt": "2026-06-21T04:07:06.897Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,17 +10,17 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 303,
+  "totalSamples": 291,
   "sufficientRoutes": 1,
   "routes": {
     "/": {
-      "samples": 180,
+      "samples": 177,
       "sufficient": true,
       "p75": {
-        "lcp": 1992,
+        "lcp": 1648,
         "cls": 0.104,
-        "inp": 248,
-        "fcp": 1648,
+        "inp": 232,
+        "fcp": 852,
         "ttfb": 189
       }
     },
@@ -68,17 +68,6 @@
         "ttfb": 895
       }
     },
-    "/contact/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 984,
-        "cls": 0,
-        "inp": 352,
-        "fcp": 984,
-        "ttfb": 22
-      }
-    },
     "/games/": {
       "samples": 15,
       "sufficient": false,
@@ -91,7 +80,7 @@
       }
     },
     "/games/call-of-doodie/": {
-      "samples": 16,
+      "samples": 13,
       "sufficient": false,
       "p75": {
         "lcp": 0,
@@ -135,7 +124,7 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 11,
+      "samples": 8,
       "sufficient": false,
       "p75": {
         "lcp": 1616,
@@ -278,11 +267,11 @@
       }
     },
     "/studio-pulse/": {
-      "samples": 4,
+      "samples": 3,
       "sufficient": false,
       "p75": {
         "lcp": 748,
-        "cls": 0.1977,
+        "cls": 0.1639,
         "inp": 576,
         "fcp": 748,
         "ttfb": 93
@@ -300,14 +289,14 @@
       }
     },
     "/universe/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "p75": {
-        "lcp": 1380,
-        "cls": 0.084,
-        "inp": 472,
-        "fcp": 1380,
-        "ttfb": 117
+        "lcp": 668,
+        "cls": 0.052,
+        "inp": 176,
+        "fcp": 668,
+        "ttfb": 4
       }
     },
     "/universe/voidfall/": {
