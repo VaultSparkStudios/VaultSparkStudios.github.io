@@ -1,47 +1,42 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 855294b1d518 -->
-<!-- generated-at: 2026-06-19T21:28:55.136Z -->
+<!-- source-hash: a3828c379da7 -->
+<!-- generated-at: 2026-06-21T22:25:19.463Z -->
 
 # LATEST_HANDOFF (compact)
 
-# Handoff Summary — VaultSparkStudios.github.io
+SESSION 213 HANDOFF SUMMARY
 
-## Session
-- S209 (autonomous /goal arc: start→audit→implement→closeout). Last updated 2026-06-19.
+Session
+- 213 (autonomous arc): IGNIS depth + push segmentation + Ark cargo.
 
-## Shipped (S209)
-- rollup-rum-ux.mjs: per-family recency epoch in deriveSummary() (play-next epoch=2026-06-18); pre-epoch impressions excluded; surfaced as `since`. play-next deadCount 18→0 (honest "insufficient post-retiming data").
-- Control self-test proving epoch flips count (18 raw → 6 windowed). 26→31 assertions.
-- api/citation.json source sync (uptime 88→89).
-- Resynced PROJECT_STATUS.json SIL fields to SIL.md authoritative (silScore 925→912).
-- Resolved S207 play-next measure-watch on TASK_BOARD: do NOT rotate the CTA.
+Shipped (S213)
+- W2a/b/c IGNIS starter analytics + game-specific starters (STARTERS_GAME, vs_last_game) + dynamic no-result fallback (STARTERS_ALL chips).
+- W3a push game-context segmentation (lastGame/route in KV, --game dispatch filter).
+- W3b push delivery+click RUM via sw.js fetch beacons.
+- W4 Ark cargo to studio-ops.
 
-## State
-- build:check EXIT 0 · 116/116 gates · doctor blockingFailing 0.
-- Deploy pending: committed to main, CF Pages auto-deploys pushed tip.
+State
+- Worker deployed abc4f4c3. doctor blockingFailing 0. check-rum-allowlist 65/68 clean (push:received/push:clicked warn-only — emitted from sw.js raw fetch, not emitUx()).
+- Pushed to main. Pre-existing smoke-startup advisory (claude.api gateway-readiness) unchanged.
 
-## Current Intent
-- Maintain observability honesty: rolling aggregates need recency horizons or they fail resolved items forever (same class as S208 perf-budget phantom).
+Now (top 3)
+1. Run `npm run push:count` for subscriber count + game breakdown.
+2. Then `npm run push:notify -- --title "..." --body "..." [--game cod/fgm/forge]` for first real notification (FOUNDER go-ahead required for first live dispatch).
+3. Process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling compliance gaps) via studio-ops.
 
-## Now Bucket (top 3)
-1. Verify S209 deploy lands via CF Pages auto-deploy.
-2. Build web-push FEATURE on provisioned VAPID cred (Worker push endpoint + client subscribe UI + pinned web-push).
-3. Derive nav Projects dropdown + press counts from catalog (currently hardcoded, broke twice on data change).
+Blockers (top 3)
+1. First live push dispatch needs founder go-ahead.
+2. push:received/push:clicked beacons are warn-only (raw fetch, not emitUx) — allowlist won't fully validate.
+3. claude.api gateway-readiness smoke-startup advisory (pre-existing).
 
-## Blockers (top 3)
-1. build:check at cmd.exe length limit — new gates must fold into existing checks (blocks OG-not-generic guard).
-2. nav-dropdown catalog-derivation needs catalog∪extra-paged merge design.
-3. Worker RUM beacons drop at edge unless deployed with `--env production`.
+Human-blocked
+- Publish forge devlog draft journal/_drafts/forge-week-2026-06-18.md, founder voice (open since S207).
+- Real-device hero v2 review, ?hero=classic reverts (since S207).
+- Staging box HCLOUD_TOKEN (since S207).
+- studio-ops: commit cloudflare.vapid CAPABILITY_MAP entry (since S207).
 
-## Human-Blocked (with age)
-- Publish forge devlog draft (journal/_drafts/forge-week-2026-06-18.md) in founder voice — since S207.
-- Real-device hero v2 review (`?hero=classic` reverts) — since S207.
-- Confirm remaining external live product URLs as projects launch — since S208.
-- Staging box HCLOUD_TOKEN — since S207.
-- studio-ops: commit cloudflare.vapid CAPABILITY_MAP entry (in their working tree) — since S207.
+Deferrals
+- play-next rotation (awaiting post-2026-06-18 field data).
+- nav catalog-derivation (catalog∪extra-paged merge design needed).
 
-## Out of Scope
-- Doctor's 3 "failures" (Hashmark/VOID/SHADOW/VEILOS compliance) are sibling-repo data — route via Ark, never edit siblings directly.
-
-## Next Session
-Verify S209 CF Pages deploy, then start the agent-doable web-push feature on the provisioned VAPID cred.
+Next session: run push:count, then await founder go-ahead for first live push:notify.

@@ -1,0 +1,272 @@
+{
+  "generatedAt": "2026-06-20",
+  "session": 213,
+  "project": "vaultsparkstudios.github.io",
+  "type": "website",
+  "rubric": "product",
+  "axisWeights": {
+    "ux": 2.5,
+    "speed": 2.0,
+    "featureDepth": 1.5,
+    "newFeature": 1.0,
+    "feedbackLoop": 1.0,
+    "gamification": 1.0,
+    "ai": 1.0,
+    "security": 1.0,
+    "tokenCost": 1.0
+  },
+  "topLine": {
+    "totalItems": 8,
+    "combinedPriority": 404.2,
+    "top3": ["ignis-starter-personalization", "ignis-no-result-dynamic", "ignis-starter-analytics"]
+  },
+  "items": [
+    {
+      "rank": 1,
+      "slug": "ignis-starter-personalization",
+      "title": "Personalize IGNIS starters by vs_last_game signal",
+      "axis": "ux+ai",
+      "tier": "🔥",
+      "impact": 9,
+      "innovation": 9,
+      "effortLabel": "1h",
+      "effortHours": 1,
+      "priority": 89.4,
+      "why": "The 5 starter prompts are static for all visitors, but vs_last_game (set in S212 W3 by ambient-loader.js) already knows whether this person last played Call of Doodie, Football GM, or Forge. A returning CoD player who opens IGNIS and sees 'What makes Call of Doodie different?' converts the warm session signal into immediate relevance — no typing needed. This closes the S212 personalization loop: the game-visit tracking exists, the starters exist, but they never talk to each other.",
+      "recipe": "Read localStorage.getItem('vs_last_game') at renderStarters() time; swap in 1–2 game-specific questions for the matching slug (cod/fgm/forge) while keeping 3 general starters. Add data-slug attr on each button for L3 analytics merge.",
+      "premiseVerified": "CONFIRMED: line 184–216 ignis-answer-engine.js — STARTERS array is a static 5-string literal; vs_last_game is never read in this function. The game tracking IIFE in ambient-loader.js writes cod/fgm/forge but ignis-answer-engine.js never reads it.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Read vs_last_game at mount; prepend 1 game-specific starter before the 5 general ones. Minimal code delta, immediate personalization lift."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Full 3-game starter packs (3 game-specific + 2 general when vs_last_game set). Add data-slug attribute to each button for analytics merge (completes ignis-starter-analytics L2)."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Topic-history analysis: parse vs_ignis_history query list for recurring terms (game names, features), weight matching starters higher. Requires a topic-extractor helper; no backend."
+        }
+      }
+    },
+    {
+      "rank": 2,
+      "slug": "ignis-no-result-dynamic",
+      "title": "Replace static no-result fallback with dynamic cluster suggestions",
+      "axis": "ux",
+      "tier": "🔥",
+      "impact": 8,
+      "innovation": 7,
+      "effortLabel": "1h",
+      "effortHours": 1,
+      "priority": 88.3,
+      "why": "When IGNIS finds no strong match it shows a hardcoded string: 'Try membership, latest ships, security, Oracle, or a game name.' These 4 suggestions were written months ago and may not reflect what's actually in the current 44,691-entry index. A dynamic fallback that pulls the top clusters from api/oracle-query-clusters.json stays current, surfaces what visitors actually search for, and emits an oracle:no_result RUM event — closing the only gap in the IGNIS observability loop (successes are measured, failures are invisible).",
+      "recipe": "At the !result branch (line 302 ignis-answer-engine.js), load api/oracle-query-clusters.json and surface the top 3 cluster labels as tappable suggestion chips. Emit oracle:no_result RUM on each zero-result query.",
+      "premiseVerified": "CONFIRMED: line 302 ignis-answer-engine.js — literal string 'IGNIS did not find a strong public match yet. Try \"membership\"...' is the only no-result path. api/oracle-query-clusters.json exists (built by build-oracle-query-clusters.mjs). No oracle:no_result event exists in Worker RUM_UX_EVENTS.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Replace static string with random selection from the 5 existing STARTERS queries as fallback suggestions — no network request, instant improvement."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Fetch api/oracle-query-clusters.json (already on CDN), render top 3 cluster chip buttons. Add oracle:no_result to Worker RUM_UX_EVENTS so zero-result rate is measurable."
+        },
+        "L3": {
+          "effortHours": 3,
+          "recipe": "Intent-pivot: detect query entity type (name vs. question vs. keyword), offer reformulation hints ('Did you mean: ...?') using tokenized index title prefix matching. Surface most similar doc title as a rescue link."
+        }
+      }
+    },
+    {
+      "rank": 3,
+      "slug": "ignis-starter-analytics",
+      "title": "Add slug suffix to oracle:starter_click RUM for per-starter attribution",
+      "axis": "ai+featureDepth",
+      "tier": "🔥",
+      "impact": 9,
+      "innovation": 7,
+      "effortLabel": "30m",
+      "effortHours": 0.5,
+      "priority": 49.7,
+      "why": "oracle:starter_click fires for all 5 starters identically — the studio can count how many starter clicks happen but cannot tell which starter drives engagement. This matters because the S212 bet is that certain starters create a stronger IGNIS habit loop. Without per-starter attribution the personalization planned in ignis-starter-personalization has no feedback signal to prove which game-specific questions work best.",
+      "recipe": "Change onClick to emit('oracle:starter_click:' + slugify(q)) where slugify converts the question to a lowercase-hyphen key. Add prefixAllowlist('oracle:starter_click', ...) to Worker. In the rollup, track per-slug counts in api/oracle-starter-insights.json.",
+      "premiseVerified": "CONFIRMED: line 209 ignis-answer-engine.js — emitUx('oracle:starter_click') has no slug. slugify helper already exists in ignis-answer-engine.js (used for cluster IDs). prefixAllowlist pattern already established (see S192 oracle:feedback_submitted).",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Emit oracle:starter_click:<slug> (5 bounded values), add prefixAllowlist entry in Worker. Rollup counts per slug appear in funnel-summary families."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Also track position (0–4) and whether the query produced a result: oracle:starter_click:<slug>:hit vs :miss. This closes the starter→answer→conversion funnel."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Build scripts/build-oracle-starter-insights.mjs → api/oracle-starter-insights.json (per-starter click rate + hit rate + downstream query continuation rate). Feed into the personalization decision for ignis-starter-personalization."
+        }
+      }
+    },
+    {
+      "rank": 4,
+      "slug": "push-game-context-store",
+      "title": "Store game interest context in push subscription KV for segmented dispatch",
+      "axis": "featureDepth+newFeature",
+      "tier": "🔥",
+      "impact": 8,
+      "innovation": 9,
+      "effortLabel": "2h",
+      "effortHours": 2,
+      "priority": 54.0,
+      "why": "The first real push dispatch (next session's headline) will blast a single message to all subscribers regardless of their interests. A CoD player who gets a Football GM update notification has a high unsubscribe risk — and unsubscribing a push subscriber is permanent. Storing the visitor's page context at subscribe time (costs 0 extra bytes in the existing KV entry) makes every future dispatch richer without requiring the visitor to do anything different.",
+      "recipe": "In push-subscribe.js POST body, append route: location.pathname and lastGame: localStorage.getItem('vs_last_game')||null alongside sub.toJSON(). In the Worker /v/push-subscribe handler, store these in the KV value. In notify-subscribers.mjs, accept --game flag to filter by stored lastGame.",
+      "premiseVerified": "CONFIRMED: push-subscribe.js line 60 — body is JSON.stringify(sub.toJSON()) only. No game context stored. Worker receives and stores the raw subscription JSON. notify-subscribers.mjs dispatches to all subscribers with no filtering.",
+      "ladder": {
+        "L1": {
+          "effortHours": 1,
+          "recipe": "Store route: location.pathname in KV. dispatch --route /games/call-of-doodie/ filters to subscribers who subscribed on that page. Immediate segmentation by page context."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "Store lastGame field from localStorage. notify-subscribers.mjs --game cod/fgm/forge filters by stored interest. Game-specific dispatch campaigns are now possible."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Multi-interest subscriber model: append gameSlug to existing interests[] array on each game page visit (requires a PATCH-style KV update on the Worker). Rich segmentation for newsletters, game updates, milestones."
+        }
+      }
+    },
+    {
+      "rank": 5,
+      "slug": "post-push-click-tracking",
+      "title": "Add service-worker push click → RUM beacon for delivery + open rate",
+      "axis": "featureDepth+feedbackLoop",
+      "tier": "⚡",
+      "impact": 7,
+      "innovation": 7,
+      "effortLabel": "2h",
+      "effortHours": 2,
+      "priority": 36.75,
+      "why": "The push notification pipeline can dispatch but has no visibility into whether pushes are received, opened, or clicked. The service worker receives push events and can respond to notificationclick — wiring a navigator.sendBeacon('/v/rum', ...) in the click handler closes the loop: the studio can measure open rate per campaign and compare push CTR against in-page CTAs.",
+      "recipe": "In assets/service-worker.js (or sw.js), add a notificationclick handler that beacons push:clicked with the notification tag. Add push:clicked and push:received to Worker RUM_UX_EVENTS. Wire push:dispatched:{count} log in notify-subscribers.mjs.",
+      "premiseVerified": "PREMISE PARTIAL: service worker exists (for PWA). notificationclick handler presence needs verification. Recipe remains valid regardless — the push event is guaranteed to fire in the SW context; click handling is additive.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Log dispatch count vs subscriber count to console + a .cache/last-dispatch-log.json file. Immediate visibility without a SW change."
+        },
+        "L2": {
+          "effortHours": 2,
+          "recipe": "SW notificationclick handler → sendBeacon push:clicked. Worker allowlist update. rollup push:* family in funnel-summary."
+        },
+        "L3": {
+          "effortHours": 4,
+          "recipe": "Full campaign attribution: include a campaign ID in notification data → SW preserves it in the click beacon → correlate open rate + downstream membership conversion per campaign."
+        }
+      }
+    },
+    {
+      "rank": 6,
+      "slug": "funnel-summary-refresh",
+      "title": "Regenerate funnel-summary.json from latest 6 days of RUM data",
+      "axis": "speed",
+      "tier": "💡",
+      "impact": 4,
+      "innovation": 2,
+      "effortLabel": "15m",
+      "effortHours": 0.25,
+      "priority": 13.7,
+      "why": "api/funnel-summary.json is dated 2026-06-14 — 6 days of engagement signal are invisible to any surface that reads this file. With the game quiz personalization (S212 W3) and IGNIS starters (S212 W4) now live, the first cohort of quiz:personalized + oracle:starter_click events should be visible in a fresh rollup.",
+      "recipe": "Run node scripts/rollup-rum-ux.mjs to regenerate. Verify the new events from S212 appear in the families array.",
+      "premiseVerified": "CONFIRMED: api/funnel-summary.json generatedAt: 2026-06-14. S212 shipped quiz:personalized + oracle:starter_click RUM events on 2026-06-20. 6-day gap confirmed.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.25,
+          "recipe": "node scripts/rollup-rum-ux.mjs — regenerate and verify new event families appear."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "Wire rollup-rum-ux into a daily GitHub Actions step so the summary never goes stale again."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Same as L2 plus a freshness check gate that fails build:check if funnel-summary is >3 days old (analogous to the perf-history freshness gate)."
+        }
+      }
+    },
+    {
+      "rank": 7,
+      "slug": "nav-catalog-derive",
+      "title": "Derive Projects/Games nav dropdowns from catalog (carry D-S208)",
+      "axis": "featureDepth",
+      "tier": "💡",
+      "impact": 5,
+      "innovation": 4,
+      "effortLabel": "4h",
+      "effortHours": 4,
+      "priority": 11.6,
+      "why": "The nav dropdowns for Games and Projects are currently hardcoded arrays (NAV_GAMES, NAV_PROJECTS) in propagate-nav.mjs that can drift from the catalog. S210 closed the sync gate (check-nav-catalog-sync warns on drift) but the root fix — deriving the arrays from catalog data — was deferred due to the non-catalog-paged projects complication. This carry reduces the maintenance surface permanently.",
+      "recipe": "Design the catalog∪extra-paged merge: maintain a EXTRA_NAV_PAGES constant for non-catalog paged entries (signal-log, vault-pipeline, etc.). Derive NAV_GAMES + NAV_PROJECTS by unioning catalog SPARKED/FORGE entries with EXTRA_NAV_PAGES. Propagate to 99+ pages. Update check-nav-catalog-sync to validate the derived list.",
+      "premiseVerified": "CONFIRMED: scripts/propagate-nav.mjs lines define NAV_GAMES + NAV_PROJECTS as hardcoded arrays. check-nav-catalog-sync.mjs advisory gate exists. Non-catalog-paged projects documented in TASK_BOARD S208 carries.",
+      "ladder": {
+        "L1": {
+          "effortHours": 2,
+          "recipe": "Document the EXTRA_NAV_PAGES list; prove which pages are non-catalog-paged. Design the merge algorithm before writing code."
+        },
+        "L2": {
+          "effortHours": 4,
+          "recipe": "Implement catalog union + EXTRA_NAV_PAGES constant in propagate-nav.mjs. Re-propagate 99 pages. Update sync gate to use the derived list."
+        },
+        "L3": {
+          "effortHours": 6,
+          "recipe": "Fully data-driven: remove EXTRA_NAV_PAGES by adding a navVisible:true field to each non-catalog-paged project's page meta. All nav items derive from one structure."
+        }
+      }
+    },
+    {
+      "rank": 8,
+      "slug": "sibling-compliance-ark",
+      "title": "Ship Ark cargo to fix VOID/SHADOW/Hashmark protocol compliance gaps",
+      "axis": "security",
+      "tier": "💡",
+      "impact": 6,
+      "innovation": 3,
+      "effortLabel": "1h",
+      "effortHours": 1,
+      "priority": 11.4,
+      "why": "Three sibling repos (VOID, SHADOW, Hashmark) have drifted from the v3.3 protocol template — missing TRUTH_AUDIT headers, stale session templates, missing PROJECT_STATUS fields. These 3 failures drag the studio compliance score from 100% to 91% for the third consecutive day. Ark cargo of type canon-update or agent-handoff to studio-ops is the only CANON-018-compliant path to fix these without direct cross-repo writes.",
+      "recipe": "node ../vaultspark-studio-ops/scripts/ark.mjs ship --type agent-handoff --to studio-ops --payload with the specific gaps per repo. studio-ops propagation handles the template updates.",
+      "premiseVerified": "CONFIRMED: docs/COMPLIANCE_HISTORY.md — VOID, SHADOW, Hashmark failing for 3+ days. Failures are sibling repos, not this repo. CANON-018 requires Ark. studio-ops propagation script handles template updates.",
+      "ladder": {
+        "L1": {
+          "effortHours": 0.5,
+          "recipe": "Ship one Ark cargo per failing repo with the specific gap list. Studio-ops processes in next available slot."
+        },
+        "L2": {
+          "effortHours": 1,
+          "recipe": "L1 plus a targeted fix payload with the exact file edits needed so studio-ops can auto-apply rather than re-diagnose."
+        },
+        "L3": {
+          "effortHours": 2,
+          "recipe": "Propose a canon-update that adds a CI action to each repo that auto-validates against the v3.3 template on push — preventing future drift without manual checks."
+        }
+      }
+    }
+  ],
+  "skipped": [
+    {
+      "slug": "play-next-rotation",
+      "reason": "0 impressions since epoch 2026-06-18 (only 2 days; data still accumulating). No verdict possible. Carry to next session when post-epoch RUM accrues."
+    },
+    {
+      "slug": "forge-devlog-publish",
+      "reason": "FOUNDER-VOICE-ONLY — never auto-published. Draft is ready in journal/_drafts/. Deferred permanently until founder publishes in their own voice."
+    },
+    {
+      "slug": "hero-glow-graduation",
+      "reason": "FOUNDER-DEVICE-GATED — mature surface requiring real-device verification before 100% flip. S164 carry unchanged."
+    }
+  ],
+  "innovationReserve": ["ignis-starter-personalization", "push-game-context-store", "post-push-click-tracking"]
+}

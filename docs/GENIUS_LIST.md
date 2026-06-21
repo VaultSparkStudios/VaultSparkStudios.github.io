@@ -1,4 +1,4 @@
-# Genius Hit List — Session 212
+# Genius Hit List — Session 213
 
 Generated: 2026-06-21
 Project: `VaultSparkStudios.github.io`
@@ -8,9 +8,9 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **84/100**
 - Health: **green**
-- Current SIL: **922/500**
+- Current SIL: **927/500**
 - CI health: **check gh run list**
-- Current focus: S212 (autonomous arc continuation) shipped 6 waves: W1 orphan shell cleanup (7 stale build artifacts removed); W2 PWA manifest → bespoke og-home.png + push-dispatch status READY; W3 game quiz personalization (vs_last_game ambient-loader tracker + pre-selected Q1 option + 'Based on your last session' hint + quiz:personalized RUM); W4 IGNIS curated starter prompts (5 SOUL-voice questions, hidden on first query, oracle:starter_click RUM, first-time-visitor guidance); W5 push dispatch KV batch (notify-subscribers.mjs: enumerates vs:push:sub: keys from CF KV via cloudflare.deploy API, fetches subscriptions, dispatches via web-push + npm run push:notify/push:count); W6 changelog notification trigger (notify-changelog-subscribers.mjs: reads changelog-narrative.json, compares against data/last-notified-changelog.json sentinel, dispatches push on new entry + npm run notify:changelog). Worker deployed ac1b2596. RUM allowlist clean (63 allowlisted · 67 call-sites). Doctor blockingFailing 0. SIL 919→922.
+- Current focus: S213 (autonomous arc · IGNIS depth + push segmentation) shipped 5 waves: W2a IGNIS starter analytics (oracle:starter_click:<slug> bounded suffix); W2b IGNIS game-specific starters (vs_last_game → STARTERS_GAME map, 2 game starters prepended for cod/fgm/forge visitors); W2c dynamic no-result fallback (STARTERS_ALL chips + oracle:no_result RUM); W3a push game-context segmentation (push-subscribe.js sends lastGame+route, Worker validates+persists, notify-subscribers.mjs --game filter); W3b push delivery+click tracking (sw.js push:received/push:clicked via fetch beacon); W4 Ark cargo to studio-ops (sibling compliance gaps). Worker deployed abc4f4c3. RUM allowlist 65/68 clean. Doctor blockingFailing 0. SIL 927.
 
 ## Strategic Read
 
@@ -22,36 +22,34 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [AI] IGNIS starter prompts analytics
-Final score: **97**
-[AI/P2·SIL] IGNIS starter prompts analytics — extend oracle:starter_click with bounded prompt slug suffix so we learn which starters resonate.
-Why it matters: IGNIS starter prompts analytics must stay grounded in public intelligence contracts — verify the Vault Oracle boundary is intact.
-
-First command: `node scripts/generate-public-intelligence.mjs`
-
-#### 2. [PRODUCT] First real push notification
+#### 1. [PRODUCT] First real push notification
 Final score: **96**
-[PUSH/P1·FOUNDER] First real push notification — run npm run push:count to check subscriber count, then npm run push:notify -- --title "..." --body "..." (founder go-ahead required for first dispatch to real subscribers).
+[PUSH/P1·FOUNDER] First real push notification — run npm run push:count to check subscriber count + game breakdown, then npm run push:notify -- --title "..." --body "..." (founder go-ahead required for first dispatch to real subscribers). --game cod for segmented game audience.
 Why it matters: First real push notification is open, local, and unblocked — can ship this session.
 
-#### 3. [VERIFY] Post-push CI confirmation
+#### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 4. [PRODUCT] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
-Final score: **90**
+#### 3. [PRODUCT] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
+Final score: **93**
 [MEASURE/P3] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
 Why it matters: Re-evaluate play-next rotation once post-2026-06-18 impressions accrue is open, local, and unblocked — can ship this session.
 
-### NEXT
-
-#### 1. [BRAND] Publish forge devlog (draft ready; founder-voice, never auto-published).
-Final score: **87**
+#### 4. [BRAND] Publish forge devlog (draft ready; founder-voice, never auto-published).
+Final score: **90**
 [CONTENT/P1·FOUNDER] Publish forge devlog (draft ready; founder-voice, never auto-published).
 Why it matters: Publish forge devlog (draft ready; founder-voice, never auto-published affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+
+### NEXT
+
+#### 1. [PRODUCT] studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling com…
+Final score: **87**
+[OPS/P2] studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling compliance gaps VOID/SHADOW/Hashmark).
+Why it matters: studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling comp is open, local, and unblocked — can ship this session.
 
 #### 2. [BRAND] Forge Window naming propagation
 Final score: **86**
@@ -94,11 +92,11 @@ Why it matters: Publish the forge devlog (journal/_drafts/forge-week-2026-06-18.
 
 ## Recommended Build Order
 
-1. IGNIS starter prompts analytics
-2. First real push notification
-3. Post-push CI confirmation
-4. Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
-5. Publish forge devlog (draft ready; founder-voice, never auto-published).
+1. First real push notification
+2. Post-push CI confirmation
+3. Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
+4. Publish forge devlog (draft ready; founder-voice, never auto-published).
+5. studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling com…
 6. Forge Window naming propagation
 7. Re-evaluate play-next rotation. Epoch = 2026-06-18; deadCount = 0. No…
 8. Publish forge devlog. Founder-voice; never auto-published.
