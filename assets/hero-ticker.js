@@ -57,14 +57,15 @@
     var label = isIgnis ? 'IGNIS is reading the studio' : 'Latest from the forge';
     if (isIgnis) root.setAttribute('data-source', 'ignis-conduit');
 
+    var linkHref = isIgnis ? '/ignis/' : '/changelog/';
     root.innerHTML =
-      '<div class="hero-ticker-inner">' +
+      '<a href="' + linkHref + '" class="hero-ticker-inner" aria-label="' + esc(label) + '">' +
         '<span class="hero-ticker-dot" aria-hidden="true"></span>' +
         '<span class="hero-ticker-label">' + esc(label) + '</span>' +
         (!isIgnis && project ? '<span class="hero-ticker-project">' + esc(project) + '</span>' : '') +
         '<span class="hero-ticker-title">' + esc(title) + '</span>' +
         (dateLabel ? '<span class="hero-ticker-when">· ' + esc(dateLabel) + '</span>' : '') +
-      '</div>';
+      '</a>';
   }
 
   // S126 #2: Studio Living Mode — when founder-twin is in-session, replace
@@ -84,12 +85,12 @@
     root.classList.add('hero-ticker-live');
     root.setAttribute('data-forge-live', '1');
     root.innerHTML =
-      '<div class="hero-ticker-inner">' +
+      '<a href="/ignis/" class="hero-ticker-inner" aria-label="In the forge right now">' +
         '<span class="hero-ticker-dot hero-ticker-dot--live" aria-hidden="true"></span>' +
         '<span class="hero-ticker-label">In the forge right now</span>' +
         '<span class="hero-ticker-title">' + esc(label) + '</span>' +
         (freshness ? '<span class="hero-ticker-when">· ' + esc(freshness) + '</span>' : '') +
-      '</div>';
+      '</a>';
   }
 
   function init() {

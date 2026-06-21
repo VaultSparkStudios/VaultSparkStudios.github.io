@@ -1,7 +1,7 @@
 // VaultSpark Studios — Service Worker
 // Handles: Push Notifications + Offline Asset Caching
 
-const CACHE_NAME = 'vaultspark-shell-d0d0a4b90b-f439e83c34-6d8a113585-0995bd7945-f15fedfd62-5b85ce5201';
+const CACHE_NAME = 'vaultspark-shell-920ea9c5cc-f439e83c34-6d8a113585-0995bd7945-f15fedfd62-5b85ce5201';
 // STATIC_ASSETS changes take effect on the next shell-asset hash rotation
 // (any edit to style.css / theme-toggle.js / nav-toggle.js / shell-health.js
 // triggers a new CACHE_NAME via build-shell-assets.mjs, which evicts the
@@ -11,7 +11,7 @@ const CACHE_NAME = 'vaultspark-shell-d0d0a4b90b-f439e83c34-6d8a113585-0995bd7945
 const MAX_PAGE_ENTRIES = 60;
 const PAGE_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 const FINGERPRINTED_SHELL_ASSETS = [
-  '/assets/style.shell-d0d0a4b90b.css',
+  '/assets/style.shell-920ea9c5cc.css',
   '/assets/theme-toggle.shell-f439e83c34.js',
   '/assets/nav-toggle.shell-6d8a113585.js',
   '/assets/shell-health.shell-0995bd7945.js',
@@ -28,7 +28,7 @@ const NON_CACHEABLE_SHELL_SOURCES = [
 ];
 const STATIC_ASSETS = [
   '/',
-  '/assets/style.shell-d0d0a4b90b.css',
+  '/assets/style.shell-920ea9c5cc.css',
   '/assets/shell-health.shell-0995bd7945.js',
   '/assets/ambient-core.shell-f15fedfd62.js',
   '/assets/ambient-feature.shell-5b85ce5201.js',

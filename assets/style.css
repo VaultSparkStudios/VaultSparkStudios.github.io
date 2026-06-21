@@ -714,6 +714,8 @@ body[data-founder-active] .brand .brand-wordmark {
   left: 50%;
   transform: translateX(-50%);
   min-width: 192px;
+  max-height: min(80vh, 540px);
+  overflow-y: auto;
   background: var(--nav-dropdown-bg);
   border: 1px solid var(--nav-dropdown-border);
   border-radius: 14px;
@@ -746,6 +748,8 @@ body[data-founder-active] .brand .brand-wordmark {
   background: transparent;
 }
 .nav-dropdown a:hover { background: var(--nav-hover-bg); color: var(--text); }
+.nav-dropdown a.dropdown-link-seeall { color: var(--gold); font-size: 0.78rem; opacity: 0.8; }
+.nav-dropdown a.dropdown-link-seeall:hover { opacity: 1; }
 .nav-dropdown .dropdown-divider {
   height: 1px;
   background: var(--nav-divider);
@@ -1171,6 +1175,13 @@ body.light-mode .card:has(.status-vaulted):hover {
   letter-spacing: 0.02em;
   max-width: 100%;
   overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.14s ease, border-color 0.14s ease;
+}
+.hero-ticker .hero-ticker-inner:hover {
+  background: rgba(31, 162, 255, 0.12);
+  border-color: rgba(31, 162, 255, 0.32);
 }
 .hero-ticker .hero-ticker-dot {
   width: 6px; height: 6px; border-radius: 50%;

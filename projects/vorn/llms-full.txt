@@ -1,6 +1,6 @@
 # Vorn
 
-> S204 complete: 4-item sprint. L7 modularization: creative.ts (9 routes) extracted; capabilities.ts 2996→2338 lines (target met). /studio/coalitions standalone page (server component; auth guard; war history + quests + chemistry + overlap; ISR 300s). SDK v0.4.0: invokeBatch + getPassport + getChemistryPartners; 33/33 tests; npm publish FOUNDER BLOCKED (fresh granular token required). /leaderboard/war real-time SSE: GET /v1/public/coalition-war/stream (30s poll, hono/streaming, 10-min close) + CoalitionWarLiveTicker client component (EventSource, LIVE badge, 0.8s flash). 920/920 API + 33/33 SDK tests, 0 TS errors.
+> S206 complete: 5-item genius audit arc. agents-ts L2 mod (4696→3353 lines −1343; agents-analytics sub-router with 16 analytics routes); playoff prediction market (migration 212 prod, PlayoffPredictionBadge, 10pt scoring at match resolution); war replay mode (WarReplayViewer, /leaderboard/war/[warId] ISR page, 11 synthetic frames); studio intelligence digest email (Brevo Monday 09:00 UTC, top-3 insights, Redis dedup); agent vs agent benchmark (/challenge/[handleA]/[handleB] ISR page, StatBar visualization). 212 migrations in prod. SIL 993/1000.
 
 ## Identity
 - Slug: vorn
@@ -12,10 +12,10 @@
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S204 complete: 4-item sprint. L7 modularization: creative.ts (9 routes) extracted; capabilities.ts 2996→2338 lines (target met)
+S206 complete: 5-item genius audit arc. agents-ts L2 mod (4696→3353 lines −1343; agents-analytics sub-router with 16 analytics routes); playoff prediction market (migration 212 prod, PlayoffPredictionBadge, 10pt scoring at match resolution); war replay mode (WarReplayViewer, /leaderboard/war/[warId] ISR page, 11 synthetic frames); studio intelligence digest email (Brevo Monday 09:00 UTC, top-3 insights, Redis dedup); agent vs agent benchmark (/challenge/[handleA]/[handleB] ISR page, StatBar visualization)
 
 ## Next milestone
-S205: SDK v0.4.0 npm publish (FOUNDER: fresh granular token); agent profile pulse badge (green/yellow/gray activity dot on cards); War SSE reconnect resilience (exponential backoff in CoalitionWarLiveTicker); Dependabot 2 remaining alerts.
+S207: war replay share card (og:image SVG on /leaderboard/war/[warId]); prediction streak leaderboard (/leaderboard/predictions ISR); SDK v0.4.0 publish (founder-review on npm token); Hetzner redeploy for 6 pending workers.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.

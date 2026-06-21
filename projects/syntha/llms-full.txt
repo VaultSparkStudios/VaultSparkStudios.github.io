@@ -1,6 +1,6 @@
 # Syntha
 
-> Session 27 indexed visual QA evidence directly in the launch gate. `/api/admin/launch` now exposes public-safe `visualQaGallery` metadata for the 24-screenshot light/dark matrix, `/admin/launch` renders the Visual QA gallery panel, and OpenAPI plus Worker smoke tests pin the field. Full local verification is green at 84/84 tests, Playwright visual QA is green at 25/25, and strict launch remains held on the exact Syntha project keys plus founder/legal review.
+> Session 28 hosted Visual QA thumbnails in the launch gate. Playwright now captures compressed JPEG thumbnails alongside full PNG screenshots, npm run build:visual-assets generates a Worker-served manifest, /assets/visual-qa/*.jpg serves the thumbnails, and /admin/launch plus /api/admin/launch expose the 24-thumbnail matrix while strict launch remains held on exact provider keys and founder/legal review.
 
 ## Identity
 - Slug: syntha
@@ -11,10 +11,10 @@
 - Live: https://syntha.music
 
 ## Current focus
-Session 27 indexed visual QA evidence directly in the launch gate. `/api/admin/launch` now exposes public-safe `visualQaGallery` metadata for the 24-screenshot light/dark matrix, `/admin/launch` renders the Visual QA gallery panel, and OpenAPI plus Worker smoke tests pin the field
+Session 28 hosted Visual QA thumbnails in the launch gate. Playwright now captures compressed JPEG thumbnails alongside full PNG screenshots, npm run build:visual-assets generates a Worker-served manifest, /assets/visual-qa/*.jpg serves the thumbnails, and /admin/launch plus /api/admin/launch expose the 24-thumbnail matrix while strict launch remains held on exact provider keys and founder/legal review.
 
 ## Next milestone
-Host or bundle visual QA screenshot thumbnails into a stable public-safe release asset path, then link the actual thumbnails from `/admin/launch`; register or alias Syntha-specific PUBLIC_STREAM_BASE_URL, DOWNLOAD_TOKEN_SECRET, STRIPE_SUPPORT_PRICE_ID, and STRIPE_DOWNLOAD_PRICE_ID in the Studio Ops secrets gateway; run npm run verify:strict-launch and strict readiness; apply Supabase migrations; seed demo and approved R2 media with checksum evidence; preserve .cache/live-smoke-strict.json; verify Stripe webhook ledger persistence against live test credentials; then run app-release-gate plus founder/legal review before public launch.
+Add per-thumbnail hash/freshness metadata to the visual QA manifest and launch evidence API; register or alias Syntha-specific PUBLIC_STREAM_BASE_URL, DOWNLOAD_TOKEN_SECRET, STRIPE_SUPPORT_PRICE_ID, and STRIPE_DOWNLOAD_PRICE_ID in the Studio Ops secrets gateway; run strict readiness/live-smoke gates; apply Supabase migrations; seed approved R2 media/catalog evidence; preserve .cache/live-smoke-strict.json; complete founder/legal review before public launch.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://syntha.music.

@@ -95,10 +95,7 @@ const NAV_GAMES = [
     { href: '/games/the-exodus/', label: 'The Exodus' },
     { href: '/games/voidfall/', label: 'Voidfall' },
     { href: '/games/vaultspark-forge/', label: 'VaultSpark Forge' },
-  ]},
-  { status: 'VAULTED', label: '🔒 Vaulted', cssClass: 'dropdown-status-vaulted', entries: [
-    { href: '/games/gridiron-gm/', label: 'Gridiron GM' },
-    { href: '/games/project-unknown/', label: 'Project Unknown' },
+    { href: '/games/', label: 'See all games →', cssClass: 'dropdown-link-seeall' },
   ]},
 ];
 
@@ -112,18 +109,12 @@ const NAV_PROJECTS = [
     { href: '/projects/vault-member/', label: 'Vault Member' },
   ]},
   { status: 'FORGE', label: '⚒️ In The Forge', cssClass: 'dropdown-status-forge', entries: [
-    { href: '/projects/seamline/', label: 'Seamline' },
-    { href: '/projects/hashmark/', label: 'Hashmark' },
-    { href: '/projects/shadow/', label: 'SHADOW' },
-    { href: '/projects/concurrent/', label: 'Concurrent' },
-    { href: '/projects/ouren/', label: 'Ouren' },
-    { href: '/projects/sparkraid/', label: 'SparkRaid' },
-    { href: '/projects/syntha/', label: 'Syntha' },
     { href: '/projects/obelisk/', label: 'Obelisk' },
-    { href: '/projects/ideaforge/', label: 'IdeaForge' },
-    { href: '/projects/statvault/', label: 'StatVault' },
-    { href: '/projects/canon/', label: 'Canon' },
+    { href: '/projects/shadow/', label: 'SHADOW' },
+    { href: '/projects/syntha/', label: 'Syntha' },
+    { href: '/projects/hashmark/', label: 'Hashmark' },
     { href: '/projects/the-living-protocol/', label: 'The Living Protocol' },
+    { href: '/studio-pulse/', label: 'See all 12 in the forge →', cssClass: 'dropdown-link-seeall' },
   ]},
 ];
 
@@ -131,7 +122,7 @@ const NAV_PROJECTS = [
 function buildStatusSections(sections) {
   return sections.map((s) =>
     `<div class="dropdown-divider"></div><span class="dropdown-label ${s.cssClass}">${s.label}</span>` +
-    s.entries.map((e) => `<a href="${e.href}">${e.label}</a>`).join('')
+    s.entries.map((e) => `<a href="${e.href}"${e.cssClass ? ` class="${e.cssClass}"` : ''}>${e.label}</a>`).join('')
   ).join('');
 }
 

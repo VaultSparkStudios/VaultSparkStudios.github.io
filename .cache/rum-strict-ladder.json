@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-21T04:07:08.125Z",
+  "generatedAt": "2026-06-21T21:10:18.932Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 291,
+  "totalSamples": 314,
   "sufficientRoutes": 1,
   "siteState": "partial-route-strict",
   "nextRoute": {
@@ -24,16 +24,16 @@
   "routes": [
     {
       "route": "/",
-      "samples": 177,
+      "samples": 189,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
-        "lcp": 1648,
-        "cls": 0.104,
-        "inp": 232,
-        "fcp": 852,
-        "ttfb": 189
+        "lcp": 979,
+        "cls": 0.102,
+        "inp": 312,
+        "fcp": 792,
+        "ttfb": 391
       },
       "overBudget": false
     },
@@ -94,6 +94,21 @@
         "inp": 0,
         "fcp": 1292,
         "ttfb": 895
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/community/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 544,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 544,
+        "ttfb": 27
       },
       "overBudget": false
     },
@@ -159,10 +174,10 @@
     },
     {
       "route": "/games/vaultfront/",
-      "samples": 8,
+      "samples": 11,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 42,
+      "remaining": 39,
       "p75": {
         "lcp": 2184,
         "cls": 0.1011,
@@ -174,10 +189,10 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 8,
+      "samples": 12,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 42,
+      "remaining": 38,
       "p75": {
         "lcp": 1616,
         "cls": 0.0233,
@@ -278,15 +293,30 @@
       "overBudget": false
     },
     {
-      "route": "/projects/promogrind/",
-      "samples": 2,
+      "route": "/projects/ideaforge/",
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
+      "p75": {
+        "lcp": 624,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 624,
+        "ttfb": 20
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/projects/promogrind/",
+      "samples": 3,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 47,
       "p75": {
         "lcp": 1396,
-        "cls": 0.0009,
-        "inp": 392,
+        "cls": 0.0351,
+        "inp": 432,
         "fcp": 1396,
         "ttfb": 102
       },
@@ -309,16 +339,16 @@
     },
     {
       "route": "/projects/vorn/",
-      "samples": 1,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 48,
       "p75": {
-        "lcp": 0,
+        "lcp": 2196,
         "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
+        "inp": 128,
+        "fcp": 2196,
+        "ttfb": 20
       },
       "overBudget": false
     },

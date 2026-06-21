@@ -147,7 +147,18 @@
     const status = String(pulseEntry?.vaultStatus || fallback?.vaultStatus || 'forge').toUpperCase();
     const focus = publicText(clipFocus(pulseEntry?.currentFocus || fallback?.focus || 'A new signal is being read…', 140));
     const updated = ago(pulseEntry?.lastUpdated || fallback?.lastUpdated);
-    const quote = publicText(voiceEntry?.quote || fallback?.quote || 'The flame reads this project.');
+    const _rawFocus = pulseEntry?.currentFocus || fallback?.focus || '';
+    const _focusBrief = clipFocus(_rawFocus, 90).replace(/\.$/, '').toLowerCase();
+    const _statusUpper = status;
+    const _pName = el.getAttribute('data-project') || 'this world';
+    const _synthesizedQuote = _focusBrief
+      ? (_statusUpper === 'SPARKED'
+          ? `${_pName} burns in the vault — ${_focusBrief}.`
+          : `Deep in the forge — ${_focusBrief}.`)
+      : (_statusUpper === 'SPARKED'
+          ? `${_pName} is live and the flame reads it clearly.`
+          : `The forge holds ${_pName} — the signal is gathering.`);
+    const quote = publicText(voiceEntry?.quote || fallback?.quote || _synthesizedQuote);
     const projectName = el.getAttribute('data-project') || '';
     // Status-derived accent colour: SPARKED → gold, FORGE → orange, others → steel.
     // SEALED retired — VAULTED is what sealed means (coined vocab).

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-21T04:07:06.897Z",
+  "generatedAt": "2026-06-21T21:10:16.239Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,18 +10,18 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 291,
+  "totalSamples": 314,
   "sufficientRoutes": 1,
   "routes": {
     "/": {
-      "samples": 177,
+      "samples": 189,
       "sufficient": true,
       "p75": {
-        "lcp": 1648,
-        "cls": 0.104,
-        "inp": 232,
-        "fcp": 852,
-        "ttfb": 189
+        "lcp": 979,
+        "cls": 0.102,
+        "inp": 312,
+        "fcp": 792,
+        "ttfb": 391
       }
     },
     "/about": {
@@ -66,6 +66,17 @@
         "inp": 0,
         "fcp": 1292,
         "ttfb": 895
+      }
+    },
+    "/community/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 544,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 544,
+        "ttfb": 27
       }
     },
     "/games/": {
@@ -113,7 +124,7 @@
       }
     },
     "/games/vaultfront/": {
-      "samples": 8,
+      "samples": 11,
       "sufficient": false,
       "p75": {
         "lcp": 2184,
@@ -124,7 +135,7 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 8,
+      "samples": 12,
       "sufficient": false,
       "p75": {
         "lcp": 1616,
@@ -200,13 +211,24 @@
         "ttfb": 197
       }
     },
+    "/projects/ideaforge/": {
+      "samples": 1,
+      "sufficient": false,
+      "p75": {
+        "lcp": 624,
+        "cls": 0.0005,
+        "inp": 0,
+        "fcp": 624,
+        "ttfb": 20
+      }
+    },
     "/projects/promogrind/": {
-      "samples": 2,
+      "samples": 3,
       "sufficient": false,
       "p75": {
         "lcp": 1396,
-        "cls": 0.0009,
-        "inp": 392,
+        "cls": 0.0351,
+        "inp": 432,
         "fcp": 1396,
         "ttfb": 102
       }
@@ -223,14 +245,14 @@
       }
     },
     "/projects/vorn/": {
-      "samples": 1,
+      "samples": 2,
       "sufficient": false,
       "p75": {
-        "lcp": 0,
+        "lcp": 2196,
         "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
+        "inp": 128,
+        "fcp": 2196,
+        "ttfb": 20
       }
     },
     "/promogrind/": {
