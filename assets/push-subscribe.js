@@ -54,10 +54,18 @@
         applicationServerKey: urlBase64ToUint8Array(publicKey),
       });
     }).then(function (sub) {
+      // S213 W3a: include game interest context so dispatch can segment by game.
+      // lastGame and route are low-cardinality safe values; never PII.
+      var lastGame = null;
+      try { lastGame = localStorage.getItem('vs_last_game') || null; } catch (_) {}
+      var payload = Object.assign({}, sub.toJSON(), {
+        route: (location.pathname || '/').slice(0, 80),
+        lastGame: lastGame,
+      });
       return fetch(PUSH_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(sub.toJSON()),
+        body: JSON.stringify(payload),
       }).then(function (r) {
         if (!r.ok) throw new Error('store-failed');
         emitUx('push:subscribed');

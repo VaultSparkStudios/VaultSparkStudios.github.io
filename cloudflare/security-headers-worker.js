@@ -552,7 +552,20 @@ async function handlePushSubscribe(request, env, ctx) {
       return new Response(JSON.stringify({ ok: false, error: 'invalid_endpoint' }), { status: 400, headers: JSON_HEADERS });
     }
     const hash = await hashEndpoint(ep);
-    const payload = JSON.stringify({ endpoint: ep, keys: sub.keys || null, registeredAt: new Date().toISOString() });
+    // S213 W3a: persist game interest context alongside subscription — enables
+    // segmented dispatch (push:notify --game cod) without re-asking the subscriber.
+    // lastGame is validated against a fixed allowlist; route is truncated for safety.
+    const GAME_ALLOW = new Set(['cod', 'fgm', 'forge']);
+    const rawGame = typeof sub.lastGame === 'string' ? sub.lastGame : null;
+    const lastGame = (rawGame && GAME_ALLOW.has(rawGame)) ? rawGame : null;
+    const route = typeof sub.route === 'string' ? sub.route.slice(0, 80) : null;
+    const payload = JSON.stringify({
+      endpoint: ep,
+      keys: sub.keys || null,
+      registeredAt: new Date().toISOString(),
+      lastGame,
+      route,
+    });
     ctx.waitUntil(env.RATE_LIMIT.put(`vs:push:sub:${hash}`, payload, { expirationTtl: 7776000 }));
     return new Response(JSON.stringify({ ok: true }), { status: 201, headers: JSON_HEADERS });
   }

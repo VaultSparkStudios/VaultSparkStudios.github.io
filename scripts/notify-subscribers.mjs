@@ -1,13 +1,15 @@
 #!/usr/bin/env node
-/* notify-subscribers.mjs — S212 W5
-   Send a web-push notification to ALL subscribed users via the Cloudflare KV
+/* notify-subscribers.mjs — S212 W5 · S213 W3a (game segmentation)
+   Send a web-push notification to subscribed users via the Cloudflare KV
    subscription list. Uses the cloudflare.deploy capability for the CF API token
    and cloudflare.vapid for VAPID credentials.
 
    Usage:
      node scripts/notify-subscribers.mjs --title "Title" --body "Body" [--url /path/]
      node scripts/notify-subscribers.mjs --title "..." --body "..." --dry-run
-     node scripts/notify-subscribers.mjs --count  # just show subscriber count
+     node scripts/notify-subscribers.mjs --count  # subscriber count + game breakdown
+     node scripts/notify-subscribers.mjs --title "..." --body "..." --game cod
+       # send only to subscribers whose last game was Call of Doodie
 
    npm alias: npm run push:notify -- --title "..." --body "..."
 */
@@ -19,11 +21,18 @@ const ROOT  = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OPS   = join(ROOT, '..', 'vaultspark-studio-ops');
 const args  = process.argv.slice(2);
 
-const DRY_RUN    = args.includes('--dry-run');
-const COUNT_ONLY = args.includes('--count');
-const TITLE      = args.includes('--title') ? args[args.indexOf('--title') + 1] : 'VaultSpark Studios';
-const BODY       = args.includes('--body')  ? args[args.indexOf('--body')  + 1] : '';
-const URL_PATH   = args.includes('--url')   ? args[args.indexOf('--url')   + 1] : '/vault-member/';
+const DRY_RUN     = args.includes('--dry-run');
+const COUNT_ONLY  = args.includes('--count');
+const GAME_FILTER = args.includes('--game') ? args[args.indexOf('--game') + 1] : null;
+const TITLE       = args.includes('--title') ? args[args.indexOf('--title') + 1] : 'VaultSpark Studios';
+const BODY        = args.includes('--body')  ? args[args.indexOf('--body')  + 1] : '';
+const URL_PATH    = args.includes('--url')   ? args[args.indexOf('--url')   + 1] : '/vault-member/';
+
+const GAME_ALLOW = new Set(['cod', 'fgm', 'forge']);
+if (GAME_FILTER && !GAME_ALLOW.has(GAME_FILTER)) {
+  console.error(`notify-subscribers: --game must be one of: ${[...GAME_ALLOW].join(', ')}`);
+  process.exit(1);
+}
 
 const KV_NAMESPACE_ID = '6fde74ca7f3d462786afbb85c85611e0'; // RATE_LIMIT binding (wrangler.toml)
 const SUB_PREFIX = 'vs:push:sub:';
@@ -83,7 +92,24 @@ async function listAllSubKeys(accountId, apiToken) {
   const keys = await listAllSubKeys(accountId, apiToken);
   console.log(`Found ${keys.length} subscriber key(s).`);
 
-  if (COUNT_ONLY) process.exit(0);
+  if (COUNT_ONLY) {
+    // Fetch all subs to show game breakdown
+    const gameCounts = {};
+    let withGame = 0, withoutGame = 0;
+    for (const key of keys) {
+      const raw = await cfKvGet(accountId, apiToken, key);
+      if (!raw) continue;
+      try {
+        const sub = JSON.parse(raw);
+        const g = sub.lastGame || null;
+        if (g) { gameCounts[g] = (gameCounts[g] || 0) + 1; withGame++; }
+        else withoutGame++;
+      } catch (_) {}
+    }
+    console.log(`  With game context: ${withGame} (${Object.entries(gameCounts).map(([g, n]) => `${g}:${n}`).join(', ') || 'none'})`);
+    console.log(`  No game context:   ${withoutGame}`);
+    process.exit(0);
+  }
 
   if (!keys.length) {
     console.log('No subscribers — nothing to send.');
@@ -112,19 +138,21 @@ async function listAllSubKeys(accountId, apiToken) {
   });
 
   if (DRY_RUN) {
-    console.log('[DRY RUN] Would send to', keys.length, 'subscriber(s):');
+    console.log('[DRY RUN] Would send to subscribers' + (GAME_FILTER ? ` with game=${GAME_FILTER}` : ' (all)') + ':');
     console.log('  title:', TITLE);
     console.log('  body: ', BODY);
     console.log('  url:  ', URL_PATH);
+    if (GAME_FILTER) console.log('  filter: --game', GAME_FILTER);
     process.exit(0);
   }
 
-  let sent = 0, failed = 0;
+  let sent = 0, failed = 0, skipped = 0;
   for (const key of keys) {
     const raw = await cfKvGet(accountId, apiToken, key);
     if (!raw) { failed++; continue; }
     try {
       const sub = JSON.parse(raw);
+      if (GAME_FILTER && sub.lastGame !== GAME_FILTER) { skipped++; continue; }
       await webPush.sendNotification(sub, payload);
       sent++;
     } catch (e) {
@@ -132,6 +160,7 @@ async function listAllSubKeys(accountId, apiToken) {
       failed++;
     }
   }
-  console.log(`Done: ${sent} sent, ${failed} failed (${keys.length} total).`);
+  const skipNote = GAME_FILTER ? ` · ${skipped} skipped (game≠${GAME_FILTER})` : '';
+  console.log(`Done: ${sent} sent, ${failed} failed${skipNote} (${keys.length} total).`);
   process.exit(failed > 0 && sent === 0 ? 1 : 0);
 })();
