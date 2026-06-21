@@ -8,6 +8,10 @@
     '/assets/ignis-live.js',
     '/assets/micro-feedback.js',
     '/assets/showcase-spine.js',
+    '/assets/recent-ships.js',
+    '/assets/ignis-tour.js',
+    '/assets/vault-resonance.js',
+    '/assets/vault-pulse.js',
   ];
 
   // S174 TT burndown: script.src is a TrustedScriptURL sink. Narrow policy
