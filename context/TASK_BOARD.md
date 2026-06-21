@@ -1,6 +1,26 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-20 (Session 212 — autonomous arc continuation: quiz personalization + IGNIS starters + push dispatch KV + changelog trigger)
+Last updated: 2026-06-21 (Session 213 — autonomous arc: IGNIS depth + push segmentation + Ark cargo)
+
+## S213 outcome + carries
+
+**Shipped in S213 (5 waves):**
+- [x] **[W2a/AI·SIL] IGNIS starter analytics.** Converted `STARTERS_ALL` to `{q, slug}[]`; `oracle:starter_click` now bounded `oracle:starter_click:<slug>` via Worker `prefixAllowlist`. Closes S212 SIL brainstorm item #2.
+- [x] **[W2b/AI] IGNIS game-specific starters.** `STARTERS_GAME` map (cod/fgm/forge); `renderStarters()` reads `vs_last_game`, prepends 2 game starters + "Based on your last game" label (sliced to 5 with STARTERS_ALL).
+- [x] **[W2c/AI] Dynamic no-result fallback.** Static "no result" → tappable STARTERS_ALL chip fallback (3 chips); `oracle:no_result` RUM in Worker.
+- [x] **[W3a/INFRA] Push game-context segmentation.** `push-subscribe.js` → `lastGame`+`route` in POST body; Worker validates `lastGame` against GAME_ALLOW + persists in KV; `notify-subscribers.mjs` `--game cod/fgm/forge` filter + `--count` game breakdown.
+- [x] **[W3b/INFRA] Push delivery + click tracking.** `sw.js` beacons `push:received` (post-showNotification) + `push:clicked` (notificationclick) via raw `fetch('/v/rum')`; Worker `RUM_UX_EVENTS` updated.
+- [x] **[W4/ARK] Sibling compliance gaps.** Shipped `pattern-share` Ark cargo to studio-ops (id `01JRK6AH97E0F421A55C54236C`) — VOID/SHADOW/Hashmark at 32/35 compliance. CANON-018 (never write sibling repos directly).
+
+**S213 honesty ledger:**
+- `smoke-startup-scripts` 1/14 FAILED (claude.api advisory, pre-existing since S210+, non-blocking in CI).
+- `push:received`/`push:clicked` in allowlist with 2 scanner dead-warnings — expected (sw.js uses raw `fetch`, not `emitUx()`; gate exits 0).
+
+**S213 carries (next session):**
+- [ ] **[PUSH/P1·FOUNDER]** First real push notification — run `npm run push:count` to check subscriber count + game breakdown, then `npm run push:notify -- --title "..." --body "..."` (founder go-ahead required for first dispatch to real subscribers). `--game cod` for segmented game audience.
+- [ ] **[MEASURE/P3]** Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
+- [ ] **[CONTENT/P1·FOUNDER]** Publish forge devlog (draft ready; founder-voice, never auto-published).
+- [ ] **[OPS/P2]** studio-ops: process Ark cargo `01JRK6AH97E0F421A55C54236C` (sibling compliance gaps VOID/SHADOW/Hashmark).
 
 ## S212 outcome + carries
 
@@ -16,10 +36,10 @@ Last updated: 2026-06-20 (Session 212 — autonomous arc continuation: quiz pers
 - `smoke-startup-scripts` 1/14 FAILED (claude.api advisory, pre-existing since S210+, non-blocking in CI where the capability resolves).
 
 **S212 carries (next session):**
-- [ ] **[PUSH/P1·FOUNDER]** First real push notification — run `npm run push:count` to check subscriber count, then `npm run push:notify -- --title "..." --body "..."` (founder go-ahead required for first dispatch to real subscribers).
-- [ ] **[AI/P2·SIL]** IGNIS starter prompts analytics — extend `oracle:starter_click` with bounded prompt slug suffix so we learn which starters resonate.
-- [ ] **[MEASURE/P3]** Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
-- [ ] **[CONTENT/P1·FOUNDER]** Publish forge devlog (draft ready; founder-voice, never auto-published).
+- [ ] **[PUSH/P1·FOUNDER]** First real push notification — run `npm run push:count` to check subscriber count, then `npm run push:notify -- --title "..." --body "..."` (founder go-ahead required for first dispatch to real subscribers). *(carry to S213+)*
+- [x] **[AI/P2·SIL]** IGNIS starter prompts analytics — `oracle:starter_click:<slug>` bounded suffix shipped S213 W2a.
+- [ ] **[MEASURE/P3]** Re-evaluate play-next rotation once post-2026-06-18 impressions accrue. *(carry to S213+)*
+- [ ] **[CONTENT/P1·FOUNDER]** Publish forge devlog (draft ready; founder-voice, never auto-published). *(carry to S213+)*
 
 ## S211 outcome + carries
 

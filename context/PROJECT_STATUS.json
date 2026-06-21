@@ -12,8 +12,8 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S212 (autonomous arc continuation) shipped 6 waves: W1 orphan shell cleanup (7 stale build artifacts removed); W2 PWA manifest → bespoke og-home.png + push-dispatch status READY; W3 game quiz personalization (vs_last_game ambient-loader tracker + pre-selected Q1 option + 'Based on your last session' hint + quiz:personalized RUM); W4 IGNIS curated starter prompts (5 SOUL-voice questions, hidden on first query, oracle:starter_click RUM, first-time-visitor guidance); W5 push dispatch KV batch (notify-subscribers.mjs: enumerates vs:push:sub: keys from CF KV via cloudflare.deploy API, fetches subscriptions, dispatches via web-push + npm run push:notify/push:count); W6 changelog notification trigger (notify-changelog-subscribers.mjs: reads changelog-narrative.json, compares against data/last-notified-changelog.json sentinel, dispatches push on new entry + npm run notify:changelog). Worker deployed ac1b2596. RUM allowlist clean (63 allowlisted · 67 call-sites). Doctor blockingFailing 0. SIL 919→922.",
-  "nextMilestone": "Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice). Engineering: nav Projects/Games dropdown catalog-derivation (needs catalog∪extra-paged merge design). Push: first real-world test of notify-subscribers.mjs (run push:count to see subscriber count, then push:notify to send first notification). studio-ops: sibling compliance drift (Hashmark/VOID/SHADOW/VEILOS) — ship via Ark.",
+  "currentFocus": "S213 (autonomous arc · IGNIS depth + push segmentation) shipped 5 waves: W2a IGNIS starter analytics (oracle:starter_click:<slug> bounded suffix); W2b IGNIS game-specific starters (vs_last_game → STARTERS_GAME map, 2 game starters prepended for cod/fgm/forge visitors); W2c dynamic no-result fallback (STARTERS_ALL chips + oracle:no_result RUM); W3a push game-context segmentation (push-subscribe.js sends lastGame+route, Worker validates+persists, notify-subscribers.mjs --game filter); W3b push delivery+click tracking (sw.js push:received/push:clicked via fetch beacon); W4 Ark cargo to studio-ops (sibling compliance gaps). Worker deployed abc4f4c3. RUM allowlist 65/68 clean. Doctor blockingFailing 0. SIL 927.",
+  "nextMilestone": "Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice). Engineering: nav Projects/Games dropdown catalog-derivation (needs catalog∪extra-paged merge design). Push: first real notification — run push:count, then push:notify (founder go-ahead required). studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling compliance).",
   "blockers": [
     {
       "id": "staging-box-hcloud",
@@ -23,15 +23,15 @@
       "addedSession": 198
     }
   ],
-  "lastUpdated": "2026-06-20",
-  "currentSession": 212,
+  "lastUpdated": "2026-06-21",
+  "currentSession": 213,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-06-19",
-  "silScore": 922,
-  "silAvg3": 918,
-  "silVelocity": 6,
-  "silDebt": "↑",
-  "silLastSession": 212,
+  "silScore": 927,
+  "silAvg3": 924,
+  "silVelocity": 5,
+  "silDebt": "↓",
+  "silLastSession": 213,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -80,19 +80,19 @@
   "silScoreLegacy500": 450,
   "silCategoriesV3": {
     "devHealth": 93,
-    "creativeAlignment": 92,
-    "momentum": 92,
+    "creativeAlignment": 93,
+    "momentum": 93,
     "engagement": 94,
     "processQuality": 93,
-    "crossRepoCoherence": 90,
-    "securityPosture": 90,
+    "crossRepoCoherence": 91,
+    "securityPosture": 91,
     "ecosystemIntegration": 93,
     "capitalEfficiency": 92,
-    "automationCoverage": 93
+    "automationCoverage": 94
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-06-20",
+    "date": "2026-06-21",
     "passing": 9,
     "warning": 1,
     "failing": 3,
@@ -205,6 +205,6 @@
   "testsPassing": 116,
   "testsLastRun": "2026-06-15",
   "testsLabel": "build:check gates",
-  "publicNote": "The site got smarter this week: the game finder quiz now remembers which game you played last and highlights the best match for you, Oracle greets first-time visitors with a curated set of questions so you always know what to ask, and the full push notification pipeline is live end-to-end.",
-  "publicNextStep": "Coming soon: the first real push notifications (infrastructure is live and ready to fire), and a forge devlog from the studio on what's building this month."
+  "publicNote": "The oracle just got more personal: if you've played one of our games, IGNIS now greets you with questions tailored to that game. First-time visitors get curated starter questions to help break the ice. Push notifications now track delivery and clicks so we know what's reaching you.",
+  "publicNextStep": "Coming soon: segmented push notifications (send to players of a specific game only), and a forge devlog from the studio on what's building this month."
 }

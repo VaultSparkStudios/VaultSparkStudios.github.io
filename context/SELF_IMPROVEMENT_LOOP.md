@@ -8,16 +8,48 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▆▇▇▇
-Avgs - 3: 918.0 | 5: ~913 | 10: ~938 | 25: 954 | all: 958 (v3.0 /1000)
-  └ 3-session: Dev 93.0 | Align 92.0 | Momentum 92.0 | Engage 93.7 | Process 93.0
-Velocity trend: ↑↑ (S212: 6 items; S211: 7 items; S210: 6 items) | Protocol velocity: → | Debt: ↑ (push dispatch + changelog trigger close the full notification loop; quiz personalization + IGNIS starters close the first-time visitor cold-start gap)
-Momentum runway: PUSH — run push:count → send first real notification (push:notify); MEASUREMENT — re-evaluate play-next once post-2026-06-18 impressions accrue; CONTENT (founder): publish forge devlog; ENGINEERING: nav catalog-derivation; sibling compliance via Ark | Intent rate: 100% (last 5) | (S212 shipped: orphan shell cleanup; PWA manifest fix; quiz personalization (vs_last_game); IGNIS starter prompts; push dispatch KV batch (notify-subscribers.mjs); changelog notification trigger (notify-changelog-subscribers.mjs). Worker deployed ac1b2596.)
-Last session: 2026-06-20 | Session 212 | Total: 922/1000 (v3.0) | Velocity: 6 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▇▆▇▇▇▇
+Avgs - 3: 924.0 | 5: ~918 | 10: ~938 | 25: 954 | all: 958 (v3.0 /1000)
+  └ 3-session: Dev 93.0 | Align 92.7 | Momentum 92.7 | Engage 94.0 | Process 93.0
+Velocity trend: ↑ (S213: 5 items; S212: 6 items; S211: 7 items) | Protocol velocity: → | Debt: ↓ (IGNIS starters now measurable by slug; game-specific starters deepen personalization; push notification tracking closes the measurement loop)
+Momentum runway: PUSH — run push:count → send first segmented notification (push:notify --game cod); MEASUREMENT — re-evaluate play-next once post-2026-06-18 impressions accrue; CONTENT (founder): publish forge devlog; ENGINEERING: nav catalog-derivation; OPS: studio-ops process Ark cargo 01JRK6AH97E0F421A55C54236C | Intent rate: 100% (last 5) | (S213 shipped: IGNIS starter analytics; game-specific starters; dynamic no-result fallback; push game-context segmentation; push delivery+click RUM. Worker deployed abc4f4c3.)
+Last session: 2026-06-21 | Session 213 | Total: 927/1000 (v3.0) | Velocity: 5 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-21 — Session 213 (/goal autonomous arc · IGNIS depth + push segmentation + Ark cargo · Worker deployed abc4f4c3) | Total: 927/1000 (v3.0) | Velocity: 5 | Debt: ↓
+Avgs — 3: 924.0 | 5: ~918 | 10: ~938 | 25: 954 | all: 958
+
+Dev Health 93 | Creative Alignment 93 | Momentum 93 | Engagement 94 | Process Quality 93 | Cross-Repo Coherence 91 | Security Posture 91 | Ecosystem Integration 93 | Capital Efficiency 92 | Automation Coverage 94
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 93 | → | Worker deployed abc4f4c3 (W2+W3 changes); check-rum-allowlist 65/68 clean (2 advisory dead-warnings for sw.js fetch beacons); doctor blockingFailing 0. Pre-existing smoke-startup advisory (claude.api) unchanged. |
+| Creative Alignment | 93 | +1 | Game-specific starters are the first feature that changes WHAT the oracle asks based on cross-session behavior — a returning Call of Doodie player sees CoD-specific questions, not generic studio questions. This is SOUL-aligned: the oracle feels like it knows you. Dynamic no-result chips are better than a blank state: visitors get 3 tappable questions to restart the conversation. |
+| Momentum | 93 | +1 | Closed S212 SIL brainstorm item #2 (starter analytics → oracle:starter_click:<slug>); closed all 5 S213 audit items; extended the push notification pipeline from "send to all" to "send to a game audience" — a real capability upgrade. |
+| Engagement | 94 | → | Push delivery tracking (push:received) + click tracking (push:clicked) close the measurement gap: we can now answer "did the notification actually show and did they click it?" Game-specific starters and dynamic no-result chips improve first-interaction quality for both cold and returning visitors. |
+| Process Quality | 93 | → | Verified that push:received/push:clicked scanner dead-warnings are advisory (gate exits 0), documented the reason (D-S213.2). All promises verified against live code before scoring; Ark cargo shipped via proper channel (CANON-018). |
+| Cross-Repo Coherence | 91 | +1 | Ark cargo correctly routes sibling compliance gaps to studio-ops (01JRK6AH97E0F421A55C54236C) instead of trying to fix directly — this is the right posture. No cross-repo tree edits. RUM event additions coordinated: static set + prefixAllowlist together. |
+| Security Posture | 91 | +1 | Push endpoint validates lastGame against GAME_ALLOW on write (not deferred to dispatch) — poisoned values stored as null. Route bounded to 80 chars. Decision D-S213.3 captures the security invariant explicitly. VAPID private key stays in gateway; KV write uses validated fields only. |
+| Ecosystem Integration | 93 | → | Push pipeline is now fully instrumented: subscribe → store (lastGame context) → dispatch (--game filter) → deliver (push:received) → click (push:clicked). Ark cargo creates a cross-repo feedback loop for compliance drift. |
+| Capital Efficiency | 92 | → | No new deps. All changes are extensions of existing infrastructure (sw.js fetch → /v/rum endpoint already live; GAME_ALLOW reuses the same set as the quiz). |
+| Automation Coverage | 94 | +1 | notify-subscribers.mjs --game filter + --count game breakdown enable targeted push dispatch without manual subscriber list management. push:received + push:clicked create the first server-push delivery measurement chain in this studio. |
+
+### Self-audit + brainstorm
+
+**What this session proves:** the S212 SIL brainstorm correctly identified that "we emit oracle:starter_click but don't know which prompt" — S213 resolved it in the first wave. This is the SIL feedback loop working: a session scores a gap, logs it as a brainstorm item, and the next session ships it. The game-specific starters show that the `vs_last_game` signal (set in ambient-loader on game page visits since S212) is genuinely useful cross-feature — it started as a quiz personalization signal and now also personalizes the IGNIS oracle surface.
+
+**Second-order candidates generated:**
+1. **oracle:starter_click:<slug> → actual routing analysis** — now that slugs are tracked, `rollup-rum-ux` or a new `build-ignis-starter-insights.mjs` could show which starters convert to real queries vs. get ignored. (1h, pure data pipeline, no UX change)
+2. **push:received + push:clicked → delivery rate dashboard** — `rollup-rum-ux` could aggregate `push:received`/`push:clicked` per-dispatch so we know open rate. The per-dispatch context is missing (no dispatch-ID in the event yet). (1h, RUM aggregation extension)
+3. **first REAL push notification** — the infrastructure is complete and segmented; all that remains is a founder go-ahead. Run `npm run push:count` to see current subscriber count + game breakdown, then `npm run push:notify -- --title "Something new dropped in the Vault" --body "..." [--game cod]`.
+4. **play-next measurement-watch** — it's been 3 days since the 2026-06-18 epoch; `npm run rollup-rum` to check if post-epoch impressions exist yet. If not, defer again; if yes, run the dead-CTA check.
+
+### Committed to TASK_BOARD (2 items)
+- `[PUSH/P1·FOUNDER]` First real push notification — push:count + game breakdown → push:notify with optional --game (founder go-ahead required)
+- `[MEASURE/P3]` play-next measurement-watch — check post-epoch impressions before next session (3+ days now)
 
 ## 2026-06-20 — Session 212 (/goal autonomous arc continuation · orphan cleanup + quiz personalization + IGNIS starters + push dispatch KV + changelog trigger · Worker deployed ac1b2596) | Total: 922/1000 (v3.0) | Velocity: 6 | Debt: ↑
 Avgs — 3: 918.0 | 5: ~913 | 10: ~938 | 25: 954 | all: 958
