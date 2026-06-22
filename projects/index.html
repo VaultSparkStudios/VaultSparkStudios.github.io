@@ -43,14 +43,15 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(circle at 20% 40%, rgba(255,196,0,0.10), transparent 35%),
-        radial-gradient(circle at 80% 40%, rgba(31,162,255,0.10), transparent 35%);
+        radial-gradient(ellipse at 15% 40%, rgba(31,162,255,0.09), transparent 45%),
+        radial-gradient(ellipse at 85% 60%, rgba(255,196,0,0.06), transparent 45%),
+        radial-gradient(ellipse at 50% 100%, rgba(100,180,255,0.04), transparent 40%);
       pointer-events: none;
     }
     .page-hero .container { position: relative; z-index: 1; }
     .page-hero h1 {
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-size: clamp(3.5rem, 8vw, 7rem);
       line-height: 0.96;
       letter-spacing: -0.045em;
       margin: 0.75rem 0 1rem;
@@ -163,6 +164,11 @@
       box-shadow: var(--shadow);
       margin-bottom: 1.2rem;
       overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card-featured:hover {
+      transform: scale(1.005);
+      box-shadow: 0 24px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(255,196,0,0.15);
     }
     .project-card-featured[data-hidden] { display: none; }
     .project-card-featured-inner {
@@ -172,7 +178,7 @@
       align-items: stretch;
     }
     .project-card-hero {
-      min-height: 280px;
+      min-height: 320px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -243,15 +249,16 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: border-color 0.18s ease, transform 0.18s ease;
+      transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
     }
     .project-card:hover {
-      border-color: rgba(255,255,255,0.16);
-      transform: translateY(-2px);
+      border-color: rgba(255,196,0,0.2);
+      transform: translateY(-5px);
+      box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,196,0,0.2);
     }
     .project-card[data-hidden] { display: none; }
     .card-hero {
-      min-height: 180px;
+      min-height: 220px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -354,6 +361,24 @@
       .project-card-body { padding: 1.6rem; }
       .hero-stat-divider { display: none; }
     }
+
+    /* === S215 visual depth === */
+    @keyframes gold-pulse { 0%,100%{opacity:1} 50%{opacity:.7} }
+    .hero-stat-val { animation: gold-pulse 3s ease-in-out infinite; animation-delay: var(--pulse-delay, 0s); }
+    .hero-stat:nth-child(1) .hero-stat-val { --pulse-delay: 0s; }
+    .hero-stat:nth-child(2) .hero-stat-val { --pulse-delay: 0.4s; }
+    .hero-stat:nth-child(3) .hero-stat-val { --pulse-delay: 0.8s; }
+
+    .ecosystem-bridge { padding: 3rem 0; border-top: 1px solid rgba(255,255,255,0.06); }
+    .ecosystem-bridge-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+    .ecosystem-bridge-eyebrow { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 0.75rem; }
+    .ecosystem-bridge h2 { font-family: Georgia, serif; font-size: clamp(1.6rem, 3vw, 2.4rem); margin-bottom: 1rem; }
+    .ecosystem-bridge p { color: var(--muted); font-size: 0.97rem; line-height: 1.7; margin-bottom: 1.5rem; }
+    .ecosystem-bridge-links { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .eco-link { display: flex; flex-direction: column; gap: 0.2rem; padding: 1rem 1.2rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.07); background: rgba(255,255,255,0.03); color: var(--text); font-weight: 700; font-size: 0.95rem; transition: border-color 0.18s, background 0.18s, transform 0.18s; }
+    .eco-link span { font-size: 0.78rem; font-weight: 500; color: var(--muted); }
+    .eco-link:hover { border-color: rgba(255,196,0,0.3); background: rgba(255,196,0,0.05); transform: translateY(-2px); }
+    @media (max-width: 720px) { .ecosystem-bridge-inner { grid-template-columns: 1fr; gap: 2rem; } .ecosystem-bridge-links { grid-template-columns: 1fr 1fr; } }
   </style>
 
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -735,6 +760,26 @@
       </div>
     </section>
 
+    <!-- Games Bridge -->
+    <section class="ecosystem-bridge" aria-label="Explore the games">
+      <div class="container">
+        <div class="ecosystem-bridge-inner">
+          <div class="ecosystem-bridge-text">
+            <p class="ecosystem-bridge-eyebrow">Also From The Vault</p>
+            <h2>Games Built on the Same Foundation</h2>
+            <p>Every tool and project feeds back into the game worlds — the same studio that builds the intelligence layer also builds the worlds you play in.</p>
+            <a href="/games/" class="button-ghost button-sm">Explore All Games &rarr;</a>
+          </div>
+          <div class="ecosystem-bridge-links">
+            <a href="/games/call-of-doodie/" class="eco-link">Call of Doodie <span>Action Comedy Shooter</span></a>
+            <a href="/games/vaultspark-football-gm/" class="eco-link">VaultSpark Football GM <span>NFL Franchise Sim</span></a>
+            <a href="/games/vaultfront/" class="eco-link">VaultFront <span>Real-Time Strategy</span></a>
+            <a href="/games/solara/" class="eco-link">Solara: Sunfall <span>Roguelite RPG</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Sealed-vault row — portfolio-scale signal -->
     <section style="padding:2rem 0 3rem;" aria-label="Vaulted initiatives">
       <div class="container">
@@ -771,8 +816,22 @@
           <a href="/games/call-of-doodie/">Call Of Doodie</a>
           <a href="/games/gridiron-gm/">Gridiron GM</a>
           <a href="/games/vaultspark-football-gm/">VaultSpark Football GM</a>
+          <a href="/games/vaultfront/">VaultFront</a>
+          <a href="/games/solara/">Solara</a>
+          <a href="/games/mindframe/">MindFrame</a>
+          <a href="/games/the-exodus/">The Exodus</a>
           <a href="/leaderboards/">Leaderboards</a>
           <a href="/community/">Community Hub</a>
+        </div>
+        <div class="footer-col">
+          <h4>Projects</h4>
+          <a href="/projects/">All Projects</a>
+          <a href="/projects/promogrind/">PromoGrind</a>
+          <a href="/projects/velaxis/">Velaxis</a>
+          <a href="/projects/vorn/">Vorn</a>
+          <a href="/projects/ideaforge/">IdeaForge</a>
+          <a href="/projects/statvault/">StatVault</a>
+          <a href="/projects/obelisk/">Obelisk</a>
         </div>
         <div class="footer-col">
           <h4>Studio</h4>

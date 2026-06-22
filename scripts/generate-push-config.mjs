@@ -19,7 +19,7 @@ if (!publicKey) {
   process.exit(1);
 }
 
-const out = { publicKey, generatedAt: new Date().toISOString().slice(0, 10) };
+const out = { schemaVersion: '1.0', publicKey, generatedAt: new Date().toISOString().slice(0, 10) };
 const outPath = join(ROOT, 'api', 'push-config.json');
 writeFileSync(outPath, JSON.stringify(out, null, 2) + '\n');
 console.log('[generate-push-config] Written', outPath, '— key:', publicKey.slice(0, 16) + '…');
