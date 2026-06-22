@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-22 (Session 215 closeout) -->
+<!-- generated-at: 2026-06-22 (Session 216 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 215 closeout · 2026-06-22.
+> **Fast-boot brief** — generated at Session 216 closeout · 2026-06-22.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 216 · 2026-06-22 · FOUNDER MODE                         ║
+║  Session 217 · 2026-06-22 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,10 +35,10 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    935/1000   ██████████████████████░░   94%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 8↑                          ║
+║    943/1000   ██████████████████████░░   94%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 6↑                          ║
 ║    Last active: 20625d  ·  Last closeout: 0d  ·  (active = newe  ║
-║    Trend  ▆▆▄▄▆  ↑  (last 5 sessions)                            ║
+║    Trend  ▆▄▄▆▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -47,29 +47,29 @@
 ║    Momentum          93    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Engagement        94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
 ║    Process Qual      94    █████████░  ▇▇▇▇▇▇▇▇ →                ║
-║    Coherence         92    █████████░  ········ →                ║
+║    Coherence         93    █████████░  ········ →                ║
 ║    Security          91    █████████░  ········ →                ║
-║    Ecosystem         94    █████████░  ········ →                ║
+║    Ecosystem         95    ██████████  ········ →                ║
 ║    Capital           92    █████████░  ········ →                ║
-║    Automation        95    ██████████  ········ →                ║
+║    Automation        96    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 215 ═══════════════════════════╗
-║  Shipped:  see LATEST_HANDOFF.md                                 ║
+╔══ WHERE WE LEFT OFF  ·  Session 216 ═══════════════════════════╗
+║  Shipped:  (1) journal-date-pipeline gate (`check-journal-dates  ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    1% used                          ║
-║     2,866 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
-║     ~1,433 tok/turn  ·  cache 50%  ·  126 turns to compact       ║
+║  ✓  ██░░░░░░░░░░░░░░░░░░░░░░   10% used                          ║
+║     95,978 / 1,000,000 tok  ·  claude-code/opus-4-8-1m  ·  meas  ║
+║     ~47,989 tok/turn  ·  cache 50%  ·  17 turns to compact       ║
 ║     Verdict: CONTINUE                                            ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-15)                   ║
-║  ✓  Velocity      8 ↑  ·  Debt: ↓                                ║
+║  ✓  Velocity      6 ↑  ·  Debt: ↓                                ║
 ║  ✓  Runway        PUSH — run push:count → send first segmented   ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         44691 FORGE  ·  3d old                         ║
@@ -100,28 +100,28 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▆▄▄▆  8↑  (last 5 sessions)                        ║
+║  Velocity:   ▆▄▄▆▆  6↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  0/1000  (↓935 vs current 935)                       ║
+║  Projected:  0/1000  (↓943 vs current 943)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ GENIUS HIT LIST ══════════════════════════════════════════════╗
-║   96  [BRAND]        Draft one Signal Log post from the 10 brai  ║
-║        Draft one Signal Log post from the 10 brainstormed ideas  ║
+║   96  [PRODUCT]      First real push notification                ║
+║        First real push notification is open, local, and unblock  ║
 ║                                                                  ║
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      Individual game/project page template impr  ║
-║        Individual game/project page template improvements is op  ║
+║   93  [BRAND]        Draft one Signal Log post from the 10 brai  ║
+║        Draft one Signal Log post from the 10 brainstormed ideas  ║
 ║                                                                  ║
-║   90  [PRODUCT]      First real push notification                ║
-║        First real push notification is open, local, and unblock  ║
+║   90  [BRAND]        Publish forge devlog (founder-voice, never  ║
+║        Publish forge devlog (founder-voice, never auto-publishe  ║
 ║                                                                  ║
 ║   87  [PRODUCT]      Re-evaluate play-next rotation once post-2  ║
 ║        Re-evaluate play-next rotation once post-2026-06-18 impr  ║
@@ -132,5 +132,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 215 closeout · 2026-06-22*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 216 closeout · 2026-06-22*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

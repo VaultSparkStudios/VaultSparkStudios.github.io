@@ -8,14 +8,35 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▆▇▇▇▇▇█
-Avgs - 3: 931.0 | 5: ~924 | 10: ~938 | 25: 954 | all: 958 (v3.0 /1000)
-  └ 3-session: Dev 94.0 | Align 93.7 | Momentum 93.7 | Engage 94.3 | Process 94.0
-Velocity trend: ↑ (S215: 8 items; S214: 5 items; S213: 5 items) | Protocol velocity: → | Debt: ↓ (footer nav Projects column; phantom blocker resolved; pathfinder builder pathway; intent graph journal+projects contexts)
-Momentum runway: PUSH — run push:count → send first segmented notification (push:notify --game cod); CONTENT — draft Signal Log post from 10 brainstormed ideas; CI — confirm Lighthouse CI green on S214 push; INDIVIDUAL PAGES — game/project template pass (~20 pages); CONTENT (founder): publish forge devlog | Intent rate: 100% (last 5) | (S215 shipped: footer 97 pages, journal dates 10 posts, pathfinder builder+intel, intent graph, games/projects visual, membership Obelisk, schemaVersion fix, staging blocker resolved.)
-Last session: 2026-06-22 | Session 215 | Total: 935/1000 (v3.0) | Velocity: 8 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▇▆▇▇▇▇▇█▉
+Avgs - 3: 935.7 | 5: ~928 | 10: ~940 | 25: 954 | all: 958 (v3.0 /1000)
+  └ 3-session: Dev 94.3 | Align 94.7 | Momentum 94.7 | Engage 95.7 | Process 94.7
+Velocity trend: ↑ (S216: 6 items; S215: 8 items; S214: 5 items) | Protocol velocity: → | Debt: ↓ (individual-page visual template 29 pages; journal-date pipeline gate; vs_last_game tracker fixed; IGNIS starters all 7 slugs; ecosystem-bridge on 29 pages)
+Momentum runway: PUSH — run push:count → send first segmented notification (push:notify --game cod); CONTENT — draft Signal Log post from 10 brainstormed ideas; CI — confirm Lighthouse CI green on cumulative S214–S216 pushes; CONTENT (founder): publish forge devlog | Intent rate: 100% (last 5) | (S216 shipped: journal-date gate, IGNIS starters all slugs, welcome-back badge, 8 game push CTAs, 29 individual-page template, 2 Ark sibling compliance cargos.)
+Last session: 2026-06-22 | Session 216 | Total: 943/1000 (v3.0) | Velocity: 6 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-22 — Session 216 (arc · IGNIS starters all 7 slugs + vs_last_game tracker fix + welcome-back badge + game push CTAs + individual-page visual template + journal-date gate + Ark sibling cargos) | Total: 943/1000 (v3.0) | Velocity: 6 | Debt: ↓
+Avgs — 3: 935.7 | 5: ~928 | 10: ~940 | 25: 954 | all: 958
+
+Dev Health 95 | Creative Alignment 95 | Momentum 95 | Engagement 96 | Process Quality 95 | Cross-Repo Coherence 93 | Security Posture 91 | Ecosystem Integration 95 | Capital Efficiency 92 | Automation Coverage 96
+
+**What improved:** Six items shipped across a full arc. The S215 individual-page deferral (29 pages) landed with the upgrade-individual-pages.mjs batch script — all game and project detail pages now have the same immersive 3-layer gradient + gold-pulse + ecosystem-bridge treatment as the landing pages. A silent IGNIS personalization bug was root-fixed: mindframe, solara, vaultfront, and the-exodus visitors were all stored as 'forge' in vs_last_game, meaning game-specific starters and the welcome-back badge never fired for them. The journal-date gate closes the S215 SIL brainstorm item #1 and makes the date-quality check continuous. The returning-visitor badge adds a tiered loyalty signal on game pages. Push CTAs are now on all 8 game pages. Two targeted Ark cargos shipped the sibling-compliance fix recipes to studio-ops.
+
+**Honest deduction (−57):** Security Posture −9 (no security changes, TT-enforce still pending field data). Capital Efficiency −8 (no major efficiency improvements this session). Cross-Repo Coherence −7 (prior Ark cargos still unprocessed by studio-ops; 2 new cargos shipped but the old S213 cargo `01JRK6AH97E0F421A55C54236C` also unprocessed).
+
+**Intent outcome:** Achieved — 6/6 audit items shipped; build:check EXIT 0; pushed direct to main.
+
+**Brainstorm**
+1. **PUSH-NOTIFY-COD-FIRST** — run `npm run push:count` → `npm run push:notify -- --game cod` for the first game-segmented push. Zero new code. Founder go-ahead required.
+2. **WELCOME-BACK-TELEMETRY** — add `vs_welcome_back_shown` RUM event in `game-welcome-back.js` so we can measure how often the badge fires + which tier. Wire to Worker prefixAllowlist.
+3. **INDIVIDUAL-PAGE-DEPTH** — the upgrade script ran across all 29 pages but the ecosystem-bridge links are currently generic (4 hardcoded links). Next pass: make bridge links page-specific (same game's related projects, or vice versa) using public-intelligence.json.
+4. **STUDIO-OPS-ARK-DRAIN** — the sibling compliance cargos need to be processed by studio-ops. Ship a reminder via `ark ship --type agent-handoff --to studio-ops` pointing at the backlog.
+
+**Committed to TASK_BOARD:** welcome-back-telemetry already wired into the S217 runway as a natural next step.
 
 ---
 

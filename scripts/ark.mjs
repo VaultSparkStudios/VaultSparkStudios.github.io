@@ -15,7 +15,7 @@
  * synced-from: delegation shim — no logic copied; nothing to drift.
  */
 import { existsSync } from 'node:fs';
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import url from 'node:url';
 

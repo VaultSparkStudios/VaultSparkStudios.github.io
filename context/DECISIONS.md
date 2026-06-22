@@ -2,6 +2,14 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-22 — S216 (arc) — vs_last_game tracker covers all slugs; welcome-back badge uses SLUG_MAP not data-voice; sibling compliance always via Ark
+
+**D-S216.1 — `vs_last_game` tracker must cover all game slugs explicitly before the catch-all forge rule.** The S213 tracker only had specific matches for cod and fgm (`/call-of-doodie/` and `/football-gm/`), with a catch-all `else if (/^\/games\/[^/]+\//)` → 'forge'. This meant mindframe, solara, vaultfront, and the-exodus visitors were silently stored as 'forge' in `vs_last_game` — IGNIS game-specific starters and the welcome-back badge both depended on this key matching the actual slug. **Fix:** added specific path matchers for all 4 missing slugs before the forge catch-all. **Rule for future sessions:** when adding a new game to `STARTERS_GAME`, the matching path pattern in `ambient-loader.js` must be added at the same time or the starters will never fire.
+
+**D-S216.2 — Welcome-back badge uses URL path segment via SLUG_MAP, not `data-voice` attribute, to map page → STARTERS_GAME key.** Game pages have `data-voice="call-of-doodie"` but `vs_last_game` stores 'cod'. The SLUG_MAP in `game-welcome-back.js` translates the URL path segment to the STARTERS_GAME key (e.g. 'call-of-doodie' → 'cod', 'vaultspark-football-gm' → 'fgm'). **Decision:** URL detection is more reliable than `data-voice` because it doesn't depend on DOM load order and can't be tampered by a content error. SLUG_MAP must be kept in sync with STARTERS_GAME keys and game URL slugs.
+
+**D-S216.3 — Sibling-repo compliance gaps are shipped as Ark `repo-question` cargo, not direct fixes.** The doctor reports VOID/SHADOW/Hashmark at 32–33/35 compliance every session. CANON-018 forbids direct sibling-repo writes. **Decision:** ship 2 targeted `repo-question` cargos to studio-ops with the specific fix recipe per repo. studio-ops processes them on their own cadence; this repo's responsibility ends at shipping the cargo. Repeated carry without Ark cargo (as happened S213→S215) is a protocol gap — closing it with explicit cargos is the correct resolution.
+
 ### 2026-06-22 — S215 (founder-directed) — staging-box-hcloud phantom blocker resolved; footer Projects column added; Obelisk framed as "coming"
 
 **D-S215.1 — staging-box-hcloud was a phantom blocker; resolved without founder action.** The S198 blocker labeled "HUMAN ACTION REQUIRED — retrieve HCLOUD_TOKEN from Hetzner Cloud Console" was based on `check-secrets.mjs --for hcloud` returning MISSING. However, the correct capability name is `hetzner.cloud-api` (not `hcloud`). Querying with the correct name shows the token is READY in the secrets gateway. No founder action was ever needed. Blocker removed from PROJECT_STATUS.json.

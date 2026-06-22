@@ -1,6 +1,15 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-22 (Session 215 — founder-directed · footer Projects column + visual overhaul + pathfinder upgrade)
+Last updated: 2026-06-22 (Session 216 — autonomous arc · IGNIS starters all slugs + returning-visitor badge + game push CTAs + individual-page visual template + Ark cargos)
+## Where We Left Off (Session 216)
+- Shipped: (1) journal-date-pipeline gate (`check-journal-dates.mjs` → `check-proof-surface`); (2) IGNIS STARTERS_GAME extended to all 7 game slugs + `vs_last_game` tracker fixed for mindframe/solara/vaultfront/the-exodus; (3) `game-welcome-back.js` returning-visitor badge (tiered: Welcome back / Vault Familiar / Vault Regular); (4) push-subscribe CTA injected on 8 game pages via `inject-game-push-cta.mjs`; (5) S215 visual template applied to 29 individual pages via `upgrade-individual-pages.mjs`; (6) 2 Ark repo-question cargos shipped to studio-ops (Hashmark TRUTH_AUDIT + VOID+SHADOW compliance).
+- Tests: build:check EXIT 0 · doctor blockingFailing 0 · 5 commits pushed (d2dc7435→00bb32ef).
+- Deploy: CF Pages auto-builds on push. All 5 S216 commits on `origin/main`.
+- First action next session: Run `/start` → `npm run push:count` → first real push notification when founder ready. Check if Lighthouse CI is green on S214/S215/S216 cumulative push.
+- Carries: Signal Log post draft (founder-voice) · forge devlog publish (founder-voice) · play-next rotation (awaiting post-2026-06-18 data) · studio-ops: process Ark cargo `01JRK6AH97E0F421A55C54236C` (S213 sibling compliance), `01JRONES0VE96C6C4554516536` (Hashmark TRUTH_AUDIT), `01JRONIRFF246105D9994172D4` (VOID+SHADOW compliance).
+- SIL: 935 → 943 (+8). Categories: Dev 95 | Align 95 | Momentum 95 | Engage 96 | Process 95 | CrossRepo 93 | Security 91 | EcoInt 95 | CapEff 92 | AutoCov 96.
+
+> **S215 (founder-directed):** Shipped 8 items. (1) Footer Projects column sitewide (97 pages); (2) Signal Log full dates (10 posts); (3) Pathfinder builder pathway + intel; (4) intent-graph projects+journal contexts; (5) games/projects landing page visual overhaul; (6) Membership Obelisk framing; (7) generate-push-config schemaVersion fix; (8) hetzner phantom blocker resolved. SIL 935.
 ## Where We Left Off (Session 215)
 - Shipped: (1) Footer Projects column + 4 Forge games sitewide (97 pages, `update-footer.mjs`); (2) Signal Log full dates — 10 posts + journal index (`update-journal-dates.mjs`); (3) Pathfinder upgrade — builder pathway, want_projects signal, intel boosts, New badge; (4) intent-graph.json — projects+journal contexts + 3 nodes; (5) games/index.html + projects/index.html visual overhaul (hero gradients, gold-pulse, bridge sections); (6) Membership + Obelisk callout on 4 pages; (7) generate-push-config.mjs schemaVersion fix; (8) staging-box-hcloud blocker RESOLVED (was phantom — HCLOUD_TOKEN already in CAPABILITY_MAP as `hetzner.cloud-api`).
 - Tests: build:check EXIT 0 · doctor blockingFailing 0 · 2 commits pushed (fa215055 140 files + 4cc7ae97 intent-graph).

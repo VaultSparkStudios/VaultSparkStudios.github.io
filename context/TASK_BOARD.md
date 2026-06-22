@@ -1,6 +1,28 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-22 (Session 215 — founder-directed: footer Projects column + visual overhaul + pathfinder upgrade)
+Last updated: 2026-06-22 (Session 216 — autonomous arc: IGNIS starters all slugs + returning-visitor badge + game push CTAs + individual-page visual template + Ark cargos)
+
+## S216 outcome + carries
+
+**Shipped in S216:**
+- [x] **[PIPELINE/P2] journal-date-pipeline.** `scripts/check-journal-dates.mjs` gate wired into `check-proof-surface.mjs` STEPS — validates day-level dates on all Signal Log posts. Closes S215 SIL brainstorm item #1.
+- [x] **[AI/P2] game-specific-ignis-starters extended.** `STARTERS_GAME` extended from 3 to 7 slugs (mindframe, solara, vaultfront, the-exodus added, 2 questions each). `vs_last_game` tracker fixed for all 6 game slugs — silent bug where 4 game visitors were tagged as 'forge'.
+- [x] **[UX/P2] game-page returning-visitor welcome-back badge.** New predicate-loaded `game-welcome-back.js` — tiered badge (Welcome back → Vault Familiar → Vault Regular) on 2nd+ visit to a game page. SLUG_MAP, CSS via ensureStyles(), idle-loaded.
+- [x] **[PUSH/P2] per-game push-subscribe CTA on all individual game pages.** `inject-game-push-cta.mjs` injected `[data-push-subscribe]` containers on 8 game pages (per-game accent + label).
+- [x] **[UX/P1] individual-page visual template pass.** `upgrade-individual-pages.mjs` applied S215 3-layer ellipse gradient + gold-pulse + ecosystem-bridge to 29 individual game + project pages. Closes S215 explicit deferral + SIL brainstorm item #2.
+- [x] **[OPS/P2] sibling-compliance-ark.** 2 targeted `repo-question` Ark cargos to studio-ops: Hashmark TRUTH_AUDIT (id `01JRONES0VE96C6C4554516536`) + VOID+SHADOW compliance (id `01JRONIRFF246105D9994172D4`).
+
+**S216 honesty ledger:**
+- push-subscribe dead-warnings (2) advisory — pre-existing (sw.js raw fetch, scanner can't see; gate exits 0).
+- `smoke-startup-scripts` 1/14 FAILED (claude.api advisory, pre-existing since S210+, non-blocking in CI).
+
+**S216 carries:**
+- [ ] **[PUSH/P1·FOUNDER]** First real push notification — `npm run push:count` → `npm run push:notify -- --game cod` (founder go-ahead required).
+- [ ] **[CONTENT/P1·FOUNDER]** Draft one Signal Log post from the 10 brainstormed ideas. Founder publishes in own voice.
+- [ ] **[CONTENT/P1·FOUNDER]** Publish forge devlog (founder-voice, never auto-published).
+- [ ] **[MEASURE/P3]** Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
+- [ ] **[OPS/P2]** studio-ops: process Ark cargos `01JRK6AH97E0F421A55C54236C` (S213) + `01JRONES0VE96C6C4554516536` + `01JRONIRFF246105D9994172D4` (S216 sibling compliance).
+- [ ] **[PERF/P2]** Confirm Lighthouse CI green on cumulative S214–S216 pushes (TBT fix target ≥0.80).
 
 ## S215 outcome + carries
 

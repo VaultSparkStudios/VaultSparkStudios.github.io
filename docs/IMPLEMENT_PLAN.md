@@ -1,5 +1,6 @@
 <!-- generated-by: /implement skill v1.0 -->
-<!-- generated-at: 2026-06-20 · session 213 · source: docs/AUDIT_2026-06-20-S213.json -->
+<!-- generated-at: 2026-06-22 · session 216 · source: docs/AUDIT_2026-06-22.json (s216candidates) -->
+<!-- S216 plan: 6 items | journal-date-pipeline → game-specific-ignis-starters → session-welcome-back → game-page-push-cta → individual-page-template → sibling-compliance-ark -->
 
 # Implement Plan — AUDIT_2026-06-18 S206 (16 items · 7 waves)
 

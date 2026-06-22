@@ -1,10 +1,11 @@
 {
   "schemaVersion": "1.3",
-  "session": 215,
+  "session": 216,
   "date": "2026-06-22",
   "agent": "claude-sonnet-4-6",
   "repo": "vaultsparkstudios-website",
-  "headline": "Attended S215 — 8 founder-directed items; footer propagated 96 pages; visual overhaul games/projects; pathfinder rebuilt; journal dates exact; Obelisk framing; phantom blocker resolved.",
+  "headline": "S216 arc — 6 new candidates: session-welcome-back, game-specific-ignis-starters, game-page-push-cta, journal-date-pipeline, individual-page-template, sibling-compliance-ark. CI verified green. Play-next verified resolved.",
+  "s215executionLog": "Attended S215 — 8 founder-directed items; footer propagated 96 pages; visual overhaul games/projects; pathfinder rebuilt; journal dates exact; Obelisk framing; phantom blocker resolved.",
   "items": [
     {
       "id": "s215-001",
@@ -186,5 +187,138 @@
     "delta": 6,
     "kind": "earned",
     "notes": "Velocity 8 items; engagement +1 from visual overhaul; creative alignment +1 from Obelisk framing; automation coverage +1 from pathfinder rebuild; cross-repo coherence +1 from intent-graph gap fill."
-  }
+  },
+  "s216candidates": [
+    {
+      "id": "s216-001",
+      "slug": "session-welcome-back",
+      "title": "Returning-visitor welcome-back badge on game pages",
+      "axis": "gamification",
+      "tier": "🔥",
+      "impact": 7,
+      "effort": "1h",
+      "effortHours": 1,
+      "innovation": 8,
+      "priority": 35.3,
+      "shipped": false,
+      "why": "Every game page tracks vs_last_game via ambient-loader.js but never shows a welcome-back signal when a returning player lands on the game they last played. A streak-aware animated badge closes the feedback loop that the rank/achievement economy promises. The studio soul demands membership feels real — returning visitors get no personal acknowledgement today.",
+      "recipe": "In each game page, add JS snippet: read vs_last_game + visit-count key (vs_<slug>_visits), if matching current page slug, increment counter, inject gold-accented .vs-welcome-back badge inside .hero-art-content with 'Welcome back · Nth visit' text, fade-in via CSS transition.",
+      "premiseVerified": true,
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "JS snippet: if vs_last_game=slug, show gold-text badge, fade-in" },
+        "L2": { "effortHours": 1, "recipe": "L1 + visit-count, streak label, CSS pulse badge" },
+        "L3": { "effortHours": 2, "recipe": "L2 + momentum strip with last-played timestamp + personal-best stat" }
+      }
+    },
+    {
+      "id": "s216-002",
+      "slug": "game-specific-ignis-starters",
+      "title": "Extend IGNIS STARTERS_GAME to all game slugs",
+      "axis": "ai",
+      "tier": "🔥",
+      "impact": 8,
+      "effort": "1h",
+      "effortHours": 1,
+      "innovation": 7,
+      "priority": 35.3,
+      "shipped": false,
+      "why": "ignis-answer-engine.js STARTERS_GAME only covers cod, fgm, forge. Visitors on mindframe, solara, vaultfront, the-exodus get generic starters — a missed signal that studio intelligence knows them. Game-voice starters in S213 proved click-through; extending to 4 remaining slugs is 30m of copy + 2 verified entries each.",
+      "recipe": "Add mindframe/solara/vaultfront/the-exodus to STARTERS_GAME in assets/ignis-answer-engine.js, 2 questions each. Verify ignis-project-block data-voice attributes match. Update Worker RUM prefixAllowlist if needed.",
+      "premiseVerified": true,
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Add 2 starters each for the 4 unserved game slugs" },
+        "L2": { "effortHours": 1, "recipe": "L1 + verify data-voice attrs + Worker RUM update + rebuild bundle" },
+        "L3": { "effortHours": 2, "recipe": "L2 + build-time generation from public-intelligence.json for future-proof auto-starters" }
+      }
+    },
+    {
+      "id": "s216-003",
+      "slug": "game-page-push-cta",
+      "title": "Per-game push-subscribe CTA on game pages",
+      "axis": "feedback-loop",
+      "tier": "⚡",
+      "impact": 7,
+      "effort": "1h",
+      "effortHours": 1,
+      "innovation": 7,
+      "priority": 30.9,
+      "shipped": false,
+      "why": "Push-subscribe is mature and segmented by game slug but game pages have no push opt-in — only global site footer or /push-subscribe route. A 'Get notified when this game updates' button wired to the game's push segment would dramatically increase opt-in conversion where visitor intent is proven.",
+      "recipe": "In share section of each game page, add push-subscribe mini-CTA button calling existing push-subscribe.js flow with lastGame=<slug> pre-filled. Show 'Subscribed ✓' on success. Render only if Notification API available.",
+      "premiseVerified": true,
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Add push-subscribe button in share section with game slug context" },
+        "L2": { "effortHours": 1, "recipe": "L1 + game accent color + subscribed state detection + RUM event" },
+        "L3": { "effortHours": 2, "recipe": "L2 + push CTA in community stats bar (gcb) area with engagement tracking" }
+      }
+    },
+    {
+      "id": "s216-004",
+      "slug": "journal-date-pipeline",
+      "title": "Wire journal-date updater into build pipeline",
+      "axis": "speed",
+      "tier": "⚡",
+      "impact": 7,
+      "effort": "30m",
+      "effortHours": 0.5,
+      "innovation": 5,
+      "priority": 26.5,
+      "shipped": false,
+      "why": "update-journal-dates.mjs was a one-off in S215. New Signal Log posts will still appear with month-only dates until founder manually runs it. Wiring as a build:check gate (non-zero on month-only dates) + pre-build fixer eliminates a recurring manual task class.",
+      "recipe": "Add scripts/check-journal-dates.mjs (errors if any posts have month-only article:published_time). Wire into npm run build:check. Optionally add update-journal-dates.mjs as prebuild script.",
+      "premiseVerified": true,
+      "ladder": {
+        "L1": { "effortHours": 0.25, "recipe": "Add check:journal-dates script that exits non-zero on month-only date" },
+        "L2": { "effortHours": 0.5, "recipe": "L1 + wire into build:check + pre-build auto-fix" },
+        "L3": { "effortHours": 1, "recipe": "L2 + CI gate blocks push if new post lacks day-level date" }
+      }
+    },
+    {
+      "id": "s216-005",
+      "slug": "individual-page-template",
+      "title": "S215 visual treatment on all individual game + project pages",
+      "axis": "ux",
+      "tier": "⚡",
+      "impact": 9,
+      "effort": "4h",
+      "effortHours": 4,
+      "innovation": 6,
+      "priority": 20.9,
+      "shipped": false,
+      "why": "S215 games/index.html got layered 3-gradient hero, gold-pulse stats, and ecosystem-bridge. Individual game pages still use basic 2-circle radial gradient. Visitor landing on /games/call-of-doodie/ via search gets a substantially less impressive experience than the landing page that referred them — a jarring gap for a studio that prizes visual craft.",
+      "recipe": "Build scripts/upgrade-individual-pages.mjs: reads each game/project page, upgrades game-hero::before to 3-layer ellipse gradient using per-game accent colors from games/index.html palette, adds gold-pulse keyframe + applies to .stat-block strong, injects ecosystem-bridge section. Run for 10 game pages + 10 project pages.",
+      "premiseVerified": true,
+      "ladder": {
+        "L1": { "effortHours": 2, "recipe": "Add gold-pulse + 3-layer ellipse gradient to all 10 game pages" },
+        "L2": { "effortHours": 4, "recipe": "L1 + ecosystem-bridge section on all 20 game + project pages" },
+        "L3": { "effortHours": 8, "recipe": "L2 + personalized bridge reorders by vs_last_game + page history with RUM tracking" }
+      }
+    },
+    {
+      "id": "s216-006",
+      "slug": "sibling-compliance-ark",
+      "title": "Ship targeted Ark fix-recipes for Hashmark/VOID/SHADOW compliance gaps",
+      "axis": "security",
+      "tier": "💡",
+      "impact": 5,
+      "effort": "30m",
+      "effortHours": 0.5,
+      "innovation": 3,
+      "priority": 11.4,
+      "shipped": false,
+      "why": "Compliance velocity stuck at 32/35 (91%) for 4 consecutive sessions. Hashmark needs TRUTH_AUDIT.md Overall status line; VOID + SHADOW need start/closeout v3.3 templates + TRUTH_AUDIT.md v1.1 header + PROJECT_STATUS.json truthAuditStatus/truthAuditLastRun fields. Prior Ark cargo S213 unprocessed.",
+      "recipe": "node scripts/ark.mjs ship --type repo-question --to studio-ops with payload listing exact fixes per repo. CANON-018: no direct sibling edits.",
+      "premiseVerified": true,
+      "ladder": {
+        "L1": { "effortHours": 0.25, "recipe": "Ship Ark repo-question with fix-recipe payload for each failing item" },
+        "L2": { "effortHours": 0.5, "recipe": "L1 + include patch script in cargo that studio-ops can apply at /start" },
+        "L3": { "effortHours": 1, "recipe": "L2 + pattern-share cargo for reusable compliance-fix recipe" }
+      }
+    }
+  ],
+  "s216skipped": [
+    { "slug": "ci-verified", "reason": "Verified green in /start: all GH CI runs completed success 2026-06-22. WIN." },
+    { "slug": "play-next-evaluate", "reason": "dead-ctas.json deadCount=0. S209 epoch fix working. Verified done." }
+  ],
+  "s216innovationReserve": ["session-welcome-back", "game-specific-ignis-starters", "game-page-push-cta"]
 }
