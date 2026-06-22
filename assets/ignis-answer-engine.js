@@ -188,12 +188,21 @@
       { q: 'What shipped in the studio recently?', slug: 'recent-ships' },
     ];
     var STARTERS_GAME = {
-      cod:   [{ q: 'What makes Call of Doodie different?', slug: 'cod-diff' },
-              { q: 'What\'s new in Call of Doodie?', slug: 'cod-new' }],
-      fgm:   [{ q: 'How deep is Football GM\'s franchise mode?', slug: 'fgm-depth' },
-              { q: 'What\'s unique about VaultSpark Football GM?', slug: 'fgm-diff' }],
-      forge: [{ q: 'What\'s being built in the Forge right now?', slug: 'forge-now' },
-              { q: 'Which Forge project launches next?', slug: 'forge-launch' }],
+      cod:          [{ q: 'What makes Call of Doodie different?', slug: 'cod-diff' },
+                     { q: 'What\'s new in Call of Doodie?', slug: 'cod-new' }],
+      fgm:          [{ q: 'How deep is Football GM\'s franchise mode?', slug: 'fgm-depth' },
+                     { q: 'What\'s unique about VaultSpark Football GM?', slug: 'fgm-diff' }],
+      forge:        [{ q: 'What\'s being built in the Forge right now?', slug: 'forge-now' },
+                     { q: 'Which Forge project launches next?', slug: 'forge-launch' }],
+      // S216: extend to all SPARKED game slugs
+      mindframe:    [{ q: 'How does MindFrame\'s Mind Model work?', slug: 'mindframe-model' },
+                     { q: 'What are MindFrame\'s 15 cognitive modes?', slug: 'mindframe-modes' }],
+      solara:       [{ q: 'How does Solara\'s shared-sun mechanic work?', slug: 'solara-sun' },
+                     { q: 'What happens to the world when you die in Solara?', slug: 'solara-death' }],
+      vaultfront:   [{ q: 'How does VaultFront\'s convoy-timing strategy work?', slug: 'vaultfront-convoy' },
+                     { q: 'What makes VaultFront\'s RTS asymmetric?', slug: 'vaultfront-rts' }],
+      'the-exodus': [{ q: 'How does The Exodus engine-building work?', slug: 'exodus-engine' },
+                     { q: 'How does your legacy carry across Exodus runs?', slug: 'exodus-legacy' }],
     };
     var starterWrap = null;
     (function renderStarters() {

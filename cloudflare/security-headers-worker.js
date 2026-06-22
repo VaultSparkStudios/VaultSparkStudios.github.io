@@ -370,10 +370,11 @@ const RUM_UX_DYNAMIC = [
   prefixAllowlist('constellation', { charset: /^[a-z0-9:-]+$/, maxLen: 36 }),
   // S207: cta:variant:<id>:<n> — dead-cta-rotation-loop variant attribution.
   prefixAllowlist('cta', { charset: /^[a-z0-9:-]+$/, maxLen: 36 }),
-  // S213 W2a: oracle:starter_click:<slug> — per-starter attribution (forge-builds /
-  // free-games / rank-system / studio-diff / recent-ships / cod-diff / cod-new /
-  // fgm-depth / fgm-diff / forge-now / forge-launch). Static oracle:starter_click
-  // removed from exact Set; slug suffix now required so we learn which starters resonate.
+  // S213 W2a: oracle:starter_click:<slug> — per-starter attribution. Slug suffix required.
+  // Known slugs: forge-builds/free-games/rank-system/studio-diff/recent-ships/cod-diff/
+  // cod-new/fgm-depth/fgm-diff/forge-now/forge-launch + S216: mindframe-model/mindframe-modes/
+  // solara-sun/solara-death/vaultfront-convoy/vaultfront-rts/exodus-engine/exodus-legacy.
+  // Static oracle:starter_click removed from exact Set; prefix covers all future game slugs.
   prefixAllowlist('oracle:starter_click', { charset: /^[a-z0-9-]+$/, maxLen: 20 }),
 ];
 const cleanRumUxEvent = makeRumUxCleaner(RUM_UX_EVENTS, RUM_UX_DYNAMIC);
