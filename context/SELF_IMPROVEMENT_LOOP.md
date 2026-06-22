@@ -8,16 +8,40 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▆▇▇▇▇
-Avgs - 3: 924.0 | 5: ~918 | 10: ~938 | 25: 954 | all: 958 (v3.0 /1000)
-  └ 3-session: Dev 93.0 | Align 92.7 | Momentum 92.7 | Engage 94.0 | Process 93.0
-Velocity trend: ↑ (S213: 5 items; S212: 6 items; S211: 7 items) | Protocol velocity: → | Debt: ↓ (IGNIS starters now measurable by slug; game-specific starters deepen personalization; push notification tracking closes the measurement loop)
-Momentum runway: PUSH — run push:count → send first segmented notification (push:notify --game cod); MEASUREMENT — re-evaluate play-next once post-2026-06-18 impressions accrue; CONTENT (founder): publish forge devlog; ENGINEERING: nav catalog-derivation; OPS: studio-ops process Ark cargo 01JRK6AH97E0F421A55C54236C | Intent rate: 100% (last 5) | (S213 shipped: IGNIS starter analytics; game-specific starters; dynamic no-result fallback; push game-context segmentation; push delivery+click RUM. Worker deployed abc4f4c3.)
-Last session: 2026-06-21 | Session 213 | Total: 927/1000 (v3.0) | Velocity: 5 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▇▆▇▇▇▇▇
+Avgs - 3: 926.3 | 5: ~920 | 10: ~938 | 25: 954 | all: 958 (v3.0 /1000)
+  └ 3-session: Dev 93.3 | Align 93.0 | Momentum 93.0 | Engage 94.0 | Process 93.3
+Velocity trend: → (S214: 5 items; S213: 5 items; S212: 6 items) | Protocol velocity: → | Debt: ↓ (Lighthouse CI TBT fix ships; mobile touch targets hardened; honest verify-reject saves context budget)
+Momentum runway: PUSH — run push:count → send first segmented notification (push:notify --game cod); CI — confirm Lighthouse CI green on S214 push; MEASUREMENT — re-evaluate play-next once post-2026-06-18 impressions accrue; CONTENT (founder): publish forge devlog; OPS: studio-ops process Ark cargo 01JRK6AH97E0F421A55C54236C | Intent rate: 100% (last 5) | (S214 shipped: supabase-public.js defer; 4 scripts idle-loaded; 5 mobile buttons →44px; honest verify-reject on oracle rater.)
+Last session: 2026-06-21 | Session 214 | Total: 929/1000 (v3.0) | Velocity: 5 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-21 — Session 214 (/goal autonomous arc · Lighthouse TBT fix + mobile audit + honest verify-reject) | Total: 929/1000 (v3.0) | Velocity: 5 | Debt: ↓
+Avgs — 3: 926.3 | 5: ~920 | 10: ~938 | 25: 954 | all: 958
+
+Dev Health 94 | Creative Alignment 93 | Momentum 93 | Engagement 94 | Process Quality 94 | Cross-Repo Coherence 91 | Security Posture 91 | Ecosystem Integration 93 | Capital Efficiency 92 | Automation Coverage 94
+
+| Category | Score | vs Last | Notes |
+|---|---|---|---|
+| Dev Health | 94 | +1 | `supabase-public.js` defer removes the sole parser-blocking external script on homepage. 4 scripts moved to idle loader reduces TBT burst. All build checks pass except pre-existing claude.api advisory. Doctor blockingFailing 0. |
+| Creative Alignment | 93 | → | No creative direction changes this session — housekeeping + perf + mobile audit. Soul non-negotiables preserved. |
+| Momentum | 93 | → | 5 waves again; consistent. TBT fix is high-leverage but no new feature surface. |
+| Engagement | 94 | → | Mobile touch targets bumped to 44px — removes friction on mobile. No engagement features added; held floor. |
+| Process Quality | 94 | +1 | Honest reject-on-verification on W4 (oracle rater already existed) is the discipline working exactly right. Prevented shipping redundant code. S175 verify-reject is a process WIN, not a miss. |
+| Cross-Repo Coherence | 91 | → | Ark cargo from S213 still unprocessed by studio-ops. No new cross-repo work. |
+| Security Posture | 91 | → | No security changes. TT policies verified clean. Scan clean. |
+| Ecosystem Integration | 93 | → | No ecosystem changes. IGNIS, push, hub surfaces unchanged. |
+| Capital Efficiency | 92 | → | Idle-loading reduces parse cost per visit. No new paid services. |
+| Automation Coverage | 94 | → | No new gates; existing gates all pass. |
+
+**SIL brainstorm — S214:**
+1. [SIL·P2] Verify Lighthouse CI actually flips green on the S214 push (perf score should climb above 0.80). Record the score in PROJECT_STATUS.json and close the "failing since S209" note. CI will auto-run on the next push — check GitHub Actions.
+2. [SIL·P1] First push notification dispatch — `push:count` = 0 now but the system is ready. Once subscribers enroll, `push:notify --game cod` is the first real dispatch. This is the next measurable engagement milestone.
+
+**[SIL] committed to TASK_BOARD:** #1 above (Lighthouse CI verify) added as S214 carry. #2 (first push) already on the carry board.
 
 ## 2026-06-21 — Session 213 (/goal autonomous arc · IGNIS depth + push segmentation + Ark cargo · Worker deployed abc4f4c3) | Total: 927/1000 (v3.0) | Velocity: 5 | Debt: ↓
 Avgs — 3: 924.0 | 5: ~918 | 10: ~938 | 25: 954 | all: 958

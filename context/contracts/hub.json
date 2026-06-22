@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-21T21:10:06.030Z",
+  "generatedAt": "2026-06-22T02:43:27.183Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 213,
-    "lastUpdated": "2026-06-21",
-    "currentFocus": "S213 (autonomous arc · IGNIS depth + push segmentation) shipped 5 waves: W2a IGNIS starter analytics (oracle:starter_click:<slug> bounded suffix); W2b IGNIS game-specific starters (vs_last_game → STARTERS_GAME map, 2 game starters prepended for cod/fgm/forge visitors); W2c dynamic no-result fallback (STARTERS_ALL chips + oracle:no_result RUM); W3a push game-context segmentation (push-subscribe.js sends lastGame+route, Worker validates+persists, notify-subscribers.mjs --game filter); W3b push delivery+click tracking (sw.js push:received/push:clicked via fetch beacon); W4 Ark cargo to studio-ops (sibling compliance gaps). Worker deployed abc4f4c3. RUM allowlist 65/68 clean. Doctor blockingFailing 0. SIL 927.",
-    "nextMilestone": "Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice). Engineering: nav Projects/Games dropdown catalog-derivation (needs catalog∪extra-paged merge design). Push: first real notification — run push:count, then push:notify (founder go-ahead required). studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling compliance).",
+    "currentSession": 214,
+    "lastUpdated": "2026-06-22",
+    "currentFocus": "S214 (autonomous arc · Lighthouse TBT fix + mobile audit) shipped 5 waves: W1 housekeeping (3 orphan shells −175KB; push:count=0 verified); W2 propagate-nav 99 pages + STARTUP_BRIEF refresh; W3 Lighthouse perf fix (supabase-public.js defer + 4 scripts idle-loaded via requestIdleCallback — targets CI 0.76→0.80+ regression); W4 oracle rater honest reject (already shipped S189+S206); W5 CANON-041 mobile tap-target audit (5 buttons →44px). Doctor blockingFailing 0. SIL 929.",
+    "nextMilestone": "CI — confirm Lighthouse CI green on S214 push (expected: perf score ≥0.80 from TBT fix). Push: first real notification — run push:count, then push:notify --game cod (founder go-ahead required). Measurement: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish forge devlog draft. OPS: studio-ops process Ark cargo 01JRK6AH97E0F421A55C54236C.",
     "blockers": [
       {
         "id": "staging-box-hcloud",
@@ -37,9 +37,14 @@
     ],
     "queues": {
       "now": [
-        "[INFRA/P2] Web-push feature — VAPID READY; ship the endpoint + subscribe UI + dispatch test. (Carry from S210 #7)",
-        "[MEASURE/P3] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Epoch set to 2026-06-18 (D-S209.1); `deadCount` = 0 (honest \"insufficient data\"). No action until field data shows a verdict.",
-        "[CONTENT/P1·FOUNDER] Publish the forge devlog (`journal/_drafts/forge-week-2026-06-18.md`) — clears the changelog stale warn. Founder-voice essay; never auto-published."
+        "[S100][INFRA] `scripts/smoke-startup-scripts.mjs` — validates import shape for all modules imported by `render-startup-brief.mjs`; wired into `build:check` so missing libs surface in CI before session start (was blind spot that caused S99 crash). Effort: S. DONE S100",
+        "[S100][INFRA] HAR staleness probe in `ops.mjs blocker-preflight` — cross-references each `[HUMAN ACTION REQUIRED]` TASK_BOARD item against `check-secrets.mjs` output; flags items marked HAR for >3 sessions without a matching missing-secret as potentially-phantom. Automates the S99 phantom-blocker check. Effort: M. DONE S100",
+        "[S101][FOUNDER-DONE] Add CNAME `hub` → `vaultsparkstudios.github.io` (proxied) — DNS record created via CF API (record id: 2601bcb616b67c4ccecc7d0942936764); `HUB_SUBDOMAIN_ENABLED=\"1\"` flipped in `cloudflare/wrangler.toml`; Worker redeployed (v45f66085); `hub.vaultsparkstudios.com` confirmed live (HTTP 200). DONE S101",
+        "[S98][FOUNDER] Confirm or decline orphan shell-asset deletion — 6 stale files were deleted in S99; `check-orphan-shell-assets.mjs` now reports \"no orphans\". DONE S99",
+        "[S98][BROWSER-VERIFY] Portfolio Heartbeat + Founder Presence + IGNIS Tour — homepage: Heartbeat grid below Recent Shipped; Take IGNIS Tour pill 8s after load cycles 3 stops; Presence badge hidden when no session active.",
+        "[S98][BROWSER-VERIFY] Visit-depth upsell — browse ≥4 sections, wait 12s, confirm pill appears with named sections. Esc dismisses.",
+        "[S97→S98][FOLLOWUP carry] IGNIS + model fallback, exit-intent timing, Studio Milestones render, changelog live-feed, rank strip highlight.",
+        "[S97→S98][HAR carry] Supabase 400s + Ask-IGNIS root cause. DONE S101 — Schema drift fixed: `subscription_status` → `is_sparked`, `rank_title` → `points` (+ client-side rank bucket fn), `challenge_submissions.user_id` → `member_id` across 8 files. Ask-IGNIS: expired API key re-uploaded + edge fn redeployed, verified live."
       ],
       "next": [
         "[SIL:2⛔] Genius Hit List as scheduled audit — DONE S88: scheduled-audit generator now exists and can be rerun with `npm run genius:list`.",
@@ -48,13 +53,7 @@
         "[OPS] Annual Stripe activation once keys exist — replace the annual placeholder path only after the real Stripe annual plan keys are created.",
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
-      "shipped": [
-        "Shipped: 5 waves — W2a IGNIS starter analytics (oracle:starter_click:<slug>), W2b game-specific starters (STARTERS_GAME map + vs_last_game), W2c dynamic no-result fallback (STARTERS_ALL chips + oracle:no_result), W3a push game-context segmentation (lastGame/route stored in KV, --game dispatch filter), W3b push delivery+click RUM tracking (sw.js fetch beacons), W4 Ark cargo to studio-ops.",
-        "Tests: Worker deployed abc4f4c3 · check-rum-allowlist 65/68 clean (push:received/push:clicked warn-only — emitted from sw.js via raw fetch, not emitUx()) · doctor blockingFailing 0.",
-        "Deploy: pushed to main; Worker abc4f4c3 deployed. Pre-existing smoke-startup advisory (claude.api gateway-readiness) unchanged.",
-        "First action next session: `npm run push:count` to see subscriber count + game breakdown → `npm run push:notify -- --title \"...\" --body \"...\" [--game cod/fgm/forge]` for first real notification (founder go-ahead required for first live dispatch).",
-        "Deferrals: play-next rotation (awaiting post-2026-06-18 field data); forge devlog (founder-voice); nav catalog-derivation (catalog∪extra-paged merge design needed); studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling compliance gaps)."
-      ]
+      "shipped": []
     },
     "ignis": {
       "score": 44691,

@@ -1,6 +1,27 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-21 (Session 213 — autonomous arc: IGNIS depth + push segmentation + Ark cargo)
+Last updated: 2026-06-21 (Session 214 — autonomous arc: Lighthouse TBT fix + mobile audit + honest reject)
+
+## S214 outcome + carries
+
+**Shipped in S214 (5 waves):**
+- [x] **[W1/CLEAN] Orphan shell cleanup + push:count verify + S213 audit files.** Deleted 3 stale ambient shell bundles (−175KB); committed untracked S213 audit JSON/MD; `push:count` = 0 (honest baseline, KV live).
+- [x] **[W2/OPS] propagate-nav 99 pages + STARTUP_BRIEF refresh.** Forge Window naming propagated to all 99 pages; STARTUP_BRIEF regenerated to S214/SIL 927 (was stale at S212/922).
+- [x] **[W3/PERF·SIL] Lighthouse CI perf fix.** `defer` on `supabase-public.js` (sole blocking external script); moved `recent-ships`, `ignis-tour`, `vault-resonance`, `vault-pulse` (~30KB) to `requestIdleCallback` idle loader — reduces post-DOMContentLoaded TBT burst. Targets CI regression 0.76 → ≥0.80.
+- [x] **[W4/AI·VERIFY] oracle-answer-quality-rater — honest verify-reject.** 👍/👎 + cluster-tagged RUM + 👎 text form fully shipped since S189+S206. False audit premise, zero changes needed. Reject-on-verification WIN.
+- [x] **[W5/MOBILE·SIL] CANON-041 tap-target audit S211-S213.** Vote buttons 36→44px; tray tabs 20→44px (inline-flex); push btn ~31→44px; quiz CTA + retry →44px. All 7 mobile contracts ✓.
+
+**S214 honesty ledger:**
+- `smoke-startup-scripts` 1/14 FAILED (claude.api advisory, pre-existing since S210+, non-blocking in CI).
+- W4 oracle rater: premise was false — feature shipped 3 sessions ago. Documented in DECISIONS.
+- SIL +2 (927→929): devHealth +1 (Lighthouse TBT fix); processQuality +1 (honest reject discipline).
+
+**S214 carries (next session):**
+- [ ] **[PUSH/P1·FOUNDER]** First real push notification — `npm run push:count` → `npm run push:notify -- --game cod` (founder go-ahead required).
+- [ ] **[MEASURE/P3]** Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
+- [ ] **[CONTENT/P1·FOUNDER]** Publish forge devlog (founder-voice, never auto-published).
+- [ ] **[OPS/P2]** studio-ops: process Ark cargo `01JRK6AH97E0F421A55C54236C` (sibling compliance VOID/SHADOW/Hashmark).
+- [ ] **[PERF/P2]** Confirm Lighthouse CI green on next push (CI will re-run with deferred scripts in place).
 
 ## S213 outcome + carries
 
@@ -68,7 +89,7 @@ Last updated: 2026-06-21 (Session 213 — autonomous arc: IGNIS depth + push seg
 **Honest deferral (S210):**
 - [ ] **[INFRA/P2] #7 — Web-push feature.** VAPID keys are READY (`cloudflare.vapid` capability = READY, keys in gateway). Remaining: Worker `/v/push-subscribe` endpoint + `assets/push-subscribe.js` + `push-dispatch.mjs --send` live test. Estimated 4h. Deferred to a dedicated session — not trivial enough to close at end-of-session closeout.
 
-## Now (S211 runway)
+## Previous (S211 runway)
 
 - [ ] **[INFRA/P2] Web-push feature** — VAPID READY; ship the endpoint + subscribe UI + dispatch test. (Carry from S210 #7)
 - [ ] **[MEASURE/P3] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.** Epoch set to 2026-06-18 (D-S209.1); `deadCount` = 0 (honest "insufficient data"). No action until field data shows a verdict.
@@ -96,13 +117,13 @@ Top themes identified S207, run via S208 `/audit`→`/implement`:
 - [x] **[DEPTH/P3] Atlas v2 — DONE (S208).** Per-project cover thumbnails on every row (6 bespoke covers via image-set + 5 accent-initial fallbacks). The "moving this week" live strip is **honestly deferred** — no per-project activity data source exists; building it would be a lying surface (CANON-031).
 - [ ] **[CONTENT/P1·FOUNDER] Publish the forge devlog** (`journal/_drafts/forge-week-2026-06-18.md`) — clears the changelog stale warn. Founder-voice essay; never auto-published.
 
-## Now (S209 runway)
+## Previous (S209 runway)
 
 - [ ] **[HONESTY/P1] Fold the OG-not-generic guard into an existing wired check.** A gate asserting no non-home page references another page's bespoke `og:image` card. `check-og-images.mjs` already validates per-page OG presence; extend it (or `check-proof-surface` orchestrator) — do NOT add a new `build:check` `&&` segment (chain is near the cmd.exe length limit, [[feedback_buildcheck_cmdexe_length_limit]]). Carried from S208.
 - [ ] **[BRAND/P2] Derive the nav Projects/Games dropdowns from the catalog.** Blocked on the catalog∪extra-paged merge design (the nav lists non-catalog paged projects) — premature derivation drifts ([[feedback_derive_dont_hardcode_public_surfaces]]). Design the merge first, then derive. Carried from S208.
 - [ ] **[MEASURE/P3] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.** The recency epoch (D-S209.1) gives the retimed copy a clean window; if it's STILL dead on post-epoch data, `build-cta-state --advance` rotates to variant 1. No code action until data accrues.
 
-## Now (S207 runway)
+## Previous (S207 runway)
 
 - [x] **[S207] Atlas ecosystem map (/atlas/) — DONE.** Server-rendered hyperlinked map (Sparked/Forge/Vaulted) + Atlas term + ItemList JSON-LD; in Studio nav + sitemap. `scripts/build-atlas.mjs`.
 - [x] **[S207] Hero tile links + categories — DONE.** SPARKED→live, FORGE→studio page (fixed MindFrame railway link); dual buttons on live tiles; real per-project categories (MindFrame = AI Intelligence).

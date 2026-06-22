@@ -30,7 +30,8 @@ export function getBuildSha() {
 
 export function generate() {
   const sha = getBuildSha();
-  const payload = JSON.stringify({ sha, builtAt: new Date().toISOString() }, null, 2);
+  const now = new Date();
+  const payload = JSON.stringify({ schemaVersion: '1.0', generatedAt: now.toISOString().slice(0, 10), sha, builtAt: now.toISOString() }, null, 2);
   writeFileSync(OUT, payload, 'utf8');
   console.log(`✓ api/build-sha.json — ${sha.slice(0, 8)}`);
 }

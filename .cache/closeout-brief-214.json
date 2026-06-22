@@ -1,0 +1,93 @@
+{
+  "session": 214,
+  "date": "2026-06-21",
+  "agent": "claude-sonnet-4-6",
+  "repo": "vaultsparkstudios.github.io",
+  "headline": "S214 — autonomous arc: Lighthouse TBT fix targeted, IGNIS mobile audit complete, 5 waves shipped",
+  "silDelta": { "from": 927, "to": 929, "kind": "structural" },
+  "diffStat": {
+    "files": 124,
+    "insertions": 1365,
+    "deletions": 4898,
+    "suite": "build:check",
+    "testsDelta": 0,
+    "probesDelta": 0
+  },
+  "items": [
+    {
+      "id": "orphan-shell-cleanup",
+      "slug": "orphan-shell-cleanup",
+      "title": "Delete 3 orphan ambient shell bundles",
+      "axis": "speed",
+      "wave": "W1",
+      "projectImpact": 4,
+      "ecosystemImpact": 1,
+      "insight": "Three stale ambient shell bundles (2f728d6bae, 38508170f3, bd3f25f2f5) had accumulated since S212 cleanup — together adding 175KB of dead weight to the repo. Verified none referenced in any HTML before removal. Net delta: −175KB, zero user impact.",
+      "evidence": "git rm 3 files; check-ambient-bundle passes; push:count=0 confirmed (no subscribers yet)"
+    },
+    {
+      "id": "startup-brief-refresh",
+      "slug": "startup-brief-refresh",
+      "title": "Regenerate STARTUP_BRIEF.md for S214",
+      "axis": "speed",
+      "wave": "W2",
+      "projectImpact": 3,
+      "ecosystemImpact": 1,
+      "insight": "The startup brief had drifted to show SIL 922 and 'last session S212' — two sessions behind. render-startup-brief.mjs regenerated it to reflect S213's 927 SIL and correct carry context. Future sessions now open with accurate anchoring.",
+      "evidence": "docs/STARTUP_BRIEF.md updated; validate-brief-format passes"
+    },
+    {
+      "id": "forge-window-propagation",
+      "slug": "forge-window-propagation",
+      "title": "Propagate-nav to all 99 pages",
+      "axis": "ux",
+      "wave": "W2",
+      "projectImpact": 5,
+      "ecosystemImpact": 2,
+      "insight": "Nav updates were pending propagation across all 99 HTML pages. Running propagate-nav.mjs updated every page in the site graph and check-nav-catalog-sync confirmed 4/4 gates green. Brand-consistent navigation is now live on all 99 pages rather than just the most recently edited subset.",
+      "evidence": "propagate-nav.mjs output: 99 pages updated; check-nav-catalog-sync 4/4 green"
+    },
+    {
+      "id": "lighthouse-perf-fix",
+      "slug": "lighthouse-perf-fix",
+      "title": "Homepage Lighthouse perf fix: TBT/parser-block root cause",
+      "axis": "speed",
+      "wave": "W3",
+      "projectImpact": 9,
+      "ecosystemImpact": 3,
+      "insight": "The Lighthouse CI failure (0.76 vs ≥0.80 threshold) traces to two root causes: supabase-public.js loading without defer (sole parser-blocking external script) and 25+ deferred scripts executing in a burst post-DOMContentLoaded. Adding defer to supabase removes the blocking load; moving ignis-tour, vault-pulse, vault-resonance, and recent-ships (~30KB total) to requestIdleCallback in home-idle-loader.js spreads their init across genuine idle gaps. pwa-install.js stays as static defer — the beforeinstallprompt event fires early during navigation and would be missed by an idle callback arriving 1800ms later.",
+      "evidence": "index.html supabase-public.js has defer; home-idle-loader.js scripts array +4 entries; check-js-budget ✓; check-page-script-relevance ✓; lint-tt-policies ✓; Lighthouse CI green expected on next push"
+    },
+    {
+      "id": "canon-041-mobile-audit",
+      "slug": "canon-041-mobile-audit",
+      "title": "CANON-041 tap-target audit on S211-S213 features",
+      "axis": "ux",
+      "wave": "W5",
+      "projectImpact": 6,
+      "ecosystemImpact": 1,
+      "insight": "Five interactive buttons across S211-S213 new features measured below the 44px CANON-041 minimum. All five fixed: IGNIS vote buttons (36→44px), IGNIS tray tabs (added min-height:44px + flex), push-subscribe button (~31→44px), quiz CTA button, quiz retry button. The quiz option rows were already compliant at ~45px via line-height — audit rejected that finding honestly.",
+      "evidence": "3 files changed: ignis-answer-engine.js, push-subscribe.js, game-discovery-quiz.js; all interactive buttons now ≥44px"
+    }
+  ],
+  "honestyLedger": [
+    {
+      "title": "oracle-answer-quality-rater: already shipped",
+      "why": "The audit claimed no 👍/👎 feedback signal existed — code review of ignis-answer-engine.js lines 336-394 proved the full rating UX (buttons, RUM events, text form, cluster-tagged feedback) was shipped in S189+S206+S207. Shipping redundant code would have created a second rating surface and confused users. Honest verify-reject per S175 discipline."
+    },
+    {
+      "title": "push-count-verify: 0 subscribers (no notification sent)",
+      "why": "push:count returned 0. The first real notification requires founder go-ahead before dispatch — that carry remains open. Not labelling as BLOCKED because no action is needed from the agent."
+    }
+  ],
+  "followUps": [
+    "[PUSH/P1·FOUNDER] First real push notification — confirm subscriber count then push:notify --game cod",
+    "[CI] Confirm Lighthouse CI green on S214 push (0.76→≥0.80 expected)",
+    "[MEASURE/P3] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue",
+    "[CONTENT/P1·FOUNDER] Publish forge devlog (founder-voice, never auto-published)",
+    "[OPS/P2] studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C"
+  ],
+  "blockers": [
+    { "id": "staging-box-hcloud", "label": "STAGING BOX — FOUNDER: retrieve HCLOUD_TOKEN → secrets gateway", "since": "2026-06-14" }
+  ]
+}

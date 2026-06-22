@@ -193,5 +193,15 @@
     "requiresMoreWork": ["progressive-script-loading", "oracle-answer-quality-rater", "canon-041-mobile-audit"]
   },
   "innovationReserve": ["oracle-answer-quality-rater", "progressive-script-loading"],
-  "skipped": []
+  "skipped": [],
+  "executionLog": [
+    { "slug": "orphan-shell-cleanup", "wave": "W1", "status": "shipped", "commit": "3a5a3c6c", "rung": "L1", "note": "Deleted 3 orphan ambient shell bundles (2f728d6bae, 38508170f3, bd3f25f2f5) — −175KB. push:count=0 verified." },
+    { "slug": "startup-brief-refresh", "wave": "W2", "status": "shipped", "commit": "441cdd54", "rung": "L1", "note": "render-startup-brief.mjs run; brief updated to S213/SIL 927." },
+    { "slug": "forge-window-propagation", "wave": "W2", "status": "shipped", "commit": "441cdd54", "rung": "L2", "note": "propagate-nav.mjs updated 99 pages; check-nav-catalog-sync 4/4 green." },
+    { "slug": "lighthouse-perf-fix", "wave": "W3", "status": "shipped", "commit": "e860c0f5", "rung": "L2", "note": "defer added to supabase-public.js; 4 non-critical scripts (ignis-tour, vault-pulse, vault-resonance, recent-ships ~30KB) moved to requestIdleCallback via home-idle-loader.js. pwa-install.js kept static-defer (beforeinstallprompt must fire early). Lighthouse CI expected to flip ≥0.80." },
+    { "slug": "progressive-script-loading", "wave": "W3", "status": "shipped", "commit": "e860c0f5", "rung": "L1", "note": "Merged with lighthouse-perf-fix — the idle-loading solution addresses both items. home-idle-loader.js TrustedTypes policy allows /assets/* paths; all 4 scripts qualify." },
+    { "slug": "oracle-answer-quality-rater", "wave": "W4", "status": "verify-rejected", "commit": null, "rung": null, "note": "Premise was FALSE — 👍/👎 rating already shipped in S189+S206+S207 (ignis-answer-engine.js lines 336-394): buttons render, click → oracle-answer:helpful/unhelpful:<clusterId> RUM, 👎 opens text form → oracle:feedback_submitted. Honest reject = win per S175 discipline." },
+    { "slug": "canon-041-mobile-audit", "wave": "W5", "status": "shipped", "commit": "e3ea99df", "rung": "L2", "note": "Audited 5 new S211-S213 surfaces. 5 buttons below 44px fixed: ignis vote buttons (40→44px h), ignis tray tabs (+min-height:44px), push-subscribe button (+min-height:44px), quiz CTA (+min-height:44px), quiz retry (+min-height:44px+flex). .vs-quiz__opt already ≥45px — no change." },
+    { "slug": "push-count-verify", "wave": "W1", "status": "shipped", "commit": "3a5a3c6c", "rung": "L1", "note": "npm run push:count run: 0 subscribers (expected — production KV, no subscribers yet). Carry remains: founder go-ahead required before first push:notify dispatch." }
+  ]
 }

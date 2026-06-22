@@ -1,15 +1,15 @@
 {
-  "generatedAt": "2026-06-21",
+  "generatedAt": "2026-06-22",
   "generatedBy": "scripts/build-feedback-provenance.mjs",
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 4,
+  "themeCount": 5,
   "themes": [
     {
       "key": "conversion",
       "label": "Conversion",
-      "count": 2,
+      "count": 1,
       "commits": [
         {
           "sha": "8276fce5",
@@ -17,21 +17,28 @@
           "tone": "sparked",
           "summary": "Wave 7 — vault-member portal rank earn-faster strip",
           "ts": "2026-06-20T07:01:32.000Z"
-        },
-        {
-          "sha": "e3355310",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "OG image uniqueness gate + fix vault-member generic fallback (#6)",
-          "ts": "2026-06-20T00:29:43.000Z"
         }
       ]
     },
     {
       "key": "worlds",
       "label": "Worlds",
-      "count": 2,
+      "count": 4,
       "commits": [
+        {
+          "sha": "e9dc8140",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "push game-context segmentation — store lastGame/route on subscribe, add --game filter to dispatch",
+          "ts": "2026-06-21T04:28:06.000Z"
+        },
+        {
+          "sha": "23a73144",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "IGNIS starter analytics + game personalization + dynamic no-result",
+          "ts": "2026-06-21T04:28:06.000Z"
+        },
         {
           "sha": "850b2ec9",
           "move": "Shipped",
@@ -53,6 +60,13 @@
       "label": "Transparency",
       "count": 6,
       "commits": [
+        {
+          "sha": "75de5e88",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "heartbeat cross-repo data + ticker clickable + ignis quote synthesis + nav dropdown trimmed",
+          "ts": "2026-06-21T21:17:36.000Z"
+        },
         {
           "sha": "72bfad51",
           "move": "Shipped",
@@ -87,13 +101,34 @@
           "tone": "sparked",
           "summary": "Wave 5 — changelog inline push subscribe CTA",
           "ts": "2026-06-20T07:01:32.000Z"
-        },
+        }
+      ]
+    },
+    {
+      "key": "speed",
+      "label": "Speed",
+      "count": 3,
+      "commits": [
         {
-          "sha": "e4067ce7",
+          "sha": "e860c0f5",
           "move": "Shipped",
           "tone": "sparked",
-          "summary": "Wave 4 — IGNIS semantic cluster grouping",
-          "ts": "2026-06-20T07:01:32.000Z"
+          "summary": "defer supabase-public.js + idle-load 4 non-critical homepage scripts",
+          "ts": "2026-06-21T23:47:59.000Z"
+        },
+        {
+          "sha": "3a5a3c6c",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "delete 3 orphan ambient shell bundles (-175KB) + push:count 0 verified",
+          "ts": "2026-06-21T23:21:37.000Z"
+        },
+        {
+          "sha": "1f6eddc1",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "push delivery + click RUM beacons — sw.js push:received/push:clicked via fetch beacon",
+          "ts": "2026-06-21T04:28:06.000Z"
         }
       ]
     },
@@ -103,18 +138,18 @@
       "count": 2,
       "commits": [
         {
-          "sha": "1095b7c3",
-          "move": "Tended",
-          "tone": "muted",
-          "summary": "propagate data-driven nav + rebuild derived outputs",
-          "ts": "2026-06-20T00:29:44.000Z"
+          "sha": "e3ea99df",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "CANON-041 tap-target audit on S211-S213 features",
+          "ts": "2026-06-21T23:58:44.000Z"
         },
         {
-          "sha": "856acfa1",
+          "sha": "441cdd54",
           "move": "Shipped",
           "tone": "sparked",
-          "summary": "nav-dropdown catalog-derivation + sync gate (#8)",
-          "ts": "2026-06-20T00:29:44.000Z"
+          "summary": "propagate-nav 99 pages + startup brief S214 refresh (SIL 927)",
+          "ts": "2026-06-21T23:29:01.000Z"
         }
       ]
     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-21T21:09:58.275Z",
+  "generatedAt": "2026-06-22T01:59:16.065Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -8,17 +8,12 @@
     {
       "theme": "conversion",
       "label": "Conversion",
-      "feedbackSignals": 2,
+      "feedbackSignals": 1,
       "shippedCommits": [
         {
           "sha": "8276fce5",
           "summary": "Wave 7 — vault-member portal rank earn-faster strip",
           "ts": "2026-06-20T07:01:32.000Z"
-        },
-        {
-          "sha": "e3355310",
-          "summary": "OG image uniqueness gate + fix vault-member generic fallback (#6)",
-          "ts": "2026-06-20T00:29:43.000Z"
         }
       ],
       "proof": null
@@ -26,8 +21,18 @@
     {
       "theme": "worlds",
       "label": "Worlds",
-      "feedbackSignals": 2,
+      "feedbackSignals": 4,
       "shippedCommits": [
+        {
+          "sha": "e9dc8140",
+          "summary": "push game-context segmentation — store lastGame/route on subscribe, add --game filter to dispatch",
+          "ts": "2026-06-21T04:28:06.000Z"
+        },
+        {
+          "sha": "23a73144",
+          "summary": "IGNIS starter analytics + game personalization + dynamic no-result",
+          "ts": "2026-06-21T04:28:06.000Z"
+        },
         {
           "sha": "850b2ec9",
           "summary": "game quiz personalization + fix quiz/push RUM beacon",
@@ -47,6 +52,11 @@
       "feedbackSignals": 6,
       "shippedCommits": [
         {
+          "sha": "75de5e88",
+          "summary": "heartbeat cross-repo data + ticker clickable + ignis quote synthesis + nav dropdown trimmed",
+          "ts": "2026-06-21T21:17:36.000Z"
+        },
+        {
           "sha": "72bfad51",
           "summary": "push dispatch KV batch + changelog notification trigger",
           "ts": "2026-06-20T19:52:44.000Z"
@@ -65,14 +75,45 @@
           "sha": "2a92a395",
           "summary": "closeout status board",
           "ts": "2026-06-20T07:13:43.000Z"
-        },
-        {
-          "sha": "81bea455",
-          "summary": "Wave 5 — changelog inline push subscribe CTA",
-          "ts": "2026-06-20T07:01:32.000Z"
         }
       ],
       "proof": null
+    },
+    {
+      "theme": "speed",
+      "label": "Speed",
+      "feedbackSignals": 3,
+      "shippedCommits": [
+        {
+          "sha": "e860c0f5",
+          "summary": "defer supabase-public.js + idle-load 4 non-critical homepage scripts",
+          "ts": "2026-06-21T23:47:59.000Z"
+        },
+        {
+          "sha": "3a5a3c6c",
+          "summary": "delete 3 orphan ambient shell bundles (-175KB) + push:count 0 verified",
+          "ts": "2026-06-21T23:21:37.000Z"
+        },
+        {
+          "sha": "1f6eddc1",
+          "summary": "push delivery + click RUM beacons — sw.js push:received/push:clicked via fetch beacon",
+          "ts": "2026-06-21T04:28:06.000Z"
+        }
+      ],
+      "proof": {
+        "set": "home-lcp-s173",
+        "captures": 4,
+        "routes": [
+          "/"
+        ]
+      },
+      "fieldVerdict": {
+        "boundary": "2026-06-05",
+        "label": "S173 critical path + S175 origin migration to CF Pages",
+        "verdict": "improved",
+        "lcpDeltaPct": -59.2,
+        "confidence": "high"
+      }
     },
     {
       "theme": "frontdoor",
@@ -80,14 +121,14 @@
       "feedbackSignals": 2,
       "shippedCommits": [
         {
-          "sha": "1095b7c3",
-          "summary": "propagate data-driven nav + rebuild derived outputs",
-          "ts": "2026-06-20T00:29:44.000Z"
+          "sha": "e3ea99df",
+          "summary": "CANON-041 tap-target audit on S211-S213 features",
+          "ts": "2026-06-21T23:58:44.000Z"
         },
         {
-          "sha": "856acfa1",
-          "summary": "nav-dropdown catalog-derivation + sync gate (#8)",
-          "ts": "2026-06-20T00:29:44.000Z"
+          "sha": "441cdd54",
+          "summary": "propagate-nav 99 pages + startup brief S214 refresh (SIL 927)",
+          "ts": "2026-06-21T23:29:01.000Z"
         }
       ],
       "proof": null

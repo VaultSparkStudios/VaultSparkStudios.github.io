@@ -12,8 +12,8 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S213 (autonomous arc · IGNIS depth + push segmentation) shipped 5 waves: W2a IGNIS starter analytics (oracle:starter_click:<slug> bounded suffix); W2b IGNIS game-specific starters (vs_last_game → STARTERS_GAME map, 2 game starters prepended for cod/fgm/forge visitors); W2c dynamic no-result fallback (STARTERS_ALL chips + oracle:no_result RUM); W3a push game-context segmentation (push-subscribe.js sends lastGame+route, Worker validates+persists, notify-subscribers.mjs --game filter); W3b push delivery+click tracking (sw.js push:received/push:clicked via fetch beacon); W4 Ark cargo to studio-ops (sibling compliance gaps). Worker deployed abc4f4c3. RUM allowlist 65/68 clean. Doctor blockingFailing 0. SIL 927.",
-  "nextMilestone": "Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice). Engineering: nav Projects/Games dropdown catalog-derivation (needs catalog∪extra-paged merge design). Push: first real notification — run push:count, then push:notify (founder go-ahead required). studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling compliance).",
+  "currentFocus": "S214 (autonomous arc · Lighthouse TBT fix + mobile audit) shipped 5 waves: W1 housekeeping (3 orphan shells −175KB; push:count=0 verified); W2 propagate-nav 99 pages + STARTUP_BRIEF refresh; W3 Lighthouse perf fix (supabase-public.js defer + 4 scripts idle-loaded via requestIdleCallback — targets CI 0.76→0.80+ regression); W4 oracle rater honest reject (already shipped S189+S206); W5 CANON-041 mobile tap-target audit (5 buttons →44px). Doctor blockingFailing 0. SIL 929.",
+  "nextMilestone": "CI — confirm Lighthouse CI green on S214 push (expected: perf score ≥0.80 from TBT fix). Push: first real notification — run push:count, then push:notify --game cod (founder go-ahead required). Measurement: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish forge devlog draft. OPS: studio-ops process Ark cargo 01JRK6AH97E0F421A55C54236C.",
   "blockers": [
     {
       "id": "staging-box-hcloud",
@@ -23,15 +23,15 @@
       "addedSession": 198
     }
   ],
-  "lastUpdated": "2026-06-21",
-  "currentSession": 213,
+  "lastUpdated": "2026-06-22",
+  "currentSession": 214,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-06-19",
-  "silScore": 927,
-  "silAvg3": 924,
+  "silScore": 929,
+  "silAvg3": 928,
   "silVelocity": 5,
   "silDebt": "↓",
-  "silLastSession": 213,
+  "silLastSession": 214,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -79,11 +79,11 @@
   "silMax": 1000,
   "silScoreLegacy500": 450,
   "silCategoriesV3": {
-    "devHealth": 93,
+    "devHealth": 94,
     "creativeAlignment": 93,
     "momentum": 93,
     "engagement": 94,
-    "processQuality": 93,
+    "processQuality": 94,
     "crossRepoCoherence": 91,
     "securityPosture": 91,
     "ecosystemIntegration": 93,
@@ -92,7 +92,7 @@
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-06-21",
+    "date": "2026-06-22",
     "passing": 9,
     "warning": 1,
     "failing": 3,
@@ -205,6 +205,6 @@
   "testsPassing": 116,
   "testsLastRun": "2026-06-15",
   "testsLabel": "build:check gates",
-  "publicNote": "The oracle just got more personal: if you've played one of our games, IGNIS now greets you with questions tailored to that game. First-time visitors get curated starter questions to help break the ice. Push notifications now track delivery and clicks so we know what's reaching you.",
+  "publicNote": "We've been tuning how the site loads — the oracle, game discovery quiz, and push notification button all snap into place faster now, especially on mobile. Touch targets on all key buttons are now properly sized for thumbs.",
   "publicNextStep": "Coming soon: segmented push notifications (send to players of a specific game only), and a forge devlog from the studio on what's building this month."
 }

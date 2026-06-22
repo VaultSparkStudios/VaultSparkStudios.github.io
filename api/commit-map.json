@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-21",
+  "generatedAt": "2026-06-22",
   "generatedBy": "scripts/build-commit-map.mjs",
   "source": "git log (local, noise-filtered)",
   "kind": "commit-map",
@@ -7,6 +7,66 @@
   "note": "Recent moves in the forge. Automated bookkeeping filtered out.",
   "count": 24,
   "entries": [
+    {
+      "sha": "e3ea99df",
+      "ts": "2026-06-21T23:58:44.000Z",
+      "type": "fix",
+      "scope": "mobile",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "CANON-041 tap-target audit on S211-S213 features"
+    },
+    {
+      "sha": "e860c0f5",
+      "ts": "2026-06-21T23:47:59.000Z",
+      "type": "feat",
+      "scope": "perf",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "defer supabase-public.js + idle-load 4 non-critical homepage scripts"
+    },
+    {
+      "sha": "441cdd54",
+      "ts": "2026-06-21T23:29:01.000Z",
+      "type": "feat",
+      "scope": "ux",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "propagate-nav 99 pages + startup brief S214 refresh (SIL 927)"
+    },
+    {
+      "sha": "3a5a3c6c",
+      "ts": "2026-06-21T23:21:37.000Z",
+      "type": "chore",
+      "scope": "perf",
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "delete 3 orphan ambient shell bundles (-175KB) + push:count 0 verified"
+    },
+    {
+      "sha": "61a5f485",
+      "ts": "2026-06-21T22:04:34.000Z",
+      "type": "fix",
+      "scope": "css",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "commit missing shell CSS f15fedfd (style.shell-920ea9c5cc) — omitted from prior commit, causing no-style on prod"
+    },
+    {
+      "sha": "75de5e88",
+      "ts": "2026-06-21T21:17:36.000Z",
+      "type": "fix",
+      "scope": "ux",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "heartbeat cross-repo data + ticker clickable + ignis quote synthesis + nav dropdown trimmed"
+    },
     {
       "sha": "40777997",
       "ts": "2026-06-21T20:38:17.000Z",
@@ -186,66 +246,6 @@
       "move": "Shipped",
       "tone": "sparked",
       "summary": "Wave 4 — IGNIS semantic cluster grouping"
-    },
-    {
-      "sha": "b1ed05b1",
-      "ts": "2026-06-20T07:01:32.000Z",
-      "type": "feat",
-      "scope": "S211",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "Wave 3 — IGNIS entity follow-up chips"
-    },
-    {
-      "sha": "6279fb31",
-      "ts": "2026-06-20T07:01:32.000Z",
-      "type": "feat",
-      "scope": "S211/W2",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "IGNIS unified chip tray — Recent | Topics tabs"
-    },
-    {
-      "sha": "d32e098c",
-      "ts": "2026-06-20T07:01:32.000Z",
-      "type": "feat",
-      "scope": "S211/W1",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "web-push complete — Worker /v/push-subscribe + client subscribe UI + VAPID public key"
-    },
-    {
-      "sha": "4d14b528",
-      "ts": "2026-06-20T06:02:50.000Z",
-      "type": "chore",
-      "scope": null,
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "CANON-043 dependabot + session-start artifact refresh"
-    },
-    {
-      "sha": "5a3e132c",
-      "ts": "2026-06-20T00:29:44.000Z",
-      "type": "chore",
-      "scope": "S210",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "closeout — context + SIL 901→913 + audit artifacts"
-    },
-    {
-      "sha": "1095b7c3",
-      "ts": "2026-06-20T00:29:44.000Z",
-      "type": "chore",
-      "scope": "S210",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "propagate data-driven nav + rebuild derived outputs"
     }
   ]
 }

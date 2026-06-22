@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-21T21:10:06.031Z",
+  "generatedAt": "2026-06-22T02:43:27.184Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 213,
-    "lastUpdated": "2026-06-21",
-    "currentFocus": "S213 (autonomous arc · IGNIS depth + push segmentation) shipped 5 waves: W2a IGNIS starter analytics (oracle:starter_click:<slug> bounded suffix); W2b IGNIS game-specific starters (vs_last_game → STARTERS_GAME map, 2 game starters prepended for cod/fgm/forge visitors); W2c dynamic no-result fallback (STARTERS_ALL chips + oracle:no_result RUM); W3a push game-context segmentation (push-subscribe.js sends lastGame+route, Worker validates+persists, notify-subscribers.mjs --game filter); W3b push delivery+click tracking (sw.js push:received/push:clicked via fetch beacon); W4 Ark cargo to studio-ops (sibling compliance gaps). Worker deployed abc4f4c3. RUM allowlist 65/68 clean. Doctor blockingFailing 0. SIL 927.",
-    "nextMilestone": "Measurement-watch: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish the forge devlog draft (your voice). Engineering: nav Projects/Games dropdown catalog-derivation (needs catalog∪extra-paged merge design). Push: first real notification — run push:count, then push:notify (founder go-ahead required). studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling compliance).",
+    "currentSession": 214,
+    "lastUpdated": "2026-06-22",
+    "currentFocus": "S214 (autonomous arc · Lighthouse TBT fix + mobile audit) shipped 5 waves: W1 housekeeping (3 orphan shells −175KB; push:count=0 verified); W2 propagate-nav 99 pages + STARTUP_BRIEF refresh; W3 Lighthouse perf fix (supabase-public.js defer + 4 scripts idle-loaded via requestIdleCallback — targets CI 0.76→0.80+ regression); W4 oracle rater honest reject (already shipped S189+S206); W5 CANON-041 mobile tap-target audit (5 buttons →44px). Doctor blockingFailing 0. SIL 929.",
+    "nextMilestone": "CI — confirm Lighthouse CI green on S214 push (expected: perf score ≥0.80 from TBT fix). Push: first real notification — run push:count, then push:notify --game cod (founder go-ahead required). Measurement: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish forge devlog draft. OPS: studio-ops process Ark cargo 01JRK6AH97E0F421A55C54236C.",
     "ignis": {
       "score": 44691,
       "grade": "FORGE",
@@ -28,13 +28,7 @@
       "Expanded intent routing on games and universe hubs.",
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
-    "shipped": [
-      "Shipped: 5 waves — W2a IGNIS starter analytics (oracle:starter_click:<slug>), W2b game-specific starters (STARTERS_GAME map + vs_last_game), W2c dynamic no-result fallback (STARTERS_ALL chips + oracle:no_result), W3a push game-context segmentation (lastGame/route stored in KV, --game dispatch filter), W3b push delivery+click RUM tracking (sw.js fetch beacons), W4 Ark cargo to studio-ops.",
-      "Tests: Worker deployed abc4f4c3 · check-rum-allowlist 65/68 clean (push:received/push:clicked warn-only — emitted from sw.js via raw fetch, not emitUx()) · doctor blockingFailing 0.",
-      "Deploy: pushed to main; Worker abc4f4c3 deployed. Pre-existing smoke-startup advisory (claude.api gateway-readiness) unchanged.",
-      "First action next session: `npm run push:count` to see subscriber count + game breakdown → `npm run push:notify -- --title \"...\" --body \"...\" [--game cod/fgm/forge]` for first real notification (founder go-ahead required for first live dispatch).",
-      "Deferrals: play-next rotation (awaiting post-2026-06-18 field data); forge devlog (founder-voice); nav catalog-derivation (catalog∪extra-paged merge design needed); studio-ops: process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling compliance gaps)."
-    ]
+    "shipped": []
   },
   "consumerChangelog": [
     {
@@ -124,7 +118,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 213,
+    "sessionsCompleted": 214,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -139,18 +133,18 @@
     "forge": 14,
     "vaulted": 0,
     "silCategories": {
-      "devHealth": 93,
+      "devHealth": 94,
       "alignment": 93,
       "momentum": 93,
       "engagement": 94,
-      "process": 93,
+      "process": 94,
       "coherence": 91,
       "security": 91,
       "ecosystem": 93,
       "capital": 92,
       "automation": 94,
-      "total": 927,
-      "updatedSession": 213
+      "total": 929,
+      "updatedSession": 214
     },
     "sealedNextRevealAt": null
   },
@@ -862,7 +856,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-06-21T04:36:44.397Z",
+    "checkedAt": "2026-06-21T21:45:53.902Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

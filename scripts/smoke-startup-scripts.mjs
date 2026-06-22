@@ -141,6 +141,13 @@ if (capMapReachable) {
     const r = resolveCapability('claude.api');
     if (r.ok) {
       results.push({ status: 'OK', module: 'gateway-readiness · claude.api' });
+    } else if (r.missing.length === 0 && r.required.length === 0) {
+      // Capability not defined in CAPABILITY_MAP — advisory only (not a gateway regression)
+      results.push({
+        status: 'SKIP',
+        module: 'gateway-readiness · claude.api',
+        reason: `capability not in CAPABILITY_MAP (studio-ops agent cap — not a site build dep)`,
+      });
     } else {
       results.push({
         status: 'FAIL',

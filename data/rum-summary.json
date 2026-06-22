@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-21T21:10:16.239Z",
+  "generatedAt": "2026-06-22T01:59:27.986Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,18 +10,18 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 314,
+  "totalSamples": 224,
   "sufficientRoutes": 1,
   "routes": {
     "/": {
-      "samples": 189,
+      "samples": 113,
       "sufficient": true,
       "p75": {
-        "lcp": 979,
+        "lcp": 976,
         "cls": 0.102,
         "inp": 312,
-        "fcp": 792,
-        "ttfb": 391
+        "fcp": 764,
+        "ttfb": 189
       }
     },
     "/about": {
@@ -91,7 +91,7 @@
       }
     },
     "/games/call-of-doodie/": {
-      "samples": 13,
+      "samples": 11,
       "sufficient": false,
       "p75": {
         "lcp": 0,
@@ -146,18 +146,18 @@
       }
     },
     "/ignis/": {
-      "samples": 6,
+      "samples": 3,
       "sufficient": false,
       "p75": {
         "lcp": 704,
-        "cls": 0.0804,
+        "cls": 0.0145,
         "inp": 488,
         "fcp": 704,
         "ttfb": 241
       }
     },
     "/membership/": {
-      "samples": 7,
+      "samples": 6,
       "sufficient": false,
       "p75": {
         "lcp": 0,
@@ -168,11 +168,11 @@
       }
     },
     "/nervous-system/": {
-      "samples": 8,
+      "samples": 6,
       "sufficient": false,
       "p75": {
         "lcp": 684,
-        "cls": 0.0979,
+        "cls": 0.0735,
         "inp": 464,
         "fcp": 684,
         "ttfb": 157
@@ -187,17 +187,6 @@
         "inp": 608,
         "fcp": 800,
         "ttfb": 74
-      }
-    },
-    "/pathways/": {
-      "samples": 2,
-      "sufficient": false,
-      "p75": {
-        "lcp": 448,
-        "cls": 0.0103,
-        "inp": 152,
-        "fcp": 448,
-        "ttfb": 232
       }
     },
     "/projects/": {
@@ -277,17 +266,6 @@
         "ttfb": 165
       }
     },
-    "/status/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
-      }
-    },
     "/studio-pulse/": {
       "samples": 3,
       "sufficient": false,
@@ -300,14 +278,14 @@
       }
     },
     "/studio/": {
-      "samples": 5,
+      "samples": 2,
       "sufficient": false,
       "p75": {
-        "lcp": 3572,
+        "lcp": 832,
         "cls": 0.0009,
         "inp": 592,
-        "fcp": 3572,
-        "ttfb": 228
+        "fcp": 832,
+        "ttfb": 34
       }
     },
     "/universe/": {

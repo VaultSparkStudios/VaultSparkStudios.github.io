@@ -46,6 +46,13 @@ export const MODELS = {
   haiku:  'claude-haiku-4-5-20251001',
 };
 
+export const ANTHROPIC_API = {
+  host:     'api.anthropic.com',
+  base:     'https://api.anthropic.com',
+  messages: 'https://api.anthropic.com/v1/messages',
+  models:   'https://api.anthropic.com/v1/models',
+};
+
 /**
  * Context window sizes (tokens), keyed by resolved model ID or agent name.
  * Kept here — alongside MODELS — so the chokepoint remains the single place
