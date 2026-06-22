@@ -14,7 +14,7 @@
  * self-test+live (no bundled proof feed is a hand-seed) · check-og-images
  * self-test+live (S194 — no crawler-facing share card is a blank SVG/missing PNG).
  */
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import url from 'node:url';
 
@@ -96,6 +96,11 @@ const STEPS = [
   // api/vault-momentum.json stays in sync with source feeds at build time.
   ['build-vault-momentum.mjs', ['--self-test']],
   ['build-vault-momentum.mjs', ['--check']],
+  // S216: journal-date gate — every Signal Log post must display a day-level date
+  // ("March 5, 2026", not "March 2026"). Fails when update-journal-dates.mjs has not
+  // been run after adding a new post. Fix: node scripts/update-journal-dates.mjs.
+  ['check-journal-dates.mjs', ['--self-test']],
+  ['check-journal-dates.mjs', []],
 ];
 
 let failed = 0;
