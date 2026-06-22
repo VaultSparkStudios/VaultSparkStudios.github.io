@@ -204,6 +204,20 @@
       idle: true
     },
     {
+      // S216: game-welcome-back — returning-visitor gold badge on individual game pages.
+      // Shows "Welcome back · Nth visit" when the visitor's last-game matches this page.
+      // Requires ≥2 visits to this game to activate (count stored in vs_game_visits_<slug>).
+      src: '/assets/game-welcome-back.js',
+      when: function () {
+        try {
+          var p = location.pathname || '/';
+          if (!/^\/games\/[^/]+\//.test(p)) return false;
+          return parseInt(localStorage.getItem('vs_visit_count') || '0', 10) >= 1;
+        } catch (_) { return false; }
+      },
+      idle: true
+    },
+    {
       // rank-orb: member rank progress orb in nav — non-portal, non-admin pages.
       src: '/assets/rank-orb.js',
       when: function () {
@@ -427,14 +441,19 @@
   }
 
   // S212: track last-visited game page for quiz personalization.
-  // Writes vs_last_game ('cod'|'fgm'|'forge') on any game-family page.
-  // The game-discovery-quiz reads this to pre-select on /games/.
+  // S216: extended to cover all SPARKED game slugs (was cod/fgm/forge only).
+  // Writes vs_last_game on any game-family page; game-discovery-quiz + IGNIS
+  // starters + game-welcome-back.js all read this for personalization.
   (function () {
     try {
       var p = location.pathname || '/';
       var key = null;
       if (/\/(games\/)?call-of-doodie\//.test(p)) key = 'cod';
       else if (/\/(games\/)?(vaultspark-football-gm|football-gm|gridiron-gm)\//.test(p)) key = 'fgm';
+      else if (/\/(games\/)?mindframe\//.test(p)) key = 'mindframe';
+      else if (/\/(games\/)?solara\//.test(p)) key = 'solara';
+      else if (/\/(games\/)?vaultfront\//.test(p)) key = 'vaultfront';
+      else if (/\/(games\/)?the-exodus\//.test(p)) key = 'the-exodus';
       else if (/^\/games\/[^/]+\//.test(p)) key = 'forge';
       if (key) localStorage.setItem('vs_last_game', key);
     } catch (_) {}
