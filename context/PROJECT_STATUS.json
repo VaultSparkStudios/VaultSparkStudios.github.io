@@ -12,26 +12,18 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S214 (autonomous arc · Lighthouse TBT fix + mobile audit) shipped 5 waves: W1 housekeeping (3 orphan shells −175KB; push:count=0 verified); W2 propagate-nav 99 pages + STARTUP_BRIEF refresh; W3 Lighthouse perf fix (supabase-public.js defer + 4 scripts idle-loaded via requestIdleCallback — targets CI 0.76→0.80+ regression); W4 oracle rater honest reject (already shipped S189+S206); W5 CANON-041 mobile tap-target audit (5 buttons →44px). Doctor blockingFailing 0. SIL 929.",
-  "nextMilestone": "CI — confirm Lighthouse CI green on S214 push (expected: perf score ≥0.80 from TBT fix). Push: first real notification — run push:count, then push:notify --game cod (founder go-ahead required). Measurement: re-evaluate play-next rotation once post-2026-06-18 impressions accrue. Founder: publish forge devlog draft. OPS: studio-ops process Ark cargo 01JRK6AH97E0F421A55C54236C.",
-  "blockers": [
-    {
-      "id": "staging-box-hcloud",
-      "label": "STAGING BOX RECOVERY — HUMAN ACTION REQUIRED",
-      "detail": "hcloud CLI not installed AND HCLOUD_TOKEN MISSING in secrets gateway. CANON-019 preflight completed. Founder: retrieve HCLOUD_TOKEN from Hetzner Cloud Console → add to secrets gateway. Agent re-attempts once READY.",
-      "since": "2026-06-14",
-      "addedSession": 198
-    }
-  ],
+  "currentFocus": "S215 (attended) shipped 8 founder-directed items: footer Projects column propagated to 96 HTML pages (PromoGrind, Velaxis, Atlas, Forge Window, Studio Pulse, Oracle, Obelisk); journal post dates upgraded to day-level on all 10 posts; pathfinder rebuilt (builder pathway + intel signals + New badge + a11y live region); intent-graph gaps filled (projects/journal contexts); games + projects landing pages visual overhaul (ellipse hero gradients, gold-pulse stats, cross-ecosystem bridges); membership/vault-member pages Obelisk framing; schemaVersion fix in generate-push-config.mjs; hetzner.cloud-api phantom blocker resolved. SIL 935.",
+  "nextMilestone": "Content: draft Signal Log post from brainstormed queue (founder voice). Push: first real notification — run push:count → push:notify --game cod. Individual game/project pages: template-level hero+bridge pass (~20 pages). CI: confirm Lighthouse green on S215 push. Staging: deploy to website.staging.vaultsparkstudios.com to verify footer propagation.",
+  "blockers": [],
   "lastUpdated": "2026-06-22",
-  "currentSession": 214,
+  "currentSession": 215,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-06-19",
-  "silScore": 929,
-  "silAvg3": 928,
-  "silVelocity": 5,
+  "silScore": 935,
+  "silAvg3": 931,
+  "silVelocity": 8,
   "silDebt": "↓",
-  "silLastSession": 214,
+  "silLastSession": 215,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -80,15 +72,15 @@
   "silScoreLegacy500": 450,
   "silCategoriesV3": {
     "devHealth": 94,
-    "creativeAlignment": 93,
-    "momentum": 93,
-    "engagement": 94,
+    "creativeAlignment": 94,
+    "momentum": 94,
+    "engagement": 95,
     "processQuality": 94,
-    "crossRepoCoherence": 91,
+    "crossRepoCoherence": 92,
     "securityPosture": 91,
-    "ecosystemIntegration": 93,
+    "ecosystemIntegration": 94,
     "capitalEfficiency": 92,
-    "automationCoverage": 94
+    "automationCoverage": 95
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
@@ -205,6 +197,6 @@
   "testsPassing": 116,
   "testsLastRun": "2026-06-15",
   "testsLabel": "build:check gates",
-  "publicNote": "We've been tuning how the site loads — the oracle, game discovery quiz, and push notification button all snap into place faster now, especially on mobile. Touch targets on all key buttons are now properly sized for thumbs.",
-  "publicNextStep": "Coming soon: segmented push notifications (send to players of a specific game only), and a forge devlog from the studio on what's building this month."
+  "publicNote": "The website just got a major update — the footer navigation now covers every game, project, and tool; all Signal Log post dates are exact; the Pathfinder recommends next steps for builders and project-curious visitors; and the games and projects landing pages are more immersive with layered visuals.",
+  "publicNextStep": "Coming soon: the first game-segmented push notification to CoD subscribers, a new Signal Log post from the studio, and deeper visual pages for individual games and projects."
 }

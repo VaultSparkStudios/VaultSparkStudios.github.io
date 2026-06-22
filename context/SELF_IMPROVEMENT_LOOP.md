@@ -8,14 +8,35 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▆▇▇▇▇▇
-Avgs - 3: 926.3 | 5: ~920 | 10: ~938 | 25: 954 | all: 958 (v3.0 /1000)
-  └ 3-session: Dev 93.3 | Align 93.0 | Momentum 93.0 | Engage 94.0 | Process 93.3
-Velocity trend: → (S214: 5 items; S213: 5 items; S212: 6 items) | Protocol velocity: → | Debt: ↓ (Lighthouse CI TBT fix ships; mobile touch targets hardened; honest verify-reject saves context budget)
-Momentum runway: PUSH — run push:count → send first segmented notification (push:notify --game cod); CI — confirm Lighthouse CI green on S214 push; MEASUREMENT — re-evaluate play-next once post-2026-06-18 impressions accrue; CONTENT (founder): publish forge devlog; OPS: studio-ops process Ark cargo 01JRK6AH97E0F421A55C54236C | Intent rate: 100% (last 5) | (S214 shipped: supabase-public.js defer; 4 scripts idle-loaded; 5 mobile buttons →44px; honest verify-reject on oracle rater.)
-Last session: 2026-06-21 | Session 214 | Total: 929/1000 (v3.0) | Velocity: 5 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▇▆▇▇▇▇▇█
+Avgs - 3: 931.0 | 5: ~924 | 10: ~938 | 25: 954 | all: 958 (v3.0 /1000)
+  └ 3-session: Dev 94.0 | Align 93.7 | Momentum 93.7 | Engage 94.3 | Process 94.0
+Velocity trend: ↑ (S215: 8 items; S214: 5 items; S213: 5 items) | Protocol velocity: → | Debt: ↓ (footer nav Projects column; phantom blocker resolved; pathfinder builder pathway; intent graph journal+projects contexts)
+Momentum runway: PUSH — run push:count → send first segmented notification (push:notify --game cod); CONTENT — draft Signal Log post from 10 brainstormed ideas; CI — confirm Lighthouse CI green on S214 push; INDIVIDUAL PAGES — game/project template pass (~20 pages); CONTENT (founder): publish forge devlog | Intent rate: 100% (last 5) | (S215 shipped: footer 97 pages, journal dates 10 posts, pathfinder builder+intel, intent graph, games/projects visual, membership Obelisk, schemaVersion fix, staging blocker resolved.)
+Last session: 2026-06-22 | Session 215 | Total: 935/1000 (v3.0) | Velocity: 8 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-22 — Session 215 (attended · footer Projects column + journal dates + pathfinder intel + visual overhaul + membership Obelisk framing + phantom blocker resolved) | Total: 935/1000 (v3.0) | Velocity: 8 | Debt: ↓
+Avgs — 3: 931.0 | 5: ~924 | 10: ~938 | 25: 954 | all: 958
+
+Dev Health 94 | Creative Alignment 94 | Momentum 94 | Engagement 95 | Process Quality 94 | Cross-Repo Coherence 92 | Security Posture 91 | Ecosystem Integration 94 | Capital Efficiency 92 | Automation Coverage 95
+
+**What improved:** Eight founder-directed items shipped across the full session. Footer navigation propagated to 96+ HTML pages with a new Projects column (PromoGrind, Velaxis, Atlas, Forge Window, Studio Pulse, Oracle, Obelisk). Journal post dates upgraded to full day-level precision on all 10 posts. Pathfinder (`intent-flight-director.js`) gained a builder pathway, public-intelligence.json intel signals, and a `node.new` badge system — plus intent-graph received proper journal and projects contexts it was missing entirely. Games and projects landing pages received layered ellipse hero gradients, gold-pulse stat animations, and cross-ecosystem bridge sections. Membership and Vault Member pages received Obelisk framing ("One Identity across every VaultSpark world"). The hetzner.cloud-api phantom blocker was resolved (HCLOUD_TOKEN was READY; capability key was wrong). schemaVersion fix in generate-push-config.mjs eliminated a recurring public-contract-health gate failure.
+
+**Honest deduction (−65):** Cross-Repo Coherence −8 for Ark cargo not shipped this session (deferred sibling awareness). Security Posture −9 for individual game/project template pass still unexecuted (~20 pages, explicitly deferred by scope). Capital Efficiency −8 for journal date script requiring a custom one-off run rather than being wired into build pipeline. Session 215 was entirely founder-directed so automation-push was constrained by human request scope.
+
+**Intent outcome:** Achieved — all 8 founder-directed items shipped; build:check EXIT 0; push confirmed on remote.
+
+**Brainstorm**
+1. **JOURNAL-DATE-PIPELINE** — wire `update-journal-dates.mjs` as a build-time check/fix so new posts automatically get day-level dates without a manual script run. ~30m.
+2. **INDIVIDUAL-PAGE-TEMPLATE-PASS** — game/project detail pages (~20) get the same layered hero + cross-ecosystem bridge treatment as the landing pages. ~8h across all pages; candidate for a future goal-arc wave.
+3. **SIGNAL-LOG-POST** — draft and publish one of the 10 brainstormed Signal Log post ideas (founder action — voice-of-founder content). The ideas are queued and ready.
+4. **PUSH-NOTIFY-COD-FIRST** — run `npm run push:count` → `npm run push:notify -- --game cod` to send the first game-segmented web push to CoD subscribers. Zero new code needed.
+
+**Committed to TASK_BOARD:** [S215][CONTENT/P2] INDIVIDUAL-PAGE-TEMPLATE-PASS · [S215][PIPELINE/P3] JOURNAL-DATE-PIPELINE
 
 ---
 

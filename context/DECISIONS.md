@@ -2,6 +2,16 @@
 
 Public-safe decisions retained in this repo:
 
+### 2026-06-22 — S215 (founder-directed) — staging-box-hcloud phantom blocker resolved; footer Projects column added; Obelisk framed as "coming"
+
+**D-S215.1 — staging-box-hcloud was a phantom blocker; resolved without founder action.** The S198 blocker labeled "HUMAN ACTION REQUIRED — retrieve HCLOUD_TOKEN from Hetzner Cloud Console" was based on `check-secrets.mjs --for hcloud` returning MISSING. However, the correct capability name is `hetzner.cloud-api` (not `hcloud`). Querying with the correct name shows the token is READY in the secrets gateway. No founder action was ever needed. Blocker removed from PROJECT_STATUS.json.
+
+**D-S215.2 — Footer gets a Projects column; Games column gets Forge entries.** Added Projects column (7 links) and 4 Forge games (VaultFront, Solara, MindFrame, The Exodus) to the Games column sitewide. Decision: Projects column placed immediately after Games for adjacency (both are primary studio outputs). Forge games included in footer because the footer is a discovery surface — visitors who reach it have high intent and should see the full portfolio, including in-development titles.
+
+**D-S215.3 — Obelisk framed as "coming" on membership pages; not described as live auth.** The Obelisk identity callout added to membership pages is clearly marked "via Obelisk (coming)" and "in the Forge" — it is not presented as a current login method. Current auth remains Supabase. This prepares visitor expectation for the Obelisk migration (CANON-045) without making a false promise.
+
+**D-S215.4 — Intent graph extended to cover projects + journal routes.** Pathfinder previously had no context for `/projects/` or `/journal/` routes (both routes were in ROUTES array but mapped to `home` context as fallback). Added proper contexts to avoid the fallback degrading the Pathfinder experience on two of the studio's most-visited informational pages.
+
 ### 2026-06-21 — S214 (arc) — Idle-load 4 non-critical scripts for TBT; pwa-install stays static defer; oracle rater premise was false
 
 **D-S214.1 — supabase-public.js gets defer; pwa-install.js stays as static defer.** Adding `defer` to `supabase-public.js` is safe because every script that depends on `window.VSPublic` is also deferred — deferred scripts execute in document order, so ordering is preserved. `pwa-install.js` was NOT moved to idle loading because it must capture the `beforeinstallprompt` event, which fires asynchronously during early page navigation. If this script loads only after the browser reaches an idle state (1800–2400ms post-load), the event has already fired and the deferred install prompt cannot be captured. All other non-critical scripts that don't intercept early browser events are safe to idle-load.

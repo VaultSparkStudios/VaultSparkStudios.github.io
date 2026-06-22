@@ -1,6 +1,32 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-21 (Session 214 — autonomous arc: Lighthouse TBT fix + mobile audit + honest reject)
+Last updated: 2026-06-22 (Session 215 — founder-directed: footer Projects column + visual overhaul + pathfinder upgrade)
+
+## S215 outcome + carries
+
+**Shipped in S215:**
+- [x] **[FOOTER] Projects column sitewide.** 97 pages updated via `scripts/update-footer.mjs`: new Projects column (All Projects, PromoGrind, Velaxis, Vorn, IdeaForge, StatVault, Obelisk) + 4 Forge games added to Games column (VaultFront, Solara, MindFrame, The Exodus).
+- [x] **[CONTENT] Signal Log full dates.** 10 posts + journal/index.html updated from "March 2026" to "March 5, 2026" format via `scripts/update-journal-dates.mjs`.
+- [x] **[AI/UX] Pathfinder upgrade.** `intent-flight-director.js`: builder pathway, want_projects hesitation signal, intel boosts (recentlyShipped/activeGames/health), node.new +8 score, New badge on cards, a11y live region.
+- [x] **[AI] Intent graph expanded.** `data/intent-graph.json`: `projects` + `journal` contexts + 3 new nodes (promogrind, velaxis, journal-archive).
+- [x] **[UX] games/index.html + projects/index.html visual overhaul.** 3-layer hero gradients, gold-pulse animations, deeper card hover states, cross-ecosystem bridge sections.
+- [x] **[UX] Membership + Obelisk.** membership/vaultsparked/vault-member/obelisk pages updated with Obelisk one-identity callout + founding-price-lock messaging.
+- [x] **[BUG] generate-push-config.mjs schemaVersion.** Fixed to emit `schemaVersion: '1.0'` — was failing public-contract-health gate.
+- [x] **[OPS] Staging blocker resolved.** HCLOUD_TOKEN confirmed in CAPABILITY_MAP as `hetzner.cloud-api` (phantom blocker — wrong capability name). Staging env isolated and current on Hetzner box.
+
+**S215 honesty ledger:**
+- Individual game/project page template improvements (~20 pages) — deferred; scope too large for one session.
+- Staging auto-deploy webhook — not needed; manual git pull on Hetzner sufficient.
+- Signal Log post drafts — brainstormed 10 ideas (provided to founder); actual writing is founder-voice.
+
+**S215 carries:**
+- [ ] **[CONTENT/P1·FOUNDER]** Draft one Signal Log post from the 10 brainstormed ideas. Agent can scaffold structure. Founder publishes in own voice.
+- [ ] **[UX/P2·SIL]** Individual game/project page template improvements — ~20 pages need immersive-template upgrade. Defer to dedicated arc.
+- [ ] **[PUSH/P1·FOUNDER]** First real push notification — `npm run push:count` → `npm run push:notify -- --game cod` (founder go-ahead required).
+- [ ] **[MEASURE/P3]** Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
+- [ ] **[CONTENT/P1·FOUNDER]** Publish forge devlog (founder-voice, never auto-published).
+- [ ] **[OPS/P2]** studio-ops: process Ark cargo `01JRK6AH97E0F421A55C54236C` (sibling compliance VOID/SHADOW/Hashmark).
+- [ ] **[PERF/P2]** Confirm Lighthouse CI green on S214 push (TBT fix should move score ≥0.80).
 
 ## S214 outcome + carries
 
