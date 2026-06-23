@@ -22,10 +22,12 @@ Last updated: 2026-06-23 (Session 218 — arc: windows-hardening recovery + safe
 - [ ] **[PUSH/P1·FOUNDER]** First real push notification — `npm run push:count` → `npm run push:notify -- --game cod` (founder go-ahead required).
 - [ ] **[CONTENT/P1·FOUNDER]** Draft one Signal Log post from the brainstormed ideas (founder voice) + publish forge devlog (founder voice, never auto-published).
 - [ ] **[OPS/P2]** Sibling CANON-006 (velaxis/syntha/shadow missing branding) → ship Ark `repo-question` cargo to studio-ops; process pending Ark cargos (S213 `01JRK6AH97E0F421A55C54236C`, S216 `01JRONES0VE96C6C4554516536` + `01JRONIRFF246105D9994172D4`).
-- [ ] **[UX/P3·SIL]** card-accent → cover-image overlay tint — wire per-card `--card-accent` into the cover image via `mix-blend-mode` (S217/S218 brainstorm).
-- [ ] **[INFRA/P3·SIL]** DECISIONS supersede-linter — flag a decision whose claim is contradicted by an active contract (would have caught the Forge-Window phantom; D-S218 brainstorm #2).
-- [ ] **[AI/P3·SIL]** bridge-affinity → founder-edge proposer — emit dark `api/proposed-edges.json` from the B2 affinity model for one-click founder curation of projectGraph (D-S218 brainstorm #3).
 - [ ] **[UX·FOUNDER]** MOBILE-SHEET-DEFAULT-SWAP — founder real-device verification (flag-gated nav sheet).
+
+**S218 second-order wave (SHIPPED — saturation pass):**
+- [x] **[INFRA/P3·SIL] DECISIONS supersede-linter** — `scripts/check-decision-currency.mjs`: self-validates DECISIONS.md "public label" claims against the canonical public surface (index.html); flags a label asserted as "the public label" but absent there (the B3 Forge-Window phantom class). Self-tested 3/3, wired into `check-proof-surface` (build:check). Derives verdict from source-of-truth, not a hand list.
+- [x] **[AI/P3·SIL] bridge-affinity → founder-edge proposer** — `scripts/build-proposed-edges.mjs`: reuses the B2 category-affinity model to emit `context/PROPOSED_GRAPH_EDGES.md` (8 candidates, pre-typed shares-universe/builds-on/sibling) — a founder-confirm curation surface that respects D-S218.5 (projectGraph stays founder-confirmed; proposals ≠ assertions). In build chain + `check-proof-surface` --check. Self-tested 3/3.
+- [ ] **[UX/P3·SIL] card-accent → cover-image overlay tint** — DEFERRED (quality-gated, not skipped): a visual change on the mature multi-layer card surface (cover bg + radial + `::before`/`::after` vignette × 8 game + 13 project accents) requires CANON-047 AI-image-test verification (screenshot every accent) that the headless/throttled env can't perform reliably. Implementing blind would violate CANON-047. Resume in a fresh env with screenshot verification.
 
 ## S217 outcome + carries
 

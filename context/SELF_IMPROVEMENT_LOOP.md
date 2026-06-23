@@ -13,13 +13,13 @@ Avgs - 3: 947.3 | 5: ~941 | 10: ~942 | 25: 953 | all: 958 (v3.0 /1000)
   └ 3-session: Dev 95.3 | Align 96.3 | Momentum 95.3 | Engage 96.3 | Process 95.7
 Velocity trend: → (S218: 6 items; S217: 5 items; S216: 6 items) | Protocol velocity: → | Debt: ↓ (recovered windows-hardening codemod; safe-spawn npm root-fix; catalog-derived bridges)
 Momentum runway: PUSH — run push:count → first real notification (founder go-ahead); CONTENT — Signal Log post + forge devlog (founder voice); SIBLING — CANON-006 velaxis/syntha/shadow via Ark; OPTIONAL — wire --card-accent into cover-image overlay tint | Intent rate: 100% (last 5) | (S218 shipped: windows-hardening recovery, safe-spawn npm root-fix, welcome-back telemetry, catalog-derived bridges, shell-drift heal; rejected Forge-Window phantom + projectGraph auto-fill.)
-Last session: 2026-06-23 | Session 218 | Total: 952/1000 (v3.0) | Velocity: 6 | protocolVelocity: 0
+Last session: 2026-06-23 | Session 218 | Total: 954/1000 (v3.0) | Velocity: 7 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
 
-## 2026-06-23 — Session 218 (arc · windows-hardening recovery + safe-spawn npm root-fix + welcome-back telemetry + catalog-derived ecosystem bridges + Forge-Window phantom reject) | Total: 952/1000 (v3.0) | Velocity: 6 | Debt: ↓
+## 2026-06-23 — Session 218 (arc · windows-hardening recovery + safe-spawn npm root-fix + welcome-back telemetry + catalog-derived ecosystem bridges + Forge-Window phantom reject + 2nd-order saturation wave) | Total: 954/1000 (v3.0) | Velocity: 7 | Debt: ↓
 Avgs — 3: 947.3 | 5: ~941 | 10: ~942 | 25: 953 | all: 958
 
 Dev Health 96 | Creative Alignment 97 | Momentum 96 | Engagement 96 | Process Quality 97 | Cross-Repo Coherence 93 | Security Posture 92 | Ecosystem Integration 95 | Capital Efficiency 94 | Automation Coverage 96
@@ -37,7 +37,7 @@ Dev Health 96 | Creative Alignment 97 | Momentum 96 | Engagement 96 | Process Qu
 2. **DECISIONS SUPERSEDE-LINTER** — D-S218.4 (Forge-Window) wasted effort because a stale "current" decision sat on top of DECISIONS.md with no superseding marker. A tiny gate that flags a decision whose claim is contradicted by an active contract (e.g. "Forge Window is the public label" vs `check-s151-contracts` enforcing "Studio Pulse") would stop phantom genius-list items at the source.
 3. **BRIDGE AFFINITY → FOUNDER-EDGE PROPOSER** — projectGraph must stay founder-confirmed, but the category-affinity model from B2 could emit a *proposal* file (`api/proposed-edges.json`, dark) for the founder to confirm/reject, turning the empty graph into a one-click-curate surface without fabricating claims.
 
-**Committed to TASK_BOARD:** card-accent→cover-tint + DECISIONS supersede-linter added as S218 carries.
+**Second-order saturation wave (shipped, post-push):** implemented 2 of the 3 brainstorm candidates at genuine quality — **check-decision-currency.mjs** (DECISIONS self-validates "public label" claims against the canonical surface; catches the B3 phantom class; folded into check-proof-surface; self-test 3/3) + **build-proposed-edges.mjs** (founder-confirm curation surface for the empty projectGraph, D-S218.5-safe, 8 pre-typed candidates; build chain + --check; self-test 3/3). Card-accent→cover-tint quality-deferred (CANON-047 AI-image-test needs a non-headless env). Saturation gated by the quality bar + CANON-047, not just the context-meter.
 
 ## 2026-06-22 — Session 217 (founder-directed · visual card overhaul games/projects/homepage + homepage data fix) | Total: 947/1000 (v3.0) | Velocity: 5 | Debt: ↓
 Avgs — 3: 942.3 | 5: ~934 | 10: ~941 | 25: 954 | all: 958

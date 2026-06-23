@@ -101,6 +101,18 @@ const STEPS = [
   // been run after adding a new post. Fix: node scripts/update-journal-dates.mjs.
   ['check-journal-dates.mjs', ['--self-test']],
   ['check-journal-dates.mjs', []],
+  // S218: decision-currency — DECISIONS.md "public label" claims are self-validated
+  // against the canonical public surface (index.html). A label asserted as "the public
+  // label" but absent there is a stale decision (the S218 B3 Forge-Window phantom class):
+  // mark it SUPERSEDED or re-propagate. Folded here (not a new cmd.exe-bounded build:check
+  // segment) — observability honesty: a decision record must not lie about live state.
+  ['check-decision-currency.mjs', ['--self-test']],
+  ['check-decision-currency.mjs', []],
+  // S218: proposed-graph-edges — the founder curation doc (context/PROPOSED_GRAPH_EDGES.md)
+  // must stay in sync with the catalog so the projectGraph activation path never goes stale.
+  // Proposals only (D-S218.5 keeps projectGraph founder-confirmed); --check guards drift.
+  ['build-proposed-edges.mjs', ['--self-test']],
+  ['build-proposed-edges.mjs', ['--check']],
 ];
 
 let failed = 0;
