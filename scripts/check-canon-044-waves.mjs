@@ -17,7 +17,7 @@
 //   node scripts/check-canon-044-waves.mjs --json
 
 import { readFileSync, existsSync } from 'node:fs';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
@@ -52,7 +52,12 @@ export function scanCanon044(root = ROOT) {
 const INVOKED_DIRECTLY = process.argv[1] && process.argv[1].endsWith('check-canon-044-waves.mjs');
 if (INVOKED_DIRECTLY) {
   const JSON_OUT = process.argv.includes('--json');
-  const { ok, surfacesChecked: checked, findings } = scanCanon044();
+  // --root / --project <path> lets the canon-conformance engine run this per-project
+  // (default: this repo's own ROOT, so standalone invocation is unchanged).
+  const argv = process.argv.slice(2);
+  const rootArg = (() => { const i = argv.findIndex(a => a === '--root' || a === '--project'); return i >= 0 ? argv[i + 1] : null; })();
+  const scanRoot = rootArg ? resolve(rootArg) : ROOT;
+  const { ok, surfacesChecked: checked, findings } = scanCanon044(scanRoot);
   if (JSON_OUT) {
     console.log(JSON.stringify({ ok, surfacesChecked: checked, findings }, null, 2));
   } else if (ok) {

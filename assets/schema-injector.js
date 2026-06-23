@@ -16,13 +16,30 @@
 (function () {
   'use strict';
 
-  // TT audit note (S190): type='application/ld+json' is not an executable MIME type,
-  // so script.appendChild(createTextNode) is NOT a TrustedTypes sink — no policy required.
-  // Confirmed by S185 policy wave + lint-tt-policies.mjs gate.
+  // TT note (S219): in practice Chrome's `require-trusted-types-for 'script'`
+  // (report-only here) DOES flag setting a script element's content via
+  // appendChild(createTextNode) — "script element modified without TrustedScript"
+  // — regardless of the application/ld+json MIME type. Route the (data, not code)
+  // JSON-LD through a TrustedScript assignment so the console is clean and the
+  // page stays correct if the policy is ever promoted to enforcing.
+  var _ttScript = null;
+  try {
+    if (window.trustedTypes && window.trustedTypes.createPolicy) {
+      _ttScript = window.trustedTypes.createPolicy('vs-jsonld', {
+        createScript: function (s) { return s; },
+      });
+    }
+  } catch (_e) { _ttScript = null; }
+
   function inject(obj) {
     var s = document.createElement('script');
     s.type = 'application/ld+json';
-    s.appendChild(document.createTextNode(JSON.stringify(obj)));
+    var json = JSON.stringify(obj);
+    if (_ttScript) {
+      s.text = _ttScript.createScript(json); // TrustedScript assignment — TT-clean
+    } else {
+      s.appendChild(document.createTextNode(json)); // fallback: no TT support
+    }
     document.head.appendChild(s);
   }
 

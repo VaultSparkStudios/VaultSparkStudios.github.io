@@ -8,6 +8,14 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # S219 safety net: data-refresh workflows (vault-narrative, rum-pull,
+    # ci-status-beacon, refresh-live-data) commit with [skip ci], which skips
+    # EVERY GitHub Actions workflow — including this deploy. A periodic deploy of
+    # the current main tree guarantees those committed-but-undeployed feeds still
+    # reach prod even if an explicit dispatch was missed. Pages uploads are
+    # content-hashed, so an unchanged tree costs nothing.
+    - cron: "40 */6 * * *" # every 6h at :40
 
 concurrency:
   group: pages-deploy
@@ -30,6 +38,21 @@ jobs:
         run: |
           mkdir -p /tmp/pages-dist
           git archive HEAD | tar -x -C /tmp/pages-dist
+
+      - name: Stamp honest deployed SHA into build-sha.json
+        # S219 deploy-currency honesty (CANON-031). generate-build-sha.mjs captures
+        # the LOCAL HEAD at build time, but that output is then committed as a NEW
+        # sha — so the committed build-sha.json is structurally always one commit
+        # behind and check-pages-deploy reads a false "prod stale" mismatch. Here,
+        # at the moment of deploy, we KNOW the true deployed commit — stamp it so
+        # the served build-sha.json reflects exactly what prod is running.
+        run: |
+          SHA=$(git rev-parse HEAD)
+          NOW=$(date -u +%Y-%m-%dT%H:%M:%S.000Z)
+          DAY=$(date -u +%Y-%m-%d)
+          mkdir -p /tmp/pages-dist/api
+          printf '{\n  "schemaVersion": "1.0",\n  "generatedAt": "%s",\n  "sha": "%s",\n  "builtAt": "%s",\n  "deployedBy": "pages-deploy"\n}\n' "$DAY" "$SHA" "$NOW" > /tmp/pages-dist/api/build-sha.json
+          echo "stamped deployed build-sha: $SHA"
 
       - name: Deploy to Cloudflare Pages
         env:

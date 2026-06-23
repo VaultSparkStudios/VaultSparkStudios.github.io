@@ -27,30 +27,12 @@
 import * as cp from 'node:child_process';
 import { promisify } from 'node:util';
 
-const WIN = process.platform === 'win32';
-// Windows: npm-family CLIs ship as .cmd shims. A no-shell spawn('npm', …) throws ENOENT
-// because CreateProcess cannot execute a .cmd directly — the documented fix is shell:true
-// (the shell resolves npm→npm.cmd). Scoped to a KNOWN tool set, not blanket shell:true, so
-// we never widen shell-injection surface for arbitrary commands; windowsHide:true is still
-// forced, so the shell runs hidden (no window-storm regression). Verified live S218:
-// release-confidence.mjs crashed `spawn npm ENOENT` before this. A command with an explicit
-// path separator or extension is trusted as-is (caller knows the exact target).
-const WIN_CMD_TOOLS = new Set(['npm', 'npx', 'yarn', 'pnpm', 'corepack']);
-function needsWinShell(args) {
-  if (!WIN || !args.length || typeof args[0] !== 'string') return false;
-  const cmd = args[0];
-  if (/[\\/]/.test(cmd) || /\.[a-z0-9]+$/i.test(cmd)) return false;
-  return WIN_CMD_TOOLS.has(cmd.toLowerCase());
-}
-
-// Merge spawn-family defaults into a call's options, matching every signature:
+// Force windowsHide:true into a spawn-family call's options, matching every signature:
 //   fn(cmd) · fn(cmd,args) · fn(cmd,opts) · fn(cmd,args,opts) · fn(cmd,cb) · fn(cmd,opts,cb)
 // Locate the options object (last plain-object arg, not Array/Buffer/TypedArray/function);
-// fill each default only when the caller left it unset (explicit choices are respected).
-// windowsHide is always defaulted true; shell is added only for npm-family tools on Windows.
+// fill windowsHide only when the caller left it unset (explicit choices are respected).
 // If no options object exists, insert one before a trailing callback, else append.
 function harden(args) {
-  const defaults = needsWinShell(args) ? { windowsHide: true, shell: true } : { windowsHide: true };
   const a = args.slice();
   let optIdx = -1;
   for (let i = a.length - 1; i >= 0; i--) {
@@ -64,15 +46,15 @@ function harden(args) {
     ) { optIdx = i; break; }
   }
   if (optIdx >= 0) {
-    const merged = { ...a[optIdx] };
-    for (const [k, v] of Object.entries(defaults)) if (merged[k] === undefined) merged[k] = v;
-    a[optIdx] = merged;
+    if (a[optIdx].windowsHide === undefined) {
+      a[optIdx] = { ...a[optIdx], windowsHide: true };
+    }
     return a;
   }
   if (a.length && typeof a[a.length - 1] === 'function') {
-    a.splice(a.length - 1, 0, { ...defaults });
+    a.splice(a.length - 1, 0, { windowsHide: true });
   } else {
-    a.push({ ...defaults });
+    a.push({ windowsHide: true });
   }
   return a;
 }

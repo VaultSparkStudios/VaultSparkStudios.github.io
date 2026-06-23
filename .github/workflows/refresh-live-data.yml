@@ -1,0 +1,86 @@
+name: Refresh Live Data
+
+# S219 live-data-currency — the founder-reported "Oracle isn't generating live
+# data" + "live-data pages must never get out of sync" root-fix.
+#
+# Before this workflow, ONLY public-intelligence.json (vault-narrative.yml) and
+# RUM history (rum-pull.yml) refreshed on a schedule. Every OTHER live-data feed
+# — oracle-insights, ignis-search-index, nervous-system, ship-receipts,
+# heartbeat, site-health, geo-vitals, citation, ecosystem-velocity, … — only
+# refreshed when a human session ran `npm run build` and pushed. Between sessions
+# those surfaces silently went stale on prod.
+#
+# This regenerates the FULL deterministic feed set every 4h, commits ONLY the
+# data feeds (never asset/shell rotations — those need source changes), and
+# triggers a Cloudflare Pages deploy so the fresh data actually reaches prod.
+# (Data commits use [skip ci] to skip the heavy CI suite; the explicit
+# pages-deploy dispatch is what makes them deploy — a [skip ci] commit alone
+# would be skipped by every GitHub Actions workflow, the deploy included.)
+
+on:
+  schedule:
+    - cron: "23 */4 * * *" # every 4h at :23 (offset off the top of the hour)
+  workflow_dispatch:
+
+concurrency:
+  group: refresh-live-data
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  actions: write # to dispatch pages-deploy.yml after a fresh data commit
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Regenerate live-data feeds (full dependency order)
+        # `npm run build` covers most feeds, but the git-history/aggregate feeds
+        # below are NOT in that chain and must regenerate in dependency order
+        # (leaves → search/oracle → aggregate) or they go stale + drift. This is
+        # the exact ordered set that keeps the Oracle (oracle-insights.json) and
+        # the intelligence budget current. Generators that need external secrets
+        # (vault-narrative→Anthropic, rum→R2) live in their own workflows and
+        # fall back to honest-dark here without failing.
+        run: |
+          npm run build
+          node scripts/build-commit-map.mjs
+          node scripts/build-ship-receipts.mjs
+          node scripts/build-ignis-search-index.mjs
+          node scripts/build-oracle-query-clusters.mjs
+          node scripts/build-intelligence-budget.mjs
+
+      - name: Commit refreshed feeds (data only — never shell rotations)
+        id: commit
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          # Stage ONLY content/data feeds. Asset shell hashes are intentionally
+          # excluded — they rotate only on source change (cold-cache cost), which
+          # must never happen on a data-only cron.
+          git add api/ data/ feed/ journal/dispatches/feed.xml .well-known/llms-full.txt llms-full.txt 2>/dev/null || true
+          git add 'projects/*/llms-full.txt' 2>/dev/null || true
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Live data unchanged — nothing to deploy."
+          else
+            git commit -m "chore: refresh live data feeds [skip ci]"
+            git pull --rebase --autostash origin main
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Deploy fresh data to Cloudflare Pages
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run pages-deploy.yml --ref main
