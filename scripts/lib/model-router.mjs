@@ -47,10 +47,8 @@ export const MODELS = {
 };
 
 export const ANTHROPIC_API = {
-  host:     'api.anthropic.com',
-  base:     'https://api.anthropic.com',
   messages: 'https://api.anthropic.com/v1/messages',
-  models:   'https://api.anthropic.com/v1/models',
+  base:     'https://api.anthropic.com/v1',
 };
 
 /**

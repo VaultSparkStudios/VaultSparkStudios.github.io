@@ -159,17 +159,33 @@
     /* ── Featured project card (full width) ── */
     .project-card-featured {
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow);
+      background: linear-gradient(180deg, rgba(14,18,30,0.93), rgba(7,9,16,0.99));
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 6px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.04);
       margin-bottom: 1.2rem;
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    /* Accent top strip on featured card */
+    .project-card-featured::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(var(--card-accent-rgb,255,196,0),0.85) 45%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 5;
     }
     .project-card-featured:hover {
-      transform: scale(1.005);
-      box-shadow: 0 24px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(255,196,0,0.15);
+      transform: scale(1.006) translateY(-3px);
+      border-color: rgba(var(--card-accent-rgb,255,196,0), 0.28);
+      box-shadow:
+        0 32px 90px rgba(0,0,0,0.6),
+        0 0 0 1px rgba(var(--card-accent-rgb,255,196,0), 0.18),
+        0 0 60px -15px rgba(var(--card-accent-rgb,255,196,0), 0.16);
     }
+    .project-card-featured:hover::before { opacity: 1; }
     .project-card-featured[data-hidden] { display: none; }
     .project-card-featured-inner {
       display: grid;
@@ -178,7 +194,7 @@
       align-items: stretch;
     }
     .project-card-hero {
-      min-height: 320px;
+      min-height: 360px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -186,22 +202,24 @@
       padding: 1.4rem;
       overflow: hidden;
     }
+    /* Side vignette on featured card hero */
     .project-card-hero::before {
       content: "";
       position: absolute;
-      inset: -20%;
-      filter: blur(24px);
-      opacity: 0.95;
+      inset: 0;
+      background: linear-gradient(270deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 40%, transparent 100%);
+      z-index: 1;
+      pointer-events: none;
     }
     .project-card-hero::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.62));
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 45%, rgba(0,0,0,0.7) 80%, rgba(0,0,0,0.88) 100%);
     }
     .project-card-hero h2 {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       font-family: Georgia, "Times New Roman", serif;
       font-size: clamp(1.8rem, 3.5vw, 2.8rem);
       letter-spacing: -0.04em;
@@ -211,7 +229,7 @@
       position: absolute;
       top: 1.1rem;
       left: 1.1rem;
-      z-index: 1;
+      z-index: 2;
     }
     .project-card-body {
       padding: 2.4rem 2.8rem;
@@ -241,24 +259,73 @@
     }
 
     /* ── Standard project card ── */
+    /* ── Per-project accent color variables (via :has() on card-hero classes) ── */
+    .project-card:has(.promogrind)        { --card-accent:#f97316; --card-accent-rgb:249,115,22; }
+    .project-card:has(.velaxis)           { --card-accent:#8b5cf6; --card-accent-rgb:139,92,246; }
+    .project-card:has(.vorn)              { --card-accent:#06b6d4; --card-accent-rgb:6,182,212; }
+    .project-card:has(.vaultfront-proj)   { --card-accent:#ffc400; --card-accent-rgb:255,196,0; }
+    .project-card:has(.pipeline)          { --card-accent:#1fa2ff; --card-accent-rgb:31,162,255; }
+    .project-card:has(.signallog)         { --card-accent:#a78bfa; --card-accent-rgb:167,139,250; }
+    .project-card:has(.vaultmember)       { --card-accent:#22c55e; --card-accent-rgb:34,197,94; }
+    .project-card:has(.seamline)          { --card-accent:#ffc400; --card-accent-rgb:255,196,0; }
+    .project-card:has(.canon)             { --card-accent:#60a5fa; --card-accent-rgb:96,165,250; }
+    .project-card:has(.living-protocol)   { --card-accent:#34d399; --card-accent-rgb:52,211,153; }
+    .project-card:has(.statvault)         { --card-accent:#fb923c; --card-accent-rgb:251,146,60; }
+    .project-card:has(.ideaforge)         { --card-accent:#e879f9; --card-accent-rgb:232,121,249; }
+    .project-card:has(.vaultpipeline)     { --card-accent:#38bdf8; --card-accent-rgb:56,189,248; }
+    .project-card-featured:has(.promogrind) { --card-accent:#f97316; --card-accent-rgb:249,115,22; }
+
+    @keyframes card-sheen {
+      0%   { transform: translateX(-120%) skewX(-18deg); }
+      100% { transform: translateX(260%) skewX(-18deg); }
+    }
+
     .project-card {
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(13,17,28,0.90), rgba(8,10,17,0.97));
-      border: 1px solid rgba(255,255,255,0.08);
-      box-shadow: var(--shadow);
+      background: linear-gradient(180deg, rgba(14,18,30,0.93), rgba(7,9,16,0.99));
+      border: 1px solid rgba(255,255,255,0.07);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.04);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: border-color 0.22s ease, transform 0.22s ease, box-shadow 0.22s ease;
+      position: relative;
+      transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.34,1.4,0.64,1), box-shadow 0.3s ease;
+    }
+    /* Accent top strip — fades in on hover */
+    .project-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, transparent 0%, rgba(var(--card-accent-rgb,255,196,0),0.9) 45%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 5;
+    }
+    /* Sheen sweep on hover */
+    .project-card::after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+      width: 45%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.055), transparent);
+      transform: translateX(-120%) skewX(-18deg);
+      pointer-events: none;
+      z-index: 6;
     }
     .project-card:hover {
-      border-color: rgba(255,196,0,0.2);
-      transform: translateY(-5px);
-      box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px rgba(255,196,0,0.2);
+      border-color: rgba(var(--card-accent-rgb,255,196,0), 0.30);
+      transform: translateY(-6px);
+      box-shadow:
+        0 28px 70px rgba(0,0,0,0.55),
+        0 0 0 1px rgba(var(--card-accent-rgb,255,196,0), 0.18),
+        0 0 50px -10px rgba(var(--card-accent-rgb,255,196,0), 0.14),
+        inset 0 1px 0 rgba(255,255,255,0.06);
     }
+    .project-card:hover::before { opacity: 1; }
+    .project-card:hover::after  { animation: card-sheen 0.6s ease forwards; }
     .project-card[data-hidden] { display: none; }
     .card-hero {
-      min-height: 220px;
+      min-height: 260px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -267,22 +334,25 @@
       padding-top: 3rem;
       overflow: hidden;
     }
+    /* Side vignette for depth */
     .card-hero::before {
       content: "";
       position: absolute;
-      inset: -20%;
-      filter: blur(20px);
-      opacity: 0.85;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,0.18) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.14) 100%);
+      z-index: 1;
+      pointer-events: none;
     }
+    /* Stronger 4-stop bottom vignette */
     .card-hero::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.02), rgba(0,0,0,0.6));
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.05) 42%, rgba(0,0,0,0.72) 76%, rgba(0,0,0,0.93) 100%);
     }
     .card-hero h3 {
       position: relative;
-      z-index: 1;
+      z-index: 2;
       font-family: Georgia, "Times New Roman", serif;
       font-size: 1.4rem;
       letter-spacing: -0.03em;
@@ -292,14 +362,26 @@
       position: absolute;
       top: 0.85rem;
       left: 0.85rem;
-      z-index: 1;
+      z-index: 2;
     }
+    /* Per-status badge colors */
+    .status-sparked.card-badge { color: #6ef3aa; border-color: rgba(68,208,123,0.42); }
+    .status-forge.card-badge   { color: #f7c98a; border-color: rgba(240,161,58,0.40); }
+    .status-vaulted.card-badge { color: #94a3b8; border-color: rgba(100,116,139,0.36); }
     .card-content {
       padding: 1.4rem 1.6rem 1.6rem;
       display: flex;
       flex-direction: column;
       gap: 0.85rem;
       flex: 1;
+      position: relative;
+    }
+    /* Accent top separator line inside content area */
+    .card-content::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 1.4rem; right: 1.4rem; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(var(--card-accent-rgb,255,196,0),0.22), transparent);
     }
     .card-content p {
       color: var(--muted);
@@ -971,7 +1053,7 @@
 <script src="/assets/sealed-vault-row.js" defer></script>
 <script src="/assets/schema-injector.js" defer></script>
   <!-- vs-ambient:start -->
-<script src="/assets/ambient-core.shell-f15fedfd62.js" defer></script>
+<script src="/assets/ambient-core.shell-bff2141eb7.js" defer></script>
 <script src="/assets/ambient-feature.shell-5b85ce5201.js" defer></script>
 <!-- vs-ambient:end -->
 </body>
