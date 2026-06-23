@@ -8,6 +8,26 @@
   "count": 24,
   "entries": [
     {
+      "sha": "402b0930",
+      "ts": "2026-06-23T21:39:15.000Z",
+      "type": "perf",
+      "scope": "S219",
+      "breaking": false,
+      "move": "Sped up",
+      "tone": "perf",
+      "summary": "single-process pre-push scan — fixes multi-minute pushes on Windows"
+    },
+    {
+      "sha": "68a866f7",
+      "ts": "2026-06-23T20:54:15.000Z",
+      "type": "feat",
+      "scope": "S219",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "dispatch voices — distinct persona per Vault Dispatch (TTS)"
+    },
+    {
       "sha": "9dbb8964",
       "ts": "2026-06-23T20:29:11.000Z",
       "type": "feat",
@@ -226,26 +246,6 @@
       "move": "Fixed",
       "tone": "fix",
       "summary": "commit missing shell CSS f15fedfd (style.shell-920ea9c5cc) — omitted from prior commit, causing no-style on prod"
-    },
-    {
-      "sha": "75de5e88",
-      "ts": "2026-06-21T21:17:36.000Z",
-      "type": "fix",
-      "scope": "ux",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "heartbeat cross-repo data + ticker clickable + ignis quote synthesis + nav dropdown trimmed"
-    },
-    {
-      "sha": "40777997",
-      "ts": "2026-06-21T20:38:17.000Z",
-      "type": "fix",
-      "scope": "push",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "replace process.exit() with exitCode+return to drain libuv handles on Windows"
     }
   ]
 }
