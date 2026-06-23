@@ -24,6 +24,11 @@ const ROOT = path.resolve(__dirname, '..');
 const QUERIES_SRC = path.join(ROOT, 'api', 'oracle-queries.json');
 const INDEX_SRC = path.join(ROOT, 'data', 'ignis-search-index.json');
 const FEEDBACK_SRC = path.join(ROOT, 'data', 'oracle-feedback.ndjson');
+// S219 oracle-live-answers — public-safe live feeds that turn each cluster's
+// canned question into a CURRENT answer (most-active game, latest ships, counts,
+// leaderboard leader) instead of only keyword-matched static docs.
+const LIVE_SRC = path.join(ROOT, 'api', 'public-intelligence.json');
+const LEADERBOARD_SRC = path.join(ROOT, 'api', 'leaderboard', 'v1', 'all.json');
 const OUT = path.join(ROOT, 'api', 'oracle-insights.json');
 const CHECK = process.argv.includes('--check');
 const SELF_TEST = process.argv.includes('--self-test');
@@ -33,16 +38,27 @@ if (SELF_TEST) {
   const testQueries = { anonymous: ['What games exist?', 'How do I join?'] };
   const testIndex = [{ title: 'Games', url: '/games/', body: 'games play arcade', summary: '' }];
   const feedbackMap = { 'what_games': { helpful: 5, unhelpful: 1, lastDay: '2026-06-10' } };
-  const out = buildClusters(testQueries, testIndex, feedbackMap);
+  const testLive = buildLive({
+    catalog: [{ type: 'game', status: 'SPARKED', name: 'Call of Doodie', progress: 85 }],
+    stats: { liveProjects: 1, projectsInForge: 2, vaultRankTiers: 9 },
+    normalizedActivity: { latest: [{ title: 'X shipped a closeout', url: '/' }] },
+    pulse: { now: ['Building the Oracle'] },
+    generatedAt: '2026-06-23T00:00:00.000Z',
+  }, { game_name: 'Call of Doodie', entries: [{ display_name: 'Ada', score: 999 }] });
+  const out = buildClusters(testQueries, testIndex, feedbackMap, testLive);
   const ok = Array.isArray(out.clusters) && out.clusters.length > 0 && out.clusters[0].topDocs;
   const ranked = out.clusters[0].key === 'what_games'; // higher helpful-rate should rank first
   const hasHelpfulScore = typeof out.clusters[0].helpfulScore === 'number';
+  const liveOk = out.clusters.some(c => typeof c.liveAnswer === 'string' && c.liveAnswer.length > 0);
+  const liveSafe = out.clusters.every(c => c.liveAnswer === null || typeof c.liveAnswer === 'string');
   console.log([
     ok ? '  ✓ clusters built' : '  ✗ clusters missing',
     ranked ? '  ✓ helpful-rate ranking applied' : '  ✗ helpful-rate ranking failed',
     hasHelpfulScore ? '  ✓ helpfulScore field present' : '  ✗ helpfulScore field missing',
+    liveOk ? '  ✓ live answer derived from live feeds' : '  ✗ live answer missing',
+    liveSafe ? '  ✓ liveAnswer is always string|null' : '  ✗ liveAnswer wrong type',
   ].join('\n'));
-  const pass = ok && ranked && hasHelpfulScore;
+  const pass = ok && ranked && hasHelpfulScore && liveOk && liveSafe;
   console.log(pass ? '✓ self-test passed' : '✗ self-test failed');
   process.exit(pass ? 0 : 1);
 }
@@ -102,7 +118,111 @@ function rankScore(clusterKey, coverageScore, feedbackMap, maxCoverage) {
   return { helpfulScore: null, sortKey: normalised, hasFeedback: false };
 }
 
-function buildClusters(queries, index, feedbackMap = {}) {
+/**
+ * buildLive(pi, lb) — distill the public-safe live feeds into the handful of
+ * CURRENT facts the Oracle answers about. Everything here is already public-safe
+ * (it ships in api/*.json); we add NO new data, just summarise what's live.
+ * Returns null when the feed is absent so the Oracle degrades to doc-match only.
+ */
+function buildLive(pi, lb) {
+  if (!pi) return null;
+  const catalog = Array.isArray(pi.catalog) ? pi.catalog : [];
+  const games = catalog.filter(c => c.type === 'game');
+  const sparkedGames = games.filter(c => String(c.status).toUpperCase() === 'SPARKED');
+  const stats = pi.stats || {};
+
+  // Most active = the public ship stream's latest game/project, else the
+  // highest-progress SPARKED game.
+  const latest = (pi.normalizedActivity && Array.isArray(pi.normalizedActivity.latest))
+    ? pi.normalizedActivity.latest : [];
+  const latestShip = latest.find(e => e && e.title) || null;
+  const topGame = sparkedGames.slice().sort((a, b) => (b.progress || 0) - (a.progress || 0))[0]
+    || games[0] || null;
+
+  const focus = (pi.pulse && Array.isArray(pi.pulse.now) && pi.pulse.now[0]) ? pi.pulse.now[0] : null;
+
+  // Leaderboard leader (top entry of the aggregate board, if present).
+  let leader = null;
+  try {
+    const entries = lb && Array.isArray(lb.entries) ? lb.entries : [];
+    if (entries.length) {
+      const e = entries[0];
+      leader = { name: e.display_name || e.name || e.handle || 'a Vault member', score: e.score ?? e.points ?? null, game: lb.game_name || null };
+    }
+  } catch { leader = null; }
+
+  return {
+    gamesLive: sparkedGames.length || stats.liveProjects || 0,
+    inForge: games.filter(c => String(c.status).toUpperCase() === 'FORGE').length || stats.projectsInForge || 0,
+    totalGames: games.length,
+    sparkedNames: sparkedGames.map(g => g.name).filter(Boolean),
+    topGame: topGame ? { name: topGame.name, note: topGame.note || '', url: topGame.deployedUrl || '' } : null,
+    latestShip: latestShip ? { title: latestShip.title, url: latestShip.url || '', at: latestShip.occurredAt || '' } : null,
+    focus,
+    rankTiers: stats.vaultRankTiers || null,
+    leader,
+    asOf: pi.generatedAt || null,
+  };
+}
+
+/**
+ * deriveLiveAnswer(tokens, live) — map a cluster's intent to a CURRENT, public-safe
+ * one-liner from the live feeds. Returns null when no live fact fits (the cluster
+ * then falls back to its doc matches, unchanged). Intent matched on tokens so it is
+ * robust to phrasing.
+ */
+function deriveLiveAnswer(tokens, live) {
+  if (!live) return null;
+  const has = (...ws) => ws.some(w => tokens.includes(w));
+  const playable = live.sparkedNames.slice(0, 3).join(', ');
+
+  // Order matters: most-specific intent first so a broad token ('vault') never
+  // shadows a precise question (leaderboards, ranks, what-to-play, membership).
+
+  // 1. Leaderboard standings (honest when there's no board data yet)
+  if (has('leaderboard', 'leaderboards', 'leading', 'winning', 'leader')) {
+    if (live.leader) {
+      const s = live.leader.score != null ? ` (${live.leader.score} pts)` : '';
+      return `Right now ${live.leader.name} leads${s}. Standings reset every week.`;
+    }
+    return `Weekly leaderboards reset every 7 days — climb the ${live.rankTiers || 9}-tier ladder and be the first name up top.`;
+  }
+  // 2. Rank / points mechanics
+  if (has('rank', 'points', 'tier', 'tiers', 'ranking') && live.rankTiers) {
+    return `The Vault rank ladder has ${live.rankTiers} tiers — earn Vault Points by playing, referring, and showing up.`;
+  }
+  // 3. "What should I play / speedrun / start with" → a real recommendation
+  if (has('should', 'speedrun', 'first', 'start', 'recommend') && live.topGame) {
+    const n = live.topGame.note ? ` — ${live.topGame.note}` : '';
+    const others = live.sparkedNames.filter(name => name !== live.topGame.name).slice(0, 2).join(', ');
+    return `Start with ${live.topGame.name}${n}${others ? ` Also live: ${others}.` : ''}`;
+  }
+  // 4. Membership — what makes a member different
+  if (has('member', 'membership', 'different', 'makes', 'subscriber')) {
+    return `Vault members get the ${live.rankTiers || 9}-tier rank ladder, the member portal, weekly leaderboards, and first look at what leaves the forge.`;
+  }
+  // 5. "Most active / hottest"
+  if (has('active', 'hottest', 'popular', 'hardest', 'challenge') && live.topGame) {
+    const n = live.topGame.note ? ` — ${live.topGame.note}` : '';
+    return `Most active right now: ${live.topGame.name}${n}`;
+  }
+  // 6. "What's new / latest / shipping this week"
+  if (has('new', 'latest', 'shipping', 'shipped', 'recent', 'week') && live.latestShip) {
+    return `Latest from the forge: ${live.latestShip.title}.`;
+  }
+  // 7. "What games are in the vault / playable"
+  if (has('games', 'game', 'play', 'playable') && (live.gamesLive || live.totalGames)) {
+    const tail = playable ? ` Playable now: ${playable}.` : '';
+    return `${live.gamesLive} game(s) live and ${live.inForge} more in the Forge.${tail}`;
+  }
+  // 8. "What is VaultSpark building / studio focus"
+  if (has('building', 'focus', 'working', 'vaultspark', 'studio', 'vault') && live.focus) {
+    return `Current focus: ${live.focus}`;
+  }
+  return null;
+}
+
+function buildClusters(queries, index, feedbackMap = {}, live = null) {
   const clusters = [];
   const allQueries = Object.entries(queries).flatMap(([tier, qs]) => qs.map(q => ({ tier, q })));
   const seen = new Set();
@@ -124,7 +244,8 @@ function buildClusters(queries, index, feedbackMap = {}) {
       .map(({ doc }) => ({ title: doc.title, url: doc.url, summary: doc.summary }));
 
     const coverageScore = scoredDocs.reduce((s, { score }) => s + score, 0);
-    clusters.push({ key: clusterKey, query: q, tier, tokens: tokens.slice(0, 4), topDocs, _coverage: coverageScore });
+    const liveAnswer = deriveLiveAnswer(tokens, live);
+    clusters.push({ key: clusterKey, query: q, tier, tokens: tokens.slice(0, 4), liveAnswer, topDocs, _coverage: coverageScore });
   }
 
   const maxCoverage = clusters.reduce((m, c) => Math.max(m, c._coverage || 0), 0);
@@ -142,8 +263,10 @@ function buildClusters(queries, index, feedbackMap = {}) {
   return { schemaVersion: '1.0', generatedAt: new Date().toISOString(), publicSafe: true, clusters: ranked };
 }
 
-// Content-hash skip: rebuild only when oracle-queries or the ignis index changes.
-const ORACLE_INPUTS = [QUERIES_SRC, INDEX_SRC, FEEDBACK_SRC];
+// Content-hash skip: rebuild when the queries, index, feedback, OR the live feeds
+// (public-intelligence / leaderboard) change — so the Oracle's live answers stay
+// current as the studio ships (S219 oracle-live-answers).
+const ORACLE_INPUTS = [QUERIES_SRC, INDEX_SRC, FEEDBACK_SRC, LIVE_SRC, LEADERBOARD_SRC];
 const oracleCache = (!FORCE) ? checkHash('oracle-clusters', ORACLE_INPUTS) : { hit: false, hash: '' };
 if (!CHECK && oracleCache.hit) {
   console.log('build-oracle-query-clusters: SKIP (inputs unchanged)');
@@ -153,13 +276,15 @@ if (!CHECK && oracleCache.hit) {
 const queries = readJson(QUERIES_SRC);
 const index = readJson(INDEX_SRC);
 const feedbackMap = loadFeedbackMap(FEEDBACK_SRC);
+const live = buildLive(readJson(LIVE_SRC), readJson(LEADERBOARD_SRC));
 
 if (!queries) { console.error('oracle-queries.json missing — skipping'); process.exit(0); }
 if (!index) { console.warn('ignis-search-index.json missing — clusters will have empty topDocs'); }
 
 const indexDocs = Array.isArray(index) ? index : (index && Array.isArray(index.documents) ? index.documents : []);
-const result = buildClusters(queries, indexDocs, feedbackMap);
+const result = buildClusters(queries, indexDocs, feedbackMap, live);
+const liveCount = result.clusters.filter(c => c.liveAnswer).length;
 fs.writeFileSync(OUT, JSON.stringify(result, null, 2));
 saveHash('oracle-clusters', oracleCache.hash);
 const feedbackNote = Object.keys(feedbackMap).length ? ` (${Object.keys(feedbackMap).length} clusters with feedback data)` : ' (no feedback data yet — ranked by coverage)';
-console.log(`✓ oracle-insights.json — ${result.clusters.length} clusters${feedbackNote}`);
+console.log(`✓ oracle-insights.json — ${result.clusters.length} clusters · ${liveCount} with live answers${feedbackNote}`);

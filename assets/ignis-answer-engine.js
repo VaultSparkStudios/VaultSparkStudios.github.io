@@ -164,12 +164,14 @@
       '.vs-ask-ignis__followups--entities{margin-top:.4rem;display:flex;flex-wrap:wrap;align-items:baseline;gap:.3rem}.vs-ask-ignis__followup-label{font-size:.72rem;color:var(--dim,#6272a0);white-space:nowrap}' +
       '.vs-ask-ignis__cluster-group{margin-top:.55rem}.vs-ask-ignis__cluster-label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim,#6272a0);margin-bottom:.3rem}' +
       '.vs-ignis-offline{padding:.6rem 0}.vs-ignis-offline__msg{font-size:.82rem;color:var(--muted,#a8b4d0);margin:0 0 .6rem}.vs-ignis-offline__list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}.vs-ignis-offline__row{border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.55rem .75rem}.vs-ignis-offline__q{display:block;font-size:.82rem;font-weight:600;color:var(--text,#eef2ff);margin-bottom:.2rem}.vs-ignis-offline__excerpt{display:block;font-size:.78rem;color:var(--muted,#a8b4d0);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.vs-ignis-offline__retry{background:none;border:1px solid rgba(255,196,0,.3);border-radius:999px;color:var(--gold,#ffc400);font:inherit;font-size:.82rem;cursor:pointer;padding:.4rem .9rem}' +
-      '.vs-ignis-starters{margin-top:.8rem;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.06)}.vs-ignis-starters__label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim,#6272a0);margin-bottom:.5rem}.vs-ignis-starters__chips{display:flex;flex-direction:column;gap:.35rem}.vs-ignis-starters__chip{text-align:left;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.55rem .85rem;color:var(--muted,#a8b4d0);font:inherit;font-size:.85rem;cursor:pointer;line-height:1.4;transition:background .12s,border-color .12s,color .12s}.vs-ignis-starters__chip:hover{background:rgba(255,196,0,.06);border-color:rgba(255,196,0,.22);color:var(--text,#eef2ff)}';
+      '.vs-ignis-starters{margin-top:.8rem;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.06)}.vs-ignis-starters__label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim,#6272a0);margin-bottom:.5rem}.vs-ignis-starters__chips{display:flex;flex-direction:column;gap:.35rem}.vs-ignis-starters__chip{text-align:left;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.55rem .85rem;color:var(--muted,#a8b4d0);font:inherit;font-size:.85rem;cursor:pointer;line-height:1.4;transition:background .12s,border-color .12s,color .12s}.vs-ignis-starters__chip:hover{background:rgba(255,196,0,.06);border-color:rgba(255,196,0,.22);color:var(--text,#eef2ff)}' +
+      '.vs-ignis-live{display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem;padding:.6rem .85rem;border-radius:10px;background:rgba(110,243,170,.07);border:1px solid rgba(110,243,170,.22);color:#aef5cf;font-size:.86rem;line-height:1.5;font-weight:600}.vs-ignis-live__dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:#6ef3aa;box-shadow:0 0 0 0 rgba(110,243,170,.6);animation:vs-ignis-live-pulse 2s infinite}@keyframes vs-ignis-live-pulse{0%{box-shadow:0 0 0 0 rgba(110,243,170,.5)}70%{box-shadow:0 0 0 7px rgba(110,243,170,0)}100%{box-shadow:0 0 0 0 rgba(110,243,170,0)}}@media (prefers-reduced-motion:reduce){.vs-ignis-live__dot{animation:none}}.vs-ignis-proactive__more{flex:0 0 auto!important;white-space:nowrap}';
     document.head.appendChild(s);
   }
 
   function mount(root, contextQueries) { // S210 #1: contextQueries = page-aware chips
     ensureStyles();
+    loadInsights(); // S219: warm oracle-insights so live answers are ready on first ask
     root.innerHTML = vsHtml('<div class="vs-ask-ignis"><form><input name="q" placeholder="Ask IGNIS about games, membership, security, feedback, or recent ships…" autocomplete="off"><button type="submit">Ask IGNIS</button></form><div class="vs-ask-ignis__chip-tray" hidden><div class="vs-ask-ignis__tray-tabs"><button type="button" class="vs-ask-ignis__tray-tab" data-tab="recent">Recent</button><button type="button" class="vs-ask-ignis__tray-tab" data-tab="topics">Topics</button></div><div class="vs-ask-ignis__history" hidden></div><div class="vs-ask-ignis__chips" hidden></div></div><div class="vs-ask-ignis__answer" aria-live="polite"></div></div>');
     var form = root.querySelector('form');
     var out = root.querySelector('.vs-ask-ignis__answer');
@@ -336,7 +338,12 @@
           });
           return;
         }
-        out.innerHTML = vsHtml('<strong>IGNIS read:</strong> ' + esc(result.text) + '<div class="vs-ask-ignis__sources">' + result.sources.map(function (src) {
+        // S219 oracle-live-answers: lead the answer with the CURRENT live fact for
+        // this query's cluster (game counts, latest ship, leaderboard, rank tiers)
+        // so the Oracle answers from live studio state, not just static page text.
+        var _live = liveAnswerFor(q);
+        var _liveLead = _live ? ('<div class="vs-ignis-live"><span class="vs-ignis-live__dot" aria-hidden="true"></span>' + esc(_live) + '</div>') : '';
+        out.innerHTML = vsHtml(_liveLead + '<strong>IGNIS read:</strong> ' + esc(result.text) + '<div class="vs-ask-ignis__sources">' + result.sources.map(function (src) {
           return '<a href="' + esc(src.url || '/') + '">' + esc(src.title || src.url || 'source') + '</a>';
         }).join('') + '</div>' +
           // S189: close the AI feedback loop — a 1-tap helpful/unhelpful control so a
@@ -919,11 +926,22 @@
 
   var INSIGHTS_URL = '/api/oracle-insights.json';
   var insightsPromise = null;
+  var _insightsData = null; // S219: resolved insights cached for synchronous live-answer lookup
   function loadInsights() {
     if (!insightsPromise) {
-      insightsPromise = fetch(INSIGHTS_URL, { cache: 'default' }).then(function (r) { return r.json(); }).catch(function () { return { clusters: [] }; });
+      insightsPromise = fetch(INSIGHTS_URL, { cache: 'default' })
+        .then(function (r) { return r.json(); })
+        .then(function (d) { _insightsData = d; return d; })
+        .catch(function () { return { clusters: [] }; });
     }
     return insightsPromise;
+  }
+  // S219 oracle-live-answers: the current live one-liner for a query's cluster,
+  // if insights are already warm. Returns '' when unavailable (graceful).
+  function liveAnswerFor(query) {
+    if (!_insightsData) return '';
+    var cl = findCluster(_insightsData, query);
+    return (cl && cl.liveAnswer) ? scrub(cl.liveAnswer) : '';
   }
 
   function findCluster(hints, query) {
@@ -947,7 +965,24 @@
     label.className = 'vs-ignis-proactive__label';
     label.textContent = 'IGNIS:';
     wrap.appendChild(label);
-    if (hint && hint.topDocs && hint.topDocs.length) {
+    // S219 oracle-live-answers: lead with the cluster's LIVE answer (current
+    // game counts, latest ship, leaderboard state, rank tiers) when present —
+    // the proactive hint then reflects the studio's actual live state, not a
+    // static page link. Falls back to the top doc link, then a generic msg.
+    if (hint && hint.liveAnswer) {
+      var live = document.createElement('span');
+      live.className = 'vs-ignis-proactive__msg';
+      live.textContent = scrub(hint.liveAnswer);
+      wrap.appendChild(live);
+      if (hint.topDocs && hint.topDocs.length) {
+        var more = document.createElement('a');
+        more.className = 'vs-ignis-proactive__link vs-ignis-proactive__more';
+        more.href = esc(hint.topDocs[0].url || '/');
+        more.textContent = 'More →';
+        more.addEventListener('click', function () { emitUx('ignis-hint:click'); });
+        wrap.appendChild(more);
+      }
+    } else if (hint && hint.topDocs && hint.topDocs.length) {
       var doc = hint.topDocs[0];
       var link = document.createElement('a');
       link.className = 'vs-ignis-proactive__link';

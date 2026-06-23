@@ -47,6 +47,19 @@ export const MODELS = {
 };
 
 /**
+ * Anthropic API endpoints — the SINGLE place that knows the API host, so the
+ * chokepoint (router-adherence pre-push rule) stays intact. Consumers
+ * (generate-vault-narrative.mjs etc.) import this instead of hardcoding the URL.
+ * (Re-exported S219 — the S217 export was lost in a rebase, breaking
+ * validate-module-imports on generate-vault-narrative.)
+ */
+export const ANTHROPIC_API = {
+  base: 'https://api.anthropic.com',
+  messages: 'https://api.anthropic.com/v1/messages',
+  version: '2023-06-01',
+};
+
+/**
  * Context window sizes (tokens), keyed by resolved model ID or agent name.
  * Kept here — alongside MODELS — so the chokepoint remains the single place
  * that knows anything model-specific. Consumers (e.g. scripts/context-meter.mjs)
