@@ -207,10 +207,48 @@
                      { q: 'How does your legacy carry across Exodus runs?', slug: 'exodus-legacy' }],
     };
     var starterWrap = null;
+    // S220: returning visitors (have history) get no curated starters, but if they
+    // have a recent in-window query cached, offer ONE re-entry chip to resume the
+    // thread — turns the otherwise-invisible prefix cache into a visible hook.
+    function renderResumeChip() {
+      var recent = null;
+      try {
+        var now = Date.now();
+        recent = readPrefixCache().find(function (e) {
+          return e && e.q && (now - e.ts) < PREFIX_TTL_MS;
+        });
+      } catch (_) {}
+      if (!recent) return;
+      starterWrap = document.createElement('div');
+      starterWrap.className = 'vs-ignis-starters';
+      var lbl = document.createElement('div');
+      lbl.className = 'vs-ignis-starters__label';
+      lbl.textContent = 'Pick up where you left off';
+      starterWrap.appendChild(lbl);
+      var resumeList = document.createElement('div');
+      resumeList.className = 'vs-ignis-starters__chips';
+      var slug = 'resume';
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'vs-ignis-starters__chip';
+      btn.setAttribute('data-slug', slug);
+      btn.textContent = recent.q;
+      btn.addEventListener('click', function () {
+        form.q.value = recent.q;
+        emitUx('oracle:starter_click:' + slug);
+        if (starterWrap) starterWrap.hidden = true;
+        runQuery(recent.q, 'resume');
+      });
+      resumeList.appendChild(btn);
+      starterWrap.appendChild(resumeList);
+      var trayEl0 = root.querySelector('.vs-ask-ignis__chip-tray');
+      var container0 = root.querySelector('.vs-ask-ignis');
+      if (container0) container0.insertBefore(starterWrap, trayEl0 || out);
+    }
     (function renderStarters() {
       var hasHistory = false;
       try { hasHistory = !!(localStorage.getItem('vs_ignis_history')); } catch (_) {}
-      if (hasHistory) return;
+      if (hasHistory) { renderResumeChip(); return; }
       var lastGame = null;
       try { lastGame = localStorage.getItem('vs_last_game'); } catch (_) {}
       var gameStarters = (lastGame && STARTERS_GAME[lastGame]) || [];

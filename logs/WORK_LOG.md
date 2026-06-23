@@ -2916,3 +2916,20 @@ One continuous arc (/start → /audit → /implement → /closeout). Hygiene + m
 **Verify:** `npm run build:check` EXIT 0 (verified directly). doctor blockingFailing 0 (4 failing = all sibling/portfolio scope). check-sil-integrity green (960 = sum). context-wipe-guard self-test 12/12; check-orphan-libs self-test 4/4; smoke-startup-scripts 16/17.
 
 **SIL:** 954 → 960/1000 (v3.0) · Velocity: 7 · Debt: ↓ · pushed to origin/main via closeout.
+
+---
+
+## Session 220 — 2026-06-23 (arc · obelisk-broker orphan removed + hero JSON-LD enrichment + IGNIS returning-visitor re-entry chip)
+
+One continuous arc (/start → /audit → /implement → /closeout), founder /goal: run the arc then direct-commit + push to main + fully deploy. Focused, high-confidence frontier (S219 audit fully consumed).
+
+**Shipped (3):**
+1. `obelisk-broker-orphan-removed` — the untracked `scripts/lib/obelisk-broker.mjs` was byte-identical to the canonical studio-ops copy (its real home; imports `./secrets.mjs` + `portfolio/` paths), Ark-shipped S219, zero website consumers. Deleted from the tree + pruned its `check-orphan-libs` allowlist entry (3→2 justified). Closes the S183→S219 disposition carry cleanly.
+2. `hero-jsonld-enrichment` (FLAGSHIP) — `build-hero-portfolio.mjs renderJsonLd`: bare 4-prop ItemList schema → per-tile description/genre/image + VideoGame fields (applicationCategory/gamePlatform/operatingSystem) + `sameAs` to the real live destination (promogrind.bet/veilos.io + playable builds), all from the committed feed (deterministic --check). Added a `</script>`-breakout guard. Self-test 6→14. Live JSON-LD verified rich. SEO + AI-citation + CANON-048 dual-audience win.
+3. `ignis-resume-chip` (second-order) — `ignis-answer-engine.js renderResumeChip()`: returning visitors (with history) now get a single "Pick up where you left off — '{last query}'" chip from the otherwise-invisible prefix-cache, reusing existing starter classes (style-contract safe) + the already-allowlisted `oracle:starter_click:` emit prefix.
+
+**Honest rejections/deferrals (wins):** agents.json llmsFull for 4 external-domain projects = by-design (no on-site page; thin-content risk); light-mode hero CTA contrast = premise FALSE (~11:1 passes WCAG); MindFrame FORGE→SPARKED = founder-gated public promise; first push/Signal Log/forge devlog/ark.hmac.seed/mobile-sheet/card-accent = unchanged founder-gated carries.
+
+**Verify:** `npm run build:check` EXIT 0 (verified directly). doctor blockingFailing 0 (3 advisory = sibling/portfolio). hero self-test 14/14; check-orphan-libs 4/4; check-intelligence-style-contract --strict exit 0; check-rum-allowlist exit 0 (66 allowlisted · 71 emits).
+
+**SIL:** 960 → 959/1000 (v3.0) · Velocity: 3 · Debt: ↓ · committed + pushed directly to origin/main.

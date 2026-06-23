@@ -9,15 +9,35 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
 Sparkline (last 5 totals): ▆▇▇██
-Avgs - 3: 953.7 | 5: ~948 | 10: ~944 | 25: 954 | all: 958 (v3.0 /1000)
-  └ 3-session: Dev 96.0 | Align 97.0 | Momentum 95.7 | Engage 96.3 | Process 96.7
-Velocity trend: ↑ (S219: 7 items; S218: 6 items; S217: 5 items) | Protocol velocity: → | Debt: ↓ (resolved S179 wipe-guard orphan + S183 broker handoff; new orphan-lib gate found 2 more; closed CANON-043 gap)
-Momentum runway: PUSH — run push:count → first real notification (founder go-ahead; 0 subs today); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); OPTIONAL — wire --card-accent into cover-image overlay tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S219 shipped: canon posture walk, SECURITY.md/CANON-043, context-wipe-guard wired, check-orphan-libs gate, Ark drain + 3 cargos.)
-Last session: 2026-06-23 | Session 219 | Total: 960/1000 (v3.0) | Velocity: 7 | protocolVelocity: 0
+Avgs - 3: 957.7 | 5: 952.6 | 10: ~948 | 25: ~954 | all: ~958 (v3.0 /1000)
+  └ 3-session: Dev 96.7 | Align 96.7 | Momentum 95.7 | Engage 96.3 | Process 97.3
+Velocity trend: ↓ (S220: 3 items; S219: 7 items; S218: 7 items) | Protocol velocity: → | Debt: ↓ (removed the S183 obelisk-broker orphan — identical canonical copy in studio-ops; allowlist 3→2)
+Momentum runway: PUSH — run push:count → first real notification (founder go-ahead; 0 subs today); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); OPTIONAL — wire --card-accent into cover-image overlay tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S220 shipped: obelisk-broker orphan removed, hero JSON-LD enrichment (flagship), IGNIS returning-visitor re-entry chip.)
+Last session: 2026-06-23 | Session 220 | Total: 959/1000 (v3.0) | Velocity: 3 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-23 — Session 220 (arc · obelisk-broker orphan removed + hero JSON-LD enrichment + IGNIS returning-visitor re-entry chip) | Total: 959/1000 (v3.0) | Velocity: 3 | Debt: ↓
+Avgs — 3: 957.7 | 5: 952.6 | 10: ~948 | 25: ~954 | all: ~958
+
+Dev Health 97 | Creative Alignment 96 | Momentum 95 | Engagement 97 | Process Quality 97 | Cross-Repo Coherence 95 | Security Posture 94 | Ecosystem Integration 96 | Capital Efficiency 95 | Automation Coverage 97
+
+**What improved:** A focused, high-confidence arc that traded raw velocity for genuine net-new product value (the gap S219 named: "no net-new visitor-facing feature"). The S219 audit was fully consumed, so this was a fresh frontier grounded by an Explore fan-out (6 candidates surfaced, 3 rejected/deferred on inspection — evidence recorded). (1) **Closed the S183→S219 `obelisk-broker.mjs` carry the honest way** — `diff` proved the untracked website copy byte-identical to the canonical studio-ops copy (its real home), so it was debris, not a disposition question: removed it + pruned the now-stale `check-orphan-libs` allowlist entry (3→2) rather than carrying a permanent allowlist exception (which would rot the gate). (2) **FLAGSHIP — enriched the hero ItemList JSON-LD** from a bare 4-prop schema to citation-grade structured data (description/genre/image + VideoGame fields + `sameAs` to real live product domains), all derived from the committed feed so `--check` stays deterministic, plus a `</script>`-breakout guard the original lacked. Real SEO rich-result + AI-citation + CANON-048 dual-audience depth on the single highest-traffic surface. (3) **SECOND-ORDER — IGNIS returning-visitor re-entry chip** turned the invisible prefix-cache (S206 #15) into a visible "pick up where you left off" hook for the exact visitors who currently see nothing (history present → no starters), reusing existing classes + the allowlisted emit prefix (zero new gate surface needed).
+
+**Process highlight:** every audit candidate's premise was verified against live code before acting — rejected light-mode-contrast (premise FALSE, ~11:1 passes WCAG), deferred agents.json external-shards (by-design; thin-content/keyword-stuff risk) and MindFrame FORGE→SPARKED (founder-gated public promise). Caught a flaw in my own self-test assertion (the wrapper's `</script>` is legitimate; only the JSON payload must be `<`-free) and fixed the assertion, not the code. `build:check` EXIT 0 verified directly (not pipe-masked); doctor blockingFailing 0; hero self-test 14/14; style-contract --strict + RUM allowlist both exit 0. No fabricated data; no sibling-tree edits.
+
+**Honest deduction (−41):** Momentum −5 (velocity 3 vs 7 — smaller scope, though intent 100% achieved + a long carry closed). Creative Alignment −4, Dev −3, Process −3 (incremental; no founder creative direction). Security Posture −6 (the JSON-LD breakout guard helps, but no deep edge-hardening). Cross-Repo Coherence −5 (removed the broker dupe — coherence up — but sibling drift + ark-seed still pending, not this repo's to fix). Ecosystem Integration −4, Capital Efficiency −5, Automation Coverage −3, Engagement −3 (net-new product value lifts engagement vs S219, but a single returning-visitor hook is incremental).
+
+**Intent outcome:** Achieved — full arc as one mission; 3 ships + 3 evidence-backed rejections/deferrals; build:check EXIT 0; doctor blockingFailing 0; committed + pushed directly to origin/main per founder /goal.
+
+**Brainstorm**
+1. **JSON-LD COMPLETENESS GATE** — the hero ItemList enrichment is now rich, but nothing asserts the shape stays rich (a future `renderJsonLd` edit could silently drop `image`/`sameAs`). A tiny gate that parses the injected `data-hero-portfolio-ld` block and asserts each SPARKED tile carries image+description+sameAs (and games carry the VideoGame fields) would lock the dual-audience win in place — same self-validating discipline as the rest of build:check.
+2. **agents.json ON-SITE/EXTERNAL COHERENCE** — MindFrame has an on-disk page (`games/mindframe/`) yet agents.json points to the external `usemindframe.com` with no shard; a check that flags any project whose `url` is external while an on-site canonical page exists would catch this generator inconsistency (and route the fix to `build-agents-json.mjs`, not a hand-edit).
+3. **RESUME-CHIP TELEMETRY READTHROUGH** — the new `oracle:starter_click:resume` emit is allowlisted, but there's no surfaced read of how often returning visitors actually resume; fold a `resume` row into the oracle starter rollup so the feature proves (or disproves) itself, per the S189 "trace telemetry to a surfaced number" rule.
+
+**Committed to TASK_BOARD (1–2 per closeout):** #1 (JSON-LD completeness gate — locks the flagship win) and #2 (agents.json on-site/external coherence check — closes the real generator inconsistency this session surfaced). Both small, headless-safe, source-of-truth gates.
 
 ## 2026-06-23 — Session 219 (arc · canon posture walk + CANON-043 SECURITY.md + S179 wipe-guard wired + check-orphan-libs 2nd-order gate + Ark drain) | Total: 960/1000 (v3.0) | Velocity: 7 | Debt: ↓
 Avgs — 3: 953.7 | 5: ~948 | 10: ~944 | 25: 954 | all: 958

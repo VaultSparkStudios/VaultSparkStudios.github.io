@@ -183,18 +183,42 @@ function renderTileStyles(tiles) {
   return `<style data-hero-portfolio-style>${rules.join('')}</style>`;
 }
 
+// Enriched ItemList JSON-LD (S220): the hero is the first interface for agents +
+// search engines, so each tile carries image/description/genre + game-specific
+// fields and a sameAs link to the real live destination — all derived from the
+// committed feed (no new build inputs, so --check stays deterministic).
+const SITE = 'https://vaultsparkstudios.com';
 function renderJsonLd(tiles, fileExists) {
-  const items = tiles.map((t, i) => ({
-    '@type': 'ListItem', position: i + 1,
-    item: {
-      '@type': t.type === 'game' ? 'VideoGame' : 'CreativeWork',
+  const items = tiles.map((t, i) => {
+    const isGame = t.type === 'game';
+    const coverKey = COVERS[t.id];
+    const url = SITE + resolveHref(t, fileExists).replace(/^https?:\/\/[^/]+/, '');
+    // liveHref → apex pathname | absolute external product URL | null.
+    const live = liveHref(t);
+    const sameAs = live ? (live.startsWith('http') ? live : SITE + live) : null;
+    const item = {
+      '@type': isGame ? 'VideoGame' : 'CreativeWork',
       name: t.name,
-      url: 'https://vaultsparkstudios.com' + resolveHref(t, fileExists).replace(/^https?:\/\/[^/]+/, ''),
+      url,
       creativeWorkStatus: t.status === 'SPARKED' ? 'Published' : 'In development',
-    },
-  }));
+    };
+    const desc = t.note || t.category;
+    if (desc) item.description = desc;
+    if (t.category) item.genre = t.category;
+    if (coverKey) item.image = `${SITE}/assets/covers/${coverKey}.png`;
+    if (isGame) {
+      item.applicationCategory = 'GameApplication';
+      item.gamePlatform = 'Web browser';
+      item.operatingSystem = 'Any (modern web browser)';
+    }
+    // Only link out when the live destination is genuinely distinct from the
+    // studio page (an external product domain, or a distinct playable build path).
+    if (sameAs && sameAs !== url) item.sameAs = sameAs;
+    return { '@type': 'ListItem', position: i + 1, item };
+  });
   const ld = { '@context': 'https://schema.org', '@type': 'ItemList', name: 'VaultSpark Studios portfolio', itemListElement: items };
-  return `<script type="application/ld+json" data-hero-portfolio-ld>${JSON.stringify(ld)}</script>`;
+  // Neutralise any literal </script> in free-text fields (JSON-safe: < decodes back to <).
+  return `<script type="application/ld+json" data-hero-portfolio-ld>${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`;
 }
 
 export function renderShowcase(catalog, fileExists) {
@@ -239,7 +263,7 @@ if (SELF_TEST) {
   let passed = 0;
   const assert = (ok, m) => { if (!ok) { console.error('✗ ' + m); process.exit(1); } console.log('  ✓ ' + m); passed++; };
   const cat = [
-    { id: 'call-of-doodie', name: 'Call of Doodie', type: 'game', status: 'SPARKED', progress: 85, color: '#ff9478', deployedUrl: 'https://vaultsparkstudios.com/call-of-doodie/' },
+    { id: 'call-of-doodie', name: 'Call of Doodie', type: 'game', status: 'SPARKED', progress: 85, color: '#ff9478', category: 'Multiplayer chaos', note: 'Co-op chaos in the browser.', deployedUrl: 'https://vaultsparkstudios.com/call-of-doodie/' },
     { id: 'football-gm', name: 'VaultSpark Football GM', type: 'game', status: 'SPARKED', progress: 78 },
     { id: 'solara', name: 'Solara', type: 'game', status: 'FORGE', progress: 40 },
     { id: 'voidfall', name: 'Voidfall', type: 'game', status: 'FORGE', progress: 20 },
@@ -253,6 +277,15 @@ if (SELF_TEST) {
   assert(!/ style\s*=\s*["']/.test(showcase), 'NO inline style= attributes (style-contract safe)');
   assert(showcase.includes('/games/call-of-doodie/'), 'on-disk canonical link resolved');
   assert(showcase.includes('application/ld+json'), 'ItemList JSON-LD emitted (agent-readable)');
+  // S220: enriched JSON-LD — image, description, genre, game fields, sameAs.
+  assert(showcase.includes('/assets/covers/doodie.png'), 'JSON-LD carries cover image');
+  assert(showcase.includes('"description":"Co-op chaos in the browser."'), 'JSON-LD carries description');
+  assert(showcase.includes('"genre":"Multiplayer chaos"'), 'JSON-LD carries genre/category');
+  assert(showcase.includes('"applicationCategory":"GameApplication"'), 'VideoGame items get game schema fields');
+  assert(showcase.includes('"gamePlatform":"Web browser"'), 'VideoGame items declare web platform');
+  assert(showcase.includes('"sameAs":"https://vaultsparkstudios.com/call-of-doodie/"'), 'sameAs links the live playable build');
+  const ldPayload = (showcase.match(/data-hero-portfolio-ld>([\s\S]*?)<\/script>/) || [])[1];
+  assert(ldPayload && !ldPayload.includes('<'), 'JSON-LD payload escapes < (no </script> breakout)');
   assert(renderStats(cat).includes('<strong>2</strong> live'), 'stat line reflects live count');
   console.log(`\nbuild-hero-portfolio self-test: ${passed} passing`);
   process.exit(0);

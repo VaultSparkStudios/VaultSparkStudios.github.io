@@ -1,6 +1,26 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-23 (Session 219 — arc: canon posture walk + CANON-043 SECURITY.md + context-wipe-guard wired + check-orphan-libs gate + Ark drain)
+Last updated: 2026-06-23 (Session 220 — arc: obelisk-broker orphan removed + hero JSON-LD enrichment + IGNIS returning-visitor re-entry chip)
+
+## S220 outcome + carries
+
+**Shipped in S220:**
+- [x] **[OPS/P3] Removed the `obelisk-broker.mjs` orphan.** `diff` proved the untracked website copy byte-identical to the canonical `../vaultspark-studio-ops/scripts/lib/obelisk-broker.mjs` (its real home; imports `./secrets.mjs` + `portfolio/`), already Ark-shipped S219, zero website consumers → deleted + pruned its `check-orphan-libs` allowlist entry (3→2). Closes the S183→S219 disposition carry (D-S220.1).
+- [x] **[SEO·AI/P1] FLAGSHIP — enriched hero ItemList JSON-LD.** `build-hero-portfolio.mjs renderJsonLd`: bare 4-prop → per-tile description/genre/image + VideoGame fields + `sameAs` to real live destinations, all from the committed feed (deterministic `--check`) + `</script>`-breakout guard. Self-test 6→14. SEO rich-result + AI-citation + CANON-048 (D-S220.2).
+- [x] **[UX/P2·SIL] SECOND-ORDER — IGNIS returning-visitor re-entry chip.** `ignis-answer-engine.js renderResumeChip()`: surfaces the otherwise-invisible prefix-cache (S206 #15) as a "Pick up where you left off" chip for visitors with history (who previously saw no starters); reuses existing classes + allowlisted `oracle:starter_click:` emit.
+
+**S220 honest ledger (rejections/deferrals = wins):**
+- **agents.json `llmsFull` for 4 external-domain projects (MindFrame, Living Protocol, SparkFunnel, VEILOS)** — DEFER (by-design): the generator only mints shards for on-site canonical pages; minting thin content for externally-hosted products is keyword-stuffing-adjacent. Real follow-up surfaced → committed below.
+- **Light-mode hero CTA contrast** — REJECT (premise FALSE; ~11:1 passes WCAG AA).
+- **MindFrame FORGE→SPARKED re-rating** — DEFER (founder-gated; lifecycle status is a public promise).
+
+**S220 committed (next-session, from this closeout's brainstorm):**
+- [ ] **[INFRA/P3·SIL] JSON-LD completeness gate.** Parse the injected `data-hero-portfolio-ld` block; assert each SPARKED tile carries image+description+sameAs (games also carry the VideoGame fields). Locks the S220 flagship dual-audience win against silent regression.
+- [ ] **[INFRA/P3·SIL] agents.json on-site/external coherence check.** Flag any project whose `url` is external while an on-site canonical page exists (e.g. MindFrame → `games/mindframe/` but points to `usemindframe.com` with no shard); route the fix to `build-agents-json.mjs`, not a hand-edit.
+
+**S219 committed [SIL] carries (not actioned in S220 — counter +1):**
+- [ ] **[INFRA/P3·SIL:1] CANON_ADOPTION freshness — local mirror of the studio-ops probe.** (was [SIL], S219)
+- [ ] **[INFRA/P3·SIL:1] orphan-lib allowlist-rot gate.** Extend `check-orphan-libs` to flag allowlist entries now (a) imported or (b) missing from disk. (was [SIL], S219)
 
 ## S219 outcome + carries
 

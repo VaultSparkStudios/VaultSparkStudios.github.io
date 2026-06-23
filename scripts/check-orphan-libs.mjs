@@ -47,10 +47,11 @@ const selfTest = args.includes('--self-test');
 // ── Allowlist: modules legitimately imported-by-nothing, with rationale ───────
 // Keep this SMALL and JUSTIFIED. A growing allowlist is itself a smell.
 const ALLOWLIST = {
-  'obelisk-broker.mjs':
-    'S183 Secret Broker (CANON-021 Phase 4). Belongs to the Obelisk trust plane, not website code. ' +
-    'Handed off to obelisk via Ark S219 (agent-handoff 01JRQS5NLIE75EA3008FBE421E); left untracked pending founder disposition. ' +
-    'No website runtime consumer exists (static site; secrets are build-time via the gateway).',
+  // obelisk-broker.mjs removed S220: it was byte-identical to the canonical
+  // ../vaultspark-studio-ops/scripts/lib/obelisk-broker.mjs (its real home — it
+  // imports ./secrets.mjs + references portfolio/, both studio-ops paths). Handed
+  // off via Ark S219, never committed here → deleted from the website tree as debris
+  // rather than carried as a permanent allowlist exception. See DECISIONS D-S220.
   'write-project-status.mjs':
     'S154 SIL-invariant write-path for PROJECT_STATUS.json. Standalone CLI (--check/--fix) + importable lib, ' +
     'intentionally invoked on demand and propagated to siblings via the protocol-scripts lane. ' +

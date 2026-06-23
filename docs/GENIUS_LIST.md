@@ -1,4 +1,4 @@
-# Genius Hit List — Session 219
+# Genius Hit List — Session 220
 
 Generated: 2026-06-23
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **84/100**
+- Overall opportunity pressure: **83/100**
 - Health: **green**
-- Current SIL: **960/500**
+- Current SIL: **959/500**
 - CI health: **check gh run list**
-- Current focus: S219 (arc) — hygiene root-fixes + second-order gate. (1) CANON walk: CANON_ADOPTION.md was MISSING entirely (latent doctor finding) → walked all 51 live canons with real posture (46 adopted / 3 in-flight review / 2 exempt-with-reason); the walk surfaced a real self-owned gap → (2) CANON-043: added SECURITY.md (Dependabot existed, security policy did not) aligned to .well-known/security.txt. (3) Resolved the S179 context-wipe-guard.mjs orphan (imported by nothing ~40 sessions) — added --self-test/--check CLIs, wired reactive checkContextFiles into closeout-autopilot Step 4 as a real gate (--allow-wipe escape hatch), CI-covered via smoke-startup-scripts (export + behavioral invariants). (4) SECOND-ORDER: built check-orphan-libs.mjs (no gate existed for orphaned scripts/lib/*.mjs) — found 2 MORE real orphans (env-local, write-project-status), allowlisted with rationale, wired into build:check via smoke runner (no cmd.exe length growth). (5) Drained Ark inbox (26 cargo, receipts shipped); root-caused 52 sig-failures = ark.hmac.seed MISSING fleet-wide (founder credential action). (6) Shipped 3 Ark cargos (studio-ops sibling-drift, obelisk-broker handoff, obelisk content-ack). Honest non-action: project-info-drift advisory = won't keyword-stuff punchy game copy. build:check EXIT 0, doctor blockingFailing 0 (4 failing = all sibling/portfolio scope, flagged via Ark).
+- Current focus: S220 (arc) — net-new visitor + agent-facing value at the genius bar, all gate-verified green. (1) Removed the obelisk-broker.mjs orphan: the untracked website copy was byte-identical (diff IDENTICAL) to the canonical studio-ops copy (its real home; imports ./secrets.mjs + portfolio/ paths), Ark-shipped S219, zero website consumers → deleted + pruned its check-orphan-libs allowlist entry (3→2). Closes the S183→S219 disposition carry (D-S220.1). (2) FLAGSHIP — enriched the hero-portfolio ItemList JSON-LD (build-hero-portfolio.mjs renderJsonLd): bare 4-prop schema → per-tile description/genre/image + VideoGame fields (applicationCategory/gamePlatform/operatingSystem) + sameAs to the real live destination (external product domains promogrind.bet/veilos.io + distinct playable builds), all derived from the committed feed (deterministic --check) + a </script>-breakout guard. Self-test 6→14. Live JSON-LD verified rich. SEO rich-result + AI-citation + CANON-048 dual-audience depth on the highest-traffic surface (D-S220.2). (3) SECOND-ORDER — IGNIS returning-visitor re-entry chip (ignis-answer-engine.js renderResumeChip): surfaces the otherwise-invisible prefix-cache (S206 #15) as a 'Pick up where you left off' chip for visitors with history (who previously saw no starters); reuses existing starter classes (style-contract safe) + the already-allowlisted oracle:starter_click: emit prefix. Honest rejections/deferrals: agents.json llmsFull for 4 external-domain projects = by-design (thin-content risk); light-mode CTA contrast = premise FALSE (~11:1 passes WCAG); MindFrame FORGE→SPARKED = founder-gated public promise. build:check EXIT 0 (verified directly), doctor blockingFailing 0 (3 advisory = sibling/portfolio), hero self-test 14/14, style-contract --strict + RUM allowlist exit 0.
 
 ## Strategic Read
 
@@ -22,88 +22,88 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] CANON_ADOPTION freshness
-Final score: **96**
-[INFRA/P3·SIL] CANON_ADOPTION freshness — local mirror of the studio-ops probe. Tiny local assertion (file exists + walked within N sessions) folded into the smoke runner, so the next "required-context-file missing" is caught locally before the portfolio doctor catches it (the asymmetry that let CANON_ADOPTION sit absent).
-Why it matters: CANON_ADOPTION freshness is open, local, and unblocked — can ship this session.
-
-#### 2. [VERIFY] Post-push CI confirmation
+#### 1. [VERIFY] Post-push CI confirmation
 Final score: **96**
 Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.
 Why it matters: The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.
 
 First command: `gh run list --limit 10`
 
-#### 3. [PRODUCT] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
+#### 2. [PRODUCT] CANON_ADOPTION freshness
 Final score: **93**
+[INFRA/P3·SIL:1] CANON_ADOPTION freshness — local mirror of the studio-ops probe. (was [SIL], S219)
+Why it matters: CANON_ADOPTION freshness is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
+Final score: **90**
+[INFRA/P3·SIL:1] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allowlist entries now (a) imported or (b) missing from disk. (was [SIL], S219)
+Why it matters: orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allowl is open, local, and unblocked — can ship this session.
+
+#### 4. [PRODUCT] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
+Final score: **87**
 [INFRA/P3·SIL] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allowlist entries that are now (a) imported (allowlist no longer needed) or (b) missing from disk (stale entry) — keeps the allowlist honest.
 Why it matters: orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allowl is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] First real push notification
-Final score: **90**
-[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).
-Why it matters: First real push notification is open, local, and unblocked — can ship this session.
-
 ### NEXT
 
-#### 1. [BRAND] Draft one Signal Log post (founder voice) + publish forge devlog (fou…
-Final score: **87**
-[CONTENT/P1·FOUNDER] Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).
-Why it matters: Draft one Signal Log post (founder voice) + publish forge devlog (foun affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
-
-#### 2. [BRAND] Forge Window naming propagation
+#### 1. [BRAND] Forge Window naming propagation
 Final score: **86**
 Finish propagating Forge Window language across generated copy and shared surfaces while preserving /studio-pulse/ for SEO.
 Why it matters: The URL stays stable for search, but the public vocabulary should stay coherent everywhere visitors see it.
 
 First command: `node scripts/propagate-nav.mjs`
 
-#### 3. [PRODUCT] Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
+#### 2. [PRODUCT] agents.json on-site/external coherence check. Flag any project whose …
 Final score: **84**
+[INFRA/P3·SIL] agents.json on-site/external coherence check. Flag any project whose url is external while an on-site canonical page exists (e.g. MindFrame → games/mindframe/ but points to usemindframe.com with no shard); route the fix to build-agents-json.mjs, not a hand-edit.
+Why it matters: agents.json on-site/external coherence check. Flag any project whose u is open, local, and unblocked — can ship this session.
+
+#### 3. [PRODUCT] First real push notification
+Final score: **84**
+[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).
+Why it matters: First real push notification is open, local, and unblocked — can ship this session.
+
+#### 4. [BRAND] Draft one Signal Log post (founder voice) + publish forge devlog (fou…
+Final score: **81**
+[CONTENT/P1·FOUNDER] Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).
+Why it matters: Draft one Signal Log post (founder voice) + publish forge devlog (foun affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+
+#### 5. [PRODUCT] Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
+Final score: **78**
 [CRED/P1·FOUNDER] Provision ark.hmac.seed (fleet ARK_HMAC_SEED) — fixes cross-repo Ark signature verification (52 sig-failures on drain). HMAC-seed minting = founder credential action (CANON-019 reserved).
 Why it matters: Provision ark.hmac.seed (fleet ARK_HMAC_SEED) is open, local, and unblocked — can ship this session.
 
-#### 4. [BRAND] MOBILE-SHEET-DEFAULT-SWAP
-Final score: **81**
+### LATER
+
+#### 1. [BRAND] MOBILE-SHEET-DEFAULT-SWAP
+Final score: **75**
 [UX·FOUNDER] MOBILE-SHEET-DEFAULT-SWAP — founder real-device verification (flag-gated nav sheet).
 Why it matters: MOBILE-SHEET-DEFAULT-SWAP affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
-#### 5. [PRODUCT] card-accent → cover-image overlay tint
-Final score: **78**
+#### 2. [PRODUCT] card-accent → cover-image overlay tint
+Final score: **72**
 [UX/P3·SIL] card-accent → cover-image overlay tint — quality-deferred (CANON-047 AI-image-test needs a non-headless screenshot env).
 Why it matters: card-accent is open, local, and unblocked — can ship this session.
 
-### LATER
-
-#### 1. [BRAND] Draft one Signal Log post from the brainstormed ideas (founder voice)…
-Final score: **75**
+#### 3. [BRAND] Draft one Signal Log post from the brainstormed ideas (founder voice)…
+Final score: **69**
 [CONTENT/P1·FOUNDER] Draft one Signal Log post from the brainstormed ideas (founder voice) + publish forge devlog (founder voice, never auto-published).
 Why it matters: Draft one Signal Log post from the brainstormed ideas (founder voice)  affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
-#### 2. [PRODUCT] Sibling CANON-006 (velaxis/syntha/shadow missing branding) → ship Ark…
-Final score: **72**
-[OPS/P2] Sibling CANON-006 (velaxis/syntha/shadow missing branding) → ship Ark repo-question cargo to studio-ops; process pending Ark cargos (S213 01JRK6AH97E0F421A55C54236C, S216 01JRONES0VE96C6C4554516536 + 01JRONIRFF246105D9994172D4).
-Why it matters: Sibling CANON-006 (velaxis/syntha/shadow missing branding) is open, local, and unblocked — can ship this session.
-
-#### 3. [BRAND] Draft one Signal Log post from the 10 brainstormed ideas. Founder pub…
-Final score: **69**
-[CONTENT/P1·FOUNDER] Draft one Signal Log post from the 10 brainstormed ideas. Founder publishes in own voice.
-Why it matters: Draft one Signal Log post from the 10 brainstormed ideas. Founder publ affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
-
 ## Recommended Build Order
 
-1. CANON_ADOPTION freshness
-2. Post-push CI confirmation
+1. Post-push CI confirmation
+2. CANON_ADOPTION freshness
 3. orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
-4. First real push notification
-5. Draft one Signal Log post (founder voice) + publish forge devlog (fou…
-6. Forge Window naming propagation
-7. Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
-8. MOBILE-SHEET-DEFAULT-SWAP
-9. card-accent → cover-image overlay tint
-10. Draft one Signal Log post from the brainstormed ideas (founder voice)…
-11. Sibling CANON-006 (velaxis/syntha/shadow missing branding) → ship Ark…
-12. Draft one Signal Log post from the 10 brainstormed ideas. Founder pub…
+4. orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
+5. Forge Window naming propagation
+6. agents.json on-site/external coherence check. Flag any project whose …
+7. First real push notification
+8. Draft one Signal Log post (founder voice) + publish forge devlog (fou…
+9. Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
+10. MOBILE-SHEET-DEFAULT-SWAP
+11. card-accent → cover-image overlay tint
+12. Draft one Signal Log post from the brainstormed ideas (founder voice)…
 
 ## Best Immediate Move
 

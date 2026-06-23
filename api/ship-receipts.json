@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-23T21:55:56.421Z",
+  "generatedAt": "2026-06-23T23:14:33.998Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -54,7 +54,7 @@
     {
       "theme": "transparency",
       "label": "Transparency",
-      "feedbackSignals": 5,
+      "feedbackSignals": 4,
       "shippedCommits": [
         {
           "sha": "9dbb8964",
@@ -75,11 +75,6 @@
           "sha": "4cc7ae97",
           "summary": "add projects + journal contexts and new nodes to intent-graph",
           "ts": "2026-06-22T06:09:29.000Z"
-        },
-        {
-          "sha": "75de5e88",
-          "summary": "heartbeat cross-repo data + ticker clickable + ignis quote synthesis + nav dropdown trimmed",
-          "ts": "2026-06-21T21:17:36.000Z"
         }
       ],
       "proof": null
@@ -108,8 +103,13 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 3,
+      "feedbackSignals": 4,
       "shippedCommits": [
+        {
+          "sha": "402b0930",
+          "summary": "single-process pre-push scan — fixes multi-minute pushes on Windows",
+          "ts": "2026-06-23T21:39:15.000Z"
+        },
         {
           "sha": "da9066e0",
           "summary": "redact local machine paths in .cache/ build output files",

@@ -1,8 +1,21 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-23 (Session 219 — arc · canon-posture walk + CANON-043 SECURITY.md + context-wipe-guard wired + check-orphan-libs gate + Ark drain)
+Last updated: 2026-06-23 (Session 220 — arc · obelisk-broker orphan removed + hero JSON-LD enrichment + IGNIS returning-visitor re-entry chip)
 
-Session Intent: Run the full arc (/start → /audit → /implement → /closeout) as one continuous mission; saturate the genius list + second-order innovation at the highest quality bar.
+Session Intent: Founder /goal — run the full arc (/start → /audit → /implement → /closeout) as one continuous mission, then direct-commit + push to main (GitHub) and fully deploy.
+
+## Where We Left Off (Session 220)
+- **Shipped (3 substantive · net-new product value):**
+  1. **Removed the `obelisk-broker.mjs` orphan** — the website's untracked copy was **byte-identical** (`diff` IDENTICAL) to the canonical `../vaultspark-studio-ops/scripts/lib/obelisk-broker.mjs` (its real home; imports `./secrets.mjs` + references `portfolio/`, both studio-ops paths), already Ark-shipped S219, zero website consumers. Deleted + pruned its `check-orphan-libs` allowlist entry (3→2) + DECISIONS note. Closes the S183→S219 "disposition pending" carry cleanly (no work lost — canonical copy is safe).
+  2. **FLAGSHIP — enriched hero-portfolio ItemList JSON-LD** (`build-hero-portfolio.mjs`). Bare 4-prop schema → per-tile `description`/`genre`/`image` + `VideoGame` fields (`applicationCategory`/`gamePlatform`/`operatingSystem`) + `sameAs` linking the real live destination (external product domains `promogrind.bet`/`veilos.io` + distinct playable builds). All from the committed feed (deterministic `--check`). Added a `</script>`-breakout guard. Self-test 6→14 passing. Live JSON-LD verified rich. SEO rich-result + AI-citation + dual-audience (CANON-048) win.
+  3. **SECOND-ORDER — IGNIS returning-visitor re-entry chip** (`ignis-answer-engine.js`). Returning visitors (have history) got no starters and the prefix-cache (S206 #15) was invisible to them; added `renderResumeChip()` → one "Pick up where you left off — '{last query}'" chip reusing existing starter classes (style-contract safe) + the already-allowlisted `oracle:starter_click:` emit prefix.
+- **Honest deferrals / rejections (wins):** agents.json `llmsFull` for 4 external-domain projects = by-design (no on-site page; thin-content/keyword-stuff risk); light-mode hero CTA contrast = premise FALSE (~11:1 passes WCAG); MindFrame FORGE→SPARKED = founder-gated public promise. Unchanged founder-gated carries: first real push (0 subs), Signal Log + forge devlog (founder voice), `ark.hmac.seed` provisioning, MOBILE-SHEET-DEFAULT-SWAP, card-accent cover-tint (CANON-047 non-headless env).
+- **Tests:** `build:check` EXIT 0 (verified directly, not pipe-masked) · doctor blockingFailing 0 (3 advisory = sibling/portfolio scope) · hero self-test 14/14 · check-orphan-libs 4/4 · style-contract --strict exit 0 · RUM allowlist exit 0 (66 allowlisted · 71 emits).
+- **Deploy:** committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip; Worker unchanged this session (no `cloudflare/**` edits).
+- **First action next session:** `/start` → verify prod hero JSON-LD (view-source the ItemList block on `vaultsparkstudios.com`) + the IGNIS resume chip (return visit with a prior query). Then `npm run push:count` → first real push when founder ready.
+- **SIL:** 960 → 959 (−1, honest — smaller velocity 7→3 traded for net-new product value). Categories: Dev 97 | Align 96 | Momentum 95 | Engage 97 | Process 97 | CrossRepo 95 | Security 94 | EcoInt 96 | CapEff 95 | AutoCov 97.
+
+> **S219 (arc):** canon posture walk + CANON-043 SECURITY.md + context-wipe-guard wired + check-orphan-libs gate + Ark drain. SIL 960.
 
 ## Where We Left Off (Session 219)
 - **Shipped (6 substantive):**
