@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawn } from 'node:child_process';
+import { spawn } from './lib/safe-spawn.mjs';
 
 const root = process.cwd();
 const statusPath = path.join(root, 'context', 'PROJECT_STATUS.json');

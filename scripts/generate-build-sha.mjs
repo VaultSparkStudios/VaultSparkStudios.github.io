@@ -12,7 +12,7 @@
  *   node scripts/generate-build-sha.mjs           # emit api/build-sha.json
  *   node scripts/generate-build-sha.mjs --check   # exit 1 if file missing/stale
  */
-import { execSync } from 'node:child_process';
+import { execSync } from './lib/safe-spawn.mjs';
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';

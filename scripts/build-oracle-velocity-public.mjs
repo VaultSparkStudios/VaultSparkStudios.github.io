@@ -19,7 +19,7 @@
      node scripts/build-oracle-velocity-public.mjs --self-test
 */
 import { writeFileSync, readFileSync } from 'node:fs';
-import { execSync } from 'node:child_process';
+import { execSync } from './lib/safe-spawn.mjs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 

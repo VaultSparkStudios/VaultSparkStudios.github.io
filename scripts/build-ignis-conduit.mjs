@@ -19,7 +19,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
-import { execSync } from 'node:child_process';
+import { execSync } from './lib/safe-spawn.mjs';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');

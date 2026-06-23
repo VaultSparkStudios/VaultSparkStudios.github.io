@@ -25,13 +25,32 @@
 // this wrapper) and propagated studio-wide (CANON-016).
 
 import * as cp from 'node:child_process';
+import { promisify } from 'node:util';
 
-// Force windowsHide:true into a spawn-family call's options, matching every signature:
+const WIN = process.platform === 'win32';
+// Windows: npm-family CLIs ship as .cmd shims. A no-shell spawn('npm', …) throws ENOENT
+// because CreateProcess cannot execute a .cmd directly — the documented fix is shell:true
+// (the shell resolves npm→npm.cmd). Scoped to a KNOWN tool set, not blanket shell:true, so
+// we never widen shell-injection surface for arbitrary commands; windowsHide:true is still
+// forced, so the shell runs hidden (no window-storm regression). Verified live S218:
+// release-confidence.mjs crashed `spawn npm ENOENT` before this. A command with an explicit
+// path separator or extension is trusted as-is (caller knows the exact target).
+const WIN_CMD_TOOLS = new Set(['npm', 'npx', 'yarn', 'pnpm', 'corepack']);
+function needsWinShell(args) {
+  if (!WIN || !args.length || typeof args[0] !== 'string') return false;
+  const cmd = args[0];
+  if (/[\\/]/.test(cmd) || /\.[a-z0-9]+$/i.test(cmd)) return false;
+  return WIN_CMD_TOOLS.has(cmd.toLowerCase());
+}
+
+// Merge spawn-family defaults into a call's options, matching every signature:
 //   fn(cmd) · fn(cmd,args) · fn(cmd,opts) · fn(cmd,args,opts) · fn(cmd,cb) · fn(cmd,opts,cb)
 // Locate the options object (last plain-object arg, not Array/Buffer/TypedArray/function);
-// fill windowsHide only when the caller left it unset (explicit choices are respected).
+// fill each default only when the caller left it unset (explicit choices are respected).
+// windowsHide is always defaulted true; shell is added only for npm-family tools on Windows.
 // If no options object exists, insert one before a trailing callback, else append.
 function harden(args) {
+  const defaults = needsWinShell(args) ? { windowsHide: true, shell: true } : { windowsHide: true };
   const a = args.slice();
   let optIdx = -1;
   for (let i = a.length - 1; i >= 0; i--) {
@@ -45,15 +64,15 @@ function harden(args) {
     ) { optIdx = i; break; }
   }
   if (optIdx >= 0) {
-    if (a[optIdx].windowsHide === undefined) {
-      a[optIdx] = { ...a[optIdx], windowsHide: true };
-    }
+    const merged = { ...a[optIdx] };
+    for (const [k, v] of Object.entries(defaults)) if (merged[k] === undefined) merged[k] = v;
+    a[optIdx] = merged;
     return a;
   }
   if (a.length && typeof a[a.length - 1] === 'function') {
-    a.splice(a.length - 1, 0, { windowsHide: true });
+    a.splice(a.length - 1, 0, { ...defaults });
   } else {
-    a.push({ windowsHide: true });
+    a.push({ ...defaults });
   }
   return a;
 }
@@ -65,6 +84,20 @@ export function execSync(...args) { return cp.execSync(...harden(args)); }
 export function execFile(...args) { return cp.execFile(...harden(args)); }
 export function execFileSync(...args) { return cp.execFileSync(...harden(args)); }
 export function fork(...args) { return cp.fork(...harden(args)); }
+
+// Preserve the util.promisify contract that native cp.exec / cp.execFile carry.
+// Native exec/execFile expose a `util.promisify.custom` implementation that resolves
+// to { stdout, stderr }. A plain wrapper function does NOT inherit that symbol, so
+// `promisify(exec)` would fall back to generic behavior and resolve the bare stdout
+// STRING instead — making `const { stdout } = await execAsync(...)` undefined and
+// crashing every caller (S188 regression: the S187 codemod rewired all child_process
+// imports HERE, silently breaking batch-push.mjs + check-registry-drift.mjs). Re-attach
+// the custom symbol, still hardened (windowsHide via harden), so promisify(exec) behaves
+// byte-identically to native.
+const _execP = promisify(cp.exec);
+const _execFileP = promisify(cp.execFile);
+exec[promisify.custom] = (...args) => _execP(...harden(args));
+execFile[promisify.custom] = (...args) => _execFileP(...harden(args));
 
 // Pass through anything else child_process exports (ChildProcess, constants, etc.).
 export const { ChildProcess } = cp;

@@ -1,22 +1,31 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-22T05:38:27.055Z",
+  "generatedAt": "2026-06-23T03:24:31.452Z",
   "generatedBy": "scripts/build-site-health.mjs",
   "publicSafe": true,
   "source": "field-rum",
   "windowDays": 7,
-  "totalSamples": 223,
-  "routesObserved": 28,
+  "totalSamples": 346,
+  "routesObserved": 38,
   "minSamples": 50,
   "fieldReady": true,
   "measured": [
     {
       "route": "/",
-      "samples": 113,
+      "samples": 145,
       "p75": {
-        "lcp": 976,
-        "cls": 0.102,
+        "lcp": 782,
+        "cls": 0.103,
         "inp": 312
+      }
+    },
+    {
+      "route": "/games/",
+      "samples": 51,
+      "p75": {
+        "lcp": 644,
+        "cls": 0.0692,
+        "inp": 256
       }
     }
   ]

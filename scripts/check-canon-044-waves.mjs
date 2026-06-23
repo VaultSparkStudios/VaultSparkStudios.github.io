@@ -27,7 +27,7 @@ const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 const SURFACES = [
   { file: 'AGENTS.md',                                          must: [/CANON-044/, /[Ww]ave/], required: true },
   { file: 'docs/SESSION_PROTOCOL.md',                           must: [/CANON-044|[Ww]ave list|task.?scaffold/i, /[Ww]ave/] },
-  { file: 'docs/STUDIO_CANON.md',                               must: [/CANON-044/, /MUST/, /Wave 1/i] }, // studio-ops (source of truth)
+  { file: 'docs/STUDIO_CANON.md',                               must: [/CANON-044/, /MUST/, /Wave 1/i, /project-specific/i] }, // studio-ops (source of truth) — S192: each Wave line is a real project-specific plan item
   { file: 'docs/templates/project-system/AGENTS_universal_sections.md', must: [/CANON-044/, /[Ww]ave/] }, // studio-ops
 ];
 

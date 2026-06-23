@@ -24,7 +24,7 @@
  *
  * Exit 0 = safe (or warn-only with --warn). Exit 1 = strand risk.
  */
-import { execSync } from 'node:child_process';
+import { execSync } from './lib/safe-spawn.mjs';
 
 const SKIP_RE = /\[(?:skip ci|ci skip|skip-ci|ci-skip)\]/i;
 

@@ -6,7 +6,7 @@
  * keeps operator/docs muscle memory from failing with MODULE_NOT_FOUND.
  */
 
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 

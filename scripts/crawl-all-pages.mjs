@@ -8,7 +8,7 @@
  * browser process startup is flaky on Windows.
  */
 
-import { spawn } from 'node:child_process';
+import { spawn } from './lib/safe-spawn.mjs';
 import { readdirSync } from 'node:fs';
 import { join, relative } from 'node:path';
 

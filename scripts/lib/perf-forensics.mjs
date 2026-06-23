@@ -14,7 +14,7 @@
  *
  * Pure functions + injected git runner → unit-testable without a repo.
  */
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './safe-spawn.mjs';
 
 /** Paths whose changes can plausibly move LCP/CLS on any route. */
 const PERF_SURFACES = [

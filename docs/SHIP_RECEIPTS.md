@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ship-receipts.mjs -->
-<!-- generated-at: 2026-06-22 -->
+<!-- generated-at: 2026-06-23 -->
 
 # Ship Receipts
 
@@ -7,8 +7,8 @@ Public-safe receipts connecting aggregate feedback themes to shipped work and pr
 
 | Theme | Signals | Shipped evidence | Visual proof |
 |---|---:|---|---|
-| Conversion | 1 | 8276fce5 Wave 7 — vault-member portal rank earn-faster strip | pending |
-| Worlds | 4 | e9dc8140 push game-context segmentation — store lastGame/route on subscribe, add --game filter to dispatch<br>23a73144 IGNIS starter analytics + game personalization + dynamic no-result<br>850b2ec9 game quiz personalization + fix quiz/push RUM beacon<br>4f841a20 Wave 6 — game discovery quiz | pending |
-| Transparency | 6 | 75de5e88 heartbeat cross-repo data + ticker clickable + ignis quote synthesis + nav dropdown trimmed<br>72bfad51 push dispatch KV batch + changelog notification trigger<br>b64638ff IGNIS curated starter prompts + oracle:starter_click RUM<br>7796fb1f PWA manifest → bespoke og-home.png; push-dispatch status READY<br>2a92a395 closeout status board | pending |
-| Speed | 3 | e860c0f5 defer supabase-public.js + idle-load 4 non-critical homepage scripts<br>3a5a3c6c delete 3 orphan ambient shell bundles (-175KB) + push:count 0 verified<br>1f6eddc1 push delivery + click RUM beacons — sw.js push:received/push:clicked via fetch beacon | home-lcp-s173 (4) |
-| Front door | 2 | e3ea99df CANON-041 tap-target audit on S211-S213 features<br>441cdd54 propagate-nav 99 pages + startup brief S214 refresh (SIL 927) | pending |
+| Conversion | 1 | fa215055 footer Projects column, Forge games, pathfinder upgrades, journal full dates, games/projects pages visual overhaul, m… | pending |
+| Worlds | 6 | e15e91d4 S216 write-backs — SIL 943, individual-page visual template, IGNIS starters all slugs, welcome-back badge, game push …<br>fbde4eab S215 template pass on 29 individual game + project pages (S216)<br>d122922a per-game push-subscribe CTA on all individual game pages (S216)<br>992c35d5 game-page returning-visitor welcome-back badge (S216)<br>41646bd2 extend STARTERS_GAME to all SPARKED game slugs (S216) | pending |
+| Transparency | 4 | bbdadbe8 wire journal-date check into build gate (S216)<br>5485beaf S215 write-backs — SIL 935, footer Projects column, visual overhaul, pathfinder intel, journal dates<br>4cc7ae97 add projects + journal contexts and new nodes to intent-graph<br>75de5e88 heartbeat cross-repo data + ticker clickable + ignis quote synthesis + nav dropdown trimmed | pending |
+| Speed | 4 | da9066e0 redact local machine paths in .cache/ build output files<br>28e2fd2f defer supabase-public.js + idle-load 4 non-critical homepage scripts<br>b59651cc delete 3 orphan ambient shell bundles (-175KB) + push:count 0 verified<br>1f6eddc1 push delivery + click RUM beacons — sw.js push:received/push:clicked via fetch beacon | home-lcp-s173 (4) |
+| Front door | 4 | 7850158f S217 visual card overhaul + homepage data fix<br>bebbb03d S214 (autonomous arc · Lighthouse TBT fix + mobile audit) sh<br>4483264b CANON-041 tap-target audit on S211-S213 features<br>94784446 propagate-nav 99 pages + startup brief S214 refresh (SIL 927) | pending |

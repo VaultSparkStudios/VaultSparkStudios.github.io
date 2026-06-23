@@ -28,7 +28,7 @@
 import fs from 'fs';
 import path from 'path';
 import readline from 'readline';
-import { spawnSync } from 'child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'url';
 import { redact } from './lib/secrets.mjs';
 import { appendEvent } from './lib/studio-events.mjs';
@@ -53,7 +53,7 @@ const LOCK_PATH = path.join(PROJECT_ROOT, 'context', '.session-lock');
 const BEACON_PATH = path.join(PROJECT_ROOT, '.claude', 'beacon.env');
 
 function sh(cmd, opts = {}) {
-  const r = spawnSync(cmd, { shell: true, cwd: PROJECT_ROOT, encoding: 'utf8', ...opts });
+  const r = spawnSync(cmd, { shell: true, windowsHide: true, cwd: PROJECT_ROOT, encoding: 'utf8', ...opts });
   return { out: r.stdout || '', err: r.stderr || '', code: r.status ?? -1 };
 }
 
@@ -255,6 +255,7 @@ if (DRY) {
       encoding: 'utf8',
       stdio: 'inherit',
       shell: true,
+      windowsHide: true,
     });
     if (r.status !== 0) {
       console.error('\n⛔ build:check failed — blocking closeout commit. Fix drift, then re-run.');

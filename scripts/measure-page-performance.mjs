@@ -12,7 +12,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawn } from 'node:child_process';
+import { spawn } from './lib/safe-spawn.mjs';
 import { once } from 'node:events';
 import { chromium } from '@playwright/test';
 

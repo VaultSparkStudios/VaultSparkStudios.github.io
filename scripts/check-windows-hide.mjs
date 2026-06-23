@@ -34,11 +34,14 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+// Reuse the ONE canonical directory-walk ignore set — do NOT re-declare the literal
+// (policy-drift-lint discipline, S188; same pattern as lib/committed-state.mjs).
+import { WALK_IGNORE_DIRS } from './lib/shared-policies.mjs';
 
 const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
 
-// Directories to skip (no source spawns we own / vendored).
-const SKIP_DIRS = new Set(['node_modules', '.git', '.cache', 'dist', 'build', 'coverage']);
+// Directories to skip (no source spawns we own / vendored): canonical set + 'coverage'.
+const SKIP_DIRS = new Set([...WALK_IGNORE_DIRS, 'coverage']);
 
 // Files allowed to import the raw `child_process` module: the hardened wrapper (which
 // MUST), the runtime preload shim (CommonJS, patches the global module), and the shim's

@@ -1,39 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-22T05:38:27.192Z",
+  "generatedAt": "2026-06-23T03:24:32.110Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 224,
-  "sufficientRoutes": 1,
+  "totalSamples": 347,
+  "sufficientRoutes": 2,
   "siteState": "partial-route-strict",
   "nextRoute": {
-    "route": "/games/",
-    "samples": 15,
+    "route": "/games/call-of-doodie/",
+    "samples": 23,
     "minSamples": 50,
     "state": "accumulating",
-    "remaining": 35,
+    "remaining": 27,
     "p75": {
-      "lcp": 644,
-      "cls": 0.2037,
-      "inp": 40,
-      "fcp": 644,
-      "ttfb": 219
+      "lcp": 0,
+      "cls": 0,
+      "inp": 0,
+      "fcp": 0,
+      "ttfb": 0
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 113,
+      "samples": 145,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
-        "lcp": 976,
-        "cls": 0.102,
+        "lcp": 782,
+        "cls": 0.103,
         "inp": 312,
         "fcp": 764,
-        "ttfb": 189
+        "ttfb": 147
       },
       "overBudget": false
     },
@@ -68,6 +68,21 @@
       "overBudget": false
     },
     {
+      "route": "/atlas/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 596,
+        "cls": 0.0087,
+        "inp": 136,
+        "fcp": 596,
+        "ttfb": 168
+      },
+      "overBudget": false
+    },
+    {
       "route": "/careers/",
       "samples": 1,
       "minSamples": 50,
@@ -84,10 +99,10 @@
     },
     {
       "route": "/changelog/",
-      "samples": 3,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 46,
       "p75": {
         "lcp": 1292,
         "cls": 0.6367,
@@ -113,26 +128,41 @@
       "overBudget": false
     },
     {
-      "route": "/games/",
-      "samples": 15,
+      "route": "/feedback/",
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 35,
+      "remaining": 49,
+      "p75": {
+        "lcp": 832,
+        "cls": 0.0087,
+        "inp": 120,
+        "fcp": 832,
+        "ttfb": 188
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/games/",
+      "samples": 51,
+      "minSamples": 50,
+      "state": "route-strict-ready",
+      "remaining": 0,
       "p75": {
         "lcp": 644,
-        "cls": 0.2037,
-        "inp": 40,
+        "cls": 0.0692,
+        "inp": 256,
         "fcp": 644,
-        "ttfb": 219
+        "ttfb": 90
       },
       "overBudget": false
     },
     {
       "route": "/games/call-of-doodie/",
-      "samples": 11,
+      "samples": 23,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 39,
+      "remaining": 27,
       "p75": {
         "lcp": 0,
         "cls": 0,
@@ -144,14 +174,14 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 15,
+      "samples": 21,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 35,
+      "remaining": 29,
       "p75": {
         "lcp": 2996,
         "cls": 0.0874,
-        "inp": 80,
+        "inp": 232,
         "fcp": 2996,
         "ttfb": 1143
       },
@@ -189,40 +219,70 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 12,
+      "samples": 23,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 38,
+      "remaining": 27,
       "p75": {
-        "lcp": 1616,
-        "cls": 0.0233,
-        "inp": 1152,
-        "fcp": 1616,
-        "ttfb": 215
+        "lcp": 1100,
+        "cls": 0.0016,
+        "inp": 432,
+        "fcp": 1100,
+        "ttfb": 202
       },
       "overBudget": false
     },
     {
       "route": "/ignis/",
-      "samples": 3,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 48,
       "p75": {
-        "lcp": 704,
+        "lcp": 816,
         "cls": 0.0145,
-        "inp": 488,
-        "fcp": 704,
+        "inp": 256,
+        "fcp": 816,
         "ttfb": 241
       },
       "overBudget": false
     },
     {
-      "route": "/membership/",
-      "samples": 6,
+      "route": "/journal/",
+      "samples": 5,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 44,
+      "remaining": 45,
+      "p75": {
+        "lcp": 516,
+        "cls": 0.0801,
+        "inp": 240,
+        "fcp": 516,
+        "ttfb": 143
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/journal/studio-os-public/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 2792,
+        "cls": 0,
+        "inp": 56,
+        "fcp": 2792,
+        "ttfb": 186
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/membership/",
+      "samples": 8,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 42,
       "p75": {
         "lcp": 0,
         "cls": 0,
@@ -234,46 +294,61 @@
     },
     {
       "route": "/nervous-system/",
-      "samples": 6,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 44,
+      "remaining": 46,
       "p75": {
-        "lcp": 684,
-        "cls": 0.0735,
-        "inp": 464,
-        "fcp": 684,
+        "lcp": 884,
+        "cls": 0.0531,
+        "inp": 112,
+        "fcp": 884,
         "ttfb": 157
       },
       "overBudget": false
     },
     {
       "route": "/oracle/",
-      "samples": 3,
+      "samples": 10,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 40,
       "p75": {
-        "lcp": 800,
-        "cls": 0.1757,
-        "inp": 608,
-        "fcp": 800,
-        "ttfb": 74
+        "lcp": 616,
+        "cls": 0.396,
+        "inp": 256,
+        "fcp": 616,
+        "ttfb": 86
       },
       "overBudget": false
     },
     {
-      "route": "/projects/",
+      "route": "/pathways/",
       "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 48,
       "p75": {
+        "lcp": 860,
+        "cls": 0.009,
+        "inp": 168,
+        "fcp": 860,
+        "ttfb": 113
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/projects/",
+      "samples": 3,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 47,
+      "p75": {
         "lcp": 1512,
         "cls": 0.001,
         "inp": 152,
         "fcp": 1512,
-        "ttfb": 197
+        "ttfb": 200
       },
       "overBudget": false
     },
@@ -309,15 +384,15 @@
     },
     {
       "route": "/projects/velaxis/",
-      "samples": 1,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 49,
+      "remaining": 48,
       "p75": {
-        "lcp": 544,
+        "lcp": 600,
         "cls": 0.0187,
-        "inp": 0,
-        "fcp": 544,
+        "inp": 440,
+        "fcp": 600,
         "ttfb": 193
       },
       "overBudget": false
@@ -353,17 +428,62 @@
       "overBudget": false
     },
     {
-      "route": "/security/",
+      "route": "/rights/",
+      "samples": 2,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 48,
+      "p75": {
+        "lcp": 664,
+        "cls": 0,
+        "inp": 120,
+        "fcp": 664,
+        "ttfb": 129
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/roadmap/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 500,
-        "cls": 0.0028,
-        "inp": 104,
-        "fcp": 484,
-        "ttfb": 165
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/security/",
+      "samples": 3,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 47,
+      "p75": {
+        "lcp": 668,
+        "cls": 0.456,
+        "inp": 248,
+        "fcp": 668,
+        "ttfb": 117
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/status/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -374,26 +494,26 @@
       "state": "accumulating",
       "remaining": 47,
       "p75": {
-        "lcp": 748,
-        "cls": 0.1639,
-        "inp": 576,
-        "fcp": 748,
-        "ttfb": 93
+        "lcp": 696,
+        "cls": 0.2429,
+        "inp": 208,
+        "fcp": 696,
+        "ttfb": 128
       },
       "overBudget": false
     },
     {
       "route": "/studio/",
-      "samples": 2,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
       "p75": {
-        "lcp": 832,
-        "cls": 0.0009,
-        "inp": 592,
-        "fcp": 832,
-        "ttfb": 34
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 0,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -404,11 +524,26 @@
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 668,
-        "cls": 0.052,
-        "inp": 176,
-        "fcp": 668,
-        "ttfb": 4
+        "lcp": 1232,
+        "cls": 0,
+        "inp": 72,
+        "fcp": 1232,
+        "ttfb": 220
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/universe/dreadspike/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 832,
+        "cls": 0.0837,
+        "inp": 208,
+        "fcp": 832,
+        "ttfb": 164
       },
       "overBudget": false
     },
@@ -439,6 +574,21 @@
         "inp": 0,
         "fcp": 0,
         "ttfb": 0
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/vault/tombstones/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 532,
+        "cls": 0.0009,
+        "inp": 232,
+        "fcp": 532,
+        "ttfb": 111
       },
       "overBudget": false
     }

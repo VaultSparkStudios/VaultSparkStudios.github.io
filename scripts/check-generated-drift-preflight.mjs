@@ -5,7 +5,7 @@
  * This intentionally runs the checks that most often catch stale generated
  * public artifacts before the full build gate spends minutes on unrelated work.
  */
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
@@ -26,6 +26,10 @@ const CHECKS = [
   { id: 'rum-summary', command: ['node', 'scripts/pull-rum-summary.mjs', '--check'], fix: 'node scripts/pull-rum-summary.mjs' },
   { id: 'nav-sheet-stats', command: ['node', 'scripts/build-nav-sheet-stats.mjs', '--check'], fix: 'node scripts/build-nav-sheet-stats.mjs' },
   { id: 'llms-full-shards', command: ['node', 'scripts/build-llms-full-shards.mjs', '--check'], fix: 'node scripts/build-llms-full-shards.mjs' },
+  // S218: page-specific ecosystem-bridge links derived from the catalog. Folded in
+  // here (not a new build:check segment) since build:check is at the Windows cmd.exe
+  // length ceiling — drift = a bridge out of sync with public-intelligence.json.
+  { id: 'ecosystem-bridges', command: ['node', 'scripts/build-ecosystem-bridges.mjs', '--check'], fix: 'node scripts/build-ecosystem-bridges.mjs' },
 ];
 
 function runCheck(check) {

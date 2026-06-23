@@ -19,7 +19,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { spawnSync } from 'child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -188,6 +188,7 @@ for (const r of toScore) {
     timeout: 60000,
     cwd: ignisPath,
     shell: true,
+    windowsHide: true,
   });
   if (res.status === 0) {
     // Parse score from CLI output: format is "31,811/100,000" and "Tier: FLARE"

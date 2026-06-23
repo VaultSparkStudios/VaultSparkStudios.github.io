@@ -20,7 +20,7 @@
  *   node scripts/sync-staging-headers.mjs --dry-run # print snippet only
  */
 
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 
 const DRY = process.argv.includes('--dry-run');
 const PROD = 'https://vaultsparkstudios.com/';

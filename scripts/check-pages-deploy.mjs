@@ -19,7 +19,7 @@
  *   node scripts/check-pages-deploy.mjs --strict     # exit 1 if mismatch
  *   node scripts/check-pages-deploy.mjs --self-test
  */
-import { execSync } from 'node:child_process';
+import { execSync } from './lib/safe-spawn.mjs';
 import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';

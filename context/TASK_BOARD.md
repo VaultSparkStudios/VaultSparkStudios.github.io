@@ -1,6 +1,31 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-22 (Session 217 — founder-directed: visual card overhaul + homepage data fix)
+Last updated: 2026-06-23 (Session 218 — arc: windows-hardening recovery + safe-spawn npm root-fix + welcome-back telemetry + catalog-derived ecosystem bridges)
+
+## S218 outcome + carries
+
+**Shipped in S218:**
+- [x] **[INFRA/P0] Recovered the stranded S187 windows-spawn-hardening codemod.** 60 `scripts/*.mjs` rewired `child_process` → `./lib/safe-spawn.mjs` (forces `windowsHide:true` — founder window-storm P0) + `promisify.custom` fix + `windows-hide-shim.cjs`; preserved from a prior un-closed session's dirty tree, validated, and finished (3 final `shell:true` patches). `check-windows-hide` GREEN.
+- [x] **[INFRA/P1] safe-spawn npm-family Windows root-fix.** Scoped hidden `shell:true` for npm/npx/yarn/pnpm/corepack resolves the live `spawn npm ENOENT` (release-confidence crash → doctor "Launch readiness" advisory). Not blanket shell:true.
+- [x] **[UX/P2·SIL] welcome-back-telemetry.** `welcome-back:shown` emit in `game-welcome-back.js` + Worker `RUM_UX_EVENTS` (both ends; `rollup-rum-ux` auto-counts). *(was an S216/S217 carry)*
+- [x] **[UX/P2·SIL] page-specific ecosystem-bridge links.** `build-ecosystem-bridges.mjs` (build chain + `--check` in drift-preflight) replaces 29 pages' hardcoded/stale bridge links with catalog-derived affinity links + correct subtitles. *(was an S217 carry)*
+- [x] **[INFRA/P2] healed committed shell generated-drift** (ambient-core `f15`→`bff`; deterministic `sha256(bundle)`; CF rebuilds at deploy).
+
+**S218 honest ledger (rejections = wins, not skips):**
+- **Forge-Window propagation = PHANTOM.** S185 reverted the public label to "Studio Pulse" (`check-s151-contracts` enforces it); attempted, caught by build:check, all edits reverted, carry removed, superseding D-S218.4 recorded. Do NOT re-attempt.
+- **projectGraph auto-population rejected** — founder-confirmed-edges-only policy (D-S218.5).
+- play-next rotation — `dead-ctas.json` `deadCount:0`, healthy → closed, no rotation.
+- 2 RUM dead-warnings (push:received/clicked) — known SW raw-fetch emits (scanner-invisible, advisory).
+- Worker deploy: local `cloudflare.deploy` cap MISSING → CI `cloudflare-worker-deploy.yml` ships the allowlist change on push (canonical path).
+
+**S218 carries:**
+- [ ] **[PUSH/P1·FOUNDER]** First real push notification — `npm run push:count` → `npm run push:notify -- --game cod` (founder go-ahead required).
+- [ ] **[CONTENT/P1·FOUNDER]** Draft one Signal Log post from the brainstormed ideas (founder voice) + publish forge devlog (founder voice, never auto-published).
+- [ ] **[OPS/P2]** Sibling CANON-006 (velaxis/syntha/shadow missing branding) → ship Ark `repo-question` cargo to studio-ops; process pending Ark cargos (S213 `01JRK6AH97E0F421A55C54236C`, S216 `01JRONES0VE96C6C4554516536` + `01JRONIRFF246105D9994172D4`).
+- [ ] **[UX/P3·SIL]** card-accent → cover-image overlay tint — wire per-card `--card-accent` into the cover image via `mix-blend-mode` (S217/S218 brainstorm).
+- [ ] **[INFRA/P3·SIL]** DECISIONS supersede-linter — flag a decision whose claim is contradicted by an active contract (would have caught the Forge-Window phantom; D-S218 brainstorm #2).
+- [ ] **[AI/P3·SIL]** bridge-affinity → founder-edge proposer — emit dark `api/proposed-edges.json` from the B2 affinity model for one-click founder curation of projectGraph (D-S218 brainstorm #3).
+- [ ] **[UX·FOUNDER]** MOBILE-SHEET-DEFAULT-SWAP — founder real-device verification (flag-gated nav sheet).
 
 ## S217 outcome + carries
 

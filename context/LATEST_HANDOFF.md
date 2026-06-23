@@ -1,6 +1,19 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-22 (Session 217 — founder-directed · visual card overhaul + homepage data fix)
+Last updated: 2026-06-23 (Session 218 — arc · windows-hardening recovery + safe-spawn root-fix + welcome-back telemetry + catalog bridges + Forge-Window phantom reject)
+
+Session Intent: Run the full arc (/start → /audit → /implement → /closeout) as one continuous mission; saturate the genius list + second-order innovation at the highest quality bar.
+
+## Where We Left Off (Session 218)
+- Shipped (5): (1) **Recovered the stranded S187 windows-spawn-hardening codemod** — 60 scripts → `lib/safe-spawn.mjs` (windowsHide), promisify.custom fix, windows-hide-shim.cjs, 3 shell:true patches; `check-windows-hide` GREEN. (2) **safe-spawn npm-family Windows root-fix** — scoped hidden `shell:true` resolves `spawn npm ENOENT` (release-confidence crash). (3) **welcome-back-telemetry** — `welcome-back:shown` emit + Worker allowlist (both ends). (4) **page-specific ecosystem bridges** — `build-ecosystem-bridges.mjs` (build chain + drift gate) replaces 29 pages' hardcoded/stale bridge links with catalog-derived affinity links. (5) **healed committed shell generated-drift** (ambient-core bff/f15).
+- Honest rejections (wins): Forge-Window propagation = PHANTOM (S185 reverted to "Studio Pulse"; reverted all edits, removed carry, recorded D-S218.4); projectGraph auto-population rejected (founder-confirmed-edges-only policy, D-S218.5).
+- Tests: build:check EXIT 0 (verified directly, not pipe-masked) · doctor blockingFailing 0 (9/13, 3 advisory = sibling/portfolio).
+- Deploy: pushed to `origin/main`; CF Pages auto-builds; **Worker auto-deploys via `cloudflare-worker-deploy.yml`** (cloudflare/** changed → ships the new RUM_UX_EVENTS allowlist with liveness gate + auto-rollback). Local `cloudflare.deploy` cap MISSING — CI is the canonical path, no manual deploy needed.
+- First action next session: `/start` → verify prod (bridge links page-specific on a game + project page; welcome-back beacon firing). Then `npm run push:count` → first real push (founder go-ahead).
+- Carries: First real push notification (FOUNDER) · Signal Log post + forge devlog (FOUNDER voice) · sibling CANON-006 velaxis/syntha/shadow → Ark · studio-ops process Ark cargos (S213/S216) · MOBILE-SHEET-DEFAULT-SWAP (founder real-device). Optional: wire `--card-accent` into cover-image overlay tint.
+- SIL: 947 → 952 (+5). Categories: Dev 96 | Align 97 | Momentum 96 | Engage 96 | Process 97 | CrossRepo 93 | Security 92 | EcoInt 95 | CapEff 94 | AutoCov 96.
+
+> **S217 (founder-directed):** Visual card overhaul (games/projects/homepage) + homepage Studio Now data fix. SIL 947.
 ## Where We Left Off (Session 217)
 - Shipped: (1) Homepage Studio Now data fix — ship-receipts/heartbeat/founder-presence regenerated, S215/S216 events appended to portfolio/events.ndjson; (2) games/index.html full visual card overhaul — per-game accent vars, sheen animation, spring transition, cinematic vignette, status badge colors; (3) projects/index.html same overhaul via `:has()` selectors for 13 projects; (4) index.html homepage hero tile sheen + color-mix glow on hover; (5) build:check fix — ANTHROPIC_API export + orphan shell cleaned.
 - Tests: build:check EXIT 0 · doctor blockingFailing 0.

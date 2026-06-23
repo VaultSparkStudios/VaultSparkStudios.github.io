@@ -1,21 +1,21 @@
 {
   "schemaVersion": "1.1",
-  "generatedAt": "2026-06-22T06:57:50.097Z",
+  "generatedAt": "2026-06-23T03:28:38.508Z",
   "window": 3,
   "entries": [
     {
       "route": "/",
       "profile": "field",
-      "lcpMed": 976,
-      "clsMed": 0.102,
+      "lcpMed": 782,
+      "clsMed": 0.103,
       "budget": {
         "lcp": 2500,
         "cls": 0.1,
         "inp": 200
       },
       "reasons": [
-        "field p75 CLS 0.1020 > 0.1 (113 samples)",
-        "field p75 INP 312ms > 200ms (113 samples)"
+        "field p75 CLS 0.1030 > 0.1 (145 samples)",
+        "field p75 INP 312ms > 200ms (145 samples)"
       ],
       "recipes": [
         {
@@ -28,6 +28,25 @@
           ]
         }
       ],
+      "forensics": {
+        "available": false,
+        "reason": "no good→bad transition in history window (route may be persistently over budget or under-sampled)"
+      }
+    },
+    {
+      "route": "/games/",
+      "profile": "field",
+      "lcpMed": 644,
+      "clsMed": 0.0692,
+      "budget": {
+        "lcp": 2500,
+        "cls": 0.1,
+        "inp": 200
+      },
+      "reasons": [
+        "field p75 INP 256ms > 200ms (51 samples)"
+      ],
+      "recipes": [],
       "forensics": {
         "available": false,
         "reason": "no good→bad transition in history window (route may be persistently over budget or under-sampled)"

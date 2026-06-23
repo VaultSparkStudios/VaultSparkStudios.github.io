@@ -9,7 +9,7 @@
  * Scope: indexable public pages only. Skips the homepage (it IS the root),
  * noindex pages, internal portals, and .ai/ machine-canonical pages.
  */
-import { execSync } from 'node:child_process';
+import { execSync } from './lib/safe-spawn.mjs';
 import fs from 'node:fs';
 
 const CHECK = process.argv.includes('--check');

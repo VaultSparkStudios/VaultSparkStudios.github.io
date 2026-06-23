@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-22T17:27:42.677Z",
+  "generatedAt": "2026-06-23T03:24:16.438Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 215,
+    "currentSession": 217,
     "lastUpdated": "2026-06-22",
-    "currentFocus": "S215 (attended) shipped 8 founder-directed items: footer Projects column propagated to 96 HTML pages (PromoGrind, Velaxis, Atlas, Forge Window, Studio Pulse, Oracle, Obelisk); journal post dates upgraded to day-level on all 10 posts; pathfinder rebuilt (builder pathway + intel signals + New badge + a11y live region); intent-graph gaps filled (projects/journal contexts); games + projects landing pages visual overhaul (ellipse hero gradients, gold-pulse stats, cross-ecosystem bridges); membership/vault-member pages Obelisk framing; schemaVersion fix in generate-push-config.mjs; hetzner.cloud-api phantom blocker resolved. SIL 935.",
-    "nextMilestone": "Content: draft Signal Log post from brainstormed queue (founder voice). Push: first real notification — run push:count → push:notify --game cod. Individual game/project pages: template-level hero+bridge pass (~20 pages). CI: confirm Lighthouse green on S215 push. Staging: deploy to website.staging.vaultsparkstudios.com to verify footer propagation.",
+    "currentFocus": "S217 (founder-directed) shipped 5 items: homepage Studio Now data fix (ship-receipts + heartbeat + founder-presence regenerated; S215/S216 events added to events.ndjson); games/index.html visual card overhaul (per-game --card-accent CSS vars, sheen animation, spring lift, cinematic vignette, accent glow, status badge colors); projects/index.html same overhaul via :has() selectors for 13 projects; index.html homepage hero tile sheen + color-mix glow; build:check fix (ANTHROPIC_API export + orphan shell). SIL 947.",
+    "nextMilestone": "Push: first real notification — run push:count → push:notify --game cod (founder go-ahead). Content: Signal Log post from brainstormed queue (founder voice). Perf: confirm Lighthouse CI green on S214–S216 cumulative TBT fix. UX: welcome-back-telemetry RUM event.",
     "ignis": {
       "score": 44691,
       "grade": "FORGE",
@@ -28,7 +28,14 @@
       "Expanded intent routing on games and universe hubs.",
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
-    "shipped": []
+    "shipped": [
+      "Shipped: (1) Homepage Studio Now data fix — ship-receipts/heartbeat/founder-presence regenerated, S215/S216 events appended to portfolio/events.ndjson; (2) games/index.html full visual card overhaul — per-game accent vars, sheen animation, spring transition, cinematic vignette, status badge colors; (3) projects/index.html same overhaul via `:has()` selectors for 13 projects; (4) index.html homepage hero tile sheen + color-mix glow on hover; (5) build:check fix — ANTHROPIC_API export + orphan shell cleaned.",
+      "Tests: build:check EXIT 0 · doctor blockingFailing 0.",
+      "Deploy: `7850158f` pushed to `origin/main` · CF Pages auto-builds on push.",
+      "First action next session: Run `/start` → check prod visually (games + projects + homepage hero tiles). Then `npm run push:count` → first real push notification when founder ready.",
+      "Carries: Signal Log post draft (founder-voice) · forge devlog publish (founder-voice) · play-next rotation (awaiting post-2026-06-18 data) · studio-ops: process Ark cargos `01JRK6AH97E0F421A55C54236C` (S213), `01JRONES0VE96C6C4554516536` (Hashmark), `01JRONIRFF246105D9994172D4` (VOID+SHADOW) · Lighthouse CI green confirm · welcome-back-telemetry RUM event.",
+      "SIL: 943 → 947 (+4). Categories: Dev 95 | Align 97 | Momentum 95 | Engage 97 | Process 95 | CrossRepo 93 | Security 91 | EcoInt 95 | CapEff 93 | AutoCov 96."
+    ]
   },
   "consumerChangelog": [
     {
@@ -118,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 215,
+    "sessionsCompleted": 217,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -133,18 +140,18 @@
     "forge": 14,
     "vaulted": 0,
     "silCategories": {
-      "devHealth": 94,
-      "alignment": 94,
-      "momentum": 94,
-      "engagement": 95,
-      "process": 94,
-      "coherence": 92,
+      "devHealth": 95,
+      "alignment": 97,
+      "momentum": 95,
+      "engagement": 97,
+      "process": 95,
+      "coherence": 93,
       "security": 91,
-      "ecosystem": 94,
-      "capital": 92,
-      "automation": 95,
-      "total": 935,
-      "updatedSession": 215
+      "ecosystem": 95,
+      "capital": 93,
+      "automation": 96,
+      "total": 947,
+      "updatedSession": 217
     },
     "sealedNextRevealAt": null
   },
@@ -686,12 +693,12 @@
     ],
     "latest": [
       {
-        "id": "session-closed-website-2026-06-22t02-46-04-448z",
+        "id": "session-closed-website-2026-06-22t22-54-55-000z",
         "source": "closeout-autopilot",
         "type": "public_ship",
         "title": "Studio Website shipped a fresh session closeout",
         "url": "/",
-        "occurredAt": "2026-06-22T02:46:04.448Z",
+        "occurredAt": "2026-06-22T22:54:55.000Z",
         "projectId": "website",
         "weight": 100
       },
@@ -723,6 +730,26 @@
         "url": "/games/solara/",
         "occurredAt": "2026-06-13T20:23:32.450Z",
         "projectId": "solara",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-website-2026-06-22t06-59-37-000z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-06-22T06:59:37.000Z",
+        "projectId": "website",
+        "weight": 100
+      },
+      {
+        "id": "session-closed-website-2026-06-22t02-46-04-448z",
+        "source": "closeout-autopilot",
+        "type": "public_ship",
+        "title": "Studio Website shipped a fresh session closeout",
+        "url": "/",
+        "occurredAt": "2026-06-22T02:46:04.448Z",
+        "projectId": "website",
         "weight": 100
       },
       {
@@ -764,26 +791,6 @@
         "occurredAt": "2026-06-18T22:55:43.554Z",
         "projectId": "studio-ops",
         "weight": 72
-      },
-      {
-        "id": "session-closed-studio-ops-2026-06-18t21-45-45-619z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "Studio Ops shipped a fresh session closeout",
-        "url": "/studio-pulse/",
-        "occurredAt": "2026-06-18T21:45:45.619Z",
-        "projectId": "studio-ops",
-        "weight": 100
-      },
-      {
-        "id": "session-closed-studio-ops-2026-06-18t16-49-40-892z",
-        "source": "closeout-autopilot",
-        "type": "public_ship",
-        "title": "Studio Ops shipped a fresh session closeout",
-        "url": "/studio-pulse/",
-        "occurredAt": "2026-06-18T16:49:40.892Z",
-        "projectId": "studio-ops",
-        "weight": 100
       }
     ]
   },
@@ -856,7 +863,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-06-22T06:34:30.411Z",
+    "checkedAt": "2026-06-23T00:54:48.686Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

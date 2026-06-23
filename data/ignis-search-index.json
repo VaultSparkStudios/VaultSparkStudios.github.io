@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-22T06:49:57.013Z",
+  "generatedAt": "2026-06-23T03:24:33.410Z",
   "generatedBy": "scripts/build-ignis-search-index.mjs",
   "publicSafe": true,
   "documents": [
@@ -8,7 +8,7 @@
       "title": "VaultSpark Studios public memory",
       "url": "/llms-full.txt",
       "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them.",
-      "body": "VaultSparkStudios.github.io (autonomous arc · IGNIS depth + push segmentation) shipped 5 waves: W2a IGNIS starter analytics (oracle:starter_click: bounded suffix); W2b IGNIS game-specific starters (vs_last_game → STARTERS_GAME map, 2 game starters prepended for cod/fgm/forge visitors); W2c dynamic no-result fallback (STARTERS_ALL chips + oracle:no_result RUM); W3a push game-context segmentation (push-subscribe.js sends lastGame+route, Worker validates+persists, notify-subscribers.mjs --game filter); W3b push delivery+click tracking (sw.js push:received/push:clicked via fetch beacon); W4 Ark cargo to studio-ops (sibling compliance gaps). Worker deployed. RUM allowlist 65/68 clean. Doctor bloc"
+      "body": "VaultSparkStudios.github.io (arc) shipped 6 items: journal-date-pipeline gate (check-journal-dates.mjs → check-proof-surface.mjs); IGNIS STARTERS_GAME extended to all 7 game slugs + vs_last_game tracker fixed (was silent bug — 4 slugs mapped to 'forge'); game-welcome-back.js returning-visitor badge (tiered: Welcome back / Vault Familiar / Vault Regular) on game pages; inject-game-push-cta.mjs added push-subscribe CTAs to 8 game pages; upgrade-individual-pages.mjs applied visual treatment (3-layer gradient + gold-pulse + ecosystem-bridge) to 29 individual game + project pages; 2 Ark repo-question cargos to studio-ops for sibling compliance (Hashmark + VOID/SHADOW). SIL 943. Identity - Slug: v"
     },
     {
       "title": "Current studio focus",

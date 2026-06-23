@@ -12,7 +12,7 @@
  *
  * Import-safe: side effects run only when invoked directly.
  */
-import { execSync, spawnSync } from 'node:child_process';
+import { execSync, spawnSync } from './lib/safe-spawn.mjs';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';

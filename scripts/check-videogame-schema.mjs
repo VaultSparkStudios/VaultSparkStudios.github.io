@@ -21,7 +21,7 @@
      node scripts/check-videogame-schema.mjs --self-test
 */
 import { readFileSync } from 'node:fs';
-import { execSync } from 'node:child_process';
+import { execSync } from './lib/safe-spawn.mjs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 

@@ -332,6 +332,10 @@ const RUM_UX_EVENTS = new Set([
   'push:subscribed', 'push:unsubscribed', 'push:error', 'push:prompt_shown',
   // S213 W3b: service-worker push delivery + click tracking
   'push:received', 'push:clicked',
+  // S218: returning-visitor welcome-back badge impression (game-welcome-back.js,
+  // shipped S216 but never instrumented). Names only — no slug/visit-count/PII;
+  // closes the loop on whether the badge is actually seen by returning players.
+  'welcome-back:shown',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so

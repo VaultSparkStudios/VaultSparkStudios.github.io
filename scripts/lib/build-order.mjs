@@ -12,7 +12,7 @@
 // Import-safe: spawning happens only inside runDerivedBuilds(); the self-test is
 // gated on direct invocation so importing this file fires no side effects.
 
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './safe-spawn.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 

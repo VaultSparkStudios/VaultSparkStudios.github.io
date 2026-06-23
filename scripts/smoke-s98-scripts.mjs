@@ -12,7 +12,7 @@
  *
  * Usage: node scripts/smoke-s98-scripts.mjs
  */
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 

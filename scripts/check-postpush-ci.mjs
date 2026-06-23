@@ -18,7 +18,7 @@
  * Modes: --sha=<sha> · --json · --quiet · --critical=name1,name2
  */
 
-import { execSync } from 'node:child_process';
+import { execSync } from './lib/safe-spawn.mjs';
 
 const args = process.argv.slice(2);
 const asJson = args.includes('--json');

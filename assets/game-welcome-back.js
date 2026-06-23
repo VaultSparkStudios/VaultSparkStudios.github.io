@@ -46,6 +46,23 @@
     return n + 'th';
   }
 
+  // Names-only RUM beacon, matching the site contract ({ route, ux }). The event
+  // NAME is the whole signal — no slug, no visit count, no PII leaves the browser
+  // (Worker stores the allowlisted name only). 'welcome-back:shown' is a static
+  // literal, so it is registered in the Worker RUM_UX_EVENTS Set (check-rum-allowlist
+  // is static-Set only). Lets us measure whether the returning-visitor badge is
+  // actually seen — the loop the S216 badge opened but never instrumented.
+  function emitUx(name) {
+    try {
+      var body = JSON.stringify({ route: location.pathname || '/', ux: name });
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/v/rum', new Blob([body], { type: 'application/json' }));
+      } else {
+        fetch('/v/rum', { method: 'POST', body: body, headers: { 'Content-Type': 'application/json' }, keepalive: true }).catch(function () {});
+      }
+    } catch (_) {}
+  }
+
   function run() {
     var slug = getSlug();
     if (!slug) return;
@@ -72,6 +89,7 @@
     var h1 = document.querySelector('.hero-center h1');
     if (h1) {
       h1.insertAdjacentElement('afterend', badge);
+      emitUx('welcome-back:shown');
     }
   }
 

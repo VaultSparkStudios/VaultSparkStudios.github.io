@@ -12,7 +12,7 @@
 
    Timing: prints elapsed time per generator and total wall-clock savings vs serial. */
 
-import { spawn } from 'node:child_process';
+import { spawn } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 import url from 'node:url';
 
