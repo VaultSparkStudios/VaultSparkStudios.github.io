@@ -1,28 +1,28 @@
 {
   "schemaVersion": "2.0",
-  "generatedAt": "2026-06-23T05:48:18.859Z",
+  "generatedAt": "2026-06-23T09:36:50.759Z",
   "generatedBy": "scripts/probe-uptime.mjs",
   "overall": "up",
   "liveness": {
     "endpoint": "/api/founder-presence.json",
     "status": 200,
-    "ms": 31,
+    "ms": 160,
     "ok": true
   },
   "routes": [
     {
       "route": "/",
       "status": 200,
-      "ms": 93,
+      "ms": 127,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 93,
+        "ms": 127,
         "ok": true
       },
       "edge": {
         "status": 403,
-        "ms": 153,
+        "ms": 79,
         "shape": "challenged",
         "note": "edge-challenged (informational; real browsers pass)"
       }
@@ -30,16 +30,16 @@
     {
       "route": "/games/",
       "status": 200,
-      "ms": 24,
+      "ms": 54,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 24,
+        "ms": 54,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 159,
+        "ms": 80,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -47,16 +47,16 @@
     {
       "route": "/vault-member/",
       "status": 200,
-      "ms": 24,
+      "ms": 57,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 24,
+        "ms": 57,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 53,
+        "ms": 57,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -64,16 +64,16 @@
     {
       "route": "/membership/",
       "status": 200,
-      "ms": 25,
+      "ms": 139,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 25,
+        "ms": 139,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 48,
+        "ms": 44,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -81,16 +81,16 @@
     {
       "route": "/status/",
       "status": 200,
-      "ms": 27,
+      "ms": 148,
       "ok": true,
       "origin": {
         "status": 200,
-        "ms": 27,
+        "ms": 148,
         "ok": true
       },
       "edge": {
         "status": 200,
-        "ms": 50,
+        "ms": 44,
         "shape": "served",
         "note": "served (real content reached)"
       }
@@ -98,7 +98,7 @@
   ],
   "note": "Edge HTML nav on the production domain is bot-challenged for datacenter/CI clients; a per-route `edge.shape` of `challenged`/`unreachable` is informational only. A `served` shape confirms real content; an `error` shape (genuine 5xx, not a challenge) while content + liveness are healthy is the one apex-HTML failure the probe now pages on (S179 shape). Availability is judged by origin content (Pages, unchallenged) + edge liveness (a JSON path).",
   "rollup": {
-    "checks": 121,
+    "checks": 122,
     "upPct": 100,
     "lastIncidentAt": null,
     "lastIncidentState": null
