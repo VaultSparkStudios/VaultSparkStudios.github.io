@@ -1,6 +1,29 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-22 (Session 216 — autonomous arc: IGNIS starters all slugs + returning-visitor badge + game push CTAs + individual-page visual template + Ark cargos)
+Last updated: 2026-06-22 (Session 217 — founder-directed: visual card overhaul + homepage data fix)
+
+## S217 outcome + carries
+
+**Shipped in S217:**
+- [x] **[DATA/P1] Homepage Studio Now strip data fix.** Regenerated `api/ship-receipts.json` (stale S214-era) + `api/heartbeat.json` (pulses7d 2→4); appended S215/S216 session-closed events to `portfolio/events.ndjson`; `api/founder-presence.json` updated to `live: true`. Homepage strip now reads correctly.
+- [x] **[UX/P1] games/index.html visual card overhaul.** Per-game `--card-accent`/`--card-accent-rgb` CSS vars for 8 slugs; `@keyframes card-sheen` sweep on hover; spring transition lift; cinematic 4-stop vignette; accent border + halo glow; status badge color overhaul; featured card 360px + side vignette fix.
+- [x] **[UX/P1] projects/index.html visual card overhaul.** Same pattern via CSS `:has()` selectors for 13 project slugs; same `.project-card`/`.project-card-featured` enhancements.
+- [x] **[UX/P2] index.html homepage hero tile enhancement.** `tile-sheen` keyframe via `::after` pseudo-element; `color-mix()` accent glow + spring lift on hover.
+- [x] **[BUILD/P2] build:check fixes.** Missing `ANTHROPIC_API` export added to `scripts/lib/model-router.mjs`; orphan shell `ambient-core.shell-f15fedfd62.js` cleaned via `clean-stale-shells.mjs --apply`. `build:check` EXIT 0.
+
+**S217 honesty ledger:**
+- `founder-presence.json` reverts to `live: false` on each `npm run build` (generate-founder-presence.mjs uses heuristics). Live status is real-time — not a bug.
+- Card accent system on `projects/index.html` relies on `:has()` selectors (class-based, no `data-project` attr). Works in all modern browsers (Safari 15.4+, Chrome 105+). Legacy browsers see no accent (graceful degradation — no layout break).
+
+**S217 carries:**
+- [ ] **[PUSH/P1·FOUNDER]** First real push notification — `npm run push:count` → `npm run push:notify -- --game cod` (founder go-ahead required).
+- [ ] **[CONTENT/P1·FOUNDER]** Draft one Signal Log post from the 10 brainstormed ideas. Founder publishes in own voice.
+- [ ] **[CONTENT/P1·FOUNDER]** Publish forge devlog (founder-voice, never auto-published).
+- [ ] **[MEASURE/P3]** Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
+- [ ] **[OPS/P2]** studio-ops: process Ark cargos `01JRK6AH97E0F421A55C54236C` (S213) + `01JRONES0VE96C6C4554516536` + `01JRONIRFF246105D9994172D4` (S216 sibling compliance).
+- [ ] **[PERF/P2]** Confirm Lighthouse CI green on cumulative S214–S216 pushes (TBT fix target ≥0.80).
+- [ ] **[UX/P2·SIL]** welcome-back-telemetry — add `vs_welcome_back_shown` RUM event in `game-welcome-back.js`; wire to Worker prefixAllowlist.
+- [ ] **[UX/P3·SIL]** individual-page ecosystem-bridge links — make bridge links page-specific (related game/project) using `public-intelligence.json` instead of 4 hardcoded links.
 
 ## S216 outcome + carries
 

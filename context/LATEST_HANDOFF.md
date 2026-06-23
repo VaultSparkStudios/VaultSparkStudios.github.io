@@ -1,6 +1,15 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-22 (Session 216 — autonomous arc · IGNIS starters all slugs + returning-visitor badge + game push CTAs + individual-page visual template + Ark cargos)
+Last updated: 2026-06-22 (Session 217 — founder-directed · visual card overhaul + homepage data fix)
+## Where We Left Off (Session 217)
+- Shipped: (1) Homepage Studio Now data fix — ship-receipts/heartbeat/founder-presence regenerated, S215/S216 events appended to portfolio/events.ndjson; (2) games/index.html full visual card overhaul — per-game accent vars, sheen animation, spring transition, cinematic vignette, status badge colors; (3) projects/index.html same overhaul via `:has()` selectors for 13 projects; (4) index.html homepage hero tile sheen + color-mix glow on hover; (5) build:check fix — ANTHROPIC_API export + orphan shell cleaned.
+- Tests: build:check EXIT 0 · doctor blockingFailing 0.
+- Deploy: `7850158f` pushed to `origin/main` · CF Pages auto-builds on push.
+- First action next session: Run `/start` → check prod visually (games + projects + homepage hero tiles). Then `npm run push:count` → first real push notification when founder ready.
+- Carries: Signal Log post draft (founder-voice) · forge devlog publish (founder-voice) · play-next rotation (awaiting post-2026-06-18 data) · studio-ops: process Ark cargos `01JRK6AH97E0F421A55C54236C` (S213), `01JRONES0VE96C6C4554516536` (Hashmark), `01JRONIRFF246105D9994172D4` (VOID+SHADOW) · Lighthouse CI green confirm · welcome-back-telemetry RUM event.
+- SIL: 943 → 947 (+4). Categories: Dev 95 | Align 97 | Momentum 95 | Engage 97 | Process 95 | CrossRepo 93 | Security 91 | EcoInt 95 | CapEff 93 | AutoCov 96.
+
+> **S216 (arc):** Shipped 6 items. (1) journal-date-pipeline gate; (2) IGNIS STARTERS_GAME all 7 slugs + vs_last_game fix; (3) game-welcome-back.js returning-visitor badge; (4) push CTAs on 8 game pages; (5) individual-page visual template 29 pages; (6) 2 Ark sibling compliance cargos. SIL 943.
 ## Where We Left Off (Session 216)
 - Shipped: (1) journal-date-pipeline gate (`check-journal-dates.mjs` → `check-proof-surface`); (2) IGNIS STARTERS_GAME extended to all 7 game slugs + `vs_last_game` tracker fixed for mindframe/solara/vaultfront/the-exodus; (3) `game-welcome-back.js` returning-visitor badge (tiered: Welcome back / Vault Familiar / Vault Regular); (4) push-subscribe CTA injected on 8 game pages via `inject-game-push-cta.mjs`; (5) S215 visual template applied to 29 individual pages via `upgrade-individual-pages.mjs`; (6) 2 Ark repo-question cargos shipped to studio-ops (Hashmark TRUTH_AUDIT + VOID+SHADOW compliance).
 - Tests: build:check EXIT 0 · doctor blockingFailing 0 · 5 commits pushed (d2dc7435→00bb32ef).

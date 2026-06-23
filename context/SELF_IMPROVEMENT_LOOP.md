@@ -8,16 +8,34 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▆▇▇▇▇▇█▉
-Avgs - 3: 935.7 | 5: ~928 | 10: ~940 | 25: 954 | all: 958 (v3.0 /1000)
-  └ 3-session: Dev 94.3 | Align 94.7 | Momentum 94.7 | Engage 95.7 | Process 94.7
-Velocity trend: ↑ (S216: 6 items; S215: 8 items; S214: 5 items) | Protocol velocity: → | Debt: ↓ (individual-page visual template 29 pages; journal-date pipeline gate; vs_last_game tracker fixed; IGNIS starters all 7 slugs; ecosystem-bridge on 29 pages)
-Momentum runway: PUSH — run push:count → send first segmented notification (push:notify --game cod); CONTENT — draft Signal Log post from 10 brainstormed ideas; CI — confirm Lighthouse CI green on cumulative S214–S216 pushes; CONTENT (founder): publish forge devlog | Intent rate: 100% (last 5) | (S216 shipped: journal-date gate, IGNIS starters all slugs, welcome-back badge, 8 game push CTAs, 29 individual-page template, 2 Ark sibling compliance cargos.)
-Last session: 2026-06-22 | Session 216 | Total: 943/1000 (v3.0) | Velocity: 6 | protocolVelocity: 0
+Sparkline (last 5 totals): ▇▇▇▇▇▇▇▇█▉
+Avgs - 3: 942.3 | 5: ~934 | 10: ~941 | 25: 954 | all: 958 (v3.0 /1000)
+  └ 3-session: Dev 95 | Align 96.3 | Momentum 95 | Engage 96.3 | Process 95
+Velocity trend: → (S217: 5 items; S216: 6 items; S215: 8 items) | Protocol velocity: → | Debt: ↓ (visual card overhaul on games/projects/homepage; homepage data fix)
+Momentum runway: PUSH — run push:count → send first segmented notification (push:notify --game cod); CONTENT — draft Signal Log post from 10 brainstormed ideas; PERF — confirm Lighthouse CI green on cumulative S214–S216 pushes; welcome-back-telemetry RUM event | Intent rate: 100% (last 5) | (S217 shipped: homepage data fix, games card overhaul, projects card overhaul, homepage hero tile sheen, build:check fixes.)
+Last session: 2026-06-22 | Session 217 | Total: 947/1000 (v3.0) | Velocity: 5 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-22 — Session 217 (founder-directed · visual card overhaul games/projects/homepage + homepage data fix) | Total: 947/1000 (v3.0) | Velocity: 5 | Debt: ↓
+Avgs — 3: 942.3 | 5: ~934 | 10: ~941 | 25: 954 | all: 958
+
+Dev Health 95 | Creative Alignment 97 | Momentum 95 | Engagement 97 | Process Quality 95 | Cross-Repo Coherence 93 | Security Posture 91 | Ecosystem Integration 95 | Capital Efficiency 93 | Automation Coverage 96
+
+**What improved:** Full visual card overhaul directly from founder request — per-game/project accent color system (`--card-accent`/`--card-accent-rgb`), sheen sweep animation on hover, spring transition lift, cinematic 4-stop vignette, accent border and box-shadow halo. The pattern works on both games (via `[data-game]` attribute selectors) and projects (via CSS `:has()` selectors on descendant classes). Homepage hero tiles got the same sheen + color-mix glow treatment. Homepage Studio Now strip was showing stale data — root cause was ship-receipts pipeline needing regeneration + events.ndjson missing S215/S216 entries. Two pre-existing build:check failures (missing ANTHROPIC_API export + orphan shell) cleaned as part of getting build green before push.
+
+**Honest deduction (−53):** Security Posture −9 (no security changes). Capital Efficiency −7 (no major efficiency improvements; CSS-only session is efficient but doesn't move the needle). Cross-Repo Coherence −7 (Ark cargos still unprocessed).
+
+**Intent outcome:** Achieved — all 5 items shipped; build:check EXIT 0; pushed to origin/main.
+
+**Brainstorm**
+1. **WELCOME-BACK-TELEMETRY** — add `vs_welcome_back_shown` RUM event in `game-welcome-back.js` so badge fire rate + tier distribution is measurable. Wire to Worker prefixAllowlist. Low effort, adds clean signal.
+2. **PER-PAGE ECOSYSTEM BRIDGE LINKS** — the 29 upgraded individual pages have 4 hardcoded bridge links. Next: generate page-specific links from `public-intelligence.json` (related game → its actual project context; project page → its related games). Closes the "generic" feel.
+3. **CARD COVER ART INTEGRATION** — games/index.html card overhaul is purely CSS now. Next level: wire the `--card-accent` value to drive the actual cover image overlay tint (use `mix-blend-mode` on the card-hero image to tie the cover color to the accent system).
+
+**Committed to TASK_BOARD:** welcome-back-telemetry + per-page bridge links added to S217 carries.
 
 ## 2026-06-22 — Session 216 (arc · IGNIS starters all 7 slugs + vs_last_game tracker fix + welcome-back badge + game push CTAs + individual-page visual template + journal-date gate + Ark sibling cargos) | Total: 943/1000 (v3.0) | Velocity: 6 | Debt: ↓
 Avgs — 3: 935.7 | 5: ~928 | 10: ~940 | 25: 954 | all: 958
