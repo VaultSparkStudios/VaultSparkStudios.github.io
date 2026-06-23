@@ -1,0 +1,110 @@
+#!/usr/bin/env bash
+# hook-version: 3   # S219 — single-process content scan. The v2 per-file
+#                   # `file`+11×grep loop (≈13 spawns/file → ~2000 for a 160-file
+#                   # push → 7-10 min on Windows Git Bash) is replaced by ONE
+#                   # `node scripts/pre-push-scan.mjs` (in-memory regex, O(1)
+#                   # spawns in file count). Patterns/exemptions preserved 1:1.
+#                   # install-hooks --check reads this version line.
+#
+# pre-push — Studio Ops secret scan + router-adherence hook.
+# Install: node scripts/install-hooks.mjs   (or copy to .git/hooks/pre-push)
+# Bypass (with justification): git push --no-verify
+#
+# Checks: 1-4 (credentials/abs-path/anthropic) → pre-push-scan.mjs (one node proc)
+#         5 settings sanitize · 6 canon · 7 SKILL yaml · 8 secrets-gateway ·
+#         9 npm supply-chain  (each guarded by file presence; few spawns)
+
+set -uo pipefail
+
+REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null || pwd)
+VIOLATIONS=0
+declare -a MESSAGES=()
+
+# stdin is git's "<local_ref> <local_sha> <remote_ref> <remote_sha>" stream.
+# Capture once so we can both feed the scanner and key the presence checks below.
+STDIN_REFS="$(cat || true)"
+
+# ── Rules 1-4: single-process content scan (O(1) spawns in file count) ────────
+if command -v node >/dev/null 2>&1 && [[ -f "$REPO_ROOT/scripts/pre-push-scan.mjs" ]]; then
+  if ! printf '%s\n' "$STDIN_REFS" | (cd "$REPO_ROOT" && node scripts/pre-push-scan.mjs); then
+    # Scanner already printed its own report + exits 1 on violations.
+    exit 1
+  fi
+fi
+
+# Changed-file list for the presence-gated checks below (one git call).
+new_files=""
+while IFS=' ' read -r _lref lsha _rref rsha; do
+  [[ -z "${lsha:-}" || "$lsha" == "0000000000000000000000000000000000000000" ]] && continue
+  if [[ "${rsha:-}" == "0000000000000000000000000000000000000000" || -z "${rsha:-}" ]]; then
+    nf=$(git diff-tree --no-commit-id -r --name-only "$lsha" 2>/dev/null || true)
+  else
+    nf=$(git diff --name-only "$rsha..$lsha" 2>/dev/null || true)
+  fi
+  new_files+="$nf"$'\n'
+done <<< "$STDIN_REFS"
+
+# ── Rule 5: .claude/settings.local.json must be sanitized ────────────────────
+if echo "${new_files:-}" | grep -q '\.claude/settings\.local\.json'; then
+  if command -v node >/dev/null 2>&1 && [[ -f "$REPO_ROOT/scripts/sanitize-claude-settings.mjs" ]]; then
+    if ! (cd "$REPO_ROOT" && node scripts/sanitize-claude-settings.mjs --check >/dev/null 2>&1); then
+      MESSAGES+=("  ⛔ .claude/settings.local.json contains secrets — run: node scripts/ops.mjs sanitize-settings")
+      ((VIOLATIONS++)) || true
+    fi
+  fi
+fi
+
+# ── Rule 6: Canon gate ───────────────────────────────────────────────────────
+if command -v node >/dev/null 2>&1 && [[ -f "$REPO_ROOT/scripts/canon-enforcer.mjs" ]]; then
+  if ! (cd "$REPO_ROOT" && node scripts/canon-enforcer.mjs --gate >/dev/null 2>&1); then
+    MESSAGES+=("  ⛔ Canon gate failed — run: node scripts/canon-enforcer.mjs --report")
+    ((VIOLATIONS++)) || true
+  fi
+fi
+
+# ── Rule 7: SKILL.md strict-YAML gate ────────────────────────────────────────
+if command -v node >/dev/null 2>&1 && [[ -f "$REPO_ROOT/scripts/validate-skill-yaml.mjs" ]]; then
+  if ! (cd "$REPO_ROOT" && node scripts/validate-skill-yaml.mjs >/dev/null 2>&1); then
+    MESSAGES+=("  ⛔ SKILL.md frontmatter has Codex-incompatible YAML — run: node scripts/validate-skill-yaml.mjs")
+    ((VIOLATIONS++)) || true
+  fi
+fi
+
+# ── Rule 8: Secrets-gateway adherence (CANON-012) ────────────────────────────
+if command -v node >/dev/null 2>&1 && [[ -f "$REPO_ROOT/scripts/check-secrets-gateway-adherence.mjs" ]]; then
+  if ! (cd "$REPO_ROOT" && node scripts/check-secrets-gateway-adherence.mjs >/dev/null 2>&1); then
+    MESSAGES+=("  ⛔ Direct secrets/*.env read outside the gateway — run: node scripts/check-secrets-gateway-adherence.mjs")
+    ((VIOLATIONS++)) || true
+  fi
+fi
+
+# ── Rule 9: npm supply-chain IOC scan ────────────────────────────────────────
+if command -v node >/dev/null 2>&1 \
+   && [[ -f "$REPO_ROOT/scripts/scan-npm-supply-chain.mjs" ]] \
+   && [[ -f "$REPO_ROOT/data/npm-supply-chain-iocs.json" ]]; then
+  (cd "$REPO_ROOT" && node scripts/scan-npm-supply-chain.mjs --json >/dev/null 2>&1)
+  scan_rc=$?
+  if [[ $scan_rc -eq 2 ]]; then
+    MESSAGES+=("  ⛔ npm supply-chain HIT — compromised package present. Run: node scripts/scan-npm-supply-chain.mjs")
+    ((VIOLATIONS++)) || true
+  elif [[ $scan_rc -eq 3 ]]; then
+    MESSAGES+=("  🚨 npm supply-chain CRITICAL — dropper/IOC string in node_modules. Run: node scripts/scan-npm-supply-chain.mjs")
+    ((VIOLATIONS++)) || true
+  elif [[ $scan_rc -ne 0 ]]; then
+    MESSAGES+=("  ⚠  npm supply-chain scanner errored (rc=$scan_rc) — non-blocking. Investigate.")
+  fi
+fi
+
+# ── Report (Rules 5-9; Rules 1-4 reported by the scanner above) ───────────────
+if [[ $VIOLATIONS -gt 0 ]]; then
+  echo ""
+  echo "⛔ Pre-push checks: $VIOLATIONS issue(s) found"
+  echo ""
+  for msg in "${MESSAGES[@]}"; do echo "$msg"; done
+  echo ""
+  echo "  To push anyway with justification: git push --no-verify"
+  echo ""
+  exit 1
+fi
+
+exit 0
