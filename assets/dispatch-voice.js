@@ -2,10 +2,15 @@
  * dispatch-voice.js — Web Speech API TTS for Vault Dispatches.
  *
  * Adds a 🔊 button to each dispatch card. Click reads the dispatch aloud
- * using the browser's native speech synthesis (no API cost). Tries to pick
- * a deep, masculine voice when one is available. Highlights the active
- * sentence as it speaks. Respects prefers-reduced-motion (no auto-play,
- * no glow).
+ * using the browser's native speech synthesis (no API cost). S219: each
+ * dispatch is voiced by a distinct VaultSpark PERSONA — a different speech
+ * voice + pitch/rate + a short spoken intro (Forge Engineer · Signal Analyst ·
+ * Vault Herald · Archivist · a gravelly Classified Channel for classified
+ * records). Persona is chosen by a stable hash so a given dispatch always
+ * sounds the same. Highlights the active sentence as it speaks. The intro is a
+ * fixed public-safe phrase; only the already-sanitized public dispatch body is
+ * ever read — no sensitive data is added or spoken. Respects
+ * prefers-reduced-motion (no auto-play, no glow).
  *
  * Mounting points (any/all):
  *  - .disp-card  (Vault Dispatches archive page)
@@ -30,6 +35,13 @@
     '.vs-voice-sentence{transition:color 0.25s ease,text-shadow 0.25s ease;}',
     '.vs-voice-sentence.is-active{color:#FFC400;text-shadow:0 0 12px rgba(255,196,0,0.35);}',
     '@media (prefers-reduced-motion: reduce){.vs-voice-sentence{transition:none;}}',
+    // Persona tag — each voice has its own tint so the personality reads visually.
+    '.vs-voice-persona{display:inline-flex;align-items:center;margin-left:0.5rem;font-size:0.68rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--dim,#6272a0);opacity:0.85;}',
+    '.vs-voice-persona[data-vs-persona="forge"]{color:#ff9478;}',
+    '.vs-voice-persona[data-vs-persona="signal"]{color:#7cc8ff;}',
+    '.vs-voice-persona[data-vs-persona="herald"]{color:#ffc400;}',
+    '.vs-voice-persona[data-vs-persona="archivist"]{color:#c4bcff;}',
+    '.vs-voice-persona[data-vs-persona="classified"]{color:#f6c945;}',
   ].join('');
 
   function injectStyles() {
@@ -40,24 +52,47 @@
     document.head.appendChild(style);
   }
 
-  // Pick a "vault-y" voice — prefer deeper-sounding masculine en-US/en-GB voices
-  // when the OS provides them. Falls back to the default voice.
-  function pickVoice(voices) {
+  // ── Personas (S219 dispatch-voices) ────────────────────────────────────────
+  // Each dispatch is read by a distinct VaultSpark "voice" — a different speech
+  // voice + pitch/rate + a short spoken intro that gives it personality. The
+  // intro is a fixed, public-safe phrase (the dispatch body is already the
+  // sanitized public feed — no sensitive data is ever added or read).
+  var PERSONAS = [
+    { id: 'forge',     label: 'Forge Engineer', intro: 'From the forge floor.',     rate: 0.95, pitch: 0.82, prefs: [/Daniel/i, /Microsoft (Guy|Davis)/i, /Google UK English Male/i, /Fred/i] },
+    { id: 'signal',    label: 'Signal Analyst', intro: 'Signal intercepted.',       rate: 1.02, pitch: 1.05, prefs: [/Microsoft (Aria|Jenny)/i, /Samantha/i, /Google US English/i, /female/i] },
+    { id: 'herald',    label: 'Vault Herald',   intro: 'Vault transmission.',       rate: 0.9,  pitch: 0.95, prefs: [/Alex/i, /Microsoft (Christopher|Eric)/i, /Google UK English/i] },
+    { id: 'archivist', label: 'The Archivist',  intro: 'From the vault archives.',  rate: 0.92, pitch: 0.88, prefs: [/Aaron/i, /Microsoft (Guy|Tony)/i, /Fred/i] },
+  ];
+  // Classified dispatches get a gravelly, secretive read.
+  var CLASSIFIED_PERSONA = { id: 'classified', label: 'Classified Channel', intro: 'Classified vault record. Clearance noted.', rate: 0.86, pitch: 0.76, prefs: [/Daniel/i, /Microsoft (Davis|Guy)/i, /Fred/i] };
+
+  // Stable hash → persona index, so a given dispatch always gets the same voice
+  // (consistent personality) but the feed as a whole varies across personas.
+  function hashStr(s) {
+    var h = 0; s = String(s || '');
+    for (var i = 0; i < s.length; i++) { h = ((h << 5) - h + s.charCodeAt(i)) | 0; }
+    return Math.abs(h);
+  }
+
+  function personaFor(card, key) {
+    if (card && card.classList && card.classList.contains('disp-card--classified')) return CLASSIFIED_PERSONA;
+    return PERSONAS[hashStr(key) % PERSONAS.length];
+  }
+
+  // Pick a real voice for a persona: try its prefs, then give each persona a
+  // DISTINCT fallback by rotating through available en voices by persona index —
+  // so personas sound different even on systems with only generic voices.
+  function pickVoiceForPersona(voices, persona, personaIdx) {
     if (!voices || !voices.length) return null;
     var en = voices.filter(function (v) { return /^en/i.test(v.lang); });
-    var preferred = [
-      /Daniel/i, /Alex/i, /Fred/i, /Aaron/i,           // macOS
-      /Microsoft (Guy|Davis|Aria|Christopher)/i,        // Windows neural
-      /Google US English/i, /Google UK English Male/i,  // Chrome OS / Android
-    ];
-    for (var i = 0; i < preferred.length; i++) {
-      var hit = en.find(function (v) { return preferred[i].test(v.name); });
+    var pool = en.length ? en : voices;
+    var prefs = (persona && persona.prefs) || [];
+    for (var i = 0; i < prefs.length; i++) {
+      var hit = pool.find(function (v) { return prefs[i].test(v.name); });
       if (hit) return hit;
     }
-    // Generic male hint
-    var male = en.find(function (v) { return /male/i.test(v.name) && !/female/i.test(v.name); });
-    if (male) return male;
-    return en[0] || voices[0];
+    // Distinct fallback: rotate so persona 0,1,2,3 map to different voices.
+    return pool[(personaIdx || 0) % pool.length] || pool[0];
   }
 
   function splitSentences(text) {
@@ -117,17 +152,20 @@
     }
   }
 
-  function speak(bodyEl, btn) {
+  function speak(bodyEl, btn, persona, personaIdx) {
     if (current && current.bodyEl === bodyEl) { stop(); return; }
     stop();
     var sentences = wrapSentences(bodyEl);
     if (!sentences.length) return;
-    var text = sentences.join(' ');
-    var u = new SpeechSynthesisUtterance(text);
-    u.rate = 0.95;
-    u.pitch = 0.85;
+    var body = sentences.join(' ');
+    // Persona intro is spoken (for personality) but NOT part of the visible /
+    // highlighted text — sentence offsets are shifted past it.
+    var intro = (persona && persona.intro) ? persona.intro + ' ' : '';
+    var u = new SpeechSynthesisUtterance(intro + body);
+    u.rate = (persona && persona.rate) || 0.95;
+    u.pitch = (persona && persona.pitch) || 0.85;
     u.volume = 1.0;
-    var voice = pickVoice(window.speechSynthesis.getVoices());
+    var voice = pickVoiceForPersona(window.speechSynthesis.getVoices(), persona, personaIdx);
     if (voice) u.voice = voice;
 
     var idx = 0;
@@ -137,9 +175,10 @@
     }
     highlight(0);
 
-    // Track sentence boundaries via word boundary events (cumulative char count).
+    // Track sentence boundaries via word boundary events (cumulative char count),
+    // shifted by the spoken intro length so highlight stays aligned to the body.
     var offsets = [];
-    var run = 0;
+    var run = intro.length;
     sentences.forEach(function (s) { run += s.length + 1; offsets.push(run); });
     u.onboundary = function (e) {
       if (e.name !== 'word' && e.name !== 'sentence') return;
@@ -152,7 +191,7 @@
 
     btn.setAttribute('aria-pressed', 'true');
     btn.querySelector('span').textContent = 'Stop';
-    current = { utterance: u, btn: btn, bodyEl: bodyEl };
+    current = { utterance: u, btn: btn, bodyEl: bodyEl, persona: persona, personaIdx: personaIdx };
     try { window.speechSynthesis.speak(u); } catch (_) { stop(); }
   }
 
@@ -161,9 +200,21 @@
     var body = card.querySelector('.disp-card__body, .narrative-body, [data-voice-body]');
     if (!body) return;
     var meta = card.querySelector('.disp-card__meta, .narrative-meta, [data-voice-meta]') || body;
+    var dateEl = card.querySelector('.disp-card__date, .narrative-meta');
+    var key = (dateEl ? dateEl.textContent : '') + '|' + (body.textContent || '').slice(0, 48);
+    var persona = personaFor(card, key);
+    var personaIdx = persona === CLASSIFIED_PERSONA ? PERSONAS.length : PERSONAS.indexOf(persona);
     var btn = buildButton();
-    btn.addEventListener('click', function () { speak(body, btn); });
+    btn.title = 'Read aloud — voiced by the ' + persona.label;
+    btn.setAttribute('data-vs-persona', persona.id);
+    btn.addEventListener('click', function () { speak(body, btn, persona, personaIdx); });
     meta.appendChild(btn);
+    // Surface the persona so the personality is visible, not just audible.
+    var tag = document.createElement('span');
+    tag.className = 'vs-voice-persona';
+    tag.setAttribute('data-vs-persona', persona.id);
+    tag.textContent = '🎙 ' + persona.label;
+    meta.appendChild(tag);
     card.dataset.vsVoiceMounted = '1';
   }
 
@@ -185,7 +236,7 @@
       window.speechSynthesis.addEventListener('voiceschanged', function () {
         if (current) {
           var u = current.utterance;
-          var v = pickVoice(window.speechSynthesis.getVoices());
+          var v = pickVoiceForPersona(window.speechSynthesis.getVoices(), current.persona, current.personaIdx);
           if (v) u.voice = v;
         }
       });
