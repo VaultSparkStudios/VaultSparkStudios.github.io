@@ -32,6 +32,7 @@ import { spawnSync } from './lib/safe-spawn.mjs';
 import { fileURLToPath } from 'url';
 import { redact } from './lib/secrets.mjs';
 import { appendEvent } from './lib/studio-events.mjs';
+import { checkContextFiles } from './lib/context-wipe-guard.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const STUDIO_ROOT = path.resolve(__dirname, '..');
@@ -41,6 +42,7 @@ const DRY = args.includes('--dry-run');
 const SKIP_PUSH = args.includes('--skip-push');
 const AUTO_YES = args.includes('--yes');
 const RESPECT_STAGED = args.includes('--respect-staged');
+const ALLOW_WIPE = args.includes('--allow-wipe');
 const msgIdx = args.indexOf('--message');
 const CUSTOM_MSG = msgIdx >= 0 ? args[msgIdx + 1] : null;
 const projectIdx = args.indexOf('--project');
@@ -289,6 +291,31 @@ console.log(redact(status));
 const diff = sh('git diff --stat').out;
 console.log('\nDiff stat:');
 console.log(redact(diff.split('\n').slice(0, 20).join('\n')));
+
+// ── Guard: context-wipe protection (context-wipe-guard, S179→wired S219) ──────
+// Reactive pre-commit check: compares working-tree context/docs/logs against HEAD
+// and aborts on a wipe-class change (content collapsed below 50% of HEAD, or a
+// prior entry in an append-only file edited/deleted). Append-only files write
+// newest-first OR oldest-first; the guard handles both. The rolling-status block
+// (CANON-001, designed to be overwritten each closeout) is exempt.
+{
+  const { ok: noWipe, findings } = checkContextFiles(PROJECT_ROOT);
+  if (!noWipe) {
+    console.error('\n⚠ context-wipe-guard — wipe-class change(s) detected vs HEAD:');
+    for (const f of findings) {
+      console.error(`    ${f.issue.padEnd(22)} ${f.file}  (${(f.ratio * 100).toFixed(1)}% of HEAD)`);
+    }
+    if (ALLOW_WIPE) {
+      console.error('  → --allow-wipe set: proceeding despite findings (logged).');
+    } else {
+      console.error('\n⛔ ABORT: refusing to commit a context-file wipe. Review the findings above.');
+      console.error('   If the change is intentional (e.g. an approved rewrite), re-run with --allow-wipe.');
+      process.exit(2);
+    }
+  } else {
+    console.log('  ✓ context-wipe-guard: no wipe-class changes vs HEAD');
+  }
+}
 
 // ── Guard: any secrets/ path in diff? ────────────────────────────────────────
 if (/^[\sMADRCU?]+secrets\//m.test(status)) {

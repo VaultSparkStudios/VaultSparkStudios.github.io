@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-23T03:24:16.437Z",
+  "generatedAt": "2026-06-23T18:56:52.228Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 217,
-    "lastUpdated": "2026-06-22",
-    "currentFocus": "S217 (founder-directed) shipped 5 items: homepage Studio Now data fix (ship-receipts + heartbeat + founder-presence regenerated; S215/S216 events added to events.ndjson); games/index.html visual card overhaul (per-game --card-accent CSS vars, sheen animation, spring lift, cinematic vignette, accent glow, status badge colors); projects/index.html same overhaul via :has() selectors for 13 projects; index.html homepage hero tile sheen + color-mix glow; build:check fix (ANTHROPIC_API export + orphan shell). SIL 947.",
-    "nextMilestone": "Push: first real notification — run push:count → push:notify --game cod (founder go-ahead). Content: Signal Log post from brainstormed queue (founder voice). Perf: confirm Lighthouse CI green on S214–S216 cumulative TBT fix. UX: welcome-back-telemetry RUM event.",
+    "currentSession": 219,
+    "lastUpdated": "2026-06-23",
+    "currentFocus": "S219 (arc) — hygiene root-fixes + second-order gate. (1) CANON walk: CANON_ADOPTION.md was MISSING entirely (latent doctor finding) → walked all 51 live canons with real posture (46 adopted / 3 in-flight review / 2 exempt-with-reason); the walk surfaced a real self-owned gap → (2) CANON-043: added SECURITY.md (Dependabot existed, security policy did not) aligned to .well-known/security.txt. (3) Resolved the S179 context-wipe-guard.mjs orphan (imported by nothing ~40 sessions) — added --self-test/--check CLIs, wired reactive checkContextFiles into closeout-autopilot Step 4 as a real gate (--allow-wipe escape hatch), CI-covered via smoke-startup-scripts (export + behavioral invariants). (4) SECOND-ORDER: built check-orphan-libs.mjs (no gate existed for orphaned scripts/lib/*.mjs) — found 2 MORE real orphans (env-local, write-project-status), allowlisted with rationale, wired into build:check via smoke runner (no cmd.exe length growth). (5) Drained Ark inbox (26 cargo, receipts shipped); root-caused 52 sig-failures = ark.hmac.seed MISSING fleet-wide (founder credential action). (6) Shipped 3 Ark cargos (studio-ops sibling-drift, obelisk-broker handoff, obelisk content-ack). Honest non-action: project-info-drift advisory = won't keyword-stuff punchy game copy. build:check EXIT 0, doctor blockingFailing 0 (4 failing = all sibling/portfolio scope, flagged via Ark).",
+    "nextMilestone": "Push: first real notification (founder go-ahead; currently 0 subscribers). Content: Signal Log post + forge devlog (founder voice). Founder: ark.hmac.seed provisioning (resolves fleet Ark sig-verification). obelisk-broker disposition (handed off via Ark). Optional: wire --card-accent into cover-image overlay tint (needs non-headless AI-image env).",
     "blockers": [],
     "queues": {
       "now": [
@@ -46,12 +46,12 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "Shipped: (1) Homepage Studio Now data fix — ship-receipts/heartbeat/founder-presence regenerated, S215/S216 events appended to portfolio/events.ndjson; (2) games/index.html full visual card overhaul — per-game accent vars, sheen animation, spring transition, cinematic vignette, status badge colors; (3) projects/index.html same overhaul via `:has()` selectors for 13 projects; (4) index.html homepage hero tile sheen + color-mix glow on hover; (5) build:check fix — ANTHROPIC_API export + orphan shell cleaned.",
-        "Tests: build:check EXIT 0 · doctor blockingFailing 0.",
-        "Deploy: `7850158f` pushed to `origin/main` · CF Pages auto-builds on push.",
-        "First action next session: Run `/start` → check prod visually (games + projects + homepage hero tiles). Then `npm run push:count` → first real push notification when founder ready.",
-        "Carries: Signal Log post draft (founder-voice) · forge devlog publish (founder-voice) · play-next rotation (awaiting post-2026-06-18 data) · studio-ops: process Ark cargos `01JRK6AH97E0F421A55C54236C` (S213), `01JRONES0VE96C6C4554516536` (Hashmark), `01JRONIRFF246105D9994172D4` (VOID+SHADOW) · Lighthouse CI green confirm · welcome-back-telemetry RUM event.",
-        "SIL: 943 → 947 (+4). Categories: Dev 95 | Align 97 | Momentum 95 | Engage 97 | Process 95 | CrossRepo 93 | Security 91 | EcoInt 95 | CapEff 93 | AutoCov 96."
+        "Shipped (6 substantive):",
+        "Honest deferrals / non-actions (wins): First real push = 0 subscribers + outward-facing (founder). Signal Log / forge devlog = founder voice. MOBILE-SHEET-DEFAULT-SWAP = founder real-device. card-accent cover-tint = CANON-047 AI-image-test needs non-headless env. project-info-drift P1 advisory = won't keyword-stuff punchy game copy to satisfy a metric. play-next = deadCount:0 (closed). REJECTED phantoms: Forge-Window propagation (S185 reverted to Studio Pulse), welcome-back-telemetry (already shipped S218).",
+        "Tests: `build:check` EXIT 0 (verified directly, not pipe-masked) · doctor blockingFailing 0 (4 failing = all `blocking:false`, all sibling/portfolio scope = \"0 self · 19 sibling-owned\"; flagged via Ark) · check-sil-integrity green (960 = sum).",
+        "Deploy: pushed to `origin/main`; CF Pages auto-builds; Worker unchanged this session (no cloudflare/ edits).",
+        "First action next session: `/start` → `npm run push:count` (0 subs today) → first real push when founder ready. Founder: provision `ark.hmac.seed` to fix fleet Ark sig-verification.",
+        "SIL: 954 → 960 (+6). Categories: Dev 97 | Align 97 | Momentum 96 | Engage 96 | Process 98 | CrossRepo 94 | Security 94 | EcoInt 96 | CapEff 94 | AutoCov 98."
       ]
     },
     "ignis": {

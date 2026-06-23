@@ -1,6 +1,34 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-23 (Session 218 — arc: windows-hardening recovery + safe-spawn npm root-fix + welcome-back telemetry + catalog-derived ecosystem bridges)
+Last updated: 2026-06-23 (Session 219 — arc: canon posture walk + CANON-043 SECURITY.md + context-wipe-guard wired + check-orphan-libs gate + Ark drain)
+
+## S219 outcome + carries
+
+**Shipped in S219:**
+- [x] **[CANON/P1] Active canon posture walk.** `context/CANON_ADOPTION.md` was MISSING (latent doctor `canon-adoption-active`); walked all 51 live canons for `website/public-live/Archetype-A` — 46 adopted / 3 review (in-flight) / 2 exempt-with-reason / 0 pending. Check now exit 0.
+- [x] **[SECURITY/P1] CANON-043: added `SECURITY.md`.** The walk surfaced a real self-owned gap (Dependabot present, security policy absent). Public-safe, proprietary-first, aligned to `.well-known/security.txt`; `/security/` page verified to exist.
+- [x] **[INFRA/P1] Wired the S179 `context-wipe-guard.mjs` orphan.** `--self-test` (12/12) + `--check` CLIs; reactive `checkContextFiles` gate in `closeout-autopilot` Step 4 (`--allow-wipe` escape hatch); CI behavioral coverage in `smoke-startup-scripts` (no new build:check segment). Resolves a ~40-session orphan + protects the context-wipe bug class.
+- [x] **[INFRA/P2·SIL] SECOND-ORDER: `check-orphan-libs.mjs`.** New gate for orphaned `scripts/lib/*.mjs` (none existed). Found 2 more real orphans (`env-local`, `write-project-status`) → consciously allowlisted. Self-test 4/4; wired into build:check via smoke runner.
+- [x] **[OPS/P2] Ark inbox drained** (26 cargo, receipts shipped) + **3 cargos shipped** (studio-ops sibling-drift `01JRQS4VOM0D8AFD0BCA8A1E00`, obelisk-broker handoff `01JRQS5NLIE75EA3008FBE421E`, obelisk content-ack `01JRQS5V84D02A733137ACA26D`). Root-caused 52 sig-failures → `ark.hmac.seed` MISSING (founder action).
+- [x] **[OPS/P3] obelisk-broker.mjs (S183 orphan) disposition** — handed off via Ark to obelisk; left untracked + allowlisted (did not author it; Ark preserves the work).
+
+**S219 honest ledger (rejections/non-actions = wins, not skips):**
+- **Forge-Window propagation = PHANTOM** (S185 reverted to "Studio Pulse"; do NOT re-attempt — D-S218.4 still binding).
+- **welcome-back-telemetry = already shipped S218** (verified live; not re-done).
+- **project-info-drift advisory** — won't keyword-stuff punchy game copy to satisfy a coverage % (gaming a metric is forbidden; D-S219.6). Stays advisory (P1, non-blocking).
+- **First real push** — 0 subscribers + outward-facing → founder-gated, nothing to send today.
+- **doctor 4 failing** — all `blocking:false`, all sibling/portfolio scope ("0 self · 19 sibling-owned"); flagged via Ark, not this repo's to fix.
+
+**S219 committed (next-session, from this closeout's brainstorm):**
+- [ ] **[INFRA/P3·SIL] CANON_ADOPTION freshness — local mirror of the studio-ops probe.** Tiny local assertion (file exists + walked within N sessions) folded into the smoke runner, so the next "required-context-file missing" is caught locally before the portfolio doctor catches it (the asymmetry that let CANON_ADOPTION sit absent).
+- [ ] **[INFRA/P3·SIL] orphan-lib allowlist-rot gate.** Extend `check-orphan-libs` to flag allowlist entries that are now (a) imported (allowlist no longer needed) or (b) missing from disk (stale entry) — keeps the allowlist honest.
+
+**S219 carries (rolled forward — founder-gated / evidence-deferred):**
+- [ ] **[PUSH/P1·FOUNDER]** First real push notification — `npm run push:count` (0 subs today) → `npm run push:notify -- --game cod` (founder go-ahead required).
+- [ ] **[CONTENT/P1·FOUNDER]** Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).
+- [ ] **[CRED/P1·FOUNDER]** Provision `ark.hmac.seed` (fleet `ARK_HMAC_SEED`) — fixes cross-repo Ark signature verification (52 sig-failures on drain). HMAC-seed minting = founder credential action (CANON-019 reserved).
+- [ ] **[UX·FOUNDER]** MOBILE-SHEET-DEFAULT-SWAP — founder real-device verification (flag-gated nav sheet).
+- [ ] **[UX/P3·SIL]** card-accent → cover-image overlay tint — quality-deferred (CANON-047 AI-image-test needs a non-headless screenshot env).
 
 ## S218 outcome + carries
 

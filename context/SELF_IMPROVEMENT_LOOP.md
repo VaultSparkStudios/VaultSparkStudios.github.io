@@ -8,16 +8,36 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇▇▇▇▇▇█▉█
-Avgs - 3: 947.3 | 5: ~941 | 10: ~942 | 25: 953 | all: 958 (v3.0 /1000)
-  └ 3-session: Dev 95.3 | Align 96.3 | Momentum 95.3 | Engage 96.3 | Process 95.7
-Velocity trend: → (S218: 6 items; S217: 5 items; S216: 6 items) | Protocol velocity: → | Debt: ↓ (recovered windows-hardening codemod; safe-spawn npm root-fix; catalog-derived bridges)
-Momentum runway: PUSH — run push:count → first real notification (founder go-ahead); CONTENT — Signal Log post + forge devlog (founder voice); SIBLING — CANON-006 velaxis/syntha/shadow via Ark; OPTIONAL — wire --card-accent into cover-image overlay tint | Intent rate: 100% (last 5) | (S218 shipped: windows-hardening recovery, safe-spawn npm root-fix, welcome-back telemetry, catalog-derived bridges, shell-drift heal; rejected Forge-Window phantom + projectGraph auto-fill.)
-Last session: 2026-06-23 | Session 218 | Total: 954/1000 (v3.0) | Velocity: 7 | protocolVelocity: 0
+Sparkline (last 5 totals): ▆▇▇██
+Avgs - 3: 953.7 | 5: ~948 | 10: ~944 | 25: 954 | all: 958 (v3.0 /1000)
+  └ 3-session: Dev 96.0 | Align 97.0 | Momentum 95.7 | Engage 96.3 | Process 96.7
+Velocity trend: ↑ (S219: 7 items; S218: 6 items; S217: 5 items) | Protocol velocity: → | Debt: ↓ (resolved S179 wipe-guard orphan + S183 broker handoff; new orphan-lib gate found 2 more; closed CANON-043 gap)
+Momentum runway: PUSH — run push:count → first real notification (founder go-ahead; 0 subs today); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); OPTIONAL — wire --card-accent into cover-image overlay tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S219 shipped: canon posture walk, SECURITY.md/CANON-043, context-wipe-guard wired, check-orphan-libs gate, Ark drain + 3 cargos.)
+Last session: 2026-06-23 | Session 219 | Total: 960/1000 (v3.0) | Velocity: 7 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-23 — Session 219 (arc · canon posture walk + CANON-043 SECURITY.md + S179 wipe-guard wired + check-orphan-libs 2nd-order gate + Ark drain) | Total: 960/1000 (v3.0) | Velocity: 7 | Debt: ↓
+Avgs — 3: 953.7 | 5: ~948 | 10: ~944 | 25: 954 | all: 958
+
+Dev Health 97 | Creative Alignment 97 | Momentum 96 | Engagement 96 | Process Quality 98 | Cross-Repo Coherence 94 | Security Posture 94 | Ecosystem Integration 96 | Capital Efficiency 94 | Automation Coverage 98
+
+**What improved:** A hygiene-and-meta-gate arc that turned an *active* canon check into found-and-closed debt. `CANON_ADOPTION.md` didn't exist (a latent studio-ops doctor finding local `build:check` can't see) → walked all 51 live canons with real posture (46 adopted / 3 in-flight review / 2 exempt-with-reason / 0 pending). The walk surfaced a real self-owned gap → **added `SECURITY.md` (CANON-043)** aligned to the existing `security.txt`. Resolved the **S179 `context-wipe-guard.mjs` orphan** (imported by nothing ~40 sessions) by wiring it as its docstring intended — reactive gate in `closeout-autopilot` Step 4 (`--allow-wipe` escape hatch) + `--self-test`/`--check` CLIs + CI behavioral coverage in `smoke-startup-scripts` (no new `build:check` segment, cmd.exe ceiling respected). Then built the **second-order gate that would have caught it**: `check-orphan-libs.mjs` (no orphan gate existed for `scripts/lib/*.mjs`) — which immediately **found 2 more real orphans** (`env-local`, `write-project-status`), now consciously allowlisted. Drained the Ark inbox (26 cargo) and shipped 3 cargos (sibling-drift, broker handoff, content-ack).
+
+**Process highlight:** Every audit item's premise verified against live code before acting — rejected 2 phantoms (Forge-Window: S185 reverted to Studio Pulse; welcome-back-telemetry: already shipped S218) and recorded an honest **non-action** (won't keyword-stuff punchy game copy to satisfy the project-info-drift advisory — gaming a metric is forbidden). Root-caused the 52 Ark signature failures to a MISSING credential (`ark.hmac.seed`), not a code bug → founder action, flagged via Ark. `build:check` EXIT 0 verified directly (not pipe-masked); doctor blockingFailing 0; check-sil-integrity green (960 = sum). No fabricated data; no sibling-tree edits.
+
+**Honest deduction (−40):** Engagement −4 (no net-new visitor-facing feature; honest non-action on copy). Momentum −4 (deep hygiene over flashy ships). Capital Efficiency −6 (resolved sunk-cost orphans efficiently, but recovery consumes budget net-new would use). Cross-Repo Coherence −6 (sibling drift + ark-seed still pending — flagged via Ark, not closed; not this repo's to fix). Security Posture −6 (SECURITY.md + canon walk help, but no deep edge-hardening change). Creative Alignment −3, Dev −3, EcoInt −4, Process −2, AutoCov −2 (incremental).
+
+**Intent outcome:** Achieved — full arc as one mission; 6 ships + 2 phantom rejections + 1 honest non-action + verify-closes; build:check EXIT 0; doctor blockingFailing 0; pushed to origin/main.
+
+**Brainstorm**
+1. **CANON_ADOPTION FRESHNESS — local mirror of the studio-ops probe.** The missing adoption file was only caught by the portfolio doctor, not local `build:check`. A tiny local assertion (file exists + walked within N sessions) folded into the smoke runner would catch the next "required-context-file missing" before the portfolio probe does — same asymmetry that let CANON_ADOPTION sit absent.
+2. **ORPHAN-LIB → ALLOWLIST-ROT GATE.** `check-orphan-libs` allowlist can itself rot (an allowlisted module gets a real consumer, or is deleted). Extend it to flag allowlist entries that are now (a) imported (allowlist no longer needed) or (b) missing from disk (stale entry) — keeps the allowlist honest, the same discipline the gate enforces on libs.
+3. **UNTRACKED-SOURCE CLOSEOUT SENTINEL.** Although `git add -A` stages new source, a closeout run with `--respect-staged` (or a hand-staged subset) can still leave a new `scripts/*.mjs` behind — the original strand path. A closeout sentinel that distinguishes untracked *source* from untracked *build artifacts* and warns loudly would close the last gap `check-orphan-libs` (import-graph based) doesn't cover.
+
+**Committed to TASK_BOARD (1–2 per closeout):** #1 (CANON_ADOPTION freshness local gate) and #2 (orphan-lib allowlist-rot extension) — both small, high-leverage, headless-safe meta-gates that harden the exact blind-spots this session exposed.
 
 ## 2026-06-23 — Session 218 (arc · windows-hardening recovery + safe-spawn npm root-fix + welcome-back telemetry + catalog-derived ecosystem bridges + Forge-Window phantom reject + 2nd-order saturation wave) | Total: 954/1000 (v3.0) | Velocity: 7 | Debt: ↓
 Avgs — 3: 947.3 | 5: ~941 | 10: ~942 | 25: 953 | all: 958

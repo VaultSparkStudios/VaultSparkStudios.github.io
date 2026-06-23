@@ -1,0 +1,299 @@
+{
+  "schemaVersion": "1.0",
+  "generatedBy": "/audit skill v1.0",
+  "generatedAt": "2026-06-14",
+  "session": 199,
+  "sessionPrev": 198,
+  "project": "vaultsparkstudios.github.io",
+  "type": "website",
+  "axisWeights": { "ux": 2.5, "speed": 2.0, "featureDepth": 1.5, "ai": 1.5, "security": 1.5, "feedbackLoop": 1.5 },
+  "topline": {
+    "thesis": "S199 frontier audit — every candidate premise-verified against live code before scoring. Two innovative findings not in any TASK_BOARD: IGNIS has no query memory (localStorage-only, no PII) and the rank system never tells members their pace to next tier (directly measured from join_date + session count). Oracle velocity chart has data (api/velocity-series.json exists, 401 commits) but 22 of 24 bars render as zero due to ISO week window bug — visually indistinguishable from broken. CSP has no report endpoint — real-world violations are invisible. Ark drained 109 sig failures (cross-repo intelligence silently rejected). Dead gtag sinks confirmed in live shell ff962aa84b at lines 394 + 2256. PWA install handler already shipped (pwa-install.js confirmed) — premise rejected, no work needed there.",
+    "top3": ["ignis-query-memory", "membership-rank-velocity", "csp-violation-reporting"]
+  },
+  "totals": { "items": 12, "combinedPriority": 274.5, "skipped": 1 },
+  "items": [
+    {
+      "id": 1,
+      "slug": "ignis-query-memory",
+      "tier": "transformative",
+      "axis": "ai/ux",
+      "effort": "1h",
+      "effortHours": 1,
+      "impact": 8,
+      "innovation": 9,
+      "priority": 45.4,
+      "title": "IGNIS Recent-Query Memory — localStorage, no PII",
+      "why": "Every returning visitor to IGNIS gets the same cold-start experience as a first-timer — no memory, no history, no continuity — even after asking 10 questions. A localStorage-backed recent-queries panel requires zero PII, zero backend, zero new deps, and makes IGNIS feel 10x smarter to returning visitors. The second-order effect is that stored query keywords can boost matching result categories, turning the anonymous static index into a pseudo-personalized AI surface that compounds on every visit. This is the single highest-leverage AI improvement available within the CANON-029 zero-variable-cost constraint.",
+      "recipe": "In ignis-answer-engine.js: after a successful answer, push {query, timestamp} into localStorage key vs_ignis_history (max 10 entries). On page load render last-5 as clickable chips below the input. L2: sort IGNIS search results by recency-weighted tag overlap with stored history. Emit engagement:ignis_history_used to RUM when a chip is clicked.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Append {query, ts} to localStorage vs_ignis_history on answer; render last-5 as chips below input on page load. ~30m." },
+        "L2": { "effortHours": 1, "recipe": "L1 + boost IGNIS result scoring by cosine-ish overlap between stored keyword set and result tags. All client-side." },
+        "L3": { "effortHours": 4, "recipe": "L2 + track which results are clicked (session-only); re-rank future answers toward clicked content categories. Add engagement:ignis_history_used RUM event under existing engagement: prefix family." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "ignis-answer-engine.js exists in assets/; no localStorage history key found in grep; IGNIS search index wired via ambient-feature bundle",
+      "executionLog": []
+    },
+    {
+      "id": 2,
+      "slug": "membership-rank-velocity",
+      "tier": "transformative",
+      "axis": "gamification/ux",
+      "effort": "2h",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 9,
+      "priority": 40.5,
+      "title": "Vault Rank Progress Velocity — estimated time to next tier",
+      "why": "The 9-tier Vault rank system is load-bearing for community buy-in, but signed-in members have no way to see how long reaching the next rank will take at their current pace — vault-rank-bar.js shows a static 2px progress bar, and the First Climb quest guides early onboarding, but there is no velocity estimate. A member who sees 'at your current pace: Rank 4 in ~12 days' visits more purposefully and converts to paid tiers far more reliably than one staring at an undated bar. This requires only member join_date + session count from Supabase profile — both already accessible via identity.js — and rank thresholds from the existing rank config.",
+      "recipe": "Pull member join_date + session count from Supabase profile via identity.js. Compute sessions_per_week = total_sessions / weeks_since_join. Fetch rank thresholds from existing rank config. Display 'At your pace: Rank N in ~X weeks' below vault-rank-bar.js on /vault-member/ and /ranks/ for signed-in users.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "On /ranks/ show 'Joined X days ago · N sessions total' from Supabase profile — gives members a reference frame with zero math." },
+        "L2": { "effortHours": 2, "recipe": "L1 + compute pace + projected rank milestone. Render 'At your pace: Rank N in ~X weeks' below the rank bar." },
+        "L3": { "effortHours": 8, "recipe": "L2 + Rank Journey Map: sparkline of actual rank milestones over time + projected future trajectory on /ranks/ as a visual timeline." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "vault-rank-bar.js confirmed in ambient-core.bundle.js line 806; First Climb quest line 889; grep for daysToNext/rankVelocity/velocityDays: no matches in assets/",
+      "executionLog": []
+    },
+    {
+      "id": 3,
+      "slug": "csp-violation-reporting",
+      "tier": "high",
+      "axis": "security",
+      "effort": "1h",
+      "effortHours": 1,
+      "impact": 7,
+      "innovation": 7,
+      "priority": 30.9,
+      "title": "CSP Violation Reporting Endpoint",
+      "why": "The Cloudflare Worker enforces a full 9-header CSP including Trusted Types, but there is no report-uri — every CSP violation from a real browser is silently discarded. CI runs axe-core and Lighthouse in a controlled environment; real browsers from real devices, browser extensions, and corporate proxies all generate violations that only a report endpoint would catch. Adding a Worker route at /v/csp-report closes the observability gap that makes the security posture surface only partially honest — it is the only missing piece between the current CSP enforcement and full operational visibility.",
+      "recipe": "In cloudflare/security-headers-worker.js: append report-uri https://vaultsparkstudios.com/v/csp-report to the Content-Security-Policy header value. Add a Worker route for /v/csp-report that accepts application/csp-report bodies and returns 204. L2: parse JSON body, write {directive, blockedUri, documentUri} to KV with 72h TTL, serve last 50 from api/csp-violations.json.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Add report-uri /v/csp-report to CSP header; Worker route returns 204. Violations land silently — no longer 404." },
+        "L2": { "effortHours": 1, "recipe": "L1 + parse report JSON in Worker, write structured entry to KV with TTL; serve from api/csp-violations.json." },
+        "L3": { "effortHours": 4, "recipe": "L2 + scripts/analyze-csp-violations.mjs: group by directive, add to check-proof-surface as warning on persistent first-party violations." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "grep for report-uri/report-to/SecurityPolicyViolation found only cloudflare/security-headers-worker.js and node_modules — no report endpoint route present",
+      "executionLog": []
+    },
+    {
+      "id": 4,
+      "slug": "game-registry-derive-pass-l2",
+      "tier": "transformative",
+      "axis": "speed/feature-depth",
+      "effort": "2h",
+      "effortHours": 2,
+      "impact": 9,
+      "innovation": 6,
+      "priority": 27.0,
+      "title": "GAME-REGISTRY DERIVE-PASS (L2) — Nav + Index from Registry",
+      "why": "data/game-registry.json is the canonical source of truth for 8 game slugs (shipped S198 G1), but the games-index cards and nav dropdown still hardcode status and links in HTML — the coherence gate catches drift at build time, but derivation is what makes drift structurally impossible. Every time a game status changes today, it requires both a registry edit AND an HTML edit. With L2 derive scripts, the registry edit is the only edit. This is the highest-leverage structural unblock available after the registry foundation shipped.",
+      "recipe": "Write scripts/derive-game-nav.mjs: reads data/game-registry.json, writes nav dropdown game-links into propagate-nav template context. Write scripts/derive-game-index.mjs: reads registry, writes game-index card status/playUrl into games/index.html template. Wire both into npm run build after registry load. Remove hardcoded HTML equivalents.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "derive-game-nav.mjs only — nav dropdown game links derived from registry. Smallest coherent slice." },
+        "L2": { "effortHours": 2, "recipe": "Both derive-game-nav.mjs + derive-game-index.mjs. Full L2 as planned in TASK_BOARD [S199][STRUCT/P1]." },
+        "L3": { "effortHours": 4, "recipe": "L2 + derive OG metadata and affinity tags from registry; games/index.html fully auto-generated from registry as single source." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "data/game-registry.json: 8 games, schemaVersion 1.0; check-game-playability-coherence.mjs confirmed; derive-game-nav.mjs + derive-game-index.mjs not found in scripts/",
+      "executionLog": []
+    },
+    {
+      "id": 5,
+      "slug": "ark-signature-heal",
+      "tier": "high",
+      "axis": "security/ecosystem",
+      "effort": "30m",
+      "effortHours": 0.5,
+      "impact": 7,
+      "innovation": 5,
+      "priority": 26.5,
+      "title": "Ark Signature Failure Triage and Heal",
+      "why": "109 Ark signature failures were detected at session drain — pattern-share cargo from seamline and session-outcome/canon-update cargo from studio-ops are failing signature verification before landing. This is not cosmetic: failures mean cross-repo intelligence is being silently rejected rather than applied. The Ark is the backbone of the Studio OS knowledge graph; sustained failures at this volume mean the site is cut off from studio learnings that should propagate automatically on every /start. 109 failures is not noise — it suggests a systematic key mismatch or a signing gap introduced during a recent Ark infrastructure update.",
+      "recipe": "Run node scripts/ark.mjs diagnose --sigs to get failure breakdown by sender and failure type (key mismatch vs missing public key vs malformed sig). If key drift: update local public key store. If signing gap in studio-ops: ship ark.mjs repair-sigs cargo. Add sig failure rate to doctor probe as L3.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Run node scripts/ark.mjs diagnose --sigs; surface root cause. Log finding to DECISIONS.md." },
+        "L2": { "effortHours": 1, "recipe": "L1 + fix root cause. Confirm failure count drops to 0 on next drain." },
+        "L3": { "effortHours": 2, "recipe": "L2 + add ark:sig_failures to doctor probe with failure-rate threshold; wire into build:check as warning." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "Session drain output: 11 new cargo received, 109 signature failures from seamline (pattern-share) and studio-ops (session-outcome, canon-update)",
+      "executionLog": []
+    },
+    {
+      "id": 6,
+      "slug": "funnel-l3-dead-gtag",
+      "tier": "high",
+      "axis": "speed/token",
+      "effort": "1h",
+      "effortHours": 1,
+      "impact": 8,
+      "innovation": 4,
+      "priority": 20.2,
+      "title": "FUNNEL L3 — Remaining Dead gtag Sinks in Live Shell",
+      "why": "Two engagement event types are confirmed dead sinks in the currently-served shell (ambient.shell-ff962aa84b.js): visit_depth_upsell_shown at line 394 and ignis_lens_opened at line 2256 both still call window.gtag which has been absent since S147. This means scroll-depth upsell exposures and IGNIS lens opens have been silently discarded for 51+ sessions. With honest-dark funnel data across the board, every measurement gap compounds — these two signals are exactly the ones that would tell the studio whether the membership upsell CTA surfaces at the right depth and whether IGNIS lens engagement drives membership conversion.",
+      "recipe": "In the ambient shell source: replace window.gtag('event','visit_depth_upsell_shown',...) with emit('engagement:visit_depth_upsell_shown', {sections}) and window.gtag('event','ignis_lens_opened') with emit('engagement:ignis_lens_opened'). Add both to engagement: prefix family in Worker allowlist and to engagements block in rollup-rum-ux.mjs. Rebuild shell.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Replace 2 window.gtag calls in ambient shell source with emit() under engagement: prefix. Rebuild shell." },
+        "L2": { "effortHours": 1, "recipe": "L1 + Worker allowlist update + rollup-rum-ux engagements block. Full wire per S188/S194 pattern." },
+        "L3": { "effortHours": 2, "recipe": "L2 + full ambient shell source audit: grep ALL shell source files for window.gtag calls and rewire in one pass." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "grep confirmed: ambient.shell-ff962aa84b.js line 394: window.gtag('event','visit_depth_upsell_shown',...) | line 2256: window.gtag('event','ignis_lens_opened')",
+      "executionLog": []
+    },
+    {
+      "id": 7,
+      "slug": "visit-streak-analytics",
+      "tier": "high",
+      "axis": "feedback-loop/gamification",
+      "effort": "1h",
+      "effortHours": 1,
+      "impact": 6,
+      "innovation": 5,
+      "priority": 18.9,
+      "title": "VISIT-STREAK-ANALYTICS — Make Streak Uptake Visible",
+      "why": "assets/visit-streak.js ships a daily streak badge (S198 B1) but its uptake is completely invisible — no RUM event fires when the badge renders, so the site cannot answer: how many visitors are building streaks? what is the distribution (1-day vs 5-day vs 14-day)? The streak mechanism is the most direct behavioral loop the site has for creating return-visit habit, and measuring it is the prerequisite for ever deepening it — including the streak-at-risk push notification path that requires the Supabase push function.",
+      "recipe": "In visit-streak.js: after badge renders, emit('streak:' + currentStreak) where currentStreak is the integer day count. Add streak: as a bounded prefix family in the Worker allowlist (same pattern as share:, engagement:). Add streaks block to rollup-rum-ux.mjs tallying distribution by N. Expose in funnel-summary.json.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "emit('streak:' + n) when badge renders; add streak: prefix to Worker allowlist. ~30m." },
+        "L2": { "effortHours": 1, "recipe": "L1 + streaks block in rollup-rum-ux.mjs; expose in funnel-summary.json as streaks: {distribution, p50, p90}." },
+        "L3": { "effortHours": 2, "recipe": "L2 + streak-at-risk Web Push: if user has 3+ day streak and has not visited in 20h, send push via Supabase push function (verify function exists first)." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "assets/visit-streak.js confirmed present; no emit() or RUM streak call found in the file; TASK_BOARD [S199][MEASURE/P3] confirms this is planned",
+      "executionLog": []
+    },
+    {
+      "id": 8,
+      "slug": "oracle-velocity-window-repair",
+      "tier": "high",
+      "axis": "speed/ai",
+      "effort": "1h",
+      "effortHours": 1,
+      "impact": 6,
+      "innovation": 5,
+      "priority": 18.9,
+      "title": "Oracle Velocity Chart — Fix ISO Week Window Bug",
+      "why": "api/velocity-series.json exists and has real data (401 total commits), but weeks W01 through W22 are all commitCount:0 while only W23=86 and W24=315. The chart therefore renders 22 consecutive zero bars followed by a spike — visually indistinguishable from a broken or empty chart to every visitor on the Oracle page, defeating the purpose of the velocity surface entirely. The root cause is that build-ecosystem-velocity.mjs uses ISO calendar week numbering (starting from W01 = early January) while the repo's commit history is concentrated in the last 2-3 weeks of activity. Fix the window to show last-N-active weeks rather than fixed ISO calendar weeks.",
+      "recipe": "In scripts/build-ecosystem-velocity.mjs: filter leading zero-weeks from the output array so velocity-series.json starts from the first non-zero week, OR switch to a sliding window of last-24-weeks-with-commits. Add build-cache hash-skip so the script skips on no-new-commits.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Filter leading zero-weeks from velocity-series.json output. Chart renders from first activity instead of 22-bar flatline. ~30m." },
+        "L2": { "effortHours": 1, "recipe": "L1 + sliding window: always last 24 weeks with commits. Wire build-cache hash-skip." },
+        "L3": { "effortHours": 2, "recipe": "L2 + expose velocity sparkline in api/public-intelligence.json for Oracle cognition hero; validate oracle-extra.js renders end-to-end." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "api/velocity-series.json: schemaVersion 1.0, source=git-log, 401 totalCommits, W01-W22 all commitCount:0, W23=86, W24=315",
+      "executionLog": []
+    },
+    {
+      "id": 9,
+      "slug": "stale-shell-cleanup",
+      "tier": "nice-to-have",
+      "axis": "speed",
+      "effort": "30m",
+      "effortHours": 0.5,
+      "impact": 6,
+      "innovation": 4,
+      "priority": 18.2,
+      "title": "Stale Shell Cleanup Script",
+      "why": "Every shell hash rotation leaves behind old shell files — the assets/ directory currently contains 4 ambient.shell variants, 9+ ambient-core.shell variants, and 3 ambient-feature.shell variants. Only the newest of each type is referenced by any live page; the others add weight to every git clone, cold-cache serve, and CI checkout. A single cleanup script keeping the 2 most recent of each type would remove 12+ files with zero breakage risk. There is no clean-stale-shells.mjs in scripts/ today.",
+      "recipe": "Write scripts/clean-stale-shells.mjs: glob assets/*.shell-*.js, group by type prefix (ambient., ambient-core., ambient-feature.), sort by mtime desc, delete all but the 2 most recent of each type. Include --dry-run flag. Wire into npm run build as a post-step.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Write clean-stale-shells.mjs with --dry-run default; run manually to confirm correct targets." },
+        "L2": { "effortHours": 0.5, "recipe": "L1 + wire into npm run build as post-step so cleanup is automatic." },
+        "L3": { "effortHours": 1, "recipe": "L2 + add check-stale-shells probe to build:check: warn when > 3 stale shells exist." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "ls assets/*.shell-*.js: 4 ambient.shell-*.js, 9 ambient-core.shell-*.js, 3 ambient-feature.shell-*.js confirmed; scripts/clean-stale-shells.mjs not found",
+      "executionLog": []
+    },
+    {
+      "id": 10,
+      "slug": "pwa-install-rum",
+      "tier": "nice-to-have",
+      "axis": "ux/feedback-loop",
+      "effort": "30m",
+      "effortHours": 0.5,
+      "impact": 4,
+      "innovation": 4,
+      "priority": 12.1,
+      "title": "PWA Install Funnel RUM Tracking",
+      "why": "assets/pwa-install.js handles the full install flow (banner, dismiss, prompt, installed event, public API) but emits zero RUM events. The site cannot answer: how often does the install banner show? what fraction leads to install? how many users have the app installed already? With a data-starved funnel, adding even a handful of observable install-conversion points compounds the measurement surface meaningfully. The pwa: bounded family is a clean 30-minute addition — 4 events, no PII.",
+      "recipe": "In pwa-install.js: add emit('pwa:banner_shown') when banner renders, emit('pwa:install_accepted') / emit('pwa:install_dismissed') on user choice, emit('pwa:already_installed') on page load when display-mode:standalone is detected. Add pwa: prefix to Worker allowlist. Add pwa block to rollup-rum-ux.mjs.",
+      "ladder": {
+        "L1": { "effortHours": 0.25, "recipe": "emit('pwa:banner_shown') + emit('pwa:install_accepted') / emit('pwa:install_dismissed'). Worker allowlist pwa: family." },
+        "L2": { "effortHours": 0.5, "recipe": "L1 + emit('pwa:already_installed') on standalone detection + pwa block in rollup-rum-ux.mjs." },
+        "L3": { "effortHours": 1, "recipe": "L2 + expose pwa install rate in api/funnel-summary.json terminal block alongside studio-dispatch:subscribe." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "pwa-install.js confirmed present with full beforeinstallprompt handling including install/dismiss buttons and appinstalled event; no emit() or RUM calls in the file",
+      "executionLog": []
+    },
+    {
+      "id": 11,
+      "slug": "build-cache-velocity-script",
+      "tier": "nice-to-have",
+      "axis": "token/speed",
+      "effort": "30m",
+      "effortHours": 0.5,
+      "impact": 4,
+      "innovation": 3,
+      "priority": 9.1,
+      "title": "Hash-Skip for build-ecosystem-velocity.mjs",
+      "why": "scripts/build-ecosystem-velocity.mjs generates api/velocity-series.json on every build by running git log — even when no new commits exist. The build-cache.mjs hash-skip pattern is already wired into 3 IGNIS scripts (build-entity-graph, build-ignis-search-index, build-oracle-query-clusters) and saves meaningful build time. The velocity script's input is deterministic when the commit SHA has not changed, making it a direct candidate for the same pattern with 30 minutes of work.",
+      "recipe": "Import { checkCache, writeCache } from scripts/lib/build-cache.mjs in build-ecosystem-velocity.mjs. Hash HEAD commit SHA + week range as the cache key. Skip write if hash matches last run. Same pattern as the 3 already-wired IGNIS scripts.",
+      "ladder": {
+        "L1": { "effortHours": 0.5, "recipe": "Wire build-cache.mjs into build-ecosystem-velocity.mjs. Use HEAD commit SHA + week range as cache key." },
+        "L2": { "effortHours": 0.5, "recipe": "L1 + also wire build-public-ecosystem.mjs which re-derives on unchanged ecosystem-state.json inputs." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "grep for build-cache in build-ecosystem-velocity.mjs: no matches. scripts/lib/build-cache.mjs present. build-entity-graph.mjs, build-ignis-search-index.mjs, build-oracle-query-clusters.mjs already import it.",
+      "executionLog": []
+    },
+    {
+      "id": 12,
+      "slug": "forge-window-manifest-naming",
+      "tier": "nice-to-have",
+      "axis": "ux",
+      "effort": "15m",
+      "effortHours": 0.25,
+      "impact": 4,
+      "innovation": 2,
+      "priority": 6.8,
+      "title": "Forge Window → Studio Pulse in manifest.json Shortcut",
+      "why": "The PWA manifest.json shortcut for Studio Pulse at line 32 still reads 'The Forge Window — live portfolio heartbeat'. This stale name from before S118 surfaces verbatim in the installed app's shortcuts menu on Android and Windows. Any Vault member who installs the PWA sees the old name — contradicting the sitewide rename that has been in the GENIUS HIT LIST for multiple sessions. It is a 15-minute edit that closes the naming drift in the one confirmed remaining location (grep for Forge Window in HTML files: 0 matches).",
+      "recipe": "Edit manifest.json line 32: change 'The Forge Window — live portfolio heartbeat' to 'Studio Pulse — live portfolio heartbeat'. Audit all other shortcut descriptions for stale terminology.",
+      "ladder": {
+        "L1": { "effortHours": 0.25, "recipe": "Edit manifest.json shortcut description from 'The Forge Window' to 'Studio Pulse'. One-line fix." },
+        "L2": { "effortHours": 0.5, "recipe": "L1 + full manifest audit: verify all shortcut names and descriptions are current. Add screenshots.mobile entry for narrow form factor." }
+      },
+      "premiseVerified": true,
+      "premiseEvidence": "manifest.json line 32 confirmed: 'The Forge Window — live portfolio heartbeat'. grep for 'Forge Window' in HTML files: 0 matches (confined to manifest only).",
+      "executionLog": []
+    }
+  ],
+  "innovationReserve": [
+    { "slug": "ignis-query-memory", "innovation": 9, "note": "nobody in the indie-game-studio website category has a sessionless local-history-personalized search engine — entirely client-side" },
+    { "slug": "membership-rank-velocity", "innovation": 9, "note": "rank system with pace projection is standard in fitness and language apps but unseen in indie game studio membership portals" },
+    { "slug": "csp-violation-reporting", "innovation": 7, "note": "reporting endpoint + KV analytics on a static-site Cloudflare Worker with no backend is a genuinely novel security observability pattern" }
+  ],
+  "skipped": [
+    {
+      "slug": "pwa-install-prompt",
+      "reason": "PREMISE FALSE — pwa-install.js already handles beforeinstallprompt with a full dismissible banner, dismiss-for-7-days localStorage logic, Install/Not-now buttons, and a public vsPwaInstall() API. The install flow is live. Promoted to pwa-install-rum (item 10) to add the missing RUM tracking."
+    }
+  ],
+  "previousAuditArchive": {
+    "session": 196,
+    "generatedAt": "2026-06-14",
+    "items": [
+      { "slug": "og-bespoke-png-cards", "status": "shipped", "note": "S196: SHIPPED (L2 + quality climb). 46 bespoke per-title PNGs rendered via sharp." },
+      { "slug": "collection-schema-listing", "status": "shipped", "note": "S196: SHIPPED (L2). CollectionPage + ItemList on journal/archive/dispatches/changelog." },
+      { "slug": "ark-dead-gtag-pattern-share", "status": "deferred-founder-gated", "note": "S196: Cargo drafted, auto-mode classifier denied broad outbound write. Founder approval pending." }
+    ]
+  }
+}

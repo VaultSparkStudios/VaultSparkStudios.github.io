@@ -1,4 +1,4 @@
-# Genius Hit List — Session 217
+# Genius Hit List — Session 219
 
 Generated: 2026-06-23
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **83/100**
+- Overall opportunity pressure: **84/100**
 - Health: **green**
-- Current SIL: **947/500**
+- Current SIL: **960/500**
 - CI health: **check gh run list**
-- Current focus: S217 (founder-directed) shipped 5 items: homepage Studio Now data fix (ship-receipts + heartbeat + founder-presence regenerated; S215/S216 events added to events.ndjson); games/index.html visual card overhaul (per-game --card-accent CSS vars, sheen animation, spring lift, cinematic vignette, accent glow, status badge colors); projects/index.html same overhaul via :has() selectors for 13 projects; index.html homepage hero tile sheen + color-mix glow; build:check fix (ANTHROPIC_API export + orphan shell). SIL 947.
+- Current focus: S219 (arc) — hygiene root-fixes + second-order gate. (1) CANON walk: CANON_ADOPTION.md was MISSING entirely (latent doctor finding) → walked all 51 live canons with real posture (46 adopted / 3 in-flight review / 2 exempt-with-reason); the walk surfaced a real self-owned gap → (2) CANON-043: added SECURITY.md (Dependabot existed, security policy did not) aligned to .well-known/security.txt. (3) Resolved the S179 context-wipe-guard.mjs orphan (imported by nothing ~40 sessions) — added --self-test/--check CLIs, wired reactive checkContextFiles into closeout-autopilot Step 4 as a real gate (--allow-wipe escape hatch), CI-covered via smoke-startup-scripts (export + behavioral invariants). (4) SECOND-ORDER: built check-orphan-libs.mjs (no gate existed for orphaned scripts/lib/*.mjs) — found 2 MORE real orphans (env-local, write-project-status), allowlisted with rationale, wired into build:check via smoke runner (no cmd.exe length growth). (5) Drained Ark inbox (26 cargo, receipts shipped); root-caused 52 sig-failures = ark.hmac.seed MISSING fleet-wide (founder credential action). (6) Shipped 3 Ark cargos (studio-ops sibling-drift, obelisk-broker handoff, obelisk content-ack). Honest non-action: project-info-drift advisory = won't keyword-stuff punchy game copy. build:check EXIT 0, doctor blockingFailing 0 (4 failing = all sibling/portfolio scope, flagged via Ark).
 
 ## Strategic Read
 
@@ -22,10 +22,10 @@ The strongest near-term leverage is release confidence first, then cross-surface
 
 ### NOW
 
-#### 1. [PRODUCT] First real push notification
+#### 1. [PRODUCT] CANON_ADOPTION freshness
 Final score: **96**
-[PUSH/P1·FOUNDER] First real push notification — npm run push:count → npm run push:notify -- --game cod (founder go-ahead required).
-Why it matters: First real push notification is open, local, and unblocked — can ship this session.
+[INFRA/P3·SIL] CANON_ADOPTION freshness — local mirror of the studio-ops probe. Tiny local assertion (file exists + walked within N sessions) folded into the smoke runner, so the next "required-context-file missing" is caught locally before the portfolio doctor catches it (the asymmetry that let CANON_ADOPTION sit absent).
+Why it matters: CANON_ADOPTION freshness is open, local, and unblocked — can ship this session.
 
 #### 2. [VERIFY] Post-push CI confirmation
 Final score: **96**
@@ -34,22 +34,22 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 3. [BRAND] Draft one Signal Log post from the 10 brainstormed ideas. Founder pub…
+#### 3. [PRODUCT] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
 Final score: **93**
-[CONTENT/P1·FOUNDER] Draft one Signal Log post from the 10 brainstormed ideas. Founder publishes in own voice.
-Why it matters: Draft one Signal Log post from the 10 brainstormed ideas. Founder publ affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+[INFRA/P3·SIL] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allowlist entries that are now (a) imported (allowlist no longer needed) or (b) missing from disk (stale entry) — keeps the allowlist honest.
+Why it matters: orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allowl is open, local, and unblocked — can ship this session.
 
-#### 4. [BRAND] Publish forge devlog (founder-voice, never auto-published).
+#### 4. [PRODUCT] First real push notification
 Final score: **90**
-[CONTENT/P1·FOUNDER] Publish forge devlog (founder-voice, never auto-published).
-Why it matters: Publish forge devlog (founder-voice, never auto-published). affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).
+Why it matters: First real push notification is open, local, and unblocked — can ship this session.
 
 ### NEXT
 
-#### 1. [PRODUCT] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
+#### 1. [BRAND] Draft one Signal Log post (founder voice) + publish forge devlog (fou…
 Final score: **87**
-[MEASURE/P3] Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
-Why it matters: Re-evaluate play-next rotation once post-2026-06-18 impressions accrue is open, local, and unblocked — can ship this session.
+[CONTENT/P1·FOUNDER] Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).
+Why it matters: Draft one Signal Log post (founder voice) + publish forge devlog (foun affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
 #### 2. [BRAND] Forge Window naming propagation
 Final score: **86**
@@ -58,56 +58,52 @@ Why it matters: The URL stays stable for search, but the public vocabulary shoul
 
 First command: `node scripts/propagate-nav.mjs`
 
-#### 3. [PRODUCT] studio-ops: process Ark cargos 01JRK6AH97E0F421A55C54236C (S213) + 01…
+#### 3. [PRODUCT] Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
 Final score: **84**
-[OPS/P2] studio-ops: process Ark cargos 01JRK6AH97E0F421A55C54236C (S213) + 01JRONES0VE96C6C4554516536 + 01JRONIRFF246105D9994172D4 (S216 sibling compliance).
-Why it matters: studio-ops: process Ark cargos 01JRK6AH97E0F421A55C54236C (S213) + 01J is open, local, and unblocked — can ship this session.
+[CRED/P1·FOUNDER] Provision ark.hmac.seed (fleet ARK_HMAC_SEED) — fixes cross-repo Ark signature verification (52 sig-failures on drain). HMAC-seed minting = founder credential action (CANON-019 reserved).
+Why it matters: Provision ark.hmac.seed (fleet ARK_HMAC_SEED) is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] welcome-back-telemetry
+#### 4. [BRAND] MOBILE-SHEET-DEFAULT-SWAP
+Final score: **81**
+[UX·FOUNDER] MOBILE-SHEET-DEFAULT-SWAP — founder real-device verification (flag-gated nav sheet).
+Why it matters: MOBILE-SHEET-DEFAULT-SWAP affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+
+#### 5. [PRODUCT] card-accent → cover-image overlay tint
 Final score: **78**
-[UX/P2·SIL] welcome-back-telemetry — add vs_welcome_back_shown RUM event in game-welcome-back.js; wire to Worker prefixAllowlist.
-Why it matters: welcome-back-telemetry is open, local, and unblocked — can ship this session.
-
-#### 5. [BRAND] Draft one Signal Log post from the 10 brainstormed ideas. Agent can s…
-Final score: **72**
-[CONTENT/P1·FOUNDER] Draft one Signal Log post from the 10 brainstormed ideas. Agent can scaffold structure. Founder publishes in own voice.
-Why it matters: Draft one Signal Log post from the 10 brainstormed ideas. Agent can sc affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
+[UX/P3·SIL] card-accent → cover-image overlay tint — quality-deferred (CANON-047 AI-image-test needs a non-headless screenshot env).
+Why it matters: card-accent is open, local, and unblocked — can ship this session.
 
 ### LATER
 
-#### 1. [VERIFY] Confirm Lighthouse CI green on cumulative S214–S216 pushes (TBT fix t…
-Final score: **71**
-[PERF/P2] Confirm Lighthouse CI green on cumulative S214–S216 pushes (TBT fix target ≥0.80).
-Why it matters: Confirm Lighthouse CI green on cumulative S214–S216 pushes (TBT fix ta is a 217-session-old carry-forward; verify or close it so it stops polluting the hit list.
+#### 1. [BRAND] Draft one Signal Log post from the brainstormed ideas (founder voice)…
+Final score: **75**
+[CONTENT/P1·FOUNDER] Draft one Signal Log post from the brainstormed ideas (founder voice) + publish forge devlog (founder voice, never auto-published).
+Why it matters: Draft one Signal Log post from the brainstormed ideas (founder voice)  affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
-First command: `npm run build:check && node scripts/csp-audit.mjs`
+#### 2. [PRODUCT] Sibling CANON-006 (velaxis/syntha/shadow missing branding) → ship Ark…
+Final score: **72**
+[OPS/P2] Sibling CANON-006 (velaxis/syntha/shadow missing branding) → ship Ark repo-question cargo to studio-ops; process pending Ark cargos (S213 01JRK6AH97E0F421A55C54236C, S216 01JRONES0VE96C6C4554516536 + 01JRONIRFF246105D9994172D4).
+Why it matters: Sibling CANON-006 (velaxis/syntha/shadow missing branding) is open, local, and unblocked — can ship this session.
 
-#### 2. [PRODUCT] Individual game/project page template improvements
+#### 3. [BRAND] Draft one Signal Log post from the 10 brainstormed ideas. Founder pub…
 Final score: **69**
-[UX/P2·SIL] Individual game/project page template improvements — ~20 pages need immersive-template upgrade. Defer to dedicated arc.
-Why it matters: Individual game/project page template improvements is open, local, and unblocked — can ship this session.
-
-#### 3. [COHESION] individual-page ecosystem-bridge links
-Final score: **68**
-[UX/P3·SIL] individual-page ecosystem-bridge links — make bridge links page-specific (related game/project) using public-intelligence.json instead of 4 hardcoded links.
-Why it matters: individual-page ecosystem-bridge links is a cross-surface bridge — one implementation improves Website, Studio Hub, and Social Dashboard simultaneously.
-
-First command: `node scripts/generate-public-intelligence.mjs`
+[CONTENT/P1·FOUNDER] Draft one Signal Log post from the 10 brainstormed ideas. Founder publishes in own voice.
+Why it matters: Draft one Signal Log post from the 10 brainstormed ideas. Founder publ affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
 ## Recommended Build Order
 
-1. First real push notification
+1. CANON_ADOPTION freshness
 2. Post-push CI confirmation
-3. Draft one Signal Log post from the 10 brainstormed ideas. Founder pub…
-4. Publish forge devlog (founder-voice, never auto-published).
-5. Re-evaluate play-next rotation once post-2026-06-18 impressions accrue.
+3. orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
+4. First real push notification
+5. Draft one Signal Log post (founder voice) + publish forge devlog (fou…
 6. Forge Window naming propagation
-7. studio-ops: process Ark cargos 01JRK6AH97E0F421A55C54236C (S213) + 01…
-8. welcome-back-telemetry
-9. Draft one Signal Log post from the 10 brainstormed ideas. Agent can s…
-10. Confirm Lighthouse CI green on cumulative S214–S216 pushes (TBT fix t…
-11. Individual game/project page template improvements
-12. individual-page ecosystem-bridge links
+7. Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
+8. MOBILE-SHEET-DEFAULT-SWAP
+9. card-accent → cover-image overlay tint
+10. Draft one Signal Log post from the brainstormed ideas (founder voice)…
+11. Sibling CANON-006 (velaxis/syntha/shadow missing branding) → ship Ark…
+12. Draft one Signal Log post from the 10 brainstormed ideas. Founder pub…
 
 ## Best Immediate Move
 

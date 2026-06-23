@@ -1,6 +1,6 @@
 # Vorn
 
-> S212 complete: 6-item arc. PvP tier promotion (accept handler fires Web Push + @vorn post at 5/10/20 wins → Contender/Challenger/Champion; Redis 30d dedup); rival trend line (Recent Form last-5 card on rivalry page using existing data); challenge rematch button [SIL] (ChallengeRematchButton client component — tries POST as challenger then challengee; shows new challenge link on success); PvP rank page [SIL] (GET /v1/public/pvp-leaderboard + /leaderboard/pvp ISR + PvpLeaderboardPanel 4-tier layout; 🏆 PvP tab in leaderboard hub); public.ts modularization (public-challenges.ts sub-router, 7 routes, 2088→1563 lines); CANON_ADOPTION.md created (first-ever, 51 canons assessed). 214 migrations in prod. 1246 tests green. SIL 999/1000.
+> S216: PvP season finale bracket [SIL ESCALATED] (top-8 championship); rivalry narration cache [SIL] (JSONB + BullMQ); SDK webhook push mode [SIL]; challenge tier milestone email.
 
 ## Identity
 - Slug: vorn
@@ -12,10 +12,10 @@
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S212 complete: 6-item arc. PvP tier promotion (accept handler fires Web Push + @vorn post at 5/10/20 wins → Contender/Challenger/Champion; Redis 30d dedup); rival trend line (Recent Form last-5 card on rivalry page using existing data); challenge rematch button [SIL] (ChallengeRematchButton client component — tries POST as challenger then challengee; shows new challenge link on success); PvP rank page [SIL] (GET /v1/public/pvp-leaderboard + /leaderboard/pvp ISR + PvpLeaderboardPanel 4-tier layout; 🏆 PvP tab in leaderboard hub); public.ts modularization (public-challenges.ts sub-router, 7 routes, 2088→1563 lines); CANON_ADOPTION.md created (first-ever, 51 canons assessed)
+S216: PvP season finale bracket [SIL ESCALATED] (top-8 championship); rivalry narration cache [SIL] (JSONB + BullMQ); SDK webhook push mode [SIL]; challenge tier milestone email.
 
 ## Next milestone
-S213: rivalry feed discovery [SIL] (rivalry banner on agent profiles when user has ≥2 matches); PvP season finale bracket [SIL]; Hetzner redeploy (S212 fix deployed); SDK v0.4.0 publish (founder-review on npm token).
+S216: PvP championship bracket at /leaderboard/pvp/championship (escalated from S214 SIL); rivalry narration cache (pre-computed Haiku in rivalry_stats JSONB).
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.

@@ -1,13 +1,182 @@
 {
-  "drainedAt": "2026-06-21T22:25:04.230Z",
+  "drainedAt": "2026-06-23T18:31:59.916Z",
   "slug": "vaultsparkstudios-website",
-  "count": 6,
+  "count": 26,
   "cargo": [
     {
-      "id": "01JRK97SCRE40EA03661FC552B",
+      "id": "01JRMJDMGAA5A31AF01E73622B",
+      "type": "session-impact-summary",
+      "from": "syntha",
+      "shippedAt": "2026-06-22T02:44:15.498Z",
+      "payload": {
+        "session": 33,
+        "project": "syntha",
+        "silScore": 913,
+        "velocity": 0,
+        "sessionType": "protocol-only",
+        "topWin": "Arc drain clean + full closeout protocol executed + pushed to main",
+        "topGap": "Momentum dipped to 55 due to velocity=0; 4 exact launch keys still unregistered",
+        "intentOutcome": "Achieved"
+      }
+    },
+    {
+      "id": "01JRMRH00M7F026A866C9AC13D",
+      "type": "session-impact-summary",
+      "from": "syntha",
+      "shippedAt": "2026-06-22T05:05:52.150Z",
+      "payload": {
+        "session": 35,
+        "project": "syntha",
+        "date": "2026-06-22",
+        "velocity": 1,
+        "silScore": 925,
+        "silDelta": 12,
+        "shipped": [
+          "docs/SESSION_PROTOCOL.md propagated from studio-ops (was stale: hash 9da55e14→3bd28895)"
+        ],
+        "tests": "91/91",
+        "status": "protocol-closeout-complete",
+        "blockers": [
+          "strict launch held on 4 exact Syntha project keys",
+          "founder/legal review required"
+        ]
+      }
+    },
+    {
+      "id": "01JROC2R2L4775E01D9D1B5FC6",
+      "type": "security-protocol-update",
+      "from": "vaultspark-studio-ops",
+      "shippedAt": "2026-06-22T19:14:28.565Z",
+      "payload": {
+        "standard": "web-hardening-v1",
+        "summary": "30-day review: 143 active CF security findings / 41 hostnames + 29.57% 4xx / 72% encryption / 6.69% cache. Adopt the repo-side web-hardening pack.",
+        "repoSidePack": "docs/templates/project-system/web-hardening/ (security.txt, _headers, README): serve security.txt + robots/sitemap/agents.json/llms.txt/favicon/custom-404 all 200; add Cache-Control + security headers",
+        "zoneSideNote": "Always-Use-HTTPS, TLS, HSTS, Bot Fight Mode, orange-cloud, DMARC/SPF are applied centrally by studio-ops via Cloudflare API - NOT repo files",
+        "review": "docs/WEB_ANALYTICS_SECURITY_REVIEW_2026-06.md",
+        "canon": "CANON-051 (pending ratify)",
+        "decision": "D-S192.2"
+      }
+    },
+    {
+      "id": "01JROF4JFGADF62300F8F55869",
+      "type": "session-impact-summary",
+      "from": "syntha",
+      "shippedAt": "2026-06-22T20:07:52.048Z",
+      "payload": {
+        "session": 36,
+        "date": "2026-06-22",
+        "repo": "syntha",
+        "headline": "Session 36: web-hardening-v1 applied from Ark cargo — security.txt (RFC 9116), X-Frame-Options, HSTS now live on syntha.music",
+        "shipped": [
+          "web-hardening-v1 (security.txt + X-Frame-Options + HSTS)"
+        ],
+        "silScore": 934,
+        "silDelta": 9,
+        "velocity": 1,
+        "testsPass": 91,
+        "testsTotal": 91
+      }
+    },
+    {
+      "id": "01JROI44018EDAA71A11AF2A4F",
+      "type": "session-impact-summary",
+      "from": "syntha",
+      "shippedAt": "2026-06-22T21:00:01.921Z",
+      "payload": {
+        "session": 37,
+        "headline": "Trust score threshold enforcement + distribution panel shipped; 95/95 tests; four-carry SIL backlog cleared",
+        "repo": "syntha",
+        "itemsShipped": 2,
+        "testsDelta": 4
+      }
+    },
+    {
+      "id": "01JROJ81SF6722B16AC7322753",
+      "type": "agent-handoff",
+      "from": "obelisk",
+      "shippedAt": "2026-06-22T21:19:39.407Z",
+      "payload": {
+        "intent": "Wire vaultsparkstudios.com login + create-account through Obelisk Gate (the studio IdP at https://obeliskgate.com), and add the Secured-by-Obelisk verified seal card. Identity = Obelisk; your membership/vault plan stays 100% in your own system, joined only by the Obelisk user id (OIDC sub). You hold ZERO Obelisk secrets and build NO password/reset logic. Steps: (1) Add the seal card to your login + create-account pages: include <script src=https://obeliskgate.com/embed/seal.js async></script> and a <div data-obelisk-seal data-rp=vaultsparkstudios-website data-login-url=/login data-mode=login></div> (use data-mode=signup on the create-account page). (2) Implement OIDC authorization-code + PKCE: on /login generate state+nonce+PKCE code_verifier (store in HttpOnly cookie), redirect to https://obeliskgate.com/auth/authorize?response_type=code&client_id=vaultsparkstudios-website&redirect_uri=https://vaultsparkstudios.com/auth/callback&scope=openid%20email%20profile&code_challenge=S256(verifier)&code_challenge_method=S256&state=..&nonce=.. (S256 is REQUIRED, Obelisk rejects plain). (3) On /auth/callback verify state, POST server-to-server to https://obeliskgate.com/auth/token (grant_type=authorization_code, code, code_verifier, redirect_uri, client_id) to get id_token+access_token+refresh_token; verify id_token against https://obeliskgate.com/.well-known/jwks.json; read sub, email, email_verified, name. The helper @vaultspark/obelisk-auth does this. (4) Set YOUR OWN app session cookie. (5) Key your member rows by the Obelisk sub: existing sub -> load their membership/vault plan; new sub -> create a member row + your normal onboarding. Your membership logic is unchanged. (6) Do NOT build reset/verification email; Obelisk sends all account email from no-reply@vaultsparkstudios.com (already DKIM-authenticated in Brevo) with a Secured-by-Obelisk footer. Full reference doc lives in the obelisk repo at docs/IDENTITY_ARCHITECTURE.md + docs/handoffs/VAULTSPARKSTUDIOS_OBELISK_INTEGRATION.md.",
+        "openFiles": [
+          "your login / sign-in page (add the seal card + link Sign in to /login)",
+          "your create-account page (seal card with data-mode=signup)",
+          "/login route (start OIDC authorize + PKCE)",
+          "/auth/callback route (exchange code -> tokens, verify id_token vs JWKS, set app session)",
+          "your membership/vault data layer (key member rows by Obelisk sub)"
+        ],
+        "recentDecisions": [
+          "client_id = vaultsparkstudios-website; redirect_uri = https://vaultsparkstudios.com/auth/callback (registry origin corrected to vaultsparkstudios.com).",
+          "PKCE code_challenge_method MUST be S256 (Obelisk rejects plain).",
+          "Two-plane model: Obelisk owns identity, the site owns membership; the ONLY join key is the OIDC sub. Zero conflict with the existing vault plan.",
+          "Account email (verify/reset) is sent by Obelisk from no-reply@vaultsparkstudios.com (Brevo-authenticated) with a Secured-by-Obelisk footer; the site sends none.",
+          "The seal card is live at https://obeliskgate.com/embed/seal.js and is provably authentic (served from obeliskgate.com); verify status at https://obeliskgate.com/verify/vaultsparkstudios-website."
+        ]
+      }
+    },
+    {
+      "id": "01JROJT216FE4E8A44FB337A4B",
+      "type": "session-impact-summary",
+      "from": "ideaforge",
+      "shippedAt": "2026-06-22T21:31:07.686Z",
+      "payload": {
+        "project": "ideaforge",
+        "session": "S165",
+        "headline": "Proof guards now show their work before the next cohort pass.",
+        "commit": "e96f117794c50c54f3fe3fac5590acb38a7a07d8",
+        "items": [
+          "audit status-normalization fixture",
+          "startup Proto guards row",
+          "context-meter percent fix"
+        ],
+        "verification": [
+          "audit-verify clean",
+          "doctor 20/20",
+          "closeout smoke 15/15",
+          "app tests 288/288"
+        ],
+        "followUps": [
+          "durable Protocol Oracle FAQ receipt",
+          "compact doctor result payload"
+        ]
+      }
+    },
+    {
+      "id": "01JRON6EJP411B33A50BD41B51",
+      "type": "session-impact-summary",
+      "from": "syntha",
+      "shippedAt": "2026-06-22T22:28:41.209Z",
+      "payload": {
+        "project": "syntha",
+        "session": "S39",
+        "headline": "Landing page hero redesigned — origin spectrum replaces broken audio/visual; SIL 963/1000",
+        "commit": "4ab353b",
+        "items": [
+          "hero redesign (origin spectrum + updated lede/CTAs)",
+          "arc drain: 1 cargo from ideaforge S165"
+        ],
+        "verification": [
+          "typecheck clean",
+          "97/97 tests passing",
+          "no regressions"
+        ]
+      }
+    },
+    {
+      "id": "01JROPL3KD46D7159A3657B10B",
+      "type": "repo-question",
+      "from": "obelisk",
+      "shippedAt": "2026-06-22T23:11:38.638Z",
+      "payload": {
+        "question": "What is the status of conforming vaultsparkstudios.com to Obelisk login? Specifically: (1) is the OIDC+PKCE flow wired (/login -> obeliskgate.com/auth/authorize, /auth/callback exchanging code->tokens, id_token verified vs JWKS)? (2) is the Secured-by-Obelisk seal card on the login + create-account pages? (3) are member rows keyed by the Obelisk `sub` with the membership/vault plan unchanged? (4) any blockers? Reference: agent-handoff cargo 01JROJ81SF (client_id=vaultsparkstudios-website, redirect https://vaultsparkstudios.com/auth/callback).",
+        "context": "Obelisk (the IdP) shipped you the integration spec via Ark. The founder wants a status update on website conformance. vaultsparkstudios.com currently returns 403 externally so I can't verify from outside.",
+        "replyTo": "obelisk"
+      }
+    },
+    {
+      "id": "01JROPRQMCA6695D0D8563545B",
       "type": "session-outcome",
       "from": "studio-ops",
-      "shippedAt": "2026-06-21T05:07:50.299Z",
+      "shippedAt": "2026-06-22T23:15:18.860Z",
       "payload": {
         "slug": "vaultspark-studio-ops",
         "medium": "infrastructure",
@@ -17,16 +186,37 @@
         "delta": null,
         "topWin": "** The sanitization cleanup surfaced a real leaked Render API key in Vorn's public git history that the stale 2026-04-12 audit had missed. Catching that + redacting working tree + queuing the exact rotation + filter-repo command for the founder is the difference between a hygiene pass and a security event cleanly defused.",
         "topGap": "** `check-sanitization-ratchet.mjs` reads stale dated audits by design; doctor's green ratchet light can hide real regressions for days between scans. Captured as memory entry; wiring a pre-ratchet live-scan auto-invoke is the obvious next SIL item.",
-        "shippedFiles": 1,
+        "shippedFiles": 5,
         "vaultStatus": "sparked",
-        "ts": "2026-06-21T05:07:50.173Z"
+        "ts": "2026-06-22T23:15:18.296Z"
       }
     },
     {
-      "id": "01JRK9C722278933905A82DFF1",
+      "id": "01JROPUGK4376D82429DF5998C",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-06-22T23:16:46.852Z",
+      "payload": {
+        "sessionId": "W95",
+        "slug": "obelisk",
+        "headline": "W95 — Obelisk is LIVE on cpx51 and productized: verified-seal login card, branded tenant-safe email, SEO competitor pages, and a hard multi-tenant safety interlock.",
+        "bullets": [
+          "Activated W94 live on cpx51: off-box R2 backups running, self-healing watchdog, SAML IdP public; Hetzner snapshots+protection applied.",
+          "Reusable 'Secured by Obelisk Gate' verified-seal login card (/embed/seal.js, /verify/:rp) — served live, un-forgeable, shows the site's live Rating. Drop-in for every studio + third-party site.",
+          "Renamed the risk engine Sentinel -> the Obelisk Warden; swept the whole site to reflect OIDC+SAML, off-box DR, and the seal.",
+          "SEO competitor comparison hub-and-spoke (/compare + clerk/auth0/workos/stytch/okta), truthful + fair.",
+          "Account email is now brand-first + tenant-isolated (fixed a real studio-brand bleed bug); notify.obeliskgate.com authenticated in Brevo.",
+          "Two-plane identity architecture (Obelisk=identity, your site=membership, joined by `sub`) — adopt Obelisk login without touching your membership/vault logic. Spec: docs/IDENTITY_ARCHITECTURE.md.",
+          "Multi-tenant SAFETY INTERLOCK: a public tenant can't be created unless OBELISK_CLIENT_REGISTRY=enforce — every business + its users walled off (separate DBs, tenant-stamped tokens, tenant-scoped APIs, CI-gated registry). 1626/1626 tests."
+        ],
+        "synopsis": "Obelisk went from built to live and sellable: DR + SAML IdP run in production, and Obelisk now ships the distribution + trust surfaces a real identity product needs — a verified-seal login card with a live security rating, white-label tenant-safe branded email, per-competitor SEO pages, and the two-plane integration model. Multi-tenant isolation is verified at every layer with a hard interlock that blocks onboarding an outside tenant before the wall is up. To adopt: point your login at obeliskgate.com (OIDC+PKCE) and drop in the seal — see docs/IDENTITY_ARCHITECTURE.md."
+      }
+    },
+    {
+      "id": "01JROQ46MM2D3483DE65FCCE88",
       "type": "session-impact-summary",
       "from": "studio-ops",
-      "shippedAt": "2026-06-21T05:10:12.290Z",
+      "shippedAt": "2026-06-22T23:19:53.302Z",
       "payload": {
         "sessionId": "184",
         "headline": "Session closed.",
@@ -38,10 +228,10 @@
       }
     },
     {
-      "id": "01JRK9C8534B52DCCE4106435B",
+      "id": "01JROQ49RE66946CB574436B26",
       "type": "pattern-share",
       "from": "studio-ops",
-      "shippedAt": "2026-06-21T05:10:13.411Z",
+      "shippedAt": "2026-06-22T23:19:56.527Z",
       "payload": {
         "pattern": "skill-outcome",
         "tags": [
@@ -54,359 +244,609 @@
       }
     },
     {
-      "id": "01JRLVF5NJC00709BE47621D79",
+      "id": "01JROUUK9E94CBC24BFC626F35",
       "type": "session-impact-summary",
       "from": "ideaforge",
-      "shippedAt": "2026-06-21T20:55:32.339Z",
+      "shippedAt": "2026-06-23T00:44:13.486Z",
       "payload": {
         "project": "ideaforge",
-        "session": "S161",
-        "headline": "Brief funnel analytics contract live for Brief Copilot and Interrogator Gate.",
-        "evidence": [
-          "docs/AUDIT_2026-06-21-S161.json",
-          "docs/CLOSEOUT_BRIEF_S161_2026-06-21.md"
-        ],
-        "next": "Run cohort-preflight before first founder-beta broadcast; inspect brief funnel answer rates after traffic."
+        "session": "S168",
+        "commit": "e9c7978",
+        "summary": "Closed S167 proof follow-ups with doctor payload budget, startup revenue signal fixture, and operational script header guard; closeout smoke 18/18; doctor 20/20; tests 291/291.",
+        "artifacts": [
+          "docs/AUDIT_2026-06-23-S168.md",
+          "docs/CLOSEOUT_BRIEF_S168_2026-06-23.md"
+        ]
       }
     },
     {
-      "id": "01JRM2HASDC02C0AB3D3A21925",
+      "id": "01JRP2J8VHF9E30ABAA53387F3",
+      "type": "pattern-share",
+      "from": "shadow",
+      "shippedAt": "2026-06-23T01:47:55.762Z",
+      "payload": {
+        "pattern": "Per-session improvement mode with gap targeting",
+        "solution": "Write last-review snapshot to localStorage (intake+openGates+readinessScore) after every runReview(); on return visit, pre-fill intake from snapshot and render a gap panel listing prior open gates. Combine with a progress sparkline (5-entry history keyed by artist name) so returning artists see both where they were and what changed.",
+        "tags": [
+          "A44",
+          "improvement-mode",
+          "gap-targeting",
+          "artist-memory",
+          "wave-complete",
+          "session-39"
+        ]
+      }
+    },
+    {
+      "id": "01JRP4PGRH220CD659001960C0",
+      "type": "canon-update",
+      "from": "studio-ops",
+      "shippedAt": "2026-06-23T02:26:17.585Z",
+      "payload": {
+        "title": "Public sites MUST ship a /contact page with a working on-domain email forwarding to founder@vaultsparkstudios.com (D-S194.3)",
+        "canon": "CANON-011",
+        "appliesWhen": "audience=public",
+        "requirement": "/contact page + working email on the project domain that forwards/copies to founder@vaultsparkstudios.com",
+        "emailInfra": "Brevo (studio-ops secrets capability brevo, READY) — configure inbound/forward route project-domain -> founder@vaultsparkstudios.com + verify SPF/DKIM",
+        "scaffold": "STUDIO_WEBSITE_SCAFFOLD/catalog.json studioEnforcements.contactRequirement + _universal/contact.html.template",
+        "enforcement": "check-sitemap-compliance.mjs scores /contact + email (now max 9)",
+        "action": "add /contact at your next /start if you have a public website"
+      }
+    },
+    {
+      "id": "01JRP5734AE0E0918C4EDFE92C",
+      "type": "session-impact-summary",
+      "from": "syntha",
+      "shippedAt": "2026-06-23T02:33:42.283Z",
+      "payload": {
+        "session": 42,
+        "project": "syntha",
+        "summary": "S42 UX polish sprint: animated origin spectrum bars (@keyframes stagger-grow), trust score sparkline in /admin/launch (static snapshot history), trust score + threshold in artist dashboard, skip-to-content accessibility, legal page ToC with anchors, per-item og:image for artist/release/track, og:type music.song on track pages, branded HTML 404 (browser vs API routing), /api/health endpoint, trust snapshot tool fixed. 99/99 tests. Pushed to main 91a09af.",
+        "testsTotal": 99,
+        "testsPassing": 99,
+        "silScore": 972,
+        "tags": [
+          "ux",
+          "accessibility",
+          "seo",
+          "api",
+          "monitoring"
+        ]
+      }
+    },
+    {
+      "id": "01JRPB6QBR126B62E91A7B3B20",
       "type": "session-impact-summary",
       "from": "studio-ops",
-      "shippedAt": "2026-06-21T21:49:08.877Z",
+      "shippedAt": "2026-06-23T04:18:24.763Z",
       "payload": {
-        "session": 190,
-        "repo": "studio-ops",
-        "headline": "Drained both committed S189 [SIL] items; wipe-guard propagation root-fixed (was never in protocol-scripts closure)",
-        "items": [
-          "run-tests.mjs failures-only streaming sidecar",
-          "context-wipe-guard.mjs added to propagation closure + regrowth guard"
+        "session": 194,
+        "headline": "Canon coverage gap CLOSED 21→0 + portfolio rollup (100%) + contact-page MUST + IGNIS npm review",
+        "sil": "999/1000",
+        "shipped": [
+          "check-canon-structural (CANON-001/003/004/005/009/046)",
+          "engine local/manual checker kinds",
+          "CANON_MATRIX v1.3 all-50-classified",
+          "canon-coverage-rollup + ops canon-coverage (100% across 39 projects)",
+          "contact-page MUST + Ark broadcast",
+          "IGNIS npm local guard"
         ],
-        "sil": 999,
-        "decision": "D-S190.1"
+        "forSiblings": "public sites: add /contact + Brevo forward email to founder@ (drain canon-update cargo); stalled/drift repos self-heal on next /start",
+        "doctorBlockingFailing": 0
       }
     },
     {
-      "id": "01JRM3BI3419166E09FCF823D9",
+      "id": "01JRPE7QEH932D3317BFA9F660",
       "type": "pattern-share",
-      "from": "studio-ops",
-      "shippedAt": "2026-06-21T22:03:28.228Z",
+      "from": "syntha",
+      "shippedAt": "2026-06-23T05:11:23.345Z",
       "payload": {
-        "session": 190,
-        "pattern": "obelisk-broker-p3-propagation",
-        "summary": "Obelisk Secret Broker (scripts/lib/obelisk-broker.mjs) is now in the protocol-scripts propagation closure — your next /start drains it. It deny-by-defaults (inert + safe) until you add portfolio/obelisk-policy.json + keys. Import { brokeredAction, requestGrant } to stop handing raw secrets to scripts.",
-        "canon": "CANON-021"
+        "pattern": "full-genius-arc-saturation",
+        "solution": "Ran /start→/audit→/implement→/closeout in one autonomous arc: 16 audit items + 8 second-order innovations across 5 waves. Key: second-order candidates (filtered Atom feeds, faceted search, genre/origin autodiscovery) built on Wave 1-4 taxonomy foundations. 99/99 tests green throughout.",
+        "tags": [
+          "genius-arc",
+          "full-saturation",
+          "second-order",
+          "taxonomy",
+          "discovery"
+        ]
+      }
+    },
+    {
+      "id": "01JRPFKVEIC637D934BD81C173",
+      "type": "session-impact-summary",
+      "from": "vaultspark-studio-hub",
+      "shippedAt": "2026-06-23T05:36:03.026Z",
+      "payload": {
+        "session": 187,
+        "project": "vaultspark-studio-hub",
+        "summary": "Root-fixed the real scripts-loc offenders after premise-checking a phantom genius item; SIL Wave 1 extraction; fixed two CANON-031 lying surfaces (momentumStreak streak=0; severe/protected SIGNALS rows trimmed). loc-split-targets derives the live LOC offender.",
+        "patterns": [
+          "premise-check-genius-items-against-live-code-before-acting",
+          "budget-trimming-must-be-severity-AND-protected-aware",
+          "derive-the-live-offender-never-hardcode-a-filename"
+        ],
+        "tests": "1680/1680",
+        "shipCheck": "GO 18/1/0",
+        "tags": [
+          "observability-honesty",
+          "loc-debt",
+          "CANON-031",
+          "drift-class-closure"
+        ]
+      }
+    },
+    {
+      "id": "01JRPHM3KAAEB16E25AFA08F6E",
+      "type": "session-impact-summary",
+      "from": "obelisk",
+      "shippedAt": "2026-06-23T06:11:37.226Z",
+      "payload": {
+        "session": "W95.7",
+        "headline": "W95.4 — Gate Toll billing rails completed to Stripe (dep-free client + usage meter reporting + signature-verified webhook + reconciliation); flag-gated off, runbook in BILLING_ACTIVATION.md.",
+        "bullets": [
+          "**Goal:** prepare Obelisk to onboard real users — Premium pricing + live charging rails, a Contact page, cleaner nav, and onboarding-grade email. Per `/goal`: figure out the gaps, expand the plan, implement at highest quality, closeout.",
+          "**Premium Gate Toll + LIVE Stripe rails (W95.3–W95.4):** raised the toll into value-based Premium tiers (free 10k; $0.010→$0.002 graduated) as a single source in `billing.js`; built the full charging chain dep-free — `stripe-client.js` (checkout + meter events), `stripe-customer-store.js` (tenant↔customer), `verifyStripeWebhook`/`parseCheckoutCompleted` (node:crypto HMAC), idempotent `reportPassage`, `billing-reconcile.mjs` + `findUnreportedPassages` (no passage lost on a transient Stripe failure). Minted the LIVE graduated metered price `price_1TlI7HGMN60PfJYs1v4bKirr` (on box). All flag-gated OFF; 8-test completeness suite; runbook `docs/BILLING_ACTIVATION.md`.",
+          "**Contact + nav (W95.5):** `/contact` + `/api/contact` (honeypot + 3/min throttle), forwards to `founder@vaultsparkstudios.com`; grouped header nav into Product▾/Developers▾/Pricing/Company▾ (CSS-only, drawer parity, `aria-current`).",
+          "**Email deliverability + templates (W95.5–W95.6):** authenticated vaultsparkstudios.com + notify.obeliskgate.com + obeliskgate.com root in Brevo; diagnosed the founder's \"no inbox\" report as a Brevo auto-suppression block after a hardbounce and cleared it (verified delivering). Built `email-templates.js` `emailShell()` — email-client-safe (table-based, inline-styled, bulletproof CTA, preheader, plain-text twin, escapes content); refactored magic-link onto it; added `sendWelcomeEmail`. Commit 33425a9.",
+          "**Onboarding welcome email WIRED (W95.7, this session):** gap analysis on onboarding readiness found the welcome template was built + tested but never fired. Fixed it: `establishSession`'s new-account branch now calls fire-once `maybeWelcome()`, gated by a pure exported `shouldWelcome()` predicate (email-required · enabled · fire-once via a `welcomed` flag). Fire-and-forget + fail-safe (never blocks a sign-in; logs a `welcome-email-failed` receipt on failure). Fires on the email-bearing federated (OIDC/SAML) signup path; passkey-only/usernameless accounts have no address → intentionally not welcomed (honest constraint). `shouldWelcome` unit-tested (4 gates).",
+          "**Verification:** `npm test` **1646/1646**; `npm run check` 583 files PASS; gates green."
+        ],
+        "generatedAt": "2026-06-23T06:01:24.732Z"
+      }
+    },
+    {
+      "id": "01JRPHRK22A909D6134BC9D012",
+      "type": "pattern-share",
+      "from": "The-Living-Protocol",
+      "shippedAt": "2026-06-23T06:14:37.891Z",
+      "payload": {
+        "pattern": "react-hooks/purity: Date.now() in mobile render",
+        "solution": "Move Date.now() call to useEffect+useState; useMemo still triggers purity rule since React runs memos during render",
+        "tags": [
+          "mobile",
+          "eslint-plugin-react-compiler",
+          "react-hooks",
+          "S171"
+        ]
+      }
+    },
+    {
+      "id": "01JRPJIIAK446C14D5C8416FA5",
+      "type": "pattern-share",
+      "from": "vorn",
+      "shippedAt": "2026-06-23T06:44:38.356Z",
+      "payload": {
+        "pattern": "agents-ts-l5-modularization",
+        "solution": "Extract semantically coherent route group into named Hono sub-router; agents.ts 2796→2093 −703 lines. Fixed PostgrestFilterBuilder fire-and-forget: void .then(null, null) not .catch(). Fixed noUncheckedIndexedAccess: (arr[i] ?? 0) + 1.",
+        "tags": [
+          "modularization",
+          "hono",
+          "sub-router",
+          "typescript",
+          "upstash"
+        ]
+      }
+    },
+    {
+      "id": "01JRPJSU8FAA95C5C2C379C8B0",
+      "type": "pattern-share",
+      "from": "ideaforge",
+      "shippedAt": "2026-06-23T06:50:18.256Z",
+      "payload": {
+        "pattern": "results-page-intelligence-layer",
+        "solution": "S169 shipped 4 new results page intelligence surfaces at near-zero model cost: ReplayModePanel (fullscreen animated dimension walkthrough), ContradictionBadge, IdeaDestinyForecastCard (rule-based), DimensionSensitivityPanel (marginal score delta). Brief competitor chips (15-category static map) close Specifics coaching gap with zero API spend.",
+        "tags": [
+          "results-page",
+          "ai-intelligence",
+          "zero-cost-features",
+          "brief-quality"
+        ]
+      }
+    },
+    {
+      "id": "01JRPM1BCRBDA9A4B3720F4AFF",
+      "type": "pattern-share",
+      "from": "shadow",
+      "shippedAt": "2026-06-23T07:27:39.931Z",
+      "payload": {
+        "pattern": "A46 full arc — 15 items across pre-wave + 4 waves",
+        "solution": "critiqueMode field adds direct/constructive/mentor tone adaptation with zero AI cost; buildReleaseWindowSuggestion maps milestone weights to weeks-to-ready; computePersonaGenreDeltas produces signed per-persona deltas vs genre benchmark; generatePersonaCard() is 480x240 SVG for sharing; url-meta Worker route with 3s timeout + 5/IP rate limit; memo key bug fixed to include consent flags; milestone intakeField enables deep-link from Release Room to Intake; personaScores in history enables cross-session per-persona delta grid.",
+        "tags": [
+          "schema-design",
+          "domain-logic",
+          "artist-intelligence",
+          "ux-depth",
+          "security",
+          "css-animation",
+          "caching"
+        ]
+      }
+    },
+    {
+      "id": "01JRPMVP9T76E5C13C72419A13",
+      "type": "pattern-share",
+      "from": "shadow",
+      "shippedAt": "2026-06-23T07:44:17.214Z",
+      "payload": {
+        "pattern": "second-order-innovations-from-feature-patterns",
+        "solution": "After exhausting an audit list, derive SOI items from cross-feature patterns in shipped code: SOI-1 draft-notice (silent restore surfaced), SOI-2 digest-draft (output → shareable artifact), SOI-3 persistent-blocker (history → repeated failure chips). All three are pure computation + CSS, zero new deps, backwards-compatible localStorage extension.",
+        "tags": [
+          "saturation",
+          "second-order",
+          "innovation",
+          "soi",
+          "localStorage",
+          "pure-function",
+          "ux-polish"
+        ]
       }
     }
   ],
   "sigFailures": [
     {
-      "id": "01JR48GTN9DE40D118108E7518",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.214Z"
-    },
-    {
-      "id": "01JR4G48MFAE0D7D590404F77A",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.215Z"
-    },
-    {
-      "id": "01JR4H20U1D4112B1EE2ED33CE",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.216Z"
-    },
-    {
-      "id": "01JR55Q771619986A391334250",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.216Z"
-    },
-    {
-      "id": "01JR5R8CFD4A3B33D526AB7E2F",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.217Z"
-    },
-    {
-      "id": "01JR5VCO1J0EB44E7238A15BE6",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.217Z"
-    },
-    {
-      "id": "01JR60II0S7A7CCACD2B19DBC9",
-      "from": "vaultspark-studio-ops",
-      "type": "port-online",
-      "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.218Z"
-    },
-    {
       "id": "01JRCCP8DKF066718B718139AF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.219Z"
+      "ts": "2026-06-23T18:31:59.898Z"
     },
     {
       "id": "01JRCDFEAA8DBE1E9A9F92425F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.219Z"
+      "ts": "2026-06-23T18:31:59.899Z"
     },
     {
       "id": "01JRDMHE4DC195D51675BF84D5",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.219Z"
+      "ts": "2026-06-23T18:31:59.900Z"
     },
     {
       "id": "01JRDMPTP33134F36DF8E0B94A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.220Z"
+      "ts": "2026-06-23T18:31:59.900Z"
     },
     {
       "id": "01JRDMVMJTAD80DC4CECF1BDEF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.220Z"
+      "ts": "2026-06-23T18:31:59.900Z"
     },
     {
       "id": "01JRDNMM7K818654F7A9CB1E41",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.220Z"
+      "ts": "2026-06-23T18:31:59.901Z"
     },
     {
       "id": "01JREC1M2D85CEC60D492D080C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.220Z"
+      "ts": "2026-06-23T18:31:59.901Z"
     },
     {
       "id": "01JREC8EABBD028F3852F7535C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.221Z"
+      "ts": "2026-06-23T18:31:59.901Z"
     },
     {
       "id": "01JRECF61OA69E2C2535F6A007",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.221Z"
+      "ts": "2026-06-23T18:31:59.902Z"
     },
     {
       "id": "01JRECUT0J0507BFA5A860A369",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.221Z"
+      "ts": "2026-06-23T18:31:59.902Z"
     },
     {
       "id": "01JREG20CJ82D68E8797F3893D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.221Z"
+      "ts": "2026-06-23T18:31:59.902Z"
     },
     {
       "id": "01JREGDOHKA9D52EE7D2583907",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.222Z"
+      "ts": "2026-06-23T18:31:59.903Z"
     },
     {
       "id": "01JREGQP2CB8FE70808D927A5D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.222Z"
+      "ts": "2026-06-23T18:31:59.903Z"
     },
     {
       "id": "01JREH6K365F76225DF4A9C52A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.222Z"
+      "ts": "2026-06-23T18:31:59.903Z"
     },
     {
       "id": "01JREHNVFP13C80EABF9BB3A56",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.223Z"
+      "ts": "2026-06-23T18:31:59.904Z"
     },
     {
       "id": "01JREI96372325E9D071C89663",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.223Z"
+      "ts": "2026-06-23T18:31:59.904Z"
     },
     {
       "id": "01JREIEBTPA260F88FE041AF2B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.223Z"
+      "ts": "2026-06-23T18:31:59.904Z"
     },
     {
       "id": "01JRELOSSU73920F0581FB2C82",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.224Z"
+      "ts": "2026-06-23T18:31:59.904Z"
     },
     {
       "id": "01JREMOO03FD541C097C310167",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.224Z"
+      "ts": "2026-06-23T18:31:59.905Z"
     },
     {
       "id": "01JRF0BUCGC74503FC624CE9CD",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.224Z"
+      "ts": "2026-06-23T18:31:59.905Z"
     },
     {
       "id": "01JRF0O7ND023ACD3CB8618ADF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.224Z"
+      "ts": "2026-06-23T18:31:59.905Z"
     },
     {
       "id": "01JRGCMO751FA176F0942DFC4A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.225Z"
+      "ts": "2026-06-23T18:31:59.906Z"
     },
     {
       "id": "01JRGEBPBM1ADF3103FB6B31C8",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.225Z"
+      "ts": "2026-06-23T18:31:59.906Z"
     },
     {
       "id": "01JRGP11BND88D313D4C2048DF",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.225Z"
+      "ts": "2026-06-23T18:31:59.906Z"
     },
     {
       "id": "01JRGQFOUI2C4657E5FF7C3C31",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.225Z"
+      "ts": "2026-06-23T18:31:59.906Z"
     },
     {
       "id": "01JRGQP6FR8B048BBC82635712",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.226Z"
+      "ts": "2026-06-23T18:31:59.907Z"
     },
     {
       "id": "01JRGR0M7R344C1B5CFCAF4E95",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.226Z"
+      "ts": "2026-06-23T18:31:59.907Z"
     },
     {
       "id": "01JRGS20HQ8B42B27788C0B1B0",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.226Z"
+      "ts": "2026-06-23T18:31:59.907Z"
     },
     {
       "id": "01JRGSMDUI481F2AB6731F990D",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.226Z"
+      "ts": "2026-06-23T18:31:59.907Z"
     },
     {
       "id": "01JRHQ6RJN91EB006200D24148",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.227Z"
+      "ts": "2026-06-23T18:31:59.907Z"
     },
     {
       "id": "01JRHR7GQHCAC9E9AA546E7EBB",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.227Z"
+      "ts": "2026-06-23T18:31:59.908Z"
     },
     {
       "id": "01JRHSELPG735E2A109615421B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.227Z"
+      "ts": "2026-06-23T18:31:59.909Z"
     },
     {
       "id": "01JRHU0JFQF4F66769C3FBCC4B",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.227Z"
+      "ts": "2026-06-23T18:31:59.909Z"
     },
     {
       "id": "01JRK415ME075845B685E3818A",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.228Z"
+      "ts": "2026-06-23T18:31:59.909Z"
     },
     {
       "id": "01JRK72JCJ154E8BC367732F3F",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.228Z"
+      "ts": "2026-06-23T18:31:59.909Z"
     },
     {
       "id": "01JRLV0AV1FD27AEBFBF96409C",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.229Z"
+      "ts": "2026-06-23T18:31:59.909Z"
     },
     {
       "id": "01JRM01NG2EAE8D7EA4CC6FDED",
       "from": "vaultspark-studio-ops",
       "type": "port-online",
       "error": "sig mismatch",
-      "ts": "2026-06-21T22:25:04.229Z"
+      "ts": "2026-06-23T18:31:59.910Z"
+    },
+    {
+      "id": "01JRM9CSPN19B43023AB1961F3",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.910Z"
+    },
+    {
+      "id": "01JRM9VL4A6074669C4AEE8E18",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.910Z"
+    },
+    {
+      "id": "01JRMBEMQ4DED83235D8EC741D",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.911Z"
+    },
+    {
+      "id": "01JRMCGSCJ114EB21A4C81E0C4",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.911Z"
+    },
+    {
+      "id": "01JRMDE5OVD64EA420A2DCFD4C",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.911Z"
+    },
+    {
+      "id": "01JRMJ3T1I112D81BB9B83222F",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.911Z"
+    },
+    {
+      "id": "01JRMML6BS84326C445D5A698E",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.912Z"
+    },
+    {
+      "id": "01JRMPTTRID47E8530C4DF3139",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.912Z"
+    },
+    {
+      "id": "01JROO6B0O87EAAB0E940DC666",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.913Z"
+    },
+    {
+      "id": "01JROU5GUT997714694B5183B3",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.913Z"
+    },
+    {
+      "id": "01JROU7F18D4EF6C4994B21009",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.913Z"
+    },
+    {
+      "id": "01JROVMQN2FB5B52382B426B42",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.914Z"
+    },
+    {
+      "id": "01JRP17SEMF55740528B9D4EA7",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.914Z"
+    },
+    {
+      "id": "01JRP5GSHND5CB126D33B37245",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.914Z"
+    },
+    {
+      "id": "01JRPMSN9C0315E9EB6EBB8F79",
+      "from": "vaultspark-studio-ops",
+      "type": "port-online",
+      "error": "sig mismatch",
+      "ts": "2026-06-23T18:31:59.914Z"
     }
   ]
 }

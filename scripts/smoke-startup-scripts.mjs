@@ -16,6 +16,7 @@
 import { existsSync, readFileSync } from 'fs';
 import { resolve, dirname, join } from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+import { spawnSync } from './lib/safe-spawn.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root      = resolve(__dirname, '..');
@@ -73,6 +74,12 @@ const CHECKS = [
   {
     module: 'scripts/lib/validate.mjs',
     exports: [],
+  },
+  {
+    // context-wipe-guard (S179 module, wired into closeout-autopilot S219).
+    // Guards context/docs/logs against accidental wipes at closeout.
+    module: 'scripts/lib/context-wipe-guard.mjs',
+    exports: ['assertSafeWrite', 'checkContextFiles', 'appendOnlyPreserved', 'isGeneratedWiped'],
   },
 ];
 
@@ -167,6 +174,55 @@ if (capMapReachable) {
   }
 } else {
   results.push({ status: 'SKIP', module: 'gateway-readiness · claude.api', reason: 'no CAPABILITY_MAP.json reachable (CI without sibling secrets)' });
+}
+
+// ── Behavioral assertion: context-wipe-guard append-only logic (S219) ─────────
+// The append-only invariant is subtle (handles both newest-first prepend and
+// oldest-first append, and exempts the rolling-status block) and regression-prone.
+// Assert the two cases that matter in-process, so CI catches a logic break — not
+// just a missing export — without adding a build:check segment (cmd.exe length).
+try {
+  const cwg = await import(pathToFileURL(resolve(root, 'scripts/lib/context-wipe-guard.mjs')).href);
+  const checks = [
+    [cwg.appendOnlyPreserved('# H\n\n## old', '# H\n\n## new\n\n## old'), true, 'prepend-after-header preserved'],
+    [cwg.appendOnlyPreserved('A\nMID\nC', 'A\nEDIT\nC'), false, 'mid-edit flagged'],
+    [cwg.appendOnlyPreserved(
+      '# H\n<!-- rolling-status-start -->OLD<!-- rolling-status-end -->\n## e',
+      '# H\n<!-- rolling-status-start -->NEW<!-- rolling-status-end -->\n## e'), true, 'rolling-status refresh exempt'],
+    [cwg.isGeneratedWiped(''), true, 'empty generated == wiped'],
+    [cwg.isGeneratedWiped('Generated: x\n## Real'), false, 'valid regen not wiped'],
+  ];
+  const bad = checks.filter(([got, want]) => got !== want);
+  if (bad.length) {
+    for (const [, , label] of bad) {
+      results.push({ status: 'FAIL', module: `context-wipe-guard · ${label}`, reason: 'behavioral invariant broke' });
+      failures++;
+    }
+  } else {
+    results.push({ status: 'OK', module: 'context-wipe-guard · append-only invariants' });
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'context-wipe-guard · behavioral', reason: `import error: ${err.message}` });
+  failures++;
+}
+
+// ── Orphan-lib gate (S219) — no scripts/lib/*.mjs imported by zero consumers ───
+// Folded in here (not a new build:check segment) to respect the cmd.exe length
+// ceiling. Exits 1 only on a NON-allowlisted orphan; untracked-lib is warn-level.
+try {
+  const orphanCheck = spawnSync(process.execPath, [resolve(root, 'scripts/check-orphan-libs.mjs')], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  if (orphanCheck.status === 0) {
+    results.push({ status: 'OK', module: 'check-orphan-libs · no orphaned lib modules' });
+  } else {
+    const tail = (orphanCheck.stderr || orphanCheck.stdout || '').trim().split('\n').slice(-3).join(' | ');
+    results.push({ status: 'FAIL', module: 'check-orphan-libs', reason: tail || 'orphaned lib module found' });
+    failures++;
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'check-orphan-libs', reason: `spawn error: ${err.message}` });
+  failures++;
 }
 
 // ── Report ────────────────────────────────────────────────────────────────────

@@ -1,9 +1,24 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-23 (Session 218 — arc · windows-hardening recovery + safe-spawn root-fix + welcome-back telemetry + catalog bridges + Forge-Window phantom reject)
+Last updated: 2026-06-23 (Session 219 — arc · canon-posture walk + CANON-043 SECURITY.md + context-wipe-guard wired + check-orphan-libs gate + Ark drain)
 
 Session Intent: Run the full arc (/start → /audit → /implement → /closeout) as one continuous mission; saturate the genius list + second-order innovation at the highest quality bar.
 
+## Where We Left Off (Session 219)
+- **Shipped (6 substantive):**
+  1. **CANON posture walk** — `context/CANON_ADOPTION.md` was MISSING entirely (latent studio-ops doctor finding `canon-adoption-active`). Walked all 51 live canons with real per-canon posture for `website/public-live/Archetype-A`: **46 adopted · 3 review (in-flight: CANON-020 Analytica, CANON-021/045 Obelisk migration) · 2 exempt-with-reason (CANON-025 studio-infra, CANON-027 no-crypto-claims) · 0 pending.** Check now exit 0.
+  2. **CANON-043: added `SECURITY.md`** — the canon walk surfaced a real self-owned gap (Dependabot existed, security policy did not). Public-safe, proprietary-first, aligned to `.well-known/security.txt` (`security@`, `/security/` page verified to exist).
+  3. **Resolved the S179 `context-wipe-guard.mjs` orphan** (imported by nothing ~40 sessions) — added `--self-test`/`--check` CLIs (import-safe), wired reactive `checkContextFiles` into `closeout-autopilot.mjs` Step 4 as a real gate (`--allow-wipe` escape hatch), CI-covered via `smoke-startup-scripts` (export shape + behavioral append-only invariants). Self-test 12/12.
+  4. **SECOND-ORDER innovation — `check-orphan-libs.mjs`** (no gate existed for orphaned `scripts/lib/*.mjs`; the asset/page/shell orphan gates didn't cover lib modules — the exact blind spot that stranded #3). It immediately **found 2 MORE real orphans** (`env-local.mjs`, `write-project-status.mjs`) → allowlisted with rationale (standalone tools). Self-test 4/4. Wired into build:check via the smoke runner (no cmd.exe length growth).
+  5. **Ark inbox drained** — 26 cargo, 26 receipts shipped. Root-caused the 52 signature failures: `ark.hmac.seed` MISSING fleet-wide (founder credential action; matches obelisk repo-question 01JQQ71ULV8CC9).
+  6. **3 Ark cargos shipped** — studio-ops sibling-drift report (`01JRQS4VOM0D8AFD0BCA8A1E00`), obelisk-broker handoff (`01JRQS5NLIE75EA3008FBE421E`), obelisk content-ack/answer (`01JRQS5V84D02A733137ACA26D`).
+- **Honest deferrals / non-actions (wins):** First real push = 0 subscribers + outward-facing (founder). Signal Log / forge devlog = founder voice. MOBILE-SHEET-DEFAULT-SWAP = founder real-device. card-accent cover-tint = CANON-047 AI-image-test needs non-headless env. project-info-drift P1 advisory = **won't keyword-stuff** punchy game copy to satisfy a metric. play-next = deadCount:0 (closed). REJECTED phantoms: Forge-Window propagation (S185 reverted to Studio Pulse), welcome-back-telemetry (already shipped S218).
+- **Tests:** `build:check` EXIT 0 (verified directly, not pipe-masked) · doctor blockingFailing 0 (4 failing = all `blocking:false`, all sibling/portfolio scope = "0 self · 19 sibling-owned"; flagged via Ark) · check-sil-integrity green (960 = sum).
+- **Deploy:** pushed to `origin/main`; CF Pages auto-builds; Worker unchanged this session (no cloudflare/** edits).
+- **First action next session:** `/start` → `npm run push:count` (0 subs today) → first real push when founder ready. Founder: provision `ark.hmac.seed` to fix fleet Ark sig-verification.
+- **SIL:** 954 → 960 (+6). Categories: Dev 97 | Align 97 | Momentum 96 | Engage 96 | Process 98 | CrossRepo 94 | Security 94 | EcoInt 96 | CapEff 94 | AutoCov 98.
+
+> **S218 (arc):** windows-hardening recovery + safe-spawn root-fix + welcome-back telemetry + catalog bridges + Forge-Window phantom reject. SIL 954.
 ## Where We Left Off (Session 218)
 - Shipped (5): (1) **Recovered the stranded S187 windows-spawn-hardening codemod** — 60 scripts → `lib/safe-spawn.mjs` (windowsHide), promisify.custom fix, windows-hide-shim.cjs, 3 shell:true patches; `check-windows-hide` GREEN. (2) **safe-spawn npm-family Windows root-fix** — scoped hidden `shell:true` resolves `spawn npm ENOENT` (release-confidence crash). (3) **welcome-back-telemetry** — `welcome-back:shown` emit + Worker allowlist (both ends). (4) **page-specific ecosystem bridges** — `build-ecosystem-bridges.mjs` (build chain + drift gate) replaces 29 pages' hardcoded/stale bridge links with catalog-derived affinity links. (5) **healed committed shell generated-drift** (ambient-core bff/f15).
 - Honest rejections (wins): Forge-Window propagation = PHANTOM (S185 reverted to "Studio Pulse"; reverted all edits, removed carry, recorded D-S218.4); projectGraph auto-population rejected (founder-confirmed-edges-only policy, D-S218.5).

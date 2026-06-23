@@ -1,17 +1,17 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-23T03:24:32.110Z",
+  "generatedAt": "2026-06-23T18:57:03.228Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 347,
+  "totalSamples": 434,
   "sufficientRoutes": 2,
   "siteState": "partial-route-strict",
   "nextRoute": {
     "route": "/games/call-of-doodie/",
-    "samples": 23,
+    "samples": 26,
     "minSamples": 50,
-    "state": "accumulating",
-    "remaining": 27,
+    "state": "warning",
+    "remaining": 24,
     "p75": {
       "lcp": 0,
       "cls": 0,
@@ -24,16 +24,16 @@
   "routes": [
     {
       "route": "/",
-      "samples": 145,
+      "samples": 208,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
-        "lcp": 782,
-        "cls": 0.103,
-        "inp": 312,
+        "lcp": 1452,
+        "cls": 0.102,
+        "inp": 232,
         "fcp": 764,
-        "ttfb": 147
+        "ttfb": 193
       },
       "overBudget": false
     },
@@ -144,25 +144,25 @@
     },
     {
       "route": "/games/",
-      "samples": 51,
+      "samples": 61,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
         "lcp": 644,
         "cls": 0.0692,
-        "inp": 256,
+        "inp": 224,
         "fcp": 644,
-        "ttfb": 90
+        "ttfb": 97
       },
       "overBudget": false
     },
     {
       "route": "/games/call-of-doodie/",
-      "samples": 23,
+      "samples": 26,
       "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 27,
+      "state": "warning",
+      "remaining": 24,
       "p75": {
         "lcp": 0,
         "cls": 0,
@@ -174,16 +174,16 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 21,
+      "samples": 26,
       "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 29,
+      "state": "warning",
+      "remaining": 24,
       "p75": {
-        "lcp": 2996,
-        "cls": 0.0874,
-        "inp": 232,
-        "fcp": 2996,
-        "ttfb": 1143
+        "lcp": 1256,
+        "cls": 0.0042,
+        "inp": 80,
+        "fcp": 1256,
+        "ttfb": 708
       },
       "overBudget": false
     },
@@ -219,16 +219,16 @@
     },
     {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 23,
+      "samples": 24,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 27,
+      "remaining": 26,
       "p75": {
         "lcp": 1100,
         "cls": 0.0016,
         "inp": 432,
         "fcp": 1100,
-        "ttfb": 202
+        "ttfb": 215
       },
       "overBudget": false
     },
@@ -279,10 +279,10 @@
     },
     {
       "route": "/membership/",
-      "samples": 8,
+      "samples": 9,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 42,
+      "remaining": 41,
       "p75": {
         "lcp": 0,
         "cls": 0,
@@ -349,6 +349,21 @@
         "inp": 152,
         "fcp": 1512,
         "ttfb": 200
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/projects/canon/",
+      "samples": 2,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 48,
+      "p75": {
+        "lcp": 3348,
+        "cls": 0.2081,
+        "inp": 0,
+        "fcp": 3348,
+        "ttfb": 291
       },
       "overBudget": false
     },
@@ -564,16 +579,31 @@
     },
     {
       "route": "/vault-member/",
-      "samples": 2,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 47,
       "p75": {
         "lcp": 0,
         "cls": 0,
         "inp": 0,
         "fcp": 0,
         "ttfb": 0
+      },
+      "overBudget": false
+    },
+    {
+      "route": "/vault-wall/",
+      "samples": 1,
+      "minSamples": 50,
+      "state": "accumulating",
+      "remaining": 49,
+      "p75": {
+        "lcp": 612,
+        "cls": 0.0093,
+        "inp": 144,
+        "fcp": 612,
+        "ttfb": 128
       },
       "overBudget": false
     },

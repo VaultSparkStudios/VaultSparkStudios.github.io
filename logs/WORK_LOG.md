@@ -2896,3 +2896,23 @@ Fresh 12-item personalized audit (Priority 383.4). Shipped 10 end-to-end, 2 defe
 **Verify:** `npm run build:check` EXIT 0. RUM allowlist 35/33 in sync. IGNIS self-test 31 docs, 0 voice leaks. Worker unit tests 25/25.
 
 **SIL:** ~985/1000 (v3.0) estimated · Velocity: 15 · Debt: ↓ · 15 commits pushed via closeout-autopilot.
+
+---
+
+## Session 219 — 2026-06-23 (arc · canon posture walk + CANON-043 SECURITY.md + context-wipe-guard wired + check-orphan-libs gate + Ark drain)
+
+One continuous arc (/start → /audit → /implement → /closeout). Hygiene + meta-gate session.
+
+**Shipped (6):**
+1. `canon-posture-walk` — `context/CANON_ADOPTION.md` was MISSING; walked all 51 live canons for website/public-live/Archetype-A (46 adopted / 3 in-flight review / 2 exempt-with-reason / 0 pending). Check exit 0.
+2. `CANON-043 SECURITY.md` — the walk surfaced a real self-owned gap; added a public-safe, proprietary-first security policy aligned to `.well-known/security.txt`.
+3. `context-wipe-guard-wired` — resolved the S179 orphan (imported by nothing ~40 sessions): `--self-test` (12/12) + `--check` CLIs, reactive gate in `closeout-autopilot` Step 4 (`--allow-wipe`), CI behavioral coverage in `smoke-startup-scripts`.
+4. `check-orphan-libs` (second-order) — new gate for orphaned `scripts/lib/*.mjs`; found 2 more real orphans (env-local, write-project-status) → allowlisted with rationale; self-test 4/4; wired into build:check via smoke runner.
+5. `ark-drain` — 26 cargo drained + receipts shipped; root-caused 52 sig-failures to `ark.hmac.seed` MISSING (founder action).
+6. `ark-cargos` — 3 shipped: studio-ops sibling-drift, obelisk-broker handoff, obelisk content-ack.
+
+**Honest rejections/non-actions (wins):** Forge-Window propagation = PHANTOM (S185); welcome-back-telemetry = already shipped S218; project-info-drift advisory = won't keyword-stuff game copy; obelisk-broker = handed off, not deleted.
+
+**Verify:** `npm run build:check` EXIT 0 (verified directly). doctor blockingFailing 0 (4 failing = all sibling/portfolio scope). check-sil-integrity green (960 = sum). context-wipe-guard self-test 12/12; check-orphan-libs self-test 4/4; smoke-startup-scripts 16/17.
+
+**SIL:** 954 → 960/1000 (v3.0) · Velocity: 7 · Debt: ↓ · pushed to origin/main via closeout.
