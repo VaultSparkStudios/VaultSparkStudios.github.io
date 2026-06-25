@@ -1,0 +1,40 @@
+name: CI Health Monitor
+
+# S223 — escalates the scheduled-workflow staleness beacon (check-scheduled-workflow-staleness.mjs)
+# beyond the doctor table by opening/updating/closing a GitHub Issue (label: ci-health).
+#
+# Pattern: runs daily, writes staleness JSON, then sync-ci-health-issue.mjs manages the
+# single idempotent ci-health issue. If all scheduled workflows are green: closes the issue.
+# If any are dead for ≥2 consecutive runs: creates or updates the issue body in-place.
+#
+# Workflow itself is advisory — never blocks deploys. The issue escalation is the signal.
+
+on:
+  schedule:
+    - cron: '0 9 * * *'   # 9am UTC daily (after nightly crons have had time to run)
+  workflow_dispatch:        # manual trigger for testing
+
+jobs:
+  health-check:
+    name: Scheduled workflow health
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      issues: write    # needed for gh issue create/edit/close/comment
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: npm install --no-audit --no-fund
+      - name: Run staleness probe
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          node scripts/check-scheduled-workflow-staleness.mjs --json > staleness-result.json
+          || true
+      - name: Sync CI health issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/sync-ci-health-issue.mjs staleness-result.json
