@@ -122,8 +122,14 @@ function render(state) {
 
 function main() {
   if (!existsSync(ECOSYSTEM)) {
-    console.error(`[agents-json] missing ${ECOSYSTEM}`);
-    process.exit(1);
+    // S223 cron root-fix (same class as S222 llms-shards fix): ecosystem-state.json
+    // is IGNIS output under the gitignored ignis/output/ — present during local
+    // human-session builds, NEVER present on CI runners. Hard-exiting here killed
+    // the every-4h `Refresh Live Data` cron (persisted past the S222 llms-shards
+    // fix because both scripts share the same dependency). Keep the committed
+    // agents.json as-is and degrade gracefully — don't strand the cron.
+    console.warn(`[agents-json] skipped — ${ECOSYSTEM.replace(ROOT, '.')} absent (gitignored IGNIS output; regenerated on local builds)`);
+    process.exit(0);
   }
   const state = JSON.parse(readFileSync(ECOSYSTEM, 'utf8'));
   const content = render(state);

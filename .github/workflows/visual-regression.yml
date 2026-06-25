@@ -14,17 +14,20 @@ name: Visual Regression (mobile)
 # Baselines are captured against production by default. If the workflow ever
 # needs to diff against a preview deploy, set the VR_BASE_URL env in the job.
 #
-# ── Baseline capture (S134) ─────────────────────────────────────────────────
+# ── Baseline capture (S134/S223) ─────────────────────────────────────────────
 # Local snapshots on Windows/macOS differ from Ubuntu runner pixels and are
-# NOT portable. Capture baselines against production on a Linux runner once,
-# then commit the resulting `tests/__snapshots__/` directory.
+# NOT portable. Use the `update_baselines` mode to capture Linux baselines:
 #
-# After deploy, manually trigger:
-#   gh workflow run "Visual Regression (mobile)" -f base_url=https://vaultsparkstudios.com
-# Wait for the run to fail (no baselines yet), then download the snapshots
-# captured into the artifacts (test-results/) and commit them under
-# `tests/__snapshots__/visual-regression.spec.js-snapshots/`. The next PR run
-# will then compare against committed truth.
+#   gh workflow run "Visual Regression (mobile)" \
+#     -f base_url=https://vaultsparkstudios.com \
+#     -f update_baselines=true
+#
+# Download the resulting `visual-regression-baselines` artifact and commit the
+# PNG files under `tests/__snapshots__/visual-regression.spec.js-snapshots/`.
+# The next PR run will then compare against committed truth.
+#
+# Without `update_baselines=true`, a run with no committed baselines will
+# fail — that is expected and correct (no phantom-pass when truth is absent).
 
 on:
   pull_request:
@@ -45,6 +48,12 @@ on:
         description: 'Base URL to snapshot against (defaults to production)'
         required: false
         default: 'https://vaultsparkstudios.com'
+      update_baselines:
+        description: >-
+          Set to true to capture new Linux baselines (--update-snapshots) and
+          upload them as an artifact for committing. Use after intentional UI changes.
+        required: false
+        default: 'false'
 
 jobs:
   snapshot:
@@ -70,7 +79,17 @@ jobs:
       - name: Run visual-regression snapshots
         env:
           VR_BASE_URL: ${{ github.event.inputs.base_url || 'https://vaultsparkstudios.com' }}
-        run: npx playwright test tests/visual-regression.spec.js --project=chromium --reporter=line
+        run: >-
+          npx playwright test tests/visual-regression.spec.js --project=chromium --reporter=line
+          ${{ github.event.inputs.update_baselines == 'true' && '--update-snapshots' || '' }}
+      - name: Upload new baselines (update_baselines mode)
+        if: >-
+          github.event.inputs.update_baselines == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-regression-baselines
+          path: tests/__snapshots__/
+          retention-days: 30
       - name: Upload diff report on failure
         if: failure()
         uses: actions/upload-artifact@v4

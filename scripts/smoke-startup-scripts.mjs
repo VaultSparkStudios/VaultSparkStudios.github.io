@@ -281,6 +281,41 @@ try {
   results.push({ status: 'SKIP', module: 'check-agents-json-coherence', reason: `spawn error: ${err.message}` });
 }
 
+// ── hero JSON-LD completeness: SPARKED tiles carry required fields (S223) ─────
+// Locks the S220 flagship dual-audience win (description/genre/image/sameAs).
+try {
+  const jld = spawnSync(process.execPath, [resolve(root, 'scripts/check-hero-jsonld-completeness.mjs')], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  if (jld.status === 0) {
+    results.push({ status: 'OK', module: 'check-hero-jsonld-completeness · SPARKED tiles complete' });
+  } else {
+    failures++;
+    const tail = (jld.stderr || '').trim().split('\n').slice(-2).join(' ');
+    results.push({ status: 'FAIL', module: 'check-hero-jsonld-completeness', reason: tail || 'SPARKED tile missing JSON-LD fields' });
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'check-hero-jsonld-completeness', reason: `spawn error: ${err.message}` });
+  failures++;
+}
+
+// ── build-step resilience: no hard-exit(1) on gitignored inputs (S223) ────────
+try {
+  const bsr = spawnSync(process.execPath, [resolve(root, 'scripts/check-build-step-resilience.mjs'), '--check'], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  if (bsr.status === 0) {
+    results.push({ status: 'OK', module: 'check-build-step-resilience · no hard exits on gitignored inputs' });
+  } else {
+    failures++;
+    const tail = (bsr.stderr || '').trim().split('\n').slice(-2).join(' ');
+    results.push({ status: 'FAIL', module: 'check-build-step-resilience', reason: tail || 'hard-exit(1) on gitignored input detected' });
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'check-build-step-resilience', reason: `spawn error: ${err.message}` });
+  failures++;
+}
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const pad = s => s.padEnd(45);
 for (const r of results) {
