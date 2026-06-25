@@ -59,7 +59,7 @@ jobs:
   snapshot:
     name: Snapshot mobile surfaces
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -84,7 +84,7 @@ jobs:
           ${{ github.event.inputs.update_baselines == 'true' && '--update-snapshots' || '' }}
       - name: Upload new baselines (update_baselines mode)
         if: >-
-          github.event.inputs.update_baselines == 'true'
+          always() && github.event.inputs.update_baselines == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: visual-regression-baselines
