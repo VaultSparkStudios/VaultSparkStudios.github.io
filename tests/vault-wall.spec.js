@@ -24,7 +24,7 @@ test.describe('Vault Wall public page', () => {
       }
     });
 
-    await page.goto(BASE + '/vault-wall/', { waitUntil: 'networkidle' });
+    await page.goto(BASE + '/vault-wall/', { waitUntil: 'load' });
 
     // Page title
     await expect(page).toHaveTitle(/Vault Wall/i);

@@ -19,7 +19,7 @@ test('homepage loads S98 ambient assets and hydrates heartbeat grid', async ({ p
     }
   });
 
-  await page.goto(BASE + '/', { waitUntil: 'networkidle' });
+  await page.goto(BASE + '/', { waitUntil: 'load' });
 
   // Ambient block is present in the DOM.
   const ambientPresent = await page.evaluate(() =>

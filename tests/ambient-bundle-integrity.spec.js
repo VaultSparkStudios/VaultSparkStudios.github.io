@@ -55,7 +55,7 @@ test.describe('Ambient bundle (S136) — single load + features alive', () => {
   });
 
   test('command-palette lazy-loads and opens on Cmd/Ctrl+K', async ({ page, browserName }) => {
-    await page.goto('/', { waitUntil: 'networkidle' });
+    await page.goto('/', { waitUntil: 'load' });
     await expect(page.locator('script[src="/assets/command-palette.js"]')).toHaveCount(0);
     const key = browserName === 'webkit' ? 'Meta+k' : 'Control+k';
     await page.keyboard.press(key);

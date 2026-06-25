@@ -20,7 +20,7 @@ test('live homepage hero and brand shell render coherently', async ({ page }) =>
     }
   });
 
-  await page.goto(BASE + '/', { waitUntil: 'networkidle' });
+  await page.goto(BASE + '/', { waitUntil: 'load' });
 
   await expect(page.locator('.brand')).toBeVisible();
   await expect(page.locator('#hero-heading')).toBeVisible();

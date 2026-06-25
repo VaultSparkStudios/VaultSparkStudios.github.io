@@ -8,7 +8,7 @@ const BASE = process.env.BASE_URL || 'http://127.0.0.1:4173';
 
 test.describe('IGNIS project block widget', () => {
   test('renders on /games/solara/ with voice quote', async ({ page }) => {
-    await page.goto(`${BASE}/games/solara/`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/games/solara/`, { waitUntil: 'load' });
     const block = page.locator('.ignis-project-block').first();
     await expect(block).toBeVisible();
     // The widget mounts asynchronously; wait for hydration
@@ -21,7 +21,7 @@ test.describe('IGNIS project block widget', () => {
   });
 
   test('renders on /projects/ideaforge/ and exposes canonical Visit-live link', async ({ page }) => {
-    await page.goto(`${BASE}/projects/ideaforge/`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/projects/ideaforge/`, { waitUntil: 'load' });
     const block = page.locator('.ignis-project-block').first();
     await expect(block).toBeVisible();
     await expect(block.locator('.ignis-block-quote p')).toBeVisible({ timeout: 6000 });
@@ -50,7 +50,7 @@ test.describe('IGNIS project block widget', () => {
 
   test('voice quote on /games/solara/ is visitor-readable with personality', async ({ page }) => {
     test.setTimeout(45_000);
-    await page.goto(`${BASE}/games/solara/`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/games/solara/`, { waitUntil: 'load' });
     const quote = await page.locator('.ignis-project-block .ignis-block-quote p').first().textContent({ timeout: 8000 });
 
     // Curator voice must NOT contain dev-coded IGNIS jargon
@@ -62,7 +62,7 @@ test.describe('IGNIS project block widget', () => {
   });
 
   test('voice quotes carry tone metadata', async ({ page }) => {
-    await page.goto(`${BASE}/games/solara/`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/games/solara/`, { waitUntil: 'load' });
     const footer = await page.locator('.ignis-project-block .ignis-block-quote footer').first().textContent({ timeout: 8000 });
     expect(footer).toMatch(/IGNIS/);
     expect(footer).toMatch(/\((philosophical|wry|patient|appreciative|historical|infrastructural|incisive|conviction|operational|cryptic|self-aware|observational|founder-aware|matter-of-fact|engineering-aware|respectful|approving|structural|front-door|decisive|pragmatic|candid|strategic|auditor)\)/i);
@@ -88,14 +88,14 @@ test.describe('IGNIS project block widget', () => {
 
 test.describe('Oracle page', () => {
   test('renders headline + stats panel populates', async ({ page }) => {
-    await page.goto(`${BASE}/oracle/`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/oracle/`, { waitUntil: 'load' });
     await expect(page.locator('h1')).toContainText(/The Oracle/i);
     await expect(page.locator('#oracle-stat-total')).not.toHaveText('—', { timeout: 6000 });
     await expect(page.locator('#oracle-stat-green')).not.toHaveText('—');
   });
 
   test('feed renders one or more IGNIS blocks', async ({ page }) => {
-    await page.goto(`${BASE}/oracle/`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/oracle/`, { waitUntil: 'load' });
     const blocks = page.locator('#oracle-feed .ignis-project-block');
     await expect(blocks.first()).toBeVisible({ timeout: 8000 });
     const count = await blocks.count();
@@ -104,7 +104,7 @@ test.describe('Oracle page', () => {
 
   test('velocity chart renders with populated stats', async ({ page }) => {
     test.setTimeout(90_000);
-    await page.goto(`${BASE}/oracle/`, { waitUntil: 'networkidle', timeout: 60_000 });
+    await page.goto(`${BASE}/oracle/`, { waitUntil: 'load', timeout: 60_000 });
     const chart = page.locator('#oracle-velocity-chart');
     await expect(chart).toBeVisible({ timeout: 15_000 });
     // wait for population
@@ -118,7 +118,7 @@ test.describe('Oracle page', () => {
   });
 
   test('filter buttons toggle aria-pressed', async ({ page }) => {
-    await page.goto(`${BASE}/oracle/`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/oracle/`, { waitUntil: 'load' });
     const greenBtn = page.locator('.oracle-filter[data-filter="green"]');
     await greenBtn.click();
     await expect(greenBtn).toHaveAttribute('aria-pressed', 'true');
@@ -130,7 +130,7 @@ test.describe('Oracle page', () => {
 
   test('IGNIS Studio Cognition hero card populates', async ({ page }) => {
     test.setTimeout(60_000);
-    await page.goto(`${BASE}/oracle/`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/oracle/`, { waitUntil: 'load' });
     await expect(page.locator('.oracle-ignis-card')).toBeVisible();
     await expect(page.locator('#ignis-aggregate-score')).not.toHaveText('—', { timeout: 10_000 });
     await expect(page.locator('#ignis-aggregate-tier')).not.toHaveText('Loading…', { timeout: 10_000 });
@@ -144,7 +144,7 @@ test.describe('Oracle page', () => {
   });
 
   test('share button is present and accessible', async ({ page }) => {
-    await page.goto(`${BASE}/oracle/`, { waitUntil: 'networkidle' });
+    await page.goto(`${BASE}/oracle/`, { waitUntil: 'load' });
     const shareBtn = page.locator('#oracle-share-btn');
     await expect(shareBtn).toBeVisible();
     await expect(shareBtn).toHaveText(/share the oracle/i);

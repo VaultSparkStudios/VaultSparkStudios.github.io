@@ -5,7 +5,7 @@ const { test, expect } = require('@playwright/test');
 
 test.describe('Ecosystem Oracle — S136 expansion', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/oracle/', { waitUntil: 'networkidle' });
+    await page.goto('/oracle/', { waitUntil: 'load' });
     // Wait for the velocity feeds to land and oracle-extra.js to render.
     await page.waitForFunction(() => {
       const insights = document.getElementById('oracle-insights');

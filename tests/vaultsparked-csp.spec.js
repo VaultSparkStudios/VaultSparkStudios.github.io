@@ -28,7 +28,7 @@ test.describe('VaultSparked CSP compliance', () => {
       }
     });
 
-    await page.goto(BASE + '/vaultsparked/', { waitUntil: 'networkidle' });
+    await page.goto(BASE + '/vaultsparked/', { waitUntil: 'load' });
 
     // Allow time for deferred scripts to run and any CSP errors to surface
     await page.waitForTimeout(1500);
@@ -54,7 +54,7 @@ test.describe('VaultSparked CSP compliance', () => {
       }
     });
 
-    await page.goto(BASE + '/', { waitUntil: 'networkidle' });
+    await page.goto(BASE + '/', { waitUntil: 'load' });
     await page.waitForTimeout(1000);
 
     expect(cspViolations, 'CSP violations found on homepage').toHaveLength(0);

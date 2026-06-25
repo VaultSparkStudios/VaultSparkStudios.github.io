@@ -19,7 +19,7 @@ test.describe('Investor message thread (S136)', () => {
   });
 
   test('unauth visitors see auth-gate, not thread (RLS isolation)', async ({ page }) => {
-    await page.goto('/investor-portal/message/', { waitUntil: 'networkidle' });
+    await page.goto('/investor-portal/message/', { waitUntil: 'load' });
     // /investor-portal/* is noindex + auth-required; an unauth visitor will
     // either be redirected to login OR see an empty state. Either is acceptable;
     // a 200 with real message bodies leaking through is a failure.

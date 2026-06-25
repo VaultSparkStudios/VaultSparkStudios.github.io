@@ -8,13 +8,13 @@ test.describe('Theme persistence', () => {
       window.localStorage.setItem('vs_theme', 'warm');
     });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
-    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(400); // let theme script apply (networkidle unreliable on RUM-beacon pages)
     // Custom picker (replaces bare <select> as of S44)
     await page.waitForSelector('#theme-picker-btn', { timeout: 15000 });
     await expect(page.locator('.theme-tile[data-theme="warm"]')).toHaveClass(/active/);
     await expect(page.locator('body')).toHaveAttribute('data-theme', 'warm');
     await page.reload({ waitUntil: 'domcontentloaded' });
-    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(400); // let theme script apply (networkidle unreliable on RUM-beacon pages)
     await page.waitForSelector('#theme-picker-btn', { timeout: 15000 });
     await expect(page.locator('.theme-tile[data-theme="warm"]')).toHaveClass(/active/);
     await expect(page.locator('body')).toHaveAttribute('data-theme', 'warm');
@@ -26,7 +26,7 @@ test.describe('Theme persistence', () => {
       window.localStorage.setItem('vs_theme', 'high-contrast');
     });
     await page.goto('/', { waitUntil: 'domcontentloaded' });
-    await page.waitForLoadState('networkidle');
+    await page.waitForTimeout(400); // let theme script apply (networkidle unreliable on RUM-beacon pages)
     // Custom picker (replaces bare <select> as of S44)
     await page.waitForSelector('#theme-picker-btn', { timeout: 15000 });
     await page.locator('#hamburger').click({ force: true });
