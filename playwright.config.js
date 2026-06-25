@@ -43,6 +43,9 @@ function loadEnvFile(envPath) {
 
 module.exports = defineConfig({
   testDir: './tests',
+  // Snapshots under tests/__snapshots__/ so the workflow upload path is deterministic
+  // and consistent with the spec comment + update-vr-baselines.mjs staging path.
+  snapshotDir: './tests/__snapshots__',
   timeout: 30000,
   retries: 1,
   workers: process.env.CI ? 2 : 1,

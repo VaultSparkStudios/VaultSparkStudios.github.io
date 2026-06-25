@@ -316,6 +316,23 @@ try {
   failures++;
 }
 
+// ── workflow YAML validity: catch the inline-colon parse error before push (S223)
+// Advisory-class catch (not blocking): passes with npx js-yaml; exits 0 on valid.
+try {
+  const wfYaml = spawnSync(process.execPath, [resolve(root, 'scripts/check-workflow-yaml-validity.mjs')], {
+    cwd: root, encoding: 'utf8', windowsHide: true, timeout: 60000,
+  });
+  if (wfYaml.status === 0) {
+    results.push({ status: 'OK', module: 'check-workflow-yaml-validity · all workflows valid' });
+  } else {
+    failures++;
+    const tail = (wfYaml.stderr || wfYaml.stdout || '').trim().split('\n').slice(-3).join(' | ');
+    results.push({ status: 'FAIL', module: 'check-workflow-yaml-validity', reason: tail || 'workflow YAML parse error' });
+  }
+} catch (err) {
+  results.push({ status: 'SKIP', module: 'check-workflow-yaml-validity', reason: `spawn error: ${err.message}` });
+}
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const pad = s => s.padEnd(45);
 for (const r of results) {

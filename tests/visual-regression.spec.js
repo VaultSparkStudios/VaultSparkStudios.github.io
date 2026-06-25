@@ -65,7 +65,10 @@ for (const vp of VIEWPORTS) {
           try { localStorage.setItem('vs-theme', t); } catch (_) {}
         }, theme);
 
-        await page.goto(BASE_URL + surface.path, { waitUntil: 'networkidle', timeout: 30000 });
+        // Use 'load' (not 'networkidle') — pages like /oracle/ have ongoing beacon
+        // traffic that never reaches networkidle, causing 30s timeouts (S223).
+        // 'load' waits for the window.load event which is sufficient for VR.
+        await page.goto(BASE_URL + surface.path, { waitUntil: 'load', timeout: 30000 });
         // Suppress ambient animations + live-data flicker so snapshots are
         // deterministic. The genome-strip + sigil read from /api shards and
         // pulse — pin to a stable opacity for the snapshot.
@@ -79,7 +82,7 @@ for (const vp of VIEWPORTS) {
             .vs-genome-strip, .vs-sigil-ring, .vs-tour-offer { opacity: 1 !important; }
           `,
         });
-        await page.waitForTimeout(400); // let ambient mounts settle
+        await page.waitForTimeout(600); // extra settle for deferred/async renders post-load
         await expect(page).toHaveScreenshot(`${surface.name}-${vp.name}-${theme}.png`, {
           fullPage: false,
           maxDiffPixelRatio: PIXEL_RATIO_TOLERANCE,
