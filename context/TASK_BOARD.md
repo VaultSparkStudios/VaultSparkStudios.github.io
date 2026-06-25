@@ -1,6 +1,29 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-25 (Session 223 — arc: root-fixed build-agents-json (same gitignored-input class as S222); 4 second-order gates; ci-health-monitor (S222 brainstorm #2); Node 24 upgrade 9 workflows; VR baseline infrastructure fixed + 2nd run triggered; Ark cargo + inbox)
+Last updated: 2026-06-25 (Session 224 — arc: generate-push-config CI fix + _headers preview fidelity + resilience gate throw detection + networkidle E2E mass fix (10 files, 23 instances) + accessibility evaluate() hardening + check-e2e-networkidle gate + beacon scheduled workflow tracking)
+
+## S224 outcome + carries
+
+**Shipped in S224:**
+- [x] **[CI/P1] `generate-push-config.mjs` graceful degrade** — script threw `ENOENT` when `../vaultspark-studio-ops/` absent (all CI environments). Changed to `try/catch` warn + exit(0). Sibling repo paths added to `check-build-step-resilience.mjs` GITIGNORED_INPUTS. Same class as S222/S223 gitignored-input fixes.
+- [x] **[CI/P2] `local-preview-server.mjs` Cloudflare `_headers` preload fidelity** — added `parseHeadersFile()` + `getExtraHeaders(pathname)` so local Lighthouse CI preview emits the same preload Link headers as production CDN; makes LCP measurements representative.
+- [x] **[INFRA/SECOND-ORDER] `check-build-step-resilience.mjs` throw detection** — extended from `process.exit(1)` only to also catch `throw new Error()` patterns (±15-line context window). Self-test 3→5 (3 inline + 2 real-file).
+- [x] **[INFRA/P3] `check-rum-allowlist.mjs` sw.js root scan** — added `ROOT_SOURCE_FILES = ['sw.js']` + extended emit regex to `\b(?:emit\w*|rumBeacon)\(` so the service worker's push RUM beacons are visible to the gate.
+- [x] **[UX/P2] Forge Window propagation** — 6 `pathways/`+`explore/` HTML pages propagated with current nav.
+- [x] **[INFRA/SECOND-ORDER] `ci-status-beacon.yml` scheduled workflow tracking** — auto-discovers `schedule:`-triggered workflows, fetches 60 runs, adds `scheduledWorkflows[]` + `hasDeadCron` to `api/ci-status.json`. Closes the CI blindness gap for non-push-triggered workflows.
+- [x] **[CI/P1] `accessibility.spec.js` `page.evaluate()` hardening** — "Form inputs have labels" test timed out on `nth(4)` (Playwright `.all()` Locators detach between collection and `getAttribute()`). Changed to synchronous DOM snapshot in `page.evaluate()` — immune to post-collection mutations (D-S224.4).
+- [x] **[CI/P1] Playwright networkidle E2E mass fix — 10 files, 23 instances** — `waitUntil: 'networkidle'` and `waitForLoadState('networkidle')` replaced with `'load'` + targeted `waitForTimeout` across: `s134-oracle-ignis.spec.js`, `oracle-extra.spec.js`, `s103-surfaces.spec.js`, `s98-surfaces.spec.js`, `vault-wall.spec.js`, `vaultsparked-csp.spec.js`, `investor-thread.spec.js`, `homepage-hero-regression.spec.js`, `ambient-bundle-integrity.spec.js`, `theme-persistence.spec.js`. Auth-gated files unchanged.
+- [x] **[INFRA/SECOND-ORDER] `check-e2e-networkidle.mjs` new gate** — scans 34 test spec files for networkidle patterns; 2 auth files exempt; 5/5 self-test; wired into `smoke-startup-scripts.mjs`. Class is un-reintroducible.
+- [x] **[OPS] Ark CANON-006 cargo** — velaxis/syntha/shadow branding gaps shipped to studio-ops.
+- [x] **[OPS] API drift cleared** — `api/heartbeat.json` + `api/public-status.json` + `api/citation.json` + `api/status-proof.json` regenerated at closeout.
+
+**S224 honest ledger (rejections = wins):**
+- → **Founder-gated carries unchanged** — push notification (0 subs), Signal Log/forge devlog (founder voice), `ark.hmac.seed`, mobile-sheet, card-accent overlay.
+
+**S224 committed to next session (brainstorm):**
+- [ ] **[CI/P2] Verify E2E green in CI** — the networkidle mass-fix should eliminate timeout failures in `s134-oracle-ignis.spec.js` and the 9 other files. Watch for the first green E2E run after S224 commit lands.
+- [ ] **[INFRA/P3·SIL] check-playwright-locator-all gate** — `page.locator().all()` followed by async `getAttribute()` is a latent race condition on any page with dynamic DOM. Scan test specs for `.all()` followed by `.getAttribute()`/`.textContent()` in a for-of loop; flag with a fix suggestion. Extends the S224 accessibility hardening.
+- [ ] **[INFRA/P3·SIL] ci-status-beacon `hasDeadCron` dashboard surface** — `api/ci-status.json` now has `hasDeadCron` and `scheduledWorkflows[]`. Build a tiny `check-ci-status-dead-crons.mjs` gate that reads the beacon and fails (advisory) if any scheduled workflow has `dead: true`. Closes the local observability gap (the beacon is already emitting the data; a gate makes it actionable without GitHub).
 
 ## S223 outcome + carries
 

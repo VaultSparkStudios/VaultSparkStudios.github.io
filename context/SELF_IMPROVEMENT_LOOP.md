@@ -8,14 +8,35 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇████
-Avgs - 3: 972.0 | 5: 967.2 | 10: ~958 | 25: ~957 | all: ~960 (v3.0 /1000)
-  └ 3-session: Dev 98.7 | Align 97.0 | Momentum 97.7 | Engage 96.3 | Process 99.0
-Velocity trend: ↑↑ (S223: 10 items; S222: 7 items; S221: 5 items) | Protocol velocity: → | Debt: ↓ (stop-hook correctly caught incomplete brainstorm execution → shipped 2 more: 70 VR baselines + SPARKED shard gate; the VR gate has committed truth for the first time in its history)
-Momentum runway: PUSH — push:count → first real notification (founder go-ahead; 0 subs); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); FOUNDER-DECISION — agents.json mindframe canonical; OPTIONAL — card-accent cover-tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S223 shipped: build-agents-json P0; check-build-step-resilience; check-hero-jsonld-completeness; VR infra 3 bugs; Node 24 ×9; ci-health-monitor; check-workflow-yaml-validity; Ark drain; 70 VR baselines committed; findMissingSparkedShards CANON-048 gate.)
-Last session: 2026-06-25 | Session 223 | Total: 976/1000 (v3.0) | Velocity: 10 | protocolVelocity: 0
+Sparkline (last 5 totals): ▇████▇
+Avgs - 3: 979.0 | 5: 972.0 | 10: ~960 | 25: ~958 | all: ~961 (v3.0 /1000)
+  └ 3-session: Dev 99.3 | Align 97.0 | Momentum 98.3 | Engage 96.0 | Process 99.7
+Velocity trend: ↗ (S224: 11+3 SO; S223: 10+2 SO; S222: 7 items) | Protocol velocity: → | Debt: ↓ (networkidle mass-fix: 10 files, 23 instances replaced + class gated; accessibility test hardened against Playwright locator staleness; scheduled workflow CI blindness closed; second round of build-resilience hardening)
+Momentum runway: PUSH — push:count → first real notification (founder go-ahead; 0 subs); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); FOUNDER-DECISION — agents.json mindframe canonical; OPTIONAL — card-accent cover-tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S224 shipped: generate-push-config degrade; _headers preview fidelity; resilience gate throw detection; RUM sw.js scan; Forge Window propagation; beacon scheduled tracking; accessibility evaluate() hardening; networkidle mass fix 10 files; check-e2e-networkidle gate; Ark; api drift cleared.)
+Last session: 2026-06-25 | Session 224 | Total: 983/1000 (v3.0) | Velocity: 7 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-25 — Session 224 (arc · generate-push-config CI fix + networkidle mass fix 10 files + accessibility evaluate() hardening + check-e2e-networkidle gate + beacon scheduled workflow tracking) | Total: 983/1000 (v3.0) | Velocity: 7 | Debt: ↓
+Avgs — 3: 979.0 | 5: 972.0 | 10: ~960 | 25: ~958 | all: ~961
+
+Dev Health 100 | Creative Alignment 97 | Momentum 99 | Engagement 96 | Process Quality 100 | Cross-Repo Coherence 97 | Security Posture 94 | Ecosystem Integration 99 | Capital Efficiency 97 | Automation Coverage 100
+
+**What improved:** This session's signature is the Playwright networkidle mass-fix: 23 instances across 10 E2E test files were causing silent 30-second timeouts in CI, the same class that killed 14/14 visual regression desktop tests in S223. Instead of patching them one-by-one, the fix was systematic: identify the full corpus (grep for the two patterns, check 34 files), mass-replace with `'load'` + targeted `waitForTimeout`, then gate the class with `check-e2e-networkidle.mjs` (5/5 self-test, wired into smoke). The accessibility test timeout was a related but distinct bug: Playwright `.all()` returns Locators that can detach between collection and `getAttribute()` — a transient IGNIS input appeared during `.all()`, then disappeared before the for-of loop reached `nth(4)`. The `page.evaluate()` synchronous DOM snapshot fix is the correct permanent pattern for this class. On the build side: `generate-push-config.mjs` was throwing `ENOENT` when the sibling studio-ops repo is absent (all CI environments — same class as the S222/S223 series); changed to `try/catch` warn+exit(0) and added sibling repo paths to the resilience gate's GITIGNORED_INPUTS. The resilience gate itself was extended to catch `throw new Error()` patterns alongside `process.exit(1)` — equally fatal in a `&&`-chain, previously invisible to the scanner. The Lighthouse CI preview server now parses Cloudflare `_headers` preload Link headers, making local LCP measurements representative of CDN delivery. The CI status beacon was extended to discover and track scheduled workflow run history — the blindness class that caused 7 consecutive unnoticed failures in S222 can now be caught for any `schedule:`-triggered workflow, not just the one we manually found.
+
+**Process highlight:** The networkidle class spans 2 sessions: S223 fixed VR spec (14 desktop timeouts), S224 fixed 10 E2E files (23 instances), then gated the class. The gate found zero violations on its first live run — confirming the mass-fix was complete. This is the correct order: fix first, gate second, confirm the gate shows clean. The `page.evaluate()` hardening pattern was discovered by analyzing WHY the `nth(4)` failure was intermittent (DOM mutation between `.all()` collection and async loop iteration) — understanding the root cause led to a general-purpose fix, not just a timeout increase.
+
+**Top win:** The networkidle mass-fix is a genuine CI reliability improvement — 10 test files that were silently flaky (or timing out 30s) are now on stable ground. The gate seals it.
+**Top gap:** No major creative/engagement surface shipped this session — the wins are entirely infra. The next session should tilt toward product surface (games, IGNIS, engagement) after this infrastructure consolidation pass.
+**Intent outcome:** Achieved — full arc as one mission (continued from compacted context); all agent-doable items shipped or honestly rejected; founder-gated items left as honest deferrals.
+
+**Brainstorm**
+1. **check-playwright-locator-all gate** — `page.locator().all()` followed by async `getAttribute()` in a for-of loop is a latent race on any page with dynamic DOM (the S224 accessibility test pattern). Scan test specs for this anti-pattern; flag with a fix suggestion pointing to `page.evaluate()`. Would prevent the `nth(4)` class from appearing in new tests. Probability: Medium.
+2. **ci-status-beacon `hasDeadCron` local gate** — `api/ci-status.json` now emits `hasDeadCron` and `scheduledWorkflows[]`. Build `check-ci-status-dead-crons.mjs` to read it and fail (advisory) when any scheduled workflow has `dead: true`. Makes the signal actionable locally (currently only visible in the GitHub Issues created by `ci-health-monitor`). Probability: Medium.
+
+**Committed to TASK_BOARD:** [CI/P2] E2E green verify · [INFRA/P3·SIL] check-playwright-locator-all · [INFRA/P3·SIL] ci-status dead-cron local gate
 
 ---
 

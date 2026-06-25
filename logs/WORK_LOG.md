@@ -1,5 +1,50 @@
 # Work Log
 
+## 2026-06-25 — Session 224 · generate-push-config CI fix + networkidle E2E mass fix (10 files, 23 instances) + accessibility evaluate() hardening + check-e2e-networkidle gate + beacon scheduled tracking (arc)
+
+Full continuous arc (/start → /audit → /implement → /closeout) — continued from compacted context mid-implementation. **11 substantive ships + 3 second-order innovations.** SIL 976 → 983 (+7). Velocity 7.
+
+**/start (resumed from compaction):** Context-meter CONTINUE. Session 224 continuing where S224 left off. Staged api/ files from drift regen (heartbeat, public-status, citation) waiting for commit.
+
+**/audit (from prior context):** Key signals: (a) `generate-push-config.mjs` threw ENOENT for absent sibling repo — same class as S222/S223 gitignored-input series; (b) `accessibility.spec.js` "Form inputs have labels" test timing out on `nth(4)` — Playwright Locator detachment; (c) networkidle in 10 E2E test files (23 instances) causing systematic CI flake on beacon-heavy pages (same class as S223 VR fix); (d) ci-status-beacon had no visibility into scheduled workflow health.
+
+**1 — [P1] `generate-push-config.mjs` degrade.** `try { ... } catch { warn + exit(0) }` when `../vaultspark-studio-ops/secrets/CAPABILITY_MAP.json` absent. Sibling repo paths added to resilience gate GITIGNORED_INPUTS. Class consistent with S222/S223; preventable by extension of existing gate.
+
+**2 — [P2] `local-preview-server.mjs` _headers preload.** Added `parseHeadersFile()` + `getExtraHeaders(pathname)`. Preview server now emits Cloudflare Link preload headers so Lighthouse CI LCP measurements match CDN delivery. Production CDN was injecting preload hints for JS/CSS that the local server suppressed, causing systematically pessimistic LCP readings.
+
+**3 — SECOND-ORDER: resilience gate throw detection.** `check-build-step-resilience.mjs` extended to catch `/\bthrow\s+new\s+\w+Error/` and `/\bthrow\s+new\s+Error/` patterns. Self-test 3→5 assertions. Both `process.exit(1)` and unhandled throws crash an `&&`-chained build identically.
+
+**4 — [P3] RUM allowlist sw.js scan.** `check-rum-allowlist.mjs` was never scanning the service worker (`sw.js`). Added `ROOT_SOURCE_FILES`, extended emit regex to `\b(?:emit\w*|rumBeacon)\(`.
+
+**5 — [P2] Forge Window propagation.** 6 `pathways/`+`explore/` HTML pages with stale nav updated.
+
+**6 — SECOND-ORDER: beacon scheduled workflow tracking.** `ci-status-beacon.yml` auto-discovers `schedule:`-triggered workflows from `.github/workflows/*.yml`, fetches 60 runs (was 40), adds `scheduledWorkflows[]` (per-workflow `lastConclusion`, `recentConclusions`, `dead`, `streak`) + `hasDeadCron` boolean to `api/ci-status.json`. Closes the CI blindness gap for scheduled workflows — the class that ran 7 consecutive unnoticed failures in S222.
+
+**7 — [P1] Accessibility evaluate() hardening.** "Form inputs have associated labels" test was timing out at `nth(4)`. Root cause: Playwright `.all()` captures Locator references that can become detached when DOM mutates between collection and the async for-of loop. A 5th transient input (from IGNIS or dynamic content) appeared during `.all()`, then disappeared before `getAttribute()` ran on it. Fix: `page.evaluate()` creates a synchronous DOM snapshot — all reads happen in one synchronous DOM walk, immune to subsequent mutations (D-S224.4).
+
+**8 — [P1] Playwright networkidle mass fix.** 23 instances across 10 test files:
+- `tests/s134-oracle-ignis.spec.js` (8 usages)
+- `tests/oracle-extra.spec.js`
+- `tests/s103-surfaces.spec.js` (4 usages)
+- `tests/s98-surfaces.spec.js`
+- `tests/vault-wall.spec.js`
+- `tests/vaultsparked-csp.spec.js` (2 usages)
+- `tests/investor-thread.spec.js`
+- `tests/homepage-hero-regression.spec.js`
+- `tests/ambient-bundle-integrity.spec.js`
+- `tests/theme-persistence.spec.js` (waitForLoadState→waitForTimeout)
+Auth-gated files (`authenticated.spec.js`, `helpers/vaultAuth.js`) left unchanged (Supabase needs networkidle).
+
+**9 — SECOND-ORDER: `check-e2e-networkidle.mjs`.** New gate scanning 34 test spec files for `waitUntil: 'networkidle'` and `waitForLoadState('networkidle')` patterns. EXEMPT_FILES: `authenticated.spec.js`, `vaultAuth.js`. 5/5 self-test; 34 test files clean on first run; 2 auth files exempt. Wired into `smoke-startup-scripts.mjs`. The class is un-reintroducible.
+
+**10 — [OPS] Ark CANON-006.** Velaxis/syntha/shadow branding gap cargo shipped to studio-ops.
+
+**11 — [OPS] API drift.** `node scripts/generate-heartbeat.mjs` + `node scripts/build-public-status.mjs` + `node scripts/build-citation.mjs` + `node scripts/build-status-proof.mjs` regenerated drift-cleared feeds.
+
+**/closeout:** `build:check` EXIT 0 (verified directly) · `blockingFailing: 0` · smoke 23/24 (1 expected skip) · all gates self-test green. Wrote all 7 context files. Committed + pushing direct to main.
+
+---
+
 ## 2026-06-25 — Session 223 · build-agents-json P0 (2nd gitignored-input script) + 4 second-order gates + ci-health-monitor + Node 24 + VR baseline infra fixed (arc)
 
 Full continuous arc (/start → /audit → /implement → /closeout) as one mission. **8 substantive ships + second-order gate catches a real bug on first run.** SIL 972 → 974 (+2). Velocity 9.

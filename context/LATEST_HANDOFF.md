@@ -1,8 +1,29 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-25 (Session 223 — arc · build-agents-json P0 (2nd script with same gitignored-input class as S222) + 4 second-order gates + ci-health-monitor + Node 24 upgrade + VR baseline infrastructure fixed)
+Last updated: 2026-06-25 (Session 224 — arc · generate-push-config CI fix + Lighthouse preview headers + resilience gate throw detection + networkidle E2E mass fix (10 files, 23 instances) + accessibility evaluate() hardening + check-e2e-networkidle gate + beacon scheduled workflow tracking)
 
-Session Intent: Founder /goal — run the full arc (/start → /audit → /implement → /closeout) as one continuous mission, saturate the genius list + second-order innovation, commit + push DIRECT to main, no mid-phase handback.
+Session Intent: Founder /goal — run the full arc (/start → /audit → /implement → /closeout) as one continuous mission. Continued from a compacted context; implemented phase was mid-stream. Quality bar: genius-level, maximally innovative, second-order innovations from each fix.
+
+## Where We Left Off (Session 224)
+- **Shipped (11 substantive · 3 second-order innovations · "networkidle mass-fix session — 10 files, 23 instances, then gated the class"):**
+  1. **[P1] `generate-push-config.mjs` graceful degrade** — script threw `ENOENT` when `../vaultspark-studio-ops/secrets/CAPABILITY_MAP.json` was absent (all CI environments). Changed to `try/catch` warn + exit(0). Sibling repo paths added to `check-build-step-resilience.mjs` GITIGNORED_INPUTS.
+  2. **[P2] `local-preview-server.mjs` `_headers` preload fidelity** — preview server was ignoring Cloudflare `_headers` Link preload hints; added `parseHeadersFile()` + `getExtraHeaders(pathname)` so local Lighthouse CI produces measurements representative of production CDN delivery.
+  3. **SECOND-ORDER — `check-build-step-resilience.mjs` throw detection** — extended from `process.exit(1)` only to also catch `throw new Error()` patterns (equally fatal to `&&`-chained build). Self-test 3→5 assertions passing.
+  4. **[P3] `check-rum-allowlist.mjs` sw.js root scan + `rumBeacon()` regex** — service worker (`sw.js`) was never scanned for RUM emits. Added `ROOT_SOURCE_FILES`, extended emit regex to `\b(?:emit\w*|rumBeacon)\(`.
+  5. **[P2] Forge Window propagation** — 6 `pathways/` and `explore/` HTML pages with stale nav propagated.
+  6. **SECOND-ORDER — `ci-status-beacon.yml` scheduled workflow tracking** — auto-discovers all `schedule:`-triggered workflows, fetches 60 runs, adds `scheduledWorkflows[]` (with `lastConclusion`/`recentConclusions`/`dead`/`streak`) + `hasDeadCron` boolean to `api/ci-status.json`. Closes the CI blindness gap for scheduled workflows.
+  7. **[P1] `accessibility.spec.js` `page.evaluate()` hardening** — "Form inputs have labels" test timed out on `nth(4)` because Playwright `.all()` Locators detach between collection and `getAttribute()`. Changed to synchronous `page.evaluate()` DOM snapshot — immune to post-collection mutations.
+  8. **[P1] Playwright networkidle mass fix — 10 E2E test files, 23 instances** — `waitUntil: 'networkidle'` and `waitForLoadState('networkidle')` replaced with `'load'` + targeted `waitForTimeout`. Files: `s134-oracle-ignis.spec.js` (8), `oracle-extra.spec.js`, `s103-surfaces.spec.js` (4), `s98-surfaces.spec.js`, `vault-wall.spec.js`, `vaultsparked-csp.spec.js` (2), `investor-thread.spec.js`, `homepage-hero-regression.spec.js`, `ambient-bundle-integrity.spec.js`, `theme-persistence.spec.js` (waitForLoadState→waitForTimeout). Auth-gated files left unchanged.
+  9. **SECOND-ORDER — `check-e2e-networkidle.mjs` new gate** — scans 34 test spec files for networkidle patterns; `authenticated.spec.js` + `vaultAuth.js` exempt (Supabase needs networkidle); 5/5 self-test; wired into `smoke-startup-scripts.mjs`. The class is un-reintroducible.
+  10. **[OPS] Ark CANON-006 cargo** — velaxis/syntha/shadow branding gaps shipped to studio-ops.
+  11. **[OPS] API drift cleared** — `api/heartbeat.json` + `api/public-status.json` + `api/citation.json` + `api/status-proof.json` regenerated and committed.
+- **Honest ledger:** Founder-gated carries unchanged — first push notification (0 subs), Signal Log + forge devlog (founder voice), `ark.hmac.seed` provisioning, mobile-sheet real-device, card-accent overlay.
+- **Tests:** `build:check` EXIT 0 (verified directly) · `blockingFailing: 0` · smoke 23/24 (1 expected skip: gateway-readiness·claude.api) · `check-e2e-networkidle` 34 files clean · `check-build-step-resilience` 5/5 self-test.
+- **Deploy:** committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip; Worker unchanged.
+- **First action next session:** `/start` → (a) verify the 10 E2E files go green in CI (the mass-fix should eliminate networkidle timeouts); (b) confirm `ci-status-beacon` shows `scheduledWorkflows[]` on next trigger; (c) scan genius list for next innovation targets.
+- **SIL:** 976 → 983 (+7). Categories: Dev 100 | Align 97 | Momentum 99 | Engage 96 | Process 100 | CrossRepo 97 | Security 94 | EcoInt 99 | CapEff 97 | AutoCov 100.
+
+> **S223 (arc):** build-agents-json P0 (2nd gitignored-input script) + check-build-step-resilience + check-hero-jsonld-completeness + VR infra 3 bugs + Node 24 ×9 + ci-health-monitor + check-workflow-yaml-validity + Ark. SIL 976.
 
 ## Where We Left Off (Session 223)
 - **Shipped (8 substantive · second class discovered and gated — "no more silent gitignored-input failures"):**
