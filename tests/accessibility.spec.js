@@ -142,13 +142,25 @@ test.describe('Accessibility — manual checks', () => {
   });
 
   test('Form inputs have associated labels on contact page', async ({ page }) => {
-    await page.goto('/contact/');
-    const inputs = await page.locator('input:visible:not([type="hidden"])').all();
-    for (const input of inputs) {
-      const id = await input.getAttribute('id');
-      const ariaLabel = await input.getAttribute('aria-label');
-      const placeholder = await input.getAttribute('placeholder');
-      expect(id || ariaLabel || placeholder).toBeTruthy();
+    await page.goto('/contact/', { waitUntil: 'load' });
+    await page.waitForTimeout(300); // let dynamic content settle
+    // Snapshot attributes in a single evaluate() to avoid locator staleness timeouts
+    // caused by transient inputs from IGNIS or other dynamic components.
+    const inputAttrs = await page.evaluate(() => {
+      const nodes = [...document.querySelectorAll('input:not([type="hidden"])')];
+      return nodes
+        .filter(el => {
+          const s = window.getComputedStyle(el);
+          return s.display !== 'none' && s.visibility !== 'hidden' && el.offsetHeight > 0;
+        })
+        .map(el => ({
+          id: el.getAttribute('id'),
+          ariaLabel: el.getAttribute('aria-label'),
+          placeholder: el.getAttribute('placeholder'),
+        }));
+    });
+    for (const attrs of inputAttrs) {
+      expect(attrs.id || attrs.ariaLabel || attrs.placeholder).toBeTruthy();
     }
   });
 });
