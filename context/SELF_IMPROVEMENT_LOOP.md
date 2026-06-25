@@ -8,12 +8,12 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇▇███
-Avgs - 3: 971.0 | 5: 966.4 | 10: ~957 | 25: ~957 | all: ~960 (v3.0 /1000)
+Sparkline (last 5 totals): ▇▇████
+Avgs - 3: 972.0 | 5: 967.2 | 10: ~958 | 25: ~957 | all: ~960 (v3.0 /1000)
   └ 3-session: Dev 98.7 | Align 97.0 | Momentum 97.7 | Engage 96.3 | Process 99.0
-Velocity trend: ↑↑ (S223: 9 items; S222: 7 items; S221: 5 items) | Protocol velocity: → | Debt: ↓ (both S222 brainstorm items shipped S223; first run of the build-step resilience gate caught a SECOND script with the same class; the class is now gated shut)
-Momentum runway: VR-BASELINE — run `node scripts/update-vr-baselines.mjs` (VR run 28200394502 pending); PUSH — push:count → first real notification (founder go-ahead; 0 subs); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); FOUNDER-DECISION — agents.json mindframe canonical; OPTIONAL — card-accent cover-tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S223 shipped: build-agents-json P0 degrade; check-build-step-resilience; check-hero-jsonld-completeness; VR baseline infra 3 bugs fixed; Node 24 upgrade 9 workflows; ci-health-monitor + sync-ci-health-issue; check-workflow-yaml-validity; Ark drain.)
-Last session: 2026-06-25 | Session 223 | Total: 974/1000 (v3.0) | Velocity: 9 | protocolVelocity: 0
+Velocity trend: ↑↑ (S223: 10 items; S222: 7 items; S221: 5 items) | Protocol velocity: → | Debt: ↓ (stop-hook correctly caught incomplete brainstorm execution → shipped 2 more: 70 VR baselines + SPARKED shard gate; the VR gate has committed truth for the first time in its history)
+Momentum runway: PUSH — push:count → first real notification (founder go-ahead; 0 subs); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); FOUNDER-DECISION — agents.json mindframe canonical; OPTIONAL — card-accent cover-tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S223 shipped: build-agents-json P0; check-build-step-resilience; check-hero-jsonld-completeness; VR infra 3 bugs; Node 24 ×9; ci-health-monitor; check-workflow-yaml-validity; Ark drain; 70 VR baselines committed; findMissingSparkedShards CANON-048 gate.)
+Last session: 2026-06-25 | Session 223 | Total: 976/1000 (v3.0) | Velocity: 10 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
