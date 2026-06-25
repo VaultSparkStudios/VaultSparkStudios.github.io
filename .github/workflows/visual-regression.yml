@@ -61,11 +61,16 @@ jobs:
       # — same pattern as accessibility.yml / cloudflare-worker-deploy.yml.
       - run: npm install --no-audit --no-fund
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium webkit
+        run: npx playwright install --with-deps chromium
+      # Pin to chromium: the spec emulates device viewports/UA/scale, but the
+      # rendering ENGINE must be a single reproducible one or baselines are
+      # meaningless (webkit vs chromium differ pixel-for-pixel, and firefox
+      # was never installed here — a latent error once the suite stopped
+      # crashing at collection). The S130 bug class is layout/CSS, engine-agnostic.
       - name: Run visual-regression snapshots
         env:
           VR_BASE_URL: ${{ github.event.inputs.base_url || 'https://vaultsparkstudios.com' }}
-        run: npx playwright test tests/visual-regression.spec.js --reporter=line
+        run: npx playwright test tests/visual-regression.spec.js --project=chromium --reporter=line
       - name: Upload diff report on failure
         if: failure()
         uses: actions/upload-artifact@v4

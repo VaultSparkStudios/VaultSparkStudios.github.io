@@ -1,6 +1,6 @@
 # VaultSparkStudios.github.io
 
-> S219 (arc) — hygiene root-fixes + second-order gate. (1) CANON walk: CANON_ADOPTION.md was MISSING entirely (latent doctor finding) → walked all 51 live canons with real posture (46 adopted / 3 in-flight review / 2 exempt-with-reason); the walk surfaced a real self-owned gap → (2) CANON-043: added SECURITY.md (Dependabot existed, security policy did not) aligned to .well-known/security.txt. (3) Resolved the S179 context-wipe-guard.mjs orphan (imported by nothing ~40 sessions) — added --self-test/--check CLIs, wired reactive checkContextFiles into closeout-autopilot Step 4 as a real gate (--allow-wipe escape hatch), CI-covered via smoke-startup-scripts (export + behavioral invariants). (4) SECOND-ORDER: built check-orphan-libs.mjs (no gate existed for orphaned scripts/lib/*.mjs) — found 2 MORE real orphans (env-local, write-project-status), allowlisted with rationale, wired into build:check via smoke runner (no cmd.exe length growth). (5) Drained Ark inbox (26 cargo, receipts shipped); root-caused 52 sig-failures = ark.hmac.seed MISSING fleet-wide (founder credential action). (6) Shipped 3 Ark cargos (studio-ops sibling-drift, obelisk-broker handoff, obelisk content-ack). Honest non-action: project-info-drift advisory = won't keyword-stuff punchy game copy. build:check EXIT 0, doctor blockingFailing 0 (4 failing = all sibling/portfolio scope, flagged via Ark).
+> S222 (arc) — closed the CI-failure-blindness class. Built check-scheduled-workflow-staleness.mjs (S221 brainstorm #1) + wired it into the doctor; on first run it caught a real incident: Refresh Live Data cron red 7 consecutive runs. Root-fixed the true cause (past a red-herring Ark-dossier log): build-llms-full-shards.mjs hard-exit(1) on the gitignored ignis/output/ecosystem-state.json, which is always absent on CI → stranded the whole 4h data-refresh → now degrades gracefully (warn+exit0). Also: fixed visual-regression defaultBrowserType-in-describe error + chromium-pinned the workflow; completed the half-done S185 rename by migrating the /studio-pulse/ H1 Forge Window→Studio Pulse + smoke assertion (E2E unblock, honoring binding D-S221.5); hardened check-s151-contracts to body-scan (closes the gate-gap that hid the stale H1); generalized cache-lint to npm/yarn/pnpm (S221 brainstorm #2). Closed 2 duplicate phantom TASK_BOARD entries. build:check EXIT 0 + blockingFailing 0 verified directly.
 
 ## Identity
 - Slug: vaultsparkstudios-website
@@ -12,10 +12,10 @@
 - Staging: https://website.staging.vaultsparkstudios.com
 
 ## Current focus
-S219 (arc) — hygiene root-fixes + second-order gate. (1) CANON walk: CANON_ADOPTION.md was MISSING entirely (latent doctor finding) → walked all 51 live canons with real posture (46 adopted / 3 in-flight review / 2 exempt-with-reason); the walk surfaced a real self-owned gap → (2) CANON-043: added SECURITY.md (Dependabot existed, security policy did not) aligned to .well-known/security.txt
+S222 (arc) — closed the CI-failure-blindness class. Built check-scheduled-workflow-staleness.mjs (S221 brainstorm #1) + wired it into the doctor; on first run it caught a real incident: Refresh Live Data cron red 7 consecutive runs
 
 ## Next milestone
-Push: first real notification (founder go-ahead; currently 0 subscribers). Content: Signal Log post + forge devlog (founder voice)
+Verify on next runs: Refresh Live Data cron + visual-regression + E2E go green (the staleness beacon will confirm the cron clears). Watch for any second latent build-step failure now that llms-shards no longer masks the rest of the chain
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://vaultsparkstudios.com/.

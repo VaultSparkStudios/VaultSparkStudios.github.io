@@ -1,33 +1,22 @@
 {
   "schemaVersion": "1.1",
-  "generatedAt": "2026-06-23T23:18:26.710Z",
+  "generatedAt": "2026-06-25T15:43:19.918Z",
   "window": 3,
   "entries": [
     {
       "route": "/",
       "profile": "field",
-      "lcpMed": 1452,
-      "clsMed": 0.102,
+      "lcpMed": 1108,
+      "clsMed": 0.0894,
       "budget": {
         "lcp": 2500,
         "cls": 0.1,
         "inp": 200
       },
       "reasons": [
-        "field p75 CLS 0.1020 > 0.1 (208 samples)",
-        "field p75 INP 232ms > 200ms (208 samples)"
+        "field p75 INP 232ms > 200ms (248 samples)"
       ],
-      "recipes": [
-        {
-          "class": "CLS-shift",
-          "severity": "medium",
-          "candidates": [
-            "Audit critical-shell geometry in scripts/build-shell-assets.mjs for / — check that header/nav/hero reservations cover this profile.",
-            "Open assets/style.css and verify @media (max-width: 768px) blocks reserve mobile geometry without late-injected layout shifts.",
-            "Look for any idle-loaded renderer that injects above-the-fold cards without a placeholder slot."
-          ]
-        }
-      ],
+      "recipes": [],
       "forensics": {
         "available": false,
         "reason": "no good→bad transition in history window (route may be persistently over budget or under-sampled)"
@@ -36,15 +25,15 @@
     {
       "route": "/games/",
       "profile": "field",
-      "lcpMed": 644,
-      "clsMed": 0.0692,
+      "lcpMed": 636,
+      "clsMed": 0.0419,
       "budget": {
         "lcp": 2500,
         "cls": 0.1,
         "inp": 200
       },
       "reasons": [
-        "field p75 INP 224ms > 200ms (61 samples)"
+        "field p75 INP 224ms > 200ms (65 samples)"
       ],
       "recipes": [],
       "forensics": {

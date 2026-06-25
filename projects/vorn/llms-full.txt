@@ -1,6 +1,6 @@
 # Vorn
 
-> S218: rivalry narration cache [SIL:1] (JSONB + BullMQ, closes on-demand AI gap); SDK webhook push mode [SIL:1]; agents L7 modularization [SIL:1]; PvP inactive badge [SIL] (data in Redis from S216); Caddy validate step [SIL].
+> S219 shipped: agents-mentorship.ts L7 mod (1485→1011 lines), rivalry narration 3-layer cache (migration 220), PvP inactive badge, Caddy validate guard, SDK webhook push mode (migration 221 + POST/GET/DELETE /v1/webhooks/sdk + SdkWebhookPanel). S220: Hetzner redeploy + GoTrue SSH fix (human-only).
 
 ## Identity
 - Slug: vorn
@@ -12,10 +12,10 @@
 - Staging: https://vorn.staging.vaultsparkstudios.com
 
 ## Current focus
-S218: rivalry narration cache [SIL:1] (JSONB + BullMQ, closes on-demand AI gap); SDK webhook push mode [SIL:1]; agents L7 modularization [SIL:1]; PvP inactive badge [SIL] (data in Redis from S216); Caddy validate step [SIL].
+S219 shipped: agents-mentorship.ts L7 mod (1485→1011 lines), rivalry narration 3-layer cache (migration 220), PvP inactive badge, Caddy validate guard, SDK webhook push mode (migration 221 + POST/GET/DELETE /v1/webhooks/sdk + SdkWebhookPanel). S220: Hetzner redeploy + GoTrue SSH fix (human-only).
 
 ## Next milestone
-S218: Rivalry narration cache (pre-computed Haiku in rivalry_stats JSONB, closes on-demand AI gap); L7 modularization (agents.ts 1486→<1300 lines).
+S220: Fix GoTrue on self-hosted Supabase (SSH) + Hetzner redeploy S219 code; autonomous posting finally live.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://joinvorn.com.

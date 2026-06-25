@@ -1,4 +1,4 @@
-# Genius Hit List — Session 220
+# Genius Hit List — Session 222
 
 Generated: 2026-06-25
 Project: `VaultSparkStudios.github.io`
@@ -6,11 +6,11 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 ## Score Summary
 
-- Overall opportunity pressure: **83/100**
+- Overall opportunity pressure: **82/100**
 - Health: **green**
-- Current SIL: **959/500**
+- Current SIL: **972/500**
 - CI health: **check gh run list**
-- Current focus: S220 (arc) — net-new visitor + agent-facing value at the genius bar, all gate-verified green. (1) Removed the obelisk-broker.mjs orphan: the untracked website copy was byte-identical (diff IDENTICAL) to the canonical studio-ops copy (its real home; imports ./secrets.mjs + portfolio/ paths), Ark-shipped S219, zero website consumers → deleted + pruned its check-orphan-libs allowlist entry (3→2). Closes the S183→S219 disposition carry (D-S220.1). (2) FLAGSHIP — enriched the hero-portfolio ItemList JSON-LD (build-hero-portfolio.mjs renderJsonLd): bare 4-prop schema → per-tile description/genre/image + VideoGame fields (applicationCategory/gamePlatform/operatingSystem) + sameAs to the real live destination (external product domains promogrind.bet/veilos.io + distinct playable builds), all derived from the committed feed (deterministic --check) + a </script>-breakout guard. Self-test 6→14. Live JSON-LD verified rich. SEO rich-result + AI-citation + CANON-048 dual-audience depth on the highest-traffic surface (D-S220.2). (3) SECOND-ORDER — IGNIS returning-visitor re-entry chip (ignis-answer-engine.js renderResumeChip): surfaces the otherwise-invisible prefix-cache (S206 #15) as a 'Pick up where you left off' chip for visitors with history (who previously saw no starters); reuses existing starter classes (style-contract safe) + the already-allowlisted oracle:starter_click: emit prefix. Honest rejections/deferrals: agents.json llmsFull for 4 external-domain projects = by-design (thin-content risk); light-mode CTA contrast = premise FALSE (~11:1 passes WCAG); MindFrame FORGE→SPARKED = founder-gated public promise. build:check EXIT 0 (verified directly), doctor blockingFailing 0 (3 advisory = sibling/portfolio), hero self-test 14/14, style-contract --strict + RUM allowlist exit 0.
+- Current focus: S222 (arc) — closed the CI-failure-blindness class. Built check-scheduled-workflow-staleness.mjs (S221 brainstorm #1) + wired it into the doctor; on first run it caught a real incident: Refresh Live Data cron red 7 consecutive runs. Root-fixed the true cause (past a red-herring Ark-dossier log): build-llms-full-shards.mjs hard-exit(1) on the gitignored ignis/output/ecosystem-state.json, which is always absent on CI → stranded the whole 4h data-refresh → now degrades gracefully (warn+exit0). Also: fixed visual-regression defaultBrowserType-in-describe error + chromium-pinned the workflow; completed the half-done S185 rename by migrating the /studio-pulse/ H1 Forge Window→Studio Pulse + smoke assertion (E2E unblock, honoring binding D-S221.5); hardened check-s151-contracts to body-scan (closes the gate-gap that hid the stale H1); generalized cache-lint to npm/yarn/pnpm (S221 brainstorm #2). Closed 2 duplicate phantom TASK_BOARD entries. build:check EXIT 0 + blockingFailing 0 verified directly.
 
 ## Strategic Read
 
@@ -29,49 +29,55 @@ Why it matters: The current implementation is only complete once the remote brow
 
 First command: `gh run list --limit 10`
 
-#### 2. [PRODUCT] CANON_ADOPTION freshness
-Final score: **93**
-[INFRA/P3·SIL:1] CANON_ADOPTION freshness — local mirror of the studio-ops probe. (was [SIL], S219)
-Why it matters: CANON_ADOPTION freshness is open, local, and unblocked — can ship this session.
-
-#### 3. [PRODUCT] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
+#### 2. [PRODUCT] workflow cache-dependency lint. Generalize check-workflow-install-con…
 Final score: **90**
-[INFRA/P3·SIL:1] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allowlist entries now (a) imported or (b) missing from disk. (was [SIL], S219)
-Why it matters: orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allowl is open, local, and unblocked — can ship this session.
+[INFRA/P3·SIL] workflow cache-dependency lint. Generalize check-workflow-install-consistency to flag any actions/setup-node cache: without a committed lockfile present (not just the literal cache: 'npm').
+Why it matters: workflow cache-dependency lint. Generalize check-workflow-install-cons is open, local, and unblocked — can ship this session.
 
-#### 4. [PRODUCT] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
+#### 3. [INTELLIGENCE] build-step resilience audit
 Final score: **87**
-[INFRA/P3·SIL] orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allowlist entries that are now (a) imported (allowlist no longer needed) or (b) missing from disk (stale entry) — keeps the allowlist honest.
-Why it matters: orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allowl is open, local, and unblocked — can ship this session.
+[INFRA/P3·SIL] build-step resilience audit — scan npm run build's chain for other steps that process.exit(1) guarded only by existsSync(<gitignored path>) (the llms-shards class), before they strand a cron. The staleness beacon is the safety net until then.
+Why it matters: build-step resilience audit keeps the ranked audit current so later sessions don't iterate on stale signal.
 
-### NEXT
+First command: `node scripts/generate-genius-list.mjs`
 
-#### 1. [BRAND] Forge Window naming propagation
+#### 4. [BRAND] Forge Window naming propagation
 Final score: **86**
 Finish propagating Forge Window language across generated copy and shared surfaces while preserving /studio-pulse/ for SEO.
 Why it matters: The URL stays stable for search, but the public vocabulary should stay coherent everywhere visitors see it.
 
 First command: `node scripts/propagate-nav.mjs`
 
-#### 2. [PRODUCT] agents.json on-site/external coherence check. Flag any project whose …
-Final score: **84**
-[INFRA/P3·SIL] agents.json on-site/external coherence check. Flag any project whose url is external while an on-site canonical page exists (e.g. MindFrame → games/mindframe/ but points to usemindframe.com with no shard); route the fix to build-agents-json.mjs, not a hand-edit.
-Why it matters: agents.json on-site/external coherence check. Flag any project whose u is open, local, and unblocked — can ship this session.
+### NEXT
 
-#### 3. [PRODUCT] First real push notification
+#### 1. [PRODUCT] First real push notification
 Final score: **84**
 [PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).
 Why it matters: First real push notification is open, local, and unblocked — can ship this session.
 
-#### 4. [BRAND] Draft one Signal Log post (founder voice) + publish forge devlog (fou…
+#### 2. [VERIFY] visual-regression Linux baseline capture
+Final score: **83**
+[CI/P2·SIL] visual-regression Linux baseline capture — now that collection is fixed + chromium-pinned, run the documented workflow_dispatch post-deploy to self-capture Ubuntu baselines, download the artifact, commit under tests/__snapshots__/ so the gate finally compares against committed truth (there are currently 0 committed snapshots).
+Why it matters: visual-regression Linux baseline capture is a 222-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
+
+#### 3. [BRAND] Draft one Signal Log post (founder voice) + publish forge devlog (fou…
 Final score: **81**
 [CONTENT/P1·FOUNDER] Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).
 Why it matters: Draft one Signal Log post (founder voice) + publish forge devlog (foun affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.
 
-#### 5. [PRODUCT] Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
+#### 4. [PRODUCT] Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
 Final score: **78**
 [CRED/P1·FOUNDER] Provision ark.hmac.seed (fleet ARK_HMAC_SEED) — fixes cross-repo Ark signature verification (52 sig-failures on drain). HMAC-seed minting = founder credential action (CANON-019 reserved).
 Why it matters: Provision ark.hmac.seed (fleet ARK_HMAC_SEED) is open, local, and unblocked — can ship this session.
+
+#### 5. [VERIFY] scheduled-workflow staleness beacon. Record per-workflow last-conclus…
+Final score: **77**
+[INFRA/P3·SIL] scheduled-workflow staleness beacon. Record per-workflow last-conclusion in api/ci-status.json + a read-only local doctor probe that flags any *scheduled* workflow red for ≥2 runs — so a 3-month silent break (og-images) can't recur. (Top gap this session: CI-failure blindness.)
+Why it matters: scheduled-workflow staleness beacon. Record per-workflow last-conclusi is a 222-session-old carry-forward; verify or close it so it stops polluting the hit list.
+
+First command: `npm run build:check && node scripts/csp-audit.mjs`
 
 ### LATER
 
@@ -93,14 +99,14 @@ Why it matters: Draft one Signal Log post from the brainstormed ideas (founder v
 ## Recommended Build Order
 
 1. Post-push CI confirmation
-2. CANON_ADOPTION freshness
-3. orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
-4. orphan-lib allowlist-rot gate. Extend check-orphan-libs to flag allow…
-5. Forge Window naming propagation
-6. agents.json on-site/external coherence check. Flag any project whose …
-7. First real push notification
-8. Draft one Signal Log post (founder voice) + publish forge devlog (fou…
-9. Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
+2. workflow cache-dependency lint. Generalize check-workflow-install-con…
+3. build-step resilience audit
+4. Forge Window naming propagation
+5. First real push notification
+6. visual-regression Linux baseline capture
+7. Draft one Signal Log post (founder voice) + publish forge devlog (fou…
+8. Provision ark.hmac.seed (fleet ARK_HMAC_SEED)
+9. scheduled-workflow staleness beacon. Record per-workflow last-conclus…
 10. MOBILE-SHEET-DEFAULT-SWAP
 11. card-accent → cover-image overlay tint
 12. Draft one Signal Log post from the brainstormed ideas (founder voice)…

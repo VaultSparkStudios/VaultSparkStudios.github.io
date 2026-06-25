@@ -40,6 +40,7 @@ const DRIFT_META = {
   ignis:                 { driftClass: 'derived-stale', blocking: false },
   genome:                { driftClass: 'local-broken', blocking: true },
   'prompt-ver':          { driftClass: 'local-broken', blocking: true },
+  'sched-staleness':     { driftClass: 'derived-stale', blocking: false },
 };
 
 // ── Auto-remediation map ──────────────────────────────────────────────────────
@@ -235,6 +236,24 @@ const CHECKS = [
       if (!startOk) issues.push(`start ${sv} ≠ template ${stv}`);
       if (!closeOk) issues.push(`closeout ${cv} ≠ template ${ctv}`);
       return { pass: false, detail: issues.join(' · ') };
+    },
+  },
+  {
+    // S222: closes the CI-failure-blindness gap. Scheduled workflows fail with
+    // no PR and no human watching — a dead cron (refresh-live-data, og-images)
+    // can stay red for months. Advisory (non-blocking): surfaces a dead cron,
+    // degrades to a pass when gh/network is unavailable so it never false-alarms.
+    id:    'sched-staleness',
+    label: 'Scheduled CI freshness',
+    cmd:   ['scripts/check-scheduled-workflow-staleness.mjs', '--json'],
+    parse: (out, code) => {
+      try {
+        const d = JSON.parse(firstLine(out));
+        if (d.skipped) return { pass: true, detail: `unverified (${d.reason})` };
+        if (d.ok) return { pass: true, detail: `${d.checked} scheduled workflows green` };
+        const names = (d.broken || []).map((b) => `${b.name} (${b.streak}×)`).join(', ');
+        return { pass: false, detail: `dead cron: ${names}` };
+      } catch { return { pass: code === 0, detail: 'parse error' }; }
     },
   },
 ];

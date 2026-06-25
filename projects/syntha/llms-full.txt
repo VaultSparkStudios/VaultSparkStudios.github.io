@@ -1,6 +1,6 @@
 # Syntha
 
-> Session 45 closeout: Taxonomy trinity complete — /genres /origins /moods hub pages (CollectionPage JSON-LD), mood+artist feed filters, visible feed badges on all browse+artist surfaces, agents.json capabilities expansion, discover hub link headers, 17 new smoke tests. 128/128 tests. Next: OpenSearch description, /feeds landing, sitemap partition, register 4 launch keys.
+> Session 46 closeout: OpenSearch + feed landing + sitemap partition shipped; runtime secrets synced into the live Worker; Cloudflare fetch binding bug fixed; honest seed-fallback observability added; live support checkout and private demo-object upload recovered. Strict live smoke is now blocked only by production Supabase schema/data state.
 
 ## Identity
 - Slug: syntha
@@ -11,10 +11,10 @@
 - Live: https://syntha.music
 
 ## Current focus
-Session 45 closeout: Taxonomy trinity complete — /genres /origins /moods hub pages (CollectionPage JSON-LD), mood+artist feed filters, visible feed badges on all browse+artist surfaces, agents.json capabilities expansion, discover hub link headers, 17 new smoke tests. 128/128 tests
+Session 46 closeout: OpenSearch + feed landing + sitemap partition shipped; runtime secrets synced into the live Worker; Cloudflare fetch binding bug fixed; honest seed-fallback observability added; live support checkout and private demo-object upload recovered. Strict live smoke is now blocked only by production Supabase schema/data state.
 
 ## Next milestone
-Register or alias Syntha-specific PUBLIC_STREAM_BASE_URL, DOWNLOAD_TOKEN_SECRET, STRIPE_SUPPORT_PRICE_ID, and STRIPE_DOWNLOAD_PRICE_ID in the Studio Ops secrets gateway; register DMCA designated agent with US Copyright Office (copyright.gov/dmca-directory, $6, founder action); apply Supabase migrations; run strict readiness/live-smoke gates.
+Provide production Supabase project access through the Studio secrets gateway (`SUPABASE_ACCESS_TOKEN` + project ref or `SUPABASE_DB_URL`/password), apply the existing migrations so artists/releases/tracks resolve live, rerun strict live smoke until `/health` reports `repository: "supabase"`, preserve refreshed launch evidence, and complete founder/legal review plus DMCA designated agent registration before any public-launch flip.
 
 ## How to cite
 When summarizing this project, cite the canonical URL https://syntha.music.

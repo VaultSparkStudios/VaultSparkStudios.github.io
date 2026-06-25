@@ -68,9 +68,14 @@ export function scanWorkflow(text) {
     if (/\bnpm ci\b/.test(code)) {
       findings.push({ line: i + 1, kind: 'npm-ci', snippet: raw.trim() });
     }
-    // setup-node lockfile cache — needs a committed lockfile to hash.
-    if (/\bcache:\s*['"]?npm['"]?\s*$/.test(code)) {
-      findings.push({ line: i + 1, kind: 'cache-npm', snippet: raw.trim() });
+    // setup-node lockfile cache — needs a committed lockfile to hash. EVERY
+    // package-manager lockfile is gitignored in this repo, so ANY cache: value
+    // (npm/yarn/pnpm) can only fail "Dependencies lock file is not found" — not
+    // just the literal `npm` (S222 generalization). `\bcache:` does not match
+    // `cache-dependency-path:` (no colon directly after "cache").
+    const cacheMatch = code.match(/\bcache:\s*['"]?(npm|yarn|pnpm)['"]?\s*$/);
+    if (cacheMatch) {
+      findings.push({ line: i + 1, kind: 'cache-lock', manager: cacheMatch[1], snippet: raw.trim() });
     }
   });
   return findings;
@@ -78,7 +83,7 @@ export function scanWorkflow(text) {
 
 const REASON = {
   'npm-ci': '`npm ci` requires a committed package-lock.json, but it is gitignored here → fails with EUSAGE. Use `npm install --no-audit --no-fund`.',
-  'cache-npm': "actions/setup-node `cache: 'npm'` needs a committed lockfile to hash → fails \"Dependencies lock file is not found\". Remove the cache line.",
+  'cache-lock': "actions/setup-node `cache:` needs a committed lockfile to hash, but every lockfile is gitignored here → fails \"Dependencies lock file is not found\". Remove the cache line.",
 };
 
 // ── Self-test ────────────────────────────────────────────────────────────────────
@@ -91,6 +96,8 @@ if (selfTest) {
   ok(scanWorkflow('        run: cd scripts && npm ci').length === 1, '`npm ci` after && flagged');
   ok(scanWorkflow("          cache: 'npm'").length === 1, "`cache: 'npm'` flagged");
   ok(scanWorkflow('          cache: npm').length === 1, 'unquoted `cache: npm` flagged');
+  ok(scanWorkflow("          cache: 'yarn'").length === 1, "`cache: 'yarn'` flagged (generalized)");
+  ok(scanWorkflow('          cache: pnpm').length === 1, '`cache: pnpm` flagged (generalized)');
   ok(scanWorkflow('        # Lockfile gitignored so `npm ci` cannot run').length === 0, 'comment mention NOT flagged');
   ok(scanWorkflow('        run: npm install --no-audit --no-fund').length === 0, '`npm install` clean');
   ok(scanWorkflow('          cache-dependency-path: scripts/package.json').length === 0, 'cache-dependency-path alone clean');

@@ -1,6 +1,27 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-25 (Session 221 — arc: P0 CI root-fix (3 broken workflows) + check-workflow-install-consistency gate + orphan-lib allowlist-rot + CANON_ADOPTION freshness + agents.json coherence)
+Last updated: 2026-06-25 (Session 222 — arc: built the CI-staleness beacon [caught a real 7-run dead cron] + root-fixed the cron; visual-regression fix; studio-pulse rename completion; s151 body-scan; cache-lint generalization)
+
+## S222 outcome + carries
+
+**Shipped in S222:**
+- [x] **[CI/P0] Root-fixed `Refresh Live Data` cron dead 7 consecutive runs.** True cause (past a red-herring `build-ark-signature-dossier: 52 failures` log that exits 0): `build-llms-full-shards.mjs` hard-`exit(1)` on the gitignored `ignis/output/ecosystem-state.json`, always absent on CI → stranded the whole 4h refresh. Now degrades gracefully (warn + exit 0); verified present (16 shards) + absent (skip).
+- [x] **[INFRA/P1·SIL→done] scheduled-workflow staleness beacon (was S221 brainstorm #1).** NEW `check-scheduled-workflow-staleness.mjs` + wired into `ops doctor` (advisory). Buckets `gh run` history by workflowName, filters `event=schedule`, flags any scheduled workflow red ≥2 completed runs; degrades-to-pass with no network. 5/5 self-test. **Caught the dead cron above on its first run.**
+- [x] **[UX/P0] `/studio-pulse/` E2E red fixed correctly** — completed the half-done S185 rename (H1 `The Forge Window`→`Studio Pulse` + smoke assertion), honoring binding D-S221.5 (NOT propagating the phantom). S218.4's "Studio Pulse everywhere" claim was incomplete.
+- [x] **[INFRA/P1] SECOND-ORDER: `check-s151-contracts` body-scan.** Was title+nav only; now strips tags to visible text (`Forge<br>Window` rejoins) + bans the `forge window` body bigram. Self-test: split-tag detection + non-false-positive on "forge" metaphor prose. Closes the gate-gap (D-S208.1) that hid the stale H1.
+- [x] **[CI/P1] `visual-regression.spec.js` structural fix** — stripped `defaultBrowserType`/`browserName` from the per-describe `test.use()` (Playwright "Cannot use defaultBrowserType in a describe group"); pinned workflow `--project=chromium` (single-engine baselines + killed latent firefox-not-installed). 70 tests collect; YAML validated.
+- [x] **[INFRA/P3·SIL→done] cache-lint generalization (was S221 brainstorm #2).** `check-workflow-install-consistency` now flags any `cache:` (npm/yarn/pnpm) without a committed lockfile, not just literal npm. 11/11.
+- [x] **[HYGIENE] Closed 2 duplicate phantom TASK_BOARD entries** (CANON_ADOPTION freshness + orphan-lib allowlist-rot, both done S221) — `check-stale-open-tasks` flagged them; `[ ]`→`[x]` breaks the genius-list re-surface loop.
+
+**S222 honest ledger (rejections = wins):**
+- ✓ **CANON_ADOPTION freshness in smoke runner** — already wired S221 (`smoke-startup-scripts.mjs:251`). Phantom; closed the duplicate.
+- ✓ **orphan-lib allowlist-rot** — already shipped S221 (`check-orphan-libs.mjs` `auditAllowlist()`). Phantom; closed the duplicate.
+- ✓ **Forge Window propagation (genius 86)** — re-confirmed phantom per D-S221.5; this session moved the *opposite* direction (removed the last H1 remnant).
+- → **Sibling-repo drift (not this repo's work)** — doctor reds compliance-validation, compliance-velocity 32/36, launch-readiness are all Hashmark/VOID/SHADOW/ATLAS/VEILOS; this repo passes both. Shipped 2 Ark `pattern-share` cargos (CI-blindness pattern → `*`; compliance-drift cluster → studio-ops). Zero sibling-tree edits.
+
+**S222 committed to next session (brainstorm):**
+- [ ] **[INFRA/P3·SIL] build-step resilience audit** — scan `npm run build`'s chain for other steps that `process.exit(1)` guarded only by `existsSync(<gitignored path>)` (the llms-shards class), before they strand a cron. The staleness beacon is the safety net until then.
+- [ ] **[CI/P2·SIL] visual-regression Linux baseline capture** — now that collection is fixed + chromium-pinned, run the documented `workflow_dispatch` post-deploy to self-capture Ubuntu baselines, download the artifact, commit under `tests/__snapshots__/` so the gate finally compares against committed truth (there are currently 0 committed snapshots).
 
 ## S221 outcome + carries
 
@@ -57,8 +78,8 @@ Last updated: 2026-06-25 (Session 221 — arc: P0 CI root-fix (3 broken workflow
 - **doctor 4 failing** — all `blocking:false`, all sibling/portfolio scope ("0 self · 19 sibling-owned"); flagged via Ark, not this repo's to fix.
 
 **S219 committed (next-session, from this closeout's brainstorm):**
-- [ ] **[INFRA/P3·SIL] CANON_ADOPTION freshness — local mirror of the studio-ops probe.** Tiny local assertion (file exists + walked within N sessions) folded into the smoke runner, so the next "required-context-file missing" is caught locally before the portfolio doctor catches it (the asymmetry that let CANON_ADOPTION sit absent).
-- [ ] **[INFRA/P3·SIL] orphan-lib allowlist-rot gate.** Extend `check-orphan-libs` to flag allowlist entries that are now (a) imported (allowlist no longer needed) or (b) missing from disk (stale entry) — keeps the allowlist honest.
+- [x] **[INFRA/P3·SIL] CANON_ADOPTION freshness — local mirror of the studio-ops probe** — DONE S221 (`check-canon-adoption-freshness.mjs`, wired into `smoke-startup-scripts.mjs:251`). S222 re-verified the wiring is live and flipped this duplicate `[ ]` to close the genius-list re-surface loop.
+- [x] **[INFRA/P3·SIL] orphan-lib allowlist-rot gate** — DONE S221 (`check-orphan-libs.mjs` `auditAllowlist()`). S222 re-verified (line 161 `// allowlist-rot (S221)`) and flipped this duplicate `[ ]` to close the loop.
 
 **S219 carries (rolled forward — founder-gated / evidence-deferred):**
 - [ ] **[PUSH/P1·FOUNDER]** First real push notification — `npm run push:count` (0 subs today) → `npm run push:notify -- --game cod` (founder go-ahead required).

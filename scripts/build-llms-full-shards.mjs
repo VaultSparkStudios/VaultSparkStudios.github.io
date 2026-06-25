@@ -126,8 +126,17 @@ function indexFor(projects) {
 
 function main() {
   if (!existsSync(ECOSYSTEM)) {
-    console.error(`[llms-shards] missing ${ECOSYSTEM}`);
-    process.exit(1);
+    // S222 cron root-fix: ecosystem-state.json is IGNIS output under the
+    // gitignored ignis/output/ — present during local human-session builds,
+    // NEVER present on CI runners. Hard-exiting here killed the every-4h
+    // `Refresh Live Data` cron for 7+ consecutive runs (caught by the new
+    // check-scheduled-workflow-staleness probe): one missing optional input
+    // stranded the entire critical data refresh (vault-narrative, RUM, feeds).
+    // The shards are a regenerated, committed artifact — when the source state
+    // isn't in THIS environment, skip and let the next local build refresh
+    // them. Degrade, don't strand. Exit 0 so the cron's primary job proceeds.
+    console.warn(`[llms-shards] skipped — ${ECOSYSTEM.replace(ROOT, '.')} absent (gitignored IGNIS output; regenerated on local builds)`);
+    process.exit(0);
   }
   const state = JSON.parse(readFileSync(ECOSYSTEM, 'utf8'));
   const projects = (state.projects || []).filter(p => p && p.slug);

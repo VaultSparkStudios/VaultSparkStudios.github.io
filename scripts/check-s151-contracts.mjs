@@ -43,6 +43,18 @@ function scriptTagFor(src) {
   return new RegExp(`<script\\b[^>]*\\bsrc=["']${src.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'][^>]*>`, 'i');
 }
 
+// Visible text only: drop <script>/<style> blocks, strip all tags, collapse
+// whitespace. So a label split across tags (`Forge<br>Window`) is rejoined into
+// "Forge Window" — the form a visitor actually reads.
+function visibleText(html) {
+  return html
+    .replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 function anchorTextForHref(html, href) {
   const re = new RegExp(`<a\\b[^>]*\\bhref=["']${href.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}["'][^>]*>([\\s\\S]*?)<\\/a>`, 'gi');
   const out = [];
@@ -96,6 +108,16 @@ function collectFailures({ homeHtml, paritySource, htmlFiles }) {
   if (pulse && !/<title>Studio Pulse — VaultSpark Studios<\/title>/.test(pulse.html)) {
     failures.push('studio-pulse/index.html: title must use Studio Pulse');
   }
+  // S222: the title+nav gate above never inspected the page BODY — which is
+  // exactly how the stale "The Forge Window" H1 (the single most prominent
+  // on-page label) survived the S185 rename invisibly for 30+ sessions
+  // (the D-S208.1 anti-pattern: a gate that skips the surface where the label
+  // lives can't catch the lie). Police the visible body too. The `forge window`
+  // bigram is the banned product LABEL; it does not match the `.forge-*` CSS
+  // class names or the "forge" verb/metaphor prose ("Live from the forge").
+  if (pulse && /forge\s+window/i.test(visibleText(pulse.html))) {
+    failures.push('studio-pulse/index.html: body still shows the retired "Forge Window" label (S185 → Studio Pulse)');
+  }
 
   return failures;
 }
@@ -106,7 +128,9 @@ function runSelfTest() {
     paritySource: 'function expectedShellPaths(){} function deployedShellPaths(){} "--self-test"',
     htmlFiles: [
       { rel: 'index.html', html: '<a href="/studio-pulse/">Studio Pulse</a>' },
-      { rel: 'studio-pulse/index.html', html: '<title>Studio Pulse — VaultSpark Studios</title><a href="/studio-pulse/">Studio Pulse</a>' },
+      // Non-false-positive: a body full of legitimate "forge" metaphor prose +
+      // the `.forge-*` CSS class names must NOT trip the body label gate.
+      { rel: 'studio-pulse/index.html', html: '<title>Studio Pulse — VaultSpark Studios</title><a href="/studio-pulse/">Studio Pulse</a><section class="forge-hero"><div class="forge-live-pill">Live from the forge</div><h1 class="forge-h1">Studio<br>Pulse</h1><a class="button-secondary">Get closer to the forge</a></section>' },
     ],
   });
   const bad = collectFailures({
@@ -114,12 +138,18 @@ function runSelfTest() {
     paritySource: 'missing',
     htmlFiles: [
       { rel: 'index.html', html: '<a href="/studio-pulse/">Forge Window</a>' },
-      { rel: 'studio-pulse/index.html', html: '<title>Forge Window — VaultSpark Studios</title>' },
+      // Detection: the retired label split across tags (`Forge<br>Window`) must
+      // still be caught once tags are stripped to visible text.
+      { rel: 'studio-pulse/index.html', html: '<title>Forge Window — VaultSpark Studios</title><h1 class="forge-h1">The Forge<br>Window</h1>' },
     ],
   });
 
   if (good.length) throw new Error(`good fixture failed: ${good.join('; ')}`);
   if (bad.length < 4) throw new Error(`bad fixture missed drift: ${bad.join('; ')}`);
+  // The bad studio-pulse fixture must trip the BODY gate specifically, not just title.
+  if (!bad.some((f) => /body still shows the retired "Forge Window" label/.test(f))) {
+    throw new Error('body label gate did not fire on split-tag "Forge<br>Window"');
+  }
   console.log('check-s151-contracts self-test passed');
 }
 

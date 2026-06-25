@@ -12,18 +12,18 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S221 (arc) — genius-tier CI/infra root-fix + gate-the-class. Found a P0 nobody had caught: THREE CI workflows silently broken at `npm ci` because package-lock.json is gitignored by repo convention. refresh-live-data (the S219 'live data must never go stale' 4h cron) was dead every run; og-images broken since 2026-03; visual-regression failed on every PR. Root-fix: `npm ci`→`npm install --no-audit --no-fund` (+ removed `cache:'npm'`), mirroring the already-correct accessibility.yml/cloudflare-worker-deploy.yml pattern. Then gated the class: NEW check-workflow-install-consistency.mjs (9/9). Cleared BOTH S219 [SIL:1] carries — (a) extended check-orphan-libs with allowlist-rot detection, which exposed + let me root-fix a latent self-counting bug in that gate (its own ALLOWLIST literal keys were miscounted as consumers); (b) NEW check-canon-adoption-freshness.mjs (local mirror of studio-ops walk; sibling-first, AGENTS.md fallback), which caught + fixed an observability lie (header claimed 51 active canons, live=50). Cleared the S220 [SIL] check-agents-json-coherence.mjs (flags mindframe external vs on-site /games/mindframe/) + extended it to hard-fail on dead llmsFull shards. REJECTED the Forge Window genius item as a verified phantom (D-S218.4). build:check EXIT 0 (verified directly); all 4 gates self-test green; smoke 19/20 (1 expected skip); drift cleared honestly.",
-  "nextMilestone": "Verify prod: the 3 fixed workflows go green on their next run (refresh-live-data cron, og-images, visual-regression PR). Founder-decision: agents.json mindframe canonical (external usemindframe.com vs on-site /games/mindframe/ — surfaced by the new advisory gate). Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning (fleet Ark sig-verification). Next-session [SIL]: workflow cache-dependency lint + scheduled-workflow staleness beacon (CI-failure blindness was the top gap — og-images was red for ~3 months unnoticed).",
+  "currentFocus": "S222 (arc) — closed the CI-failure-blindness class. Built check-scheduled-workflow-staleness.mjs (S221 brainstorm #1) + wired it into the doctor; on first run it caught a real incident: Refresh Live Data cron red 7 consecutive runs. Root-fixed the true cause (past a red-herring Ark-dossier log): build-llms-full-shards.mjs hard-exit(1) on the gitignored ignis/output/ecosystem-state.json, which is always absent on CI → stranded the whole 4h data-refresh → now degrades gracefully (warn+exit0). Also: fixed visual-regression defaultBrowserType-in-describe error + chromium-pinned the workflow; completed the half-done S185 rename by migrating the /studio-pulse/ H1 Forge Window→Studio Pulse + smoke assertion (E2E unblock, honoring binding D-S221.5); hardened check-s151-contracts to body-scan (closes the gate-gap that hid the stale H1); generalized cache-lint to npm/yarn/pnpm (S221 brainstorm #2). Closed 2 duplicate phantom TASK_BOARD entries. build:check EXIT 0 + blockingFailing 0 verified directly.",
+  "nextMilestone": "Verify on next runs: Refresh Live Data cron + visual-regression + E2E go green (the staleness beacon will confirm the cron clears). Watch for any second latent build-step failure now that llms-shards no longer masks the rest of the chain. Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning. Next-session [SIL]: build-step resilience audit (other exit(1)-on-gitignored-input steps) + visual-regression Linux baseline capture (dispatch post-deploy, commit snapshots).",
   "blockers": [],
   "lastUpdated": "2026-06-25",
-  "currentSession": 221,
+  "currentSession": 222,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-06-25",
-  "silScore": 967,
-  "silAvg3": 961,
-  "silVelocity": 5,
+  "silScore": 972,
+  "silAvg3": 969,
+  "silVelocity": 7,
   "silDebt": "down",
-  "silLastSession": 221,
+  "silLastSession": 222,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -73,25 +73,25 @@
   "silCategoriesV3": {
     "devHealth": 98,
     "creativeAlignment": 97,
-    "momentum": 97,
+    "momentum": 98,
     "engagement": 97,
-    "processQuality": 98,
-    "crossRepoCoherence": 96,
+    "processQuality": 99,
+    "crossRepoCoherence": 97,
     "securityPosture": 94,
     "ecosystemIntegration": 97,
-    "capitalEfficiency": 95,
-    "automationCoverage": 98
+    "capitalEfficiency": 96,
+    "automationCoverage": 99
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
     "date": "2026-06-25",
     "passing": 9,
     "warning": 1,
-    "failing": 3,
+    "failing": 4,
     "blockingFailing": 0,
-    "advisoryFailing": 3,
-    "total": 13,
-    "score": 69,
+    "advisoryFailing": 4,
+    "total": 14,
+    "score": 64,
     "checks": [
       {
         "id": "manifest",
@@ -183,6 +183,13 @@
         "warn": false,
         "driftClass": "local-broken",
         "blocking": false
+      },
+      {
+        "id": "sched-staleness",
+        "pass": false,
+        "warn": false,
+        "driftClass": "derived-stale",
+        "blocking": false
       }
     ]
   },
@@ -197,6 +204,6 @@
   "testsPassing": 116,
   "testsLastRun": "2026-06-23",
   "testsLabel": "build:check gates",
-  "publicNote": "We fixed our automated 'keep the site's live data fresh' pipeline, which had quietly stopped running — so the studio stats, status, and game info you see stay genuinely up to date without anyone having to refresh them by hand. We also added safety checks so that whole class of silent breakage can't happen again.",
+  "publicNote": "We found and fixed a behind-the-scenes pipeline that quietly stopped running a while ago — the one that keeps the studio stats, status, and game info on the site genuinely fresh. We also built a new automated watchdog that notices the moment any scheduled job goes quiet, so this kind of silent breakage gets caught fast instead of lingering.",
   "publicNextStep": "Coming soon: the first game-segmented push notification to Call of Doodie subscribers and a new Signal Log post from the studio."
 }

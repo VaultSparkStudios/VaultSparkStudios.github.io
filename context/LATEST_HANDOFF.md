@@ -1,8 +1,26 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-25 (Session 221 — arc · P0 CI root-fix (3 broken workflows) + 2 second-order gates + 2 [SIL] carries cleared)
+Last updated: 2026-06-25 (Session 222 — arc · CI-blindness class closed: built the beacon S221 brainstormed, it caught a real 7-run dead cron, root-fixed it)
 
 Session Intent: Founder /goal — run the full arc (/start → /audit → /implement → /closeout) as one continuous mission, saturate the genius list + second-order innovation, commit + push DIRECT to main, no mid-phase handback.
+
+## Where We Left Off (Session 222)
+- **Shipped (7 substantive · CI-blindness closed + the dead cron it found, root-fixed):**
+  1. **`/studio-pulse/` E2E red fixed correctly** — smoke required `Forge Window`; binding D-S221.5 rules that a phantom (label is "Studio Pulse"). Completed the half-done S185 rename: page H1 `The Forge Window`→`Studio Pulse` + smoke assertion. S218.4's "live site uses Studio Pulse everywhere" was false — the H1 was never migrated.
+  2. **SECOND-ORDER — `check-s151-contracts` body-scan** — the gate enforced `<title>`+nav but never the page body (how the stale H1 hid 30+ sessions; D-S208.1 anti-pattern). Now strips tags to visible text (`Forge<br>Window` rejoins) + bans the `forge window` bigram; self-test proves split-tag detection + non-false-positive on "forge" metaphor prose.
+  3. **`visual-regression.spec.js` fix** — `test.use({...deviceConfig})` in a describe threw Playwright "Cannot use defaultBrowserType in a describe group"; stripped engine keys; pinned workflow `--project=chromium` (single-engine baselines + killed latent firefox-not-installed). 70 tests collect; YAML validated.
+  4. **`check-scheduled-workflow-staleness.mjs` + doctor probe** (S221 brainstorm #1) — flags any scheduled workflow red ≥2 completed runs; degrades-to-pass with no network. **First run caught `Refresh Live Data` red 7 runs.**
+  5. **Root-fixed that dead cron** — true cause (past a red-herring Ark-dossier log that exits 0): `build-llms-full-shards.mjs` hard-`exit(1)` on the gitignored `ignis/output/ecosystem-state.json` (always absent on CI) → stranded the 4h refresh. Now warns + exit 0; verified present (16 shards) + absent (skip).
+  6. **Generalized cache-lint** (S221 brainstorm #2) — `check-workflow-install-consistency` flags any `cache:` (npm/yarn/pnpm) without a committed lockfile. 11/11.
+  7. **Closed 2 duplicate phantom TASK_BOARD entries** (CANON_ADOPTION freshness + orphan-lib rot, both done S221) — `check-stale-open-tasks` flagged them; `[ ]`→`[x]` breaks the genius-list re-surface loop.
+- **Honest rejection-wins:** 3 genius items were already-shipped phantoms (CANON_ADOPTION wired S221 `smoke-startup-scripts.mjs:251`; orphan-lib shipped S221; Forge Window per D-S221.5). Recorded, not silently skipped.
+- **Sibling drift → Ark (zero sibling-tree edits):** the doctor's other 3 reds (compliance-validation, compliance-velocity 32/36, launch-readiness) are 100% sibling repos (Hashmark/VOID/SHADOW/ATLAS/VEILOS) — this repo passes both. Shipped 2 Ark `pattern-share` cargos (the CI-blindness pattern to `*`; the compliance-drift cluster to studio-ops).
+- **Tests:** `build:check` EXIT 0 (verified directly, not pipe-masked) · `blockingFailing: 0` · all new/extended gates self-test green · generated-drift cleared (regen).
+- **Deploy:** committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip; no `cloudflare/**` edits (Worker unchanged).
+- **First action next session:** `/start` → confirm `Refresh Live Data` cron cleared (the staleness beacon will show it green) AND watch for any second latent build-step failure now that llms-shards no longer masks the chain. Then the next [SIL] pair: build-step resilience audit + visual-regression Linux baseline capture (dispatch post-deploy, commit snapshots).
+- **SIL:** 967 → 972 (+5). Categories: Dev 98 | Align 97 | Momentum 98 | Engage 97 | Process 99 | CrossRepo 97 | Security 94 | EcoInt 97 | CapEff 96 | AutoCov 99.
+
+> **S221 (arc):** P0 CI root-fix — 3 workflows un-broken at `npm ci`; check-workflow-install-consistency gate; orphan-lib allowlist-rot + self-count bugfix; CANON_ADOPTION freshness + header-lie fix; agents.json coherence. SIL 967.
 
 ## Where We Left Off (Session 221)
 - **Shipped (5 substantive · CI/infra root-fix + gate-the-class):**

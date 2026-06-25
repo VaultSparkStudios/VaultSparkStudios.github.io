@@ -41,10 +41,23 @@ const VIEWPORTS = [
 // `body.dark-mode` specificity trap) only surface when the saved theme flips.
 const THEMES = ['dark', 'light'];
 
+// Playwright forbids setting `defaultBrowserType` (or `browserName`) inside a
+// describe group — it would force a new worker ("Cannot use({ defaultBrowserType })
+// in a describe group"). The `devices[...]` descriptors carry defaultBrowserType
+// (webkit for iPhone, chromium for Pixel), so spreading the whole config trips
+// it. Strip the engine keys — the browser is pinned at the project level
+// (--project=chromium in CI); we only want each device's viewport / UA /
+// scale-factor / touch emulation here. Snapshot names already encode vp.name,
+// so dropping the engine key changes nothing about which snapshot is compared.
+function emulationOnly(config) {
+  const { defaultBrowserType, browserName, ...rest } = config;
+  return rest;
+}
+
 for (const vp of VIEWPORTS) {
   for (const theme of THEMES) {
     test.describe(`visual regression · ${vp.name} · ${theme}`, () => {
-      test.use({ ...vp.config });
+      test.use(emulationOnly(vp.config));
 
       for (const surface of SURFACES) {
         test(`${surface.name} · ${vp.name} · ${theme}`, async ({ page }) => {

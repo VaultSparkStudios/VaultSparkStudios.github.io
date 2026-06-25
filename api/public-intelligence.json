@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-25T15:37:19.788Z",
+  "generatedAt": "2026-06-25T16:21:06.042Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 221,
+    "currentSession": 222,
     "lastUpdated": "2026-06-25",
-    "currentFocus": "S221 (arc) — genius-tier CI/infra root-fix + gate-the-class. Found a P0 nobody had caught: THREE CI workflows silently broken at `npm ci` because package-lock.json is gitignored by repo convention. refresh-live-data (the S219 'live data must never go stale' 4h cron) was dead every run; og-images broken since 2026-03; visual-regression failed on every PR. Root-fix: `npm ci`→`npm install --no-audit --no-fund` (+ removed `cache:'npm'`), mirroring the already-correct accessibility.yml/cloudflare-worker-deploy.yml pattern. Then gated the class: NEW check-workflow-install-consistency.mjs (9/9). Cleared BOTH S219 [SIL:1] carries — (a) extended check-orphan-libs with allowlist-rot detection, which exposed + let me root-fix a latent self-counting bug in that gate (its own ALLOWLIST literal keys were miscounted as consumers); (b) NEW check-canon-adoption-freshness.mjs (local mirror of studio-ops walk; sibling-first, AGENTS.md fallback), which caught + fixed an observability lie (header claimed 51 active canons, live=50). Cleared the S220 [SIL] check-agents-json-coherence.mjs (flags mindframe external vs on-site /games/mindframe/) + extended it to hard-fail on dead llmsFull shards. REJECTED the Forge Window genius item as a verified phantom (D-S218.4). build:check EXIT 0 (verified directly); all 4 gates self-test green; smoke 19/20 (1 expected skip); drift cleared honestly.",
-    "nextMilestone": "Verify prod: the 3 fixed workflows go green on their next run (refresh-live-data cron, og-images, visual-regression PR). Founder-decision: agents.json mindframe canonical (external usemindframe.com vs on-site /games/mindframe/ — surfaced by the new advisory gate). Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning (fleet Ark sig-verification). Next-session [SIL]: workflow cache-dependency lint + scheduled-workflow staleness beacon (CI-failure blindness was the top gap — og-images was red for ~3 months unnoticed).",
+    "currentFocus": "S222 (arc) — closed the CI-failure-blindness class. Built check-scheduled-workflow-staleness.mjs (S221 brainstorm #1) + wired it into the doctor; on first run it caught a real incident: Refresh Live Data cron red 7 consecutive runs. Root-fixed the true cause (past a red-herring Ark-dossier log): build-llms-full-shards.mjs hard-exit(1) on the gitignored ignis/output/ecosystem-state.json, which is always absent on CI → stranded the whole 4h data-refresh → now degrades gracefully (warn+exit0). Also: fixed visual-regression defaultBrowserType-in-describe error + chromium-pinned the workflow; completed the half-done S185 rename by migrating the /studio-pulse/ H1 Forge Window→Studio Pulse + smoke assertion (E2E unblock, honoring binding D-S221.5); hardened check-s151-contracts to body-scan (closes the gate-gap that hid the stale H1); generalized cache-lint to npm/yarn/pnpm (S221 brainstorm #2). Closed 2 duplicate phantom TASK_BOARD entries. build:check EXIT 0 + blockingFailing 0 verified directly.",
+    "nextMilestone": "Verify on next runs: Refresh Live Data cron + visual-regression + E2E go green (the staleness beacon will confirm the cron clears). Watch for any second latent build-step failure now that llms-shards no longer masks the rest of the chain. Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning. Next-session [SIL]: build-step resilience audit (other exit(1)-on-gitignored-input steps) + visual-regression Linux baseline capture (dispatch post-deploy, commit snapshots).",
     "ignis": {
       "score": 44691,
       "grade": "FORGE",
@@ -29,12 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped (5 substantive · CI/infra root-fix + gate-the-class):",
-      "Honest rejection (win): Forge Window propagation (genius score 86) = verified PHANTOM (D-S218.4; S185 → \"Studio Pulse\", enforced by check-s151-contracts). Not re-attempted.",
-      "Founder-decision surfaced: agents.json mindframe canonical — keep external `usemindframe.com` OR route on-site /games/mindframe/ + generate its shard (advisory gate flags it; do not auto-flip — would advertise a dead shard).",
-      "Tests: `build:check` EXIT 0 (verified directly, not pipe-masked) · all 4 new/extended gates self-test green · smoke 19/20 (1 expected skip = gateway-readiness studio-ops cap) · generated-drift cleared (regen public-intelligence + heartbeat).",
-      "Deploy: committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip; no `cloudflare/` edits (Worker unchanged). The fixed workflows will go green on their next scheduled/PR run.",
-      "First action next session: `/start` → verify the 3 fixed workflows went green (`gh run list --workflow=refresh-live-data.yml` etc.). Then the next [SIL] pair: workflow cache-dependency lint + scheduled-workflow staleness beacon."
+      "Shipped (7 substantive · CI-blindness closed + the dead cron it found, root-fixed):",
+      "Honest rejection-wins: 3 genius items were already-shipped phantoms (CANON_ADOPTION wired S221 `smoke-startup-scripts.mjs:251`; orphan-lib shipped S221; Forge Window per D-S221.5). Recorded, not silently skipped.",
+      "Sibling drift → Ark (zero sibling-tree edits): the doctor's other 3 reds (compliance-validation, compliance-velocity 32/36, launch-readiness) are 100% sibling repos (Hashmark/VOID/SHADOW/ATLAS/VEILOS) — this repo passes both. Shipped 2 Ark `pattern-share` cargos (the CI-blindness pattern to `*`; the compliance-drift cluster to studio-ops).",
+      "Tests: `build:check` EXIT 0 (verified directly, not pipe-masked) · `blockingFailing: 0` · all new/extended gates self-test green · generated-drift cleared (regen).",
+      "Deploy: committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip; no `cloudflare/` edits (Worker unchanged).",
+      "First action next session: `/start` → confirm `Refresh Live Data` cron cleared (the staleness beacon will show it green) AND watch for any second latent build-step failure now that llms-shards no longer masks the chain. Then the next [SIL] pair: build-step resilience audit + visual-regression Linux baseline capture (dispatch post-deploy, commit snapshots)."
     ]
   },
   "consumerChangelog": [
@@ -125,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 221,
+    "sessionsCompleted": 222,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -142,16 +142,16 @@
     "silCategories": {
       "devHealth": 98,
       "alignment": 97,
-      "momentum": 97,
+      "momentum": 98,
       "engagement": 97,
-      "process": 98,
-      "coherence": 96,
+      "process": 99,
+      "coherence": 97,
       "security": 94,
       "ecosystem": 97,
-      "capital": 95,
-      "automation": 98,
-      "total": 967,
-      "updatedSession": 221
+      "capital": 96,
+      "automation": 99,
+      "total": 972,
+      "updatedSession": 222
     },
     "sealedNextRevealAt": null
   },

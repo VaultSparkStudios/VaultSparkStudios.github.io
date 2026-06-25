@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-25 (Session 220 closeout) -->
+<!-- generated-at: 2026-06-25 (Session 222 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 220 closeout · 2026-06-25.
+> **Fast-boot brief** — generated at Session 222 closeout · 2026-06-25.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 221 · 2026-06-25 · FOUNDER MODE                         ║
+║  Session 223 · 2026-06-25 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,10 +35,10 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    959/1000   ███████████████████████░   96%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 3↓                          ║
-║    Last active: 20628d  ·  Last closeout: 2d  ·  (active = newe  ║
-║    Trend  ▆▄▆▆▄  ↓  (last 5 sessions)                            ║
+║    972/1000   ███████████████████████░   97%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 7↑                          ║
+║    Last active: 20628d  ·  Last closeout: 0d  ·  (active = newe  ║
+║    Trend  ▆▆▄▄▆  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -47,30 +47,30 @@
 ║    Momentum          93    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
 ║    Engagement        94    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
 ║    Process Qual      94    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
-║    Coherence         95    ██████████  ········ →                ║
+║    Coherence         97    ██████████  ········ →                ║
 ║    Security          94    █████████░  ········ →                ║
-║    Ecosystem         96    ██████████  ········ →                ║
-║    Capital           95    ██████████  ········ →                ║
-║    Automation        97    ██████████  ········ →                ║
+║    Ecosystem         97    ██████████  ········ →                ║
+║    Capital           96    ██████████  ········ →                ║
+║    Automation        99    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 220 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 222 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  █░░░░░░░░░░░░░░░░░░░░░░░    3% used                          ║
-║     5,241 / 200,000 tok  ·  unknown/default  ·  heuristic        ║
-║     ~2,621 tok/turn  ·  cache 50%  ·  68 turns to compact        ║
-║     Verdict: CONTINUE                                            ║
+║  ✓  ███████████████░░░░░░░░░   63% used                          ║
+║     125,158 / 200,000 tok  ·  unknown/default  ·  heuristic      ║
+║     ~62,579 tok/turn  ·  cache 50%  ·  0 turns to compact        ║
+║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-23)                   ║
-║  ✓  Velocity      3 ↓  ·  Debt: ↓                                ║
-║  ✓  Runway        PUSH — run push:count → first real notificati  ║
+║  ✓  Velocity      7 ↑  ·  Debt: ↓                                ║
+║  ✓  Runway        PUSH — push:count → first real notification (  ║
 ║  ⛔  Context age   ?d                                             ║
 ║  ✓  IGNIS         44691 FORGE  ·  6d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
@@ -82,7 +82,7 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ⛔  Doctor        9/13 (69%)  ·  3 failing                       ║
+║  ⛔  Doctor        9/14 (64%)  ·  4 failing                       ║
 ║  ✓  Cost          real $0.04/7d · 7d notional $0.66 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -100,13 +100,13 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▆▄▆▆▄  3↓  (last 5 sessions)                        ║
+║  Velocity:   ▆▆▄▄▆  7↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  0/1000  (↓959 vs current 959)                       ║
+║  Projected:  0/1000  (↓972 vs current 972)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -114,17 +114,17 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   93  [PRODUCT]      CANON_ADOPTION freshness                    ║
-║        CANON_ADOPTION freshness is open, local, and unblocked —  ║
+║   90  [PRODUCT]      workflow cache-dependency lint. Generalize  ║
+║        workflow cache-dependency lint. Generalize check-workflo  ║
 ║                                                                  ║
-║   90  [PRODUCT]      orphan-lib allowlist-rot gate. Extend chec  ║
-║        orphan-lib allowlist-rot gate. Extend check-orphan-libs   ║
-║                                                                  ║
-║   87  [PRODUCT]      orphan-lib allowlist-rot gate. Extend chec  ║
-║        orphan-lib allowlist-rot gate. Extend check-orphan-libs   ║
+║   87  [INTELLIGENCE]  build-step resilience audit                ║
+║        build-step resilience audit keeps the ranked audit curre  ║
 ║                                                                  ║
 ║   86  [BRAND]        Forge Window naming propagation             ║
 ║        The URL stays stable for search, but the public vocabula  ║
+║                                                                  ║
+║   84  [PRODUCT]      First real push notification                ║
+║        First real push notification is open, local, and unblock  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -132,5 +132,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 220 closeout · 2026-06-25*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 222 closeout · 2026-06-25*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*

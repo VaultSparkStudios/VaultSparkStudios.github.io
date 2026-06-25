@@ -69,7 +69,7 @@ const CHECKS = [
   {
     path: '/studio-pulse/',
     status: 200,
-    contains: ['Forge Window'],
+    contains: ['Studio Pulse'],
   },
   {
     path: '/vault-wall/',

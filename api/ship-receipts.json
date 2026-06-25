@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-23T23:14:33.998Z",
+  "generatedAt": "2026-06-25T15:17:15.835Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -54,8 +54,18 @@
     {
       "theme": "transparency",
       "label": "Transparency",
-      "feedbackSignals": 4,
+      "feedbackSignals": 6,
       "shippedCommits": [
+        {
+          "sha": "fd7adbe1",
+          "summary": "closeout status board",
+          "ts": "2026-06-23T23:44:11.000Z"
+        },
+        {
+          "sha": "1de253f3",
+          "summary": "hero JSON-LD enrichment + IGNIS resume chip + obelisk-broker orphan removal",
+          "ts": "2026-06-23T23:40:02.000Z"
+        },
         {
           "sha": "9dbb8964",
           "summary": "Oracle live answers — real studio state in every cluster + answer",
@@ -70,11 +80,6 @@
           "sha": "5485beaf",
           "summary": "S215 write-backs — SIL 935, footer Projects column, visual overhaul, pathfinder intel, journal dates",
           "ts": "2026-06-22T07:01:31.000Z"
-        },
-        {
-          "sha": "4cc7ae97",
-          "summary": "add projects + journal contexts and new nodes to intent-graph",
-          "ts": "2026-06-22T06:09:29.000Z"
         }
       ],
       "proof": null
@@ -103,7 +108,7 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 4,
+      "feedbackSignals": 2,
       "shippedCommits": [
         {
           "sha": "402b0930",
@@ -114,16 +119,6 @@
           "sha": "da9066e0",
           "summary": "redact local machine paths in .cache/ build output files",
           "ts": "2026-06-22T04:04:15.000Z"
-        },
-        {
-          "sha": "28e2fd2f",
-          "summary": "defer supabase-public.js + idle-load 4 non-critical homepage scripts",
-          "ts": "2026-06-22T02:49:16.000Z"
-        },
-        {
-          "sha": "b59651cc",
-          "summary": "delete 3 orphan ambient shell bundles (-175KB) + push:count 0 verified",
-          "ts": "2026-06-22T02:49:16.000Z"
         }
       ],
       "proof": {
@@ -137,14 +132,14 @@
         "boundary": "2026-06-05",
         "label": "S173 critical path + S175 origin migration to CF Pages",
         "verdict": "improved",
-        "lcpDeltaPct": -58.7,
+        "lcpDeltaPct": -64.7,
         "confidence": "high"
       }
     },
     {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 4,
+      "feedbackSignals": 3,
       "shippedCommits": [
         {
           "sha": "7850158f",
@@ -160,11 +155,6 @@
           "sha": "4483264b",
           "summary": "CANON-041 tap-target audit on S211-S213 features",
           "ts": "2026-06-22T02:49:17.000Z"
-        },
-        {
-          "sha": "94784446",
-          "summary": "propagate-nav 99 pages + startup brief S214 refresh (SIL 927)",
-          "ts": "2026-06-22T02:49:16.000Z"
         }
       ],
       "proof": null

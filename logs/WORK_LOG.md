@@ -1,5 +1,33 @@
 # Work Log
 
+## 2026-06-25 — Session 222 · CI-blindness class closed: built the staleness beacon S221 brainstormed → it caught a real 7-run dead cron → root-fixed it (arc)
+
+Full continuous arc (/start → /audit → /implement → /closeout) as one mission. **7 substantive ships + 3 phantom rejection-wins + 2 Ark cargos.** SIL 967 → 972 (+5). Velocity 7.
+
+**/start:** `git pull --rebase` fast-forwarded 14 hourly Action-commit files. Context-meter CONTINUE (2%). Session 222, BUILDER work (detector mislabeled FOUNDER on the goal prompt's "portfolio" token). `blockingFailing: 0`. Secrets discovery: `ark` capability MISSING (HMAC seed = founder credential, confirmed not phantom).
+
+**/audit:** the doctor's 3 reds + the #1 VERIFY item (`gh run list`) were the real surface. Verified every genius premise against LIVE code: 3 items were already-shipped phantoms (CANON_ADOPTION freshness wired S221 `smoke-startup-scripts.mjs:251`; orphan-lib rot shipped S221; Forge Window phantom per D-S221.5) → recorded as rejection-wins. The 2 latent CI reds on the latest PR — Visual Regression + E2E — were the genuine local work. The other doctor reds = 100% sibling-repo drift.
+
+**1 — `/studio-pulse/` E2E red (A2).** Smoke failed `missing "Forge Window"`. Binding D-S221.5: that's a phantom; label is "Studio Pulse". Fix = complete the half-done S185 rename, not propagate the phantom: H1 `The Forge<br>Window`→`Studio<br>Pulse` (`studio-pulse/index.html:287`) + smoke assertion (`smoke-http.mjs:72`). S218.4's "Studio Pulse everywhere" claim was false — the most prominent label (H1) was never migrated.
+
+**2 — SECOND-ORDER: s151 body-scan (SI-2).** `check-s151-contracts` enforced `<title>`+nav but never the body — how the stale H1 hid 30+ sessions (D-S208.1 anti-pattern). Added `visibleText()` (strip script/style/tags, collapse ws so `Forge<br>Window` rejoins) + a `forge window` body-bigram fail. Self-test proves split-tag detection AND non-false-positive on legit "forge" metaphor prose (good fixture has `.forge-hero`, "Live from the forge"). Self-test + live green (145 pages).
+
+**3 — visual-regression structural fix (A1).** Playwright errored at collection: `test.use({...vp.config})` inside a describe pulls in `defaultBrowserType` (webkit/chromium per device) → "Cannot use defaultBrowserType in a describe group". Added `emulationOnly()` to strip `defaultBrowserType`/`browserName`. Pinned the workflow `--project=chromium` (single reproducible engine + killed a latent firefox-not-installed failure; the workflow installed only chromium+webkit). 70 tests collect; YAML validated. (Baseline *capture* deferred honestly — 0 committed snapshots; Linux-runner self-capture can't be faked from Windows.)
+
+**4 — staleness beacon + doctor probe (A3).** NEW `check-scheduled-workflow-staleness.mjs`: discovers `on: schedule:` workflows, one `gh run list` call bucketed by `workflowName`, filters `event=schedule`, flags any whose latest ≥2 completed runs all failed (`FAILED` set excludes cancelled/skipped). Degrades-to-pass when gh/network absent. Pure `evaluateStaleness()` core, 5/5 self-test. Wired into `run-doctor.mjs` as advisory (`sched-staleness`, non-blocking). **First run: `Refresh Live Data` red 7 consecutive runs.**
+
+**5 — root-fixed that dead cron (A3 root-fix).** `gh run view --log-failed` showed `build-ark-signature-dossier: 52 failures` (a red herring — that script exits 0) then the REAL line: `[llms-shards] missing .../ignis/output/ecosystem-state.json` → exit 1. `build-llms-full-shards.mjs:128` hard-exits when that gitignored IGNIS output is absent — always the case on CI — failing `npm run build` and stranding the 4h refresh. Changed to warn + exit 0. Verified present (16 shards) + simulated-absent (skip) paths. Secrets-discovery first confirmed the alternative (ark.hmac.seed) is genuinely founder-blocked, but the decoupling is the correct agent-fix.
+
+**6 — cache-lint generalization (A5).** `check-workflow-install-consistency:72` flagged only `cache: 'npm'`; generalized to `cache: (npm|yarn|pnpm)` (every lockfile is gitignored here). `\bcache:` still excludes `cache-dependency-path:`. +yarn/pnpm self-test cases; 11/11.
+
+**7 — closed 2 phantom TASK_BOARD entries.** `check-stale-open-tasks` (in build:check) flagged the duplicate `[ ]` CANON_ADOPTION + orphan-lib entries (done S221); flipped to `[x]` to break the genius-list re-surface loop.
+
+**Ark (sibling drift, zero sibling edits):** shipped 2 `pattern-share` cargos — the CI-blindness pattern (`*`, id `01JRVNNF45…`) + the compliance-drift cluster (studio-ops, id `01JRVNNIFF…`, covering Hashmark/VOID/SHADOW/ATLAS/VEILOS).
+
+**/closeout:** `build:check` EXIT 0 verified directly (after a normal `npm run build` regen); `blockingFailing: 0`; the new `Scheduled CI freshness` doctor probe is live (shows the dead cron until its next run clears). Full write-back. Committed + pushed DIRECT to main.
+
+---
+
 ## 2026-06-25 — Session 221 · P0 CI root-fix (gitignored lockfile vs npm ci · 3 broken workflows) + gate-the-class + orphan-rot bugfix + canon-freshness + agents.json coherence (arc)
 
 Full continuous arc (/start → /audit → /implement → /closeout) as one mission. **5 substantive ships + 1 phantom rejection + 1 founder-decision surfaced.** SIL 959 → 967 (+8). Velocity 5.
