@@ -14,16 +14,17 @@ Last updated: 2026-06-25 (Session 223 — arc: root-fixed build-agents-json (sam
 - [x] **[INFRA/P3·SIL] `check-workflow-yaml-validity.mjs`.** Zero-dep regex scan of all 27 .github/workflows/*.yml for the S183 class: inline run: values with ': ' (parsed as YAML mapping key) or '${{' (misparses flow mapping). 5/5 self-test; 27/27 clean. Wired into smoke runner (blocking). 22/23 checks pass (1 skip: gateway-readiness·claude.api).
 - [x] **[OPS/P2] CANON-006 Ark cargo shipped to studio-ops** (pattern-share · velaxis/syntha/shadow missing branding; id `01JS09FRB52FB88833F70F7644`). Ark inbox drained (33 cargos).
 
+**S223b shipped (same continuous arc — stop-hook correctly caught incomplete brainstorm execution):**
+- [x] **[CI/P2·SIL] VR Linux baselines committed** — 70 PNG files from CI run 28200394502 committed under `tests/__snapshots__/visual-regression.spec.js-snapshots/`; VR gate now compares against committed truth for the first time. Covers 7 surfaces × 5 viewports × 2 themes (dark+light = 35 dark + 35 light).
+- [x] **[INFRA/P3·SIL] `findMissingSparkedShards` — CANON-048 AI discovery gate** (S223 brainstorm #2) — SPARKED on-site pages MUST have a committed `llms-full.txt` shard; missing one = AI agents can't discover or index the product (CANON-048 violation). Reads catalog from `api/public-intelligence.json`; FORGE/VAULTED and external-domain projects exempt (not a judgment call for SPARKED on-site). Self-test 6/6 → 11/11; live scan green (all 4 SPARKED on-site pages have shards; advisory mindframe incoherence unchanged D-S221.4).
+
 **S223 honest ledger (rejections = wins):**
-- → **VR baselines: 2nd run triggered (28200394502)** — in progress, 25-min timeout, fixed snapshot path. When complete: `node scripts/update-vr-baselines.mjs` → `git add tests/__snapshots__/` → commit.
-- → **First VR run (28198295334)** failed: 56/70 mobile tests captured baselines correctly but upload pointed at wrong dir (empty artifact). Desktop timeout from networkidle. Both root-fixed.
+- ✓ **VR dark-theme brainstorm #1 was ALREADY IMPLEMENTED** — `const THEMES = ['dark','light']` was already in the spec. The 70 baselines are 35 dark + 35 light. No new code needed; closure = committing the baselines.
+- → **First VR run (28198295334)** failed: upload pointed at wrong dir. Root-fixed in S223a; run 28200394502 captured 70/70.
 - ✓ **Founder-gated carries unchanged** — push notification, Signal Log/forge devlog, ark.hmac.seed, mobile-sheet, card-accent.
 
 **S223 committed to next session (brainstorm):**
-- [ ] **[CI/P2·SIL] Visual-regression baseline commit** — VR run 28200394502 is in progress. When complete: `node scripts/update-vr-baselines.mjs` → `git add tests/__snapshots__/` → commit PNG files. The gate will then compare against committed truth for the first time.
 - [ ] **[INFRA/P3] `ci-health-monitor` first real run** — monitor will run on schedule (9am UTC) and open/update a GitHub Issue if any dead crons are found. Watch for the first auto-issue or auto-close after the Refresh Live Data cron goes green.
-- [ ] **[CI/P3·SIL] VR dark-theme baseline pass** (S223 brainstorm #1) — the current VR spec captures 7 surfaces × 2 viewports = 14 tests, all default (light) theme. Adding a dark-theme variant (toggle → screenshot → compare) mechanizes part of CANON-047 human-readability verification; catches black-on-black / sub-WCAG regressions that only appear in dark mode.
-- [ ] **[INFRA/P3·SIL] Dead-shard gate → blocking for on-site SPARKED pages** (S223 brainstorm #2) — `check-agents-json-coherence.mjs` currently flags dead `llmsFull` shards advisory-only. For pages where a shard IS producible (any SPARKED game with a self-hosted page), the "never advertise a dead URL" rule should be a hard failure. Uplift to blocking for on-site SPARKED games; keep advisory for external-domain projects (those remain founder-decision).
 
 ## S222 outcome + carries
 

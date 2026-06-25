@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-25T19:12:16.179Z",
+  "generatedAt": "2026-06-25T21:42:34.491Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 222,
-    "currentFocus": "S222 (arc) — closed the CI-failure-blindness class. Built check-scheduled-workflow-staleness.mjs (S221 brainstorm #1) + wired it into the doctor; on first run it caught a real incident: Refresh Live Data cron red 7 consecutive runs. Root-fixed the true cause (past a red-herring Ark-dossier log): build-llms-full-shards.mjs hard-exit(1) on the gitignored ignis/output/ecosystem-state.json, which is always absent on CI → stranded the whole 4h data-refresh → now degrades gracefully (warn+exit0). Also: fixed visual-regression defaultBrowserType-in-describe error + chromium-pinned the workflow; completed the half-done S185 rename by migrating the /studio-pulse/ H1 Forge Window→Studio Pulse + smoke assertion (E2E unblock, honoring binding D-S221.5); hardened check-s151-contracts to body-scan (closes the gate-gap that hid the stale H1); generalized cache-lint to npm/yarn/pnpm (S221 brainstorm #2). Closed 2 duplicate phantom TASK_BOARD entries. build:check EXIT 0 + blockingFailing 0 verified directly.",
-    "nextMilestone": "Verify on next runs: Refresh Live Data cron + visual-regression + E2E go green (the staleness beacon will confirm the cron clears). Watch for any second latent build-step failure now that llms-shards no longer masks the rest of the chain. Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning. Next-session [SIL]: build-step resilience audit (other exit(1)-on-gitignored-input steps) + visual-regression Linux baseline capture (dispatch post-deploy, commit snapshots).",
+    "currentSession": 223,
+    "currentFocus": "S223 (arc) — continued closing the gitignored-input hard-exit class. Root-fixed build-agents-json.mjs (the SECOND script with the same class as S222's llms-shards fix — Refresh Live Data cron was still failing after S222). Shipped 4 second-order gates: check-build-step-resilience (scans all 54 build scripts for hard-exit on gitignored inputs), check-hero-jsonld-completeness (locks S220 JSON-LD win), check-workflow-yaml-validity (zero-dep scan for S183 inline-colon class), and ci-health-monitor.yml + sync-ci-health-issue.mjs (S222 brainstorm #2: beacon→auto-issue escalation). Node 24 upgraded 9 workflows. VR baseline infrastructure fixed (snapshotDir + waitUntil:load + always-upload); 2nd VR run triggered (28200394502, in progress). CANON-006 Ark cargo shipped to studio-ops. Ark inbox drained (33 cargos). build:check EXIT 0 + blockingFailing 0 verified directly.",
+    "nextMilestone": "VR baseline run 28200394502: when complete, run `node scripts/update-vr-baselines.mjs` → commit PNG files → VR gate will have committed truth. Verify Refresh Live Data cron green on next scheduled run (beacon will surface it). Founder-gated carries: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning, mobile-sheet real-device verification.",
     "pulseKeys": [
       "now",
       "next",
