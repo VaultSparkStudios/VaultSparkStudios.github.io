@@ -333,6 +333,22 @@ try {
   results.push({ status: 'SKIP', module: 'check-workflow-yaml-validity', reason: `spawn error: ${err.message}` });
 }
 
+// ── E2E networkidle patterns: prevent 30s timeout class (S224) ───────────────
+try {
+  const eni = spawnSync(process.execPath, [resolve(root, 'scripts/check-e2e-networkidle.mjs'), '--check'], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  if (eni.status === 0) {
+    results.push({ status: 'OK', module: 'check-e2e-networkidle · no networkidle in E2E tests' });
+  } else {
+    failures++;
+    const tail = (eni.stderr || eni.stdout || '').trim().split('\n').slice(-2).join(' ');
+    results.push({ status: 'FAIL', module: 'check-e2e-networkidle', reason: tail || 'networkidle pattern found in E2E spec' });
+  }
+} catch (err) {
+  results.push({ status: 'SKIP', module: 'check-e2e-networkidle', reason: `spawn error: ${err.message}` });
+}
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const pad = s => s.padEnd(45);
 for (const r of results) {

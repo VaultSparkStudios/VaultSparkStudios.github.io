@@ -68,7 +68,10 @@ function auditScript(scriptName) {
 
   for (let i = 0; i < lines.length; i++) {
     const ln = lines[i];
-    if (!ln.includes('process.exit(1)') && !ln.includes('process.exit(2)')) continue;
+    // Catch both explicit exits AND throw statements — both crash the &&-chained build.
+    const isHardExit = ln.includes('process.exit(1)') || ln.includes('process.exit(2)');
+    const isThrow = /\bthrow\s+new\s+\w+Error/.test(ln) || /\bthrow\s+new\s+Error/.test(ln);
+    if (!isHardExit && !isThrow) continue;
 
     // Check context window ±15 lines
     const start = Math.max(0, i - 15);
@@ -101,7 +104,7 @@ function auditScript(scriptName) {
 }
 
 function selfTest() {
-  // Test 1: a script with hard exit(1) on gitignored input → should be flagged
+  // Test 1: exit(1) on gitignored input → should be flagged
   const fakeBad = `
 import { existsSync } from 'node:fs';
 const ECOSYSTEM = 'ignis/output/ecosystem-state.json';
@@ -110,7 +113,7 @@ if (!existsSync(ECOSYSTEM)) {
   process.exit(1);
 }
 `;
-  // Test 2: a script with graceful exit(0) → should NOT be flagged
+  // Test 2: graceful exit(0) → should NOT be flagged
   const fakeGood = `
 import { existsSync } from 'node:fs';
 const ECOSYSTEM = 'ignis/output/ecosystem-state.json';
@@ -119,13 +122,23 @@ if (!existsSync(ECOSYSTEM)) {
   process.exit(0);
 }
 `;
-  // Simulate the audit inline (parsing, not file system)
+  // Test 3: throw new Error on gitignored input → should be flagged (S224 hardening)
+  const fakeThrow = `
+import { existsSync } from 'node:fs';
+const ECOSYSTEM = 'ignis/output/ecosystem-state.json';
+if (!existsSync(ECOSYSTEM)) {
+  throw new Error('ecosystem file missing');
+}
+`;
+  // Inline audit replicating the production logic (kept in sync with auditScript)
   function auditCode(code) {
     const lines = code.split('\n');
     const findings = [];
     for (let i = 0; i < lines.length; i++) {
       const ln = lines[i];
-      if (!ln.includes('process.exit(1)')) continue;
+      const isHardExit = ln.includes('process.exit(1)') || ln.includes('process.exit(2)');
+      const isThrow = /\bthrow\s+new\s+\w+Error/.test(ln) || /\bthrow\s+new\s+Error/.test(ln);
+      if (!isHardExit && !isThrow) continue;
       const start = Math.max(0, i - 15);
       const ctx = lines.slice(start, i + 5).join('\n');
       for (const gi of GITIGNORED_INPUTS) {
@@ -145,14 +158,15 @@ if (!existsSync(ECOSYSTEM)) {
 
   assert(auditCode(fakeBad).length > 0, 'bad code (exit 1 on gitignored) should be flagged');
   assert(auditCode(fakeGood).length === 0, 'good code (exit 0 on gitignored) should not be flagged');
+  assert(auditCode(fakeThrow).length > 0, 'bad code (throw on gitignored) should be flagged (S224)');
 
-  // Test 3: build-llms-full-shards (fixed in S222) must pass
+  // Test 4: build-llms-full-shards (fixed in S222) must pass
   if (existsSync(join(ROOT, 'scripts/build-llms-full-shards.mjs'))) {
     const llmsFindings = auditScript('build-llms-full-shards.mjs');
     assert(llmsFindings.length === 0, 'build-llms-full-shards.mjs must pass (fixed S222)');
   }
 
-  // Test 4: build-agents-json (fixed in S223) must pass
+  // Test 5: build-agents-json (fixed in S223) must pass
   if (existsSync(join(ROOT, 'scripts/build-agents-json.mjs'))) {
     const ajFindings = auditScript('build-agents-json.mjs');
     assert(ajFindings.length === 0, 'build-agents-json.mjs must pass (fixed S223)');
