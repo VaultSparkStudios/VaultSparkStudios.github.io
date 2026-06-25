@@ -75,6 +75,32 @@ export function findDeadShards(projects, shardExists) {
   return out;
 }
 
+/**
+ * findMissingSparkedShards(catalogEntries, resolveOnSitePath, resolveShardPath) — pure.
+ *
+ * CANON-048: every SPARKED project with an on-site canonical page MUST have a committed
+ * llms-full.txt shard — so AI agents can discover and index it. A SPARKED page without a
+ * shard is an AI discovery blind-spot, not a founder judgment call (unlike the
+ * external-URL incoherence above). This FAILS unconditionally when violated.
+ *
+ * @param {Array<{id:string,status:string}>} catalogEntries  items from public-intelligence catalog
+ * @param {(id:string)=>string|null}  resolveOnSitePath  returns on-site path if page exists, else null
+ * @param {(id:string,onSitePath:string)=>boolean} resolveShardExists  true if shard file is on disk
+ * @returns {Array<{id:string, onSitePath:string}>}
+ */
+export function findMissingSparkedShards(catalogEntries, resolveOnSitePath, resolveShardExists) {
+  const out = [];
+  for (const entry of catalogEntries) {
+    if (!entry || !entry.id || entry.status !== 'SPARKED') continue;
+    const onSitePath = resolveOnSitePath(entry.id);
+    if (!onSitePath) continue; // no on-site page → not our concern
+    if (!resolveShardExists(entry.id, onSitePath)) {
+      out.push({ id: entry.id, onSitePath });
+    }
+  }
+  return out;
+}
+
 // ── Self-test ────────────────────────────────────────────────────────────────────
 if (selfTest) {
   let pass = 0, fail = 0;
@@ -102,6 +128,22 @@ if (selfTest) {
   const dead = findDeadShards(withShards, url => url.includes('/games/a/'));
   ok(dead.length === 1 && dead[0].slug === 'b', 'dead shard (advertised-but-missing) flagged');
   ok(!dead.some(d => d.slug === 'c'), 'no-shard entry not flagged');
+
+  // missing SPARKED shard detection (CANON-048 blind-spot gate)
+  const catalog = [
+    { id: 'alpha', status: 'SPARKED' },   // SPARKED, on-site page exists, shard missing → flag
+    { id: 'beta',  status: 'SPARKED' },   // SPARKED, on-site page exists, shard present → ok
+    { id: 'gamma', status: 'FORGE' },     // FORGE, on-site page exists, shard missing → skip (not SPARKED)
+    { id: 'delta', status: 'SPARKED' },   // SPARKED, NO on-site page → skip
+  ];
+  const resolvePage = id => (id === 'alpha' || id === 'beta' || id === 'gamma') ? `/games/${id}/` : null;
+  const resolveShard = (id) => id === 'beta'; // only beta has a shard
+  const missingSparked = findMissingSparkedShards(catalog, resolvePage, resolveShard);
+  ok(missingSparked.length === 1, 'exactly one missing-sparked-shard found');
+  ok(missingSparked[0].id === 'alpha', 'alpha flagged (SPARKED + on-site page + no shard)');
+  ok(!missingSparked.some(m => m.id === 'beta'), 'beta NOT flagged (shard exists)');
+  ok(!missingSparked.some(m => m.id === 'gamma'), 'gamma NOT flagged (FORGE, not SPARKED)');
+  ok(!missingSparked.some(m => m.id === 'delta'), 'delta NOT flagged (no on-site page)');
 
   console.log(`check-agents-json-coherence --self-test: ${pass} passed, ${fail} failed`);
   process.exit(fail === 0 ? 0 : 1);
@@ -131,18 +173,40 @@ const projects = manifest.projects || [];
 const findings = findIncoherent(projects, onSiteResolver);
 const deadShards = findDeadShards(projects, shardExists);
 
-if (asJson) {
-  console.log(JSON.stringify({ scanned: projects.length, findings, deadShards }, null, 2));
-  process.exit(deadShards.length || (findings.length && strict) ? 1 : 0);
+// CANON-048: load catalog for SPARKED shard coverage check.
+let catalogEntries = [];
+try {
+  const pi = JSON.parse(fs.readFileSync(path.join(ROOT, 'api/public-intelligence.json'), 'utf8'));
+  catalogEntries = Object.values(pi.catalog || {});
+} catch (_) {
+  // public-intelligence.json may not exist in CI before first build; degrade gracefully.
 }
 
-console.log(`check-agents-json-coherence: scanned ${projects.length} agents.json project(s)`);
+const shardExistsForId = (id, onSitePath) => {
+  const rel = onSitePath.replace(/^\//, '') + 'llms-full.txt';
+  return fs.existsSync(path.join(ROOT, rel));
+};
+const missingSparked = findMissingSparkedShards(catalogEntries, onSiteResolver, shardExistsForId);
+
+if (asJson) {
+  console.log(JSON.stringify({ scanned: projects.length, findings, deadShards, missingSparked }, null, 2));
+  process.exit(deadShards.length || missingSparked.length || (findings.length && strict) ? 1 : 0);
+}
+
+console.log(`check-agents-json-coherence: scanned ${projects.length} agents.json project(s), ${catalogEntries.length} catalog entries`);
 
 // Dead shards = hard error (a 404 advertised to crawlers — not a judgment call).
 if (deadShards.length) {
   console.error(`  ✗ ${deadShards.length} advertised llms-full shard(s) MISSING on disk (404 to crawlers):`);
   for (const d of deadShards) console.error(`      ${d.slug.padEnd(20)} ${d.llmsFull}`);
   console.error('  → regenerate the shard (build-llms-full-shards.mjs) or stop advertising it in build-agents-json.mjs.');
+}
+
+// CANON-048: SPARKED on-site pages must have a committed shard — AI discovery gap is a hard fail.
+if (missingSparked.length) {
+  console.error(`  ✗ ${missingSparked.length} SPARKED on-site page(s) MISSING llms-full.txt shard (AI discovery blind-spot):`);
+  for (const m of missingSparked) console.error(`      ${m.id.padEnd(20)} on-site at ${m.onSitePath} — no shard committed`);
+  console.error('  → run build-llms-full-shards.mjs (requires IGNIS session) or add shard manually, then commit.');
 }
 
 // On-site/external incoherence = advisory (founder/content decision).
@@ -155,7 +219,7 @@ if (findings.length) {
   console.log('    OR route on-site AND generate the matching llms-full.txt shard (never advertise a dead shard).');
 }
 
-if (!deadShards.length && !findings.length) {
-  console.log('  ✓ no dead shards; no external-url entries shadow an existing on-site canonical page');
+if (!deadShards.length && !missingSparked.length && !findings.length) {
+  console.log('  ✓ no dead shards; no missing SPARKED shards; no external-url entries shadow an existing on-site canonical page');
 }
-process.exit(deadShards.length || (strict && findings.length) ? 1 : 0);
+process.exit(deadShards.length || missingSparked.length || (strict && findings.length) ? 1 : 0);
