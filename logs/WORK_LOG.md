@@ -1,5 +1,33 @@
 # Work Log
 
+## 2026-06-25 — Session 223 · build-agents-json P0 (2nd gitignored-input script) + 4 second-order gates + ci-health-monitor + Node 24 + VR baseline infra fixed (arc)
+
+Full continuous arc (/start → /audit → /implement → /closeout) as one mission. **8 substantive ships + second-order gate catches a real bug on first run.** SIL 972 → 974 (+2). Velocity 9.
+
+**/start:** `git pull --rebase` fast-forwarded autopilot commits. Context-meter CONTINUE. Session 223. `blockingFailing: 0`.
+
+**/audit:** S222's top-gap ("other build steps after llms-shards never ran on CI, so a second latent failure could surface") was the real signal. Verified against LIVE code: `build-agents-json.mjs` had the identical `existsSync(ECOSYSTEM) || process.exit(1)` pattern on the same gitignored `ignis/output/ecosystem-state.json`. The beacon's first run showed `Refresh Live Data` still red — S222 fixed the loudest failure; this one was still killing the cron.
+
+**1 — [P0] `build-agents-json.mjs` degrade.** `existsSync(ECOSYSTEM) || process.exit(1)` → `if (!existsSync(ECOSYSTEM)) { console.warn('...'); process.exit(0); }`. Same pattern as S222's llms-shards fix. The cron is now genuinely fixed (both consuming scripts degrade gracefully).
+
+**2 — SECOND-ORDER: `check-build-step-resilience.mjs`.** Scans all 54 build-chain scripts for `process.exit(1)` within ±15 lines of `existsSync(<gitignored path>)`. Gitignored paths list: `ignis/output/`, `data/rum-raw.*`, `data/studio-feed.json`, `.cache/router-suggest.json`. Skips when a graceful exit(0) is already nearby. 4/4 self-test; wired into smoke runner as blocking gate. Class is un-reintroducible.
+
+**3 — `check-hero-jsonld-completeness.mjs`.** S220 committed brainstorm. Parses `data-hero-portfolio-ld` in index.html; asserts SPARKED VideoGame tiles carry `description`/`genre`/`image`/`applicationCategory`/`sameAs`; SPARKED CreativeWork tiles carry `description`/`genre`/`sameAs`; FORGE/VAULTED advisory only. 9/9 self-test; 5/5 live SPARKED tiles pass; wired into smoke runner.
+
+**4 — VR baseline infrastructure (3 bugs).** (a) Added `snapshotDir: './tests/__snapshots__'` to `playwright.config.js` — default was `tests/visual-regression.spec.js-snapshots/`, which the workflow upload never pointed at (zero artifacts every run). (b) Changed `waitUntil: 'networkidle'` → `'load'` in spec — `/oracle/` has persistent beacon polling, timed out 14/14 desktop tests. (c) Confirmed `always()` upload condition works (upload succeeds even when Playwright step fails). Second VR run triggered (28200394502, 25-min timeout, in progress).
+
+**5 — Node 24 upgrade.** 9 workflows: `accessibility.yml`, `brief-format-check.yml`, `e2e.yml`, `leaderboard-api.yml`, `member-seo.yml`, `og-images.yml`, `sitemap.yml`, `vault-narrative.yml`, `visual-regression.yml`. Changed `node-version: '20'` → `'24'`. Aligns with runner default and eliminates active deprecation warnings.
+
+**6 — `ci-health-monitor.yml` + `sync-ci-health-issue.mjs`.** S222 brainstorm #2. Daily 9am UTC GitHub Actions cron: runs staleness probe → `sync-ci-health-issue.mjs` reads result JSON → creates/updates/closes a single `ci-health` labeled issue idempotently. Escalates beyond the doctor table. 2/2 self-test; YAML validated. Permissions: `issues: write`.
+
+**7 — `check-workflow-yaml-validity.mjs`.** Zero-dep regex scanner for the S183 class: `run:` values with inline `: ` or `${{` parse as YAML mapping keys → fail in 0s with no stack trace. Written without `npx js-yaml` (unreliable in smoke-runner spawn context). `const EXPR = '${{';` avoids Node template-literal parser hazard in the gate's own source. 5/5 self-test; 27/27 live workflows clean; wired into smoke runner.
+
+**8 — Ark.** Drained inbox (33 cargos); shipped CANON-006 pattern-share cargo to studio-ops (`01JS09FRB52FB88833F70F7644`).
+
+**/closeout:** `build:check` EXIT 0 verified directly (not pipe-masked); `blockingFailing: 0`; all new gates self-test green; smoke 22/23 (1 expected skip). VR baselines pending (run in progress). Full write-back; committed + pushed DIRECT to main.
+
+---
+
 ## 2026-06-25 — Session 222 · CI-blindness class closed: built the staleness beacon S221 brainstormed → it caught a real 7-run dead cron → root-fixed it (arc)
 
 Full continuous arc (/start → /audit → /implement → /closeout) as one mission. **7 substantive ships + 3 phantom rejection-wins + 2 Ark cargos.** SIL 967 → 972 (+5). Velocity 7.

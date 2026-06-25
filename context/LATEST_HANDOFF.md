@@ -1,8 +1,26 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-25 (Session 222 — arc · CI-blindness class closed: built the beacon S221 brainstormed, it caught a real 7-run dead cron, root-fixed it)
+Last updated: 2026-06-25 (Session 223 — arc · build-agents-json P0 (2nd script with same gitignored-input class as S222) + 4 second-order gates + ci-health-monitor + Node 24 upgrade + VR baseline infrastructure fixed)
 
 Session Intent: Founder /goal — run the full arc (/start → /audit → /implement → /closeout) as one continuous mission, saturate the genius list + second-order innovation, commit + push DIRECT to main, no mid-phase handback.
+
+## Where We Left Off (Session 223)
+- **Shipped (8 substantive · second class discovered and gated — "no more silent gitignored-input failures"):**
+  1. **[P0] `build-agents-json.mjs` graceful degrade** — S222 fixed `build-llms-full-shards.mjs` and declared the cron dead. One step down the same `npm run build` chain, `build-agents-json.mjs` had the identical `existsSync(ECOSYSTEM) || process.exit(1)` pattern (same gitignored `ignis/output/ecosystem-state.json`). Two scripts consumed the same optional IGNIS output; one got fixed; the other was still hard-failing. Changed to warn + exit(0), matching S222's fix.
+  2. **SECOND-ORDER — `check-build-step-resilience.mjs`** (S222 brainstorm #1): scans all 54 build-chain scripts for `process.exit(1)` within ±15 lines of `existsSync(<gitignored path>)` (ignis/output/, data/rum-raw.*, data/studio-feed.json, .cache/router-suggest.json); skips when a graceful exit(0) is already nearby. 4/4 self-test; wired into smoke runner as blocking gate. The class is now un-reintroducible.
+  3. **`check-hero-jsonld-completeness.mjs`** (S220 committed brainstorm): parses `data-hero-portfolio-ld` in index.html; SPARKED VideoGame tiles must carry `description`/`genre`/`image`/`applicationCategory`/`sameAs`; SPARKED CreativeWork tiles must carry `description`/`genre`/`sameAs`; FORGE/VAULTED advisory. 9/9 self-test; 5/5 live SPARKED tiles pass; wired into smoke runner.
+  4. **VR baseline infrastructure — 3 bugs fixed**: (a) `snapshotDir: './tests/__snapshots__'` added to `playwright.config.js` (default was `tests/visual-regression.spec.js-snapshots/` — the workflow uploaded `tests/__snapshots__/`, which was empty, explaining why every prior VR run produced zero artifacts); (b) `waitUntil: 'networkidle'` → `'load'` in the spec (`/oracle/` has persistent beacon polling that never reaches networkidle — timed out all 14 desktop-1280 tests); (c) confirmed `always()` upload condition works. Second VR run triggered (28200394502, 25-min timeout, in progress at closeout).
+  5. **Node 24 upgrade** — 9 workflows upgraded from `node-version: '20'` → `'24'`; runner default was already Node 24 (active deprecation warnings); aligns all workflows with the already-correct `cloudflare-worker-deploy.yml`.
+  6. **`sync-ci-health-issue.mjs` + `ci-health-monitor.yml`** (S222 brainstorm #2): daily GitHub Actions cron runs the staleness probe + creates/updates/closes a single idempotent `ci-health` issue when dead crons are found. Escalates beyond the doctor table (a place humans watch). 2/2 self-test; YAML validated.
+  7. **`check-workflow-yaml-validity.mjs`**: zero-dep regex scan of all 27 workflows for the S183 class (`run:` values with inline `: ` or `${{` — these parse as YAML mapping keys, fail in 0s with no stack trace on CI). 5/5 self-test; 27/27 clean; wired into smoke runner.
+  8. **Ark** — CANON-006 cargo shipped to studio-ops (`01JS09FRB52FB88833F70F7644`); inbox drained (33 cargos).
+- **Honest ledger:** VR baselines not yet committed (run 28200394502 in progress). Founder-gated carries unchanged: first push notification (0 subs), Signal Log + forge devlog (founder voice), `ark.hmac.seed` provisioning, mobile-sheet real-device.
+- **Tests:** `build:check` EXIT 0 (verified directly, not pipe-masked) · `blockingFailing: 0` · all new/extended gates self-test green · smoke 22/23 (1 expected skip: gateway-readiness·claude.api).
+- **Deploy:** committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip; Worker unchanged.
+- **First action next session:** `/start` → (a) run `node scripts/update-vr-baselines.mjs` if VR run 28200394502 completed (download PNG baselines → commit under `tests/__snapshots__/`); (b) verify `Refresh Live Data` cron cleared (second dead script fixed — the beacon should show green); (c) check if `ci-health-monitor` first daily run created/closed an issue.
+- **SIL:** 972 → 974 (+2). Categories: Dev 99 | Align 97 | Momentum 98 | Engage 96 | Process 99 | CrossRepo 97 | Security 94 | EcoInt 98 | CapEff 97 | AutoCov 99.
+
+> **S222 (arc):** CI-blindness class closed — scheduled-workflow staleness beacon (caught a real 7-run dead cron + root-fixed it); visual-regression structural fix; s151 body-scan gate hardened; Studio Pulse rename completed; cache-lint generalized; 2 phantom task entries closed. SIL 972.
 
 ## Where We Left Off (Session 222)
 - **Shipped (7 substantive · CI-blindness closed + the dead cron it found, root-fixed):**

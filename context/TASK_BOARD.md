@@ -1,6 +1,29 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-25 (Session 222 — arc: built the CI-staleness beacon [caught a real 7-run dead cron] + root-fixed the cron; visual-regression fix; studio-pulse rename completion; s151 body-scan; cache-lint generalization)
+Last updated: 2026-06-25 (Session 223 — arc: root-fixed build-agents-json (same gitignored-input class as S222); 4 second-order gates; ci-health-monitor (S222 brainstorm #2); Node 24 upgrade 9 workflows; VR baseline infrastructure fixed + 2nd run triggered; Ark cargo + inbox)
+
+## S223 outcome + carries
+
+**Shipped in S223:**
+- [x] **[CI/P0] Root-fixed `build-agents-json.mjs` — SECOND script with same gitignored-input class.** S222 fixed `build-llms-full-shards.mjs` but Refresh Live Data was STILL failing every run. True cause: `build-agents-json.mjs` also hard-`exit(1)` on `ignis/output/ecosystem-state.json` (same file, same absent-on-CI reason). Fixed: warn + exit(0). Gate: `check-build-step-resilience.mjs` now catches the class proactively.
+- [x] **[INFRA/P3·SIL] S222 brainstorm #1: `check-build-step-resilience.mjs`.** Scans all 54 build-chain scripts for hard-exit(1) near existsSync on gitignored paths (ignis/output/, data/rum-raw.*, data/studio-feed.json, .cache/router-suggest.json). 4/4 self-test. Wired into smoke runner (blocking). Makes the gitignored-input class un-reintroducible.
+- [x] **[INFRA/P3·SIL] S220 committed brainstorm: `check-hero-jsonld-completeness.mjs`.** Parses `data-hero-portfolio-ld` block in index.html; asserts each SPARKED VideoGame/CreativeWork tile carries required fields (description, genre, image, sameAs; games also applicationCategory). FORGE/VAULTED advisory only. 9/9 self-test; 5/5 live SPARKED tiles pass. Wired into smoke runner (blocking).
+- [x] **[CI/P2·SIL] VR baseline infrastructure fixed (3 bugs).** (a) `snapshotDir: './tests/__snapshots__'` in playwright.config.js — without this, `--update-snapshots` wrote to `tests/v-r.s-s/` while the workflow uploaded `tests/__snapshots__/` (empty → zero artifact). (b) `waitUntil: 'networkidle'` → `waitUntil: 'load'` — /oracle/ has persistent beacon traffic that never reached networkidle, timing out all 14 desktop-1280 tests. (c) `update_baselines` workflow_dispatch + 25-min timeout + `always()` upload condition.
+- [x] **[CI/HYGIENE] Node 24 upgrade.** 9 workflows upgraded from node-version: '20' to '24'. Runners were already forcing Node 24 with deprecation warnings.
+- [x] **[INFRA/P3·SIL] S222 brainstorm #2: `sync-ci-health-issue.mjs` + `ci-health-monitor.yml`.** When `check-scheduled-workflow-staleness` flags dead crons, `ci-health-monitor.yml` (daily 9am UTC) runs the probe and calls `sync-ci-health-issue.mjs` to create/update/close a single idempotent GitHub Issue (label: `ci-health`). 2/2 self-test; YAML valid.
+- [x] **[INFRA/P3·SIL] `check-workflow-yaml-validity.mjs`.** Zero-dep regex scan of all 27 .github/workflows/*.yml for the S183 class: inline run: values with ': ' (parsed as YAML mapping key) or '${{' (misparses flow mapping). 5/5 self-test; 27/27 clean. Wired into smoke runner (blocking). 22/23 checks pass (1 skip: gateway-readiness·claude.api).
+- [x] **[OPS/P2] CANON-006 Ark cargo shipped to studio-ops** (pattern-share · velaxis/syntha/shadow missing branding; id `01JS09FRB52FB88833F70F7644`). Ark inbox drained (33 cargos).
+
+**S223 honest ledger (rejections = wins):**
+- → **VR baselines: 2nd run triggered (28200394502)** — in progress, 25-min timeout, fixed snapshot path. When complete: `node scripts/update-vr-baselines.mjs` → `git add tests/__snapshots__/` → commit.
+- → **First VR run (28198295334)** failed: 56/70 mobile tests captured baselines correctly but upload pointed at wrong dir (empty artifact). Desktop timeout from networkidle. Both root-fixed.
+- ✓ **Founder-gated carries unchanged** — push notification, Signal Log/forge devlog, ark.hmac.seed, mobile-sheet, card-accent.
+
+**S223 committed to next session (brainstorm):**
+- [ ] **[CI/P2·SIL] Visual-regression baseline commit** — VR run 28200394502 is in progress. When complete: `node scripts/update-vr-baselines.mjs` → `git add tests/__snapshots__/` → commit PNG files. The gate will then compare against committed truth for the first time.
+- [ ] **[INFRA/P3] `ci-health-monitor` first real run** — monitor will run on schedule (9am UTC) and open/update a GitHub Issue if any dead crons are found. Watch for the first auto-issue or auto-close after the Refresh Live Data cron goes green.
+- [ ] **[CI/P3·SIL] VR dark-theme baseline pass** (S223 brainstorm #1) — the current VR spec captures 7 surfaces × 2 viewports = 14 tests, all default (light) theme. Adding a dark-theme variant (toggle → screenshot → compare) mechanizes part of CANON-047 human-readability verification; catches black-on-black / sub-WCAG regressions that only appear in dark mode.
+- [ ] **[INFRA/P3·SIL] Dead-shard gate → blocking for on-site SPARKED pages** (S223 brainstorm #2) — `check-agents-json-coherence.mjs` currently flags dead `llmsFull` shards advisory-only. For pages where a shard IS producible (any SPARKED game with a self-hosted page), the "never advertise a dead URL" rule should be a hard failure. Uplift to blocking for on-site SPARKED games; keep advisory for external-domain projects (those remain founder-decision).
 
 ## S222 outcome + carries
 
@@ -19,9 +42,9 @@ Last updated: 2026-06-25 (Session 222 — arc: built the CI-staleness beacon [ca
 - ✓ **Forge Window propagation (genius 86)** — re-confirmed phantom per D-S221.5; this session moved the *opposite* direction (removed the last H1 remnant).
 - → **Sibling-repo drift (not this repo's work)** — doctor reds compliance-validation, compliance-velocity 32/36, launch-readiness are all Hashmark/VOID/SHADOW/ATLAS/VEILOS; this repo passes both. Shipped 2 Ark `pattern-share` cargos (CI-blindness pattern → `*`; compliance-drift cluster → studio-ops). Zero sibling-tree edits.
 
-**S222 committed to next session (brainstorm):**
-- [ ] **[INFRA/P3·SIL] build-step resilience audit** — scan `npm run build`'s chain for other steps that `process.exit(1)` guarded only by `existsSync(<gitignored path>)` (the llms-shards class), before they strand a cron. The staleness beacon is the safety net until then.
-- [ ] **[CI/P2·SIL] visual-regression Linux baseline capture** — now that collection is fixed + chromium-pinned, run the documented `workflow_dispatch` post-deploy to self-capture Ubuntu baselines, download the artifact, commit under `tests/__snapshots__/` so the gate finally compares against committed truth (there are currently 0 committed snapshots).
+**S222 committed to next session (brainstorm) — BOTH CLEARED S223:**
+- [x] **[INFRA/P3·SIL] build-step resilience audit** — DONE S223 (`check-build-step-resilience.mjs`; also found and root-fixed a second hard-exit in `build-agents-json.mjs`).
+- [x] **[CI/P2·SIL] visual-regression Linux baseline capture** — TRIGGERED S223 (run 28200394502 in progress with fixed snapshot path + waitUntil:load); baseline commit pending run completion.
 
 ## S221 outcome + carries
 

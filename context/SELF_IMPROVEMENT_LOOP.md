@@ -8,14 +8,35 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇████
-Avgs - 3: 968.7 | 5: 960.4 | 10: ~953 | 25: ~956 | all: ~959 (v3.0 /1000)
-  └ 3-session: Dev 98.0 | Align 97.0 | Momentum 97.3 | Engage 97.0 | Process 98.3
-Velocity trend: ↑ (S222: 7 items; S221: 5 items; S220: 3 items) | Protocol velocity: → | Debt: ↓ (S221's two committed brainstorm items both shipped this session; the new beacon immediately caught a real 7-run dead cron + I root-fixed it at source)
-Momentum runway: PUSH — push:count → first real notification (founder go-ahead; 0 subs); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); FOUNDER-DECISION — agents.json mindframe canonical (external usemindframe.com vs on-site /games/mindframe/); OPTIONAL — card-accent cover-tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S222 shipped: root-fixed Refresh-Live-Data dead cron [llms-shards hard-fail on gitignored input]; scheduled-workflow staleness beacon + doctor probe; visual-regression defaultBrowserType fix + chromium pin; studio-pulse "Forge Window"→"Studio Pulse" rename completion [E2E unblock]; check-s151-contracts body-scan hardening; cache-lint generalization; 2 phantom task-board entries closed.)
-Last session: 2026-06-25 | Session 222 | Total: 972/1000 (v3.0) | Velocity: 7 | protocolVelocity: 0
+Sparkline (last 5 totals): ▇▇███
+Avgs - 3: 971.0 | 5: 966.4 | 10: ~957 | 25: ~957 | all: ~960 (v3.0 /1000)
+  └ 3-session: Dev 98.7 | Align 97.0 | Momentum 97.7 | Engage 96.3 | Process 99.0
+Velocity trend: ↑↑ (S223: 9 items; S222: 7 items; S221: 5 items) | Protocol velocity: → | Debt: ↓ (both S222 brainstorm items shipped S223; first run of the build-step resilience gate caught a SECOND script with the same class; the class is now gated shut)
+Momentum runway: VR-BASELINE — run `node scripts/update-vr-baselines.mjs` (VR run 28200394502 pending); PUSH — push:count → first real notification (founder go-ahead; 0 subs); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); FOUNDER-DECISION — agents.json mindframe canonical; OPTIONAL — card-accent cover-tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S223 shipped: build-agents-json P0 degrade; check-build-step-resilience; check-hero-jsonld-completeness; VR baseline infra 3 bugs fixed; Node 24 upgrade 9 workflows; ci-health-monitor + sync-ci-health-issue; check-workflow-yaml-validity; Ark drain.)
+Last session: 2026-06-25 | Session 223 | Total: 974/1000 (v3.0) | Velocity: 9 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-25 — Session 223 (arc · build-agents-json P0 + 4 second-order gates + ci-health-monitor + Node 24 + VR baseline infra) | Total: 974/1000 (v3.0) | Velocity: 9 | Debt: ↓
+Avgs — 3: 971.0 | 5: 966.4 | 10: ~957 | 25: ~957 | all: ~960
+
+Dev Health 99 | Creative Alignment 97 | Momentum 98 | Engagement 96 | Process Quality 99 | Cross-Repo Coherence 97 | Security Posture 94 | Ecosystem Integration 98 | Capital Efficiency 97 | Automation Coverage 99
+
+**What improved:** Started from S222's exact top-gap: "other build steps after llms-shards never ran on CI, so a second latent failure could surface on the next run — the beacon is now the safety net." The session's signature is that the safety net caught the second failure on its very first run. `build-agents-json.mjs` (one step further in `npm run build`) had the identical `existsSync(ECOSYSTEM) || process.exit(1)` pattern consuming the same gitignored `ignis/output/ecosystem-state.json` — it was silently hard-failing the entire `Refresh Live Data` cron alongside llms-shards. One prior session declared "the cron is fixed"; one additional script was still killing it. Fixed: warn + exit(0). Then — per "build the gate for the class right after you hand-fix it" — shipped `check-build-step-resilience.mjs`: scans all 54 build-chain scripts for the exact `existsSync(<gitignored>) + exit(1)` pattern (±15-line context window, skips if a graceful exit(0) is already nearby). Wired into the smoke runner as a blocking gate; the class is now un-reintroducible. Cleared S220's committed brainstorm: `check-hero-jsonld-completeness.mjs` locks the hero JSON-LD enrichment win — SPARKED VideoGame tiles must carry description/genre/image/applicationCategory/sameAs; 5/5 live tiles pass; gate blocks future regressions. Cleared S222 brainstorm #2: `ci-health-monitor.yml` + `sync-ci-health-issue.mjs` escalate staleness findings beyond the doctor table into a GitHub Issue (idempotent create/update/close by `ci-health` label). Shipped `check-workflow-yaml-validity.mjs` (zero-dep, no npx) for the S183 class — and explicitly wrote it with `const EXPR = '${{';` to avoid Node's own template-literal parser tripping over the two-char sequence. Three VR bugs fixed in one pass: (a) `snapshotDir` defaulted to a sibling-named dir that the upload step didn't know about (zero artifacts produced); (b) `/oracle/` beacon polling never reaches networkidle (14/14 desktop tests timed out); (c) `always()` upload condition needed — confirmed working. Second VR run triggered. Node 24 upgrade closed 9 lingering deprecation-warning spams. Ark inbox drained (33 cargos; CANON-006 cargo shipped).
+
+**Process highlight:** Read past the red-herring (llms-shards was the loudest S222 fix — but the CI chain had another hard-exit sitting right next to it). Verified every premise before acting (no phantom re-fixes). Zero-dep constraint on check-workflow-yaml-validity is load-bearing: smoke runner spawns it, npx would spawn 27 external processes that can fail/block — wrote the regex scanner from scratch instead. The `${{` template-literal SyntaxError was a real parser hazard; caught it in self-test, fixed with a `const EXPR` string break — exactly the discipline the gate was built to protect against.
+
+**Top win:** The build-step resilience gate found the second gitignored-input failure on its very first run. A gate that finds a real bug immediately is a gate that paid for itself.
+**Top gap:** VR baselines still not committed (run in progress at closeout). The infrastructure is now correct; the blocking gap is one `node scripts/update-vr-baselines.mjs` + commit away.
+**Intent outcome:** Achieved — full arc as one mission; all agent-doable items shipped or honestly rejected; founder-gated items left as honest deferrals.
+
+**Brainstorm**
+1. **VR dark-theme baselines** — the VR spec captures 7 surfaces × 2 viewport sizes = 14 tests, all default (light) theme. Adding a dark-theme pass (theme toggle → screenshot → compare) would mechanize part of CANON-047 verification and catch black-on-black / sub-WCAG regressions that only appear in dark mode. Probability: Medium.
+2. **Dead-shard gate escalation** — `check-agents-json-coherence.mjs` flags dead `llmsFull` shards advisory-only for external-domain projects. For on-site pages where a shard IS producible (any SPARKED game with a local page), elevate to blocking. The distinction: advisory = "founder decision whether to route on-site"; blocking = "you advertised a shard URL that 404s." Probability: Medium.
+
+**Committed to TASK_BOARD:** [SIL] VR dark-theme baseline pass (brainstorm 1) · [SIL] dead-shard gate → blocking for on-site SPARKED pages (brainstorm 2)
 
 ---
 
