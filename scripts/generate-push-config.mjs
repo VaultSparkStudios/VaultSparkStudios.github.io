@@ -7,8 +7,8 @@ const ROOT = resolve(__dirname, '..');
 const opsPath = resolve(ROOT, '../vaultspark-studio-ops/scripts/lib/secrets.mjs');
 
 if (!existsSync(opsPath)) {
-  console.error('[generate-push-config] studio-ops not found at', opsPath);
-  process.exit(1);
+  console.warn('[generate-push-config] studio-ops not found — keeping committed api/push-config.json (CI mode)');
+  process.exit(0);
 }
 
 const { getSecret } = await import(pathToFileURL(opsPath).href);

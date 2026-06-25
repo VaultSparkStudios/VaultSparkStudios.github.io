@@ -18,13 +18,15 @@
 
    Import-safe: side effects run only when invoked directly. */
 
-import { readFileSync, readdirSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WORKER = join(ROOT, 'cloudflare', 'security-headers-worker.js');
 const ASSETS_DIR = join(ROOT, 'assets');
+// Root-level source files that also emit RUM events (service worker lives here)
+const ROOT_SOURCE_FILES = ['sw.js'];
 
 // Names the gate should not flag as "dead" even when no asset emits them — e.g.
 // events emitted from edge functions or HTML inline (none today; kept explicit).
@@ -42,8 +44,9 @@ export function parseAllowlist(workerSrc) {
 }
 
 /** Extract RUM event emissions from a source string. Matches any emit-shaped
-   call — emit('x'), emitUx('x') — since the local helper name varies by file
-   (footer-dispatch uses emitUx; nav-sheet uses emit). Returns { names, prefixes }:
+   call — emit('x'), emitUx('x'), rumBeacon('x') — since the local helper name
+   varies by file (footer-dispatch uses emitUx; nav-sheet uses emit; sw.js uses
+   rumBeacon). Returns { names, prefixes }:
      names    = concrete static event names
      prefixes = dynamic stems like 'nav-sheet:' from emit('nav-sheet:' + cause),
                 which COVER any allowlist entry that starts with them.
@@ -53,7 +56,8 @@ export function parseAllowlist(workerSrc) {
 export function parseEmissions(src) {
   const names = [];
   const prefixes = [];
-  const re = /\bemit\w*\(\s*['"]([a-z0-9][a-z0-9:_-]*)['"]\s*(\+)?/gi;
+  // Matches emitUx('x'), emit('x'), rumBeacon('x') and their variants
+  const re = /\b(?:emit\w*|rumBeacon)\(\s*['"]([a-z0-9][a-z0-9:_-]*)['"]\s*(\+)?/gi;
   let g;
   while ((g = re.exec(src))) {
     const token = g[1];
@@ -143,6 +147,14 @@ function runScan() {
   for (const file of readdirSync(ASSETS_DIR).filter(isSourceAsset)) {
     const src = readFileSync(join(ASSETS_DIR, file), 'utf8');
     if (!src.includes('/v/rum')) continue; // only files on the RUM beacon transport
+    const emitted = parseEmissions(src);
+    if (emitted.names.length || emitted.prefixes.length) emissionMap[file] = emitted;
+  }
+  // Also scan root-level source files (sw.js uses rumBeacon() not emitUx())
+  for (const file of ROOT_SOURCE_FILES) {
+    const absPath = join(ROOT, file);
+    if (!existsSync(absPath)) continue;
+    const src = readFileSync(absPath, 'utf8');
     const emitted = parseEmissions(src);
     if (emitted.names.length || emitted.prefixes.length) emissionMap[file] = emitted;
   }

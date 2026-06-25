@@ -35,14 +35,17 @@ const ROOT = resolve(__dirname, '..');
 const CHECK = process.argv.includes('--check');
 const SELF_TEST = process.argv.includes('--self-test');
 
-// Paths that are gitignored and therefore absent on CI runners.
-// Extend this list if new gitignored inputs are added to the build chain.
+// Paths that are gitignored or absent on CI runners (gitignored files OR sibling repos).
+// Extend this list if new absent-on-CI inputs are added to the build chain.
 const GITIGNORED_INPUTS = [
   'ignis/output/',
   'data/rum-raw.ndjson',
   'data/rum-raw.json',
   'data/studio-feed.json',
   '.cache/router-suggest.json',
+  // Sibling repos are not checked out on CI — a hard exit(1) when they're absent strands the build.
+  '../vaultspark-studio-ops/',
+  'vaultspark-studio-ops/',
 ];
 
 // Read the build chain scripts from package.json

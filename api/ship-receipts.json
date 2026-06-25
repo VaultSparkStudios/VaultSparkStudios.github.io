@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-25T19:12:10.934Z",
+  "generatedAt": "2026-06-25T22:25:13.159Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -11,9 +11,9 @@
       "feedbackSignals": 1,
       "shippedCommits": [
         {
-          "sha": "fa215055",
-          "summary": "footer Projects column, Forge games, pathfinder upgrades, journal full dates, games/projects pages visual overhaul, m…",
-          "ts": "2026-06-22T05:50:25.000Z"
+          "sha": "a4dbe13c",
+          "summary": "upgrade all workflows from Node 20 to Node 24",
+          "ts": "2026-06-25T20:21:46.000Z"
         }
       ],
       "proof": null
@@ -21,7 +21,7 @@
     {
       "theme": "worlds",
       "label": "Worlds",
-      "feedbackSignals": 5,
+      "feedbackSignals": 2,
       "shippedCommits": [
         {
           "sha": "e15e91d4",
@@ -32,21 +32,6 @@
           "sha": "fbde4eab",
           "summary": "S215 template pass on 29 individual game + project pages (S216)",
           "ts": "2026-06-22T22:56:10.000Z"
-        },
-        {
-          "sha": "d122922a",
-          "summary": "per-game push-subscribe CTA on all individual game pages (S216)",
-          "ts": "2026-06-22T22:56:10.000Z"
-        },
-        {
-          "sha": "992c35d5",
-          "summary": "game-page returning-visitor welcome-back badge (S216)",
-          "ts": "2026-06-22T22:56:10.000Z"
-        },
-        {
-          "sha": "41646bd2",
-          "summary": "extend STARTERS_GAME to all SPARKED game slugs (S216)",
-          "ts": "2026-06-22T22:56:10.000Z"
         }
       ],
       "proof": null
@@ -54,8 +39,13 @@
     {
       "theme": "transparency",
       "label": "Transparency",
-      "feedbackSignals": 6,
+      "feedbackSignals": 4,
       "shippedCommits": [
+        {
+          "sha": "4732f661",
+          "summary": "S223 SIL rolling-status update — 974→976 velocity 10",
+          "ts": "2026-06-25T21:53:31.000Z"
+        },
         {
           "sha": "fd7adbe1",
           "summary": "closeout status board",
@@ -70,16 +60,6 @@
           "sha": "9dbb8964",
           "summary": "Oracle live answers — real studio state in every cluster + answer",
           "ts": "2026-06-23T20:29:11.000Z"
-        },
-        {
-          "sha": "bbdadbe8",
-          "summary": "wire journal-date check into build gate (S216)",
-          "ts": "2026-06-22T22:56:10.000Z"
-        },
-        {
-          "sha": "5485beaf",
-          "summary": "S215 write-backs — SIL 935, footer Projects column, visual overhaul, pathfinder intel, journal dates",
-          "ts": "2026-06-22T07:01:31.000Z"
         }
       ],
       "proof": null
@@ -108,17 +88,12 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 2,
+      "feedbackSignals": 1,
       "shippedCommits": [
         {
           "sha": "402b0930",
           "summary": "single-process pre-push scan — fixes multi-minute pushes on Windows",
           "ts": "2026-06-23T21:39:15.000Z"
-        },
-        {
-          "sha": "da9066e0",
-          "summary": "redact local machine paths in .cache/ build output files",
-          "ts": "2026-06-22T04:04:15.000Z"
         }
       ],
       "proof": {
@@ -139,22 +114,17 @@
     {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 3,
+      "feedbackSignals": 2,
       "shippedCommits": [
+        {
+          "sha": "41a6e22a",
+          "summary": "root-fix agents-json CI exit(1) on gitignored ECOSYSTEM + build-step resilience gate + hero JSON-LD completeness gate",
+          "ts": "2026-06-25T19:38:09.000Z"
+        },
         {
           "sha": "7850158f",
           "summary": "S217 visual card overhaul + homepage data fix",
           "ts": "2026-06-23T00:42:38.000Z"
-        },
-        {
-          "sha": "bebbb03d",
-          "summary": "S214 (autonomous arc · Lighthouse TBT fix + mobile audit) sh",
-          "ts": "2026-06-22T03:01:10.000Z"
-        },
-        {
-          "sha": "4483264b",
-          "summary": "CANON-041 tap-target audit on S211-S213 features",
-          "ts": "2026-06-22T02:49:17.000Z"
         }
       ],
       "proof": null

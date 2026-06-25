@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-25T19:12:28.975Z",
+  "generatedAt": "2026-06-25T22:25:31.480Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,7 +41,7 @@
       "href": "/social/"
     }
   ],
-  "focus": "We found and fixed a behind-the-scenes pipeline that quietly stopped running a while ago — the one that keeps the studio stats, status, and game info on the site genuinely fresh. We also built a new automated watchdog that notices the moment any scheduled job goes quiet, so this kind of silent breakage gets caught fast instead of lingering.",
+  "focus": "We completed a deep infrastructure pass — fixed a second silent pipeline failure (same class as last session) and built an automatic alert system that opens a GitHub issue whenever any of our scheduled automation jobs stops working. The site's reliability detection is now significantly tighter.",
   "nextStep": "Coming soon: the first game-segmented push notification to Call of Doodie subscribers and a new Signal Log post from the studio.",
   "decisions": [
     {

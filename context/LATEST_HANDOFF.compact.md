@@ -1,42 +1,44 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: a3828c379da7 -->
-<!-- generated-at: 2026-06-21T22:25:19.463Z -->
+<!-- source-hash: ec09bafc4be5 -->
+<!-- generated-at: 2026-06-25T22:13:23.613Z -->
 
 # LATEST_HANDOFF (compact)
 
-SESSION 213 HANDOFF SUMMARY
+HANDOFF SUMMARY — VaultSparkStudios.github.io
 
-Session
-- 213 (autonomous arc): IGNIS depth + push segmentation + Ark cargo.
+Session: 223 (arc; continuous /start→/audit→/implement→/closeout, direct-to-main)
 
-Shipped (S213)
-- W2a/b/c IGNIS starter analytics + game-specific starters (STARTERS_GAME, vs_last_game) + dynamic no-result fallback (STARTERS_ALL chips).
-- W3a push game-context segmentation (lastGame/route in KV, --game dispatch filter).
-- W3b push delivery+click RUM via sw.js fetch beacons.
-- W4 Ark cargo to studio-ops.
+Shipped (S223)
+- P0: build-agents-json.mjs graceful degrade (warn+exit0) — 2nd script with same gitignored-input failure class as S222 (ignis/output/ecosystem-state.json)
+- check-build-step-resilience.mjs gate (4/4) — scans 54 build scripts for exit(1) near existsSync(gitignored); class now un-reintroducible; blocking smoke gate
+- check-hero-jsonld-completeness.mjs (9/9; 5/5 live SPARKED pass)
+- VR baseline infra: 3 bugs fixed (snapshotDir → tests/__snapshots__; networkidle→load for /oracle/ beacon polling; always() upload). Run 28200394502 in progress at closeout
+- Node 24 upgrade (9 workflows 20→24)
+- ci-health-monitor.yml + sync-ci-health-issue.mjs (daily cron, idempotent ci-health issue) (2/2)
+- check-workflow-yaml-validity.mjs (5/5; 27/27 clean)
+- Ark: CANON-006 shipped to studio-ops; inbox drained (33 cargos)
 
-State
-- Worker deployed abc4f4c3. doctor blockingFailing 0. check-rum-allowlist 65/68 clean (push:received/push:clicked warn-only — emitted from sw.js raw fetch, not emitUx()).
-- Pushed to main. Pre-existing smoke-startup advisory (claude.api gateway-readiness) unchanged.
+Current Intent
+- Saturate genius list + second-order innovation; commit/push direct to main; no mid-phase handback
 
 Now (top 3)
-1. Run `npm run push:count` for subscriber count + game breakdown.
-2. Then `npm run push:notify -- --title "..." --body "..." [--game cod/fgm/forge]` for first real notification (FOUNDER go-ahead required for first live dispatch).
-3. Process Ark cargo 01JRK6AH97E0F421A55C54236C (sibling compliance gaps) via studio-ops.
+- Run node scripts/update-vr-baselines.mjs IF run 28200394502 completed → commit PNGs under tests/__snapshots__/
+- Verify Refresh Live Data cron cleared green (2nd dead script now fixed)
+- Check ci-health-monitor first daily run created/closed an issue
 
 Blockers (top 3)
-1. First live push dispatch needs founder go-ahead.
-2. push:received/push:clicked beacons are warn-only (raw fetch, not emitUx) — allowlist won't fully validate.
-3. claude.api gateway-readiness smoke-startup advisory (pre-existing).
+- VR baselines uncommitted — gated on run 28200394502 completing (25-min timeout, in progress)
+- Lockfile gitignored by repo convention (npm ci forbidden in workflows; enforced by gate)
+- agents.json mindframe canonical: external vs on-site — founder-decision, do not auto-flip
 
-Human-blocked
-- Publish forge devlog draft journal/_drafts/forge-week-2026-06-18.md, founder voice (open since S207).
-- Real-device hero v2 review, ?hero=classic reverts (since S207).
-- Staging box HCLOUD_TOKEN (since S207).
-- studio-ops: commit cloudflare.vapid CAPABILITY_MAP entry (since S207).
+Human-Blocked (with age)
+- First real push notification, 0 subs (founder) — since ~S214 (~9 sessions)
+- Signal Log + forge devlog, founder voice — since ~S214 (~9 sessions)
+- ark.hmac.seed provisioning, fleet-wide Ark sig-verification — since S219 (~4 sessions)
+- MOBILE-SHEET-DEFAULT-SWAP real-device — since ~S218 (~5 sessions)
 
-Deferrals
-- play-next rotation (awaiting post-2026-06-18 field data).
-- nav catalog-derivation (catalog∪extra-paged merge design needed).
+State
+- build:check EXIT 0 (verified direct, not pipe-masked) · blockingFailing 0 · smoke 22/23 (1 expected skip: gateway-readiness·claude.api) · pushed to origin/main · CF Pages auto-builds · Worker unchanged
+- SIL: 974
 
-Next session: run push:count, then await founder go-ahead for first live push:notify.
+Next session: /start → resolve VR baselines (commit if run done), confirm both dead-cron fixes green, check ci-health issue.
