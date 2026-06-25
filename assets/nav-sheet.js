@@ -97,7 +97,7 @@
       st.textContent =
         '.vs-nav-sheet-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:2147483640;opacity:0;pointer-events:none;transition:opacity 240ms ease}' +
         '.vs-nav-sheet-backdrop.open{opacity:1;pointer-events:auto}' +
-        '.vs-nav-sheet{position:fixed;left:0;right:0;bottom:0;max-height:60vh;background:var(--mobile-nav-bg,rgba(5,6,14,0.99));border-top:1px solid var(--mobile-nav-border,rgba(255,255,255,0.06));border-radius:18px 18px 0 0;z-index:2147483641;transform:translateY(100%);transition:transform 280ms cubic-bezier(.4,0,.2,1);overflow:auto;padding:0.6rem 1.1rem 1.4rem;color:var(--text);display:flex;flex-direction:column;box-shadow:0 -18px 60px rgba(0,0,0,0.6)}' +
+        '.vs-nav-sheet{position:fixed;left:0;right:0;bottom:0;max-height:60dvh;background:var(--mobile-nav-bg,rgba(5,6,14,0.99));border-top:1px solid var(--mobile-nav-border,rgba(255,255,255,0.06));border-radius:18px 18px 0 0;z-index:2147483641;transform:translateY(100%);transition:transform 280ms cubic-bezier(.4,0,.2,1);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:0.6rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom,0px));color:var(--text);display:flex;flex-direction:column;box-shadow:0 -18px 60px rgba(0,0,0,0.6)}' +
         '.vs-nav-sheet[hidden]{display:none}' +
         '.vs-nav-sheet.open{transform:translateY(0)}' +
         '.vs-nav-sheet-handle{width:42px;height:4px;border-radius:2px;background:rgba(255,255,255,0.18);margin:0 auto 0.6rem}' +
@@ -153,6 +153,27 @@
       });
     }
 
+    /* iOS-safe scroll lock matching nav-toggle.js: `overflow:hidden` on body
+     * swallows fixed-overlay taps in iOS Safari; pin body with position:fixed
+     * instead, restoring scroll offset on close. */
+    var savedScrollY = 0;
+    function lockScroll() {
+      savedScrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + savedScrollY + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+    }
+    function unlockScroll() {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      window.scrollTo(0, savedScrollY);
+    }
+
     var open = false;
     // S163 (audit #8 mobile-sheet-graduation-telemetry): privacy-minimized,
     // fire-and-forget usage signal so the founder default-swap is a data
@@ -172,6 +193,7 @@
       sheet.hidden = false;
       // Force a reflow so the transform transition lands.
       void sheet.offsetWidth;
+      lockScroll();
       backdrop.classList.add('open');
       sheet.classList.add('open');
       hamburger.setAttribute('aria-expanded', 'true');
@@ -180,6 +202,7 @@
     function closeSheet(cause) {
       if (!open) return;
       open = false;
+      unlockScroll();
       backdrop.classList.remove('open');
       sheet.classList.remove('open');
       hamburger.setAttribute('aria-expanded', 'false');
