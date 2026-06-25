@@ -225,6 +225,62 @@ try {
   failures++;
 }
 
+// ── Workflow install-consistency gate (S221) — no `npm ci` / `cache: 'npm'` in ──
+// CI workflows (the lockfile is gitignored here, so both can only ever fail).
+// Folded in here, not a new build:check segment, to respect the cmd.exe ceiling.
+try {
+  const wfCheck = spawnSync(process.execPath, [resolve(root, 'scripts/check-workflow-install-consistency.mjs')], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  if (wfCheck.status === 0) {
+    results.push({ status: 'OK', module: 'check-workflow-install-consistency · npm install only' });
+  } else {
+    const tail = (wfCheck.stderr || wfCheck.stdout || '').trim().split('\n').slice(-4).join(' | ');
+    results.push({ status: 'FAIL', module: 'check-workflow-install-consistency', reason: tail || 'forbidden install directive' });
+    failures++;
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'check-workflow-install-consistency', reason: `spawn error: ${err.message}` });
+  failures++;
+}
+
+// ── Canon-adoption freshness gate (S221) — every live ACTIVE canon has a row in ─
+// context/CANON_ADOPTION.md. Local mirror of the studio-ops walk; fails only on a
+// MISSING (un-walked) live canon, advisories (extra/count/age) never fail.
+try {
+  const canonCheck = spawnSync(process.execPath, [resolve(root, 'scripts/check-canon-adoption-freshness.mjs')], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  if (canonCheck.status === 0) {
+    results.push({ status: 'OK', module: 'check-canon-adoption-freshness · full coverage' });
+  } else {
+    const tail = (canonCheck.stderr || canonCheck.stdout || '').trim().split('\n').slice(-2).join(' | ');
+    results.push({ status: 'FAIL', module: 'check-canon-adoption-freshness', reason: tail || 'un-walked live canon' });
+    failures++;
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'check-canon-adoption-freshness', reason: `spawn error: ${err.message}` });
+  failures++;
+}
+
+// ── agents.json on-site/external coherence (S221) — ADVISORY (never fails the ──
+// suite; the resolution is a founder/content decision). Surfaces any entry that
+// sends agents to an external domain while an on-site canonical page exists.
+try {
+  const agc = spawnSync(process.execPath, [resolve(root, 'scripts/check-agents-json-coherence.mjs'), '--json'], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  let n = 0;
+  try { n = (JSON.parse(agc.stdout || '{}').findings || []).length; } catch { /* leave 0 */ }
+  results.push({
+    status: 'OK',
+    module: 'check-agents-json-coherence · advisory',
+    reason: n ? `${n} external-url entr(y/ies) shadow an on-site page (founder-decision; non-blocking)` : undefined,
+  });
+} catch (err) {
+  results.push({ status: 'SKIP', module: 'check-agents-json-coherence', reason: `spawn error: ${err.message}` });
+}
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const pad = s => s.padEnd(45);
 for (const r of results) {

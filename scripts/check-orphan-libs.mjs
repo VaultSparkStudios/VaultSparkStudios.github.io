@@ -18,6 +18,15 @@
  *
  * An ORPHAN that is also UNTRACKED is the worst case (the exact S179/S183 class).
  *
+ * S221 — ALLOWLIST-ROT (third signal): the allowlist itself can decay and start
+ * lying. Two rot kinds, both kept honest here (matches "a growing allowlist is a
+ * smell"):
+ *   3a. REDUNDANT — an allowlisted module that now HAS code consumers. The
+ *                   exemption is no longer needed; remove it so the allowlist
+ *                   only ever holds genuine orphans.
+ *   3b. STALE     — an allowlisted module that no longer exists on disk. The
+ *                   entry points at nothing; delete it.
+ *
  * Intentional standalone modules (CLI-only tools, deliberate handoffs awaiting
  * founder disposition) live in ALLOWLIST with a rationale — same discipline as
  * check-protocol-scripts.mjs, so we see ONE structured delta line, not noise.
@@ -111,6 +120,26 @@ function scanOrphans(libNames, bodies) {
   return counts;
 }
 
+/**
+ * auditAllowlist(allowlistNames, libNames, counts) — pure, testable rot detector.
+ * @param {string[]} allowlistNames   ALLOWLIST keys (basenames)
+ * @param {string[]} libNames         lib modules present on disk (basenames)
+ * @param {Map<string,number>} counts libName -> consumer count
+ * @returns {{redundant:string[], stale:string[]}}
+ *   redundant — allowlisted but now has ≥1 consumer (exemption no longer needed)
+ *   stale     — allowlisted but absent from disk (entry points at nothing)
+ */
+function auditAllowlist(allowlistNames, libNames, counts) {
+  const onDisk = new Set(libNames);
+  const redundant = [];
+  const stale = [];
+  for (const name of allowlistNames) {
+    if (!onDisk.has(name)) { stale.push(name); continue; }
+    if ((counts.get(name) || 0) > 0) redundant.push(name);
+  }
+  return { redundant, stale };
+}
+
 // ── Self-test ──────────────────────────────────────────────────────────────────
 if (selfTest) {
   let pass = 0, fail = 0;
@@ -129,6 +158,16 @@ if (selfTest) {
   ok(counts.get('foo.mjs') === 1, 'foo.mjs counted once');
   ok(counts.get('prefixfoo.mjs') === 0, 'prefixfoo.mjs NOT matched by foo.mjs (boundary)');
 
+  // allowlist-rot (S221)
+  const rot = auditAllowlist(
+    ['used.mjs', 'orphan.mjs', 'gone.mjs'],          // allowlisted
+    ['used.mjs', 'orphan.mjs'],                       // on disk (gone.mjs missing)
+    counts,                                           // used.mjs has 2 consumers, orphan.mjs has 0
+  );
+  ok(rot.redundant.length === 1 && rot.redundant[0] === 'used.mjs', 'redundant: allowlisted-but-now-imported flagged');
+  ok(rot.stale.length === 1 && rot.stale[0] === 'gone.mjs', 'stale: allowlisted-but-missing-from-disk flagged');
+  ok(!rot.redundant.includes('orphan.mjs') && !rot.stale.includes('orphan.mjs'), 'genuine orphan stays legitimately allowlisted');
+
   console.log(`check-orphan-libs --self-test: ${pass} passed, ${fail} failed`);
   process.exit(fail === 0 ? 0 : 1);
 }
@@ -144,7 +183,12 @@ try {
 }
 
 const libAbs = new Set(libFiles.map(f => path.join(libDir, f)));
-const codeFiles = listCodeFiles().filter(f => !libAbs.has(f)); // exclude lib self-files as consumers
+// Exclude lib self-files AND this gate itself as "consumers": this file's ALLOWLIST
+// object literal contains each allowlisted basename as a quoted key (e.g.
+// `'env-local.mjs':`), which the path-token regex would otherwise miscount as an
+// import — falsely crediting every allowlisted module with a consumer (S221).
+const SELF = fileURLToPath(import.meta.url);
+const codeFiles = listCodeFiles().filter(f => !libAbs.has(f) && path.resolve(f) !== path.resolve(SELF));
 const bodies = new Map();
 for (const f of codeFiles) {
   try { bodies.set(path.relative(ROOT, f).replace(/\\/g, '/'), fs.readFileSync(f, 'utf8')); } catch { /* skip */ }
@@ -163,6 +207,7 @@ for (const f of libAbs) {
 
 const counts = scanOrphans(libFiles, bodies);
 const tracked = trackedSet();
+const rot = auditAllowlist(Object.keys(ALLOWLIST), libFiles, counts);
 
 const orphans = [];
 const untracked = [];
@@ -176,15 +221,18 @@ for (const name of libFiles) {
   }
 }
 
+const rotCount = rot.redundant.length + rot.stale.length;
+
 if (asJson) {
   console.log(JSON.stringify({
     scanned: libFiles.length,
     orphans,
     untracked,
     allowlisted: Object.keys(ALLOWLIST),
+    allowlistRot: rot,
     gitAvailable: tracked !== null,
   }, null, 2));
-  process.exit(orphans.length && !warnOnly ? 1 : 0);
+  process.exit((orphans.length || rotCount) && !warnOnly ? 1 : 0);
 }
 
 console.log(`check-orphan-libs: scanned ${libFiles.length} lib module(s)`);
@@ -195,9 +243,23 @@ if (untracked.length) {
   console.log(`  ⚠ untracked source module(s) (never committed — absent on fresh clone/CI):`);
   for (const u of untracked) console.log(`      ${u}`);
 }
+if (rotCount) {
+  console.error(`  ✗ ${rotCount} allowlist-rot finding(s) — the allowlist no longer reflects reality:`);
+  for (const name of rot.redundant) {
+    console.error(`      ${name}  (REDUNDANT — now has code consumer(s); the exemption is no longer needed)`);
+  }
+  for (const name of rot.stale) {
+    console.error(`      ${name}  (STALE — no longer exists on disk; the entry points at nothing)`);
+  }
+  console.error('  → remove the rotted ALLOWLIST entr(y/ies) so it only ever holds genuine orphans.');
+}
+
 if (!orphans.length) {
-  console.log('  ✓ no orphaned lib modules (every lib has at least one code consumer)');
-  process.exit(0);
+  if (!rotCount) {
+    console.log('  ✓ no orphaned lib modules (every lib has at least one code consumer)');
+    process.exit(0);
+  }
+  process.exit(warnOnly ? 0 : 1);
 }
 console.error(`  ✗ ${orphans.length} orphaned lib module(s) — imported by ZERO code consumers:`);
 for (const o of orphans) {

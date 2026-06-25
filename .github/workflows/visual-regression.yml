@@ -56,8 +56,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-      - run: npm ci
+      # Lockfile is gitignored in this repo (.gitignore), so `cache: 'npm'` (which
+      # needs a committed lockfile to hash) and `npm ci` both fail. Use `npm install`
+      # — same pattern as accessibility.yml / cloudflare-worker-deploy.yml.
+      - run: npm install --no-audit --no-fund
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium webkit
       - name: Run visual-regression snapshots

@@ -41,7 +41,10 @@ jobs:
           node-version: "22"
 
       - name: Install dependencies
-        run: npm ci --no-audit --no-fund
+        # Lockfile is gitignored in this repo by convention (.gitignore lines 3-4),
+        # so `npm ci` (which REQUIRES a committed lockfile) fails with EUSAGE in CI.
+        # Use `npm install` — same pattern as accessibility.yml / cloudflare-worker-deploy.yml.
+        run: npm install --no-audit --no-fund
 
       - name: Regenerate live-data feeds (full dependency order)
         # `npm run build` covers most feeds, but the git-history/aggregate feeds

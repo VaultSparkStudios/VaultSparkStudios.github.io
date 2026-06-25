@@ -1,8 +1,24 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-23 (Session 220 — arc · obelisk-broker orphan removed + hero JSON-LD enrichment + IGNIS returning-visitor re-entry chip)
+Last updated: 2026-06-25 (Session 221 — arc · P0 CI root-fix (3 broken workflows) + 2 second-order gates + 2 [SIL] carries cleared)
 
-Session Intent: Founder /goal — run the full arc (/start → /audit → /implement → /closeout) as one continuous mission, then direct-commit + push to main (GitHub) and fully deploy.
+Session Intent: Founder /goal — run the full arc (/start → /audit → /implement → /closeout) as one continuous mission, saturate the genius list + second-order innovation, commit + push DIRECT to main, no mid-phase handback.
+
+## Where We Left Off (Session 221)
+- **Shipped (5 substantive · CI/infra root-fix + gate-the-class):**
+  1. **P0 — fixed 3 CI workflows silently broken at `npm ci`.** Lockfile is gitignored by repo convention → `npm ci`/`cache:'npm'` fail at install. `refresh-live-data` (S219 live-data 4h cron — dead every run), `og-images` (broken since 2026-03), `visual-regression` (failed every PR) → `npm install --no-audit --no-fund` + removed `cache:'npm'`, mirroring accessibility.yml/cloudflare-worker-deploy.yml. YAML validated (`js-yaml`).
+  2. **SECOND-ORDER — `check-workflow-install-consistency.mjs`** (9/9). Forbids `npm ci`/`cache:'npm'` in workflows; comment-mentions excluded. Wired into smoke runner (no new build:check segment).
+  3. **orphan-lib allowlist-rot** (cleared S219 [SIL:1]) — extended `check-orphan-libs`; exposed + root-fixed a latent self-counting bug in that gate (its own ALLOWLIST literal keys miscounted as consumers). 7/7.
+  4. **`check-canon-adoption-freshness.mjs`** (cleared S219 [SIL:1]) — local mirror (sibling STUDIO_CANON.md → AGENTS.md fallback). Caught + fixed header lie (51→50 active canons). 7/7.
+  5. **`check-agents-json-coherence.mjs`** (cleared S220 [SIL]) — flags mindframe (external vs on-site /games/mindframe/, advisory) + hard-fails dead llmsFull shards. 6/6.
+- **Honest rejection (win):** Forge Window propagation (genius score 86) = verified PHANTOM (D-S218.4; S185 → "Studio Pulse", enforced by check-s151-contracts). Not re-attempted.
+- **Founder-decision surfaced:** agents.json mindframe canonical — keep external `usemindframe.com` OR route on-site /games/mindframe/ + generate its shard (advisory gate flags it; do not auto-flip — would advertise a dead shard).
+- **Tests:** `build:check` EXIT 0 (verified directly, not pipe-masked) · all 4 new/extended gates self-test green · smoke 19/20 (1 expected skip = gateway-readiness studio-ops cap) · generated-drift cleared (regen public-intelligence + heartbeat).
+- **Deploy:** committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip; no `cloudflare/**` edits (Worker unchanged). The fixed workflows will go green on their next scheduled/PR run.
+- **First action next session:** `/start` → verify the 3 fixed workflows went green (`gh run list --workflow=refresh-live-data.yml` etc.). Then the next [SIL] pair: workflow cache-dependency lint + scheduled-workflow staleness beacon.
+- **SIL:** 959 → 967 (+8). Categories: Dev 98 | Align 97 | Momentum 97 | Engage 97 | Process 98 | CrossRepo 96 | Security 94 | EcoInt 97 | CapEff 95 | AutoCov 98.
+
+> **S220 (arc):** obelisk-broker orphan removed + hero JSON-LD enrichment (flagship) + IGNIS returning-visitor re-entry chip. SIL 959.
 
 ## Where We Left Off (Session 220)
 - **Shipped (3 substantive · net-new product value):**

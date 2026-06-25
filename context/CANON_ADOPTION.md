@@ -5,7 +5,7 @@
 > Mark each: **adopted** · **pending** · **review** · **exempt (reason)**. This file is maintained, not auto-trusted.
 > Walked in full at **S219** (2026-06-23) — first active posture pass (file was previously absent).
 
-Audience: public-live · Type: website (brand anchor) · Archetype: A (Cloudflare Pages + Workers + Supabase) · Live ACTIVE canons: 51
+Audience: public-live · Type: website (brand anchor) · Archetype: A (Cloudflare Pages + Workers + Supabase) · Live ACTIVE canons: 50
 
 | Canon | Title | Status | Evidence / note |
 |---|---|---|---|

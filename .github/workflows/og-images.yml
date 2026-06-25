@@ -18,11 +18,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: scripts/package.json
 
       - name: Install dependencies
-        run: cd scripts && npm ci
+        # scripts/package-lock.json is gitignored in this repo (.gitignore line 3),
+        # so `npm ci` (and `cache: 'npm'`) fail in CI. Use `npm install` — same
+        # pattern as accessibility.yml / cloudflare-worker-deploy.yml.
+        run: cd scripts && npm install --no-audit --no-fund
 
       - name: Generate OG images
         run: cd scripts && node generate-og.mjs

@@ -8,16 +8,36 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▆▇▇██
-Avgs - 3: 957.7 | 5: 952.6 | 10: ~948 | 25: ~954 | all: ~958 (v3.0 /1000)
-  └ 3-session: Dev 96.7 | Align 96.7 | Momentum 95.7 | Engage 96.3 | Process 97.3
-Velocity trend: ↓ (S220: 3 items; S219: 7 items; S218: 7 items) | Protocol velocity: → | Debt: ↓ (removed the S183 obelisk-broker orphan — identical canonical copy in studio-ops; allowlist 3→2)
-Momentum runway: PUSH — run push:count → first real notification (founder go-ahead; 0 subs today); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); OPTIONAL — wire --card-accent into cover-image overlay tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S220 shipped: obelisk-broker orphan removed, hero JSON-LD enrichment (flagship), IGNIS returning-visitor re-entry chip.)
-Last session: 2026-06-23 | Session 220 | Total: 959/1000 (v3.0) | Velocity: 3 | protocolVelocity: 0
+Sparkline (last 5 totals): ▇▇███
+Avgs - 3: 961.7 | 5: 957.2 | 10: ~951 | 25: ~955 | all: ~959 (v3.0 /1000)
+  └ 3-session: Dev 97.3 | Align 96.7 | Momentum 96.3 | Engage 97.0 | Process 97.7
+Velocity trend: ↑ (S221: 5 items; S220: 3 items; S219: 7 items) | Protocol velocity: → | Debt: ↓ (both S219 [SIL:1] carries cleared + a latent self-counting bug root-fixed in check-orphan-libs)
+Momentum runway: PUSH — push:count → first real notification (founder go-ahead; 0 subs); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); FOUNDER-DECISION — agents.json mindframe canonical (external usemindframe.com vs on-site /games/mindframe/); OPTIONAL — card-accent cover-tint (needs non-headless AI-image env) | Intent rate: 100% (last 5) | (S221 shipped: P0 CI fix — 3 workflows un-broken; check-workflow-install-consistency gate; orphan-lib allowlist-rot + self-count bugfix; CANON_ADOPTION freshness probe + header-lie fix; agents.json coherence + dead-shard gate.)
+Last session: 2026-06-25 | Session 221 | Total: 967/1000 (v3.0) | Velocity: 5 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
 
 ---
+
+## 2026-06-25 — Session 221 (arc · P0 CI root-fix: 3 broken workflows + 2 second-order gates + 2 [SIL] carries cleared) | Total: 967/1000 (v3.0) | Velocity: 5 | Debt: ↓
+Avgs — 3: 961.7 | 5: 957.2 | 10: ~951 | 25: ~955 | all: ~959
+
+Dev Health 98 | Creative Alignment 97 | Momentum 97 | Engagement 97 | Process Quality 98 | Cross-Repo Coherence 96 | Security Posture 94 | Ecosystem Integration 97 | Capital Efficiency 95 | Automation Coverage 98
+
+**What improved:** A genius-tier infrastructure session that started from the audit's #1 verify item (`gh run list`) and surfaced a P0 nobody had caught: **three CI workflows silently broken at `npm ci`** because `package-lock.json` is gitignored by repo convention. `refresh-live-data` (the S219 "live data must never go stale" 4h cron) was dead every run; `og-images` had been failing since 2026-03; `visual-regression` failed on every PR. Root-fix: `npm ci` → `npm install --no-audit --no-fund` (+ removed `cache: 'npm'` which also needs a lockfile), mirroring the already-correct pattern in `accessibility.yml`/`cloudflare-worker-deploy.yml`. Then — per the "build the gate for the class right after you hand-fix it" discipline — shipped **`check-workflow-install-consistency.mjs`** (9/9 self-test) so the class can never silently return. Cleared **both** S219 `[SIL:1]` carries: (a) extended `check-orphan-libs` with **allowlist-rot detection** (entries now-imported or missing-from-disk) — which immediately exposed and let me **root-fix a latent self-counting bug** in that very gate (its own `ALLOWLIST` object-literal keys were being miscounted as consumers); (b) shipped **`check-canon-adoption-freshness.mjs`** (local mirror of the studio-ops walk; prefers sibling STUDIO_CANON.md, falls back to AGENTS.md offline) — which caught an observability lie (header claimed "51 active canons", live truth is 50) and I corrected it. Finally cleared the S220 `[SIL]` **`check-agents-json-coherence.mjs`** (flags mindframe: external `usemindframe.com` while `/games/mindframe/` exists) and extended it to also hard-fail on dead `llmsFull` shards (404-to-crawlers).
+
+**Process highlight:** every premise verified against LIVE code before acting — and the **Forge Window propagation** genius item (score 86) was correctly **REJECTED as a phantom** (D-S218.4: S185 reverted to "Studio Pulse"; `check-s151-contracts` enforces it). Verified the failing CI cause directly (`gh run --log-failed` → `EUSAGE`), not assumed. Root-fixed, never refreshed-a-report; the rot detector flushing out a bug in its own host gate is the session's signature. `build:check` EXIT 0 verified directly (not pipe-masked); all 4 new/extended gates self-test green; smoke suite 19/20 (1 expected skip); generated-drift cleared honestly (regen public-intelligence + heartbeat). No fabricated data; no sibling-tree edits; founder-gated items (push, devlog, ark.hmac.seed, mobile-sheet, card-accent) left as honest deferrals.
+
+**Top win:** Caught + root-fixed a P0 nobody noticed — three CI workflows dead at `npm ci` (one since March; one the very S219 live-data-currency cron) — then gated the class shut, all in one pass.
+**Top gap:** CI-failure blindness itself: og-images failed silently for ~3 months. No local/cheap signal surfaces a scheduled workflow that's been red for N runs — a real second-order opportunity (recorded as brainstorm).
+**Intent outcome:** Achieved — full arc (start→audit→implement→closeout) run as one mission; all agent-doable genius items shipped or honestly rejected.
+
+**Brainstorm**
+1. **Scheduled-workflow staleness beacon** — a cheap committed snapshot (e.g. `api/ci-status.json` already exists) + a local doctor probe that flags any *scheduled* workflow whose last conclusion is `failure` for ≥2 runs, so a 3-month silent break can't recur. Path: extend `ci-status-beacon.yml` to record per-workflow last-conclusion; add a read-only local check. Probability: Medium.
+2. **`cache-dependency-path` lint** — generalize `check-workflow-install-consistency` to also flag any `actions/setup-node` `cache:` without a committed lockfile present, not just the literal `cache: 'npm'`. Path: parse the resolved cache config block. Probability: High.
+3. **agents.json mindframe resolution** — decide canonical (external product home vs on-site page) and either accept external in the builder or generate the `/games/mindframe/` shard + route on-site. Founder-decision; surfaced by the new advisory gate. Probability: Medium (needs founder).
+
+**Committed to TASK_BOARD:** [SIL] workflow-cache-dependency lint (brainstorm 2) · [SIL] scheduled-workflow staleness beacon (brainstorm 1)
 
 ## 2026-06-23 — Session 220 (arc · obelisk-broker orphan removed + hero JSON-LD enrichment + IGNIS returning-visitor re-entry chip) | Total: 959/1000 (v3.0) | Velocity: 3 | Debt: ↓
 Avgs — 3: 957.7 | 5: 952.6 | 10: ~948 | 25: ~954 | all: ~958

@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "1.3",
+  "project": "vaultsparkstudios-website",
+  "date": "2026-06-25",
+  "session": 221,
+  "sessionType": "implementation",
+  "label": "arc — P0 CI root-fix + gate-the-class + 2 [SIL] carries cleared",
+  "calibration": false,
+  "scores": {
+    "devHealth": 98, "creativeAlignment": 97, "momentum": 97,
+    "engagement": 97, "processQuality": 98
+  },
+  "total": 487,
+  "maxScore": 500,
+  "scoresV3": {
+    "devHealth": 98, "creativeAlignment": 97, "momentum": 97,
+    "engagement": 97, "processQuality": 98, "crossRepoCoherence": 96,
+    "securityPosture": 94, "ecosystemIntegration": 97, "capitalEfficiency": 95,
+    "automationCoverage": 98
+  },
+  "totalV3": 967,
+  "maxScoreV3": 1000,
+  "velocity": 5,
+  "protocolVelocity": 0,
+  "durationMinutes": 110,
+  "debt": "↓",
+  "rollingAvg3": {
+    "devHealth": 97.3, "creativeAlignment": 96.7, "momentum": 96.3,
+    "engagement": 97.0, "processQuality": 97.7, "total": 961.7
+  },
+  "rollingAvgTotals": { "3": 961.7, "5": 957.2, "10": 951, "25": 955, "all": 959 },
+  "topWin": "Caught + root-fixed a P0 nobody noticed — three CI workflows dead at `npm ci` (one since 2026-03; one the very S219 live-data-currency 4h cron) — then gated the class shut, all in one pass.",
+  "topGap": "CI-failure blindness itself: og-images failed silently for ~3 months. No cheap local signal surfaces a scheduled workflow that's been red for N runs (recorded as next-session [SIL]).",
+  "intentOutcome": "Achieved",
+  "improvementsShipped": 5,
+  "improvementGroups": {
+    "ci-fix": ["refresh-live-data + visual-regression + og-images npm ci -> npm install"],
+    "gates": ["check-workflow-install-consistency", "orphan-lib allowlist-rot + self-count bugfix", "check-canon-adoption-freshness", "check-agents-json-coherence + dead-shard"],
+    "observability": ["CANON_ADOPTION header 51->50 lie corrected"]
+  },
+  "testsTotal": 116,
+  "testsByType": { "buildCheckGates": 116 },
+  "testsDelta": 0,
+  "deployStatus": "pushed-pending-ci",
+  "ignisFlags": ["intent-achieved", "blocker-cleared", "debt-clear"],
+  "ignisNote": "The session's signature: the allowlist-rot detector I shipped immediately flushed out a latent self-counting bug in its own host gate — a control that audits its own assumptions. And the highest-value find came not from the genius list but from the audit's #1 VERIFY chore (`gh run list`), which exposed a 3-month-silent P0."
+}

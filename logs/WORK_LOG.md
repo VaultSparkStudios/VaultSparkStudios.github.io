@@ -1,5 +1,27 @@
 # Work Log
 
+## 2026-06-25 — Session 221 · P0 CI root-fix (gitignored lockfile vs npm ci · 3 broken workflows) + gate-the-class + orphan-rot bugfix + canon-freshness + agents.json coherence (arc)
+
+Full continuous arc (/start → /audit → /implement → /closeout) as one mission. **5 substantive ships + 1 phantom rejection + 1 founder-decision surfaced.** SIL 959 → 967 (+8). Velocity 5.
+
+**/start:** `git pull --rebase` fast-forwarded 17 hourly Action-commit files. Context-meter CONTINUE (3%). Session 221, BUILDER work under FOUNDER-mode flag. blockingFailing 0 (3 advisory = sibling/portfolio).
+
+**/audit:** started from the brief's #1 VERIFY item (`gh run list`) and immediately found a P0: `Refresh Live Data` failing on schedule. Verified each genius-list premise against LIVE code — confirmed orphan-rot + canon-freshness genuinely undone, confirmed Forge Window is a phantom (D-S218.4), confirmed mindframe agents.json incoherence.
+
+**1 — P0 CI fix.** `gh run view --log-failed` → `npm error code EUSAGE` at Install dependencies. Root cause: `package-lock.json` gitignored (.gitignore 3-4), so `npm ci` can't run on a clean checkout. Three workflows still used it: `refresh-live-data.yml:44`, `visual-regression.yml:60`, `og-images.yml:25`. Fixed all three → `npm install --no-audit --no-fund` + removed `cache:'npm'` (also needs a lockfile), mirroring the already-correct accessibility/worker-deploy pattern. `js-yaml` validated all three. Impact: restores the S219 live-data 4h cron (dead every run), the visual-regression PR gate, og-images regen (broken since 2026-03).
+
+**2 — `check-workflow-install-consistency.mjs`** (second-order; 9/9 self-test). Forbids `npm ci`/`cache:'npm'` in workflow code lines; ignores comment mentions. Wired into `smoke-startup-scripts` (not a new build:check segment — cmd.exe ceiling at 7986/~7900).
+
+**3 — orphan-lib allowlist-rot** (S219 [SIL:1] cleared). Extended `check-orphan-libs` with `auditAllowlist` (redundant = now-imported, stale = missing-from-disk). On first live run it flagged both allowlist entries — verification proved a FALSE POSITIVE: the consumer regex matched the gate's own `ALLOWLIST` literal keys, so the gate counted itself as a consumer. Root-fixed by excluding `import.meta.url` from the consumer set. 7/7 self-test, live green.
+
+**4 — `check-canon-adoption-freshness.mjs`** (S219 [SIL:1] cleared). Local mirror of the studio-ops walk; sibling `STUDIO_CANON.md` `## CANON-NNN` headings as truth, `AGENTS.md` propagated index as offline fallback. Fails on a MISSING live canon. Caught the header lie "51 active canons" → corrected to live truth 50. 7/7, wired into smoke.
+
+**5 — `check-agents-json-coherence.mjs`** (S220 [SIL] cleared). Advisory-flags external-url entries shadowing an on-site page (mindframe → usemindframe.com vs /games/mindframe/) + hard-fails dead `llmsFull` shards. Root-caused mindframe to `routeFor`'s slug heuristic guessing /projects/; decided NOT to auto-flip (no shard on disk → would advertise a dead URL; founder-decision). 6/6, wired into smoke (advisory).
+
+**Rejection (win):** Forge Window propagation (genius 86) = phantom (D-S218.4; live contract `check-s151-contracts` enforces "Studio Pulse").
+
+**Verify:** `build:check` EXIT 0 (direct, redirect not pipe). Smoke 19/20 (1 expected skip). Generated-drift cleared (regen public-intelligence + heartbeat). No fabricated data; no sibling edits. Brainstorm committed 2 [SIL]: workflow cache-dependency lint + scheduled-workflow staleness beacon (top gap = CI-failure blindness; og-images was red ~3 months unnoticed).
+
 ## 2026-06-23 — Session 218 · Windows-hardening recovery + safe-spawn npm root-fix + welcome-back telemetry + catalog-derived ecosystem bridges + Forge-Window phantom rejection (arc)
 
 Full continuous arc (/start → /audit → /implement → /closeout). **5 substantive ships + 2 honest rejections + 2 verify-closes.**

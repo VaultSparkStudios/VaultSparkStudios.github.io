@@ -1,6 +1,23 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-23 (Session 220 — arc: obelisk-broker orphan removed + hero JSON-LD enrichment + IGNIS returning-visitor re-entry chip)
+Last updated: 2026-06-25 (Session 221 — arc: P0 CI root-fix (3 broken workflows) + check-workflow-install-consistency gate + orphan-lib allowlist-rot + CANON_ADOPTION freshness + agents.json coherence)
+
+## S221 outcome + carries
+
+**Shipped in S221:**
+- [x] **[CI/P0] Root-fixed 3 CI workflows silently broken at `npm ci`.** `package-lock.json` is gitignored by repo convention, so `npm ci` (and `cache:'npm'`) fail at install. `refresh-live-data` (S219 live-data-currency 4h cron — DEAD every run), `og-images` (broken since 2026-03), `visual-regression` (failed on every PR) → switched to `npm install --no-audit --no-fund` + removed `cache:'npm'`, mirroring accessibility.yml/cloudflare-worker-deploy.yml. YAML validated.
+- [x] **[INFRA/P1] SECOND-ORDER: `check-workflow-install-consistency.mjs`.** Forbids `npm ci`/`cache:'npm'` in workflows (lockfile gitignored → can only fail); comment-mentions not flagged. 9/9 self-test; wired into `smoke-startup-scripts` (no new build:check segment — cmd.exe ceiling). Makes the P0 class un-reintroducible.
+- [x] **[INFRA/P2·SIL→done] orphan-lib allowlist-rot gate (was S219 [SIL:1]).** Extended `check-orphan-libs` to flag allowlist entries now (a) imported or (b) missing-from-disk. Exposed + **root-fixed a latent self-counting bug** in that gate (its own `ALLOWLIST` object-literal keys were miscounted as consumers via the path-token regex). 7/7 self-test; live green.
+- [x] **[INFRA/P2·SIL→done] CANON_ADOPTION freshness probe (was S219 [SIL:1]).** NEW `check-canon-adoption-freshness.mjs` — local mirror of the studio-ops walk; prefers sibling `STUDIO_CANON.md`, falls back to `AGENTS.md` (CI-safe). Fails on a MISSING (un-walked) live canon; advisories for extra/count/age. Caught + **fixed an observability lie** (header "51 active canons" → 50). 7/7 self-test; wired into smoke.
+- [x] **[INFRA/P3·SIL→done] agents.json coherence gate (was S220 [SIL]).** NEW `check-agents-json-coherence.mjs` — flags external-url entries that shadow an on-site canonical page (mindframe → `usemindframe.com` vs `/games/mindframe/`; advisory, founder-decision) AND hard-fails on dead `llmsFull` shards (404-to-crawlers). 6/6 self-test; wired into smoke (advisory).
+
+**S221 honest ledger (rejections = wins):**
+- **Forge Window propagation (genius score 86) — REJECTED as a verified phantom.** D-S218.4 binding: S185 reverted the public label to "Studio Pulse" and `check-s151-contracts.mjs` enforces it; the genius list only surfaces it because of stale top DECISIONS entries. Confirmed against the live contract, not the doc.
+- **agents.json mindframe auto-route — DECLINED (founder-decision).** Flipping on-site would advertise a non-existent shard (builder's own "never advertise a dead URL" rule) and override a possibly-intentional external canonical. Surfaced as an advisory; resolution belongs to the founder + `build-agents-json.mjs`.
+
+**S221 committed (next-session [SIL], from this closeout's brainstorm):**
+- [ ] **[INFRA/P3·SIL] workflow cache-dependency lint.** Generalize `check-workflow-install-consistency` to flag any `actions/setup-node` `cache:` without a committed lockfile present (not just the literal `cache: 'npm'`).
+- [ ] **[INFRA/P3·SIL] scheduled-workflow staleness beacon.** Record per-workflow last-conclusion in `api/ci-status.json` + a read-only local doctor probe that flags any *scheduled* workflow red for ≥2 runs — so a 3-month silent break (og-images) can't recur. (Top gap this session: CI-failure blindness.)
 
 ## S220 outcome + carries
 
@@ -15,12 +32,12 @@ Last updated: 2026-06-23 (Session 220 — arc: obelisk-broker orphan removed + h
 - **MindFrame FORGE→SPARKED re-rating** — DEFER (founder-gated; lifecycle status is a public promise).
 
 **S220 committed (next-session, from this closeout's brainstorm):**
-- [ ] **[INFRA/P3·SIL] JSON-LD completeness gate.** Parse the injected `data-hero-portfolio-ld` block; assert each SPARKED tile carries image+description+sameAs (games also carry the VideoGame fields). Locks the S220 flagship dual-audience win against silent regression.
-- [ ] **[INFRA/P3·SIL] agents.json on-site/external coherence check.** Flag any project whose `url` is external while an on-site canonical page exists (e.g. MindFrame → `games/mindframe/` but points to `usemindframe.com` with no shard); route the fix to `build-agents-json.mjs`, not a hand-edit.
+- [ ] **[INFRA/P3·SIL:1] JSON-LD completeness gate.** Parse the injected `data-hero-portfolio-ld` block; assert each SPARKED tile carries image+description+sameAs (games also carry the VideoGame fields). Locks the S220 flagship dual-audience win against silent regression. (carried — not actioned S221; counter +1)
+- [x] **[INFRA/P3·SIL] agents.json on-site/external coherence check** — DONE S221 (`check-agents-json-coherence.mjs` + dead-shard hard-fail; mindframe flagged advisory).
 
-**S219 committed [SIL] carries (not actioned in S220 — counter +1):**
-- [ ] **[INFRA/P3·SIL:1] CANON_ADOPTION freshness — local mirror of the studio-ops probe.** (was [SIL], S219)
-- [ ] **[INFRA/P3·SIL:1] orphan-lib allowlist-rot gate.** Extend `check-orphan-libs` to flag allowlist entries now (a) imported or (b) missing from disk. (was [SIL], S219)
+**S219 committed [SIL] carries — BOTH CLEARED S221:**
+- [x] **[INFRA/P3·SIL] CANON_ADOPTION freshness — local mirror of the studio-ops probe** — DONE S221 (`check-canon-adoption-freshness.mjs`; caught header lie 51→50).
+- [x] **[INFRA/P3·SIL] orphan-lib allowlist-rot gate** — DONE S221 (extended `check-orphan-libs`; also root-fixed a latent self-counting bug it exposed).
 
 ## S219 outcome + carries
 
