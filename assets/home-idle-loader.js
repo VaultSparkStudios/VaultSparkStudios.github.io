@@ -12,6 +12,10 @@
     '/assets/ignis-tour.js',
     '/assets/vault-resonance.js',
     '/assets/vault-pulse.js',
+    // S228: moved from defer → idle (below-fold, non-critical for initial paint)
+    '/assets/trust-depth.js',
+    '/assets/related-content.js',
+    '/assets/pathways-router.js',
   ];
 
   // S174 TT burndown: script.src is a TrustedScriptURL sink. Narrow policy
