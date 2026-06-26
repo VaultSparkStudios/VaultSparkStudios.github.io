@@ -15,9 +15,10 @@
  */
 
 import fs from 'node:fs';
+import https from 'node:https';
 import path from 'node:path';
 import process from 'node:process';
-import { MODELS } from './lib/model-router.mjs';
+import { MODELS, callClaude } from './lib/model-router.mjs';
 
 const ROOT = process.cwd();
 const INTEL_PATH = path.join(ROOT, 'api', 'public-intelligence.json');
@@ -25,7 +26,6 @@ const OUT_PATH = path.join(ROOT, 'api', 'vault-narrative.json');
 const HISTORY_PATH = path.join(ROOT, 'api', 'vault-narrative-history.json');
 const RSS_PATH = path.join(ROOT, 'journal', 'dispatches', 'feed.xml');
 const HISTORY_LIMIT = 30;
-const MESSAGES_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL = process.env.ANTHROPIC_MODEL || MODELS.sonnet;
 
 function readJson(p) { return JSON.parse(fs.readFileSync(p, 'utf8')); }
@@ -59,30 +59,14 @@ function buildPrompt(intel) {
 async function callAnthropic(prompt) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
   if (!apiKey) throw new Error('ANTHROPIC_API_KEY not set');
-
-  // 60s timeout — without it a hung Anthropic connection burns CI minutes
-  // until the workflow's outer 6h timeout fires. 2026-04-28 cron failure
-  // ran 15m before exiting; this caps the worst case at one minute.
-  const res = await fetch(MESSAGES_URL, {
-    method: 'POST',
-    headers: {
-      'x-api-key': apiKey,
-      'anthropic-version': '2023-06-01',
-      'content-type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: MODEL,
-      max_tokens: 220,
-      messages: [{ role: 'user', content: prompt }],
-    }),
-    signal: AbortSignal.timeout(60_000),
-  });
-
-  if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Anthropic ${res.status}: ${text.slice(0, 200)}`);
-  }
-  return await res.json();
+  return callClaude({
+    apiKey,
+    model: MODEL,
+    maxTokens: 220,
+    messages: [{ role: 'user', content: prompt }],
+    logAs: 'generate-vault-narrative',
+    turnClassify: false,
+  }, https);
 }
 
 async function logSpendToMeter(usage) {
