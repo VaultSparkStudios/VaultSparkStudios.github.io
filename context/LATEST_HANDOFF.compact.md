@@ -1,45 +1,32 @@
 <!-- generated-by: scripts/compact-handoff.mjs v3.1 -->
-<!-- source-hash: 32265d001605 -->
-<!-- generated-at: 2026-06-26T01:37:51.655Z -->
+<!-- source-hash: 292dbf02b541 -->
+<!-- generated-at: 2026-06-26T06:11:14.688Z -->
 
 # LATEST_HANDOFF (compact)
 
-HANDOFF SUMMARY — VaultSparkStudios.github.io
+# HANDOFF 226 — VaultSparkStudios.github.io
 
-Session: 224 (arc · continuous /start→/audit→/implement→/closeout)
+Session: 226 | Intent: Complete check-lighthouse-trend RAW_METRICS, fix hero LCP root cause, commit & push.
 
-Shipped S224 (11 items, 3 second-order)
-- generate-push-config.mjs graceful degrade (ENOENT on absent sibling secrets → try/catch warn + exit 0)
-- local-preview-server.mjs _headers preload fidelity (parseHeadersFile + getExtraHeaders → representative local Lighthouse)
-- Playwright networkidle mass fix: 10 E2E files, 23 instances → 'load' + targeted waitForTimeout (auth-gated left intact)
-- accessibility.spec.js hardened via synchronous page.evaluate() DOM snapshot (immune to Locator detach)
-- New gate check-e2e-networkidle.mjs (34 files scanned; authenticated/vaultAuth exempt; wired to smoke runner)
-- Second-order: check-build-step-resilience throw detection; ci-status-beacon scheduled-workflow tracking (scheduledWorkflows[] + hasDeadCron)
-- OPS: Ark CANON-006 cargo; api drift cleared (heartbeat/public-status/citation/status-proof)
+## Shipped
+1. **Hero LCP root-fix** — `<picture><img fetchpriority="high">` in `build-hero-portfolio.mjs` (was CSS `image-set()` background, unpreloadable). Load Delay 3s→0ms. `check-hero-lcp-element` gate prevents regression (5 checks).
+2. **check-lighthouse-trend RAW_METRICS** — tracks `lcp_ms`, `fcp_ms`, `tbt_ms`, `cls` alongside category scores. Integer/float preservation. 15 self-tests.
+3. **Infra** — `.gitignore lighthouse-results/`, nav propagated (106 pages), shell rebuilt (105 pages).
 
-Current Intent
-- Run full arc continuously, genius bar, extract second-order innovations from each fix.
+## Tests & Status
+`build:check` EXIT 0 · smoke 26/27 (1 skip: gateway-readiness·claude.api) · hero self-test 18/18 · lcp-element 4/4 · lighthouse-trend 15/15 · commit 36918106 pushed to main · CF Pages building.
 
-Now — Top 3
-1. Verify 10 mass-fixed E2E files go green in CI (networkidle timeouts eliminated)
-2. Confirm ci-status-beacon emits scheduledWorkflows[] on next trigger
-3. Scan genius list for next innovation targets
+## Now (Top 3)
+1. Check CI Lighthouse result — verify homepage perf ≥0.80 (root cause eliminated).
+2. Run `node scripts/check-lighthouse-trend.mjs --update --session 227` after next CI Lighthouse run to grow trend ledger.
+3. Scan genius list for next targets.
 
-Blockers — Top 3
-1. CI confirmation pending for E2E mass-fix and beacon scheduled-workflow tracking (next trigger)
-2. VR baselines uncommitted (S223 run 28200394502 dependency — run update-vr-baselines.mjs when complete)
-3. None build-blocking (blockingFailing: 0)
+## Blockers (Top 3)
+1. Lighthouse CI verify pending (requires next scheduled CI run).
+2. RAW_METRICS columns unpopulated in trend ledger until CI Lighthouse runs.
+3. None hard-blocking; all gated and tested.
 
-Human-Blocked (founder-gated, long-standing carries)
-- First real push notification — 0 subscribers (carried since ~S214)
-- ark.hmac.seed provisioning — fleet-wide Ark sig-verification (since S219)
-- Signal Log + forge devlog — founder voice (since ~S215)
-- mobile-sheet real-device swap; card-accent cover-tint overlay (CANON-047 non-headless env)
-- agents.json mindframe canonical decision — keep external vs route on-site (since S220/221)
+## Human-Blocked
+None.
 
-Status
-- build:check EXIT 0 · blockingFailing 0 · smoke 23/24 (1 expected skip: gateway-readiness·claude.api) · check-e2e-networkidle 34 clean · resilience 5/5
-- Deployed: committed + pushed origin/main; CF Pages auto-builds; Worker unchanged
-- SIL: 983 (+7)
-
-Next session: /start → verify CI green on the 10 E2E files and beacon scheduledWorkflows[], then scan genius list.
+Next session: `/start` → verify CI Lighthouse ≥0.80 homepage perf, then update trend ledger & resume genius-list targets.

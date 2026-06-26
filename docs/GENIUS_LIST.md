@@ -1,4 +1,4 @@
-# Genius Hit List — Session 225
+# Genius Hit List — Session 226
 
 Generated: 2026-06-26
 Project: `VaultSparkStudios.github.io`
@@ -8,9 +8,9 @@ Source: deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and
 
 - Overall opportunity pressure: **80/100**
 - Health: **green**
-- Current SIL: **985/500**
+- Current SIL: **986/500**
 - CI health: **check gh run list**
-- Current focus: S225 (full arc, 5 audit items + 2 second-order) — SEO+CI unblock session: 7 leaderboard SEO sub-pages (fixes leaderboards.spec.js E2E failures); hero LCP preload hint (<link rel=preload> for featured AVIF/WebP cover, browser fetches at parse time not after style computation); 3 new CI gates (check-ci-status-dead-crons advisory, check-playwright-locator-all blocking, check-lighthouse-trend regression tracker); workflow-cache-lint extended to bun; generate-vault-narrative.mjs ANTHROPIC_API import fixed (propagation applied). build:check EXIT 0 + blockingFailing 0 verified directly.
+- Current focus: S226 (arc continuation) — hero LCP root-fix: CSS image-set() background on featured tile cannot be matched by Chrome preload hints; converted to <picture><img fetchpriority="high"> (preload-matchable, discovered at HTML parse time). New check-hero-lcp-element blocking gate prevents regression. check-lighthouse-trend enhanced with RAW_METRICS (lcp_ms/fcp_ms/tbt_ms/cls). build:check EXIT 0 + blockingFailing 0 + smoke 26/27.
 
 ## Strategic Read
 
@@ -31,13 +31,13 @@ First command: `gh run list --limit 10`
 
 #### 2. [PRODUCT] Leaderboard sub-pages sitemap.xml
 Final score: **90**
-[SEO/P2] Leaderboard sub-pages sitemap.xml — the 7 new /leaderboards/*/ pages are not yet in sitemap.xml; add them for crawler indexing.
+[SEO/P2] Leaderboard sub-pages sitemap.xml — the 7 new /leaderboards/*/ pages are not yet in sitemap.xml. Add 7 <url> entries (or derive programmatically from PAGES array in build-leaderboard-subpages.mjs).
 Why it matters: Leaderboard sub-pages sitemap.xml is open, local, and unblocked — can ship this session.
 
 #### 3. [VERIFY] Verify Lighthouse homepage ≥0.80
 Final score: **86**
-[CI/P1] Verify Lighthouse homepage ≥0.80 — LCP preload fix deployed in S225. Watch next CI Lighthouse run for homepage performance score ≥0.80. If still failing, investigate TBT as secondary cause.
-Why it matters: Verify Lighthouse homepage ≥0.80 is a 225-session-old carry-forward; verify or close it so it stops polluting the hit list.
+[CI/P1] Verify Lighthouse homepage ≥0.80 — picture/img fix eliminates the CSS-background preload-mismatch root cause. Watch next CI Lighthouse run. If still failing, investigate TBT as remaining bottleneck.
+Why it matters: Verify Lighthouse homepage ≥0.80 is a 226-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -50,10 +50,10 @@ First command: `node scripts/propagate-nav.mjs`
 
 ### NEXT
 
-#### 1. [VERIFY] Grow lighthouse-trend ledger
+#### 1. [VERIFY] Lighthouse CI gate: --check flag for perf threshold
 Final score: **83**
-[CI/P2] Grow lighthouse-trend ledger — after next CI Lighthouse run, run node scripts/check-lighthouse-trend.mjs --update --session 226 to add S226 data point.
-Why it matters: Grow lighthouse-trend ledger is a 225-session-old carry-forward; verify or close it so it stops polluting the hit list.
+[INFRA/P2] Lighthouse CI gate: --check flag for perf threshold — after confirming ≥0.80, add check-lighthouse-trend --check --session N step to the Lighthouse CI workflow post-run. Makes perf regression ≥0.05 from best blocking in CI (not just advisory local).
+Why it matters: Lighthouse CI gate: --check flag for perf threshold is a 226-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -65,7 +65,7 @@ Why it matters: workflow cache-dependency lint. Generalize check-workflow-instal
 #### 3. [VERIFY] Verify E2E green in CI
 Final score: **77**
 [CI/P2] Verify E2E green in CI — the networkidle mass-fix should eliminate timeout failures in s134-oracle-ignis.spec.js and the 9 other files. Watch for the first green E2E run after S224 commit lands.
-Why it matters: Verify E2E green in CI is a 225-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: Verify E2E green in CI is a 226-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -77,7 +77,7 @@ Why it matters: First real push notification is open, local, and unblocked — c
 #### 5. [VERIFY] ci-health-monitor first real run
 Final score: **74**
 [INFRA/P3] ci-health-monitor first real run — monitor will run on schedule (9am UTC) and open/update a GitHub Issue if any dead crons are found. Watch for the first auto-issue or auto-close after the Refresh Live Data cron goes green.
-Why it matters: ci-health-monitor first real run is a 225-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: ci-health-monitor first real run is a 226-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -96,7 +96,7 @@ Why it matters: Provision ark.hmac.seed (fleet ARK_HMAC_SEED) is open, local, an
 #### 3. [VERIFY] scheduled-workflow staleness beacon. Record per-workflow last-conclus…
 Final score: **68**
 [INFRA/P3·SIL] scheduled-workflow staleness beacon. Record per-workflow last-conclusion in api/ci-status.json + a read-only local doctor probe that flags any *scheduled* workflow red for ≥2 runs — so a 3-month silent break (og-images) can't recur. (Top gap this session: CI-failure blindness.)
-Why it matters: scheduled-workflow staleness beacon. Record per-workflow last-conclusi is a 225-session-old carry-forward; verify or close it so it stops polluting the hit list.
+Why it matters: scheduled-workflow staleness beacon. Record per-workflow last-conclusi is a 226-session-old carry-forward; verify or close it so it stops polluting the hit list.
 
 First command: `npm run build:check && node scripts/csp-audit.mjs`
 
@@ -106,7 +106,7 @@ First command: `npm run build:check && node scripts/csp-audit.mjs`
 2. Leaderboard sub-pages sitemap.xml
 3. Verify Lighthouse homepage ≥0.80
 4. Forge Window naming propagation
-5. Grow lighthouse-trend ledger
+5. Lighthouse CI gate: --check flag for perf threshold
 6. workflow cache-dependency lint. Generalize check-workflow-install-con…
 7. Verify E2E green in CI
 8. First real push notification

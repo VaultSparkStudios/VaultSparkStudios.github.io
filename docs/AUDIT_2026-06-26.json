@@ -1,170 +1,300 @@
 {
-  "meta": {
-    "generatedAt": "2026-06-26",
-    "session": 225,
-    "project": "vaultsparkstudios-website",
+  "schemaVersion": "1.0",
+  "generatedAt": "2026-06-26",
+  "session": 227,
+  "project": {
+    "slug": "vaultsparkstudios-website",
     "type": "website",
-    "profileOverlay": {"medium":"website","axisWeights":{"ux":2.5,"speed":2.0,"featureDepth":1.5},"successBar":["Each item must name the conversion or info-finding outcome"]},
-    "totalItems": 7,
-    "combinedPriority": 76.4,
-    "top3": ["leaderboard-seo-subpages","lighthouse-perf-0.80","ci-dead-cron-gate"]
+    "name": "VaultSparkStudios.github.io"
   },
-  "candidates": [
+  "axes": {
+    "security": 2.0,
+    "speed": 2.0,
+    "ux": 1.5,
+    "feedbackLoop": 1.5,
+    "featureDepth": 1.0,
+    "aiIntelligence": 1.0,
+    "engagement": 1.0,
+    "tokenCost": 1.0
+  },
+  "profileOverlay": {
+    "medium": "website",
+    "promptOverlay": "Marketing/website. Surface Core Web Vitals, conversion path, brand consistency."
+  },
+  "items": [
     {
       "id": 1,
-      "slug": "leaderboard-seo-subpages",
-      "title": "Leaderboard SEO sub-pages (7 missing pages)",
-      "axis": "feature-depth",
-      "tier": "fire",
+      "slug": "oracle-feedback-themes-surface",
+      "title": "Surface oracle feedback themes as 'What people want to know' discovery chips",
+      "axis": "feedback-loop",
+      "tier": "🔥",
       "impact": 9,
-      "innovation": 6,
-      "effortLabel": "2h",
+      "innovation": 7,
       "effortHours": 2,
-      "priority": 19.3,
-      "why": "Seven leaderboard sub-page tests have been failing in CI (E2E Test Suite) because the pages don't exist — both the SEO page spec and a redirect spec are failing simultaneously. Creating real static SEO sub-pages fixes the CI red, adds genuine search surface for each leaderboard category (Global, Weekly, Challenges, etc.), and closes the info-finding gap for visitors arriving via search. Each page resolves to a scoped leaderboard view with correct title, h1, and a back-link — turning a test failure into a real product improvement.",
-      "recipe": "Create leaderboards/{global,challenges,recruiters,football-gm,call-of-doodie,teams,weekly}/index.html with nav + hero + 'View Full Leaderboard' CTA + JSON-LD BreadcrumbList. Remove LEADERBOARD_301 from redirects.spec.js (redirect spec conflicts with real pages).",
+      "priority": 31.5,
+      "why": "api/oracle-feedback-themes.json is built at deploy time from oracle-feedback:<clusterId> RUM events — but it's never shown to visitors. The oracle page gets answers but has no 'warm start' signal showing what the community has been exploring. Surfacing the top-5 cluster chips above the oracle search box turns anonymous collective curiosity into a discovery mechanism: a first-time visitor sees 'Strategy · Membership · Monetization · Early Access · Leagues' and can orient instantly. This closes the feedback loop that was opened in S207 and has been collecting data ever since.",
+      "recipe": "In ignis-answer-engine.js: at mount(), fetch api/oracle-feedback-themes.json, render top-5 ranked themes as clickable topic chips in a 'What our community is exploring' cluster above the starter prompts. On click: pre-fill oracle search with the theme label. Use existing starter-chip CSS classes (style-contract compliant). Add oracle:topic_chip_click to Worker RUM_UX_EVENTS.",
+      "status": "pending",
       "ladder": {
-        "L1": {"effortHours": 0.5, "recipe": "Remove LEADERBOARD_301 redirects test only (unblocks CI without creating pages)"},
-        "L2": {"effortHours": 2, "recipe": "Create 7 static SEO sub-pages with correct title/h1/CTA + remove redirect test"},
-        "L3": {"effortHours": 4, "recipe": "L2 + per-category JSON-LD structured data + generate via script from catalog"}
+        "L1": {"effortHours": 0.5, "recipe": "Read oracle-feedback-themes.json at IGNIS mount, render top 3 theme names as plain starter chips prefilling the search box"},
+        "L2": {"effortHours": 2, "recipe": "L1 + labeled 'What the Vault is exploring:' section + click→search pre-fill + oracle:topic_chip_click RUM + graceful empty-state when <3 themes"},
+        "L3": {"effortHours": 4, "recipe": "L2 + per-theme trending arrow (up/down vs prior session via build-oracle-feedback-themes.mjs) + theme ranking by recency weight"}
       },
-      "status": "open",
       "verifiedPremise": true,
-      "verifyNote": "Confirmed: /leaderboards/global/ 404s; redirects.spec.js LEADERBOARD_301 also fails; both tests red in run 28207887625"
+      "verifyNote": "Confirmed: api/oracle-feedback-themes.json exists. oracle-feedback:<clusterId> emitted in ignis-answer-engine.js. No chip cluster rendering this data. CANON-048 gap.",
+      "executionLog": []
     },
     {
       "id": 2,
-      "slug": "lighthouse-perf-0.80",
-      "title": "Lighthouse performance 0.78 → ≥0.80 (fix persistent CI failure)",
-      "axis": "speed",
-      "tier": "fire",
-      "impact": 9,
-      "innovation": 5,
-      "effortLabel": "2h",
+      "slug": "returning-visitor-ignis-topic-chip",
+      "title": "Topic-aware IGNIS re-entry: 'New content about [your topic] since your last visit'",
+      "axis": "ai-intelligence",
+      "tier": "🔥",
+      "impact": 7,
+      "innovation": 9,
       "effortHours": 2,
-      "priority": 17.2,
-      "why": "Lighthouse CI has been failing on every push since S209 (performance 0.78 vs 0.80 threshold). S214 moved scripts to defer + requestIdleCallback and went from 0.76 to 0.78 — not enough. Remaining opportunities: fetchpriority='high' on LCP hero image, lazy-load below-fold images, reduce unused CSS in critical path. Each 0.01 improvement in Lighthouse score directly maps to TBT/LCP improvement for real visitors.",
-      "recipe": "Identify which of the 7 Lighthouse URLs is lowest-scoring. Apply fetchpriority='high' to LCP element, loading='lazy' to below-fold images, preconnect to Supabase. Verify local with node scripts/local-preview-server.mjs.",
+      "priority": 31.5,
+      "why": "The S210 returning-visitor signal strip surfaces any new changelog entry since vs_last_visit_ts — but it's blind to what the visitor actually cared about. A visitor who asked 'how does football GM monetize' three weeks ago gets the same generic 'New dispatch posted' chip as anyone else. Cross-referencing vs_ignis_history (their query topics) with changelog-narrative.json (new entries) makes the re-entry surface hyper-relevant: 'New intel matching your question about monetization — search it now →'. Nobody does this in the category.",
+      "recipe": "In ignis-answer-engine.js renderResumeChip(): read vs_ignis_history (last 5 queries). Fetch api/changelog-narrative.json. Cross-reference changelog entry titles against query keywords (simple split + includes check). If a match exists and entry is newer than vs_last_visit_ts: show 'New intel about [keyword]' chip with vs_ignis_topic_chip:shown RUM. Reuse .vs-ignis-resume class; no new CSS.",
+      "status": "pending",
       "ladder": {
-        "L1": {"effortHours": 0.5, "recipe": "Add fetchpriority='high' to homepage hero image (highest LCP candidate)"},
-        "L2": {"effortHours": 1.5, "recipe": "L1 + lazy-load all non-hero images across all 7 Lighthouse URLs + optimize font loading"},
-        "L3": {"effortHours": 4, "recipe": "L2 + build a Lighthouse score tracker (api/lighthouse-history.json) for local regression detection"}
+        "L1": {"effortHours": 0.5, "recipe": "Check if any changelog entry is newer than vs_last_visit_ts; if so, add 'New content since your last visit' chip to existing resume chip"},
+        "L2": {"effortHours": 2, "recipe": "Full topic cross-reference: vs_ignis_history keywords × changelog entry titles; render 'New intel about [keyword]' if matched; fallback to generic; RUM"},
+        "L3": {"effortHours": 4, "recipe": "L2 + query ignis-query-index for documents newer than vs_last_visit_ts matching history keywords — surface as 'X new answers about [topic]'"}
       },
-      "status": "open",
       "verifiedPremise": true,
-      "verifyNote": "Confirmed: run 28207887645 shows performance 0.78, threshold 0.80; every push since S209 fails Lighthouse"
+      "verifyNote": "Confirmed: vs_ignis_history exists (S211). api/changelog-narrative.json exists (S205). S210 strip reads changelog but not history keywords. Cross-reference is a genuine gap.",
+      "executionLog": []
     },
     {
       "id": 3,
-      "slug": "ci-dead-cron-gate",
-      "title": "check-ci-status-dead-crons.mjs gate (hasDeadCron local observability)",
+      "slug": "ignis-deploy-invalidation-cache",
+      "title": "IGNIS prefix cache: deploy-hash key clears stale answers on redeployment",
       "axis": "speed",
-      "tier": "high",
+      "tier": "🔥",
       "impact": 7,
-      "innovation": 6,
-      "effortLabel": "1h",
-      "effortHours": 1,
-      "priority": 14.0,
-      "why": "The ci-status-beacon.yml now emits hasDeadCron + scheduledWorkflows[] to api/ci-status.json (S224). A gate that reads this file locally closes the observability gap: it makes dead crons actionable in build:check without needing GitHub access. The beacon data is already there — a gate turns a hidden signal into a blocking (advisory) local alert. Prevents the class where a cron dies for 7 runs before anyone notices (the S222 incident).",
-      "recipe": "Build scripts/check-ci-status-dead-crons.mjs: reads api/ci-status.json, exits advisory(warn+exit0) if hasDeadCron=true listing the dead workflows. Self-test 3 cases: green, dead, missing-file. Wire into smoke-startup-scripts.",
+      "innovation": 5,
+      "effortHours": 0.5,
+      "priority": 22.1,
+      "why": "The IGNIS prefix cache (vs_ignis_prefix_cache, 24h TTL) has no deploy-version key. When a deployment changes api/ignis-query-index.json, returning visitors see 'Continuing from your earlier search — [stale excerpt]' for up to 24h. api/build-sha.json exists from S210 — a one-check fix: if stored SHA !== current SHA, clear the prefix cache. Small correctness improvement with zero performance cost, meaningful trust improvement for the 'Continuing from earlier' pattern.",
+      "recipe": "In ignis-answer-engine.js getPrefixCache(): fetch api/build-sha.json once per session (module-scope promise). Compare stored vs_ignis_deploy_sha vs current sha. If different: localStorage.removeItem(PREFIX_CACHE_KEY); update vs_ignis_deploy_sha. One async check protecting the full 24h cache window.",
+      "status": "pending",
       "ladder": {
-        "L1": {"effortHours": 0.5, "recipe": "Minimal gate: read api/ci-status.json, warn if hasDeadCron"},
-        "L2": {"effortHours": 1, "recipe": "L1 + list dead workflow names + self-test 3/3 + smoke wire"},
-        "L3": {"effortHours": 2, "recipe": "L2 + historical dead-cron tracking in .cache/dead-cron-history.json for trend detection"}
+        "L1": {"effortHours": 0.5, "recipe": "Fetch api/build-sha.json at IGNIS init; compare vs vs_ignis_deploy_sha; clear prefix cache on mismatch; update sha key"},
+        "L2": {"effortHours": 1, "recipe": "L1 + include sha in PREFIX_CACHE_KEY itself so each deploy gets a fresh namespace; old keys expire via storage quota"},
+        "L3": {"effortHours": 2, "recipe": "L2 + soft-stale window: keep entries <2h old from prior deployment as warm fallback while fresh index loads"}
       },
-      "status": "open",
       "verifiedPremise": true,
-      "verifyNote": "Confirmed: api/ci-status.json has hasDeadCron field (S224 ci-status-beacon.yml); no gate yet reads it locally"
+      "verifyNote": "Confirmed: PREFIX_CACHE_KEY = 'vs_ignis_prefix_cache' with no sha component. api/build-sha.json exists (S210). No deploy-hash check found in cache read/write path.",
+      "executionLog": []
     },
     {
       "id": 4,
-      "slug": "playwright-locator-all-gate",
-      "title": "check-playwright-locator-all.mjs — scan for .all() + async attribute race",
-      "axis": "speed",
-      "tier": "high",
+      "slug": "csp-violation-monitoring",
+      "title": "CSP violation reporting pipeline: report-uri → Worker RUM → doctor probe",
+      "axis": "security",
+      "tier": "🔥",
       "impact": 7,
       "innovation": 6,
-      "effortLabel": "1h",
-      "effortHours": 1,
-      "priority": 14.0,
-      "why": "page.locator().all() followed by async getAttribute/textContent in a for-of loop is a race condition: elements can detach between collection and attribute access on dynamic pages (the S224 accessibility.spec.js bug). S224 fixed one instance by switching to page.evaluate(); a gate prevents the class from being re-introduced anywhere in the 34 spec files. This directly improves test suite reliability and prevents future CI failures from the same class.",
-      "recipe": "Build scripts/check-playwright-locator-all.mjs: scan tests/*.spec.js for .all() (locator pattern) followed within 5 lines by await [...].getAttribute/textContent/innerText in a for-of. Flag with fix suggestion (use page.evaluate snapshot). Self-test 3/3. Wire into smoke-startup-scripts.",
+      "effortHours": 2,
+      "priority": 21.0,
+      "why": "The CSP headers block unsafe scripts and untrusted origins — but violations are completely silent. No report-uri endpoint exists. The Worker handles /v/rum RUM beacons already. Adding /v/csp-report (standard CSP violation JSON POST) takes ~20 Worker lines and creates a real-time security signal: CSP violations (injected ads, browser extension conflicts, new untrusted assets) surface in the doctor table instead of arriving via user complaint. CANON-051 Web Hardening baseline requires CSP — monitoring it is the natural second step.",
+      "recipe": "Worker: add /v/csp-report route that parses the JSON POST body, increments KV counter csp:violations:date, stores top-3 blocked-uri + violated-directive. Add report-uri https://vaultsparkstudios.com/v/csp-report to the CSP header in _headers. Build scripts/check-csp-violations.mjs reading api/csp-violations.json for doctor probe.",
+      "status": "pending",
       "ladder": {
-        "L1": {"effortHours": 0.5, "recipe": "Regex scan for .all() + suggest manual audit"},
-        "L2": {"effortHours": 1, "recipe": "Full AST-free pattern scan: .all() within 5 lines of .getAttribute/.textContent in for-of + self-test + smoke"},
-        "L3": {"effortHours": 2, "recipe": "L2 + auto-suggest page.evaluate replacement in error output"}
+        "L1": {"effortHours": 0.5, "recipe": "Worker: /v/csp-report handler that increments a KV counter + returns 204. Add report-uri to _headers CSP."},
+        "L2": {"effortHours": 2, "recipe": "L1 + structured violation log (blocked-uri, violated-directive, top-5/day) + build-csp-violations.mjs → api/csp-violations.json + doctor probe warns on >10/day"},
+        "L3": {"effortHours": 4, "recipe": "L2 + report-to header (Reporting API) + ci-health-monitor integration (auto-issue on spike >100/day)"}
       },
-      "status": "open",
       "verifiedPremise": true,
-      "verifyNote": "S224 TASK_BOARD: 'check-playwright-locator-all gate — .all() followed by async getAttribute() is a latent race condition'"
+      "verifyNote": "Confirmed: Worker handles /v/rum but no /v/csp-report. _headers CSP has no report-uri. CANON-051 compliance gap — CSP is set but unmonitored.",
+      "executionLog": []
     },
     {
       "id": 5,
-      "slug": "workflow-cache-lint-generalize",
-      "title": "Generalize workflow cache-dependency lint (setup-node cache: without lockfile)",
-      "axis": "speed",
-      "tier": "high",
+      "slug": "ignis-session-context",
+      "title": "IGNIS session-aware query expansion: boost results matching prior session queries",
+      "axis": "ai-intelligence",
+      "tier": "🔥",
       "impact": 7,
-      "innovation": 5,
-      "effortLabel": "30m",
-      "effortHours": 0.5,
-      "priority": 12.2,
-      "why": "check-workflow-install-consistency currently flags literal `cache: 'npm'` in workflows without a committed lockfile. But any `actions/setup-node` with `cache: yarn` or `cache: pnpm` suffers the same failure mode. Generalizing closes the class for all package managers — not just npm — preventing a future developer from adding a pnpm workflow that fails silently. The S221 brainstorm explicitly named this as the carry.",
-      "recipe": "Extend check-workflow-install-consistency.mjs: change the lockfile-check logic to detect any cache: key (npm/yarn/pnpm/bun) in setup-node and verify the corresponding lockfile exists. Update self-test to cover yarn and pnpm cases.",
+      "innovation": 8,
+      "effortHours": 4,
+      "priority": 21.7,
+      "why": "The oracle is a static document retrieval engine that scores documents against the current query with no session context. A visitor who asked 'football gm draft strategy' and then asks 'how do I win' gets generic results, not football-strategy-amplified results. sessionStorage already holds the last 5 queries (vs_ignis_history). A lightweight query-expansion pass: extract top-N keywords from session history, apply a contextBoost multiplier (+0.15) in the scoring loop when a document's title/tags match a history keyword. All client-side, zero new API calls.",
+      "recipe": "In ignis-answer-engine.js query(): read sessionStorage vs_ignis_history, extract top-3 keywords (split + stop-word filter). In the document scoring loop: add +0.15 contextBoost when document title/tags include a history keyword. Only apply when ≥2 prior queries (prevents single-query over-specialization). Cap at 2× raw score. Add oracle:context_boost RUM event.",
+      "status": "pending",
       "ladder": {
-        "L1": {"effortHours": 0.5, "recipe": "Add yarn/pnpm/bun to the existing npm check in check-workflow-install-consistency.mjs"},
-        "L2": {"effortHours": 1, "recipe": "L1 + update self-test to cover all 4 managers + integration test against workflows/*.yml"},
-        "L3": {"effortHours": 2, "recipe": "L2 + check for setup-node `cache:` without a corresponding lockfile-existence check (not just committed)"}
+        "L1": {"effortHours": 1, "recipe": "Extract keywords from vs_ignis_history; console.log boost candidates (no visible change — A/B verification)"},
+        "L2": {"effortHours": 4, "recipe": "Full context boost in scoring: +0.15 per session-keyword match, capped 2×; only ≥2 prior queries; oracle:context_boost RUM"},
+        "L3": {"effortHours": 8, "recipe": "L2 + session decay (recent queries weighted more) + explicit 'based on your interest in X' label on boosted results"}
       },
-      "status": "open",
       "verifiedPremise": true,
-      "verifyNote": "S221 TASK_BOARD: 'workflow cache-dependency lint. Generalize check-workflow-install-consistency to flag any setup-node cache: without committed lockfile'"
+      "verifyNote": "Confirmed: vs_ignis_history in sessionStorage (S211). Oracle scoring is stateless per-query. No context expansion found in ignis-answer-engine.js. Clean gap.",
+      "executionLog": []
     },
     {
       "id": 6,
-      "slug": "leaderboard-jsonld-structured-data",
-      "title": "Second-order: Leaderboard sub-pages with ItemList JSON-LD (AI + SEO depth)",
-      "axis": "ai-intelligence",
-      "tier": "high",
-      "impact": 7,
-      "innovation": 8,
-      "effortLabel": "1h",
+      "slug": "lighthouse-ci-check-gate",
+      "title": "Lighthouse CI blocking gate: check-lighthouse-trend --check in workflow post-run",
+      "axis": "speed",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 4,
       "effortHours": 1,
-      "priority": 13.6,
-      "why": "The new leaderboard sub-pages are a structural win but a stock SEO opportunity if they lack structured data. Adding ItemList JSON-LD with leaderboard category entries (as a FAQ or ItemList schema) makes each page machine-readable for AI search discovery (CANON-048 dual-audience). Visitors from AI search agents (ChatGPT, Gemini Search, Perplexity) will find rich structured answers about VaultSpark's community rankings, turning leaderboard pages into AI-citation sources.",
-      "recipe": "Add @type:WebPage + BreadcrumbList JSON-LD to each leaderboard sub-page. Add a second block with FAQPage (Q: What is the [Global] leaderboard? A: [description]) — no live data needed, only static descriptions. Self-validating via check-hero-jsonld-completeness pattern.",
+      "priority": 20.2,
+      "why": "check-lighthouse-trend.mjs seeds + tracks per-page LH scores (S225) and RAW_METRICS (S226). But it only runs locally — the CI Lighthouse workflow still uses a raw threshold with no session-over-session regression detection. Adding --check --session N as a post-run step makes ≥0.05 regression from best-session blocking in CI. This closes the multi-session blind spot where Lighthouse quietly declined from 0.88 to 0.76 without a gate catching it (the S209-S225 incident).",
+      "recipe": "In .github/workflows/lighthouse.yml: after all Lighthouse runs complete, add a step running 'node scripts/check-lighthouse-trend.mjs --check'. The --check flag already exits 1 on regression (S225). Commit the lighthouse-trend.json baseline update in the same CI step.",
+      "status": "pending",
       "ladder": {
-        "L1": {"effortHours": 0.5, "recipe": "BreadcrumbList only on each sub-page"},
-        "L2": {"effortHours": 1, "recipe": "L1 + FAQPage block per category + WebPage with description"},
-        "L3": {"effortHours": 2, "recipe": "L2 + generate sub-pages from a data script (DRY) + check-leaderboard-seo-spine gate"}
+        "L1": {"effortHours": 0.5, "recipe": "Add check-lighthouse-trend --check as post-CI step; exit 1 on ≥0.05 regression from baseline"},
+        "L2": {"effortHours": 1, "recipe": "L1 + auto-update .cache/lighthouse-trend.json baseline via CI artifact upload + cache-restore"},
+        "L3": {"effortHours": 2, "recipe": "L2 + --threshold flag per workflow + failure annotation naming the specific page that regressed"}
       },
-      "status": "open",
       "verifiedPremise": true,
-      "verifyNote": "Second-order innovation — leaderboard sub-pages will exist after item #1; JSON-LD is additive"
+      "verifyNote": "Confirmed: check-lighthouse-trend.mjs exists with --check mode. lighthouse.yml runs 7 URLs but does not call check-lighthouse-trend post-run. S226 TASK_BOARD explicitly open.",
+      "executionLog": []
     },
     {
       "id": 7,
-      "slug": "lighthouse-score-tracker",
-      "title": "Second-order: Lighthouse score history tracker (local regression detector)",
-      "axis": "speed",
-      "tier": "high",
+      "slug": "push-notification-personalization",
+      "title": "Push notification content personalization per-subscriber game segment",
+      "axis": "engagement",
+      "tier": "⚡",
       "impact": 6,
       "innovation": 8,
-      "effortLabel": "1h",
-      "effortHours": 1,
-      "priority": 11.0,
-      "why": "Lighthouse has been regressing silently — it failed from S209 to S225 without a local gate that would have caught it. A lightweight script that records the last N Lighthouse scores from CI artifacts or the public storage URL and surfaces a trend would close this blind spot. The S209 perf-budget staleness lesson applies here: rolling aggregates need trend awareness.",
-      "recipe": "Build scripts/check-lighthouse-trend.mjs: reads .cache/lighthouse-scores.json (written by a CI upload step), warns if score trend is declining or below threshold. Advisory only (exit 0). Wire into doctor.",
+      "effortHours": 4,
+      "priority": 18.6,
+      "why": "The push dispatch sends the same title/body to all subscribers. The Worker already stores lastGame per subscriber in KV (S213). GAME_COPY_VARIANTS simply doesn't exist yet. 'Call of Doodie just dropped a new challenge' converts at dramatically higher rates than 'New from VaultSpark Studios' for a subscriber who identified as a CoD player. This turns the push system from a broadcast into a relevance engine — and the data is already there.",
+      "recipe": "In scripts/notify-subscribers.mjs: define GAME_COPY_VARIANTS = {cod:{title,body}, fgm:{...}, forge:{...}, default:{...}}. When iterating subscribers: read sub.lastGame from KV data; select matching variant. Pass game-specific title+body to push dispatch. Add push:personalized RUM in sw.js.",
+      "status": "pending",
       "ladder": {
-        "L1": {"effortHours": 0.5, "recipe": "Read lighthouse artifact from last CI run via gh api + emit score to .cache/lighthouse-scores.json"},
-        "L2": {"effortHours": 1, "recipe": "L1 + trend detection (3-run average) + doctor integration"},
-        "L3": {"effortHours": 2, "recipe": "L2 + automatic regression issue creation via ci-health-monitor pattern"}
+        "L1": {"effortHours": 1, "recipe": "Add GAME_COPY_VARIANTS; use sub.lastGame to select variant per subscriber"},
+        "L2": {"effortHours": 4, "recipe": "L1 + generate dynamic variants from recent changelog-narrative entries per game slug + push:personalized RUM + --dry-run shows per-segment preview"},
+        "L3": {"effortHours": 8, "recipe": "L2 + A/B test two variants per segment + measure open-rate via push:clicked RUM per variant tag"}
       },
-      "status": "open",
       "verifiedPremise": true,
-      "verifyNote": "Second-order: Lighthouse has failed 8+ sessions without a local visibility path"
+      "verifyNote": "Confirmed: notify-subscribers.mjs sends static title/body. Worker KV stores lastGame per subscriber (S213). GAME_COPY_VARIANTS does not exist. Push subscriptions = 0 currently but infrastructure complete.",
+      "executionLog": []
+    },
+    {
+      "id": 8,
+      "slug": "sitemap-auto-derivation-gate",
+      "title": "check-sitemap-coverage.mjs: gate sitemap completeness against page generators",
+      "axis": "speed",
+      "tier": "⚡",
+      "impact": 7,
+      "innovation": 5,
+      "effortHours": 2,
+      "priority": 17.5,
+      "why": "sitemap.xml is manually maintained. The leaderboard sub-pages TASK_BOARD item was stale — all 7 entries already exist (phantom-detected this session). But the class is real: future page generators can ship without adding sitemap entries. A gate that scans known page generators (build-leaderboard-subpages.mjs PAGES, propagate-nav.mjs) and verifies each generated URL in sitemap.xml makes the gap detectable on the very next build. Converts a phantom carry into a second-order gate.",
+      "recipe": "Build scripts/check-sitemap-coverage.mjs: reads sitemap.xml into a Set of <loc> URLs. Imports PAGES from build-leaderboard-subpages.mjs. Globs games/*/index.html and projects/*/index.html. For each page URL not in sitemap Set: warn. Self-test 5 cases: all present, one missing, empty pages, missing sitemap, wrong export. Wire into check-proof-surface.mjs.",
+      "status": "pending",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "Parse sitemap.xml locs + compare against leaderboards/*/index.html globs (spot check)"},
+        "L2": {"effortHours": 2, "recipe": "Full generator-aware check: import PAGES from generators, compare against sitemap Set, warn on gaps, self-test 5/5, wire into check-proof-surface"},
+        "L3": {"effortHours": 4, "recipe": "L2 + --fix mode: auto-add missing entries to sitemap.xml + check lastmod dates are current"}
+      },
+      "verifiedPremise": true,
+      "verifyNote": "PHANTOM PIVOT: TASK_BOARD item 'Leaderboard sub-pages sitemap.xml' was stale — all 7 entries confirmed in sitemap.xml. Reframed as gate to prevent the class. Build-level sitemap maintenance is confirmed manual/fragile.",
+      "executionLog": []
+    },
+    {
+      "id": 9,
+      "slug": "agent-discovery-leaderboards",
+      "title": "Add leaderboard sub-pages to llms.txt + agents.json for CANON-048 AI discoverability",
+      "axis": "ai-intelligence",
+      "tier": "💡",
+      "impact": 5,
+      "innovation": 4,
+      "effortHours": 1,
+      "priority": 12.6,
+      "why": "The 7 leaderboard sub-pages (S225) are crawlable and in sitemap.xml — but .well-known/llms.txt doesn't mention them (confirmed this session). AI agents reading llms.txt (ChatGPT Browse, Perplexity, Gemini) won't discover the leaderboard category pages, which have BreadcrumbList + FAQPage JSON-LD and are prime AI-citation candidates. CANON-048 dual-audience compliance requires every significant surface be agent-discoverable.",
+      "recipe": "Add 7 leaderboard sub-page entries to .well-known/llms.txt under a '## Community & Rankings' section. Update agents.json page-discovery array. Extend check-agents-json-coherence.mjs known-pages list to include leaderboard routes.",
+      "status": "pending",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "Add 7 leaderboard entries to .well-known/llms.txt under Community section"},
+        "L2": {"effortHours": 1, "recipe": "L1 + update agents.json + extend check-agents-json-coherence.mjs to cover leaderboard in dead-shard scan"},
+        "L3": {"effortHours": 2, "recipe": "L2 + auto-generate leaderboard section in llms-full.txt shard from build-leaderboard-subpages.mjs PAGES array + check-llms-coverage gate"}
+      },
+      "verifiedPremise": true,
+      "verifyNote": "Confirmed: .well-known/llms.txt does not mention leaderboard sub-pages (read this session). CANON-048 gap.",
+      "executionLog": []
+    },
+    {
+      "id": 10,
+      "slug": "workflow-cache-lint-generalize",
+      "title": "Generalize workflow cache-dependency lint to all package managers (yarn/pnpm)",
+      "axis": "speed",
+      "tier": "💡",
+      "impact": 6,
+      "innovation": 3,
+      "effortHours": 0.5,
+      "priority": 11.4,
+      "why": "check-workflow-install-consistency.mjs flags cache: 'npm' and cache: 'bun' (S225) without a committed lockfile. yarn and pnpm would fail identically (GitHub Actions cache: requires a committed lockfile for cache-key computation). Generalizing closes the class fully — one regex change, one self-test extension. Carry from S221 brainstorm that is still technically partial.",
+      "recipe": "In check-workflow-install-consistency.mjs: change flag condition from explicit npm/bun to a generic match for any setup-node cache: (npm|yarn|pnpm|bun). Update self-test to add yarn and pnpm cases.",
+      "status": "pending",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "Add yarn/pnpm to the flag condition + update self-test"},
+        "L2": {"effortHours": 1, "recipe": "L1 + integration test against all 27 .github/workflows/*.yml files"},
+        "L3": {"effortHours": 2, "recipe": "L2 + flag setup-node cache: without corresponding lockfile-existence check (not just committed lockfile)"}
+      },
+      "verifiedPremise": true,
+      "verifyNote": "S225 extended to bun (12/12 self-test). S221 full generalization to 'any setup-node cache:' still open per TASK_BOARD check.",
+      "executionLog": []
+    },
+    {
+      "id": 11,
+      "slug": "verify-close-ci-confirms",
+      "title": "VERIFY: CI confirms Lighthouse ≥0.80 + E2E green after S226 picture/img fix",
+      "axis": "speed",
+      "tier": "⚡",
+      "impact": 8,
+      "innovation": 2,
+      "effortHours": 0.5,
+      "priority": 10.1,
+      "why": "Two multi-session carries block the genius list: (1) Lighthouse ≥0.80 — picture/img fix eliminates the CSS-background preload-mismatch root cause (S226 D-S226.1); (2) E2E green — networkidle mass-fix (S224, 10 files 23 instances) should clear the timeout failures. Until CI confirms both, they occupy top slots and occlude genuinely new work. A green run closes both carries permanently.",
+      "recipe": "Run gh run list --limit 10. Find most recent push-triggered run. Check Lighthouse CI + E2E outcomes. If Lighthouse fails: check TBT in LHR — consider defer for any remaining parser-blocking script. If E2E fails: isolate which spec file remains failing + targeted fix.",
+      "status": "pending",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "gh run list --limit 10; check Lighthouse + E2E outcomes; close TASK_BOARD carries if green"},
+        "L2": {"effortHours": 1, "recipe": "L1 + if Lighthouse still failing: diagnose TBT from LHR JSON + apply one targeted defer fix"},
+        "L3": {"effortHours": 2, "recipe": "L2 + if E2E still failing: isolate per-spec failure + apply targeted waitForTimeout/selector fix"}
+      },
+      "verifiedPremise": true,
+      "verifyNote": "S226 shipped picture/img fix (D-S226.1 confirmed correct approach). CI run required to verify LH score. E2E networkidle mass-fix (S224) also pending CI confirmation.",
+      "executionLog": []
     }
   ],
-  "skipped": [],
-  "executionLog": []
+  "totals": {
+    "count": 11,
+    "priority": 208.2,
+    "top3": ["oracle-feedback-themes-surface", "returning-visitor-ignis-topic-chip", "ignis-deploy-invalidation-cache"]
+  },
+  "innovationReserve": ["returning-visitor-ignis-topic-chip", "ignis-session-context", "push-notification-personalization"],
+  "skipped": [
+    {
+      "slug": "leaderboard-sitemap-entries",
+      "reason": "PHANTOM VERIFIED: all 7 leaderboard sub-pages already in sitemap.xml (9 leaderboard entries confirmed by grep this session). TASK_BOARD item was stale. Reframed as sitemap-auto-derivation-gate (item #8)."
+    },
+    {
+      "slug": "leaderboard-seo-subpages",
+      "reason": "SHIPPED S225: all 7 pages generated with BreadcrumbList + FAQPage JSON-LD. E2E spec fixed. Sitemap confirmed."
+    },
+    {
+      "slug": "ci-dead-cron-gate",
+      "reason": "SHIPPED S225: check-ci-status-dead-crons.mjs built + wired into smoke. 5/5 self-test."
+    },
+    {
+      "slug": "playwright-locator-all-gate",
+      "reason": "SHIPPED S225: check-playwright-locator-all.mjs built + wired into smoke. 4/4 self-test."
+    },
+    {
+      "slug": "leaderboard-jsonld-structured-data",
+      "reason": "SHIPPED S225: BreadcrumbList + FAQPage JSON-LD included in all 7 leaderboard sub-pages on generation."
+    },
+    {
+      "slug": "lighthouse-score-tracker",
+      "reason": "SHIPPED S225+S226: check-lighthouse-trend.mjs (S225) + RAW_METRICS (S226, 15/15 self-tests)."
+    }
+  ]
 }

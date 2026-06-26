@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-26T04:47:27.916Z",
+  "generatedAt": "2026-06-26T07:19:16.059Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 225,
-    "currentFocus": "S225 (full arc, 5 audit items + 2 second-order) — SEO+CI unblock session: 7 leaderboard SEO sub-pages (fixes leaderboards.spec.js E2E failures); hero LCP preload hint (<link rel=preload> for featured AVIF/WebP cover, browser fetches at parse time not after style computation); 3 new CI gates (check-ci-status-dead-crons advisory, check-playwright-locator-all blocking, check-lighthouse-trend regression tracker); workflow-cache-lint extended to bun; generate-vault-narrative.mjs ANTHROPIC_API import fixed (propagation applied). build:check EXIT 0 + blockingFailing 0 verified directly.",
-    "nextMilestone": "Verify Lighthouse CI homepage perf ≥0.80 in next CI run (LCP preload fix from hero AVIF preloading). Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning, mobile-sheet real-device verification.",
+    "currentSession": 226,
+    "currentFocus": "S226 (arc continuation) — hero LCP root-fix: CSS image-set() background on featured tile cannot be matched by Chrome preload hints; converted to <picture><img fetchpriority=\"high\"> (preload-matchable, discovered at HTML parse time). New check-hero-lcp-element blocking gate prevents regression. check-lighthouse-trend enhanced with RAW_METRICS (lcp_ms/fcp_ms/tbt_ms/cls). build:check EXIT 0 + blockingFailing 0 + smoke 26/27.",
+    "nextMilestone": "Verify Lighthouse CI homepage perf ≥0.80 after S226 root-fix (picture/img eliminates the CSS-background preload-mismatch). After confirmed: add --check flag to lighthouse-trend in CI workflow. Also: leaderboard sub-pages in sitemap.xml (7 pages not yet indexed).",
     "pulseKeys": [
       "now",
       "next",

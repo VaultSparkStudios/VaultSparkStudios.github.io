@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-26T04:47:00.605Z",
+  "generatedAt": "2026-06-26T07:19:29.090Z",
   "generatedBy": "scripts/build-ignis-search-index.mjs",
   "publicSafe": true,
   "documents": [
@@ -8,7 +8,7 @@
       "title": "VaultSpark Studios public memory",
       "url": "/llms-full.txt",
       "summary": "A living record of what VaultSpark Studios is building in the open — games, tools, worlds, and the studio intelligence behind them.",
-      "body": "VaultSparkStudios.github.io (arc) — closed the CI-failure-blindness class. Built check-scheduled-workflow-staleness.mjs ( brainstorm 1) + wired it into the doctor; on first run it caught a real incident: Refresh Live Data cron red 7 consecutive runs. Root-fixed the true cause (past a red-herring Ark-dossier log): build-llms-full-shards.mjs hard-exit(1) on the gitignored ignis/output/ecosystem-state.json, which is always absent on CI → stranded the whole 4h data-refresh → now degrades gracefully (warn+exit0). Also: fixed visual-regression defaultBrowserType-in-describe error + chromium-pinned the workflow; completed the half-done rename by migrating the /studio-pulse/ H1 Forge Window→Studio P"
+      "body": "VaultSparkStudios.github.io (full arc, 5 + 2 second-order) — SEO+CI unblock session: 7 leaderboard SEO sub-pages (fixes leaderboards.spec.js E2E failures); hero LCP preload hint ( for featured AVIF/WebP cover, browser fetches at parse time not after style computation); 3 new CI gates (check-ci-status-dead-crons advisory, check-playwright-locator-all blocking, check-lighthouse-trend regression tracker); workflow-cache-lint extended to bun; generate-vault-narrative.mjs ANTHROPIC_API import fixed (propagation applied). automated checks EXIT 0 + blockingFailing 0 verified directly. Identity - Slug: vaultsparkstudios-website - Medium: website - Audience: public-live - Vault status: SPARKED - Heal"
     },
     {
       "title": "Current studio focus",

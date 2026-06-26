@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-26T04:47:27.916Z",
+  "generatedAt": "2026-06-26T07:19:16.059Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 225,
+    "currentSession": 226,
     "lastUpdated": "2026-06-26",
-    "currentFocus": "S225 (full arc, 5 audit items + 2 second-order) — SEO+CI unblock session: 7 leaderboard SEO sub-pages (fixes leaderboards.spec.js E2E failures); hero LCP preload hint (<link rel=preload> for featured AVIF/WebP cover, browser fetches at parse time not after style computation); 3 new CI gates (check-ci-status-dead-crons advisory, check-playwright-locator-all blocking, check-lighthouse-trend regression tracker); workflow-cache-lint extended to bun; generate-vault-narrative.mjs ANTHROPIC_API import fixed (propagation applied). build:check EXIT 0 + blockingFailing 0 verified directly.",
-    "nextMilestone": "Verify Lighthouse CI homepage perf ≥0.80 in next CI run (LCP preload fix from hero AVIF preloading). Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning, mobile-sheet real-device verification.",
+    "currentFocus": "S226 (arc continuation) — hero LCP root-fix: CSS image-set() background on featured tile cannot be matched by Chrome preload hints; converted to <picture><img fetchpriority=\"high\"> (preload-matchable, discovered at HTML parse time). New check-hero-lcp-element blocking gate prevents regression. check-lighthouse-trend enhanced with RAW_METRICS (lcp_ms/fcp_ms/tbt_ms/cls). build:check EXIT 0 + blockingFailing 0 + smoke 26/27.",
+    "nextMilestone": "Verify Lighthouse CI homepage perf ≥0.80 after S226 root-fix (picture/img eliminates the CSS-background preload-mismatch). After confirmed: add --check flag to lighthouse-trend in CI workflow. Also: leaderboard sub-pages in sitemap.xml (7 pages not yet indexed).",
     "blockers": [],
     "queues": {
       "now": [
@@ -46,16 +46,16 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "Shipped (5 audit items · 2 second-order innovations — \"SEO unblock + LCP preload + CI gate wave\"):",
-        "Honest ledger: Lighthouse performance CI verify is pending (will confirm in S226 CI run). Founder-gated carries unchanged — first push notification (0 subs), Signal Log + forge devlog (founder voice), `ark.hmac.seed` provisioning, mobile-sheet real-device, card-accent overlay.",
-        "Tests: `build:check` EXIT 0 (verified directly) · `blockingFailing: 0` (doctor verified) · smoke 25/26 (1 expected skip: gateway-readiness·claude.api) · leaderboard-subpages self-test 35/35 · lighthouse-trend self-test 11/11 · locator-all self-test 4/4 · dead-crons self-test 5/5 · workflow-install-consistency 12/12.",
-        "Deploy: committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip.",
-        "First action next session: `/start` → (a) check CI run to verify leaderboards.spec.js now passes and Lighthouse homepage ≥0.80; (b) run `node scripts/check-lighthouse-trend.mjs --update --session 226` after next CI Lighthouse run to grow the trend ledger; (c) scan genius list for next innovation targets.",
-        "SIL: 983 → 985 (+2). Categories: Dev 100 | Align 97 | Momentum 99 | Engage 96 | Process 100 | CrossRepo 98 | Security 94 | EcoInt 99 | CapEff 97 | AutoCov 100."
+        "Shipped (1 flagship fix · 1 second-order gate · 1 gate enhancement · infra):",
+        "Honest ledger: Lighthouse CI verify still pending (requires next CI run after push). RAW_METRICS diagnostic columns will populate in the trend ledger after the next CI Lighthouse run. Founder-gated carries unchanged — first push notification (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet, card-accent.",
+        "Tests: `build:check` EXIT 0 · `blockingFailing: 0` · smoke 26/27 (1 expected skip: gateway-readiness·claude.api) · build-hero-portfolio self-test 18/18 · check-hero-lcp-element self-test 4/4 · check-lighthouse-trend self-test 15/15.",
+        "Deploy: committed `36918106` + merge commit → pushed to `origin/main`; CF Pages is building.",
+        "First action next session: `/start` → check CI Lighthouse run to verify homepage perf ≥0.80 (root cause eliminated); if ≥0.80 confirmed, run `node scripts/check-lighthouse-trend.mjs --update --session 227` to grow the trend ledger; next genius list targets.",
+        "SIL: 985 → 986 (+1). Categories: Dev 100 | Align 97 | Momentum 99 | Engage 96 | Process 100 | CrossRepo 98 | Security 94 | EcoInt 99 | CapEff 97 | AutoCov 100."
       ]
     },
     "ignis": {
-      "score": 47999,
+      "score": 48864,
       "grade": "FORGE",
       "lastComputed": "2026-06-26"
     },

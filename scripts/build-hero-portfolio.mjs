@@ -136,7 +136,7 @@ function renderTile(item, fileExists, featured) {
   // so the background is late-discovered (~3s Load Delay). A real <img> is visible in HTML
   // and correctly matched to the preload hint, cutting Load Delay to near 0.
   const coverEl = (featured && coverKey)
-    ? `<span class="hero-tile__cover hero-tile__cover--lcp" aria-hidden="true"><picture><source srcset="/assets/covers/${coverKey}.avif" type="image/avif"><source srcset="/assets/covers/${coverKey}.webp" type="image/webp"><img src="/assets/covers/${coverKey}.png" fetchpriority="high" decoding="async" alt=""></picture></span>`
+    ? `<span class="hero-tile__cover hero-tile__cover--lcp" aria-hidden="true"><picture><source srcset="/assets/covers/${coverKey}.avif" type="image/avif"><source srcset="/assets/covers/${coverKey}.webp" type="image/webp"><img src="/assets/covers/${coverKey}.png" fetchpriority="high" alt=""></picture></span>`
     : `<span class="hero-tile__cover" aria-hidden="true"></span>`;
   const inner = [
     coverEl,
