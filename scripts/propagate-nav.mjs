@@ -436,6 +436,12 @@ for (const { full, rel } of files) {
     );
   }
 
+  // S228/CANON-048: Agent discovery link — points AI crawlers at /agents.json.
+  // Idempotent: guard prevents double-injection on re-runs.
+  if (!html.includes('href="/agents.json"')) {
+    html = html.replace('</head>', '  <link rel="alternate" type="application/json" href="/agents.json" />\n</head>');
+  }
+
   // S126: Speculation Rules — prerender same-origin nav-target pages on hover.
   // type="speculationrules" is data-not-code; modern CSP exempts it from script-src.
   // Refreshable via marker comments (re-runs replace the block in place).
