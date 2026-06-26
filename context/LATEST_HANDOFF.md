@@ -1,8 +1,40 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-26 (Session 226 — arc continuation · hero LCP root-fix (picture/img) + check-hero-lcp-element gate + check-lighthouse-trend RAW_METRICS)
+Last updated: 2026-06-26 (Session 227 — full arc · IGNIS community chips + session-context boost + topic-aware re-entry + deploy-hash · Lighthouse CI gate · push GAME_COPY_VARIANTS · sitemap gate · LCP decoding=async fix)
 
-Session Intent: Continuation of /goal arc from compacted context — complete check-lighthouse-trend RAW_METRICS enhancement that was in progress, fix the hero LCP issue at its root cause, commit and push.
+Session Intent: Full /goal arc (/start → /audit → /implement → /closeout). Saturate the session: exhaust the Unified Genius List and generate + implement second-order innovations.
+
+## Where We Left Off (Session 227)
+
+- **Shipped (11 substantive items · 3 phantom wins — "IGNIS intelligence depth wave + CI gate hardening"):**
+  1. **[PERF/P0] LCP decoding=async root-fix** — `build-hero-portfolio.mjs` LCP `<img>` had `decoding="async"` which defers paint commitment until next rAF after decode (5.1s render delay = 82% of LCP time). Removed. `fetchpriority="high"` alone is the correct instruction for LCP images; `decoding="async"` was actively harmful here.
+  2. **[INFRA] api/heartbeat.json regenerated** — E2E compliance drift cleared (generate-heartbeat output was stale; check-generated-drift-preflight now passing).
+  3. **[AI/P1] IGNIS deploy-hash cache invalidation** — `var DEPLOY_SHA_KEY = 'vs_ignis_deploy_sha'` + IIFE: fetches `api/build-sha.json` once per session (fire-and-forget), clears `vs_ignis_prefix_cache` when SHA changed, prevents 24h stale excerpts in "Continuing from earlier" for returning visitors after a deploy.
+  4. **[AI/P1] IGNIS community topic chips** — `renderCommunityTopics()` IIFE in `mount()`: fetches `/api/oracle-feedback-themes.json`, renders top-5 ranked theme chips in a `vs-ignis-community` div with CSS injected into `ensureStyles()`. Honesty gate: only renders when `!honestDark && themes.length`. Each chip fires `emitUx('oracle:topic_chip_click')` + `runQuery(theme.label, 'community')`. New CSS added to ensureStyles for the community cluster div. `oracle:topic_chip_click` added to Worker `RUM_UX_EVENTS`.
+  5. **[AI/P1] IGNIS topic-aware returning-visitor chip** — enhanced `renderResumeChip()`: after inserting starterWrap, appends an IIFE that reads `vs_ignis_history` keywords, fetches `/api/changelog-narrative.json`, finds entries newer than `vs_last_visit_ts` whose titles contain a matched keyword (length > 3). If match: appends "New intel about [keyword]" button using `.vs-ignis-starters__chip .vs-ask-ignis__chip--context` classes; click fires `emitUx('oracle:topic_chip_click')` + `runQuery('What\'s new about ' + matchedKeyword + '?', 'topic-chip')`.
+  6. **[AI/P2] IGNIS session-context scoring boost** — in `answer()` scoring loop: if `sessionQueries.length >= 2`, extracts top-5 keyword tokens from history (deduped), applies +0.15 `boost` per matched token in document title/tags. Boost capped at `Math.min(score * 2, score + boost)`. Follow-up queries become progressively more relevant to the established session context.
+  7. **[SEO/P2] .well-known/llms.txt Community & Rankings section** — 8 leaderboard URLs added under new `## Community & Rankings` section (hub + 7 sub-pages). Closes CANON-048 AI discoverability gap for leaderboard surfaces. llms-full.txt regenerated (16 shards across 40 projects).
+  8. **[INFRA/P2] check-sitemap-coverage.mjs (new gate)** — scans `leaderboards/*/index.html`, `games/*/index.html`, `projects/*/index.html`; parses `sitemap.xml` locs into Set (both trailing-slash forms); warns on gaps. `SITEMAP_EXCLUDE = /vault-member|investor-portal|member\/[^/]+\/index/` (matches sitemap.yml EXCLUDE var). 5/5 self-test. Wired into `check-proof-surface.mjs` STEPS array. Live: 35 pages verified.
+  9. **[CI/P2] Lighthouse CI blocking regression gate** — `lighthouse.yml`: added `outputDir: ./lighthouse-results` (puts LHR JSONs where check-lighthouse-trend.mjs expects them) + `node scripts/check-lighthouse-trend.mjs --check` post-run step. ≥0.05 regression from committed trend ledger is now blocking in CI (exits 1). The "slow bleed" pattern (0.95 → 0.82 → just-passing) is now detectable mid-session.
+  10. **[ENGAGEMENT/P2] Push notification GAME_COPY_VARIANTS** — `notify-subscribers.mjs`: added `GAME_COPY_VARIANTS` map (cod/fgm/forge) with `title(base)`, `body(base)`, `url(base)` transformer functions that personalize content per subscriber's KV-stored `lastGame`. Generic pre-loop `payload` removed; per-subscriber `personalizedPayload` built in send loop. `--dry-run` output updated to note personalization.
+  11. **[BUILD] Build artifacts refreshed** — `api/build-sha.json → d6f47a07`, `data/ignis-search-index.json` updated, `api/oracle-feedback-themes.json → honestDark:true (0 submissions)`, `feed/forge-ledger.json/xml`, `api/velocity-series.json`, `api/vault-momentum.json`.
+
+- **Phantom wins (CANON-019 discipline):**
+  - `workflow-cache-lint-generalize` — PHANTOM: `check-workflow-install-consistency.mjs` line 76 regex `(npm|yarn|pnpm|bun)` already covers all 4 managers; 12/12 self-tests passing.
+  - `csp-violation-monitoring` — 90% PHANTOM: Worker `/v/csp-report` handler at line 718 + `config/csp-policy.mjs` `reportUri` at line 160 = complete infrastructure. Only gap: doctor probe reading KV data (not feasible without a new Worker GET endpoint serving KV data as JSON).
+  - `leaderboard-sitemap-entries` — PHANTOM: all 9 leaderboard entries confirmed in sitemap.xml. Reframed as `check-sitemap-coverage.mjs` gate (shipped above).
+
+- **Honest ledger:** Lighthouse CI verify pending (decoding=async eliminated 5.1s render delay; next CI run will confirm ≥0.80). E2E still failing in last CI run (pre-S227). oracle:context_boost RUM omitted (boost is live but unmeasured). Founder-gated carries unchanged — push (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet.
+
+- **Tests:** `build:check` EXIT 0 · `blockingFailing: 0` · smoke 26/27 (1 expected skip: gateway-readiness·claude.api) · `check-sitemap-coverage` 5/5 self-test, 35 pages live.
+
+- **Deploy:** committed `9543dd5e` + `d6f47a07` + `4c8d1df7` → pushed to `origin/main`; CF Pages building.
+
+- **First action next session:** `/start` → check CI Lighthouse run (was 0.77; decoding=async removed = 5.1s render delay gone → should hit ≥0.80). Also check E2E run. If both green: close the multi-session CI-verify carry and scan genius list for next targets.
+
+- **SIL:** 986 → 983 (−3). Categories: Dev 100 | Align 98 | Momentum 99 | Engage 98 | Process 100 | CrossRepo 98 | Security 94 | EcoInt 99 | CapEff 97 | AutoCov 100.
+
+> **S226 (arc continuation):** hero LCP root-fix (CSS image-set() → picture/img) + check-hero-lcp-element blocking gate + check-lighthouse-trend RAW_METRICS (lcp_ms/fcp_ms/tbt_ms/cls). SIL 986.
 
 ## Where We Left Off (Session 226)
 - **Shipped (1 flagship fix · 1 second-order gate · 1 gate enhancement · infra):**

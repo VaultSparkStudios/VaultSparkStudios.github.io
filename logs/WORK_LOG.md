@@ -1,5 +1,32 @@
 # Work Log
 
+## 2026-06-26 — Session 227 · IGNIS community chips + session-context boost + topic-aware re-entry + deploy-hash · Lighthouse CI gate · push GAME_COPY_VARIANTS · sitemap gate · LCP decoding=async fix (full arc)
+
+Full continuous /goal arc (/start → /audit → /implement → /closeout). **11 substantive ships + 3 phantom wins.** SIL 986 → 983 (−3). Velocity −3.
+
+**Shipped (11 items):**
+1. `lcp-decoding-async-fix` — `build-hero-portfolio.mjs`: removed `decoding="async"` from LCP `<img>`. Root cause: `decoding=async` defers paint commitment until next rAF after decode, adding 5.1s render delay (82% of LCP time). `fetchpriority="high"` alone is the correct approach for LCP images.
+2. `heartbeat-regenerate` — ran `node scripts/generate-heartbeat.mjs` to clear E2E compliance drift in `api/heartbeat.json`.
+3. `ignis-deploy-hash-invalidation` — `vs_ignis_deploy_sha` key: fire-and-forget fetch of `api/build-sha.json` on mount; clears `vs_ignis_prefix_cache` on SHA mismatch; prevents stale 24h prefix excerpts for returning visitors after deploys.
+4. `ignis-community-topic-chips` — `renderCommunityTopics()` IIFE in `mount()`: fetches `api/oracle-feedback-themes.json`, renders top-5 theme chips with `vs-ignis-community` CSS cluster; fires `oracle:topic_chip_click` + `runQuery(theme.label, 'community')`; only renders when `!honestDark && themes.length`. `oracle:topic_chip_click` added to Worker RUM_UX_EVENTS.
+5. `ignis-topic-aware-return-chip` — enhanced `renderResumeChip()`: appends IIFE that reads `vs_ignis_history` keywords, fetches `api/changelog-narrative.json`, finds entries newer than `vs_last_visit_ts` with matched keyword (len > 3); appends "New intel about [keyword]" chip when match; fires `oracle:topic_chip_click` + contextual runQuery.
+6. `ignis-session-context-boost` — in `answer()` scoring loop: when `sessionQueries.length >= 2`, extracts top-5 deduped tokens from history, applies +0.15 boost per matched token in document title/tags (capped at `score * 2`). Follow-up queries become progressively context-aware.
+7. `llms-txt-community-section` — added `## Community & Rankings` section to `.well-known/llms.txt` with 8 leaderboard URLs (hub + 7 sub-pages). Closes CANON-048 AI discoverability gap. llms-full.txt regenerated (16 shards, 40 projects).
+8. `check-sitemap-coverage` — new gate: scans leaderboards/games/projects index.html files vs sitemap.xml Set; warn-only (exit 0); SITEMAP_EXCLUDE regex mirrors sitemap.yml EXCLUDE; 5/5 self-test, 35 pages live; wired into check-proof-surface.mjs STEPS.
+9. `lighthouse-ci-blocking-gate` — `lighthouse.yml`: `outputDir: ./lighthouse-results` + `node scripts/check-lighthouse-trend.mjs --check` post-run step; ≥0.05 regression from committed trend ledger is blocking in CI.
+10. `push-game-copy-variants` — `notify-subscribers.mjs`: GAME_COPY_VARIANTS map (cod/fgm/forge) with title/body/url transformer functions; per-subscriber personalizedPayload in send loop using KV-stored `lastGame`.
+11. `build-artifacts-refresh` — `api/build-sha.json` → d6f47a07, `data/ignis-search-index.json`, `api/oracle-feedback-themes.json` (honestDark:true, 0 submissions), feed/forge-ledger.json/xml, velocity-series.json, vault-momentum.json.
+
+**Phantom wins (3):** workflow-cache-lint-generalize (already covered), csp-violation-monitoring (90% done — Worker handler + reportUri complete; doctor probe deferred), leaderboard-sitemap-entries (all 9 present — reframed as gate).
+
+**Honest non-actions:** Lighthouse CI verify pending (decoding=async removed; CI run will confirm). E2E still failing pre-S227. oracle:context_boost RUM omitted (unmeasured, P2 carry). Founder-gated: push (0 subs), forge devlog, ark.hmac.seed, mobile-sheet.
+
+**Verify:** `build:check` EXIT 0 · `blockingFailing: 0` · smoke 26/27 (1 expected skip) · sitemap gate 5/5 self-test.
+
+**SIL:** 986 → 983/1000 (v3.0) · Dev 100 | Align 98 | Momentum 99 | Engage 98 | Process 100 | CrossRepo 98 | Security 94 | EcoInt 99 | CapEff 97 | AutoCov 100 · committed `9543dd5e` + `d6f47a07` + `4c8d1df7` + pushed to origin/main.
+
+---
+
 ## 2026-06-26 — Session 226 · hero LCP root-fix (picture/img) + check-hero-lcp-element gate + check-lighthouse-trend RAW_METRICS (arc continuation)
 
 Arc continuation from compacted context — completed the in-progress `check-lighthouse-trend` RAW_METRICS enhancement, root-fixed the hero LCP issue, and built the regression prevention gate. **3 ships.** SIL 985 → 986 (+1). Velocity 1.

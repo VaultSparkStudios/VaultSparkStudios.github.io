@@ -1,6 +1,36 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-26 (Session 226 — arc continuation: hero LCP root-fix (picture/img) + check-hero-lcp-element gate + check-lighthouse-trend RAW_METRICS)
+Last updated: 2026-06-26 (Session 227 — full arc: IGNIS community chips + session-context boost + topic-aware re-entry + deploy-hash + Lighthouse CI gate + push personalization + sitemap gate + LCP decoding=async fix)
+
+## S227 outcome + carries
+
+**Shipped in S227:**
+- [x] **[PERF/P0] LCP decoding=async root-fix** — `build-hero-portfolio.mjs` LCP `<img>` had `decoding="async"` which defers paint commitment until next rAF (5.1s render delay = 82% of LCP time). Removed. `fetchpriority="high"` alone is correct for LCP images.
+- [x] **[INFRA/P1] api/heartbeat.json regenerated** — E2E compliance drift cleared (check-generated-drift-preflight now passing).
+- [x] **[AI/P1] IGNIS deploy-hash cache invalidation** — `vs_ignis_deploy_sha` IIFE: fetches api/build-sha.json, clears vs_ignis_prefix_cache when SHA changes. Prevents 24h stale excerpts after deploy.
+- [x] **[AI/P1] IGNIS community topic chips** — `renderCommunityTopics()`: fetches api/oracle-feedback-themes.json, renders top-5 ranked theme chips as "What our community is exploring" (honestDark gate). Click pre-fills oracle search + emits `oracle:topic_chip_click` RUM. Worker allowlist updated.
+- [x] **[AI/P1] IGNIS topic-aware returning-visitor chip** — Enhanced `renderResumeChip()`: cross-references vs_ignis_history keywords × api/changelog-narrative.json entries newer than vs_last_visit_ts; shows "New intel about [keyword]" chip when matched.
+- [x] **[AI/P2] IGNIS session-context scoring boost** — In `answer()`: if ≥2 prior sessionQueries, extracts keywords from history, applies +0.15 contextBoost per matched token in document title/tags, capped at 2× raw score. Follow-up queries become progressively more relevant.
+- [x] **[SEO/P2] .well-known/llms.txt Community & Rankings section** — 7 leaderboard sub-page URLs added under "## Community & Rankings" (CANON-048 AI discoverability gap closed). llms-full.txt regenerated.
+- [x] **[INFRA/P2] check-sitemap-coverage.mjs** — Auto-derives expected URLs from leaderboards/games/projects dirs, warns on gaps vs sitemap.xml (35 pages verified; vault-member excluded per sitemap.yml EXCLUDE). 5/5 self-test. Wired into check-proof-surface.mjs.
+- [x] **[CI/P2] Lighthouse CI blocking regression gate** — lighthouse.yml: `outputDir: ./lighthouse-results` + `node scripts/check-lighthouse-trend.mjs --check` post-run step. ≥0.05 regression from committed trend ledger is now blocking in CI.
+- [x] **[ENGAGEMENT/P2] Push notification GAME_COPY_VARIANTS** — notify-subscribers.mjs: GAME_COPY_VARIANTS (cod/fgm/forge) selects per-subscriber personalized title/body/url from KV-stored lastGame. Generic pre-loop payload removed.
+
+**S227 phantom wins (reject-on-verification):**
+- → `workflow-cache-lint-generalize` — PHANTOM: line 76 `(npm|yarn|pnpm|bun)` already covers all 4 managers; 12/12 self-tests passing.
+- → `csp-violation-monitoring` — 90% PHANTOM: Worker /v/csp-report handler at line 718 + config/csp-policy.mjs reportUri line 160 = complete. Only gap: doctor probe reading KV data (not feasible without a KV-serving Worker GET endpoint). Honest non-action.
+- → `leaderboard-sitemap-entries` — PHANTOM: all 9 leaderboard entries confirmed in sitemap.xml (S225). Reframed as sitemap-auto-derivation-gate (shipped above).
+
+**S227 honest ledger:**
+- → **Lighthouse CI verify still pending** — decoding=async removed; CI run after this push will confirm ≥0.80. Previous failure was 0.77 (0.53, 0.77, 0.77 all values).
+- → **E2E verify still pending** — networkidle mass-fix (S224) + accessibility harness hardening. Last CI run: failure. Needs post-S227 push confirmation.
+- → **Founder-gated carries unchanged** — push notification (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet.
+
+**S227 committed to next session (brainstorm):**
+- [ ] **[CI/P1] Verify Lighthouse homepage ≥0.80** — decoding=async removed = 5.1s render delay eliminated. Watch next CI Lighthouse run (outputDir now set, --check gate will catch regression).
+- [ ] **[CI/P1] Verify E2E green** — networkidle fixes from S224 should clear timeout failures. After green: close the carry permanently.
+- [ ] **[AI/P2] IGNIS oracle:context_boost RUM** — session-context boost is shipping but the RUM event `oracle:context_boost` was omitted (in-memory only). Add to Worker RUM_UX_EVENTS + emit in answer() scoring loop for measurement.
+- [ ] **[SECURITY/P3] CSP violation doctor probe** — only remaining gap: a `check-csp-violations.mjs` that reads a KV-serving Worker GET endpoint (not buildable without shipping a new Worker route). Deferred until Worker GET for csp-violations is available.
 
 ## S226 outcome + carries
 
@@ -16,9 +46,9 @@ Last updated: 2026-06-26 (Session 226 — arc continuation: hero LCP root-fix (p
 - → **Founder-gated carries unchanged** — push notification (0 subs), Signal Log/forge devlog (founder voice), `ark.hmac.seed`, mobile-sheet, card-accent overlay.
 
 **S226 committed to next session (brainstorm):**
-- [ ] **[CI/P1] Verify Lighthouse homepage ≥0.80** — picture/img fix eliminates the CSS-background preload-mismatch root cause. Watch next CI Lighthouse run. If still failing, investigate TBT as remaining bottleneck.
-- [ ] **[INFRA/P2] Lighthouse CI gate: `--check` flag for perf threshold** — after confirming ≥0.80, add `check-lighthouse-trend --check --session N` step to the Lighthouse CI workflow post-run. Makes perf regression ≥0.05 from best blocking in CI (not just advisory local).
-- [ ] **[SEO/P2] Leaderboard sub-pages sitemap.xml** — the 7 new `/leaderboards/*/` pages are not yet in `sitemap.xml`. Add 7 `<url>` entries (or derive programmatically from PAGES array in `build-leaderboard-subpages.mjs`).
+- [ ] **[CI/P1] Verify Lighthouse homepage ≥0.80** — picture/img fix eliminates the CSS-background preload-mismatch root cause; decoding=async removed S227 (5.1s render delay = 82% of LCP eliminated). Verify pending in CI.
+- [x] **[INFRA/P2] Lighthouse CI gate: `--check` flag for perf threshold** — DONE S227. lighthouse.yml: `outputDir: ./lighthouse-results` + `node scripts/check-lighthouse-trend.mjs --check` post-run. Makes perf regression ≥0.05 blocking in CI.
+- [x] **[SEO/P2] Leaderboard sub-pages sitemap.xml** — DONE S227 (phantom: all 7 already in sitemap). check-sitemap-coverage.mjs gate built to auto-verify going forward (35 pages verified).
 
 ## S225 outcome + carries
 

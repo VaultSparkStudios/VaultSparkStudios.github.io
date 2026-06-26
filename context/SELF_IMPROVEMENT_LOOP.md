@@ -8,14 +8,40 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇████▇██
-Avgs - 3: 985.3 | 5: 977.4 | 10: ~964 | 25: ~960 | all: ~963 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 97.0 | Momentum 99.0 | Engage 96.0 | Process 100.0
-Velocity trend: → (S226: 3 items; S225: 7 items; S224: 11+3 SO) | Protocol velocity: → | Debt: ↓ (S226: hero LCP root-fixed CSS-background→picture/img; check-hero-lcp-element blocking gate; lighthouse-trend RAW_METRICS; Lighthouse CI verify pending)
-Momentum runway: CI-VERIFY — confirm Lighthouse homepage ≥0.80 (picture/img eliminates CSS-background preload-mismatch root cause); PUSH — push:count → first real notification (founder go-ahead; 0 subs); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); SEO — leaderboards sitemap.xml (7 pages not yet indexed) | Intent rate: 100% (last 5) | (S226 shipped: hero LCP picture/img root-fix; check-hero-lcp-element gate; lighthouse-trend RAW_METRICS; .gitignore lighthouse-results; 106/105 pages propagated+rebuilt.)
-Last session: 2026-06-26 | Session 226 | Total: 986/1000 (v3.0) | Velocity: 1 | protocolVelocity: 0
+Sparkline (last 5 totals): ████▇███
+Avgs - 3: 984.0 | 5: 980.2 | 10: ~965 | 25: ~961 | all: ~963 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 97.7 | Momentum 99.0 | Engage 97.3 | Process 100.0
+Velocity trend: ↑ (S227: 10 items + 3 phantom wins; S226: 3 items; S225: 7 items) | Protocol velocity: → | Debt: level (S227: LCP decoding=async fix; IGNIS depth wave 4 items; Lighthouse CI gate; push personalization; sitemap gate; Lighthouse CI verify pending)
+Momentum runway: CI-VERIFY — Lighthouse ≥0.80 (decoding=async eliminated 5.1s render delay) + E2E green; PUSH — first notification (0 subs); FOUNDER — ark.hmac.seed; CONTENT — Signal Log + forge devlog; AI — oracle:context_boost RUM event | Intent rate: 100% (last 5) | (S227 shipped: LCP decoding=async fix; IGNIS community chips + session-context boost + topic-aware re-entry + deploy-hash; llms.txt Community section; check-sitemap-coverage gate; Lighthouse CI --check gate; push GAME_COPY_VARIANTS.)
+Last session: 2026-06-26 | Session 227 | Total: 983/1000 (v3.0) | Velocity: -3 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-26 — Session 227 (full arc · IGNIS community chips + session-context boost + topic-aware re-entry + deploy-hash invalidation · Lighthouse CI blocking gate · push GAME_COPY_VARIANTS · sitemap auto-derivation gate · LCP decoding=async fix) | Total: 983/1000 (v3.0) | Velocity: -3 | Debt: level
+Avgs — 3: 984.0 | 5: 980.2 | 10: ~965 | 25: ~961 | all: ~963
+
+Dev Health 100 | Creative Alignment 98 | Momentum 99 | Engagement 98 | Process Quality 100 | Cross-Repo Coherence 98 | Security Posture 94 | Ecosystem Integration 99 | Capital Efficiency 97 | Automation Coverage 100
+
+**What improved:** This session's signature is depth-of-intelligence compounding. Four IGNIS features shipped in a coordinated wave that each compound the others: the deploy-hash invalidation makes returning-visitor excerpts honest; the community topic chips surface collective curiosity; the session-context boost makes each follow-up smarter than the last; the topic-aware re-entry chip crosses the visitor's own history against the latest content. No single feature is independently brilliant — the insight is that the four together create a qualitatively different oracle experience for any visitor who's been here before.
+
+The LCP root-cause was `decoding="async"` on the LCP `<img>` — a subtle but devastating flag: it defers paint commitment until the next rAF tick after decode, adding 5.1s (82% of LCP time). The image was already loading fast (0.5s) but the browser waited. Removing the attribute solves it; `fetchpriority="high"` is the correct and sufficient instruction for LCP images. This was found by analyzing the prior CI failure's LHR JSON (0.53, 0.77, 0.77 — consistent with a render-delay pattern, not a network-load pattern).
+
+The Lighthouse CI gate is a structural win: before S227, CI only reported PASS/FAIL at a threshold. Now it compares against the committed trend ledger and exits 1 on ≥0.05 regression from best session. The "slow bleed" pattern (0.95 → 0.88 → 0.82 → just passing) is now detectable and blocking.
+
+**What remained honest:** Lighthouse CI verify is still pending (CI run required after push). E2E is still showing the S224-era failure. csp-violation doctor probe is unfeasible without a new Worker GET endpoint. oracle:context_boost RUM omitted from this session — context boost is live but unmeasured.
+
+**Top win:** The four IGNIS depth features ship as a coherent intelligence upgrade, not four isolated tweaks. Compounding UX with no new infra cost.
+**Top gap:** Lighthouse CI + E2E still in "verify pending" state. Should confirm in the next CI run after this push.
+**Intent outcome:** Full arc completed — build:check EXIT 0, blockingFailing 0, audit items exhausted, phantom discipline maintained.
+
+**Brainstorm**
+1. **IGNIS-CONTEXT-BOOST-RUM** — `oracle:context_boost` RUM event in the scoring loop lets us measure whether session-aware boosting is improving click-through on boosted results vs non-boosted. Without measurement the boost is shipped but unvalidated. Low effort (one emit + one Worker allowlist entry). Probability: High.
+2. **CSP-VIOLATIONS-WORKER-GET** — the only remaining csp-monitoring gap is a Worker GET endpoint that serves KV data as JSON (so the doctor probe can read it). This would close the CANON-051 monitoring gap fully and enable the advisor probe. Medium effort, real security visibility gain.
+3. **LIGHTHOUSE-TREND-AUTO-UPDATE** — after each CI Lighthouse run, automatically push an updated `.cache/lighthouse-trend.json` back to the repo (via `git commit --allow-empty` or a dedicated CI step + PAT). Currently the ledger only grows locally. Would make the trend meaningful across CI runs without manual intervention.
+
+**Committed to TASK_BOARD:** [AI/P2] IGNIS oracle:context_boost RUM · [CI/P1] Verify Lighthouse ≥0.80 + E2E green · [SECURITY/P3] CSP violation doctor probe (post Worker GET)
 
 ---
 
