@@ -1,5 +1,23 @@
 # Work Log
 
+## 2026-06-26 — Session 226 · hero LCP root-fix (picture/img) + check-hero-lcp-element gate + check-lighthouse-trend RAW_METRICS (arc continuation)
+
+Arc continuation from compacted context — completed the in-progress `check-lighthouse-trend` RAW_METRICS enhancement, root-fixed the hero LCP issue, and built the regression prevention gate. **3 ships.** SIL 985 → 986 (+1). Velocity 1.
+
+**Shipped (3 ships, infra):**
+1. `hero-lcp-picture-img` — `build-hero-portfolio.mjs renderTile()` generates `<picture><img fetchpriority="high">` for featured tile (index 0). Root cause: Chrome cannot match `<link rel="preload" as="image">` to a CSS `image-set()` background — only `<img>` in HTML is preload-matchable. S225 added the preload hint; S226 adds the `<img>` that makes it effective. `renderTileStyles()` skips CSS background rule for index 0. `index.html` CSS: `.hero-tile__cover--lcp { background:none; position:absolute; inset:0; object-fit:cover }`. Self-test 18/18 (4 new assertions).
+2. `check-hero-lcp-element` (SECOND-ORDER) — blocking gate: 5 checks (--lcp class, fetchpriority=high, AVIF source, head preload, non-featured exclusion); 4/4 self-test; wired into smoke (now 26/27, 1 expected skip). Prevents regression when `build-hero-portfolio.mjs` is re-run.
+3. `check-lighthouse-trend RAW_METRICS` — completed in-progress enhancement: lcp_ms/fcp_ms/tbt_ms/cls from `lhr.audits[key].numericValue`; `integer: true/false` flag (ms as integer, cls as float 0.003); `detectRegressions()` skips raw metrics (diagnostic context only); print shows `lcp=Xms tbt=Xms`. 15/15 self-test (4 new).
+- Infrastructure: `.gitignore` adds `lighthouse-results/`; 106 pages nav-propagated; 105 pages shell rebuilt; merge commit (CI cron live-data refresh conflict on heartbeat.json/public-intelligence.json resolved with `-X theirs`).
+
+**Honest rejections/non-actions (wins):** Lighthouse CI verify still pending (requires next CI run after push).
+
+**Verify:** `npm run build:check` EXIT 0 · `blockingFailing: 0` · smoke 26/27 (1 expected skip) · all new self-tests pass.
+
+**SIL:** 985 → 986/1000 (v3.0) · Velocity: 1 · Debt: ↓ · committed + pushed to origin/main.
+
+---
+
 ## 2026-06-26 — Session 225 · 7 leaderboard SEO sub-pages + hero LCP preload + 3 CI gates + check-lighthouse-trend + workflow-cache-lint bun + propagation applied (arc)
 
 Full continuous arc (/start → /audit → /implement → /closeout) — continued from compacted context; mid-stream on audit plan items 1–4 at compaction; resumed and completed all 5 audit items + 2 second-order innovations. **7 ships + 8 infrastructure fixes.** SIL 983 → 985 (+2). Velocity 2.

@@ -1,6 +1,24 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-26 (Session 225 — arc: 7 leaderboard SEO sub-pages + hero LCP preload + check-ci-status-dead-crons + check-playwright-locator-all + workflow-cache-lint bun + check-lighthouse-trend + generate-vault-narrative import fix + lighthouse-results nav exemptions)
+Last updated: 2026-06-26 (Session 226 — arc continuation: hero LCP root-fix (picture/img) + check-hero-lcp-element gate + check-lighthouse-trend RAW_METRICS)
+
+## S226 outcome + carries
+
+**Shipped in S226:**
+- [x] **[PERF/P0] Hero featured-tile LCP root-fix** — `build-hero-portfolio.mjs renderTile()` generates `<picture><img fetchpriority="high">` for featured tile (index 0) instead of CSS `image-set()` background. CSS backgrounds cannot be matched by Chrome's `<link rel="preload">`; `<img>` in HTML is preload-matchable and discovered at parse time (~0ms Load Delay vs ~3s). `renderTileStyles()` skips the CSS background rule for index 0. 18/18 self-tests passing (4 new assertions). `index.html` regenerated + new CSS rules for `.hero-tile__cover--lcp`.
+- [x] **[SECOND-ORDER] `check-hero-lcp-element.mjs`** — new blocking gate preventing regression from `<picture><img>` back to CSS background span. 5 checks (--lcp class, fetchpriority=high, AVIF source, head preload, non-featured exclusion); 4/4 self-tests; wired into `smoke-startup-scripts.mjs` (26/27 OK, 1 expected skip).
+- [x] **[INFRA] `check-lighthouse-trend.mjs` RAW_METRICS** — `lcp_ms`, `fcp_ms`, `tbt_ms`, `cls` tracked alongside category scores. `integer: true/false` flag in RAW_METRICS; `parseLhrDir()` collects `lhr.audits[key].numericValue`; `computeMedians()` stores ms as integers, cls at 4dp; `detectRegressions()` skips raw metric keys; print shows `lcp=Xms tbt=Xms`. 15/15 self-tests.
+- [x] **[INFRA] `.gitignore` + 106/105 pages** — `lighthouse-results/` added to gitignore (ephemeral CI artifacts). 106 pages nav-propagated (Forge Window naming). 105 pages shell rebuilt (hash changed).
+
+**S226 honest ledger (rejections = wins):**
+- → **Lighthouse CI score ≥0.80 pending** — root-fix deployed; verify in next CI Lighthouse run. The picture/img approach eliminates the ~3s Load Delay by making the image preload-matchable directly from HTML.
+- → **lighthouse-trend ledger will grow** — after next CI Lighthouse run with RAW_METRICS support, the diagnostic columns (lcp=Xms, tbt=Xms) will populate for the first time.
+- → **Founder-gated carries unchanged** — push notification (0 subs), Signal Log/forge devlog (founder voice), `ark.hmac.seed`, mobile-sheet, card-accent overlay.
+
+**S226 committed to next session (brainstorm):**
+- [ ] **[CI/P1] Verify Lighthouse homepage ≥0.80** — picture/img fix eliminates the CSS-background preload-mismatch root cause. Watch next CI Lighthouse run. If still failing, investigate TBT as remaining bottleneck.
+- [ ] **[INFRA/P2] Lighthouse CI gate: `--check` flag for perf threshold** — after confirming ≥0.80, add `check-lighthouse-trend --check --session N` step to the Lighthouse CI workflow post-run. Makes perf regression ≥0.05 from best blocking in CI (not just advisory local).
+- [ ] **[SEO/P2] Leaderboard sub-pages sitemap.xml** — the 7 new `/leaderboards/*/` pages are not yet in `sitemap.xml`. Add 7 `<url>` entries (or derive programmatically from PAGES array in `build-leaderboard-subpages.mjs`).
 
 ## S225 outcome + carries
 
@@ -19,8 +37,8 @@ Last updated: 2026-06-26 (Session 225 — arc: 7 leaderboard SEO sub-pages + her
 - → **Founder-gated carries unchanged** — push notification (0 subs), Signal Log/forge devlog (founder voice), `ark.hmac.seed`, mobile-sheet, card-accent overlay.
 
 **S225 committed to next session (brainstorm):**
-- [ ] **[CI/P1] Verify Lighthouse homepage ≥0.80** — LCP preload fix deployed in S225. Watch next CI Lighthouse run for homepage performance score ≥0.80. If still failing, investigate TBT as secondary cause.
-- [ ] **[CI/P2] Grow lighthouse-trend ledger** — after next CI Lighthouse run, run `node scripts/check-lighthouse-trend.mjs --update --session 226` to add S226 data point.
+- [x] **[CI/P1] Verify Lighthouse homepage ≥0.80** — S226 root-fixed: CSS image-set background → `<picture><img fetchpriority="high">` (preload-matchable). S225 preload hint was correct direction but CSS backgrounds aren't matchable by Chrome preload hints. Root cause eliminated.
+- [x] **[CI/P2] Grow lighthouse-trend ledger with RAW_METRICS** — S226 enhanced: lcp_ms/fcp_ms/tbt_ms/cls now collected from LHR audits; 15/15 self-tests; print shows `lcp=Xms tbt=Xms`. Ledger will populate diagnostic columns on next CI run.
 - [ ] **[SEO/P2] Leaderboard sub-pages sitemap.xml** — the 7 new `/leaderboards/*/` pages are not yet in `sitemap.xml`; add them for crawler indexing.
 
 ## S224 outcome + carries

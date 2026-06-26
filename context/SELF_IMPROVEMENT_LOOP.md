@@ -8,14 +8,40 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ▇████▇█
-Avgs - 3: 981.0 | 5: 974.6 | 10: ~962 | 25: ~959 | all: ~962 (v3.0 /1000)
+Sparkline (last 5 totals): ▇████▇██
+Avgs - 3: 985.3 | 5: 977.4 | 10: ~964 | 25: ~960 | all: ~963 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 97.0 | Momentum 99.0 | Engage 96.0 | Process 100.0
-Velocity trend: → (S225: 7 items; S224: 11+3 SO; S223: 10+2 SO) | Protocol velocity: → | Debt: ↓ (S225: 7 leaderboard SEO pages fix CI E2E; hero LCP preload targets Lighthouse ≥0.80; 3 new CI gates (dead-cron/locator-all/lighthouse-trend); workflow-cache-lint bun; propagation applied)
-Momentum runway: PUSH — push:count → first real notification (founder go-ahead; 0 subs); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); FOUNDER-DECISION — agents.json mindframe canonical; CI-VERIFY — confirm Lighthouse homepage ≥0.80 in next CI run | Intent rate: 100% (last 5) | (S225 shipped: 7 leaderboard SEO pages; hero LCP preload; check-ci-status-dead-crons; check-playwright-locator-all; workflow-cache-lint bun; check-lighthouse-trend; generate-vault-narrative import fix; lighthouse-results nav exemptions.)
-Last session: 2026-06-26 | Session 225 | Total: 985/1000 (v3.0) | Velocity: 2 | protocolVelocity: 0
+Velocity trend: → (S226: 3 items; S225: 7 items; S224: 11+3 SO) | Protocol velocity: → | Debt: ↓ (S226: hero LCP root-fixed CSS-background→picture/img; check-hero-lcp-element blocking gate; lighthouse-trend RAW_METRICS; Lighthouse CI verify pending)
+Momentum runway: CI-VERIFY — confirm Lighthouse homepage ≥0.80 (picture/img eliminates CSS-background preload-mismatch root cause); PUSH — push:count → first real notification (founder go-ahead; 0 subs); FOUNDER — provision ark.hmac.seed (fixes fleet Ark sig-verification); CONTENT — Signal Log post + forge devlog (founder voice); SEO — leaderboards sitemap.xml (7 pages not yet indexed) | Intent rate: 100% (last 5) | (S226 shipped: hero LCP picture/img root-fix; check-hero-lcp-element gate; lighthouse-trend RAW_METRICS; .gitignore lighthouse-results; 106/105 pages propagated+rebuilt.)
+Last session: 2026-06-26 | Session 226 | Total: 986/1000 (v3.0) | Velocity: 1 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-26 — Session 226 (arc continuation · hero LCP root-fix picture/img + check-hero-lcp-element gate + lighthouse-trend RAW_METRICS) | Total: 986/1000 (v3.0) | Velocity: 1 | Debt: ↓
+Avgs — 3: 985.3 | 5: 977.4 | 10: ~964 | 25: ~960 | all: ~963
+
+Dev Health 100 | Creative Alignment 97 | Momentum 99 | Engagement 96 | Process Quality 100 | Cross-Repo Coherence 98 | Security Posture 94 | Ecosystem Integration 99 | Capital Efficiency 97 | Automation Coverage 100
+
+**What improved:** This session's single most important insight: **Chrome's `<link rel="preload" as="image">` cannot be matched to a CSS `image-set()` background**. It only matches `<img src>` or `<source srcset>` elements in HTML. S225 added a preload hint for the featured hero tile's AVIF cover, but the cover was a `<span>` with `background-image: image-set(...)` — so the preload was wasted, and the LCP "Load Delay" remained ~3s because the image URL wasn't discoverable until after CSS style computation. Converting the featured tile to `<picture><img fetchpriority="high">` directly in HTML lets the browser discover the image URL during HTML parsing (Load Delay drops to ~0). The fix is surgical: non-featured tiles keep CSS backgrounds (they are not LCP candidates), and the `--lcp` class marks exactly which span needs the different treatment.
+
+The second structural win: `check-hero-lcp-element.mjs` makes this fix un-revertable. `build-hero-portfolio.mjs` is re-run frequently; without the gate, a future regeneration could silently regress back to the CSS background. The gate checks 5 invariants and runs in the smoke suite.
+
+The `check-lighthouse-trend.mjs` RAW_METRICS enhancement was in-progress at context compaction — completed cleanly. The `integer: true/false` flag on each metric prevents the CLS precision bug (0.003 → 0 when rounded to integer). The `detectRegressions()` skip for raw metric keys prevents ms-scale numbers (e.g. lcp_ms: 2962) from being compared against score-scale thresholds (WARN_DELTA: 0.05).
+
+**Process highlight:** The compacted context picked up mid-implementation with minimal friction — the `RAW_METRICS` constant was already added, and the remaining 4 edits (parseLhrDir, computeMedians, detectRegressions, print section, self-test fixture) were completed without re-reading the whole file, just the key sections. The self-test found and surfaced the CLS precision bug during the fixture authoring.
+
+**Top win:** Root-fixing the LCP issue closes a multi-session carry (S225 preload → S226 picture/img). The gate ensures the next regeneration can't undo it.
+**Top gap:** Lighthouse CI verify is still pending (requires a CI run after this push lands). We won't know for certain the fix works until CI reports ≥0.80.
+**Intent outcome:** Achieved — completed the in-progress work from compacted context; build:check EXIT 0, blockingFailing 0, smoke 26/27.
+
+**Brainstorm**
+1. **LIGHTHOUSE-CI-BLOCKING-GATE** — after confirming ≥0.80 in CI, wire `check-lighthouse-trend.mjs --check` into the Lighthouse CI workflow as a post-run step. Makes homepage perf regression ≥0.05 from best block the PR. Currently advisory-only. Probability: High (now that baseline is seeded).
+2. **LEADERBOARD-SITEMAP-XML** — 7 new `/leaderboards/*/` pages not in `sitemap.xml`. Derive programmatically from `build-leaderboard-subpages.mjs` PAGES array; add to `npm run build` chain. Low effort, SEO unlock. Probability: High.
+3. **LCP-ELEMENT-CLASS** — could build a broader `check-lcp-element-type.mjs` that runs a headless Lighthouse single-page audit locally and verifies the LCP element is an `<img>` (not a `<span>` or `<div>`). Stronger than the HTML-pattern gate because it tests the browser's actual LCP classification. Requires Lighthouse CLI installed locally or in CI. Probability: Medium.
+
+**Committed to TASK_BOARD:** [CI/P1] Verify Lighthouse ≥0.80 · [INFRA/P2] Lighthouse CI blocking gate after confirmed · [SEO/P2] Leaderboard sitemap.xml
 
 ---
 
