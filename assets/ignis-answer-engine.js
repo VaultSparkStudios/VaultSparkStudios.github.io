@@ -79,6 +79,7 @@
   var PREFIX_CACHE_KEY = 'vs_ignis_prefix_cache';
   var PREFIX_TTL_MS = 24 * 60 * 60 * 1000; // 24h
   var PREFIX_MAX = 20;
+  var DEPLOY_SHA_KEY = 'vs_ignis_deploy_sha';
 
   function prefixKey(q) {
     return tokens(q).slice(0, 3).join(' ');
@@ -109,6 +110,23 @@
     }) || null;
   }
 
+  // S227: deploy-hash invalidation. Fetches api/build-sha.json once per page load;
+  // if the deploy SHA changed since the last visit, the 24h prefix cache is stale
+  // (index docs may have changed) and is wiped. Fire-and-forget — never blocks search.
+  (function () {
+    try {
+      fetch('/api/build-sha.json').then(function (r) { return r.json(); }).then(function (d) {
+        var sha = d && d.sha;
+        if (!sha) return;
+        var stored = localStorage.getItem(DEPLOY_SHA_KEY);
+        if (stored && stored !== sha) {
+          localStorage.removeItem(PREFIX_CACHE_KEY);
+        }
+        localStorage.setItem(DEPLOY_SHA_KEY, sha);
+      }).catch(function () {});
+    } catch (_) {}
+  }());
+
   // S201 ignis-synthesis-mode: session-scoped query log (cleared on page load).
   var sessionQueries = [];
   var FOLLOWUP_RE = /^(tell me more|more\b|go on|continue|why\b|how about|what about|and |elaborate|explain|details?|keep going|then\b)/i;
@@ -127,11 +145,25 @@
     // On a follow-up, fold in the prior topic so "more" / pronouns have substance.
     if (opts.followUp && priorTokens.length) qTokens = priorTokens.concat(qTokens);
     if (!qTokens.length) return null;
+    // S227: session-context boost — if ≥2 prior in-session queries exist, extract top
+    // keywords from sessionQueries and boost documents matching them by +0.15 each.
+    // Prevents single-query over-specialization; caps at 2× raw score.
+    var ctxTokens = [];
+    if (sessionQueries.length >= 2) {
+      sessionQueries.slice(0, 5).forEach(function (e) {
+        tokens(e.q || '').forEach(function (t) { if (t && !ctxTokens.includes(t)) ctxTokens.push(t); });
+      });
+    }
     var scored = (index.documents || []).map(function (doc) {
       var hay = [doc.title, doc.summary, doc.body, doc.url].join(' ').toLowerCase();
       var score = qTokens.reduce(function (acc, t) { return acc + (hay.indexOf(t) !== -1 ? 1 : 0); }, 0);
       // Bias toward the prior answer's topic so a thread stays coherent (half-weight).
       if (priorTokens.length) score += priorTokens.reduce(function (acc, t) { return acc + (hay.indexOf(t) !== -1 ? 0.5 : 0); }, 0);
+      // Session-context boost: +0.15 per matched session keyword, capped at 2× raw score.
+      if (ctxTokens.length && score > 0) {
+        var boost = ctxTokens.reduce(function (acc, t) { return acc + (hay.indexOf(t) !== -1 ? 0.15 : 0); }, 0);
+        score = Math.min(score * 2, score + boost);
+      }
       return { doc: doc, score: score };
     }).filter(function (row) { return row.score > 0; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 4);
     if (!scored.length) return null;
@@ -165,7 +197,8 @@
       '.vs-ask-ignis__cluster-group{margin-top:.55rem}.vs-ask-ignis__cluster-label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dim,#6272a0);margin-bottom:.3rem}' +
       '.vs-ignis-offline{padding:.6rem 0}.vs-ignis-offline__msg{font-size:.82rem;color:var(--muted,#a8b4d0);margin:0 0 .6rem}.vs-ignis-offline__list{display:flex;flex-direction:column;gap:.5rem;margin-bottom:.75rem}.vs-ignis-offline__row{border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:.55rem .75rem}.vs-ignis-offline__q{display:block;font-size:.82rem;font-weight:600;color:var(--text,#eef2ff);margin-bottom:.2rem}.vs-ignis-offline__excerpt{display:block;font-size:.78rem;color:var(--muted,#a8b4d0);overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}.vs-ignis-offline__retry{background:none;border:1px solid rgba(255,196,0,.3);border-radius:999px;color:var(--gold,#ffc400);font:inherit;font-size:.82rem;cursor:pointer;padding:.4rem .9rem}' +
       '.vs-ignis-starters{margin-top:.8rem;padding-top:.8rem;border-top:1px solid rgba(255,255,255,.06)}.vs-ignis-starters__label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim,#6272a0);margin-bottom:.5rem}.vs-ignis-starters__chips{display:flex;flex-direction:column;gap:.35rem}.vs-ignis-starters__chip{text-align:left;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.55rem .85rem;color:var(--muted,#a8b4d0);font:inherit;font-size:.85rem;cursor:pointer;line-height:1.4;transition:background .12s,border-color .12s,color .12s}.vs-ignis-starters__chip:hover{background:rgba(255,196,0,.06);border-color:rgba(255,196,0,.22);color:var(--text,#eef2ff)}' +
-      '.vs-ignis-live{display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem;padding:.6rem .85rem;border-radius:10px;background:rgba(110,243,170,.07);border:1px solid rgba(110,243,170,.22);color:#aef5cf;font-size:.86rem;line-height:1.5;font-weight:600}.vs-ignis-live__dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:#6ef3aa;box-shadow:0 0 0 0 rgba(110,243,170,.6);animation:vs-ignis-live-pulse 2s infinite}@keyframes vs-ignis-live-pulse{0%{box-shadow:0 0 0 0 rgba(110,243,170,.5)}70%{box-shadow:0 0 0 7px rgba(110,243,170,0)}100%{box-shadow:0 0 0 0 rgba(110,243,170,0)}}@media (prefers-reduced-motion:reduce){.vs-ignis-live__dot{animation:none}}.vs-ignis-proactive__more{flex:0 0 auto!important;white-space:nowrap}';
+      '.vs-ignis-live{display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem;padding:.6rem .85rem;border-radius:10px;background:rgba(110,243,170,.07);border:1px solid rgba(110,243,170,.22);color:#aef5cf;font-size:.86rem;line-height:1.5;font-weight:600}.vs-ignis-live__dot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;background:#6ef3aa;box-shadow:0 0 0 0 rgba(110,243,170,.6);animation:vs-ignis-live-pulse 2s infinite}@keyframes vs-ignis-live-pulse{0%{box-shadow:0 0 0 0 rgba(110,243,170,.5)}70%{box-shadow:0 0 0 7px rgba(110,243,170,0)}100%{box-shadow:0 0 0 0 rgba(110,243,170,0)}}@media (prefers-reduced-motion:reduce){.vs-ignis-live__dot{animation:none}}.vs-ignis-proactive__more{flex:0 0 auto!important;white-space:nowrap}' +
+      '.vs-ignis-community{margin-top:.8rem;padding-top:.8rem;border-top:1px solid rgba(255,196,0,.1)}.vs-ignis-community__label{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--dim,#6272a0);margin-bottom:.5rem}.vs-ignis-community__chips{display:flex;gap:.45rem;flex-wrap:wrap}.vs-ignis-community__chip{font-size:.8rem;border:1px solid rgba(255,196,0,.25);border-radius:999px;padding:.4rem .8rem;background:rgba(255,196,0,.06);color:var(--gold,#ffc400);cursor:pointer;font:inherit;text-align:left;transition:background .12s,border-color .12s}.vs-ignis-community__chip:hover{background:rgba(255,196,0,.16);border-color:rgba(255,196,0,.4)}';
     document.head.appendChild(s);
   }
 
@@ -244,6 +277,51 @@
       var trayEl0 = root.querySelector('.vs-ask-ignis__chip-tray');
       var container0 = root.querySelector('.vs-ask-ignis');
       if (container0) container0.insertBefore(starterWrap, trayEl0 || out);
+      // S227: topic-aware re-entry — cross-reference history keywords × new changelog entries.
+      // Fire-and-forget: appends a contextual chip if a match is found after the resume chip.
+      (function () {
+        try {
+          var hist = JSON.parse(localStorage.getItem('vs_ignis_history') || '[]');
+          var lastVisitTs = parseInt(localStorage.getItem('vs_last_visit_ts') || '0', 10);
+          if (!hist.length || !lastVisitTs) return;
+          var histKeywords = [];
+          hist.slice(0, 5).forEach(function (h) {
+            tokens(typeof h === 'string' ? h : (h.q || '')).forEach(function (t) {
+              if (t && !histKeywords.includes(t)) histKeywords.push(t);
+            });
+          });
+          if (!histKeywords.length) return;
+          fetch('/api/changelog-narrative.json').then(function (r) { return r.json(); }).then(function (data) {
+            var entries = (data && data.entries) || [];
+            var matchedKeyword = null;
+            for (var i = 0; i < entries.length; i++) {
+              var e = entries[i];
+              var entryTs = new Date(e.date || '').getTime();
+              if (!entryTs || entryTs <= lastVisitTs) continue;
+              var title = (e.title || '').toLowerCase();
+              for (var j = 0; j < histKeywords.length; j++) {
+                if (histKeywords[j].length > 3 && title.includes(histKeywords[j])) {
+                  matchedKeyword = histKeywords[j]; break;
+                }
+              }
+              if (matchedKeyword) break;
+            }
+            if (!matchedKeyword || !starterWrap || starterWrap.hidden) return;
+            var topicBtn = document.createElement('button');
+            topicBtn.type = 'button';
+            topicBtn.className = 'vs-ignis-starters__chip vs-ask-ignis__chip--context';
+            topicBtn.textContent = 'New intel about ' + matchedKeyword + ' since your last visit';
+            topicBtn.addEventListener('click', function () {
+              var q = ‘What\’s new about ‘ + matchedKeyword + ‘?’;
+              form.q.value = q;
+              emitUx('oracle:topic_chip_click');
+              if (starterWrap) starterWrap.hidden = true;
+              runQuery(q, 'topic-chip');
+            });
+            resumeList.appendChild(topicBtn);
+          }).catch(function () {});
+        } catch (_) {}
+      }());
     }
     (function renderStarters() {
       var hasHistory = false;
@@ -280,6 +358,40 @@
       var container = root.querySelector('.vs-ask-ignis');
       if (container) container.insertBefore(starterWrap, trayEl || out);
     })();
+
+    // S227: community topic chips — surfaces oracle-feedback-themes.json as a
+    // 'What the Vault is exploring' discovery row. honestDark=true → no render.
+    (function renderCommunityTopics() {
+      fetch('/api/oracle-feedback-themes.json').then(function (r) { return r.json(); }).then(function (d) {
+        if (!d || d.honestDark || !d.themes || !d.themes.length) return;
+        var section = document.createElement('div');
+        section.className = 'vs-ignis-community';
+        var lbl = document.createElement('div');
+        lbl.className = 'vs-ignis-community__label';
+        lbl.textContent = 'What the Vault is exploring';
+        section.appendChild(lbl);
+        var row = document.createElement('div');
+        row.className = 'vs-ignis-community__chips';
+        d.themes.slice(0, 5).forEach(function (theme) {
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'vs-ignis-community__chip';
+          btn.textContent = theme.label;
+          btn.addEventListener('click', function () {
+            form.q.value = theme.label;
+            if (starterWrap) starterWrap.hidden = true;
+            section.hidden = true;
+            emitUx('oracle:topic_chip_click');
+            runQuery(theme.label, 'community');
+          });
+          row.appendChild(btn);
+        });
+        section.appendChild(row);
+        var container = root.querySelector('.vs-ask-ignis');
+        var trayEl = root.querySelector('.vs-ask-ignis__chip-tray');
+        if (container) container.insertBefore(section, trayEl || out);
+      }).catch(function () {});
+    }());
 
     // S211 Wave 2: tab wiring for unified chip tray (Recent | Topics).
     function activateTab(tabName) {

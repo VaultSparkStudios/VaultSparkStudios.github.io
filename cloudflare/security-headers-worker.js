@@ -336,6 +336,8 @@ const RUM_UX_EVENTS = new Set([
   // shipped S216 but never instrumented). Names only — no slug/visit-count/PII;
   // closes the loop on whether the badge is actually seen by returning players.
   'welcome-back:shown',
+  // S227: community topic chip clicked from oracle-feedback-themes.json surface.
+  'oracle:topic_chip_click',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so
