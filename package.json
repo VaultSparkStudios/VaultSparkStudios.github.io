@@ -44,7 +44,8 @@
     "preview": "wrangler dev --config cloudflare/wrangler.toml",
     "push:notify": "node scripts/notify-subscribers.mjs",
     "push:count": "node scripts/notify-subscribers.mjs --count",
-    "notify:changelog": "node scripts/notify-changelog-subscribers.mjs"
+    "notify:changelog": "node scripts/notify-changelog-subscribers.mjs",
+    "probe:csp-violations": "node scripts/check-csp-violations.mjs"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",

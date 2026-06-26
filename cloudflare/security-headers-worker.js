@@ -746,6 +746,57 @@ export default {
       return new Response(null, { status: 204, headers: { 'Cache-Control': 'no-store' } });
     }
 
+    // --- Layer 0: CSP violation summary probe (S228) -------------------------
+    // GET /v/csp-violations-summary — aggregate-only read of csp: KV entries.
+    // Used by check-csp-violations.mjs doctor probe; no raw URIs exposed.
+    if (url.pathname === '/v/csp-violations-summary' && request.method === 'GET') {
+      if (!env.RATE_LIMIT) {
+        return Response.json(
+          { error: 'no-kv', total3d: 0, byDay: [], topDirectives: [], ts: new Date().toISOString() },
+          { status: 503, headers: { 'Cache-Control': 'no-store' } }
+        );
+      }
+      const now = new Date();
+      const byDay = [];
+      for (let i = 0; i < 3; i++) {
+        const d = new Date(now);
+        d.setDate(d.getDate() - i);
+        const date = d.toISOString().slice(0, 10);
+        const count = Number(await env.RATE_LIMIT.get(`csp:${date}:counter`)) || 0;
+        if (count > 0) byDay.push({ date, count });
+      }
+      const total3d = byDay.reduce((s, d) => s + d.count, 0);
+      const topDirectives = [];
+      if (total3d > 0 && byDay.length > 0) {
+        const sampleDay = byDay[0].date;
+        const sampleN = Math.min(20, byDay[0].count);
+        const rows = await Promise.all(
+          Array.from({ length: sampleN }, (_, j) =>
+            env.RATE_LIMIT.get(`csp:${sampleDay}:${String(j).padStart(4, '0')}`)
+          )
+        );
+        const dirCounts = {};
+        for (const raw of rows) {
+          if (!raw) continue;
+          try {
+            const e = JSON.parse(raw);
+            const dir = String(e.directive || 'unknown').slice(0, 80);
+            dirCounts[dir] = (dirCounts[dir] || 0) + 1;
+          } catch (_) { /* skip malformed entries */ }
+        }
+        topDirectives.push(
+          ...Object.entries(dirCounts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([directive, count]) => ({ directive, count }))
+        );
+      }
+      return Response.json(
+        { total3d, byDay, topDirectives, ts: now.toISOString() },
+        { headers: { 'Cache-Control': 'no-store', 'Access-Control-Allow-Origin': '*' } }
+      );
+    }
+
     // --- Layer 0: Web-push subscription management (S211) -------------------
     // POST stores subscription JSON in KV (vs:push:sub:<sha256-prefix>); TTL 90d.
     // DELETE removes by hashed endpoint. Same-origin; no CORS needed.

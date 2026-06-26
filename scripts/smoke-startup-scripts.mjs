@@ -396,6 +396,18 @@ try {
   results.push({ status: 'SKIP', module: 'check-ci-status-dead-crons', reason: `spawn error: ${err.message}` });
 }
 
+// ── CSP violation probe advisory (S228) — reports CSP violation counts from prod KV ──
+// Non-blocking: always exits 0. Requires network; skipped automatically if unreachable.
+try {
+  const cspProbe = spawnSync(process.execPath, [resolve(root, 'scripts/check-csp-violations.mjs'), '--self-test'], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  const selfOut = (cspProbe.stdout || '').trim();
+  results.push({ status: cspProbe.status === 0 ? 'OK' : 'SKIP', module: 'check-csp-violations · ' + (selfOut.split('\n')[0] || 'self-test') });
+} catch (err) {
+  results.push({ status: 'SKIP', module: 'check-csp-violations', reason: `spawn error: ${err.message}` });
+}
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const pad = s => s.padEnd(45);
 for (const r of results) {
