@@ -338,6 +338,10 @@ const RUM_UX_EVENTS = new Set([
   'welcome-back:shown',
   // S227: community topic chip clicked from oracle-feedback-themes.json surface.
   'oracle:topic_chip_click',
+  // S228: session-context boost RUM — fires once per answer when ≥2 prior in-session
+  // queries exist and boost tokens are applied. Measures how often IGNIS is operating
+  // in context-aware mode vs. cold-start retrieval.
+  'oracle:context_boost',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so

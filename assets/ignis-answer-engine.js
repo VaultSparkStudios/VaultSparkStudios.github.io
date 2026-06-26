@@ -167,6 +167,8 @@
       return { doc: doc, score: score };
     }).filter(function (row) { return row.score > 0; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 4);
     if (!scored.length) return null;
+    // S228: emit once per answer when session-context boost was active.
+    if (ctxTokens.length) emitUx('oracle:context_boost');
     var top = scored[0].doc;
     return {
       text: scrub(top.summary || top.body) || ('IGNIS found the strongest public match in ' + top.title + '.'),

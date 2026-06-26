@@ -69,7 +69,7 @@ Last updated: 2026-06-26 (Session 227 — full arc: IGNIS community chips + sess
 **S225 committed to next session (brainstorm):**
 - [x] **[CI/P1] Verify Lighthouse homepage ≥0.80** — S226 root-fixed: CSS image-set background → `<picture><img fetchpriority="high">` (preload-matchable). S225 preload hint was correct direction but CSS backgrounds aren't matchable by Chrome preload hints. Root cause eliminated.
 - [x] **[CI/P2] Grow lighthouse-trend ledger with RAW_METRICS** — S226 enhanced: lcp_ms/fcp_ms/tbt_ms/cls now collected from LHR audits; 15/15 self-tests; print shows `lcp=Xms tbt=Xms`. Ledger will populate diagnostic columns on next CI run.
-- [ ] **[SEO/P2] Leaderboard sub-pages sitemap.xml** — the 7 new `/leaderboards/*/` pages are not yet in `sitemap.xml`; add them for crawler indexing.
+- [x] **[SEO/P2] Leaderboard sub-pages sitemap.xml** — PHANTOM (S228 confirmed): all 9 leaderboard entries including all 7 sub-pages already in `sitemap.xml`. Gate `check-sitemap-coverage.mjs` verifies ongoing (35 pages).
 
 ## S224 outcome + carries
 
