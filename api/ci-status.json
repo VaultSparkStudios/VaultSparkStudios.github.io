@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-06-26T00:04:01.898Z",
+  "generatedAt": "2026-06-26T04:14:50.170Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
   "allGreen": false,
   "hasDeadCron": false,
-  "summary": "One or more CI gates are failing. Studio is investigating.",
+  "summary": "CI gates in progress or status unknown.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "updatedAt": "2026-06-26T00:03:50Z"
+      "status": "in_progress",
+      "updatedAt": "2026-06-26T04:13:27Z"
     },
     {
       "name": "Accessibility Audit",
       "status": "success",
-      "updatedAt": "2026-06-25T23:53:33Z"
+      "updatedAt": "2026-06-26T04:14:37Z"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "updatedAt": "2026-06-25T23:57:43Z"
+      "status": "in_progress",
+      "updatedAt": "2026-06-26T04:13:20Z"
     }
   ],
   "scheduledWorkflows": [
@@ -112,13 +112,14 @@
     },
     {
       "name": "uptime-probe",
-      "lastConclusion": "failure",
-      "lastUpdatedAt": "2026-06-25T23:52:30Z",
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-06-26T03:35:48Z",
       "recentConclusions": [
+        "success",
         "failure"
       ],
       "dead": false,
-      "streak": 1
+      "streak": 0
     },
     {
       "name": "Generate Vault Narrative",
