@@ -1,8 +1,26 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-25 (Session 224 — arc · generate-push-config CI fix + Lighthouse preview headers + resilience gate throw detection + networkidle E2E mass fix (10 files, 23 instances) + accessibility evaluate() hardening + check-e2e-networkidle gate + beacon scheduled workflow tracking)
+Last updated: 2026-06-26 (Session 225 — arc · 7 leaderboard SEO sub-pages + hero LCP preload + 3 new CI gates + workflow-cache-lint bun + lighthouse-trend tracker + propagation applied)
 
-Session Intent: Founder /goal — run the full arc (/start → /audit → /implement → /closeout) as one continuous mission. Continued from a compacted context; implemented phase was mid-stream. Quality bar: genius-level, maximally innovative, second-order innovations from each fix.
+Session Intent: Founder /goal — run the full arc (/start → /audit → /implement → /closeout) as one continuous mission; saturate until Unified Genius List exhausted + second-order innovations generated and implemented. Quality bar: genius-level, maximally innovative.
+
+## Where We Left Off (Session 225)
+- **Shipped (5 audit items · 2 second-order innovations — "SEO unblock + LCP preload + CI gate wave"):**
+  1. **[SEO/P0] 7 leaderboard SEO sub-pages** — `scripts/build-leaderboard-subpages.mjs` generates `/leaderboards/{global,challenges,recruiters,football-gm,call-of-doodie,teams,weekly}/index.html` from a DRY PAGES array. Each page has correct `<title>/<h1>`, "View Full Leaderboard" CTA, BreadcrumbList + FAQPage JSON-LD. Removes the conflict with `tests/redirects.spec.js` (which had LEADERBOARD_301 entries for the same paths; removed). Wired: `npm run build` chain + `check-proof-surface.mjs` `--check` gate. Self-test 35/35.
+  2. **[PERF/P1] Hero LCP preload** — `build-hero-portfolio.mjs renderLcpPreload()` adds `<link rel="preload" as="image" fetchpriority="high">` for the featured tile's AVIF + WebP cover in `<head>`. Browser can fetch the hero image during HTML parsing instead of waiting ~838ms for CSS style computation. Target: lifts homepage Lighthouse from 0.76/0.78 → ≥0.80 (verify in next CI run).
+  3. **[CI/P1] `check-ci-status-dead-crons.mjs`** — advisory gate (always exits 0). Reads `api/ci-status.json` (from S224 ci-status-beacon) and warns when any scheduled workflow is dead. 5/5 self-test. Wired into `smoke-startup-scripts.mjs` (advisory block).
+  4. **[CI/P1] `check-playwright-locator-all.mjs`** — blocking gate. Scans `tests/*.spec.js` for the `.all()` + async-attribute-read race (Playwright locators detach between `.all()` collection and subsequent `.getAttribute()`). Detects 8 async methods. 4/4 self-test. Wired into `smoke-startup-scripts.mjs` (blocking).
+  5. **[CI/P1] workflow-cache-lint generalized to `bun`** — `check-workflow-install-consistency.mjs` regex extended from `(npm|yarn|pnpm)` → `(npm|yarn|pnpm|bun)`. Self-test 11→12 (added `cache: bun` case). 27 workflows clean.
+  6. **SECOND-ORDER — `check-lighthouse-trend.mjs`** — reads `lighthouse-results/lhr-*.json`, computes per-page median scores (performance/accessibility/best-practices/seo), and compares against `.cache/lighthouse-trend.json` ledger (session-over-session). WARN ≥0.05 delta, ERROR ≥0.10. Self-test 11/11. S225 baseline seeded (7 pages, 21 LHR files). Wired into `check-proof-surface.mjs` (advisory).
+  7. **SECOND-ORDER — propagation + import fix** — `model-router.mjs` ANTHROPIC_API export was removed by propagation during /start. `generate-vault-narrative.mjs` inlined `'https://api.anthropic.com/v1/messages'` directly and removed the dead import. `validate-module-imports` now clean.
+  8. **Nav/orphan exemptions** — `lighthouse-results` added to `SKIP_DIRS` in `propagate-nav.mjs`, `check-nav-orphans.mjs`, `check-orphan-pages.mjs`. `/leaderboards/*/` added to `EXEMPT_PATTERNS` in `check-orphan-pages.mjs` (intentional SEO sub-pages, linked from leaderboards/index.html, not from sitewide nav).
+- **Honest ledger:** Lighthouse performance CI verify is pending (will confirm in S226 CI run). Founder-gated carries unchanged — first push notification (0 subs), Signal Log + forge devlog (founder voice), `ark.hmac.seed` provisioning, mobile-sheet real-device, card-accent overlay.
+- **Tests:** `build:check` EXIT 0 (verified directly) · `blockingFailing: 0` (doctor verified) · smoke 25/26 (1 expected skip: gateway-readiness·claude.api) · leaderboard-subpages self-test 35/35 · lighthouse-trend self-test 11/11 · locator-all self-test 4/4 · dead-crons self-test 5/5 · workflow-install-consistency 12/12.
+- **Deploy:** committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip.
+- **First action next session:** `/start` → (a) check CI run to verify leaderboards.spec.js now passes and Lighthouse homepage ≥0.80; (b) run `node scripts/check-lighthouse-trend.mjs --update --session 226` after next CI Lighthouse run to grow the trend ledger; (c) scan genius list for next innovation targets.
+- **SIL:** 983 → 985 (+2). Categories: Dev 100 | Align 97 | Momentum 99 | Engage 96 | Process 100 | CrossRepo 98 | Security 94 | EcoInt 99 | CapEff 97 | AutoCov 100.
+
+> **S224 (arc):** generate-push-config CI fix + Lighthouse preview header fidelity + resilience gate throw detection + networkidle E2E mass fix (10 files, 23 instances) + accessibility evaluate() hardening + check-e2e-networkidle gate + beacon scheduled workflow tracking. SIL 983.
 
 ## Where We Left Off (Session 224)
 - **Shipped (11 substantive · 3 second-order innovations · "networkidle mass-fix session — 10 files, 23 instances, then gated the class"):**

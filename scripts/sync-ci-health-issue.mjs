@@ -18,7 +18,7 @@
  */
 
 import { readFileSync } from 'node:fs';
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 

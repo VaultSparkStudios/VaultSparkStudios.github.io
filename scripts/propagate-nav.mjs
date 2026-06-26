@@ -28,7 +28,10 @@ const SKIP_DIRS = new Set([
   'obelisk-passport',
   // S193: solara is a standalone Vite game app (own dark UI, no VaultSpark shell
   // nav by design) — same class as the exempted vaultspark-football-gm runtime.
-  'solara'
+  'solara',
+  // S225: Lighthouse CI HTML report artifacts — not part of the public site shell.
+  // (Mirrored in check-nav-orphans.)
+  'lighthouse-results'
 ]);
 
 // Standalone game runtimes (no standard nav) + utility pages (noindex)

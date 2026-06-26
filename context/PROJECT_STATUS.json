@@ -12,18 +12,18 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S224 (full arc, 11 items + 3 second-order) — networkidle mass-fix session: 10 E2E test files (23 instances) replaced with 'load' + targeted waitForTimeout; check-e2e-networkidle gate gates the class; accessibility test hardened with page.evaluate() snapshot; generate-push-config CI fix (sibling repo absent on CI); local-preview-server _headers Cloudflare fidelity; resilience gate throw detection; RUM allowlist sw.js scan; ci-status-beacon scheduled workflow tracking (hasDeadCron). build:check EXIT 0 + blockingFailing 0 verified directly.",
-  "nextMilestone": "Verify E2E CI goes green (mass networkidle fix reduces timeout failures); confirm scheduled workflow tracking appears in next ci-status.json beacon. Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning, mobile-sheet real-device verification.",
+  "currentFocus": "S225 (full arc, 5 audit items + 2 second-order) — SEO+CI unblock session: 7 leaderboard SEO sub-pages (fixes leaderboards.spec.js E2E failures); hero LCP preload hint (<link rel=preload> for featured AVIF/WebP cover, browser fetches at parse time not after style computation); 3 new CI gates (check-ci-status-dead-crons advisory, check-playwright-locator-all blocking, check-lighthouse-trend regression tracker); workflow-cache-lint extended to bun; generate-vault-narrative.mjs ANTHROPIC_API import fixed (propagation applied). build:check EXIT 0 + blockingFailing 0 verified directly.",
+  "nextMilestone": "Verify Lighthouse CI homepage perf ≥0.80 in next CI run (LCP preload fix from hero AVIF preloading). Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning, mobile-sheet real-device verification.",
   "blockers": [],
-  "lastUpdated": "2026-06-25",
-  "currentSession": 224,
+  "lastUpdated": "2026-06-26",
+  "currentSession": 225,
   "truthAuditStatus": "green",
-  "truthAuditLastRun": "2026-06-25",
-  "silScore": 983,
-  "silAvg3": 978,
-  "silVelocity": 7,
+  "truthAuditLastRun": "2026-06-26",
+  "silScore": 985,
+  "silAvg3": 980,
+  "silVelocity": 2,
   "silDebt": "down",
-  "silLastSession": 224,
+  "silLastSession": 225,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -76,7 +76,7 @@
     "momentum": 99,
     "engagement": 96,
     "processQuality": 100,
-    "crossRepoCoherence": 97,
+    "crossRepoCoherence": 98,
     "securityPosture": 94,
     "ecosystemIntegration": 99,
     "capitalEfficiency": 97,
@@ -84,12 +84,12 @@
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-06-25",
+    "date": "2026-06-26",
     "passing": 9,
-    "warning": 1,
-    "failing": 4,
+    "warning": 2,
+    "failing": 3,
     "blockingFailing": 0,
-    "advisoryFailing": 4,
+    "advisoryFailing": 3,
     "total": 14,
     "score": 64,
     "checks": [
@@ -165,8 +165,8 @@
       },
       {
         "id": "ignis",
-        "pass": true,
-        "warn": false,
+        "pass": false,
+        "warn": true,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -186,7 +186,7 @@
       },
       {
         "id": "sched-staleness",
-        "pass": false,
+        "pass": true,
         "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
@@ -204,6 +204,6 @@
   "testsPassing": 116,
   "testsLastRun": "2026-06-23",
   "testsLabel": "build:check gates",
-  "publicNote": "We completed a major testing infrastructure pass — fixed a persistent timeout failure class affecting 10 test files, hardened the accessibility test suite against dynamic content races, and added scheduled pipeline monitoring. Every fix was locked in with a new automated gate so the same class can't return silently.",
-  "publicNextStep": "Coming soon: cleaner CI reliability across all test suites, and the first game-segmented push notification to Call of Doodie subscribers."
+  "publicNote": "Behind the scenes this week: we made the site load faster on the homepage (the featured game cover now preloads the moment your browser reads the HTML, not after layout), added seven dedicated leaderboard category pages for better search discoverability, and added automated Lighthouse performance regression detection so any future slowdowns are caught before shipping.",
+  "publicNextStep": "Coming soon: confirmation that the Lighthouse performance fix pushes the homepage score above the 80% threshold. Also watching for the first game-segmented push notifications to Call of Doodie subscribers."
 }

@@ -20,7 +20,7 @@
  * Exit 0 = clean · 1 = violations (printed) · also `--self-test`.
  */
 import { readFileSync, existsSync, statSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
+import { execFileSync } from './lib/safe-spawn.mjs';
 import path from 'node:path';
 
 const ZERO = '0000000000000000000000000000000000000000';

@@ -1,0 +1,170 @@
+{
+  "meta": {
+    "generatedAt": "2026-06-26",
+    "session": 225,
+    "project": "vaultsparkstudios-website",
+    "type": "website",
+    "profileOverlay": {"medium":"website","axisWeights":{"ux":2.5,"speed":2.0,"featureDepth":1.5},"successBar":["Each item must name the conversion or info-finding outcome"]},
+    "totalItems": 7,
+    "combinedPriority": 76.4,
+    "top3": ["leaderboard-seo-subpages","lighthouse-perf-0.80","ci-dead-cron-gate"]
+  },
+  "candidates": [
+    {
+      "id": 1,
+      "slug": "leaderboard-seo-subpages",
+      "title": "Leaderboard SEO sub-pages (7 missing pages)",
+      "axis": "feature-depth",
+      "tier": "fire",
+      "impact": 9,
+      "innovation": 6,
+      "effortLabel": "2h",
+      "effortHours": 2,
+      "priority": 19.3,
+      "why": "Seven leaderboard sub-page tests have been failing in CI (E2E Test Suite) because the pages don't exist — both the SEO page spec and a redirect spec are failing simultaneously. Creating real static SEO sub-pages fixes the CI red, adds genuine search surface for each leaderboard category (Global, Weekly, Challenges, etc.), and closes the info-finding gap for visitors arriving via search. Each page resolves to a scoped leaderboard view with correct title, h1, and a back-link — turning a test failure into a real product improvement.",
+      "recipe": "Create leaderboards/{global,challenges,recruiters,football-gm,call-of-doodie,teams,weekly}/index.html with nav + hero + 'View Full Leaderboard' CTA + JSON-LD BreadcrumbList. Remove LEADERBOARD_301 from redirects.spec.js (redirect spec conflicts with real pages).",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "Remove LEADERBOARD_301 redirects test only (unblocks CI without creating pages)"},
+        "L2": {"effortHours": 2, "recipe": "Create 7 static SEO sub-pages with correct title/h1/CTA + remove redirect test"},
+        "L3": {"effortHours": 4, "recipe": "L2 + per-category JSON-LD structured data + generate via script from catalog"}
+      },
+      "status": "open",
+      "verifiedPremise": true,
+      "verifyNote": "Confirmed: /leaderboards/global/ 404s; redirects.spec.js LEADERBOARD_301 also fails; both tests red in run 28207887625"
+    },
+    {
+      "id": 2,
+      "slug": "lighthouse-perf-0.80",
+      "title": "Lighthouse performance 0.78 → ≥0.80 (fix persistent CI failure)",
+      "axis": "speed",
+      "tier": "fire",
+      "impact": 9,
+      "innovation": 5,
+      "effortLabel": "2h",
+      "effortHours": 2,
+      "priority": 17.2,
+      "why": "Lighthouse CI has been failing on every push since S209 (performance 0.78 vs 0.80 threshold). S214 moved scripts to defer + requestIdleCallback and went from 0.76 to 0.78 — not enough. Remaining opportunities: fetchpriority='high' on LCP hero image, lazy-load below-fold images, reduce unused CSS in critical path. Each 0.01 improvement in Lighthouse score directly maps to TBT/LCP improvement for real visitors.",
+      "recipe": "Identify which of the 7 Lighthouse URLs is lowest-scoring. Apply fetchpriority='high' to LCP element, loading='lazy' to below-fold images, preconnect to Supabase. Verify local with node scripts/local-preview-server.mjs.",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "Add fetchpriority='high' to homepage hero image (highest LCP candidate)"},
+        "L2": {"effortHours": 1.5, "recipe": "L1 + lazy-load all non-hero images across all 7 Lighthouse URLs + optimize font loading"},
+        "L3": {"effortHours": 4, "recipe": "L2 + build a Lighthouse score tracker (api/lighthouse-history.json) for local regression detection"}
+      },
+      "status": "open",
+      "verifiedPremise": true,
+      "verifyNote": "Confirmed: run 28207887645 shows performance 0.78, threshold 0.80; every push since S209 fails Lighthouse"
+    },
+    {
+      "id": 3,
+      "slug": "ci-dead-cron-gate",
+      "title": "check-ci-status-dead-crons.mjs gate (hasDeadCron local observability)",
+      "axis": "speed",
+      "tier": "high",
+      "impact": 7,
+      "innovation": 6,
+      "effortLabel": "1h",
+      "effortHours": 1,
+      "priority": 14.0,
+      "why": "The ci-status-beacon.yml now emits hasDeadCron + scheduledWorkflows[] to api/ci-status.json (S224). A gate that reads this file locally closes the observability gap: it makes dead crons actionable in build:check without needing GitHub access. The beacon data is already there — a gate turns a hidden signal into a blocking (advisory) local alert. Prevents the class where a cron dies for 7 runs before anyone notices (the S222 incident).",
+      "recipe": "Build scripts/check-ci-status-dead-crons.mjs: reads api/ci-status.json, exits advisory(warn+exit0) if hasDeadCron=true listing the dead workflows. Self-test 3 cases: green, dead, missing-file. Wire into smoke-startup-scripts.",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "Minimal gate: read api/ci-status.json, warn if hasDeadCron"},
+        "L2": {"effortHours": 1, "recipe": "L1 + list dead workflow names + self-test 3/3 + smoke wire"},
+        "L3": {"effortHours": 2, "recipe": "L2 + historical dead-cron tracking in .cache/dead-cron-history.json for trend detection"}
+      },
+      "status": "open",
+      "verifiedPremise": true,
+      "verifyNote": "Confirmed: api/ci-status.json has hasDeadCron field (S224 ci-status-beacon.yml); no gate yet reads it locally"
+    },
+    {
+      "id": 4,
+      "slug": "playwright-locator-all-gate",
+      "title": "check-playwright-locator-all.mjs — scan for .all() + async attribute race",
+      "axis": "speed",
+      "tier": "high",
+      "impact": 7,
+      "innovation": 6,
+      "effortLabel": "1h",
+      "effortHours": 1,
+      "priority": 14.0,
+      "why": "page.locator().all() followed by async getAttribute/textContent in a for-of loop is a race condition: elements can detach between collection and attribute access on dynamic pages (the S224 accessibility.spec.js bug). S224 fixed one instance by switching to page.evaluate(); a gate prevents the class from being re-introduced anywhere in the 34 spec files. This directly improves test suite reliability and prevents future CI failures from the same class.",
+      "recipe": "Build scripts/check-playwright-locator-all.mjs: scan tests/*.spec.js for .all() (locator pattern) followed within 5 lines by await [...].getAttribute/textContent/innerText in a for-of. Flag with fix suggestion (use page.evaluate snapshot). Self-test 3/3. Wire into smoke-startup-scripts.",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "Regex scan for .all() + suggest manual audit"},
+        "L2": {"effortHours": 1, "recipe": "Full AST-free pattern scan: .all() within 5 lines of .getAttribute/.textContent in for-of + self-test + smoke"},
+        "L3": {"effortHours": 2, "recipe": "L2 + auto-suggest page.evaluate replacement in error output"}
+      },
+      "status": "open",
+      "verifiedPremise": true,
+      "verifyNote": "S224 TASK_BOARD: 'check-playwright-locator-all gate — .all() followed by async getAttribute() is a latent race condition'"
+    },
+    {
+      "id": 5,
+      "slug": "workflow-cache-lint-generalize",
+      "title": "Generalize workflow cache-dependency lint (setup-node cache: without lockfile)",
+      "axis": "speed",
+      "tier": "high",
+      "impact": 7,
+      "innovation": 5,
+      "effortLabel": "30m",
+      "effortHours": 0.5,
+      "priority": 12.2,
+      "why": "check-workflow-install-consistency currently flags literal `cache: 'npm'` in workflows without a committed lockfile. But any `actions/setup-node` with `cache: yarn` or `cache: pnpm` suffers the same failure mode. Generalizing closes the class for all package managers — not just npm — preventing a future developer from adding a pnpm workflow that fails silently. The S221 brainstorm explicitly named this as the carry.",
+      "recipe": "Extend check-workflow-install-consistency.mjs: change the lockfile-check logic to detect any cache: key (npm/yarn/pnpm/bun) in setup-node and verify the corresponding lockfile exists. Update self-test to cover yarn and pnpm cases.",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "Add yarn/pnpm/bun to the existing npm check in check-workflow-install-consistency.mjs"},
+        "L2": {"effortHours": 1, "recipe": "L1 + update self-test to cover all 4 managers + integration test against workflows/*.yml"},
+        "L3": {"effortHours": 2, "recipe": "L2 + check for setup-node `cache:` without a corresponding lockfile-existence check (not just committed)"}
+      },
+      "status": "open",
+      "verifiedPremise": true,
+      "verifyNote": "S221 TASK_BOARD: 'workflow cache-dependency lint. Generalize check-workflow-install-consistency to flag any setup-node cache: without committed lockfile'"
+    },
+    {
+      "id": 6,
+      "slug": "leaderboard-jsonld-structured-data",
+      "title": "Second-order: Leaderboard sub-pages with ItemList JSON-LD (AI + SEO depth)",
+      "axis": "ai-intelligence",
+      "tier": "high",
+      "impact": 7,
+      "innovation": 8,
+      "effortLabel": "1h",
+      "effortHours": 1,
+      "priority": 13.6,
+      "why": "The new leaderboard sub-pages are a structural win but a stock SEO opportunity if they lack structured data. Adding ItemList JSON-LD with leaderboard category entries (as a FAQ or ItemList schema) makes each page machine-readable for AI search discovery (CANON-048 dual-audience). Visitors from AI search agents (ChatGPT, Gemini Search, Perplexity) will find rich structured answers about VaultSpark's community rankings, turning leaderboard pages into AI-citation sources.",
+      "recipe": "Add @type:WebPage + BreadcrumbList JSON-LD to each leaderboard sub-page. Add a second block with FAQPage (Q: What is the [Global] leaderboard? A: [description]) — no live data needed, only static descriptions. Self-validating via check-hero-jsonld-completeness pattern.",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "BreadcrumbList only on each sub-page"},
+        "L2": {"effortHours": 1, "recipe": "L1 + FAQPage block per category + WebPage with description"},
+        "L3": {"effortHours": 2, "recipe": "L2 + generate sub-pages from a data script (DRY) + check-leaderboard-seo-spine gate"}
+      },
+      "status": "open",
+      "verifiedPremise": true,
+      "verifyNote": "Second-order innovation — leaderboard sub-pages will exist after item #1; JSON-LD is additive"
+    },
+    {
+      "id": 7,
+      "slug": "lighthouse-score-tracker",
+      "title": "Second-order: Lighthouse score history tracker (local regression detector)",
+      "axis": "speed",
+      "tier": "high",
+      "impact": 6,
+      "innovation": 8,
+      "effortLabel": "1h",
+      "effortHours": 1,
+      "priority": 11.0,
+      "why": "Lighthouse has been regressing silently — it failed from S209 to S225 without a local gate that would have caught it. A lightweight script that records the last N Lighthouse scores from CI artifacts or the public storage URL and surfaces a trend would close this blind spot. The S209 perf-budget staleness lesson applies here: rolling aggregates need trend awareness.",
+      "recipe": "Build scripts/check-lighthouse-trend.mjs: reads .cache/lighthouse-scores.json (written by a CI upload step), warns if score trend is declining or below threshold. Advisory only (exit 0). Wire into doctor.",
+      "ladder": {
+        "L1": {"effortHours": 0.5, "recipe": "Read lighthouse artifact from last CI run via gh api + emit score to .cache/lighthouse-scores.json"},
+        "L2": {"effortHours": 1, "recipe": "L1 + trend detection (3-run average) + doctor integration"},
+        "L3": {"effortHours": 2, "recipe": "L2 + automatic regression issue creation via ci-health-monitor pattern"}
+      },
+      "status": "open",
+      "verifiedPremise": true,
+      "verifyNote": "Second-order: Lighthouse has failed 8+ sessions without a local visibility path"
+    }
+  ],
+  "skipped": [],
+  "executionLog": []
+}

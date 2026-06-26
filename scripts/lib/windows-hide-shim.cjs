@@ -29,7 +29,12 @@ if (process.platform === 'win32') {
   const cp = require('child_process');
 
   if (!cp.__windowsHideShimInstalled) {
-    Object.defineProperty(cp, '__windowsHideShimInstalled', { value: true, enumerable: false });
+    // configurable:true so the install is re-runnable — required because S195 wired this
+    // shim as a global `NODE_OPTIONS=--require` preload, so by the time anything else wants
+    // to (re)patch child_process (a test that installs spies, or a re-wire), the flag is
+    // already set. A non-configurable flag would make that re-patch a permanent no-op
+    // (the exact break that took tier1-windows-hide-shim red — S198).
+    Object.defineProperty(cp, '__windowsHideShimInstalled', { value: true, enumerable: false, configurable: true });
 
     // Force windowsHide:true into a spawn-family call's options object.
     // Handles every signature shape:
@@ -71,6 +76,11 @@ if (process.platform === 'win32') {
       return a;
     }
 
+    // util.promisify.custom is a globally-registered well-known symbol; native
+    // exec/execFile carry an implementation that makes `promisify(exec)` resolve to
+    // { stdout, stderr }. Re-attach it (S198) — see the loop below.
+    const { promisify } = require('util');
+
     for (const name of ['spawn', 'spawnSync', 'exec', 'execSync', 'execFile', 'execFileSync', 'fork']) {
       const orig = cp[name];
       if (typeof orig !== 'function') continue;
@@ -79,6 +89,18 @@ if (process.platform === 'win32') {
       };
       // Preserve identity/metadata so callers checking fn.name still see the original.
       Object.defineProperty(patched, 'name', { value: name, configurable: true });
+      // CRITICAL (S198): a plain wrapper does NOT inherit the original's
+      // `util.promisify.custom` implementation, so wrapping exec/execFile WITHOUT
+      // re-attaching it silently strips the { stdout, stderr } promisify contract —
+      // `promisify(exec)` then falls back to resolving the BARE stdout STRING, crashing
+      // every `const { stdout } = await execAsync(...)` caller. Because this shim is
+      // GLOBALLY preloaded via NODE_OPTIONS (S195), that break hit every node process in
+      // the studio (and cascaded through lib/safe-spawn.mjs, which builds on cp.exec).
+      // Re-point the custom impl through harden so promisify stays byte-identical to native.
+      const origCustom = orig[promisify.custom];
+      if (typeof origCustom === 'function') {
+        patched[promisify.custom] = function (...args) { return origCustom.apply(this, harden(args)); };
+      }
       cp[name] = patched;
     }
   }

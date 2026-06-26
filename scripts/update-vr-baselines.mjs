@@ -19,7 +19,7 @@
  *   git commit -m "test(vr): capture Linux baselines from CI (S223)"
  */
 
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 import {
   mkdirSync, existsSync, readdirSync, statSync,
   copyFileSync, unlinkSync, rmSync,

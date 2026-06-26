@@ -349,6 +349,35 @@ try {
   results.push({ status: 'SKIP', module: 'check-e2e-networkidle', reason: `spawn error: ${err.message}` });
 }
 
+// ── Playwright .all() + async-attribute race gate (S225) ────────────────────
+try {
+  const pla = spawnSync(process.execPath, [resolve(root, 'scripts/check-playwright-locator-all.mjs')], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  if (pla.status === 0) {
+    results.push({ status: 'OK', module: 'check-playwright-locator-all · no .all() + async-attribute race' });
+  } else {
+    failures++;
+    const tail = (pla.stderr || pla.stdout || '').trim().split('\n').slice(0, 2).join(' ');
+    results.push({ status: 'FAIL', module: 'check-playwright-locator-all', reason: tail || 'race pattern found' });
+  }
+} catch (err) {
+  results.push({ status: 'SKIP', module: 'check-playwright-locator-all', reason: `spawn error: ${err.message}` });
+}
+
+// ── Dead cron advisory (S225) — warns when a scheduled workflow has gone silent ──
+try {
+  const dcc = spawnSync(process.execPath, [resolve(root, 'scripts/check-ci-status-dead-crons.mjs')], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  // Advisory only — never counts as a failure; just surface its output
+  const out = (dcc.stdout || '').trim();
+  if (out) results.push({ status: 'OK', module: 'check-ci-status-dead-crons · ' + out.split('\n')[0] });
+  else results.push({ status: 'OK', module: 'check-ci-status-dead-crons · skipped (no ci-status.json)' });
+} catch (err) {
+  results.push({ status: 'SKIP', module: 'check-ci-status-dead-crons', reason: `spawn error: ${err.message}` });
+}
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const pad = s => s.padEnd(45);
 for (const r of results) {

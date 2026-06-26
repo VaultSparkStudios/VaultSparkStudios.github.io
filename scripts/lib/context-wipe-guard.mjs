@@ -195,8 +195,27 @@ export function checkContextFiles(root, opts = {}) {
     return r.stdout;
   }
 
-  // Check append-only files for prefix violation
+  // Get the set of files that actually differ from HEAD — a file whose working-tree
+  // content equals HEAD can never have ratio < 1.0, so checking it is pure waste.
+  // On a 473-file repo this drops the git-show call count from ~473 to the handful
+  // of files changed in the current session (typically ≤10). Falls back to the full
+  // ls-files walk if diff itself fails (e.g., non-git or very early bootstrap).
+  function getChangedFiles(dirs) {
+    const r = spawnSync(
+      'git', ['diff', '--name-only', 'HEAD', '--', ...dirs],
+      { cwd: root, encoding: 'utf8', windowsHide: true },
+    );
+    if (r.status !== 0 || r.error) return null; // fall back to full walk
+    return new Set(r.stdout.trim().split('\n').filter(Boolean));
+  }
+
+  const CONTEXT_DIRS = ['context', 'docs', 'logs'];
+  const changedFiles = getChangedFiles(CONTEXT_DIRS); // null = fallback
+
+  // Check append-only files for prefix violation.
+  // Only files that differ from HEAD need checking; unchanged files trivially pass.
   for (const relPath of APPEND_ONLY) {
+    if (changedFiles && !changedFiles.has(relPath)) continue; // not changed → skip
     const absPath = join(root, relPath);
     if (!existsSync(absPath)) continue;
     const headContent = gitShow(relPath);
@@ -214,27 +233,20 @@ export function checkContextFiles(root, opts = {}) {
     }
   }
 
-  // Threshold check on non-shrink-allowed context files
-  const contextGlob = ['context', 'docs', 'logs'];
-  for (const dir of contextGlob) {
-    const dirPath = join(root, dir);
-    if (!existsSync(dirPath)) continue;
-    // Use git to list tracked files in the dir vs HEAD
-    const lsRes = spawnSync('git', ['ls-files', dir], { cwd: root, encoding: 'utf8', windowsHide: true });
-    if (lsRes.status !== 0) continue;
-    const trackedFiles = lsRes.stdout.trim().split('\n').filter(Boolean);
-    for (const relPath of trackedFiles) {
-      // Skip already-handled append-only files and shrink-allowed files
-      if (APPEND_ONLY.some(p => relPath.includes(p.replace('/', '/')))) continue;
+  // Threshold check on non-shrink-allowed context files.
+  // When changedFiles is available, skip the per-file git ls-files enumeration and
+  // work directly from the diff output — far fewer subprocesses. Fall back to the
+  // original full ls-files walk when the diff failed (non-git, bootstrap, etc.).
+  if (changedFiles !== null) {
+    // Only check files that are (a) in a context dir and (b) actually changed.
+    for (const relPath of changedFiles) {
+      if (APPEND_ONLY.some(p => relPath.includes(p))) continue; // already handled above
       if (SHRINK_ALLOWED.some(p => relPath.includes(p))) continue;
-      // Skip binary or very large files (>500KB) — not context prose
       const absPath = join(root, relPath);
       if (!existsSync(absPath)) continue;
       const headContent = gitShow(relPath);
-      if (headContent === null || headContent.length < 200) continue; // small files ok
+      if (headContent === null || headContent.length < 200) continue;
       const diskContent = readFileSync(absPath, 'utf8');
-      // GENERATED artifacts legitimately vary in size each regeneration — flag only
-      // a true empty/template-scaffold wipe (preserves genius #237), never a shrink.
       if (GENERATED.some(p => relPath.includes(p))) {
         if (isGeneratedWiped(diskContent)) {
           findings.push({ file: relPath, issue: 'content-wipe', ratio: diskContent.length / headContent.length });
@@ -244,6 +256,34 @@ export function checkContextFiles(root, opts = {}) {
       const ratio = diskContent.length / headContent.length;
       if (ratio < threshold) {
         findings.push({ file: relPath, issue: 'content-wipe', ratio });
+      }
+    }
+  } else {
+    // Fallback: full enumeration (original behaviour — used only when git diff fails).
+    for (const dir of CONTEXT_DIRS) {
+      const dirPath = join(root, dir);
+      if (!existsSync(dirPath)) continue;
+      const lsRes = spawnSync('git', ['ls-files', dir], { cwd: root, encoding: 'utf8', windowsHide: true });
+      if (lsRes.status !== 0) continue;
+      const trackedFiles = lsRes.stdout.trim().split('\n').filter(Boolean);
+      for (const relPath of trackedFiles) {
+        if (APPEND_ONLY.some(p => relPath.includes(p.replace('/', '/')))) continue;
+        if (SHRINK_ALLOWED.some(p => relPath.includes(p))) continue;
+        const absPath = join(root, relPath);
+        if (!existsSync(absPath)) continue;
+        const headContent = gitShow(relPath);
+        if (headContent === null || headContent.length < 200) continue;
+        const diskContent = readFileSync(absPath, 'utf8');
+        if (GENERATED.some(p => relPath.includes(p))) {
+          if (isGeneratedWiped(diskContent)) {
+            findings.push({ file: relPath, issue: 'content-wipe', ratio: diskContent.length / headContent.length });
+          }
+          continue;
+        }
+        const ratio = diskContent.length / headContent.length;
+        if (ratio < threshold) {
+          findings.push({ file: relPath, issue: 'content-wipe', ratio });
+        }
       }
     }
   }

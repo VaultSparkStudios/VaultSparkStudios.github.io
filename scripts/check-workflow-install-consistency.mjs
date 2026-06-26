@@ -70,10 +70,10 @@ export function scanWorkflow(text) {
     }
     // setup-node lockfile cache — needs a committed lockfile to hash. EVERY
     // package-manager lockfile is gitignored in this repo, so ANY cache: value
-    // (npm/yarn/pnpm) can only fail "Dependencies lock file is not found" — not
-    // just the literal `npm` (S222 generalization). `\bcache:` does not match
-    // `cache-dependency-path:` (no colon directly after "cache").
-    const cacheMatch = code.match(/\bcache:\s*['"]?(npm|yarn|pnpm)['"]?\s*$/);
+    // (npm/yarn/pnpm/bun) can only fail "Dependencies lock file is not found" — not
+    // just the literal `npm` (S222 generalization; bun added S225). `\bcache:` does
+    // not match `cache-dependency-path:` (no colon directly after "cache").
+    const cacheMatch = code.match(/\bcache:\s*['"]?(npm|yarn|pnpm|bun)['"]?\s*$/);
     if (cacheMatch) {
       findings.push({ line: i + 1, kind: 'cache-lock', manager: cacheMatch[1], snippet: raw.trim() });
     }
@@ -98,6 +98,7 @@ if (selfTest) {
   ok(scanWorkflow('          cache: npm').length === 1, 'unquoted `cache: npm` flagged');
   ok(scanWorkflow("          cache: 'yarn'").length === 1, "`cache: 'yarn'` flagged (generalized)");
   ok(scanWorkflow('          cache: pnpm').length === 1, '`cache: pnpm` flagged (generalized)');
+  ok(scanWorkflow('          cache: bun').length === 1, '`cache: bun` flagged (generalized, S225)');
   ok(scanWorkflow('        # Lockfile gitignored so `npm ci` cannot run').length === 0, 'comment mention NOT flagged');
   ok(scanWorkflow('        run: npm install --no-audit --no-fund').length === 0, '`npm install` clean');
   ok(scanWorkflow('          cache-dependency-path: scripts/package.json').length === 0, 'cache-dependency-path alone clean');

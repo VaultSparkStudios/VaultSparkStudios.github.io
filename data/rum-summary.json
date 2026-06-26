@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-25T22:25:29.250Z",
+  "generatedAt": "2026-06-26T03:58:41.671Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,16 +10,16 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 557,
+  "totalSamples": 496,
   "sufficientRoutes": 2,
   "routes": {
     "/": {
-      "samples": 248,
+      "samples": 215,
       "sufficient": true,
       "p75": {
         "lcp": 1108,
-        "cls": 0.0894,
-        "inp": 232,
+        "cls": 0.0815,
+        "inp": 208,
         "fcp": 752,
         "ttfb": 193
       }
@@ -102,18 +102,18 @@
       }
     },
     "/games/": {
-      "samples": 65,
+      "samples": 61,
       "sufficient": true,
       "p75": {
-        "lcp": 636,
+        "lcp": 632,
         "cls": 0.0419,
         "inp": 224,
-        "fcp": 636,
+        "fcp": 632,
         "ttfb": 95
       }
     },
     "/games/call-of-doodie/": {
-      "samples": 24,
+      "samples": 21,
       "sufficient": false,
       "p75": {
         "lcp": 0,
@@ -124,14 +124,14 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 24,
+      "samples": 16,
       "sufficient": false,
       "p75": {
-        "lcp": 1224,
-        "cls": 0.0047,
+        "lcp": 764,
+        "cls": 0.0042,
         "inp": 64,
-        "fcp": 1224,
-        "ttfb": 617
+        "fcp": 764,
+        "ttfb": 385
       }
     },
     "/games/mindframe/": {
@@ -146,14 +146,14 @@
       }
     },
     "/games/vaultfront/": {
-      "samples": 11,
+      "samples": 3,
       "sufficient": false,
       "p75": {
-        "lcp": 2184,
-        "cls": 0.1011,
-        "inp": 272,
-        "fcp": 2184,
-        "ttfb": 710
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 1164,
+        "ttfb": 298
       }
     },
     "/games/vaultspark-football-gm/": {
@@ -289,13 +289,13 @@
       }
     },
     "/projects/": {
-      "samples": 3,
+      "samples": 1,
       "sufficient": false,
       "p75": {
-        "lcp": 1512,
-        "cls": 0.001,
-        "inp": 152,
-        "fcp": 1512,
+        "lcp": 660,
+        "cls": 0.0009,
+        "inp": 120,
+        "fcp": 660,
         "ttfb": 200
       }
     },
@@ -344,11 +344,11 @@
       }
     },
     "/projects/velaxis/": {
-      "samples": 3,
+      "samples": 2,
       "sufficient": false,
       "p75": {
         "lcp": 600,
-        "cls": 0.0187,
+        "cls": 0.0155,
         "inp": 440,
         "fcp": 600,
         "ttfb": 242
@@ -363,17 +363,6 @@
         "inp": 128,
         "fcp": 2196,
         "ttfb": 20
-      }
-    },
-    "/promogrind/": {
-      "samples": 1,
-      "sufficient": false,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
       }
     },
     "/rights/": {
@@ -476,7 +465,7 @@
       }
     },
     "/vault-member/": {
-      "samples": 3,
+      "samples": 2,
       "sufficient": false,
       "p75": {
         "lcp": 0,

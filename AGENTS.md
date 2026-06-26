@@ -215,6 +215,8 @@ Producer allowlist: `vaultspark-studio-ops/portfolio/ark/MANIFEST.json` (`canon-
 
 Don't know the command? Check capabilities before declaring anything unknown or blocked: master index `vaultspark-studio-ops/docs/AGENT_CAPABILITIES.md` · NL lookup `node ../vaultspark-studio-ops/scripts/ops.mjs cap "<intent>"` · skills `~/.claude/skills/` (Claude) / `~/.agents/skills/` (Codex) · cheatsheet `vaultspark-studio-ops/docs/SKILL_MAP.md`. Universal skills: `/audit` (9-axis audit → `docs/AUDIT_<date>.md`) + `/implement` (ship the audit). No match → file an innovation candidate.
 
+**Before building any tool, check the reuse-registry (CANON-039 · Internal-First):** `vaultspark-studio-ops/docs/INTERNAL_TOOLS.md` is the studio-wide registry of already-built internal tools (arc/guard/propagation/secrets/Ark/doctor and more). Reuse an existing internal tool before researching OSS or building new; only build when the registry has no fit and OSS research comes up short. Record a new reusable tool back to the registry so the next project finds it.
+
 ## Public-facing project requirements
 
 For `audience: public-*` projects:

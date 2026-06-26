@@ -22,7 +22,9 @@ const SKIP_DIRS = new Set([
   'node_modules', 'playwright-report', 'test-results', '.git', '.well-known',
   'scripts', 'docs', 'context', 'logs', 'supabase', 'config', 'public', 'tests',
   'workers', 'cloudflare', '_og', 'data', 'site', 'build', 'dist', '.github',
-  '.cache', 'coverage', 'assets'
+  '.cache', 'coverage', 'assets',
+  // S225: Lighthouse CI HTML report artifacts — not part of the public site.
+  'lighthouse-results'
 ]);
 
 const SKIP_FILES = new Set([
@@ -52,6 +54,8 @@ const EXEMPT_PATTERNS = [
   /^\/login\.html$/,
   /^\/auth\/callback\/?$/,          // S207: OAuth callback landing — not nav-reachable by design
   /^\/auth\/callback\.html$/,
+  /^\/leaderboards\/[^/]+\//,       // S225: SEO sub-pages (global/challenges/recruiters/etc) — linked
+                                    // from leaderboards/index.html via anchor CTAs, not from sitewide nav
 ];
 
 function normalizeRel(full) {

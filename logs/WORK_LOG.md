@@ -1,5 +1,27 @@
 # Work Log
 
+## 2026-06-26 — Session 225 · 7 leaderboard SEO sub-pages + hero LCP preload + 3 CI gates + check-lighthouse-trend + workflow-cache-lint bun + propagation applied (arc)
+
+Full continuous arc (/start → /audit → /implement → /closeout) — continued from compacted context; mid-stream on audit plan items 1–4 at compaction; resumed and completed all 5 audit items + 2 second-order innovations. **7 ships + 8 infrastructure fixes.** SIL 983 → 985 (+2). Velocity 2.
+
+**Shipped (7 ships, 8 infrastructure fixes):**
+1. `leaderboard-seo-subpages` — `build-leaderboard-subpages.mjs` generates 7 pages (`/global/`,`/challenges/`,`/recruiters/`,`/football-gm/`,`/call-of-doodie/`,`/teams/`,`/weekly/`); BreadcrumbList + FAQPage JSON-LD; self-test 35/35; fixes `leaderboards.spec.js` CI E2E failures; redirect conflict in `redirects.spec.js` removed.
+2. `hero-lcp-preload` — `build-hero-portfolio.mjs renderLcpPreload()` injects `<link rel="preload" as="image" fetchpriority="high">` for featured tile's AVIF + WebP in `<head>`; new `<!-- hero-lcp-preload:start/end -->` marker. Targets homepage LCP 6.1s → target <2s.
+3. `check-ci-status-dead-crons` — advisory gate reads `api/ci-status.json`, warns on dead crons; 5/5 self-test; wired into smoke (advisory).
+4. `check-playwright-locator-all` — blocking gate scans test specs for `.all()` + async-attribute-read race; 4/4 self-test; wired into smoke (blocking).
+5. `workflow-cache-lint-bun` — `check-workflow-install-consistency.mjs` extended to flag `cache: bun`; 12/12 self-test.
+6. `check-lighthouse-trend` (SECOND-ORDER) — per-page LHR median ledger, session-over-session regression detection; 11/11 self-test; S225 baseline seeded; advisory in `check-proof-surface.mjs`.
+7. `generate-vault-narrative-import-fix` — propagation removed `ANTHROPIC_API` from `model-router.mjs`; inlined URL in consumer; `validate-module-imports` clean.
+- Infrastructure: `lighthouse-results/` exempted from propagate-nav/check-nav-orphans/check-orphan-pages; `/leaderboards/*/` exempted from orphan-page check; `check-proof-surface.mjs` wired with S225 leaderboard gate + lighthouse-trend advisory.
+
+**Honest rejections/non-actions (wins):** Lighthouse score ≥0.80 pending CI verify (LCP preload fix deployed but unconfirmed); no founders-gated carries changed.
+
+**Verify:** `npm run build:check` EXIT 0 · `blockingFailing: 0` (doctor --json) · smoke 25/26 (1 expected skip) · all new self-tests pass.
+
+**SIL:** 983 → 985/1000 (v3.0) · Velocity: 2 · Debt: ↓ · committed + pushed to origin/main.
+
+---
+
 ## 2026-06-25 — Session 224 · generate-push-config CI fix + networkidle E2E mass fix (10 files, 23 instances) + accessibility evaluate() hardening + check-e2e-networkidle gate + beacon scheduled tracking (arc)
 
 Full continuous arc (/start → /audit → /implement → /closeout) — continued from compacted context mid-implementation. **11 substantive ships + 3 second-order innovations.** SIL 976 → 983 (+7). Velocity 7.

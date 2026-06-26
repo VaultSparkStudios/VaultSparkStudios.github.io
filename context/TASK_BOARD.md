@@ -1,6 +1,27 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-25 (Session 224 — arc: generate-push-config CI fix + _headers preview fidelity + resilience gate throw detection + networkidle E2E mass fix (10 files, 23 instances) + accessibility evaluate() hardening + check-e2e-networkidle gate + beacon scheduled workflow tracking)
+Last updated: 2026-06-26 (Session 225 — arc: 7 leaderboard SEO sub-pages + hero LCP preload + check-ci-status-dead-crons + check-playwright-locator-all + workflow-cache-lint bun + check-lighthouse-trend + generate-vault-narrative import fix + lighthouse-results nav exemptions)
+
+## S225 outcome + carries
+
+**Shipped in S225:**
+- [x] **[SEO/P0] 7 leaderboard SEO sub-pages** — `scripts/build-leaderboard-subpages.mjs` generates `/leaderboards/{global,challenges,recruiters,football-gm,call-of-doodie,teams,weekly}/index.html`. Each has correct `<title>/<h1>`, "View Full Leaderboard" CTA, BreadcrumbList + FAQPage JSON-LD. Removes conflicting LEADERBOARD_301 entries from `tests/redirects.spec.js`. Wired: build chain + `check-proof-surface.mjs --check`. Self-test 35/35.
+- [x] **[PERF/P1] Hero LCP preload** — `build-hero-portfolio.mjs renderLcpPreload()` injects `<!-- hero-lcp-preload:start/end -->` in `<head>` with `<link rel="preload" as="image" fetchpriority="high">` for featured tile AVIF + WebP. Addresses ~838ms LCP delay from CSS background-image late-discovery.
+- [x] **[CI/P1] `check-ci-status-dead-crons.mjs`** — advisory gate. Reads `api/ci-status.json`, warns when `hasDeadCron: true`. 5/5 self-test. Wired into `smoke-startup-scripts.mjs`.
+- [x] **[CI/P1] `check-playwright-locator-all.mjs`** — blocking gate. Scans `tests/*.spec.js` for `.all()` + async-attribute-read race. 4/4 self-test. Wired into `smoke-startup-scripts.mjs`.
+- [x] **[CI/P1] workflow-cache-lint bun generalization** — `check-workflow-install-consistency.mjs` extended to flag `cache: bun`. 12/12 self-test.
+- [x] **[SECOND-ORDER] `check-lighthouse-trend.mjs`** — per-page LHR median → `.cache/lighthouse-trend.json` ledger, session-over-session regression detection (WARN ≥0.05 / ERROR ≥0.10). 11/11 self-test. S225 baseline seeded. Wired into `check-proof-surface.mjs`.
+- [x] **[INFRA] `generate-vault-narrative.mjs` import fix** — propagation removed `ANTHROPIC_API` from model-router; inlined URL directly. `validate-module-imports` clean.
+- [x] **[INFRA] `lighthouse-results/` nav/orphan exemptions** — `propagate-nav.mjs`, `check-nav-orphans.mjs`, `check-orphan-pages.mjs` all exempt `lighthouse-results`; `/leaderboards/*/` added to `EXEMPT_PATTERNS`.
+
+**S225 honest ledger (rejections = wins):**
+- → **Lighthouse CI score ≥0.80 pending** — LCP preload fix deployed; verify in next CI run.
+- → **Founder-gated carries unchanged** — push notification (0 subs), Signal Log/forge devlog (founder voice), `ark.hmac.seed`, mobile-sheet, card-accent overlay.
+
+**S225 committed to next session (brainstorm):**
+- [ ] **[CI/P1] Verify Lighthouse homepage ≥0.80** — LCP preload fix deployed in S225. Watch next CI Lighthouse run for homepage performance score ≥0.80. If still failing, investigate TBT as secondary cause.
+- [ ] **[CI/P2] Grow lighthouse-trend ledger** — after next CI Lighthouse run, run `node scripts/check-lighthouse-trend.mjs --update --session 226` to add S226 data point.
+- [ ] **[SEO/P2] Leaderboard sub-pages sitemap.xml** — the 7 new `/leaderboards/*/` pages are not yet in `sitemap.xml`; add them for crawler indexing.
 
 ## S224 outcome + carries
 
@@ -22,8 +43,8 @@ Last updated: 2026-06-25 (Session 224 — arc: generate-push-config CI fix + _he
 
 **S224 committed to next session (brainstorm):**
 - [ ] **[CI/P2] Verify E2E green in CI** — the networkidle mass-fix should eliminate timeout failures in `s134-oracle-ignis.spec.js` and the 9 other files. Watch for the first green E2E run after S224 commit lands.
-- [ ] **[INFRA/P3·SIL] check-playwright-locator-all gate** — `page.locator().all()` followed by async `getAttribute()` is a latent race condition on any page with dynamic DOM. Scan test specs for `.all()` followed by `.getAttribute()`/`.textContent()` in a for-of loop; flag with a fix suggestion. Extends the S224 accessibility hardening.
-- [ ] **[INFRA/P3·SIL] ci-status-beacon `hasDeadCron` dashboard surface** — `api/ci-status.json` now has `hasDeadCron` and `scheduledWorkflows[]`. Build a tiny `check-ci-status-dead-crons.mjs` gate that reads the beacon and fails (advisory) if any scheduled workflow has `dead: true`. Closes the local observability gap (the beacon is already emitting the data; a gate makes it actionable without GitHub).
+- [x] **[INFRA/P3·SIL] check-playwright-locator-all gate** — DONE S225. `check-playwright-locator-all.mjs` blocking gate wired into smoke. 4/4 self-test; 35 spec files clean.
+- [x] **[INFRA/P3·SIL] ci-status-beacon `hasDeadCron` dashboard surface** — DONE S225. `check-ci-status-dead-crons.mjs` advisory gate reads beacon + warns on dead crons. 5/5 self-test; 13 workflows healthy.
 
 ## S223 outcome + carries
 

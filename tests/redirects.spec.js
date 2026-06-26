@@ -52,16 +52,6 @@ const LEGACY_301 = [
   ['/products/voidfall-companion', '/universe/voidfall/'],
 ];
 
-const LEADERBOARD_301 = [
-  ['/leaderboards/call-of-doodie', '/leaderboards/#doodie'],
-  ['/leaderboards/challenges',     '/leaderboards/#challenges'],
-  ['/leaderboards/football-gm',    '/leaderboards/#football'],
-  ['/leaderboards/global',         '/leaderboards/#global'],
-  ['/leaderboards/teams',          '/leaderboards/#teams'],
-  ['/leaderboards/weekly',         '/leaderboards/#weekly'],
-  ['/leaderboards/recruiters',     '/leaderboards/#referrals'],
-];
-
 const EXTERNAL_301 = [
   ['/call-of-doodie',          'https://callofdoodie.wtf/'],
   ['/products/call-of-doodie', 'https://callofdoodie.wtf/'],
@@ -72,16 +62,6 @@ test.describe('Legacy path redirects (S147 redirect-stub-purge)', () => {
   test('Same-origin legacy paths return 301 to canonical', async () => {
     const api = await request.newContext({ baseURL: BASE });
     for (const [from, to] of LEGACY_301) {
-      const res = await api.fetch(from, { maxRedirects: 0 });
-      expect.soft(res.status(), `${from} should 301`).toBe(301);
-      const loc = res.headers()['location'] || '';
-      expect.soft(loc, `${from} should redirect to ${to}`).toContain(to);
-    }
-  });
-
-  test('Leaderboard sub-paths 301 to hash-anchored main page', async () => {
-    const api = await request.newContext({ baseURL: BASE });
-    for (const [from, to] of LEADERBOARD_301) {
       const res = await api.fetch(from, { maxRedirects: 0 });
       expect.soft(res.status(), `${from} should 301`).toBe(301);
       const loc = res.headers()['location'] || '';

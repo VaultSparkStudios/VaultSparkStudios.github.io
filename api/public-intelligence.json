@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-25T22:25:18.542Z",
+  "generatedAt": "2026-06-26T03:58:33.597Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 223,
-    "lastUpdated": "2026-06-25",
-    "currentFocus": "S223 (full arc, 10 items) — (1) build-agents-json.mjs P0 degrade (2nd gitignored-input script after S222); (2) check-build-step-resilience gate (all 54 scripts, class un-reintroducible); (3) check-hero-jsonld-completeness; (4) VR baseline infra 3 bugs fixed (snapshotDir + waitUntil:load + always()); (5) Node 24 upgrade 9 workflows; (6) ci-health-monitor + sync-ci-health-issue; (7) check-workflow-yaml-validity; (8) Ark drain (33); (9) 70 VR Linux baselines committed (run 28200394502, 35 dark + 35 light); (10) findMissingSparkedShards — CANON-048 SPARKED on-site pages must have committed AI shard (11/11 self-test). build:check EXIT 0 + blockingFailing 0 verified directly.",
-    "nextMilestone": "ci-health-monitor first real run (9am UTC daily — watch for auto-issue on any dead crons). Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning, mobile-sheet real-device verification.",
+    "currentSession": 225,
+    "lastUpdated": "2026-06-26",
+    "currentFocus": "S225 (full arc, 5 audit items + 2 second-order) — SEO+CI unblock session: 7 leaderboard SEO sub-pages (fixes leaderboards.spec.js E2E failures); hero LCP preload hint (<link rel=preload> for featured AVIF/WebP cover, browser fetches at parse time not after style computation); 3 new CI gates (check-ci-status-dead-crons advisory, check-playwright-locator-all blocking, check-lighthouse-trend regression tracker); workflow-cache-lint extended to bun; generate-vault-narrative.mjs ANTHROPIC_API import fixed (propagation applied). build:check EXIT 0 + blockingFailing 0 verified directly.",
+    "nextMilestone": "Verify Lighthouse CI homepage perf ≥0.80 in next CI run (LCP preload fix from hero AVIF preloading). Founder-gated: first push notification (0 subs), Signal Log + forge devlog (founder voice), ark.hmac.seed provisioning, mobile-sheet real-device verification.",
     "ignis": {
       "score": 44691,
       "grade": "FORGE",
@@ -29,12 +29,12 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped (8 substantive · second class discovered and gated — \"no more silent gitignored-input failures\"):",
-      "Honest ledger: VR baselines not yet committed (run 28200394502 in progress). Founder-gated carries unchanged: first push notification (0 subs), Signal Log + forge devlog (founder voice), `ark.hmac.seed` provisioning, mobile-sheet real-device.",
-      "Tests: `build:check` EXIT 0 (verified directly, not pipe-masked) · `blockingFailing: 0` · all new/extended gates self-test green · smoke 22/23 (1 expected skip: gateway-readiness·claude.api).",
-      "Deploy: committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip; Worker unchanged.",
-      "First action next session: `/start` → (a) run `node scripts/update-vr-baselines.mjs` if VR run 28200394502 completed (download PNG baselines → commit under `tests/__snapshots__/`); (b) verify `Refresh Live Data` cron cleared (second dead script fixed — the beacon should show green); (c) check if `ci-health-monitor` first daily run created/closed an issue.",
-      "SIL: 972 → 974 (+2). Categories: Dev 99 | Align 97 | Momentum 98 | Engage 96 | Process 99 | CrossRepo 97 | Security 94 | EcoInt 98 | CapEff 97 | AutoCov 99."
+      "Shipped (5 audit items · 2 second-order innovations — \"SEO unblock + LCP preload + CI gate wave\"):",
+      "Honest ledger: Lighthouse performance CI verify is pending (will confirm in S226 CI run). Founder-gated carries unchanged — first push notification (0 subs), Signal Log + forge devlog (founder voice), `ark.hmac.seed` provisioning, mobile-sheet real-device, card-accent overlay.",
+      "Tests: `build:check` EXIT 0 (verified directly) · `blockingFailing: 0` (doctor verified) · smoke 25/26 (1 expected skip: gateway-readiness·claude.api) · leaderboard-subpages self-test 35/35 · lighthouse-trend self-test 11/11 · locator-all self-test 4/4 · dead-crons self-test 5/5 · workflow-install-consistency 12/12.",
+      "Deploy: committed + pushed to `origin/main`; CF Pages auto-builds the pushed tip.",
+      "First action next session: `/start` → (a) check CI run to verify leaderboards.spec.js now passes and Lighthouse homepage ≥0.80; (b) run `node scripts/check-lighthouse-trend.mjs --update --session 226` after next CI Lighthouse run to grow the trend ledger; (c) scan genius list for next innovation targets.",
+      "SIL: 983 → 985 (+2). Categories: Dev 100 | Align 97 | Momentum 99 | Engage 96 | Process 100 | CrossRepo 98 | Security 94 | EcoInt 99 | CapEff 97 | AutoCov 100."
     ]
   },
   "consumerChangelog": [
@@ -125,7 +125,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 223,
+    "sessionsCompleted": 225,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -140,18 +140,18 @@
     "forge": 14,
     "vaulted": 0,
     "silCategories": {
-      "devHealth": 99,
+      "devHealth": 100,
       "alignment": 97,
-      "momentum": 98,
+      "momentum": 99,
       "engagement": 96,
-      "process": 99,
-      "coherence": 97,
+      "process": 100,
+      "coherence": 98,
       "security": 94,
-      "ecosystem": 98,
+      "ecosystem": 99,
       "capital": 97,
       "automation": 100,
-      "total": 976,
-      "updatedSession": 223
+      "total": 985,
+      "updatedSession": 225
     },
     "sealedNextRevealAt": null
   },
@@ -863,7 +863,7 @@
   "ciHealth": {
     "allGreen": false,
     "summary": "One or more CI gates are failing. Studio is investigating.",
-    "checkedAt": "2026-06-25T22:06:51.999Z",
+    "checkedAt": "2026-06-25T23:38:53.250Z",
     "workflows": [
       {
         "name": "E2E Test Suite",

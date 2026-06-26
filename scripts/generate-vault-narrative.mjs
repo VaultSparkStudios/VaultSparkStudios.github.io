@@ -17,7 +17,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
-import { MODELS, ANTHROPIC_API } from './lib/model-router.mjs';
+import { MODELS } from './lib/model-router.mjs';
 
 const ROOT = process.cwd();
 const INTEL_PATH = path.join(ROOT, 'api', 'public-intelligence.json');
@@ -25,7 +25,7 @@ const OUT_PATH = path.join(ROOT, 'api', 'vault-narrative.json');
 const HISTORY_PATH = path.join(ROOT, 'api', 'vault-narrative-history.json');
 const RSS_PATH = path.join(ROOT, 'journal', 'dispatches', 'feed.xml');
 const HISTORY_LIMIT = 30;
-const MESSAGES_URL = ANTHROPIC_API.messages;
+const MESSAGES_URL = 'https://api.anthropic.com/v1/messages';
 const MODEL = process.env.ANTHROPIC_MODEL || MODELS.sonnet;
 
 function readJson(p) { return JSON.parse(fs.readFileSync(p, 'utf8')); }

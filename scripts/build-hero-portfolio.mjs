@@ -244,11 +244,35 @@ function injectBlock(html, marker, content) {
   return html.replace(re, `${start}${content}${end}`);
 }
 
+// S225: preload hint for the hero LCP candidate (featured tile CSS background image).
+// CSS background-images are late-discovered — the browser can't start fetching them
+// until after layout/style computation (~800ms of Style&Layout on CI). A <link
+// rel="preload"> in <head> moves the fetch to the HTML parsing phase, trimming
+// ~800ms-2s off LCP on simulated-throttle Lighthouse runs.
+function renderLcpPreload(catalog) {
+  const { tiles } = planPortfolio(catalog);
+  const featured = tiles[0];
+  if (!featured) return '';
+  const coverKey = COVERS[featured.id];
+  if (!coverKey) return '';
+  // Preload AVIF (primary) + WebP (fallback for Safari/non-AVIF browsers).
+  // Both are tiny (<10KB each) so double-preload cost is negligible.
+  const avif = `<link rel="preload" as="image" href="/assets/covers/${coverKey}.avif" type="image/avif" fetchpriority="high">`;
+  const webp = `<link rel="preload" as="image" href="/assets/covers/${coverKey}.webp" type="image/webp" fetchpriority="high">`;
+  return avif + webp;
+}
+
 function build({ write }) {
   const catalog = JSON.parse(readFileSync(FEED, 'utf8')).catalog;
   const fileExists = (rel) => existsSync(path.join(ROOT, rel));
   let html = readFileSync(INDEX, 'utf8');
-  const next = injectBlock(injectBlock(html, 'hero-showcase', renderShowcase(catalog, fileExists)), 'hero-stats', renderStats(catalog));
+  const next = injectBlock(
+    injectBlock(
+      injectBlock(html, 'hero-showcase', renderShowcase(catalog, fileExists)),
+      'hero-stats', renderStats(catalog)
+    ),
+    'hero-lcp-preload', renderLcpPreload(catalog)
+  );
   if (CHECK) {
     if (next !== html) { console.error('build-hero-portfolio --check: index.html hero showcase/stats drift; run node scripts/build-hero-portfolio.mjs'); process.exit(1); }
     console.log('build-hero-portfolio --check: ok (hero showcase in sync)');

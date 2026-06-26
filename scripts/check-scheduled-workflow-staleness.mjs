@@ -28,7 +28,7 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { spawnSync } from 'node:child_process';
+import { spawnSync } from './lib/safe-spawn.mjs';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const WF_DIR = join(ROOT, '.github', 'workflows');

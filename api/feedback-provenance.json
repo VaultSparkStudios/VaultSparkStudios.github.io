@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-06-25",
+  "generatedAt": "2026-06-26",
   "generatedBy": "scripts/build-feedback-provenance.mjs",
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 6,
+  "themeCount": 5,
   "themes": [
     {
       "key": "conversion",
@@ -21,31 +21,17 @@
       ]
     },
     {
-      "key": "worlds",
-      "label": "Worlds",
-      "count": 2,
-      "commits": [
-        {
-          "sha": "e15e91d4",
-          "move": "Tended",
-          "tone": "muted",
-          "summary": "S216 write-backs — SIL 943, individual-page visual template, IGNIS starters all slugs, welcome-back badge, game push …",
-          "ts": "2026-06-22T22:56:10.000Z"
-        },
-        {
-          "sha": "fbde4eab",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "S215 template pass on 29 individual game + project pages (S216)",
-          "ts": "2026-06-22T22:56:10.000Z"
-        }
-      ]
-    },
-    {
       "key": "transparency",
       "label": "Transparency",
-      "count": 4,
+      "count": 5,
       "commits": [
+        {
+          "sha": "8502f758",
+          "move": "Tended",
+          "tone": "muted",
+          "summary": "S224 SIL rolling-status update — 976→983 velocity 7",
+          "ts": "2026-06-25T23:52:10.000Z"
+        },
         {
           "sha": "4732f661",
           "move": "Tended",
@@ -79,8 +65,15 @@
     {
       "key": "trust",
       "label": "Trust & legal",
-      "count": 1,
+      "count": 2,
       "commits": [
+        {
+          "sha": "cfa738a0",
+          "move": "Fixed",
+          "tone": "fix",
+          "summary": "beacon scheduled-workflow tracking + a11y test staleness hardening",
+          "ts": "2026-06-25T23:10:42.000Z"
+        },
         {
           "sha": "13f7fe0d",
           "move": "Shipped",
@@ -110,18 +103,18 @@
       "count": 2,
       "commits": [
         {
+          "sha": "7ae885b0",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "CI root-fix (Refresh Live Data) + Lighthouse preload headers + gate hardening",
+          "ts": "2026-06-25T22:56:04.000Z"
+        },
+        {
           "sha": "41a6e22a",
           "move": "Fixed",
           "tone": "fix",
           "summary": "root-fix agents-json CI exit(1) on gitignored ECOSYSTEM + build-step resilience gate + hero JSON-LD completeness gate",
           "ts": "2026-06-25T19:38:09.000Z"
-        },
-        {
-          "sha": "7850158f",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "S217 visual card overhaul + homepage data fix",
-          "ts": "2026-06-23T00:42:38.000Z"
         }
       ]
     }

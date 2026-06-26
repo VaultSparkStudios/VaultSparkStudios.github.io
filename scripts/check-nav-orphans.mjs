@@ -41,7 +41,10 @@ const SKIP_DIRS = new Set([
   // S193: solara is a standalone Vite game app (its own dark UI, no VaultSpark
   // shell nav by design) — same class as the exempted vaultspark-football-gm
   // game runtime. (Mirrors propagate-nav.)
-  'solara'
+  'solara',
+  // S225: Lighthouse CI HTML report artifacts — these are rendered Lighthouse
+  // audit pages, not part of the public site shell. (Mirrors propagate-nav.)
+  'lighthouse-results'
 ]);
 
 const SKIP_FILES = new Set([
