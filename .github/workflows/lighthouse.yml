@@ -43,6 +43,12 @@ jobs:
           configPath: ./.lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
+          outputDir: ./lighthouse-results
+
+      - name: Check Lighthouse trend
+        # S227: regression gate — exits 1 if any page+category regressed ≥0.05 vs committed trend ledger.
+        # Silently skips when no prior history exists (seeds automatically on first run).
+        run: node scripts/check-lighthouse-trend.mjs --check
 
       - name: Stop local preview
         if: always()

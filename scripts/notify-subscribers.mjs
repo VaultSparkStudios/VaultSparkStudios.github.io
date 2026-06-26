@@ -34,6 +34,27 @@ if (GAME_FILTER && !GAME_ALLOW.has(GAME_FILTER)) {
   process.exit(1);
 }
 
+// S227: per-game personalized copy variants. When --title/--body are the default values
+// and a subscriber's lastGame matches, swap in a more relevant headline/hook.
+// Falls back to the caller-supplied title/body when no match.
+const GAME_COPY_VARIANTS = {
+  cod: {
+    title: (base) => base === 'VaultSpark Studios' ? 'Call of Doodie Update' : base,
+    body:  (base) => base || 'Your Doodie squad has a new drop waiting.',
+    url:   (base) => base === '/vault-member/' ? '/games/call-of-doodie/' : base,
+  },
+  fgm: {
+    title: (base) => base === 'VaultSpark Studios' ? 'Football GM Update' : base,
+    body:  (base) => base || 'Gridiron GM has new intel for your franchise.',
+    url:   (base) => base === '/vault-member/' ? '/games/gridiron-gm-play/' : base,
+  },
+  forge: {
+    title: (base) => base === 'VaultSpark Studios' ? 'VaultSpark Studios Update' : base,
+    body:  (base) => base || 'Something new is sparking in the Vault.',
+    url:   (base) => base,
+  },
+};
+
 const KV_NAMESPACE_ID = '6fde74ca7f3d462786afbb85c85611e0'; // RATE_LIMIT binding (wrangler.toml)
 const SUB_PREFIX = 'vs:push:sub:';
 
@@ -127,20 +148,11 @@ async function listAllSubKeys(accountId, apiToken) {
 
   webPush.setVapidDetails(vapidSubj, vapidPub, vapidPriv);
 
-  const payload = JSON.stringify({
-    title: TITLE,
-    body: BODY,
-    icon: '/assets/icons/icon-192.png',
-    badge: '/assets/icons/badge-72.png',
-    url: URL_PATH,
-    tag: 'vs-notify',
-  });
-
   if (DRY_RUN) {
-    console.log('[DRY RUN] Would send to subscribers' + (GAME_FILTER ? ` with game=${GAME_FILTER}` : ' (all)') + ':');
-    console.log('  title:', TITLE);
-    console.log('  body: ', BODY);
-    console.log('  url:  ', URL_PATH);
+    console.log('[DRY RUN] Would send to subscribers' + (GAME_FILTER ? ` with game=${GAME_FILTER}` : ' (all, personalized)') + ':');
+    console.log('  title:', TITLE, '(may be personalized per sub.lastGame)');
+    console.log('  body: ', BODY, '(may be personalized per sub.lastGame)');
+    console.log('  url:  ', URL_PATH, '(may be personalized per sub.lastGame)');
     if (GAME_FILTER) console.log('  filter: --game', GAME_FILTER);
     return;
   }
@@ -152,7 +164,23 @@ async function listAllSubKeys(accountId, apiToken) {
     try {
       const sub = JSON.parse(raw);
       if (GAME_FILTER && sub.lastGame !== GAME_FILTER) { skipped++; continue; }
-      await webPush.sendNotification(sub, payload);
+
+      // S227: apply per-game copy variant when subscriber has a known lastGame.
+      const variant = sub.lastGame && GAME_COPY_VARIANTS[sub.lastGame];
+      const personalizedTitle = variant ? variant.title(TITLE) : TITLE;
+      const personalizedBody  = variant ? variant.body(BODY)   : BODY;
+      const personalizedUrl   = variant ? variant.url(URL_PATH) : URL_PATH;
+
+      const personalizedPayload = JSON.stringify({
+        title: personalizedTitle,
+        body: personalizedBody,
+        icon: '/assets/icons/icon-192.png',
+        badge: '/assets/icons/badge-72.png',
+        url: personalizedUrl,
+        tag: 'vs-notify',
+      });
+
+      await webPush.sendNotification(sub, personalizedPayload);
       sent++;
     } catch (e) {
       console.warn(`Failed to send to ${key}: ${e.message}`);
