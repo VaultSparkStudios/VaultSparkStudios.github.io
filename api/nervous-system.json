@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-26T08:04:25.056Z",
+  "generatedAt": "2026-06-26T11:19:16.132Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "Behind the scenes this week: the homepage hero cover image is now loaded with the browser's fastest possible path — the image URL is in the HTML itself, so the browser starts fetching it immediately during page load instead of waiting for CSS to compute first. This closes a performance gap that had been keeping our Lighthouse score just below the 80% threshold. Also added diagnostic tracking (LCP, TBT, CLS) to our performance regression system so we can see exactly which metrics changed when scores shift.",
-  "nextStep": "Coming soon: confirming the Lighthouse CI score has crossed the 80% threshold, and adding the seven new leaderboard category pages to the sitemap for search indexing.",
+  "focus": "This week's update focused on the IGNIS intelligence engine: when you return to the site, the oracle now shows you what the community has been exploring and cross-references your past queries with new content published since your last visit. Oracle results also get smarter the longer you search — each follow-up query knows what you've been asking about. On the infrastructure side, we added automatic performance regression detection to CI (Lighthouse score drops are now a blocking failure) and pushed notification content now adapts per game.",
+  "nextStep": "Verifying the Lighthouse performance score crosses the 80% threshold after our recent fix, and sending the first push notification once subscriber count grows.",
   "decisions": [
     {
       "surface": "Mobile navigation",
