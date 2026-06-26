@@ -1,8 +1,24 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-26 (Session 227 — full arc · IGNIS community chips + session-context boost + topic-aware re-entry + deploy-hash · Lighthouse CI gate · push GAME_COPY_VARIANTS · sitemap gate · LCP decoding=async fix)
+Last updated: 2026-06-26 (Session 228 — arc continuation · oracle:context_boost RUM + CSP violations probe + Worker GET + defer→idle 43KB + Lighthouse CI outputDir fix + agents.json sitewide CANON-048)
 
-Session Intent: Full /goal arc (/start → /audit → /implement → /closeout). Saturate the session: exhaust the Unified Genius List and generate + implement second-order innovations.
+Session Intent: Continuation of S228 full arc — execute pending carries from compacted context, then closeout.
+
+## Where We Left Off (Session 228)
+
+- **Shipped (6 substantive items · 0 phantom wins — "CI gate fixes + CANON-048 closure + security monitoring"):**
+  1. **[AI/P2] oracle:context_boost RUM** — S227 brainstorm #1 closed. `emitUx('oracle:context_boost')` in `assets/ignis-answer-engine.js` `answer()` function, gated on `ctxTokens.length > 0` (session-context boost was active). Added to Worker `RUM_UX_EVENTS` Set. Emit happens once per oracle answer when ≥2 prior session queries contributed to the boost. Now we can measure whether context-boosted sessions produce better engagement.
+  2. **[SECURITY/P2] CSP violations probe + Worker GET endpoint** — S227 brainstorm #2 closed. `scripts/check-csp-violations.mjs`: advisory (exit 0 always), 8 self-tests, `--json`/`--self-test`/text output modes; wired into `smoke-startup-scripts.mjs` as advisory block (--self-test only in build:check). Worker `/v/csp-violations-summary` GET endpoint: reads `csp:YYYY-MM-DD:counter` keys from `RATE_LIMIT` KV for 3-day window; samples `csp:YYYY-MM-DD:*` keys for topDirectives; returns `{total3d, byDay[], topDirectives[], ts}` JSON; graceful 503 when KV absent. Package.json: `"probe:csp-violations"`.
+  3. **[SEO] Meta description trim** — atlas (202→147 chars), vaultspark-forge (177→108 chars + removed duplicate "A VaultSpark Studios project taking shape in the forge" sentence), voidfall (166→110 chars). All within ≤200 char threshold.
+  4. **[PERF/P2] defer→idle migration (43KB TBT reduction)** — moved trust-depth.js (14KB), related-content.js (12KB), pathways-router.js (9.6KB) from `<script defer>` in `index.html` to `home-idle-loader.js` `scripts` array; removed adaptive-cta.js (7KB) from `index.html` entirely — it `return`s immediately on `pathname === '/'` so it was a 7KB no-op on the homepage. Net: 4 `<script defer>` tags removed (was 5, kept `live-proof.js`), 43KB of DOMContentLoaded execution deferred to `requestIdleCallback`. Targets the Lighthouse ≥0.80 performance threshold.
+  5. **[CI/P1] Lighthouse CI outputDir fix** — `treosh/lighthouse-ci-action@v11` does NOT support `outputDir:` as an action input (silently ignored in v11). LHR files were going to `.lighthouseci/` (default), but `check-lighthouse-trend.mjs` reads from `./lighthouse-results/` — the gate was receiving zero files and silently skipping on every CI run. Fix: removed invalid `outputDir: ./lighthouse-results` from lighthouse.yml action inputs; added shell step `find .lighthouseci -name 'lhr-*.json' -exec cp {} lighthouse-results/` between "Run Lighthouse CI" and "Check Lighthouse trend" steps. `.gitignore` updated: `.cache/lh-check-s227/` pattern. Now the trend check actually receives LHR data.
+  6. **[AI/P1] CANON-048 agents.json discovery link sitewide** — added injection to `scripts/propagate-nav.mjs` (`processHtml`): `if (!html.includes('href="/agents.json"'))` guard replaces `</head>` with `<link rel="alternate" type="application/json" href="/agents.json" />` + closing tag. Ran `propagate-nav.mjs` (127 pages updated) → `derive-game-nav.mjs --apply` (106 pages synced) → `build-shell-assets.mjs` (0 remaining drift). Result: 106 public HTML pages carry the agents.json discovery link. AI crawlers landing on any page can now discover the capability manifest without guessing well-known paths.
+
+- **Honest ledger:** Lighthouse CI verify pending (defer→idle + outputDir fix — next CI run will confirm ≥0.80). E2E still in "pending" state (S224 networkidle fix should make it green; confirm after CI). Founder-gated carries unchanged — push (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet.
+
+- **Tests:** `build:check` EXIT 0 · `blockingFailing: 0` · smoke 27/28 (1 expected skip: gateway-readiness·claude.api) · `check-csp-violations --self-test` 8/8.
+
+- **HEAD on origin/main:** `3b4cc23c` (feat: CANON-048 agents.json discovery link sitewide, 127 pages)
 
 ## Where We Left Off (Session 227)
 

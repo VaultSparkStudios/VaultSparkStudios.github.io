@@ -1,6 +1,26 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-26 (Session 227 — full arc: IGNIS community chips + session-context boost + topic-aware re-entry + deploy-hash + Lighthouse CI gate + push personalization + sitemap gate + LCP decoding=async fix)
+Last updated: 2026-06-26 (Session 228 — arc continuation: oracle:context_boost RUM + CSP violations probe + Worker GET + defer→idle 43KB + Lighthouse CI outputDir fix + agents.json sitewide CANON-048)
+
+## S228 outcome + carries
+
+**Shipped in S228:**
+- [x] **[AI/P2] oracle:context_boost RUM** — S227 brainstorm #1: `emitUx('oracle:context_boost')` in `answer()` when `ctxTokens.length > 0`; added to Worker `RUM_UX_EVENTS`. Session-context boost is now measured, not just shipped.
+- [x] **[SECURITY/P2] CSP violations probe + Worker GET endpoint** — S227 brainstorm #2: `scripts/check-csp-violations.mjs` (advisory, 8 self-tests; wired into smoke) + Worker `/v/csp-violations-summary` GET endpoint (3-day KV window, topDirectives sampling). Closes CANON-051 CSP monitoring gap. `npm run probe:csp-violations`.
+- [x] **[SEO] Meta description trim** — atlas (202→147 chars), vaultspark-forge (177→108 chars, duplicate sentence removed), voidfall (166→110 chars). All ≤200 char threshold.
+- [x] **[PERF/P2] defer→idle migration** — trust-depth.js (14KB) + related-content.js (12KB) + pathways-router.js (9.6KB) moved from `<script defer>` to `home-idle-loader.js`. adaptive-cta.js (7KB) removed from index.html entirely (no-op on `/`). 43KB DOMContentLoaded reduction → TBT improvement for Lighthouse gate.
+- [x] **[CI/P1] Lighthouse CI outputDir fix** — `treosh/lighthouse-ci-action@v11` does not support `outputDir:` input (silently ignored); LHR files go to `.lighthouseci/` by default. Added `find .lighthouseci -name 'lhr-*.json' -exec cp {} lighthouse-results/` step between Lighthouse run and trend check. Gate now receives real LHR data.
+- [x] **[AI/P1] agents.json discovery link sitewide** — CANON-048: `<link rel="alternate" type="application/json" href="/agents.json">` injected via `propagate-nav.mjs` into 106 pages. Idempotent guard prevents double-injection. AI crawlers can now discover the capability manifest from any page.
+
+**S228 honest ledger:**
+- → **Lighthouse CI verify pending** — defer→idle removes 43KB DOMContentLoaded JS; CI run will confirm homepage ≥0.80.
+- → **E2E verify still pending** — networkidle mass-fix (S224) should be green; confirm after CI run.
+- → **Founder-gated carries unchanged** — push notification (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet.
+
+**S228 committed to next session (brainstorm):**
+- [ ] **[CI/P1] Verify Lighthouse homepage ≥0.80** — defer→idle (43KB) + outputDir fix (gate now sees LHR data). Watch next CI Lighthouse run.
+- [ ] **[CI/P1] Verify E2E green** — networkidle mass-fix from S224. Confirm first green E2E run.
+- [ ] **[INFRA/P3] Lighthouse trend auto-update in CI** — push updated `.cache/lighthouse-trend.json` back to repo after each CI Lighthouse run (CI step + PAT). Ledger currently only grows locally; cross-session trend is invisible in CI.
 
 ## S227 outcome + carries
 
@@ -29,8 +49,8 @@ Last updated: 2026-06-26 (Session 227 — full arc: IGNIS community chips + sess
 **S227 committed to next session (brainstorm):**
 - [ ] **[CI/P1] Verify Lighthouse homepage ≥0.80** — decoding=async removed = 5.1s render delay eliminated. Watch next CI Lighthouse run (outputDir now set, --check gate will catch regression).
 - [ ] **[CI/P1] Verify E2E green** — networkidle fixes from S224 should clear timeout failures. After green: close the carry permanently.
-- [ ] **[AI/P2] IGNIS oracle:context_boost RUM** — session-context boost is shipping but the RUM event `oracle:context_boost` was omitted (in-memory only). Add to Worker RUM_UX_EVENTS + emit in answer() scoring loop for measurement.
-- [ ] **[SECURITY/P3] CSP violation doctor probe** — only remaining gap: a `check-csp-violations.mjs` that reads a KV-serving Worker GET endpoint (not buildable without shipping a new Worker route). Deferred until Worker GET for csp-violations is available.
+- [x] **[AI/P2] IGNIS oracle:context_boost RUM** — DONE S228: `emitUx('oracle:context_boost')` wired + Worker allowlist. Session-context boost is now measured.
+- [x] **[SECURITY/P3] CSP violation doctor probe** — DONE S228: `check-csp-violations.mjs` (advisory probe) + Worker `/v/csp-violations-summary` GET endpoint. CANON-051 monitoring gap closed.
 
 ## S226 outcome + carries
 

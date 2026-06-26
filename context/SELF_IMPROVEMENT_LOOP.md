@@ -8,14 +8,40 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ████▇███
-Avgs - 3: 984.0 | 5: 980.2 | 10: ~965 | 25: ~961 | all: ~963 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 97.7 | Momentum 99.0 | Engage 97.3 | Process 100.0
-Velocity trend: ↑ (S227: 10 items + 3 phantom wins; S226: 3 items; S225: 7 items) | Protocol velocity: → | Debt: level (S227: LCP decoding=async fix; IGNIS depth wave 4 items; Lighthouse CI gate; push personalization; sitemap gate; Lighthouse CI verify pending)
-Momentum runway: CI-VERIFY — Lighthouse ≥0.80 (decoding=async eliminated 5.1s render delay) + E2E green; PUSH — first notification (0 subs); FOUNDER — ark.hmac.seed; CONTENT — Signal Log + forge devlog; AI — oracle:context_boost RUM event | Intent rate: 100% (last 5) | (S227 shipped: LCP decoding=async fix; IGNIS community chips + session-context boost + topic-aware re-entry + deploy-hash; llms.txt Community section; check-sitemap-coverage gate; Lighthouse CI --check gate; push GAME_COPY_VARIANTS.)
-Last session: 2026-06-26 | Session 227 | Total: 983/1000 (v3.0) | Velocity: -3 | protocolVelocity: 0
+Sparkline (last 5 totals): ████▇████
+Avgs - 3: 985.3 | 5: 981.6 | 10: ~966 | 25: ~962 | all: ~963 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 98.0 | Momentum 99.0 | Engage 98.0 | Process 100.0
+Velocity trend: ↑ (S228: 6 items; S227: 10 items + 3 phantom wins; S226: 3 items) | Protocol velocity: → | Debt: level (S228: oracle:context_boost RUM; CSP probe; defer→idle; LH CI fix; agents.json sitewide; Lighthouse CI verify pending)
+Momentum runway: CI-VERIFY — Lighthouse ≥0.80 (defer→idle + outputDir fix makes gate real) + E2E green; PUSH — first notification (0 subs); FOUNDER — ark.hmac.seed; CONTENT — Signal Log + forge devlog; INFRA — Lighthouse trend auto-CI-update | Intent rate: 100% (last 5) | (S228 shipped: oracle:context_boost RUM; CSP violations probe + Worker GET; meta-desc trim; defer→idle 43KB; LH CI outputDir fix; agents.json sitewide 106 pages.)
+Last session: 2026-06-26 | Session 228 | Total: 987/1000 (v3.0) | Velocity: +4 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-26 — Session 228 (arc continuation · oracle:context_boost RUM + CSP violations probe + Worker GET endpoint + defer→idle 43KB + Lighthouse CI outputDir fix + agents.json sitewide CANON-048) | Total: 987/1000 (v3.0) | Velocity: +4 | Debt: level
+Avgs — 3: 985.3 | 5: 981.6 | 10: ~966 | 25: ~962 | all: ~963
+
+Dev Health 100 | Creative Alignment 98 | Momentum 99 | Engagement 98 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 96 | Ecosystem Integration 100 | Capital Efficiency 97 | Automation Coverage 100
+
+**What improved:** This session's throughline is three compounding infrastructure wins that make S227's work actually functional. The Lighthouse CI trend gate (S227) was architecturally complete but functionally blind — the LHR files never reached the directory the gate was reading (Lighthouse action's `outputDir:` input is unsupported in v11; files go to `.lighthouseci/`, gate reads `./lighthouse-results/`). The defer→idle migration gives the homepage a real shot at the Lighthouse performance threshold by removing 43KB from the DOMContentLoaded execution phase. The agents.json sitewide injection via propagate-nav completes CANON-048 — AI crawlers landing on ANY page can now discover the capability manifest, not just those who know the well-known path.
+
+The two S227 brainstorm carries closed cleanly: oracle:context_boost RUM makes the session-context boost measurable for the first time; CSP violations probe + Worker GET endpoint closes the CANON-051 monitoring gap that had been "90% done" since S227.
+
+The session was a continuation after context compaction — the toolchain pattern (rebase → stash → pop → push to beat hourly CI advances) remained stable. derive-game-nav + build-shell-assets sequencing for propagate-nav output is the key workflow to remember for future sitewide head injections.
+
+**What remained honest:** Lighthouse CI verify pending (CI run required). E2E verify pending (S224 networkidle fix should hold). Lighthouse trend auto-CI-update is the only new carry — the ledger only grows locally right now.
+
+**Top win:** The Lighthouse CI trend gate was silent for every CI run since S227. Now it's functional — the outputDir fix is a force-multiplier on 2 sessions of prior Lighthouse infrastructure work.
+**Top gap:** Lighthouse verify still pending; the gate infrastructure is now correct but we haven't seen it catch or pass a real CI run yet.
+**Intent outcome:** Continuation arc completed — build:check EXIT 0, blockingFailing 0, all carries from compacted context executed cleanly.
+
+**Brainstorm**
+1. **LIGHTHOUSE-TREND-AUTO-CI-UPDATE** — the ledger at `.cache/lighthouse-trend.json` only grows when a developer runs Lighthouse locally. After each CI Lighthouse run, a post-job step could commit + push the updated ledger (needs a PAT or bot token). This makes the cross-session trend meaningful across CI runs, not just local development sessions. Medium effort.
+2. **PROPAGATE-NAV-HEAD-TEST** — with 3 distinct `<head>` injections now in `processHtml()` (Supabase preconnect, speculation rules, agents.json), a smoke test verifying the head structure of a sample page after propagate-nav would catch regressions in the injection order or guards. Low effort, high coverage value.
+3. **CSP-VIOLATION-DIRECTOR** — now that `/v/csp-violations-summary` returns topDirectives, a build-time `npm run probe:csp-violations` session could automatically file DECISIONS.md context when the topDirective count crosses a threshold (a living directive-specific hardening backlog). Zero engineering cost — just a cron that POSTs to DECISIONS if new patterns emerge.
+
+**Committed to TASK_BOARD:** [CI/P1] Verify Lighthouse ≥0.80 · [CI/P1] Verify E2E green · [INFRA/P3] Lighthouse trend auto-CI-update
 
 ---
 

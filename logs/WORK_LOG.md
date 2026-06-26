@@ -1,5 +1,25 @@
 # Work Log
 
+## 2026-06-26 — Session 228 · oracle:context_boost RUM + CSP violations probe + Worker GET + defer→idle 43KB + Lighthouse CI outputDir fix + agents.json sitewide CANON-048 (arc continuation)
+
+Continuation of S228 full arc after context compaction. **6 substantive ships + 0 phantom wins.** SIL 983 → 987/1000 (+4). Velocity +4.
+
+**Shipped (6 items):**
+1. `oracle-context-boost-rum` — S227 brainstorm #1: `emitUx('oracle:context_boost')` in `ignis-answer-engine.js` `answer()` when `ctxTokens.length > 0`; added to Worker `RUM_UX_EVENTS`. Session-context boost is now measured.
+2. `csp-violations-probe-worker-get` — S227 brainstorm #2: `scripts/check-csp-violations.mjs` (advisory, 8 self-tests, wired into smoke) + Worker `/v/csp-violations-summary` GET endpoint (3-day KV window, topDirectives sampling; graceful 503 without KV). `npm run probe:csp-violations`. CANON-051 monitoring gap closed.
+3. `meta-desc-trim` — atlas (202→147 chars), vaultspark-forge (177→108 chars, removed duplicate sentence), voidfall (166→110 chars). All ≤200 char threshold.
+4. `defer-to-idle-43kb` — trust-depth.js (14KB) + related-content.js (12KB) + pathways-router.js (9.6KB) moved from `<script defer>` to `home-idle-loader.js` `scripts` array. adaptive-cta.js (7KB) removed from `index.html` (exits immediately on homepage — 7KB no-op). 43KB DOMContentLoaded reduction.
+5. `lighthouse-ci-outputdir-fix` — removed invalid `outputDir: ./lighthouse-results` from `treosh/lighthouse-ci-action@v11` inputs (unsupported — silently ignored; LHR files go to `.lighthouseci/`). Added shell step `find .lighthouseci -name 'lhr-*.json' -exec cp {} lighthouse-results/` between LH run and trend check. `.gitignore` updated: `.cache/lh-check-s227/`. Trend gate now receives real LHR data.
+6. `agents-json-discovery-link-sitewide` — CANON-048: injected `<link rel="alternate" type="application/json" href="/agents.json">` into 106 pages via `propagate-nav.mjs`. Idempotent guard. Required: `derive-game-nav.mjs --apply` + `build-shell-assets.mjs` after propagate-nav for full normalization.
+
+**Honest non-actions:** Lighthouse CI verify pending (defer→idle + outputDir fix — CI run required). E2E verify pending. Founder-gated: push (0 subs), forge devlog, ark.hmac.seed, mobile-sheet.
+
+**Verify:** `build:check` EXIT 0 · `blockingFailing: 0` · smoke 27/28 (1 expected skip) · `check-csp-violations --self-test` 8/8.
+
+**SIL:** 983 → 987/1000 (v3.0) · Dev 100 | Align 98 | Momentum 99 | Engage 98 | Process 100 | CrossRepo 99 | Security 96 | EcoInt 100 | CapEff 97 | AutoCov 100 · HEAD origin/main = 3b4cc23c.
+
+---
+
 ## 2026-06-26 — Session 227 · IGNIS community chips + session-context boost + topic-aware re-entry + deploy-hash · Lighthouse CI gate · push GAME_COPY_VARIANTS · sitemap gate · LCP decoding=async fix (full arc)
 
 Full continuous /goal arc (/start → /audit → /implement → /closeout). **11 substantive ships + 3 phantom wins.** SIL 986 → 983 (−3). Velocity −3.
