@@ -43,7 +43,11 @@ jobs:
           configPath: ./.lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
-          outputDir: ./lighthouse-results
+
+      - name: Collect Lighthouse JSON results
+        run: >-
+          mkdir -p lighthouse-results &&
+          find .lighthouseci -name 'lhr-*.json' -exec cp {} lighthouse-results/ \; 2>/dev/null || true
 
       - name: Check Lighthouse trend
         # S227: regression gate — exits 1 if any page+category regressed ≥0.05 vs committed trend ledger.
