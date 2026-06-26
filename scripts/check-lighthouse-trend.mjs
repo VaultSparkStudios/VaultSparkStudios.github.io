@@ -38,6 +38,15 @@ const ROOT = path.resolve(__dirname, '..');
 const LHR_DIR = path.join(ROOT, 'lighthouse-results');
 const TREND_FILE = path.join(ROOT, '.cache', 'lighthouse-trend.json');
 const CATEGORIES = ['performance', 'accessibility', 'best-practices', 'seo'];
+// Raw timing metrics tracked for diagnostic context (not used for regression gating)
+// integer:true → store as ms integer; integer:false → store as raw float (e.g. CLS 0.003)
+const RAW_METRICS = [
+  { key: 'largest-contentful-paint', label: 'lcp_ms', integer: true },
+  { key: 'first-contentful-paint',   label: 'fcp_ms', integer: true },
+  { key: 'total-blocking-time',      label: 'tbt_ms', integer: true },
+  { key: 'cumulative-layout-shift',  label: 'cls',    integer: false },
+];
+const RAW_METRIC_LABELS = new Set(RAW_METRICS.map(m => m.label));
 const WARN_DELTA = 0.05;
 const ERROR_DELTA = 0.10;
 
@@ -62,7 +71,7 @@ function median(arr) {
 
 /**
  * parseLhrDir(dir) — read all lhr-*.json files in dir.
- * Returns { pageSlug → { category → [score, …] } }
+ * Returns { pageSlug → { category → [score, …], lcp_ms → [ms, …], … } }
  */
 export function parseLhrDir(dir) {
   const byPage = {};
@@ -85,6 +94,14 @@ export function parseLhrDir(dir) {
         byPage[slug][cat].push(score);
       }
     }
+    // S226: also collect raw metric timings for diagnostic context
+    for (const { key, label, integer } of RAW_METRICS) {
+      const val = lhr.audits?.[key]?.numericValue;
+      if (typeof val === 'number' && !isNaN(val)) {
+        if (!byPage[slug][label]) byPage[slug][label] = [];
+        byPage[slug][label].push(integer ? Math.round(val) : val);
+      }
+    }
   }
   return byPage;
 }
@@ -99,7 +116,11 @@ export function computeMedians(byPage) {
     out[slug] = {};
     for (const [cat, scores] of Object.entries(cats)) {
       const m = median(scores);
-      if (m !== null) out[slug][cat] = Math.round(m * 100) / 100;
+      if (m !== null) {
+        if (cat === 'cls') out[slug][cat] = Math.round(m * 10000) / 10000; // 4dp for CLS
+        else if (RAW_METRIC_LABELS.has(cat)) out[slug][cat] = Math.round(m); // ms → integer
+        else out[slug][cat] = Math.round(m * 100) / 100; // category scores → 2dp
+      }
     }
   }
   return out;
@@ -125,6 +146,7 @@ export function detectRegressions(current, history) {
   const regressions = [];
   for (const [slug, cats] of Object.entries(current)) {
     for (const [cat, now] of Object.entries(cats)) {
+      if (!CATEGORIES.includes(cat)) continue; // raw metrics are diagnostic context, not regression gates
       const prev = best[slug]?.[cat];
       if (prev === undefined) continue;
       // Round to 2dp before comparison to avoid floating-point precision surprises
@@ -153,22 +175,33 @@ if (isSelfTest) {
   // parseLhrDir on synthetic fixtures
   const tmpDir = path.join(ROOT, '.cache', '__lhr_test_tmp__');
   fs.mkdirSync(tmpDir, { recursive: true });
-  const fakeLhr = (url, perfScore, a11yScore) => ({
+  const fakeLhr = (url, perfScore, a11yScore, lcpMs = 2000) => ({
     finalUrl: url,
     categories: { performance: { score: perfScore }, accessibility: { score: a11yScore }, 'best-practices': { score: 0.9 }, seo: { score: 0.95 } },
+    audits: {
+      'largest-contentful-paint': { numericValue: lcpMs },
+      'first-contentful-paint':   { numericValue: 800 },
+      'total-blocking-time':      { numericValue: 120 },
+      'cumulative-layout-shift':  { numericValue: 0.003 },
+    },
   });
-  fs.writeFileSync(path.join(tmpDir, 'lhr-001.json'), JSON.stringify(fakeLhr('http://127.0.0.1:4173/', 0.80, 0.92)));
-  fs.writeFileSync(path.join(tmpDir, 'lhr-002.json'), JSON.stringify(fakeLhr('http://127.0.0.1:4173/', 0.84, 0.92)));
-  fs.writeFileSync(path.join(tmpDir, 'lhr-003.json'), JSON.stringify(fakeLhr('http://127.0.0.1:4173/games/', 0.90, 0.95)));
+  fs.writeFileSync(path.join(tmpDir, 'lhr-001.json'), JSON.stringify(fakeLhr('http://127.0.0.1:4173/', 0.80, 0.92, 2400)));
+  fs.writeFileSync(path.join(tmpDir, 'lhr-002.json'), JSON.stringify(fakeLhr('http://127.0.0.1:4173/', 0.84, 0.92, 1800)));
+  fs.writeFileSync(path.join(tmpDir, 'lhr-003.json'), JSON.stringify(fakeLhr('http://127.0.0.1:4173/games/', 0.90, 0.95, 1200)));
 
   const byPage = parseLhrDir(tmpDir);
   ok(Object.keys(byPage).length === 2, 'parseLhrDir: 2 pages');
   ok((byPage['/']?.performance || []).length === 2, 'parseLhrDir: 2 perf scores for /');
   ok((byPage['/games/']?.performance || []).length === 1, 'parseLhrDir: 1 perf score for /games/');
+  ok((byPage['/']?.lcp_ms || []).length === 2, 'parseLhrDir: raw lcp_ms collected for /');
+  ok(byPage['/'].cls?.[0] === 0.003, 'parseLhrDir: cls stored as raw float (not rounded to int)');
 
   const medians = computeMedians(byPage);
   ok(medians['/'].performance === 0.82, 'computeMedians: / perf median = 0.82');
   ok(medians['/games/'].performance === 0.90, 'computeMedians: /games/ perf = 0.90');
+  // median of [2400, 1800] = 2100
+  ok(medians['/'].lcp_ms === 2100, `computeMedians: / lcp_ms median = 2100 (got ${medians['/'].lcp_ms})`);
+  ok(medians['/'].cls === 0.003, `computeMedians: / cls median = 0.003 (4dp) (got ${medians['/'].cls})`);
 
   // detectRegressions
   const history = [{ pages: { '/': { performance: 0.90 }, '/games/': { performance: 0.95 } } }];
@@ -215,7 +248,9 @@ for (const [slug, cats] of Object.entries(current)) {
   const a11y = cats.accessibility !== undefined ? ` a11y=${cats.accessibility.toFixed(2)}` : '';
   const bp = cats['best-practices'] !== undefined ? ` bp=${cats['best-practices'].toFixed(2)}` : '';
   const seo = cats.seo !== undefined ? ` seo=${cats.seo.toFixed(2)}` : '';
-  console.log(`  ${slug}${perf}${a11y}${bp}${seo}`);
+  const lcp = cats.lcp_ms !== undefined ? ` lcp=${cats.lcp_ms}ms` : '';
+  const tbt = cats.tbt_ms !== undefined ? ` tbt=${cats.tbt_ms}ms` : '';
+  console.log(`  ${slug}${perf}${a11y}${bp}${seo}${lcp}${tbt}`);
 }
 
 let exitCode = 0;

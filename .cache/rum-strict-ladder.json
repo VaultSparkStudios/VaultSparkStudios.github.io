@@ -1,9 +1,9 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-25T22:25:30.334Z",
+  "generatedAt": "2026-06-26T03:58:42.584Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 557,
+  "totalSamples": 496,
   "sufficientRoutes": 2,
   "siteState": "partial-route-strict",
   "nextRoute": {
@@ -24,14 +24,14 @@
   "routes": [
     {
       "route": "/",
-      "samples": 248,
+      "samples": 215,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
         "lcp": 1108,
-        "cls": 0.0894,
-        "inp": 232,
+        "cls": 0.0815,
+        "inp": 208,
         "fcp": 752,
         "ttfb": 193
       },
@@ -144,25 +144,25 @@
     },
     {
       "route": "/games/",
-      "samples": 65,
+      "samples": 61,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
-        "lcp": 636,
+        "lcp": 632,
         "cls": 0.0419,
         "inp": 224,
-        "fcp": 636,
+        "fcp": 632,
         "ttfb": 95
       },
       "overBudget": false
     },
     {
       "route": "/games/call-of-doodie/",
-      "samples": 24,
+      "samples": 21,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 26,
+      "remaining": 29,
       "p75": {
         "lcp": 0,
         "cls": 0,
@@ -174,16 +174,16 @@
     },
     {
       "route": "/games/gridiron-gm/",
-      "samples": 24,
+      "samples": 16,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 26,
+      "remaining": 34,
       "p75": {
-        "lcp": 1224,
-        "cls": 0.0047,
+        "lcp": 764,
+        "cls": 0.0042,
         "inp": 64,
-        "fcp": 1224,
-        "ttfb": 617
+        "fcp": 764,
+        "ttfb": 385
       },
       "overBudget": false
     },
@@ -204,16 +204,16 @@
     },
     {
       "route": "/games/vaultfront/",
-      "samples": 11,
+      "samples": 3,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 39,
+      "remaining": 47,
       "p75": {
-        "lcp": 2184,
-        "cls": 0.1011,
-        "inp": 272,
-        "fcp": 2184,
-        "ttfb": 710
+        "lcp": 0,
+        "cls": 0,
+        "inp": 0,
+        "fcp": 1164,
+        "ttfb": 298
       },
       "overBudget": false
     },
@@ -399,15 +399,15 @@
     },
     {
       "route": "/projects/",
-      "samples": 3,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 49,
       "p75": {
-        "lcp": 1512,
-        "cls": 0.001,
-        "inp": 152,
-        "fcp": 1512,
+        "lcp": 660,
+        "cls": 0.0009,
+        "inp": 120,
+        "fcp": 660,
         "ttfb": 200
       },
       "overBudget": false
@@ -474,13 +474,13 @@
     },
     {
       "route": "/projects/velaxis/",
-      "samples": 3,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 48,
       "p75": {
         "lcp": 600,
-        "cls": 0.0187,
+        "cls": 0.0155,
         "inp": 440,
         "fcp": 600,
         "ttfb": 242
@@ -499,21 +499,6 @@
         "inp": 128,
         "fcp": 2196,
         "ttfb": 20
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/promogrind/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
       },
       "overBudget": false
     },
@@ -654,10 +639,10 @@
     },
     {
       "route": "/vault-member/",
-      "samples": 3,
+      "samples": 2,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 47,
+      "remaining": 48,
       "p75": {
         "lcp": 0,
         "cls": 0,

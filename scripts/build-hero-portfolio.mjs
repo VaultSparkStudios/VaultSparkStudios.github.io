@@ -131,8 +131,15 @@ function renderTile(item, fileExists, featured) {
   const detailsLabel = featured ? 'Details →' : 'Details';
 
   const cls = ['hero-tile', `ht-${item.id}`, statusClass, featured ? 'hero-tile--featured' : '', coverKey ? 'has-cover' : 'no-cover', dual ? 'hero-tile--dual' : ''].filter(Boolean).join(' ');
+  // Featured tile with a cover: use <picture><img fetchpriority="high"> instead of a CSS
+  // background <span>. Chrome cannot match <link rel="preload"> to image-set() backgrounds,
+  // so the background is late-discovered (~3s Load Delay). A real <img> is visible in HTML
+  // and correctly matched to the preload hint, cutting Load Delay to near 0.
+  const coverEl = (featured && coverKey)
+    ? `<span class="hero-tile__cover hero-tile__cover--lcp" aria-hidden="true"><picture><source srcset="/assets/covers/${coverKey}.avif" type="image/avif"><source srcset="/assets/covers/${coverKey}.webp" type="image/webp"><img src="/assets/covers/${coverKey}.png" fetchpriority="high" decoding="async" alt=""></picture></span>`
+    : `<span class="hero-tile__cover" aria-hidden="true"></span>`;
   const inner = [
-    `<span class="hero-tile__cover" aria-hidden="true"></span>`,
+    coverEl,
     coverKey ? '' : `<span class="hero-tile__mark" aria-hidden="true">${mark}</span>`,
     `<span class="hero-tile__veil" aria-hidden="true"></span>`,
     `<span class="hero-tile__badge"><span class="hero-tile__dot" aria-hidden="true"></span>${esc(badge)}</span>`,
@@ -174,10 +181,11 @@ function coverRule(id, key) {
 }
 
 function renderTileStyles(tiles) {
-  const rules = tiles.map((t) => {
+  const rules = tiles.map((t, i) => {
     const accent = t.color || '#ffc400';
     const coverKey = COVERS[t.id];
-    const cover = coverKey ? coverRule(t.id, coverKey) : '';
+    // Featured tile (i=0) with a cover now uses <picture><img> — skip CSS background rule.
+    const cover = (coverKey && i > 0) ? coverRule(t.id, coverKey) : '';
     return `.ht-${t.id}{--tile-accent:${accent}}${cover}`;
   });
   return `<style data-hero-portfolio-style>${rules.join('')}</style>`;
@@ -301,6 +309,13 @@ if (SELF_TEST) {
   assert(!/ style\s*=\s*["']/.test(showcase), 'NO inline style= attributes (style-contract safe)');
   assert(showcase.includes('/games/call-of-doodie/'), 'on-disk canonical link resolved');
   assert(showcase.includes('application/ld+json'), 'ItemList JSON-LD emitted (agent-readable)');
+  // S226: LCP fix — featured cover uses <picture><img fetchpriority="high">, not CSS background.
+  assert(showcase.includes('hero-tile__cover--lcp'), 'featured LCP cover uses picture/img element');
+  assert(showcase.includes('fetchpriority="high"'), 'featured img carries fetchpriority=high');
+  assert(showcase.includes('type="image/avif"'), 'picture source includes AVIF source');
+  // Non-featured tiles still use CSS background (no --lcp class).
+  const nonFeatured = showcase.replace(/<!--.*?-->|hero-tile--featured[^>]*>[\s\S]*?<\/div>/, '');
+  assert(!nonFeatured.includes('hero-tile__cover--lcp'), 'non-featured tiles keep CSS background span');
   // S220: enriched JSON-LD — image, description, genre, game fields, sameAs.
   assert(showcase.includes('/assets/covers/doodie.png'), 'JSON-LD carries cover image');
   assert(showcase.includes('"description":"Co-op chaos in the browser."'), 'JSON-LD carries description');

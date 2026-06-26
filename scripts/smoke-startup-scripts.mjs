@@ -299,6 +299,24 @@ try {
   failures++;
 }
 
+// ── hero LCP element: featured tile uses <picture><img fetchpriority="high"> (S226) ─
+// Prevents regression to CSS image-set() background (not matched by Chrome preload).
+try {
+  const lcp = spawnSync(process.execPath, [resolve(root, 'scripts/check-hero-lcp-element.mjs')], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  if (lcp.status === 0) {
+    results.push({ status: 'OK', module: 'check-hero-lcp-element · featured cover uses picture/img' });
+  } else {
+    failures++;
+    const tail = (lcp.stderr || lcp.stdout || '').trim().split('\n').slice(-2).join(' ');
+    results.push({ status: 'FAIL', module: 'check-hero-lcp-element', reason: tail || 'LCP element regression: featured tile uses CSS background instead of picture/img' });
+  }
+} catch (err) {
+  results.push({ status: 'FAIL', module: 'check-hero-lcp-element', reason: `spawn error: ${err.message}` });
+  failures++;
+}
+
 // ── build-step resilience: no hard-exit(1) on gitignored inputs (S223) ────────
 try {
   const bsr = spawnSync(process.execPath, [resolve(root, 'scripts/check-build-step-resilience.mjs'), '--check'], {
