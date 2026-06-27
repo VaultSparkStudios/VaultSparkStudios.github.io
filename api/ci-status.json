@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-06-27T21:45:08.252Z",
+  "generatedAt": "2026-06-27T23:20:36.830Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
   "allGreen": false,
   "hasDeadCron": false,
-  "summary": "One or more CI gates are failing. Studio is investigating.",
+  "summary": "CI gates in progress or status unknown.",
   "workflows": [
     {
       "name": "E2E Test Suite",
-      "status": "failure",
-      "updatedAt": "2026-06-27T21:44:53Z"
+      "status": "in_progress",
+      "updatedAt": "2026-06-27T23:19:12Z"
     },
     {
       "name": "Accessibility Audit",
       "status": "success",
-      "updatedAt": "2026-06-27T21:33:22Z"
+      "updatedAt": "2026-06-27T23:20:23Z"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "updatedAt": "2026-06-27T21:36:47Z"
+      "status": "in_progress",
+      "updatedAt": "2026-06-27T23:19:06Z"
     }
   ],
   "scheduledWorkflows": [
@@ -114,9 +114,11 @@
     },
     {
       "name": "uptime-probe",
-      "lastConclusion": "unknown",
-      "lastUpdatedAt": null,
-      "recentConclusions": [],
+      "lastConclusion": "success",
+      "lastUpdatedAt": "2026-06-27T22:35:49Z",
+      "recentConclusions": [
+        "success"
+      ],
       "dead": false,
       "streak": 0
     },
