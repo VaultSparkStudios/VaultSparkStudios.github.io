@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-27T20:41:52.867Z",
+  "generatedAt": "2026-06-27T21:20:05.851Z",
   "consumer": "studio-hub",
   "listingMetadata": {
     "hubDescription": "Studio OS migration applied. VaultSparked Discord role live.",
@@ -22,10 +22,10 @@
     }
   },
   "pulse": {
-    "currentSession": 229,
+    "currentSession": 230,
     "lastUpdated": "2026-06-27",
-    "currentFocus": "S229 (arc) — LQIP cross-platform P0 fix (build-lqip-map.mjs git ls-files → 201 deterministic entries on both platforms, closes E2E compliance CI gate); INP attribution telemetry (new assets/inp-telemetry.js — PerformanceObserver('event') >150ms → beacons inp:slow_interaction with element+type+duration to /v/rum); CWV composite pass rate (cwvPass per route + cwvPassRate global in rum-summary.mjs — field: 50%, / passes, /games/ fails INP 224ms); oracle domain-tag context ranking (+0.12 boost per shared URL path segment from prior sessionQueries in ignis-answer-engine.js); changelog auto-draft (new scripts/draft-changelog-entry.mjs → context/changelog-drafts/<date>.md, honest-dark); build-SHA pre-push refresh (closeout-autopilot Step 5b runs generate-build-sha.mjs before git add -A); push personalization + post-quiz CTA (wireQuizPrompt via vs:quiz-complete CustomEvent from game-discovery-quiz.js); Lighthouse staging warmup (curl warmup step in lighthouse.yml); Lighthouse trend CI pushback (auto-commit .cache/lighthouse-trend.json on each LH CI run via GITHUB_TOKEN); CLS hardening (contain-intrinsic-block-size on .member-welcome-strip). Worker deployed v4967045f. build:check EXIT 0.",
-    "nextMilestone": "INP root-fix (inp-telemetry.js live in prod — field data will identify dominant slow interaction on / and /games/ in 2-3 days; then root-fix the interaction). Changelog publish (promote context/changelog-drafts/2026-06-27.md to changelog/index.html — founder review required). E2E full CI verify (LQIP P0 fix makes lqip-map deterministic on CI — next CI run should green E2E). Lighthouse CI ≥0.80 verify (defer→idle S228 + outputDir fix = gate now sees real LHR data).",
+    "currentFocus": "S230 (arc) — public changelog 75-day gap CLOSED: two hand-curated visitor-voice entries added to changelog/index.html (S225–S229 + consolidated S67–S224 'Intelligence Era'), reporting only already-live features (the Oracle AI, web push, edge migration, living-portfolio homepage, game quiz, themes, Studio Pulse); page had been frozen at S66/2026-04-13 for 75 days. Freshness self-heal: draft-changelog-entry.mjs gained internal/visitor classifier + CANON-030 humanize lexicon + paste-ready cl-phase HTML emit; check-content-freshness.mjs gained a HARD blockDays:60 ceiling so a months-stale public changelog now BLOCKS build:check (exit 1, control-proven). Observability honesty: check-rum-allowlist parseEmissions now credits the raw event:'name' sendBeacon body (S229 inp-telemetry.js), killing a false 'dead config' warning (77→78 call-sites in sync). build:check EXIT 0 (verified directly).",
+    "nextMilestone": "INP interaction root-fix (inp-telemetry.js field data: 0 inp:slow_interaction samples as of S230 — wait 2-3 days for samples on / and /games/, then defer the dominant slow handler / apply scheduler.yield()). E2E full CI verify (LQIP P0 determinism from S229 should green E2E on next run). Lighthouse CI ≥0.80 verify (defer→idle S228 + outputDir fix = gate sees real LHR data). Push: first live notification (0 subscribers — needs higher-intent CTA placement).",
     "blockers": [],
     "queues": {
       "now": [
@@ -46,11 +46,7 @@
         "[OPS] CF Worker automation unblock — add `CF_WORKER_API_TOKEN` so Worker deploys stop depending on local Wrangler auth."
       ],
       "shipped": [
-        "Shipped (10 substantive items · 0 phantom wins — \"LQIP P0 + INP telemetry + CWV composite + oracle domain ranking + changelog auto-draft + push personalization + CI automation\"):",
-        "Honest ledger: INP root-fix deferred — `inp-telemetry.js` is now live in production but field data needs 2–3 days to identify the dominant slow interaction on `/` and `/games/`. Changelog draft ready for founder review at `context/changelog-drafts/2026-06-27.md` — not auto-published (honest-dark). Lighthouse CI trend pushback: `GITHUB_TOKEN` used (no PAT needed), first auto-commit will land on next Lighthouse CI run after push. Founder-gated carries unchanged — push (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet.",
-        "Tests: `build:check` EXIT 0 · `blockingFailing: 0` · smoke 27/28 (1 expected skip: gateway-readiness·claude.api) · lqip-map 201 entries (deterministic on Windows + CI).",
-        "Worker: deployed `4967045f-1c5d-49c4-b8ce-a1867a005903` (inp:slow_interaction in RUM_UX_EVENTS).",
-        "First action next session: `/start` → check CI run: (a) is E2E green now that LQIP is deterministic? (b) did Lighthouse CI trigger a trend ledger commit? (c) check inp-telemetry field data in `data/rum-summary.json` after 48h — what element/type is causing INP > 200ms on `/games/`?"
+        "Shipped (3 substantive items · 1 carry resolved · 1 honest defer):"
       ]
     },
     "ignis": {
