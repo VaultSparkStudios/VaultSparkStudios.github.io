@@ -1,24 +1,24 @@
 {
-  "generatedAt": "2026-06-27T21:10:36.761Z",
+  "generatedAt": "2026-06-27T21:13:10.974Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
   "allGreen": false,
   "hasDeadCron": false,
-  "summary": "One or more CI gates are failing. Studio is investigating.",
+  "summary": "CI gates in progress or status unknown.",
   "workflows": [
     {
       "name": "E2E Test Suite",
       "status": "in_progress",
-      "updatedAt": "2026-06-27T21:05:43Z"
+      "updatedAt": "2026-06-27T21:11:49Z"
     },
     {
       "name": "Accessibility Audit",
       "status": "success",
-      "updatedAt": "2026-06-27T21:06:55Z"
+      "updatedAt": "2026-06-27T21:13:00Z"
     },
     {
       "name": "Lighthouse CI",
-      "status": "failure",
-      "updatedAt": "2026-06-27T21:10:20Z"
+      "status": "in_progress",
+      "updatedAt": "2026-06-27T21:11:50Z"
     }
   ],
   "scheduledWorkflows": [
@@ -62,11 +62,9 @@
     },
     {
       "name": "Generate Leaderboard API",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-06-27T08:48:33Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
