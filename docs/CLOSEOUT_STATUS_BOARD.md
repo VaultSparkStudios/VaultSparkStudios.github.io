@@ -1,24 +1,27 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-06-27 (Session 230 closeout) -->
+<!-- generated-at: 2026-06-27 (Session 231 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S230 ═══════╗
-║  Date: 2026-06-27  ·  SIL: 990/1000  ·  Velocity: 3 level        ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S231 ═══════╗
+║  Date: 2026-06-27  ·  SIL: 991/1000  ·  Velocity: 4 down         ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Shipped (3 substantive items · 1 carry resolved · 1 honest  ║
+║  ✓ **Shipped (4 substantive · 1 verify-win):**                   ║
+║  ✓ **Honest ledger:** INP passive-listener pass = **verify-win*  ║
+║  ✓ **Tests:** `build:check` reaches `build-lqip-map` (i.e. PASS  ║
+║  ✓ **First action next session:** `/start` → the new `CI (main)  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 990/1000 ═══════════════════════════════════════╗
+╔══ SCORES · SIL 991/1000 ═══════════════════════════════════════╗
 ║    Dev Health         100  ██████████                            ║
 ║    Alignment          98   ██████████                            ║
 ║    Momentum           100  ██████████                            ║
 ║    Engagement         100  ██████████                            ║
 ║    Process Qual       100  ██████████                            ║
 ║    Coherence          99   ██████████                            ║
-║    Security           96   ██████████                            ║
+║    Security           97   ██████████                            ║
 ║    Ecosystem          100  ██████████                            ║
 ║    Capital            97   ██████████                            ║
 ║    Automation         100  ██████████                            ║

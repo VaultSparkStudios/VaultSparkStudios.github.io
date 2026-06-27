@@ -4,13 +4,20 @@
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 4,
+  "themeCount": 3,
   "themes": [
     {
       "key": "transparency",
       "label": "Transparency",
       "count": 6,
       "commits": [
+        {
+          "sha": "24a28a04",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "RSS autodiscovery for the ship feed on /changelog/",
+          "ts": "2026-06-27T21:25:50.000Z"
+        },
         {
           "sha": "4f019bb4",
           "move": "Tended",
@@ -45,20 +52,13 @@
           "tone": "sparked",
           "summary": "IGNIS deploy-hash invalidation + session-context boost + community topics + leaderboard AI discovery",
           "ts": "2026-06-26T08:18:49.000Z"
-        },
-        {
-          "sha": "131f31a6",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "LCP render-delay root-cause (decoding=async) + heartbeat drift clear",
-          "ts": "2026-06-26T08:18:48.000Z"
         }
       ]
     },
     {
       "key": "trust",
       "label": "Trust & legal",
-      "count": 2,
+      "count": 1,
       "commits": [
         {
           "sha": "7e2d7cdc",
@@ -66,13 +66,6 @@
           "tone": "sparked",
           "summary": "CSP violations probe + Worker summary endpoint + build refresh",
           "ts": "2026-06-26T19:37:09.000Z"
-        },
-        {
-          "sha": "cfa738a0",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "beacon scheduled-workflow tracking + a11y test staleness hardening",
-          "ts": "2026-06-25T23:10:42.000Z"
         }
       ]
     },
@@ -115,20 +108,6 @@
           "tone": "sparked",
           "summary": "7 leaderboard SEO sub-pages + hero LCP preload + CI gate wave",
           "ts": "2026-06-26T04:07:36.000Z"
-        }
-      ]
-    },
-    {
-      "key": "frontdoor",
-      "label": "Front door",
-      "count": 1,
-      "commits": [
-        {
-          "sha": "7ae885b0",
-          "move": "Shipped",
-          "tone": "sparked",
-          "summary": "CI root-fix (Refresh Live Data) + Lighthouse preload headers + gate hardening",
-          "ts": "2026-06-25T22:56:04.000Z"
         }
       ]
     }

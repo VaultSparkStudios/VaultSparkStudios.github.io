@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-27T21:20:05.851Z",
+  "generatedAt": "2026-06-27T23:32:22.771Z",
   "project": {
     "slug": "vaultsparkstudios-website",
     "name": "VaultSparkStudios.github.io",
@@ -51,9 +51,9 @@
   },
   "intelligence": {
     "publicEndpoint": "/api/public-intelligence.json",
-    "currentSession": 230,
-    "currentFocus": "S230 (arc) — public changelog 75-day gap CLOSED: two hand-curated visitor-voice entries added to changelog/index.html (S225–S229 + consolidated S67–S224 'Intelligence Era'), reporting only already-live features (the Oracle AI, web push, edge migration, living-portfolio homepage, game quiz, themes, Studio Pulse); page had been frozen at S66/2026-04-13 for 75 days. Freshness self-heal: draft-changelog-entry.mjs gained internal/visitor classifier + CANON-030 humanize lexicon + paste-ready cl-phase HTML emit; check-content-freshness.mjs gained a HARD blockDays:60 ceiling so a months-stale public changelog now BLOCKS build:check (exit 1, control-proven). Observability honesty: check-rum-allowlist parseEmissions now credits the raw event:'name' sendBeacon body (S229 inp-telemetry.js), killing a false 'dead config' warning (77→78 call-sites in sync). build:check EXIT 0 (verified directly).",
-    "nextMilestone": "INP interaction root-fix (inp-telemetry.js field data: 0 inp:slow_interaction samples as of S230 — wait 2-3 days for samples on / and /games/, then defer the dominant slow handler / apply scheduler.yield()). E2E full CI verify (LQIP P0 determinism from S229 should green E2E on next run). Lighthouse CI ≥0.80 verify (defer→idle S228 + outputDir fix = gate sees real LHR data). Push: first live notification (0 subscribers — needs higher-intent CTA placement).",
+    "currentSession": 231,
+    "currentFocus": "S231 (arc) — root-fixed two silently-RED CI gates that 3 closeouts missed by never running `gh run list`. (1) E2E Test Suite compliance job failed on clean-stale-shells: a committed orphan shell (assets/ambient-core.shell-bff2141eb7.js, 0 tracked-HTML refs) was masked locally by gitignored lighthouse-results/*.html reports — removed the orphan + rewrote clean-stale-shells to scan git-tracked HTML only (git ls-files), killing the green-locally/red-in-CI class (same as S229 LQIP). (2) Lighthouse CI failed on the S229 trend-ledger git push (403/exit128, no permissions block) — added permissions: contents:write + push-only-on-main + rebase + continue-on-error. Generalized: same divergence fixed in check-orphan-assets (skip lighthouse-results/.lighthouseci); new check-trust-feed-freshness.mjs extends the S230 blockDays ceiling to status-proof/uptime/site-health/heartbeat feeds (dead-cron class blocks build); CI-truth beacon added to the startup brief (reads api/ci-status.json -> 'CI (main)' SIGNALS row, so a closeout can never again claim green over a red main). build:check passes my changes in-chain (proof-surface verified); the lone local failure is a pre-existing Windows-vs-Linux lqip-map base64 platform artifact (committed = CI-correct, kept).",
+    "nextMilestone": "Confirm the CI flip GREEN on this push (E2E Test Suite + Lighthouse CI — the real arbiter). Then: INP interaction root-fix once inp-telemetry.js has 2-3 days of field samples (0 inp:slow_interaction as of S231). LQIP cross-platform determinism (Windows libvips != Linux base64 -> perpetual local build:check drift after Action regens; needs a platform-stable encode or git-attributes strategy). Push: first live notification (0 subscribers — founder-gated).",
     "pulseKeys": [
       "now",
       "next",

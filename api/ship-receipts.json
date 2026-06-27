@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-27T21:34:36.720Z",
+  "generatedAt": "2026-06-27T23:32:19.025Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
@@ -10,6 +10,11 @@
       "label": "Transparency",
       "feedbackSignals": 6,
       "shippedCommits": [
+        {
+          "sha": "24a28a04",
+          "summary": "RSS autodiscovery for the ship feed on /changelog/",
+          "ts": "2026-06-27T21:25:50.000Z"
+        },
         {
           "sha": "4f019bb4",
           "summary": "closeout status board",
@@ -29,11 +34,6 @@
           "sha": "3711f5e2",
           "summary": "IGNIS oracle:context_boost RUM + build artifact refresh",
           "ts": "2026-06-26T19:23:24.000Z"
-        },
-        {
-          "sha": "48e6102e",
-          "summary": "IGNIS deploy-hash invalidation + session-context boost + community topics + leaderboard AI discovery",
-          "ts": "2026-06-26T08:18:49.000Z"
         }
       ],
       "proof": null
@@ -41,17 +41,12 @@
     {
       "theme": "trust",
       "label": "Trust & legal",
-      "feedbackSignals": 2,
+      "feedbackSignals": 1,
       "shippedCommits": [
         {
           "sha": "7e2d7cdc",
           "summary": "CSP violations probe + Worker summary endpoint + build refresh",
           "ts": "2026-06-26T19:37:09.000Z"
-        },
-        {
-          "sha": "cfa738a0",
-          "summary": "beacon scheduled-workflow tracking + a11y test staleness hardening",
-          "ts": "2026-06-25T23:10:42.000Z"
         }
       ],
       "proof": {
@@ -109,19 +104,6 @@
         "lcpDeltaPct": -68.4,
         "confidence": "high"
       }
-    },
-    {
-      "theme": "frontdoor",
-      "label": "Front door",
-      "feedbackSignals": 1,
-      "shippedCommits": [
-        {
-          "sha": "7ae885b0",
-          "summary": "CI root-fix (Refresh Live Data) + Lighthouse preload headers + gate hardening",
-          "ts": "2026-06-25T22:56:04.000Z"
-        }
-      ],
-      "proof": null
     }
   ]
 }
