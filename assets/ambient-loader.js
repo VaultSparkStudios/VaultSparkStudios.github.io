@@ -87,12 +87,14 @@
     {
       // S211 Wave 1: web-push subscribe UI — wires the #toggle-push in the vault-member
       // portal and any [data-push-subscribe] containers (e.g. /changelog/).
+      // S229: also loads on /games/ to listen for vs:quiz-complete and show a
+      // post-quiz contextual subscribe prompt.
       // PushManager guard prevents loading on unsupported browsers (Safari <16.4, etc.).
       src: '/assets/push-subscribe.js',
       when: function () {
         if (!('PushManager' in window) || !('serviceWorker' in navigator)) return false;
         var p = (window.location.pathname || '/').replace(/\/?$/, '/');
-        return p === '/vault-member/' || !!document.querySelector('[data-push-subscribe]');
+        return p === '/vault-member/' || p === '/games/' || !!document.querySelector('[data-push-subscribe]');
       },
       idle: true
     },
@@ -390,6 +392,19 @@
       when: function () {
         if (document.body && document.body.hasAttribute('data-vs-signed-in')) return false;
         try { return !localStorage.getItem('vs_trial_offered'); } catch (_) { return true; }
+      },
+      idle: true
+    },
+    {
+      // S229: INP attribution — beacons inp:slow_interaction for interactions >150ms.
+      // Field INP is 208ms (/) and 224ms (/games/) — over the 200ms budget. This
+      // script identifies WHICH element + event type causes the miss so we can target
+      // the fix. Only loads when PerformanceObserver 'event' type is supported.
+      src: '/assets/inp-telemetry.js',
+      when: function () {
+        return typeof PerformanceObserver !== 'undefined' &&
+          typeof PerformanceObserver.supportedEntryTypes !== 'undefined' &&
+          PerformanceObserver.supportedEntryTypes.indexOf('event') !== -1;
       },
       idle: true
     }

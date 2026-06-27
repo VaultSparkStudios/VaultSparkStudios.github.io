@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/build-ark-signature-dossier.mjs -->
-<!-- generated-at: 2026-06-26 -->
+<!-- generated-at: 2026-06-27 -->
 
 # Ark Signature Failure Dossier
 

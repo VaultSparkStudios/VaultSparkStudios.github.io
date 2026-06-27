@@ -1,16 +1,16 @@
 {
   "schemaVersion": "1.2",
-  "generatedAt": "2026-06-26T21:45:05.572Z",
+  "generatedAt": "2026-06-27T03:54:10.233Z",
   "project": {
     "name": "VaultSparkStudios.github.io",
     "slug": "vaultsparkstudios-website",
     "status": "live",
     "health": "green",
     "vaultStatus": "SPARKED",
-    "currentSession": 227,
-    "lastUpdated": "2026-06-26",
-    "currentFocus": "S227 (full arc) — IGNIS community topic chips (oracle-feedback-themes surface), session-context scoring boost, topic-aware returning-visitor re-entry chip, deploy-hash cache invalidation; Lighthouse CI blocking regression gate (outputDir + --check post-run); push notification GAME_COPY_VARIANTS personalization (cod/fgm/forge); sitemap auto-derivation gate (35 pages verified). LCP decoding=async fix: removed decoding=async from LCP img (was causing 5.1s render delay = 82% of LCP time). build:check EXIT 0 + blockingFailing 0.",
-    "nextMilestone": "Verify Lighthouse CI homepage ≥0.80 (decoding=async removed = render delay eliminated). E2E verify green (networkidle mass-fix from S224 + accessibility harness). Push notification live test (0 subs currently — send first notification when subscriber count >0).",
+    "currentSession": 229,
+    "lastUpdated": "2026-06-27",
+    "currentFocus": "S229 (arc) — LQIP cross-platform P0 fix (build-lqip-map.mjs git ls-files → 201 deterministic entries on both platforms, closes E2E compliance CI gate); INP attribution telemetry (new assets/inp-telemetry.js — PerformanceObserver('event') >150ms → beacons inp:slow_interaction with element+type+duration to /v/rum); CWV composite pass rate (cwvPass per route + cwvPassRate global in rum-summary.mjs — field: 50%, / passes, /games/ fails INP 224ms); oracle domain-tag context ranking (+0.12 boost per shared URL path segment from prior sessionQueries in ignis-answer-engine.js); changelog auto-draft (new scripts/draft-changelog-entry.mjs → context/changelog-drafts/<date>.md, honest-dark); build-SHA pre-push refresh (closeout-autopilot Step 5b runs generate-build-sha.mjs before git add -A); push personalization + post-quiz CTA (wireQuizPrompt via vs:quiz-complete CustomEvent from game-discovery-quiz.js); Lighthouse staging warmup (curl warmup step in lighthouse.yml); Lighthouse trend CI pushback (auto-commit .cache/lighthouse-trend.json on each LH CI run via GITHUB_TOKEN); CLS hardening (contain-intrinsic-block-size on .member-welcome-strip). Worker deployed v4967045f. build:check EXIT 0.",
+    "nextMilestone": "INP root-fix (inp-telemetry.js live in prod — field data will identify dominant slow interaction on / and /games/ in 2-3 days; then root-fix the interaction). Changelog publish (promote context/changelog-drafts/2026-06-27.md to changelog/index.html — founder review required). E2E full CI verify (LQIP P0 fix makes lqip-map deterministic on CI — next CI run should green E2E). Lighthouse CI ≥0.80 verify (defer→idle S228 + outputDir fix = gate now sees real LHR data).",
     "ignis": {
       "score": 48864,
       "grade": "FORGE",
@@ -29,12 +29,11 @@
       "Cloudflare security hardening — additional WAF rules for international traffic filtering."
     ],
     "shipped": [
-      "Shipped (11 substantive items · 3 phantom wins — \"IGNIS intelligence depth wave + CI gate hardening\"):",
-      "Phantom wins (CANON-019 discipline):",
-      "`workflow-cache-lint-generalize` — PHANTOM: `check-workflow-install-consistency.mjs` line 76 regex `(npm|yarn|pnpm|bun)` already covers all 4 managers; 12/12 self-tests passing.",
-      "`csp-violation-monitoring` — 90% PHANTOM: Worker `/v/csp-report` handler at line 718 + `config/csp-policy.mjs` `reportUri` at line 160 = complete infrastructure. Only gap: doctor probe reading KV data (not feasible without a new Worker GET endpoint serving KV data as JSON).",
-      "`leaderboard-sitemap-entries` — PHANTOM: all 9 leaderboard entries confirmed in sitemap.xml. Reframed as `check-sitemap-coverage.mjs` gate (shipped above).",
-      "Honest ledger: Lighthouse CI verify pending (decoding=async eliminated 5.1s render delay; next CI run will confirm ≥0.80). E2E still failing in last CI run (pre-S227). oracle:context_boost RUM omitted (boost is live but unmeasured). Founder-gated carries unchanged — push (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet."
+      "Shipped (10 substantive items · 0 phantom wins — \"LQIP P0 + INP telemetry + CWV composite + oracle domain ranking + changelog auto-draft + push personalization + CI automation\"):",
+      "Honest ledger: INP root-fix deferred — `inp-telemetry.js` is now live in production but field data needs 2–3 days to identify the dominant slow interaction on `/` and `/games/`. Changelog draft ready for founder review at `context/changelog-drafts/2026-06-27.md` — not auto-published (honest-dark). Lighthouse CI trend pushback: `GITHUB_TOKEN` used (no PAT needed), first auto-commit will land on next Lighthouse CI run after push. Founder-gated carries unchanged — push (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet.",
+      "Tests: `build:check` EXIT 0 · `blockingFailing: 0` · smoke 27/28 (1 expected skip: gateway-readiness·claude.api) · lqip-map 201 entries (deterministic on Windows + CI).",
+      "Worker: deployed `4967045f-1c5d-49c4-b8ce-a1867a005903` (inp:slow_interaction in RUM_UX_EVENTS).",
+      "First action next session: `/start` → check CI run: (a) is E2E green now that LQIP is deterministic? (b) did Lighthouse CI trigger a trend ledger commit? (c) check inp-telemetry field data in `data/rum-summary.json` after 48h — what element/type is causing INP > 200ms on `/games/`?"
     ]
   },
   "consumerChangelog": [
@@ -125,7 +124,7 @@
     }
   ],
   "stats": {
-    "sessionsCompleted": 227,
+    "sessionsCompleted": 229,
     "liveProjects": 6,
     "projectsInForge": 14,
     "activeEdgeFunctions": 16,
@@ -142,16 +141,16 @@
     "silCategories": {
       "devHealth": 100,
       "alignment": 98,
-      "momentum": 99,
-      "engagement": 98,
+      "momentum": 100,
+      "engagement": 99,
       "process": 100,
-      "coherence": 98,
-      "security": 94,
-      "ecosystem": 99,
+      "coherence": 99,
+      "security": 96,
+      "ecosystem": 100,
       "capital": 97,
       "automation": 100,
-      "total": 983,
-      "updatedSession": 227
+      "total": 989,
+      "updatedSession": 229
     },
     "sealedNextRevealAt": null
   },

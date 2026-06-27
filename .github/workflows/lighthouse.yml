@@ -54,6 +54,20 @@ jobs:
         # Silently skips when no prior history exists (seeds automatically on first run).
         run: node scripts/check-lighthouse-trend.mjs --check
 
+      - name: Update Lighthouse trend ledger
+        # S229: commit updated .cache/lighthouse-trend.json so the trend history grows
+        # each run. Only commits when the ledger actually changed to avoid [skip ci] spam.
+        if: success()
+        run: >-
+          node scripts/check-lighthouse-trend.mjs --update &&
+          git config user.name "github-actions[bot]" &&
+          git config user.email "github-actions[bot]@users.noreply.github.com" &&
+          git add .cache/lighthouse-trend.json &&
+          git diff --cached --quiet || git commit -m "chore: update lighthouse trend ledger [skip ci]" &&
+          git push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Stop local preview
         if: always()
         run: |
@@ -73,6 +87,13 @@ jobs:
 
       - name: Wait for staging reachability
         run: npx --yes wait-on --timeout 120000 --interval 5000 https://website.staging.vaultsparkstudios.com/
+
+      - name: Warm up staging server
+        run: >-
+          curl -s -o /dev/null -w "warmup: %{http_code} in %{time_total}s\n"
+          https://website.staging.vaultsparkstudios.com/ &&
+          curl -s -o /dev/null -w "warmup games: %{http_code} in %{time_total}s\n"
+          https://website.staging.vaultsparkstudios.com/games/ || true
 
       - name: Run Lighthouse against staging
         uses: treosh/lighthouse-ci-action@v11

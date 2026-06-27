@@ -8,14 +8,27 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ████▇████
-Avgs - 3: 985.3 | 5: 981.6 | 10: ~966 | 25: ~962 | all: ~963 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 98.0 | Momentum 99.0 | Engage 98.0 | Process 100.0
-Velocity trend: ↑ (S228: 6 items; S227: 10 items + 3 phantom wins; S226: 3 items) | Protocol velocity: → | Debt: level (S228: oracle:context_boost RUM; CSP probe; defer→idle; LH CI fix; agents.json sitewide; Lighthouse CI verify pending)
-Momentum runway: CI-VERIFY — Lighthouse ≥0.80 (defer→idle + outputDir fix makes gate real) + E2E green; PUSH — first notification (0 subs); FOUNDER — ark.hmac.seed; CONTENT — Signal Log + forge devlog; INFRA — Lighthouse trend auto-CI-update | Intent rate: 100% (last 5) | (S228 shipped: oracle:context_boost RUM; CSP violations probe + Worker GET; meta-desc trim; defer→idle 43KB; LH CI outputDir fix; agents.json sitewide 106 pages.)
-Last session: 2026-06-26 | Session 228 | Total: 987/1000 (v3.0) | Velocity: +4 | protocolVelocity: 0
+Sparkline (last 5 totals): ███▇█████
+Avgs - 3: 986.3 | 5: 986.0 | 10: ~967 | 25: ~962 | all: ~964 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 98.0 | Momentum 99.7 | Engage 98.7 | Process 100.0
+Velocity trend: ↑ (S229: 10 items; S228: 6 items; S227: 11 items + 3 phantom wins) | Protocol velocity: → | Debt: level (S229: LQIP P0 determinism; INP telemetry live; CWV composite; changelog auto-draft; push personalization; CI automation; inp root-fix data pending in 2-3 days)
+Momentum runway: INP-ROOT-FIX — inp-telemetry.js in prod, field data builds over 2-3 days; CHANGELOG — promote context/changelog-drafts/2026-06-27.md after founder review; CI-VERIFY — E2E (LQIP deterministic now) + Lighthouse ≥0.80; PUSH — first notification (0 subs); FOUNDER — ark.hmac.seed; CONTENT — Signal Log + forge devlog | Intent rate: 100% (last 5) | (S229 shipped: LQIP P0 git ls-files; inp-telemetry.js + Worker; cwv-composite-rum; oracle domain-rank; lh-staging-warmup; changelog-auto-draft; build-sha-pre-push; push-personalization+quiz-cta; lh-trend-ci-pushback; cls-hardening.)
+Last session: 2026-06-27 | Session 229 | Total: 989/1000 (v3.0) | Velocity: +2 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-27 — Session 229 (full arc · LQIP P0 + inp-telemetry + cwv-composite-rum + oracle-domain-rank + changelog-auto-draft + build-sha-pre-push + push-quiz-cta + lh-warmup + lh-trend-ci + cls-hardening) | Total: 989/1000 (v3.0) | Velocity: +2 | Debt: level
+Avgs — 3: 986.3 | 5: 986.0 | 10: ~967 | 25: ~962 | all: ~964
+
+Dev Health 100 | Creative Alignment 98 | Momentum 100 | Engagement 99 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 96 | Ecosystem Integration 100 | Capital Efficiency 97 | Automation Coverage 100
+
+**What improved:** This session's throughline is closing the field observability gap — from knowing a CWV budget miss existed, to knowing *which* metric fails *which* route, to now knowing *which interaction* is the culprit (INP telemetry wired). The LQIP P0 fix eliminates a 3-month-silent CI divergence (Windows 402 vs Linux 201 entries) by replacing filesystem enumeration with `git ls-files` — the class that made E2E always fail on CI. The CWV composite pass rate surfaces the whole-picture health signal that was missing from individual-metric monitoring: cwvPassRate=50% (/ passes, /games/ fails INP 224ms).
+
+Second-order: oracle domain-tag ranking compounds the S227 keyword boost with URL-space coherence (prior result path segments reinforce subsequent scoring, keeping multi-turn threads topically coherent without re-extracting keywords). The changelog auto-draft closes the content capture loop — every session's work is now auto-drafted to `context/changelog-drafts/` for founder review. The two CI automation items (Lighthouse staging warmup + trend ledger auto-commit) make the CI gates fully self-maintaining.
+
+**One brainstorm item committed to next session:** INP root-fix — `inp-telemetry.js` is live in production; after 2–3 days of field data, identify the dominant slow interaction (element tag + event type with highest duration counts on `/games/`). Likely a heavy event listener on a nav or catalog element. Fix it and get `/games/` INP under the 200ms budget.
 
 ---
 

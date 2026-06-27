@@ -220,6 +220,8 @@
       container.appendChild(wrap);
 
       emitUx('quiz:complete');
+      // S229: broadcast quiz completion so push-subscribe.js can show a contextual prompt.
+      try { document.dispatchEvent(new CustomEvent('vs:quiz-complete', { detail: { topGame: winner } })); } catch (_) {}
     }
 
     // S212: personalization — pre-select first-question option based on last game.

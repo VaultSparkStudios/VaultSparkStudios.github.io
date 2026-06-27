@@ -715,6 +715,10 @@
       border-bottom: 1px solid rgba(255,196,0,0.10);
       font-size: 0.87rem;
       color: var(--muted);
+      /* S229 CLS guard: reserve layout space before JS sets data-vs-signed-in.
+         contain-intrinsic-size hints the browser to reserve ~42px so the strip
+         expanding from 0 doesn't shift the hero down for logged-in visitors. */
+      contain-intrinsic-block-size: 42px;
     }
     body[data-vs-signed-in] .member-welcome-strip { display: flex; }
     .member-welcome-rank {
@@ -2427,7 +2431,7 @@
   <script src="/assets/home-idle-loader.js" defer></script>
 <script src="/assets/schema-injector.js" defer></script>
   <!-- vs-ambient:start -->
-<script src="/assets/ambient-core.shell-bff2141eb7.js" defer></script>
+<script src="/assets/ambient-core.shell-82efb5ec87.js" defer></script>
 <script src="/assets/ambient-feature.shell-5b85ce5201.js" defer></script>
 <!-- vs-ambient:end -->
 </body>

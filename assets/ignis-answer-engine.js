@@ -154,6 +154,17 @@
         tokens(e.q || '').forEach(function (t) { if (t && !ctxTokens.includes(t)) ctxTokens.push(t); });
       });
     }
+    // S229 oracle-context-ranking: domain-tag boost — extract top-level URL path
+    // segments from prior result URLs (e.g. '/games/' → 'games'). New results
+    // sharing a domain tag with prior results get +0.12, keeping multi-turn threads
+    // topically coherent without hard-filtering unrelated useful docs.
+    var ctxDomains = [];
+    if (sessionQueries.length >= 2) {
+      sessionQueries.slice(0, 5).forEach(function (e) {
+        var seg = (e.url || '').replace(/^https?:\/\/[^/]+/, '').split('/').filter(Boolean)[0];
+        if (seg && seg.length > 1 && !ctxDomains.includes(seg)) ctxDomains.push(seg);
+      });
+    }
     var scored = (index.documents || []).map(function (doc) {
       var hay = [doc.title, doc.summary, doc.body, doc.url].join(' ').toLowerCase();
       var score = qTokens.reduce(function (acc, t) { return acc + (hay.indexOf(t) !== -1 ? 1 : 0); }, 0);
@@ -163,6 +174,14 @@
       if (ctxTokens.length && score > 0) {
         var boost = ctxTokens.reduce(function (acc, t) { return acc + (hay.indexOf(t) !== -1 ? 0.15 : 0); }, 0);
         score = Math.min(score * 2, score + boost);
+      }
+      // Domain-tag coherence: +0.12 per shared top-level path segment with prior results.
+      if (ctxDomains.length && score > 0) {
+        var urlPath = (doc.url || '').replace(/^https?:\/\/[^/]+/, '');
+        var domBoost = ctxDomains.reduce(function (acc, seg) {
+          return acc + (urlPath.indexOf('/' + seg + '/') !== -1 || urlPath.indexOf('/' + seg) === 0 ? 0.12 : 0);
+        }, 0);
+        if (domBoost > 0) score = Math.min(score * 2, score + domBoost);
       }
       return { doc: doc, score: score };
     }).filter(function (row) { return row.score > 0; }).sort(function (a, b) { return b.score - a.score; }).slice(0, 4);

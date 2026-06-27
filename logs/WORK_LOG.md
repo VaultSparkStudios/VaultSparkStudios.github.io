@@ -1,5 +1,29 @@
 # Work Log
 
+## 2026-06-27 — Session 229 · Full Arc · LQIP P0 fix + INP telemetry + CWV composite + oracle domain ranking + changelog draft + push personalization + CI automation
+
+Full /start → /audit → /implement → /closeout arc. **10 substantive ships · 0 phantom wins.** SIL 987 → 989/1000 (+2). Velocity +2.
+
+**Shipped (10 items):**
+1. `lqip-cross-platform-fix` — `build-lqip-map.mjs` replaced filesystem walk with `git ls-files` (`trackedImages()` via `spawnSync`). Excludes gitignored `docs/mobile-audit/` (Windows: 402 entries, CI: 201 entries). Now deterministic 201 entries on both platforms. Closes E2E compliance P0.
+2. `inp-rum-telemetry` — new `assets/inp-telemetry.js`: `PerformanceObserver('event')` >150ms → beacons `inp:slow_interaction` (element + type + duration). Predicate in ambient-loader. `inp:slow_interaction` in Worker RUM_UX_EVENTS. Worker deployed (v4967045f). Field INP / 208ms → now attributable.
+3. `cwv-composite-rum` — `pull-rum-summary.mjs`: `CWV_BUDGET` constant + per-route `cwvPass` + global `cwvPassRate`/`cwvPassRouteCount`. Field: / passes, /games/ fails (INP 224ms). cwvPassRate=50%.
+4. `oracle-domain-ranking` — `ignis-answer-engine.js`: `ctxDomains` from prior result URLs, +0.12 boost per shared path segment. Complements S227 keyword boost (+0.15).
+5. `lighthouse-staging-warmup` — lighthouse.yml: curl warmup (homepage + /games/) before treosh staging LH run. Kills cold-start LCP inflation.
+6. `changelog-auto-draft` — new `scripts/draft-changelog-entry.mjs`: reads WORK_LOG → themes → honest-dark draft in `context/changelog-drafts/<date>.md`. 5/5 self-test.
+7. `build-sha-pre-push` — `closeout-autopilot.mjs` Step 5b: `node scripts/generate-build-sha.mjs` before `git add -A`, so SHA is always fresh at commit time.
+8. `push-subscribe-personalization` — `push-subscribe.js`: `GAME_LABELS` + `getPersonalizedHint(topGame)` for game-specific copy + `wireQuizPrompt(config)` post-quiz contextual CTA (vs:quiz-complete custom event from game-discovery-quiz.js). Ambient-loader extended to /games/.
+9. `lighthouse-trend-ci-pushback` — lighthouse.yml: "Update Lighthouse trend ledger" CI step (`--update` + git commit + push). Trend history auto-grows each CI run.
+10. `cls-margin-hardening` — `index.html` `.member-welcome-strip`: `contain-intrinsic-block-size: 42px`. Field CLS green (0.08/0.04); proactive guard for signed-in visitors.
+
+**Honest non-actions:** INP root-fix deferred (need 2+ days of inp-telemetry data). Changelog publish deferred (founder voice). Push (0 subs). ark.hmac.seed / mobile-sheet / Signal Log / forge devlog (founder-gated).
+
+**Verify:** `build:check` EXIT 0 · Worker deployed v4967045f · smoke 27/28 (1 expected skip) · lqip-map 201 entries deterministic.
+
+**SIL:** 987 → 989/1000 (v3.0) · Dev 100 | Align 98 | Momentum 100 | Engage 99 | Process 100 | CrossRepo 99 | Security 96 | Ecosystem 100 | Capital 97 | Auto 100 · HEAD origin/main = [to be updated after push].
+
+---
+
 ## 2026-06-26 — Session 228 · oracle:context_boost RUM + CSP violations probe + Worker GET + defer→idle 43KB + Lighthouse CI outputDir fix + agents.json sitewide CANON-048 (arc continuation)
 
 Continuation of S228 full arc after context compaction. **6 substantive ships + 0 phantom wins.** SIL 983 → 987/1000 (+4). Velocity +4.

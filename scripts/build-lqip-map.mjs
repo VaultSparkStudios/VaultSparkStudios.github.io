@@ -18,6 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import url from 'node:url';
+import { spawnSync } from 'node:child_process';
 import sharp from 'sharp';
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
@@ -28,6 +29,19 @@ const CHECK = process.argv.includes('--check');
 
 const RASTER = new Set(['.jpg', '.jpeg', '.png', '.webp', '.avif']);
 const MIN_BYTES = 20 * 1024; // skip icons/tiny graphics
+
+// Only scan git-tracked files so local gitignored dirs (e.g. docs/mobile-audit/)
+// are excluded — keeps local and CI output identical.
+function trackedImages() {
+  const res = spawnSync('git', ['ls-files', '--', '*.jpg', '*.jpeg', '*.png', '*.webp', '*.avif'], {
+    cwd: ROOT, encoding: 'utf8',
+  });
+  if (res.status !== 0) {
+    // git unavailable — fall back to walk (should not happen in normal use)
+    return null;
+  }
+  return res.stdout.trim().split('\n').filter(Boolean).map((rel) => path.join(ROOT, rel));
+}
 
 function walk(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -49,7 +63,8 @@ async function lqipFor(absPath) {
 }
 
 async function main() {
-  const files = walk(ROOT).filter((p) => {
+  const tracked = trackedImages();
+  const files = (tracked ?? walk(ROOT)).filter((p) => {
     try { return fs.statSync(p).size >= MIN_BYTES; } catch { return false; }
   });
 

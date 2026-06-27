@@ -12,18 +12,18 @@
   "localPath": null,
   "github": "https://github.com/VaultSparkStudios/VaultSparkStudios.github.io",
   "liveUrl": "https://vaultsparkstudios.com/",
-  "currentFocus": "S228 (arc continuation) — oracle:context_boost RUM (S227 carry, now measured); CSP violations probe + Worker /v/csp-violations-summary GET endpoint (S227 brainstorm, CANON-051 monitoring closed); defer→idle migration (trust-depth/related-content/pathways-router + adaptive-cta removed from homepage — 43KB DOMContentLoaded reduction); Lighthouse CI outputDir fix (treosh/lighthouse-ci-action@v11 outputDir unsupported — LHR files now copied from .lighthouseci/ to lighthouse-results/ before trend check); agents.json discovery link sitewide via propagate-nav.mjs (106 pages, CANON-048 closed). build:check EXIT 0 + blockingFailing 0.",
-  "nextMilestone": "Verify Lighthouse CI homepage ≥0.80 (defer→idle + outputDir fix = gate now sees real LHR data). E2E verify green (networkidle mass-fix from S224). Push notification live test (0 subs currently). Lighthouse trend auto-update CI step (ledger currently local-only).",
+  "currentFocus": "S229 (arc) — LQIP cross-platform P0 fix (build-lqip-map.mjs git ls-files → 201 deterministic entries on both platforms, closes E2E compliance CI gate); INP attribution telemetry (new assets/inp-telemetry.js — PerformanceObserver('event') >150ms → beacons inp:slow_interaction with element+type+duration to /v/rum); CWV composite pass rate (cwvPass per route + cwvPassRate global in rum-summary.mjs — field: 50%, / passes, /games/ fails INP 224ms); oracle domain-tag context ranking (+0.12 boost per shared URL path segment from prior sessionQueries in ignis-answer-engine.js); changelog auto-draft (new scripts/draft-changelog-entry.mjs → context/changelog-drafts/<date>.md, honest-dark); build-SHA pre-push refresh (closeout-autopilot Step 5b runs generate-build-sha.mjs before git add -A); push personalization + post-quiz CTA (wireQuizPrompt via vs:quiz-complete CustomEvent from game-discovery-quiz.js); Lighthouse staging warmup (curl warmup step in lighthouse.yml); Lighthouse trend CI pushback (auto-commit .cache/lighthouse-trend.json on each LH CI run via GITHUB_TOKEN); CLS hardening (contain-intrinsic-block-size on .member-welcome-strip). Worker deployed v4967045f. build:check EXIT 0.",
+  "nextMilestone": "INP root-fix (inp-telemetry.js live in prod — field data will identify dominant slow interaction on / and /games/ in 2-3 days; then root-fix the interaction). Changelog publish (promote context/changelog-drafts/2026-06-27.md to changelog/index.html — founder review required). E2E full CI verify (LQIP P0 fix makes lqip-map deterministic on CI — next CI run should green E2E). Lighthouse CI ≥0.80 verify (defer→idle S228 + outputDir fix = gate now sees real LHR data).",
   "blockers": [],
-  "lastUpdated": "2026-06-26",
-  "currentSession": 228,
+  "lastUpdated": "2026-06-27",
+  "currentSession": 229,
   "truthAuditStatus": "green",
   "truthAuditLastRun": "2026-06-26",
-  "silScore": 987,
-  "silAvg3": 985,
-  "silVelocity": 4,
+  "silScore": 989,
+  "silAvg3": 986,
+  "silVelocity": 2,
   "silDebt": "level",
-  "silLastSession": 228,
+  "silLastSession": 229,
   "stagingUrl": "https://website.staging.vaultsparkstudios.com",
   "stagingType": "hetzner",
   "testingSurfaces": [
@@ -73,8 +73,8 @@
   "silCategoriesV3": {
     "devHealth": 100,
     "creativeAlignment": 98,
-    "momentum": 99,
-    "engagement": 98,
+    "momentum": 100,
+    "engagement": 99,
     "processQuality": 100,
     "crossRepoCoherence": 99,
     "securityPosture": 96,
@@ -84,14 +84,14 @@
   },
   "silScoreV3MigratedAt": "2026-04-21",
   "doctorScore": {
-    "date": "2026-06-26",
-    "passing": 9,
-    "warning": 2,
+    "date": "2026-06-27",
+    "passing": 10,
+    "warning": 1,
     "failing": 3,
     "blockingFailing": 0,
     "advisoryFailing": 3,
     "total": 14,
-    "score": 64,
+    "score": 71,
     "checks": [
       {
         "id": "manifest",
@@ -165,8 +165,8 @@
       },
       {
         "id": "ignis",
-        "pass": false,
-        "warn": true,
+        "pass": true,
+        "warn": false,
         "driftClass": "derived-stale",
         "blocking": false
       },
@@ -204,6 +204,6 @@
   "testsPassing": 116,
   "testsLastRun": "2026-06-23",
   "testsLabel": "build:check gates",
-  "publicNote": "This week: the IGNIS oracle now tracks when it's using your session history to sharpen results — you can see exactly when your context is actively boosting the answers you get. We also added real-time CSP violation monitoring (security telemetry for the studio) and made every page on the site AI-agent-readable by embedding a capability manifest discovery link. Under the hood, we fixed a silent blind spot in our Lighthouse performance CI gate and reduced homepage JavaScript execution time.",
-  "publicNextStep": "Confirming the Lighthouse performance score crosses the 80% threshold after our recent optimizations, and getting the first push notification test off the ground."
+  "publicNote": "This week: we can now pinpoint exactly which interaction is causing performance slowness on our pages — a new telemetry layer records the specific button or element responsible for input delays over 150ms. We also built a composite Core Web Vitals health score (all three metrics passing simultaneously per page), automated changelog drafts so session work gets captured in human-readable form, and wired push notification prompts to appear right after the game quiz with game-specific personalized copy.",
+  "publicNextStep": "Improving how quickly the games page responds to clicks, and publishing the latest studio update once it is ready for review."
 }

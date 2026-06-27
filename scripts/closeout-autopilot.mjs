@@ -336,6 +336,21 @@ const confirm = AUTO_YES ? true : await prompt('  Commit + push the above?', tru
 if (confirm === false) { console.log('  Aborted.'); process.exit(0); }
 if (confirm === 'dry') { console.log('  Dry-run mode selected — no changes written.'); process.exit(0); }
 
+// ── Step 5b: Refresh build-sha before commit ─────────────────────────────────
+// S229: regenerate api/build-sha.json to reflect the current HEAD (the last
+// substantive commit) so the deployed SHA is always 1 commit fresh rather than
+// potentially a session old. Must run AFTER all derived-artifact generation and
+// BEFORE git add so the freshly stamped SHA is included in the closeout commit.
+if (!DRY) {
+  header('Step 5b · Refresh api/build-sha.json');
+  const bsr = spawnSync(process.execPath, [path.join(PROJECT_ROOT, 'scripts', 'generate-build-sha.mjs')], {
+    cwd: PROJECT_ROOT, encoding: 'utf8', stdio: 'inherit',
+  });
+  if (bsr.status !== 0) {
+    console.warn('  ⚠ generate-build-sha.mjs exited non-zero — proceeding without SHA refresh');
+  }
+}
+
 // ── Step 6: Commit ───────────────────────────────────────────────────────────
 header('Step 6 · Commit');
 if (DRY) {

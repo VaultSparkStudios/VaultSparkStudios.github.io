@@ -167,7 +167,31 @@
     });
   }
 
-  function renderContainer(container, subscribed, config) {
+  // S229: personalized push hint copy based on last-visited game.
+  var GAME_LABELS = {
+    'vaultspark-forge': 'Forge',
+    'call-of-doodie': 'Call of Doodie',
+    'vaultspark-football-gm': 'Football GM',
+    'mindframe': 'Mindframe',
+    'solara': 'Solara',
+    'vaultfront': 'Vaultfront',
+    'the-exodus': 'The Exodus',
+    'cod': 'Call of Doodie',
+    'fgm': 'Football GM',
+    'forge': 'Forge',
+  };
+
+  function getPersonalizedHint(topGame) {
+    var lastGame = null;
+    try { lastGame = localStorage.getItem('vs_last_game') || null; } catch (_) {}
+    var game = topGame || lastGame;
+    var label = game && GAME_LABELS[game];
+    return label
+      ? 'Get notified when ' + label + ' gets an update.'
+      : 'Get notified when something new ships from the Vault.';
+  }
+
+  function renderContainer(container, subscribed, config, topGame) {
     container.innerHTML = '';
     var btn = document.createElement('button');
     btn.type = 'button';
@@ -178,7 +202,7 @@
     if (!subscribed) {
       var hint = document.createElement('p');
       hint.className = 'vs-push-hint';
-      hint.textContent = 'Get notified when something new ships from the Vault.';
+      hint.textContent = getPersonalizedHint(topGame);
       container.appendChild(hint);
     }
 
@@ -206,6 +230,31 @@
     });
   }
 
+  // S229: post-quiz contextual push prompt. After quiz:complete fires, inject
+  // a push subscribe card below the quiz result. Gate: not already subscribed,
+  // not already shown this session (vs_push_quiz_prompt localStorage key).
+  function wireQuizPrompt(config) {
+    try { if (sessionStorage.getItem('vs_push_quiz_shown')) return; } catch (_) {}
+    document.addEventListener('vs:quiz-complete', function (ev) {
+      var topGame = (ev.detail && ev.detail.topGame) || null;
+      getSubscription().then(function (sub) {
+        if (sub) return; // already subscribed
+        try { if (sessionStorage.getItem('vs_push_quiz_shown')) return; } catch (_) {}
+        try { sessionStorage.setItem('vs_push_quiz_shown', '1'); } catch (_) {}
+
+        // Find the quiz result container and append after it.
+        var result = document.querySelector('.vs-quiz__result');
+        if (!result) return;
+        var wrap = document.createElement('div');
+        wrap.setAttribute('data-push-subscribe', '');
+        wrap.style.marginTop = '1.2rem';
+        result.parentNode.insertBefore(wrap, result.nextSibling);
+        renderContainer(wrap, false, config, topGame);
+        emitUx('push:prompt_shown');
+      }).catch(function () {});
+    }, { once: true });
+  }
+
   function boot() {
     if (!('PushManager' in window) || !('serviceWorker' in navigator)) {
       var msg = document.getElementById('push-status-msg');
@@ -217,6 +266,7 @@
       if (!config || !config.publicKey) return;
       wirePortalToggle(config);
       wireContainers(config);
+      wireQuizPrompt(config);
     }).catch(function () {
       var msg = document.getElementById('push-status-msg');
       if (msg) msg.textContent = 'Push notifications temporarily unavailable.';

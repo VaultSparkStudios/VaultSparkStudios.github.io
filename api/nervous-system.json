@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-26T21:45:08.580Z",
+  "generatedAt": "2026-06-27T03:56:18.851Z",
   "generatedBy": "scripts/build-nervous-system.mjs",
   "publicSafe": true,
   "tiles": [
@@ -41,8 +41,8 @@
       "href": "/social/"
     }
   ],
-  "focus": "This week's update focused on the IGNIS intelligence engine: when you return to the site, the oracle now shows you what the community has been exploring and cross-references your past queries with new content published since your last visit. Oracle results also get smarter the longer you search — each follow-up query knows what you've been asking about. On the infrastructure side, we added automatic performance regression detection to CI (Lighthouse score drops are now a blocking failure) and pushed notification content now adapts per game.",
-  "nextStep": "Verifying the Lighthouse performance score crosses the 80% threshold after our recent fix, and sending the first push notification once subscriber count grows.",
+  "focus": "This week: we can now pinpoint exactly which interaction is causing performance slowness on our pages — a new telemetry layer records the specific button or element responsible for input delays over 150ms. We also built a composite Core Web Vitals health score (all three metrics passing simultaneously per page), automated changelog drafts so session work gets captured in human-readable form, and wired push notification prompts to appear right after the game quiz with game-specific personalized copy.",
+  "nextStep": "Improving how quickly the games page responds to clicks, and publishing the latest studio update once it is ready for review.",
   "decisions": [
     {
       "surface": "Mobile navigation",

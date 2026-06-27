@@ -342,6 +342,10 @@ const RUM_UX_EVENTS = new Set([
   // queries exist and boost tokens are applied. Measures how often IGNIS is operating
   // in context-aware mode vs. cold-start retrieval.
   'oracle:context_boost',
+  // S229: INP attribution — slow interaction beacon (>150ms) from inp-telemetry.js.
+  // Carries element tag + event type + duration so we can identify the interaction
+  // causing the field INP budget miss on / (208ms) and /games/ (224ms).
+  'inp:slow_interaction',
 ]);
 // S192: bounded dynamic families. The exact Set above stays authoritative for
 // static names; these admit `${family}:${suffix}` (single bounded token) so

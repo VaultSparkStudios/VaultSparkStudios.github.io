@@ -1,54 +1,39 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-26T19:34:31.952Z",
+  "generatedAt": "2026-06-27T03:12:34.023Z",
   "generatedBy": "scripts/check-rum-strict-ladder.mjs",
   "minSamples": 50,
-  "totalSamples": 593,
+  "totalSamples": 544,
   "sufficientRoutes": 2,
   "siteState": "partial-route-strict",
   "nextRoute": {
     "route": "/membership/",
-    "samples": 41,
+    "samples": 39,
     "minSamples": 50,
     "state": "warning",
-    "remaining": 9,
+    "remaining": 11,
     "p75": {
       "lcp": 0,
       "cls": 0,
-      "inp": 0,
-      "fcp": 0,
-      "ttfb": 0
+      "inp": 88,
+      "fcp": 632,
+      "ttfb": 21
     },
     "overBudget": false
   },
   "routes": [
     {
       "route": "/",
-      "samples": 278,
+      "samples": 255,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
       "p75": {
         "lcp": 1108,
         "cls": 0.0815,
-        "inp": 208,
+        "inp": 176,
         "fcp": 752,
         "ttfb": 193
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/assets/og/og-*.png",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
       },
       "overBudget": false
     },
@@ -68,47 +53,17 @@
       "overBudget": false
     },
     {
-      "route": "/careers/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 784,
-        "cls": 0.0005,
-        "inp": 0,
-        "fcp": 784,
-        "ttfb": 86
-      },
-      "overBudget": false
-    },
-    {
       "route": "/changelog/",
-      "samples": 4,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 46,
-      "p75": {
-        "lcp": 1292,
-        "cls": 0.6367,
-        "inp": 0,
-        "fcp": 1292,
-        "ttfb": 895
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/community/",
       "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
       "remaining": 49,
       "p75": {
-        "lcp": 544,
-        "cls": 0.0005,
+        "lcp": 0,
+        "cls": 0,
         "inp": 0,
-        "fcp": 544,
-        "ttfb": 27
+        "fcp": 0,
+        "ttfb": 0
       },
       "overBudget": false
     },
@@ -144,7 +99,7 @@
     },
     {
       "route": "/games/",
-      "samples": 85,
+      "samples": 84,
       "minSamples": 50,
       "state": "route-strict-ready",
       "remaining": 0,
@@ -159,16 +114,16 @@
     },
     {
       "route": "/games/call-of-doodie/",
-      "samples": 21,
+      "samples": 18,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 29,
+      "remaining": 32,
       "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
+        "lcp": 364,
+        "cls": 0.016,
+        "inp": 160,
+        "fcp": 364,
+        "ttfb": 5
       },
       "overBudget": false
     },
@@ -203,26 +158,11 @@
       "overBudget": false
     },
     {
-      "route": "/games/vaultfront/",
-      "samples": 3,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 47,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 1164,
-        "ttfb": 298
-      },
-      "overBudget": false
-    },
-    {
       "route": "/games/vaultspark-football-gm/",
-      "samples": 38,
+      "samples": 34,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 12,
+      "remaining": 16,
       "p75": {
         "lcp": 1100,
         "cls": 0.0048,
@@ -339,28 +279,28 @@
     },
     {
       "route": "/membership/",
-      "samples": 41,
+      "samples": 39,
       "minSamples": 50,
       "state": "warning",
-      "remaining": 9,
+      "remaining": 11,
       "p75": {
         "lcp": 0,
         "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
+        "inp": 88,
+        "fcp": 632,
+        "ttfb": 21
       },
       "overBudget": false
     },
     {
       "route": "/nervous-system/",
-      "samples": 6,
+      "samples": 4,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 44,
+      "remaining": 46,
       "p75": {
         "lcp": 884,
-        "cls": 0.0531,
+        "cls": 0.0384,
         "inp": 184,
         "fcp": 884,
         "ttfb": 192
@@ -369,16 +309,16 @@
     },
     {
       "route": "/oracle/",
-      "samples": 24,
+      "samples": 23,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 26,
+      "remaining": 27,
       "p75": {
-        "lcp": 616,
-        "cls": 0.396,
-        "inp": 256,
-        "fcp": 616,
-        "ttfb": 231
+        "lcp": 880,
+        "cls": 0.4652,
+        "inp": 272,
+        "fcp": 880,
+        "ttfb": 275
       },
       "overBudget": false
     },
@@ -428,21 +368,6 @@
       "overBudget": false
     },
     {
-      "route": "/projects/ideaforge/",
-      "samples": 1,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 49,
-      "p75": {
-        "lcp": 624,
-        "cls": 0.0005,
-        "inp": 0,
-        "fcp": 624,
-        "ttfb": 20
-      },
-      "overBudget": false
-    },
-    {
       "route": "/projects/promogrind/",
       "samples": 1,
       "minSamples": 50,
@@ -484,21 +409,6 @@
         "inp": 440,
         "fcp": 600,
         "ttfb": 242
-      },
-      "overBudget": false
-    },
-    {
-      "route": "/projects/vorn/",
-      "samples": 2,
-      "minSamples": 50,
-      "state": "accumulating",
-      "remaining": 48,
-      "p75": {
-        "lcp": 2196,
-        "cls": 0,
-        "inp": 128,
-        "fcp": 2196,
-        "ttfb": 20
       },
       "overBudget": false
     },
@@ -594,10 +504,10 @@
     },
     {
       "route": "/studio/",
-      "samples": 2,
+      "samples": 1,
       "minSamples": 50,
       "state": "accumulating",
-      "remaining": 48,
+      "remaining": 49,
       "p75": {
         "lcp": 0,
         "cls": 0,

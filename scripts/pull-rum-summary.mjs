@@ -63,6 +63,8 @@ const WINDOW_DAYS = Math.max(1, Number(flag('--window-days', 7)) || 7);
 const MIN_SAMPLES = Math.max(1, Number(flag('--min-samples', 50)) || 50);
 
 const METRICS = ['lcp', 'cls', 'inp', 'fcp', 'ttfb'];
+// CWV "good" p75 thresholds (matches fieldBudget in summary output).
+const CWV_BUDGET = { lcp: 2500, cls: 0.1, inp: 200 };
 
 /** Nearest-rank p75 (the percentile CWV scores against). */
 function p75(nums) {
@@ -136,9 +138,14 @@ function summarize(rows, { windowDays = WINDOW_DAYS, now = Date.now() } = {}) {
       samples += rawRows.length;
       for (const m of METRICS) p[m] = p75(rawRows.map((r) => Number(r[m])));
     }
+    const lcpOk = p.lcp != null && p.lcp <= CWV_BUDGET.lcp;
+    const clsOk = p.cls != null && p.cls <= CWV_BUDGET.cls;
+    const inpOk = p.inp != null && p.inp <= CWV_BUDGET.inp;
+    const hasCwv = p.lcp != null && p.cls != null && p.inp != null;
     routes[route] = {
       samples,
       sufficient: samples >= MIN_SAMPLES,
+      cwvPass: hasCwv ? (lcpOk && clsOk && inpOk) : null,
       p75: {
         lcp: p.lcp == null ? null : Math.round(p.lcp),
         cls: p.cls == null ? null : Number(p.cls.toFixed(4)),
@@ -217,6 +224,14 @@ const routes = summarize(rows);
 const totalSamples = Object.values(routes).reduce((n, r) => n + r.samples, 0);
 const sufficientRoutes = Object.values(routes).filter((r) => r.sufficient).length;
 
+// CWV composite pass rate — % of sufficient routes where all 3 p75s meet budget.
+// null when no sufficient routes have all three vitals measured.
+const sufficientWithCwv = Object.values(routes).filter((r) => r.sufficient && r.cwvPass !== null);
+const cwvPassRouteCount = sufficientWithCwv.filter((r) => r.cwvPass === true).length;
+const cwvPassRate = sufficientWithCwv.length > 0
+  ? Math.round((cwvPassRouteCount / sufficientWithCwv.length) * 100)
+  : null;
+
 const summary = {
   schemaVersion: '1.0',
   generatedAt: new Date().toISOString(),
@@ -227,6 +242,9 @@ const summary = {
   fieldBudget: { lcp: 2500, cls: 0.1, inp: 200 }, // CWV "good" p75 thresholds
   totalSamples,
   sufficientRoutes,
+  cwvPassRate,
+  cwvPassRouteCount,
+  cwvMeasuredRouteCount: sufficientWithCwv.length,
   routes,
 };
 

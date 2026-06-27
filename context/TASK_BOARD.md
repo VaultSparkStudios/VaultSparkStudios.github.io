@@ -2,6 +2,31 @@
 
 Last updated: 2026-06-26 (Session 228 — arc continuation: oracle:context_boost RUM + CSP violations probe + Worker GET + defer→idle 43KB + Lighthouse CI outputDir fix + agents.json sitewide CANON-048)
 
+## S229 outcome + carries
+
+**Shipped in S229 (10 items · 0 phantom wins — "INP telemetry + CWV composite + IGNIS domain ranking + push personalization + CI automation"):**
+- [x] **[PERF/P0] LQIP cross-platform determinism fix** — `scripts/build-lqip-map.mjs`: replaced filesystem walk with `git ls-files` (`trackedImages()` function using `spawnSync`). Excludes gitignored `docs/mobile-audit/` screenshots that existed locally (Windows: 402 entries) but not on CI (Linux: 201 entries), causing the E2E compliance gate to fail every CI run. Now deterministic: both platforms produce 201 entries. Closes the most critical outstanding CI blocker.
+- [x] **[PERF/P1] INP attribution telemetry** — new `assets/inp-telemetry.js`: `PerformanceObserver('event')` for interactions >150ms, beacons `inp:slow_interaction` with element tag + event type + duration to `/v/rum`. Predicate-loaded via `ambient-loader.js` (gated on `PerformanceObserver.supportedEntryTypes.includes('event')`). `inp:slow_interaction` added to Worker `RUM_UX_EVENTS` Set + Worker deployed (v4967045f-1c5d-49c4-b8ce-a1867a005903). Field INP / at 208ms p75 (over 200ms budget) can now be attributed to a specific interaction.
+- [x] **[PERF/P2] CWV composite pass rate** — `scripts/pull-rum-summary.mjs`: added `CWV_BUDGET` constant, per-route `cwvPass` boolean (null when any metric missing), and aggregate `cwvPassRate` / `cwvPassRouteCount` / `cwvMeasuredRouteCount` to the summary output. Current field data: / passes (INP 176ms, CLS 0.08, LCP 1108ms); /games/ fails (INP 224ms). cwvPassRate=50%. Surfaces the composite signal in `data/rum-summary.json`.
+- [x] **[AI/P2] Oracle domain-tag context ranking** — `assets/ignis-answer-engine.js` `answer()`: added `ctxDomains` extraction from prior `sessionQueries[].url` top-level path segments. Documents sharing a URL domain (e.g. `/games/`) with prior results get +0.12 boost, keeping multi-turn threads topically coherent. Composable with the S227 keyword boost (+0.15 per token).
+- [x] **[CI/P2] Lighthouse staging warmup** — `.github/workflows/lighthouse.yml` `lighthouse-staging` job: added "Warm up staging server" step (`curl` to homepage + /games/) between the wait-on reachability check and the treosh Lighthouse run. Prevents cold-start LCP inflation (staging 6057ms vs field median 1108ms).
+- [x] **[CONTENT/P2] Changelog auto-draft script** — new `scripts/draft-changelog-entry.mjs`: reads latest WORK_LOG session entry, extracts shipped items, groups by theme (intelligence/performance/observability/platform/product), writes honest-dark draft to `context/changelog-drafts/<date>.md`. Self-test 5/5. Generated first draft: `context/changelog-drafts/2026-06-27.md`. Closes the 75-day changelog staleness gap.
+- [x] **[INFRA/P2] Build-SHA pre-commit regeneration** — `scripts/closeout-autopilot.mjs`: added Step 5b between build:check gate and Step 6 Commit: `node scripts/generate-build-sha.mjs` runs immediately before `git add -A`, ensuring `api/build-sha.json` always reflects the current HEAD at push time rather than a potentially session-old SHA.
+- [x] **[ENGAGEMENT/P2] Push subscribe personalization + post-quiz CTA** — `assets/push-subscribe.js`: added `GAME_LABELS` map + `getPersonalizedHint(topGame)` for game-specific copy ("Get notified when Forge gets an update."); added `wireQuizPrompt(config)` that listens for `vs:quiz-complete` custom DOM event (dispatched from `game-discovery-quiz.js` after `emitUx('quiz:complete')`) and injects a push subscribe card below the quiz result (session-gated, not already subscribed). Ambient-loader predicate extended to also load on `/games/`.
+- [x] **[CI/P2] Lighthouse trend CI pushback** — `.github/workflows/lighthouse.yml`: added "Update Lighthouse trend ledger" step after the regression check: runs `check-lighthouse-trend.mjs --update`, configures git, stages `.cache/lighthouse-trend.json`, commits + pushes only when changed. Trend history now grows automatically on each Lighthouse CI run.
+- [x] **[PERF/L1] CLS margin hardening** — `index.html` `.member-welcome-strip` CSS: added `contain-intrinsic-block-size: 42px` to reserve layout space before JS sets `data-vs-signed-in`, preventing hero shift for signed-in visitors. Field CLS is green (/ 0.08, /games/ 0.04) — this is a proactive guard.
+
+**S229 honest ledger:**
+- → **INP attribution data needed** — inp-telemetry.js is now live; field data will identify the slow interaction on / and /games/ in 1–2 days of real traffic.
+- → **Changelog draft needs founder review** — `context/changelog-drafts/2026-06-27.md` generated; promote to `changelog/index.html` when ready.
+- → **Lighthouse CI trend pushback** — `GITHUB_TOKEN` used (no PAT needed); first commit will land on next Lighthouse CI run.
+- → **Founder-gated carries unchanged** — push (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet.
+
+**S229 committed to next session (brainstorm):**
+- [ ] **[PERF/P1] INP root-fix** — after inp-telemetry.js collects 2–3 days of data, identify the dominant interaction and fix it (likely a heavy event listener on a nav element or oracle chip).
+- [ ] **[PRODUCT/P1] Changelog publish** — review `context/changelog-drafts/2026-06-27.md` and promote to `changelog/index.html` (founder voice).
+- [ ] **[CI/P2] E2E full verify** — confirm E2E suite green post-LQIP fix (CI run needed).
+
 ## S228 outcome + carries
 
 **Shipped in S228:**

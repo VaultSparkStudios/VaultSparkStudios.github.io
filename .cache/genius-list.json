@@ -1,0 +1,115 @@
+{
+  "signature": "8d4fad4822e38d93",
+  "generatedAt": "2026-06-26T20:52:47.647Z",
+  "list": {
+    "schemaVersion": 1,
+    "generatedAt": "2026-06-26T20:52:47.548Z",
+    "project": "VaultSparkStudios.github.io",
+    "source": "deterministic repo-truth scan of PROJECT_STATUS.json, TASK_BOARD.md, and LATEST_HANDOFF.md",
+    "ignisSource": "fallback",
+    "scoreSummary": {
+      "overallOpportunityPressure": 79,
+      "health": "green",
+      "silScore": 987,
+      "ciHealth": "check gh run list"
+    },
+    "items": [
+      {
+        "category": "VERIFY",
+        "title": "Post-push CI confirmation",
+        "score": 96,
+        "task": "Confirm Lighthouse, Accessibility, and E2E after the local-preview CI recovery lands.",
+        "rationale": "The current implementation is only complete once the remote browser gates prove the runner is auditing the real artifact.",
+        "command": "gh run list --limit 10"
+      },
+      {
+        "category": "VERIFY",
+        "title": "Verify Lighthouse homepage ≥0.80",
+        "score": 86,
+        "task": "[CI/P1] Verify Lighthouse homepage ≥0.80 — defer→idle (43KB) + outputDir fix (gate now sees LHR data). Watch next CI Lighthouse run.",
+        "rationale": "Verify Lighthouse homepage ≥0.80 is a 228-session-old carry-forward; verify or close it so it stops polluting the hit list.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
+      {
+        "category": "BRAND",
+        "title": "Forge Window naming propagation",
+        "score": 86,
+        "task": "Finish propagating Forge Window language across generated copy and shared surfaces while preserving /studio-pulse/ for SEO.",
+        "rationale": "The URL stays stable for search, but the public vocabulary should stay coherent everywhere visitors see it.",
+        "command": "node scripts/propagate-nav.mjs"
+      },
+      {
+        "category": "VERIFY",
+        "title": "Verify E2E green",
+        "score": 83,
+        "task": "[CI/P1] Verify E2E green — networkidle mass-fix from S224. Confirm first green E2E run.",
+        "rationale": "Verify E2E green is a 228-session-old carry-forward; verify or close it so it stops polluting the hit list.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
+      {
+        "category": "PRODUCT",
+        "title": "workflow cache-dependency lint. Generalize check-workflow-install-con…",
+        "score": 81,
+        "task": "[INFRA/P3·SIL] workflow cache-dependency lint. Generalize check-workflow-install-consistency to flag any actions/setup-node cache: without a committed lockfile present (not just the literal cache: 'npm').",
+        "rationale": "workflow cache-dependency lint. Generalize check-workflow-install-cons is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "VERIFY",
+        "title": "Lighthouse trend auto-update in CI",
+        "score": 80,
+        "task": "[INFRA/P3] Lighthouse trend auto-update in CI — push updated .cache/lighthouse-trend.json back to repo after each CI Lighthouse run (CI step + PAT). Ledger currently only grows locally; cross-session trend is invisible in CI.",
+        "rationale": "Lighthouse trend auto-update in CI is a 228-session-old carry-forward; verify or close it so it stops polluting the hit list.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
+      {
+        "category": "VERIFY",
+        "title": "Verify E2E green in CI",
+        "score": 77,
+        "task": "[CI/P2] Verify E2E green in CI — the networkidle mass-fix should eliminate timeout failures in s134-oracle-ignis.spec.js and the 9 other files. Watch for the first green E2E run after S224 commit lands.",
+        "rationale": "Verify E2E green in CI is a 228-session-old carry-forward; verify or close it so it stops polluting the hit list.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
+      {
+        "category": "PRODUCT",
+        "title": "First real push notification",
+        "score": 75,
+        "task": "[PUSH/P1·FOUNDER] First real push notification — npm run push:count (0 subs today) → npm run push:notify -- --game cod (founder go-ahead required).",
+        "rationale": "First real push notification is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "VERIFY",
+        "title": "ci-health-monitor first real run",
+        "score": 74,
+        "task": "[INFRA/P3] ci-health-monitor first real run — monitor will run on schedule (9am UTC) and open/update a GitHub Issue if any dead crons are found. Watch for the first auto-issue or auto-close after the Refresh Live Data cron goes green.",
+        "rationale": "ci-health-monitor first real run is a 228-session-old carry-forward; verify or close it so it stops polluting the hit list.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      },
+      {
+        "category": "BRAND",
+        "title": "Draft one Signal Log post (founder voice) + publish forge devlog (fou…",
+        "score": 72,
+        "task": "[CONTENT/P1·FOUNDER] Draft one Signal Log post (founder voice) + publish forge devlog (founder voice, never auto-published).",
+        "rationale": "Draft one Signal Log post (founder voice) + publish forge devlog (foun affects public vocabulary and navigation; requires founder sign-off before user-visible copy changes.",
+        "command": ""
+      },
+      {
+        "category": "PRODUCT",
+        "title": "Provision ark.hmac.seed (fleet ARK_HMAC_SEED)",
+        "score": 69,
+        "task": "[CRED/P1·FOUNDER] Provision ark.hmac.seed (fleet ARK_HMAC_SEED) — fixes cross-repo Ark signature verification (52 sig-failures on drain). HMAC-seed minting = founder credential action (CANON-019 reserved).",
+        "rationale": "Provision ark.hmac.seed (fleet ARK_HMAC_SEED) is open, local, and unblocked — can ship this session.",
+        "command": ""
+      },
+      {
+        "category": "VERIFY",
+        "title": "scheduled-workflow staleness beacon. Record per-workflow last-conclus…",
+        "score": 68,
+        "task": "[INFRA/P3·SIL] scheduled-workflow staleness beacon. Record per-workflow last-conclusion in api/ci-status.json + a read-only local doctor probe that flags any *scheduled* workflow red for ≥2 runs — so a 3-month silent break (og-images) can't recur. (Top gap this session: CI-failure blindness.)",
+        "rationale": "scheduled-workflow staleness beacon. Record per-workflow last-conclusi is a 228-session-old carry-forward; verify or close it so it stops polluting the hit list.",
+        "command": "npm run build:check && node scripts/csp-audit.mjs"
+      }
+    ]
+  }
+}

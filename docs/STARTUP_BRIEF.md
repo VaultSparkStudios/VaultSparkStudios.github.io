@@ -1,11 +1,11 @@
 <!-- generated-by: scripts/render-startup-brief.mjs v3.1 -->
-<!-- generated-at: 2026-06-26 (Session 224 closeout) -->
+<!-- generated-at: 2026-06-27 (Session 228 closeout) -->
 <!-- fast-boot-valid-until: next session if within 24h -->
 <!-- brief-coherent: true -->
 
 # Startup Brief — VaultSparkStudios.github.io
 
-> **Fast-boot brief** — generated at Session 224 closeout · 2026-06-26.
+> **Fast-boot brief** — generated at Session 228 closeout · 2026-06-27.
 > Valid for next session if started within 24h. For sessions >24h later, load context files fresh (start.md §3).
 
 ---
@@ -14,7 +14,7 @@
 ╔════════════════════════════════════════════════════════════════╗
 ║  🚀 VAULTSPARKSTUDIOS.GITHUB.IO                                  ║
 ║  website · deployed/public-live · SPARKED                        ║
-║  Session 225 · 2026-06-26 · FOUNDER MODE                         ║
+║  Session 229 · 2026-06-27 · FOUNDER MODE                         ║
 ║  Owner: VaultSpark Studios                                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -35,10 +35,10 @@
 
 ╔══ SCORE ═══════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    983/1000   ███████████████████████░   98%                     ║
-║    SIL v3.0  ·  Avg3: ?  ·  Velocity 7→                          ║
-║    Last active: 20629d  ·  Last closeout: 1d  ·  (active = newe  ║
-║    Trend  ▄▄▆▇▆  →  (last 5 sessions)                            ║
+║    987/1000   ███████████████████████░   99%                     ║
+║    SIL v3.0  ·  Avg3: ?  ·  Velocity 0↑                          ║
+║    Last active: 20630d  ·  Last closeout: 1d  ·  (active = newe  ║
+║    Trend  ▆▇▆▂▂  ↑  (last 5 sessions)                            ║
 ║                                                                  ║
 ║    Category         Score  Bar        Spark   Δ                  ║
 ║    ─────────────── ────── ────────── ──────── ─                  ║
@@ -47,34 +47,34 @@
 ║    Momentum          93    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
 ║    Engagement        94    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
 ║    Process Qual      94    █████████░  ▇▇▇▇▇▇▇▇ ↓                ║
-║    Coherence         97    ██████████  ········ →                ║
-║    Security          94    █████████░  ········ →                ║
-║    Ecosystem         99    ██████████  ········ →                ║
+║    Coherence         99    ██████████  ········ →                ║
+║    Security          96    ██████████  ········ →                ║
+║    Ecosystem        100    ██████████  ········ →                ║
 ║    Capital           97    ██████████  ········ →                ║
 ║    Automation       100    ██████████  ········ →                ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
-╔══ WHERE WE LEFT OFF  ·  Session 224 ═══════════════════════════╗
+╔══ WHERE WE LEFT OFF  ·  Session 228 ═══════════════════════════╗
 ║  Shipped:  see LATEST_HANDOFF.md                                 ║
 ║  Tests:    116/116 passing  ·  Deploy: N/A                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ CONTEXT METER ═══════════════════════════════════════════════╗
-║  ✓  ░░░░░░░░░░░░░░░░░░░░░░░░    2% used                          ║
-║     18,894 / 1,000,000 tok  ·  claude-code/opus-4-8-1m  ·  meas  ║
-║     ~9,447 tok/turn  ·  cache 50%  ·  95 turns to compact        ║
-║     Verdict: CONTINUE                                            ║
+║  ✓  ██████████░░░░░░░░░░░░░░   42% used                          ║
+║     84,678 / 200,000 tok  ·  unknown/default  ·  heuristic       ║
+║     ~42,339 tok/turn  ·  cache 50%  ·  2 turns to compact        ║
+║     Verdict: WARN_COMPACT_SOON  ← act now                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIGNALS ═════════════════════════════════════════════════════╗
 ║  ✓  Tests         116/116 passing (2026-06-23)                   ║
-║  ✓  Velocity      7   ·  Debt: ↓                                 ║
-║  ✓  Runway        PUSH — push:count → first real notification (  ║
+║  ⛔  Velocity      0 ↑  ·  Debt: →                                ║
+║  ✓  Runway        CI-VERIFY — Lighthouse ≥0.80 (defer→idle + ou  ║
 ║  ⛔  Context age   ?d                                             ║
-║  ⚠  IGNIS         44691 FORGE  ·  7d old                         ║
+║  ✓  IGNIS         48864 FORGE  ·  1d old                         ║
 ║  ✓  Truth         green  ·  Genome: ?                            ║
-║  ⛔  Compliance   32/36 (89%) → ▆▆▆▆▆▆▆▆                          ║
+║  ⛔  Compliance   33/36 (92%) → ▆▆▆▆▆▆▆▆                          ║
 ║  ✓  Genome dims   all stable  (0/25)                             ║
 ║  ✓  Entropy       0.213  (healthy)                               ║
 ║  ✓  CDR           no gap detected                                ║
@@ -82,13 +82,13 @@
 ║  ✓  Templates     v3.3 aligned                                   ║
 ║  ⛔  Revenue sig.  not found  ⚠ stale                             ║
 ║  ✓  Deploy gaps   no gaps (run: ops deploy-gaps)                 ║
-║  ⛔  Doctor        9/14 (64%)  ·  3 failing                       ║
-║  ✓  Cost          real $0.04/7d · 7d notional $0.71 (flat-rate   ║
+║  ⛔  Doctor        10/14 (71%)  ·  3 failing                      ║
+║  ✓  Cost          real $0.09/7d · 7d notional $1.21 (flat-rate   ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ FOUNDER UNLOCKS ═════════════════════════════════════════════╗
 ║  Single founder actions that reopen sprint surface:              ║
-║     7d · [S164→MOBILE-SHEET-DEFAULT-SWAP]                        ║
+║     8d · [S164→MOBILE-SHEET-DEFAULT-SWAP]                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ ORCHESTRATOR ════════════════════════════════════════════════╗
@@ -100,13 +100,13 @@
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ MOMENTUM METER ══════════════════════════════════════════════╗
-║  Velocity:   ▄▄▆▇▆  7→  (last 5 sessions)                        ║
+║  Velocity:   ▆▇▆▂▂  0↑  (last 5 sessions)                        ║
 ║  Intent:     100% achieved last 5                                ║
 ║  Streak:     — (last intent not achieved)                        ║
 ╚════════════════════════════════════════════════════════════════╝
 
 ╔══ SIL FORECAST (next session) ═════════════════════════════════╗
-║  Projected:  0/1000  (↓983 vs current 983)                       ║
+║  Projected:  0/1000  (↓987 vs current 987)                       ║
 ║  All categories forecast stable or rising.                       ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -114,17 +114,17 @@
 ║   96  [VERIFY]       Post-push CI confirmation                   ║
 ║        The current implementation is only complete once the rem  ║
 ║                                                                  ║
-║   86  [VERIFY]       Verify E2E green in CI                      ║
-║        Verify E2E green in CI is a 224-session-old carry-forwar  ║
+║   86  [VERIFY]       Verify Lighthouse homepage ≥0.80            ║
+║        Verify Lighthouse homepage ≥0.80 is a 228-session-old ca  ║
 ║                                                                  ║
 ║   86  [BRAND]        Forge Window naming propagation             ║
 ║        The URL stays stable for search, but the public vocabula  ║
 ║                                                                  ║
-║   84  [PRODUCT]      workflow cache-dependency lint. Generalize  ║
-║        workflow cache-dependency lint. Generalize check-workflo  ║
+║   83  [VERIFY]       Verify E2E green                            ║
+║        Verify E2E green is a 228-session-old carry-forward; ver  ║
 ║                                                                  ║
-║   80  [VERIFY]       ci-status-beacon hasDeadCron dashboard sur  ║
-║        ci-status-beacon hasDeadCron dashboard surface is a 224-  ║
+║   81  [PRODUCT]      workflow cache-dependency lint. Generalize  ║
+║        workflow cache-dependency lint. Generalize check-workflo  ║
 ║                                                                  ║
 ╚════════════════════════════════════════════════════════════════╝
 
@@ -132,5 +132,5 @@
 
 ---
 
-*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 224 closeout · 2026-06-26*
+*Generated by `scripts/render-startup-brief.mjs v3.1` · Session 228 closeout · 2026-06-27*
 *Run `node scripts/ops.mjs doctor` for live health check · `node scripts/ops.mjs genius-list` to refresh hit list*
