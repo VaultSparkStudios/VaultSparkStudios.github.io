@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-06-27T21:13:10.974Z",
+  "generatedAt": "2026-06-27T21:17:00.012Z",
   "generatedBy": ".github/workflows/ci-status-beacon.yml",
   "allGreen": false,
   "hasDeadCron": false,
-  "summary": "CI gates in progress or status unknown.",
+  "summary": "One or more CI gates are failing. Studio is investigating.",
   "workflows": [
     {
       "name": "E2E Test Suite",
@@ -17,8 +17,8 @@
     },
     {
       "name": "Lighthouse CI",
-      "status": "in_progress",
-      "updatedAt": "2026-06-27T21:11:50Z"
+      "status": "failure",
+      "updatedAt": "2026-06-27T21:16:50Z"
     }
   ],
   "scheduledWorkflows": [
@@ -118,11 +118,9 @@
     },
     {
       "name": "RUM Field Pull",
-      "lastConclusion": "success",
-      "lastUpdatedAt": "2026-06-27T08:52:39Z",
-      "recentConclusions": [
-        "success"
-      ],
+      "lastConclusion": "unknown",
+      "lastUpdatedAt": null,
+      "recentConclusions": [],
       "dead": false,
       "streak": 0
     },
