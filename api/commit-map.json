@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-26",
+  "generatedAt": "2026-06-27",
   "generatedBy": "scripts/build-commit-map.mjs",
   "source": "git log (local, noise-filtered)",
   "kind": "commit-map",
@@ -7,6 +7,86 @@
   "note": "Recent moves in the forge. Automated bookkeeping filtered out.",
   "count": 24,
   "entries": [
+    {
+      "sha": "dc32ed51",
+      "ts": "2026-06-27T04:10:31.000Z",
+      "type": "feat",
+      "scope": "S229",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "LQIP P0 + INP telemetry + CWV composite + oracle domain rank + changelog draft + push quiz CTA + CI automation"
+    },
+    {
+      "sha": "58320e0e",
+      "ts": "2026-06-27T01:01:21.000Z",
+      "type": "merge",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "pull upstream beacon + refresh commits"
+    },
+    {
+      "sha": "98b58dec",
+      "ts": "2026-06-26T20:50:15.000Z",
+      "type": "chore",
+      "scope": null,
+      "breaking": false,
+      "move": "Tended",
+      "tone": "muted",
+      "summary": "S228 closeout — context + decisions + SIL 987 + task board"
+    },
+    {
+      "sha": "3b4cc23c",
+      "ts": "2026-06-26T20:20:43.000Z",
+      "type": "feat",
+      "scope": "S228",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "CANON-048 agents.json discovery link sitewide (127 pages)"
+    },
+    {
+      "sha": "e2fa8520",
+      "ts": "2026-06-26T20:01:43.000Z",
+      "type": "fix",
+      "scope": "S228",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "Lighthouse CI outputDir warning + trend-check pipeline fix"
+    },
+    {
+      "sha": "1e5d46cb",
+      "ts": "2026-06-26T19:58:25.000Z",
+      "type": "perf",
+      "scope": "S228",
+      "breaking": false,
+      "move": "Sped up",
+      "tone": "perf",
+      "summary": "defer→idle for 3 below-fold scripts + remove adaptive-cta no-op"
+    },
+    {
+      "sha": "ca5a1f6a",
+      "ts": "2026-06-26T19:58:24.000Z",
+      "type": "fix",
+      "scope": "S228",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "trim 3 meta description length warnings + build-sha refresh"
+    },
+    {
+      "sha": "7e2d7cdc",
+      "ts": "2026-06-26T19:37:09.000Z",
+      "type": "feat",
+      "scope": "S228",
+      "breaking": false,
+      "move": "Shipped",
+      "tone": "sparked",
+      "summary": "CSP violations probe + Worker summary endpoint + build refresh"
+    },
     {
       "sha": "3711f5e2",
       "ts": "2026-06-26T19:23:24.000Z",
@@ -166,86 +246,6 @@
       "move": "Tended",
       "tone": "muted",
       "summary": "S223b doc update — 10 total ships · VR baselines + SPARKED shard gate · SIL 976"
-    },
-    {
-      "sha": "dfaf941a",
-      "ts": "2026-06-25T21:52:28.000Z",
-      "type": "feat",
-      "scope": "S223b",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "VR Linux baselines committed + CANON-048 SPARKED shard gate"
-    },
-    {
-      "sha": "b6b52c80",
-      "ts": "2026-06-25T21:22:43.000Z",
-      "type": "chore",
-      "scope": "closeout",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "S223 write-back — 8 ships · build-agents-json P0 + 4 gates + ci-health-monitor + Node24 + VR infra · SIL 974"
-    },
-    {
-      "sha": "7278e65e",
-      "ts": "2026-06-25T21:02:16.000Z",
-      "type": "fix",
-      "scope": "vr",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "snapshot dir + networkidle → load + YAML validity gate (S223)"
-    },
-    {
-      "sha": "9473eebd",
-      "ts": "2026-06-25T21:02:16.000Z",
-      "type": "feat",
-      "scope": "ci",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "beacon→auto-issue escalation (S223 brainstorm #2)"
-    },
-    {
-      "sha": "a4dbe13c",
-      "ts": "2026-06-25T20:21:46.000Z",
-      "type": "chore",
-      "scope": "ci",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "upgrade all workflows from Node 20 to Node 24"
-    },
-    {
-      "sha": "c955a640",
-      "ts": "2026-06-25T20:17:00.000Z",
-      "type": "fix",
-      "scope": "vr",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "increase timeout 12→25min + always-upload baselines + add update-vr-baselines.mjs helper"
-    },
-    {
-      "sha": "41a6e22a",
-      "ts": "2026-06-25T19:38:09.000Z",
-      "type": "fix",
-      "scope": "S223",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "root-fix agents-json CI exit(1) on gitignored ECOSYSTEM + build-step resilience gate + hero JSON-LD completeness gate"
-    },
-    {
-      "sha": "2d6f104b",
-      "ts": "2026-06-25T16:30:06.000Z",
-      "type": "fix",
-      "scope": "S222",
-      "breaking": false,
-      "move": "Fixed",
-      "tone": "fix",
-      "summary": "CI-blindness class closed — built the staleness beacon, it caught a real 7-run dead cron, root-fixed it + 3 latent CI…"
     }
   ]
 }

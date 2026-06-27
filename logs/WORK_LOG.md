@@ -1,5 +1,22 @@
 # Work Log
 
+## 2026-06-27 — Session 230 · Full Arc · Changelog 75-day public-gap close + freshness self-heal gate + RUM beacon observability-honesty fix
+
+Full /start → /audit → /implement → /closeout arc. **3 substantive ships · 1 carry RESOLVED · 1 honest defer.** SIL 989 → 990/1000 (+1). The session's signature: a public-trust hole no automated signal ever stopped, then the gate that makes the class impossible to recur.
+
+**Audit (verified vs LIVE code):** the genius-list carries were mostly already done — *Post-push CI confirmation* RESOLVED (S229's dc32ed51 deployed clean; every workflow `success`), *INP root-fix* premise not-yet-ready (`grep inp:slow data/rum-history.ndjson` = **0 samples**; telemetry only shipped ~5h ago → honest defer, no fabricated diagnosis). The 3 "failing" doctor checks are all **portfolio/sibling drift** (VEILOS/Velaxis/Syntha Stripe + branding) — this repo's `blockingFailing` is 0. The one real live gap: `check-content-freshness` flagged the public `/changelog/` **75 days stale** (frozen at S66 / 2026-04-13 while 163 sessions shipped).
+
+**Shipped (3 items):**
+1. `changelog-public-gap-close` (P0 trust) — added two hand-curated, visitor-voice entries to `changelog/index.html`: **S225–S229** ("Faster pages, sharper discovery, smarter Oracle") and a consolidated **S67–S224 "Intelligence Era"** (the Oracle AI launch, web push, edge-network migration, living-portfolio homepage, find-your-game quiz, theme system, Studio Pulse). Reports ONLY already-live features (honest, not a new promise, not founder-voice narrative). Caught + corrected my own overclaim mid-session: "Core Web Vitals in the green" → "load times dramatically faster" (field cwvPassRate is 50%, INP still over budget — won't lie on a public surface). `check-content-freshness` changelog: **75d stale → 0d fresh**.
+2. `changelog-freshness-self-heal` (build the gate for the class) — two parts. **(a)** Upgraded `scripts/draft-changelog-entry.mjs`: `INTERNAL_ONLY_RE` filters CI/gate/VR/build-infra jargon out of public drafts, `HUMANIZE` lexicon expands acronyms per CANON-030 (IGNIS→"the Oracle (AI answer engine)", LCP→"main-image load speed", INP→"tap responsiveness"…), and `renderClPhase()` emits paste-ready `cl-phase` HTML so future promotion is one copy/paste (the friction that *caused* the 75-day staleness). Self-test 6→11. **(b)** Added a HARD `blockDays:60` ceiling to `check-content-freshness.mjs` (already in build:check): a months-stale public changelog now **BLOCKS** the build (exit 1) instead of warning forever; journal stays advisory. Control proves the floor flips: simulated `--now 2026-09-01` (66d) → **exit 1**; live (0d) → **exit 0**. Self-test 5→8. Zero build:check length cost (modified an already-wired script — build:check is at 7986/8191 cmd.exe limit, can't take a new `&&` segment).
+3. `rum-allowlist-beacon-honesty` (observability must not lie) — `check-rum-allowlist.mjs parseEmissions()` now credits the raw `event:'name'` `sendBeacon('/v/rum', …)` body form (S229's `inp-telemetry.js`), not just `emit*()` helper call-sites. Killed a false **"dead config — remove it"** warning that invited a cleanup which would have silently broken the Worker's edge acceptance of INP telemetry. 77→78 call-sites detected · "all in sync" · self-test +1. Same class as the S213 SW-raw-fetch precedent, now scanner-visible instead of exempted.
+
+**Honest non-actions (wins, recorded — not silent skips):** INP interaction root-fix deferred (0 field samples — diagnosing now = fabrication); Post-push CI carry retired as resolved (green); sibling/portfolio doctor reds left untouched (no cross-repo tree edits — Ark is the channel). The generated `context/changelog-drafts/<date>.md` is honest-dark + now `.gitignore`d (review-required, never committed).
+
+**Verify:** `npm run build:check` EXIT 0 (captured directly to `.cache/buildcheck-s230-final.txt`, not via pipe). check-content-freshness 8/8 · draft-changelog 11/11 · check-rum-allowlist 7/7 + live "all in sync" exit 0. doctor blockingFailing 0 (3 advisory = sibling/portfolio). Changelog public page newest date 2026-06-27.
+
+**SIL:** 989 → 990/1000 (v3.0) · Velocity: 3 · Debt: ↓ · committed + pushed directly to origin/main.
+
 ## 2026-06-27 — Session 229 · Full Arc · LQIP P0 fix + INP telemetry + CWV composite + oracle domain ranking + changelog draft + push personalization + CI automation
 
 Full /start → /audit → /implement → /closeout arc. **10 substantive ships · 0 phantom wins.** SIL 987 → 989/1000 (+2). Velocity +2.

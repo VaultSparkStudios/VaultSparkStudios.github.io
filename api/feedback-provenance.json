@@ -4,27 +4,20 @@
   "source": "api/commit-map.json (theme-classified, public commit subjects only)",
   "kind": "feedback-provenance",
   "note": "Recent forge moves in the areas people flag. A correlation surface, not a per-ticket link.",
-  "themeCount": 5,
+  "themeCount": 4,
   "themes": [
-    {
-      "key": "conversion",
-      "label": "Conversion",
-      "count": 1,
-      "commits": [
-        {
-          "sha": "a4dbe13c",
-          "move": "Tended",
-          "tone": "muted",
-          "summary": "upgrade all workflows from Node 20 to Node 24",
-          "ts": "2026-06-25T20:21:46.000Z"
-        }
-      ]
-    },
     {
       "key": "transparency",
       "label": "Transparency",
-      "count": 5,
+      "count": 6,
       "commits": [
+        {
+          "sha": "dc32ed51",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "LQIP P0 + INP telemetry + CWV composite + oracle domain rank + changelog draft + push quiz CTA + CI automation",
+          "ts": "2026-06-27T04:10:31.000Z"
+        },
         {
           "sha": "3711f5e2",
           "move": "Shipped",
@@ -65,8 +58,15 @@
     {
       "key": "trust",
       "label": "Trust & legal",
-      "count": 1,
+      "count": 2,
       "commits": [
+        {
+          "sha": "7e2d7cdc",
+          "move": "Shipped",
+          "tone": "sparked",
+          "summary": "CSP violations probe + Worker summary endpoint + build refresh",
+          "ts": "2026-06-26T19:37:09.000Z"
+        },
         {
           "sha": "cfa738a0",
           "move": "Fixed",
@@ -79,8 +79,15 @@
     {
       "key": "speed",
       "label": "Speed",
-      "count": 4,
+      "count": 5,
       "commits": [
+        {
+          "sha": "1e5d46cb",
+          "move": "Sped up",
+          "tone": "perf",
+          "summary": "defer→idle for 3 below-fold scripts + remove adaptive-cta no-op",
+          "ts": "2026-06-26T19:58:25.000Z"
+        },
         {
           "sha": "d986610d",
           "move": "Tended",
@@ -114,7 +121,7 @@
     {
       "key": "frontdoor",
       "label": "Front door",
-      "count": 2,
+      "count": 1,
       "commits": [
         {
           "sha": "7ae885b0",
@@ -122,13 +129,6 @@
           "tone": "sparked",
           "summary": "CI root-fix (Refresh Live Data) + Lighthouse preload headers + gate hardening",
           "ts": "2026-06-25T22:56:04.000Z"
-        },
-        {
-          "sha": "41a6e22a",
-          "move": "Fixed",
-          "tone": "fix",
-          "summary": "root-fix agents-json CI exit(1) on gitignored ECOSYSTEM + build-step resilience gate + hero JSON-LD completeness gate",
-          "ts": "2026-06-25T19:38:09.000Z"
         }
       ]
     }

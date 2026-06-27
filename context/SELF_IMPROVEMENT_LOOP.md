@@ -8,14 +8,27 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ███▇█████
-Avgs - 3: 986.3 | 5: 986.0 | 10: ~967 | 25: ~962 | all: ~964 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 98.0 | Momentum 99.7 | Engage 98.7 | Process 100.0
-Velocity trend: ↑ (S229: 10 items; S228: 6 items; S227: 11 items + 3 phantom wins) | Protocol velocity: → | Debt: level (S229: LQIP P0 determinism; INP telemetry live; CWV composite; changelog auto-draft; push personalization; CI automation; inp root-fix data pending in 2-3 days)
-Momentum runway: INP-ROOT-FIX — inp-telemetry.js in prod, field data builds over 2-3 days; CHANGELOG — promote context/changelog-drafts/2026-06-27.md after founder review; CI-VERIFY — E2E (LQIP deterministic now) + Lighthouse ≥0.80; PUSH — first notification (0 subs); FOUNDER — ark.hmac.seed; CONTENT — Signal Log + forge devlog | Intent rate: 100% (last 5) | (S229 shipped: LQIP P0 git ls-files; inp-telemetry.js + Worker; cwv-composite-rum; oracle domain-rank; lh-staging-warmup; changelog-auto-draft; build-sha-pre-push; push-personalization+quiz-cta; lh-trend-ci-pushback; cls-hardening.)
-Last session: 2026-06-27 | Session 229 | Total: 989/1000 (v3.0) | Velocity: +2 | protocolVelocity: 0
+Sparkline (last 5 totals): █▇█████▉█
+Avgs - 3: 988.7 | 5: 987.6 | 10: ~969 | 25: ~963 | all: ~964 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 98.0 | Momentum 100.0 | Engage 99.3 | Process 100.0
+Velocity trend: → (S230: 3 items + 1 resolved + 1 honest defer; S229: 10 items; S228: 6 items) | Protocol velocity: → | Debt: ↓ (S230: closed a 75-day public-trust gap + built the blocking gate so it can't recur; killed a false dead-config observability warning)
+Momentum runway: INP-ROOT-FIX — 0 inp:slow_interaction field samples yet (telemetry ~5h old); wait 2-3 days then defer dominant slow handler; CI-VERIFY — E2E (LQIP deterministic) + Lighthouse ≥0.80; PUSH — first notification (0 subs, needs higher-intent CTA); FOUNDER — ark.hmac.seed; CONTENT — Signal Log + forge devlog | Intent rate: 100% (last 5) | (S230 shipped: changelog-public-gap-close (2 visitor entries, 75d→0d); changelog-freshness-self-heal (humanize+paste-HTML draft tool + blockDays:60 blocking gate); rum-allowlist-beacon-honesty (raw event:'name' sendBeacon credited, false dead-config killed).)
+Last session: 2026-06-27 | Session 230 | Total: 990/1000 (v3.0) | Velocity: +1 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-27 — Session 230 (full arc · changelog-public-gap-close + changelog-freshness-self-heal + rum-allowlist-beacon-honesty) | Total: 990/1000 (v3.0) | Velocity: +1 | Debt: ↓
+Avgs — 3: 988.7 | 5: 987.6 | 10: ~969 | 25: ~963 | all: ~964
+
+Dev Health 100 | Creative Alignment 98 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 96 | Ecosystem Integration 100 | Capital Efficiency 97 | Automation Coverage 100
+
+**What improved:** The throughline is *finding the public-trust hole the whole telemetry stack was pointed away from, then making the class un-recurrable.* Every session for months has polished internal observability (RUM, CWV, INP, gates) — yet the single most visitor-visible surface, the public `/changelog/`, had silently sat frozen at S66 (2026-04-13) for **75 days** while 163 sessions of real work shipped. The audit caught it because `check-content-freshness` *did* flag it — but as a warn-only signal nobody's closeout ever escalated. Fix in three honest layers: (1) two hand-curated visitor-voice entries reporting only already-live features — and a mid-session self-correction when I noticed I'd written "Core Web Vitals in the green" while field cwvPassRate is 50% (changed to "load times dramatically faster"; a public surface is the last place to let observability lie). (2) The self-heal: the draft tool now strips internal CI/infra jargon, expands acronyms (CANON-030), and emits paste-ready `cl-phase` HTML (the promotion friction was the root cause of the staleness), and `check-content-freshness` gained a HARD `blockDays:60` ceiling so a months-stale public changelog now *blocks the build* — control-proven (sim 66d → exit 1, live 0d → exit 0) and zero build:check length cost (the script was already in the chain, which matters at 7986/8191 of the cmd.exe limit). (3) `check-rum-allowlist` now credits the raw `event:'name'` sendBeacon body, so S229's `inp-telemetry.js` is scanner-visible — killing a false "dead config — remove it" warning that would have invited a cleanup silently breaking the Worker's INP-telemetry acceptance.
+
+Honest discipline: the INP interaction root-fix was *deferred, not faked* — 0 field samples exist yet (telemetry ~5h old), and inventing a culprit would be fabrication. The Post-push-CI carry was retired as genuinely resolved (S229 deployed clean, all workflows green). The 3 doctor reds were correctly read as sibling/portfolio drift, not this repo (blockingFailing 0) — and left untouched (Ark, not cross-repo tree edits).
+
+**Brainstorm — items committed to TASK_BOARD:** (1) **Changelog machine-feed (CANON-048 dual-audience)** — the public `/changelog/` has no Atom/JSON feed; AI agents and RSS readers can't subscribe to ship updates. Build `/changelog/feed.xml` from the curated entries (the `cl-phase` blocks are already structured) so the dual-audience contract covers the ship log too. (2) **Generalize the `blockDays` trust-ceiling pattern** — `check-content-freshness` now blocks on a months-stale public changelog; the same expire-don't-warn discipline should cover other public-trust surfaces that currently only warn (status proof feeds, uptime publish age). One blocking ceiling per public surface that visitors would notice before a gate does.
 
 ---
 

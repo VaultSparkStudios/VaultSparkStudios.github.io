@@ -1,8 +1,21 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-27 (Session 229 — full arc · LQIP P0 fix + INP telemetry + CWV composite + oracle domain ranking + changelog draft + push personalization + CI automation)
+Last updated: 2026-06-27 (Session 230 — full arc · changelog 75-day public-gap close + freshness self-heal blocking gate + RUM beacon observability-honesty fix)
 
-Session Intent: Next session — verify CI runs green (LQIP fix makes E2E deterministic on CI; Lighthouse trend ledger auto-updates from now on). Then check inp-telemetry.js field data for INP root-fix candidates.
+Session Intent: Run the full arc as one continuous mission; saturate at genius quality. Outcome — found the public-trust hole the telemetry stack was pointed away from (public /changelog/ frozen 75 days) and made the class un-recurrable.
+
+## Where We Left Off (Session 230)
+
+- **Shipped (3 substantive items · 1 carry resolved · 1 honest defer):**
+  1. **[PRODUCT/P0] Changelog public-gap close** — `changelog/index.html`: two hand-curated visitor-voice `cl-phase` entries above S66 — **S225–S229** ("Faster pages, sharper discovery, smarter Oracle") and consolidated **S67–S224 "Intelligence Era"** (the Oracle AI answer engine, web push, Cloudflare-edge migration, living-portfolio homepage, find-your-game quiz, theme system, Studio Pulse). The public page had been frozen at S66 / 2026-04-13 for **75 days** while 163 sessions shipped. Reports ONLY already-live features — honest, no new promise, not founder-voice narrative. Caught + corrected my own overclaim mid-session ("Core Web Vitals in the green" → "load times dramatically faster"; field cwvPassRate is 50%). `check-content-freshness` changelog: **75d stale → 0d fresh**. Completes the S229 [PRODUCT/P1] Changelog-publish carry.
+  2. **[INFRA/P1] Changelog freshness self-heal** — (a) `scripts/draft-changelog-entry.mjs` upgraded: `INTERNAL_ONLY_RE` filters CI/gate/VR/build-infra jargon out of public drafts, `HUMANIZE` lexicon expands acronyms (CANON-030), `renderClPhase()` emits paste-ready `cl-phase` HTML (one-paste promotion — the friction that *caused* the 75-day staleness). Self-test 6→11. (b) `scripts/check-content-freshness.mjs` (already in build:check) gained a HARD `blockDays:60` ceiling: a months-stale public changelog now **BLOCKS** the build (exit 1), journal stays advisory. Control-proven: sim `--now 2026-09-01` (66d) → exit 1; live (0d) → exit 0. Self-test 5→8. Zero build:check length cost (build:check is at 7986/8191 cmd.exe limit — can't take a new `&&` segment).
+  3. **[OBSERVABILITY/P2] RUM allowlist beacon honesty** — `scripts/check-rum-allowlist.mjs parseEmissions()` now credits the raw `event:'name'` `sendBeacon('/v/rum', …)` body form (S229 `inp-telemetry.js`), not just `emit*()` helpers. Killed a false **"dead config — remove it"** warning that would have invited a cleanup silently breaking the Worker's edge acceptance of INP telemetry. 77→78 call-sites · "all in sync" · self-test +1.
+
+- **Honest ledger:** INP interaction root-fix **deferred, not faked** — `grep inp:slow data/rum-history.ndjson` = 0 samples (telemetry ~5h old); inventing a culprit = fabrication. Post-push-CI carry retired as **resolved** (S229 deployed clean, all workflows green). Doctor's 3 reds are **sibling/portfolio drift** (VEILOS/Velaxis/Syntha Stripe+branding), not this repo — blockingFailing 0, left untouched (Ark, not cross-repo edits). Generated `context/changelog-drafts/<date>.md` is honest-dark + now `.gitignore`d.
+
+- **Tests:** `build:check` EXIT 0 (verified directly via `.cache/buildcheck-s230-final.txt`, not via pipe) · `blockingFailing: 0` · check-content-freshness 8/8 · draft-changelog 11/11 · check-rum-allowlist 7/7 + live "all in sync".
+
+- **First action next session:** `/start` → (a) check inp-telemetry field data in `data/rum-summary.json` after 48h — what element/type drives INP > 200ms on `/games/`? (b) build `/changelog/feed.xml` (CANON-048 machine-feed brainstorm). (c) verify E2E green post-LQIP.
 
 ## Where We Left Off (Session 229)
 

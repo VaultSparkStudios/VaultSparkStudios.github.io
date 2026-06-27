@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-27T02:52:10.625Z",
+  "generatedAt": "2026-06-27T20:42:12.822Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,22 +10,22 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 544,
+  "totalSamples": 654,
   "sufficientRoutes": 2,
   "cwvPassRate": 50,
   "cwvPassRouteCount": 1,
   "cwvMeasuredRouteCount": 2,
   "routes": {
     "/": {
-      "samples": 255,
+      "samples": 311,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
         "lcp": 1108,
         "cls": 0.0815,
         "inp": 176,
-        "fcp": 752,
-        "ttfb": 193
+        "fcp": 980,
+        "ttfb": 583
       }
     },
     "/atlas/": {
@@ -77,14 +77,14 @@
       }
     },
     "/games/": {
-      "samples": 84,
+      "samples": 102,
       "sufficient": true,
       "cwvPass": false,
       "p75": {
-        "lcp": 632,
-        "cls": 0.0419,
-        "inp": 224,
-        "fcp": 632,
+        "lcp": 656,
+        "cls": 0.0692,
+        "inp": 384,
+        "fcp": 656,
         "ttfb": 95
       }
     },
@@ -101,14 +101,14 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 21,
+      "samples": 33,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 1256,
+        "lcp": 1284,
         "cls": 0.0042,
-        "inp": 136,
-        "fcp": 1256,
+        "inp": 160,
+        "fcp": 1284,
         "ttfb": 617
       }
     },
@@ -125,7 +125,7 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 34,
+      "samples": 37,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -137,7 +137,7 @@
       }
     },
     "/ignis/": {
-      "samples": 4,
+      "samples": 6,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
@@ -161,19 +161,19 @@
       }
     },
     "/journal/": {
-      "samples": 6,
+      "samples": 7,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
         "lcp": 728,
-        "cls": 0.0801,
+        "cls": 0.0191,
         "inp": 240,
         "fcp": 728,
-        "ttfb": 238
+        "ttfb": 143
       }
     },
     "/journal/dispatches/": {
-      "samples": 1,
+      "samples": 2,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -221,19 +221,19 @@
       }
     },
     "/membership/": {
-      "samples": 39,
+      "samples": 46,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 0,
         "cls": 0,
         "inp": 88,
-        "fcp": 632,
+        "fcp": 600,
         "ttfb": 21
       }
     },
     "/nervous-system/": {
-      "samples": 4,
+      "samples": 6,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -245,24 +245,24 @@
       }
     },
     "/oracle/": {
-      "samples": 23,
+      "samples": 28,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 880,
-        "cls": 0.4652,
-        "inp": 272,
-        "fcp": 880,
-        "ttfb": 275
+        "lcp": 616,
+        "cls": 0.396,
+        "inp": 256,
+        "fcp": 616,
+        "ttfb": 231
       }
     },
     "/pathways/": {
-      "samples": 2,
+      "samples": 4,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 860,
-        "cls": 0.009,
+        "cls": 0.0219,
         "inp": 168,
         "fcp": 860,
         "ttfb": 113
@@ -389,15 +389,15 @@
       }
     },
     "/studio-pulse/": {
-      "samples": 5,
+      "samples": 6,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 1748,
-        "cls": 0.2429,
-        "inp": 232,
-        "fcp": 1748,
-        "ttfb": 128
+        "lcp": 696,
+        "cls": 0.0886,
+        "inp": 208,
+        "fcp": 696,
+        "ttfb": 63
       }
     },
     "/studio/": {

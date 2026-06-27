@@ -1,28 +1,20 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-27T17:35:27.535Z",
+  "generatedAt": "2026-06-27T20:41:40.037Z",
   "generatedBy": "scripts/build-ship-receipts.mjs",
   "publicSafe": true,
   "note": "Aggregate theme-to-ship receipts. No raw feedback text.",
   "receipts": [
     {
-      "theme": "conversion",
-      "label": "Conversion",
-      "feedbackSignals": 1,
-      "shippedCommits": [
-        {
-          "sha": "a4dbe13c",
-          "summary": "upgrade all workflows from Node 20 to Node 24",
-          "ts": "2026-06-25T20:21:46.000Z"
-        }
-      ],
-      "proof": null
-    },
-    {
       "theme": "transparency",
       "label": "Transparency",
-      "feedbackSignals": 5,
+      "feedbackSignals": 6,
       "shippedCommits": [
+        {
+          "sha": "dc32ed51",
+          "summary": "LQIP P0 + INP telemetry + CWV composite + oracle domain rank + changelog draft + push quiz CTA + CI automation",
+          "ts": "2026-06-27T04:10:31.000Z"
+        },
         {
           "sha": "3711f5e2",
           "summary": "IGNIS oracle:context_boost RUM + build artifact refresh",
@@ -42,11 +34,6 @@
           "sha": "8502f758",
           "summary": "S224 SIL rolling-status update — 976→983 velocity 7",
           "ts": "2026-06-25T23:52:10.000Z"
-        },
-        {
-          "sha": "4732f661",
-          "summary": "S223 SIL rolling-status update — 974→976 velocity 10",
-          "ts": "2026-06-25T21:53:31.000Z"
         }
       ],
       "proof": null
@@ -54,8 +41,13 @@
     {
       "theme": "trust",
       "label": "Trust & legal",
-      "feedbackSignals": 1,
+      "feedbackSignals": 2,
       "shippedCommits": [
+        {
+          "sha": "7e2d7cdc",
+          "summary": "CSP violations probe + Worker summary endpoint + build refresh",
+          "ts": "2026-06-26T19:37:09.000Z"
+        },
         {
           "sha": "cfa738a0",
           "summary": "beacon scheduled-workflow tracking + a11y test staleness hardening",
@@ -75,8 +67,13 @@
     {
       "theme": "speed",
       "label": "Speed",
-      "feedbackSignals": 4,
+      "feedbackSignals": 5,
       "shippedCommits": [
+        {
+          "sha": "1e5d46cb",
+          "summary": "defer→idle for 3 below-fold scripts + remove adaptive-cta no-op",
+          "ts": "2026-06-26T19:58:25.000Z"
+        },
         {
           "sha": "d986610d",
           "summary": "integrate CI live-data refresh (39f640f1) with S226 LCP fix",
@@ -116,17 +113,12 @@
     {
       "theme": "frontdoor",
       "label": "Front door",
-      "feedbackSignals": 2,
+      "feedbackSignals": 1,
       "shippedCommits": [
         {
           "sha": "7ae885b0",
           "summary": "CI root-fix (Refresh Live Data) + Lighthouse preload headers + gate hardening",
           "ts": "2026-06-25T22:56:04.000Z"
-        },
-        {
-          "sha": "41a6e22a",
-          "summary": "root-fix agents-json CI exit(1) on gitignored ECOSYSTEM + build-step resilience gate + hero JSON-LD completeness gate",
-          "ts": "2026-06-25T19:38:09.000Z"
         }
       ],
       "proof": null

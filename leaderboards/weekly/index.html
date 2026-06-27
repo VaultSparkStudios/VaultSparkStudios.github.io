@@ -43,40 +43,12 @@
   .lb-sub-breadcrumb a:hover { color:var(--gold); }
   .lb-sub-cta-wrap { display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; }
 </style>
-  <link rel="alternate" type="application/json" href="/agents.json" />
-<!-- vs-speculation:start -->
-  <script type="speculationrules">
-  {
-    "prerender": [
-      {
-        "where": {
-          "and": [
-            { "href_matches": "/*" },
-            { "not": { "href_matches": "/vault-member/*" } },
-            { "not": { "href_matches": "/investor-portal/*" } },
-            { "not": { "href_matches": "/admin/*" } },
-            { "not": { "href_matches": "/api/*" } },
-            { "not": { "href_matches": "/*/admin/*" } },
-            { "not": { "selector_matches": "[data-no-prerender]" } },
-            { "not": { "selector_matches": ".no-prerender" } }
-          ]
-        },
-        "eagerness": "moderate"
-      }
-    ],
-    "prefetch": [
-      { "where": { "href_matches": "/*" }, "eagerness": "conservative" }
-    ]
-  }
-  </script>
-  <!-- vs-speculation:end -->
 </head>
 <body class="dark-mode" data-theme="dark">
-<script>!function(){try{var t=localStorage.getItem('vs_theme')||'dark',m={dark:'dark-mode',light:'light-mode',ambient:'ambient-mode',warm:'warm-mode',cool:'cool-mode',lava:'lava-mode','high-contrast':'high-contrast-mode'};if(m[t]){var r=['dark-mode','light-mode','ambient-mode','warm-mode','cool-mode','lava-mode','high-contrast-mode'];document.documentElement.classList.remove.apply(document.documentElement,r);document.body.classList.remove.apply(document.body,r);var c=m[t];document.documentElement.classList.add(c);document.documentElement.dataset.theme=t;document.body.classList.add(c);document.body.dataset.theme=t;}var mo=localStorage.getItem('vs_motion');if(mo==='reduced'){document.documentElement.dataset.motion='reduced';document.body.dataset.motion='reduced';}}catch(e){}}();</script>
 <header class="site-header">
     <div class="container nav">
       <a class="brand" href="/" aria-label="VaultSpark Studios — home">
-        <img fetchpriority="high" src="../../assets/vaultspark-icon-nav.webp" alt="VaultSpark Studios icon" width="44" height="44" />
+        <img fetchpriority="high" src="../assets/vaultspark-icon-nav.webp" alt="VaultSpark Studios icon" width="44" height="44" />
         <span class="brand-wordmark">VaultSpark<span class="brand-suffix"> Studios</span><small>The vault is sparked</small></span>
       </a>
       <nav class="nav-center" id="nav-menu" aria-label="Primary navigation">
@@ -210,20 +182,20 @@
       <div class="footer-socials-row" aria-label="Follow VaultSpark Studios">
         <span class="footer-socials-label">Follow the Studio</span>
         <div class="footer-socials">
-          <a class="footer-social" href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="YouTube" title="YouTube"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-youtube"/></svg></a>
-          <a class="footer-social" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="GitHub" title="GitHub"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-github"/></svg></a>
-          <a class="footer-social" href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Reddit" title="Reddit"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-reddit"/></svg></a>
-          <a class="footer-social" href="https://x.com/VaultSpark" target="_blank" rel="noreferrer me" aria-label="X" title="X"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-x"/></svg></a>
-          <a class="footer-social" href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer me" aria-label="Instagram" title="Instagram"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-instagram"/></svg></a>
-          <a class="footer-social" href="https://www.tiktok.com/@vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="TikTok" title="TikTok"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-tiktok"/></svg></a>
-          <a class="footer-social" href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer me" aria-label="Discord" title="Discord"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-discord"/></svg></a>
-          <a class="footer-social" href="https://bsky.app/profile/vaultsparkstudios.bsky.social" target="_blank" rel="noreferrer me" aria-label="Bluesky" title="Bluesky"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-bluesky"/></svg></a>
-          <a class="footer-social" href="https://www.threads.com/@vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="Threads" title="Threads"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-threads"/></svg></a>
-          <a class="footer-social" href="https://www.facebook.com/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Facebook" title="Facebook"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-facebook"/></svg></a>
-          <a class="footer-social" href="https://www.pinterest.com/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Pinterest" title="Pinterest"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-pinterest"/></svg></a>
-          <a class="footer-social" href="https://vaultsparkstudios.gumroad.com/" target="_blank" rel="noreferrer me" aria-label="Gumroad" title="Gumroad"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-gumroad"/></svg></a>
-          <a class="footer-social" href="https://suno.com/@VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="Suno" title="Suno"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-suno"/></svg></a>
-          <a class="footer-social" href="https://sora.chatgpt.com/profile/vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="Sora" title="Sora"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../../assets/social-icons.svg#i-sora"/></svg></a>
+          <a class="footer-social" href="https://www.youtube.com/@VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="YouTube" title="YouTube"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-youtube"/></svg></a>
+          <a class="footer-social" href="https://github.com/VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="GitHub" title="GitHub"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-github"/></svg></a>
+          <a class="footer-social" href="https://www.reddit.com/r/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Reddit" title="Reddit"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-reddit"/></svg></a>
+          <a class="footer-social" href="https://x.com/VaultSpark" target="_blank" rel="noreferrer me" aria-label="X" title="X"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-x"/></svg></a>
+          <a class="footer-social" href="https://www.instagram.com/vaultsparkstudios/" target="_blank" rel="noreferrer me" aria-label="Instagram" title="Instagram"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-instagram"/></svg></a>
+          <a class="footer-social" href="https://www.tiktok.com/@vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="TikTok" title="TikTok"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-tiktok"/></svg></a>
+          <a class="footer-social" href="https://discord.gg/bgR3mSB2" target="_blank" rel="noreferrer me" aria-label="Discord" title="Discord"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-discord"/></svg></a>
+          <a class="footer-social" href="https://bsky.app/profile/vaultsparkstudios.bsky.social" target="_blank" rel="noreferrer me" aria-label="Bluesky" title="Bluesky"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-bluesky"/></svg></a>
+          <a class="footer-social" href="https://www.threads.com/@vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="Threads" title="Threads"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-threads"/></svg></a>
+          <a class="footer-social" href="https://www.facebook.com/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Facebook" title="Facebook"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-facebook"/></svg></a>
+          <a class="footer-social" href="https://www.pinterest.com/VaultSparkStudios/" target="_blank" rel="noreferrer me" aria-label="Pinterest" title="Pinterest"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-pinterest"/></svg></a>
+          <a class="footer-social" href="https://vaultsparkstudios.gumroad.com/" target="_blank" rel="noreferrer me" aria-label="Gumroad" title="Gumroad"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-gumroad"/></svg></a>
+          <a class="footer-social" href="https://suno.com/@VaultSparkStudios" target="_blank" rel="noreferrer me" aria-label="Suno" title="Suno"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-suno"/></svg></a>
+          <a class="footer-social" href="https://sora.chatgpt.com/profile/vaultsparkstudios" target="_blank" rel="noreferrer me" aria-label="Sora" title="Sora"><svg class="social-svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="../assets/social-icons.svg#i-sora"/></svg></a>
         </div>
         <a class="footer-socials-all" href="/social/">All channels &rarr;</a>
       </div>

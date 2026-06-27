@@ -6,11 +6,15 @@
 // S187 found journal frozen ~11 weeks and changelog ~8. This makes "the studio's
 // voice went quiet" a CI signal instead of a thing a visitor notices first.
 //
-// WARN-ONLY by design: a stale devlog must never block a deploy. Exits 0 unless
-// --strict is passed. Pair with scripts/draft-weekly-forge.mjs to clear it.
+// WARN-ONLY for short drifts (a stale devlog must never block a routine deploy),
+// but a surface may declare a HARD `blockDays` ceiling beyond which it BLOCKS the
+// build even without --strict. S230: the public /changelog/ went 75 days stale on
+// a SPARKED site — a real trust failure no warn-only signal ever stopped. The
+// changelog now blocks at 60d so that class can never silently recur; the journal
+// stays advisory. Pair with scripts/draft-changelog-entry.mjs to clear it.
 //
-//   node scripts/check-content-freshness.mjs            # warn-only (build:check)
-//   node scripts/check-content-freshness.mjs --strict   # exit 1 if stale
+//   node scripts/check-content-freshness.mjs            # warn-only + hard blockDays (build:check)
+//   node scripts/check-content-freshness.mjs --strict   # exit 1 on ANY stale surface
 //   node scripts/check-content-freshness.mjs --self-test
 //
 // Per DECISIONS (S178): exports pure; side effects gate on RUN_DIRECT.
@@ -20,7 +24,8 @@ import { join } from 'node:path';
 
 const SURFACES = [
   { name: 'journal', dir: 'journal', maxDays: 30 },
-  { name: 'changelog', dir: 'changelog', maxDays: 30 },
+  // blockDays: a months-stale public changelog is a SPARKED trust failure → hard fail.
+  { name: 'changelog', dir: 'changelog', maxDays: 30, blockDays: 60 },
 ];
 const DATE_RE = /20\d\d-[01]\d-[0-3]\d/g;
 
@@ -46,10 +51,13 @@ export function newestDateIn(dir, readDir = readdirSync, readFile = readFileSync
 }
 
 // Pure: classify one surface given its newest date + a reference "now".
-export function classify(newest, nowMs, maxDays) {
-  if (!newest) return { status: 'unknown', ageDays: null };
+// `blocked` is true only when the surface declares a blockDays ceiling and the
+// age exceeds it — a hard failure independent of --strict.
+export function classify(newest, nowMs, maxDays, blockDays = null) {
+  if (!newest) return { status: 'unknown', ageDays: null, blocked: false };
   const ageDays = Math.floor((nowMs - new Date(newest + 'T00:00:00Z').getTime()) / 86400000);
-  return { status: ageDays > maxDays ? 'stale' : 'fresh', ageDays };
+  const blocked = blockDays != null && ageDays > blockDays;
+  return { status: ageDays > maxDays ? 'stale' : 'fresh', ageDays, blocked };
 }
 
 export function runFreshness({ nowMs, root = '.' } = {}) {
@@ -58,7 +66,7 @@ export function runFreshness({ nowMs, root = '.' } = {}) {
     const dir = join(root, s.dir);
     if (!existsSync(dir)) { results.push({ ...s, status: 'missing', ageDays: null, newest: null }); continue; }
     const newest = newestDateIn(dir);
-    results.push({ ...s, newest, ...classify(newest, nowMs, s.maxDays) });
+    results.push({ ...s, newest, ...classify(newest, nowMs, s.maxDays, s.blockDays ?? null) });
   }
   return results;
 }
@@ -71,6 +79,9 @@ function selfTest() {
   check('fresh when recent', classify('2026-06-05', now, 30).status === 'fresh');
   check('unknown when null', classify(null, now, 30).status === 'unknown');
   check('age computed', classify('2026-06-01', now, 30).ageDays === 10);
+  check('blocked when past blockDays', classify('2026-03-22', now, 30, 60).blocked === true);
+  check('not blocked within blockDays', classify('2026-05-09', now, 30, 60).blocked === false);
+  check('no blockDays → never blocked', classify('2024-01-01', now, 30).blocked === false);
   // newestDateIn against fake fs
   const fakeDirs = { 'j': [{ name: 'a', isDirectory: () => false, }, { name: 'b.html', isDirectory: () => false }] };
   const fakeRead = (d) => (d === 'j' ? fakeDirs.j : []);
@@ -90,16 +101,21 @@ if (RUN_DIRECT) {
   const strict = argv.includes('--strict');
 
   const results = runFreshness({ nowMs });
-  let anyStale = false;
+  let anyStale = false, anyBlocked = false;
   for (const r of results) {
-    const icon = r.status === 'stale' ? '⚠' : r.status === 'fresh' ? '✓' : '∅';
+    const icon = r.blocked ? '⛔' : r.status === 'stale' ? '⚠' : r.status === 'fresh' ? '✓' : '∅';
     const age = r.ageDays == null ? 'no dated entry' : `${r.ageDays}d old (newest ${r.newest})`;
     console.log(`${icon}  ${r.name.padEnd(10)} ${r.status.padEnd(8)} ${age}`);
-    if (r.status === 'stale') {
+    if (r.blocked) {
+      anyBlocked = true;
+      console.log(`     ⛔ BLOCKING — public ${r.name} exceeds its ${r.blockDays}d trust ceiling on a SPARKED site.`);
+      console.log(`        Run: node scripts/draft-changelog-entry.mjs → review the paste-ready HTML → publish to ${r.dir}/index.html.`);
+    } else if (r.status === 'stale') {
       anyStale = true;
       console.log(`     → curated voice is stale. Run: node scripts/draft-weekly-forge.mjs, then review + publish.`);
     }
   }
+  if (anyBlocked) process.exit(1);          // hard ceiling — blocks regardless of --strict
   if (anyStale && strict) process.exit(1);
   process.exit(0); // warn-only by default
 }

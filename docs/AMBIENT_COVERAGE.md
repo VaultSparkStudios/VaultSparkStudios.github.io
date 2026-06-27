@@ -1,5 +1,5 @@
 <!-- generated-by: scripts/report-ambient-coverage.mjs -->
-<!-- generated-at: 2026-06-26 -->
+<!-- generated-at: 2026-06-27 -->
 
 # Ambient Bundle — Activation Shape Report
 
@@ -8,15 +8,15 @@
 > condition — the shortlist for a future conditional/lazy split. Runtime
 > confirmation via the Playwright harness is the follow-up step.
 
-- Sources: **17**  ·  Total: **70.2 KB** (raw)
-- Guarded (conditional): **13** modules · **57.5 KB** — split candidates
+- Sources: **17**  ·  Total: **71.0 KB** (raw)
+- Guarded (conditional): **13** modules · **58.3 KB** — split candidates
 - Always-on: **4** modules · **12.7 KB**
 
 ## By size (split candidates flagged)
 
 | Source | Size | Shape | Why conditional |
 |---|--:|:-:|---|
-| `ambient-loader.js` | 17.7 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
+| `ambient-loader.js` | 18.5 KB | 🔶 guarded | query-param gated, viewport gated, session gated |
 | `adaptive-speculation.js` | 5.2 KB | 🔶 guarded | — |
 | `breadcrumb-render.js` | 4.7 KB | always | — |
 | `signed-in-state.js` | 4.7 KB | 🔶 guarded | session gated |

@@ -1,6 +1,25 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-26 (Session 228 — arc continuation: oracle:context_boost RUM + CSP violations probe + Worker GET + defer→idle 43KB + Lighthouse CI outputDir fix + agents.json sitewide CANON-048)
+Last updated: 2026-06-27 (Session 230 — full arc: changelog 75-day public-gap close + freshness self-heal blocking gate + RUM beacon observability-honesty fix)
+
+## S230 outcome + carries
+
+**Shipped in S230 (3 items · 1 carry resolved · 1 honest defer — "closed the public-trust gap + built the gate so it can't recur"):**
+- [x] **[PRODUCT/P0] Changelog public-gap close** — added two hand-curated visitor-voice entries to `changelog/index.html`: **S225–S229** and consolidated **S67–S224 "Intelligence Era"** (the Oracle AI, web push, edge migration, living-portfolio homepage, find-your-game quiz, theme system, Studio Pulse). Page was frozen at S66/2026-04-13 for 75 days. Reports only already-live features (honest). Corrected an in-flight overclaim ("CWV in the green" → "load times dramatically faster"; field cwvPassRate is 50%). `check-content-freshness` changelog: 75d → 0d. **This DONE-completes the S229 [PRODUCT/P1] Changelog publish carry.**
+- [x] **[INFRA/P1] Changelog freshness self-heal** — (a) `scripts/draft-changelog-entry.mjs`: `INTERNAL_ONLY_RE` jargon filter + `HUMANIZE` acronym lexicon (CANON-030) + paste-ready `cl-phase` HTML emit (one-paste promotion). Self-test 6→11. (b) `scripts/check-content-freshness.mjs`: HARD `blockDays:60` ceiling — a months-stale public changelog now BLOCKS build:check (exit 1), control-proven (sim 66d→exit 1, live 0d→exit 0). Self-test 5→8. Zero build:check length cost.
+- [x] **[OBSERVABILITY/P2] RUM allowlist beacon honesty** — `scripts/check-rum-allowlist.mjs parseEmissions()` now credits the raw `event:'name'` sendBeacon body form (S229 inp-telemetry.js), killing a false "dead config — remove it" warning that would have invited a cleanup silently breaking the Worker's INP-telemetry acceptance. 77→78 call-sites, "all in sync". Self-test +1.
+
+**S230 honest ledger:**
+- → **INP attribution still data-blocked** — `grep inp:slow data/rum-history.ndjson` = 0 samples (telemetry ~5h old). Deferred, not faked — diagnosing a culprit now would be fabrication. Re-check in 2–3 days.
+- ✓ **Post-push CI carry RESOLVED** — S229's dc32ed51 deployed clean; every workflow `success`. Retired.
+- → **Doctor 3 reds = sibling/portfolio drift** (VEILOS/Velaxis/Syntha Stripe+branding), not this repo. blockingFailing 0. Left untouched (Ark, not cross-repo edits).
+- → **Founder-gated carries unchanged** — push (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet.
+
+**S230 committed to next session (brainstorm):**
+- [ ] **[AI/P2] Changelog machine-feed (CANON-048)** — build `/changelog/feed.xml` (Atom/JSON) from the curated `cl-phase` entries so AI agents + RSS readers can subscribe to ship updates; dual-audience contract should cover the ship log too.
+- [ ] **[INFRA/P2] Generalize the `blockDays` trust-ceiling** — extend the expire-don't-warn blocking pattern to other public-trust surfaces that currently only warn (status-proof feeds, uptime publish age). One blocking ceiling per visitor-noticeable surface.
+- [ ] **[PERF/P1] INP root-fix** — once inp-telemetry.js has 2–3 days of field data, fix the dominant slow interaction on `/games/` (INP 224ms).
+- [ ] **[CI/P2] E2E full verify** — confirm E2E suite green post-LQIP fix (CI run needed).
 
 ## S229 outcome + carries
 

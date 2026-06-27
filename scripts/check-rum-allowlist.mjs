@@ -52,7 +52,13 @@ export function parseAllowlist(workerSrc) {
                 which COVER any allowlist entry that starts with them.
    A literal is treated as a dynamic prefix when it ends in ':' or is immediately
    followed by a '+' concatenation. Only meaningful for files on the /v/rum
-   transport; callers gate on that to avoid matching unrelated event emitters. */
+   transport; callers gate on that to avoid matching unrelated event emitters.
+
+   Also credits the RAW-BEACON form `event: 'name'` — some modules (S229
+   inp-telemetry.js) build the JSON body inline and post it via
+   navigator.sendBeacon('/v/rum', …) instead of an emit*() helper. Without this
+   the scanner falsely reports the allowlist entry as dead config — a trap that
+   invites "cleanup" that would silently break edge acceptance of the event. */
 export function parseEmissions(src) {
   const names = [];
   const prefixes = [];
@@ -63,6 +69,14 @@ export function parseEmissions(src) {
     const token = g[1];
     const concatenated = g[2] === '+';
     if (concatenated || token.endsWith(':')) prefixes.push(token);
+    else names.push(token);
+  }
+  // Raw sendBeacon body: { event: 'inp:slow_interaction', … }. Bounded to
+  // /v/rum files by the caller, so a stray `event:` elsewhere can't leak in.
+  const beaconRe = /\bevent\s*:\s*['"]([a-z0-9][a-z0-9:_-]*)['"]/gi;
+  while ((g = beaconRe.exec(src))) {
+    const token = g[1];
+    if (token.endsWith(':')) prefixes.push(token);
     else names.push(token);
   }
   return { names, prefixes };
@@ -116,6 +130,10 @@ function runSelfTest() {
   // parseEmissions — dynamic prefix from concatenation
   const ep = parseEmissions("emit('nav-sheet:' + cause); emit('nav-sheet:open');");
   assert(ep.prefixes.length === 1 && ep.prefixes[0] === 'nav-sheet:' && ep.names.length === 1 && ep.names[0] === 'nav-sheet:open', 'parseEmissions splits dynamic prefix from static name');
+
+  // parseEmissions — raw sendBeacon body (S229 inp-telemetry.js form)
+  const eb = parseEmissions("var body = JSON.stringify({ event: 'inp:slow_interaction', route: r }); navigator.sendBeacon('/v/rum', body);");
+  assert(eb.names.includes('inp:slow_interaction'), 'parseEmissions credits raw-beacon event: literal');
 
   // analyze — clean
   let r = analyze(['a:x', 'b:y'], { 'f.js': { names: ['a:x', 'b:y'], prefixes: [] } });

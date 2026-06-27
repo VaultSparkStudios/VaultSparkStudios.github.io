@@ -36,6 +36,66 @@ const THEME_PATTERNS = [
   { key: 'product',      label: 'Product',           re: /game|play|member|vault|changelog|push|subscribe|cta/i },
 ];
 
+// Internal-only work that should NOT reach the public changelog — visitors do
+// not benefit from CI/test/gate/build-infra churn (S230: the public /changelog/
+// went 75 days stale precisely because the auto-feed was full of this jargon).
+const INTERNAL_ONLY_RE = /\b(ci|gate|vr|baseline|root-?fix|build artifact|snapshot|yaml|eslint|lint|doctor|sil|allowlist|workflow|cron|orphan|self-test|--check|propagat|ark|repo-lock|cmd\.exe|node ?2[04]|networkidle|spawn)\b/i;
+
+// CANON-030: expand acronyms / dev-jargon into plain visitor English the first
+// time they appear. Applied to descriptions before they reach a human draft.
+const HUMANIZE = [
+  [/\bIGNIS\b/g, 'the Oracle (AI answer engine)'],
+  [/\boracle\b/gi, 'the Oracle'],
+  [/\bLCP\b/g, 'main-image load speed'],
+  [/\bINP\b/g, 'tap responsiveness'],
+  [/\bCLS\b/g, 'layout stability'],
+  [/\bCWV\b/g, 'Core Web Vitals'],
+  [/\bLQIP\b/g, 'blur-up image placeholders'],
+  [/\bRUM\b/g, 'real-user performance data'],
+  [/\bSEO\b/g, 'search visibility'],
+  [/\bCTA\b/g, 'call-to-action'],
+  [/\bJSON-LD\b/g, 'structured data for search engines'],
+  [/\bP0\b/g, 'top-priority'],
+];
+
+function humanize(text) {
+  let out = text;
+  for (const [re, sub] of HUMANIZE) out = out.replace(re, sub);
+  return out;
+}
+
+function isVisitorFacing(item) {
+  return !INTERNAL_ONLY_RE.test(item.slug + ' ' + item.desc);
+}
+
+// Build a paste-ready cl-phase <article> matching changelog/index.html's exact
+// markup, so promoting a draft is a single copy/paste (friction was the root
+// cause of staleness). Only visitor-facing items are included.
+function renderClPhase(sessionLabel, dateIso, items) {
+  const visitor = items.filter(isVisitorFacing);
+  if (!visitor.length) return '';
+  const lis = visitor
+    .map((it) => {
+      const desc = humanize(it.desc);
+      const short = desc.length > 160 ? desc.slice(0, 157) + '…' : desc;
+      return `              <li>${short}</li>`;
+    })
+    .join('\n');
+  return [
+    `          <!-- ${sessionLabel} -->`,
+    `          <article class="cl-phase" data-reveal="fade-up">`,
+    `            <div class="cl-dot" aria-hidden="true"></div>`,
+    `            <div class="cl-phase-header">`,
+    `              <span class="cl-phase-num">${sessionLabel}</span><span class="cl-phase-date">${dateIso}</span>`,
+    `              <div class="cl-phase-title">REVIEW: write a 4–6 word visitor-facing headline</div>`,
+    `            </div>`,
+    `            <ul class="cl-items">`,
+    lis,
+    `            </ul>`,
+    `          </article>`,
+  ].join('\n');
+}
+
 function parseWorkLogSession(text) {
   // Extract the most recent session block (## 2026-... heading).
   const sections = text.split(/^## /m).filter(Boolean);
@@ -90,6 +150,12 @@ if (SELF_TEST) {
   cases.push(['parse slugs correct', parsed && parsed.items[0].slug === 'ignis-feature' && parsed.items[1].slug === 'lqip-fix']);
   cases.push(['classifyItem ignis → intelligence', classifyItem('ignis context boost') === 'intelligence']);
   cases.push(['classifyItem lqip → performance', classifyItem('lqip-fix Faster LCP') === 'performance']);
+  cases.push(['humanize expands IGNIS', humanize('IGNIS answer engine').includes('Oracle')]);
+  cases.push(['humanize expands LCP', humanize('Fixed LCP').includes('load speed')]);
+  cases.push(['internal CI item filtered', isVisitorFacing({ slug: 'ci-rootfix', desc: 'CI gate hardening' }) === false]);
+  cases.push(['visitor game item kept', isVisitorFacing({ slug: 'game-quiz', desc: 'find-your-game quiz' }) === true]);
+  cases.push(['renderClPhase emits article for visitor items', renderClPhase('S999', '2026-06-27', [{ slug: 'game-quiz', desc: 'Find-your-game quiz' }]).includes('cl-phase')]);
+  cases.push(['renderClPhase empty when all internal', renderClPhase('S999', '2026-06-27', [{ slug: 'ci', desc: 'CI gate' }]) === '']);
   let pass = 0, fail = 0;
   for (const [label, ok] of cases) { console.log(`  ${ok ? '✓' : '✗'} ${label}`); ok ? pass++ : fail++; }
   console.log(`\nself-test: ${pass} passed, ${fail} failed`);
@@ -148,6 +214,22 @@ if (commits.length) {
   lines.push('');
 }
 
+// Paste-ready HTML — only visitor-facing items, acronyms expanded (CANON-030).
+const sessionLabel = 'S' + (session.header.split('Session')[1]?.trim().split(/\s/)[0] || 'NNN');
+const clPhase = renderClPhase(sessionLabel, DATE, session.items);
+lines.push('## Paste-ready changelog HTML (visitor-facing only)');
+lines.push('');
+if (clPhase) {
+  lines.push('> Review the headline + bullets, then paste this `<article>` above the newest');
+  lines.push('> `<!-- S… -->` block in `changelog/index.html` (inside `.cl-timeline`).');
+  lines.push('');
+  lines.push('```html');
+  lines.push(clPhase);
+  lines.push('```');
+} else {
+  lines.push('_No visitor-facing items this session — all shipped work was internal (CI/build/test/infra). Nothing to add to the public changelog._');
+}
+lines.push('');
 lines.push('---');
 lines.push('');
 lines.push('*Generated by `scripts/draft-changelog-entry.mjs` · honest-dark · not auto-published*');
