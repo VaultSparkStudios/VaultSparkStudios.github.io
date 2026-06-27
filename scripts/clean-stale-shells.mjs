@@ -12,27 +12,55 @@
  *
  * Import-safe: side effects run only when invoked directly.
  */
-import { readdirSync, readFileSync, rmSync } from 'node:fs';
+import { readdirSync, readFileSync, rmSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { globSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const ASSETS = join(ROOT, 'assets');
 
-/** Collect every hash that appears in any HTML file under ROOT. */
-function liveHashes() {
+/**
+ * Enumerate HTML files to scan for live shell hashes.
+ *
+ * MUST be git-tracked HTML only (S231 root-fix). A plain filesystem walk also
+ * picks up gitignored, locally-generated report HTML — e.g. lighthouse-results and
+ * .cache lhr report files — which embed whatever shell hash was current when the
+ * report was captured. Those references made an orphaned committed shell look "live"
+ * locally (exit 0) while CI (clean checkout, no local reports) correctly flagged it
+ * stale (exit 1) — a green-locally / red-in-CI divergence. `git ls-files` is identical
+ * on every machine, so the verdict is deterministic. Mirrors the S229 build-lqip-map fix.
+ */
+function trackedHtmlFiles() {
+  const res = spawnSync('git', ['-C', ROOT, 'ls-files', '*.html'], {
+    encoding: 'utf8',
+    windowsHide: true,
+    maxBuffer: 32 * 1024 * 1024,
+  });
+  if (res.status === 0 && res.stdout) {
+    return res.stdout.split('\n').map((p) => p.trim()).filter(Boolean)
+      .map((rel) => join(ROOT, rel)).filter((p) => existsSync(p));
+  }
+  // Defensive fallback (no git available): fs-walk, but still exclude dot-dirs +
+  // known local report output dirs so the masking class cannot reappear.
+  const EXCLUDE_DIRS = new Set(['node_modules', 'lighthouse-results', '.lighthouseci']);
   const htmlFiles = [];
   function walk(dir) {
     for (const entry of readdirSync(dir, { withFileTypes: true })) {
       if (entry.isDirectory()) {
-        if (!entry.name.startsWith('.') && entry.name !== 'node_modules') walk(join(dir, entry.name));
+        if (!entry.name.startsWith('.') && !EXCLUDE_DIRS.has(entry.name)) walk(join(dir, entry.name));
       } else if (entry.name.endsWith('.html')) {
         htmlFiles.push(join(dir, entry.name));
       }
     }
   }
   walk(ROOT);
+  return htmlFiles;
+}
+
+/** Collect every hash that appears in any git-tracked HTML file. */
+function liveHashes() {
+  const htmlFiles = trackedHtmlFiles();
 
   const set = new Set();
   const pat = /shell-([a-f0-9]+)\.js/g;

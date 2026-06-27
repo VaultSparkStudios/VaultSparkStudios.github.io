@@ -40,7 +40,12 @@ const STRICT = args.includes('--strict');
 const JSON_MODE = args.includes('--json');
 const SELF_TEST = args.includes('--self-test');
 
-const SKIP_DIRS = new Set(['node_modules', '.git', 'test-results', '.cache', 'handoffs', 'audits', 'logs']);
+// S231: lighthouse-results + .lighthouseci hold gitignored, locally-generated Lighthouse
+// report HTML that embeds whatever asset/shell hashes were live at capture time. Walking them
+// makes a stale asset look "referenced" locally (present) but orphaned in CI (absent) — the
+// same green-locally/red-in-CI divergence fixed in clean-stale-shells. Skip them so the
+// orphan verdict is deterministic across machines.
+const SKIP_DIRS = new Set(['node_modules', '.git', 'test-results', '.cache', 'handoffs', 'audits', 'logs', 'lighthouse-results', '.lighthouseci']);
 // Build artifacts: never flagged as orphans (they're outputs).
 const ARTIFACT = /(\.shell-[0-9a-f]+\.(js|css)$)|(^ambient\.bundle\.js$)|(\.min\.js$)/;
 // Self-contained or convention-loaded files that look unreferenced but aren't.

@@ -92,6 +92,13 @@ const STEPS = [
   // S199: stale shell cleanup — guard that no unreferenced *.shell-*.js asset
   // accumulates; exits 1 if stale files are found (run --apply to clean).
   ['clean-stale-shells.mjs', ['--check']],
+  // S231: trust-feed freshness — generalizes the S230 changelog blockDays ceiling to the
+  // machine-generated public trust feeds (status-proof/uptime/site-health/heartbeat). A feed
+  // past its hard blockDays ceiling means its scheduled generator is dead (S221/S222 class)
+  // and the public site is serving a stale "live" signal → BLOCK build:check. Short drifts
+  // stay warn-only; a missing feed warns (existence is gated by each generate-*.mjs --check).
+  ['check-trust-feed-freshness.mjs', ['--self-test']],
+  ['check-trust-feed-freshness.mjs', []],
   // S205: vault momentum — rolling score from 3 public feeds; gating ensures
   // api/vault-momentum.json stays in sync with source feeds at build time.
   ['build-vault-momentum.mjs', ['--self-test']],

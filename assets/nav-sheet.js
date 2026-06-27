@@ -214,7 +214,7 @@
       sheet.style.transform = '';
       startY = null;
       if (dy > 80) closeSheet('drag-close');
-    });
+    }, { passive: true }); // S231: never preventDefaults — passive for consistency with start/move
   }
 
   if (document.readyState !== 'loading') init();

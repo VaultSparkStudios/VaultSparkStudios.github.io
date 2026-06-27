@@ -796,6 +796,24 @@ const complianceDetail = complianceLatest
   ? `${complianceLatest.passed}/${complianceLatest.total} (${complianceLatest.score}%) ${complianceTrend} ${complianceSpark}`
   : 'not tracked — run: node scripts/ops.mjs compliance-velocity';
 
+// ── CI truth beacon (S231) ───────────────────────────────────────────────────
+// The brief previously showed only a static test count, so it read "Tests ✓" while
+// main was RED on three consecutive pushes (E2E + Lighthouse failing). api/ci-status.json
+// is the live per-workflow truth (refreshed by ci-status-beacon.yml). Surface it so a
+// /start or /closeout can never again claim green over a red main (observability honesty).
+const ciStatus = readJson(path.join(root, 'api', 'ci-status.json'), null);
+let sigCI = '⚠', ciDetail = 'no ci-status.json — run ci-status-beacon';
+if (ciStatus && Array.isArray(ciStatus.workflows)) {
+  const failing = ciStatus.workflows.filter((w) => w.status === 'failure').map((w) => w.name);
+  if (ciStatus.allGreen && failing.length === 0) {
+    sigCI = '✓';
+    ciDetail = `main green · ${ciStatus.workflows.length} workflow(s)`;
+  } else {
+    sigCI = '⛔';
+    ciDetail = `main RED · failing: ${failing.join(', ') || 'see api/ci-status.json'}`;
+  }
+}
+
 function buildGeniusBoxFromMarkdown(markdown) {
   const entries = [];
   const regex = /##\s+([^\n]+)\n\n\*\*Tier:\*\*.*?\n\n([^\n]+)(?:\n\n```bash\n([^\n]+)\n```)?/g;
@@ -1140,6 +1158,7 @@ const lines = [
   // ── SIGNALS ────────────────────────────────────────────────────────────────
   top('SIGNALS'),
   row(`${sigTests}  Tests         ${testsLabel}`),
+  row(`${sigCI}  CI (main)     ${ciDetail}`),
   row(`${sigVel}  Velocity      ${velocity} ${velTrend}  ·  Debt: ${debtRaw}`),
   row(`${sigRun}  Runway        ${runwayRaw}`),
   // Headroom moved to dedicated CONTEXT METER block above (S119).

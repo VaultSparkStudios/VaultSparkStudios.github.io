@@ -1,8 +1,22 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-27 (Session 230 — full arc · changelog 75-day public-gap close + freshness self-heal blocking gate + RUM beacon observability-honesty fix)
+Last updated: 2026-06-27 (Session 231 — full arc · two silently-RED CI gates root-fixed + determinism class generalized + trust-feed blockDays ceiling + CI-truth beacon)
 
-Session Intent: Run the full arc as one continuous mission; saturate at genius quality. Outcome — found the public-trust hole the telemetry stack was pointed away from (public /changelog/ frozen 75 days) and made the class un-recurrable.
+Session Intent: Run the full arc as one continuous mission; saturate at genius quality. Outcome — `gh run list` exposed that main had been RED on every push for three sessions (E2E + Lighthouse) while every closeout claimed `build:check EXIT 0` (true locally; CI was never checked). Root-fixed both reds, generalized the determinism class, and shipped the CI-truth beacon that makes the blind spot un-repeatable.
+
+## Where We Left Off (Session 231)
+
+- **Shipped (4 substantive · 1 verify-win):**
+  1. **[CI/P0] Orphan shell + `clean-stale-shells` determinism root-fix** — removed committed orphan `assets/ambient-core.shell-bff2141eb7.js` (0 tracked-HTML refs); `liveHashes()` now scans **git-tracked** HTML (`git ls-files '*.html'`) instead of walking the FS, which had picked up gitignored `lighthouse-results/lhr-*.html` and masked the orphan locally while CI flagged it (exit 1). Greens the E2E Test Suite compliance job. Same class as the S229 LQIP `git ls-files` fix.
+  2. **[CI/P0] Lighthouse CI trend-push 403 root-fix** — `lighthouse.yml` had no `permissions:` block → default token read-only → the S229 trend-ledger `git push` returned 403 (exit 128), reding the gate though every audit passed. Added `permissions: contents: write`, gated the commit to push-to-main (fork PRs get read-only tokens), rebase-before-push for the hourly-Action race, `continue-on-error` so bookkeeping never reds an audit.
+  3. **[INFRA/P2] Generalized the `blockDays` trust-ceiling** (S230 brainstorm) — `scripts/check-trust-feed-freshness.mjs` extends the expire-don't-warn ceiling to status-proof/uptime/site-health/heartbeat (reads each `generatedAt`; `blockDays:4` = presumed cron-dead → BLOCKS build:check). Self-test 6/6 · control-proven (5d→blocked) · missing=warn (dodges the gitignored-input trap). Wired into `check-proof-surface.mjs`.
+  4. **[INFRA/P2·second-order] `check-orphan-assets` divergence fix + CI-truth beacon** — (a) the generalization caught a sibling instance: `check-orphan-assets SKIP_DIRS` now excludes `lighthouse-results`/`.lighthouseci` (`check-orphan-shell-assets` already safe via `git grep`). (b) `render-startup-brief.mjs` now reads `api/ci-status.json` → renders a `CI (main)` SIGNALS row showing real failing-workflow names, so a /start or /closeout can never again claim green over a red main.
+
+- **Honest ledger:** INP passive-listener pass = **verify-win** (all listeners already passive where it matters; added one missing `touchend` passive). INP root-fix still deferred (0 field samples). "Forge Window" rename = founder-gated public vocabulary (108 pages). 3 doctor reds = sibling/portfolio scope (blockingFailing 0). Discovered + deferred: `build-lqip-map` base64 is Windows↔Linux platform-divergent (committed Linux/CI version kept; the lone local `build:check` failure is this artifact, not a regression).
+
+- **Tests:** `build:check` reaches `build-lqip-map` (i.e. PASSED `check-proof-surface` incl. my clean-stale-shells fix + new trust-feed gate in-chain — verified at lines 539/545/589 of the run log); only the Windows lqip artifact fails locally. clean-stale-shells exit 0 · check-trust-feed-freshness 6/6 · check-orphan-assets 7/7 · brief validator conformant.
+
+- **First action next session:** `/start` → the new `CI (main)` SIGNALS row tells you the truth immediately. Confirm E2E + Lighthouse flipped GREEN on the S231 push (`gh run list`). Then INP field data + the LQIP platform-determinism carry.
 
 ## Where We Left Off (Session 230)
 

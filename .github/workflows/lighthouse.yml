@@ -10,6 +10,11 @@ on:
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
+    # S231: the trend-ledger commit step pushes back to main. Without this the default
+    # GITHUB_TOKEN is read-only on push events → `git push` returned 403 (exit 128),
+    # reding the whole Lighthouse gate even though every audit passed.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -57,14 +62,24 @@ jobs:
       - name: Update Lighthouse trend ledger
         # S229: commit updated .cache/lighthouse-trend.json so the trend history grows
         # each run. Only commits when the ledger actually changed to avoid [skip ci] spam.
-        if: success()
-        run: >-
-          node scripts/check-lighthouse-trend.mjs --update &&
-          git config user.name "github-actions[bot]" &&
-          git config user.email "github-actions[bot]@users.noreply.github.com" &&
-          git add .cache/lighthouse-trend.json &&
-          git diff --cached --quiet || git commit -m "chore: update lighthouse trend ledger [skip ci]" &&
-          git push
+        # S231: push only on push-to-main (fork PRs get a read-only token), rebase first to
+        # survive the hourly Action race, and treat the whole step as non-fatal bookkeeping —
+        # the gate is the prior "Check Lighthouse trend" step; a ledger-push hiccup must never
+        # red a green audit.
+        if: success() && github.event_name == 'push'
+        continue-on-error: true
+        run: |
+          node scripts/check-lighthouse-trend.mjs --update
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .cache/lighthouse-trend.json
+          if git diff --cached --quiet; then
+            echo "No trend change to commit."
+            exit 0
+          fi
+          git commit -m "chore: update lighthouse trend ledger [skip ci]"
+          git pull --rebase origin main || true
+          git push || echo "trend push skipped (non-fatal)"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

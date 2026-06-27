@@ -1,6 +1,21 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-27 (Session 230 — full arc: changelog 75-day public-gap close + freshness self-heal blocking gate + RUM beacon observability-honesty fix)
+Last updated: 2026-06-27 (Session 231 — full arc: two silently-RED CI gates root-fixed + determinism class generalized + trust-feed blockDays ceiling + CI-truth beacon)
+
+## S231 outcome + carries
+
+**Shipped in S231 (4 items · 1 verify-win · "main was RED for 3 sessions and no closeout looked"):**
+- [x] **[CI/P0] Orphan shell + clean-stale-shells determinism root-fix** — `git rm assets/ambient-core.shell-bff2141eb7.js` (0 tracked-HTML refs, committed orphan); rewrote `clean-stale-shells.mjs liveHashes()` to enumerate **git-tracked** HTML via `git ls-files '*.html'` (was a filesystem walk that picked up gitignored `lighthouse-results/lhr-*.html`, masking the orphan locally while CI flagged it). Greens the E2E Test Suite compliance job. Same class as S229 LQIP.
+- [x] **[CI/P0] Lighthouse CI trend-push 403 root-fix** — `lighthouse.yml`: added `permissions: contents: write` (default token was read-only → `git push` 403/exit128 on the S229 trend-ledger step), gated to push-to-main only, rebase-before-push, `continue-on-error` (bookkeeping must never red a green audit). `lighthouse.yml` was the lone pushing workflow missing the permission.
+- [x] **[INFRA/P2] Generalize the blockDays trust-ceiling** (S230 brainstorm carry) — new `scripts/check-trust-feed-freshness.mjs`: extends the expire-don't-warn ceiling to status-proof/uptime/site-health/heartbeat (reads each feed's `generatedAt`; `blockDays:4` = presumed cron-dead → BLOCKS build). Self-test 6/6, control-proven, missing=warn. Wired into `check-proof-surface.mjs`.
+- [x] **[INFRA/P2·second-order] check-orphan-assets divergence fix + CI-truth beacon** — (a) `check-orphan-assets.mjs SKIP_DIRS` now excludes `lighthouse-results`/`.lighthouseci` (same masking bug as clean-stale-shells; `check-orphan-shell-assets` already safe via git grep). (b) `render-startup-brief.mjs` reads `api/ci-status.json` → renders a `CI (main)` SIGNALS row (brief showed "Tests ✓" while main red 3 pushes).
+- [x] **[PERF·verify-win] INP passive-listener pass** — audited all scroll/touch/wheel listeners; already `{passive:true}` where it matters. Added the one missing `passive` on nav-sheet `touchend`. Recorded as verify-win, not a manufactured ship.
+
+**Carries → Now (S231):**
+- [ ] **[CI/P0·VERIFY] Confirm CI flips GREEN on this push** — E2E Test Suite + Lighthouse CI must go green (the real arbiter; root causes fixed, verify on next run via `gh run list`).
+- [ ] **[INFRA/P2] LQIP cross-platform determinism** — `build-lqip-map` base64 differs Windows↔Linux (libvips encode), so local `build:check` perpetually shows lqip stale after a Linux Action regen. Needs a platform-stable encode or a `.gitattributes`/CI-only-regen strategy. (Pre-existing; surfaced this session.)
+- [ ] **[PERF/P1] INP root-fix** — once inp-telemetry.js has 2–3 days of field data (0 `inp:slow_interaction` samples as of S231), fix the dominant slow interaction on `/games/`.
+- [ ] **[BRAND/FOUNDER] Forge Window naming** — rename "Studio Pulse"→"Forge Window" across 108 public pages is a founder-gated public-vocabulary change (keep `/studio-pulse/` URL for SEO). Needs sign-off on the public name.
 
 ## S230 outcome + carries
 
