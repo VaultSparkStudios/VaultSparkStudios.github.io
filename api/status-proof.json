@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0",
   "generatedBy": "scripts/build-status-proof.mjs",
-  "generatedAt": "2026-06-27T10:07:15.050Z",
+  "generatedAt": "2026-06-27T10:29:35.985Z",
   "publicSafe": true,
   "note": "Unified, self-grading proof manifest. Each proof carries its own source generatedAt + staleness. One fetch verifies the studio's live posture.",
   "summary": {
@@ -12,7 +12,7 @@
     "trustScore": 91,
     "worstStale": {
       "key": "field-verdicts",
-      "ageSeconds": 1698125,
+      "ageSeconds": 1699466,
       "generatedAt": "2026-06-07T18:25:10.430Z"
     },
     "seedRisk": []
@@ -22,7 +22,7 @@
       "present": true,
       "source": "/api/uptime.json",
       "generatedAt": "2026-06-27T10:07:14.495Z",
-      "freshnessSeconds": 1,
+      "freshnessSeconds": 1341,
       "staleAfterH": 2,
       "stale": false,
       "data": {
@@ -135,8 +135,8 @@
     "field-win": {
       "present": true,
       "source": "/api/field-win.json",
-      "generatedAt": "2026-06-27T04:30:38.086Z",
-      "freshnessSeconds": 20197,
+      "generatedAt": "2026-06-27T10:29:20.019Z",
+      "freshnessSeconds": 16,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -151,12 +151,12 @@
           "boundary": "2026-06-05",
           "label": "S173 critical path + S175 origin migration to CF Pages",
           "verdict": "improved",
-          "lcpDeltaPct": -69.9,
+          "lcpDeltaPct": -69.6,
           "confidence": "low",
           "preSamples": 8,
-          "postSamples": 105,
+          "postSamples": 123,
           "preLcpP75": 2000,
-          "postLcpP75": 601
+          "postLcpP75": 607
         },
         "confirmed": [
           {
@@ -164,51 +164,51 @@
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -64.7,
+            "lcpDeltaPct": -68.4,
             "confidence": "high",
             "preSamples": 38,
-            "postSamples": 462,
+            "postSamples": 518,
             "preLcpP75": 9489,
-            "postLcpP75": 3354
+            "postLcpP75": 3000
           },
           {
             "route": "/games/",
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "improved",
-            "lcpDeltaPct": -69.9,
+            "lcpDeltaPct": -69.6,
             "confidence": "low",
             "preSamples": 8,
-            "postSamples": 105,
+            "postSamples": 123,
             "preLcpP75": 2000,
-            "postLcpP75": 601
+            "postLcpP75": 607
           },
           {
             "route": "/games/gridiron-gm/",
             "boundary": "2026-06-05",
             "label": "S173 critical path + S175 origin migration to CF Pages",
             "verdict": "regressed",
-            "lcpDeltaPct": 35.1,
+            "lcpDeltaPct": 27.1,
             "confidence": "low",
             "preSamples": 5,
-            "postSamples": 43,
+            "postSamples": 55,
             "preLcpP75": 1294,
-            "postLcpP75": 1748
+            "postLcpP75": 1645
           }
         ],
-        "generatedAt": "2026-06-27T04:30:38.086Z"
+        "generatedAt": "2026-06-27T10:29:20.019Z"
       }
     },
     "ai-discovery-health": {
       "present": true,
       "source": "/api/ai-discovery-health.json",
-      "generatedAt": "2026-06-27T04:30:55.187Z",
-      "freshnessSeconds": 20180,
+      "generatedAt": "2026-06-27T10:29:35.888Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-27T04:30:55.187Z",
+        "generatedAt": "2026-06-27T10:29:35.888Z",
         "generatedBy": "scripts/build-ai-discovery-health.mjs",
         "publicSafe": true,
         "status": "healthy",
@@ -237,7 +237,7 @@
       "present": true,
       "source": "/api/ci-status.json",
       "generatedAt": "2026-06-27T04:22:50.763Z",
-      "freshnessSeconds": 20664,
+      "freshnessSeconds": 22005,
       "staleAfterH": 96,
       "stale": false,
       "data": {
@@ -382,13 +382,13 @@
     "site-health": {
       "present": true,
       "source": "/api/site-health.json",
-      "generatedAt": "2026-06-27T04:30:54.819Z",
-      "freshnessSeconds": 20180,
+      "generatedAt": "2026-06-27T10:29:35.508Z",
+      "freshnessSeconds": 0,
       "staleAfterH": 48,
       "stale": false,
       "data": {
         "schemaVersion": "1.0",
-        "generatedAt": "2026-06-27T04:30:54.819Z",
+        "generatedAt": "2026-06-27T10:29:35.508Z",
         "generatedBy": "scripts/build-site-health.mjs",
         "publicSafe": true,
         "source": "field-rum",
@@ -423,7 +423,7 @@
       "present": true,
       "source": "/api/staging-health.json",
       "generatedAt": "2026-06-27T10:07:14.959Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 1341,
       "staleAfterH": 168,
       "stale": false,
       "data": {
@@ -514,7 +514,7 @@
       "present": true,
       "source": "/api/geo-vitals.json",
       "generatedAt": "2026-06-27T10:07:15.014Z",
-      "freshnessSeconds": 0,
+      "freshnessSeconds": 1341,
       "staleAfterH": 48,
       "stale": false,
       "data": {
@@ -596,7 +596,7 @@
       "present": true,
       "source": "/api/field-verdicts.json",
       "generatedAt": "2026-06-07T18:25:10.430Z",
-      "freshnessSeconds": 1698125,
+      "freshnessSeconds": 1699466,
       "staleAfterH": 72,
       "stale": true,
       "data": {
@@ -674,7 +674,7 @@
       "present": true,
       "source": "/api/funnel-summary.json",
       "generatedAt": "2026-06-14T00:00:00.000Z",
-      "freshnessSeconds": 1159635,
+      "freshnessSeconds": 1160976,
       "staleAfterH": null,
       "honestDark": true,
       "stale": false,
@@ -766,7 +766,7 @@
       "present": true,
       "source": "/api/public-status.json",
       "generatedAt": "2026-06-27T00:00:00.000Z",
-      "freshnessSeconds": 36435,
+      "freshnessSeconds": 37776,
       "staleAfterH": 720,
       "stale": false,
       "data": {
@@ -817,7 +817,7 @@
       "present": true,
       "source": "/api/security-posture.json",
       "generatedAt": "2026-06-27T00:00:00.000Z",
-      "freshnessSeconds": 36435,
+      "freshnessSeconds": 37776,
       "staleAfterH": 720,
       "stale": false,
       "data": {
