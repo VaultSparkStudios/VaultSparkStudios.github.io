@@ -11,7 +11,7 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 Sparkline (last 5 totals): █▇█████▉█
 Avgs - 3: 988.7 | 5: 987.6 | 10: ~969 | 25: ~963 | all: ~964 (v3.0 /1000)
   └ 3-session: Dev 100.0 | Align 98.0 | Momentum 100.0 | Engage 99.3 | Process 100.0
-Velocity trend: → (S230: 3 items + 1 resolved + 1 honest defer; S229: 10 items; S228: 6 items) | Protocol velocity: → | Debt: ↓ (S230: closed a 75-day public-trust gap + built the blocking gate so it can't recur; killed a false dead-config observability warning)
+Velocity trend: → (S230: 4 items + 1 resolved + 1 honest defer + 1 phantom rejected; S229: 10 items; S228: 6 items) | Protocol velocity: → | Debt: ↓ (S230: closed a 75-day public-trust gap + built the blocking gate so it can't recur; killed a false dead-config observability warning; ship-feed RSS autodiscovery)
 Momentum runway: INP-ROOT-FIX — 0 inp:slow_interaction field samples yet (telemetry ~5h old); wait 2-3 days then defer dominant slow handler; CI-VERIFY — E2E (LQIP deterministic) + Lighthouse ≥0.80; PUSH — first notification (0 subs, needs higher-intent CTA); FOUNDER — ark.hmac.seed; CONTENT — Signal Log + forge devlog | Intent rate: 100% (last 5) | (S230 shipped: changelog-public-gap-close (2 visitor entries, 75d→0d); changelog-freshness-self-heal (humanize+paste-HTML draft tool + blockDays:60 blocking gate); rum-allowlist-beacon-honesty (raw event:'name' sendBeacon credited, false dead-config killed).)
 Last session: 2026-06-27 | Session 230 | Total: 990/1000 (v3.0) | Velocity: +1 | protocolVelocity: 0
 ─────────────────────────────────────────────────────────────────────

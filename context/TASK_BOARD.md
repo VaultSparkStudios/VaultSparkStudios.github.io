@@ -16,7 +16,7 @@ Last updated: 2026-06-27 (Session 230 — full arc: changelog 75-day public-gap 
 - → **Founder-gated carries unchanged** — push (0 subs), Signal Log/forge devlog (founder voice), ark.hmac.seed, mobile-sheet.
 
 **S230 committed to next session (brainstorm):**
-- [ ] **[AI/P2] Changelog machine-feed (CANON-048)** — build `/changelog/feed.xml` (Atom/JSON) from the curated `cl-phase` entries so AI agents + RSS readers can subscribe to ship updates; dual-audience contract should cover the ship log too.
+- [x] **[AI/P2] Changelog machine-feed (CANON-048)** — RESOLVED in-session: the ship feed already exists (`/feed/forge-ledger.xml`); a second `/changelog/feed.xml` would duplicate it (phantom rejected). Real gap was *discovery* — added RSS autodiscovery `<link>` on `/changelog/` pointing at the existing feed (journal pages already had it).
 - [ ] **[INFRA/P2] Generalize the `blockDays` trust-ceiling** — extend the expire-don't-warn blocking pattern to other public-trust surfaces that currently only warn (status-proof feeds, uptime publish age). One blocking ceiling per visitor-noticeable surface.
 - [ ] **[PERF/P1] INP root-fix** — once inp-telemetry.js has 2–3 days of field data, fix the dominant slow interaction on `/games/` (INP 224ms).
 - [ ] **[CI/P2] E2E full verify** — confirm E2E suite green post-LQIP fix (CI run needed).
