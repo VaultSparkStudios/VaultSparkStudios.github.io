@@ -1,31 +1,27 @@
 <!-- generated-by: scripts/render-closeout-board.mjs v1.0 -->
-<!-- generated-at: 2026-06-23 (Session 220 closeout) -->
+<!-- generated-at: 2026-06-27 (Session 230 closeout) -->
 
 # Closeout Status Board — VaultSparkStudios.github.io
 
 ```
-╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S220 ═══════╗
-║  Date: 2026-06-23  ·  SIL: 959/1000  ·  Velocity: 3 down         ║
+╔══ SESSION CLOSEOUT · VaultSparkStudios.github.io · S230 ═══════╗
+║  Date: 2026-06-27  ·  SIL: 990/1000  ·  Velocity: 3 level        ║
 ║  Mode: FOUNDER  ·  Agent: claude-code                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WHAT SHIPPED ════════════════════════════════════════════════╗
-║  ✓ **Shipped (3 substantive · net-new product value):**          ║
-║  ✓ **Honest deferrals / rejections (wins):** agents.json `llmsF  ║
-║  ✓ **Tests:** `build:check` EXIT 0 (verified directly, not pipe  ║
-║  ✓ **Deploy:** committed + pushed to `origin/main`; CF Pages au  ║
-║  ✓ **First action next session:** `/start` → verify prod hero J  ║
+║  ✓ **Shipped (3 substantive items · 1 carry resolved · 1 honest  ║
 ╚════════════════════════════════════════════════════════════════╝
-╔══ SCORES · SIL 959/1000 ═══════════════════════════════════════╗
-║    Dev Health         97   ██████████                            ║
-║    Alignment          96   ██████████                            ║
-║    Momentum           95   ██████████                            ║
-║    Engagement         97   ██████████                            ║
-║    Process Qual       97   ██████████                            ║
-║    Coherence          95   ██████████                            ║
-║    Security           94   █████████░                            ║
-║    Ecosystem          96   ██████████                            ║
-║    Capital            95   ██████████                            ║
-║    Automation         97   ██████████                            ║
+╔══ SCORES · SIL 990/1000 ═══════════════════════════════════════╗
+║    Dev Health         100  ██████████                            ║
+║    Alignment          98   ██████████                            ║
+║    Momentum           100  ██████████                            ║
+║    Engagement         100  ██████████                            ║
+║    Process Qual       100  ██████████                            ║
+║    Coherence          99   ██████████                            ║
+║    Security           96   ██████████                            ║
+║    Ecosystem          100  ██████████                            ║
+║    Capital            97   ██████████                            ║
+║    Automation         100  ██████████                            ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ WRITE-BACK STATUS ═══════════════════════════════════════════╗
 ║  · context/CURRENT_STATE.md                                      ║
@@ -49,10 +45,10 @@
 ║  Live:     N/A — pre-deploy (FORGE)                              ║
 ╚════════════════════════════════════════════════════════════════╝
 ╔══ POST-SESSION SIGNALS ════════════════════════════════════════╗
-║  Doctor:        9/13                                             ║
+║  Doctor:        10/14                                            ║
 ║  Compliance:    —                                                ║
 ║  Tests:         116/116                                          ║
-║  IGNIS:         5d ago                                           ║
+║  IGNIS:         2d ago                                           ║
 ║  Truth:         green                                            ║
 ║  Sanitization:  —                                                ║
 ╚════════════════════════════════════════════════════════════════╝
