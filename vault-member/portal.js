@@ -1,16 +1,36 @@
     // ── Mobile nav ──────────────────────────────────────────────
     const hamburger = document.getElementById('hamburger');
     const navMenu   = document.getElementById('nav-menu');
+    /* iOS-safe scroll lock: overflow:hidden on <body> swallows taps on
+       fixed overlays in iOS Safari. Pin body at its current scroll position
+       via position:fixed instead, then restore on close. */
+    let _savedScrollY = 0;
+    function _lockScroll() {
+      _savedScrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.position = 'fixed';
+      document.body.style.top      = '-' + _savedScrollY + 'px';
+      document.body.style.left     = '0';
+      document.body.style.right    = '0';
+      document.body.style.width    = '100%';
+    }
+    function _unlockScroll() {
+      document.body.style.position = '';
+      document.body.style.top      = '';
+      document.body.style.left     = '';
+      document.body.style.right    = '';
+      document.body.style.width    = '';
+      window.scrollTo(0, _savedScrollY);
+    }
     hamburger.addEventListener('click', () => {
       const isOpen = navMenu.classList.toggle('open');
       hamburger.setAttribute('aria-expanded', isOpen);
-      document.body.style.overflow = isOpen ? 'hidden' : '';
+      if (isOpen) _lockScroll(); else _unlockScroll();
     });
     navMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         navMenu.classList.remove('open');
         hamburger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+        _unlockScroll();
       });
     });
 
