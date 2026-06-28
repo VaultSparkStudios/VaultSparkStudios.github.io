@@ -7,28 +7,33 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
 const SELF_TEST = process.argv.includes('--self-test');
 const INTERNAL_TERMS = /\b(human action required|founder action required|api key|private financial|mrr|arr)\b/i;
+// S231: entries are forward-slash and lookups are normalized to '/'. The list was
+// authored with Windows '\\' separators while the scan keys come from path.join — which
+// yields '\' on Windows (matched, exempt) but '/' on Linux (no match → checked → fail).
+// That made the whole gate pass locally yet fail in CI on 14 legacy feeds. Normalize both.
 const LEGACY_SHAPE_ALLOWLIST = new Set([
-  'api\\ci-status.json',
-  'api\\commit-map.json',
-  'api\\eternal-credits.json',
-  'api\\feedback-provenance.json',
-  'api\\feedback-summary.json',
-  'api\\founder-presence.json',
-  'api\\heartbeat.json',
-  'api\\ignis-conduit.json',
-  'api\\ignis-roi.json',
-  'api\\oracle-queries.json',
-  'api\\public-intelligence.json',
-  'api\\public-status.json',
-  'api\\vault-narrative-history.json',
-  '.well-known\\entity-graph.json',
-  '.well-known\\llms-full.txt',
+  'api/ci-status.json',
+  'api/commit-map.json',
+  'api/eternal-credits.json',
+  'api/feedback-provenance.json',
+  'api/feedback-summary.json',
+  'api/founder-presence.json',
+  'api/heartbeat.json',
+  'api/ignis-conduit.json',
+  'api/ignis-roi.json',
+  'api/oracle-queries.json',
+  'api/public-intelligence.json',
+  'api/public-status.json',
+  'api/vault-narrative-history.json',
+  '.well-known/entity-graph.json',
+  '.well-known/llms-full.txt',
   'llms-full.txt'
 ]);
+const norm = (p) => p.replace(/\\/g, '/');
 
 function evaluate(name, text) {
   const findings = [];
-  const legacy = LEGACY_SHAPE_ALLOWLIST.has(name);
+  const legacy = LEGACY_SHAPE_ALLOWLIST.has(norm(name));
   if (!legacy && INTERNAL_TERMS.test(text)) findings.push('internal/private vocabulary');
   if (name.endsWith('.json')) {
     try {
