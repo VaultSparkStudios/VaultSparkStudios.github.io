@@ -34,9 +34,15 @@ const FORCE = process.argv.includes('--force');
 const ORIGIN = 'https://vaultsparkstudios.com';
 const ID = (slug) => `${ORIGIN}/#${slug}`;
 
+// S231: the registry is in the studio-ops SIBLING repo — present in local sessions,
+// ABSENT in CI (CI checks out only this repo). Signal availability so --check and write
+// can degrade gracefully instead of regenerating an empty graph (which made --check fail
+// in CI forever — the committed 22-entity graph vs a 6-entity sibling-less regen — and
+// would clobber the good committed file on write). Same class as check-registry-freshness
+// SKIPping when the sibling is unreachable.
 function loadRegistry() {
-  try { return JSON.parse(fs.readFileSync(REGISTRY, 'utf8')); }
-  catch { return { projects: [] }; }
+  try { return { available: true, registry: JSON.parse(fs.readFileSync(REGISTRY, 'utf8')) }; }
+  catch { return { available: false, registry: { projects: [] } }; }
 }
 
 function audienceUrl(p) {
@@ -164,7 +170,16 @@ function main() {
     return;
   }
 
-  const registry = loadRegistry();
+  const { available, registry } = loadRegistry();
+
+  // Registry absent (CI / no studio-ops sibling): the committed graph is authoritative —
+  // it was generated where the registry exists. Never fail --check and never clobber the
+  // file with a project-less graph here. Degrade to a clean skip (exit 0).
+  if (!available) {
+    console.log('build-entity-graph: SKIP — PROJECT_REGISTRY (studio-ops sibling) unavailable; committed graph is authoritative.');
+    return;
+  }
+
   const graph = buildGraph(registry);
   const json = JSON.stringify(graph, null, 2);
 
