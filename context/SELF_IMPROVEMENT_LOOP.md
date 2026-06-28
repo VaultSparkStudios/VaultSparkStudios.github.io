@@ -8,14 +8,29 @@ Entries below are append-only. Rolling Status header is overwritten each closeou
 
 <!-- rolling-status-start -->
 ## Rolling Status (auto-updated each closeout)
-Sparkline (last 5 totals): ████▉█
-Avgs - 3: 991.0 | 5: 988.8 | 10: ~972 | 25: ~964 | all: ~965 (v3.0 /1000)
-  └ 3-session: Dev 100.0 | Align 98.3 | Momentum 100.0 | Engage 100.0 | Process 100.0
-Velocity trend: → (S232: 6 items + 2 honest closes/defers; S231: 4 items + 1 verify-win; S230: 4 items) | Protocol velocity: ↑ (2 propagated-doc syncs + 2 new/hardened gates) | Debt: ↓ (S232: closed 2 STRONG canon gaps → 0 GAP; resolved the S231 LQIP-determinism carry at the map level; shipped a propagation-drift gate so a stale propagated doc can't recur)
-Momentum runway: INP-ROOT-FIX — telemetry now captures target+phase breakdown; awaits first inp:slow_interaction field sample to pin the /games/ 224ms offender; FORGE-WINDOW rename (108 pages, founder-gated); CHANGELOG publish (founder voice); PUSH first notification (0 subs, founder-gated) | Intent rate: 100% (last 5) | (S232 shipped: CANON-003 initiate.md + CANON-044 SESSION_PROTOCOL re-sync v1.3→v1.5; lockfile-presence-aware workflow-install lint; LQIP coverage-preserving write — zero cross-platform churn; INP telemetry target+phase enrichment; check-propagated-doc-currency gate + doctor probe; confirmed CI GREEN closing 6 VERIFY carries.)
-Last session: 2026-06-27 | Session 232 | Total: 992/1000 (v3.0) | Velocity: +1 | protocolVelocity: 2
+Sparkline (last 5 totals): ████▉██
+Avgs - 3: 992.0 | 5: 991.0 | 10: ~973 | 25: ~965 | all: ~966 (v3.0 /1000)
+  └ 3-session: Dev 100.0 | Align 99.0 | Momentum 100.0 | Engage 100.0 | Process 100.0
+Velocity trend: → (S233: 5 items + 4 honest carry-closes; S232: 6 items + 2 honest closes; S231: 4 items + 1 verify-win) | Protocol velocity: ↑ (Worker P0 + 2 new gates + 2 Ark cargos) | Debt: ↓ (S233: closed silent Worker data-loss P0 — inp:slow_interaction samples were silently dropped since S229; INP consumer closes the telemetry loop; LH floor gate closes "stable but bad" blind spot; Ark-shipped S232 gate patterns to portfolio)
+Momentum runway: INP-ROOT-FIX — Worker fix deployed (a4ab332a), samples will arrive in 2–3 days of field traffic; once inp-breakdown.json has data, fix the dominant /games/ phase (INP 224ms P1 carry); FORGE-WINDOW rename (108 pages, founder-gated); CHANGELOG publish (founder voice); PUSH first notification (0 subs, founder-gated) | Intent rate: 100% (last 5) | (S233 shipped: Worker INP data-loss P0 fixed+deployed; INP rollup consumer 8/8 self-tests; Lighthouse floor gate 5/5 self-tests; Ark-share 2 gate patterns to siblings; Lighthouse CI 3x warmup; confirmed CI GREEN closing 4 VERIFY carries.)
+Last session: 2026-06-28 | Session 233 | Total: 993/1000 (v3.0) | Velocity: +1 | protocolVelocity: 3
 ─────────────────────────────────────────────────────────────────────
 <!-- rolling-status-end -->
+
+---
+
+## 2026-06-28 — Session 233 (full arc · Worker INP silent-data-loss P0 fixed + INP rollup consumer + Lighthouse floor gate + Ark-share two gate patterns + Lighthouse CI 3x warmup) | Total: 993/1000 (v3.0) | Velocity: +1 | Debt: ↓
+Avgs — 3: 992.0 | 5: 991.0 | 10: ~973 | 25: ~965 | all: ~966
+
+Dev Health 100 | Creative Alignment 99 | Momentum 100 | Engagement 100 | Process Quality 100 | Cross-Repo Coherence 99 | Security Posture 97 | Ecosystem Integration 100 | Capital Efficiency 97 | Automation Coverage 100
+
+**What improved:** The throughline is *the session that found and fixed what S229–S232 couldn't see: every inp:slow_interaction beacon had been silently dropped at the edge since day one.* The S232 INP enrichment was a genuine win — `inp-telemetry.js` now beacons a stable target hint + full phase breakdown — but S233's audit found a P0 bug that invalidated the premise: `handleRumIngest` in the Worker read `raw?.ux` while the client sends `raw.event` (the bare JSON sendBeacon form, no `ux` key). Result: every inp:slow_interaction beacon was stored with `ux: null`, the `inpPhase` block was never written, and the "0 inp:slow_interaction samples" everyone read as "no slow interactions on this route" actually meant "Worker discarded every sample." Fixed with `const uxRaw = raw?.ux ?? raw?.event` (a one-line fallback) and `inpPhase` now stored in R2 per the S232 schema. Worker deployed `a4ab332a-6477-46e1-9c55-dfb93dfcb8e6`. The INP rollup consumer (`scripts/rollup-inp-telemetry.mjs`, 8/8 self-tests) is ready to surface the dominant /games/ phase the moment samples land — closes the loop S232 opened.
+
+The Lighthouse floor gate is a second-order win with clean design: the regression gate catches `0.85→0.80` (drop), but not `0.76→0.78→0.77` (hovering at the same bad level). Homepage has been 0.76–0.78 for ≥4 CI runs; the regression gate exits 0 every time because no single run is ≥0.05 worse than the prior one. `check-lighthouse-floor.mjs` closes this class — median perf across last 4 runs, WARN at 0.78, ERROR at 0.74, requires ≥2 runs to qualify (cold-start noise exclusion). Live: all 7 pages at or above floor. Advisory smoke probe wired (blocking only on ERROR). The Lighthouse CI warmup (1→3 passes) attacks the cold-disk-read gap that inflated local-preview LCP: first pass primes Node.js HTTP + fs cache, second primes the keep-alive pool, third ensures the AVIF/WebP hero is file-cached.
+
+Honest discipline: the "⛔ CI RED" brief signal was a snapshot from the S231 closeout — live `api/ci-status.json` confirmed ALL GREEN on the S232 tip. Four stale [VERIFY] carries retired as genuine wins. The S232 committed brainstorm items (INP consumer + Ark-share) both executed exactly as promised. 0 INP field samples is expected and honest — the Worker fix was deployed this session; data will arrive with traffic over 2–3 days.
+
+**Brainstorm — items committed to TASK_BOARD:** (1) **INP root-fix** — once the enriched telemetry + S233 Worker fix delivers its first `inp:slow_interaction` field sample, `data/inp-breakdown.json` will surface the dominant /games/ phase automatically. At that point fix the dominant slow interaction (field 224ms, over 200ms budget) using the dominantPhase signal (inputDelay = passive-listener audit; processing = JS profiling; presentation = layout/paint). This is the P1 carry that has been data-blocked since S229 — S233 unblocked the data pipeline.
 
 ---
 

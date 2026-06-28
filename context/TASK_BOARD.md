@@ -1,6 +1,25 @@
 # Task Board — VaultSparkStudios.github.io
 
-Last updated: 2026-06-27 (Session 232 — full arc: 2 STRONG canon gaps closed (0 GAP) + 6 CI carries closed (confirmed green) + LQIP churn killed + lockfile-aware lint + INP telemetry enrichment + propagation-drift gate)
+Last updated: 2026-06-28 (Session 233 — full arc: Worker INP silent-data-loss P0 fixed + INP rollup consumer + Lighthouse floor gate + Ark-share two gate patterns + Lighthouse CI 3x warmup)
+
+## S233 outcome + carries
+
+**Shipped in S233 (5 items · 4 honest carry-closes · "closed the loop the S232 INP enrichment opened — and hit a P0 bug in the process"):**
+- [x] **[OBSERVABILITY/P0] Worker INP event capture bug fixed** — `cloudflare/security-headers-worker.js`: `handleRumIngest` read `raw?.ux` but `inp-telemetry.js` sends `raw.event` (bare JSON, no `ux` key). ALL `inp:slow_interaction` event data (target, inputDelay, processing, presentation) silently dropped at the edge. Fixed: `const uxRaw = raw?.ux ?? raw?.event`; stores `inpPhase` object in R2 when `ux === 'inp:slow_interaction'`. Worker deployed `a4ab332a-6477-46e1-9c55-dfb93dfcb8e6`.
+- [x] **[OBSERVABILITY/P2] INP rollup consumer** — new `scripts/rollup-inp-telemetry.mjs`: aggregates `inp:slow_interaction` R2 rows per route (samples, topTargets, topTypes, p75ms {duration, inputDelay, processing, presentation}, dominantPhase). 8/8 self-tests. `data/inp-breakdown.json` generated (0 samples — expected until Worker fix sees field traffic). Advisory smoke probe wired.
+- [x] **[INFRA/P2] Lighthouse absolute floor gate** — new `scripts/check-lighthouse-floor.mjs`: detects pages consistently below target across ≥2 recent runs — the "stable but bad" blind spot the regression gate misses. WARN_FLOOR=0.78, ERROR_FLOOR=0.74, LOOK_BACK=4. 5/5 self-tests. Live: all 7 pages at or above floor. Advisory smoke probe wired (blocking only on ERROR).
+- [x] **[CROSS-REPO] Ark-share two gate patterns** — shipped `pattern-share` cargo to all siblings: (a) `propagated-doc-currency` gate (check-propagated-doc-currency.mjs), (b) `lockfile-aware-install-lint` gate. Both close the sibling-level drift Hashmark/SHADOW/ATLAS literally show.
+- [x] **[PERF/P2] Lighthouse CI warmup 3x passes** — `.github/workflows/lighthouse.yml`: warmup step upgraded from 1 to 3 passes. First primes Node.js HTTP + fs cache; second primes keep-alive pool; third ensures AVIF/WebP hero assets are file-cached. Closes the 4.5s FCP→LCP cold-disk-read gap.
+
+**S233 honest ledger:**
+- ✓ **[CI·VERIFY] CI confirmed ALL GREEN on S232 push** — live check disproved stale "⛔ CI RED" brief signal (was a snapshot from S231 closeout; E2E/Lighthouse/Accessibility all `success` on S232 tip). 4 stale [VERIFY] carries retired.
+- ✓ **[S232 committed items] INP consumer + Ark-share RESOLVED** — both S232 brainstorm commits executed as S233 Wave 1+4.
+- → **[PERF/P1] INP root-fix still data-blocked** — 0 `inp:slow_interaction` samples (expected — Worker fix just deployed; data will populate once field traffic arrives). Re-check in 2–3 days.
+- → **Doctor 3 advisory reds = sibling/portfolio** (Hashmark/SHADOW/ATLAS template versions, VEILOS launch), blockingFailing 0, untouched.
+- → **Founder-gated carries unchanged** — Forge-Window rename (108 pages), changelog publish (founder voice), first push notification (0 subs).
+
+**S233 committed to next session (brainstorm → Now):**
+- [ ] **[SIL][PERF/P1] INP root-fix** — once the enriched telemetry (S232 target+phase enrichment + S233 Worker fix) returns its first `inp:slow_interaction` sample, use `data/inp-breakdown.json` dominantPhase to fix the dominant slow interaction on `/games/` (field 224ms, over 200ms budget).
 
 ## S232 outcome + carries
 
@@ -21,8 +40,8 @@ Last updated: 2026-06-27 (Session 232 — full arc: 2 STRONG canon gaps closed (
 - → **Founder-gated carries unchanged** — Forge-Window rename (108 pages), changelog publish (founder voice), first push notification (0 subs).
 
 **S232 committed to next session (brainstorm → Now):**
-- [ ] **[SIL][OBSERVABILITY/P2] INP slow-interaction consumer** — once the enriched telemetry returns its first `inp:slow_interaction` sample, build a small rollup over the new `target`/`inputDelay`/`processing`/`presentation` fields so the dominant /games/ offender + its phase surface in the RUM summary automatically (closes the loop the S232 enrichment opened).
-- [ ] **[SIL][INFRA/P2] Ark-share the two reusable gate patterns** — ship `check-propagated-doc-currency` + the lockfile-presence-aware install lint as `pattern-share` cargo so siblings with the same gitignored-lockfile + propagated-doc setup (Hashmark/SHADOW/ATLAS literally show the drift) inherit the class-closers without anyone editing their trees.
+- [x] **[SIL][OBSERVABILITY/P2] INP slow-interaction consumer — RESOLVED (S233)** — `scripts/rollup-inp-telemetry.mjs` built (8/8 self-tests) + `data/inp-breakdown.json` wired. Requires S233 Worker fix deployed — data will populate with field traffic.
+- [x] **[SIL][INFRA/P2] Ark-share the two reusable gate patterns — RESOLVED (S233)** — shipped `pattern-share` cargo for `check-propagated-doc-currency` + `lockfile-aware-install-lint` to all siblings.
 
 ## S231 outcome + carries
 

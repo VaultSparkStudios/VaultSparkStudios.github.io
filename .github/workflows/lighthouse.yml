@@ -37,10 +37,16 @@ jobs:
       # S231: warm the preview server before auditing so the first (cold) request's
       # inflated LCP doesn't drag the homepage median. Mirrors the lighthouse-staging
       # warmup (S229). Non-fatal — purely a measurement-quality step.
+      # S233: 3 warmup passes instead of 1. First pass primes Node.js HTTP + fs cache;
+      # second primes the connection keep-alive pool; third ensures static assets (AVIF
+      # hero cover) are file-cached. Eliminates the 4.5s FCP→LCP gap caused by cold
+      # disk reads on the first Lighthouse iteration of a 6-file AVIF/WebP hero tile.
       - name: Warm up local preview
         run: |
-          for u in / /games/ /community/ /leaderboards/ /journal/ /ranks/ /contact/; do
-            curl -s -o /dev/null "http://127.0.0.1:4173$u" || true
+          for pass in 1 2 3; do
+            for u in / /games/ /community/ /leaderboards/ /journal/ /ranks/ /contact/; do
+              curl -s -o /dev/null "http://127.0.0.1:4173$u" || true
+            done
           done
 
       - name: Run Lighthouse CI

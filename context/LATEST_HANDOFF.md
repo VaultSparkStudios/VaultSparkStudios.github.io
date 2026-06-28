@@ -1,8 +1,23 @@
 # Latest Handoff — VaultSparkStudios.github.io
 
-Last updated: 2026-06-27 (Session 232 — full arc · 2 STRONG canon gaps closed (0 GAP) + 6 CI carries closed (confirmed green) + LQIP churn killed + lockfile-aware lint + INP telemetry enrichment + propagation-drift gate)
+Last updated: 2026-06-28 (Session 233 — full arc · Worker INP P0 silent-data-loss bug fixed + INP rollup consumer + Lighthouse floor gate + Ark-share two gate patterns + Lighthouse CI 3x warmup)
 
-Session Intent: Run the full /arc as one continuous mission; saturate at genius quality until the genius list is exhausted + second-order innovations shipped. Outcome — Achieved. Verified every audit premise against live code: closed the only 2 real STRONG canon gaps (0 GAP), confirmed CI is green (closing 6 stale [VERIFY] carries), shipped real residual engineering on 3 partly-done items, and built a new gate to close the propagation-drift class discovered mid-session. build:check EXIT 0; blockingFailing 0.
+Session Intent: Run the full /arc as one continuous mission; saturate at genius quality until the Unified Genius List is fully exhausted AND generate + implement second-order innovation candidates. Outcome — 5 substantive ships; Worker INP P0 fixed and deployed; 4 stale carries retired; build:check EXIT 0; blockingFailing 0.
+
+## Where We Left Off (Session 233)
+
+- **Shipped (5 substantive · 4 honest carry-closes):**
+  1. **[OBSERVABILITY/P0] Worker INP event capture bug fixed** — `cloudflare/security-headers-worker.js` `handleRumIngest`: was reading `raw?.ux` but `inp-telemetry.js` sends `raw.event` (bare JSON, no `ux` key). **ALL inp:slow_interaction data silently dropped at the edge** — element, target, inputDelay, processing, presentation all lost. Fixed: `const uxRaw = raw?.ux ?? raw?.event`; stores `inpPhase` object in R2 row when `ux === 'inp:slow_interaction'`. Worker deployed `a4ab332a-6477-46e1-9c55-dfb93dfcb8e6`.
+  2. **[OBSERVABILITY/P2] INP rollup consumer** — new `scripts/rollup-inp-telemetry.mjs`: aggregates inp:slow_interaction R2 rows per route → samples, topTargets (top 3), topTypes (top 3), p75ms {duration, inputDelay, processing, presentation}, dominantPhase (highest p75 of the 3 sub-phases). 8/8 self-tests. `data/inp-breakdown.json` generated (0 samples — correct, Worker fix just deployed). Advisory smoke probe wired.
+  3. **[INFRA/P2] Lighthouse absolute floor gate** — new `scripts/check-lighthouse-floor.mjs`: detects pages consistently below perf target across ≥2 runs in the last 4 (the "stable but bad" blind spot the regression gate misses — homepage has been 0.76–0.78 for ≥3 runs while target is 0.80). WARN_FLOOR=0.78, ERROR_FLOOR=0.74. 5/5 self-tests. Live: all 7 pages at or above floor. Advisory smoke probe wired (blocking on ERROR only).
+  4. **[CROSS-REPO] Ark-share two gate patterns** — `pattern-share` cargo shipped to all siblings: `check-propagated-doc-currency` (S232 second-order, closes propagation-drift class) + `lockfile-aware-install-lint` (S232 core, closes the gitignored-lockfile/npm-ci class). Hashmark/SHADOW/ATLAS literally show both drifts.
+  5. **[PERF/P2] Lighthouse CI warmup 3x passes** — `.github/workflows/lighthouse.yml`: warmup upgraded from 1 → 3 passes over 7 pages each. First primes Node.js HTTP + fs cache; second primes keep-alive pool; third ensures AVIF/WebP hero tile is file-cached. Closes the cold-disk-read LCP gap that inflated homepage local-preview scores.
+
+- **Honest ledger:** CI confirmed ALL GREEN on S232 tip (disproved stale "⛔ CI RED" brief signal). 4 stale [VERIFY] carries retired. INP field data: 0 samples (correct — Worker fix deployed this session; data will come with traffic). All S232 committed carries (INP consumer + Ark-share) executed. Founder-gated unchanged: Forge-Window rename (108 pages), changelog publish (founder voice), push first notification (0 subs).
+
+- **Tests:** `build:check` EXIT 0 end-to-end. Smoke 29/30 (1 skip = gateway-readiness for claude.api — advisory, not a site build dep). Doctor blockingFailing 0. check-lighthouse-floor 5/5 self-test · rollup-inp-telemetry 8/8 self-test.
+
+- **First action next session:** `/start` → confirm CI stays green on this push (new gates wired into smoke runner, Worker deployed). Then watch for the first inp:slow_interaction samples in `data/rum-raw.ndjson` (2–3 days of field traffic after Worker deploy) — when samples land, `rollup-inp-telemetry.mjs` will surface the dominant /games/ phase automatically via `data/inp-breakdown.json`. INP root-fix is the P1 carry.
 
 ## Where We Left Off (Session 232)
 

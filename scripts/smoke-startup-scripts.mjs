@@ -408,6 +408,34 @@ try {
   results.push({ status: 'SKIP', module: 'check-csp-violations', reason: `spawn error: ${err.message}` });
 }
 
+// ── Lighthouse absolute floor advisory (S233) — catches "stable but bad" scores ──
+// Advisory: exits 0 on WARN, exits 1 only on ERROR (page perf median <0.74 consistently).
+// Distinct from check-lighthouse-trend which detects regressions; this detects stagnation.
+try {
+  const floorProbe = spawnSync(process.execPath, [resolve(root, 'scripts/check-lighthouse-floor.mjs')], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  const floorOut = (floorProbe.stdout || '').trim();
+  const floorErr = (floorProbe.stderr || '').trim();
+  const floorStatus = floorProbe.status === 0 ? 'OK' : 'FAIL';
+  if (floorProbe.status !== 0) failures++;
+  results.push({ status: floorStatus, module: 'check-lighthouse-floor · ' + (floorOut.split('\n')[0] || floorErr.split('\n')[0] || 'floor gate') });
+} catch (err) {
+  results.push({ status: 'SKIP', module: 'check-lighthouse-floor', reason: `spawn error: ${err.message}` });
+}
+
+// ── INP rollup consumer advisory (S233) — surfaces phase breakdown when samples land ──
+// Advisory: always exits 0 (data-blocked until field samples arrive from the fixed Worker).
+try {
+  const inpProbe = spawnSync(process.execPath, [resolve(root, 'scripts/rollup-inp-telemetry.mjs'), '--check'], {
+    cwd: root, encoding: 'utf8', windowsHide: true,
+  });
+  const inpOut = (inpProbe.stdout || '').trim();
+  results.push({ status: inpProbe.status === 0 ? 'OK' : 'SKIP', module: 'rollup-inp-telemetry · ' + (inpOut.split('\n')[0] || 'check') });
+} catch (err) {
+  results.push({ status: 'SKIP', module: 'rollup-inp-telemetry', reason: `spawn error: ${err.message}` });
+}
+
 // ── Report ────────────────────────────────────────────────────────────────────
 const pad = s => s.padEnd(45);
 for (const r of results) {

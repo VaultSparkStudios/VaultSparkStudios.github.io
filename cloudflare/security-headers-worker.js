@@ -413,11 +413,16 @@ async function handleRumIngest(request, env, ctx) {
   const vitals = raw && typeof raw.vitals === 'object' ? raw.vitals : {};
   const context = raw && typeof raw.context === 'object' ? raw.context : {};
   const now = new Date();
+  // inp-telemetry.js sends { event: '...', route, ... } (raw beacon form, no `ux` key).
+  // Fall back to raw.event so UX events reach cleanRumUxEvent regardless of which key the
+  // client used — this is the S233 fix for the silent INP-data-loss bug.
+  const uxRaw = raw?.ux ?? raw?.event;
+  const isInpSlow = typeof uxRaw === 'string' && uxRaw === 'inp:slow_interaction';
   const row = {
     schemaVersion: '1.0',
     ts: now.toISOString(),
     route: cleanRumRoute(raw?.route),
-    ux: cleanRumUxEvent(raw?.ux),
+    ux: cleanRumUxEvent(uxRaw),
     vitals: {
       lcp: cleanRumNumber(vitals.lcp, 60000),
       fcp: cleanRumNumber(vitals.fcp, 60000),
@@ -425,6 +430,20 @@ async function handleRumIngest(request, env, ctx) {
       inp: cleanRumNumber(vitals.inp, 10000),
       ttfb: cleanRumNumber(vitals.ttfb, 60000),
     },
+    // S233: store INP phase breakdown (target/type/phase ms) so rollup-inp-telemetry can
+    // attribute slow interactions without re-reading vitals.inp (which is the CWV p75, not
+    // the individual slow-event duration). Only present when ux===inp:slow_interaction.
+    ...(isInpSlow && {
+      inpPhase: {
+        element: typeof raw.element === 'string' ? raw.element.slice(0, 40) : null,
+        target: typeof raw.target === 'string' ? raw.target.slice(0, 80) : null,
+        type: typeof raw.type === 'string' ? raw.type.slice(0, 24) : null,
+        duration: Number.isFinite(Number(raw.duration)) ? Math.min(Math.round(Number(raw.duration)), 30000) : null,
+        inputDelay: Number.isFinite(Number(raw.inputDelay)) ? Math.min(Math.round(Number(raw.inputDelay)), 30000) : null,
+        processing: Number.isFinite(Number(raw.processing)) ? Math.min(Math.round(Number(raw.processing)), 30000) : null,
+        presentation: Number.isFinite(Number(raw.presentation)) ? Math.min(Math.round(Number(raw.presentation)), 30000) : null,
+      },
+    }),
     context: {
       connection: String(context.connection || 'unknown').slice(0, 24),
       saveData: !!context.saveData,

@@ -1,5 +1,18 @@
 # Work Log
 
+## 2026-06-28 — Session 233 · Full Arc · Worker INP silent-data-loss P0 fixed + INP rollup consumer + Lighthouse floor gate + Ark-share two gate patterns + Lighthouse CI 3x warmup
+
+Full /start → /audit → /implement → /closeout arc, run as one continuous mission. **5 substantive ships · 4 honest carry-closes · 0 phantom ships.** SIL 992 → 993/1000 (+1). The session's signature: *the loop S232 opened (INP enrichment → consumer → root-fix) immediately surfaced a P0 — all inp:slow_interaction data had been silently dropped at the edge since S229 because the Worker read `raw?.ux` while the client sent `raw.event`.*
+
+**Shipped:**
+1. **[OBSERVABILITY/P0] Worker INP event capture bug fixed** — `handleRumIngest` read `raw?.ux` but `inp-telemetry.js` sends `raw.event` (bare sendBeacon JSON, no `ux` key). ALL `inp:slow_interaction` data (element, target, inputDelay, processing, presentation) silently dropped. Fixed: `const uxRaw = raw?.ux ?? raw?.event`; stores `inpPhase` in R2 when `ux === 'inp:slow_interaction'`. Worker deployed `a4ab332a-6477-46e1-9c55-dfb93dfcb8e6`.
+2. **[OBSERVABILITY/P2] INP rollup consumer** — new `scripts/rollup-inp-telemetry.mjs`: aggregates inp:slow_interaction rows per route (samples, topTargets, topTypes, p75ms {duration/inputDelay/processing/presentation}, dominantPhase). 8/8 self-tests. `data/inp-breakdown.json` generated (0 samples = correct, Worker fix just deployed). Advisory smoke probe wired. Will auto-surface the /games/ 224ms offender once field traffic arrives.
+3. **[INFRA/P2] Lighthouse absolute floor gate** — new `scripts/check-lighthouse-floor.mjs`: closes the "stable but bad" blind spot (regression gate misses `0.76→0.78→0.77`). WARN_FLOOR=0.78, ERROR_FLOOR=0.74, LOOK_BACK=4 runs, min 2 appearances. 5/5 self-tests. Live: all 7 pages at or above floor. Advisory smoke probe wired.
+4. **[CROSS-REPO] Ark-share two gate patterns** — `pattern-share` cargo to all siblings: `check-propagated-doc-currency` (closes propagation-drift class) + `lockfile-aware-install-lint` (closes gitignored-lockfile/npm-ci class). Hashmark/SHADOW/ATLAS literally show both drifts.
+5. **[PERF/P2] Lighthouse CI warmup 3x passes** — `.github/workflows/lighthouse.yml`: 1→3 warmup passes over 7 pages. Primes HTTP cache + keep-alive pool + AVIF file cache. Closes cold-disk-read LCP gap on local-preview Lighthouse runs.
+
+**Honest closes:** CI confirmed ALL GREEN on S232 tip (disproved stale "⛔ CI RED" brief signal). 4 stale [VERIFY] carries retired. S232 committed brainstorm items (INP consumer + Ark-share) both executed. INP field data: 0 samples (correct — Worker fix just deployed). build:check EXIT 0; smoke 29/30; doctor blockingFailing 0.
+
 ## 2026-06-27 — Session 232 · Full Arc · 2 STRONG canon gaps closed (0 GAP) + 6 CI carries closed (confirmed green) + LQIP churn killed + lockfile-aware lint + INP telemetry enrichment + propagation-drift gate
 
 Full /start → /audit → /implement → /closeout arc, run as one continuous mission. **6 substantive ships · 2 honest closes (1 phantom verified-done, 6 CI carries) · 3 honest defers.** SIL 991 → 992/1000 (+1). The signature of the session: *the audit refused to inherit a stale list.* The brief said "CI (main) RED" and the genius list was 6-deep in [VERIFY] CI carries — `gh run list` on the real workflows showed E2E (13m4s), Lighthouse (8m29s), Accessibility all **success** on the S231 tip, so those carries closed as honest wins. Conformance had exactly 2 real STRONG gaps and 0 ABSOLUTE: `prompts/initiate.md` missing (CANON-003) and `docs/SESSION_PROTOCOL.md` stranded at v1.3 vs canonical v1.5 (CANON-044 Wave marker) — both closed, **2 GAP → 0 GAP**.
