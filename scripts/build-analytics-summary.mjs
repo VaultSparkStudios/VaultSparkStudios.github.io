@@ -74,18 +74,28 @@ if (process.argv.includes('--self-test')) {
 const rows = fs.existsSync(HISTORY)
   ? fs.readFileSync(HISTORY, 'utf8').split('\n').filter(Boolean).map((l) => { try { return JSON.parse(l); } catch { return null; } })
   : [];
-const payload = {
-  schemaVersion: '1.0',
-  generatedAt: new Date().toISOString(),
-  generatedBy: 'scripts/build-analytics-summary.mjs',
-  publicSafe: true,
-  note: 'First-party page-view aggregates from the RUM beacon. No cookies, no third parties, no per-visitor data.',
-  ...summarize(rows),
-};
+function buildPayload(todayIso) {
+  return {
+    schemaVersion: '1.0',
+    generatedAt: new Date().toISOString(),
+    generatedBy: 'scripts/build-analytics-summary.mjs',
+    publicSafe: true,
+    note: 'First-party page-view aggregates from the RUM beacon. No cookies, no third parties, no per-visitor data.',
+    ...summarize(rows, todayIso),
+  };
+}
 
 if (CHECK) {
   if (!fs.existsSync(OUT)) { console.error('build-analytics-summary --check: missing output; run without --check'); process.exit(1); }
   const cur = JSON.parse(fs.readFileSync(OUT, 'utf8'));
+  // S231: recompute the rolling 7d/30d window relative to the committed file's OWN
+  // generatedAt date, NOT "now". The window is date-relative, so a date rollover between
+  // generation and check (e.g. CI running just after midnight UTC) shifts the window and
+  // false-drifts — a flaky red that masked deeper CI failures. Validating against the
+  // committed date checks the file's internal consistency vs the committed history
+  // (the real drift signal) without the calendar flakiness. (S183: don't gate on volatile.)
+  const curDate = (cur.generatedAt || '').slice(0, 10) || undefined;
+  const payload = buildPayload(curDate);
   if (JSON.stringify({ ...cur, generatedAt: '' }) !== JSON.stringify({ ...payload, generatedAt: '' })) {
     console.error('build-analytics-summary --check: drift; run node scripts/build-analytics-summary.mjs');
     process.exit(1);
@@ -93,5 +103,7 @@ if (CHECK) {
   console.log(`build-analytics-summary --check: ok (${payload.views7} views/7d)`);
   process.exit(0);
 }
+
+const payload = buildPayload();
 fs.writeFileSync(OUT, JSON.stringify(payload, null, 2) + '\n');
 console.log(`build-analytics-summary → api/analytics-summary.json (${payload.views7} views/7d · ${payload.views30} views/30d · top: ${payload.topRoutes[0]?.route ?? '—'})`);

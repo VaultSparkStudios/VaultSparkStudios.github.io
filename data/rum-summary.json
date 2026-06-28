@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "generatedAt": "2026-06-27T23:32:27.698Z",
+  "generatedAt": "2026-06-28T00:45:41.713Z",
   "generatedBy": "scripts/pull-rum-summary.mjs",
   "source": "data\\rum-history.ndjson",
   "windowDays": 7,
@@ -10,20 +10,20 @@
     "cls": 0.1,
     "inp": 200
   },
-  "totalSamples": 654,
+  "totalSamples": 530,
   "sufficientRoutes": 2,
   "cwvPassRate": 50,
   "cwvPassRouteCount": 1,
   "cwvMeasuredRouteCount": 2,
   "routes": {
     "/": {
-      "samples": 311,
+      "samples": 270,
       "sufficient": true,
       "cwvPass": true,
       "p75": {
         "lcp": 1108,
-        "cls": 0.0815,
-        "inp": 176,
+        "cls": 0.0294,
+        "inp": 144,
         "fcp": 980,
         "ttfb": 583
       }
@@ -40,18 +40,6 @@
         "ttfb": 168
       }
     },
-    "/changelog/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
-      }
-    },
     "/contact/": {
       "samples": 10,
       "sufficient": false,
@@ -65,31 +53,31 @@
       }
     },
     "/feedback/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 832,
+        "lcp": 572,
         "cls": 0.0093,
         "inp": 192,
-        "fcp": 832,
+        "fcp": 572,
         "ttfb": 228
       }
     },
     "/games/": {
-      "samples": 102,
+      "samples": 77,
       "sufficient": true,
       "cwvPass": false,
       "p75": {
         "lcp": 656,
-        "cls": 0.0692,
-        "inp": 384,
+        "cls": 0.0419,
+        "inp": 224,
         "fcp": 656,
         "ttfb": 95
       }
     },
     "/games/call-of-doodie/": {
-      "samples": 18,
+      "samples": 9,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -101,15 +89,15 @@
       }
     },
     "/games/gridiron-gm/": {
-      "samples": 33,
+      "samples": 27,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
         "lcp": 1284,
         "cls": 0.0042,
-        "inp": 160,
+        "inp": 136,
         "fcp": 1284,
-        "ttfb": 617
+        "ttfb": 538
       }
     },
     "/games/mindframe/": {
@@ -125,25 +113,25 @@
       }
     },
     "/games/vaultspark-football-gm/": {
-      "samples": 37,
+      "samples": 26,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 1100,
+        "lcp": 892,
         "cls": 0.0048,
-        "inp": 424,
-        "fcp": 1100,
+        "inp": 296,
+        "fcp": 892,
         "ttfb": 162
       }
     },
     "/ignis/": {
-      "samples": 6,
+      "samples": 5,
       "sufficient": false,
-      "cwvPass": false,
+      "cwvPass": true,
       "p75": {
         "lcp": 948,
-        "cls": 0.0114,
-        "inp": 256,
+        "cls": 0.0112,
+        "inp": 136,
         "fcp": 948,
         "ttfb": 225
       }
@@ -161,15 +149,15 @@
       }
     },
     "/journal/": {
-      "samples": 7,
+      "samples": 3,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 728,
+        "lcp": 2332,
         "cls": 0.0191,
         "inp": 240,
-        "fcp": 728,
-        "ttfb": 143
+        "fcp": 2332,
+        "ttfb": 238
       }
     },
     "/journal/dispatches/": {
@@ -221,51 +209,51 @@
       }
     },
     "/membership/": {
-      "samples": 46,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 88,
-        "fcp": 600,
-        "ttfb": 21
-      }
-    },
-    "/nervous-system/": {
-      "samples": 6,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 884,
-        "cls": 0.0384,
-        "inp": 184,
-        "fcp": 884,
-        "ttfb": 192
-      }
-    },
-    "/oracle/": {
-      "samples": 28,
+      "samples": 45,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 616,
-        "cls": 0.396,
-        "inp": 256,
-        "fcp": 616,
-        "ttfb": 231
+        "lcp": 600,
+        "cls": 0.0923,
+        "inp": 288,
+        "fcp": 632,
+        "ttfb": 69
       }
     },
-    "/pathways/": {
+    "/nervous-system/": {
       "samples": 4,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 860,
+        "lcp": 508,
+        "cls": 0.0384,
+        "inp": 184,
+        "fcp": 508,
+        "ttfb": 192
+      }
+    },
+    "/oracle/": {
+      "samples": 19,
+      "sufficient": false,
+      "cwvPass": false,
+      "p75": {
+        "lcp": 880,
+        "cls": 0.4652,
+        "inp": 272,
+        "fcp": 880,
+        "ttfb": 275
+      }
+    },
+    "/pathways/": {
+      "samples": 2,
+      "sufficient": false,
+      "cwvPass": true,
+      "p75": {
+        "lcp": 300,
         "cls": 0.0219,
-        "inp": 168,
-        "fcp": 860,
-        "ttfb": 113
+        "inp": 0,
+        "fcp": 300,
+        "ttfb": 23
       }
     },
     "/projects/": {
@@ -292,18 +280,6 @@
         "ttfb": 291
       }
     },
-    "/projects/promogrind/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 1024,
-        "cls": 0.0351,
-        "inp": 432,
-        "fcp": 1024,
-        "ttfb": 7
-      }
-    },
     "/projects/syntha/": {
       "samples": 1,
       "sufficient": false,
@@ -317,27 +293,15 @@
       }
     },
     "/projects/velaxis/": {
-      "samples": 2,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 600,
-        "cls": 0.0155,
-        "inp": 440,
-        "fcp": 600,
-        "ttfb": 242
-      }
-    },
-    "/rights/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
-        "lcp": 664,
-        "cls": 0,
-        "inp": 120,
-        "fcp": 664,
-        "ttfb": 129
+        "lcp": 500,
+        "cls": 0.0155,
+        "inp": 176,
+        "fcp": 500,
+        "ttfb": 242
       }
     },
     "/roadmap/": {
@@ -364,39 +328,15 @@
         "ttfb": 0
       }
     },
-    "/security/": {
-      "samples": 3,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 668,
-        "cls": 0.456,
-        "inp": 248,
-        "fcp": 668,
-        "ttfb": 117
-      }
-    },
-    "/status/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": true,
-      "p75": {
-        "lcp": 0,
-        "cls": 0,
-        "inp": 0,
-        "fcp": 0,
-        "ttfb": 0
-      }
-    },
     "/studio-pulse/": {
-      "samples": 6,
+      "samples": 5,
       "sufficient": false,
       "cwvPass": false,
       "p75": {
-        "lcp": 696,
+        "lcp": 1748,
         "cls": 0.0886,
-        "inp": 208,
-        "fcp": 696,
+        "inp": 232,
+        "fcp": 1748,
         "ttfb": 63
       }
     },
@@ -437,7 +377,7 @@
       }
     },
     "/vault-member/": {
-      "samples": 2,
+      "samples": 1,
       "sufficient": false,
       "cwvPass": true,
       "p75": {
@@ -458,18 +398,6 @@
         "inp": 160,
         "fcp": 612,
         "ttfb": 128
-      }
-    },
-    "/vault/tombstones/": {
-      "samples": 1,
-      "sufficient": false,
-      "cwvPass": false,
-      "p75": {
-        "lcp": 532,
-        "cls": 0.0009,
-        "inp": 232,
-        "fcp": 532,
-        "ttfb": 111
       }
     }
   }

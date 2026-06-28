@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27",
+  "generatedAt": "2026-06-28",
   "generatedBy": "scripts/build-commit-map.mjs",
   "source": "git log (local, noise-filtered)",
   "kind": "commit-map",
@@ -7,6 +7,36 @@
   "note": "Recent moves in the forge. Automated bookkeeping filtered out.",
   "count": 24,
   "entries": [
+    {
+      "sha": "a0c0cdbb",
+      "ts": "2026-06-28T00:29:11.000Z",
+      "type": "fix",
+      "scope": "S231",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "build-entity-graph degrades gracefully when studio-ops sibling absent (CI)"
+    },
+    {
+      "sha": "19cfd0a6",
+      "ts": "2026-06-27T23:54:41.000Z",
+      "type": "fix",
+      "scope": "S231",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "build-lqip-map --check validates coverage, not non-deterministic base64"
+    },
+    {
+      "sha": "be8a6b9d",
+      "ts": "2026-06-27T23:36:56.000Z",
+      "type": "fix",
+      "scope": "S231",
+      "breaking": false,
+      "move": "Fixed",
+      "tone": "fix",
+      "summary": "regen public-intelligence cascade (drift) + Lighthouse perf→warn + warmup"
+    },
     {
       "sha": "47df6d60",
       "ts": "2026-06-27T23:18:36.000Z",
@@ -216,36 +246,6 @@
       "move": "Tended",
       "tone": "muted",
       "summary": "trigger deploy — S225 leaderboard SEO pages + hero LCP preload"
-    },
-    {
-      "sha": "bc30d4e0",
-      "ts": "2026-06-26T04:07:36.000Z",
-      "type": "feat",
-      "scope": "S225",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "7 leaderboard SEO sub-pages + hero LCP preload + CI gate wave"
-    },
-    {
-      "sha": "8502f758",
-      "ts": "2026-06-25T23:52:10.000Z",
-      "type": "chore",
-      "scope": "closeout",
-      "breaking": false,
-      "move": "Tended",
-      "tone": "muted",
-      "summary": "S224 SIL rolling-status update — 976→983 velocity 7"
-    },
-    {
-      "sha": "ddd6d179",
-      "ts": "2026-06-25T23:26:56.000Z",
-      "type": "feat",
-      "scope": "S224",
-      "breaking": false,
-      "move": "Shipped",
-      "tone": "sparked",
-      "summary": "second-order innovations — E2E networkidle gate + throw-pattern detection"
     }
   ]
 }
